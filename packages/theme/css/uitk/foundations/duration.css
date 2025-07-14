@@ -1,0 +1,6 @@
+.salt-theme {
+  --salt-duration-instant: 0ms;
+  --salt-duration-perceptible: 300ms;
+  --salt-duration-notable: 1000ms;
+  --salt-duration-cutoff: 10000ms;
+}

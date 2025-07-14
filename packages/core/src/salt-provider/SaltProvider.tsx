@@ -24,6 +24,7 @@ import {
 import type {
   Accent,
   ActionFont,
+  BrandName,
   Corner,
   Density,
   HeadingFont,
@@ -40,11 +41,13 @@ const DEFAULT_THEME_NAME = "salt-theme";
 const DEFAULT_THEME_NAME_NEXT = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
+const DEFAULT_BRAND = "uitk";
 const DEFAULT_CORNER: Corner = "sharp";
 const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
 const DEFAULT_ACCENT: Accent = "blue";
 const DEFAULT_ACTION_FONT: ActionFont = "Open Sans";
 export interface ThemeContextProps {
+  brand: BrandName;
   theme: ThemeName;
   mode: Mode;
   window?: WindowContextType;
@@ -68,6 +71,7 @@ export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
 
 export const ThemeContext = createContext<ThemeContextProps>({
   theme: "",
+  brand: DEFAULT_BRAND,
   mode: DEFAULT_MODE,
   themeNext: false,
   corner: DEFAULT_CORNER,
@@ -105,6 +109,7 @@ interface ThemeNextProps {
 }
 
 const createThemedChildren = ({
+  brandName,
   children,
   themeName,
   density,
@@ -116,6 +121,7 @@ const createThemedChildren = ({
   accent,
   actionFont,
 }: {
+  brandName: BrandName;
   children: ReactNode;
   themeName: ThemeName;
   density: Density;
@@ -142,6 +148,7 @@ const createThemedChildren = ({
           `salt-density-${density}`,
         ),
         // @ts-ignore
+        "data-brand": brandName,
         "data-mode": mode,
         ...(themeNext ? themeNextProps : {}),
       });
@@ -160,6 +167,7 @@ const createThemedChildren = ({
         themeNamesString,
         `salt-density-${density}`,
       )}
+      data-brand={brandName}
       data-mode={mode}
       {...(themeNext ? themeNextProps : {})}
     >
@@ -190,6 +198,11 @@ interface SaltProviderBaseProps {
    * A string. Specifies custom theme name(s) you want to apply, similar to `className`.
    */
   theme?: ThemeName;
+  /**
+   * Either "legacy" or "salt".
+   * Specifies branding to be used for the theme.
+   */
+  brand?: BrandName;
   /**
    * Either "light" or "dark". Enable the color palette to change from light to dark.
    * Refer to [modes](https://www.saltdesignsystem.com/salt/foundations/modes) doc for more detail.
@@ -243,12 +256,14 @@ function InternalSaltProvider({
   headingFont: headingFontProp,
   accent: accentProp,
   actionFont: actionFontProp,
+  brand: brandProp,
 }: Omit<
   SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
 >) {
   const inheritedDensity = useContext(DensityContext);
   const {
+    brand: inheritedBrand,
     theme: inheritedTheme,
     mode: inheritedMode,
     window: inheritedWindow,
@@ -262,6 +277,7 @@ function InternalSaltProvider({
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
+  const brandName = brandProp ?? inheritedBrand ?? DEFAULT_BRAND;
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
@@ -283,6 +299,7 @@ function InternalSaltProvider({
 
   const themeContextValue = useMemo(
     () => ({
+      brand: brandName,
       theme: themeName,
       mode,
       window: targetWindow,
@@ -298,6 +315,7 @@ function InternalSaltProvider({
       UNSTABLE_actionFont: actionFont,
     }),
     [
+      brandName,
       themeName,
       mode,
       targetWindow,
@@ -310,6 +328,7 @@ function InternalSaltProvider({
   );
 
   const themedChildren = createThemedChildren({
+    brandName,
     children,
     themeName,
     density,
@@ -333,6 +352,7 @@ function InternalSaltProvider({
           ...themeNames,
           `salt-density-${density}`,
         );
+        targetWindow.document.documentElement.dataset.brand = brandName;
         targetWindow.document.documentElement.dataset.mode = mode;
         if (themeNext) {
           targetWindow.document.documentElement.dataset.corner = corner;
@@ -355,6 +375,7 @@ function InternalSaltProvider({
           `salt-density-${density}`,
         );
         targetWindow.document.documentElement.dataset.mode = undefined;
+        targetWindow.document.documentElement.dataset.brand = undefined;
         if (themeNext) {
           delete targetWindow.document.documentElement.dataset.corner;
           delete targetWindow.document.documentElement.dataset.headingFont;
@@ -365,6 +386,7 @@ function InternalSaltProvider({
     };
   }, [
     applyClassesTo,
+    brandName,
     density,
     mode,
     themeName,
@@ -451,7 +473,7 @@ export function SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
-/** @deprecated use `SaltProviderNext` */
+/** @deprecated use `SaltProvider` with `brand="salt"` prop */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {

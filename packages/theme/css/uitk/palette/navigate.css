@@ -1,0 +1,11 @@
+.salt-theme[data-mode="light"][data-brand="uitk"] {
+  --salt-palette-navigate-foreground-visited: var(--salt-color-purple-800);
+  --salt-palette-navigate-indicator-hover: var(--salt-color-gray-90);
+  --salt-palette-navigate-indicator-active: var(--salt-color-orange-600);
+}
+
+.salt-theme[data-mode="dark"][data-brand="uitk"] {
+  --salt-palette-navigate-foreground-visited: var(--salt-color-purple-100);
+  --salt-palette-navigate-indicator-hover: var(--salt-color-gray-90);
+  --salt-palette-navigate-indicator-active: var(--salt-color-orange-400);
+}
