@@ -74,7 +74,7 @@
 }
 
 .saltColorChooserSwatch-transparent {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-sentiment-negative-foreground-informative) !important;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-sentiment-negative-foreground-decorative) !important;
   width: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   height: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;
