@@ -1,12 +1,6 @@
-import {
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -26,7 +20,6 @@ export const TabList = (): ReactElement => {
     <Carousel
       aria-label="Pagination carousel example"
       className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
       <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>

@@ -1,13 +1,6 @@
-import {
-  Link,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { Link, StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
@@ -30,7 +23,6 @@ export const CardActions = (): ReactElement => {
       aria-label="Card actions example"
       className={styles.carousel}
       emblaPlugins={[
-        CarouselAnnouncement(),
         Classnames({
           snapped: styles.carouselSlideIsSnapped,
         }),

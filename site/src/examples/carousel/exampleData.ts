@@ -1,6 +1,6 @@
 export const sliderData = [
   {
-    title: "Your accounts. On the move",
+    title: "Your accounts, on the move",
     image: "/img/examples/carouselSlide1.png",
     content: "Discover our latest personal accounts app for iOS.",
     link: "Open an account",
