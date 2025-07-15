@@ -36,7 +36,7 @@
 }
 
 .saltVerticalNavigationItemContent:hover .saltVerticalNavigationItemTrigger::before {
-  background: var(--salt-navigable-accent-background-hover);
+  background: var(--salt-navigable-background-hover);
 }
 
 .saltVerticalNavigationItemContent-active .saltVerticalNavigationItemTrigger[href]::before {
