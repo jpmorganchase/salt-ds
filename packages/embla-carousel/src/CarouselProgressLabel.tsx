@@ -48,7 +48,6 @@ export function CarouselProgressLabel({
       const slidePosition = endSlideNumber
         ? `${startSlideNumber}-${endSlideNumber}`
         : startSlideNumber;
-
       setProgress(`Slide ${slidePosition} of ${numberOfSlides}.`);
     };
 

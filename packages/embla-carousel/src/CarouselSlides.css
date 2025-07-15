@@ -1,6 +1,18 @@
 .saltCarouselSlides {
   overflow: hidden;
 }
+
+.saltCarouselSlides:focus-visible {
+  cursor: var(--salt-cursor-hover);
+  box-shadow: var(--salt-overlayable-shadow-hover);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  --linkCard-accent-color: var(--salt-selectable-foreground-hover);
+  border-radius: var(--salt-palette-corner, 0);
+}
+
 .saltCarouselSlides-container {
   display: flex;
   touch-action: pan-y pinch-zoom;
@@ -15,6 +27,6 @@
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  whitespace: nowrap;
-  borderwidth: 0;
+  white-space: nowrap;
+  border-width: 0;
 }
