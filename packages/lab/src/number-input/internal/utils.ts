@@ -35,7 +35,7 @@ export const isValidNumber = (num: string | number) => {
 
 export const sanitizeInput = (value: string | number) => {
   if (typeof value === "number") return value;
-  let sanitizedInput = value.replace(/[^0-9.+-]/g, "");
+  let sanitizedInput = value.replace(/[^0-9.,+-]/g, "");
   sanitizedInput = sanitizedInput.replace(
     /^([+-]?)(.*)$/,
     (match, sign, rest) => {
@@ -48,6 +48,12 @@ export const sanitizeInput = (value: string | number) => {
   }
 
   return sanitizedInput;
+};
+
+export const isAllowed = (value: string) => {
+  const invalidPatternRegex = /[a-zA-Z]|(\..*\.)|(?<!^)[+-]$/;
+  const containsInvalidPatterns = invalidPatternRegex.test(value);
+  return !containsInvalidPatterns;
 };
 
 export const isOutOfRange = (
