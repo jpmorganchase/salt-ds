@@ -159,7 +159,7 @@ const RecursiveNavItem: FC<{
         onClick={(event) => {
           // prevent default to avoid navigation in storybook example
           event.preventDefault();
-          if(item.href){
+          if (item.href) {
             setActive(item.name);
           }
         }}
