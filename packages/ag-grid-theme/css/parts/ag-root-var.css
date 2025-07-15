@@ -54,8 +54,8 @@ div[class*="ag-theme-salt"] {
   --ag-toggle-button-switch-border-color: var(--salt-container-primary-background); /* Fake a border with bg color */
   --ag-toggle-button-switch-background-color: var(--salt-selectable-foreground);
   --ag-tooltip-background-color: var(--salt-container-primary-background);
-  --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
-  --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
+  --ag-value-change-delta-down-color: var(--salt-sentiment-negative-foreground-decorative);
+  --ag-value-change-delta-up-color: var(--salt-sentiment-positive-foreground-decorative);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
   /*
       Use categorical color for below tokens when available
