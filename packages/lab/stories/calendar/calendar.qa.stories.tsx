@@ -48,7 +48,18 @@ const renderQAContainer = () => {
     >
       <Calendar
         selectionVariant="single"
-        selectedDate={dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date}
+        selectedDate={dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="single"
+        multiselect
+        selectedDate={[
+          dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        ]}
       >
         <CalendarNavigation />
         <CalendarGrid />
@@ -56,8 +67,58 @@ const renderQAContainer = () => {
       <Calendar
         selectionVariant="range"
         selectedDate={{
-          startDate: dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        }}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="range"
+        multiselect
+        selectedDate={[
+          {
+            startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+            endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+          },
+          {
+            startDate: dateAdapter.parse("2024-05-08", "YYYY-MM-DD").date,
+            endDate: dateAdapter.parse("2024-05-10", "YYYY-MM-DD").date,
+          },
+        ]}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="range"
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        }}
+      >
+        <CalendarNavigation hideYearDropdown />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="range"
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        }}
+      >
+        <CalendarNavigation
+          MonthDropdownProps={{ bordered: true }}
+          YearDropdownProps={{ bordered: true }}
+        />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="offset"
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
         }}
       >
         <CalendarNavigation />
@@ -65,44 +126,19 @@ const renderQAContainer = () => {
       </Calendar>
       <Calendar
         selectionVariant="offset"
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
-        }}
-      >
-        <CalendarNavigation />
-      </Calendar>
-      <Calendar
-        selectionVariant="multiselect"
+        multiselect
         selectedDate={[
-          dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
-          dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
+          {
+            startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+            endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+          },
+          {
+            startDate: dateAdapter.parse("2024-05-08", "YYYY-MM-DD").date,
+            endDate: dateAdapter.parse("2024-05-10", "YYYY-MM-DD").date,
+          },
         ]}
       >
         <CalendarNavigation />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="multiselect"
-        selectedDate={[
-          dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
-          dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
-        ]}
-      >
-        <CalendarNavigation hideYearDropdown />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="multiselect"
-        selectedDate={[
-          dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
-          dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
-        ]}
-      >
-        <CalendarNavigation
-          MonthDropdownProps={{ bordered: true }}
-          YearDropdownProps={{ bordered: true }}
-        />
         <CalendarGrid />
       </Calendar>
     </QAContainer>
