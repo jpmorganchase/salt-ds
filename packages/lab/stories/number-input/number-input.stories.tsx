@@ -512,12 +512,11 @@ export const Fractions: StoryFn<NumberInputProps> = () => {
 
           // Check if the input matches the valid fractional pattern
           const isValid = validFractionRegex.test(value);
-          console.log("isvalid? ", isValid);
           // Return true if the input is valid, false otherwise
           return isValid;
         }}
         onChange={(e, v) => setVal(v)}
-        defaultValue={342.125}
+        value={val}
       />
       <Text>Returned value: {val}</Text>
     </StackLayout>
