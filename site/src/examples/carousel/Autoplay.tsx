@@ -1,6 +1,7 @@
 import {
   Button,
   FlexLayout,
+  H2,
   Link,
   StackLayout,
   Text,
@@ -83,9 +84,7 @@ export const Autoplay = () => {
         ]}
         getEmblaApi={setEmblaApi}
       >
-        <Text styleAs="h2" className={styles.carouselHeading}>
-          Title
-        </Text>
+        <H2 className={styles.carouselHeading}>Title</H2>
         <CarouselSlides
           onMouseEnter={() => pause()}
           onMouseLeave={() => {

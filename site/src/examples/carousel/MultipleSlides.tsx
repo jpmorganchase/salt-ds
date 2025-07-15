@@ -1,4 +1,4 @@
-import { StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
+import { H2, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -14,16 +14,13 @@ import styles from "./index.module.css";
 
 export const MultipleSlides = (): ReactElement => {
   const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
-
   return (
     <Carousel
       aria-label="Multiple slides carousel example"
       className={clsx(styles.carousel, styles.carouselMultipleSlides)}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <H2 className={styles.carouselHeading}>Title</H2>
       <CarouselSlides>
         {sliderData.map((slide, index) => {
           return (
@@ -48,14 +45,8 @@ export const MultipleSlides = (): ReactElement => {
         })}
       </CarouselSlides>
       <StackLayout direction={"row"} gap={1}>
-        <CarouselPreviousButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
-        <CarouselNextButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
+        <CarouselPreviousButton />
+        <CarouselNextButton />
         <CarouselProgressLabel />
       </StackLayout>
     </Carousel>

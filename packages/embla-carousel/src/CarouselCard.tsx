@@ -58,7 +58,6 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
     return (
       <div
         role="tabpanel"
-        aria-roledescription="slide"
         className={clsx(withBaseName(), className)}
         {...rest}
         ref={ref}
