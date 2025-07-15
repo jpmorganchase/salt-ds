@@ -5,6 +5,7 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
+  Text,
   useId,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
@@ -12,6 +13,7 @@ import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { toFloat } from "packages/core/src/slider/internal/utils";
 import { useState } from "react";
+import { Fraction32ndParser, RoundingEnum } from "./formatter";
 
 export default {
   title: "Lab/Number Input",
@@ -484,6 +486,40 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           step={0.1}
         />
       </FormField>
+    </StackLayout>
+  );
+};
+
+export const Fractions: StoryFn<NumberInputProps> = () => {
+  const [val, setVal] = useState(100.03125);
+
+  return (
+    <StackLayout gap={2}>
+      <NumberInput
+        format={(val) => {
+          return Fraction32ndParser.to32nd(
+            val.toString(),
+            RoundingEnum.ROUND_UP,
+          );
+        }}
+        parse={(val) => {
+          return Fraction32ndParser.from32nd(val.toString());
+        }}
+        isAllowed={(value) => {
+          // Regular expression to match valid fractional input like "100-32" or "10032"
+          const validFractionRegex =
+            /^\d+(\-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
+
+          // Check if the input matches the valid fractional pattern
+          const isValid = validFractionRegex.test(value);
+          console.log("isvalid? ", isValid);
+          // Return true if the input is valid, false otherwise
+          return isValid;
+        }}
+        onChange={(e, v) => setVal(v)}
+        defaultValue={342.125}
+      />
+      <Text>Returned value: {val}</Text>
     </StackLayout>
   );
 };
