@@ -496,15 +496,10 @@ export const Fractions: StoryFn<NumberInputProps> = () => {
   return (
     <StackLayout gap={2}>
       <NumberInput
-        format={(val) => {
-          return Fraction32ndParser.to32nd(
-            val.toString(),
-            RoundingEnum.ROUND_UP,
-          );
-        }}
-        parse={(val) => {
-          return Fraction32ndParser.from32nd(val.toString());
-        }}
+        format={(val) =>
+          Fraction32ndParser.to32nd(val.toString(), RoundingEnum.ROUND_UP)
+        }
+        parse={(val) => Fraction32ndParser.from32nd(val.toString())}
         isAllowed={(value) => {
           const validFractionRegex = /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
           return validFractionRegex.test(value);
