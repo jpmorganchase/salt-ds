@@ -1,4 +1,4 @@
-import { FlexLayout, Text, useId } from "@salt-ds/core";
+import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselNextButton,
@@ -17,7 +17,7 @@ export const Title = (): ReactElement => {
       aria-label="Carousel example with title"
       className={styles.carousel}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <H2 className={styles.carouselHeading}>Title</H2>
       <CarouselSlides>
         {slides.map((index) => (
           <div

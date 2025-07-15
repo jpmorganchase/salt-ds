@@ -11,15 +11,15 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
 import {
   FlexLayout,
+  H2,
   StackLayout,
   Text,
   useBreakpoint,
   useId,
 } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
-import { sliderData } from "@salt-ds/site/src/examples/carousel/exampleData";
-import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
+import { sliderData } from "./exampleData";
 import { renderSlides } from "./renderSlides";
 
 export default {
@@ -37,7 +37,7 @@ const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
       className="carousel"
       {...args}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <H2 className="carouselHeading">Title</H2>
       <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
       <StackLayout direction={"row"} gap={1}>
         <CarouselPreviousButton
@@ -66,6 +66,7 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
     >
       <FlexLayout justify={"start"} direction={"row"} gap={1}>
         <CarouselPreviousButton />
+        <CarouselTabList />
         <CarouselNextButton />
         <CarouselProgressLabel />
       </FlexLayout>
@@ -102,9 +103,6 @@ Loop.args = {
 
 export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
   const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
-
   return (
     <Carousel
       aria-label="Multiple slides carousel example"
@@ -112,7 +110,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
       {...args}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <H2 className="carouselHeading">Title</H2>
       <CarouselSlides>
         {sliderData.map((slide, index) => {
           return (
@@ -137,14 +135,8 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
         })}
       </CarouselSlides>
       <StackLayout direction={"row"} gap={1}>
-        <CarouselPreviousButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
-        <CarouselNextButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
+        <CarouselPreviousButton />
+        <CarouselNextButton />
         <CarouselProgressLabel />
       </StackLayout>
     </Carousel>

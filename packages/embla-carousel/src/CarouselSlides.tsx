@@ -15,7 +15,6 @@ import { useCarouselContext } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
 import { createCustomSettle } from "./createCustomSettle";
 import { getVisibleSlideDescriptions } from "./getVisibleSlideDescriptions";
-import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 /**
  * Props for the CarouselSlides component.
@@ -40,7 +39,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     const [liveAnnouncement, setLiveAnnouncement] = useState<string>("");
 
     useEffect(() => {
-      const announceVisibleSlides = (emblaApi: EmblaCarouselType) => {
+      const handleSettle = (emblaApi: EmblaCarouselType) => {
         const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
         const contentDescriptions = getVisibleSlideDescriptions(
           emblaApi,
@@ -51,46 +50,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
             ? `Currently visible slides: ${contentDescriptions.join(", ")}`
             : contentDescriptions[0];
         setLiveAnnouncement(announcement);
-      };
-
-      const focusFirstFocusableElement = (emblaApi: EmblaCarouselType) => {
-        if (!usingArrowNavigation.current) {
-          return;
-        }
-
-        const visibleSlides = getVisibleSlideIndexes(
-          emblaApi,
-          emblaApi.selectedScrollSnap(),
-        );
-        const slideNodes = emblaApi.slideNodes();
-
-        const getFirstFocusableElement = (): HTMLElement | null => {
-          for (const slideIndex of visibleSlides) {
-            const slideElement = slideNodes[slideIndex - 1];
-            if (slideElement) {
-              const focusableElements =
-                slideElement.querySelectorAll<HTMLElement>(
-                  'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
-                );
-              if (focusableElements.length > 0) {
-                return focusableElements[0];
-              }
-            }
-          }
-          return null;
-        };
-
-        const firstFocusableElement = getFirstFocusableElement();
-        if (firstFocusableElement) {
-          firstFocusableElement.focus();
-        }
-
-        usingArrowNavigation.current = false;
-      };
-
-      const handleSettle = (emblaApi: EmblaCarouselType) => {
-        announceVisibleSlides(emblaApi);
-        focusFirstFocusableElement(emblaApi);
       };
 
       if (!emblaApi) {
@@ -125,6 +84,12 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       onKeyDown?.(event);
     };
 
+    const handleContainerKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.stopPropagation();
+      }
+    };
+
     return (
       <>
         <div
@@ -132,9 +97,15 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           onKeyDown={handleKeyDown}
           ref={carouselRef}
           className={clsx(withBaseName(), className)}
+          tabIndex={0}
           {...rest}
         >
-          <div className={withBaseName("container")}>{children}</div>
+          <div
+            className={withBaseName("container")}
+            onKeyDown={handleContainerKeyDown}
+          >
+            {children}
+          </div>
         </div>
         <div aria-live="polite" className={withBaseName("sr-only")}>
           {liveAnnouncement}

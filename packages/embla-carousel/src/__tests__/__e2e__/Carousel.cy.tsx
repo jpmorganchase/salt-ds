@@ -73,14 +73,14 @@ describe("Given a Carousel", () => {
     cy.findByRole("tab", { selected: true }).should(
       "have.attr",
       "aria-label",
-      `Slide ${expectedText}`,
+      `Selected ${expectedText} of 4 slides`,
     );
   };
 
   it("should render the carousel with four slides", () => {
     cy.mount(<Default />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="carousel example"]').should("exist");
+    cy.get('[aria-label="default carousel example"]').should("exist");
     cy.get('[aria-roledescription="slide"]').should("have.length", 4);
   });
 
@@ -156,31 +156,31 @@ describe("Given a Carousel", () => {
       cy.findAllByRole("tab").should("have.length", 4);
       cy.findAllByRole("tab")
         .eq(0)
-        .should("have.attr", "aria-label", "Slide 1");
+        .should("have.attr", "aria-label", "Selected 1 of 4 slides");
       cy.findAllByRole("tab")
         .eq(1)
-        .should("have.attr", "aria-label", "Slide 2");
+        .should("have.attr", "aria-label", "Selected 2 of 4 slides");
       cy.findAllByRole("tab")
         .eq(2)
-        .should("have.attr", "aria-label", "Slide 3");
+        .should("have.attr", "aria-label", "Selected 3 of 4 slides");
       cy.findAllByRole("tab")
         .eq(3)
-        .should("have.attr", "aria-label", "Slide 4");
+        .should("have.attr", "aria-label", "Selected 4 of 4 slides");
     });
 
     it("should navigate to each slide in the tablist", () => {
       verifySlide("4");
 
-      cy.findByLabelText(/Slide 2/).click();
+      cy.findByLabelText(/Selected 2 of 4 slides/).click();
       cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2"));
 
-      cy.findByLabelText(/Slide 3/).click();
+      cy.findByLabelText(/Selected 3 of 4 slides/).click();
       cy.wrap(waitForSettle(emblaApi, 2)).then(() => verifySlide("3"));
 
-      cy.findByLabelText(/Slide 4/).click();
+      cy.findByLabelText(/Selected 4 of 4 slides/).click();
       cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4"));
 
-      cy.findByLabelText(/Slide 1/).click();
+      cy.findByLabelText(/Selected 1 of 4 slides/).click();
       cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1"));
     });
   });
