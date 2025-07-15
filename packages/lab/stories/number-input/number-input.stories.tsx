@@ -502,7 +502,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
   );
 };
 
-export const Fractions: StoryFn<NumberInputProps> = () => {
+export const Fractions: StoryFn<NumberInputProps> = (args) => {
   const [val, setVal] = useState(100.03125);
 
   return (
@@ -518,6 +518,7 @@ export const Fractions: StoryFn<NumberInputProps> = () => {
         }}
         onChange={(e, v) => setVal(v)}
         value={val}
+        {...args}
       />
       <Text>Returned value: {val}</Text>
     </StackLayout>
