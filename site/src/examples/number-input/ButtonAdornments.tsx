@@ -6,6 +6,7 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
+import { toFloat } from "@salt-ds/core/src/slider/internal/utils";
 import { AddIcon, RefreshIcon, RemoveIcon, SyncIcon } from "@salt-ds/icons";
 import { NumberInput } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ const accessibleTextStyles = {
 
 const ResetAdornment = () => {
   const defaultValue = 1000;
-  const [value, setValue] = useState<number | string>(defaultValue);
+  const [value, setValue] = useState(defaultValue);
   const [accessibleText, setAccessibleText] = useState("");
 
   const formFieldLabel = "Number input with reset adornment";
@@ -45,7 +46,9 @@ const ResetAdornment = () => {
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(defaultValue);
-                setAccessibleText("Value was reset");
+                setAccessibleText(
+                  `${formFieldLabel} value was reset ${defaultValue}`,
+                );
                 clearAccessibleText();
               }}
               appearance="transparent"
@@ -68,8 +71,8 @@ const ResetAdornment = () => {
 };
 
 const SyncAdornment = () => {
-  const [randomLiveValue, setRandomLiveValue] = useState("14.75");
-  const [value, setValue] = useState<number | string>(randomLiveValue);
+  const [randomLiveValue, setRandomLiveValue] = useState(14.75);
+  const [value, setValue] = useState(randomLiveValue);
   const [accessibleText, setAccessibleText] = useState("");
 
   const formFieldLabel = "Number input with sync adornment";
@@ -77,10 +80,8 @@ const SyncAdornment = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const randomDelta = Number.parseFloat((Math.random() * 2 - 1).toFixed(2));
-      setRandomLiveValue((prev) =>
-        (Number.parseFloat(prev) + randomDelta).toFixed(2),
-      );
+      const randomDelta = toFloat((Math.random() * 2 - 1).toFixed(2));
+      setRandomLiveValue((prev) => toFloat((prev + randomDelta).toFixed(2)));
     }, 500);
 
     return () => clearInterval(intervalId);
@@ -106,7 +107,9 @@ const SyncAdornment = () => {
               aria-label={`Sync ${formFieldLabel}`}
               onClick={() => {
                 setValue(randomLiveValue);
-                setAccessibleText(`Synchronized value to ${randomLiveValue}`);
+                setAccessibleText(
+                  `Sync ${formFieldLabel} value with live value ${randomLiveValue}`,
+                );
                 clearAccessibleText();
               }}
               appearance="transparent"
@@ -130,7 +133,7 @@ const SyncAdornment = () => {
 
 const CustomButtons = () => {
   const step = 1;
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState(10);
 
   const updateValue = (multiplier: -1 | 1) => {
     if (typeof value === "number") {

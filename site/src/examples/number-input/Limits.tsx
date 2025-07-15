@@ -3,16 +3,11 @@ import { NumberInput } from "@salt-ds/lab";
 import { useState } from "react";
 
 export const Limits = () => {
-  const [value, setValue] = useState<number | string>(2);
+  const [value, setValue] = useState(2);
   const max = 10;
   const min = 0;
 
-  const numericValue =
-    typeof value === "number" ? value : Number.parseFloat(value);
-  const isError =
-    typeof numericValue !== "number" ||
-    numericValue > max ||
-    numericValue < min;
+  const isError = value > max || value < min;
 
   return (
     <FormField
