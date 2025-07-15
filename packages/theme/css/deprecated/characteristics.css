@@ -190,8 +190,8 @@
   --salt-navigable-tertiary-background: var(--salt-palette-navigate-tertiary-background);
   --salt-navigable-tertiary-background-hover: var(--salt-palette-navigate-tertiary-background-hover);
   --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
+  --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
   --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
-  --salt-navigable-background-hover: var(--salt-palette-navigate-background-hover);
 
   --salt-navigable-textDecoration: var(--salt-typography-textDecoration-underline);
   --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
