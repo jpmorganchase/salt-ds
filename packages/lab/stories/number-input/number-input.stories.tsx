@@ -506,14 +506,8 @@ export const Fractions: StoryFn<NumberInputProps> = () => {
           return Fraction32ndParser.from32nd(val.toString());
         }}
         isAllowed={(value) => {
-          // Regular expression to match valid fractional input like "100-32" or "10032"
-          const validFractionRegex =
-            /^\d+(\-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
-
-          // Check if the input matches the valid fractional pattern
-          const isValid = validFractionRegex.test(value);
-          // Return true if the input is valid, false otherwise
-          return isValid;
+          const validFractionRegex = /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
+          return validFractionRegex.test(value);
         }}
         onChange={(e, v) => setVal(v)}
         value={val}
