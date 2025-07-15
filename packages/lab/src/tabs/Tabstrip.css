@@ -102,7 +102,7 @@
 
   --tabs-tab-background: var(--salt-navigable-background-hover);
   --tabs-tab-before-content: "";
-  --tabs-tab-before-background: var(--salt-navigable-indicator-active);
+  --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
   --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
   --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);

@@ -48,7 +48,7 @@
 
 .saltTabNext:hover::after,
 .saltTabNext-focusVisible::after {
-  background: var(--salt-navigable-indicator-active);
+  background: var(--salt-navigable-indicator-hover);
 }
 
 .saltTabNext-disabled:hover::after,

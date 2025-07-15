@@ -127,7 +127,7 @@
 /* Styles applied to activation line on hover  */
 .saltNavigationItem-wrapper:hover::after,
 .saltNavigationItem-wrapper:focus-visible::after {
-  background: var(--salt-navigable-accent-indicator-active);
+  background: var(--salt-navigable-indicator-hover);
   /* Hover on animation */
   transition: background var(--salt-duration-perceptible) ease-in-out;
 }
