@@ -1,4 +1,11 @@
-import { Link, StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
+import {
+  H2,
+  Link,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -28,7 +35,7 @@ export const CardActions = (): ReactElement => {
         }),
       ]}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <H2 className={styles.carouselHeading}>Title</H2>
       <CarouselSlides>
         {sliderData.map((slide, index) => {
           return (
