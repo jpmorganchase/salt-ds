@@ -20,11 +20,11 @@ export const Formatting = () => {
           }}
           parse={(value) => {
             const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
-            if (!match) return value;
+            if (!match) return toFloat(value);
             const [_, num, , unit] = match;
             const multiplier =
               { k: 1e3, m: 1e6, b: 1e9 }[unit.toLowerCase()] || 1;
-            return Number.parseFloat(num) * multiplier;
+            return toFloat(num) * multiplier;
           }}
         />
       </FormField>
@@ -38,7 +38,7 @@ export const Formatting = () => {
           parse={(value) => {
             const stringValue =
               typeof value === "number" ? value.toString() : value;
-            return stringValue.replace(/,/g, "");
+            return toFloat(stringValue.replace(/,/g, ""));
           }}
         />
       </FormField>
