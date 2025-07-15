@@ -1,12 +1,6 @@
-import {
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
@@ -27,7 +21,6 @@ export const BorderedCard = (): ReactElement => {
     <Carousel
       aria-label="Bordered carousel example"
       className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
       <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>

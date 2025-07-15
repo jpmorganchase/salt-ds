@@ -1,7 +1,6 @@
 import { FlexLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -14,11 +13,7 @@ export const Basic = (): ReactElement => {
   const slideId = useId();
   const slides = Array.from(Array(4).keys());
   return (
-    <Carousel
-      aria-label="default carousel example"
-      className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
-    >
+    <Carousel aria-label="default carousel example" className={styles.carousel}>
       <FlexLayout justify={"start"} direction={"row"} gap={1}>
         <CarouselPreviousButton />
         <CarouselNextButton />

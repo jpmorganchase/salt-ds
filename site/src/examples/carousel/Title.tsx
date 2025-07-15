@@ -1,7 +1,6 @@
 import { FlexLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -17,7 +16,6 @@ export const Title = (): ReactElement => {
     <Carousel
       aria-label="Carousel example with title"
       className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
       <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>

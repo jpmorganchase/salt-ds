@@ -1,18 +1,11 @@
-import {
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
   CarouselSlides,
-  CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import { clsx } from "clsx";
 import type { ReactElement } from "react";
@@ -29,7 +22,6 @@ export const MultipleSlides = (): ReactElement => {
       aria-label="Multiple slides carousel example"
       className={clsx(styles.carousel, styles.carouselMultipleSlides)}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
       <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>

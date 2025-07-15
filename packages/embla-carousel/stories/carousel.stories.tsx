@@ -1,6 +1,6 @@
 import {
   Carousel,
-  CarouselAnnouncement,
+  CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -14,9 +14,10 @@ import {
   StackLayout,
   Text,
   useBreakpoint,
-  useId
+  useId,
 } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
+import { sliderData } from "@salt-ds/site/src/examples/carousel/exampleData";
 import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import { renderSlides } from "./renderSlides";
@@ -29,33 +30,24 @@ export default {
 const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
     <Carousel
-      aria-label="Account overview"
+      aria-label="Carousel cards example"
       className="carousel"
-      emblaPlugins={[
-        CarouselAnnouncement(),
-        Classnames({
-          snapped: "carouselSlideIsSnapped",
-        }),
-      ]}
       {...args}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <Text styleAs={"h2"} className="carouselHeading">
-          Title
-        </Text>
-      </FlexLayout>
+      <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
       <StackLayout direction={"row"} gap={1}>
         <CarouselPreviousButton
           tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "bordered" : "transparent"}
+          appearance={!isMobile ? "transparent" : "bordered"}
         />
         {!isMobile ? <CarouselTabList /> : null}
         <CarouselNextButton
           tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "bordered" : "transparent"}
+          appearance={!isMobile ? "transparent" : "bordered"}
         />
         <CarouselProgressLabel />
       </StackLayout>
@@ -64,21 +56,18 @@ const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
 };
 
 const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
-  const slides = Array.from(Array(4).keys());
   const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const slides = Array.from(Array(4).keys());
   return (
     <Carousel
-      aria-label="carousel example"
-      className={"carousel"}
-      emblaPlugins={[CarouselAnnouncement()]}
+      aria-label="default carousel example"
+      className="carousel"
       {...args}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <Text styleAs={"h2"} className="carouselHeading">
-          Title
-        </Text>
+      <FlexLayout justify={"start"} direction={"row"} gap={1}>
+        <CarouselPreviousButton />
+        <CarouselNextButton />
+        <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
         {slides.map((index) => (
@@ -98,18 +87,6 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
           </div>
         ))}
       </CarouselSlides>
-      <StackLayout direction={"row"} gap={1}>
-        <CarouselPreviousButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "bordered" : "transparent"}
-        />
-        {!isMobile ? <CarouselTabList /> : null}
-        <CarouselNextButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "bordered" : "transparent"}
-        />
-        <CarouselProgressLabel />
-      </StackLayout>
     </Carousel>
   );
 };
@@ -124,49 +101,49 @@ Loop.args = {
 };
 
 export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
-  const slides = Array.from(Array(7).keys());
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
     <Carousel
-      aria-label="carousel example"
+      aria-label="Multiple slides carousel example"
       className={"carouselMultipleSlide"}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
-      emblaPlugins={[CarouselAnnouncement()]}
       {...args}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <Text styleAs={"h2"} className="carouselHeading">
-          Title
-        </Text>
-      </FlexLayout>
+      <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            aria-label={`Example slide ${index + 1}`}
-            aria-roledescription="slide"
-            className="carouselSlide"
-            id={`${slideId}-${index}`}
-            key={`${slideId}-${index}`}
-          >
-            <div className="carouselNumber">
-              <Text styleAs={"display1"} className="carouselHeading">
-                {index + 1}
-              </Text>
-            </div>
-          </div>
-        ))}
+        {sliderData.map((slide, index) => {
+          return (
+            <CarouselCard
+              className="carouselSlide"
+              key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+              id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+              aria-label={slide.title}
+              appearance={"bordered"}
+              media={
+                <img
+                  alt={`stock content to show in carousel slide ${index}`}
+                  className="carouselImagePlaceholder"
+                  src={slide.image}
+                />
+              }
+              header={<Text styleAs={"h3"}>{slide.title}</Text>}
+            >
+              <Text>{slide.content}</Text>
+            </CarouselCard>
+          );
+        })}
       </CarouselSlides>
       <StackLayout direction={"row"} gap={1}>
         <CarouselPreviousButton
           tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "bordered" : "transparent"}
+          appearance={!isMobile ? "transparent" : "bordered"}
         />
-        {!isMobile ? <CarouselTabList /> : null}
         <CarouselNextButton
           tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "bordered" : "transparent"}
+          appearance={!isMobile ? "transparent" : "bordered"}
         />
         <CarouselProgressLabel />
       </StackLayout>
