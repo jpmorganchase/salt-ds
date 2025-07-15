@@ -1,12 +1,6 @@
-import {
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
@@ -24,11 +18,7 @@ export const Card = (): ReactElement => {
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
   return (
-    <Carousel
-      aria-label="Carousel cards example"
-      className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
-    >
+    <Carousel aria-label="Carousel cards example" className={styles.carousel}>
       <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>
         {sliderData.map((slide, index) => {

@@ -8,7 +8,6 @@ import {
 } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselAutoplayIndicator,
   CarouselCard,
   type CarouselEmblaApiType,
@@ -81,7 +80,6 @@ export const Autoplay = () => {
           Classnames({
             snapped: styles.carouselSlideIsSnapped,
           }),
-          CarouselAnnouncement(),
         ]}
         getEmblaApi={setEmblaApi}
       >

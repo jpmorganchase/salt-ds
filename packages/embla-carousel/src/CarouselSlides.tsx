@@ -9,10 +9,13 @@ import {
   type KeyboardEvent,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
 import { createCustomSettle } from "./createCustomSettle";
+import { getVisibleSlideDescriptions } from "./getVisibleSlideDescriptions";
+import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 /**
  * Props for the CarouselSlides component.
@@ -34,23 +37,60 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
 
     const usingArrowNavigation = useRef<boolean>();
+    const [liveAnnouncement, setLiveAnnouncement] = useState<string>("");
 
     useEffect(() => {
-      const handleSettle = (emblaApi: EmblaCarouselType) => {
+      const announceVisibleSlides = (emblaApi: EmblaCarouselType) => {
+        const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
+        const contentDescriptions = getVisibleSlideDescriptions(
+          emblaApi,
+          selectedScrollSnap,
+        );
+        const announcement =
+          contentDescriptions?.length > 1
+            ? `Currently visible slides: ${contentDescriptions.join(", ")}`
+            : contentDescriptions[0];
+        setLiveAnnouncement(announcement);
+      };
+
+      const focusFirstFocusableElement = (emblaApi: EmblaCarouselType) => {
         if (!usingArrowNavigation.current) {
           return;
         }
-        const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
-        const snappedSlide = emblaApi.slideNodes()[slideIndexInView];
-        if (snappedSlide) {
-          const focusableElements = snappedSlide.querySelectorAll<HTMLElement>(
-            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
-          );
-          if (focusableElements.length > 0) {
-            focusableElements[0].focus();
+
+        const visibleSlides = getVisibleSlideIndexes(
+          emblaApi,
+          emblaApi.selectedScrollSnap(),
+        );
+        const slideNodes = emblaApi.slideNodes();
+
+        const getFirstFocusableElement = (): HTMLElement | null => {
+          for (const slideIndex of visibleSlides) {
+            const slideElement = slideNodes[slideIndex - 1];
+            if (slideElement) {
+              const focusableElements =
+                slideElement.querySelectorAll<HTMLElement>(
+                  'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
+                );
+              if (focusableElements.length > 0) {
+                return focusableElements[0];
+              }
+            }
           }
+          return null;
+        };
+
+        const firstFocusableElement = getFirstFocusableElement();
+        if (firstFocusableElement) {
+          firstFocusableElement.focus();
         }
+
         usingArrowNavigation.current = false;
+      };
+
+      const handleSettle = (emblaApi: EmblaCarouselType) => {
+        announceVisibleSlides(emblaApi);
+        focusFirstFocusableElement(emblaApi);
       };
 
       if (!emblaApi) {
@@ -86,15 +126,20 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     };
 
     return (
-      <div
-        aria-live={"off"}
-        onKeyDown={handleKeyDown}
-        ref={carouselRef}
-        className={clsx(withBaseName(), className)}
-        {...rest}
-      >
-        <div className={withBaseName("container")}>{children}</div>
-      </div>
+      <>
+        <div
+          aria-live={"off"}
+          onKeyDown={handleKeyDown}
+          ref={carouselRef}
+          className={clsx(withBaseName(), className)}
+          {...rest}
+        >
+          <div className={withBaseName("container")}>{children}</div>
+        </div>
+        <div aria-live="polite" className={withBaseName("sr-only")}>
+          {liveAnnouncement}
+        </div>
+      </>
     );
   },
 );
