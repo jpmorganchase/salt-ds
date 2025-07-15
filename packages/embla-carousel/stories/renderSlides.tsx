@@ -13,7 +13,7 @@ export const renderSlides = ({
 } = {}) => {
   const content = [
     {
-      title: "Your accounts. On the move",
+      title: "Your accounts, on the move",
       image: carouselSlide1,
       content: "Discover our latest personal accounts app for iOS.",
       link: "Open an account",
