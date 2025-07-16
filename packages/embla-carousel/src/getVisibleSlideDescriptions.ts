@@ -18,16 +18,15 @@ export const getVisibleSlideDescriptions = (
 
   return visibleSlideIndexes.reduce<string[]>((result, slideIndex) => {
     const slideElement = emblaApi.slideNodes()[slideIndex - 1];
-    let description: string | undefined =
-      slideElement?.getAttribute("aria-label") ?? undefined;
-
+    let description: string | undefined;
+    const labelledById = slideElement?.getAttribute("aria-labelledby");
+    const { ownerDocument } = emblaApi.internalEngine();
+    if (labelledById) {
+      const labelledByElement = ownerDocument.getElementById(labelledById);
+      description = labelledByElement?.textContent ?? undefined;
+    }
     if (!description) {
-      const labelledById = slideElement?.getAttribute("aria-labelledby");
-      const { ownerDocument } = emblaApi.internalEngine();
-      if (labelledById) {
-        const labelledByElement = ownerDocument.getElementById(labelledById);
-        description = labelledByElement?.textContent ?? undefined;
-      }
+      description = slideElement?.getAttribute("aria-label") ?? undefined;
     }
 
     return [...result, description || ""];

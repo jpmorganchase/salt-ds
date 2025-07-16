@@ -18,27 +18,32 @@ export const Title = (): ReactElement => {
       className={styles.carousel}
     >
       <H2 className={styles.carouselHeading}>Title</H2>
-      <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            role="tabpanel"
-            aria-roledescription="slide"
-            aria-label={`Example slide ${index + 1}`}
-            className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
-          >
-            <Text styleAs={"display1"} className={styles.carouselNumber}>
-              {index + 1}
-            </Text>
-          </div>
-        ))}
-      </CarouselSlides>
-      <FlexLayout justify={"start"} direction={"row"} gap={1}>
-        <CarouselPreviousButton />
-        <CarouselNextButton />
-        <CarouselProgressLabel />
-      </FlexLayout>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
+      >
+        <FlexLayout justify="start" direction="row" gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </FlexLayout>
+        <CarouselSlides>
+          {slides.map((index) => (
+            <div
+              aria-label={`Example slide ${index + 1}`}
+              className={styles.carouselSlide}
+              key={`slide-${slideId}-${index}`}
+            >
+              <Text styleAs="display1" className={styles.carouselNumber}>
+                {index + 1}
+              </Text>
+            </div>
+          ))}
+        </CarouselSlides>
+      </div>
     </Carousel>
   );
 };

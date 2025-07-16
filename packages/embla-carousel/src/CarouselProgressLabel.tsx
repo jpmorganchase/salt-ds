@@ -40,11 +40,9 @@ export function CarouselProgressLabel({
         emblaApi,
         selectedScrollSnap,
       );
-      const startSlideNumber = visibleSlides[0];
+      const startSlideNumber = visibleSlides.length >= 1 ? visibleSlides[0] : 0;
       const endSlideNumber =
-        visibleSlides.length > 1
-          ? visibleSlides[visibleSlides.length - 1]
-          : undefined;
+        visibleSlides.length > 1 ? visibleSlides[visibleSlides.length - 1] : 0;
       const slidePosition = endSlideNumber
         ? `${startSlideNumber}-${endSlideNumber}`
         : startSlideNumber;

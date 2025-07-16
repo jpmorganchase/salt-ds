@@ -10,7 +10,7 @@ import {
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const TabList = (): ReactElement => {
+export const TabListTop = (): ReactElement => {
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
@@ -21,24 +21,7 @@ export const TabList = (): ReactElement => {
       aria-label="Pagination carousel example"
       className={styles.carousel}
     >
-      <H2 className={styles.carouselHeading}>Title</H2>
-      <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            role="tabpanel"
-            aria-roledescription="slide"
-            aria-label={`Example slide ${index + 1}`}
-            className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
-          >
-            <Text styleAs={"display1"} className={styles.carouselNumber}>
-              {index + 1}
-            </Text>
-          </div>
-        ))}
-      </CarouselSlides>
-      <StackLayout direction={"row"} gap={1}>
+      <StackLayout direction="row" gap={1}>
         <CarouselPreviousButton
           tabIndex={!isMobile ? -1 : 0}
           appearance={!isMobile ? "transparent" : "bordered"}
@@ -50,6 +33,22 @@ export const TabList = (): ReactElement => {
         />
         <CarouselProgressLabel />
       </StackLayout>
+      <CarouselSlides>
+        {slides.map((index) => (
+          <div
+            role={!isMobile ? "tabpanel" : "group"}
+            aria-roledescription={!isMobile ? undefined : "slide"}
+            aria-label={`Example slide ${index + 1}`}
+            className={styles.carouselSlide}
+            key={`slide-${slideId}-${index}`}
+          >
+            <Text styleAs="display1" className={styles.carouselNumber}>
+              {index + 1}
+            </Text>
+          </div>
+        ))}
+      </CarouselSlides>
+      <H2 className={styles.carouselHeading}>Title</H2>
     </Carousel>
   );
 };
