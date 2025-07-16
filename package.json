@@ -100,6 +100,7 @@
   "resolutions": {
     "@changesets/assemble-release-plan@npm:^6.0.5": "patch:@changesets/assemble-release-plan@npm%3A6.0.5#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.5-3055b7bcad.patch",
     "@salt-ds/lab": "workspace:*",
+    "dayjs": "patch:dayjs@npm%3A1.11.13#~/.yarn/patches/dayjs-npm-1.11.13-d478bb9479.patch",
     "next": "^14.0.0",
     "whatwg-url": "^14.0.0",
     "cookie": "^1.0.0",

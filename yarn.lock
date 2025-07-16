@@ -7229,10 +7229,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.13, dayjs@npm:^1.10.4, dayjs@npm:^1.11.13":
+"dayjs@npm:1.11.13":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: 10/7374d63ab179b8d909a95e74790def25c8986e329ae989840bacb8b1888be116d20e1c4eee75a69ea0dfbae13172efc50ef85619d304ee7ca3c01d5878b704f5
+  languageName: node
+  linkType: hard
+
+"dayjs@patch:dayjs@npm%3A1.11.13#~/.yarn/patches/dayjs-npm-1.11.13-d478bb9479.patch":
+  version: 1.11.13
+  resolution: "dayjs@patch:dayjs@npm%3A1.11.13#~/.yarn/patches/dayjs-npm-1.11.13-d478bb9479.patch::version=1.11.13&hash=1b90fa"
+  checksum: 10/e4f77ae6dc551a1069ac6c6d2bcc855add4da4a43b2534de04b11000e5e82964fc4c570dc05a4ebbbf98638f1a6bd433deeb42eee2a53d3425f574cdd2051c2c
   languageName: node
   linkType: hard
 
