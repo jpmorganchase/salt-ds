@@ -1,7 +1,6 @@
 import { H2, StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -9,17 +8,17 @@ import {
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import type { ReactElement } from "react";
-import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const BorderedCard = (): ReactElement => {
+export const TabListBottom = (): ReactElement => {
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
+  const slides = Array.from(Array(isMobile ? 2 : 4).keys());
   return (
     <Carousel
-      aria-label="Bordered carousel example"
+      aria-label="Pagination carousel example"
       className={styles.carousel}
     >
       <H2 className={styles.carouselHeading}>Title</H2>
@@ -43,33 +42,19 @@ export const BorderedCard = (): ReactElement => {
           <CarouselProgressLabel />
         </StackLayout>
         <CarouselSlides>
-          {sliderData.map((slide, index) => {
-            const id = `${slideId}-${index}`;
-            return (
-              <CarouselCard
-                role={!isMobile ? "tabpanel" : "group"}
-                aria-roledescription={!isMobile ? undefined : "slide"}
-                className={styles.carouselSlide}
-                key={`slide-${id}`}
-                aria-labelledby={id}
-                appearance="bordered"
-                media={
-                  <img
-                    alt={`stock content to show in carousel slide ${index}`}
-                    className={styles.carouselImage}
-                    src={slide.image}
-                  />
-                }
-                header={
-                  <Text styleAs="h3" id={id}>
-                    {slide.title}
-                  </Text>
-                }
-              >
-                <Text>{slide.content}</Text>
-              </CarouselCard>
-            );
-          })}
+          {slides.map((index) => (
+            <div
+              role={!isMobile ? "tabpanel" : "group"}
+              aria-roledescription={!isMobile ? undefined : "slide"}
+              aria-label={`Example slide ${index + 1}`}
+              className={styles.carouselSlide}
+              key={`slide-${slideId}-${index}`}
+            >
+              <Text styleAs="display1" className={styles.carouselNumber}>
+                {index + 1}
+              </Text>
+            </div>
+          ))}
         </CarouselSlides>
       </div>
     </Carousel>

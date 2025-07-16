@@ -97,21 +97,21 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
             emblaApi,
             scrollSnapIndex,
           );
-          const startSlideNumber = visibleSlides[0];
+          const startSlideNumber =
+            visibleSlides.length >= 1 ? visibleSlides[0] : 0;
           const endSlideNumber =
             visibleSlides.length > 1
               ? visibleSlides[visibleSlides.length - 1]
-              : undefined;
+              : 0;
           const slidePosition = endSlideNumber
             ? `${startSlideNumber}-${endSlideNumber}`
             : startSlideNumber;
 
           const selected = selectedIndex === scrollSnapIndex;
-
-          const startSlideIndex = startSlideNumber - 1;
           const ariaControls = slideNodes?.length
-            ? slideNodes[startSlideIndex].id
+            ? slideNodes[startSlideNumber - 1].id
             : undefined;
+
           return (
             <CarouselTabRenderer
               key={`carouselTab-${scrollSnapIndex}}`}
@@ -124,9 +124,9 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
               onClick={(_event: SyntheticEvent) =>
                 emblaApi?.scrollTo(scrollSnapIndex)
               }
+              aria-label={`Slide ${slidePosition}`}
               aria-selected={selected}
               tabIndex={selected ? 0 : -1}
-              aria-label={`Selected ${slidePosition} of ${numberOfSlides} slides`}
               aria-controls={ariaControls}
             />
           );
