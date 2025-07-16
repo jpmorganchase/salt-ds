@@ -491,24 +491,40 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
 };
 
 export const Fractions: StoryFn<NumberInputProps> = (args) => {
-  const [val, setVal] = useState(100.03125);
-
+  const [value, setValue] = useState(100.03125);
   return (
-    <StackLayout gap={2}>
-      <NumberInput
-        format={(val) =>
-          Fraction32ndParser.to32nd(val.toString(), RoundingEnum.ROUND_UP)
-        }
-        parse={(val) => Fraction32ndParser.from32nd(val.toString())}
-        isAllowed={(value) => {
-          const validFractionRegex = /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
-          return validFractionRegex.test(value);
-        }}
-        onChange={(e, v) => setVal(v)}
-        value={val}
-        {...args}
-      />
-      <Text>Returned value: {val}</Text>
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>With fractional format</FormFieldLabel>
+        <NumberInput
+          {...args}
+          value={value}
+          onChange={(e, value) => {
+            setValue(value);
+            console.log("on change value", value);
+          }}
+          onValueChange={(value) => console.log("onValueChange", value)}
+          format={(val) => {
+            console.log("formatting: ", val);
+            return Fraction32ndParser.to32nd(
+              val.toString(),
+              RoundingEnum.ROUND_UP,
+            );
+          }}
+          parse={(val) => {
+            console.log("parsing: ", val);
+            return Fraction32ndParser.from32nd(val.toString());
+          }}
+          isAllowed={(value) => {
+            const validFractionRegex =
+              /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
+            return validFractionRegex.test(value);
+          }}
+        />
+        <FormFieldHelperText>
+          Number input's value is {value}
+        </FormFieldHelperText>
+      </FormField>
     </StackLayout>
   );
 };
