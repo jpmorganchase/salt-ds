@@ -9,6 +9,7 @@
   /* auto is needed for support on Safari, due to webkit bugs with flex */
   flex: 1 1 auto;
   position: relative;
+  display: flex;
 }
 
 .saltDialogContent-inner {
