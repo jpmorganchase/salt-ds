@@ -304,7 +304,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       max,
       min,
       onChange: onChangeProp,
-      parse,
       readOnly: isReadOnly,
       setIsEditing,
       setValue,
