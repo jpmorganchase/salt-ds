@@ -20,7 +20,6 @@ export interface UseNumberInputProps
     | "max"
     | "min"
     | "onChange"
-    | "parse"
     | "readOnly"
     | "step"
     | "stepMultiplier"
@@ -46,7 +45,6 @@ export const useNumberInput = ({
   max = Number.MAX_SAFE_INTEGER,
   min = Number.MIN_SAFE_INTEGER,
   onChange,
-  parse,
   readOnly,
   setIsEditing,
   setValue,
@@ -70,23 +68,21 @@ export const useNumberInput = ({
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse?.(value) || value;
-      const nextValue = toFloat(parsedValue) - decrementStep;
+      const nextValue = toFloat(value) - decrementStep;
       if (nextValue < min) return;
       updateValue(event, nextValue);
     },
-    [value, min, step, stepMultiplier, updateValue, parse],
+    [value, min, step, stepMultiplier, updateValue],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse?.(value) || value;
-      const nextValue = toFloat(parsedValue) + incrementStep;
+      const nextValue = toFloat(value) + incrementStep;
       if (nextValue > max) return;
       updateValue(event, nextValue);
     },
-    [value, max, step, stepMultiplier, updateValue, parse],
+    [value, max, step, stepMultiplier, updateValue],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
