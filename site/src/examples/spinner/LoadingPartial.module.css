@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
   font-weight: var(--salt-text-fontWeight-small);
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-container-secondary-background);
 }
 
 .loadingItem.loading {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor-disabled);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor-disabled);
   color: var(--salt-content-secondary-foreground);
   background-color: initial;
 }

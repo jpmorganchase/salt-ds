@@ -69,6 +69,7 @@ const allAllowedKeys = [
   "navigable",
   "overlayable",
   "selectable",
+  "sentiment",
   "separable",
   "status",
   "taggable", // TODO: **deprecated:** delete here
@@ -81,6 +82,7 @@ const allAllowedKeys = [
   "delay", // TODO: **deprecated:** delete here
   "duration", // TODO: to be merged with animation
   "size",
+  "borderStyle",
   "cursor",
   "spacing",
   "typography-textDecoration",

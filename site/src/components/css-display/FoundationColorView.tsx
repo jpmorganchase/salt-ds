@@ -15,13 +15,14 @@ type CssVariableData = Record<string, string>;
 const foundationColors = [
   "black",
   "white",
+  "brown",
+  "teal",
+  "gray",
   "red",
   "orange",
   "green",
-  "teal",
   "blue",
   "purple",
-  "gray",
 ];
 
 const categoricalColors = [
@@ -47,7 +48,15 @@ const categoricalColors = [
   "forest",
 ];
 
-const ColorTable = ({ data }: { data: CssVariableData }) => {
+const ColorTable = ({
+  data,
+  themeNext,
+}: {
+  data: CssVariableData;
+  themeNext?: boolean;
+}) => {
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+
   return (
     <div style={{ maxWidth: "100vw", overflowX: "auto" }}>
       <Table>
@@ -62,9 +71,9 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
           {Object.entries(data).map(([name, value]) => (
             <TR key={name}>
               <TD>
-                <SaltProvider theme="">
+                <ChosenSaltProvider theme="">
                   <ColorBlock hideToken colorVar={name} />
-                </SaltProvider>
+                </ChosenSaltProvider>
               </TD>
               <TD>
                 <FlowLayout gap={1} align="center">
@@ -107,9 +116,27 @@ export const FoundationColorView = ({
           "|",
         ),
       );
+
       setData(
         colorKeys
           .filter((x) => regex.test(x))
+          .sort((a, b) => {
+            if (group === "categorical") {
+              return 0; // Categorical colors are not sorted,
+            }
+
+            const aColor = a.match(/--salt-color-(\w+)(-\d+)?/)?.[1];
+            const bColor = b.match(/--salt-color-(\w+)(-\d+)?/)?.[1];
+
+            if (!aColor || !bColor) {
+              return 0; // Fallback if regex doesn't match
+            }
+
+            return (
+              foundationColors.indexOf(aColor) -
+              foundationColors.indexOf(bColor)
+            );
+          })
           .reduce<CssVariableData>((prev, current) => {
             const value = data[current];
             if (value.includes("rgb(")) {
@@ -138,7 +165,7 @@ export const FoundationColorView = ({
 
   return (
     <ChosenSaltProvider>
-      <ColorTable data={data} />
+      <ColorTable data={data} themeNext={themeNext} />
     </ChosenSaltProvider>
   );
 };

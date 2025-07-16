@@ -4,8 +4,8 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ForwardedRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import { makePrefixer } from "../utils";
 

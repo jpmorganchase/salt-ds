@@ -1,15 +1,14 @@
+import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactElement,
   forwardRef,
+  type ReactElement,
 } from "react";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
-
-import type { IconProps } from "@salt-ds/icons";
 import toastCss from "./Toast.css";
 
 const withBaseName = makePrefixer("saltToast");

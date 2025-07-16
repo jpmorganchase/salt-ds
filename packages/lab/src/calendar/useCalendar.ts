@@ -9,7 +9,9 @@ import { type SyntheticEvent, useCallback, useEffect, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import {
   type UseCalendarSelectionBaseProps,
-  type UseCalendarSelectionMultiSelectProps,
+  type UseCalendarSelectionMultiselectOffsetProps,
+  type UseCalendarSelectionMultiselectRangeProps,
+  type UseCalendarSelectionMultiselectSingleProps,
   type UseCalendarSelectionOffsetProps,
   type UseCalendarSelectionProps,
   type UseCalendarSelectionRangeProps,
@@ -72,58 +74,60 @@ interface UseCalendarBaseProps<TDate>
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
+  /**
+   * If `true`, the calendar will be multiselect.
+   */
+  multiselect?: boolean;
 }
 
 /**
- * UseCalendar hook props for a single date selection Calendar.
+ * UseCalendar hook props for a single date selection.
  */
 export interface UseCalendarSingleProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionSingleProps<TDate>,
-    UseCalendarBaseProps<TDate> {
-  /**
-   * The selection variant, set to "single".
-   */
-  selectionVariant: "single";
-}
+    UseCalendarBaseProps<TDate> {}
 
 /**
- * UseCalendar hook props for a date range selection Calendar.
+ * UseCalendar hook props for a multi-select, single date selection.
+ */
+export interface UseCalendarMultiselectSingleProps<
+  TDate extends DateFrameworkType,
+> extends UseCalendarSelectionMultiselectSingleProps<TDate>,
+    Omit<UseCalendarBaseProps<TDate>, "multiselect"> {}
+
+/**
+ * UseCalendar hook props for a date range selection.
  * @template TDate - The type of the date object.
  */
 export interface UseCalendarRangeProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionRangeProps<TDate>,
-    UseCalendarBaseProps<TDate> {
-  /**
-   * The selection variant, set to "range".
-   */
-  selectionVariant: "range";
-}
+    UseCalendarBaseProps<TDate> {}
 
 /**
- * UseCalendar hook props for a multi-select Calendar.
+ * UseCalendar hook props for a multi-select, date range selection.
  * @template TDate - The type of the date object.
  */
-export interface UseCalendarMultiSelectProps<TDate extends DateFrameworkType>
-  extends UseCalendarSelectionMultiSelectProps<TDate>,
-    UseCalendarBaseProps<TDate> {
-  /**
-   * The selection variant, set to "multiselect".
-   */
-  selectionVariant: "multiselect";
-}
+export interface UseCalendarMultiselectRangeProps<
+  TDate extends DateFrameworkType,
+> extends UseCalendarSelectionMultiselectRangeProps<TDate>,
+    Omit<UseCalendarBaseProps<TDate>, "multiselect"> {}
 
 /**
- * UseCalendar hook props for an offset date selection Calendar.
+ * UseCalendar hook props for an offset date selection.
  * @template TDate - The type of the date object.
  */
 export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionOffsetProps<TDate>,
-    UseCalendarBaseProps<TDate> {
-  /**
-   * The selection variant, set to "offset".
-   */
-  selectionVariant: "offset";
-}
+    UseCalendarBaseProps<TDate> {}
+
+/**
+ * UseCalendar hook props for a multi-select, offset selection.
+ * @template TDate - The type of the date object.
+ */
+export interface UseCalendarMultiselectOffsetProps<
+  TDate extends DateFrameworkType,
+> extends UseCalendarSelectionMultiselectOffsetProps<TDate>,
+    Omit<UseCalendarBaseProps<TDate>, "multiselect"> {}
 
 /**
  * UseCalendar hook props, wth the selection variant determining the return type of the date selection
@@ -131,9 +135,11 @@ export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
  */
 export type UseCalendarProps<TDate extends DateFrameworkType> =
   | UseCalendarSingleProps<TDate>
+  | UseCalendarMultiselectSingleProps<TDate>
   | UseCalendarRangeProps<TDate>
-  | UseCalendarMultiSelectProps<TDate>
-  | UseCalendarOffsetProps<TDate>;
+  | UseCalendarMultiselectRangeProps<TDate>
+  | UseCalendarOffsetProps<TDate>
+  | UseCalendarMultiselectOffsetProps<TDate>;
 
 /**
  * Default function to determine if a day is unselectable.
@@ -190,7 +196,7 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      * The selection variant of the calendar, indicating the type of selection allowed.
      */
-    selectionVariant: "single" | "range" | "multiselect" | "offset";
+    selectionVariant: "single" | "range" | "offset";
 
     /**
      * Whether to hide dates that are out of the selectable range.
@@ -404,6 +410,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     isDayDisabled = defaultIsDayDisabled,
     isDayHighlighted = defaultIsDayHighlighted,
     isDayUnselectable = defaultIsDayUnselectable,
+    multiselect,
     maxDate = defaultMaxDate,
     minDate = defaultMinDate,
     numberOfVisibleMonths = 1,
@@ -411,6 +418,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     onSelectionChange,
     onVisibleMonthChange,
     onFocusedDateChange,
+    select,
     selectedDate,
     selectionVariant,
     visibleMonth: visibleMonthProp,
@@ -512,7 +520,9 @@ export function useCalendar<TDate extends DateFrameworkType>(
     isDayVisible,
     focusedDate: focusedDateProp,
     focusedDateRef,
+    multiselect,
     onFocusedDateChange,
+    select,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
@@ -555,6 +565,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         state: {
           visibleMonth,
           timezone,
+          multiselect,
           minDate,
           maxDate,
           numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
@@ -577,6 +588,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     [
       visibleMonth,
       timezone,
+      multiselect,
       minDate,
       maxDate,
       selectionVariant,

@@ -1,4 +1,8 @@
 .salt-theme {
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
-  --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
+  --salt-navigable-accent-indicator-active: var(--salt-palette-navigate-indicator-active);
+
+  --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
+  --salt-navigable-accent-background-active: var(--salt-palette-alpha-none);
+  --salt-navigable-accent-borderColor-active: var(--salt-palette-interact-border-active);
 }

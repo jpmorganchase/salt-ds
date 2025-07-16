@@ -42,7 +42,7 @@
 }
 
 .salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
 }
 
 .salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch,
@@ -62,19 +62,19 @@
 }
 
 .salt-theme[data-mode="dark"] .saltColorChooserSwatch-graySwatch {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
 }
 
 .saltColorChooserSwatch-active {
-  outline: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
-  border: var(--salt-focused-outlineWidth) var(--salt-container-borderStyle) var(--salt-actionable-cta-foreground-active) !important;
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  border: var(--salt-focused-outlineWidth) var(--salt-borderStyle-solid) var(--salt-actionable-cta-foreground-active) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: var(--salt-cursor-active);
 }
 
 .saltColorChooserSwatch-transparent {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-status-negative-foreground) !important;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-sentiment-negative-foreground-decorative) !important;
   width: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   height: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;

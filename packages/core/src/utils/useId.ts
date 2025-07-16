@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useHookAtTopLevel: `React.useId` is invariant at runtime. */
 import * as React from "react";
 
 // Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985
@@ -23,7 +24,6 @@ export function useId(idOverride?: string): string | undefined {
     const reactId = maybeReactUseId();
     return idOverride ?? reactId;
   }
-  // `React.useId` is invariant at runtime.
   return useIdLegacy(idOverride);
 }
 

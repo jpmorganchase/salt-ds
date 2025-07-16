@@ -14,13 +14,13 @@
   right: calc(-50% + calc(var(--step-icon-size) / 2 + var(--salt-spacing-100)));
 
   border-top-width: var(--salt-size-fixed-200);
-  border-top-style: var(--salt-track-borderStyle-incomplete);
-  border-top-color: var(--salt-track-borderColor);
+  border-top-style: var(--salt-borderStyle-dotted);
+  border-top-color: var(--salt-sentiment-neutral-track);
 }
 
 .saltStepper-horizontal .saltStep-stage-completed > .saltStepConnector,
 .saltStepper-horizontal .saltStep-stage-inprogress > .saltStepConnector {
-  border-top-style: var(--salt-track-borderStyle-complete);
+  border-top-style: var(--salt-borderStyle-solid);
 }
 
 .saltStepper-vertical .saltStepConnector {
@@ -29,13 +29,13 @@
   justify-self: center;
 
   border-left-width: var(--salt-size-fixed-200);
-  border-left-style: var(--salt-track-borderStyle-incomplete);
-  border-left-color: var(--salt-track-borderColor);
+  border-left-style: var(--salt-borderStyle-dotted);
+  border-left-color: var(--salt-sentiment-neutral-track);
 }
 
 .saltStepper-vertical .saltStep-stage-completed > .saltStepConnector,
 .saltStepper-vertical .saltStep-stage-inprogress > .saltStepConnector {
-  border-left-style: var(--salt-track-borderStyle-complete);
+  border-left-style: var(--salt-borderStyle-solid);
 }
 
 .saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepConnector {

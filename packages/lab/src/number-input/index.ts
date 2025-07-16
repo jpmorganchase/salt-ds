@@ -1,2 +1,2 @@
-export * from "./useNumberInput";
 export * from "./NumberInput";
+export * from "./useNumberInput";

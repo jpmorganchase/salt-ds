@@ -1,5 +1,5 @@
 import { Button, type ButtonProps, useIcon } from "@salt-ds/core";
-import { type MouseEventHandler, forwardRef } from "react";
+import { forwardRef, type MouseEventHandler } from "react";
 import { usePrevNextButtons } from "./usePrevNextButtons";
 
 /**

@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  capitalize,
   FlexItem,
   FlowLayout,
   FormField,
@@ -10,7 +11,6 @@ import {
   StackLayout,
   StatusIndicator,
   Text,
-  capitalize,
 } from "@salt-ds/core";
 import { CloseIcon, type IconProps, SearchIcon } from "@salt-ds/icons";
 import {

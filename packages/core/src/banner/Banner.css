@@ -5,7 +5,7 @@
   background: var(--saltBanner-background, var(--banner-background));
   border-color: var(--saltBanner-borderColor, var(--banner-borderColor));
   border-width: var(--saltBanner-borderWidth, var(--salt-size-fixed-100));
-  border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltBanner-borderStyle, var(--salt-borderStyle-solid));
   border-radius: var(--saltBanner-borderRadius, var(--salt-palette-corner, 0));
   box-sizing: border-box;
   display: inline-flex;

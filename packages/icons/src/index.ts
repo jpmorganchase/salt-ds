@@ -1,2 +1,2 @@
-export * from "./icon";
 export * from "./components";
+export * from "./icon";

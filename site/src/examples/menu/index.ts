@@ -1,3 +1,4 @@
+export * from "./Descriptions";
 export * from "./GroupedItems";
 export * from "./GroupedWithIcon";
 export * from "./Multilevel";
@@ -6,6 +7,5 @@ export * from "./Scrolling";
 export * from "./SeparatorOnly";
 export * from "./SingleLevel";
 export * from "./VirtualElement";
-export * from "./WithIcon";
-export * from "./Descriptions";
 export * from "./WithBadge";
+export * from "./WithIcon";

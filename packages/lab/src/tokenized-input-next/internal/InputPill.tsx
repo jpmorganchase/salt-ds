@@ -1,8 +1,8 @@
 import {
+  makePrefixer,
   Pill,
   type PillProps,
   Tooltip,
-  makePrefixer,
   useIcon,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -11,8 +11,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type MutableRefObject,
-  type SyntheticEvent,
   memo,
+  type SyntheticEvent,
   useRef,
   useState,
 } from "react";

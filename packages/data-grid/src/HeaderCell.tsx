@@ -13,10 +13,9 @@ import { useColumnDragContext } from "./ColumnDragContext";
 import { useColumnSortContext } from "./ColumnSortContext";
 import { type ColumnSeparatorType, SortOrder } from "./Grid";
 import type { HeaderCellProps } from "./GridColumn";
-import { useSizingContext } from "./SizingContext";
-import { Cursor, useFocusableContent } from "./internal";
-
 import headerCellCss from "./HeaderCell.css";
+import { Cursor, useFocusableContent } from "./internal";
+import { useSizingContext } from "./SizingContext";
 
 const withBaseName = makePrefixer("saltGridHeaderCell");
 
@@ -28,6 +27,30 @@ export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
   const className = withBaseName([props.separatorType, "Separator"].join(""));
   return <div className={className} />;
 }
+
+interface HeaderCellSortingIconProps {
+  justify: FlexContentAlignment;
+  sortOrder: SortOrder;
+}
+
+const HeaderCellSortingIcon = ({
+  justify,
+  sortOrder,
+}: HeaderCellSortingIconProps) => {
+  const className = withBaseName("sortingIcon");
+  return (
+    <div
+      className={clsx(className, {
+        [withBaseName("sortingIconStart")]: justify === "start",
+        [withBaseName("sortingIconEnd")]: justify === "end",
+      })}
+      aria-hidden
+    >
+      {sortOrder === SortOrder.ASC && <ArrowUpIcon />}
+      {sortOrder === SortOrder.DESC && <ArrowDownIcon />}
+    </div>
+  );
+};
 
 type AriaSortProps = "none" | "ascending" | "descending";
 
@@ -61,28 +84,6 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   } = useColumnSortContext();
 
   const valueAlignRight = align === "right";
-
-  interface HeaderCellSortingIconProps {
-    justify: FlexContentAlignment;
-  }
-
-  const HeaderCellSortingIcon = ({ justify }: HeaderCellSortingIconProps) => {
-    const className = withBaseName("sortingIcon");
-    const icon = (
-      <div
-        className={clsx(className, {
-          [withBaseName("sortingIconStart")]: justify === "start",
-          [withBaseName("sortingIconEnd")]: justify === "end",
-        })}
-        aria-hidden
-      >
-        {sortOrder === SortOrder.ASC && <ArrowUpIcon />}
-        {sortOrder === SortOrder.DESC && <ArrowDownIcon />}
-      </div>
-    );
-
-    return icon;
-  };
 
   const ariaSortMap = {
     asc: "ascending",
@@ -138,7 +139,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       aria-label={column.info.props["aria-label"]}
     >
       {sortByColumnId === id && sortable && valueAlignRight && (
-        <HeaderCellSortingIcon justify="start" />
+        <HeaderCellSortingIcon justify="start" sortOrder={sortOrder} />
       )}
       <div
         className={clsx(withBaseName("valueContainer"), {
@@ -154,7 +155,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
         {children}
       </div>
       {sortByColumnId === id && sortable && !valueAlignRight && (
-        <HeaderCellSortingIcon justify="end" />
+        <HeaderCellSortingIcon justify="end" sortOrder={sortOrder} />
       )}
       <HeaderCellSeparator separatorType={separator} />
       <div

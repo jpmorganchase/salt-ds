@@ -3,7 +3,7 @@
 .ag-theme-salt-compact-light .ag-menu,
 .ag-theme-salt-compact-dark .ag-menu {
   padding: var(--salt-spacing-100);
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
 }
 .ag-theme-salt-light .ag-tabs,
 .ag-theme-salt-dark .ag-tabs,
@@ -21,7 +21,7 @@
 .ag-theme-salt-dark .ag-menu-header,
 .ag-theme-salt-compact-light .ag-menu-header,
 .ag-theme-salt-compact-dark .ag-menu-header {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   background-color: var(--salt-container-primary-background);
 }
 .ag-theme-salt-light .ag-menu-body,

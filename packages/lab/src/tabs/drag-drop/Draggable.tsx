@@ -1,12 +1,11 @@
 import { useForkRef } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type MutableRefObject, forwardRef, useCallback } from "react";
-import { Portal } from "../../portal";
-import type { Rect } from "./dragDropTypes";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type MutableRefObject, useCallback } from "react";
+import { Portal } from "../../portal";
 import draggableCss from "./Draggable.css";
+import type { Rect } from "./dragDropTypes";
 
 const makeClassNames = (classNames: string) =>
   classNames.split(" ").map((className) => `saltDraggable-${className}`);

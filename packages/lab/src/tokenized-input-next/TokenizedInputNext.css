@@ -4,7 +4,7 @@
 }
 .saltTokenizedInputNext {
   --tokenizedInput-borderColor: var(--salt-editable-borderColor);
-  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle);
+  --tokenizedInput-borderStyle: var(--salt-borderStyle-solid);
   --tokenizedInput-outlineColor: var(--salt-focused-outlineColor);
   --tokenizedInput-border: none;
   --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-100);
@@ -29,7 +29,7 @@
 
 /* Style applied on hover */
 .saltTokenizedInputNext:hover {
-  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-hover);
+  --tokenizedInput-borderStyle: var(--salt-borderStyle-solid);
   --tokenizedInput-borderColor: var(--salt-editable-borderColor-hover);
 
   background: var(--tokenizedInput-background-hover);
@@ -39,7 +39,7 @@
 /* Style applied when active */
 .saltTokenizedInputNext:active {
   --tokenizedInput-borderColor: var(--salt-editable-borderColor-active);
-  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-active);
+  --tokenizedInput-borderStyle: var(--salt-borderStyle-solid);
   --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-200);
 
   background: var(--tokenizedInput-background-active);
@@ -144,7 +144,7 @@
 .saltTokenizedInputNext-readOnly:active,
 .saltTokenizedInputNext-readOnly:hover {
   --tokenizedInput-borderColor: var(--salt-editable-borderColor-readonly);
-  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --tokenizedInput-borderStyle: var(--salt-borderStyle-solid);
   --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-100);
 
   background: var(--tokenizedInput-background-readonly);
@@ -161,7 +161,7 @@
 .saltTokenizedInputNext-disabled:hover,
 .saltTokenizedInputNext-disabled:active {
   --tokenizedInput-borderColor: var(--salt-editable-borderColor-disabled);
-  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --tokenizedInput-borderStyle: var(--salt-borderStyle-solid);
   --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-100);
 
   background: var(--tokenizedInput-background-disabled);
@@ -180,7 +180,7 @@
 
 /* Style applied if `bordered={true}` */
 .saltTokenizedInputNext.saltTokenizedInputNext-bordered {
-  --tokenizedInput-border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--tokenizedInput-borderColor);
+  --tokenizedInput-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--tokenizedInput-borderColor);
   --tokenizedInput-activationIndicator-borderWidth: 0;
 }
 

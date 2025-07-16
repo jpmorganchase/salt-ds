@@ -5,12 +5,10 @@ import type { RefObject } from "react";
 
 import type { GridColumnModel, GridRowModel } from "../Grid";
 import type { CellValidationState } from "../GridColumn";
-
+import { useActiveOnWheel } from "./gridHooks";
+import middlePartCss from "./MiddlePart.css";
 import { TableBody } from "./TableBody";
 import { TableColGroup } from "./TableColGroup";
-import { useActiveOnWheel } from "./gridHooks";
-
-import middlePartCss from "./MiddlePart.css";
 
 const withBaseName = makePrefixer("saltGridMiddlePart");
 

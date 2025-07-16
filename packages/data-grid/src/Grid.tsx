@@ -20,17 +20,17 @@ import type { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnSortContext } from "./ColumnSortContext";
 import { CursorContext, type FocusedPart } from "./CursorContext";
 import { EditorContext } from "./EditorContext"; // TODO remove
+import gridCss from "./Grid.css";
 import type {
   CellValidationState,
   GridColumnInfo,
   GridColumnProps,
 } from "./GridColumn";
 import { GridContext } from "./GridContext";
-import { LayoutContext } from "./LayoutContext";
-import { SelectionContext } from "./SelectionContext";
-import { SizingContext } from "./SizingContext";
 import {
   CellMeasure,
+  clamp,
+  getFocusablePosition,
   LeftPart,
   MiddlePart,
   RightPart,
@@ -39,8 +39,6 @@ import {
   TopLeftPart,
   TopPart,
   TopRightPart,
-  clamp,
-  getFocusablePosition,
   useBodyVisibleAreaTop,
   useBodyVisibleColumnRange,
   useClientMidHeight,
@@ -63,8 +61,9 @@ import {
 } from "./internal";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnGhost } from "./internal/ColumnGhost";
-
-import gridCss from "./Grid.css";
+import { LayoutContext } from "./LayoutContext";
+import { SelectionContext } from "./SelectionContext";
+import { SizingContext } from "./SizingContext";
 
 const withBaseName = makePrefixer("saltGrid");
 

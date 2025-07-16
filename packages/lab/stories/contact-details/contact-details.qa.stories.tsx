@@ -1,5 +1,3 @@
-import type { Meta, StoryFn } from "@storybook/react-vite";
-
 import { CallIcon, ChatIcon, MessageIcon } from "@salt-ds/icons";
 import {
   ContactAction,
@@ -14,6 +12,7 @@ import {
   ContactTertiaryInfo,
   MailLinkComponent,
 } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import avatar1 from "../assets/avatar1.png";
 

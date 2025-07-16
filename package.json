@@ -39,12 +39,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsc --noEmit",
+    "typecheck:v4": "tsc --noEmit --project tsconfig.v4.json",
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@biomejs/js-api": "0.7.1",
-    "@biomejs/wasm-nodejs": "1.9.4",
+    "@biomejs/biome": "^2.0.0",
+    "@biomejs/js-api": "^1.0.0",
+    "@biomejs/wasm-nodejs": "^2.0.0",
     "@changesets/cli": "^2.27.12",
     "@cypress/code-coverage": "^3.13.6",
     "@faker-js/faker": "^8.0.0",
@@ -129,6 +130,7 @@
     "workerDirectory": "docs/public"
   },
   "devDependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",

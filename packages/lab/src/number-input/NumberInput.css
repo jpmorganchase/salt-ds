@@ -1,8 +1,8 @@
 /* Styles applied to number container */
 .saltNumberInput {
-  --numberInput-border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--numberInput-borderColor);
+  --numberInput-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--numberInput-borderColor);
   --numberInput-borderColor: var(--salt-editable-borderColor);
-  --numberInput-borderStyle: var(--salt-editable-borderStyle);
+  --numberInput-borderStyle: var(--salt-borderStyle-solid);
   --numberInput-outlineColor: var(--salt-focused-outlineColor);
   --numberInput-borderWidth: var(--salt-size-fixed-100);
   --numberInput-outline: none;
@@ -30,7 +30,7 @@
 }
 
 .saltNumberInput:hover {
-  --numberInput-borderStyle: var(--salt-editable-borderStyle-hover);
+  --numberInput-borderStyle: var(--salt-borderStyle-solid);
   --numberInput-borderColor: var(--salt-editable-borderColor-hover);
 
   background: var(--numberInput-background-hover);
@@ -39,7 +39,7 @@
 
 .saltNumberInput:active {
   --numberInput-borderColor: var(--salt-editable-borderColor-active);
-  --numberInput-borderStyle: var(--salt-editable-borderStyle-active);
+  --numberInput-borderStyle: var(--salt-borderStyle-solid);
   --numberInput-borderWidth: var(--salt-size-fixed-200);
 
   background: var(--numberInput-background-active);
@@ -140,7 +140,7 @@
 
 /* Style applied if `bordered={true}` */
 .saltNumberInput-bordered {
-  --numberInput-border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--numberInput-borderColor);
+  --numberInput-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--numberInput-borderColor);
   --numberInput-borderWidth: 0;
 
   border: var(--numberInput-border);
@@ -167,7 +167,7 @@
 .saltNumberInput-readOnly,
 .saltNumberInput-bordered.saltNumberInput-readOnly {
   --numberInput-borderColor: var(--salt-editable-borderColor-readonly);
-  --numberInput-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --numberInput-borderStyle: var(--salt-borderStyle-solid);
   --numberInput-borderWidth: var(--salt-size-fixed-100);
 
   background: var(--numberInput-background-readonly);
@@ -199,7 +199,7 @@
 .saltNumberInput-disabled:hover,
 .saltNumberInput-disabled:active {
   --numberInput-borderColor: var(--salt-editable-borderColor-disabled);
-  --numberInput-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --numberInput-borderStyle: var(--salt-borderStyle-solid);
   --numberInput-borderWidth: var(--salt-size-fixed-100);
 
   background: var(--numberInput-background-disabled);
@@ -279,11 +279,11 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--numberInput-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--numberInput-borderColor);
 }
 
 .saltNumberInput-focused .saltNumberInput-activationIndicator {
-  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--salt-editable-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--salt-editable-borderColor-active);
 }
 
 .saltNumberInput-bordered.saltNumberInput-focused .saltNumberInput-activationIndicator {
