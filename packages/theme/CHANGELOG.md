@@ -1,5 +1,154 @@
 # @salt-ds/theme
 
+## 1.31.0
+
+### Minor Changes
+
+- 665c306: Added a new border style foundation. This allows us to consolidate 18 characteristic tokens in to 3 foundational tokens.
+
+  ```diff
+  + --salt-borderStyle-dashed
+  + --salt-borderStyle-dotted
+  + --salt-borderStyle-solid
+  ```
+
+  Deprecated the following `-borderStyle` characteristic tokens:
+
+  | Name                                         | Replacement                 |
+  | -------------------------------------------- | --------------------------- |
+  | `--salt-container-borderStyle`               | `--salt-borderStyle-solid`  |
+  | `--salt-editable-borderStyle`                | `--salt-borderStyle-solid`  |
+  | `--salt-editable-borderStyle-hover `         | `--salt-borderStyle-solid`  |
+  | `--salt-editable-borderStyle-active`         | `--salt-borderStyle-solid`  |
+  | `--salt-editable-borderStyle-disabled`       | `--salt-borderStyle-solid`  |
+  | `--salt-editable-borderStyle-readonly`       | `--salt-borderStyle-solid`  |
+  | `--salt-selectable-borderStyle`              | `--salt-borderStyle-solid`  |
+  | `--salt-selectable-borderStyle-hover`        | `--salt-borderStyle-solid`  |
+  | `--salt-selectable-borderStyle-selected`     | `--salt-borderStyle-solid`  |
+  | `--salt-selectable-borderStyle-blurSelected` | `--salt-borderStyle-solid`  |
+  | `--salt-separable-borderStyle`               | `--salt-borderStyle-solid`  |
+  | `--salt-target-borderStyle`                  | `--salt-borderStyle-dashed` |
+  | `--salt-target-borderStyle-hover`            | `--salt-borderStyle-solid`  |
+  | `--salt-target-borderStyle-disabled`         | `--salt-borderStyle-dashed` |
+  | `--salt-track-borderStyle`                   | `--salt-borderStyle-solid`  |
+  | `--salt-track-borderStyle-active`            | `--salt-borderStyle-solid`  |
+  | `--salt-track-borderStyle-complete`          | `--salt-borderStyle-solid`  |
+  | `--salt-track-borderStyle-incomplete`        | `--salt-borderStyle-dotted` |
+
+- 9a4ff31: Added 2 new navigable tokens:
+
+  - `--salt-navigable-accent-background-active`
+  - `--salt-navigable-accent-borderColor-active`
+
+  Undeprecated and updated `--salt-navigable-background-hover`.
+
+- 5edb00f: Deprecated the `--salt-status-static-foreground` token.
+
+  | Token                           | Replacement                         |
+  | ------------------------------- | ----------------------------------- |
+  | --salt-status-static-foreground | --salt-content-secondary-foreground |
+
+- c86ee15: Deprecated `--salt-selectable-background-blurSelected` and `--salt-palette-interact-background-blurSelected`.
+- 1a8898f: Deprecated 6 alpha foundation tokens.
+
+  | Token                  |
+  | ---------------------- |
+  | --salt-color-black-60a |
+  | --salt-color-black-70a |
+  | --salt-color-black-90a |
+  | --salt-color-white-60a |
+  | --salt-color-white-70a |
+  | --salt-color-white-90a |
+
+- 5edb00f: Added sentiment characteristic.
+
+  | Token                                            |
+  | ------------------------------------------------ |
+  | --salt-sentiment-negative-foreground-decorative  |
+  | --salt-sentiment-negative-foreground-informative |
+  | --salt-sentiment-positive-foreground-decorative  |
+  | --salt-sentiment-positive-foreground-informative |
+  | --salt-sentiment-neutral-track                   |
+  | --salt-sentiment-neutral-track-disabled          |
+
+  As part of this change, some tokens have been deprecated.
+
+  | Token                             | Replacement                                     |
+  | --------------------------------- | ----------------------------------------------- |
+  | --salt-track-borderColor          | --salt-sentiment-neutral-track                  |
+  | --salt-track-borderColor-disabled | --salt-sentiment-neutral-track-disabled         |
+  | --salt-status-positive-foreground | --salt-sentiment-positive-foreground-decorative |
+  | --salt-status-negative-foreground | --salt-sentiment-negative-foreground-decorative |
+
+- 1a8898f: Updated the alpha palette to add a bias towards lower values of alpha. This change affects alpha and alpha contrast tokens.
+
+  | Alpha level | Old alpha value | New alpha value |
+  | ----------- | --------------- | --------------- |
+  | Highest     | 90%             | 80%             |
+  | Higher      | 80%             | 65%             |
+  | High        | 70%             | 50%             |
+  | Medium High | 60%             | 40%             |
+  | Medium      | 50%             | 30%             |
+  | Medium Low  | 40%             | 20%             |
+  | Low         | 30%             | 15%             |
+  | Lower       | 20%             | 10%             |
+  | Lowest      | 10%             | 5%              |
+
+  As part of this change, characteristics have been updated to use the new level that corresponds to their old value. For example:
+
+  | Token                                   | Replacement                              |
+  | --------------------------------------- | ---------------------------------------- |
+  | --salt-palette-alpha-high               | --salt-palette-alpha-higher              |
+  | --salt-palette-alpha-contrast-lowest    | --salt-palette-alpha-contrast-lower      |
+  | --salt-palette-alpha-contrast-lower     | --salt-palette-alpha-contrast-mediumLow  |
+  | --salt-palette-alpha-contrast-low       | --salt-palette-alpha-contrast-medium     |
+  | --salt-palette-alpha-contrast-mediumLow | --salt-palette-alpha-contrast-mediumHigh |
+  | --salt-palette-alpha-contrast-medium    | --salt-palette-alpha-contrast-high       |
+
+- 9a4ff31: Deprecated `--salt-navigable-indicator-active`. It has been replaced by `--salt-navigable-accent-indicator-active`.
+- 1a8898f: Added 6 alpha foundation tokens.
+
+  | Token                  |
+  | ---------------------- |
+  | --salt-color-black-5a  |
+  | --salt-color-black-15a |
+  | --salt-color-black-65a |
+  | --salt-color-white-5a  |
+  | --salt-color-white-15a |
+  | --salt-color-white-65a |
+
+- 91f0e09: Deprecated navigable font weight tokens.
+
+  | Name                                 | Replacement                     |
+  | ------------------------------------ | ------------------------------- |
+  | `--salt-navigable-fontWeight`        | `--salt-text-fontWeight`        |
+  | `--salt-navigable-fontWeight-hover`  | `--salt-text-fontWeight`        |
+  | `--salt-navigable-fontWeight-active` | `--salt-text-fontWeight-strong` |
+  | `--salt-navigable-fontWeight-edit`   | `--salt-text-fontWeight`        |
+
+- efb4fbc: Added an experimental brown ramp.
+
+  ```css
+  --salt-color-brown-100
+  --salt-color-brown-200
+  --salt-color-brown-300
+  --salt-color-brown-400
+  --salt-color-brown-500
+  --salt-color-brown-600
+  --salt-color-brown-700
+  --salt-color-brown-800
+  --salt-color-brown-900
+  ```
+
+### Patch Changes
+
+- efb4fbc: Updated 4 foundational color tokens to address color contrast requirements:
+
+  - `--salt-color-gray-100`
+  - `--salt-color-teal-900`
+  - `--salt-color-orange-400`
+  - `--salt-color-orange-600`
+
 ## 1.30.0
 
 ### Minor Changes
