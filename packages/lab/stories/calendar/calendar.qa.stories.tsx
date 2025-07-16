@@ -164,7 +164,6 @@ AllExamplesWithDateFns.parameters = {
 export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () =>
   renderQAContainer();
 AllExamplesWithDayjs.parameters = {
-  ...QAContainerParameters,
   dateLocale: "en",
   dateAdapter: "dayjs",
 };
