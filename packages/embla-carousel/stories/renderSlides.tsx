@@ -11,6 +11,7 @@ export const renderSlides = ({
 }: {
   withActions?: boolean;
 } = {}) => {
+  const slideId = useId();
   const content = [
     {
       title: "Your accounts, on the move",
@@ -42,14 +43,13 @@ export const renderSlides = ({
   ];
 
   return content.map((slide, index) => {
-    const slideId = useId();
     return (
       <CarouselCard
-        key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-        id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+        role="tabpanel"
+        key={`slide-${slideId}-${index}`}
         appearance="bordered"
-        header={<H3>{slide.title}</H3>}
-        aria-label={`label for slide ${index + 1}`}
+        header={<H3 id={`${slideId}-${index}`}>{slide.title}</H3>}
+        aria-labelledby={`${slideId}-${index}`}
         media={
           <img
             className="carouselImagePlaceholder"
