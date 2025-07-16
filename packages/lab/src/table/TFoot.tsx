@@ -15,7 +15,7 @@ export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
    */
   sticky?: boolean;
   /**
-   * Divider styling variant. Defaults to "tertiary";
+   * Divider styling variant. Defaults to "primary";
    * @default primary
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
@@ -34,7 +34,7 @@ export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
       className,
       sticky = false,
       variant,
-      divider = "tertiary",
+      divider = "primary",
       ...rest
     },
     ref,

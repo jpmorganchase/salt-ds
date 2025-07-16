@@ -16,7 +16,7 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
    */
   variant?: TableVariant;
   /**
-   * Divider styling variant. Defaults to "secondary";
+   * Divider styling variant. Defaults to "tertiary";
    * @default secondary
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
@@ -34,7 +34,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     children,
     className,
     variant = "primary",
-    divider = "secondary",
+    divider = "tertiary",
     zebra = undefined,
     ...rest
   },

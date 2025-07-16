@@ -11,7 +11,7 @@ import {
 } from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
-export const THeadVariant = (): ReactElement => {
+export const Variants = (): ReactElement => {
   const [variant, setVariant] = useState("primary");
 
   const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -25,8 +25,8 @@ export const THeadVariant = (): ReactElement => {
         <ToggleButton value="secondary">Secondary</ToggleButton>
         <ToggleButton value="tertiary">Tertiary</ToggleButton>
       </ToggleButtonGroup>
-      <Table>
-        <THead variant={variant as TableProps["variant"]}>
+      <Table variant={variant as TableProps["variant"]}>
+        <THead>
           <TR>
             {Array.from({ length: 3 }, (_, i) => {
               return <TH key={`col-${i}`}>Column {i + 1}</TH>;

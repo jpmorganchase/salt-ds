@@ -1,12 +1,12 @@
 import {
+  Table,
+  type TableProps,
   TBody,
   TD,
   TFoot,
   TH,
   THead,
   TR,
-  Table,
-  type TableProps,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";

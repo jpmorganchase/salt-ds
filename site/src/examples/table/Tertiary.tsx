@@ -1,4 +1,4 @@
-import { TBody, TD, TFoot, TH, THead, TR, Table } from "@salt-ds/lab";
+import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Tertiary = (): ReactElement => {

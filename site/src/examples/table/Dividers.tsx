@@ -19,25 +19,30 @@ import {
 } from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
-export const Zebra = (): ReactElement => {
-  const [variant, setVariant] = useState("primary");
-  const [zebra, setZebra] = useState("secondary");
+export const Dividers = (): ReactElement => {
+  const [body, setBody] = useState("tertiary");
+  const [header, setHeader] = useState("primary");
+  const [footer, setFooter] = useState("primary");
 
-  const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setVariant(event.currentTarget.value);
+  const onChangeBody = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBody(event.currentTarget.value);
   };
 
-  const onChangeZebra = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setZebra(event.currentTarget.value);
+  const onChangeHeader = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setHeader(event.currentTarget.value);
+  };
+
+  const onChangeFooter = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setFooter(event.currentTarget.value);
   };
 
   return (
-    <StackLayout style={{ width: "100%" }}>
-      <FlexLayout align="center">
+    <StackLayout style={{ width: "90%" }}>
+      <FlexLayout align="start" direction="column">
         <FlexItem>
           <FormField>
-            <FormFieldLabel>Variant</FormFieldLabel>
-            <ToggleButtonGroup onChange={onChangeVariant} value={variant}>
+            <FormFieldLabel>Header</FormFieldLabel>
+            <ToggleButtonGroup onChange={onChangeHeader} value={header}>
               <ToggleButton value="primary">Primary</ToggleButton>
               <ToggleButton value="secondary">Secondary</ToggleButton>
               <ToggleButton value="tertiary">Tertiary</ToggleButton>
@@ -46,8 +51,18 @@ export const Zebra = (): ReactElement => {
         </FlexItem>
         <FlexItem>
           <FormField>
-            <FormFieldLabel>Zebra</FormFieldLabel>
-            <ToggleButtonGroup onChange={onChangeZebra} value={zebra}>
+            <FormFieldLabel>Body</FormFieldLabel>
+            <ToggleButtonGroup onChange={onChangeBody} value={body}>
+              <ToggleButton value="primary">Primary</ToggleButton>
+              <ToggleButton value="secondary">Secondary</ToggleButton>
+              <ToggleButton value="tertiary">Tertiary</ToggleButton>
+            </ToggleButtonGroup>
+          </FormField>
+        </FlexItem>
+        <FlexItem>
+          <FormField>
+            <FormFieldLabel>Footer</FormFieldLabel>
+            <ToggleButtonGroup onChange={onChangeFooter} value={footer}>
               <ToggleButton value="primary">Primary</ToggleButton>
               <ToggleButton value="secondary">Secondary</ToggleButton>
               <ToggleButton value="tertiary">Tertiary</ToggleButton>
@@ -55,11 +70,8 @@ export const Zebra = (): ReactElement => {
           </FormField>
         </FlexItem>
       </FlexLayout>
-      <Table
-        variant={variant as TableProps["variant"]}
-        zebra={zebra as TableProps["zebra"]}
-      >
-        <THead>
+      <Table divider={body as TableProps["divider"]}>
+        <THead divider={header as TableProps["divider"]}>
           <TR>
             {Array.from({ length: 3 }, (_, i) => {
               return <TH key={`col-${i}`}>Column {i + 1}</TH>;
@@ -77,7 +89,7 @@ export const Zebra = (): ReactElement => {
             );
           })}
         </TBody>
-        <TFoot>
+        <TFoot divider={footer as TableProps["divider"]}>
           <TR>
             {Array.from({ length: 3 }, (_, i) => {
               return <TD key={`footer-${i}`}>Footer {i + 1}</TD>;

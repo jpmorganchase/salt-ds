@@ -1,5 +1,3 @@
-import type { Meta, StoryFn } from "@storybook/react";
-
 import {
   Button,
   Code,
@@ -8,7 +6,8 @@ import {
   Switch,
   Text,
 } from "@salt-ds/core";
-import { TBody, TD, TFoot, TH, THead, TR, Table } from "@salt-ds/lab";
+import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
 
 type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {

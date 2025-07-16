@@ -1,22 +1,22 @@
-import { TBody, TD, TFoot, TH, THead, TR, Table } from "@salt-ds/lab";
+import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Primary = (): ReactElement => {
+export const Default = (): ReactElement => {
   return (
     <Table>
       <THead>
         <TR>
           {Array.from({ length: 3 }, (_, i) => {
-            return <TH key={`col-${i}`}>Column {i}</TH>;
+            return <TH key={`col-${i}`}>Column {i + 1}</TH>;
           })}
         </TR>
       </THead>
       <TBody>
-        {Array.from({ length: 5 }, (_, i) => {
+        {Array.from({ length: 5 }, (_, x) => {
           return (
-            <TR key={`tr-${i}`}>
+            <TR key={`tr-${x}`}>
               {Array.from({ length: 3 }, (_, i) => {
-                return <TD key={`td-${i}`}>Row {i}</TD>;
+                return <TD key={`td-${i}`}>Row {x + 1}</TD>;
               })}
             </TR>
           );
@@ -25,7 +25,7 @@ export const Primary = (): ReactElement => {
       <TFoot>
         <TR>
           {Array.from({ length: 3 }, (_, i) => {
-            return <TD key={`footer-${i}`}>Footer {i}</TD>;
+            return <TD key={`footer-${i}`}>Footer {i + 1}</TD>;
           })}
         </TR>
       </TFoot>

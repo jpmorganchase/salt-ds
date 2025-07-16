@@ -5,7 +5,7 @@ import {
   Spinner,
   Text,
 } from "@salt-ds/core";
-import { TBody, TD, TH, THead, TR, Table } from "@salt-ds/lab";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { ColorBlock } from "./style-blocks/ColorBlock";

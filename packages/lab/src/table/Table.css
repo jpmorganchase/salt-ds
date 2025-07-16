@@ -67,40 +67,40 @@ table.saltTable thead {
   white-space: nowrap;
 }
 
-thead.saltTable-thead-sticky {
+table.saltTable thead.saltTable-thead-sticky {
   position: sticky;
   top: 0;
 }
 
-thead.saltTable-thead-primary tr {
+table.saltTable thead.saltTable-thead-primary tr {
   background: var(--salt-container-primary-background);
 }
 
-thead.saltTable-thead-secondary tr {
+table.saltTable thead.saltTable-thead-secondary tr {
   background: var(--salt-container-secondary-background);
 }
 
-thead.saltTable-thead-tertiary tr {
+table.saltTable thead.saltTable-thead-tertiary tr {
   background: var(--salt-container-tertiary-background);
 }
 
-table.saltTable thead tr {
+table.saltTable thead.saltTable-thead tr {
   border-bottom: var(--salt-separable-borderStyle) var(--table-header-divider-color) var(--salt-size-fixed-100);
 }
 
-thead.saltTable-thead-divider-primary {
+table.saltTable thead.saltTable-thead-divider-primary {
   --table-header-divider-color: var(--salt-separable-primary-borderColor);
 }
 
-thead.saltTable-thead-divider-secondary {
+table.saltTable thead.saltTable-thead-divider-secondary {
   --table-header-divider-color: var(--salt-separable-secondary-borderColor);
 }
 
-thead.saltTable-thead-divider-tertiary {
+table.saltTable thead.saltTable-thead-divider-tertiary {
   --table-header-divider-color: var(--salt-separable-tertiary-borderColor);
 }
 
-thead.saltTable-thead-divider-none {
+table.saltTable thead.saltTable-thead-divider-none {
   --table-header-divider-color: transparent;
 }
 
@@ -116,40 +116,40 @@ table.saltTable tfoot {
   white-space: nowrap;
 }
 
-tfoot.saltTable-tfoot-sticky {
+table.saltTable tfoot.saltTable-tfoot-sticky {
   position: sticky;
   bottom: 0;
 }
 
-tfoot.saltTable-tfoot tr {
+table.saltTable tfoot.saltTable-tfoot tr {
   border-top: var(--salt-separable-borderStyle) var(--table-footer-divider-color) var(--salt-size-fixed-100);
 }
 
-tfoot.saltTable-tfoot-primary tr {
+table.saltTable tfoot.saltTable-tfoot-primary tr {
   background: var(--salt-container-primary-background);
 }
 
-tfoot.saltTable-tfoot-secondary tr {
+table.saltTable tfoot.saltTable-tfoot-secondary tr {
   background: var(--salt-container-secondary-background);
 }
 
-tfoot.saltTable-tfoot-tertiary tr {
+table.saltTable tfoot.saltTable-tfoot-tertiary tr {
   background: var(--salt-container-tertiary-background);
 }
 
-tfoot.saltTable-tfoot-divider-primary tr {
+table.saltTable tfoot.saltTable-tfoot-divider-primary tr {
   --table-footer-divider-color: var(--salt-separable-primary-borderColor);
 }
 
-tfoot.saltTable-tfoot-divider-secondary tr {
+table.saltTable tfoot.saltTable-tfoot-divider-secondary tr {
   --table-footer-divider-color: var(--salt-separable-secondary-borderColor);
 }
 
-tfoot.saltTable-tfoot-divider-tertiary tr {
+table.saltTable tfoot.saltTable-tfoot-divider-tertiary tr {
   --table-footer-divider-color: var(--salt-separable-tertiary-borderColor);
 }
 
-tfoot.saltTable-tfoot-divider-none tr {
+table.saltTable tfoot.saltTable-tfoot-divider-none tr {
   --table-footer-divider-color: transparent;
 }
 
@@ -181,11 +181,11 @@ table.saltTable tr {
   min-height: var(--table-row-height);
 }
 
-table.saltTable tbody tr {
+table.saltTable tbody tr:not(:last-child) {
   border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-fixed-100);
 }
 
-table.saltTable-divider-none tr {
+table.saltTable-divider-none tbody tr {
   --table-divider-color: transparent;
 }
 
