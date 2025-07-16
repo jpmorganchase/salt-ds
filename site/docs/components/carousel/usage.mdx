@@ -15,22 +15,31 @@ Carousel is a composable pattern of Salt components that uses the [Embla](https:
 A basic carousel navigates through slides individually, one at a time.
 
 <LivePreview componentName="carousel" exampleName="Basic" />
-
 <br />
+
+### With a title
+
 Adding a title serves as a heading for the carousel group.
 
 <LivePreview componentName="carousel" exampleName="Title" />
 <br />
-`CarouselTabList` is an aria `tablist` providing support for screen readers to
-announce the slides as the associated`tab`. To enhance accessibility, ensure
-that each slide has a unique id. This will facilitate the association between
-the `tablist` and `tab`, thereby improving screen reader functionality.
+
+### With a tablist
 
 A `tablist` provides a visual indicator of the current slide and includes clickable elements for direct navigation to specific slides, along with keyboard navigation controls. Ensure the tablist is positioned at the top or bottom of the carousel, alongside other controls like `CarouselNextButton` and `CarouselPreviousButton`.
 
-<LivePreview componentName="carousel" exampleName="TabList" />
+`CarouselTabList` is an aria `tablist` providing support for screen readers to announce the slides as the associated`tab`.
 
+<LivePreview componentName="carousel" exampleName="TabListTop" />
 <br />
+
+If you position a `tablist` or navigation controls at the bottom of the carousel, the slides will initially receive focus. To ensure accessibility, navigation controls should receive focus before the slides. You can achieve this by using an additional `div` to reverse the flex direction, thereby ensuring the navigation controls are focused first.
+
+<LivePreview componentName="carousel" exampleName="TabListBottom" />
+<br />
+
+### With focusable slide content
+
 Additional actions, such as[`Link`](../link), can be incorporated into a
 carousel slide, but avoid embedding other clickable actions during animation to
 prevent accidental clicks while slides are transitioning.
@@ -41,14 +50,16 @@ Content within slides can be tabbable but ensure that off-screen content is not 
 This example ensures that CSS is applied to the off-screen content, preventing it from being tabbable.
 
 <LivePreview componentName="carousel" exampleName="CardActions" />
+<br />
 
-## Configuration and control of Embla
+### Configuration and control of Embla
 
 When composed with other components the visible slide can be controlled programmatically using the `embla` API.
 
 Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full API.
 
 <LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+<br />
 
 ## Using the component
 
@@ -66,9 +77,10 @@ Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full
 ### Best practices
 
 - Always provide navigation controls for the carousel, alongside a visual indicator of the current slide.
+- When tabbing through the focus order, ensure that any `tablist` or navigation controls recieve focus before the slide.
 - Include 5 or fewer slides. The most important slide always comes first.
 - Not all content is visible within a carousel until selected, ensure that important content is also placed on another page of your site.
-- To provide arrow key navigation add a tablist.
+- To provide a visual indicator of progress add a `tablist`.
 
 ## Import
 
