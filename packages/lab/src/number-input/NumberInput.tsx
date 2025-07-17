@@ -115,10 +115,6 @@ export interface NumberInputProps
    */
   onChangeEnd?: (event: SyntheticEvent | undefined, value: number) => void;
   /**
-   * Callback for formatted value
-   */
-  onValueChange?: (value: string) => void;
-  /**
    *
    * A callback to parse the value of the `NumberInput`. To be used alongside
    * the `format` callback.
@@ -197,7 +193,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       min = Number.MIN_SAFE_INTEGER,
       onChange: onChangeProp,
       onChangeEnd,
-      onValueChange,
       parse,
       placeholder,
       decimalScale: decimalScaleProp,
@@ -357,7 +352,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
       if (format) {
         const formatted = format(clampAndFixed);
-        onValueChange?.(formatted);
         setDisplayValue(formatted);
       }
     };
@@ -466,8 +460,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               ? isOutOfRange(value, min, max) || validationStatus === "error"
               : undefined
           }
-          // Workaround to have the value announced by screen reader on Safari.
-          {...(!isReadOnly && { "aria-valuetext": value.toString() })}
           className={clsx(
             withBaseName("input"),
             withBaseName(`inputTextAlign${capitalize(textAlign)}`),
@@ -484,6 +476,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           aria-readonly={isReadOnly ? "true" : undefined}
           ref={handleInputRef}
           required={isRequired}
+          {...(!isReadOnly && {
+            "aria-valuenow": toFloat(value),
+            "aria-valuemax": max,
+            "aria-valuemin": min,
+            "aria-valuetext": value.toString(),
+          })}
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}
           tabIndex={isDisabled ? -1 : 0}
