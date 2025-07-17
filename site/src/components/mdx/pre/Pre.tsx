@@ -3,9 +3,9 @@ import { CopyIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
   isValidElement,
+  type ReactNode,
   useRef,
   useState,
 } from "react";

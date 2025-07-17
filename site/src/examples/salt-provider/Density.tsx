@@ -1,9 +1,9 @@
 import {
+  capitalize,
   FlexLayout,
   SaltProvider,
   StackLayout,
   Text,
-  capitalize,
   useDensity,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";

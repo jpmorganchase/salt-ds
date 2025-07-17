@@ -2,13 +2,13 @@ import {
   type AdornmentValidationStatus,
   Button,
   type ButtonProps,
+  makePrefixer,
   type NecessityType,
   StatusAdornment,
-  type ValidationStatus,
-  makePrefixer,
   useForkRef,
   useIcon,
   useId,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -18,6 +18,7 @@ import {
   type FocusEvent,
   type FocusEventHandler,
   type ForwardedRef,
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type KeyboardEventHandler,
@@ -25,11 +26,10 @@ import {
   type Ref,
   type SyntheticEvent,
   type TextareaHTMLAttributes,
-  forwardRef,
   useRef,
 } from "react";
-import tokenizedInputCss from "./TokenizedInputNext.css";
 import { InputPill } from "./internal/InputPill";
+import tokenizedInputCss from "./TokenizedInputNext.css";
 import {
   type TokenizedInputNextHelpers,
   type TokenizedInputNextState,

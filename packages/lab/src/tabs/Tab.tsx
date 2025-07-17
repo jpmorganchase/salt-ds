@@ -12,18 +12,17 @@ import { clsx } from "clsx";
 import {
   type FocusEvent,
   type ForwardedRef,
+  forwardRef,
   type KeyboardEvent,
   type MouseEvent,
   type ReactElement,
-  forwardRef,
   useCallback,
   useRef,
   useState,
 } from "react";
 import { EditableLabel, type EditableLabelProps } from "../editable-label";
-import type { TabProps } from "./TabsTypes";
-
 import tabCss from "./Tab.css";
+import type { TabProps } from "./TabsTypes";
 
 const noop = () => undefined;
 

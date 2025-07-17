@@ -2,11 +2,9 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
-
-import type { ColumnSeparatorType } from "./Grid";
-
+import { forwardRef, type HTMLAttributes } from "react";
 import cellCss from "./CellFrame.css";
+import type { ColumnSeparatorType } from "./Grid";
 
 export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;

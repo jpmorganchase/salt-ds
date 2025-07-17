@@ -11,7 +11,7 @@ describe("Number Input - Accessibility", () => {
   it("sets the correct default ARIA attributes on input", () => {
     cy.mount(
       <Default
-        decimalPlaces={2}
+        decimalScale={2}
         defaultValue={-20.1}
         max={250.23}
         min={-500.11}
@@ -27,7 +27,7 @@ describe("Number Input - Accessibility", () => {
   it("has the correct labelling when wrapped in a `FormField`", () => {
     cy.mount(<Default defaultValue={-10} min={0} />);
 
-    cy.findByRole("spinbutton").should("have.accessibleName", "Number Input");
+    cy.findByRole("spinbutton").should("have.accessibleName", "Number input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
       "Please enter a number",

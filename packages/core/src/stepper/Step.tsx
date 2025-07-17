@@ -1,28 +1,27 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
-  type CSSProperties,
   type ComponentPropsWithoutRef,
-  type ReactNode,
+  type CSSProperties,
   forwardRef,
+  type ReactNode,
   useContext,
   useEffect,
 } from "react";
-import { makePrefixer, useControlled, useId } from "../utils";
-
 import type { ButtonProps } from "../button";
-import stepCSS from "./Step.css";
-import { Stepper } from "./Stepper";
+import { makePrefixer, useControlled, useId } from "../utils";
 import { StepConnector } from "./internal/StepConnector";
 import { StepExpandTrigger } from "./internal/StepExpandTrigger";
 import { StepIcon } from "./internal/StepIcon";
-import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
-import { StepText } from "./internal/StepText";
 import {
   StepDepthContext,
   StepperOrientationContext,
 } from "./internal/StepperProvider";
+import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
+import { StepText } from "./internal/StepText";
+import stepCSS from "./Step.css";
+import { Stepper } from "./Stepper";
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {

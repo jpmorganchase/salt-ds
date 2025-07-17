@@ -56,7 +56,7 @@ const Single = ({
 
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       selection: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -224,7 +224,7 @@ export const SingleWithTimezone = (): ReactElement => {
   );
 
   const handleAdapterChange: DropdownProps["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     setDateAdapterName(newSelected[0] ?? "date-fns");

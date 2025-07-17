@@ -1,0 +1,5 @@
+.salt-theme {
+  --salt-borderStyle-solid: solid;
+  --salt-borderStyle-dashed: dashed;
+  --salt-borderStyle-dotted: dotted;
+}

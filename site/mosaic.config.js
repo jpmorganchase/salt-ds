@@ -53,10 +53,6 @@ const saltConfig = {
       modulePath: require.resolve(
         "./src/mosaic-plugins/LabsComponentPlugin.mjs",
       ),
-      options: {
-        labPackageName: "@salt-ds/lab",
-        statusLabel: "Release candidate",
-      },
     },
   ],
 };

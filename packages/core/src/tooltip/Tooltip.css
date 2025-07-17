@@ -14,7 +14,7 @@
   box-sizing: border-box;
   background: var(--tooltip-background);
   border-color: var(--saltTooltip-borderColor, var(--tooltip-status-borderColor));
-  border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltTooltip-borderStyle, var(--salt-borderStyle-solid));
   border-width: var(--saltTooltip-borderWidth, var(--tooltip-borderWidth));
   border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));

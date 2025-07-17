@@ -4,9 +4,9 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  type MouseEventHandler,
   cloneElement,
   isValidElement,
+  type MouseEventHandler,
 } from "react";
 
 import { BaseCell } from "../BaseCell";

@@ -23,14 +23,16 @@ export const CustomDayRendering = (): ReactElement => {
       <button
         {...rest}
         className={clsx([
-          { [styles.buttonWithDot]: !status.outOfRange },
+          {
+            [styles.buttonWithDot]: !status.outOfRange,
+            [styles.today]: status.today,
+          },
           className,
         ])}
       >
         <span className={clsx({ [styles.dot]: !status.outOfRange })}>
           {dateAdapter.format(date, "D")}
         </span>
-        {status.today ? <span className={styles.today} /> : null}
       </button>
     );
   }

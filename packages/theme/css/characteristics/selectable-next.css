@@ -14,7 +14,6 @@
   --salt-selectable-background: var(--salt-palette-alpha-none);
   --salt-selectable-background-hover: var(--salt-palette-accent-weakest);
   --salt-selectable-background-selected: var(--salt-palette-accent-weaker);
-  --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);
   --salt-selectable-background-disabled: var(--salt-palette-alpha-none);
   --salt-selectable-background-selectedDisabled: var(--salt-palette-accent-weaker-disabled);
 }

@@ -4,6 +4,6 @@
   align-items: center;
   justify-content: center;
   font-weight: var(--salt-text-fontWeight-small);
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
   margin: calc(var(--salt-size-fixed-100) * -1) 0 0 calc(var(--salt-size-fixed-100) * -1);
 }

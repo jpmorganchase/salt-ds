@@ -1,7 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { makePrefixer } from "../utils";
 
 import badgeCss from "./Badge.css";

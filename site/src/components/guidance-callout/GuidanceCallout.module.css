@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: var(--salt-spacing-200);
   gap: var(--salt-spacing-150);
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   margin-block: var(--salt-spacing-300);
   border-radius: var(--salt-palette-corner-weaker);
 }

@@ -1,15 +1,15 @@
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
+import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
 
 export const Decimals = () => (
-  <FormField style={{ width: "256px" }}>
-    <FormFieldLabel>Number input with decimal places</FormFieldLabel>
-    <NumberInput
-      defaultValue={376.0}
-      decimalPlaces={2}
-      step={0.01}
-      endAdornment="USD"
-    />
-    <FormFieldHelperText>Please enter a currency value</FormFieldHelperText>
-  </FormField>
+  <StackLayout>
+    <FormField style={{ width: "256px" }}>
+      <FormFieldLabel>Number input with derived decimal scale</FormFieldLabel>
+      <NumberInput defaultValue={100} step={0.01} endAdornment="USD" />
+    </FormField>
+    <FormField style={{ width: "256px" }}>
+      <FormFieldLabel>Number input with set decimal scale</FormFieldLabel>
+      <NumberInput defaultValue={100} decimalScale={2} endAdornment="USD" />
+    </FormField>
+  </StackLayout>
 );

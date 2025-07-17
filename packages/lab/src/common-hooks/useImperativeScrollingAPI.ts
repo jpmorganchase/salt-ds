@@ -59,14 +59,10 @@ export const useImperativeScrollingAPI = <Item>({
     ],
   );
 
-  useImperativeHandle(
-    forwardedRef,
-    () => {
-      if (scrollableRef.current) {
-        return scrollHandles;
-      }
-      return noScrolling;
-    },
-    [scrollHandles, scrollableRef],
-  );
+  useImperativeHandle(forwardedRef, () => {
+    if (scrollableRef.current) {
+      return scrollHandles;
+    }
+    return noScrolling;
+  }, [scrollHandles, scrollableRef]);
 };

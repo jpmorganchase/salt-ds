@@ -241,10 +241,7 @@ const SidebarPlugin = {
           newChildNode.status = page.data.status;
         }
 
-        const currentChildNodes = Object.prototype.hasOwnProperty.call(
-          result,
-          groupPath,
-        )
+        const currentChildNodes = Object.hasOwn(result, groupPath)
           ? result[groupPath].childNodes
           : [];
         const groupPriority = page.sidebar?.groupPriority;

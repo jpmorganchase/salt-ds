@@ -11,14 +11,14 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer itemPadding={4} {...props}>
       <NumberInput
-        decimalPlaces={2}
+        decimalScale={2}
         defaultValue={0.5}
         max={10}
         min={-5}
         step={0.5}
       />
       <NumberInput
-        decimalPlaces={3}
+        decimalScale={3}
         defaultValue={-5}
         max={10}
         min={-5}
@@ -26,7 +26,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         textAlign={"center"}
       />
       <NumberInput
-        decimalPlaces={1}
+        decimalScale={1}
         defaultValue={5}
         max={5}
         min={0}
@@ -34,28 +34,25 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         textAlign={"right"}
       />
       <NumberInput
-        decimalPlaces={2}
-        defaultValue="readOnly"
+        decimalScale={2}
+        defaultValue={5}
         max={10}
         min={-5}
         readOnly
         step={0.5}
       />
       <NumberInput
-        decimalPlaces={2}
-        defaultValue="disabled"
+        decimalScale={2}
+        defaultValue={5}
         disabled
         max={10}
         min={-5}
         step={0.5}
       />
-      <NumberInput value="bordered" bordered />
-      <NumberInput validationStatus="success" value="success" />
-      <NumberInput validationStatus="error" value="error" />
-      <NumberInput validationStatus="warning" value="warning" />
-      <NumberInput value="success" bordered validationStatus="success" />
-      <NumberInput value="error" bordered validationStatus="error" />
-      <NumberInput value="warning" bordered validationStatus="warning" />
+      <NumberInput validationStatus="success" value={100} />
+      <NumberInput validationStatus="error" value={100} />
+      <NumberInput validationStatus="warning" value={100} />
+      <NumberInput value={100} hideButtons />
     </QAContainer>
   );
 };

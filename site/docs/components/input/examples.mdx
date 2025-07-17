@@ -34,7 +34,7 @@ You can disable the input, resulting in no action when the user interacts with i
 
 You can set `Input` to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
 
-By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
+By default, a dash ('-') serves as the empty marker. You can customize this marker by using the `emptyReadOnlyMarker` prop if your application needs a different symbol.
 
 - Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
 
@@ -66,7 +66,7 @@ You can add custom adornments at the beginning or end of the Input field using t
 
 Start adornments typically describe the purpose of the field (e.g., a phone number input, or a currency), while end adornments typically indicate a reveal of more information (e.g., using an arrow icon) or to trigger a new user interface (such as a date picker).
 
-You can use [text](/salt/components/text) and [icons](/salt/foundations/iconography) to add Salt styled alphanumeric text or symbols as adornments. Wrap multiple start or end adornments in a parent container and pass them to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
+You can use [text](/salt/components/text) and [icons](/salt/foundations/assets) to add Salt styled alphanumeric text or symbols as adornments. Wrap multiple start or end adornments in a parent container and pass them to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
 
 **Note:** Don't rely on static adornments for labelling, screen readers will not read them out.
 

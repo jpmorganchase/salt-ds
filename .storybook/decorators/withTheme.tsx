@@ -1,9 +1,9 @@
 import {
+  getCharacteristicValue,
   ModeValues,
   Panel,
   SaltProvider,
   SaltProviderNext,
-  getCharacteristicValue,
   useTheme,
 } from "@salt-ds/core";
 import type { Decorator } from "@storybook/react-vite";

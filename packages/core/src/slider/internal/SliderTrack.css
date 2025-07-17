@@ -1,5 +1,5 @@
 .saltSliderTrack {
-  --slider-track-background: var(--salt-track-borderColor);
+  --slider-track-background: var(--salt-sentiment-neutral-track);
   --slider-track-fill: var(--salt-accent-borderColor);
   --slider-progressPercentage: 0%;
   --slider-tick-height: calc((var(--salt-size-selectable) - var(--salt-size-bar)) / 2);
@@ -115,7 +115,7 @@
 
 .saltSliderTrack-disabled {
   --slider-track-fill: var(--salt-accent-borderColor-disabled);
-  --slider-track-background: var(--salt-track-borderColor-disabled);
+  --slider-track-background: var(--salt-sentiment-neutral-track-disabled);
 }
 
 .saltSliderTrack-ticks {

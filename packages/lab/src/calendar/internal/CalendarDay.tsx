@@ -1,9 +1,9 @@
 import {
+  makePrefixer,
   type RenderPropsType,
+  renderProps,
   Tooltip,
   type TooltipProps,
-  makePrefixer,
-  renderProps,
   useForkRef,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";

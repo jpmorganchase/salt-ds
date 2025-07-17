@@ -1,9 +1,9 @@
 import {
   Children,
   type ComponentType,
-  type ReactNode,
   cloneElement,
   isValidElement,
+  type ReactNode,
   useEffect,
   useRef,
 } from "react";

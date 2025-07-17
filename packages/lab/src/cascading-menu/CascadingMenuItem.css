@@ -12,6 +12,9 @@
   user-select: none;
   white-space: nowrap;
   text-overflow: ellipsis;
+  border-top: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) transparent;
+  box-sizing: border-box;
 }
 
 .saltCascadingMenuItem-menuItemText {
@@ -33,7 +36,7 @@
 }
 
 .saltCascadingMenuItem.saltCascadingMenuItem-menuItemDivider {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .saltCascadingMenuItem-menuItemHover:hover {
@@ -42,5 +45,7 @@
 
 /* extra specificity requred to override ListItem selected */
 .saltCascadingMenuItem.saltCascadingMenuItem-menuItemBlurSelected {
-  background: var(--salt-selectable-background-blurSelected) !important;
+  background: var(--salt-selectable-background-selected);
+  border-top-color: var(--salt-selectable-borderColor-selected);
+  border-bottom-color: var(--salt-selectable-borderColor-selected);
 }

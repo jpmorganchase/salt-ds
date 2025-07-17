@@ -13,7 +13,7 @@ import {
   UserIcon,
 } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import { type FC, useState } from "react";
+import { type Dispatch, type FC, type SetStateAction, useState } from "react";
 
 export default {
   title: "Patterns/Vertical Navigation",
@@ -116,6 +116,73 @@ SingleLevel.parameters = {
   layout: "fullscreen",
 };
 
+const isParentOfActiveItem = (
+  children: NavigationItemData[],
+  activeName: string,
+): boolean => {
+  return children.some((child: NavigationItemData) => {
+    if (child.name === activeName) return true;
+    return child.children
+      ? isParentOfActiveItem(child.children, activeName)
+      : false;
+  });
+};
+
+const RecursiveNavItem: FC<{
+  item: NavigationItemData;
+  active: string;
+  setActive: Dispatch<SetStateAction<string>>;
+}> = ({ item, active, setActive }) => {
+  const [expanded, setExpanded] = useState<string[]>([]);
+
+  const handleExpand = (item: NavigationItemData) => () => {
+    const isExpanded = expanded.includes(item.name);
+    setExpanded(
+      isExpanded
+        ? expanded.filter((name) => name !== item.name)
+        : [...expanded, item.name],
+    );
+  };
+
+  return (
+    <li style={{ listStyle: "none" }} key={item.name}>
+      <NavigationItem
+        active={active === item.name}
+        blurActive={
+          item.children && !expanded.includes(item.name)
+            ? isParentOfActiveItem(item.children, active)
+            : false
+        }
+        href={item.href}
+        expanded={expanded.includes(item.name)}
+        orientation="vertical"
+        onClick={(event) => {
+          // prevent default to avoid navigation in storybook example
+          event.preventDefault();
+          if (item.href) {
+            setActive(item.name);
+          }
+        }}
+        level={item.level || 0}
+        onExpand={handleExpand(item)}
+        parent={!!item.children}
+      >
+        {item.name}
+      </NavigationItem>
+      {item.children &&
+        expanded.includes(item.name) &&
+        item.children.map((child) => (
+          <RecursiveNavItem
+            item={{ ...child, level: (item.level || 0) + 1 }}
+            key={item.name}
+            active={active}
+            setActive={setActive}
+          />
+        ))}
+    </li>
+  );
+};
+
 export const Nested = () => {
   const navigationData = [
     { name: "Overview", href: "#" },
@@ -134,64 +201,6 @@ export const Nested = () => {
   ];
 
   const [active, setActive] = useState(navigationData[0].name);
-  const [expanded, setExpanded] = useState<string[]>([]);
-
-  const handleExpand = (item: NavigationItemData) => () => {
-    const isExpanded = expanded.includes(item.name);
-    setExpanded(
-      isExpanded
-        ? expanded.filter((name) => name !== item.name)
-        : [...expanded, item.name],
-    );
-  };
-
-  const isParentOfActiveItem = (
-    children: NavigationItemData[],
-    activeName: string,
-  ): boolean => {
-    return children.some((child: NavigationItemData) => {
-      if (child.name === activeName) return true;
-      return child.children
-        ? isParentOfActiveItem(child.children, activeName)
-        : false;
-    });
-  };
-
-  const RecursiveNavItem: FC<{ item: NavigationItemData }> = ({ item }) => {
-    return (
-      <li style={{ listStyle: "none" }} key={item.name}>
-        <NavigationItem
-          active={active === item.name}
-          blurActive={
-            item.children && !expanded.includes(item.name)
-              ? isParentOfActiveItem(item.children, active)
-              : false
-          }
-          href={item.href}
-          expanded={expanded.includes(item.name)}
-          orientation="vertical"
-          onClick={(event) => {
-            // prevent default to avoid navigation in storybook example
-            event.preventDefault();
-            setActive(item.name);
-          }}
-          level={item.level || 0}
-          onExpand={handleExpand(item)}
-          parent={!!item.children}
-        >
-          {item.name}
-        </NavigationItem>
-        {item.children &&
-          expanded.includes(item.name) &&
-          item.children.map((child) => (
-            <RecursiveNavItem
-              item={{ ...child, level: (item.level || 0) + 1 }}
-              key={item.name}
-            />
-          ))}
-      </li>
-    );
-  };
 
   return (
     <BorderLayout>
@@ -214,7 +223,12 @@ export const Nested = () => {
               style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
               {navigationData.map((item) => (
-                <RecursiveNavItem item={item} key={item.name} />
+                <RecursiveNavItem
+                  item={item}
+                  key={item.name}
+                  active={active}
+                  setActive={setActive}
+                />
               ))}
             </StackLayout>
           </nav>

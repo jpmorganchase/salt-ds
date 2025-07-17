@@ -1,5 +1,5 @@
-import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
 import type { CountryCode } from "@salt-ds/countries";
+import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { Suspense } from "react";
 

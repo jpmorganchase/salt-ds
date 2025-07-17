@@ -125,7 +125,7 @@
 }
 
 .saltDraggable[class*="tabstrip"] .saltTab[aria-selected="true"]:before {
-  --tabs-tab-before-background: var(--salt-navigable-indicator-active);
+  --tabs-tab-before-background: var(--salt-navigable-accent-indicator-active);
 }
 
 .saltDraggable[class*="tabstrip"] .saltTab {

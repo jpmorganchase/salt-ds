@@ -68,3 +68,9 @@
   --saltCheckbox-outline: none;
   --saltRadioButton-outline: none;
 }
+
+@supports selector(:has(*)) {
+  .saltFormField:not(:has(.saltFormFieldLabel)) {
+    grid-template-areas: "controls";
+  }
+}

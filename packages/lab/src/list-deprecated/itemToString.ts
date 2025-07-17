@@ -7,7 +7,7 @@ export function itemToString(item: any) {
     return String(item);
   }
 
-  if (Object.prototype.hasOwnProperty.call(item, "label")) {
+  if (Object.hasOwn(item, "label")) {
     return String(item.label);
   }
 

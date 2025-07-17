@@ -122,7 +122,7 @@
 .ag-theme-salt-compact-light .ag-status-bar,
 .ag-theme-salt-compact-dark .ag-status-bar {
   border: none;
-  border-top: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-label-fontWeight);
@@ -166,7 +166,7 @@
 .ag-theme-salt-dark .ag-column-drop-horizontal,
 .ag-theme-salt-compact-light .ag-column-drop-horizontal,
 .ag-theme-salt-compact-dark .ag-column-drop-horizontal {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 

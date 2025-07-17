@@ -34,7 +34,7 @@
   color: var(--salt-content-primary-foreground);
 }
 .saltCalendarDay-outOfRange .saltCalendarDay-today > span:last-of-type {
-  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-secondary-foreground);
+  border-bottom: var(--salt-size-indicator) var(--salt-borderStyle-solid) var(--salt-content-secondary-foreground);
 }
 
 .saltCalendarDay-outOfRange.saltCalendarDay-highlighted:before {
@@ -79,8 +79,10 @@
 .saltCalendarDay-selectedSpan:hover {
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background-hover);
-  box-shadow: calc(var(--salt-size-fixed-100) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-size-fixed-100)
-    var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
+  box-shadow:
+    calc(var(--salt-size-fixed-100) * -2) 0 0 0 var(--salt-selectable-background-hover),
+    calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-size-fixed-100) var(--salt-selectable-borderColor-selected),
+    0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
 .saltCalendarDay-disabled,

@@ -1,12 +1,4 @@
 import {
-  type ChangeEvent,
-  type DragEvent,
-  type SyntheticEvent,
-  useCallback,
-  useState,
-} from "react";
-
-import {
   Banner,
   BannerContent,
   Button,
@@ -21,11 +13,18 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import {
+  type ChangeEvent,
+  type DragEvent,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 import {
-  type FilesValidator,
   createFileTypeValidator,
   createTotalSizeValidator,
+  type FilesValidator,
   validateFiles,
 } from "./utils";
 

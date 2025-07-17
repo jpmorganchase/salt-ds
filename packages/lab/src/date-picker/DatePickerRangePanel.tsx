@@ -4,8 +4,8 @@ import {
   FormFieldContext,
   type FormFieldContextValue,
   FormFieldHelperText,
-  StackLayout,
   makePrefixer,
+  StackLayout,
   useControlled,
   useForkRef,
 } from "@salt-ds/core";
@@ -16,12 +16,11 @@ import type {
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEventHandler,
-  type SyntheticEvent,
   forwardRef,
+  type SyntheticEvent,
   useCallback,
   useLayoutEffect,
   useRef,
@@ -341,17 +340,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   };
 
   const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
-
-  const handleStartCalendarBlur: FocusEventHandler<HTMLDivElement> = (
-    event,
-  ) => {
-    setHoveredDate(null);
-    StartCalendarGridProps?.onBlur?.(event);
-  };
-  const handleEndCalendarBlur: FocusEventHandler<HTMLDivElement> = (event) => {
-    setHoveredDate(null);
-    EndCalendarGridProps?.onBlur?.(event);
-  };
 
   const handleStartCalendarFocusedDateChange = useCallback(
     (event: SyntheticEvent | null, newFocusedDate: TDate) => {

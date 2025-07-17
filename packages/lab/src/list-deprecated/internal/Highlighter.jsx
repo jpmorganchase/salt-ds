@@ -1,7 +1,6 @@
-import { escapeRegExp } from "../../utils";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { escapeRegExp } from "../../utils";
 import highlighterCss from "./Highlighter.css";
 
 const baseName = "saltHighlighter";

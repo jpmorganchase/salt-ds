@@ -38,6 +38,7 @@ const entryPoints = {
   luxon: path.join(cwd, "src/luxon-adapter/index.ts"),
   dayjs: path.join(cwd, "src/dayjs-adapter/index.ts"),
   "date-fns": path.join(cwd, "src/date-fns-adapter/index.ts"),
+  "date-fns-tz": path.join(cwd, "src/date-fns-tz-adapter/index.ts"),
 };
 
 for (const [adapterName, inputPath] of Object.entries(entryPoints)) {
@@ -121,6 +122,11 @@ await fs.writeJSON(
         types: "./dist-types/date-fns-adapter/index.d.ts",
         import: "./dist-es/date-fns/index.js",
         require: "./dist-cjs/date-fns/index.js",
+      },
+      "./date-fns-tz": {
+        types: "./dist-types/date-fns-tz-adapter/index.d.ts",
+        import: "./dist-es/date-fns-tz/index.js",
+        require: "./dist-cjs/date-fns-tz/index.js",
       },
       "./dayjs": {
         types: "./dist-types/dayjs-adapter/index.d.ts",

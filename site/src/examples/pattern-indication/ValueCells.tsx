@@ -1,4 +1,4 @@
-import { FlexLayout, capitalize } from "@salt-ds/core";
+import { capitalize, FlexLayout } from "@salt-ds/core";
 import type { GridCellValueProps } from "@salt-ds/data-grid";
 import { Icon, type IconProps } from "@salt-ds/icons";
 import type { FC } from "react";

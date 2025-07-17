@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { platform } from "@floating-ui/dom";
 import type { Platform } from "@floating-ui/react";
 import {
@@ -8,6 +6,7 @@ import {
   StackLayout,
   Tooltip,
 } from "@salt-ds/core";
+import { useState } from "react";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

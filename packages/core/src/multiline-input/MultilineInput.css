@@ -23,36 +23,36 @@
 /* Style applied on hover */
 .saltMultilineInput:hover {
   background: var(--multilineInput-background-hover);
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-text);
 }
 
 /* Style applied if `bordered={true}` */
 .saltMultilineInput-bordered.saltMultilineInput {
-  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--multilineInput-borderColor);
 }
 
 .saltMultilineInput-bordered.saltMultilineInput:hover {
-  border-style: var(--salt-editable-borderStyle-hover);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--multilineInput-borderColor-hover);
 }
 
 /* Style applied if focused or active when `bordered={true}` */
 .saltMultilineInput-bordered.saltMultilineInput-focused,
 .saltMultilineInput-bordered.saltMultilineInput-focused:hover {
-  border-style: var(--salt-editable-borderStyle-active);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--multilineInput-borderColor-active);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
 .saltMultilineInput-bordered.saltMultilineInput-readOnly,
 .saltMultilineInput-bordered.saltMultilineInput-readOnly:hover {
-  border-style: var(--salt-editable-borderStyle-readonly);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltMultilineInput-bordered.saltMultilineInput-disabled,
 .saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
-  border-style: var(--salt-editable-borderStyle-disabled);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -62,28 +62,28 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--multilineInput-borderColor);
 }
 
 .saltMultilineInput:hover .saltMultilineInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--multilineInput-borderColor-hover);
 }
 
 .saltMultilineInput-focused .saltMultilineInput-activationIndicator,
 .saltMultilineInput-focused:hover .saltMultilineInput-activationIndicator {
-  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--multilineInput-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--multilineInput-borderColor-active);
 }
 
 .saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
 .saltMultilineInput-readOnly:hover .saltMultilineInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltMultilineInput-disabled .saltMultilineInput-activationIndicator,
 .saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -164,7 +164,7 @@
 .saltMultilineInput-focused,
 .saltMultilineInput-focused:hover {
   background: var(--multilineInput-background-active);
-  cursor: var(--salt-cursor-active);
+  cursor: var(--salt-cursor-text);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
 }
 
