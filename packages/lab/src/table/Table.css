@@ -182,7 +182,7 @@ table.saltTable tr {
 }
 
 table.saltTable tbody tr:not(:last-child) {
-  border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-fixed-100);
+  border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
 }
 
 table.saltTable-divider-none tbody tr {
