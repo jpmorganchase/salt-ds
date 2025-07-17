@@ -2,7 +2,14 @@ import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  forwardRef,
+  type MouseEvent,
+  useRef,
+} from "react";
+import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -21,7 +28,16 @@ export const VerticalNavigationItemTrigger = forwardRef<
   HTMLAnchorElement,
   VerticalNavigationItemTriggerProps
 >(function VerticalNavigationItemTrigger(props, ref) {
-  const { className, children, render, href, ...rest } = props;
+  const {
+    className,
+    children,
+    render,
+    href,
+    onFocus,
+    onBlur,
+    onMouseDown,
+    ...rest
+  } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -31,13 +47,38 @@ export const VerticalNavigationItemTrigger = forwardRef<
   });
 
   const isLink = href != null;
+  const { active, setFocusVisible } = useVerticalNavigationItem();
+
+  const wasMouseDownRef = useRef(false);
+
+  const handleFocus = (event: FocusEvent<never>) => {
+    if (!wasMouseDownRef.current) {
+      setFocusVisible(true);
+    }
+    wasMouseDownRef.current = false;
+    onFocus?.(event);
+  };
+
+  const handleBlur = (event: FocusEvent<never>) => {
+    setFocusVisible(false);
+    onBlur?.(event);
+  };
+
+  const handleMouseDown = (event: MouseEvent<never>) => {
+    wasMouseDownRef.current = true;
+    onMouseDown?.(event);
+  };
 
   return (
     <ItemAction
       className={clsx(withBaseName(), className)}
       href={href}
+      aria-current={href && active ? "page" : undefined}
       render={render ?? (isLink ? undefined : <button type="button" />)}
       ref={ref}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onMouseDown={handleMouseDown}
       {...rest}
     >
       {children}

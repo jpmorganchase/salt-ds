@@ -35,7 +35,7 @@ export const VerticalNavigationItemContent = forwardRef<
   const containerRef = useRef<HTMLSpanElement>(null);
   const handleRef = useForkRef(ref, containerRef);
 
-  const { active } = useVerticalNavigationItem();
+  const { active, focusVisible } = useVerticalNavigationItem();
   const { setDirectIcons, iconPaddingCount } = useSubMenuContext();
   const [hasIcon, setHasIcon] = useState(false);
 
@@ -44,7 +44,7 @@ export const VerticalNavigationItemContent = forwardRef<
   useEffect(() => {
     const checkForIcons = () => {
       const iconElement = containerRef.current?.querySelector<HTMLElement>(
-        ".saltIcon:not(.saltVerticalNavigationItem-indicator)",
+        ".saltIcon:not(.saltVerticalNavigationItemExpansionIcon)",
       );
 
       setHasIcon(Boolean(iconElement));
@@ -84,6 +84,7 @@ export const VerticalNavigationItemContent = forwardRef<
         withBaseName(),
         {
           [withBaseName("active")]: active,
+          [withBaseName("focused")]: focusVisible,
         },
         className,
       )}

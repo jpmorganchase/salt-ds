@@ -6,6 +6,7 @@ import {
   type SyntheticEvent,
   useCallback,
   useMemo,
+  useState,
 } from "react";
 import { CollapsibleContext } from "./CollapsibleContext";
 
@@ -47,6 +48,8 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
       state: "open",
     });
 
+    const [panelId, setPanelId] = useState<string | undefined>(undefined);
+
     const setOpen = useCallback(
       (event: SyntheticEvent<HTMLButtonElement>, newOpen: boolean) => {
         setOpenState(newOpen);
@@ -59,8 +62,10 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
       () => ({
         open,
         setOpen,
+        panelId,
+        setPanelId,
       }),
-      [open, setOpen],
+      [open, setOpen, panelId],
     );
 
     return (
