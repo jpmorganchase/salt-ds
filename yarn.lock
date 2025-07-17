@@ -3240,6 +3240,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/highcharts-theme@workspace:packages/highcharts-theme":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"
+  peerDependencies:
+    "@salt-ds/theme": "workspace:^"
+    highcharts: ^10.2.0
+    highcharts-react-official: ^3.2.2
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/icons@npm:^1.13.2, @salt-ds/icons@workspace:^, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
