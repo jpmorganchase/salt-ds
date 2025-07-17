@@ -44,7 +44,7 @@ export const VerticalNavigationItemContent = forwardRef<
   useEffect(() => {
     const checkForIcons = () => {
       const iconElement = containerRef.current?.querySelector<HTMLElement>(
-        ".saltIcon:not(.saltVerticalNavigationItem-indicator)",
+        ".saltIcon:not(.saltVerticalNavigationItemExpansionIcon)",
       );
 
       setHasIcon(Boolean(iconElement));

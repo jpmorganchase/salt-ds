@@ -70,7 +70,7 @@
   border-color: var(--salt-navigable-accent-borderColor-active);
 }
 
-.saltVerticalNavigationItemContent .saltVerticalNavigationItem-indicator {
+.saltVerticalNavigationItemContent .saltVerticalNavigationItemExpansionIcon {
   margin-left: auto;
   padding-top: var(--salt-spacing-25);
 }

@@ -3,6 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -31,11 +32,13 @@ export const VerticalNavigationItemTrigger = forwardRef<
   });
 
   const isLink = href != null;
+  const { active } = useVerticalNavigationItem();
 
   return (
     <ItemAction
       className={clsx(withBaseName(), className)}
       href={href}
+      aria-current={href && active ? "page" : undefined}
       render={render ?? (isLink ? undefined : <button type="button" />)}
       ref={ref}
       {...rest}
