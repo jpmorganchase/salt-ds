@@ -122,7 +122,7 @@ table.saltTable tfoot.saltTable-tfoot-sticky {
 }
 
 table.saltTable tfoot.saltTable-tfoot tr {
-  border-top: var(--salt-separable-borderStyle) var(--table-footer-divider-color) var(--salt-size-fixed-100);
+  border-top: var(--salt-borderStyle-solid) var(--table-footer-divider-color) var(--salt-size-fixed-100);
 }
 
 table.saltTable tfoot.saltTable-tfoot-primary tr {
