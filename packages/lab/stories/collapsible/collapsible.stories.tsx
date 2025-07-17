@@ -37,8 +37,8 @@ export default {
 export const Default: StoryFn<typeof Collapsible> = (args) => (
   <Collapsible {...args}>
     <CollapsibleTrigger>Click</CollapsibleTrigger>
-    <CollapsiblePanel>
-      <p style={{ maxWidth: "80ch" }}>
+    <CollapsiblePanel data-testid="collapsible-panel">
+      <p data-testid="panel-content" style={{ maxWidth: "80ch" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -123,7 +123,7 @@ export const ContactDetails = () => {
   const [expandedDetails, setExpandedDetails] = useState(false);
 
   return (
-    <Collapsible onToggle={(_, expanded) => setExpandedDetails(expanded)}>
+    <Collapsible onOpenChange={(_, expanded) => setExpandedDetails(expanded)}>
       <StackLayout direction="row" gap={2} style={{ width: "400px" }}>
         <Avatar
           src={persona as string}

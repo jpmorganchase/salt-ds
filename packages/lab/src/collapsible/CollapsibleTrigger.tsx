@@ -22,10 +22,10 @@ export const CollapsibleTrigger = forwardRef<
 >(function CollapsibleTrigger(props, ref) {
   const { className, onClick, render, ...rest } = props;
 
-  const { expanded, setExpanded, panelId } = useCollapsibleContext();
+  const { open, setOpen, panelId } = useCollapsibleContext();
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setExpanded(event, !expanded);
+    setOpen(event, !open);
     onClick?.(event);
   };
 
@@ -33,7 +33,7 @@ export const CollapsibleTrigger = forwardRef<
     ref,
     className: clsx(withBaseName(), className),
     type: "button",
-    "aria-expanded": expanded,
+    "aria-expanded": open,
     "aria-controls": panelId,
     onClick: handleClick,
     render,

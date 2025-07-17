@@ -180,7 +180,7 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible onToggle={(_, expanded) => setCollapsed(!expanded)}>
+      <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
         <VerticalNavigationItem
           active={location.pathname.startsWith(item.href) && collapsed}
         >
@@ -442,7 +442,7 @@ function DualActionItem(props: { item: NavItem }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible expanded={location.pathname.startsWith(item.href)}>
+      <Collapsible open={location.pathname.startsWith(item.href)}>
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<MockedTrigger to={item.href} />}>
