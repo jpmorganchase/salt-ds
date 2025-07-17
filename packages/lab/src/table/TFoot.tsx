@@ -6,8 +6,6 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export const TFootVariantValues = ["primary", "secondary", "tertiary"] as const;
-
 export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   /**
    * If footer is positioned with sticky styling.

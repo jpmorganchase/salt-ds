@@ -6,8 +6,6 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export const THeadVariantValues = ["primary", "secondary", "tertiary"] as const;
-
 export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
   /**
    * If header is positioned with sticky styling.

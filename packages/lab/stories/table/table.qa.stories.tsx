@@ -32,7 +32,7 @@ const TableComp = (props: TableProps) => {
         </TR>
       </THead>
       <TBody>
-        {Array.from({ length: 3 }, (_, x) => {
+        {Array.from({ length: NUM_ROWS }, (_, x) => {
           return (
             <TR key={`tr-${x}`}>
               {Array.from({ length: NUM_COLS }, (_, i) => {
@@ -55,11 +55,22 @@ const TableComp = (props: TableProps) => {
 
 export const QA: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={1} itemPadding={12} width={1200}>
-    <TableComp />
-    <TableComp variant="secondary" />
-    <TableComp variant="tertiary" />
+    {["primary", "secondary", "tertiary" as TableProps['variant']].map((variant) => {
+      return (
+        <>
+          <TableComp variant={variant} />
+          <TableComp variant={variant} zebra="primary" />
+          <TableComp variant={variant} zebra="secondary" />
+          <TableComp variant={variant} zebra="tertiary" />
+          <TableComp variant={variant} divider="primary" />
+          <TableComp variant={variant} divider="secondary" />
+          <TableComp variant={variant} divider="tertiary" />
+        </>
+      );
+    })}
   </QAContainer>
 );
+
 QA.parameters = {
   chromatic: { disableSnapshot: false },
 };
