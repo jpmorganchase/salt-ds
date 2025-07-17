@@ -12,13 +12,12 @@ data:
 
 ## Import
 
-To install the theme package, ensure you have a supported version of Highcharts installed and add `@salt-ds/highcharts-theme` via your package manager
+To install the Salt Highcharts theme package, ensure you have a supported version of Highcharts installed and add `@salt-ds/highcharts-theme` via your package manager
 
 ```bash
 npm install @salt-ds/highcharts-theme
 # or
 yarn add @salt-ds/highcharts-theme
-
 ```
 
 ### Import Highcharts CSS
@@ -64,3 +63,12 @@ If you already have a global options object, you can call `Highcharts.setOptions
 For granular control, you can also use the `Highcharts.merge()` utility function to deep merge the `highchartsOptionsSalt` with your existing options object, including at the chart level.
 
 </Callout>
+
+### Patterns and Fills
+
+The Salt Highcharts theme also provides Salt patterns and fills that can be applied to create visible contrast between series. 
+
+For example, the `salt-line-patterns` class applies
+a line pattern to each series in a Line Chart. See the [Examples](./examples) section to see how to apply fills and patterns in specific charts.
+
+Guidance on Fills TBA.
