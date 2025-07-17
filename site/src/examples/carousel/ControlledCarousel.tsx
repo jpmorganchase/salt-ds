@@ -54,15 +54,29 @@ export const ControlledCarousel = (): ReactElement => {
         className={styles.carousel}
         getEmblaApi={setEmblaApi}
       >
+        <StackLayout direction="row" gap={1}>
+          <CarouselPreviousButton
+            tabIndex={!isMobile ? -1 : 0}
+            appearance={!isMobile ? "transparent" : "bordered"}
+          />
+          {!isMobile ? <CarouselTabList /> : null}
+          <CarouselNextButton
+            tabIndex={!isMobile ? -1 : 0}
+            appearance={!isMobile ? "transparent" : "bordered"}
+          />
+          <CarouselProgressLabel />
+        </StackLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
+            const id = `${slideId}-${index}`;
             return (
               <CarouselCard
+                role={!isMobile ? "tabpanel" : "group"}
+                aria-roledescription={!isMobile ? undefined : "slide"}
                 className={styles.carouselSlide}
-                key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-                id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-                aria-label={slide.title}
-                appearance={"bordered"}
+                key={`slide-${id}`}
+                aria-labelledby={id}
+                appearance="bordered"
                 media={
                   <img
                     alt={`stock content to show in carousel slide ${index}`}
@@ -70,23 +84,19 @@ export const ControlledCarousel = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={<Text styleAs={"h3"}>{slide.title}</Text>}
+                header={
+                  <Text styleAs="h3" id={id}>
+                    {slide.title}
+                  </Text>
+                }
               >
                 <Text>{slide.content}</Text>
               </CarouselCard>
             );
           })}
         </CarouselSlides>
-        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-          <StackLayout direction={"row"} gap={1}>
-            <CarouselPreviousButton />
-            <CarouselNextButton />
-            <CarouselProgressLabel />
-          </StackLayout>
-          {!isMobile ? <CarouselTabList /> : null}
-        </FlexLayout>
       </Carousel>
-      <FlexLayout justify={"center"} align={"center"} direction={"row"}>
+      <FlexLayout justify="center" align="center" direction="row">
         <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
       </FlexLayout>
     </StackLayout>

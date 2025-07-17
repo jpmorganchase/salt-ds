@@ -9,10 +9,12 @@ import {
   type KeyboardEvent,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
 import { createCustomSettle } from "./createCustomSettle";
+import { getVisibleSlideDescriptions } from "./getVisibleSlideDescriptions";
 
 /**
  * Props for the CarouselSlides component.
@@ -34,23 +36,20 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
 
     const usingArrowNavigation = useRef<boolean>();
+    const [liveAnnouncement, setLiveAnnouncement] = useState<string>("");
 
     useEffect(() => {
       const handleSettle = (emblaApi: EmblaCarouselType) => {
-        if (!usingArrowNavigation.current) {
-          return;
-        }
-        const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
-        const snappedSlide = emblaApi.slideNodes()[slideIndexInView];
-        if (snappedSlide) {
-          const focusableElements = snappedSlide.querySelectorAll<HTMLElement>(
-            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
-          );
-          if (focusableElements.length > 0) {
-            focusableElements[0].focus();
-          }
-        }
-        usingArrowNavigation.current = false;
+        const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
+        const contentDescriptions = getVisibleSlideDescriptions(
+          emblaApi,
+          selectedScrollSnap,
+        );
+        const announcement =
+          contentDescriptions?.length > 1
+            ? `Currently visible slides: ${contentDescriptions.join(", ")}`
+            : contentDescriptions[0];
+        setLiveAnnouncement(announcement);
       };
 
       if (!emblaApi) {
@@ -85,15 +84,33 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       onKeyDown?.(event);
     };
 
+    const handleContainerKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.stopPropagation();
+      }
+    };
+
     return (
-      <div
-        onKeyDown={handleKeyDown}
-        ref={carouselRef}
-        className={clsx(withBaseName(), className)}
-        {...rest}
-      >
-        <div className={withBaseName("container")}>{children}</div>
-      </div>
+      <>
+        <div
+          aria-live={"off"}
+          onKeyDown={handleKeyDown}
+          ref={carouselRef}
+          className={clsx(withBaseName(), className)}
+          tabIndex={0}
+          {...rest}
+        >
+          <div
+            className={withBaseName("container")}
+            onKeyDown={handleContainerKeyDown}
+          >
+            {children}
+          </div>
+        </div>
+        <div aria-live="polite" className={withBaseName("sr-only")}>
+          {liveAnnouncement}
+        </div>
+      </>
     );
   },
 );

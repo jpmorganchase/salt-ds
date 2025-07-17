@@ -1,6 +1,6 @@
 import {
   Carousel,
-  CarouselAnnouncement,
+  CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -9,10 +9,17 @@ import {
 } from "@salt-ds/embla-carousel";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
-import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  H2,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
-import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
+import { sliderData } from "./exampleData";
 import { renderSlides } from "./renderSlides";
 
 export default {
@@ -21,77 +28,83 @@ export default {
 } as Meta<typeof Carousel>;
 
 const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
     <Carousel
-      aria-label="Account overview"
+      aria-label="Carousel cards example"
       className="carousel"
-      emblaPlugins={[
-        CarouselAnnouncement(),
-        Classnames({
-          snapped: "carouselSlideIsSnapped",
-        }),
-      ]}
       {...args}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <Text styleAs={"h2"} className="carouselHeading">
-          Title
-        </Text>
-      </FlexLayout>
-      <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
+      <H2 className="carouselHeading">Title</H2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
+      >
+        <StackLayout direction="row" gap={1}>
+          <CarouselPreviousButton
+            tabIndex={!isMobile ? -1 : 0}
+            appearance={!isMobile ? "transparent" : "bordered"}
+          />
+          {!isMobile ? <CarouselTabList /> : null}
+          <CarouselNextButton
+            tabIndex={!isMobile ? -1 : 0}
+            appearance={!isMobile ? "transparent" : "bordered"}
+          />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselTabList />
-      </FlexLayout>
+        <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
+      </div>
     </Carousel>
   );
 };
 
 const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   const slides = Array.from(Array(4).keys());
   const slideId = useId();
   return (
     <Carousel
-      aria-label="carousel example"
-      className={"carousel"}
-      emblaPlugins={[CarouselAnnouncement()]}
+      aria-label="default carousel example"
+      className="carousel"
       {...args}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <Text styleAs={"h2"} className="carouselHeading">
-          Title
-        </Text>
+      <FlexLayout justify="start" direction="row" gap={1}>
+        <CarouselPreviousButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        {!isMobile ? <CarouselTabList /> : null}
+        <CarouselNextButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            role="tabpanel"
-            aria-roledescription="slide"
-            aria-label={`Example slide ${index + 1}`}
-            className="carouselSlide"
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
-          >
-            <div className="carouselNumber">
-              <Text styleAs={"display1"} className="carouselHeading">
-                {index + 1}
-              </Text>
+        {slides.map((index) => {
+          return (
+            <div
+              role="tabpanel"
+              aria-label={`Example slide ${index + 1}`}
+              className="carouselSlide"
+              key={`slide-${slideId}-${index}`}
+            >
+              <div className="carouselNumber">
+                <Text styleAs="display1" className="carouselHeading">
+                  {index + 1}
+                </Text>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
-          <CarouselProgressLabel />
-        </StackLayout>
-        <CarouselTabList />
-      </FlexLayout>
     </Carousel>
   );
 };
@@ -106,52 +119,62 @@ Loop.args = {
 };
 
 export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
-  const slides = Array.from(Array(7).keys());
   const slideId = useId();
   return (
     <Carousel
-      aria-label="carousel example"
-      className={"carouselMultipleSlide"}
+      aria-label="Multiple slides carousel example"
+      className="carouselMultipleSlide"
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
-      emblaPlugins={[CarouselAnnouncement()]}
       {...args}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <Text styleAs={"h2"} className="carouselHeading">
-          Title
-        </Text>
-      </FlexLayout>
-      <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            aria-label={`Example slide ${index + 1}`}
-            aria-roledescription="slide"
-            className="carouselSlide"
-            id={`${slideId}-${index}`}
-            key={`${slideId}-${index}`}
-          >
-            <div className="carouselNumber">
-              <Text styleAs={"display1"} className="carouselHeading">
-                {index + 1}
-              </Text>
-            </div>
-          </div>
-        ))}
-      </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
+      <H2 className="carouselHeading">Title</H2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
+      >
+        <StackLayout direction="row" gap={1} align="center">
           <CarouselPreviousButton />
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselTabList />
-      </FlexLayout>
+        <CarouselSlides>
+          {sliderData.map((slide, index) => {
+            return (
+              <CarouselCard
+                className="carouselSlide"
+                key={`slide-${slideId}-${index}`}
+                aria-labelledby={`${slideId}-${index}`}
+                appearance="bordered"
+                media={
+                  <img
+                    alt={`stock content to show in carousel slide ${index}`}
+                    className="carouselImagePlaceholder"
+                    src={slide.image}
+                  />
+                }
+                header={
+                  <Text styleAs="h3" id={`${slideId}-${index}`}>
+                    {slide.title}
+                  </Text>
+                }
+              >
+                <Text>{slide.content}</Text>
+              </CarouselCard>
+            );
+          })}
+        </CarouselSlides>
+      </div>
     </Carousel>
   );
 };
 
 export const FadePlugin = CarouselCardExample.bind({});
 FadePlugin.args = {
-  emblaOptions: { duration: 30 },
+  emblaOptions: {
+    duration: 30,
+  },
   emblaPlugins: [Fade()],
 };
