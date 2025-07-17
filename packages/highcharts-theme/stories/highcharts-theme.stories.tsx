@@ -1,7 +1,7 @@
 import type { Decorator } from "@storybook/react-vite";
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
 import accessibility from "highcharts/modules/accessibility";
+import HighchartsReact from "highcharts-react-official";
 
 import "@salt-ds/highcharts-theme/stories/highcharts-default.css";
 import "@salt-ds/highcharts-theme/index.css";

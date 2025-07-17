@@ -138,7 +138,9 @@
   cursor: pointer;
   fill: #999999;
   font-size: 0.7em;
-  transition: fill 250ms, font-size 250ms;
+  transition:
+    fill 250ms,
+    font-size 250ms;
 }
 
 .highcharts-credits:hover {
@@ -405,12 +407,18 @@ text.highcharts-data-label {
 .highcharts-treemap-series .highcharts-point {
   stroke-width: 1px;
   stroke: #e6e6e6;
-  transition: stroke 250ms, fill 250ms, fill-opacity 250ms;
+  transition:
+    stroke 250ms,
+    fill 250ms,
+    fill-opacity 250ms;
 }
 
 .highcharts-treemap-series .highcharts-point-hover {
   stroke: #999999;
-  transition: stroke 25ms, fill 25ms, fill-opacity 25ms;
+  transition:
+    stroke 25ms,
+    fill 25ms,
+    fill-opacity 25ms;
 }
 
 .highcharts-treemap-series .highcharts-above-level {
@@ -525,7 +533,9 @@ circle.highcharts-legend-nav-inactive {
   height: 0 !important;
   opacity: 0;
   overflow: hidden;
-  transition: opacity 250ms, height 250ms step-end;
+  transition:
+    opacity 250ms,
+    height 250ms step-end;
 }
 
 .highcharts-loading-inner {
@@ -589,19 +599,25 @@ circle.highcharts-legend-nav-inactive {
 }
 
 .highcharts-sankey-series .highcharts-link {
-  transition: fill 250ms, fill-opacity 250ms;
+  transition:
+    fill 250ms,
+    fill-opacity 250ms;
   fill-opacity: 0.5;
 }
 
 .highcharts-sankey-series .highcharts-point-hover.highcharts-link {
-  transition: fill 50ms, fill-opacity 50ms;
+  transition:
+    fill 50ms,
+    fill-opacity 50ms;
   fill-opacity: 1;
 }
 
 .highcharts-venn-series .highcharts-point {
   fill-opacity: 0.75;
   stroke: #cccccc;
-  transition: stroke 250ms, fill-opacity 250ms;
+  transition:
+    stroke 250ms,
+    fill-opacity 250ms;
 }
 
 .highcharts-venn-series .highcharts-point-hover {
@@ -819,13 +835,18 @@ input.highcharts-range-selector {
 
 /* Highcharts Maps */
 .highcharts-map-series .highcharts-point {
-  transition: fill 500ms, fill-opacity 500ms, stroke-width 250ms;
+  transition:
+    fill 500ms,
+    fill-opacity 500ms,
+    stroke-width 250ms;
   stroke: #cccccc;
   stroke-width: inherit;
 }
 
 .highcharts-map-series .highcharts-point-hover {
-  transition: fill 0ms, fill-opacity 0ms;
+  transition:
+    fill 0ms,
+    fill-opacity 0ms;
   fill-opacity: 0.5;
 }
 
@@ -896,7 +917,9 @@ input.highcharts-range-selector {
   background: none;
   color: #333333;
   cursor: pointer;
-  transition: background 250ms, color 250ms;
+  transition:
+    background 250ms,
+    color 250ms;
 }
 
 .highcharts-menu-item:hover {

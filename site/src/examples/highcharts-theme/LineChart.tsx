@@ -1,7 +1,6 @@
 import Highcharts, { type Options } from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-
 import accessibility from "highcharts/modules/accessibility";
+import HighchartsReact from "highcharts-react-official";
 
 accessibility(Highcharts);
 
