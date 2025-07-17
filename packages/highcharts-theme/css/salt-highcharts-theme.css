@@ -153,3 +153,7 @@
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
 }
+
+.highcharts-theme-salt .highcharts-point {
+  stroke: var(--salt-color-white);
+}
