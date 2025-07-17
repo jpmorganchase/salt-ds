@@ -401,7 +401,6 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
             setValue(value);
             console.log("on change value", value);
           }}
-          onValueChange={(value) => console.log("onValueChange", value)}
           format={(value) => {
             const formattedValue = new Intl.NumberFormat("en-GB", {
               notation: "compact",
@@ -499,4 +498,3 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
     </StackLayout>
   );
 };
-
