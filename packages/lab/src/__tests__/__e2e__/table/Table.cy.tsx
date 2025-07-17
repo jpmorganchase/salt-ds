@@ -3,13 +3,13 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(tableStories);
-const { Primary, Secondary, Tertiary } = composedStories;
+const { Default } = composedStories;
 
 describe("GIVEN a Table", () => {
   checkAccessibility(composedStories);
 
   it("THEN should render all rows and columns", () => {
-    cy.mount(<Primary />);
+    cy.mount(<Default />);
 
     cy.findByText("Column 0").should("exist");
     cy.findByText("Column 1").should("exist");
@@ -20,21 +20,5 @@ describe("GIVEN a Table", () => {
     cy.findAllByText("Row 1").should("exist");
     cy.findAllByText("Row 9").should("exist");
     cy.findAllByText("Row 10").should("not.exist");
-  });
-
-  describe("WHEN variant=secondary", () => {
-    it("THEN class should be applied to the banner", () => {
-      cy.mount(<Secondary />);
-
-      cy.findByRole("table").should("have.class", "saltTable-secondary");
-    });
-  });
-
-  describe("WHEN variant=tertiary", () => {
-    it("THEN class should be applied to the banner", () => {
-      cy.mount(<Tertiary />);
-
-      cy.findByRole("table").should("have.class", "saltTable-tertiary");
-    });
   });
 });

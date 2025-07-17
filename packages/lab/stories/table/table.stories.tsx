@@ -53,9 +53,9 @@ const Template: StoryFn = ({
       <Table {...args}>
         <THead {...THeadProps}>
           <TR {...TRProps}>
-            {Array.from({ length: NUM_COLS }, (_, i) => {
+            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
               return (
-                <TH {...THProps} key={`col-${i}`}>
+                <TH {...THProps} key={`col-${arrItem}`}>
                   Column {i}
                 </TH>
               );
@@ -63,12 +63,12 @@ const Template: StoryFn = ({
           </TR>
         </THead>
         <TBody {...TBodyProps}>
-          {Array.from({ length: NUM_ROWS }, (_, x) => {
+          {Array.from({ length: NUM_ROWS }, (arrItem, x) => {
             return (
-              <TR {...TRProps} key={`tr-${x}`}>
-                {Array.from({ length: NUM_COLS }, (_, i) => {
+              <TR {...TRProps} key={`tr-${arrItem}`}>
+                {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
                   return (
-                    <TD {...TDProps} key={`td-${i}`}>
+                    <TD {...TDProps} key={`td-${nestedArrItem}`}>
                       Row {x}
                     </TD>
                   );
@@ -79,9 +79,9 @@ const Template: StoryFn = ({
         </TBody>
         <TFoot {...TFootProps}>
           <TR {...TRProps}>
-            {Array.from({ length: NUM_COLS }, (_, i) => {
+            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
               return (
-                <TD {...TDProps} key={`footer-${i}`}>
+                <TD {...TDProps} key={`footer-${arrItem}`}>
                   Footer {i}
                 </TD>
               );
@@ -177,17 +177,17 @@ export const StickyHeaderFooter: StoryFn<typeof Text> = ({
       <Table>
         <THead {...THeadProps}>
           <TR>
-            {Array.from({ length: NUM_COLS }, (_, i) => {
-              return <TH key={`col-${i}`}>Column {i}</TH>;
+            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
+              return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;
             })}
           </TR>
         </THead>
         <TBody>
-          {Array.from({ length: NUM_ROWS }, (_, i) => {
+          {Array.from({ length: NUM_ROWS }, (arrItem, i) => {
             return (
-              <TR key={`tr-${i}`}>
-                {Array.from({ length: NUM_COLS }, (_, i) => {
-                  return <TD key={`td-${i}`}>Row {i}</TD>;
+              <TR key={`tr-${arrItem}`}>
+                {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
+                  return <TD key={`td-${nestedArrItem}`}>Row {i + 1}</TD>;
                 })}
               </TR>
             );
@@ -195,8 +195,8 @@ export const StickyHeaderFooter: StoryFn<typeof Text> = ({
         </TBody>
         <TFoot {...TFootProps}>
           <TR>
-            {Array.from({ length: NUM_COLS }, (_, i) => {
-              return <TD key={`footer-${i}`}>Footer {i}</TD>;
+            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
+              return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;
             })}
           </TR>
         </TFoot>

@@ -73,17 +73,17 @@ export const Dividers = (): ReactElement => {
       <Table divider={body as TableProps["divider"]}>
         <THead divider={header as TableProps["divider"]}>
           <TR>
-            {Array.from({ length: 3 }, (_, i) => {
-              return <TH key={`col-${i}`}>Column {i + 1}</TH>;
+            {Array.from({ length: 3 }, (arrItem, i) => {
+              return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;
             })}
           </TR>
         </THead>
         <TBody>
-          {Array.from({ length: 5 }, (_, x) => {
+          {Array.from({ length: 5 }, (arrItem, x) => {
             return (
-              <TR key={`tr-${x}`}>
-                {Array.from({ length: 3 }, (_, i) => {
-                  return <TD key={`td-${i}`}>Row {x + 1}</TD>;
+              <TR key={`tr-${arrItem}`}>
+                {Array.from({ length: 3 }, (nestedArrItem) => {
+                  return <TD key={`td-${nestedArrItem}`}>Row {x + 1}</TD>;
                 })}
               </TR>
             );
@@ -91,8 +91,8 @@ export const Dividers = (): ReactElement => {
         </TBody>
         <TFoot divider={footer as TableProps["divider"]}>
           <TR>
-            {Array.from({ length: 3 }, (_, i) => {
-              return <TD key={`footer-${i}`}>Footer {i + 1}</TD>;
+            {Array.from({ length: 3 }, (arrItem, i) => {
+              return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;
             })}
           </TR>
         </TFoot>

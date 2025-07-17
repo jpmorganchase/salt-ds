@@ -26,17 +26,17 @@ const TableComp = (props: TableProps) => {
     <Table {...props}>
       <THead>
         <TR>
-          {Array.from({ length: NUM_COLS }, (_, i) => {
-            return <TH key={`col-${i}`}>Column {i}</TH>;
+          {Array.from({ length: NUM_COLS }, (arrItem, i) => {
+            return <TH key={`col-${arrItem}`}>Column {i}</TH>;
           })}
         </TR>
       </THead>
       <TBody>
-        {Array.from({ length: NUM_ROWS }, (_, x) => {
+        {Array.from({ length: NUM_ROWS }, (arrItem, x) => {
           return (
-            <TR key={`tr-${x}`}>
-              {Array.from({ length: NUM_COLS }, (_, i) => {
-                return <TD key={`td-${i}`}>Row {x}</TD>;
+            <TR key={`tr-${arrItem}`}>
+              {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
+                return <TD key={`tr-td-${nestedArrItem}`}>Row {x}</TD>;
               })}
             </TR>
           );
@@ -44,8 +44,8 @@ const TableComp = (props: TableProps) => {
       </TBody>
       <TFoot>
         <TR>
-          {Array.from({ length: NUM_COLS }, (_, i) => {
-            return <TD key={`footer-${i}`}>Footer {i}</TD>;
+          {Array.from({ length: NUM_COLS }, (arrItem, i) => {
+            return <TD key={`footer-${arrItem}`}>Footer {i}</TD>;
           })}
         </TR>
       </TFoot>
@@ -55,19 +55,21 @@ const TableComp = (props: TableProps) => {
 
 export const QA: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={1} itemPadding={12} width={1200}>
-    {["primary", "secondary", "tertiary" as TableProps['variant']].map((variant) => {
-      return (
-        <>
-          <TableComp variant={variant} />
-          <TableComp variant={variant} zebra="primary" />
-          <TableComp variant={variant} zebra="secondary" />
-          <TableComp variant={variant} zebra="tertiary" />
-          <TableComp variant={variant} divider="primary" />
-          <TableComp variant={variant} divider="secondary" />
-          <TableComp variant={variant} divider="tertiary" />
-        </>
-      );
-    })}
+    {["primary", "secondary", "tertiary" as TableProps["variant"]].map(
+      (variant) => {
+        return (
+          <>
+            <TableComp variant={variant} />
+            <TableComp variant={variant} zebra="primary" />
+            <TableComp variant={variant} zebra="secondary" />
+            <TableComp variant={variant} zebra="tertiary" />
+            <TableComp variant={variant} divider="primary" />
+            <TableComp variant={variant} divider="secondary" />
+            <TableComp variant={variant} divider="tertiary" />
+          </>
+        );
+      },
+    )}
   </QAContainer>
 );
 
