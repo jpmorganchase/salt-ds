@@ -1,23 +1,32 @@
 /* Style applied to the root element */
 .saltMultilineInput {
-  align-items: center;
+  display: inline-grid;
   background: var(--multilineInput-background);
   border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--salt-content-primary-foreground);
-  display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
-  height: auto;
   min-height: var(--salt-size-base);
   min-width: 4em;
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
   position: relative;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  padding: 0 var(--salt-spacing-100);
+}
+
+.saltMultilineInput {
+  grid-template-areas: "start-adornment textarea end-adornment";
+  grid-template-columns: min-content 1fr min-content;
+}
+
+.saltMultilineInput-wrapper {
+  grid-area: textarea;
+  overflow: hidden;
+  margin: var(--salt-spacing-75) 0;
+  display: flex;
 }
 
 /* Style applied on hover */
@@ -183,8 +192,9 @@
 }
 
 .saltMultilineInput.saltMultilineInput-withAdornmentRow {
-  display: flex;
-  flex-wrap: wrap;
+  grid-template-areas: "start-adornment textarea textarea" "end-adornment end-adornment end-adornment";
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 1fr auto;
 }
 
 /* Style applied to adornment containers */
@@ -200,11 +210,13 @@
 .saltMultilineInput-startAdornmentContainer {
   align-self: self-start;
   padding-right: var(--salt-spacing-100);
+  grid-area: start-adornment;
 }
 
 /* Style applied to suffix adornment container */
 .saltMultilineInput-suffixAdornments {
   align-self: self-end;
+  grid-area: end-adornment;
 }
 
 /* Style applied to suffix adornment container when end adornments are provided */
@@ -251,21 +263,19 @@
 
 /* Style applied to inner textarea element */
 .saltMultilineInput-textarea {
+  appearance: none;
   background: none;
-  border: none;
-  box-sizing: border-box;
+  border: 0;
   color: inherit;
-  cursor: inherit;
-  flex-grow: 1;
   font: inherit;
-  letter-spacing: 0;
-  line-height: var(--salt-text-lineHeight);
-  margin: var(--salt-spacing-75) 0;
-  min-width: 0;
-  min-height: 0;
-  max-height: inherit;
   resize: vertical;
+  width: 100%;
   padding: 0;
+  box-sizing: border-box;
+  min-height: 0;
+  min-width: 0;
+  max-height: 100%;
+  overflow: auto;
 }
 
 /* Style applied to placeholder */
