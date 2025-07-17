@@ -1,1 +1,0 @@
-# @salt-ds/highcharts-theme
