@@ -23,7 +23,7 @@ export const CollapsiblePanel = (props: CollapsiblePanelProps) => {
   });
 
   const id = useId(idProp);
-  const { expanded, setPanelId } = useCollapsibleContext();
+  const { open, setPanelId } = useCollapsibleContext();
 
   useEffect(() => {
     if (id) {
@@ -35,8 +35,8 @@ export const CollapsiblePanel = (props: CollapsiblePanelProps) => {
     <div
       className={clsx(withBaseName(), className)}
       id={id}
-      aria-hidden={!expanded ? "true" : undefined}
-      hidden={!expanded}
+      aria-hidden={!open ? "true" : undefined}
+      hidden={!open}
       {...rest}
     >
       <div className={withBaseName("inner")}>{children}</div>

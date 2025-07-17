@@ -74,7 +74,7 @@ function NestedItem(props: { item: NavItem }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible onToggle={(_, expanded) => setCollapsed(!expanded)}>
+      <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
         <VerticalNavigationItem
           active={location.pathname.startsWith(item.href) && collapsed}
         >

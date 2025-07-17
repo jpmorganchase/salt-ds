@@ -12,19 +12,19 @@ import { CollapsibleContext } from "./CollapsibleContext";
 export interface CollapsibleProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onToggle"> {
   /**
-   * Whether the accordion is expanded.
+   * Whether the accordion is open.
    */
-  expanded?: boolean;
+  open?: boolean;
   /**
-   * Whether the accordion is expanded by default.
+   * Whether the accordion is open by default.
    */
-  defaultExpanded?: boolean;
+  defaultOpen?: boolean;
   /**
-   * Callback fired when the accordion is toggled.
+   * Callback fired when the accordion is opened or closed.
    */
-  onToggle?: (
+  onOpenChange?: (
     event: SyntheticEvent<HTMLButtonElement>,
-    expanded: boolean,
+    open: boolean,
   ) => void;
 }
 
@@ -34,33 +34,33 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
   function Collapsible(props, ref) {
     const {
       className,
-      expanded: expandedProp,
-      defaultExpanded,
-      onToggle,
+      open: openProp,
+      defaultOpen,
+      onOpenChange,
       ...rest
     } = props;
 
-    const [expanded, setExpandedState] = useControlled({
-      default: Boolean(defaultExpanded),
-      controlled: expandedProp,
+    const [open, setOpenState] = useControlled({
+      default: Boolean(defaultOpen),
+      controlled: openProp,
       name: "Collapsible",
-      state: "expanded",
+      state: "open",
     });
 
-    const setExpanded = useCallback(
-      (event: SyntheticEvent<HTMLButtonElement>, newExpanded: boolean) => {
-        setExpandedState(newExpanded);
-        onToggle?.(event, newExpanded);
+    const setOpen = useCallback(
+      (event: SyntheticEvent<HTMLButtonElement>, newOpen: boolean) => {
+        setOpenState(newOpen);
+        onOpenChange?.(event, newOpen);
       },
-      [onToggle],
+      [onOpenChange],
     );
 
     const contextValue = useMemo(
       () => ({
-        expanded,
-        setExpanded,
+        open,
+        setOpen,
       }),
-      [expanded, setExpanded],
+      [open, setOpen],
     );
 
     return (
