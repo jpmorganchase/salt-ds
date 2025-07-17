@@ -5,8 +5,11 @@ import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type CSSProperties,
+  type Dispatch,
   forwardRef,
+  type SetStateAction,
   useContext,
+  useState,
 } from "react";
 import { useSubMenuContext } from "./SubMenuContext";
 import verticalNavigationItemCss from "./VerticalNavigationItem.css";
@@ -18,12 +21,21 @@ export interface VerticalNavigationItemProps
 
 const withBaseName = makePrefixer("saltVerticalNavigationItem");
 
-const VerticalNavigationItemContext = createContext(
-  "saltVerticalNavigationItemContext",
-  {
-    active: false,
-  },
-);
+type VerticalNavigationItemContextType = {
+  active: boolean;
+  focusVisible: boolean;
+  setFocusVisible: Dispatch<SetStateAction<boolean>>;
+};
+
+const VerticalNavigationItemContext =
+  createContext<VerticalNavigationItemContextType>(
+    "saltVerticalNavigationItemContext",
+    {
+      active: false,
+      focusVisible: false,
+      setFocusVisible: () => {},
+    },
+  );
 
 export function useVerticalNavigationItem() {
   return useContext(VerticalNavigationItemContext);
@@ -43,9 +55,12 @@ export const VerticalNavigationItem = forwardRef<
   });
 
   const { depth } = useSubMenuContext();
+  const [focusVisible, setFocusVisible] = useState(false);
 
   return (
-    <VerticalNavigationItemContext.Provider value={{ active }}>
+    <VerticalNavigationItemContext.Provider
+      value={{ active, focusVisible, setFocusVisible }}
+    >
       <li
         ref={ref}
         className={clsx(withBaseName(), className)}

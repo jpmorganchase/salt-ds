@@ -9,6 +9,7 @@ describe("Given a Collapsible", () => {
   it("should have the correct accessibility attributes", () => {
     cy.mount(<Default />);
 
+    cy.findByRole("button").should("have.attr", "aria-controls");
     cy.findByRole("button").then((button) => {
       cy.findByTestId("collapsible-panel").should(
         "have.attr",
