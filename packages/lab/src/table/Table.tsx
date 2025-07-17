@@ -35,7 +35,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     className,
     variant = "primary",
     divider = "tertiary",
-    zebra = undefined,
+    zebra,
     ...rest
   },
   ref,
