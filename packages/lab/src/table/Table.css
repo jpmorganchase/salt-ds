@@ -85,7 +85,7 @@ table.saltTable thead.saltTable-thead-tertiary tr {
 }
 
 table.saltTable thead.saltTable-thead tr {
-  border-bottom: var(--salt-separable-borderStyle) var(--table-header-divider-color) var(--salt-size-fixed-100);
+  border-bottom: var(--salt-borderStyle-solid) var(--table-header-divider-color) var(--salt-size-fixed-100);
 }
 
 table.saltTable thead.saltTable-thead-divider-primary {
