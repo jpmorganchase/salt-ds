@@ -15,53 +15,53 @@
 } */
 
 .highcharts-theme-salt .highcharts-color-0 {
-  fill: var(--salt-palette-categorical-1);
-  stroke: var(--salt-palette-categorical-1);
+  fill: var(--salt-category-1-bold-background);
+  stroke: var(--salt-category-1-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-1 {
-  fill: var(--salt-palette-categorical-2);
-  stroke: var(--salt-palette-categorical-2);
+  fill: var(--salt-category-2-bold-background);
+  stroke: var(--salt-category-2-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-2 {
-  fill: var(--salt-palette-categorical-3);
-  stroke: var(--salt-palette-categorical-3);
+  fill: var(--salt-category-3-bold-background);
+  stroke: var(--salt-category-3-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-3 {
-  fill: var(--salt-palette-categorical-4);
-  stroke: var(--salt-palette-categorical-4);
+  fill: var(--salt-category-4-bold-background);
+  stroke: var(--salt-category-4-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-4 {
-  fill: var(--salt-palette-categorical-5);
-  stroke: var(--salt-palette-categorical-5);
+  fill: var(--salt-category-5-bold-background);
+  stroke: var(--salt-category-5-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-5 {
-  fill: var(--salt-palette-categorical-6);
-  stroke: var(--salt-palette-categorical-6);
+  fill: var(--salt-category-6-bold-background);
+  stroke: var(--salt-category-6-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-6 {
-  fill: var(--salt-palette-categorical-7);
-  stroke: var(--salt-palette-categorical-7);
+  fill: var(--salt-category-7-bold-background);
+  stroke: var(--salt-category-7-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-7 {
-  fill: var(--salt-palette-categorical-8);
-  stroke: var(--salt-palette-categorical-8);
+  fill: var(--salt-category-8-bold-background);
+  stroke: var(--salt-category-8-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-8 {
-  fill: var(--salt-palette-categorical-9);
-  stroke: var(--salt-palette-categorical-9);
+  fill: var(--salt-category-9-bold-background);
+  stroke: var(--salt-category-9-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-color-9 {
-  fill: var(--salt-palette-categorical-10);
-  stroke: var(--salt-palette-categorical-10);
+  fill: var(--salt-category-10-bold-background);
+  stroke: var(--salt-category-10-subtle-borderColor);
 }
 
 .highcharts-theme-salt .highcharts-point-inactive {
