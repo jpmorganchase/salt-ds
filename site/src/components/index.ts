@@ -10,8 +10,14 @@ export {
   Panel,
   SaltProvider,
   StackLayout,
+  Table,
+  TBody,
+  TD,
   Text,
-  Table, TBody, TD, TH, TR, TFoot, THead
+  TFoot,
+  TH,
+  THead,
+  TR,
 } from "@salt-ds/core";
 
 export * from "./ag-grid-doc";
@@ -36,21 +42,17 @@ export * from "./mdx";
 export * from "./patterns";
 export * from "./quick-links";
 
-
 /**
  * Salt -> Markdown/MDXProvider mappings
  */
 import {
   Table as table,
   TBody as tbody,
-  THead as thead,
-  TH as th,
   TD as td,
-  TR as tr,
   TFoot as tfoot,
+  TH as th,
+  THead as thead,
+  TR as tr,
 } from "@salt-ds/lab";
 
 export { table, tbody, thead, th, td, tr, tfoot };
-
-
-
