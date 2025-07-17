@@ -35,7 +35,7 @@ export const VerticalNavigationItemContent = forwardRef<
   const containerRef = useRef<HTMLSpanElement>(null);
   const handleRef = useForkRef(ref, containerRef);
 
-  const { active, focused } = useVerticalNavigationItem();
+  const { active, focusVisible } = useVerticalNavigationItem();
   const { setDirectIcons, iconPaddingCount } = useSubMenuContext();
   const [hasIcon, setHasIcon] = useState(false);
 
@@ -84,7 +84,7 @@ export const VerticalNavigationItemContent = forwardRef<
         withBaseName(),
         {
           [withBaseName("active")]: active,
-          [withBaseName("focused")]: focused,
+          [withBaseName("focused")]: focusVisible,
         },
         className,
       )}

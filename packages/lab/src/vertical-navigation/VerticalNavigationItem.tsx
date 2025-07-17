@@ -23,8 +23,8 @@ const withBaseName = makePrefixer("saltVerticalNavigationItem");
 
 type VerticalNavigationItemContextType = {
   active: boolean;
-  focused: boolean;
-  setFocused: Dispatch<SetStateAction<boolean>>;
+  focusVisible: boolean;
+  setFocusVisible: Dispatch<SetStateAction<boolean>>;
 };
 
 const VerticalNavigationItemContext =
@@ -32,8 +32,8 @@ const VerticalNavigationItemContext =
     "saltVerticalNavigationItemContext",
     {
       active: false,
-      focused: false,
-      setFocused: () => {},
+      focusVisible: false,
+      setFocusVisible: () => {},
     },
   );
 
@@ -55,11 +55,11 @@ export const VerticalNavigationItem = forwardRef<
   });
 
   const { depth } = useSubMenuContext();
-  const [focused, setFocused] = useState(false);
+  const [focusVisible, setFocusVisible] = useState(false);
 
   return (
     <VerticalNavigationItemContext.Provider
-      value={{ active, focused, setFocused }}
+      value={{ active, focusVisible, setFocusVisible }}
     >
       <li
         ref={ref}

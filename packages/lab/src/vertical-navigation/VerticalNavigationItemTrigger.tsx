@@ -6,6 +6,8 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
+  type MouseEvent,
+  useRef,
 } from "react";
 import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
@@ -26,7 +28,16 @@ export const VerticalNavigationItemTrigger = forwardRef<
   HTMLAnchorElement,
   VerticalNavigationItemTriggerProps
 >(function VerticalNavigationItemTrigger(props, ref) {
-  const { className, children, render, href, onFocus, onBlur, ...rest } = props;
+  const {
+    className,
+    children,
+    render,
+    href,
+    onFocus,
+    onBlur,
+    onMouseDown,
+    ...rest
+  } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -36,16 +47,26 @@ export const VerticalNavigationItemTrigger = forwardRef<
   });
 
   const isLink = href != null;
-  const { active, setFocused } = useVerticalNavigationItem();
+  const { active, setFocusVisible } = useVerticalNavigationItem();
+
+  const wasMouseDownRef = useRef(false);
 
   const handleFocus = (event: FocusEvent<never>) => {
-    setFocused(true);
+    if (!wasMouseDownRef.current) {
+      setFocusVisible(true);
+    }
+    wasMouseDownRef.current = false;
     onFocus?.(event);
   };
 
   const handleBlur = (event: FocusEvent<never>) => {
-    setFocused(false);
+    setFocusVisible(false);
     onBlur?.(event);
+  };
+
+  const handleMouseDown = (event: MouseEvent<never>) => {
+    wasMouseDownRef.current = true;
+    onMouseDown?.(event);
   };
 
   return (
@@ -57,6 +78,7 @@ export const VerticalNavigationItemTrigger = forwardRef<
       ref={ref}
       onFocus={handleFocus}
       onBlur={handleBlur}
+      onMouseDown={handleMouseDown}
       {...rest}
     >
       {children}
