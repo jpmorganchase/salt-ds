@@ -74,3 +74,7 @@
   margin-left: auto;
   padding-top: var(--salt-spacing-25);
 }
+
+.saltVerticalNavigationItemContent-focused {
+  outline: var(--salt-focused-outline);
+}
