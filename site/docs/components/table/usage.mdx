@@ -1,0 +1,57 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Best practices
+
+- Only use the `Table` component for when you need to present simple data.
+
+## Using the component
+
+### When to use
+
+- When you need to present data in a structured, tableau format.
+
+### When not to use
+
+- When you need to show complex data, instead use [AG Grid with Salt](../ag-grid-theme/examples)
+
+## Content
+
+## Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import `Table` from the lab Salt package, use:
+
+```js
+import { Table, THead, TBody, TR, TH, TD, TFoot } from "@salt-ds/lab";
+```
+
+## Props
+
+### Table
+
+<PropsTable componentName="Table" packageName="lab" />
+
+### THead
+
+<PropsTable componentName="THead" packageName="lab" />
+
+### TFoot
+
+<PropsTable componentName="THead" packageName="lab" />
+
+### TH
+
+<PropsTable componentName="TH" packageName="lab" />
+
+### TD
+
+<PropsTable componentName="TD" packageName="lab" />
