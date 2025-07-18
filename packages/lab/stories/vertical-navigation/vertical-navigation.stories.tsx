@@ -7,6 +7,7 @@ import {
   MenuPanel,
   MenuTrigger,
   StackLayout,
+  useId,
 } from "@salt-ds/core";
 import {
   Collapsible,
@@ -30,6 +31,7 @@ import {
   StorageSolidIcon,
   UserGroupSolidIcon,
 } from "@salt-ds/icons";
+import { clsx } from "clsx";
 
 export default {
   title: "Lab/Vertical Navigation",
@@ -274,13 +276,27 @@ function ExpandButtonItem(props: { item: NavItem }) {
 
   const location = useLocation();
 
+  const itemId = useId();
+  const actionId = useId();
+
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
       <Collapsible>
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
-            <CollapsibleTrigger render={<Button appearance="transparent" />}>
+            <MockedTrigger to={item.href} id={itemId}>
+              {item.title}
+            </MockedTrigger>
+            <CollapsibleTrigger
+              render={
+                <Button
+                  id={actionId}
+                  aria-labelledby={clsx(actionId, itemId)}
+                  aria-label="Expand"
+                  appearance="transparent"
+                />
+              }
+            >
               <VerticalNavigationItemExpansionIcon />
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>

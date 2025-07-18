@@ -73,7 +73,7 @@ export const VerticalNavigationItemTrigger = forwardRef<
     <ItemAction
       className={clsx(withBaseName(), className)}
       href={href}
-      aria-current={href && active ? "page" : undefined}
+      aria-current={active ? "page" : undefined}
       render={render ?? (isLink ? undefined : <button type="button" />)}
       ref={ref}
       onFocus={handleFocus}

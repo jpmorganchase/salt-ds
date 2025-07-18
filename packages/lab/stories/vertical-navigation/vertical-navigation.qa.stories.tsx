@@ -7,6 +7,7 @@ import {
   VerticalNavigationItemContent,
   VerticalNavigationItemExpansionIcon,
   VerticalNavigationItemTrigger,
+  type VerticalNavigationProps,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -19,9 +20,9 @@ export default {
   component: VerticalNavigation,
 };
 
-const Simple = () => {
+const Simple = ({ appearance }: VerticalNavigationProps) => {
   return (
-    <VerticalNavigation>
+    <VerticalNavigation appearance={appearance}>
       <VerticalNavigationItem>
         <VerticalNavigationItemContent>
           <VerticalNavigationItemTrigger>One</VerticalNavigationItemTrigger>
@@ -46,9 +47,9 @@ const Simple = () => {
   );
 };
 
-const CollapsibleNested = () => {
+const CollapsibleNested = ({ appearance }: VerticalNavigationProps) => {
   return (
-    <VerticalNavigation>
+    <VerticalNavigation appearance={appearance}>
       <Collapsible open>
         <VerticalNavigationItem>
           <VerticalNavigationItemContent>
@@ -90,9 +91,9 @@ const CollapsibleNested = () => {
   );
 };
 
-const CollapsibleIcons = () => {
+const CollapsibleIcons = ({ appearance }: VerticalNavigationProps) => {
   return (
-    <VerticalNavigation>
+    <VerticalNavigation appearance={appearance}>
       <Collapsible open>
         <VerticalNavigationItem>
           <VerticalNavigationItemContent>
@@ -140,6 +141,9 @@ export const Example: StoryFn = () => {
       <Simple />
       <CollapsibleNested />
       <CollapsibleIcons />
+      <Simple appearance="bordered" />
+      <CollapsibleNested appearance="bordered" />
+      <CollapsibleIcons appearance="bordered" />
     </QAContainer>
   );
 };
