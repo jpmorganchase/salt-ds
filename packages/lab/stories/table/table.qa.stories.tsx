@@ -55,20 +55,18 @@ const TableComp = (props: TableProps) => {
 
 export const QA: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={1} itemPadding={12} width={1200}>
-    {["primary", "secondary", "tertiary" as TableProps["variant"]].map(
-      (variant) => {
-        return (
-          <>
-            <TableComp variant={variant} />
-            <TableComp variant={variant} zebra="primary" />
-            <TableComp variant={variant} zebra="secondary" />
-            <TableComp variant={variant} zebra="tertiary" />
-            <TableComp variant={variant} divider="primary" />
-            <TableComp variant={variant} divider="secondary" />
-            <TableComp variant={variant} divider="tertiary" />
-          </>
-        );
-      },
+    {(["primary", "secondary", "tertiary"] as TableProps["variant"][]).map(
+      (variant) => (
+        <>
+          <TableComp variant={variant} />
+          <TableComp variant={variant} zebra="primary" />
+          <TableComp variant={variant} zebra="secondary" />
+          <TableComp variant={variant} zebra="tertiary" />
+          <TableComp variant={variant} divider="primary" />
+          <TableComp variant={variant} divider="secondary" />
+          <TableComp variant={variant} divider="tertiary" />
+        </>
+      ),
     )}
   </QAContainer>
 );

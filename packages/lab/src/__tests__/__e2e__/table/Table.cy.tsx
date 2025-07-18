@@ -3,13 +3,13 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(tableStories);
-const { Default } = composedStories;
+const { Primary } = composedStories;
 
 describe("GIVEN a Table", () => {
   checkAccessibility(composedStories);
 
   it("THEN should render all rows and columns", () => {
-    cy.mount(<Default />);
+    cy.mount(<Primary />);
 
     cy.findByText("Column 0").should("exist");
     cy.findByText("Column 1").should("exist");
