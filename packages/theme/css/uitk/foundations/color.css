@@ -1,4 +1,4 @@
-.salt-theme {
+.salt-theme[data-brand="uitk"] {
   /* RGB Values */
   --salt-color-white-rgb: 255, 255, 255;
   --salt-color-black-rgb: 0, 0, 0;

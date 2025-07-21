@@ -1,0 +1,5 @@
+/* 
+    Reference file due to restructured theme package, preferably import directly from the theme file you are using. 
+    e.g. for this brand theme, import instead from `@salt-ds/theme/css/uitk/index.css`
+*/
+@import url(uitk/index.css);

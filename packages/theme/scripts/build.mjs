@@ -25,6 +25,7 @@ const context = await esbuild.context({
   entryPoints: [
     "index.css",
     "css/global.css",
+    "css/deprecated/index.css",
     "css/salt/index.css",
     "css/uitk/index.css",
     "css/manhattan/index.css",

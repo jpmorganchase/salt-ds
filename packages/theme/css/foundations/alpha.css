@@ -1,0 +1,27 @@
+.salt-theme {
+  --salt-color-background-snow-40a: rgba(var(--salt-color-background-snow-rgb), 0.4);
+  --salt-color-background-marble-40a: rgba(var(--salt-color-background-marble-rgb), 0.4);
+  --salt-color-background-limestone-40a: rgba(var(--salt-color-background-limestone-rgb), 0.4);
+  --salt-color-background-granite-40a: rgba(var(--salt-color-background-granite-rgb), 0.4);
+  --salt-color-background-jet-40a: rgba(var(--salt-color-background-jet-rgb), 0.4);
+  --salt-color-background-leather-40a: rgba(var(--salt-color-background-leather-rgb), 0.4);
+
+  --salt-color-white-5a: rgba(var(--salt-color-white-rgb), 0.05);
+  --salt-color-white-10a: rgba(var(--salt-color-white-rgb), 0.1);
+  --salt-color-white-15a: rgba(var(--salt-color-white-rgb), 0.15);
+  --salt-color-white-20a: rgba(var(--salt-color-white-rgb), 0.2);
+  --salt-color-white-30a: rgba(var(--salt-color-white-rgb), 0.3);
+  --salt-color-white-40a: rgba(var(--salt-color-white-rgb), 0.4);
+  --salt-color-white-50a: rgba(var(--salt-color-white-rgb), 0.5);
+  --salt-color-white-65a: rgba(var(--salt-color-white-rgb), 0.65);
+  --salt-color-white-80a: rgba(var(--salt-color-white-rgb), 0.8);
+  --salt-color-black-5a: rgba(var(--salt-color-black-rgb), 0.05);
+  --salt-color-black-10a: rgba(var(--salt-color-black-rgb), 0.1);
+  --salt-color-black-15a: rgba(var(--salt-color-black-rgb), 0.15);
+  --salt-color-black-20a: rgba(var(--salt-color-black-rgb), 0.2);
+  --salt-color-black-30a: rgba(var(--salt-color-black-rgb), 0.3);
+  --salt-color-black-40a: rgba(var(--salt-color-black-rgb), 0.4);
+  --salt-color-black-50a: rgba(var(--salt-color-black-rgb), 0.5);
+  --salt-color-black-65a: rgba(var(--salt-color-black-rgb), 0.65);
+  --salt-color-black-80a: rgba(var(--salt-color-black-rgb), 0.8);
+}
