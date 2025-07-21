@@ -1,15 +1,5 @@
 @import url(foundations/alpha.css);
-@import url(foundations/animation.css);
-@import url(foundations/borderStyle.css);
 @import url(foundations/color.css);
-@import url(foundations/cursor.css);
-@import url(foundations/curve.css);
-@import url(foundations/duration.css);
-@import url(foundations/shadow.css);
-@import url(foundations/size.css);
-@import url(foundations/spacing.css);
-@import url(foundations/typography.css);
-@import url(foundations/zindex.css);
 
 @import url(palette/accent.css);
 @import url(palette/alpha.css);
