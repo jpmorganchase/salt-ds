@@ -20,9 +20,9 @@ export default {
   component: HighchartsReact,
   decorators: [withHighchartsTheme],
   parameters: {
-    // chromatic: {
-    //   disableSnapshot: false,
-    // },
+    chromatic: {
+      disableSnapshot: false,
+    },
   },
 };
 
