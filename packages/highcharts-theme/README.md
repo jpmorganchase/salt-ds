@@ -6,7 +6,7 @@ Salt Highcharts Theme is a package that adds Salt theme styles to Highcharts. Th
 
 This package is compatible with version 10 to 12 of Highcharts.
 
-Within the package CSS folder, the default theme is considered to be v10. 
+Within the package CSS folder, the default theme is considered to be v10.
 
 CSS changes from other major versions are isolated into their own file but feature in prior versions too.
 
