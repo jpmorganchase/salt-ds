@@ -11,6 +11,7 @@
 @import url(foundations/zindex.css);
 
 @import url(palette/accent.css);
+@import url(palette/alpha.css);
 @import url(palette/background.css);
 @import url(palette/corner.css);
 @import url(palette/foreground.css);
