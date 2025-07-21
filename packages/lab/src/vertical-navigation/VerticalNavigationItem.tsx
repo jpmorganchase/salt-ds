@@ -1,6 +1,4 @@
 import { createContext, makePrefixer } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -9,10 +7,10 @@ import {
   forwardRef,
   type SetStateAction,
   useContext,
+  useMemo,
   useState,
 } from "react";
 import { useSubMenuContext } from "./SubMenuContext";
-import verticalNavigationItemCss from "./VerticalNavigationItem.css";
 
 export interface VerticalNavigationItemProps
   extends ComponentPropsWithoutRef<"li"> {
@@ -47,20 +45,20 @@ export const VerticalNavigationItem = forwardRef<
 >(function VerticalNavigationItem(props, ref) {
   const { children, className, active = false, style, ...rest } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-vertical-navigation-item",
-    css: verticalNavigationItemCss,
-    window: targetWindow,
-  });
-
   const { depth } = useSubMenuContext();
   const [focusVisible, setFocusVisible] = useState(false);
 
+  const context = useMemo(
+    () => ({
+      active,
+      focusVisible,
+      setFocusVisible,
+    }),
+    [active, focusVisible],
+  );
+
   return (
-    <VerticalNavigationItemContext.Provider
-      value={{ active, focusVisible, setFocusVisible }}
-    >
+    <VerticalNavigationItemContext.Provider value={context}>
       <li
         ref={ref}
         className={clsx(withBaseName(), className)}

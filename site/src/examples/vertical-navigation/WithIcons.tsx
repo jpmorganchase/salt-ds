@@ -1,5 +1,7 @@
+import { StackLayout } from "@salt-ds/core";
 import {
   HelpSolidIcon,
+  HomeSolidIcon,
   MessageSolidIcon,
   StorageSolidIcon,
   UserGroupSolidIcon,
@@ -12,6 +14,7 @@ import {
   VerticalNavigationItem,
   VerticalNavigationItemContent,
   VerticalNavigationItemExpansionIcon,
+  VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
@@ -26,6 +29,11 @@ type NavItem = {
 };
 
 const nested: NavItem[] = [
+  {
+    title: "Home",
+    href: "/",
+    icon: <HomeSolidIcon aria-hidden="true" />,
+  },
   {
     title: "Products",
     href: "/products",
@@ -80,7 +88,10 @@ function NestedItem(props: { item: NavItem }) {
         >
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              {item.icon ? item.icon : undefined} {item.title}{" "}
+              {item.icon ? item.icon : undefined}
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
               <VerticalNavigationItemExpansionIcon />
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
@@ -100,7 +111,10 @@ function NestedItem(props: { item: NavItem }) {
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
-          {item.icon ? item.icon : undefined} {item.title}
+          {item.icon ? item.icon : undefined}
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
@@ -109,10 +123,17 @@ function NestedItem(props: { item: NavItem }) {
 
 export const WithIcons = () => {
   return (
-    <VerticalNavigation style={{ minWidth: "30ch" }}>
-      {nested.map((item) => (
-        <NestedItem key={item.title} item={item} />
-      ))}
-    </VerticalNavigation>
+    <StackLayout direction="row">
+      <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
+        {nested.map((item) => (
+          <NestedItem key={item.title} item={item} />
+        ))}
+      </VerticalNavigation>
+      <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
+        {nested.map((item) => (
+          <NestedItem key={item.title} item={item} />
+        ))}
+      </VerticalNavigation>
+    </StackLayout>
   );
 };

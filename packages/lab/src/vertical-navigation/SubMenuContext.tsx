@@ -4,6 +4,7 @@ import {
   type ReactNode,
   type SetStateAction,
   useContext,
+  useMemo,
   useState,
 } from "react";
 
@@ -27,14 +28,17 @@ export function SubMenuProvider({ children }: { children: ReactNode }) {
 
   const [directIcons, setDirectIcons] = useState<string[]>([]);
 
+  const context = useMemo(
+    () => ({
+      depth: depth + 1,
+      iconPaddingCount: iconPaddingCount + (directIcons.length > 0 ? 1 : 0),
+      setDirectIcons,
+    }),
+    [depth, iconPaddingCount, directIcons],
+  );
+
   return (
-    <SubMenuContext.Provider
-      value={{
-        depth: depth + 1,
-        iconPaddingCount: iconPaddingCount + (directIcons.length > 0 ? 1 : 0),
-        setDirectIcons,
-      }}
-    >
+    <SubMenuContext.Provider value={context}>
       {children}
     </SubMenuContext.Provider>
   );

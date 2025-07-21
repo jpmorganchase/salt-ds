@@ -17,6 +17,7 @@ import {
   VerticalNavigationItem,
   VerticalNavigationItemContent,
   VerticalNavigationItemExpansionIcon,
+  VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
@@ -94,7 +95,11 @@ export const Default: StoryFn<typeof VerticalNavigation> = (args) => {
           active={location.pathname === item.href}
         >
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+            <MockedTrigger to={item.href}>
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
+            </MockedTrigger>
           </VerticalNavigationItemContent>
         </VerticalNavigationItem>
       ))}
@@ -188,7 +193,10 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
         >
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              {icon ? item.icon : undefined} {item.title}{" "}
+              {icon ? item.icon : undefined}
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
               <VerticalNavigationItemExpansionIcon />
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
@@ -208,7 +216,10 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
         <MockedTrigger to={item.href}>
-          {icon ? item.icon : undefined} {item.title}
+          {icon ? item.icon : undefined}
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
         </MockedTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
@@ -248,7 +259,11 @@ export const Nested: StoryFn<typeof VerticalNavigation> = (args) => {
           active={location.pathname === item.href}
         >
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+            <MockedTrigger to={item.href}>
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
+            </MockedTrigger>
           </VerticalNavigationItemContent>
           {item.children && (
             <VerticalNavigationSubMenu>
@@ -258,7 +273,11 @@ export const Nested: StoryFn<typeof VerticalNavigation> = (args) => {
                   active={location.pathname === child.href}
                 >
                   <VerticalNavigationItemContent>
-                    <MockedTrigger to={child.href}>{child.title}</MockedTrigger>
+                    <MockedTrigger to={child.href}>
+                      <VerticalNavigationItemLabel>
+                        {child.title}
+                      </VerticalNavigationItemLabel>
+                    </MockedTrigger>
                   </VerticalNavigationItemContent>
                 </VerticalNavigationItem>
               ))}
@@ -285,7 +304,9 @@ function ExpandButtonItem(props: { item: NavItem }) {
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
             <MockedTrigger to={item.href} id={itemId}>
-              {item.title}
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
             </MockedTrigger>
             <CollapsibleTrigger
               render={
@@ -315,7 +336,11 @@ function ExpandButtonItem(props: { item: NavItem }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+        <MockedTrigger to={item.href}>
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
+        </MockedTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
@@ -347,7 +372,11 @@ export const Groups: StoryFn<typeof VerticalNavigation> = (args) => {
               active={location.pathname === item.href}
             >
               <VerticalNavigationItemContent>
-                <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+                <MockedTrigger to={item.href}>
+                  <VerticalNavigationItemLabel>
+                    {item.title}
+                  </VerticalNavigationItemLabel>
+                </MockedTrigger>
               </VerticalNavigationItemContent>
             </VerticalNavigationItem>
           ))}
@@ -378,7 +407,11 @@ function MultiActionItem(props: { item: NavItem }) {
       <Collapsible>
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+            <MockedTrigger to={item.href}>
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
+            </MockedTrigger>
             <Menu>
               <MenuTrigger>
                 <Button appearance="transparent" aria-label="Open Menu">
@@ -435,7 +468,11 @@ function MultiActionItem(props: { item: NavItem }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+        <MockedTrigger to={item.href}>
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
+        </MockedTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
@@ -462,7 +499,9 @@ function DualActionItem(props: { item: NavItem }) {
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<MockedTrigger to={item.href} />}>
-              {item.title}
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
               <VerticalNavigationItemExpansionIcon />
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
@@ -481,7 +520,11 @@ function DualActionItem(props: { item: NavItem }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>{item.title}</MockedTrigger>
+        <MockedTrigger to={item.href}>
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
+        </MockedTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );

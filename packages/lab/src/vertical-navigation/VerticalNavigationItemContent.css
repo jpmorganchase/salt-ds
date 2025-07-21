@@ -1,11 +1,16 @@
 .saltVerticalNavigationItemContent {
   --verticalNavigationItem-iconPadding: calc(var(--saltVerticalNavigationItem-iconPaddingMultiplier, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)));
-  --verticalNavigationItem-paddingLeft: calc(
-    var(--salt-spacing-150) +
-    var(--salt-size-indicator) +
-    (var(--salt-spacing-100) * max(0, calc(var(--verticalNavigationItem-depth, 0) - 1))) +
-    var(--verticalNavigationItem-iconPadding, 0px)
-  );
+  --verticalNavigationItem-depthPadding: calc(var(--salt-spacing-100) * max(0, calc(var(--verticalNavigationItem-depth, 0) - 1)));
+}
+
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent {
+  --verticalNavigationItem-paddingLeft: calc(var(--salt-spacing-150) + var(--salt-size-indicator) + var(--verticalNavigationItem-depthPadding) + var(--verticalNavigationItem-iconPadding));
+  --verticalNavigationitem-paddingBlock: var(--salt-spacing-50);
+}
+
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
+  --verticalNavigationItem-paddingLeft: calc(var(--salt-spacing-150) + var(--verticalNavigationItem-depthPadding) + var(--verticalNavigationItem-iconPadding));
+  --verticalNavigationitem-paddingBlock: calc(var(--salt-spacing-50) - var(--salt-size-fixed-100));
 }
 
 .saltVerticalNavigationItemContent {
@@ -17,8 +22,7 @@
   white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
-  padding: calc(var(--salt-spacing-50) - var(--verticalNavigationItem-border-size, 0px)) var(--salt-spacing-100) calc(var(--salt-spacing-50) - var(--verticalNavigationItem-border-size, 0px))
-    var(--verticalNavigationItem-paddingLeft);
+  padding: var(--verticalNavigationitem-paddingBlock) var(--salt-spacing-100) var(--verticalNavigationitem-paddingBlock) var(--verticalNavigationItem-paddingLeft);
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
@@ -33,14 +37,6 @@
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-h4-lineHeight);
   font-size: var(--salt-text-h4-fontSize);
-}
-
-.saltVerticalNavigationItemContent:hover .saltVerticalNavigationItemTrigger::before {
-  background: var(--salt-navigable-background-hover);
-}
-
-.saltVerticalNavigationItemContent-active .saltVerticalNavigationItemTrigger[href]::before {
-  background: transparent;
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
@@ -61,8 +57,7 @@
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
-  --verticalNavigationItem-border-size: var(--salt-size-fixed-100);
-  border: var(--verticalNavigationItem-border-size) var(--salt-separable-borderStyle) transparent;
+  border: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) transparent;
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
@@ -70,11 +65,26 @@
   border-color: var(--salt-navigable-accent-borderColor-active);
 }
 
-.saltVerticalNavigationItemContent .saltVerticalNavigationItemExpansionIcon {
-  margin-left: auto;
-  padding-top: var(--salt-spacing-25);
+.saltVerticalNavigationItemContent .saltIcon,
+.saltVerticalNavigationItemContent .saltBadge {
+  min-height: var(--salt-text-lineHeight);
 }
 
 .saltVerticalNavigationItemContent-focused {
   outline: var(--salt-focused-outline);
+  z-index: 1;
+}
+
+.saltVerticalNavigationItemContent:hover {
+  background: var(--salt-navigable-background-hover);
+}
+
+.saltVerticalNavigationItemContent-active:hover {
+  background: linear-gradient(var(--salt-navigable-background-hover), var(--salt-navigable-background-hover)) var(--salt-navigable-accent-background-active);
+}
+
+@supports selector(:has(*)) {
+  .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[href]) {
+    background: var(--salt-navigable-accent-background-active);
+  }
 }
