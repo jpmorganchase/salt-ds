@@ -12,7 +12,7 @@ import {
   ProgressInprogressIcon,
   StepActiveIcon,
   StepDefaultIcon,
-  StepSuccessIcon,
+  SuccessCircleSolidIcon,
   SuccessTickIcon,
   TearOutIcon,
   TriangleDownIcon,
@@ -87,7 +87,7 @@ const defaultIconMap: SemanticIconMap = {
   ExternalIcon: TearOutIcon,
   PendingIcon: StepDefaultIcon,
   ActiveIcon: StepActiveIcon,
-  CompletedIcon: StepSuccessIcon,
+  CompletedIcon: SuccessCircleSolidIcon,
   LockedIcon: LockedIcon,
   InProgressIcon: ProgressInprogressIcon,
 };
