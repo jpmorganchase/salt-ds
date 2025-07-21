@@ -1,16 +1,8 @@
-.salt-theme[data-mode="light"] {
+.salt-theme[data-mode="light"][data-brand="uitk"] {
   --salt-palette-accent-foreground: var(--salt-color-white);
   --salt-palette-accent-foreground-informative: var(--salt-color-blue-600);
   --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-600-40a);
-}
 
-.salt-theme[data-mode="dark"] {
-  --salt-palette-accent-foreground: var(--salt-color-white);
-  --salt-palette-accent-foreground-informative: var(--salt-color-blue-200);
-  --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-200-40a);
-}
-
-.salt-theme[data-brand="uitk"][data-mode="light"] {
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-strong: var(--salt-color-blue-600);
@@ -26,7 +18,11 @@
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
 }
 
-.salt-theme[data-brand="uitk"][data-mode="dark"] {
+.salt-theme[data-mode="dark"][data-brand="uitk"] {
+  --salt-palette-accent-foreground: var(--salt-color-white);
+  --salt-palette-accent-foreground-informative: var(--salt-color-blue-200);
+  --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-200-40a);
+
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-strong: var(--salt-color-blue-400);

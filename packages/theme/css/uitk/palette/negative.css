@@ -1,4 +1,3 @@
-.salt-theme[data-mode="light"],
 .salt-theme[data-brand="uitk"][data-mode="light"] {
   --salt-palette-negative-foreground: var(--salt-color-red-600);
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-600-40a);
@@ -10,7 +9,6 @@
   --salt-palette-negative-border-disabled: var(--salt-color-red-500-40a);
 }
 
-.salt-theme[data-mode="dark"],
 .salt-theme[data-brand="uitk"][data-mode="dark"] {
   --salt-palette-negative-foreground: var(--salt-color-red-200);
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-200-40a);
