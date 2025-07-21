@@ -8,12 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-## Appearance
-
-`VerticalNavigation` supports two appearances: `indicator` and `bordered`.
-
-<LivePreview componentName="vertical-navigation" exampleName="Appearance" />
-
 ## Nesting
 
 Nest navigation items under a parent navigation item to create a multilevel structure.
@@ -30,7 +24,7 @@ Compose `VerticalNavigation` with `Collapsible` to create a collapsible menu str
 
 ### Best practices
 
-- When a collapsed submenu contains an active navigation item, the parent item should be set to active.
+- When a collapsed submenu contains an active navigation item, the parent item should be set to active. This allows users to see where they are in the navigation hierarchy even when the submenu is collapsed.
 
 <LivePreview
   componentName="vertical-navigation"

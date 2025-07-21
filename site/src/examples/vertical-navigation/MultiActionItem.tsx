@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Collapsible,
   CollapsiblePanel,
@@ -7,10 +7,10 @@ import {
   VerticalNavigationItem,
   VerticalNavigationItemContent,
   VerticalNavigationItemExpansionIcon,
+  VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router";
 
@@ -22,6 +22,10 @@ type NavItem = {
 };
 
 const multiLevel: NavItem[] = [
+  {
+    title: "Home",
+    href: "/",
+  },
   {
     title: "Solutions",
     href: "/solutions",
@@ -71,7 +75,9 @@ function ExpandButtonItem(props: { item: NavItem }) {
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
             <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
-              {item.title}
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
             </VerticalNavigationItemTrigger>
             <CollapsibleTrigger render={<Button appearance="transparent" />}>
               <VerticalNavigationItemExpansionIcon />
@@ -93,19 +99,28 @@ function ExpandButtonItem(props: { item: NavItem }) {
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
-          {item.title}
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
 }
 
-export const MultiActionItem: StoryFn<typeof VerticalNavigation> = (args) => {
+export const MultiActionItem = () => {
   return (
-    <VerticalNavigation {...args}>
-      {multiLevel.map((item) => (
-        <ExpandButtonItem key={item.title} item={item} />
-      ))}
-    </VerticalNavigation>
+    <StackLayout direction="row">
+      <VerticalNavigation appearance="indicator">
+        {multiLevel.map((item) => (
+          <ExpandButtonItem key={item.title} item={item} />
+        ))}
+      </VerticalNavigation>
+      <VerticalNavigation appearance="bordered">
+        {multiLevel.map((item) => (
+          <ExpandButtonItem key={item.title} item={item} />
+        ))}
+      </VerticalNavigation>
+    </StackLayout>
   );
 };

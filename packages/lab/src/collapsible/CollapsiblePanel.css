@@ -18,6 +18,6 @@
   visibility: visible;
 }
 
-.saltCollapsiblePanel-inner {
+.saltCollapsiblePanel[aria-hidden="true"] .saltCollapsiblePanel-inner {
   overflow: hidden;
 }
