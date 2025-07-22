@@ -189,7 +189,7 @@
 }
 
 .saltMultilineInput.saltMultilineInput-withAdornmentRow {
-  grid-template-areas: "start-adornment textarea textarea" "end-adornment end-adornment end-adornment";
+  grid-template-areas: "start-adornment textarea" "end-adornment end-adornment";
   grid-template-columns: min-content 1fr;
   grid-template-rows: 1fr auto;
 }
