@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-selectable-borderColor: var(--salt-palette-neutral);
   --salt-selectable-borderColor-hover: var(--salt-palette-accent-weak);

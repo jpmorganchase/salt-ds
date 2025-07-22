@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-accent-background: var(--salt-palette-accent);
   --salt-accent-background-disabled: var(--salt-palette-accent-disabled);

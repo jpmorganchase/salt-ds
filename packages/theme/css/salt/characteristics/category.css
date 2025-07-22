@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-category-1-bold-background: var(--salt-palette-categorical-1);
   --salt-category-1-bold-foreground: var(--salt-palette-foreground-primary-alt);

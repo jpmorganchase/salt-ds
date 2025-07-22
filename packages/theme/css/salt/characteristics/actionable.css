@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   /* accented solid */
   --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-action-active);

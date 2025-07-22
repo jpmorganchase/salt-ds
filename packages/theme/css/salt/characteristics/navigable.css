@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-navigable-indicator-hover: var(--salt-palette-neutral);
   --salt-navigable-accent-indicator-active: var(--salt-palette-accent);

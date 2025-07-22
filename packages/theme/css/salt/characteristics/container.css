@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-container-primary-background: var(--salt-palette-background-primary);
   --salt-container-primary-background-disabled: var(--salt-palette-background-primary-disabled);
@@ -13,4 +14,7 @@
   --salt-container-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
   --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-medium);
   --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower);
+
+  --salt-container-ghost-background: var(--salt-palette-alpha-medium);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-medium);
 }

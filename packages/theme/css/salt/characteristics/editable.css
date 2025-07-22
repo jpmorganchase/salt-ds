@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-editable-borderColor: var(--salt-palette-neutral);
   --salt-editable-borderColor-active: var(--salt-palette-accent-stronger);

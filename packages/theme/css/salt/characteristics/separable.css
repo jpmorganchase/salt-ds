@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumHigh);
   --salt-separable-secondary-borderColor: var(--salt-palette-alpha-contrast-medium);

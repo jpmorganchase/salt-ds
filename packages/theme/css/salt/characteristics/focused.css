@@ -1,3 +1,4 @@
+.salt-theme-next /* for backwards compatibility */,
 .salt-theme[data-brand="salt"] {
   --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
   --salt-focused-outlineStyle: dotted;
@@ -6,16 +7,4 @@
   --salt-focused-outlineOffset: 0;
 
   --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
-}
-
-.saltFocusVisible:after,
-.focused:focus:after,
-.focused:focus-visible:after {
-  content: "";
-  inset: var(--salt-focused-outlineInset);
-  outline-color: var(--salt-focused-outlineColor);
-  outline-offset: var(--salt-focused-outlineOffset);
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  position: absolute;
 }
