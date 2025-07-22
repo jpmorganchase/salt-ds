@@ -5,7 +5,6 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
-  Text,
   useId,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
@@ -503,7 +502,6 @@ export const Fractions: StoryFn<NumberInputProps> = (args) => {
             setValue(value);
             console.log("on change value", value);
           }}
-          onValueChange={(value) => console.log("onValueChange", value)}
           format={(val) => {
             console.log("formatting: ", val);
             return Fraction32ndParser.to32nd(
@@ -516,6 +514,9 @@ export const Fractions: StoryFn<NumberInputProps> = (args) => {
             return Fraction32ndParser.from32nd(val.toString());
           }}
           isAllowed={(value) => {
+            if (value === "") {
+              return true; // Allow empty values
+            }
             const validFractionRegex =
               /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
             return validFractionRegex.test(value);
