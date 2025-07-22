@@ -1,8 +1,5 @@
 .salt-theme[data-brand="uitk"] {
   /* RGB Values */
-  --salt-color-white-rgb: 255, 255, 255;
-  --salt-color-black-rgb: 0, 0, 0;
-
   --salt-color-red-10-rgb: 255, 227, 224;
   --salt-color-red-20-rgb: 255, 207, 201;
   --salt-color-red-30-rgb: 255, 187, 178;
@@ -121,9 +118,6 @@
   --salt-color-background-granite-rgb: 26, 34, 41;
   --salt-color-background-leather-rgb: 38, 41, 43;
   --salt-color-logo-brown-rgb: 58, 34, 6;
-
-  --salt-color-white: rgb(var(--salt-color-white-rgb));
-  --salt-color-black: rgb(var(--salt-color-black-rgb));
 
   --salt-color-red-10: rgb(var(--salt-color-red-10-rgb));
   --salt-color-red-20: rgb(var(--salt-color-red-20-rgb));

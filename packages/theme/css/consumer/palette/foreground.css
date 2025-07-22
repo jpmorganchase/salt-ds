@@ -1,0 +1,26 @@
+.salt-theme[data-brand="consumer"][data-mode="light"] {
+  --salt-palette-foreground-primary: var(--salt-color-silver-900);
+  --salt-palette-foreground-primary-alt: var(--salt-color-white);
+  --salt-palette-foreground-secondary: var(--salt-color-silver-600);
+
+  /* 
+  --salt-palette-foreground-primary-disabled: ;
+  --salt-palette-foreground-primary-alt-disabled: ;
+  --salt-palette-foreground-secondary-disabled: ;
+  --salt-palette-foreground-visited: ; 
+  */
+}
+
+.salt-theme[data-brand="consumer"][data-mode="dark"] {
+  --salt-palette-foreground-primary: var(--salt-color-ultramarine-50);
+  --salt-palette-foreground-primary-alt: var(--salt-color-white);
+  --salt-palette-foreground-secondary: var(--salt-color-ultramarine-300);
+
+  /* 
+  --salt-palette-foreground-primary-disabled: ;
+  --salt-palette-foreground-primary-alt-disabled: ;
+  --salt-palette-foreground-secondary: ;
+  --salt-palette-foreground-secondary-disabled: ;
+  --salt-palette-foreground-visited: ; 
+  */
+}

@@ -1,0 +1,33 @@
+.salt-theme[data-brand="consumer"][data-mode="light"] {
+  --salt-palette-info: var(--salt-color-blue-600);
+
+  --salt-palette-info-strong: var(--salt-color-blue-700);
+
+  --salt-palette-info-weak: var(--salt-color-blue-50);
+
+  /* 
+  --salt-palette-info-strong-disabled: ;
+  --salt-palette-info-weak: ;
+  --salt-palette-info-weaker: ;
+  --salt-palette-info-action-hover: ;
+  --salt-palette-info-action-active: ;
+  --salt-palette-info-disabled: ; 
+  */
+}
+
+.salt-theme[data-brand="consumer"][data-mode="dark"] {
+  --salt-palette-info: var(--salt-color-blue-400);
+
+  --salt-palette-info-strong: var(--salt-color-blue-300);
+
+  --salt-palette-info-weak: var(--salt-color-blue-950);
+
+  /* 
+  --salt-palette-info-strong-disabled: ;
+  --salt-palette-info-weak: ;
+  --salt-palette-info-weaker: ;
+  --salt-palette-info-action-hover: ;
+  --salt-palette-info-action-active: ;
+  --salt-palette-info-disabled: ; 
+  */
+}

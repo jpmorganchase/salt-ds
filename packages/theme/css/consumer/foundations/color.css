@@ -1,7 +1,4 @@
 .salt-theme[data-brand="consumer"] {
-  --salt-color-white-rgb: 255, 255, 255;
-  --salt-color-black-rgb: 0, 0, 0;
-
   --salt-color-ultramarine-50-rgb: 237, 239, 247;
   --salt-color-ultramarine-100-rgb: 219, 223, 240;
   --salt-color-ultramarine-150-rgb: 201, 207, 232;
@@ -170,9 +167,6 @@
   --salt-color-gold-800-rgb: 128, 70, 0;
   --salt-color-gold-900-rgb: 76, 41, 0;
   --salt-color-gold-950-rgb: 51, 27, 0;
-
-  --salt-color-white: rgb(var(--salt-color-white-rgb));
-  --salt-color-black: rgb(var(--salt-color-black-rgb));
 
   --salt-color-ultramarine-50: rgb(var(--salt-color-ultramarine-50-rgb));
   --salt-color-ultramarine-100: rgb(var(--salt-color-ultramarine-100-rgb));
