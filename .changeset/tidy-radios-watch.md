@@ -10,7 +10,7 @@ Salt Highcharts theme is a package that supplies the Salt theme for Highcharts. 
 
 A theme-only package for Highcharts offers a lightweight solution focused solely on styling, making it easier to maintain and update visual consistency across charts. Unlike a full React wrapper, it doesn't impose additional abstraction layers, allowing developers to leverage Highcharts' native capabilities directly. This approach minimizes overhead and complexity, providing flexibility to integrate with various frameworks or environments without being tied to a specific implementation.
 
-### Supported Charts
+### Supported charts
 
 This package is a work in progress and represents a snapshot release focusing specifically on the LineChart.
 
@@ -18,7 +18,7 @@ Our intent is to gather feedback on the provided solution, allowing us to refine
 
 ### Usage
 
-Please see the package `README.md` for guidance on usage.
+Please see the package [README.md](https://github.com/jpmorganchase/salt-ds/blob/main/packages/highcharts-theme/README.md) for guidance on usage.
 
 ### Migration
 
