@@ -208,6 +208,19 @@ describe("Number Input", () => {
     );
   });
 
+  it.only("calls the `onChangeEnd` callback with the final value after keyboard changes", () => {
+    const changeEndSpy = cy.stub().as("changeEndSpy");
+    cy.mount(<Default onChangeEnd={changeEndSpy} />);
+
+    cy.findByRole("spinbutton").focus().realType("7");
+
+    cy.get("@changeE  ndSpy").should(
+      "have.been.calledOnceWith",
+      Cypress.sinon.match.any,
+      7,
+    );
+  });
+
   it("does not allow inputting non-numeric values", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(<Default defaultValue={5} onChange={changeSpy} />);
