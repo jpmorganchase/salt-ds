@@ -1,8 +1,4 @@
-import {
-  type IconProps,
-  SuccessSmallSolidIcon,
-  SuccessSolidIcon,
-} from "@salt-ds/icons";
+import { CheckmarkSolidIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -14,7 +10,6 @@ import {
   type ReactNode,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { useDensity } from "../salt-provider";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 
@@ -69,15 +64,6 @@ export interface SwitchProps
 }
 
 const withBaseName = makePrefixer("saltSwitch");
-
-function CheckedIcon(props: IconProps) {
-  const density = useDensity();
-  return density === "high" ? (
-    <SuccessSmallSolidIcon {...props} />
-  ) : (
-    <SuccessSolidIcon {...props} />
-  );
-}
 
 export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
   function Switch(props, ref) {
@@ -173,7 +159,10 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
         <span className={withBaseName("track")}>
           <span className={withBaseName("thumb")}>
             {checked && (
-              <CheckedIcon aria-hidden className={withBaseName("icon")} />
+              <CheckmarkSolidIcon
+                aria-hidden
+                className={withBaseName("icon")}
+              />
             )}
           </span>
         </span>

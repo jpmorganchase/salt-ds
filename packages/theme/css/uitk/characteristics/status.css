@@ -1,8 +1,4 @@
 .salt-theme[data-brand="uitk"] {
-  --salt-status-negative-foreground: var(--salt-palette-negative-foreground);
-  --salt-status-positive-foreground: var(--salt-palette-positive-foreground);
-  --salt-status-static-foreground: var(--salt-palette-neutral-secondary-foreground);
-
   --salt-status-error-foreground-decorative: var(--salt-palette-error-foreground-decorative);
   --salt-status-error-foreground-informative: var(--salt-palette-error-foreground-informative);
   --salt-status-error-background: var(--salt-palette-error-background);

@@ -108,6 +108,9 @@
   --salt-separable-borderStyle: solid;
 
   /* Status */
+  --salt-status-negative-foreground: var(--salt-palette-negative-foreground); /* Use ---salt-sentiment-negative-foreground-decorative */
+  --salt-status-positive-foreground: var(--salt-palette-positive-foreground); /* Use ---salt-sentiment-negative-foreground-decorative */
+
   --salt-status-info-background-emphasize: var(--salt-status-info-background);
   --salt-status-success-background-emphasize: var(--salt-status-success-background);
   --salt-status-warning-background-emphasize: var(--salt-status-warning-background);
@@ -117,6 +120,7 @@
   --salt-status-success-foreground-disabled: var(--salt-palette-success-foreground-disabled);
   --salt-status-warning-foreground-disabled: var(--salt-palette-warning-foreground-disabled);
   --salt-status-error-foreground-disabled: var(--salt-palette-error-foreground-disabled);
+  --salt-status-static-foreground: var(--salt-palette-neutral-secondary-foreground); /* Use --salt-content-secondary-foreground */
   --salt-status-static-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
   --salt-status-negative-foreground-disabled: var(--salt-palette-negative-foreground-disabled);
   --salt-status-positive-foreground-disabled: var(--salt-palette-positive-foreground-disabled);
@@ -186,8 +190,8 @@
   --salt-navigable-tertiary-background: var(--salt-palette-navigate-tertiary-background);
   --salt-navigable-tertiary-background-hover: var(--salt-palette-navigate-tertiary-background-hover);
   --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
+  --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
   --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
-  --salt-navigable-background-hover: var(--salt-palette-navigate-background-hover);
 
   --salt-navigable-textDecoration: var(--salt-typography-textDecoration-underline);
   --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
@@ -215,6 +219,8 @@
   --salt-track-textAlign: center;
   --salt-track-background: var(--salt-palette-track-background);
   --salt-track-background-disabled: var(--salt-palette-track-background-disabled);
+  --salt-track-borderColor: var(--salt-palette-neutral-border); /* Use --salt-sentiment-neutral-track */
+  --salt-track-borderColor-disabled: var(--salt-palette-neutral-border-disabled); /* Use --salt-sentiment-neutral-track-disabled */
 
   /* Taggable */
   --salt-taggable-cursor-hover: pointer;

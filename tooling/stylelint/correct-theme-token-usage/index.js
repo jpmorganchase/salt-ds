@@ -69,6 +69,7 @@ const allAllowedKeys = [
   "navigable",
   "overlayable",
   "selectable",
+  "sentiment",
   "separable",
   "status",
   "taggable", // TODO: **deprecated:** delete here

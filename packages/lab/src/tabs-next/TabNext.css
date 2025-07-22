@@ -67,7 +67,7 @@
 }
 
 .saltTabNext.saltTabNext-selected::after {
-  background: var(--salt-navigable-indicator-active);
+  background: var(--salt-navigable-accent-indicator-active);
 }
 
 .saltTabNext.saltTabNext-disabled {

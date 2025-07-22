@@ -1,8 +1,4 @@
 .salt-theme[data-brand="salt"] {
-  --salt-status-static-foreground: var(--salt-palette-foreground-secondary);
-  --salt-status-negative-foreground: var(--salt-palette-negative);
-  --salt-status-positive-foreground: var(--salt-palette-positive);
-
   --salt-status-error-foreground-decorative: var(--salt-palette-negative);
   --salt-status-error-foreground-informative: var(--salt-palette-negative-strong);
   --salt-status-error-background: var(--salt-palette-negative-weak);

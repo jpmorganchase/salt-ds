@@ -159,7 +159,9 @@ const RecursiveNavItem: FC<{
         onClick={(event) => {
           // prevent default to avoid navigation in storybook example
           event.preventDefault();
-          setActive(item.name);
+          if (item.href) {
+            setActive(item.name);
+          }
         }}
         level={item.level || 0}
         onExpand={handleExpand(item)}
