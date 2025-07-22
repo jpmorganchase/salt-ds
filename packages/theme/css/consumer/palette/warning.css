@@ -15,7 +15,7 @@
   */
 }
 
-.salt-theme[data-brand="salt"][data-mode="dark"] {
+.salt-theme[data-brand="consumer"][data-mode="dark"] {
   --salt-palette-warning: var(--salt-color-orange-500);
 
   --salt-palette-warning-strong: var(--salt-color-orange-400);
