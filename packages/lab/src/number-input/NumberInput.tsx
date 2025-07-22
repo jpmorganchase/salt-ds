@@ -364,6 +364,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         setDisplayValue("");
         setValue("");
         onChangeProp?.(event, 0);
+        onChangeEnd?.(event, 0);
       } else {
         setDisplayValue(inputValue);
         setValue(inputValue);
@@ -371,6 +372,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         const floatValue = toFloat(parsed);
         if (!Number.isNaN(floatValue) && floatValue !== toFloat(value)) {
           onChangeProp?.(event, floatValue);
+          onChangeEnd?.(event, floatValue);
         }
       }
     };
