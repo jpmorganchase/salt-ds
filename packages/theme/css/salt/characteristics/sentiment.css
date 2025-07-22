@@ -1,4 +1,4 @@
-.salt-theme-next.salt-theme {
+.salt-theme[data-brand="salt"] {
   --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative-strong);
   --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive-strong);
 

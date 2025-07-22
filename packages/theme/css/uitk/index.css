@@ -26,11 +26,11 @@
 @import url(characteristics/navigable.css);
 @import url(characteristics/overlayable.css);
 @import url(characteristics/selectable.css);
+@import url(characteristics/sentiment.css);
 @import url(characteristics/separable.css);
 @import url(characteristics/status.css);
 @import url(characteristics/target.css);
 @import url(characteristics/text.css);
-@import url(characteristics/track.css);
 
 /* Deprecated */
 @import url(../deprecated/foundations.css);

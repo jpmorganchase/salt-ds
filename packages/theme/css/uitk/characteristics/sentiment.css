@@ -1,4 +1,4 @@
-.salt-theme {
+.salt-theme[data-brand="uitk"] {
   --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative-foreground);
   --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive-foreground);
 
