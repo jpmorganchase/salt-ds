@@ -58,8 +58,8 @@ export const ToggleBrandAndMode = () => {
               <ToggleButton aria-label="jpm brand" value="salt">
                 jpm
               </ToggleButton>
-              <ToggleButton aria-label="manhattan brand" value="manhattan">
-                manhattan
+              <ToggleButton aria-label="consumer brand" value="consumer">
+                consumer
               </ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
@@ -135,8 +135,8 @@ export const NestedBrands = () => {
               <ToggleButton aria-label="jpm brand" value="salt">
                 jpm
               </ToggleButton>
-              <ToggleButton aria-label="manhattan brand" value="manhattan">
-                manhattan
+              <ToggleButton aria-label="consumer brand" value="consumer">
+                consumer
               </ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
