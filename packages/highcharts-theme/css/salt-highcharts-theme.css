@@ -130,10 +130,6 @@
   fill: var(--salt-container-primary-background);
 }
 
-.highcharts-theme-salt .highcharts-legend-navigation {
-  font-size: var(--salt-text-label-fontSize);
-}
-
 .highcharts-theme-salt path.highcharts-legend-nav-active {
   fill: var(--salt-content-secondary-foreground);
 }
