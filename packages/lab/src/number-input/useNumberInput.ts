@@ -20,6 +20,7 @@ export interface UseNumberInputProps
     | "max"
     | "min"
     | "onChange"
+    | "onChangeEnd"
     | "readOnly"
     | "step"
     | "stepMultiplier"
@@ -45,6 +46,7 @@ export const useNumberInput = ({
   max = Number.MAX_SAFE_INTEGER,
   min = Number.MIN_SAFE_INTEGER,
   onChange,
+  onChangeEnd,
   readOnly,
   setIsEditing,
   setValue,
@@ -95,7 +97,10 @@ export const useNumberInput = ({
     toFloat(value) >= max,
   );
 
-  const handleButtonMouseUp = () => inputRef.current?.focus();
+  const handleButtonMouseUp = (event: MouseEvent<HTMLButtonElement>) => {
+    inputRef.current?.focus();
+    onChangeEnd?.(event, toFloat(value));
+  };
 
   const commonButtonProps = {
     "aria-hidden": true,

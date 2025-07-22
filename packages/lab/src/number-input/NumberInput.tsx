@@ -73,7 +73,7 @@ export interface NumberInputProps
    */
   endAdornment?: ReactNode;
   /**
-   * Always display fixed number of decimals
+   * If true, 0s will be padded to the value to match the given `decimalScale`.
    */
   fixedDecimalScale?: boolean;
   /**
@@ -111,13 +111,12 @@ export interface NumberInputProps
    */
   onChange?: (event: SyntheticEvent | undefined, value: number) => void;
   /**
-   * Callback for final value
+   * A callback function that is triggered with the final value of the `NumberInput` after continuous increments and decrements.
    */
   onChangeEnd?: (event: SyntheticEvent | undefined, value: number) => void;
   /**
    *
-   * A callback to parse the value of the `NumberInput`. To be used alongside
-   * the `format` callback.
+   * A callback to parse the value of the `NumberInput`. To be used alongside the `format` callback.
    */
   parse?: (value: number | string) => number;
   /**
@@ -165,7 +164,8 @@ export interface NumberInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * Callback to validate input
+   * A callback to validate the `NumberInput`. If it returns `false`, `onChange` will not be
+   * triggered and the value will not be updated.
    */
   isAllowed?: (value: string) => boolean;
   /**
@@ -236,7 +236,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const defaultValue = isEmptyReadOnly
       ? emptyReadOnlyMarker
       : defaultValueProp;
-
     const validationStatusId = useId(idProp);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef(inputRefProp, inputRef);
@@ -299,6 +298,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       max,
       min,
       onChange: onChangeProp,
+      onChangeEnd: onChangeEnd,
       readOnly: isReadOnly,
       setIsEditing,
       setValue,
@@ -320,8 +320,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           ? sanitizeInput(value)
           : value;
         const clampAndFixed = clampAndFix(toFloat(updatedValue));
-        const formatted = format ? format(clampAndFixed) : clampAndFixed;
-        return formatted;
+        return format ? format(clampAndFixed) : clampAndFixed;
       };
       const updatedValue = formatValue();
       setDisplayValue(updatedValue);
@@ -334,9 +333,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
-      if (isReadOnly) return;
       setIsEditing(false);
       isAdjustingRef.current = false;
+      if (isReadOnly) return;
       const inputValue = event.target.value;
       if (isEmpty(inputValue)) {
         return;
@@ -344,35 +343,35 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const parsed = parse ? parse(inputValue) : sanitizeInput(inputValue);
       const clampAndFixed = !Number.isNaN(toFloat(parsed))
         ? clampAndFix(toFloat(parsed))
-        : toFloat(parsed);
-      if (value !== clampAndFixed) {
-        setValue(clampAndFixed || "");
-        onChangeProp?.(event, toFloat(clampAndFixed) || 0);
-        inputOnBlur?.(event);
+        : "";
+      setValue(clampAndFixed);
+      if (toFloat(clampAndFixed) !== toFloat(value)) {
+        onChangeProp?.(event, toFloat(clampAndFixed) ?? 0);
       }
       if (format) {
         const formatted = format(clampAndFixed);
         setDisplayValue(formatted);
       }
+      inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
-
-      if (isControlled && !onChangeProp) {
+      if ((isControlled && !onChangeProp) || !isValueAllowed(inputValue)) {
         return;
       }
       if (isEmpty(inputValue)) {
         setDisplayValue("");
         setValue("");
         onChangeProp?.(event, 0);
-      } else if (!isValueAllowed(inputValue)) {
-        return;
       } else {
         setDisplayValue(inputValue);
         setValue(inputValue);
         const parsed = parse ? parse(inputValue) : inputValue;
-        onChangeProp?.(event, toFloat(parsed));
+        const floatValue = toFloat(parsed);
+        if (!Number.isNaN(floatValue) && floatValue !== toFloat(value)) {
+          onChangeProp?.(event, floatValue);
+        }
       }
     };
 
