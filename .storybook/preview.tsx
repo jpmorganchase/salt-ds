@@ -14,6 +14,7 @@ import "@fontsource/pt-mono";
 
 import "@salt-ds/theme/css/salt/index.css";
 import "@salt-ds/theme/css/uitk/index.css";
+import "@salt-ds/theme/css/consumer/index.css";
 
 import "@salt-ds/theme/index.css";
 import "./styles.css";
