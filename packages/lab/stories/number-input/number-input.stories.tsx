@@ -399,7 +399,6 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
           value={value}
           onChange={(e, value) => {
             setValue(value);
-            console.log("on change value", value);
           }}
           format={(value) => {
             const formattedValue = new Intl.NumberFormat("en-GB", {
@@ -449,11 +448,15 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           defaultValue={12}
-          format={(value) => `${value}%`}
           max={100}
           clamp
+          format={(value) => `${value}%`}
           parse={(value) => {
             return toFloat(String(value).replace(/%/g, ""));
+          }}
+          isAllowed={(value) => {
+            const validPatternRegex = /^\d*(\.\d*)?%?$/;
+            return validPatternRegex.test(value);
           }}
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
@@ -470,7 +473,10 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
               typeof value === "number" ? value.toString() : value;
             return toFloat(stringValue.replace(/,/g, ""));
           }}
-          onChange={(e, val) => console.log("val on change", val)}
+          isAllowed={(value) => {
+            const validPatternRegex = /^[\d,.-]*$/;
+            return validPatternRegex.test(value);
+          }}
         />
       </FormField>
       <FormField>
