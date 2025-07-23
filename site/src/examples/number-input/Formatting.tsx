@@ -26,6 +26,10 @@ export const Formatting = () => {
               { k: 1e3, m: 1e6, b: 1e9 }[unit.toLowerCase()] || 1;
             return toFloat(num) * multiplier;
           }}
+          isAllowed={(value) => {
+            const validInputRegex = /^$|^[\d,\.]+[kKmMbB]?$/;
+            return validInputRegex.test(value);
+          }}
         />
       </FormField>
       <FormField>
@@ -39,6 +43,10 @@ export const Formatting = () => {
             const stringValue =
               typeof value === "number" ? value.toString() : value;
             return toFloat(stringValue.replace(/,/g, ""));
+          }}
+          isAllowed={(value) => {
+            const validPatternRegex = /^[\d,.-]*$/;
+            return validPatternRegex.test(value);
           }}
         />
       </FormField>

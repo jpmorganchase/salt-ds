@@ -274,6 +274,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const [displayValue, setDisplayValue] = useState<string | number>(value);
 
     const clampAndFix = (value: number): number | string => {
+      if (value > Number.MAX_SAFE_INTEGER) {
+        return Number.MAX_SAFE_INTEGER;
+      }
+      if (value < Number.MIN_SAFE_INTEGER) {
+        return Number.MIN_SAFE_INTEGER;
+      }
       const clampedValue = clamp ? clampToRange(min, max, value) : value;
       if (format) {
         return clampedValue;
@@ -346,7 +352,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         : "";
       setValue(clampAndFixed);
       if (toFloat(clampAndFixed) !== toFloat(value)) {
-        onChangeProp?.(event, toFloat(clampAndFixed) ?? 0);
+        onChangeProp?.(event, toFloat(clampAndFixed));
+        onChangeEnd?.(event, toFloat(clampAndFixed));
       }
       if (format) {
         const formatted = format(clampAndFixed);
@@ -477,12 +484,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           aria-readonly={isReadOnly ? "true" : undefined}
           ref={handleInputRef}
           required={isRequired}
-          {...(!isReadOnly && {
-            "aria-valuenow": toFloat(value),
-            "aria-valuemax": max,
-            "aria-valuemin": min,
-            "aria-valuetext": value.toString(),
-          })}
+          {...(!isReadOnly &&
+            !isEmpty(value) && {
+              "aria-valuemax": max,
+              "aria-valuemin": min,
+            })}
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}
           tabIndex={isDisabled ? -1 : 0}

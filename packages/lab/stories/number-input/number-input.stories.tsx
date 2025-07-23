@@ -186,53 +186,48 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
 
 export const Clamping: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState(2);
+  const [accessibleText, setAccessibleText] = useState("");
+  const accessibleTextId = useId();
   const max = 5;
   const min = 0;
 
-  const getValidationStatus = () => {
-    if (typeof value === "number") {
-      if (value > max || value < min) {
-        return "error";
-      }
-    } else {
-      const numericValue = Number.parseFloat(value);
-      if (numericValue > max || numericValue < min) {
-        return "error";
-      }
-    }
-    return undefined;
+  const clearAccessibleText = () => {
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
   };
 
   return (
     <StackLayout>
-      <FormField validationStatus={getValidationStatus()}>
-        <FormFieldLabel>No clamping</FormFieldLabel>
-        <NumberInput
-          {...args}
-          value={value}
-          onChange={(_event, value) => {
-            setValue(value);
-          }}
-          max={max}
-          min={min}
-          style={{ width: "250px" }}
-        />
-        <FormFieldHelperText>
-          Please enter a value between {min} and {max}
-        </FormFieldHelperText>
-      </FormField>
       <FormField>
         <FormFieldLabel>With clamping</FormFieldLabel>
         <NumberInput
           {...args}
-          defaultValue={2}
+          value={value}
+          onChange={(_, value) => {
+            setValue(value);
+          }}
           clamp
           max={max}
           min={min}
           style={{ width: "250px" }}
+          inputProps={{
+            onBlur: () => {
+              const clampedValue = Math.min(Math.max(value, min), max);
+              setAccessibleText(`Value adjusted to ${clampedValue}`);
+              clearAccessibleText();
+            },
+          }}
         />
+        <span
+          id={accessibleTextId}
+          style={accessibleTextStyles}
+          aria-live="polite"
+        >
+          {accessibleText}
+        </span>
         <FormFieldHelperText>
-          Please enter a value between {min} and {max}
+          Please enter a value between {min} and {max}.
         </FormFieldHelperText>
       </FormField>
     </StackLayout>
@@ -308,7 +303,7 @@ export const ResetAdornment: StoryFn<NumberInputProps> = (args) => {
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(10);
-                setAccessibleText("Value was reset");
+                setAccessibleText("Value was reset to 10");
                 clearAccessibleText();
               }}
             >
@@ -418,9 +413,8 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
             return toFloat(Number.parseFloat(num) * multiplier);
           }}
           isAllowed={(value) => {
-            const validInputRegex = /^[\d,\.]+[kKmMbB]?$/;
-            const isValid = validInputRegex.test(value);
-            return isValid;
+            const validInputRegex = /^$|^[\d,.]+[kKmMbB]?$/;
+            return validInputRegex.test(value);
           }}
         />
         <FormFieldHelperText>
