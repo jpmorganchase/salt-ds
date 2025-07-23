@@ -62,7 +62,7 @@ Highcharts.setOptions(highchartsOptionsSalt);
 
 ### Compatibility with existing Highcharts options
 
-If you already have a global options object, you can call `Highcharts.setOptions` again with the `highchartsOptionsSalt` after your initial call. Any fields set by `highchartsOptionsSalt` will take precedence over any previously set fields.
+If you already have a [Highcharts global options object](https://www.highcharts.com/docs/getting-started/how-to-set-options), you can call `Highcharts.setOptions` again with the `highchartsOptionsSalt` after your initial call. Any fields set by `highchartsOptionsSalt` will take precedence over any previously set fields.
 
 For granular control, you can also use the `Highcharts.merge()` utility function to deep merge the `highchartsOptionsSalt` with your existing options object, including at the chart level.
 
