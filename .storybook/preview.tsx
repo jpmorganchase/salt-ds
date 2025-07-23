@@ -46,6 +46,7 @@ if (!window.Cypress) {
 const preview: Preview = {
   initialGlobals: {
     mode: "light",
+    brand: "salt",
     density: "medium",
     responsive: "unwrap",
     textSpacing: "disable",
@@ -70,6 +71,20 @@ const preview: Preview = {
             title: "Side by side",
           },
           { value: "stacked", icon: "bottombar", title: "Stacked" },
+        ],
+      },
+    },
+    brand: {
+      name: "Brand",
+      description: "Set the brand",
+      toolbar: {
+        title: "Brand",
+        // show the brand name once selected in the toolbar
+        dynamicTitle: true,
+        items: [
+          { value: "salt", title: "Salt" },
+          { value: "uitk", title: "UITK" },
+          { value: "consumer", title: "Consumer" },
         ],
       },
     },
@@ -161,6 +176,8 @@ const preview: Preview = {
         return (
           <DocsContainer context={context} {...rest}>
             <ChosenProvider
+              /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+              brand={context.store.userGlobals.globals?.brand}
               /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
               mode={context.store.userGlobals.globals?.mode}
               enableStyleInjection={
