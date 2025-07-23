@@ -22,6 +22,10 @@ Our intent is to gather feedback on the provided solution, allowing us to refine
 
 Please see the package [README.md](https://github.com/jpmorganchase/salt-ds/blob/main/packages/highcharts-theme/README.md) for guidance on usage.
 
+### License
+
+A license is required to use Highcharts.
+
 ### Migration
 
 The Salt Highcharts theme replaces previous approaches that bundled a chart wrapper with styling. Because this package contains **only** theme assets (CSS + Highcharts options), you can keep using any Highcharts integration you prefer and simply apply the theme.
