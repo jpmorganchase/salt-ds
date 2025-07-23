@@ -1,4 +1,11 @@
-import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import {
   Table,
   type TableProps,
@@ -13,18 +20,35 @@ import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const TFootVariant = (): ReactElement => {
   const [variant, setVariant] = useState<TableProps["variant"]>("secondary");
+  const [divider, setDivider] = useState<"on" | "off">("on");
 
   const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
     setVariant(event.currentTarget.value as TableProps["variant"]);
   };
 
+  const onChangeDivider = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setDivider(event.currentTarget.value as "on" | "off");
+  };
+
   return (
     <StackLayout style={{ width: "100%" }}>
-      <ToggleButtonGroup onChange={onChangeVariant} value={variant}>
-        <ToggleButton value="primary">Primary</ToggleButton>
-        <ToggleButton value="secondary">Secondary</ToggleButton>
-        <ToggleButton value="tertiary">Tertiary</ToggleButton>
-      </ToggleButtonGroup>
+      <FlexLayout direction="row">
+        <FormField>
+          <FormFieldLabel>Variant</FormFieldLabel>
+          <ToggleButtonGroup onChange={onChangeVariant} value={variant}>
+            <ToggleButton value="primary">Primary</ToggleButton>
+            <ToggleButton value="secondary">Secondary</ToggleButton>
+            <ToggleButton value="tertiary">Tertiary</ToggleButton>
+          </ToggleButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Divider</FormFieldLabel>
+          <ToggleButtonGroup onChange={onChangeDivider} value={divider}>
+            <ToggleButton value="on">On</ToggleButton>
+            <ToggleButton value="off">Off</ToggleButton>
+          </ToggleButtonGroup>
+        </FormField>
+      </FlexLayout>
       <Table>
         <THead>
           <TR>
@@ -44,7 +68,10 @@ export const TFootVariant = (): ReactElement => {
             );
           })}
         </TBody>
-        <TFoot variant={variant}>
+        <TFoot
+          variant={variant}
+          divider={divider === "on" ? "primary" : "none"}
+        >
           <TR>
             {Array.from({ length: 3 }, (arrItem, i) => {
               return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;

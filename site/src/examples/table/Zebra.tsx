@@ -1,4 +1,11 @@
-import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import {
   Table,
   type TableProps,
@@ -13,19 +20,36 @@ import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Zebra = (): ReactElement => {
   const [zebra, setZebra] = useState<TableProps["zebra"]>("secondary");
+  const [divider, setDivider] = useState<"on" | "off">("on");
 
   const onChangeZebra = (event: SyntheticEvent<HTMLButtonElement>) => {
     setZebra(event.currentTarget.value as TableProps["zebra"]);
   };
 
+  const onChangeDivider = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setDivider(event.currentTarget.value as "on" | "off");
+  };
+
   return (
     <StackLayout style={{ width: "100%" }}>
-      <ToggleButtonGroup onChange={onChangeZebra} value={zebra}>
-        <ToggleButton value="primary">Primary</ToggleButton>
-        <ToggleButton value="secondary">Secondary</ToggleButton>
-        <ToggleButton value="tertiary">Tertiary</ToggleButton>
-      </ToggleButtonGroup>
-      <Table zebra={zebra}>
+      <FlexLayout direction="row">
+        <FormField>
+          <FormFieldLabel>Zebra</FormFieldLabel>
+          <ToggleButtonGroup onChange={onChangeZebra} value={zebra}>
+            <ToggleButton value="primary">Primary</ToggleButton>
+            <ToggleButton value="secondary">Secondary</ToggleButton>
+            <ToggleButton value="tertiary">Tertiary</ToggleButton>
+          </ToggleButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Divider</FormFieldLabel>
+          <ToggleButtonGroup onChange={onChangeDivider} value={divider}>
+            <ToggleButton value="on">On</ToggleButton>
+            <ToggleButton value="off">Off</ToggleButton>
+          </ToggleButtonGroup>
+        </FormField>
+      </FlexLayout>
+      <Table zebra={zebra} divider={divider === "on" ? "tertiary" : "none"}>
         <THead>
           <TR>
             {Array.from({ length: 3 }, (arrItem, i) => {
