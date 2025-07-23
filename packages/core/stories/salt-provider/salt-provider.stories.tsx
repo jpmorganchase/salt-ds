@@ -8,6 +8,7 @@ import {
   H1,
   type Mode,
   SaltProvider,
+  SaltProviderNext,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
@@ -22,7 +23,7 @@ export default {
 
 export const Default = () => {
   return (
-    <SaltProvider density="high" mode="light">
+    <SaltProvider brand="uitk" density="high" mode="light">
       <Card>
         <div>
           <h1>This is Card</h1>
@@ -244,7 +245,7 @@ export const ToggleMode = () => {
   };
 
   return (
-    <SaltProvider mode={mode}>
+    <SaltProvider brand={"uitk"} mode={mode}>
       <Card>
         <div>
           <h1>This Card is wrapped with a SaltProvider</h1>
@@ -308,6 +309,7 @@ export const NestedProviders = () => {
 
   return (
     <SaltProvider
+      brand="uitk"
       density={outerDensity === "unset" ? undefined : outerDensity}
       mode={outerMode === "unset" ? undefined : outerMode}
     >
@@ -379,5 +381,55 @@ export const NestedProviders = () => {
         </SaltProvider>
       </Card>
     </SaltProvider>
+  );
+};
+
+export const NextWithNoBrandGiven = () => {
+  return (
+    <SaltProviderNext
+      density="high"
+      mode="light"
+    >
+      <Card accent="left">
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+        </div>
+      </Card>
+    </SaltProviderNext>
+  );
+};
+
+export const NextWithBrandGiven = () => {
+  const [brand, setBrand] = useState<BrandName>("uitk");
+
+  const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBrand(event.currentTarget.value as BrandName);
+  };
+
+  return (
+    <SaltProviderNext
+      brand={brand}
+      density="high"
+      mode="light"
+    >
+      <Card accent="left">
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+            <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+              <ToggleButton aria-label="uitk brand" value="uitk">
+                uitk
+              </ToggleButton>
+              <ToggleButton aria-label="jpm brand" value="salt">
+                jpm
+              </ToggleButton>
+              <ToggleButton aria-label="consumer brand" value="consumer">
+                consumer
+              </ToggleButton>
+            </ToggleButtonGroup>
+        </div>
+      </Card>
+    </SaltProviderNext>
   );
 };

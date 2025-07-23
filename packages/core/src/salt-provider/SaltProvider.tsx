@@ -47,24 +47,29 @@ const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
 const DEFAULT_ACCENT: Accent = "blue";
 const DEFAULT_ACTION_FONT: ActionFont = "Open Sans";
 export interface ThemeContextProps {
-  brand: BrandName;
+  brand?: BrandName;
   theme: ThemeName;
   mode: Mode;
   window?: WindowContextType;
   /** Only available when using SaltProviderNext. */
+  /** @deprecated use `brand` for desired styling */
   themeNext: boolean;
-  corner: Corner;
+  /** @deprecated use `brand` for desired styling */
+  corner?: Corner;
   /** @deprecated use `corner`*/
-  UNSTABLE_corner: Corner;
-  headingFont: HeadingFont;
+  UNSTABLE_corner?: Corner;
+  /** @deprecated use `brand` for desired styling */
+  headingFont?: HeadingFont;
   /** @deprecated use `headingFont` */
-  UNSTABLE_headingFont: HeadingFont;
-  accent: Accent;
+  UNSTABLE_headingFont?: HeadingFont;
+  /** @deprecated use `brand` for desired styling */
+  accent?: Accent;
   /** @deprecated use `accent` */
-  UNSTABLE_accent: Accent;
-  actionFont: ActionFont;
+  UNSTABLE_accent?: Accent;
+  /** @deprecated use `brand` for desired styling */
+  actionFont?: ActionFont;
   /** @deprecated use `actionFont` */
-  UNSTABLE_actionFont: ActionFont;
+  UNSTABLE_actionFont?: ActionFont;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -95,6 +100,7 @@ const getThemeNames = (
   themeNext?: boolean,
 ): ThemeName => {
   if (themeNext) {
+    /* We still apply salt-theme-next for backwards compatibility, but it does not get referenced in our CSS */
     return themeName === DEFAULT_THEME_NAME
       ? clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT)
       : clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT, themeName);
@@ -109,7 +115,7 @@ interface ThemeNextProps {
 }
 
 const createThemedChildren = ({
-  brandName,
+  brand,
   children,
   themeName,
   density,
@@ -120,13 +126,15 @@ const createThemedChildren = ({
   headingFont,
   accent,
   actionFont,
+  applyThemeNextProps
 }: {
-  brandName: BrandName;
+  brand?: BrandName;
   children: ReactNode;
   themeName: ThemeName;
   density: Density;
   mode: Mode;
   applyClassesTo?: TargetElement;
+  applyThemeNextProps?: boolean;
 } & ThemeNextProps &
   SaltProviderNextAdditionalProps) => {
   const themeNamesString = getThemeNames(themeName, themeNext);
@@ -136,6 +144,7 @@ const createThemedChildren = ({
     "data-accent": accent,
     "data-action-font": actionFont,
   };
+  
   if (applyClassesTo === "root") {
     return children;
   }
@@ -148,9 +157,9 @@ const createThemedChildren = ({
           `salt-density-${density}`,
         ),
         // @ts-ignore
-        "data-brand": brandName,
+        "data-brand": brand,
         "data-mode": mode,
-        ...(themeNext ? themeNextProps : {}),
+        ...(applyThemeNextProps ? themeNextProps : {}),
       });
     }
     console.warn(
@@ -167,9 +176,9 @@ const createThemedChildren = ({
         themeNamesString,
         `salt-density-${density}`,
       )}
-      data-brand={brandName}
+      data-brand={brand}
       data-mode={mode}
-      {...(themeNext ? themeNextProps : {})}
+      {...(applyThemeNextProps ? themeNextProps : {})}
     >
       {children}
     </div>
@@ -199,7 +208,7 @@ interface SaltProviderBaseProps {
    */
   theme?: ThemeName;
   /**
-   * Either "legacy" or "salt".
+   * Either "legacy", "commercial", or "consumer".
    * Specifies branding to be used for the theme.
    */
   brand?: BrandName;
@@ -260,7 +269,7 @@ function InternalSaltProvider({
 }: Omit<
   SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
->) {
+  >) {
   const inheritedDensity = useContext(DensityContext);
   const {
     brand: inheritedBrand,
@@ -277,9 +286,10 @@ function InternalSaltProvider({
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
-  const brandName = brandProp ?? inheritedBrand ?? DEFAULT_BRAND;
+  const brand = brandProp ?? inheritedBrand ?? DEFAULT_BRAND; 
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
+
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
   const headingFont =
     headingFontProp ?? inheritedHeadingFont ?? DEFAULT_HEADING_FONT;
@@ -289,6 +299,9 @@ function InternalSaltProvider({
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
+  
+  /* If brand prop is provided as something other than legacy (default), don't apply the deprecated themeNextProps */
+  const applyThemeNextProps = themeNext && brand === 'uitk';
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -299,46 +312,47 @@ function InternalSaltProvider({
 
   const themeContextValue = useMemo(
     () => ({
-      brand: brandName,
+      brand,
       theme: themeName,
       mode,
       window: targetWindow,
-      themeNext: Boolean(themeNext),
-      corner: corner,
-      headingFont: headingFont,
+      // Backwards compatibility
       accent: accent,
       actionFont: actionFont,
-      // Backward compatibility
+      corner: corner,
+      headingFont: headingFont,
+      themeNext: Boolean(themeNext),
       UNSTABLE_corner: corner,
       UNSTABLE_headingFont: headingFont,
       UNSTABLE_accent: accent,
       UNSTABLE_actionFont: actionFont,
     }),
     [
-      brandName,
+      brand,
       themeName,
       mode,
       targetWindow,
-      themeNext,
-      corner,
-      headingFont,
       accent,
       actionFont,
+      corner,
+      headingFont,
+      themeNext,
     ],
   );
-
+  
   const themedChildren = createThemedChildren({
-    brandName,
+    brand,
     children,
     themeName,
     density,
     mode,
     applyClassesTo,
     themeNext,
-    corner: corner,
+    corner,
     headingFont,
     accent,
     actionFont,
+    applyThemeNextProps
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -352,9 +366,9 @@ function InternalSaltProvider({
           ...themeNames,
           `salt-density-${density}`,
         );
-        targetWindow.document.documentElement.dataset.brand = brandName;
+        targetWindow.document.documentElement.dataset.brand = brand;
         targetWindow.document.documentElement.dataset.mode = mode;
-        if (themeNext) {
+        if (themeNext && applyThemeNextProps) {
           targetWindow.document.documentElement.dataset.corner = corner;
           targetWindow.document.documentElement.dataset.headingFont =
             headingFont;
@@ -376,7 +390,7 @@ function InternalSaltProvider({
         );
         targetWindow.document.documentElement.dataset.mode = undefined;
         targetWindow.document.documentElement.dataset.brand = undefined;
-        if (themeNext) {
+        if (themeNext && applyThemeNextProps) {
           delete targetWindow.document.documentElement.dataset.corner;
           delete targetWindow.document.documentElement.dataset.headingFont;
           delete targetWindow.document.documentElement.dataset.accent;
@@ -386,7 +400,7 @@ function InternalSaltProvider({
     };
   }, [
     applyClassesTo,
-    brandName,
+    brand,
     density,
     mode,
     themeName,
@@ -397,6 +411,7 @@ function InternalSaltProvider({
     headingFont,
     accent,
     actionFont,
+    applyThemeNextProps
   ]);
 
   const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
@@ -432,29 +447,33 @@ export function SaltProvider({
 
 interface SaltProviderNextAdditionalProps {
   /**
-   * Either "sharp" or "rounded".
-   * Determines selected components corner radius.
-   * @default "sharp"
-   */
-  corner?: Corner;
-  /**
-   * Either "Open Sans" or "Amplitude".
-   * Determines font family of display and heading text.
-   * @default "Open Sans"
-   */
-  headingFont?: HeadingFont;
-  /**
    * Either "blue" or "teal".
    * Determines accent color used across components, e.g. Accent Button, List, Calendar.
+   * Will not take effect if `brand` prop is provided
    * @default "blue"
    */
   accent?: Accent;
   /**
    * Either "Open Sans" or "Amplitude".
    * Determines font family of action components, mostly Buttons.
+   * Will not take effect if `brand` prop is provided
    * @default "Open Sans"
    */
   actionFont?: ActionFont;
+  /**
+   * Either "sharp" or "rounded".
+   * Determines selected components corner radius.
+   * Will not take effect if `brand` prop is provided
+   * @default "sharp"
+   */
+  corner?: Corner;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of display and heading text.
+   * Will not take effect if `brand` prop is provided
+   * @default "Open Sans"
+   */
+  headingFont?: HeadingFont;
 }
 
 export type SaltProviderNextProps = SaltProviderProps &
@@ -473,7 +492,7 @@ export function SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
-/** @deprecated use `SaltProvider` with `brand="salt"` prop */
+/** @deprecated use `SaltProvider` with appropriate `brand` prop */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {

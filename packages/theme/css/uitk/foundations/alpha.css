@@ -29,4 +29,13 @@
   --salt-color-red-200-40a: rgba(var(--salt-color-red-200-rgb), 0.4);
   --salt-color-red-500-40a: rgba(var(--salt-color-red-500-rgb), 0.4);
   --salt-color-red-600-40a: rgba(var(--salt-color-red-600-rgb), 0.4);
+
+  /* for backwards compatibility */
+  --salt-color-teal-200-40a: rgba(var(--salt-color-teal-200-rgb), 0.4);
+  --salt-color-teal-300-40a: rgba(var(--salt-color-teal-300-rgb), 0.4);
+  --salt-color-teal-400-40a: rgba(var(--salt-color-teal-400-rgb), 0.4);
+  --salt-color-teal-500-40a: rgba(var(--salt-color-teal-500-rgb), 0.4);
+  --salt-color-teal-600-40a: rgba(var(--salt-color-teal-600-rgb), 0.4);
+  --salt-color-teal-700-40a: rgba(var(--salt-color-teal-700-rgb), 0.4);
+  --salt-color-teal-800-40a: rgba(var(--salt-color-teal-800-rgb), 0.4);
 }
