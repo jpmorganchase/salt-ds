@@ -24,6 +24,10 @@ describe("GIVEN a link", () => {
     );
 
     cy.findByTestId(/TearOutIcon/i).should("exist");
+    cy.findByRole("link").should(
+      "have.accessibleName",
+      "Action Opens in a new tab",
+    );
   });
 
   it('WHEN passed target="_blank" AND passed IconComponent, THEN should render the Link with the tear out icon', () => {
