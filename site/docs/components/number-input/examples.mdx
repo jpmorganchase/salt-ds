@@ -45,6 +45,8 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clamp` to true, the
 input will automatically adjust to the nearest minimum or maximum value when the input field loses focus.
 
+**Note:** When using the `clamp` prop, ensure that the screen reader is updated to announce the clamped value, providing an accessible experience for users relying on assistive technologies.
+
 <LivePreview componentName="number-input" exampleName="ClampBehaviour" />
 
 ## Validation
@@ -58,10 +60,11 @@ The `NumberInput` can display validation states, `error`, `warning`, and `succes
 
 <LivePreview componentName="number-input" exampleName="Validation" />
 
-## Decimal scale
+## Decimal Scale
 
-By default, the decimal scale is derived from the highest number of decimal places found in the `step` prop, or if not defined, in either the `defaultValue` or `value` prop.
-However, you can set it to any value of your choice using the `decimalScale` prop and that will have priority.
+The `decimalScale` prop allows you to define the number of decimal places displayed in the `NumberInput`. By default, the decimal scale is determined by the greater number of decimal places between the `step` value and the `value` or `defaultValue` provided.
+
+If you need to enforce a consistent decimal scale, even if it requires padding with zeros, you can enable the `fixedDecimalScale` prop. When set to `true`, the `NumberInput` will always display the specified number of decimal places, ensuring uniform formatting by appending zeros as necessary.
 
 ### Best practices
 
@@ -71,15 +74,15 @@ When configuring the number of decimal places, ensure it aligns with the specifi
 
 ## Formatting
 
-You can format the value of the `NumberInput` using the `format` callback prop. It typically works alongside a `parse` callback for complex formatting.
+The `NumberInput` allows you to format its value using the `format` callback prop. This typically works in conjunction with a `parse` callback which determines the numerical value, as well as an `isAllowed` callback to control which values can be entered.
 
-Users will be able to see the formatted value in the input, e.g. "5K". When the input gains focus, the value will be parsed into its numerical form, so "5K" becomes "5000". This allows users to edit the values with precision. When the input loses focus, the value will be formatted again.
+### Best Practices
 
-### Best practices
+- **`format` and `parse`**: The `format` callback is designed to work seamlessly with most formatting libraries, such as `Intl.NumberFormat`. It is strongly recommended to provide a `parse` callback alongside `format` to ensure the correct numerical value is derived, maintaining precision and consistency.
 
-The `format` callback has been designed to work with most formatting libraries, e.g. Intl.NumberFormat. However, it is highly recommended to provide a `parse` callback alongside `format` to determine the correct numerical value so the precision of the value can be maintained.
+- **`isAllowed`**: This callback returns a boolean as to whether the entered value is valid or not. This is particularly useful for restricting input to specifi ranges, patterns, or formats. For example, you can prevent users from entering invalid characters or values outside a defined range.
 
-**Note**: If a `format` callback is provided, it will override the `decimalScale`, enabling you to handle decimal place rules directly within your formatting function.
+**Note**: If a `format` callback is provided, it will override the `decimalScale` prop, allowing you to define custom rules for decimal places directly within your formatting logic.
 
 <LivePreview componentName="number-input" exampleName="Formatting" />
 
