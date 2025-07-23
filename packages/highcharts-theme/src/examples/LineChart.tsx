@@ -22,10 +22,10 @@ const lineDataOptions: Options = {
   },
   xAxis: {
     title: {
-      text: "Time from 2011 to 2015",
+      text: "Time from 2011 to 2020",
     },
     accessibility: {
-      description: "Time from 2011 to 2015",
+      description: "Time from 2011 to 2020",
     },
     categories: [
       "2011",
