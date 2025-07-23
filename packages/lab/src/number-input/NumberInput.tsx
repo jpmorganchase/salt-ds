@@ -485,7 +485,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           ref={handleInputRef}
           required={isRequired}
           {...(!isReadOnly &&
-            !isEmpty(value) && {
+            // Workaround to not have the screen reader announce "50%" when the input is blank.
+            !isEmpty(displayValue) && {
               "aria-valuemax": max,
               "aria-valuemin": min,
             })}
