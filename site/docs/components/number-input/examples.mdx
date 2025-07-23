@@ -74,13 +74,13 @@ When configuring the number of decimal places, ensure it aligns with the specifi
 
 ## Formatting
 
-The `NumberInput` allows you to format its value using the `format` callback prop. This typically works in conjunction with a `parse` callback which determines the numerical value, as well as an `isAllowed` callback to control which values can be entered.
+The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which determines the numerical value, and an `isAllowed` callback to regulate permissible input values.
 
 ### Best Practices
 
-- **`format` and `parse`**: The `format` callback is designed to work seamlessly with most formatting libraries, such as `Intl.NumberFormat`. It is strongly recommended to provide a `parse` callback alongside `format` to ensure the correct numerical value is derived, maintaining precision and consistency.
+- **`format` and `parse`**: The `format` callback is designed to work seamlessly with most formatting libraries, such as Intl.NumberFormat. It is strongly recommended to provide a `parse` callback alongside `format` to ensure the correct numerical value is derived, maintaining precision and consistency.
 
-- **`isAllowed`**: This callback returns a boolean as to whether the entered value is valid or not. This is particularly useful for restricting input to specifi ranges, patterns, or formats. For example, you can prevent users from entering invalid characters or values outside a defined range.
+- **`isAllowed`**: By default, the `NumberInput` restricts input to numerical values. However, when formatting is applied, you might want to include special characters or specific formats. The `isAllowed` callback returns a boolean that allows you to define which values are valid. This is especially useful for limiting input to certain ranges, patterns, or formats. For example, you can restrict users from entering invalid characters or values that fall outside a specified range.
 
 **Note**: If a `format` callback is provided, it will override the `decimalScale` prop, allowing you to define custom rules for decimal places directly within your formatting logic.
 
