@@ -208,3 +208,24 @@ StickyHeaderFooter.args = {
   THeadProps: { sticky: true },
   TFootProps: { sticky: true },
 };
+
+export const ColumnHeaders: StoryFn<typeof Table> = (args) => {
+  return (
+    <Table divider="none" {...args}>
+      <TBody>
+        <TR>
+          <TH>Label</TH>
+          <TD>Value</TD>
+        </TR>
+        <TR>
+          <TH>Label</TH>
+          <TD>Value</TD>
+        </TR>
+        <TR>
+          <TH>Label</TH>
+          <TD>Value</TD>
+        </TR>
+      </TBody>
+    </Table>
+  );
+};

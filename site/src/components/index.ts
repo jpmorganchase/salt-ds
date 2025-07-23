@@ -10,14 +10,7 @@ export {
   Panel,
   SaltProvider,
   StackLayout,
-  Table,
-  TBody,
-  TD,
   Text,
-  TFoot,
-  TH,
-  THead,
-  TR,
 } from "@salt-ds/core";
 
 export * from "./ag-grid-doc";

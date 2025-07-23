@@ -12,10 +12,10 @@ import {
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const TFootVariant = (): ReactElement => {
-  const [variant, setVariant] = useState("primary");
+  const [variant, setVariant] = useState<TableProps["variant"]>("secondary");
 
   const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setVariant(event.currentTarget.value);
+    setVariant(event.currentTarget.value as TableProps["variant"]);
   };
 
   return (
@@ -44,7 +44,7 @@ export const TFootVariant = (): ReactElement => {
             );
           })}
         </TBody>
-        <TFoot variant={variant as TableProps["variant"]}>
+        <TFoot variant={variant}>
           <TR>
             {Array.from({ length: 3 }, (arrItem, i) => {
               return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;

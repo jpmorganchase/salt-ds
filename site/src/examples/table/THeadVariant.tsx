@@ -12,10 +12,10 @@ import {
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const THeadVariant = (): ReactElement => {
-  const [variant, setVariant] = useState("primary");
+  const [variant, setVariant] = useState<TableProps["variant"]>("secondary");
 
   const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setVariant(event.currentTarget.value);
+    setVariant(event.currentTarget.value as TableProps["variant"]);
   };
 
   return (
@@ -26,7 +26,7 @@ export const THeadVariant = (): ReactElement => {
         <ToggleButton value="tertiary">Tertiary</ToggleButton>
       </ToggleButtonGroup>
       <Table>
-        <THead variant={variant as TableProps["variant"]}>
+        <THead variant={variant}>
           <TR>
             {Array.from({ length: 3 }, (arrItem, i) => {
               return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;

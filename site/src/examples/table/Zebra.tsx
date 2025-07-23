@@ -1,12 +1,4 @@
-import {
-  FlexItem,
-  FlexLayout,
-  FormField,
-  FormFieldLabel,
-  StackLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
+import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import {
   Table,
   type TableProps,
@@ -20,45 +12,20 @@ import {
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Zebra = (): ReactElement => {
-  const [variant, setVariant] = useState("primary");
-  const [zebra, setZebra] = useState("secondary");
-
-  const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setVariant(event.currentTarget.value);
-  };
+  const [zebra, setZebra] = useState<TableProps["zebra"]>("secondary");
 
   const onChangeZebra = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setZebra(event.currentTarget.value);
+    setZebra(event.currentTarget.value as TableProps["zebra"]);
   };
 
   return (
     <StackLayout style={{ width: "100%" }}>
-      <FlexLayout align="center">
-        <FlexItem>
-          <FormField>
-            <FormFieldLabel>Variant</FormFieldLabel>
-            <ToggleButtonGroup onChange={onChangeVariant} value={variant}>
-              <ToggleButton value="primary">Primary</ToggleButton>
-              <ToggleButton value="secondary">Secondary</ToggleButton>
-              <ToggleButton value="tertiary">Tertiary</ToggleButton>
-            </ToggleButtonGroup>
-          </FormField>
-        </FlexItem>
-        <FlexItem>
-          <FormField>
-            <FormFieldLabel>Zebra</FormFieldLabel>
-            <ToggleButtonGroup onChange={onChangeZebra} value={zebra}>
-              <ToggleButton value="primary">Primary</ToggleButton>
-              <ToggleButton value="secondary">Secondary</ToggleButton>
-              <ToggleButton value="tertiary">Tertiary</ToggleButton>
-            </ToggleButtonGroup>
-          </FormField>
-        </FlexItem>
-      </FlexLayout>
-      <Table
-        variant={variant as TableProps["variant"]}
-        zebra={zebra as TableProps["zebra"]}
-      >
+      <ToggleButtonGroup onChange={onChangeZebra} value={zebra}>
+        <ToggleButton value="primary">Primary</ToggleButton>
+        <ToggleButton value="secondary">Secondary</ToggleButton>
+        <ToggleButton value="tertiary">Tertiary</ToggleButton>
+      </ToggleButtonGroup>
+      <Table zebra={zebra}>
         <THead>
           <TR>
             {Array.from({ length: 3 }, (arrItem, i) => {
