@@ -212,17 +212,23 @@ StickyHeaderFooter.args = {
 export const ColumnHeaders: StoryFn<typeof Table> = (args) => {
   return (
     <Table divider="none" {...args}>
+      <THead>
+        <TR>
+          <TH>One</TH>
+          <TH>Two</TH>
+        </TR>
+      </THead>
       <TBody>
         <TR>
-          <TH>Label</TH>
+          <TH scope="row">Label</TH>
           <TD>Value</TD>
         </TR>
         <TR>
-          <TH>Label</TH>
+          <TH scope="row">Label</TH>
           <TD>Value</TD>
         </TR>
         <TR>
-          <TH>Label</TH>
+          <TH scope="row">Label</TH>
           <TD>Value</TD>
         </TR>
       </TBody>

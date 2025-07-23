@@ -162,6 +162,11 @@ table.saltTable th {
   text-align: start;
 }
 
+.table.saltTable th[scope="row"] {
+  font-weight: var(--salt-text-fontWeight-strong);
+  line-height: var(--salt-text-lineHeight);
+}
+
 table.saltTable th + th::before {
   --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   background: var(--salt-separable-tertiary-borderColor);
