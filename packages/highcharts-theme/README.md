@@ -2,7 +2,7 @@
 
 Salt Highcharts Theme is a package that adds Salt theme styles to Highcharts. The package contains a CSS file and a Highcharts global options object necessary for positional property application.
 
-*Please note, this package is a WIP. Highcharts CSS files and Options object are not finalised.*
+_Please note, this package is a WIP. Highcharts CSS files and Options object are not finalised._
 
 ## Supported Highchart versions
 
