@@ -3,6 +3,7 @@
 
   --salt-palette-positive-strong: var(--salt-color-green-700);
 
+  /* should be weakest */
   --salt-palette-positive-weak: var(--salt-color-green-50);
 
   /* 
@@ -20,6 +21,7 @@
 
   --salt-palette-positive-strong: var(--salt-color-green-300);
 
+  /* should be weakest */
   --salt-palette-positive-weak: var(--salt-color-green-950);
 
   /* 

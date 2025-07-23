@@ -3,6 +3,7 @@
 
   --salt-palette-warning-strong: var(--salt-color-orange-600);
 
+  /* should be weakest */
   --salt-palette-warning-weak: var(--salt-color-orange-50);
 
   /* 
@@ -20,6 +21,7 @@
 
   --salt-palette-warning-strong: var(--salt-color-orange-400);
 
+  /* should be weakest */
   --salt-palette-warning-weak: var(--salt-color-orange-950);
 
   /* 

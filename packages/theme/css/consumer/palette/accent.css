@@ -1,0 +1,49 @@
+.salt-theme[data-mode="light"][data-brand="consumer"] {
+  --salt-palette-accent: var(--salt-color-blue-600);
+
+  --salt-palette-accent-strong: var(--salt-color-blue-700);
+
+  --salt-palette-accent-action-active: var(--salt-color-blue-800);
+  --salt-palette-accent-action-hover: var(--salt-color-blue-700);
+
+  /*
+  --salt-palette-accent-foreground: ;
+  --salt-palette-accent-foreground-informative: ;
+  --salt-palette-accent-stronger: ;
+  --salt-palette-accent-strongest: ;
+  --salt-palette-accent-weak: ;
+  --salt-palette-accent-weaker: ;
+  --salt-palette-accent-weakest: ;
+
+  --salt-palette-accent-disabled: ;
+  --salt-palette-accent-foreground-informative-disabled: ;
+  --salt-palette-accent-weaker-disabled: ;
+  --salt-palette-accent-strong-disabled: ;
+  --salt-palette-accent-stronger-disabled: ;
+  */
+}
+
+.salt-theme[data-mode="dark"][data-brand="consumer"] {
+  --salt-palette-accent: var(--salt-color-blue-600);
+
+  --salt-palette-accent-strong: var(--salt-color-blue-300);
+
+  --salt-palette-accent-action-active: var(--salt-color-blue-800);
+  --salt-palette-accent-action-hover: var(--salt-color-blue-700);
+
+  /*
+  --salt-palette-accent-foreground: ;
+  --salt-palette-accent-foreground-informative: ;
+  --salt-palette-accent-stronger: ;
+  --salt-palette-accent-strongest: ;
+  --salt-palette-accent-weak: ;
+  --salt-palette-accent-weaker: ;
+  --salt-palette-accent-weakest: ;
+
+  --salt-palette-accent-disabled: ;
+  --salt-palette-accent-foreground-informative-disabled: ;
+  --salt-palette-accent-weaker-disabled: ;
+  --salt-palette-accent-strong-disabled: ;
+  --salt-palette-accent-stronger-disabled: ;
+  */
+}

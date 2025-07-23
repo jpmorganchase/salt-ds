@@ -3,8 +3,9 @@
   --salt-palette-foreground-primary-alt: var(--salt-color-white);
   --salt-palette-foreground-secondary: var(--salt-color-silver-600);
 
+  --salt-palette-foreground-primary-disabled: var(--salt-color-gray-500);
+
   /* 
-  --salt-palette-foreground-primary-disabled: ;
   --salt-palette-foreground-primary-alt-disabled: ;
   --salt-palette-foreground-secondary-disabled: ;
   --salt-palette-foreground-visited: ; 
@@ -16,10 +17,10 @@
   --salt-palette-foreground-primary-alt: var(--salt-color-white);
   --salt-palette-foreground-secondary: var(--salt-color-ultramarine-300);
 
+  --salt-palette-foreground-primary-disabled: var(--salt-color-gray-500);
+
   /* 
-  --salt-palette-foreground-primary-disabled: ;
-  --salt-palette-foreground-primary-alt-disabled: ;
-  --salt-palette-foreground-secondary: ;
+  --salt-palette-foreground-primary-alt-disabled: 
   --salt-palette-foreground-secondary-disabled: ;
   --salt-palette-foreground-visited: ; 
   */
