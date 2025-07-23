@@ -1,6 +1,6 @@
 .salt-theme[data-mode="light"][data-brand="consumer"] {
   --salt-palette-alpha-none: transparent;
-  --salt-palette-alpha-contrast-low:  var(--salt-color-black-15a);
+  --salt-palette-alpha-contrast-low: var(--salt-color-black-15a);
 
   /*
   --salt-palette-alpha-highest: ;
@@ -26,7 +26,7 @@
 
 .salt-theme[data-mode="dark"][data-brand="consumer"] {
   --salt-palette-alpha-none: transparent;
-  --salt-palette-alpha-contrast-low:  var(--salt-color-white-15a);
+  --salt-palette-alpha-contrast-low: var(--salt-color-white-15a);
 
   /*
   --salt-palette-alpha-highest: ;

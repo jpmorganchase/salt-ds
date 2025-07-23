@@ -386,10 +386,7 @@ export const NestedProviders = () => {
 
 export const NextWithNoBrandGiven = () => {
   return (
-    <SaltProviderNext
-      density="high"
-      mode="light"
-    >
+    <SaltProviderNext density="high" mode="light">
       <Card accent="left">
         <div>
           <h1>This is Card</h1>
@@ -408,26 +405,22 @@ export const NextWithBrandGiven = () => {
   };
 
   return (
-    <SaltProviderNext
-      brand={brand}
-      density="high"
-      mode="light"
-    >
+    <SaltProviderNext brand={brand} density="high" mode="light">
       <Card accent="left">
         <div>
           <h1>This is Card</h1>
           <span>Using Nested DOM Elements</span>
-            <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
-              <ToggleButton aria-label="uitk brand" value="uitk">
-                uitk
-              </ToggleButton>
-              <ToggleButton aria-label="jpm brand" value="salt">
-                jpm
-              </ToggleButton>
-              <ToggleButton aria-label="consumer brand" value="consumer">
-                consumer
-              </ToggleButton>
-            </ToggleButtonGroup>
+          <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+            <ToggleButton aria-label="uitk brand" value="uitk">
+              uitk
+            </ToggleButton>
+            <ToggleButton aria-label="jpm brand" value="salt">
+              jpm
+            </ToggleButton>
+            <ToggleButton aria-label="consumer brand" value="consumer">
+              consumer
+            </ToggleButton>
+          </ToggleButtonGroup>
         </div>
       </Card>
     </SaltProviderNext>

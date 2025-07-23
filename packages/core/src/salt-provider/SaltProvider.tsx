@@ -100,7 +100,7 @@ const getThemeNames = (
   themeNext?: boolean,
 ): ThemeName => {
   if (themeNext) {
-    /* We still apply salt-theme-next for backwards compatibility, but it does not get referenced in our CSS */
+    /* We still apply salt-theme-next for backwards compatibility for accent, heading/action font, and corner data attributes */
     return themeName === DEFAULT_THEME_NAME
       ? clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT)
       : clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT, themeName);
@@ -126,7 +126,7 @@ const createThemedChildren = ({
   headingFont,
   accent,
   actionFont,
-  applyThemeNextProps
+  applyThemeNextProps,
 }: {
   brand?: BrandName;
   children: ReactNode;
@@ -144,7 +144,7 @@ const createThemedChildren = ({
     "data-accent": accent,
     "data-action-font": actionFont,
   };
-  
+
   if (applyClassesTo === "root") {
     return children;
   }
@@ -269,7 +269,7 @@ function InternalSaltProvider({
 }: Omit<
   SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
-  >) {
+>) {
   const inheritedDensity = useContext(DensityContext);
   const {
     brand: inheritedBrand,
@@ -286,7 +286,7 @@ function InternalSaltProvider({
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
-  const brand = brandProp ?? inheritedBrand ?? DEFAULT_BRAND; 
+  const brand = brandProp ?? inheritedBrand ?? DEFAULT_BRAND;
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
@@ -299,9 +299,9 @@ function InternalSaltProvider({
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
-  
+
   /* If brand prop is provided as something other than legacy (default), don't apply the deprecated themeNextProps */
-  const applyThemeNextProps = themeNext && brand === 'uitk';
+  const applyThemeNextProps = themeNext && brand === "uitk";
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -339,7 +339,7 @@ function InternalSaltProvider({
       themeNext,
     ],
   );
-  
+
   const themedChildren = createThemedChildren({
     brand,
     children,
@@ -352,7 +352,7 @@ function InternalSaltProvider({
     headingFont,
     accent,
     actionFont,
-    applyThemeNextProps
+    applyThemeNextProps,
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -411,7 +411,7 @@ function InternalSaltProvider({
     headingFont,
     accent,
     actionFont,
-    applyThemeNextProps
+    applyThemeNextProps,
   ]);
 
   const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
