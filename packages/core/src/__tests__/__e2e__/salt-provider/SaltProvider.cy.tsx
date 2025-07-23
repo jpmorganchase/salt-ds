@@ -133,7 +133,7 @@ describe("Given a SaltProvider", () => {
     it("should apply values specified in props", () => {
       mount(
         <SaltProvider
-          brand="salt"
+          brand="commercial"
           density="high"
           mode="dark"
           theme="custom-theme"
@@ -143,7 +143,7 @@ describe("Given a SaltProvider", () => {
       );
       cy.get("#test-1")
         .should("exist")
-        .and("have.attr", "data-brand", "salt")
+        .and("have.attr", "data-brand", "commercial")
         .and("have.attr", "data-density", "high")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-theme", "custom-theme")
