@@ -386,7 +386,7 @@ HiddenButtons.args = {
 export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState(100000);
   return (
-    <StackLayout>
+    <StackLayout gap={2}>
       <FormField>
         <FormFieldLabel>With compact notation, controlled</FormFieldLabel>
         <NumberInput
@@ -404,30 +404,25 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
             return formattedValue;
           }}
           parse={(value) => {
-            const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
+            const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbBtT]?)$/);
             if (!match) return toFloat(value);
 
             const [_, num, , unit] = match;
             const multiplier =
-              { k: 1e3, m: 1e6, b: 1e9 }[unit.toLowerCase()] || 1;
+              { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[unit.toLowerCase()] || 1;
             return toFloat(Number.parseFloat(num) * multiplier);
           }}
           isAllowed={(value) => {
-            const validInputRegex = /^$|^[\d,.]+[kKmMbB]?$/;
+            const validInputRegex = /^$|^[\d,.]+[kKmMbBtT]?$/;
             return validInputRegex.test(value);
           }}
         />
-        <FormFieldHelperText>
-          Number input's value is {value}
-        </FormFieldHelperText>
-        <FlexLayout>
-          <Button onClick={() => setValue(123456)}>Set value to 123456</Button>
-          <Button onClick={() => setValue(value + 100)}>
-            Increment by 100
-          </Button>
-          <Button onClick={() => setValue(0)}>Clear</Button>
-        </FlexLayout>
       </FormField>
+      <FlexLayout>
+        <Button onClick={() => setValue(123456)}>Set value to 123456</Button>
+        <Button onClick={() => setValue(value + 100)}>Increment by 100</Button>
+        <Button onClick={() => setValue(0)}>Clear</Button>
+      </FlexLayout>
     </StackLayout>
   );
 };
