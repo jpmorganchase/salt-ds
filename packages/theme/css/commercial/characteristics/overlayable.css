@@ -1,0 +1,14 @@
+.salt-theme-next /* for backwards compatibility */,
+.salt-theme[data-brand="commercial"] {
+  --salt-overlayable-shadow-scroll: var(--salt-shadow-100);
+  --salt-overlayable-shadow-region: var(--salt-shadow-200);
+  --salt-overlayable-shadow: var(--salt-shadow-200);
+  --salt-overlayable-shadow-hover: var(--salt-shadow-300);
+  --salt-overlayable-shadow-popout: var(--salt-shadow-400);
+  --salt-overlayable-shadow-drag: var(--salt-shadow-400);
+  --salt-overlayable-shadow-modal: var(--salt-shadow-500);
+
+  --salt-overlayable-background: var(--salt-palette-alpha-higher);
+  --salt-overlayable-background-highlight: var(--salt-palette-alpha-contrast-medium);
+  --salt-overlayable-background-rangeSelection: var(--salt-palette-alpha-contrast-mediumLow);
+}

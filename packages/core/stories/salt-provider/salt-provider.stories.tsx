@@ -23,7 +23,7 @@ export default {
 
 export const Default = () => {
   return (
-    <SaltProvider brand="uitk" density="high" mode="light">
+    <SaltProvider brand="legacy" density="high" mode="light">
       <Card>
         <div>
           <h1>This is Card</h1>
@@ -35,7 +35,7 @@ export const Default = () => {
 };
 
 export const ToggleBrandAndMode = () => {
-  const [brand, setBrand] = useState<BrandName>("uitk");
+  const [brand, setBrand] = useState<BrandName>("legacy");
   const [mode, setMode] = useState<Mode>("light");
 
   const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -53,10 +53,10 @@ export const ToggleBrandAndMode = () => {
           <H1>This Card is wrapped with a SaltProvider</H1>
           <FlexLayout>
             <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
-              <ToggleButton aria-label="uitk brand" value="uitk">
-                uitk
+              <ToggleButton aria-label="legacy brand" value="legacy">
+                legacy
               </ToggleButton>
-              <ToggleButton aria-label="jpm brand" value="salt">
+              <ToggleButton aria-label="jpm brand" value="commercial">
                 jpm
               </ToggleButton>
               <ToggleButton aria-label="consumer brand" value="consumer">
@@ -98,8 +98,10 @@ export const ToggleBrandAndMode = () => {
 };
 
 export const NestedBrands = () => {
-  const [brand, setBrand] = useState<BrandName>("uitk");
-  const [nestedBrand, setNestedBrand] = useState<BrandName | "unset">("salt");
+  const [brand, setBrand] = useState<BrandName>("legacy");
+  const [nestedBrand, setNestedBrand] = useState<BrandName | "unset">(
+    "commercial",
+  );
   const [mode, setMode] = useState<Mode>("light");
   const [nestedMode, setNestedMode] = useState<Mode | "unset">("light");
 
@@ -130,10 +132,10 @@ export const NestedBrands = () => {
           <H1>This Card is wrapped with a SaltProvider</H1>
           <FlexLayout>
             <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
-              <ToggleButton aria-label="uitk brand" value="uitk">
-                uitk
+              <ToggleButton aria-label="legacy brand" value="legacy">
+                legacy
               </ToggleButton>
-              <ToggleButton aria-label="jpm brand" value="salt">
+              <ToggleButton aria-label="jpm brand" value="commercial">
                 jpm
               </ToggleButton>
               <ToggleButton aria-label="consumer brand" value="consumer">
@@ -180,10 +182,10 @@ export const NestedBrands = () => {
                   onChange={handleChangeNestedBrand}
                   value={nestedBrand}
                 >
-                  <ToggleButton aria-label="uitk brand" value="uitk">
-                    uitk
+                  <ToggleButton aria-label="legacy brand" value="legacy">
+                    legacy
                   </ToggleButton>
-                  <ToggleButton aria-label="jpm brand" value="salt">
+                  <ToggleButton aria-label="jpm brand" value="commercial">
                     jpm
                   </ToggleButton>
                   <ToggleButton
@@ -245,7 +247,7 @@ export const ToggleMode = () => {
   };
 
   return (
-    <SaltProvider brand={"uitk"} mode={mode}>
+    <SaltProvider brand={"legacy"} mode={mode}>
       <Card>
         <div>
           <h1>This Card is wrapped with a SaltProvider</h1>
@@ -309,7 +311,7 @@ export const NestedProviders = () => {
 
   return (
     <SaltProvider
-      brand="uitk"
+      brand="legacy"
       density={outerDensity === "unset" ? undefined : outerDensity}
       mode={outerMode === "unset" ? undefined : outerMode}
     >
@@ -398,7 +400,7 @@ export const NextWithNoBrandGiven = () => {
 };
 
 export const NextWithBrandGiven = () => {
-  const [brand, setBrand] = useState<BrandName>("uitk");
+  const [brand, setBrand] = useState<BrandName>("legacy");
 
   const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
     setBrand(event.currentTarget.value as BrandName);
@@ -411,11 +413,11 @@ export const NextWithBrandGiven = () => {
           <h1>This is Card</h1>
           <span>Using Nested DOM Elements</span>
           <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
-            <ToggleButton aria-label="uitk brand" value="uitk">
-              uitk
+            <ToggleButton aria-label="legacy brand" value="legacy">
+              legacy
             </ToggleButton>
-            <ToggleButton aria-label="jpm brand" value="salt">
-              jpm
+            <ToggleButton aria-label="commercial brand" value="commercial">
+              commercial
             </ToggleButton>
             <ToggleButton aria-label="consumer brand" value="consumer">
               consumer

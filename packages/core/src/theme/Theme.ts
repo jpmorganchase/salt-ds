@@ -16,7 +16,7 @@ export type characteristic =
   | "text"
   | "differential" /* **deprecated** */;
 
-export type BrandName = "uitk" | "salt" | "consumer";
+export type BrandName = "legacy" | "commercial" | "consumer";
 export type ThemeName = string;
 
 export const getCharacteristicValue = (

@@ -1,4 +1,4 @@
-.salt-theme[data-brand="salt"] {
+.salt-theme[data-brand="commercial"] {
   --salt-navigable-indicator-active: var(--salt-palette-accent);
 
   --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);

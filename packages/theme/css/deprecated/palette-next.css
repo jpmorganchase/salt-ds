@@ -1,9 +1,9 @@
-.salt-theme[data-brand="salt"][data-mode="light"] {
+.salt-theme[data-brand="commercial"][data-mode="light"] {
   --salt-palette-foreground-active: var(--salt-color-blue-700);
   --salt-palette-foreground-hover: var(--salt-color-blue-600);
 }
 
-.salt-theme[data-brand="salt"][data-mode="dark"] {
+.salt-theme[data-brand="commercial"][data-mode="dark"] {
   --salt-palette-foreground-active: var(--salt-color-blue-300);
   --salt-palette-foreground-hover: var(--salt-color-blue-400);
 }

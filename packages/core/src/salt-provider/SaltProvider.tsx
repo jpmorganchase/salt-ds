@@ -41,7 +41,7 @@ const DEFAULT_THEME_NAME = "salt-theme";
 const DEFAULT_THEME_NAME_NEXT = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
-const DEFAULT_BRAND = "uitk";
+const DEFAULT_BRAND = "legacy";
 const DEFAULT_CORNER: Corner = "sharp";
 const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
 const DEFAULT_ACCENT: Accent = "blue";
@@ -301,7 +301,7 @@ function InternalSaltProvider({
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
 
   /* If brand prop is provided as something other than legacy (default), don't apply the deprecated themeNextProps */
-  const applyThemeNextProps = themeNext && brand === "uitk";
+  const applyThemeNextProps = themeNext && brand === "legacy";
 
   const targetWindow = useWindow();
   useComponentCssInjection({

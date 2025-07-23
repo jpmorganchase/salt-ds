@@ -1,0 +1,11 @@
+.salt-theme-next /* for backwards compatibility */,
+.salt-theme[data-brand="commercial"] {
+  --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative-strong);
+  --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive-strong);
+
+  --salt-sentiment-negative-foreground-decorative: var(--salt-palette-negative);
+  --salt-sentiment-positive-foreground-decorative: var(--salt-palette-positive);
+
+  --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
+  --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
+}

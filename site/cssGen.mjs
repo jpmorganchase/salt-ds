@@ -100,7 +100,7 @@ function extractVariables(folder, outputFileBaseName) {
 }
 
 extractVariables(
-  "../packages/theme/css/uitk/characteristics",
+  "../packages/theme/css/legacy/characteristics",
   "cssCharacteristics",
 );
-extractVariables("../packages/theme/css/uitk/foundations", "cssFoundations");
+extractVariables("../packages/theme/css/legacy/foundations", "cssFoundations");

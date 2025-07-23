@@ -1,5 +1,0 @@
-.salt-theme-next /* for backwards compatibility */,
-.salt-theme[data-brand="salt"] {
-  --salt-target-background-hover: var(--salt-palette-accent-weakest);
-  --salt-target-borderColor-hover: var(--salt-palette-accent);
-}

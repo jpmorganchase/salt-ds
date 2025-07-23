@@ -1,0 +1,12 @@
+.salt-theme[data-brand="legacy"] {
+  --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumHigh);
+  --salt-separable-secondary-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-separable-tertiary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
+
+  --salt-separable-foreground: var(--salt-palette-neutral-primary-foreground);
+  --salt-separable-foreground-hover: var(--salt-palette-neutral-primary-foreground);
+  --salt-separable-foreground-active: var(--salt-palette-interact-cta-foreground);
+  --salt-separable-background: var(--salt-palette-alpha-none);
+  --salt-separable-background-hover: var(--salt-palette-alpha-contrast-mediumLow);
+  --salt-separable-background-active: var(--salt-palette-accent);
+}

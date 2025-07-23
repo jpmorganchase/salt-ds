@@ -3,7 +3,7 @@
 @import url(css/deprecated/index.css);
 
 /* 
- * We have to import the UITK theme globally for backwards  
+ * We have to import the legacy theme globally for backwards  
  * compatibility with the old SaltProvider
  */
-@import url(css/uitk/index.css);
+@import url(css/legacy/index.css);

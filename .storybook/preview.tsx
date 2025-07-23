@@ -12,9 +12,9 @@ import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
 
-import "@salt-ds/theme/css/salt/index.css";
-import "@salt-ds/theme/css/uitk/index.css";
+import "@salt-ds/theme/css/commercial/index.css";
 import "@salt-ds/theme/css/consumer/index.css";
+import "@salt-ds/theme/css/legacy/index.css";
 
 import "@salt-ds/theme/index.css";
 import "./styles.css";
@@ -82,8 +82,8 @@ const preview: Preview = {
         // show the brand name once selected in the toolbar
         dynamicTitle: true,
         items: [
-          { value: "salt", title: "Salt" },
-          { value: "uitk", title: "UITK" },
+          { value: "commercial", title: "Commercial" },
+          { value: "legacy", title: "Legacy" },
           { value: "consumer", title: "Consumer" },
         ],
       },

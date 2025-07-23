@@ -1,9 +1,0 @@
-.salt-theme[data-brand="uitk"] {
-  --salt-focused-outlineColor: var(--salt-palette-interact-outline);
-  --salt-focused-outlineStyle: var(--salt-borderStyle-dotted);
-  --salt-focused-outlineWidth: var(--salt-size-fixed-200);
-  --salt-focused-outlineInset: 0;
-  --salt-focused-outlineOffset: 0;
-
-  --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
-}
