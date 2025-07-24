@@ -1,179 +1,119 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
-import { NotificationIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
+import { Link, useLocation } from "react-router";
+import { MockHistory } from "./MockHistory";
 
-type Item = {
-  name: string;
-  subNav?: Item[];
-  href?: string;
+type NavItem = {
+  title: string;
+  href: string;
+  children?: NavItem[];
 };
 
-const multipleLevelNesting: Item[] = [
+const nested: NavItem[] = [
   {
-    name: "Label 1 - level 0",
-    href: "#",
+    title: "Home",
+    href: "/",
   },
   {
-    name: "Label 2 - level 0",
-    subNav: [
-      {
-        name: "Label 1 - level 1",
-        subNav: [
-          {
-            name: "Label 1 - level 2",
-            href: "#",
-          },
-          { name: "Label 2 - level 2", href: "#" },
-          { name: "Label 3 - level 2", href: "#" },
-        ],
-      },
+    title: "Products",
+    href: "/products",
+    children: [
+      { title: "Widgets", href: "/products/widgets" },
+      { title: "Gadgets", href: "/products/gadgets" },
+      { title: "Doodads", href: "/products/doodads" },
     ],
+  },
+  {
+    title: "About Us",
+    href: "/about",
+    children: [
+      { title: "Our Story", href: "/about/story" },
+      { title: "Our Team", href: "/about/team" },
+      { title: "Press", href: "/about/press" },
+    ],
+  },
+  {
+    title: "Support",
+    href: "/support",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
   },
 ];
 
-export const VerticalNestedGroup = (): ReactElement => {
-  const [active, setActive] = useState(multipleLevelNesting[0].name);
+function NavItem({ item, level = 0 }: { item: NavItem; level?: number }) {
+  const location = useLocation();
+  const [expanded, setExpanded] = useState(false);
 
-  const [expanded, setExpanded] = useState<string[]>([]);
+  if (item.children && item.children.length > 0) {
+    return (
+      <li>
+        <NavigationItem
+          blurActive={location.pathname.startsWith(item.href) && !expanded}
+          orientation="vertical"
+          onExpand={() => {
+            setExpanded((old) => !old);
+          }}
+          parent
+          expanded={expanded}
+          level={level}
+        >
+          {item.title}
+        </NavigationItem>
+        {expanded && (
+          <StackLayout
+            as="ul"
+            gap="var(--salt-spacing-fixed-100)"
+            style={{
+              width: 250,
+              listStyle: "none",
+              paddingLeft: 0,
+            }}
+          >
+            {item.children?.map((item) => (
+              <NavItem key={item.href} item={item} level={level + 1} />
+            ))}
+          </StackLayout>
+        )}
+      </li>
+    );
+  }
 
   return (
-    <nav>
-      <StackLayout
-        as="ul"
-        gap="var(--salt-spacing-fixed-100)"
-        style={{
-          width: 250,
-          listStyle: "none",
-          paddingLeft: 0,
-        }}
+    <li>
+      <NavigationItem
+        active={location.pathname === item.href}
+        href={item.href}
+        orientation="vertical"
+        expanded={expanded}
+        render={<Link to={item.href} />}
+        level={level}
       >
-        {multipleLevelNesting.map(({ name, subNav, href }) => (
-          <li key={name}>
-            <NavigationItem
-              active={
-                active === name ||
-                (!expanded.includes(name) &&
-                  subNav?.some((item) => active === `${name} - ${item.name}`))
-              }
-              blurActive={
-                !expanded.includes(name) &&
-                subNav?.some(
-                  (item) =>
-                    active === `${name} - ${item.name}` ||
-                    item.subNav?.some(
-                      (nestedItem) =>
-                        active === `${name} - ${item.name} - ${nestedItem}`,
-                    ),
-                )
-              }
-              href={href}
-              orientation="vertical"
-              onClick={() => {
-                setActive(name);
-              }}
-              onExpand={() => {
-                if (expanded.includes(name)) {
-                  setExpanded(expanded.filter((item) => item !== name));
-                } else {
-                  setExpanded([...expanded, name]);
-                }
-              }}
-              parent={subNav && subNav.length > 0}
-              expanded={expanded.includes(name)}
-            >
-              <NotificationIcon />
-              {name}
-            </NavigationItem>
-            {expanded.includes(name) && (
-              <StackLayout
-                as="ul"
-                gap="var(--salt-spacing-fixed-100)"
-                style={{
-                  width: 250,
-                  listStyle: "none",
-                  paddingLeft: 0,
-                }}
-              >
-                {subNav?.map((item) => {
-                  const itemValue = `${name} - ${item.name}`;
+        {item.title}
+      </NavigationItem>
+    </li>
+  );
+}
 
-                  return (
-                    <li key={itemValue}>
-                      <NavigationItem
-                        active={
-                          active === itemValue ||
-                          (!expanded.includes(item.name) &&
-                            item.subNav?.some(
-                              (item) => active === `${name} - ${item}`,
-                            ))
-                        }
-                        blurActive={
-                          !expanded.includes(item.name) &&
-                          item.subNav?.some(
-                            (nestedItem) =>
-                              active ===
-                              `${name} - ${item.name} - ${nestedItem}`,
-                          )
-                        }
-                        href={item.href}
-                        orientation="vertical"
-                        level={1}
-                        onExpand={() => {
-                          if (expanded.includes(item.name)) {
-                            setExpanded(
-                              expanded.filter(
-                                (element) => element !== item.name,
-                              ),
-                            );
-                          } else {
-                            setExpanded([...expanded, item.name]);
-                          }
-                        }}
-                        parent={item.subNav && item.subNav.length > 0}
-                        expanded={expanded.includes(item.name)}
-                      >
-                        {item.name}
-                      </NavigationItem>
-
-                      {expanded.includes(item.name) && (
-                        <StackLayout
-                          as="ul"
-                          gap="var(--salt-spacing-fixed-100)"
-                          style={{
-                            width: 250,
-                            listStyle: "none",
-                            paddingLeft: 0,
-                          }}
-                        >
-                          {item.subNav?.map((nestedItem) => {
-                            const itemValue = `${name} - ${item.name} - ${nestedItem.name}`;
-
-                            return (
-                              <li key={itemValue}>
-                                <NavigationItem
-                                  active={active === itemValue}
-                                  href={nestedItem.href}
-                                  orientation="vertical"
-                                  onClick={() => {
-                                    setActive(itemValue);
-                                  }}
-                                  level={2}
-                                >
-                                  {nestedItem.name}
-                                </NavigationItem>
-                              </li>
-                            );
-                          })}
-                        </StackLayout>
-                      )}
-                    </li>
-                  );
-                })}
-              </StackLayout>
-            )}
-          </li>
-        ))}
-      </StackLayout>
-    </nav>
+export const VerticalNestedGroup = (): ReactElement => {
+  return (
+    <MockHistory>
+      <nav>
+        <StackLayout
+          as="ul"
+          gap="var(--salt-spacing-fixed-100)"
+          style={{
+            width: 250,
+            listStyle: "none",
+            paddingLeft: 0,
+          }}
+        >
+          {nested.map((item) => (
+            <NavItem key={item.href} item={item} />
+          ))}
+        </StackLayout>
+      </nav>
+    </MockHistory>
   );
 };

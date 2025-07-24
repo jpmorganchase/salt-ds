@@ -72,6 +72,7 @@
 
 .saltVerticalNavigationItemContent-focused {
   outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
   z-index: 1;
 }
 

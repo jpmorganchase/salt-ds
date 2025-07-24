@@ -12,6 +12,10 @@ data:
 
 For further details on how to use the component to provide navigation, see the [navigation pattern](/salt/patterns/navigation/)
 
+### Routing libraries
+
+If you are using a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), you can use the `render` prop to render a link component from the routing library. This allows you to take advantage of the routing library's features, such as client-side navigation and route matching.
+
 ### When to use
 
 - When you have multiple levels of navigation in your application or website.
@@ -35,10 +39,47 @@ For further details on how to use the component to provide navigation, see the [
 
 To import `VerticalNavigation` and related components from the lab Salt package, use:
 
-```
-import { VerticalNavigation } from "@salt-ds/lab";
+```js
+import {
+  VerticalNavigation,
+  VerticalNavigationItem,
+  VerticalNavigationItemContent,
+  VerticalNavigationItemExpansionIcon,
+  VerticalNavigationItemLabel,
+  VerticalNavigationItemTrigger,
+  VerticalNavigationSubMenu,
+} from "@salt-ds/lab";
 ```
 
 ## Props
 
+### VerticalNavigation
+
 <PropsTable packageName="lab" componentName="VerticalNavigation" />
+
+### VerticalNavigationItem
+
+<PropsTable packageName="lab" componentName="VerticalNavigationItem" />
+
+### VerticalNavigationItemContent
+
+<PropsTable packageName="lab" componentName="VerticalNavigationItemContent" />
+
+### VerticalNavigationItemTrigger
+
+<PropsTable packageName="lab" componentName="VerticalNavigationItemTrigger" />
+
+### VerticalNavigationItemLabel
+
+<PropsTable packageName="lab" componentName="VerticalNavigationItemLabel" />
+
+### VerticalNavigationItemExpansionIcon
+
+<PropsTable
+  packageName="lab"
+  componentName="VerticalNavigationItemExpansionIcon"
+/>
+
+### VerticalNavigationSubMenu
+
+<PropsTable packageName="lab" componentName="VerticalNavigationSubMenu" />

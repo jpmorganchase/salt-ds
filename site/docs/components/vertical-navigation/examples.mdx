@@ -8,7 +8,13 @@ data:
   $ref: ./#/data
 ---
 
-## Nesting
+## Basic
+
+`VerticalNavigation` allows users to navigate between distinct applications and website pages. It supports two appearances: `indicator` and `bordered`.
+
+<LivePreview componentName="vertical-navigation" exampleName="Basic" />
+
+## Submenus
 
 Nest navigation items under a parent navigation item to create a multilevel structure.
 
@@ -16,7 +22,7 @@ Nest navigation items under a parent navigation item to create a multilevel stru
 
 - Use `Divider` to visually separate nested items.
 
-<LivePreview componentName="vertical-navigation" exampleName="Nested" />
+<LivePreview componentName="vertical-navigation" exampleName="Submenu" />
 
 ## Collapsible submenus
 
@@ -49,3 +55,13 @@ Use an icon to effectively signify the navigation itemâ€™s purpose, whether itâ€
 Ensure that you use icon descriptors consistently across all items within the same hierarchy level. This helps keep them equally weighted.
 
 <LivePreview componentName="vertical-navigation" exampleName="WithIcons" />
+
+## With badges
+
+You can add a [badge](../badge) to a navigation item to serve as a visual cue. A badge can inform users of additional context, notifications, signpost new content or indicate a status.
+
+### Best practices
+
+Only place a badge in a navigation item that does not include nested items, i.e., it will not have a chevron.
+
+<LivePreview componentName="vertical-navigation" exampleName="WithBadges" />

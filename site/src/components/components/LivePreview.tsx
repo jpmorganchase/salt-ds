@@ -12,7 +12,6 @@ import {
 import { Pre } from "../mdx/pre";
 import styles from "./LivePreview.module.css";
 import { useLivePreviewControls } from "./LivePreviewProvider";
-import { MockHistory } from "./MockHistory";
 
 type LivePreviewProps = {
   componentName: string;
@@ -63,42 +62,40 @@ export const LivePreview: FC<LivePreviewProps> = ({
     <div className={styles.container}>
       <div className={styles.componentPreview}>
         <LocalizationProvider DateAdapter={AdapterDateFns}>
-          <MockHistory>
-            <div className={styles.exampleWithSwitch}>
-              <ChosenSaltProvider
-                mode={mode}
-                accent="teal"
-                corner="rounded"
-                headingFont="Amplitude"
-                actionFont="Amplitude"
-                applyClassesTo="scope"
-              >
-                <div className={styles.example}>
-                  {/* Blank theme is needed here to prevent the site theme being inherited */}
-                  <ChosenSaltProvider
-                    applyClassesTo="scope"
-                    theme=""
-                    density={density}
-                    mode={mode}
-                  >
-                    {ComponentExample.Example && <ComponentExample.Example />}
-                  </ChosenSaltProvider>
-                </div>
-              </ChosenSaltProvider>
-              {/* Unset theme, font size override would cause switch misalignment */}
-              <SaltProviderNext density="low" applyClassesTo="child" theme="">
-                <div className={styles.toolbar}>
-                  <Switch
-                    checked={showCode}
-                    onChange={handleShowCodeToggle}
-                    className={styles.switch}
-                    label="Show code"
-                    aria-controls={panelId}
-                  />
-                </div>
-              </SaltProviderNext>
-            </div>
-          </MockHistory>
+          <div className={styles.exampleWithSwitch}>
+            <ChosenSaltProvider
+              mode={mode}
+              accent="teal"
+              corner="rounded"
+              headingFont="Amplitude"
+              actionFont="Amplitude"
+              applyClassesTo="scope"
+            >
+              <div className={styles.example}>
+                {/* Blank theme is needed here to prevent the site theme being inherited */}
+                <ChosenSaltProvider
+                  applyClassesTo="scope"
+                  theme=""
+                  density={density}
+                  mode={mode}
+                >
+                  {ComponentExample.Example && <ComponentExample.Example />}
+                </ChosenSaltProvider>
+              </div>
+            </ChosenSaltProvider>
+            {/* Unset theme, font size override would cause switch misalignment */}
+            <SaltProviderNext density="low" applyClassesTo="child" theme="">
+              <div className={styles.toolbar}>
+                <Switch
+                  checked={showCode}
+                  onChange={handleShowCodeToggle}
+                  className={styles.switch}
+                  label="Show code"
+                  aria-controls={panelId}
+                />
+              </div>
+            </SaltProviderNext>
+          </div>
         </LocalizationProvider>
       </div>
       <div
