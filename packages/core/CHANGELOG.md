@@ -1,5 +1,13 @@
 # @salt-ds/core
 
+## 1.47.3
+
+### Patch Changes
+
+- 55e7bc5: Replaced deprecated success icons with their improved counterparts in Checkbox, Switch and Stepper. These icons should now look more visibily balanced.
+- 3481308: Updated target="blank" Link's hidden accessibility text.
+- 851e4cb: Updated Dialog to ensure content always spans the full width.
+
 ## 1.47.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @salt-ds/embla-carousel
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [55e7bc5]
+- Updated dependencies [3481308]
+- Updated dependencies [851e4cb]
+  - @salt-ds/core@1.47.3
+
 ## 0.1.1
 
 ### Patch Changes
