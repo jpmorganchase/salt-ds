@@ -67,11 +67,13 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
           active={location.pathname.startsWith(item.href) && collapsed}
         >
           <VerticalNavigationItemContent>
-            <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              <VerticalNavigationItemLabel>
-                {item.title}
-              </VerticalNavigationItemLabel>
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <VerticalNavigationItemTrigger>
+                <VerticalNavigationItemLabel>
+                  {item.title}
+                </VerticalNavigationItemLabel>
+                <VerticalNavigationItemExpansionIcon />
+              </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>

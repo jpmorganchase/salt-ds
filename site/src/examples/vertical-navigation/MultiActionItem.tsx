@@ -80,8 +80,10 @@ function ExpandButtonItem(props: { item: NavItem }) {
                 {item.title}
               </VerticalNavigationItemLabel>
             </VerticalNavigationItemTrigger>
-            <CollapsibleTrigger render={<Button appearance="transparent" />}>
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <Button appearance="transparent">
+                <VerticalNavigationItemExpansionIcon />
+              </Button>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>

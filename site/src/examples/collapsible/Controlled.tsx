@@ -1,3 +1,4 @@
+import { Button } from "@salt-ds/core";
 import {
   Collapsible,
   CollapsiblePanel,
@@ -13,7 +14,9 @@ export const Controlled = (): ReactElement => {
       open={open}
       onOpenChange={(_event, newOpen) => setOpen(newOpen)}
     >
-      <CollapsibleTrigger>Click</CollapsibleTrigger>
+      <CollapsibleTrigger>
+        <Button>Click</Button>
+      </CollapsibleTrigger>
       <CollapsiblePanel>
         <p style={{ maxWidth: "80ch" }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
