@@ -2,6 +2,7 @@
   --salt-palette-accent: var(--salt-color-blue-600);
 
   --salt-palette-accent-strong: var(--salt-color-blue-700);
+  --salt-palette-accent-inverse: var(--salt-color-blue-700);
 
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
   --salt-palette-accent-action-hover: var(--salt-color-blue-700);
@@ -27,6 +28,7 @@
   --salt-palette-accent: var(--salt-color-blue-600);
 
   --salt-palette-accent-strong: var(--salt-color-blue-300);
+  --salt-palette-accent-inverse: var(--salt-color-white);
 
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
   --salt-palette-accent-action-hover: var(--salt-color-blue-700);

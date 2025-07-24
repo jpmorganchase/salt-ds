@@ -1,6 +1,6 @@
 .salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
   --salt-navigable-indicator-hover: var(--salt-palette-neutral);
-  --salt-navigable-accent-indicator-active: var(--salt-palette-accent);
+  --salt-navigable-accent-indicator-active: var(--salt-palette-accent-inverse); /* differs from commercial theme */
 
   --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
   --salt-navigable-accent-background-active: var(--salt-palette-accent-weakest);

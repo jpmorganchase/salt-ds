@@ -6,7 +6,7 @@
 
   /* Action */
   --salt-text-action-fontFamily: var(--salt-palette-text-fontFamily-action);
-  --salt-text-action-letterSpacing: 0.6px;
+  --salt-text-action-letterSpacing: 0; /* differs from commercial theme */
   --salt-text-action-textTransform: uppercase;
   --salt-text-action-textAlign: center;
   --salt-text-action-fontWeight: var(--salt-palette-text-action-fontWeight);
