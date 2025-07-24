@@ -39,7 +39,7 @@ The Salt Highcharts theme replaces previous approaches that bundled a chart wrap
    npm install @salt-ds/highcharts-theme
 
    # yarn
-   yarn add @salt-ds/highcharts-theme@0.1.0-snapshot
+   yarn add @salt-ds/highcharts-theme
    ```
 
 2. **Import the theme resources** at your application entry point:
