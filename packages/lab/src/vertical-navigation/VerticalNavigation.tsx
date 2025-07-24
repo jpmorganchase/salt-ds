@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
 import { SubMenuProvider } from "./SubMenuContext";
 import verticalNavigationCss from "./VerticalNavigation.css";
 
@@ -26,11 +26,14 @@ export const VerticalNavigation = forwardRef<
     window: targetWindow,
   });
 
+  const [directIcons, setDirectIcons] = useState<string[]>([]);
+
   return (
-    <SubMenuProvider>
+    <SubMenuProvider directIcons={directIcons} setDirectIcons={setDirectIcons}>
       <ul
         ref={ref}
         className={clsx(withBaseName(), withBaseName(appearance), className)}
+        data-has-direct-icons={directIcons.length > 0}
         {...rest}
       />
     </SubMenuProvider>
