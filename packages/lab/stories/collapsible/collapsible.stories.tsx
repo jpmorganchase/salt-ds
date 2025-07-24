@@ -36,7 +36,9 @@ export default {
 
 export const Default: StoryFn<typeof Collapsible> = (args) => (
   <Collapsible {...args}>
-    <CollapsibleTrigger>Click</CollapsibleTrigger>
+    <CollapsibleTrigger>
+      <Button>Click</Button>
+    </CollapsibleTrigger>
     <CollapsiblePanel data-testid="collapsible-panel">
       <p data-testid="panel-content" style={{ maxWidth: "80ch" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
@@ -66,10 +68,10 @@ export const Accounts = () => {
                   <Text color="secondary" styleAs="label">
                     4 of 4 products
                   </Text>
-                  <CollapsibleTrigger
-                    render={<Button appearance="transparent" />}
-                  >
-                    <ChevronDownIcon aria-hidden />
+                  <CollapsibleTrigger>
+                    <Button appearance="transparent">
+                      <ChevronDownIcon aria-hidden />
+                    </Button>
                   </CollapsibleTrigger>
                 </FlowLayout>
               }
@@ -181,15 +183,14 @@ export const ContactDetails = () => {
               </StackLayout>
             }
             endItem={
-              <CollapsibleTrigger
-                aria-label="expand contact details"
-                render={<Button appearance="transparent" />}
-              >
-                {expandedDetails ? (
-                  <ChevronUpIcon aria-hidden />
-                ) : (
-                  <ChevronDownIcon aria-hidden />
-                )}
+              <CollapsibleTrigger aria-label="expand contact details">
+                <Button appearance="transparent">
+                  {expandedDetails ? (
+                    <ChevronUpIcon aria-hidden />
+                  ) : (
+                    <ChevronDownIcon aria-hidden />
+                  )}
+                </Button>
               </CollapsibleTrigger>
             }
           />

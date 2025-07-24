@@ -53,9 +53,11 @@ const CollapsibleNested = ({ appearance }: VerticalNavigationProps) => {
       <Collapsible open>
         <VerticalNavigationItem>
           <VerticalNavigationItemContent>
-            <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              One
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <VerticalNavigationItemTrigger>
+                One
+                <VerticalNavigationItemExpansionIcon />
+              </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>
@@ -97,9 +99,11 @@ const CollapsibleIcons = ({ appearance }: VerticalNavigationProps) => {
       <Collapsible open>
         <VerticalNavigationItem>
           <VerticalNavigationItemContent>
-            <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              <SaltShakerIcon /> One
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <VerticalNavigationItemTrigger>
+                <SaltShakerIcon /> One
+                <VerticalNavigationItemExpansionIcon />
+              </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>

@@ -192,12 +192,14 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
           active={location.pathname.startsWith(item.href) && collapsed}
         >
           <VerticalNavigationItemContent>
-            <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              {icon ? item.icon : undefined}
-              <VerticalNavigationItemLabel>
-                {item.title}
-              </VerticalNavigationItemLabel>
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <VerticalNavigationItemTrigger>
+                {icon ? item.icon : undefined}
+                <VerticalNavigationItemLabel>
+                  {item.title}
+                </VerticalNavigationItemLabel>
+                <VerticalNavigationItemExpansionIcon />
+              </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>
@@ -308,17 +310,15 @@ function ExpandButtonItem(props: { item: NavItem }) {
                 {item.title}
               </VerticalNavigationItemLabel>
             </MockedTrigger>
-            <CollapsibleTrigger
-              render={
-                <Button
-                  id={actionId}
-                  aria-labelledby={clsx(actionId, itemId)}
-                  aria-label="Expand"
-                  appearance="transparent"
-                />
-              }
-            >
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <Button
+                id={actionId}
+                aria-labelledby={clsx(actionId, itemId)}
+                aria-label="Expand"
+                appearance="transparent"
+              >
+                <VerticalNavigationItemExpansionIcon />
+              </Button>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>
@@ -449,8 +449,10 @@ function MultiActionItem(props: { item: NavItem }) {
                 </MenuItem>
               </MenuPanel>
             </Menu>
-            <CollapsibleTrigger render={<Button appearance="transparent" />}>
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <Button appearance="transparent">
+                <VerticalNavigationItemExpansionIcon />
+              </Button>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>
@@ -498,11 +500,13 @@ function DualActionItem(props: { item: NavItem }) {
       <Collapsible open={location.pathname.startsWith(item.href)}>
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
-            <CollapsibleTrigger render={<MockedTrigger to={item.href} />}>
-              <VerticalNavigationItemLabel>
-                {item.title}
-              </VerticalNavigationItemLabel>
-              <VerticalNavigationItemExpansionIcon />
+            <CollapsibleTrigger>
+              <MockedTrigger to={item.href}>
+                <VerticalNavigationItemLabel>
+                  {item.title}
+                </VerticalNavigationItemLabel>
+                <VerticalNavigationItemExpansionIcon />
+              </MockedTrigger>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>

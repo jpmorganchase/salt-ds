@@ -1,3 +1,4 @@
+import { Button } from "@salt-ds/core";
 import {
   Collapsible,
   CollapsiblePanel,
@@ -8,7 +9,9 @@ import type { ReactElement } from "react";
 export const Default = (): ReactElement => {
   return (
     <Collapsible>
-      <CollapsibleTrigger>Click</CollapsibleTrigger>
+      <CollapsibleTrigger>
+        <Button>Click</Button>
+      </CollapsibleTrigger>
       <CollapsiblePanel>
         <p style={{ maxWidth: "80ch" }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
