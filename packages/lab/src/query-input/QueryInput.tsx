@@ -1,14 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
-import { QueryInputBody, ValueSelector } from "./internal";
-import type { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
-import { type BooleanOperator, useQueryInput } from "./useQueryInput";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes } from "react";
+import { QueryInputBody, ValueSelector } from "./internal";
 import queryInputCss from "./QueryInput.css";
+import type { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
+import { type BooleanOperator, useQueryInput } from "./useQueryInput";
 
 const withBaseName = makePrefixer("saltQueryInput");
 

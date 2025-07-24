@@ -1,0 +1,9 @@
+.saltCarousel {
+  --carousel-slide-height: 310px;
+  --carousel-slide-spacing: var(--salt-spacing-100);
+  --carousel-slide-size: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  margin: auto;
+}

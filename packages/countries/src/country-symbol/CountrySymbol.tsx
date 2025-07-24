@@ -1,8 +1,7 @@
-import { clsx } from "clsx";
-import { type SVGAttributes, forwardRef } from "react";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type SVGAttributes } from "react";
 
 import countrySymbolCss from "./CountrySymbol.css";
 // Duplicate from core/util to avoid circular dependency

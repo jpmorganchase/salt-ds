@@ -1,0 +1,45 @@
+---
+title: Icons
+layout: DetailTechnical
+sidebar:
+  groupLabel: Assets
+  label: Icons
+  groupPriority: 11
+---
+
+Icons are simplified visual representations of a specific action, object or concept.
+
+## Icon variants
+
+Icons come in two variant types: **Outline** and **Solid**. Please note that all icons within the icon set have an outline variant, but not all icons have a solid variant.
+
+**Solid icons** may be faster to recognise than outline icons due to less visual noise, especially depending on the complexity of the icon. Solid icons better represent how we view objects, whereas outline icons are silhouettes and therefore can take longer to perceive.
+
+**Outline icons** place less emphasis on non-imperative items and are more recognizable when they have wider inner spacing. They’re also better to use when you need to make subtle design cues more noticeable.
+
+<Image
+  src="/img/foundations/iconography-icon-variants.png"
+  alt="Example of solid and outline icons"
+/>
+
+## All icons
+
+<IconPreview />
+
+## Scaling icons
+
+Icon size will vary based on use case and system requirements. Standard sizing ensures components maintain a consistent spatial relationship with surrounding elements.
+
+<Image
+  src="/img/foundations/iconography-icon-size.png"
+  alt="Example of an icon in three scaled sizes"
+/>
+
+| Size token         | Multiplier | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
+| ------------------ | ---------- | ----------------- | ------------------- | ---------------- | ------------------ |
+| `--salt-size-icon` | x1         | 12 \*             | 12                  | 14               | 16                 |
+|                    | x2         | 20                | 24                  | 28               | 32                 |
+|                    | x3         | 30                | 36                  | 42               | 48                 |
+|                    | x4         | 40                | 48                  | 56               | 64                 |
+
+\* Icons have a minimum size set at 12px and should not be displayed any smaller. For high density this means the default size of an icon is 12px, but the rest of the scale grows based on small base dimension.

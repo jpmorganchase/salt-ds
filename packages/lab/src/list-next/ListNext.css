@@ -3,7 +3,7 @@
   margin: 0;
   background: var(--salt-container-primary-background);
   border-color: var(--salt-container-primary-borderColor);
-  border-style: var(--salt-container-borderStyle);
+  border-style: var(--salt-borderStyle-solid);
   border-width: var(--salt-size-fixed-100);
   height: 100%;
   outline: none;

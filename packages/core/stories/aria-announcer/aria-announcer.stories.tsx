@@ -1,8 +1,8 @@
 import { AriaAnnouncerProvider, useAriaAnnouncer } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
-  type CSSProperties,
   type ChangeEvent,
+  type CSSProperties,
   useCallback,
   useState,
 } from "react";

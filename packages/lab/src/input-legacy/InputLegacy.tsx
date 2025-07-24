@@ -1,4 +1,6 @@
 import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type AriaAttributes,
@@ -6,23 +8,19 @@ import {
   type ElementType,
   type FocusEvent,
   type FocusEventHandler,
+  forwardRef,
   type HTMLAttributes,
   type InputHTMLAttributes,
   type KeyboardEventHandler,
   type MouseEvent,
   type MouseEventHandler,
   type ReactNode,
-  forwardRef,
   useRef,
   useState,
 } from "react";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
-import { useCursorOnFocus } from "./useCursorOnFocus";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import inputLegacyCss from "./InputLegacy.css";
+import { useCursorOnFocus } from "./useCursorOnFocus";
 
 const withBaseName = makePrefixer("saltInputLegacy");
 

@@ -22,7 +22,7 @@ import {
   ListStateContext,
 } from "../../list-deprecated";
 import { Portal } from "../../portal";
-import { Window, type WindowProps, isDesktop } from "../../window";
+import { isDesktop, Window, type WindowProps } from "../../window";
 import type { GetFilterRegex } from "../filterHelpers";
 import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";

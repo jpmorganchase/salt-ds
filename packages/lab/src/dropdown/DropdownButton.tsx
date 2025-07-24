@@ -1,5 +1,7 @@
 import { Button, type ButtonProps, makePrefixer, useIcon } from "@salt-ds/core";
 import { DEFAULT_ICON_SIZE, type IconProps } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type AriaAttributes,
@@ -8,9 +10,6 @@ import {
   forwardRef,
 } from "react";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
 import dropdownButtonCss from "./DropdownButton.css";
 

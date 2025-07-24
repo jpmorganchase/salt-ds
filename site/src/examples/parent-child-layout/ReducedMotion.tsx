@@ -5,9 +5,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import { type ReactElement, useState } from "react";
-
-import clsx from "clsx";
 import styles from "./Default.module.css";
 
 const parent = <div className={styles.parentContent}>Parent</div>;

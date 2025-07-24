@@ -9,7 +9,8 @@ const componentPackages = [
   "icons",
   "countries",
   "ag-grid-theme",
-  "react-resziable-panel-theme",
+  "react-resizable-panel-theme",
+  "embla-carousel",
 ]; // Adding more packages here will generate additional prop files
 
 console.log("Generating props in packages:", componentPackages);

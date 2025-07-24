@@ -1,17 +1,15 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { ElementType, HTMLAttributes } from "react";
 import type { FormFieldValidationStatus } from "./FormFieldLegacy";
+import formLabelCss from "./FormLabel.css";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
   type NecessityIndicatorOptions,
 } from "./NecessityIndicator";
 import { StatusIndicator, type StatusIndicatorProps } from "./StatusIndicator";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import formLabelCss from "./FormLabel.css";
 
 const withBaseName = makePrefixer("saltFormLabel");
 export interface FormLabelProps

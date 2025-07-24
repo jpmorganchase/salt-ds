@@ -12,7 +12,7 @@ import {
   ProgressInprogressIcon,
   StepActiveIcon,
   StepDefaultIcon,
-  StepSuccessIcon,
+  SuccessCircleSolidIcon,
   SuccessTickIcon,
   TearOutIcon,
   TriangleDownIcon,
@@ -22,9 +22,9 @@ import {
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import {
+  createContext,
   type ElementType,
   type ReactNode,
-  createContext,
   useContext,
 } from "react";
 
@@ -87,7 +87,7 @@ const defaultIconMap: SemanticIconMap = {
   ExternalIcon: TearOutIcon,
   PendingIcon: StepDefaultIcon,
   ActiveIcon: StepActiveIcon,
-  CompletedIcon: StepSuccessIcon,
+  CompletedIcon: SuccessCircleSolidIcon,
   LockedIcon: LockedIcon,
   InProgressIcon: ProgressInprogressIcon,
 };

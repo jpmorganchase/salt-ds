@@ -8,7 +8,7 @@
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
   background-color: var(--salt-container-primary-background);
-  border-bottom: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
 }
 .navigation {
   display: flex;

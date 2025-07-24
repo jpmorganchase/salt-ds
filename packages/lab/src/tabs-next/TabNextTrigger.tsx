@@ -8,9 +8,9 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  forwardRef,
   type KeyboardEvent,
   type MouseEvent,
-  forwardRef,
   useRef,
 } from "react";
 import { useTabNext } from "./TabNextContext";

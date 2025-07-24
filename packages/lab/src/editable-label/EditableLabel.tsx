@@ -1,18 +1,17 @@
 import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ForwardedRef,
+  forwardRef,
   type KeyboardEvent,
   type ReactElement,
-  forwardRef,
   useCallback,
   useRef,
 } from "react";
 import { InputLegacy as Input } from "../input-legacy";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
 import editableLabelCss from "./EditableLabel.css";
 

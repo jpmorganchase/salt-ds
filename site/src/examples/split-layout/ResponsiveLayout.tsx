@@ -8,10 +8,10 @@ import {
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
-import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
 import styles from "./index.module.css";
+import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
 
 const viewportOptions = ["Large", "Small"] as const;
 type Viewport = (typeof viewportOptions)[number];

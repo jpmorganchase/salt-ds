@@ -1,7 +1,0 @@
----
-"@salt-ds/lab": patch
----
-
-Fixed Calendar's today indicator
-
-When Next theme with rounded corners is enabled, the today indicator will display rounded corners.

@@ -20,7 +20,7 @@ export interface KeyboardControlProps {
   className?: string;
 }
 
-const keyOrComboSeparator = /\s*([+\/]|or)\s*/i;
+const keyOrComboSeparator = /\s*([+/]|or)\s*/i;
 
 function splitCombo(keyOrCombo: string): string[] {
   return keyOrCombo.split(keyOrComboSeparator);

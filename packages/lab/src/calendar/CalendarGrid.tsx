@@ -4,17 +4,13 @@ import {
   type ResponsiveProp,
   useForkRef,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
   forwardRef,
   useRef,
 } from "react";
-import { useCalendarContext } from "./internal/CalendarContext";
-import type { CalendarDayProps } from "./internal/CalendarDay";
-import { CalendarMonth } from "./internal/CalendarMonth";
-
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
 import {
   CalendarMonthHeader,
@@ -24,6 +20,9 @@ import {
   CalendarWeekHeader,
   type CalendarWeekHeaderProps,
 } from "./CalendarWeekHeader";
+import { useCalendarContext } from "./internal/CalendarContext";
+import type { CalendarDayProps } from "./internal/CalendarDay";
+import { CalendarMonth } from "./internal/CalendarMonth";
 
 /**
  * Props for the CalendarGrid component.

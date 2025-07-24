@@ -1,6 +1,5 @@
-import type { Meta, StoryFn } from "@storybook/react-vite";
-
 import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {

@@ -1,15 +1,14 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEventHandler,
   type ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
+import { useFormFieldProps } from "../form-field-context";
 import { makePrefixer, useControlled, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { useFormFieldProps } from "../form-field-context";
 import radioButtonGroupCss from "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");

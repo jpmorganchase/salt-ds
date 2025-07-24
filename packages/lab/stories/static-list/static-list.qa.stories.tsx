@@ -1,4 +1,4 @@
-import { Button, Divider, StackLayout, Text, useId } from "@salt-ds/core";
+import { Button, Divider, StackLayout, Text } from "@salt-ds/core";
 import { CalendarIcon, OverflowMenuIcon, VideoIcon } from "@salt-ds/icons";
 import {
   StaticList,
@@ -47,44 +47,43 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       ))}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      {complexEventsData.map(({ title, time }) => {
-        const id = useId();
+      {complexEventsData.map(({ title, time }, index) => {
         return (
           <StaticListItem key={title}>
             <StaticListItemContent>
               <StackLayout gap={0.5}>
-                <Text color="inherit" id={`label-${id}`}>
+                <Text color="inherit" id={`label-${index}`}>
                   {title}
                 </Text>
                 <Text
                   styleAs="label"
                   color="secondary"
-                  id={`secondary-label-${id}`}
+                  id={`secondary-label-${index}`}
                 >
                   {time}
                 </Text>
               </StackLayout>
             </StaticListItemContent>
             <Button
-              id={`information-button-${id}`}
+              id={`information-button-${index}`}
               appearance="transparent"
               aria-label="Zoom information"
               aria-labelledby={clsx(
-                `label-${id}`,
-                `secondary-label-${id}`,
-                `information-button-${id}`,
+                `label-${index}`,
+                `secondary-label-${index}`,
+                `information-button-${index}`,
               )}
             >
               <VideoIcon aria-hidden />
             </Button>
             <Button
-              id={`options-button-${id}`}
+              id={`options-button-${index}`}
               appearance="transparent"
               aria-label="More options"
               aria-labelledby={clsx(
-                `label-${id}`,
-                `secondary-label-${id}`,
-                `options-button-${id}`,
+                `label-${index}`,
+                `secondary-label-${index}`,
+                `options-button-${index}`,
               )}
             >
               <OverflowMenuIcon aria-hidden />

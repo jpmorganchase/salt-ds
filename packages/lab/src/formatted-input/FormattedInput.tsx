@@ -1,4 +1,6 @@
 import { useControlled } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { useRifm } from "rifm";
@@ -6,16 +8,12 @@ import {
   InputLegacy as Input,
   type InputLegacyProps as InputProps,
 } from "../input-legacy";
+import formattedInputCss from "./FormattedInput.css";
 import {
+  baseName,
   InputWithMask,
   type InputWithMaskProps,
-  baseName,
 } from "./internal/InputWithMask";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import formattedInputCss from "./FormattedInput.css";
 
 export type MaskFunction = (value: string | undefined) => boolean;
 

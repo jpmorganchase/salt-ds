@@ -1,12 +1,12 @@
-import { ToggleButton, ToggleButtonGroup, makePrefixer } from "@salt-ds/core";
+import { makePrefixer, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { FilterIcon } from "@salt-ds/icons";
 import {
   type ChangeEventHandler,
   type FocusEventHandler,
+  forwardRef,
   type KeyboardEventHandler,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useMemo,
 } from "react";
 

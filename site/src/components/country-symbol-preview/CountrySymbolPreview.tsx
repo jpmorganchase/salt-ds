@@ -9,8 +9,8 @@ import {
   Text,
 } from "@salt-ds/core";
 import {
-  type LazyCountrySymbolProps,
   countryMetaMap,
+  type LazyCountrySymbolProps,
 } from "@salt-ds/countries";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";

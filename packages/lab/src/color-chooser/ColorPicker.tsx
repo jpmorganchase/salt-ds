@@ -1,16 +1,14 @@
 import { Button, makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { ChangeEvent } from "react";
 import { type ColorResult, SketchPicker } from "react-color";
 import { Color, type RGBAValue } from "./Color";
 import { hexValueWithoutAlpha } from "./ColorHelpers";
+import colorPickerCss from "./ColorPicker.css";
 import { HexInput } from "./HexInput";
 import { RGBAInput } from "./RGBAInput";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import colorPickerCss from "./ColorPicker.css";
 
 const withBaseName = makePrefixer("saltColorChooserPicker");
 

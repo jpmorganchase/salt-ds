@@ -1,17 +1,5 @@
 import { offset, platform } from "@floating-ui/dom";
 import type { Platform } from "@floating-ui/react";
-import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  type CSSProperties,
-  type ChangeEvent,
-  type ComponentPropsWithoutRef,
-  type Ref,
-  forwardRef,
-  useMemo,
-  useState,
-} from "react";
-import { createPortal } from "react-dom";
-
 import {
   Button,
   ComboBox,
@@ -28,6 +16,17 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import type { Meta, StoryFn } from "@storybook/react-vite";
+import {
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type CSSProperties,
+  forwardRef,
+  type Ref,
+  useMemo,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 
 import floatingCss from "./floating-platform.css?inline";
 

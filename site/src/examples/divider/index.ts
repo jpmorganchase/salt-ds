@@ -1,2 +1,2 @@
-export * from "./Vertical";
 export * from "./Variants";
+export * from "./Vertical";

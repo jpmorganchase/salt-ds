@@ -1,14 +1,12 @@
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { useMemo } from "react";
 import { useIcon } from "../../semantic-icon-provider";
 import { makePrefixer } from "../../utils";
-
-import stepIconCSS from "./StepIcon.css";
-
 import type { StepStage, StepStatus } from "../Step";
+import stepIconCSS from "./StepIcon.css";
 
 export interface StepIconProps extends IconProps {
   stage: StepStage;

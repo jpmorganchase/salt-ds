@@ -1,8 +1,8 @@
+import { withDateMock } from ".storybook/decorators/withDateMock";
 import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { withDateMock } from ".storybook/decorators/withDateMock";
 
 export default {
   title: "Lab/Date Input/QA",

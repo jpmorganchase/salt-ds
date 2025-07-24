@@ -28,11 +28,11 @@
 /* Active list item on focus using keyboard navigation  */
 .saltListItemNext-highlighted:not([aria-disabled="true"]) {
   --listNext-item-background: var(--salt-selectable-background-hover);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltListItemNext[aria-selected="true"] {
-  outline: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   --listNext-item-background: var(--salt-selectable-background-selected);
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
@@ -40,7 +40,7 @@
 /* Style applied to disabled items */
 .saltListItemNext[aria-disabled="true"] {
   --listNext-item-text-color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 .saltListItemNext[aria-disabled="true"] .saltText {
   color: var(--listNext-item-text-color);
@@ -48,6 +48,6 @@
 
 /* disabled list item when selected */
 .saltListItemNext[aria-disabled="true"][aria-selected="true"] {
-  outline: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selectedDisabled);
   --listNext-item-background: var(--salt-selectable-background-selectedDisabled);
 }

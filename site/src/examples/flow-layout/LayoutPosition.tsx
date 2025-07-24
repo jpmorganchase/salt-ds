@@ -4,15 +4,15 @@ import {
   FlowLayout,
   FormField,
   FormFieldLabel,
-  RadioButton,
-  RadioButtonGroup,
   FLEX_ALIGNMENT_BASE as flexAlignment,
   FLEX_CONTENT_ALIGNMENT_BASE as flexContentAlignment,
+  RadioButton,
+  RadioButtonGroup,
 } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
-import layoutPositionStyles from "./LayoutPosition.module.css";
 import styles from "./index.module.css";
+import layoutPositionStyles from "./LayoutPosition.module.css";
 
 type FlexAlignment = (typeof flexAlignment)[number];
 type FlexAlign = FlexAlignment | "stretch" | "baseline";

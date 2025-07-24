@@ -1,9 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import logoSeparatorCss from "./LogoSeparator.css";
 

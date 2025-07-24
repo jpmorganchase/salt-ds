@@ -1,6 +1,6 @@
 export * from "./escapeRegExp";
-export * from "./isEmail";
 export * from "./forwardCallbackProps";
+export * from "./isEmail";
 export * from "./isPlainObject";
 export * from "./partition";
 export * from "./useClickOutside";

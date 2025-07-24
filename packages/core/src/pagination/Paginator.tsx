@@ -1,15 +1,13 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, type MouseEventHandler, forwardRef } from "react";
+import { forwardRef, type HTMLAttributes, type MouseEventHandler } from "react";
 import { Button } from "../button";
 import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer } from "../utils";
 import { PageRanges } from "./PageRanges";
-import { usePaginationContext } from "./usePaginationContext";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import paginatorCss from "./Paginator.css";
+import { usePaginationContext } from "./usePaginationContext";
 
 const withBaseName = makePrefixer("saltPaginator");
 

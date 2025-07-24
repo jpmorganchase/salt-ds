@@ -1,17 +1,15 @@
-import { clsx } from "clsx";
-import { forwardRef, useContext } from "react";
-
 import {
   Button,
   type ButtonProps,
   capitalize,
   makePrefixer,
 } from "@salt-ds/core";
-import { ButtonBarContext } from "./internal/ButtonBarContext";
-import { useDescendant } from "./internal/useDescendant";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, useContext } from "react";
+import { ButtonBarContext } from "./internal/ButtonBarContext";
+import { useDescendant } from "./internal/useDescendant";
 
 import orderedButtonCss from "./OrderedButton.css";
 

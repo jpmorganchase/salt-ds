@@ -37,7 +37,7 @@ const SB_VIRTUAL_FILES = {
   VIRTUAL_ADDON_SETUP_FILE: "virtual:/@storybook/builder-vite/setup-addons.js",
 };
 
-function getResolvedVirtualModuleId(virtualModuleId: string) {
+function _getResolvedVirtualModuleId(virtualModuleId: string) {
   return `\0${virtualModuleId}`;
 }
 

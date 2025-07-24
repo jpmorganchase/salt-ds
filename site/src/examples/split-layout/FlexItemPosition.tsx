@@ -3,13 +3,13 @@ import {
   FlowLayout,
   FormField,
   FormFieldLabel,
+  type flexItemAlignment,
+  FLEX_ITEM_ALIGNMENTS as flexItemAlignments,
   RadioButton,
   RadioButtonGroup,
   SplitLayout,
-  type flexItemAlignment,
-  FLEX_ITEM_ALIGNMENTS as flexItemAlignments,
 } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import flexItemPositionStyles from "./FlexItemPosition.module.css";
 import styles from "./index.module.css";

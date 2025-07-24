@@ -1,9 +1,9 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
   Children,
+  isValidElement,
   type ReactElement,
   type ReactNode,
-  isValidElement,
   useCallback,
   useReducer,
   useRef,

@@ -3,9 +3,9 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  forwardRef,
   type MouseEvent,
   type SyntheticEvent,
-  forwardRef,
   useRef,
 } from "react";
 import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";

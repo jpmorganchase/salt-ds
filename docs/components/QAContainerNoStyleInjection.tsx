@@ -1,17 +1,15 @@
 import { useEffect } from "react";
-import { QAContainer, type QAContainerProps } from "./QAContainer";
-
-// @ts-ignore
-import coreCss from "../css/salt-core.css?inline";
-
 // @ts-ignore
 import iconCss from "../../packages/icons/src/icon/Icon.css?inline";
 
 // @ts-ignore
-import labCss from "../css/salt-lab.css?inline";
-
+import coreCss from "../css/salt-core.css?inline";
 // @ts-ignore
 import countriesCss from "../css/salt-countries.css?inline";
+
+// @ts-ignore
+import labCss from "../css/salt-lab.css?inline";
+import { QAContainer, type QAContainerProps } from "./QAContainer";
 
 export const useDynamicStyleSheet = (styleSheet: string, id: string): void => {
   useEffect(() => {

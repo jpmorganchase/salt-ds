@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-
+import baseCellCss from "./BaseCell.css";
 import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
 import type { GridColumnModel } from "./Grid";
@@ -13,8 +13,6 @@ import {
   CellSuccessIcon,
   CellWarningIcon,
 } from "./internal/CellStatusIcons";
-
-import baseCellCss from "./BaseCell.css";
 
 const withBaseName = makePrefixer("saltGridBaseCell");
 

@@ -1,18 +1,17 @@
+import { makePrefixer, useControlled, useEventCallback } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  forwardRef,
   type ReactNode,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
-
-import { makePrefixer, useControlled, useEventCallback } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type Item, TabsNextContext } from "./TabsNextContext";
 import { useCollection } from "./hooks/useCollection";
+import { type Item, TabsNextContext } from "./TabsNextContext";
 
 export interface TabsNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {

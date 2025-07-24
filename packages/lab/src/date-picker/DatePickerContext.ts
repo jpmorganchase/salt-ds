@@ -232,28 +232,31 @@ export function useDatePickerContext<TDate extends DateFrameworkType>(props: {
 export function useDatePickerContext<TDate extends DateFrameworkType>({
   selectionVariant,
 }: UseDatePickerContextProps): DatePickerState<TDate> {
-  if (selectionVariant === "range") {
-    const context = useContext(
-      DateRangeSelectionContext as Context<
-        RangeDatePickerState<TDate> | undefined
-      >,
-    );
-    if (!context) {
-      throw new Error(
-        'useDatePickerSelection should be called with props { selectionVariant : "range" } inside DateRangeSelectionContext.Provider',
-      );
-    }
-    return context;
-  }
-  const context = useContext(
+  const rangeContext = useContext(
+    DateRangeSelectionContext as Context<
+      RangeDatePickerState<TDate> | undefined
+    >,
+  );
+
+  const singleContext = useContext(
     SingleDateSelectionContext as Context<
       SingleDatePickerState<TDate> | undefined
     >,
   );
-  if (!context) {
+
+  if (selectionVariant === "range") {
+    if (!rangeContext) {
+      throw new Error(
+        'useDatePickerSelection should be called with props { selectionVariant : "range" } inside DateRangeSelectionContext.Provider',
+      );
+    }
+    return rangeContext;
+  }
+
+  if (!singleContext) {
     throw new Error(
       'useDatePickerSelection should be called with props { selectionVariant : "single" } inside SingleDateSelectionContext.Provider',
     );
   }
-  return context;
+  return singleContext;
 }

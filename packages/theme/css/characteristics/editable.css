@@ -1,15 +1,4 @@
 .salt-theme {
-  --salt-editable-cursor-hover: text;
-  --salt-editable-cursor-active: text;
-  --salt-editable-cursor-disabled: not-allowed;
-  --salt-editable-cursor-readonly: text;
-
-  --salt-editable-borderStyle: solid;
-  --salt-editable-borderStyle-hover: solid;
-  --salt-editable-borderStyle-active: solid;
-  --salt-editable-borderStyle-disabled: solid;
-  --salt-editable-borderStyle-readonly: solid;
-
   --salt-editable-borderColor: var(--salt-palette-interact-border);
   --salt-editable-borderColor-active: var(--salt-palette-interact-border-active);
   --salt-editable-borderColor-disabled: var(--salt-palette-interact-border-disabled);

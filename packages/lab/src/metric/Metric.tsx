@@ -1,10 +1,9 @@
 import { makePrefixer, useId } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useMemo } from "react";
-import { MetricContextProvider, type MetricContextValue } from "./internal";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes, useMemo } from "react";
+import { MetricContextProvider, type MetricContextValue } from "./internal";
 
 import metricCSS from "./Metric.css";
 

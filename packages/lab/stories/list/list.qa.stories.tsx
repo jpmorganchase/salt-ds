@@ -1,7 +1,6 @@
+import { List } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
-import { List } from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
 

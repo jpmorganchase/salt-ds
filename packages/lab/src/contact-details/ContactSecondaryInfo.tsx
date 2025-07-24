@@ -1,10 +1,10 @@
-import { Text, makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, Text, useId } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type ComponentType,
-  type HTMLAttributes,
   forwardRef,
+  type HTMLAttributes,
   useEffect,
 } from "react";
 import { useContactDetailsContext } from "./internal";

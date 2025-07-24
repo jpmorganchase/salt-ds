@@ -1,3 +1,5 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ElementType,
@@ -5,16 +7,13 @@ import {
   type FunctionComponent,
   forwardRef,
 } from "react";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { useBreakpoint } from "../breakpoints";
 import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
   type ResponsiveProp,
-  makePrefixer,
   resolveResponsiveValue,
 } from "../utils";
 import gridItemCss from "./GridItem.css";

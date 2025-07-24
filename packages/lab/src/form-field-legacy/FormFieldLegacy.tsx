@@ -1,32 +1,30 @@
-import { Tooltip, makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, Tooltip, useForkRef, useId } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type Dispatch,
   type ElementType,
   type FocusEventHandler,
   type ForwardedRef,
+  forwardRef,
   type HTMLAttributes,
   type SetStateAction,
-  forwardRef,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { FormFieldLegacyContext } from "../form-field-context-legacy";
+import { classBase } from "./constant";
 import {
   FormActivationIndicator,
   type FormActivationIndicatorProps,
 } from "./FormActivationIndicator";
+import formFieldLegacyCss from "./FormFieldLegacy.css";
 import { FormHelperText, type FormHelperTextProps } from "./FormHelperText";
 import { FormLabel, type FormLabelProps } from "./FormLabel";
 import type { NecessityIndicatorOptions } from "./NecessityIndicator";
 import type { StatusIndicatorProps } from "./StatusIndicator";
-import { classBase } from "./constant";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import formFieldLegacyCss from "./FormFieldLegacy.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";

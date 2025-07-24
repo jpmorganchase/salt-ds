@@ -124,8 +124,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   "mount",
-  // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
-  <TDate extends DateFrameworkType, TLocale = any>(
+  (
     children: ReactNode,
     options?: MountOptions,
   ): Cypress.Chainable<MountReturn> => {

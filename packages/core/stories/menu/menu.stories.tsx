@@ -1,3 +1,4 @@
+import type { VirtualElement } from "@floating-ui/react";
 import {
   Button,
   Card,
@@ -10,8 +11,6 @@ import {
   Text,
   Tooltip,
 } from "@salt-ds/core";
-
-import type { VirtualElement } from "@floating-ui/react";
 import {
   CopyIcon,
   ExportIcon,

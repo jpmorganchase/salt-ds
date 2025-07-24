@@ -21,7 +21,12 @@ export function QuickLink({
   children,
   action,
   href,
-}: { title: string; children?: ReactNode; action: string; href: string }) {
+}: {
+  title: string;
+  children?: ReactNode;
+  action: string;
+  href: string;
+}) {
   return (
     <LinkBase href={href} passHref legacyBehavior>
       <LinkCard className={styles.card}>

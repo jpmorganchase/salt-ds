@@ -2,13 +2,11 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { HeaderRow } from "./HeaderRow";
-import { TableColGroup } from "./TableColGroup";
-
 import type { GridColumnGroupModel, GridColumnModel } from "../Grid";
-
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import { useActiveOnWheel } from "./gridHooks";
+import { HeaderRow } from "./HeaderRow";
+import { TableColGroup } from "./TableColGroup";
 
 import topRightPartCss from "./TopRightPart.css";
 

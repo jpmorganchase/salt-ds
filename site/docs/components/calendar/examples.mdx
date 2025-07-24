@@ -14,23 +14,32 @@ When the `selectionVariant` prop is set to "single", the `Calendar` component al
 
 <LivePreview componentName="calendar" exampleName="Single" />
 
+To enable multiple selection of single dates, set the `multiselect` prop to `true`.
+
+<LivePreview componentName="calendar" exampleName="SingleMultiselect" />
+
+To de-select the previous selection, you can use `select` callback to provide control of the current selected dates.
+
+<LivePreview
+  componentName="calendar"
+  exampleName="SingleMultiselectControlled"
+/>
+
 ## Date range selection
 
 When the `selectionVariant` prop is set to "range", the `Calendar` component allows users to select a date range, including both a start date and an end date, enabling a comprehensive date selection experience.
 
 <LivePreview componentName="calendar" exampleName="Range" />
 
-## Multi-select
-
-When the `selectionVariant` prop is set to "multiselect", the `Calendar` component allows users to select multiple individual dates, providing flexibility for selecting non-consecutive dates.
-
-<LivePreview componentName="calendar" exampleName="Multiselect" />
+_Multiple selection of date ranges is still work-in-progress, refer to our [roadmap](https://github.com/jpmorganchase/salt-ds/issues/4081) for details._
 
 ## Offset selection
 
 When the `selectionVariant` prop is set to "offset", the `Calendar` component allows users to select a date range by choosing a single start date, with the end date automatically determined based on a predefined offset.
 
 <LivePreview componentName="calendar" exampleName="Offset" />
+
+_Multiple selection of date ranges is still work-in-progress, refer to our [roadmap](https://github.com/jpmorganchase/salt-ds/issues/4081) for details._
 
 ## Unselectable dates
 

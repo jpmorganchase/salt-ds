@@ -2,16 +2,15 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useCallback,
   useRef,
   useState,
 } from "react";
 import {
   makePrefixer,
-  useForkRef,
   useIsomorphicLayoutEffect,
   useResizeObserver,
 } from "../utils";
@@ -30,23 +29,22 @@ export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
     const { children, className, ...rest } = props;
-    const [scrolledTop, setScrolledTop] = useState(false);
-    const [scrolledBottom, setScrolledBottom] = useState(true);
+    const [canScrollUp, setCanScrollUp] = useState(false);
+    const [canScrollDown, setCanScrollDown] = useState(true);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
-    const containerRef = useForkRef(divRef, ref);
 
     const handleScroll = () => {
       targetWindow?.requestAnimationFrame(() => {
         const container = divRef.current;
         if (!container) return;
-        setScrolledTop(container.scrollTop > 0);
-        setScrolledBottom(
+        setCanScrollUp(container.scrollTop > 0);
+        setCanScrollDown(
           container.scrollHeight -
             container.scrollTop -
-            container.clientHeight !==
-            0,
+            container.clientHeight >
+            1,
         );
       });
     };
@@ -72,32 +70,19 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     }, [checkOverflow]);
 
     return (
-      <>
+      <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
         <div
-          className={clsx({
-            [withBaseName("scroll")]: isOverflowing && scrolledTop,
-          })}
-        />
-        <div
-          className={clsx(
-            withBaseName(),
-            {
-              [withBaseName("overflow")]: isOverflowing,
-            },
-            className,
-          )}
           onScrollCapture={handleScroll}
-          {...rest}
-          ref={containerRef}
+          ref={divRef}
+          className={clsx(withBaseName("inner"), {
+            [withBaseName("overflow")]: isOverflowing,
+            [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
+            [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
+          })}
         >
           {children}
         </div>
-        <div
-          className={clsx({
-            [withBaseName("scroll")]: isOverflowing && scrolledBottom,
-          })}
-        />
-      </>
+      </div>
     );
   },
 );

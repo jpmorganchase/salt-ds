@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   color: var(--salt-content-primary-foreground);
 
   font-family: var(--salt-text-fontFamily);
@@ -13,11 +13,11 @@
 
 .saltSwitch-disabled {
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltSwitch-track {
-  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor);
   --saltIcon-size: 100%;
   border-radius: var(--salt-palette-corner-weak, 0);
   display: flex;
@@ -72,7 +72,7 @@
   height: var(--salt-size-selectable);
   background: currentColor;
   margin: var(--salt-spacing-25);
-  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner-weaker, 0);
 }

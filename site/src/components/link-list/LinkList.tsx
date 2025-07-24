@@ -1,8 +1,7 @@
-import { Heading4 } from "../mdx/h4";
-import { Image } from "../mdx/image";
-
 import { Link, Text } from "@salt-ds/core";
 import { LinkBase } from "../link/Link";
+import { Heading4 } from "../mdx/h4";
+import { Image } from "../mdx/image";
 import styles from "./LinkList.module.css";
 
 type LinkData = { href: string; label: string };

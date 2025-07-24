@@ -1,8 +1,7 @@
 import { clsx } from "clsx";
 import Image from "next/image";
-import styles from "./Logo.module.css";
-
 import type { ComponentPropsWithoutRef } from "react";
+import styles from "./Logo.module.css";
 import logoLDDark from "./logo_ld_dark.svg";
 import logoLDLight from "./logo_ld_light.svg";
 import logoTDDark from "./logo_td_dark.svg";

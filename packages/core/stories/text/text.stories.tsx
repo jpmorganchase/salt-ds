@@ -1,5 +1,3 @@
-import type { Meta, StoryFn } from "@storybook/react-vite";
-
 import {
   Code as CodeText,
   Display1,
@@ -14,6 +12,7 @@ import {
   TextAction,
   TextNotation,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Core/Text",

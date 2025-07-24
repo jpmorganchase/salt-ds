@@ -4,37 +4,35 @@ import {
   useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
   type ComponentType,
+  createContext,
   type ForwardedRef,
+  forwardRef,
   type HTMLAttributes,
+  memo,
   type ReactElement,
   type Ref,
-  createContext,
-  forwardRef,
-  memo,
   useContext,
   useImperativeHandle,
   useMemo,
   useRef,
 } from "react";
-import { FixedSizeList, VariableSizeList, areEqual } from "react-window";
-import { ListItemBase } from "./ListItemBase";
-import { ListItemContext } from "./ListItemContext";
-import type { ListBaseProps } from "./ListProps";
-import { useListStateContext } from "./ListStateContext";
+import { areEqual, FixedSizeList, VariableSizeList } from "react-window";
 import { calcPreferredListHeight } from "./internal/calcPreferredListHeight";
 import { scrollIntoView } from "./internal/scrollIntoView";
 import { useListAutoSizer } from "./internal/useListAutoSizer";
 import { itemToString as defaultItemToString } from "./itemToString";
-import { useListItem, useVirtualizedListItem } from "./useListItem";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import listCss from "./List.css";
+import { ListItemBase } from "./ListItemBase";
+import { ListItemContext } from "./ListItemContext";
+import type { ListBaseProps } from "./ListProps";
+import { useListStateContext } from "./ListStateContext";
+import { useListItem, useVirtualizedListItem } from "./useListItem";
 
 const withBaseName = makePrefixer("saltListDeprecated");
 
@@ -262,19 +260,15 @@ export const ListBase = forwardRef(function ListBase<Item>(
     [getItemIndex],
   );
 
-  useImperativeHandle(
-    ref,
-    () => {
-      if (virtualized && virtualizedListRef.current) {
-        return virtualizedScrollHandles;
-      }
-      if (listRef.current) {
-        return scrollHandles;
-      }
-      return noScrolling;
-    },
-    [virtualized, scrollHandles, virtualizedScrollHandles],
-  );
+  useImperativeHandle(ref, () => {
+    if (virtualized && virtualizedListRef.current) {
+      return virtualizedScrollHandles;
+    }
+    if (listRef.current) {
+      return scrollHandles;
+    }
+    return noScrolling;
+  }, [virtualized, scrollHandles, virtualizedScrollHandles]);
 
   useIsomorphicLayoutEffect(() => {
     if (highlightedIndex == null) {

@@ -1,17 +1,15 @@
-import { type HTMLAttributes, type ReactElement, cloneElement } from "react";
-
-import type { ToolbarAlignmentProps } from "../ToolbarProps";
-import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
-
-import { Tooltray } from "../Tooltray";
-
+import { cloneElement, type HTMLAttributes, type ReactElement } from "react";
 import {
-  type OverflowCollectionHookResult,
-  type OverflowItem,
   isCollapsedOrCollapsing,
   liftResponsivePropsToFormField,
+  type OverflowCollectionHookResult,
+  type OverflowItem,
   type orientationType,
 } from "../../responsive";
+import type { ToolbarAlignmentProps } from "../ToolbarProps";
+
+import { Tooltray } from "../Tooltray";
+import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
 
 // These are the props we use for item alignment, either from individual element
 // declarations - e.g Tooltray (alignLeft etc) or generic data- attributes

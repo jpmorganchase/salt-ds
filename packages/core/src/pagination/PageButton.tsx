@@ -1,12 +1,10 @@
-import { clsx } from "clsx";
-import { type MouseEventHandler, forwardRef } from "react";
-import { makePrefixer } from "../utils";
-import { usePaginationContext } from "./usePaginationContext";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import { clsx } from "clsx";
+import { forwardRef, type MouseEventHandler } from "react";
+import { makePrefixer } from "../utils";
 import pageButtonCss from "./PageButton.css";
+import { usePaginationContext } from "./usePaginationContext";
 
 const withBaseName = makePrefixer("saltPageButton");
 

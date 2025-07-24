@@ -1,6 +1,6 @@
 import { Button, GridItem, GridLayout } from "@salt-ds/core";
 import { ExpandIcon, MinimizeIcon } from "@salt-ds/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ReactElement, useState } from "react";
 import expandingAndCollapsingItemsStyles from "./ExpandingAndCollapsingItems.module.css";
 import styles from "./index.module.css";

@@ -1,6 +1,6 @@
 import { Link as SaltLink, Text } from "@salt-ds/core";
 import { SaltShakerSolidIcon } from "@salt-ds/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 import styles from "./Footer.module.css";

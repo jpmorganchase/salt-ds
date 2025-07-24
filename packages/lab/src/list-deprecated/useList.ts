@@ -598,12 +598,14 @@ const validateProps = <Item, Variant extends ListSelectionVariant>(
 
     const sourceNotArray = !Array.isArray(source);
 
+    // biome-ignore lint/correctness/useHookAtTopLevel: NODE_ENV is invariant at runtime.
     useEffect(() => {
       if (sourceNotArray) {
         console.error("`source` for useList must be an array.");
       }
     }, [sourceNotArray]);
 
+    // biome-ignore lint/correctness/useHookAtTopLevel: NODE_ENV is invariant at runtime.
     useEffect(() => {
       if (!hasNoIndexer && !hasIndexer) {
         console.error(

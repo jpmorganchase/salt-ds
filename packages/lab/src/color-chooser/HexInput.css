@@ -14,5 +14,5 @@
 
 .saltColorChooserHexInput-input {
   width: var(--salt-size-unit);
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
 }

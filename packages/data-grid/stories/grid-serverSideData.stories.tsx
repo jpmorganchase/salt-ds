@@ -1,14 +1,14 @@
 import type { Decorator, StoryFn } from "@storybook/react-vite";
 import {
+  keepPreviousData,
   QueryClient,
   QueryClientProvider,
-  keepPreviousData,
   useInfiniteQuery,
 } from "@tanstack/react-query";
 import { http } from "msw";
 import { useCallback } from "react";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
-import { type Investor, db, investorKeyGetter } from "./dummyData";
+import { db, type Investor, investorKeyGetter } from "./dummyData";
 import "./grid.stories.css";
 
 export default {

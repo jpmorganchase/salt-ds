@@ -8,10 +8,8 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
+import { enUS as dateFnsEnUs, es as dateFnsEs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
-import { es as dateFnsEs } from "date-fns/locale";
-import { enUS as dateFnsEnUs } from "date-fns/locale";
 import "dayjs/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
 

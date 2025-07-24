@@ -6,12 +6,10 @@ import type { RefObject } from "react";
 
 import type { GridColumnModel, GridRowModel } from "../Grid";
 import type { CellValidationState } from "../GridColumn";
-
+import { useActiveOnWheel } from "./gridHooks";
+import leftPartCss from "./LeftPart.css";
 import { TableBody } from "./TableBody";
 import { TableColGroup } from "./TableColGroup";
-import { useActiveOnWheel } from "./gridHooks";
-
-import leftPartCss from "./LeftPart.css";
 
 const withBaseName = makePrefixer("saltGridLeftPart");
 

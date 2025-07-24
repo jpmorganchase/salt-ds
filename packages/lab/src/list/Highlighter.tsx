@@ -1,9 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
-import type { ReactElement } from "react";
-import { escapeRegExp } from "../utils";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import type { ReactElement } from "react";
+import { escapeRegExp } from "../utils";
 
 import highligherCss from "./Highlighter.css";
 

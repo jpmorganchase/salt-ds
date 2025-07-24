@@ -1,6 +1,6 @@
 import { useId } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { type InputHTMLAttributes, forwardRef } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 import type { FormattedInputProps } from "../FormattedInput";
 
 export const baseName = "saltFormattedInput";

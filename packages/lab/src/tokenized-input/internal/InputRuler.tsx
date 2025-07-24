@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type ForwardedRef, type InputHTMLAttributes, forwardRef } from "react";
+import { type ForwardedRef, forwardRef, type InputHTMLAttributes } from "react";
 import inputRuler from "./InputRuler.css";
 
 const withBaseName = makePrefixer("saltInputRuler");

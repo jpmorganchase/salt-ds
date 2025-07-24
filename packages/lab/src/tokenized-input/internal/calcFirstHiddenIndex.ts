@@ -1,7 +1,10 @@
 export function calcFirstHiddenIndex({
   containerWidth = 0,
   pillWidths = [],
-}: { containerWidth?: number; pillWidths?: number[] } = {}) {
+}: {
+  containerWidth?: number;
+  pillWidths?: number[];
+} = {}) {
   let totalWidth = 0;
   let firstHiddenIndex: null | number = null;
 

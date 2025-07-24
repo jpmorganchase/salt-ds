@@ -1,11 +1,9 @@
 import { RadioButton } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import checkboxCellCss from "./CheckboxCell.css";
 import type { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-
-import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
   const { row, isFocused } = props;

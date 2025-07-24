@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useRef } from "react";
+import {
+  type ResizeHandler,
+  useResizeObserver,
+} from "../responsive/useResizeObserver";
 import type {
   ElementRef,
   ManagedListRef,
   OverflowItem,
   OverflowLayoutHookProps,
 } from "./overflowTypes";
-
-import {
-  type ResizeHandler,
-  useResizeObserver,
-} from "../responsive/useResizeObserver";
 import { getIsOverflowed, measureContainerOverflow } from "./overflowUtils";
 import { useDynamicCollapse } from "./useDynamicCollapse";
 import { useInstantCollapse } from "./useInstantCollapse";

@@ -1,6 +1,6 @@
 import { useTableOfContents } from "@jpmorganchase/mosaic-store";
 import { NavigationItem, Text, useId } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   useEffect,

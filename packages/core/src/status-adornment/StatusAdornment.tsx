@@ -6,10 +6,9 @@ import { forwardRef } from "react";
 import type { ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
 import { ErrorAdornmentIcon } from "./ErrorAdornment";
+import statusAdornmentCss from "./StatusAdornment.css";
 import { SuccessAdornmentIcon } from "./SuccessAdornment";
 import { WarningAdornmentIcon } from "./WarningAdornment";
-
-import statusAdornmentCss from "./StatusAdornment.css";
 
 const icons = {
   error: ErrorAdornmentIcon,

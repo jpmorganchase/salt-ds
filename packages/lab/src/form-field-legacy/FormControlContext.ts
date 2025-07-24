@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+
 const defaultState = { focused: false };
 
 export const FormControlContext = createContext(defaultState);

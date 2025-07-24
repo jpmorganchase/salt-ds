@@ -1,9 +1,4 @@
 import type { Options } from "highcharts";
-
-// TODO: How might we use design tokens here for spacing values?
-// Q: Do we have some sort of export of tokens as raw values we
-// can safely and consistently here? (That we can read from to build options?)
-
 // Properties relating to color will be overrided due to styledMode: true
 
 export const highchartsOptionsSalt: Options = {

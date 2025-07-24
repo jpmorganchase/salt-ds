@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,19 +7,17 @@
     "defaultBranch": "main"
   },
   "files": {
-    "ignore": [
-      ".next",
-      "mockServiceWorker.js",
-      "*-props.json",
-      ".tmp",
-      "package.json",
-      "site/src/components/css-display/*.json",
-      "site/public/search-data.json"
+    "includes": [
+      "**",
+      "!**/.next",
+      "!**/mockServiceWorker.js",
+      "!**/*-props.json",
+      "!**/.tmp",
+      "!**/site/src/components/css-display/**/*.json",
+      "!**/site/public/search-data.json"
     ]
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "formatter": {
     "enabled": true,
     "indentStyle": "space"
@@ -30,7 +28,16 @@
       "recommended": true,
       "style": {
         // Changed to warn because we have a lot of non-null assertions.
-        "noNonNullAssertion": "warn"
+        "noNonNullAssertion": "warn",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       },
       "complexity": {
         // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
@@ -41,8 +48,11 @@
         "noAutofocus": "off",
         // Disabled because we write a lot of custom components.
         "noNoninteractiveElementToInteractiveRole": "off",
+        "noStaticElementInteractions": "off",
         "useFocusableInteractive": "off",
         "noNoninteractiveTabindex": "off",
+        "useAriaPropsSupportedByRole": "warn",
+        "useKeyWithClickEvents": "warn",
         // Disabled until biome doesn't flag hidden SVGs.
         "noSvgWithoutTitle": "off",
         // Changed to warn because biome has some false positives.
@@ -87,7 +97,7 @@
   "overrides": [
     {
       // Disable some rules for tests and stories, because they are not production code.
-      "include": ["__tests__/**", "stories/**"],
+      "includes": ["**/__tests__/**", "**/stories/**"],
       "linter": {
         "rules": {
           "a11y": {
@@ -98,16 +108,19 @@
           },
           "suspicious": {
             "noImplicitAnyLet": "off"
+          },
+          "nursery": {
+            "useUniqueElementIds": "warn"
           }
         }
       }
     },
     {
       // Disable some rules for legacy code, because it is not worth fixing.
-      "include": [
-        "lab/src/responsive/**",
-        "packages/data-grid/**",
-        "lab/src/common-hooks/**"
+      "includes": [
+        "**/lab/src/responsive/**",
+        "**/packages/data-grid/**",
+        "**/lab/src/common-hooks/**"
       ],
       "linter": {
         "rules": {
@@ -122,7 +135,7 @@
     },
     {
       // Disable noExplicitAny for utils, because any is useful in some cases.
-      "include": ["utils/**"],
+      "includes": ["**/utils/**"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -133,9 +146,9 @@
     },
     {
       // Disable noArrayIndexKey for layout examples because array indexes are useful in this case.
-      "include": [
-        "packages/*/stories/*-layout/**",
-        "site/src/examples/*-layout/**"
+      "includes": [
+        "**/packages/**/*/stories/**/*-layout/**",
+        "**/site/src/examples/**/*-layout/**"
       ],
       "linter": {
         "rules": {
@@ -147,7 +160,7 @@
     },
     {
       // Disable noShadowRestrictedNames for examples and stories because it is useful to shadow restricted names for example names.
-      "include": ["site/src/examples/**", "packages/*/stories/**"],
+      "includes": ["**/site/src/examples/**", "**/packages/**/*/stories/**"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -157,11 +170,13 @@
       }
     },
     {
-      "include": ["packages/core/src/**"],
-      "ignore": ["packages/core/src/__tests__/**"],
+      "includes": [
+        "**/packages/core/src/**",
+        "!**/packages/core/src/__tests__/**"
+      ],
       "linter": {
         "rules": {
-          "nursery": {
+          "style": {
             "noRestrictedImports": {
               "level": "error",
               "options": {
@@ -174,13 +189,25 @@
         }
       }
     },
-
     {
-      "include": ["packages/lab/src/**"],
-      "ignore": ["packages/lab/src/__tests__/**"],
+      "includes": ["**/tooling/**"],
       "linter": {
         "rules": {
-          "nursery": {
+          "correctness": {
+            "noUnusedFunctionParameters": "warn"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/lab/src/**",
+        "!**/packages/lab/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "nursery": {},
+          "style": {
             "noRestrictedImports": {
               "level": "error",
               "options": {

@@ -1,14 +1,14 @@
 import {
   type Breakpoints,
+  makePrefixer,
   Scrim,
   type ScrimProps,
-  makePrefixer,
   usePrevious,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useEffect, useState } from "react";
+import { forwardRef, type HTMLAttributes, useEffect, useState } from "react";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import layerLayoutCss from "./LayerLayout.css";

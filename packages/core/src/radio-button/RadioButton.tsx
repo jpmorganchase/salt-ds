@@ -5,19 +5,18 @@ import {
   type ChangeEventHandler,
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
+  forwardRef,
   type InputHTMLAttributes,
   type ReactNode,
   type Ref,
-  forwardRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
-import { RadioButtonIcon } from "./RadioButtonIcon";
 import { useRadioGroup } from "./internal/useRadioGroup";
-
 import radioButtonCss from "./RadioButton.css";
+import { RadioButtonIcon } from "./RadioButtonIcon";
 
 const withBaseName = makePrefixer("saltRadioButton");
 

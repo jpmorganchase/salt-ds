@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
 import {
+  isValidElement,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
-  isValidElement,
   useCallback,
 } from "react";
 import { ToolbarButton } from "../ToolbarButton";

@@ -40,7 +40,7 @@
 }
 
 .saltLinearProgress-track {
-  background: var(--salt-track-borderColor);
+  background: var(--salt-sentiment-neutral-track);
   width: 100%;
   height: var(--salt-size-bar);
   position: absolute;

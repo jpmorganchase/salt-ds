@@ -8,16 +8,11 @@ interface HighchartsThemeProviderProps {
   children: ReactNode;
 }
 
-/** This is needed for highcharts theme CSS to be imported */
 export const HighchartsThemeProvider: FC<HighchartsThemeProviderProps> = ({
   children,
 }) => {
   useEffect(() => {
     Highcharts.setOptions(highchartsOptionsSalt);
-
-    // You could also call setOptions again to override the theme options
-    // or you can be chart specific by specifiying and providing options
-    // at the individual chart level (which takes precedence over the theme options)
   }, []);
 
   return <>{children}</>;

@@ -39,6 +39,7 @@ export function PerformanceTester({
   };
 
   return (
+    // biome-ignore lint/nursery/useUniqueElementIds: Profiler needs a static id
     <Profiler id="performanceTest" onRender={handleRender}>
       {children}
     </Profiler>

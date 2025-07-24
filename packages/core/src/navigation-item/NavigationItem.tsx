@@ -1,17 +1,15 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  forwardRef,
   type MouseEvent,
   type MouseEventHandler,
-  forwardRef,
 } from "react";
+import type { RenderPropsType } from "../utils";
 import { makePrefixer } from "../utils";
 import { ExpansionIcon } from "./ExpansionIcon";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import type { RenderPropsType } from "../utils";
 import navigationItemCss from "./NavigationItem.css";
 import { NavigationItemAction } from "./NavigationItemAction";
 

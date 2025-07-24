@@ -3,9 +3,9 @@
 Follow below instructions to contribute to Salt.
 
 1. Run `yarn` to install dependencies. If this step is stuck, check your proxy setting.
-1. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
-1. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
-1. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
+2. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
+3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
+4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
 
 ## Packages
 
@@ -38,7 +38,11 @@ Added:
 
 ### Prop deprecation
 
-To do.
+To deprecate a prop, you should:
+
+1. Add a comment above the prop in the component's `.tsx` file, indicating that it is deprecated and providing information on what to use instead. This should use the @deprecated JSDoc tag.
+2. Update the component's documentation to reflect the deprecation, including the reason for deprecation and the recommended alternative.
+3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should show contain a diff code block.
 
 ### Theming
 
@@ -47,13 +51,12 @@ Additions and updates to the theme come from our designers. Any changes to the t
 #### How to add new tokens
 
 1. Add the token to the appropriate `.css` file in `packages/theme/css`
-2. Document the token in the appropriate file within `packages/theme/stories`
+2. Document the token if appropriate in the foundations section on the site.
 3. Add a changeset listing the new tokens.
-4. The tokens can then be used within components as desired.
 
 #### How to remove/deprecate tokens
 
-If tokens are for some reason removed from the theme, this is a breaking change and you must add them to the `deprecated` folder.
+If tokens are for some reason removed from the theme, this is a breaking change, and you must add them to the `deprecated` folder.
 
 1. Move the token and its value to the respective `theme/css/deprecated/<characteristics | fade | foundations | palette>` file.
 2. Remove the token from its original file.
@@ -87,25 +90,47 @@ In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
 
 5. Add a changeset with the appropriate information.
 6. Any components using the deprecated tokens where the replacement token has the same value can use the replacement token instead immediately. If the value of the replacement token differs, this should be noted in the changeset.
-7. On the next breaking change release, the deprecated tokens can be carefully removed and it should be ensured that the removed token is no longer used anywhere in the codebase.
 
-#### How to manage component CSS API and local tokens
+### Pull requests
 
-Local tokens begin with `--componentName`, whereas tokens belonging to our CSS API are prefixed with `--saltComponentName`. Local tokens should not be changed by consumers and so don't need to follow strict deprecation rules if renamed or removed. However, changes to CSS API tokens are considered as breaking changes and should be treated as such.
+- Most pull requests should have a related issue. This helps us track the changes, agree scope and ensures that the pull request is addressing a specific problem or feature.
+- Small pull requests are preferred, as they are easier to review and test. If you have a large change, consider breaking it down into smaller pull requests.
+- Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioural tests using Cypress component tests or visual tests using Chromatic.
+- Pull request titles and commits should be written in the present tense, e.g. "Add new icon" or "Fix bug in component".
+- Each user-facing change should be documented in a changeset. The changeset should be written in past tense, e.g. "Added new icon" or "Fixed bug in component".
+- To help efficiency, please self-review your pull request before submitting it.
+- If your pull request is not ready for review, please mark it as a draft. This will help us avoid reviewing pull requests that are not ready.
 
-It is rare that a CSS API token should need to change, but in the case it does, follow the necessary steps:
+#### Chromatic
 
-1. Clearly document the token that is changing within the components docs in `packages/<core | lab>/stories`.
-2. If the token is being deleted, keep it in the component CSS file until the breaking change release.
-3. If the token is being renamed, use the rename as the second fallback - for example `align-items: var(--saltButton-someToken, center);` changes to `align-items: var(--saltButton-someToken, var(--saltButton-tokenRenamed, center))`. Then, on breaking change, remove the deprecated token: resulting in `align-items: var(--saltButton-tokenRenamed, center)`.
+##### Pull requests
 
-#### How to remove component class names
+To run visual regression tests using Chromatic, you will need to add the `chromatic` label to your pull request. This should only been done when the pull request is ready for review and has been tested locally. Once the label is added.
+By default, Chromatic will use Turbosnap to only snapshot the changed stories. If you want to disable this you can use the label: `no turbosnap`.
 
-Any component class names that are no longer necessary must first be deprecated. Simply add a comment above the class name, and then remove upon breaking change. Example:
+##### QA stories
 
-```css
-/* **Deprecated:** Tertiary variant no longer supported */
-.saltFormField-tertiary {
-  background: var(--salt-editable-tertiary-background);
-}
+- QA stories should be inside a QA stories file e.g. `button.qa.stories.tsx`.
+- The title in the metadata should include the component name e.g. "Button QA".
+- Since there is a cost associated with running Chromatic, QA stories should be limited to the minimum number of stories required to test the component. You can use the `QAContainer` to show multiple variants of a component.
+
+To enable Chromatic to run these stories, you will need to add extra parameters to the stories e.g.:
+
+```ts
+Story.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
 ```

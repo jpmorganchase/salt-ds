@@ -1,10 +1,9 @@
-import { Link, type LinkProps, Text, makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useCallback } from "react";
-import { useMetricContext } from "./internal";
-
+import { Link, type LinkProps, makePrefixer, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes, useCallback } from "react";
+import { useMetricContext } from "./internal";
 
 import metricHeaderCss from "./MetricHeader.css";
 

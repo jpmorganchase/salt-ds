@@ -15,9 +15,9 @@ import {
   type LayoutSeparator,
 } from "../flex-layout";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type ResponsiveProp,
-  makePrefixer,
   resolveResponsiveValue,
 } from "../utils";
 import stackLayoutCss from "./StackLayout.css";

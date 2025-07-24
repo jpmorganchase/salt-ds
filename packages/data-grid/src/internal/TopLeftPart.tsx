@@ -6,9 +6,9 @@ import { clsx } from "clsx";
 import type { GridColumnGroupModel, GridColumnModel } from "../Grid";
 
 import { GroupHeaderRow } from "./GroupHeaderRow";
+import { useActiveOnWheel } from "./gridHooks";
 import { HeaderRow } from "./HeaderRow";
 import { TableColGroup } from "./TableColGroup";
-import { useActiveOnWheel } from "./gridHooks";
 
 import topLeftPartCss from "./TopLeftPart.css";
 

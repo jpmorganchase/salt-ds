@@ -4,13 +4,11 @@ import { useWindow } from "@salt-ds/window";
 import type { CSSProperties } from "react";
 
 import type { GridColumnModel, GridRowModel } from "../Grid";
-
+import columnGhostCss from "./ColumnGhost.css";
+import type { ColumnDragState } from "./gridHooks";
 import { HeaderRow } from "./HeaderRow";
 import { TableBody } from "./TableBody";
 import { TableColGroup } from "./TableColGroup";
-import type { ColumnDragState } from "./gridHooks";
-
-import columnGhostCss from "./ColumnGhost.css";
 
 const withBaseName = makePrefixer("saltGridColumnGhost");
 

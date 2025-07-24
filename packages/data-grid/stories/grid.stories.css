@@ -25,12 +25,12 @@
 }
 
 .bid {
-  color: var(--salt-status-positive-foreground);
+  color: var(--salt-sentiment-positive-foreground-informative);
   padding-right: 4px;
 }
 
 .ask {
-  color: var(--salt-status-negative-foreground);
+  color: var(--salt-sentiment-negative-foreground-informative);
   padding-left: 4px;
 }
 

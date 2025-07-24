@@ -1,34 +1,31 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type ForwardedRef,
-  type ReactElement,
   cloneElement,
+  type ForwardedRef,
   forwardRef,
   isValidElement,
+  type ReactElement,
   useRef,
 } from "react";
 import {
   type CollectionIndexer,
   type CollectionItem,
+  itemToString as defaultItemToString,
+  isSelected,
   LIST_FOCUS_VISIBLE,
   type ScrollingAPI,
   type SelectionStrategy,
-  itemToString as defaultItemToString,
-  isSelected,
   useCollectionItems,
   useImperativeScrollingAPI,
 } from "../common-hooks";
-
+import listCss from "./List.css";
 import { ListItem as DefaultListItem, ListItemProxy } from "./ListItem";
 import type { ListItemProps, ListProps } from "./listTypes";
 import { useList } from "./useList";
 import { useListHeight } from "./useListHeight";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import listCss from "./List.css";
 
 const defaultEmptyMessage = "No data to display";
 

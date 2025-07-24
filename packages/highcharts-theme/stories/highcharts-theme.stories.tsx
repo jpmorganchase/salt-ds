@@ -1,12 +1,12 @@
 import type { Decorator } from "@storybook/react-vite";
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
 import accessibility from "highcharts/modules/accessibility";
+import HighchartsReact from "highcharts-react-official";
 
-import "../css/highcharts-sb-only.css";
-import "../index.css";
+import "@salt-ds/highcharts-theme/stories/highcharts-default.css";
+import "@salt-ds/highcharts-theme/index.css";
 
-import { highchartsOptionsSalt } from "../src";
+import { highchartsOptionsSalt } from "@salt-ds/highcharts-theme";
 
 accessibility(Highcharts);
 
@@ -20,9 +20,9 @@ export default {
   component: HighchartsReact,
   decorators: [withHighchartsTheme],
   parameters: {
-    // chromatic: {
-    //   disableSnapshot: false,
-    // },
+    chromatic: {
+      disableSnapshot: false,
+    },
   },
 };
 

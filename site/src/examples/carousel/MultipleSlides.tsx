@@ -1,40 +1,69 @@
-import { H3, Text, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
-  CarouselControls,
-  CarouselSlide,
-  CarouselSlider,
-} from "@salt-ds/lab";
-import clsx from "clsx";
+  CarouselAnnouncement,
+  CarouselCard,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
+  CarouselSlides,
+  CarouselTabList,
+} from "@salt-ds/embla-carousel";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const MultipleSlides = (): ReactElement => {
+  const slideId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
-    <Carousel visibleSlides={{ xs: 1, sm: 2 }} aria-label="Account overview">
-      <CarouselControls />
-      <CarouselSlider>
+    <Carousel
+      aria-label="Multiple slides carousel example"
+      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
+      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
+      emblaPlugins={[CarouselAnnouncement()]}
+    >
+      <Text styleAs={"h2"}>Title</Text>
+      <CarouselSlides>
         {sliderData.map((slide, index) => {
-          const slideId = useId();
           return (
-            <CarouselSlide
-              key={slideId}
-              aria-labelledby={`slide-title-${slideId}`}
+            <CarouselCard
+              className={styles.carouselSlide}
+              key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+              id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+              aria-label={slide.title}
+              appearance={"bordered"}
               media={
                 <img
                   alt={`stock content to show in carousel slide ${index}`}
-                  className={clsx(styles.carouselImagePlaceholder)}
+                  className={styles.carouselImage}
                   src={slide.image}
                 />
               }
-              header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+              header={<Text styleAs={"h3"}>{slide.title}</Text>}
             >
               <Text>{slide.content}</Text>
-            </CarouselSlide>
+            </CarouselCard>
           );
         })}
-      </CarouselSlider>
+      </CarouselSlides>
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </StackLayout>
+        {!isMobile ? <CarouselTabList /> : null}
+      </FlexLayout>
     </Carousel>
   );
 };

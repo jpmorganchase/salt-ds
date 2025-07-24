@@ -4,7 +4,6 @@
   min-width: 4em;
   width: 100%;
   background: var(--dropdown-background);
-  cursor: var(--salt-selectable-cursor-hover);
   min-height: var(--salt-size-base);
   border-radius: var(--salt-palette-corner-weak, 0);
   display: inline-flex;
@@ -22,34 +21,35 @@
 
 .saltDropdown:hover {
   background: var(--dropdown-background-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltDropdown-bordered.saltDropdown {
-  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--dropdown-borderColor);
 }
 
 .saltDropdown-bordered.saltDropdown:hover {
-  border-style: var(--salt-editable-borderStyle-hover);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--dropdown-borderColor-hover);
 }
 
 /* Style applied if focused or active when `bordered={true}` */
 .saltDropdown-bordered.saltDropdown:focus,
 .saltDropdown-bordered.saltDropdown:focus:hover {
-  border-style: var(--salt-editable-borderStyle-active);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--dropdown-borderColor-active);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
 .saltDropdown-bordered.saltDropdown[aria-readonly="true"],
 .saltDropdown-bordered.saltDropdown[aria-readonly="true"]:hover {
-  border-style: var(--salt-editable-borderStyle-readonly);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDropdown-bordered.saltDropdown-disabled,
 .saltDropdown-bordered.saltDropdown-disabled:hover {
-  border-style: var(--salt-editable-borderStyle-disabled);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -58,28 +58,28 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--dropdown-borderColor);
 }
 
 .saltDropdown:hover .saltDropdown-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--dropdown-borderColor-hover);
 }
 
 .saltDropdown:focus .saltDropdown-activationIndicator,
 .saltDropdown:focus:hover .saltDropdown-activationIndicator {
-  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--dropdown-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--dropdown-borderColor-active);
 }
 
 .saltDropdown[aria-readonly="true"] .saltDropdown-activationIndicator,
 .saltDropdown[aria-readonly="true"]:hover .saltDropdown-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDropdown-disabled .saltDropdown-activationIndicator,
 .saltDropdown-disabled:hover .saltDropdown-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -159,19 +159,19 @@
 .saltDropdown:focus,
 .saltDropdown:focus:hover {
   background: var(--dropdown-background-active);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--dropdown-outlineColor);
 }
 
 .saltDropdown.saltDropdown[aria-readonly="true"] {
   background: var(--dropdown-background-readonly);
-  cursor: var(--salt-selectable-cursor-readonly);
+  cursor: var(--salt-cursor-readonly);
 }
 
 .saltDropdown.saltDropdown:disabled,
 .saltDropdown.saltDropdown:disabled:hover {
   background: var(--dropdown-background-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }
 

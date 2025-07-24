@@ -6,10 +6,9 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-
-import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/System Status",

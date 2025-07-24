@@ -11,6 +11,10 @@
       "groupName": "Chromatic",
       "matchManagers": ["npm", "github-actions"],
       "matchPackageNames": ["chromatic", "chromaui/action"]
+    },
+    {
+      "groupName": "Biome",
+      "matchPackageNames": ["@biomejs/**"]
     }
   ]
 }

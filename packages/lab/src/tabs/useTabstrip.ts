@@ -1,19 +1,26 @@
 import {
+  createElement,
   type KeyboardEvent,
   type MouseEvent,
   type RefObject,
-  createElement,
   useCallback,
   useEffect,
   useRef,
 } from "react";
 import type { OverflowCollectionHookResult } from "../responsive";
-import { Tab } from "./Tab";
 import {
   type DragHookResult,
   type dragStrategy,
   useDragDrop,
 } from "./drag-drop";
+import { Tab } from "./Tab";
+import type {
+  composableTabProps,
+  exitEditHandler,
+  navigationProps,
+  TabDescriptor,
+  TabElement,
+} from "./TabsTypes";
 import {
   type EditableItemHookResult,
   type ExitEditModeHandler,
@@ -24,14 +31,6 @@ import {
   useKeyboardNavigation,
 } from "./useKeyboardNavigation";
 import { useSelection } from "./useSelection";
-
-import type {
-  TabDescriptor,
-  TabElement,
-  composableTabProps,
-  exitEditHandler,
-  navigationProps,
-} from "./TabsTypes";
 
 interface tabstripHookProps {
   activeTabIndex?: number | null;

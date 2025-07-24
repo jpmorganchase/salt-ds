@@ -2,10 +2,10 @@ import { useControlled } from "@salt-ds/core";
 import { useCallback, useMemo } from "react";
 import {
   type CollectionItem,
+  itemToString as defaultItemToString,
   type SelectHandler,
   type SelectionChangeHandler,
   type SelectionStrategy,
-  itemToString as defaultItemToString,
 } from "../common-hooks";
 import { type ListHookProps, type ListHookResult, useList } from "../list";
 import type { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";

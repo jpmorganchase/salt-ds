@@ -1,19 +1,16 @@
 import { useIdMemo } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { cloneElement } from "react";
-import { OverflowPanel } from "./overflow-panel/OverflowPanel";
-
-import type { TooltrayProps } from "./TooltrayProps";
 
 import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
 import { useOverflowLayout } from "../responsive/useOverflowLayout";
 
 import { renderTrayTools } from "./internal/renderTrayTools";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
+import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 import tooltrayCss from "./Tooltray.css";
+import type { TooltrayProps } from "./TooltrayProps";
 
 export const Tooltray = (props: TooltrayProps) => {
   const {

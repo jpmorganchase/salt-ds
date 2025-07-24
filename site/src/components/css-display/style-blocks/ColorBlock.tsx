@@ -1,4 +1,3 @@
-import {} from "@salt-ds/core";
 import { clsx } from "clsx";
 
 import { useCallback, useState } from "react";

@@ -2,11 +2,11 @@ import { useControlled } from "@salt-ds/core";
 import {
   Children,
   type FocusEventHandler,
+  isValidElement,
   type MouseEventHandler,
   type MouseEvent as ReactMouseEvent,
   type ReactNode,
   type RefObject,
-  isValidElement,
   useCallback,
   useEffect,
   useMemo,
@@ -379,8 +379,8 @@ export function useScrollToCell<T>(
       if (part !== "body") {
         return; // TODO
       }
-      let x: number | undefined = undefined;
-      let y: number | undefined = undefined;
+      let x: number | undefined;
+      let y: number | undefined;
       if (rowIdx <= visRowRng.start) {
         // First row is 1px wider than other rows (additional top border)
         y = rowIdx === 0 ? 0 : 1 + rowHeight * rowIdx;
@@ -769,8 +769,8 @@ export function useRowSelection<T>(
           ? lastSelRowIdx
           : undefined;
 
-      let nextSelRowIdxs: Set<number> | undefined = undefined;
-      let nextLastSelRowIdx: number | undefined = undefined;
+      let nextSelRowIdxs: Set<number> | undefined;
+      let nextLastSelRowIdx: number | undefined;
 
       if (idxFrom === undefined) {
         if (unselectOtherRows) {

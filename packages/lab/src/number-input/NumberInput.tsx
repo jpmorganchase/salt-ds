@@ -1,13 +1,14 @@
 import {
   Button,
-  StatusAdornment,
-  type ValidationStatus,
   capitalize,
   makePrefixer,
+  StatusAdornment,
   useControlled,
   useForkRef,
   useFormFieldProps,
   useIcon,
+  useId,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -16,23 +17,26 @@ import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
   type FocusEvent,
+  forwardRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
+  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import useCaret from "./internal/useCaret";
 import {
-  isAllowedNonNumeric,
+  clampToRange,
+  getNumberPrecision,
+  isEmpty,
   isOutOfRange,
-  sanitizedInput,
-  toFixedDecimalPlaces,
+  sanitizeInput,
   toFloat,
 } from "./internal/utils";
-
 import numberInputCss from "./NumberInput.css";
 import { useNumberInput } from "./useNumberInput";
 
@@ -41,33 +45,40 @@ const withBaseName = makePrefixer("saltNumberInput");
 export interface NumberInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * A boolean. When `true`, the input will receive a full border.
+   * Styling variant with full border.
+   * @default false
    */
   bordered?: boolean;
   /**
-   * The number of decimal places to display.
+   * A boolean that, when true, ensures the input value is clamped within the specified min and max range upon losing focus.
+   * @default false
    */
-  decimalPlaces?: number;
+  clamp?: boolean;
   /**
-   * Sets the initial default value of the component.
+   * The default value. Use when the component is uncontrolled.
    */
   defaultValue?: number | string;
   /**
-   * If `true`, the number input will be disabled.
+   * Disable the `NumberInput`.
+   * @default false
    */
   disabled?: boolean;
   /**
    * The marker to use in an empty read only Input.
-   * Use `''` to disable this feature. Defaults to '—'.
-   * @default '—'
+   * Use `''` to disable this feature.
+   * @default "—"
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
-   * Whether to hide the number buttons. Defaults to `false`.
+   * A callback to format the value of the `NumberInput`.
+   */
+  format?: (value: number | string) => string | number;
+  /**
+   * Hide the number buttons.
    * @default false
    */
   hideButtons?: boolean;
@@ -76,52 +87,67 @@ export interface NumberInputProps
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * The maximum value that can be selected. Defaults to Number.MAX_SAFE_INTEGER.
+   * The maximum value that can be selected.
    * @default Number.MAX_SAFE_INTEGER
    */
   max?: number;
   /**
-   * The minimum value that can be selected. Defaults to Number.MIN_SAFE_INTEGER.
+   * The minimum value that can be selected.
    * @default Number.MIN_SAFE_INTEGER
    */
   min?: number;
   /**
-   * Callback when number input value is changed.
-   * @param event - the event triggers value change, could be undefined during increment / decrement button long press
+   * Callback function that is triggered when the value of the `NumberInput` changes.
+   *
+   * @param event - The event that triggers the value change. This may be `undefined` during a long press on the increment or decrement buttons.
+   * @param value - The new value of the `NumberInput`, which can be a number or a string.
    */
   onChange?: (
     event: SyntheticEvent | undefined,
     value: number | string,
   ) => void;
   /**
-   * A string. Displayed in a dimmed color when the input value is empty.
+   *
+   * A callback to parse the value of the `NumberInput`. To be used alongside
+   * the `format` callback.
    */
-  placeholder?: string | undefined;
+  parse?: (value: number | string) => string | number;
   /**
-   * A boolean. If `true`, the component is not editable by the user.
+   * A string displayed in a dimmed color when the `NumberInput` value is empty.
+   */
+  placeholder?: string;
+  /**
+   * The number of decimal places allowed. Defaults to the decimal scale of either the initial value provided or the step, whichever is greater.
+   */
+  decimalScale?: number;
+  /**
+   * A boolean property that controls the editability of the `NumberInput`.
+   * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
+   * - When set to `false` or omitted, the `NumberInput` is editable by the user.
    */
   readOnly?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * The amount to increment or decrement the value by when using the number buttons or Up Arrow and Down Arrow keys. Default to 1.
+   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys.
    * @default 1
    */
   step?: number;
   /**
-   * The amount to change the value when the value is incremented or decremented by holding Shift and pressing Up arrow or Down arrow keys.
-   * Defaults to 10.
-   * @default 10
+   * Defines the factor by which the step value is multiplied to determine the maximum increment or decrement when the Shift key
+   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value.
+   * @default 2
    */
-  stepBlock?: number;
+  stepMultiplier?: number;
   /**
-   * Alignment of text within container. Defaults to "left".
+   * Specifies the alignment of the text within the `NumberInput`.
+   *
    * @default "left"
    */
   textAlign?: "left" | "center" | "right";
@@ -130,41 +156,45 @@ export interface NumberInputProps
    */
   validationStatus?: Extract<ValidationStatus, "error" | "warning" | "success">;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
    * @default "primary"
    */
   variant?: "primary" | "secondary";
   /**
-   * The value of the number input. The component will be controlled if this prop is provided.
+   * Value of the `NumberInput`, to be used when in a controlled state.
    */
-  value?: number | string | undefined;
+  value?: number | string;
 }
 
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
-      bordered,
+      bordered = false,
       className: classNameProp,
-      decimalPlaces = 0,
-      defaultValue: defaultValueProp,
+      clamp = false,
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
+      format,
       hideButtons,
+      id: idProp,
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
       onChange: onChangeProp,
+      parse,
       placeholder,
+      decimalScale: decimalScaleProp,
       readOnly: readOnlyProp,
       startAdornment,
       step = 1,
-      stepBlock = 10,
+      stepMultiplier = 2,
       textAlign = "left",
       validationStatus: validationStatusProp,
       value: valueProp,
       variant = "primary",
+      defaultValue: defaultValueProp = "",
       ...restProps
     },
     ref,
@@ -175,8 +205,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       css: numberInputCss,
       window: targetWindow,
     });
-
-    const { IncreaseIcon, DecreaseIcon } = useIcon();
 
     const {
       a11yProps: {
@@ -192,6 +220,15 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
+    const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
+    const defaultValue = isEmptyReadOnly
+      ? emptyReadOnlyMarker
+      : defaultValueProp;
+
+    const validationStatusId = useId(idProp);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const handleInputRef = useForkRef(inputRefProp, inputRef);
+    const { IncreaseIcon, DecreaseIcon } = useIcon();
 
     const {
       "aria-describedby": inputDescribedBy,
@@ -209,21 +246,31 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
+    const isAdjustingRef = useRef<boolean>(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+
+    const [recordCaret, restoreCaret, resetCaret] = useCaret({
+      inputRef,
+    });
+
     const [value, setValue] = useControlled({
       controlled: valueProp,
-      default:
-        typeof defaultValueProp === "number"
-          ? toFixedDecimalPlaces(defaultValueProp, decimalPlaces)
-          : defaultValueProp,
+      default: defaultValue,
       name: "NumberInput",
       state: "value",
     });
 
-    // Won't be needed when `:has` css can be used
-    const [focused, setFocused] = useState(false);
+    const decimalScale =
+      decimalScaleProp ||
+      Math.max(getNumberPrecision(value), getNumberPrecision(step));
 
-    const inputRef = useRef<HTMLInputElement | null>(null);
-    const forkedInputRef = useForkRef(inputRef, inputRefProp);
+    const [displayValue, setDisplayValue] = useState<string | number>(value);
+
+    const clampAndFix = (value: number) => {
+      const clampedValue = clamp ? clampToRange(min, max, value) : value;
+      return !format ? clampedValue.toFixed(decimalScale) : clampedValue;
+    };
 
     const {
       decrementButtonProps,
@@ -231,58 +278,107 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       incrementButtonProps,
       incrementValue,
     } = useNumberInput({
-      inputRef,
-      setValue,
-      decimalPlaces,
+      clampAndFix,
+      decimalScale,
       disabled,
+      format,
+      inputRef,
+      isAdjustingRef,
       max,
       min,
       onChange: onChangeProp,
+      parse,
       readOnly: isReadOnly,
+      setIsEditing,
+      setValue,
       step,
-      stepBlock,
+      stepMultiplier,
       value,
     });
 
-    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      setFocused(true);
+    // biome-ignore lint/correctness/useExhaustiveDependencies: We do not want to re-render when  display value changes
+    useEffect(() => {
+      const formatValue = () => {
+        const sanitizedValue = sanitizeInput(value);
+        const floatValue = toFloat(sanitizedValue);
+        if (
+          !isAdjustingRef.current &&
+          (isEditing ||
+            isEmpty(value) ||
+            Number.isNaN(floatValue) ||
+            isReadOnly)
+        ) {
+          return value;
+        }
+        if (isAdjustingRef.current) {
+          return clampAndFix(toFloat(value));
+        }
+        const clampedValue = clampAndFix(floatValue);
+        return format ? format(clampedValue) : clampedValue;
+      };
+      const updatedValue = formatValue();
+      setDisplayValue(updatedValue);
+    }, [value, isEditing, isReadOnly, format, clamp, decimalScale, min, max]);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Need to restore caret position when value changes.
+    useLayoutEffect(() => {
+      if (isAdjustingRef.current) {
+        resetCaret();
+      } else {
+        restoreCaret();
+      }
+    }, [displayValue, value]);
+
+    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      setIsFocused(true);
+      if (isReadOnly) return;
+      const parsedValue = parse?.(value) ?? value;
+      const updatedValue = !isEmpty(parsedValue)
+        ? clampAndFix(toFloat(parsedValue))
+        : parsedValue;
+      setDisplayValue(updatedValue);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
-      setFocused(false);
-
-      if (value === undefined) return;
-
-      const floatValue = toFloat(value);
-      if (Number.isNaN(floatValue)) {
-        // Keep original value if NaN
-        setValue(value);
-        onChangeProp?.(event, value);
-      } else {
-        const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
-
-        if (value !== "" && !isAllowedNonNumeric(value)) {
-          setValue(roundedValue);
-        }
-
-        onChangeProp?.(event, roundedValue);
+      setIsFocused(false);
+      if (isReadOnly) return;
+      setIsEditing(false);
+      isAdjustingRef.current = false;
+      resetCaret();
+      const inputValue = event.target.value;
+      if (isEmpty(inputValue)) {
+        return;
       }
-
+      const sanitizedValue = sanitizeInput(event.target.value);
+      const floatValue = toFloat(sanitizedValue);
+      const clampedValue = clampAndFix(floatValue);
+      // Update the value if it has changed
+      if (clampedValue.toString() !== value.toString()) {
+        setValue(clampedValue);
+        onChangeProp?.(event, clampedValue);
+      }
+      // Ensure the displayValue is updated with the formatted value
+      const formattedValue = format ? format(clampedValue) : clampedValue;
+      setDisplayValue(formattedValue);
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const changedValue = event.target.value;
-
-      setValue(sanitizedInput(changedValue));
-
-      onChangeProp?.(event, sanitizedInput(changedValue));
-      inputOnChange?.(event);
+      recordCaret();
+      const raw = sanitizeInput(event.target.value);
+      if (raw.toString() === value.toString()) {
+        return;
+      }
+      const parsed = parse && !isEditing ? parse(raw) : raw;
+      setValue(parsed);
+      onChangeProp?.(event, parsed);
     };
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      setIsEditing(true);
+      isAdjustingRef.current = false;
+
       switch (event.key) {
         case "ArrowUp": {
           event.preventDefault();
@@ -319,94 +415,96 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           break;
         }
       }
-
       inputOnKeyDown?.(event);
+    };
+
+    const handleBeforeInput = () => {
+      setIsEditing(true);
     };
 
     return (
       <div
-        className={clsx(withBaseName(), classNameProp)}
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("focused")]: isFocused,
+            [withBaseName("disabled")]: isDisabled,
+            [withBaseName("readOnly")]: isReadOnly,
+            [withBaseName("hiddenButtons")]: hideButtons,
+            [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName("bordered")]: bordered,
+          },
+          classNameProp,
+        )}
         {...restProps}
         ref={ref}
       >
-        <div
+        {startAdornment && (
+          <div className={withBaseName("startAdornmentContainer")}>
+            {startAdornment}
+          </div>
+        )}
+        <input
+          aria-describedby={clsx(
+            validationStatusId,
+            formFieldDescribedBy,
+            inputDescribedBy,
+          )}
+          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+          aria-invalid={
+            !isReadOnly
+              ? isOutOfRange(value, min, max) || validationStatus === "error"
+              : undefined
+          }
+          aria-valuemax={!isReadOnly ? max : undefined}
+          aria-valuemin={!isReadOnly ? min : undefined}
+          aria-valuenow={
+            value && !Number.isNaN(toFloat(value)) && !isReadOnly
+              ? toFloat(parse?.(value) || value)
+              : undefined
+          }
+          // Workaround to have the value announced by screen reader on Safari.
+          {...(!isReadOnly && { "aria-valuetext": value.toString() })}
           className={clsx(
-            withBaseName("inputContainer"),
-            withBaseName(variant),
-            {
-              [withBaseName("focused")]: !isDisabled && focused,
-              [withBaseName("disabled")]: isDisabled,
-              [withBaseName("readOnly")]: isReadOnly,
-              [withBaseName(validationStatus || "")]: validationStatus,
-              [withBaseName("bordered")]: bordered,
-            },
+            withBaseName("input"),
+            withBaseName(`inputTextAlign${capitalize(textAlign)}`),
+            inputClassName,
           )}
-        >
-          {startAdornment && (
-            <div className={withBaseName("startAdornmentContainer")}>
-              {startAdornment}
-            </div>
-          )}
-          <input
-            aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-            aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
-            aria-invalid={
-              !isReadOnly ? isOutOfRange(value, min, max) : undefined
-            }
-            aria-valuemax={
-              !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(max, decimalPlaces))
-                : undefined
-            }
-            aria-valuemin={
-              !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(min, decimalPlaces))
-                : undefined
-            }
-            aria-valuenow={
-              value && !Number.isNaN(toFloat(value)) && !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
-                : undefined
-            }
-            className={clsx(
-              withBaseName("input"),
-              withBaseName(`inputTextAlign${capitalize(textAlign)}`),
-              inputClassName,
-            )}
-            disabled={isDisabled}
-            onBlur={handleInputBlur}
-            onChange={handleInputChange}
-            onFocus={!isDisabled ? handleInputFocus : undefined}
-            onKeyDown={handleInputKeyDown}
-            placeholder={placeholder}
-            readOnly={isReadOnly}
-            aria-readonly={isReadOnly ? "true" : undefined}
-            ref={forkedInputRef}
-            required={isRequired}
-            // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
-            role={isReadOnly ? "textbox" : "spinbutton"}
-            tabIndex={isDisabled ? -1 : 0}
-            value={value}
-            {...restInputProps}
-          />
-          {!isDisabled && validationStatus && (
-            <StatusAdornment status={validationStatus} />
-          )}
-          {endAdornment && (
-            <div className={withBaseName("endAdornmentContainer")}>
-              {endAdornment}
-            </div>
-          )}
-          <div className={withBaseName("activationIndicator")} />
-        </div>
-
-        {!hideButtons && !isReadOnly && (
-          <div className={withBaseName("buttonContainer")}>
+          disabled={isDisabled}
+          onBlur={handleInputBlur}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          onKeyDown={handleInputKeyDown}
+          onBeforeInput={handleBeforeInput}
+          placeholder={placeholder}
+          readOnly={isReadOnly}
+          aria-readonly={isReadOnly ? "true" : undefined}
+          ref={handleInputRef}
+          required={isRequired}
+          // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
+          role={isReadOnly ? "textbox" : "spinbutton"}
+          tabIndex={isDisabled ? -1 : 0}
+          value={displayValue}
+          {...restInputProps}
+        />
+        <div className={withBaseName("activationIndicator")} />
+        {!isDisabled && validationStatus && (
+          <StatusAdornment status={validationStatus} id={validationStatusId} />
+        )}
+        {endAdornment && (
+          <div className={withBaseName("endAdornmentContainer")}>
+            {endAdornment}
+          </div>
+        )}
+        {!isReadOnly && (
+          <div className={clsx(withBaseName("buttonContainer"))}>
             <Button
               className={clsx(
                 withBaseName("numberButton"),
                 withBaseName("numberButtonIncrement"),
               )}
+              appearance="transparent"
               {...incrementButtonProps}
             >
               <IncreaseIcon aria-hidden />
@@ -416,6 +514,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 withBaseName("numberButton"),
                 withBaseName("numberButtonDecrement"),
               )}
+              appearance="transparent"
               {...decrementButtonProps}
             >
               <DecreaseIcon aria-hidden />

@@ -1,14 +1,7 @@
-import {
-  type IconProps,
-  SuccessIcon,
-  SuccessSmallIcon,
-  SuccessSmallSolidIcon,
-  SuccessSolidIcon,
-} from "@salt-ds/icons";
+import { CheckmarkIcon, CheckmarkSolidIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { useDensity } from "../salt-provider";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer } from "../utils";
 import checkboxIconCss from "./CheckboxIcon.css";
@@ -27,24 +20,6 @@ export interface CheckboxIconProps {
 }
 
 const withBaseName = makePrefixer("saltCheckboxIcon");
-
-function CheckedIcon(props: IconProps) {
-  const density = useDensity();
-  return density === "high" ? (
-    <SuccessSmallSolidIcon {...props} />
-  ) : (
-    <SuccessSolidIcon {...props} />
-  );
-}
-
-function CheckedReadOnlyIcon(props: IconProps) {
-  const density = useDensity();
-  return density === "high" ? (
-    <SuccessSmallIcon {...props} />
-  ) : (
-    <SuccessIcon {...props} />
-  );
-}
 
 export const CheckboxIcon = ({
   checked = false,
@@ -79,10 +54,10 @@ export const CheckboxIcon = ({
       )}
     >
       {checked && !indeterminate && !readOnly && (
-        <CheckedIcon className={withBaseName("icon")} />
+        <CheckmarkSolidIcon className={withBaseName("icon")} />
       )}
       {checked && !indeterminate && readOnly && (
-        <CheckedReadOnlyIcon className={withBaseName("icon")} />
+        <CheckmarkIcon className={withBaseName("icon")} />
       )}
     </div>
   );

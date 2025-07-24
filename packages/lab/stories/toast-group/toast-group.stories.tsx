@@ -1,3 +1,4 @@
+import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   Button,
   FlowLayout,
@@ -10,7 +11,6 @@ import { CloseIcon } from "@salt-ds/icons";
 import { ToastGroup } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import { Fragment, type ReactNode, useState } from "react";
-import { withDateMock } from ".storybook/decorators/withDateMock";
 
 export default {
   title: "Lab/Toast Group",

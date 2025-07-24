@@ -1,10 +1,9 @@
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
-import { StatusIndicator, type ValidationStatus } from "../status-indicator";
-import { makePrefixer } from "../utils";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes } from "react";
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
+import { makePrefixer } from "../utils";
 
 import bannerCss from "./Banner.css";
 

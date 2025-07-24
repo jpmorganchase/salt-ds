@@ -1,8 +1,7 @@
-import { type ForwardedRef, type ReactElement, forwardRef } from "react";
-
-import { ListItemBase, type ListItemBaseProps } from "./ListItemBase";
+import { type ForwardedRef, forwardRef, type ReactElement } from "react";
 import { useDescendant } from "./internal/DescendantContext";
 import { isPlainObject } from "./internal/helpers";
+import { ListItemBase, type ListItemBaseProps } from "./ListItemBase";
 import { useListItem } from "./useListItem";
 
 export interface ListItemProps<Item = string>

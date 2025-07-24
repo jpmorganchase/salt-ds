@@ -1,11 +1,4 @@
 // The input should only accept numbers, decimal points, and plus/minus symbols
-export const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
-
-export const toFixedDecimalPlaces = (
-  inputNumber: number,
-  decimalPlaces: number,
-) => inputNumber.toFixed(decimalPlaces);
-
 export const isAllowedNonNumeric = (inputCharacter: number | string) => {
   if (typeof inputCharacter === "number") return;
   return (
@@ -20,17 +13,41 @@ export const toFloat = (inputValue: number | string) => {
   return Number.parseFloat(inputValue.toString());
 };
 
-export const sanitizedInput = (numberString: string) =>
-  (numberString.match(ACCEPT_INPUT) || []).join("");
+export const isValidNumber = (num: string | number) => {
+  if (typeof num === "number") {
+    return !Number.isNaN(num);
+  }
 
-export const isAtMax = (value: number | string | undefined, max: number) => {
-  if (value === undefined) return true;
-  return toFloat(value) >= max;
+  // Empty
+  if (!num) {
+    return false;
+  }
+
+  return (
+    // Normal type: 11.28
+    /^\s*-?\d+(\.\d+)?\s*$/.test(num) ||
+    // Pre-number: 1.
+    /^\s*-?\d+\.\s*$/.test(num) ||
+    // Post-number: .1
+    /^\s*-?\.\d+\s*$/.test(num)
+  );
 };
 
-export const isAtMin = (value: number | string | undefined, min: number) => {
-  if (value === undefined) return true;
-  return toFloat(value) <= min;
+export const sanitizeInput = (value: string | number) => {
+  if (typeof value === "number") return value;
+  let sanitizedInput = value.replace(/[^0-9.+-]/g, "");
+  sanitizedInput = sanitizedInput.replace(
+    /^([+-]?)(.*)$/,
+    (match, sign, rest) => {
+      return sign + rest.replace(/[+-]/g, "");
+    },
+  );
+  const parts = sanitizedInput.split(".");
+  if (parts.length > 2) {
+    sanitizedInput = `${parts[0]}.${parts.slice(1).join("")}`;
+  }
+
+  return sanitizedInput;
 };
 
 export const isOutOfRange = (
@@ -41,4 +58,38 @@ export const isOutOfRange = (
   if (value === undefined) return true;
   const floatValue = toFloat(value);
   return floatValue > max || floatValue < min;
+};
+
+export const clampToRange = (min: number, max: number, value: number) => {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+};
+
+const isExponential = (number: string | number) => {
+  const str = String(number);
+
+  return !Number.isNaN(Number(str)) && str.includes("e");
+};
+
+export const getNumberPrecision = (number: string | number) => {
+  const numStr: string = String(sanitizeInput(number));
+
+  if (isExponential(number)) {
+    let precision = Number(numStr.slice(numStr.indexOf("e-") + 2));
+
+    const decimalMatch = numStr.match(/\.(\d+)/);
+    if (decimalMatch?.[1]) {
+      precision += decimalMatch[1].length;
+    }
+    return precision;
+  }
+
+  return numStr.includes(".") && isValidNumber(numStr)
+    ? numStr.length - numStr.indexOf(".") - 1
+    : 0;
+};
+
+export const isEmpty = (value: number | string) => {
+  return value === "";
 };

@@ -1,19 +1,17 @@
-import { Link, Text, type TooltipProps, makePrefixer } from "@salt-ds/core";
+import { Link, makePrefixer, Text, type TooltipProps } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
   type ComponentType,
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
 } from "react";
-import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import breadcrumbCss from "./Breadcrumb.css";
+import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 
 const withBaseName = makePrefixer("saltBreadcrumb");
 

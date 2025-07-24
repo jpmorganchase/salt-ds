@@ -1,8 +1,6 @@
 import { StackLayout, Step, Stepper, Text, Tooltip } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
-import "./stepper.stories.css";
-
 export default {
   title: "Core/Stepper",
   component: Stepper,

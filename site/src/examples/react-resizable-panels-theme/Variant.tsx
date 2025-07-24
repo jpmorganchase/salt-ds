@@ -1,5 +1,5 @@
 import { FlexLayout, Text } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 import styles from "./splitter.module.css";

@@ -1,5 +1,5 @@
 import { FlexItem, SplitLayout, StackLayout } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import flexItemSizeStyles from "./FlexItemSize.module.css";
 import styles from "./index.module.css";

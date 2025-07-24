@@ -1,0 +1,41 @@
+.saltCarouselCard {
+  display: flex;
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--carousel-slide-size);
+  min-width: 0;
+  padding-left: var(--carousel-slide-spacing);
+  box-sizing: border-box;
+}
+
+.saltCarouselCard-content {
+  display: flex;
+  user-select: none;
+  overflow: hidden;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+  flex-grow: 1;
+}
+
+.saltCarouselCard-body {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+  flex-grow: 1;
+  padding: 0 var(--salt-spacing-200) var(--salt-spacing-200) var(--salt-spacing-200);
+}
+
+.saltCarouselCard-content h2,
+.saltCarouselCard-content h3 {
+  margin: 0;
+}
+
+.saltCarouselCard[data-visibility="off-screen"] a {
+  visibility: hidden;
+}
+
+.saltCarouselCard-bordered {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+}

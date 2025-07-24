@@ -1,13 +1,12 @@
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useEffect } from "react";
-import { useAriaAnnouncer } from "../aria-announcer";
-import { makePrefixer, useId } from "../utils";
-import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes, useEffect } from "react";
+import { useAriaAnnouncer } from "../aria-announcer";
 import { useDensity } from "../salt-provider";
+import { makePrefixer, useId } from "../utils";
 import spinnerCss from "./Spinner.css";
+import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 
 /**
  * Spinner component, provides an indeterminate loading indicator

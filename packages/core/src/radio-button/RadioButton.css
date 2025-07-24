@@ -2,7 +2,7 @@
 .saltRadioButton {
   display: inline-flex;
   gap: var(--salt-spacing-100);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   position: relative;
 
   font-size: var(--salt-text-fontSize);
@@ -16,13 +16,13 @@
 /* Styles applied when RadioButton is disabled */
 .saltRadioButton-disabled {
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 /* Styles applied to root component if `readOnly={true}` */
 .saltRadioButton-readOnly {
   color: var(--salt-content-primary-foreground);
-  cursor: var(--salt-selectable-cursor-readonly);
+  cursor: var(--salt-cursor-readonly);
 }
 
 /* Styles applied to input component */

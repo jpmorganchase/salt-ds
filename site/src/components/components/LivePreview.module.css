@@ -1,5 +1,5 @@
 .container {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
   margin-top: var(--salt-spacing-200);
   border-radius: var(--salt-palette-corner);
   overflow: hidden;
@@ -17,7 +17,7 @@
 }
 
 .codePreview {
-  border-top: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
 }
 
 .codePreview.codePreview {
@@ -50,12 +50,15 @@
   display: flex;
   justify-content: flex-end;
   padding: var(--salt-spacing-200);
-  border-top: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }
 
 .codePanel {
   display: grid;
-  transition: grid-template-rows var(--salt-duration-perceptible) ease-in-out, opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
+  transition:
+    grid-template-rows var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out,
+    visibility var(--salt-duration-perceptible) ease-in-out;
   grid-template-rows: 1fr;
   opacity: 1;
   visibility: visible;

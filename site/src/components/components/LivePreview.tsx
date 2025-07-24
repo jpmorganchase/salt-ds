@@ -1,5 +1,7 @@
-import { SaltProviderNext, Switch, useId } from "@salt-ds/core";
-import { SaltProvider } from "@salt-ds/core";
+import { useColorMode } from "@jpmorganchase/mosaic-store";
+import { SaltProvider, SaltProviderNext, Switch, useId } from "@salt-ds/core";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { LocalizationProvider } from "@salt-ds/lab";
 import {
   type ChangeEvent,
   type ElementType,
@@ -8,12 +10,8 @@ import {
   useState,
 } from "react";
 import { Pre } from "../mdx/pre";
-import { useLivePreviewControls } from "./LivePreviewProvider";
-
-import { useColorMode } from "@jpmorganchase/mosaic-store";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
-import { LocalizationProvider } from "@salt-ds/lab";
 import styles from "./LivePreview.module.css";
+import { useLivePreviewControls } from "./LivePreviewProvider";
 
 type LivePreviewProps = {
   componentName: string;

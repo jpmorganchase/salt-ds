@@ -12,10 +12,10 @@ import {
 } from "react";
 import {
   type CollectionItem,
+  itemToString as defaultItemToString,
   type SelectionChangeHandler,
   type SelectionStrategy,
   type SingleSelectionStrategy,
-  itemToString as defaultItemToString,
 } from "../common-hooks";
 import type { DropdownHookProps, DropdownHookResult } from "../dropdown";
 import type { InputLegacyProps as InputProps } from "../input-legacy";

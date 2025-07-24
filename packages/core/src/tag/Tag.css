@@ -18,15 +18,15 @@
 .saltTag-primary {
   background: var(--tag-primary-background, var(--salt-category-1-subtle-background));
   color: var(--tag-primary-foreground, var(--salt-category-1-subtle-foreground));
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) transparent;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
 }
 .saltTag-bordered {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--tag-primary-borderColor, var(--salt-category-1-subtle-borderColor));
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--tag-primary-borderColor, var(--salt-category-1-subtle-borderColor));
 }
 .saltTag-secondary {
   background: var(--tag-secondary-background, var(--salt-category-1-bold-background));
   color: var(--tag-secondary-foreground, var(--salt-category-1-bold-foreground));
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) transparent;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
 }
 
 .saltTag-category-1 {

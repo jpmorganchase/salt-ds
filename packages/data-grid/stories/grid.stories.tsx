@@ -8,8 +8,8 @@ import {
 } from "@salt-ds/icons";
 import type { StoryFn } from "@storybook/react-vite";
 import {
-  type CSSProperties,
   type ChangeEvent,
+  type CSSProperties,
   createContext,
   useCallback,
   useContext,
@@ -31,9 +31,9 @@ import {
   RowSelectionRadioColumn,
 } from "../src";
 import {
-  type Investor,
   allLocations,
   createDummyInvestors,
+  type Investor,
   investorKeyGetter,
 } from "./dummyData";
 import { randomString, randomText } from "./utils";

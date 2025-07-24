@@ -3,7 +3,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-container-primary-background);
   --ag-border-color: var(--salt-separable-secondary-borderColor);
-  --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-separable-borderStyle);
+  --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-borderStyle-solid);
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
   --ag-checkbox-border-radius: 0;
@@ -25,7 +25,6 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   --ag-header-column-separator-width: var(--salt-size-fixed-100);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
-  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   /* Replicating min size 12px from Icon.css */
   --ag-icon-size: max(var(--salt-size-icon), 12px);
   --ag-input-border-color: var(--salt-editable-borderColor);
@@ -44,7 +43,7 @@ div[class*="ag-theme-salt"] {
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
   --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
   --ag-selected-row-background-color: var(--salt-selectable-background-selected);
-  --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
+  --ag-selected-tab-underline-color: var(--salt-navigable-accent-indicator-active);
   --ag-selected-tab-underline-width: var(--salt-size-indicator);
   --ag-subheader-background-color: var(--salt-container-primary-background);
   --ag-control-panel-background-color: var(--salt-container-primary-background);
@@ -55,8 +54,8 @@ div[class*="ag-theme-salt"] {
   --ag-toggle-button-switch-border-color: var(--salt-container-primary-background); /* Fake a border with bg color */
   --ag-toggle-button-switch-background-color: var(--salt-selectable-foreground);
   --ag-tooltip-background-color: var(--salt-container-primary-background);
-  --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
-  --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
+  --ag-value-change-delta-down-color: var(--salt-sentiment-negative-foreground-decorative);
+  --ag-value-change-delta-up-color: var(--salt-sentiment-positive-foreground-decorative);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
   /*
       Use categorical color for below tokens when available

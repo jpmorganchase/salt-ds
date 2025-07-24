@@ -79,7 +79,7 @@
   flex-direction: row;
   align-items: center;
   border-bottom: solid 1px var(--salt-separable-secondary-borderColor);
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltQueryInputValueList-back .saltIcon {

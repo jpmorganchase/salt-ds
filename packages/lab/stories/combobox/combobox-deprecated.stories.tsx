@@ -1,4 +1,17 @@
 import { Button } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
+import {
+  ComboBoxDeprecated,
+  escapeRegExp,
+  FormField,
+  type GetFilterRegex,
+  type ListChangeHandlerDeprecated,
+  ListItemBaseDeprecated,
+  type ListItemProps,
+  type ListSelectHandlerDeprecated,
+  useListItemDeprecated,
+} from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
   type ComponentProps,
@@ -6,20 +19,6 @@ import {
   useRef,
   useState,
 } from "react";
-
-import { CloseIcon } from "@salt-ds/icons";
-import {
-  ComboBoxDeprecated,
-  FormField,
-  type GetFilterRegex,
-  type ListChangeHandlerDeprecated,
-  ListItemBaseDeprecated,
-  type ListItemProps,
-  type ListSelectHandlerDeprecated,
-  escapeRegExp,
-  useListItemDeprecated,
-} from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react-vite";
 import type { IndexedListItemProps } from "../../src/list-deprecated";
 import { Highlighter } from "../../src/list-deprecated/internal/Highlighter";
 

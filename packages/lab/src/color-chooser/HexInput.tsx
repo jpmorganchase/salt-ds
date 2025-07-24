@@ -1,12 +1,11 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
 import { useEffect, useState } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 import { isValidHex } from "./ColorHelpers";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
 import hexInputCss from "./HexInput.css";
 

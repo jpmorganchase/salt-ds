@@ -4,7 +4,7 @@ import {
   FloatingComponentProvider,
   SaltProvider,
 } from "@salt-ds/core";
-import { type CSSProperties, type ReactNode, forwardRef } from "react";
+import { type CSSProperties, forwardRef, type ReactNode } from "react";
 
 export const FLOATING_TEST_ID = "FLOATING_TEST_ID";
 

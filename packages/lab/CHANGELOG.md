@@ -1,5 +1,159 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.72
+
+### Patch Changes
+
+- a8ee89c: Upgrade peer dependencies for Luxon and its type definitions to the latest versions.
+
+  - Updated peer dependency `luxon` from `^3.5.0` to `^3.6.1`.
+  - Updated peer dependency `@types/luxon` from `^3.4.2` to `^3.6.2`.
+
+  This upgrade includes improvements and bug fixes provided in the newer versions of Luxon and its type definitions. Ensure compatibility with your codebase by reviewing any changes in the Luxon API or type definitions. As these are peer dependencies, make sure that the consuming projects are also updated to these versions to avoid potential conflicts.
+
+- ab80f5f: Updated the `Calendar` API to use a `multiselect` prop instead of `selectionVariant="multiselect"`
+
+  Previously, the `Calendar` component used `selectionVariant="multiselect"` to enable the selection and de-selection of multiple single dates, with the de-selection logic embedded within the component.
+
+  To extend multiple selection capabilities to all selection variants, we have revised the API to include a `multiselect` boolean prop. This change removes the need for `selectionVariant="multiselect"`.
+
+  Now, you can apply the multiselect property in `Calendar` alongside `selectionVariant="single`", `selectionVariant="range"`, or `selectionVariant="offset"`.
+
+  This update allows us to offer a consistent multiple selection API across all date selection variants.
+
+  ```diff
+  <Calendar
+  -  selectionVariant="multiselect"
+  +  selectionVariant="single"
+  +  multiselect
+  >
+    <CalendarNavigation />
+    <CalendarGrid />
+  </Calendar>
+  ```
+
+  To de-select a previous selection, control is provided through a new `select` prop that enables control over the current selection based on the day that has been selected by the user.
+
+  ```diff
+  function selectMultiselectSingle<TDate extends DateFrameworkType>(
+    dateAdapter: SaltDateAdapter<TDate>,
+    previousSelectedDate: SingleDateSelection<TDate>[],
+    newDate: TDate,
+  ) {
+    const newSelection = previousSelectedDate.filter(
+      (previousSingleDate) =>
+        !dateAdapter.isSame(previousSingleDate, newDate, "day"),
+    );
+    if (previousSelectedDate.length !== newSelection.length) {
+      return newSelection;
+    }
+    return [...previousSelectedDate, newDate];
+  }
+
+  <Calendar
+  -  selectionVariant="multiselect"
+  +  selectionVariant="single"
+  +  multiselect
+  +   select={(
+  +     previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
+  +     newDate: SingleDateSelection<DateFrameworkType>,
+  +   ) => selectMultiselectSingle(dateAdapter, previousSelectedDate, newDate)}
+     >
+     <StackLayout gap={0}>
+        <CalendarNavigation />
+        <CalendarGrid />
+     </StackLayout>
+  </Calendar>
+  ```
+
+  A few additional type changes have occurred:
+
+  `CalendarMultiSelectProps` has been replaced by `CalendarMultiselectSingleProps`, and `UseCalendarMultiSelectProps` has been replaced by `UseCalendarMultiselectSingleProps`.
+
+  ```diff
+  - import { type CalendarMultiSelectProps } from "@salt-ds/lab";
+  + import { type CalendarMultiselectSingleProps } from "@salt-ds/lab";
+
+  - import { type UseCalendarMultiSelectProps } from "@salt-ds/lab";
+  + import { type UseCalendarMultiselectSingleProps } from "@salt-ds/lab";
+  ```
+
+  The associated selected date type for multiselect single dates, has also been updated:
+
+  ```diff
+  import type { DateFrameworkType } from "@salt-ds/date-adapters"; // This type can be any supported date framework object type, such as Date, Dayjs, Luxon, or Moment
+  - import type { MultipleDateSelection } from "@salt-ds/lab";
+  + import type { SingleDateSelection } from "@salt-ds/lab";
+  - type selectedDate = MultipleDateSelection<DateFrameworkType>;
+  + type selectedDate = Array<SingleDateSelection<DateFrameworkType>>;
+  ```
+
+  Our goal for the `DatePicker` is to support multiple selection across all date types: `single`, `range`, and `offset`, similar to the functionality in Calendar.
+  However, this will require a design iteration around the input component before it can be added.
+
+- c86ee15: Fixed CascadingMenu and refactored the styles to not use any deprecated tokens.
+- Updated dependencies [a8ee89c]
+- Updated dependencies [09cac7d]
+- Updated dependencies [cdce628]
+- Updated dependencies [454686b]
+- Updated dependencies [f25a82b]
+- Updated dependencies [6bc8e53]
+  - @salt-ds/date-adapters@0.1.0-alpha.5
+  - @salt-ds/core@1.47.2
+
+## 1.0.0-alpha.71
+
+### Minor Changes
+
+- 9c4575b: ### Summary
+
+  The `Carousel` component has been moved from the Lab package to its own package, `@salt-ds/embla-carousel`.
+
+  `Carousel` remains in a pre-release state and subject to feedback will be promoted to stable in a forthcoming release.
+
+  Refer to the `@salt-ds/embla-carousel` changelog for the migration guide.
+
+- 7db876d: Updated the `NumberInput`:
+
+  1. Added support for `format` and `parse` callbacks for formatting capabilities.
+  2. Added `clamp` prop to restrict entry within the min and max range.
+  3. Refactored `stepBlock` prop to be `stepMultiplier` to be consistent with `Slider` and `RangeSlider` components and to ensure that valid values remain reachable.
+  4. Refactored `decimalPlaces` to be `decimalScale`.
+  5. Added caret handling to preserve the caret position, during change.
+
+  Example:
+
+  ```diff
+  <NumberInput
+  + format={(value) => `${value}%`}
+  + parse={(value) => String(value).replace(/%/g, "")}
+  - decimalPlaces={2}
+  + decimalScale={2}
+  - stepBlock={10}
+  + stepMultiplier={4}
+    min={0}
+    max={100}
+  + clamp
+    defaultValue={20}
+  />
+  ```
+
+### Patch Changes
+
+- d5a52bb: Fixed Calendar's today indicator
+
+  When Next theme with rounded corners is enabled, the today indicator will display rounded corners.
+
+- 621253b: Refactored components and themes to use the new fixed tokens.
+- Updated dependencies [62975de]
+- Updated dependencies [b96166e]
+- Updated dependencies [73ccf6b]
+- Updated dependencies [95dd874]
+- Updated dependencies [c93c943]
+- Updated dependencies [104d776]
+- Updated dependencies [621253b]
+  - @salt-ds/core@1.47.1
+
 ## 1.0.0-alpha.70
 
 ### Patch Changes

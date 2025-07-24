@@ -56,6 +56,11 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         <Input defaultValue="Value" />
       </FormField>
     </GridLayout>
+    <GridLayout columns={1}>
+      <FormField {...props}>
+        <Input defaultValue="Value" />
+      </FormField>
+    </GridLayout>
   </QAContainer>
 );
 
@@ -103,6 +108,11 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       </FormField>
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+    </GridLayout>
+    <GridLayout columns={1}>
+      <FormField {...props}>
         <Input defaultValue="Value" />
       </FormField>
     </GridLayout>

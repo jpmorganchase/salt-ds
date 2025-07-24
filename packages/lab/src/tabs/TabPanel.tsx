@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ForwardedRef, type HTMLAttributes, forwardRef } from "react";
+import { type ForwardedRef, forwardRef, type HTMLAttributes } from "react";
 
 import tabPanelCss from "./TabPanel.css";
 

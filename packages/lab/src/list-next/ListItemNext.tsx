@@ -1,9 +1,8 @@
 import { makePrefixer, useIdMemo } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, type MouseEvent, forwardRef } from "react";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes, type MouseEvent } from "react";
 import listItemNextCss from "./ListItemNext.css";
 import { useListItem } from "./ListNextContext";
 

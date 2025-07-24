@@ -1,4 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ForwardedRef,
@@ -7,14 +9,10 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
+import tabsCss from "./Tabs.css";
 import type { FocusAPI, TabstripProps } from "./TabsTypes";
 import { Tabstrip } from "./Tabstrip";
 import { useTabs } from "./useTabs";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import tabsCss from "./Tabs.css";
 
 const withBaseName = makePrefixer("saltTabs");
 

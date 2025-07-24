@@ -1,4 +1,3 @@
-export * from "./Content";
 export * from "./Default";
 export * from "./DelayBeforeShown";
 export * from "./HideArrow";

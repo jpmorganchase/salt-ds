@@ -43,9 +43,9 @@ import {
   type DatePickerSingleProps,
   DatePickerTrigger,
   type DateRangeSelection,
+  type renderCalendarDayProps,
   type SingleDatePickerState,
   type SingleDateSelection,
-  type renderCalendarDayProps,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
@@ -57,9 +57,11 @@ import {
   type ChangeEvent,
   type ReactElement,
   type SyntheticEvent,
+  useCallback,
   useEffect,
+  useRef,
+  useState,
 } from "react";
-import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
@@ -67,8 +69,7 @@ import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 import "dayjs/locale/zh-cn";
-import { es as dateFnsEs } from "date-fns/locale";
-import { zhCN as dateFnsZhCn } from "date-fns/locale";
+import { es as dateFnsEs, zhCN as dateFnsZhCn } from "date-fns/locale";
 import type { DateTime } from "luxon";
 import "./date-picker.stories.css";
 import { withDateMock } from ".storybook/decorators/withDateMock";
@@ -3532,6 +3533,33 @@ export const WithExperimentalTime: StoryFn<
     );
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
+  const addTimeToDate = useCallback(
+    (
+      time: typeof selectedTime,
+      date: DateRangeSelection<DateFrameworkType>,
+    ) => {
+      const { startTime, endTime } = time;
+      if (dateAdapter.isValid(date?.startDate) && startTime) {
+        date.startDate = dateAdapter.set(date.startDate, {
+          hour: startTime.hour,
+          minute: startTime.minute,
+          second: startTime.second,
+          millisecond: startTime.millisecond,
+        });
+      }
+      if (dateAdapter.isValid(date?.endDate) && endTime) {
+        date.endDate = dateAdapter.set(date.endDate, {
+          hour: endTime.hour,
+          minute: endTime.minute,
+          second: endTime.second,
+          millisecond: endTime.millisecond,
+        });
+      }
+      return date;
+    },
+    [selectedTime, dateAdapter],
+  );
+
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
@@ -3586,6 +3614,7 @@ export const WithExperimentalTime: StoryFn<
       selectedTime,
       selectedTime?.startTime,
       selectedTime?.endTime,
+      addTimeToDate,
     ],
   );
 
@@ -3600,32 +3629,8 @@ export const WithExperimentalTime: StoryFn<
         );
       }
     },
-    [dateAdapter, selectedDate],
+    [dateAdapter, selectedDate, addTimeToDate],
   );
-
-  function addTimeToDate(
-    time: typeof selectedTime,
-    date: DateRangeSelection<DateFrameworkType>,
-  ) {
-    const { startTime, endTime } = time;
-    if (dateAdapter.isValid(date?.startDate) && startTime) {
-      date.startDate = dateAdapter.set(date.startDate, {
-        hour: startTime.hour,
-        minute: startTime.minute,
-        second: startTime.second,
-        millisecond: startTime.millisecond,
-      });
-    }
-    if (dateAdapter.isValid(date?.endDate) && endTime) {
-      date.endDate = dateAdapter.set(date.endDate, {
-        hour: endTime.hour,
-        minute: endTime.minute,
-        second: endTime.second,
-        millisecond: endTime.millisecond,
-      });
-    }
-    return date;
-  }
 
   const handleApply = useCallback(
     (

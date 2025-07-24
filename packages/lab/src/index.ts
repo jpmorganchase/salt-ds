@@ -1,28 +1,17 @@
+export * from "./app-header";
+export * from "./breadcrumbs";
+export * from "./button-bar";
+export * from "./calendar";
+export * from "./cascading-menu";
+export * from "./color-chooser";
+export * from "./combo-box";
+export * from "./combo-box-deprecated";
 export type {
   SelectHandler,
   SelectionChangeHandler,
   SelectionStrategy,
   useCollectionItems,
 } from "./common-hooks";
-
-export {
-  ListItemBase as ListItemBaseDeprecated,
-  useListItem as useListItemDeprecated,
-} from "./list-deprecated";
-export type {
-  ListChangeHandler as ListChangeHandlerDeprecated,
-  ListSelectHandler as ListSelectHandlerDeprecated,
-} from "./list-deprecated";
-
-export * from "./app-header";
-export * from "./breadcrumbs";
-export * from "./button-bar";
-export * from "./calendar";
-export * from "./carousel";
-export * from "./cascading-menu";
-export * from "./color-chooser";
-export * from "./combo-box";
-export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
 export * from "./date-input";
@@ -34,18 +23,26 @@ export * from "./editable-label";
 export * from "./form-field-context-legacy";
 export {
   FormFieldLegacy as FormField,
-  FormLabel,
   type FormFieldLegacyProps as FormFieldProps,
+  FormLabel,
 } from "./form-field-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
 export {
   InputLegacy as Input,
-  StaticInputAdornment,
   type InputLegacyProps as InputProps,
+  StaticInputAdornment,
 } from "./input-legacy";
 export * from "./layer-layout";
 export * from "./list";
+export type {
+  ListChangeHandler as ListChangeHandlerDeprecated,
+  ListSelectHandler as ListSelectHandlerDeprecated,
+} from "./list-deprecated";
+export {
+  ListItemBase as ListItemBaseDeprecated,
+  useListItem as useListItemDeprecated,
+} from "./list-deprecated";
 export * from "./list-next";
 export * from "./localization-provider";
 export * from "./logo";

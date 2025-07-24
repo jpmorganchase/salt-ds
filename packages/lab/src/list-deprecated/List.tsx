@@ -2,23 +2,21 @@ import { useForkRef } from "@salt-ds/core";
 
 import {
   type ForwardedRef,
+  forwardRef,
   type KeyboardEvent,
   type ReactElement,
-  forwardRef,
   useContext,
   useRef,
 } from "react";
-
+import {
+  DescendantContext,
+  DescendantProvider,
+} from "./internal/DescendantContext";
 import { ListBase, type ListScrollHandles } from "./ListBase";
 import type { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
 import { useList } from "./useList";
 import { useTypeSelect } from "./useTypeSelect";
-
-import {
-  DescendantContext,
-  DescendantProvider,
-} from "./internal/DescendantContext";
 
 const ListWithDescendants = forwardRef(function ListWithDescendants<
   Item,
@@ -30,7 +28,7 @@ const ListWithDescendants = forwardRef(function ListWithDescendants<
   const { items } = useContext(DescendantContext);
 
   const { focusedRef, state, helpers, listProps } = useList({
-    source: items.current.length ? items.current : [],
+    source: (items?.current.length ? items.current : []) as Item[],
     ...props,
   });
 

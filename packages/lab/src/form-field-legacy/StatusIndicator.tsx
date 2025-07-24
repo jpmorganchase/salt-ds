@@ -1,8 +1,8 @@
 import {
   StatusIndicator as BaseStatusIndicator,
+  makePrefixer,
   Tooltip,
   type TooltipProps,
-  makePrefixer,
 } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";

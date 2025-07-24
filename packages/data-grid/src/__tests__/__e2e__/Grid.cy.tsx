@@ -1,3 +1,4 @@
+import * as gridStories from "@stories/grid.stories";
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as cellValidationStories from "@stories/grid-cellValidation.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
@@ -7,7 +8,6 @@ import * as rowSelectionControlledStories from "@stories/grid-rowSelectionContro
 import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stories";
 import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
 import * as variantsStories from "@stories/grid-variants.stories";
-import * as gridStories from "@stories/grid.stories";
 import { composeStories } from "@storybook/react-vite";
 
 const { GridVariants } = composeStories(variantsStories);

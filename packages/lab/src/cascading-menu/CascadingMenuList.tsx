@@ -4,13 +4,15 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { List, type ListProps } from "../list-deprecated";
 import { Portal } from "../portal";
-
 import { useWindow as usePortalWindow } from "../window";
 import { DefaultMenuItem, type MenuItemProps } from "./CascadingMenuItem";
+import cascadingMenuListCss from "./CascadingMenuList.css";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
 import { getKeyDownHandlers } from "./internal/keydownHandlers";
 import {
@@ -22,11 +24,6 @@ import { hasIcon, hasSubMenu, type menuState } from "./internal/stateUtils";
 import { useMouseHandlers } from "./internal/useMouseHandlers";
 import type { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import cascadingMenuListCss from "./CascadingMenuList.css";
 
 export interface CascadingMenuListProps {
   className?: string;

@@ -7,8 +7,8 @@ import {
 import { ArrowDownIcon, ArrowUpIcon, MenuIcon } from "@salt-ds/icons";
 import { MenuButton } from "@salt-ds/lab";
 import {
-  type SyntheticEvent,
   createContext,
+  type SyntheticEvent,
   useCallback,
   useContext,
   useMemo,

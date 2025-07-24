@@ -1,30 +1,27 @@
 import { useForkRef, useIdMemo } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  type ReactElement,
   cloneElement,
   forwardRef,
+  type ReactElement,
   useRef,
 } from "react";
-
-import { OverflowPanel } from "./overflow-panel/OverflowPanel";
-import { OverflowSeparator } from "./overflow-panel/OverflowSeparator";
 
 import {
   isOverflowed,
   useOverflowCollectionItems,
   useOverflowLayout,
 } from "../responsive";
+import { renderToolbarItems } from "./internal/renderToolbarItems";
+import { OverflowPanel } from "./overflow-panel/OverflowPanel";
+import { OverflowSeparator } from "./overflow-panel/OverflowSeparator";
+import toolbarCss from "./Toolbar.css";
 import type { ToolbarProps } from "./ToolbarProps";
 import { Tooltray } from "./Tooltray";
 import type { TooltrayProps } from "./TooltrayProps";
-import { renderToolbarItems } from "./internal/renderToolbarItems";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import toolbarCss from "./Toolbar.css";
 
 const classBase = "saltToolbar";
 

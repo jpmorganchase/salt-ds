@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useContext } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 
 import type { StepDepth } from "../Step";
 import type { StepperOrientation } from "../Stepper";

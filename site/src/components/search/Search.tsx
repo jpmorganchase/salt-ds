@@ -3,10 +3,10 @@ import {
   Button,
   ComboBox,
   type ComboBoxProps,
+  capitalize,
   Option,
   OptionGroup,
   Text,
-  capitalize,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useRouter } from "next/router";

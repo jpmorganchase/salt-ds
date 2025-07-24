@@ -6,9 +6,9 @@ import {
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type MouseEventHandler,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useEffect,
   useRef,

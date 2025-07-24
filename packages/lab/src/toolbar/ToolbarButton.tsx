@@ -1,8 +1,7 @@
 import { Button, type ButtonProps } from "@salt-ds/core";
-import { forwardRef } from "react";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { forwardRef } from "react";
 
 import toolbarButtonCss from "./ToolbarButton.css";
 
