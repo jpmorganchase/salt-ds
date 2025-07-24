@@ -1,5 +1,5 @@
 ---
-"@salt-ds/highcharts-theme": patch
+"@salt-ds/highcharts-theme": minor
 ---
 
 ### Summary
