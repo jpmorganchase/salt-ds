@@ -7,10 +7,11 @@
   margin: 0;
 }
 
-.saltVerticalNavigation .saltCollapsiblePanel-inner {
+.saltVerticalNavigation[data-has-direct-icons="false"] .saltCollapsiblePanel-inner {
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }
 
-.saltCollapsiblePanel-inner .saltCollapsiblePanel-inner {
+/* Only show border at the top-level */
+.saltVerticalNavigation .saltVerticalNavigationSubMenu .saltCollapsiblePanel-inner {
   border-bottom: none;
 }
