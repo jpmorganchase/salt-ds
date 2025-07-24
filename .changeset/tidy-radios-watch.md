@@ -36,7 +36,7 @@ The Salt Highcharts theme replaces previous approaches that bundled a chart wrap
 
    ```bash
    # npm
-   npm install @salt-ds/highcharts-theme@0.1.0-snapshot
+   npm install @salt-ds/highcharts-theme
 
    # yarn
    yarn add @salt-ds/highcharts-theme@0.1.0-snapshot
