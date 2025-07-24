@@ -13,6 +13,7 @@ import {
 } from "@salt-ds/lab";
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router";
+import { MockHistory } from "./MockHistory";
 
 type NavItem = {
   title: string;
@@ -110,17 +111,21 @@ function ExpandButtonItem(props: { item: NavItem }) {
 
 export const MultiActionItem = () => {
   return (
-    <StackLayout direction="row">
-      <VerticalNavigation appearance="indicator">
-        {multiLevel.map((item) => (
-          <ExpandButtonItem key={item.title} item={item} />
-        ))}
-      </VerticalNavigation>
-      <VerticalNavigation appearance="bordered">
-        {multiLevel.map((item) => (
-          <ExpandButtonItem key={item.title} item={item} />
-        ))}
-      </VerticalNavigation>
+    <StackLayout direction="row" gap={6}>
+      <MockHistory>
+        <VerticalNavigation appearance="indicator">
+          {multiLevel.map((item) => (
+            <ExpandButtonItem key={item.title} item={item} />
+          ))}
+        </VerticalNavigation>
+      </MockHistory>
+      <MockHistory>
+        <VerticalNavigation appearance="bordered">
+          {multiLevel.map((item) => (
+            <ExpandButtonItem key={item.title} item={item} />
+          ))}
+        </VerticalNavigation>
+      </MockHistory>
     </StackLayout>
   );
 };

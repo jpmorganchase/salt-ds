@@ -1,27 +1,24 @@
-import { StackLayout } from "@salt-ds/core";
+import { Divider, StackLayout } from "@salt-ds/core";
 import {
-  Collapsible,
-  CollapsiblePanel,
-  CollapsibleTrigger,
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
-  VerticalNavigationItemExpansionIcon,
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
-import { useState } from "react";
+import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router";
 import { MockHistory } from "./MockHistory";
 
 type NavItem = {
   title: string;
   href: string;
+  icon?: ReactNode;
   children?: NavItem[];
 };
 
-const nested: NavItem[] = [
+const submenu: NavItem[] = [
   {
     title: "Home",
     href: "/",
@@ -54,37 +51,8 @@ const nested: NavItem[] = [
   },
 ];
 
-function NestedItem(props: { item: NavItem; icon?: boolean }) {
-  const { item, icon } = props;
-
+function NavItem({ item }: { item: NavItem }) {
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
-
-  if (Array.isArray(item.children) && item.children.length > 0) {
-    return (
-      <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
-        <VerticalNavigationItem
-          active={location.pathname.startsWith(item.href) && collapsed}
-        >
-          <VerticalNavigationItemContent>
-            <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              <VerticalNavigationItemLabel>
-                {item.title}
-              </VerticalNavigationItemLabel>
-              <VerticalNavigationItemExpansionIcon />
-            </CollapsibleTrigger>
-          </VerticalNavigationItemContent>
-          <CollapsiblePanel>
-            <VerticalNavigationSubMenu>
-              {item.children.map((child) => (
-                <NestedItem key={child.title} item={child} icon={icon} />
-              ))}
-            </VerticalNavigationSubMenu>
-          </CollapsiblePanel>
-        </VerticalNavigationItem>
-      </Collapsible>
-    );
-  }
 
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
@@ -95,24 +63,45 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
           </VerticalNavigationItemLabel>
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
+      {item.children && (
+        <VerticalNavigationSubMenu>
+          {item.children.map((child) => (
+            <VerticalNavigationItem
+              key={child.title}
+              active={location.pathname === child.href}
+            >
+              <VerticalNavigationItemContent>
+                <VerticalNavigationItemTrigger
+                  render={<Link to={child.href} />}
+                >
+                  <VerticalNavigationItemLabel>
+                    {child.title}
+                  </VerticalNavigationItemLabel>
+                </VerticalNavigationItemTrigger>
+              </VerticalNavigationItemContent>
+            </VerticalNavigationItem>
+          ))}
+          <Divider variant="tertiary" />
+        </VerticalNavigationSubMenu>
+      )}
     </VerticalNavigationItem>
   );
 }
 
-export const CollapsibleSubmenu = () => {
+export const Submenu = () => {
   return (
     <StackLayout direction="row" gap={6}>
       <MockHistory>
         <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
-          {nested.map((item) => (
-            <NestedItem key={item.title} item={item} />
+          {submenu.map((item) => (
+            <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
         <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
-          {nested.map((item) => (
-            <NestedItem key={item.title} item={item} />
+          {submenu.map((item) => (
+            <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>

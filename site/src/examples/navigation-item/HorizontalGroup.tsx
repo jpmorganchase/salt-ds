@@ -1,33 +1,69 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import type { ReactElement } from "react";
+import { Link, useLocation } from "react-router";
+import { MockHistory } from "./MockHistory";
 
-const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
+type NavItem = {
+  title: string;
+  href: string;
+  children?: NavItem[];
+};
 
-export const HorizontalGroup = (): ReactElement => {
-  const [active, setActive] = useState(items[0]);
+const items: NavItem[] = [
+  {
+    title: "Home",
+    href: "/",
+  },
+  {
+    title: "Products",
+    href: "/products",
+  },
+  {
+    title: "About Us",
+    href: "/about",
+  },
+  {
+    title: "Support",
+    href: "/support",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+  },
+];
+
+function NavItem({ item }: { item: NavItem }) {
+  const location = useLocation();
 
   return (
-    <nav>
-      <StackLayout
-        as="ul"
-        direction="row"
-        gap={1}
-        style={{ listStyle: "none" }}
+    <li key={item.href}>
+      <NavigationItem
+        href={item.href}
+        orientation="horizontal"
+        render={<Link to={item.href} />}
+        active={location.pathname === item.href}
       >
-        {items.map((item) => (
-          <li key={item}>
-            <NavigationItem
-              active={active === item}
-              href="#"
-              onClick={() => {
-                setActive(item);
-              }}
-            >
-              {item}
-            </NavigationItem>
-          </li>
-        ))}
-      </StackLayout>
-    </nav>
+        {item.title}
+      </NavigationItem>
+    </li>
+  );
+}
+
+export const HorizontalGroup = (): ReactElement => {
+  return (
+    <MockHistory>
+      <nav>
+        <StackLayout
+          as="ul"
+          direction="row"
+          gap={1}
+          style={{ listStyle: "none" }}
+        >
+          {items.map((item) => (
+            <NavItem key={item.href} item={item} />
+          ))}
+        </StackLayout>
+      </nav>
+    </MockHistory>
   );
 };

@@ -1,11 +1,4 @@
-import { StackLayout } from "@salt-ds/core";
-import {
-  HelpIcon,
-  HomeIcon,
-  MessageIcon,
-  StorageIcon,
-  UserGroupIcon,
-} from "@salt-ds/icons";
+import { Badge, StackLayout } from "@salt-ds/core";
 import {
   Collapsible,
   CollapsiblePanel,
@@ -18,14 +11,14 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { MockHistory } from "./MockHistory";
 
 type NavItem = {
   title: string;
   href: string;
-  icon?: ReactNode;
+  status?: string;
   children?: NavItem[];
 };
 
@@ -33,12 +26,11 @@ const nested: NavItem[] = [
   {
     title: "Home",
     href: "/",
-    icon: <HomeIcon aria-hidden="true" />,
+    status: "New",
   },
   {
     title: "Products",
     href: "/products",
-    icon: <StorageIcon aria-hidden />,
     children: [
       {
         title: "Widgets",
@@ -56,7 +48,6 @@ const nested: NavItem[] = [
   {
     title: "About Us",
     href: "/about",
-    icon: <UserGroupIcon aria-hidden />,
     children: [
       { title: "Our Story", href: "/about/story" },
       { title: "Our Team", href: "/about/team" },
@@ -66,12 +57,10 @@ const nested: NavItem[] = [
   {
     title: "Support",
     href: "/support",
-    icon: <HelpIcon aria-hidden />,
   },
   {
     title: "Contact",
     href: "/contact",
-    icon: <MessageIcon aria-hidden />,
   },
 ];
 
@@ -89,7 +78,6 @@ function NestedItem(props: { item: NavItem }) {
         >
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              {item.icon ? item.icon : undefined}
               <VerticalNavigationItemLabel>
                 {item.title}
               </VerticalNavigationItemLabel>
@@ -112,17 +100,17 @@ function NestedItem(props: { item: NavItem }) {
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
-          {item.icon ? item.icon : undefined}
           <VerticalNavigationItemLabel>
             {item.title}
           </VerticalNavigationItemLabel>
+          {item.status && <Badge value={item.status} />}
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
 }
 
-export const WithIcons = () => {
+export const WithBadges = () => {
   return (
     <StackLayout direction="row" gap={6}>
       <MockHistory>
