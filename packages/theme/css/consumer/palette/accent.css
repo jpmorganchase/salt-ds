@@ -7,13 +7,14 @@
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
   --salt-palette-accent-action-hover: var(--salt-color-blue-700);
 
+  --salt-palette-accent-weaker: var(--salt-color-blue-200);
+
   /*
   --salt-palette-accent-foreground: ;
   --salt-palette-accent-foreground-informative: ;
   --salt-palette-accent-stronger: ;
   --salt-palette-accent-strongest: ;
   --salt-palette-accent-weak: ;
-  --salt-palette-accent-weaker: ;
   --salt-palette-accent-weakest: ;
 
   --salt-palette-accent-disabled: ;
@@ -33,13 +34,14 @@
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
   --salt-palette-accent-action-hover: var(--salt-color-blue-700);
 
+  --salt-palette-accent-weaker: var(--salt-color-blue-800);
+
   /*
   --salt-palette-accent-foreground: ;
   --salt-palette-accent-foreground-informative: ;
   --salt-palette-accent-stronger: ;
   --salt-palette-accent-strongest: ;
   --salt-palette-accent-weak: ;
-  --salt-palette-accent-weaker: ;
   --salt-palette-accent-weakest: ;
 
   --salt-palette-accent-disabled: ;

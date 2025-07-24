@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-selectable-borderColor: var(--salt-palette-neutral);
   --salt-selectable-borderColor-hover: var(--salt-palette-accent-weak);
   --salt-selectable-borderColor-selected: var(--salt-palette-accent);

@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   /* accented solid */
   --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-action-active);
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-accent-disabled);

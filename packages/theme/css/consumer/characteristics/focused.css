@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
   --salt-focused-outlineStyle: dotted;
   --salt-focused-outlineWidth: var(--salt-size-fixed-200);

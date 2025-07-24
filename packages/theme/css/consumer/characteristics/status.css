@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-status-error-foreground-decorative: var(--salt-palette-negative);
   --salt-status-error-foreground-informative: var(--salt-palette-negative-strong);
   --salt-status-error-background: var(--salt-palette-negative-weak);

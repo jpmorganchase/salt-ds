@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-editable-borderColor: var(--salt-palette-neutral);
   --salt-editable-borderColor-active: var(--salt-palette-accent-stronger);
   --salt-editable-borderColor-disabled: var(--salt-palette-neutral-disabled);

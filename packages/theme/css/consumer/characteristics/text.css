@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   /* Misc */
   --salt-text-letterSpacing: 0;
   --salt-text-textAlign: left;
@@ -81,7 +81,7 @@
 }
 
 /* Sizes by density */
-.salt-density-touch[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-density-touch[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-text-h1-fontSize: 42px;
   --salt-text-h1-lineHeight: 54px;
 
@@ -117,7 +117,7 @@
   --salt-text-notation-lineHeight: 18px;
 }
 
-.salt-density-low[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-density-low[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-text-h1-fontSize: 32px;
   --salt-text-h1-lineHeight: 42px;
 
@@ -153,7 +153,7 @@
   --salt-text-notation-lineHeight: 16px;
 }
 
-.salt-density-medium[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-density-medium[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-text-h1-fontSize: 24px;
   --salt-text-h1-lineHeight: 32px;
 
@@ -189,7 +189,7 @@
   --salt-text-notation-lineHeight: 13px;
 }
 
-.salt-density-high[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-density-high[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-text-h1-fontSize: 18px;
   --salt-text-h1-lineHeight: 24px;
 

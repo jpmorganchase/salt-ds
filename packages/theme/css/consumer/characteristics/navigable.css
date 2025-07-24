@@ -1,4 +1,4 @@
-.salt-theme[data-brand="consumer"] /* WARNING: Copied from salt theme, needs checking */ {
+.salt-theme[data-brand="consumer"] /* WARNING: Copied from commercial theme, needs checking */ {
   --salt-navigable-indicator-hover: var(--salt-palette-neutral);
   --salt-navigable-accent-indicator-active: var(--salt-palette-accent-inverse); /* differs from commercial theme */
 
