@@ -1,0 +1,17 @@
+.salt-theme[data-brand="legacy"] {
+  /* Colors */
+  --salt-content-primary-foreground: var(--salt-palette-neutral-primary-foreground);
+  --salt-content-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
+  --salt-content-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
+  --salt-content-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-content-accent-foreground: var(--salt-palette-accent-foreground-informative);
+  --salt-content-attention-foreground: var(--salt-palette-negative-foreground);
+
+  --salt-content-bold-foreground: var(--salt-palette-interact-cta-foreground);
+  --salt-content-bold-foreground-disabled: var(--salt-palette-interact-cta-foreground-disabled);
+
+  --salt-content-foreground-hover: var(--salt-palette-accent-foreground-informative);
+  --salt-content-foreground-active: var(--salt-palette-accent-foreground-informative);
+  --salt-content-foreground-visited: var(--salt-palette-navigate-foreground-visited);
+  --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
+}

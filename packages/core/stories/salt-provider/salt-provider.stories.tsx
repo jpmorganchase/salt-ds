@@ -1,10 +1,14 @@
 import {
+  type BrandName,
   Button,
   Card,
   Checkbox,
   type Density,
+  FlexLayout,
+  H1,
   type Mode,
   SaltProvider,
+  SaltProviderNext,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
@@ -19,7 +23,7 @@ export default {
 
 export const Default = () => {
   return (
-    <SaltProvider density="high" mode="light">
+    <SaltProvider brand="legacy" density="high" mode="light">
       <Card>
         <div>
           <h1>This is Card</h1>
@@ -30,7 +34,212 @@ export const Default = () => {
   );
 };
 
-export const ToggleTheme = () => {
+export const ToggleBrandAndMode = () => {
+  const [brand, setBrand] = useState<BrandName>("legacy");
+  const [mode, setMode] = useState<Mode>("light");
+
+  const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBrand(event.currentTarget.value as BrandName);
+  };
+
+  const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
+  };
+
+  return (
+    <SaltProvider brand={brand} mode={mode}>
+      <Card>
+        <div>
+          <H1>This Card is wrapped with a SaltProvider</H1>
+          <FlexLayout>
+            <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+              <ToggleButton aria-label="legacy brand" value="legacy">
+                legacy
+              </ToggleButton>
+              <ToggleButton aria-label="jpm brand" value="commercial">
+                jpm
+              </ToggleButton>
+              <ToggleButton aria-label="consumer brand" value="consumer">
+                consumer
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
+              <ToggleButton aria-label="light theme" value="light">
+                Light
+              </ToggleButton>
+              <ToggleButton aria-label="dark theme" value="dark">
+                Dark
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </FlexLayout>
+          <p>{`This Card is wrapped with a SaltProvider, brand is ${brand}, mode is ${mode}`}</p>
+
+          <Checkbox label="Example Choice 1" />
+          <Checkbox defaultChecked label="Example Choice 2" />
+          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          <br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              gridTemplateRows: "auto",
+              gridGap: 10,
+            }}
+          >
+            <Button sentiment="accented">Continue</Button>
+            <Button>Previous</Button>
+            <Button appearance="transparent">Upload File</Button>
+          </div>
+        </div>
+        <br />
+      </Card>
+    </SaltProvider>
+  );
+};
+
+export const NestedBrands = () => {
+  const [brand, setBrand] = useState<BrandName>("legacy");
+  const [nestedBrand, setNestedBrand] = useState<BrandName | "unset">(
+    "commercial",
+  );
+  const [mode, setMode] = useState<Mode>("light");
+  const [nestedMode, setNestedMode] = useState<Mode | "unset">("light");
+
+  const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBrand(event.currentTarget.value as BrandName);
+  };
+
+  const handleChangeNestedBrand = (
+    event: SyntheticEvent<HTMLButtonElement>,
+  ) => {
+    setNestedBrand(event.currentTarget.value as BrandName);
+  };
+
+  const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
+  };
+
+  const handleChangeNestedTheme = (
+    event: SyntheticEvent<HTMLButtonElement>,
+  ) => {
+    setNestedMode(event.currentTarget.value as Mode);
+  };
+
+  return (
+    <SaltProvider brand={brand} mode={mode}>
+      <Card>
+        <div>
+          <H1>This Card is wrapped with a SaltProvider</H1>
+          <FlexLayout>
+            <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+              <ToggleButton aria-label="legacy brand" value="legacy">
+                legacy
+              </ToggleButton>
+              <ToggleButton aria-label="jpm brand" value="commercial">
+                jpm
+              </ToggleButton>
+              <ToggleButton aria-label="consumer brand" value="consumer">
+                consumer
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
+              <ToggleButton aria-label="light theme" value="light">
+                Light
+              </ToggleButton>
+              <ToggleButton aria-label="dark theme" value="dark">
+                Dark
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </FlexLayout>
+          <p>{`This Card is wrapped with a SaltProvider, brand is ${brand}, mode is ${mode}`}</p>
+          <Checkbox label="Example Choice 1" />
+          <Checkbox defaultChecked label="Example Choice 2" />
+          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          <br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              gridTemplateRows: "auto",
+              gridGap: 10,
+            }}
+          >
+            <Button sentiment="accented">Continue</Button>
+            <Button>Previous</Button>
+            <Button appearance="transparent">Upload File</Button>
+          </div>
+        </div>
+        <br />
+        <SaltProvider
+          brand={nestedBrand === "unset" ? undefined : nestedBrand}
+          mode={nestedMode === "unset" ? undefined : nestedMode}
+        >
+          <Card>
+            <div>
+              <H1>Nested Card wrapped with a SaltProvider</H1>
+              <FlexLayout>
+                <ToggleButtonGroup
+                  onChange={handleChangeNestedBrand}
+                  value={nestedBrand}
+                >
+                  <ToggleButton aria-label="legacy brand" value="legacy">
+                    legacy
+                  </ToggleButton>
+                  <ToggleButton aria-label="jpm brand" value="commercial">
+                    jpm
+                  </ToggleButton>
+                  <ToggleButton
+                    aria-label="unset brand (inherited)"
+                    value="unset"
+                  >
+                    unset
+                  </ToggleButton>
+                </ToggleButtonGroup>
+                <ToggleButtonGroup
+                  onChange={handleChangeNestedTheme}
+                  value={nestedMode}
+                >
+                  <ToggleButton aria-label="light theme" value="light">
+                    Light
+                  </ToggleButton>
+                  <ToggleButton aria-label="dark theme" value="dark">
+                    Dark
+                  </ToggleButton>
+                  <ToggleButton
+                    aria-label="unset theme (inherited)"
+                    value="unset"
+                  >
+                    Unset
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </FlexLayout>
+              <p>{`This Card is wrapped with a SaltProvider, brand is ${brand}, mode is ${mode}`}</p>
+              <Checkbox label="Example Choice 1" />
+              <Checkbox defaultChecked label="Example Choice 2" />
+              <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+              <br />
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto auto auto",
+                  gridTemplateRows: "auto",
+                  gridGap: 10,
+                }}
+              >
+                <Button sentiment="accented">Continue</Button>
+                <Button>Previous</Button>
+                <Button appearance="transparent">Upload File</Button>
+              </div>
+            </div>
+            <br />
+          </Card>
+        </SaltProvider>
+      </Card>
+    </SaltProvider>
+  );
+};
+
+export const ToggleMode = () => {
   const [mode, setMode] = useState<Mode>("light");
 
   const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -38,7 +247,7 @@ export const ToggleTheme = () => {
   };
 
   return (
-    <SaltProvider mode={mode}>
+    <SaltProvider brand={"legacy"} mode={mode}>
       <Card>
         <div>
           <h1>This Card is wrapped with a SaltProvider</h1>
@@ -102,6 +311,7 @@ export const NestedProviders = () => {
 
   return (
     <SaltProvider
+      brand="legacy"
       density={outerDensity === "unset" ? undefined : outerDensity}
       mode={outerMode === "unset" ? undefined : outerMode}
     >
@@ -173,5 +383,48 @@ export const NestedProviders = () => {
         </SaltProvider>
       </Card>
     </SaltProvider>
+  );
+};
+
+export const NextWithNoBrandGiven = () => {
+  return (
+    <SaltProviderNext density="high" mode="light">
+      <Card accent="left">
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+        </div>
+      </Card>
+    </SaltProviderNext>
+  );
+};
+
+export const NextWithBrandGiven = () => {
+  const [brand, setBrand] = useState<BrandName>("legacy");
+
+  const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBrand(event.currentTarget.value as BrandName);
+  };
+
+  return (
+    <SaltProviderNext brand={brand} density="high" mode="light">
+      <Card accent="left">
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+          <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+            <ToggleButton aria-label="legacy brand" value="legacy">
+              legacy
+            </ToggleButton>
+            <ToggleButton aria-label="commercial brand" value="commercial">
+              commercial
+            </ToggleButton>
+            <ToggleButton aria-label="consumer brand" value="consumer">
+              consumer
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+      </Card>
+    </SaltProviderNext>
   );
 };

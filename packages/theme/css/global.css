@@ -1,5 +1,5 @@
 /**
- * Have some global styles to simulate more realistic app. Currently only for Storybook.
+ * Have some global styles to simulate more realistic app.
  */
 
 .salt-theme {
@@ -32,4 +32,16 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+.saltFocusVisible:after,
+.focused:focus:after,
+.focused:focus-visible:after {
+  content: "";
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  position: absolute;
 }
