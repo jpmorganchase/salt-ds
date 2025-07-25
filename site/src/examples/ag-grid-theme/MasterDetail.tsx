@@ -21,7 +21,7 @@ export const MasterDetail = (props: AgGridReactProps) => {
   const detailCellRenderer = () => (
     <div
       className={containerProps.className}
-      style={{ height: "100%", padding: 20 }}
+      style={{ height: "100%", padding: "var(--salt-spacing-300)" }}
     >
       <AgGridReact
         columnDefs={masterDetailColumns}
