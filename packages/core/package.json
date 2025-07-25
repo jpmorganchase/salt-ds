@@ -13,7 +13,7 @@
     "*.css"
   ],
   "dependencies": {
-    "@floating-ui/react": "^0.26.28",
+    "@floating-ui/react": "0.27.0",
     "@salt-ds/icons": "workspace:^",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
