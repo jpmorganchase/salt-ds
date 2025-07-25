@@ -154,7 +154,7 @@ export const CalendarDay = forwardRef<
       leaveDelay={0} // --salt-duration-instant
       {...TooltipProps}
     >
-      {buttonElement}
+        {buttonElement}
     </Tooltip>
   );
 });

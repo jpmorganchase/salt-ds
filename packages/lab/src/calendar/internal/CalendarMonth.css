@@ -1,6 +1,6 @@
 .saltCalendarMonth-grid {
   display: grid;
-  gap: var(--salt-spacing-fixed-100);
+  /*gap: var(--salt-spacing-fixed-100);*/
   grid-template-columns: repeat(7, var(--salt-size-base));
   grid-template-rows: repeat(6, var(--salt-size-base));
   text-align: center;

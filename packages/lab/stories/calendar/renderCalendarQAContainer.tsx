@@ -1,46 +1,17 @@
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   useLocalization,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react-vite";
-import { enUS as dateFnsEnUs } from "date-fns/locale";
-import { QAContainer, type QAContainerProps } from "docs/components";
+import { QAContainer } from "docs/components";
 
-export default {
-  title: "Lab/Calendar/QA",
-  component: Calendar,
-  decorators: [withDateMock],
-  globals: {
-    a11y: {
-      manual: true,
-    },
-  },
-};
-
-const QAContainerParameters = {
-  chromatic: { disableSnapshot: false },
-  modes: {
-    theme: {
-      themeNext: "disable",
-    },
-    themeNext: {
-      themeNext: "enable",
-      corner: "rounded",
-      accent: "teal",
-    },
-  },
-};
-
-const renderQAContainer = () => {
+export const renderCalendarQAContainer = () => {
   const { dateAdapter } = useLocalization();
   return (
     <QAContainer
       cols={4}
       itemPadding={1}
-      height={3410}
       width={1050}
       itemWidthAuto
       transposeDensity
@@ -143,35 +114,4 @@ const renderQAContainer = () => {
       </Calendar>
     </QAContainer>
   );
-};
-
-export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithMoment.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "moment",
-};
-
-export const AllExamplesWithDateFns: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithDateFns.parameters = {
-  ...QAContainerParameters,
-  dateLocale: dateFnsEnUs,
-  dateAdapter: "date-fns",
-};
-
-export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithDayjs.parameters = {
-  dateLocale: "en",
-  dateAdapter: "dayjs",
-};
-
-export const AllExamplesWithLuxon: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithLuxon.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "luxon",
 };
