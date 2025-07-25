@@ -5,10 +5,9 @@ import {
   Spinner,
   Text,
 } from "@salt-ds/core";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
-import { Table } from "../mdx/table";
-import styles from "./FoundationColorView.module.css";
 import { ColorBlock } from "./style-blocks/ColorBlock";
 
 type CssVariableData = Record<string, string>;
@@ -59,34 +58,36 @@ const ColorTable = ({
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
-    <Table className={styles.table}>
-      <thead>
-        <tr>
-          <th className={styles.viewColumn}>Preview</th>
-          <th>Name</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Object.entries(data).map(([name, value]) => (
-          <tr key={name}>
-            <td className={styles.viewColumn}>
-              <ChosenSaltProvider theme="">
-                <ColorBlock hideToken colorVar={name} />
-              </ChosenSaltProvider>
-            </td>
-            <td>
-              <FlowLayout gap={1} align="center">
-                <CopyToClipboard value={name} />
-              </FlowLayout>
-            </td>
-            <td>
-              <Text styleAs="code">{value}</Text>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <div style={{ maxWidth: "100vw", overflowX: "auto" }}>
+      <Table>
+        <THead>
+          <TR>
+            <TH>Preview</TH>
+            <TH>Name</TH>
+            <TH>Value</TH>
+          </TR>
+        </THead>
+        <TBody>
+          {Object.entries(data).map(([name, value]) => (
+            <TR key={name}>
+              <TD>
+                <ChosenSaltProvider theme="">
+                  <ColorBlock hideToken colorVar={name} />
+                </ChosenSaltProvider>
+              </TD>
+              <TD>
+                <FlowLayout gap={1} align="center">
+                  <CopyToClipboard value={name} />
+                </FlowLayout>
+              </TD>
+              <TD>
+                <Text styleAs="code">{value}</Text>
+              </TD>
+            </TR>
+          ))}
+        </TBody>
+      </Table>
+    </div>
   );
 };
 
