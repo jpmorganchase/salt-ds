@@ -82,7 +82,7 @@ const DefaultFloatingComponent = forwardRef<
     return (
       <FloatingPortal>
         <ChosenSaltProvider applyClassesTo="scope">
-          <FloatingFocusManager {...focusManagerProps}>
+          <FloatingFocusManager outsideElementsInert {...focusManagerProps}>
             <div style={style} {...rest} ref={ref} />
           </FloatingFocusManager>
         </ChosenSaltProvider>
