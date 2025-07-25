@@ -7,38 +7,10 @@ import {
   VerticalNavigationItemTrigger,
 } from "@salt-ds/lab";
 import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";
 
-type NavItem = {
-  title: string;
-  href: string;
-  children?: NavItem[];
-};
-
-const items: NavItem[] = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Products",
-    href: "/products",
-  },
-  {
-    title: "About Us",
-    href: "/about",
-  },
-  {
-    title: "Support",
-    href: "/support",
-  },
-  {
-    title: "Contact",
-    href: "/contact",
-  },
-];
-
-function NavItem({ item }: { item: NavItem }) {
+function NavItem({ item }: { item: Item }) {
   const location = useLocation();
 
   return (
@@ -59,14 +31,14 @@ export const Basic = () => {
     <StackLayout direction="row" gap={6}>
       <MockHistory>
         <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
-          {items.map((item) => (
+          {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
         <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
-          {items.map((item) => (
+          {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>

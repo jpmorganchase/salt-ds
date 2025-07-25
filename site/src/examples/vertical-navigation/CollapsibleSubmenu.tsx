@@ -13,49 +13,11 @@ import {
 } from "@salt-ds/lab";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";
 
-type NavItem = {
-  title: string;
-  href: string;
-  children?: NavItem[];
-};
-
-const nested: NavItem[] = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Products",
-    href: "/products",
-    children: [
-      { title: "Widgets", href: "/products/widgets" },
-      { title: "Gadgets", href: "/products/gadgets" },
-      { title: "Doodads", href: "/products/doodads" },
-    ],
-  },
-  {
-    title: "About Us",
-    href: "/about",
-    children: [
-      { title: "Our Story", href: "/about/story" },
-      { title: "Our Team", href: "/about/team" },
-      { title: "Press", href: "/about/press" },
-    ],
-  },
-  {
-    title: "Support",
-    href: "/support",
-  },
-  {
-    title: "Contact",
-    href: "/contact",
-  },
-];
-
-function NestedItem(props: { item: NavItem; icon?: boolean }) {
-  const { item, icon } = props;
+function NestedItem(props: { item: Item }) {
+  const { item } = props;
 
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
@@ -79,7 +41,7 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
           <CollapsiblePanel>
             <VerticalNavigationSubMenu>
               {item.children.map((child) => (
-                <NestedItem key={child.title} item={child} icon={icon} />
+                <NestedItem key={child.title} item={child} />
               ))}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
@@ -106,14 +68,14 @@ export const CollapsibleSubmenu = () => {
     <StackLayout direction="row" gap={6}>
       <MockHistory>
         <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
-          {nested.map((item) => (
+          {navData.map((item) => (
             <NestedItem key={item.title} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
         <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
-          {nested.map((item) => (
+          {navData.map((item) => (
             <NestedItem key={item.title} item={item} />
           ))}
         </VerticalNavigation>

@@ -1,38 +1,10 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";
 
-type NavItem = {
-  title: string;
-  href: string;
-  children?: NavItem[];
-};
-
-const items: NavItem[] = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Products",
-    href: "/products",
-  },
-  {
-    title: "About Us",
-    href: "/about",
-  },
-  {
-    title: "Support",
-    href: "/support",
-  },
-  {
-    title: "Contact",
-    href: "/contact",
-  },
-];
-
-function NavItem({ item }: { item: NavItem }) {
+function NavItem({ item }: { item: Item }) {
   const location = useLocation();
 
   return (
@@ -59,7 +31,7 @@ export const HorizontalGroup = (): ReactElement => {
           gap={1}
           style={{ listStyle: "none" }}
         >
-          {items.map((item) => (
+          {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </StackLayout>

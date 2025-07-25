@@ -7,51 +7,11 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
-import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";
 
-type NavItem = {
-  title: string;
-  href: string;
-  icon?: ReactNode;
-  children?: NavItem[];
-};
-
-const submenu: NavItem[] = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Products",
-    href: "/products",
-    children: [
-      { title: "Widgets", href: "/products/widgets" },
-      { title: "Gadgets", href: "/products/gadgets" },
-      { title: "Doodads", href: "/products/doodads" },
-    ],
-  },
-  {
-    title: "About Us",
-    href: "/about",
-    children: [
-      { title: "Our Story", href: "/about/story" },
-      { title: "Our Team", href: "/about/team" },
-      { title: "Press", href: "/about/press" },
-    ],
-  },
-  {
-    title: "Support",
-    href: "/support",
-  },
-  {
-    title: "Contact",
-    href: "/contact",
-  },
-];
-
-function NavItem({ item }: { item: NavItem }) {
+function NavItem({ item }: { item: Item }) {
   const location = useLocation();
 
   return (
@@ -93,14 +53,14 @@ export const Submenu = () => {
     <StackLayout direction="row" gap={6}>
       <MockHistory>
         <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
-          {submenu.map((item) => (
+          {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
         <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
-          {submenu.map((item) => (
+          {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
