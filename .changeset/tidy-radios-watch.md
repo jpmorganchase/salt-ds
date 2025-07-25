@@ -65,7 +65,7 @@ The Salt Highcharts theme replaces previous approaches that bundled a chart wrap
 
 4. **Merge additional options as required.** Highcharts deep-merges subsequent calls to `Highcharts.setOptions`; you can also combine objects per-chart with `Highcharts.merge()`.
 
-**Things to watch for**
+**Things to watch for:**
 
 - This snapshot styles **LineChart** only; other chart types will fall back to default Highcharts styles until future releases.
 - Ensure the Salt CSS is loaded **after** the default Highcharts CSS to guarantee correct specificity.
