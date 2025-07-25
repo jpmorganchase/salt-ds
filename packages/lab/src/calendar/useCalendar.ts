@@ -324,6 +324,14 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isSelected: (date: TDate) => boolean;
 
     /**
+     * Determines if a date is hovered.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is hovered, otherwise `false`.
+     */
+    isHovered: (date: TDate) => boolean;
+
+    /**
      * Sets the hovered date in the calendar.
      *
      * @param event - The event triggering the change.
@@ -343,14 +351,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isSelectedSpan: (date: TDate) => boolean;
 
     /**
-     * Determines if a date is part of a hovered span.
-     *
-     * @param date - The date to check.
-     * @returns `true` if the date is part of a hovered span, otherwise `false`.
-     */
-    isHoveredSpan: (date: TDate) => boolean;
-
-    /**
      * Determines if a date is the start of a selected range.
      *
      * @param date - The date to check.
@@ -367,20 +367,28 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isSelectedEnd: (date: TDate) => boolean;
 
     /**
-     * Determines if a date is hovered.
+     * Determines if the hovered and a new date range would be created, if selected.
      *
      * @param date - The date to check.
-     * @returns `true` if the date is hovered, otherwise `false`.
+     * @returns `true` if the date is the start of a hovered offset, otherwise `false`.
      */
-    isHovered: (date: TDate) => boolean;
+    isHoveredStart: (date: TDate) => boolean;
 
     /**
-     * Determines if a date is part of a hovered offset.
+     * Determines if a date is part of a hovered range.
      *
      * @param date - The date to check.
      * @returns `true` if the date is part of a hovered offset, otherwise `false`.
      */
-    isHoveredOffset: (date: TDate) => boolean;
+    isHoveredSpan: (date: TDate) => boolean;
+
+    /**
+     * Determines if the hovered and a date range would be completed, if selected.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is the end of a hovered offset, otherwise `false`.
+     */
+    isHoveredEnd: (date: TDate) => boolean;
 
     /**
      * Determines if a day is selectable.
