@@ -1,0 +1,29 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is above the collapsible trigger, Tab moves focus to the trigger.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is below the collapsible trigger, this action moves focus to the trigger.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- Collapsible panels are in the collapsed state by default. This action expands, or collapses, panels.
+
+</KeyboardControl>
+</KeyboardControls>

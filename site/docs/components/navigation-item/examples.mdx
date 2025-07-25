@@ -8,21 +8,44 @@ data:
   $ref: ./#/data
 ---
 
-## Default (Horizontal)
+## Horizontal group
 
-By default the navigation item is oriented horizontally.
+Use horizontal navigation items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. This will allow users to easily scan and identify navigation options in a seamless user experience.
 
 ### Best practices
 
-A navigation item hugs its content by default, but you can customize it and adjust its container to fit any preferred width.
+Use a horizontal group of navigation items when you have fewer than eight items, otherwise consider a vertical group of items.
 
-<LivePreview componentName="navigation-item" exampleName="Default" />
+<LivePreview componentName="navigation-item" exampleName="HorizontalGroup" />
 
-## Vertical
+<Callout variant="secondary" status="warning">
 
-To change the orientation of the navigation item, you can use the vertical orientation prop.
+A new component ([VerticalNavigation](/salt/components/vertical-navigation)) has been introduced to replace the existing NavigationItem component for vertical navigation. The new component provides a more structured and flexible way to create vertical navigation. For now you can continue to use the NavigationItem component, but we recommend migrating to the new [VerticalNavigation](/salt/components/vertical-navigation) component as the NavigationItem component will be deprecated in a future release and removed in the future major release.
 
-<LivePreview componentName="navigation-item" exampleName="Vertical" />
+</Callout>
+
+## Vertical group
+
+A vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
+
+<LivePreview componentName="navigation-item" exampleName="VerticalGroup" />
+
+## Vertical group nested
+
+Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, making it easy to explore the content hierarchy.
+
+When the user collapses a vertical nested group, and there is an active nested item within it, the parent item should be configured with `blurActive={true}`. The indicator will stay on the parent item in the blur-active state. This tells the user that the active item is within this nested structure.
+
+You can use a navigation item as a parent which nests other navigation items inside it. Parent navigation items are displayed with a chevron on the right-hand side. To set a navigation item as a parent, use the `parent` prop.
+
+### Best practices
+
+If a navigation item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
+
+<LivePreview
+  componentName="navigation-item"
+  exampleName="VerticalNestedGroup"
+/>
 
 ## With icon
 
@@ -43,83 +66,3 @@ You can add a [badge](../badge) to a navigation item to serve as a visual cue. A
 Only place a badge in a navigation item that does not include nested items, i.e., it will not have a chevron.
 
 <LivePreview componentName="navigation-item" exampleName="WithBadge" />
-
-## With nested items
-
-You can use a navigation item as a parent which nests other navigation items inside it. Parent navigation items are displayed with a chevron on the right-hand side. To set a navigation item as a parent, use the `parent` prop.
-
-<LivePreview componentName="navigation-item" exampleName="WithNestedItems" />
-
-## Horizontal group
-
-Use horizontal navigation items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. This will allow users to easily scan and identify navigation options in a seamless user experience.
-
-### Best practices
-
-Use a horizontal group of navigation items when you have fewer than eight items, otherwise consider a vertical group of items.
-
-<LivePreview componentName="navigation-item" exampleName="HorizontalGroup" />
-
-## Vertical group
-
-A vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
-
-<LivePreview componentName="navigation-item" exampleName="VerticalGroup" />
-
-## Vertical group nested
-
-Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, making it easy to explore the content hierarchy.
-
-### Best practices
-
-If a navigation item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
-
-<LivePreview
-  componentName="navigation-item"
-  exampleName="VerticalNestedGroup"
-/>
-
-## Blur-active
-
-When the user collapses a vertical nested group, and there is an active nested item within it, the parent item should be configured with `blurActive={true}`. The indicator will stay on the parent item in the blur-active state. This tells the user that the active item is within this nested structure.
-
-<LivePreview componentName="navigation-item" exampleName="BlurActive" />
-
-## Render prop - element
-
-Using the `render` prop, you can customize the element rendered by the `NavigationItem`.
-Props defined on the JSX element will be merged with props from the `NavigationItem`.
-
-A `NavigationItem` will either act as a link, or an expandable group for other `NavigationItem` elements.
-When a parent group is clicked, the group will expand or collapse.
-When a link is clicked, navigates the user to the specified `href`.
-
-The default element for parent groups is `<button>`, whilst a link will use `<a>`.
-
-### Prop merging
-
-```tsx
-<NavigationItem href="/your-page" render={<a target="_blank" />}>
-  ...
-</NavigationItem>
-```
-
-will be created in the DOM as an `<a>` with merged props
-
-```tsx
-<a href="/your-page" target="_blank">
-  ...
-</a>
-```
-
-<LivePreview componentName="navigation-item" exampleName="RenderElement" />
-
-## Render prop - callback
-
-Using the `render` prop, you can customize the element rendered by the `NavigationItem`.
-
-The `render` prop can also accept a function. This approach allows more control over how props are merged, allowing for more precise customization of the component's behavior.
-
-When a function is passed to the `render` prop, it's your responsibility to merge props within the function itself.
-
-<LivePreview componentName="navigation-item" exampleName="RenderProp" />

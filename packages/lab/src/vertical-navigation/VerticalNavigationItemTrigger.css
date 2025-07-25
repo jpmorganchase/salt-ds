@@ -1,0 +1,7 @@
+.saltVerticalNavigationItemTrigger {
+  all: unset;
+  padding: var(--salt-spacing-75) 0;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}

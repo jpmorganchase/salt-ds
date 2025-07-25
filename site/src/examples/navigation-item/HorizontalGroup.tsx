@@ -1,33 +1,41 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import type { ReactElement } from "react";
+import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
+import { MockHistory } from "./MockHistory";
 
-const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
-
-export const HorizontalGroup = (): ReactElement => {
-  const [active, setActive] = useState(items[0]);
+function NavItem({ item }: { item: Item }) {
+  const location = useLocation();
 
   return (
-    <nav>
-      <StackLayout
-        as="ul"
-        direction="row"
-        gap={1}
-        style={{ listStyle: "none" }}
+    <li key={item.href}>
+      <NavigationItem
+        href={item.href}
+        orientation="horizontal"
+        render={<Link to={item.href} />}
+        active={location.pathname === item.href}
       >
-        {items.map((item) => (
-          <li key={item}>
-            <NavigationItem
-              active={active === item}
-              href="#"
-              onClick={() => {
-                setActive(item);
-              }}
-            >
-              {item}
-            </NavigationItem>
-          </li>
-        ))}
-      </StackLayout>
-    </nav>
+        {item.title}
+      </NavigationItem>
+    </li>
+  );
+}
+
+export const HorizontalGroup = (): ReactElement => {
+  return (
+    <MockHistory>
+      <nav>
+        <StackLayout
+          as="ul"
+          direction="row"
+          gap={1}
+          style={{ listStyle: "none" }}
+        >
+          {navData.map((item) => (
+            <NavItem key={item.href} item={item} />
+          ))}
+        </StackLayout>
+      </nav>
+    </MockHistory>
   );
 };

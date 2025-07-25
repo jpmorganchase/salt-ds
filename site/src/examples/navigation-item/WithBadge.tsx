@@ -1,43 +1,82 @@
-import { Badge, FlexLayout, NavigationItem } from "@salt-ds/core";
+import { Badge, NavigationItem, StackLayout } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
+import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
+import { MockHistory } from "./MockHistory";
 
-export const WithBadge = (): ReactElement => {
-  const [horizontalActive, setHorizontalActive] = useState(false);
+function NavItem({ item, level = 0 }: { item: Item; level?: number }) {
+  const location = useLocation();
+  const [expanded, setExpanded] = useState(false);
 
-  const [verticalActive, setVerticalActive] = useState(false);
-
-  const handleHorizontalActiveToggle = () => {
-    setHorizontalActive((current) => !current);
-  };
-
-  const handleVerticalActiveToggle = () => {
-    setVerticalActive((current) => !current);
-  };
+  if (item.children && item.children.length > 0) {
+    return (
+      <li>
+        <NavigationItem
+          blurActive={location.pathname.startsWith(item.href) && !expanded}
+          orientation="vertical"
+          onExpand={() => {
+            setExpanded((old) => !old);
+          }}
+          parent
+          expanded={expanded}
+          level={level}
+        >
+          {item.title}
+        </NavigationItem>
+        {expanded && (
+          <StackLayout
+            as="ul"
+            gap="var(--salt-spacing-fixed-100)"
+            style={{
+              width: 250,
+              listStyle: "none",
+              paddingLeft: 0,
+            }}
+          >
+            {item.children?.map((item) => (
+              <NavItem key={item.href} item={item} level={level + 1} />
+            ))}
+          </StackLayout>
+        )}
+      </li>
+    );
+  }
 
   return (
-    <FlexLayout align="center">
+    <li>
       <NavigationItem
-        active={horizontalActive}
-        onClick={() => {
-          handleHorizontalActiveToggle();
-        }}
-        href="#"
-      >
-        Label
-        <Badge value="New" />
-      </NavigationItem>
-
-      <NavigationItem
-        active={verticalActive}
-        onClick={() => {
-          handleVerticalActiveToggle();
-        }}
-        href="#"
+        active={location.pathname === item.href}
+        href={item.href}
         orientation="vertical"
+        expanded={expanded}
+        render={<Link to={item.href} />}
+        level={level}
       >
-        Label
-        <Badge value="New" />
+        {item.title}
+        {item.status && <Badge value={item.status} />}
       </NavigationItem>
-    </FlexLayout>
+    </li>
+  );
+}
+
+export const WithBadge = (): ReactElement => {
+  return (
+    <MockHistory>
+      <nav>
+        <StackLayout
+          as="ul"
+          gap="var(--salt-spacing-fixed-100)"
+          style={{
+            width: 250,
+            listStyle: "none",
+            paddingLeft: 0,
+          }}
+        >
+          {navData.map((item) => (
+            <NavItem key={item.href} item={item} />
+          ))}
+        </StackLayout>
+      </nav>
+    </MockHistory>
   );
 };
