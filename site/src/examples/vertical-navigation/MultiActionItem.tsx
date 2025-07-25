@@ -11,61 +11,11 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/lab";
-import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router";
+import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";
 
-type NavItem = {
-  title: string;
-  href: string;
-  icon?: ReactNode;
-  children?: NavItem[];
-};
-
-const multiLevel: NavItem[] = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Solutions",
-    href: "/solutions",
-    children: [
-      {
-        title: "By Industry",
-        href: "/solutions/by-industry",
-        children: [
-          { title: "Healthcare", href: "/solutions/by-industry/healthcare" },
-          { title: "Finance", href: "/solutions/by-industry/finance" },
-          { title: "Education", href: "/solutions/by-industry/education" },
-        ],
-      },
-      {
-        title: "By Business Size",
-        href: "/solutions/by-size",
-        children: [
-          { title: "Startups", href: "/solutions/by-size/startups" },
-          {
-            title: "Small & Medium Business",
-            href: "/solutions/by-size/smb",
-          },
-          { title: "Enterprise", href: "/solutions/by-size/enterprise" },
-        ],
-      },
-    ],
-  },
-  {
-    title: "Company",
-    href: "/company",
-    children: [
-      { title: "About Us", href: "/company/about" },
-      { title: "Careers", href: "/company/careers" },
-      { title: "Press Center", href: "/company/press" },
-    ],
-  },
-];
-
-function ExpandButtonItem(props: { item: NavItem }) {
+function ExpandButtonItem(props: { item: Item }) {
   const { item } = props;
 
   const location = useLocation();
@@ -116,14 +66,14 @@ export const MultiActionItem = () => {
     <StackLayout direction="row" gap={6}>
       <MockHistory>
         <VerticalNavigation appearance="indicator">
-          {multiLevel.map((item) => (
+          {navData.map((item) => (
             <ExpandButtonItem key={item.title} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
         <VerticalNavigation appearance="bordered">
-          {multiLevel.map((item) => (
+          {navData.map((item) => (
             <ExpandButtonItem key={item.title} item={item} />
           ))}
         </VerticalNavigation>
