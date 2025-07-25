@@ -1,19 +1,3 @@
-/* Use of CSS Variables is not supported in Highcharts v10.2.0 (available in v11.0.0 onwards - https://code.highcharts.com/11.0.0/css/highcharts.css)*/
-/* .highcharts-theme-salt {
-  --highcharts-background-color: none;
-
-  --highcharts-color-0: var(--salt-palette-categorical-3);
-  --highcharts-color-1: var(--salt-palette-categorical-10);
-  --highcharts-color-2: var(--salt-palette-categorical-12);
-  --highcharts-color-3: var(--salt-palette-categorical-1);
-  --highcharts-color-4: var(--salt-palette-categorical-16);
-  --highcharts-color-5: var(--salt-palette-categorical-7);
-  --highcharts-color-6: var(--salt-palette-categorical-9);
-  --highcharts-color-7: var(--salt-palette-categorical-2);
-  --highcharts-color-8: var(--salt-palette-categorical-20);
-  --highcharts-color-9: var(--salt-palette-categorical-6);
-} */
-
 .highcharts-theme-salt .highcharts-color-0 {
   fill: var(--salt-category-1-bold-background);
   stroke: var(--salt-category-1-subtle-borderColor);
@@ -64,15 +48,6 @@
   stroke: var(--salt-category-10-subtle-borderColor);
 }
 
-.highcharts-theme-salt .highcharts-point-inactive {
-  opacity: 1;
-  stroke: var(--salt-selectable-borderColor-disabled);
-}
-
-.highcharts-theme-salt .highcharts-container {
-  font-family: var(--salt-text-fontFamily);
-}
-
 .highcharts-theme-salt .highcharts-grid-line {
   stroke: var(--salt-separable-tertiary-borderColor);
 }
@@ -82,6 +57,7 @@
   font-size: var(--salt-text-h4-fontSize);
   font-weight: var(--salt-text-h4-fontWeight);
   line-height: var(--salt-text-h4-lineHeight);
+  font-family: var(--salt-text-h4-fontFamily);
 }
 .highcharts-theme-salt .highcharts-subtitle,
 .highcharts-theme-salt .highcharts-axis-title,
@@ -89,6 +65,7 @@
   fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
 }
 
 /* Deselected legend state, requires !important to override default styles, which also use !important */
@@ -104,6 +81,7 @@
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight);
   line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
 }
 .highcharts-theme-salt .highcharts-axis-line {
   stroke: var(--salt-separable-primary-borderColor);
@@ -115,6 +93,7 @@
   font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
 }
 
 .highcharts-theme-salt .highcharts-tooltip-box {
@@ -148,6 +127,7 @@
   font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
 }
 
 .highcharts-theme-salt .highcharts-point {
