@@ -117,11 +117,6 @@
   fill: var(--salt-content-secondary-foreground-disabled);
 }
 
-.highcharts-theme-salt circle.highcharts-legend-nav-active,
-.highcharts-theme-salt circle.highcharts-legend-nav-inactive {
-  fill: transparent;
-}
-
 .highcharts-theme-salt text.highcharts-legend-navigation {
   fill: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-label-fontWeight);
