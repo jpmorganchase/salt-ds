@@ -1,5 +1,15 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.73
+
+### Patch Changes
+
+- 86877dd: Fixed extra margin appearing on StaticList.
+- Updated dependencies [55e7bc5]
+- Updated dependencies [3481308]
+- Updated dependencies [851e4cb]
+  - @salt-ds/core@1.47.3
+
 ## 1.0.0-alpha.72
 
 ### Patch Changes
