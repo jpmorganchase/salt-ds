@@ -1,13 +1,6 @@
-import {
-  FlexLayout,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { H2, StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -17,7 +10,7 @@ import {
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const TabList = (): ReactElement => {
+export const TabListTop = (): ReactElement => {
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
@@ -27,33 +20,35 @@ export const TabList = (): ReactElement => {
     <Carousel
       aria-label="Pagination carousel example"
       className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <StackLayout direction="row" gap={1}>
+        <CarouselPreviousButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        {!isMobile ? <CarouselTabList /> : null}
+        <CarouselNextButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        <CarouselProgressLabel />
+      </StackLayout>
       <CarouselSlides>
         {slides.map((index) => (
           <div
-            role="tabpanel"
-            aria-roledescription="slide"
+            role={!isMobile ? "tabpanel" : "group"}
+            aria-roledescription={!isMobile ? undefined : "slide"}
             aria-label={`Example slide ${index + 1}`}
             className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
+            key={`slide-${slideId}-${index}`}
           >
-            <Text styleAs={"display1"} className={styles.carouselNumber}>
+            <Text styleAs="display1" className={styles.carouselNumber}>
               {index + 1}
             </Text>
           </div>
         ))}
       </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
-          <CarouselProgressLabel />
-        </StackLayout>
-        <CarouselTabList />
-      </FlexLayout>
+      <H2 className={styles.carouselHeading}>Title</H2>
     </Carousel>
   );
 };

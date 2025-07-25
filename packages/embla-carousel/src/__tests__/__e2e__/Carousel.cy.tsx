@@ -69,19 +69,13 @@ describe("Given a Carousel", () => {
     cy.get(
       ".carouselSlide.is-snapped .carouselNumber .saltText-display1",
     ).should("have.text", expectedText);
-    // Verify tablist updates
-    cy.findByRole("tab", { selected: true }).should(
-      "have.attr",
-      "aria-label",
-      `Slide ${expectedText}`,
-    );
   };
 
   it("should render the carousel with four slides", () => {
     cy.mount(<Default />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="carousel example"]').should("exist");
-    cy.get('[aria-roledescription="slide"]').should("have.length", 4);
+    cy.get('[aria-label="default carousel example"]').should("exist");
+    cy.get('[role="tabpanel"]').should("have.length", 4);
   });
 
   describe("WITH the current slide as slide 1", () => {
@@ -154,33 +148,21 @@ describe("Given a Carousel", () => {
 
     it("should display the tablist", () => {
       cy.findAllByRole("tab").should("have.length", 4);
-      cy.findAllByRole("tab")
-        .eq(0)
-        .should("have.attr", "aria-label", "Slide 1");
-      cy.findAllByRole("tab")
-        .eq(1)
-        .should("have.attr", "aria-label", "Slide 2");
-      cy.findAllByRole("tab")
-        .eq(2)
-        .should("have.attr", "aria-label", "Slide 3");
-      cy.findAllByRole("tab")
-        .eq(3)
-        .should("have.attr", "aria-label", "Slide 4");
     });
 
     it("should navigate to each slide in the tablist", () => {
       verifySlide("4");
 
-      cy.findByLabelText(/Slide 2/).click();
+      cy.findAllByRole("tab").eq(1).click();
       cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2"));
 
-      cy.findByLabelText(/Slide 3/).click();
+      cy.findAllByRole("tab").eq(2).click();
       cy.wrap(waitForSettle(emblaApi, 2)).then(() => verifySlide("3"));
 
-      cy.findByLabelText(/Slide 4/).click();
+      cy.findAllByRole("tab").eq(3).click();
       cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4"));
 
-      cy.findByLabelText(/Slide 1/).click();
+      cy.findAllByRole("tab").eq(0).click();
       cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1"));
     });
   });

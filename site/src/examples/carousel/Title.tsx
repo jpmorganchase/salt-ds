@@ -1,7 +1,6 @@
-import { FlexLayout, Text, useId } from "@salt-ds/core";
+import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -17,30 +16,34 @@ export const Title = (): ReactElement => {
     <Carousel
       aria-label="Carousel example with title"
       className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
-      <Text styleAs={"h2"}>Title</Text>
-      <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            role="tabpanel"
-            aria-roledescription="slide"
-            aria-label={`Example slide ${index + 1}`}
-            className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
-          >
-            <Text styleAs={"display1"} className={styles.carouselNumber}>
-              {index + 1}
-            </Text>
-          </div>
-        ))}
-      </CarouselSlides>
-      <FlexLayout justify={"start"} direction={"row"} gap={1}>
-        <CarouselPreviousButton />
-        <CarouselNextButton />
-        <CarouselProgressLabel />
-      </FlexLayout>
+      <H2 className={styles.carouselHeading}>Title</H2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
+      >
+        <FlexLayout justify="start" direction="row" gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </FlexLayout>
+        <CarouselSlides>
+          {slides.map((index) => (
+            <div
+              aria-label={`Example slide ${index + 1}`}
+              className={styles.carouselSlide}
+              key={`slide-${slideId}-${index}`}
+            >
+              <Text styleAs="display1" className={styles.carouselNumber}>
+                {index + 1}
+              </Text>
+            </div>
+          ))}
+        </CarouselSlides>
+      </div>
     </Carousel>
   );
 };
