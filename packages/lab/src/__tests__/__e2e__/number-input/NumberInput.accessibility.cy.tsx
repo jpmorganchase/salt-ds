@@ -18,7 +18,7 @@ describe("Number Input - Accessibility", () => {
       />,
     );
 
-    cy.findByRole("spinbutton").should("have.attr", "aria-valuenow", "-20.1");
+    cy.findByRole("spinbutton").should("have.value", "-20.1");
     cy.findByRole("spinbutton").should("have.attr", "aria-valuemax", "250.23");
     cy.findByRole("spinbutton").should("have.attr", "aria-valuemin", "-500.11");
     cy.findByRole("spinbutton").should("have.attr", "aria-invalid", "false");
