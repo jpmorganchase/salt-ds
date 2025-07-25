@@ -46,7 +46,7 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
-    state: { timezone = "default" },
+    state: { selectionVariant, timezone = "default" },
     helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
   const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
@@ -62,7 +62,7 @@ export const CalendarMonth = forwardRef<
       onMouseLeave={handleMouseLeave}
       {...rest}
     >
-      <div data-testid="CalendarGrid" className={withBaseName("grid")}>
+      <div data-testid="CalendarGrid" className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}>
         {days.map((day) => (
           <CalendarDay
             {...CalendarDayProps}

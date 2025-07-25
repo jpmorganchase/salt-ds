@@ -675,35 +675,15 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (!selectedDate) {
         return false;
       }
-
-      const isSingleDateSelected = (element: SingleDateSelection<TDate>) =>
-        dateAdapter.isSame(element, date, "day");
-
-      const isDateRangeSelected = (range: DateRangeSelection<TDate>) =>
-        range.startDate &&
-        range.endDate &&
-        dateAdapter.compare(date, range.startDate) >= 0 &&
-        dateAdapter.compare(date, range.endDate) <= 0;
-
-      if (Array.isArray(selectedDate)) {
-        return selectedDate.some((element) =>
-          isDateRangeSelection(element)
-            ? isDateRangeSelected(element)
-            : isSingleDateSelected(element as SingleDateSelection<TDate>),
+      if (selectionVariant === "single") {
+        const singleDates = (
+          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
+        ) as TDate[];
+        return singleDates.some((singleDate) =>
+          dateAdapter.isSame(singleDate, date, "day"),
         );
       }
-
-      switch (selectionVariant) {
-        case "single":
-          return isSingleDateSelected(
-            selectedDate as SingleDateSelection<TDate>,
-          );
-        case "range":
-        case "offset":
-          return isDateRangeSelected(selectedDate as DateRangeSelection<TDate>);
-        default:
-          return false;
-      }
+      return false;
     },
     [dateAdapter, selectedDate, selectionVariant],
   );
@@ -885,8 +865,165 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     visibleMonth,
   ]);
 
+  const isHoveredStart = useCallback(
+    (date: TDate) => {
+      if (selectionVariant === "range" && hoveredDate && dateAdapter.isSame(date, hoveredDate, "day")) {
+        const dateRanges = (
+          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
+        ) as DateRangeSelection<TDate>[];
+        const allDatesPopulated = dateRanges.every(
+          (range) => range?.startDate && range?.endDate,
+        );
+        const startDateMatches = dateRanges.some(
+          (range) =>
+            range?.startDate &&
+            dateAdapter.isSame(date, range.startDate, "day"),
+        );
+        const firstIncompleteRange = dateRanges.find(
+          (range) => range?.startDate && !range?.endDate,
+        );
+        const newDateRangeRequired =
+          firstIncompleteRange?.startDate &&
+          dateAdapter.compare(date, firstIncompleteRange.startDate) < 0;
+        return allDatesPopulated || startDateMatches || newDateRangeRequired;
+      }
+      if (selectionVariant === "offset" && hoveredDate) {
+        const startDate = getStartDateOffset(hoveredDate);
+        return (
+          dateAdapter.isSame(date, startDate, "day") &&
+          (!isDaySelectable || isDaySelectable(date))
+        );
+      }
+      return false;
+    },
+    [
+      dateAdapter,
+      getStartDateOffset,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      isDaySelectable,
+    ],
+  );
+
+  const isHoveredSpan = useCallback(
+    (date: TDate) => {
+      if (selectionVariant === "range") {
+        const dateRanges = Array.isArray(selectedDate)
+          ? selectedDate
+          : [selectedDate];
+        return dateRanges.some((range) => {
+          if (
+            isDateRangeSelection(range) &&
+            dateAdapter.isValid(range.startDate) &&
+            !dateAdapter.isValid(range.endDate) &&
+            !isOutsideAllowedDates(range.startDate) &&
+            hoveredDate
+          ) {
+            const isForwardRange =
+              dateAdapter.compare(hoveredDate, range.startDate) > 0 &&
+              dateAdapter.compare(date, range.startDate) > 0 &&
+              dateAdapter.compare(date, hoveredDate) < 0;
+
+            const isValidDayHovered =
+              !isDaySelectable || isDaySelectable(hoveredDate);
+
+            return isForwardRange && isValidDayHovered;
+          }
+          return false;
+        });
+      }
+      if (selectionVariant === "offset" && hoveredDate) {
+        const startDate = getStartDateOffset(hoveredDate);
+        const endDate = getEndDateOffset(hoveredDate);
+        return (
+          dateAdapter.compare(date, startDate) > 0 &&
+          dateAdapter.compare(date, endDate) < 0 &&
+          (!isDaySelectable || isDaySelectable(date))
+        );
+      }
+      return false;
+    },
+    [
+      dateAdapter,
+      isOutsideAllowedDates,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      isDaySelectable,
+    ],
+  );
+
+  const isHoveredEnd = useCallback(
+    (date: TDate) => {
+      if (
+        selectionVariant === "range" &&
+        hoveredDate &&
+        dateAdapter.isSame(date, hoveredDate, "day")
+      ) {
+        const dateRanges = (
+          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
+        ) as DateRangeSelection<TDate>[];
+        const isIncompleteRange = dateRanges.some(
+          (range) =>
+            range?.startDate &&
+            !range?.endDate &&
+            hoveredDate &&
+            dateAdapter.compare(hoveredDate, range.startDate) >= 0,
+        );
+        const endDateMatches = dateRanges.some(
+          (range) =>
+            range?.endDate && dateAdapter.isSame(range.endDate, date, "day"),
+        );
+        return endDateMatches || isIncompleteRange;
+      }
+      if (selectionVariant === "offset" && hoveredDate) {
+        const endDate = getEndDateOffset(hoveredDate);
+        return (
+          dateAdapter.isSame(date, endDate, "day") &&
+          (!isDaySelectable || isDaySelectable(date))
+        );
+      }
+      return false;
+    },
+    [
+      dateAdapter,
+      getEndDateOffset,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      isDaySelectable,
+    ],
+  );
+
+  const isSelectedStart = useCallback(
+    (date: TDate) => {
+      if (selectionVariant === "single") {
+        return false;
+      }
+      const dateRanges = Array.isArray(selectedDate)
+        ? selectedDate
+        : [selectedDate];
+      return dateRanges.some((range) => {
+        if (
+          (selectionVariant === "range" || selectionVariant === "offset") &&
+          isDateRangeSelection(range) &&
+          dateAdapter.isValid(range.startDate) &&
+          !isOutsideAllowedDates(range.startDate)
+        ) {
+          return dateAdapter.isSame(range.startDate, date, "day");
+        }
+        return false;
+      });
+    },
+    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
+  );
+
   const isSelectedSpan = useCallback(
     (date: TDate) => {
+      if (selectionVariant === "single") {
+        return false;
+      }
       const dateRanges = Array.isArray(selectedDate)
         ? selectedDate
         : [selectedDate];
@@ -910,66 +1047,11 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
   );
 
-  const isHoveredSpan = useCallback(
-    (date: TDate) => {
-      const dateRanges = Array.isArray(selectedDate)
-        ? selectedDate
-        : [selectedDate];
-      return dateRanges.some((range) => {
-        if (
-          (selectionVariant === "range" || selectionVariant === "offset") &&
-          isDateRangeSelection(range) &&
-          dateAdapter.isValid(range.startDate) &&
-          !dateAdapter.isValid(range.endDate) &&
-          !isOutsideAllowedDates(range.startDate) &&
-          hoveredDate
-        ) {
-          const isForwardRange =
-            dateAdapter.compare(hoveredDate, range.startDate) >= 0 &&
-            ((dateAdapter.compare(date, range.startDate) >= 0 &&
-              dateAdapter.compare(date, hoveredDate) <= 0) ||
-              dateAdapter.isSame(date, hoveredDate, "day"));
-
-          const isValidDayHovered =
-            !isDaySelectable || isDaySelectable(hoveredDate);
-
-          return isForwardRange && isValidDayHovered;
-        }
-        return false;
-      });
-    },
-    [
-      dateAdapter,
-      isOutsideAllowedDates,
-      selectionVariant,
-      selectedDate,
-      hoveredDate,
-      isDaySelectable,
-    ],
-  );
-
-  const isSelectedStart = useCallback(
-    (date: TDate) => {
-      const dateRanges = Array.isArray(selectedDate)
-        ? selectedDate
-        : [selectedDate];
-      return dateRanges.some((range) => {
-        if (
-          (selectionVariant === "range" || selectionVariant === "offset") &&
-          isDateRangeSelection(range) &&
-          dateAdapter.isValid(range.startDate) &&
-          !isOutsideAllowedDates(range.startDate)
-        ) {
-          return dateAdapter.isSame(range.startDate, date, "day");
-        }
-        return false;
-      });
-    },
-    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
-  );
-
   const isSelectedEnd = useCallback(
     (date: TDate) => {
+      if (selectionVariant === "single") {
+        return false;
+      }
       const dateRanges = Array.isArray(selectedDate)
         ? selectedDate
         : [selectedDate];
@@ -988,31 +1070,6 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
   );
 
-  const isHoveredOffset = useCallback(
-    (date: TDate) => {
-      if (hoveredDate && selectionVariant === "offset") {
-        const startDate = getStartDateOffset(hoveredDate);
-        const endDate = getEndDateOffset(hoveredDate);
-
-        return (
-          dateAdapter.compare(date, startDate) >= 0 &&
-          dateAdapter.compare(date, endDate) <= 0 &&
-          (!isDaySelectable || isDaySelectable(date))
-        );
-      }
-
-      return false;
-    },
-    [
-      dateAdapter,
-      getStartDateOffset,
-      getEndDateOffset,
-      hoveredDate,
-      isDaySelectable,
-      selectionVariant,
-    ],
-  );
-
   return useMemo(
     () => ({
       state: {
@@ -1023,15 +1080,16 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
         focusableDates: getFocusableDates(),
       },
       helpers: {
-        isSelected,
-        setSelectedDate,
         isHovered,
+        isSelected,
         setHoveredDate,
-        isSelectedSpan,
-        isHoveredSpan,
+        setSelectedDate,
         isSelectedStart,
+        isSelectedSpan,
         isSelectedEnd,
-        isHoveredOffset,
+        isHoveredStart,
+        isHoveredSpan,
+        isHoveredEnd,
         isDaySelectable,
         setFocusedDate,
       },
@@ -1043,12 +1101,12 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       getFocusableDates,
       hoveredDate,
       isSelected,
-      isHovered,
-      isSelectedSpan,
+      isHoveredStart,
       isHoveredSpan,
+      isHoveredEnd,
       isSelectedStart,
+      isSelectedSpan,
       isSelectedEnd,
-      isHoveredOffset,
       isDaySelectable,
       setFocusedDate,
       setHoveredDate,
@@ -1063,15 +1121,17 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   date: TDate;
 }) {
   const {
+    state: { selectionVariant },
     helpers: {
       setSelectedDate,
       isSelected,
-      isSelectedSpan,
-      isHoveredSpan,
       isSelectedStart,
+      isSelectedSpan,
       isSelectedEnd,
       isHovered,
-      isHoveredOffset,
+      isHoveredStart,
+      isHoveredSpan,
+      isHoveredEnd,
       isDaySelectable,
     },
   } = useCalendarContext<TDate>();
@@ -1096,34 +1156,44 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   );
 
   const selected = isSelected(date);
-  const selectedSpan = isSelectedSpan(date);
-  const hoveredSpan = isHoveredSpan(date);
   const selectedStart = isSelectedStart(date);
+  const selectedSpan = isSelectedSpan(date);
   const selectedEnd = isSelectedEnd(date);
+
   const hovered = isHovered(date);
-  const hoveredOffset = isHoveredOffset(date);
+  const hoveredStart = isHoveredStart(date);
+  const hoveredSpan = isHoveredSpan(date);
+  const hoveredEnd = isHoveredEnd(date);
 
   return {
     handleClick,
     handleKeyDown,
     status: {
-      selected,
-      selectedSpan,
-      hoveredSpan,
-      selectedStart,
-      selectedEnd,
       hovered,
-      hoveredOffset,
+      selected,
+      selectedStart,
+      selectedSpan,
+      selectedEnd,
+      hoveredStart,
+      hoveredSpan,
+      hoveredEnd,
     },
     dayProps: {
       className: clsx({
-        [withBaseName("selected")]: selected,
-        [withBaseName("selectedSpan")]: selectedSpan,
-        [withBaseName("hoveredSpan")]: hoveredSpan,
-        [withBaseName("selectedStart")]: selectedStart,
-        [withBaseName("selectedEnd")]: selectedEnd,
-        [withBaseName("hovered")]: hovered,
-        [withBaseName("hoveredOffset")]: hoveredOffset,
+        [withBaseName("selected")]:
+          selectionVariant === "single" ? selected : undefined,
+        [withBaseName("selectedStart")]:
+          selectionVariant !== "single" ? selectedStart : undefined,
+        [withBaseName("selectedSpan")]:
+          selectionVariant !== "single" ? selectedSpan : undefined,
+        [withBaseName("selectedEnd")]:
+          selectionVariant !== "single" ? selectedEnd : undefined,
+        [withBaseName("hoveredStart")]:
+          selectionVariant !== "single" && hoveredStart,
+        [withBaseName("hoveredSpan")]:
+          selectionVariant !== "single" && hoveredSpan,
+        [withBaseName("hoveredEnd")]:
+          selectionVariant !== "single" && hoveredEnd
       }),
       "aria-pressed":
         selected || selectedEnd || selectedStart || selectedSpan

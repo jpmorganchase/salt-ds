@@ -30,7 +30,6 @@ const renderQAContainer = () => {
     <QAContainer
       cols={4}
       itemPadding={1}
-      height={3410}
       width={1050}
       itemWidthAuto
       transposeDensity

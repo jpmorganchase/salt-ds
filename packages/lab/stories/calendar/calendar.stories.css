@@ -19,3 +19,12 @@
   bottom: var(--salt-spacing-25);
   background-color: var(--salt-category-2-bold-background);
 }
+
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, var(--salt-size-base));
+  grid-template-rows: repeat(6, var(--salt-size-base));
+  text-align: center;
+  margin: var(--salt-spacing-fixed-100);
+}
