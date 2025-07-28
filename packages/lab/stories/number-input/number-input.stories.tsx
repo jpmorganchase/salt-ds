@@ -510,16 +510,11 @@ export const Fractions: StoryFn<NumberInputProps> = (args) => {
             );
           }}
           parse={(val) => {
-            console.log("parsing: ", val);
+            const match = String(val).match(
+              /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/,
+            );
+            if (!match) return;
             return Fraction32ndParser.from32nd(val.toString());
-          }}
-          isAllowed={(value) => {
-            if (value === "") {
-              return true; // Allow empty values
-            }
-            const validFractionRegex =
-              /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/;
-            return validFractionRegex.test(value);
           }}
         />
         <FormFieldHelperText>
