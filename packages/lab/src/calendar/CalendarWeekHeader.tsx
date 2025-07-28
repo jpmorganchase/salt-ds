@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Text } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -39,13 +39,13 @@ export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader<
       {...rest}
     >
       {weekdaysShort.map((day, index) => (
-        <small
+        <Text
           aria-hidden
           key={weekdaysLong[index]}
           className={withBaseName("dayOfWeek")}
         >
           {day}
-        </small>
+        </Text>
       ))}
     </div>
   );
