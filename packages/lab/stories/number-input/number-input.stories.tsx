@@ -12,6 +12,7 @@ import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { toFloat } from "packages/core/src/slider/internal/utils";
 import { useState } from "react";
+import { Fraction32ndParser, RoundingEnum } from "./formatter";
 
 export default {
   title: "Lab/Number Input",
@@ -483,6 +484,42 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           decimalScale={2}
           step={0.1}
         />
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const Fractions: StoryFn<NumberInputProps> = (args) => {
+  const [value, setValue] = useState(100.03125);
+  return (
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>With fractional format</FormFieldLabel>
+        <NumberInput
+          {...args}
+          value={value}
+          onChange={(e, value) => {
+            setValue(value);
+            console.log("on change value", value);
+          }}
+          format={(val) => {
+            console.log("formatting: ", val);
+            return Fraction32ndParser.to32nd(
+              val.toString(),
+              RoundingEnum.ROUND_UP,
+            );
+          }}
+          parse={(val) => {
+            const match = String(val).match(
+              /^\d+(-\d{0,2}(\d|\+)?|\d{0,2}(\d|\+)?)?$/,
+            );
+            if (!match) return;
+            return Fraction32ndParser.from32nd(val.toString());
+          }}
+        />
+        <FormFieldHelperText>
+          Number input's value is {value}
+        </FormFieldHelperText>
       </FormField>
     </StackLayout>
   );
