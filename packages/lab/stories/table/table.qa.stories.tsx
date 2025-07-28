@@ -12,9 +12,10 @@ import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "docs/story.css";
+import { StackLayout } from "@salt-ds/core";
 
-const NUM_COLS = 3;
-const NUM_ROWS = 2;
+const NUM_COLS = 2;
+const NUM_ROWS = 3;
 
 export default {
   title: "Lab/Table/Table QA",
@@ -54,10 +55,17 @@ const TableComp = (props: TableProps) => {
 };
 
 export const QA: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={1} itemPadding={12} width={1200}>
+  <QAContainer
+    transposeDensity
+    vertical
+    cols={7}
+    itemPadding={6}
+    width={1400}
+    itemWidthAuto
+  >
     {(["primary", "secondary", "tertiary"] as TableProps["variant"][]).map(
       (variant) => (
-        <>
+        <StackLayout key={variant} direction="row" gap={1}>
           <TableComp variant={variant} />
           <TableComp variant={variant} zebra="primary" />
           <TableComp variant={variant} zebra="secondary" />
@@ -65,7 +73,7 @@ export const QA: StoryFn<QAContainerProps> = () => (
           <TableComp variant={variant} divider="primary" />
           <TableComp variant={variant} divider="secondary" />
           <TableComp variant={variant} divider="tertiary" />
-        </>
+        </StackLayout>
       ),
     )}
   </QAContainer>
