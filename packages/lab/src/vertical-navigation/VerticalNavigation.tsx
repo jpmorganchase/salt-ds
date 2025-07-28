@@ -7,14 +7,14 @@ import { SubMenuProvider } from "./SubMenuContext";
 import verticalNavigationCss from "./VerticalNavigation.css";
 
 export interface VerticalNavigationProps
-  extends ComponentPropsWithoutRef<"ul"> {
+  extends ComponentPropsWithoutRef<"ol"> {
   appearance?: "indicator" | "bordered";
 }
 
 const withBaseName = makePrefixer("saltVerticalNavigation");
 
 export const VerticalNavigation = forwardRef<
-  HTMLUListElement,
+  HTMLOListElement,
   VerticalNavigationProps
 >(function VerticalNavigation(props, ref) {
   const { appearance = "indicator", className, ...rest } = props;
@@ -30,7 +30,7 @@ export const VerticalNavigation = forwardRef<
 
   return (
     <SubMenuProvider directIcons={directIcons} setDirectIcons={setDirectIcons}>
-      <ul
+      <ol
         ref={ref}
         className={clsx(withBaseName(), withBaseName(appearance), className)}
         data-has-direct-icons={directIcons.length > 0}
