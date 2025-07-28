@@ -55,6 +55,16 @@ export const CalendarMonth = forwardRef<
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
   };
 
+  const chunkArray = (array: TDate[], chunkSize: number) => {
+    const result = [];
+    for (let chunkIndex = 0; chunkIndex < array.length; chunkIndex += chunkSize) {
+      result.push(array.slice(chunkIndex, chunkIndex + chunkSize));
+    }
+    return result;
+  };
+
+  const weeks = chunkArray(days, 7);
+
   return (
     <div
       className={clsx(withBaseName(), className)}
@@ -63,13 +73,17 @@ export const CalendarMonth = forwardRef<
       {...rest}
     >
       <div data-testid="CalendarGrid" className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}>
-        {days.map((day) => (
+        {weeks.map((week, index) => (
+          <div key={`row-${index}`} className={clsx(withBaseName("week"))}>
+            {week.map((day: TDate) => (
           <CalendarDay
             {...CalendarDayProps}
             key={dateAdapter.format(day, "DD MMM YYYY")}
             date={day}
             month={date}
           />
+        ))}
+          </div>
         ))}
       </div>
     </div>

@@ -1,8 +1,36 @@
 .saltCalendarMonth-grid {
-  display: grid;
-  /*gap: var(--salt-spacing-fixed-100);*/
-  grid-template-columns: repeat(7, var(--salt-size-base));
-  grid-template-rows: repeat(6, var(--salt-size-base));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: calc(var(--calendar-day-size) * 7 + var(--calendar-gap) * 6);
   text-align: center;
-  margin: var(--salt-spacing-fixed-100);
+  gap: var(--calendar-gap);
 }
+
+.saltCalendarMonth-grid > .saltCalendarMonth-week {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--calendar-gap);
+  width: 100%;
+}
+
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredStart:last-child::before,
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredSpan:last-child::before,
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredEnd:last-child::before,
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-selectedSpan:last-child::before {
+  right: 0px;
+}
+
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredStart:first-child::before,
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredSpan:first-child::before,
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredEnd:first-child::before,
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-selectedSpan:first-child::before {
+  left: 0;
+}
+
+.saltCalendarMonth-grid > .saltCalendarMonth-week > * {
+  width: var(--calendar-day-size);
+  height: var(--calendar-day-size);
+  box-sizing: border-box;
+}
+
