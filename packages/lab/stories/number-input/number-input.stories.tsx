@@ -405,16 +405,12 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
           }}
           parse={(value) => {
             const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbBtT]?)$/);
-            if (!match) return toFloat(value);
+            if (!match) return;
 
             const [_, num, , unit] = match;
             const multiplier =
               { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[unit.toLowerCase()] || 1;
             return toFloat(Number.parseFloat(num) * multiplier);
-          }}
-          isAllowed={(value) => {
-            const validInputRegex = /^$|^[\d,.]+[kKmMbBtT]?$/;
-            return validInputRegex.test(value);
           }}
         />
       </FormField>
@@ -441,11 +437,10 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           clamp
           format={(value) => `${value}%`}
           parse={(value) => {
+            const match = String(value).match(/^\d*(\.\d*)?%?$/);
+            if (!match) return;
+
             return toFloat(String(value).replace(/%/g, ""));
-          }}
-          isAllowed={(value) => {
-            const validPatternRegex = /^\d*(\.\d*)?%?$/;
-            return validPatternRegex.test(value);
           }}
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
@@ -458,13 +453,12 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
             return new Intl.NumberFormat("en-GB").format(toFloat(value));
           }}
           parse={(value) => {
+            const match = String(value).match(/^[\d,.-]*$/);
+            if (!match) return;
+
             const stringValue =
               typeof value === "number" ? value.toString() : value;
             return toFloat(stringValue.replace(/,/g, ""));
-          }}
-          isAllowed={(value) => {
-            const validPatternRegex = /^[\d,.-]*$/;
-            return validPatternRegex.test(value);
           }}
         />
       </FormField>

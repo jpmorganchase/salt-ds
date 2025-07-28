@@ -588,10 +588,6 @@ describe("Number Input", () => {
             onChange={onChange}
             format={(value) => `${value}%`}
             parse={(value) => toFloat(String(value).replace(/%/g, ""))}
-            isAllowed={(value: string) => {
-              const validPatternRegex = /^\d*(\.\d*)?%?$/;
-              return validPatternRegex.test(value);
-            }}
           />
         );
       }
@@ -692,10 +688,6 @@ describe("Number Input", () => {
           parse={(value: string | number) =>
             toFloat(String(value).replace(/%/g, ""))
           }
-          isAllowed={(value: string) => {
-            const validPatternRegex = /^\d*(\.\d*)?%?$/;
-            return validPatternRegex.test(value);
-          }}
           onChange={changeSpy}
         />,
       );

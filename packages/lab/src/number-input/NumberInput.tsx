@@ -118,7 +118,7 @@ export interface NumberInputProps
    *
    * A callback to parse the value of the `NumberInput`. To be used alongside the `format` callback.
    */
-  parse?: (value: number | string) => number;
+  parse?: (value: number | string) => number | undefined;
   /**
    * A string displayed in a dimmed color when the `NumberInput` value is empty.
    */
@@ -164,11 +164,6 @@ export interface NumberInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * A callback to validate the `NumberInput`. If it returns `false`, `onChange` will not be
-   * triggered and the value will not be updated.
-   */
-  isAllowed?: (value: string) => boolean;
-  /**
    * Value of the `NumberInput`, to be used when in a controlled state.
    */
   value?: number;
@@ -202,7 +197,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       stepMultiplier = 2,
       textAlign = "left",
       validationStatus: validationStatusProp,
-      isAllowed: isAllowedProp,
       value: valueProp,
       variant = "primary",
       defaultValue: defaultValueProp = "",
@@ -230,7 +224,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const isValueAllowed = isAllowedProp || isAllowed;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
     const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
     const defaultValue = isEmptyReadOnly
@@ -347,9 +340,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         return;
       }
       const parsed = parse ? parse(inputValue) : sanitizeInput(inputValue);
-      const clampAndFixed = !Number.isNaN(toFloat(parsed))
-        ? clampAndFix(toFloat(parsed))
-        : "";
+      const clampAndFixed =
+        parsed && !Number.isNaN(toFloat(parsed))
+          ? clampAndFix(toFloat(parsed))
+          : "";
       setValue(clampAndFixed);
       if (toFloat(clampAndFixed) !== toFloat(value)) {
         onChangeProp?.(event, toFloat(clampAndFixed));
@@ -364,7 +358,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
-      if ((isControlled && !onChangeProp) || !isValueAllowed(inputValue)) {
+      if (
+        (isControlled && !onChangeProp) ||
+        (!parse && !isAllowed(inputValue))
+      ) {
         return;
       }
       if (isEmpty(inputValue)) {
@@ -373,13 +370,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         onChangeProp?.(event, 0);
         onChangeEnd?.(event, 0);
       } else {
+        const parsed = parse ? parse(inputValue) : inputValue;
+        if (!parsed || Number.isNaN(toFloat(parsed))) {
+          return;
+        }
         setDisplayValue(inputValue);
         setValue(inputValue);
-        const parsed = parse ? parse(inputValue) : inputValue;
-        const floatValue = toFloat(parsed);
-        if (!Number.isNaN(floatValue) && floatValue !== toFloat(value)) {
-          onChangeProp?.(event, floatValue);
-          onChangeEnd?.(event, floatValue);
+
+        if (toFloat(parsed) !== toFloat(value)) {
+          onChangeProp?.(event, toFloat(parsed));
+          onChangeEnd?.(event, toFloat(parsed));
         }
       }
     };

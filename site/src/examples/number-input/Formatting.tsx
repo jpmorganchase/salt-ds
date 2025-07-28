@@ -20,15 +20,11 @@ export const Formatting = () => {
           }}
           parse={(value) => {
             const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
-            if (!match) return toFloat(value);
+            if (!match) return;
             const [_, num, , unit] = match;
             const multiplier =
               { k: 1e3, m: 1e6, b: 1e9 }[unit.toLowerCase()] || 1;
             return toFloat(num) * multiplier;
-          }}
-          isAllowed={(value) => {
-            const validInputRegex = /^$|^[\d,\.]+[kKmMbB]?$/;
-            return validInputRegex.test(value);
           }}
         />
       </FormField>
@@ -40,13 +36,11 @@ export const Formatting = () => {
             return new Intl.NumberFormat("en-GB").format(toFloat(value));
           }}
           parse={(value) => {
+            const match = String(value).match(/^[\d,.-]*$/);
+            if (!match) return;
             const stringValue =
               typeof value === "number" ? value.toString() : value;
             return toFloat(stringValue.replace(/,/g, ""));
-          }}
-          isAllowed={(value) => {
-            const validPatternRegex = /^[\d,.-]*$/;
-            return validPatternRegex.test(value);
           }}
         />
       </FormField>

@@ -74,13 +74,11 @@ When configuring the number of decimal places, ensure it aligns with the specifi
 
 ## Formatting
 
-The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which determines the numerical value, and an `isAllowed` callback to regulate permissible input values.
+The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which can be used to determine the valid input format and extract the numerical value of the formatted input.
 
-### Best Practices
+### Best Practice
 
-- **`format` and `parse`**: The `format` callback is designed to work seamlessly with most formatting libraries, such as Intl.NumberFormat. It is strongly recommended to provide a `parse` callback alongside `format` to ensure the correct numerical value is derived, maintaining precision and consistency.
-
-- **`isAllowed`**: By default, the `NumberInput` restricts input to numerical values. However, when formatting is applied, you might want to include special characters or specific formats. The `isAllowed` callback returns a boolean that allows you to define which values are valid. This is especially useful for limiting input to certain ranges, patterns, or formats. For example, you can restrict users from entering invalid characters or values that fall outside a specified range.
+The `format` callback is designed to work seamlessly with most formatting libraries, such as Intl.NumberFormat. It is strongly recommended to provide a `parse` callback alongside `format` to ensure that valid input is entered and its correct numerical value is derived, maintaining precision and consistency.
 
 **Note**: If a `format` callback is provided, it will override the `decimalScale` prop, allowing you to define custom rules for decimal places directly within your formatting logic.
 
