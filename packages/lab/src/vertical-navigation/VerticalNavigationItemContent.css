@@ -80,6 +80,11 @@
   background: var(--salt-navigable-background-hover);
 }
 
+.saltVerticalNavigation .saltVerticalNavigationItemContent-active,
+.saltVerticalNavigationSubMenu .saltVerticalNavigationItemContent-active {
+  font-weight: var(--salt-text-h4-fontWeight);
+}
+
 .saltVerticalNavigationItemContent-active:hover {
   background: linear-gradient(var(--salt-navigable-background-hover), var(--salt-navigable-background-hover)) var(--salt-navigable-accent-background-active);
 }
