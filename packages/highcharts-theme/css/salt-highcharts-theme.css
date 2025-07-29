@@ -153,3 +153,18 @@
 .highcharts-theme-salt .highcharts-point {
   stroke: var(--salt-color-white);
 }
+
+/* Data connector line for Donut/Pie chart */
+.highcharts-theme-salt .highcharts-data-label-connector {
+  fill: none;
+}
+
+/* Removes extra hover style for Donut/Pie */
+.highcharts-theme-salt .highcharts-halo {
+  display: none;
+}
+
+/* Reduces opacity of deselected segments for Donut/Pie */
+.highcharts-theme-salt .highcharts-point-inactive {
+  opacity: 0.25;
+}
