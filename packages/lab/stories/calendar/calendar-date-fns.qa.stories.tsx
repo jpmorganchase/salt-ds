@@ -1,9 +1,9 @@
 import type { StoryFn } from "@storybook/react-vite";
-import { type QAContainerProps } from "docs/components";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
-import { renderCalendarQAContainer } from "./renderCalendarQAContainer";
-import { Calendar } from "../../src";
+import type { QAContainerProps } from "docs/components";
 import { withDateMock } from "../../../../.storybook/decorators/withDateMock";
+import { Calendar } from "../../src";
+import { renderCalendarQAContainer } from "./renderCalendarQAContainer";
 
 const QAContainerParameters = {
   chromatic: { disableSnapshot: false },
