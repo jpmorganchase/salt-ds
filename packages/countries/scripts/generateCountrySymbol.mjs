@@ -25,6 +25,7 @@ function biomeFormat(content, filePath) {
     filePath: filePath,
   });
 
+  // Linting is needed to sort imports.
   const result = biome.lintContent(
     project.projectKey,
     formattedResult.content,
