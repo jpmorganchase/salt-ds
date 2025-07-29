@@ -4,6 +4,7 @@
   --calendar-day-z-index-selected-endcap: calc(var(--calendar-day-z-index-hover) + 2);
   --calendar-day-z-index-content: calc(var(--calendar-day-z-index-hover) + 3);
   --calendar-day-z-index-highlight: calc(var(--calendar-day-z-index-hover) + 4);
+  --calendar-day-highlight-size: 10px;
 
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
@@ -63,6 +64,7 @@
 .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before {
   content: "";
   position: absolute;
+  box-sizing: border-box;
   top: calc(var(--calendar-gap) * -1);
   left: calc(var(--calendar-gap) * -1);
   right: calc(var(--calendar-gap) * -1);
@@ -83,6 +85,7 @@
 .saltCalendarDay-selectedEnd.saltCalendarDay-hoveredEnd:before {
   content: "";
   position: absolute;
+  box-sizing: border-box;
   top: calc(var(--calendar-gap) * -1);
   left: calc(var(--calendar-gap) * -1);
   right: calc(var(--calendar-gap) * -1);
@@ -130,11 +133,12 @@
  * The following namespaced styles are used to highlight the hovered days in different selection modes.
  */
 .saltCalendarMonth-single {
-  .saltCalendarDay-focused,
-  .saltCalendarDay:focus,
-  .saltCalendarDay:focus-visible,
-  .saltCalendarDay:hover,
-  .saltCalendarDay-selected {
+  .saltCalendarDay-focused:before,
+  .saltCalendarDay:focus:before,
+  .saltCalendarDay:focus-visible:before,
+  .saltCalendarDay:hover:before {
+    outline: var(--salt-focused-outline);
+    outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1) - 1px);
     border-radius: var(--salt-palette-corner-weak, 0);
   }
 
@@ -144,10 +148,18 @@
     background: var(--salt-selectable-background-hover);
   }
 
-  .saltCalendarDay-selected {
+  .saltCalendarDay-selected:before {
+    content: "";
+    position: absolute;
+    top: calc(var(--calendar-gap) * -1);
+    left: calc(var(--calendar-gap) * -1);
+    right: calc(var(--calendar-gap) * -1);
+    bottom: calc(var(--calendar-gap) * -1);
+    z-index: var(--calendar-day-z-index-selected-span);
     color: var(--salt-content-primary-foreground);
     background: var(--salt-selectable-background-selected);
     border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+    border-radius: var(--salt-palette-corner-weak, 0);
   }
 }
 
@@ -274,13 +286,17 @@
 .saltCalendarDay-highlighted:after {
   content: "";
   top: 0px;
-  right: 1px;
-  width: 10px;
-  height: 10px;
+  right: 0px;
+  box-sizing: border-box;
+  height: var(--calendar-day-highlight-size); /* TODO: change for size-modifier when available */
+  width: var(--calendar-day-highlight-size);
   background: var(--salt-accent-background);
   position: absolute;
   clip-path: polygon(100% 0, 100% 100%, 0 0);
   z-index: var(--calendar-day-z-index-highlight);
+}
+.saltCalendarDay-focused .saltCalendarDay-highlighted:after {
+  border: var(--salt-focused-outline);
 }
 
 .saltCalendarDay-unselectable:after {
