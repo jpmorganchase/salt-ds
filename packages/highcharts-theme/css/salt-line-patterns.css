@@ -1,0 +1,76 @@
+.highcharts-theme-salt.salt-line-patterns .highcharts-graph {
+  stroke-linecap: butt;
+  stroke-width: var(--salt-size-fixed-200);
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-1 .highcharts-graph {
+  stroke-dasharray: 2, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-2 .highcharts-graph {
+  stroke-dasharray: 8, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-3 .highcharts-graph {
+  stroke-dasharray: 8, 2, 2, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-4 .highcharts-graph {
+  stroke-dasharray: 16, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-5 .highcharts-graph {
+  stroke-dasharray: 16, 2, 2, 2, 2, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-6 .highcharts-graph {
+  stroke-dasharray: 8, 8, 2, 8, 2, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-7 .highcharts-graph {
+  stroke-dasharray: 8, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-8 .highcharts-graph {
+  stroke-dasharray: 2, 16;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-9 .highcharts-graph {
+  stroke-dasharray: 16, 2, 8, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-10 .highcharts-graph {
+  stroke-dasharray: 16, 2, 2, 2, 2, 2, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-11 .highcharts-graph {
+  stroke-dasharray: 16, 8, 8, 8, 8, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-12 .highcharts-graph {
+  stroke-dasharray: 8, 2, 2, 2, 2, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-13 .highcharts-graph {
+  stroke-dasharray: 8, 8, 2, 8, 2, 8, 2, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-14 .highcharts-graph {
+  stroke-dasharray: 16, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-15 .highcharts-graph {
+  stroke-dasharray: 16, 8, 8, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-16 .highcharts-graph {
+  stroke-dasharray: 8, 2, 2, 2, 2, 2, 2, 2;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-17 .highcharts-graph {
+  stroke-dasharray: 16, 8, 8, 8, 8, 8, 8;
+}
+
+.highcharts-theme-salt.salt-line-patterns .highcharts-series-18 .highcharts-graph {
+  stroke-dasharray: 16, 2, 2, 2;
+}
