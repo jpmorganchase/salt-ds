@@ -24,25 +24,27 @@ function NavItem({ item }: { item: Item }) {
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
       {item.children && (
-        <VerticalNavigationSubMenu>
-          {item.children.map((child) => (
-            <VerticalNavigationItem
-              key={child.title}
-              active={location.pathname === child.href}
-            >
-              <VerticalNavigationItemContent>
-                <VerticalNavigationItemTrigger
-                  render={<Link to={child.href} />}
-                >
-                  <VerticalNavigationItemLabel>
-                    {child.title}
-                  </VerticalNavigationItemLabel>
-                </VerticalNavigationItemTrigger>
-              </VerticalNavigationItemContent>
-            </VerticalNavigationItem>
-          ))}
+        <>
+          <VerticalNavigationSubMenu>
+            {item.children.map((child) => (
+              <VerticalNavigationItem
+                key={child.title}
+                active={location.pathname === child.href}
+              >
+                <VerticalNavigationItemContent>
+                  <VerticalNavigationItemTrigger
+                    render={<Link to={child.href} />}
+                  >
+                    <VerticalNavigationItemLabel>
+                      {child.title}
+                    </VerticalNavigationItemLabel>
+                  </VerticalNavigationItemTrigger>
+                </VerticalNavigationItemContent>
+              </VerticalNavigationItem>
+            ))}
+          </VerticalNavigationSubMenu>
           <Divider variant="tertiary" />
-        </VerticalNavigationSubMenu>
+        </>
       )}
     </VerticalNavigationItem>
   );
