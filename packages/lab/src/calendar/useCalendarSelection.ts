@@ -867,7 +867,11 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
 
   const isHoveredStart = useCallback(
     (date: TDate) => {
-      if (selectionVariant === "range" && hoveredDate && dateAdapter.isSame(date, hoveredDate, "day")) {
+      if (
+        selectionVariant === "range" &&
+        hoveredDate &&
+        dateAdapter.isSame(date, hoveredDate, "day")
+      ) {
         const dateRanges = (
           Array.isArray(selectedDate) ? selectedDate : [selectedDate]
         ) as DateRangeSelection<TDate>[];
@@ -996,6 +1000,27 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     ],
   );
 
+  const isSameDay = useCallback(
+    (date: TDate) => {
+      const dateRanges = Array.isArray(selectedDate)
+        ? selectedDate
+        : [selectedDate];
+      return dateRanges.some((range) => {
+        if (
+          (selectionVariant === "range" || selectionVariant === "offset") &&
+          isDateRangeSelection(range) &&
+          range?.startDate &&
+          range?.endDate &&
+          dateAdapter.isSame(range?.startDate, date, 'day')
+        ) {
+          return dateAdapter.isSame(range?.startDate, range?.endDate, 'day');
+        }
+        return false;
+      });
+    },
+    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
+  );
+
   const isSelectedStart = useCallback(
     (date: TDate) => {
       if (selectionVariant === "single") {
@@ -1083,6 +1108,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
         isHovered,
         isSelected,
         setHoveredDate,
+        isSameDay,
         setSelectedDate,
         isSelectedStart,
         isSelectedSpan,
@@ -1104,6 +1130,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       isHoveredStart,
       isHoveredSpan,
       isHoveredEnd,
+      isSameDay,
       isSelectedStart,
       isSelectedSpan,
       isSelectedEnd,
@@ -1124,6 +1151,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
     state: { selectionVariant },
     helpers: {
       setSelectedDate,
+      isSameDay,
       isSelected,
       isSelectedStart,
       isSelectedSpan,
@@ -1159,6 +1187,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   const selectedStart = isSelectedStart(date);
   const selectedSpan = isSelectedSpan(date);
   const selectedEnd = isSelectedEnd(date);
+  const selectedOnSameDay = isSameDay(date);
 
   const hovered = isHovered(date);
   const hoveredStart = isHoveredStart(date);
@@ -1188,12 +1217,14 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
           selectionVariant !== "single" ? selectedSpan : undefined,
         [withBaseName("selectedEnd")]:
           selectionVariant !== "single" ? selectedEnd : undefined,
+        [withBaseName("selectedSameDay")]:
+        selectionVariant !== "single" && selectedOnSameDay,
         [withBaseName("hoveredStart")]:
           selectionVariant !== "single" && hoveredStart,
         [withBaseName("hoveredSpan")]:
           selectionVariant !== "single" && hoveredSpan,
         [withBaseName("hoveredEnd")]:
-          selectionVariant !== "single" && hoveredEnd
+          selectionVariant !== "single" && hoveredEnd,
       }),
       "aria-pressed":
         selected || selectedEnd || selectedStart || selectedSpan

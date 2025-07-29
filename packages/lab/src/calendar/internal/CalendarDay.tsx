@@ -101,9 +101,12 @@ export const CalendarDay = forwardRef<
   const defaultButtonProps = {
     "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
     children: (
+      <>
+      {highlighted ? <div className={withBaseName("highlighted")}></div> : null}
       <span className={withBaseName("content")}>
         {dateAdapter.format(date, format)}
       </span>
+      </>
     ),
     disabled,
     ...dayProps,
@@ -116,7 +119,6 @@ export const CalendarDay = forwardRef<
         [withBaseName("outOfRange")]: outOfRange,
         [withBaseName("disabled")]: disabled,
         [withBaseName("unselectable")]: !!unselectable,
-        [withBaseName("highlighted")]: !!highlighted,
         [withBaseName("focused")]: !!focused,
         [withBaseName("today")]: today,
       },
@@ -126,7 +128,7 @@ export const CalendarDay = forwardRef<
   };
 
   const defaultButtonElement = (
-    <button type={"button"} {...defaultButtonProps} />
+      <button type={"button"} {...defaultButtonProps} />
   );
 
   const buttonElement = render
@@ -154,7 +156,7 @@ export const CalendarDay = forwardRef<
       leaveDelay={0} // --salt-duration-instant
       {...TooltipProps}
     >
-        {buttonElement}
+      {buttonElement}
     </Tooltip>
   );
 });
