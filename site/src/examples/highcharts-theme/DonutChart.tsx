@@ -12,6 +12,26 @@ import styles from "./PatternFill.module.css";
 import { useDensity } from "@salt-ds/core";
 import { useChart } from "./useChart";
 
+
+/*
+<svg width="36" height="39" viewBox="0 0 36 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_120_5176)">
+<rect x="-33.8418" y="44.6154" width="80" height="1.44702" rx="0.723511" transform="rotate(-45 -33.8418 44.6154)" fill="#9F55C2"/>
+<rect x="-8.08105" y="30.0455" width="80" height="1.44702" rx="0.723511" transform="rotate(-45 -8.08105 30.0455)" fill="#9F55C2"/>
+<rect x="-11.8063" y="44.6154" width="80" height="1.44702" rx="0.723511" transform="rotate(-45 -11.8063 44.6154)" fill="#9F55C2"/>
+<rect x="12.3576" y="41.9807" width="80" height="1.44702" rx="0.723511" transform="rotate(-45 12.3576 41.9807)" fill="#9F55C2"/>
+<rect x="21.0514" y="44.6154" width="80" height="1.44702" rx="0.723511" transform="rotate(-45 21.0514 44.6154)" fill="#9F55C2"/>
+<rect x="-0.9841" y="44.6154" width="80" height="1.44702" rx="0.723511" transform="rotate(-45 -0.9841 44.6154)" fill="#9F55C2"/>
+</g>
+<defs>
+<clipPath id="clip0_120_5176">
+<rect width="35" height="38" fill="white" transform="translate(0.512207 0.949707)"/>
+</clipPath>
+</defs>
+</svg>
+
+*/
+
 const fillPatternProps = [
   {
     id: "diagonal-up",
