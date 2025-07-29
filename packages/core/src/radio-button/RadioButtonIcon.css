@@ -57,7 +57,8 @@
 
 .saltRadioButtonIcon-readOnly,
 .saltRadioButton:hover .saltRadioButtonIcon-readOnly {
-  border-color: var(--salt-selectable-borderColor-readonly);
+  border-color: var(--salt-selectable-borderColor);
+  border-style: var(--salt-borderStyle-dashed);
   color: var(--salt-content-primary-foreground);
 }
 
