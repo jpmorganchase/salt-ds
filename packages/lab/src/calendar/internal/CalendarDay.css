@@ -1,5 +1,5 @@
 .saltCalendarDay {
-  --calendar-day-z-index-hover: calc(var(--salt-zIndex-default, 1));
+  --calendar-day-z-index-hover: calc(var(--salt-zIndex-default, 1) + 1);
   --calendar-day-z-index-selected-span: calc(var(--calendar-day-z-index-hover) + 1);
   --calendar-day-z-index-selected-endcap: calc(var(--calendar-day-z-index-hover) + 2);
   --calendar-day-z-index-content: calc(var(--calendar-day-z-index-hover) + 3);
@@ -157,7 +157,6 @@
   .saltCalendarDay:focus,
   .saltCalendarDay:focus-visible {
     outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1));
-    z-index: var(--calendar-day-z-index-selected-endcap);
   }
 
   .saltCalendarDay:hover:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd) {
@@ -272,17 +271,15 @@
   border-radius: var(--salt-palette-corner-weak, 0);
 }
 
-.saltCalendarDay-highlighted:after,
-.saltCalendarDay-highlighted:hover:after {
+.saltCalendarDay-highlighted:after {
   content: "";
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: calc(var(--salt-size-fixed-100) * -1);
+  top: 0px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
   background: var(--salt-accent-background);
   position: absolute;
-  transform: rotate(-90deg);
-  clip-path: polygon(165% 0%, 0% 165%, 165% 165%);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
   z-index: var(--calendar-day-z-index-highlight);
 }
 
