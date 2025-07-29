@@ -3834,6 +3834,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/highcharts-theme@workspace:packages/highcharts-theme":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"
+  peerDependencies:
+    "@salt-ds/theme": "workspace:^"
+    highcharts: ^10.2.0
+    highcharts-react-official: ^3.2.2
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/icons@npm:^1.13.2, @salt-ds/icons@workspace:^, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
@@ -3950,6 +3960,8 @@ __metadata:
     dom-accessibility-api: "npm:^0.7.0"
     execa: "npm:^9.0.0"
     get-tsconfig: "npm:^4.7.5"
+    highcharts: "npm:^10.2.0"
+    highcharts-react-official: "npm:^3.2.2"
     mockdate: "npm:^3.0.5"
     msw: "npm:^2.7.0"
     msw-storybook-addon: "npm:^2.0.4"
@@ -10080,6 +10092,23 @@ __metadata:
   version: 4.0.3
   resolution: "headers-polyfill@npm:4.0.3"
   checksum: 10/3a008aa2ef71591e2077706efb48db1b2729b90cf646cc217f9b69744e35cca4ba463f39debb6000904aa7de4fada2e5cc682463025d26bcc469c1d99fa5af27
+  languageName: node
+  linkType: hard
+
+"highcharts-react-official@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "highcharts-react-official@npm:3.2.2"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: 10/f93b051d0a599bcd7cddb4e7ebf0c513c888782eacdf8879111b3627247b98faba55b75ffebccfa10bf92ee9389973d321ea61ee989f7c5eca36933e2a43b280
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:^10.2.0":
+  version: 10.3.3
+  resolution: "highcharts@npm:10.3.3"
+  checksum: 10/7085b584379fe35cc9a45ffeac950ed1c0de8ee4bd0efaaa3224f3772b4ec1c92e225b10188172286cfbb6bb75ae8b4ffbf0bbbe3e6cb3147d04481637015097
   languageName: node
   linkType: hard
 
