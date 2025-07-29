@@ -716,7 +716,11 @@ export const HighlightedDates: StoryFn<
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startOfMonth = dateAdapter.startOf(day, "month");
-    return dateAdapter.isSame(dateAdapter.add(startOfMonth, {days: 7}), day, "day")
+    return dateAdapter.isSame(
+      dateAdapter.add(startOfMonth, { days: 7 }),
+      day,
+      "day",
+    )
       ? "Start of month reminder"
       : false;
   };

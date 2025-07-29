@@ -26,6 +26,14 @@ const QAContainerParameters = {
 
 const renderQAContainer = () => {
   const { dateAdapter } = useLocalization();
+  const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
+    const startDate = dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date;
+    const endDate = dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date;
+    return dateAdapter.compare(day, startDate) >= 0 &&
+      dateAdapter.compare(day, endDate) <= 0
+      ? "Start of month reminder"
+      : false;
+  };
   return (
     <QAContainer
       cols={4}
@@ -95,6 +103,48 @@ const renderQAContainer = () => {
         selectedDate={{
           startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
           endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        }}
+      >
+        <CalendarNavigation
+          MonthDropdownProps={{ bordered: true }}
+          YearDropdownProps={{ bordered: true }}
+        />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="range"
+        isDayHighlighted={isDayHighlighted}
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        }}
+      >
+        <CalendarNavigation
+          MonthDropdownProps={{ bordered: true }}
+          YearDropdownProps={{ bordered: true }}
+        />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="range"
+        isDayHighlighted={isDayHighlighted}
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+        }}
+      >
+        <CalendarNavigation
+          MonthDropdownProps={{ bordered: true }}
+          YearDropdownProps={{ bordered: true }}
+        />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="range"
+        isDayHighlighted={isDayHighlighted}
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-03", "YYYY-MM-DD").date,
         }}
       >
         <CalendarNavigation
