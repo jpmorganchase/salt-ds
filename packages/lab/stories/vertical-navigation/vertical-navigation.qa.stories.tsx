@@ -6,6 +6,7 @@ import {
   VerticalNavigationItem,
   VerticalNavigationItemContent,
   VerticalNavigationItemExpansionIcon,
+  VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   type VerticalNavigationProps,
   VerticalNavigationSubMenu,
@@ -25,22 +26,30 @@ const Simple = ({ appearance }: VerticalNavigationProps) => {
     <VerticalNavigation appearance={appearance}>
       <VerticalNavigationItem>
         <VerticalNavigationItemContent>
-          <VerticalNavigationItemTrigger>One</VerticalNavigationItemTrigger>
+          <VerticalNavigationItemTrigger>
+            <VerticalNavigationItemLabel>One</VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
         </VerticalNavigationItemContent>
       </VerticalNavigationItem>
       <VerticalNavigationItem active>
         <VerticalNavigationItemContent>
-          <VerticalNavigationItemTrigger>Two</VerticalNavigationItemTrigger>
+          <VerticalNavigationItemTrigger>
+            <VerticalNavigationItemLabel>Two</VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
         </VerticalNavigationItemContent>
       </VerticalNavigationItem>
       <VerticalNavigationItem>
         <VerticalNavigationItemContent>
-          <VerticalNavigationItemTrigger>Three</VerticalNavigationItemTrigger>
+          <VerticalNavigationItemTrigger>
+            <VerticalNavigationItemLabel>Three</VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
         </VerticalNavigationItemContent>
       </VerticalNavigationItem>
       <VerticalNavigationItem>
         <VerticalNavigationItemContent>
-          <VerticalNavigationItemTrigger>Four</VerticalNavigationItemTrigger>
+          <VerticalNavigationItemTrigger>
+            <VerticalNavigationItemLabel>Four</VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
         </VerticalNavigationItemContent>
       </VerticalNavigationItem>
     </VerticalNavigation>
@@ -55,7 +64,7 @@ const CollapsibleNested = ({ appearance }: VerticalNavigationProps) => {
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
-                One
+                <VerticalNavigationItemLabel>One</VerticalNavigationItemLabel>
                 <VerticalNavigationItemExpansionIcon />
               </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
@@ -65,7 +74,9 @@ const CollapsibleNested = ({ appearance }: VerticalNavigationProps) => {
               <VerticalNavigationItem active>
                 <VerticalNavigationItemContent>
                   <VerticalNavigationItemTrigger>
-                    Submenu One
+                    <VerticalNavigationItemLabel>
+                      Submenu One
+                    </VerticalNavigationItemLabel>
                   </VerticalNavigationItemTrigger>
                 </VerticalNavigationItemContent>
               </VerticalNavigationItem>
@@ -73,14 +84,18 @@ const CollapsibleNested = ({ appearance }: VerticalNavigationProps) => {
                 <VerticalNavigationItem>
                   <VerticalNavigationItemContent>
                     <VerticalNavigationItemTrigger>
-                      Submenu Two
+                      <VerticalNavigationItemLabel>
+                        Submenu Two
+                      </VerticalNavigationItemLabel>
                     </VerticalNavigationItemTrigger>
                   </VerticalNavigationItemContent>
                 </VerticalNavigationItem>
                 <VerticalNavigationItem>
                   <VerticalNavigationItemContent>
                     <VerticalNavigationItemTrigger>
-                      Submenu Three
+                      <VerticalNavigationItemLabel>
+                        Submenu Three
+                      </VerticalNavigationItemLabel>
                     </VerticalNavigationItemTrigger>
                   </VerticalNavigationItemContent>
                 </VerticalNavigationItem>
@@ -101,7 +116,8 @@ const CollapsibleIcons = ({ appearance }: VerticalNavigationProps) => {
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
-                <SaltShakerIcon /> One
+                <SaltShakerIcon />
+                <VerticalNavigationItemLabel>One</VerticalNavigationItemLabel>
                 <VerticalNavigationItemExpansionIcon />
               </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
@@ -111,7 +127,10 @@ const CollapsibleIcons = ({ appearance }: VerticalNavigationProps) => {
               <VerticalNavigationItem active>
                 <VerticalNavigationItemContent>
                   <VerticalNavigationItemTrigger>
-                    <SaltShakerIcon /> Submenu One
+                    <SaltShakerIcon />
+                    <VerticalNavigationItemLabel>
+                      Submenu One
+                    </VerticalNavigationItemLabel>
                   </VerticalNavigationItemTrigger>
                 </VerticalNavigationItemContent>
               </VerticalNavigationItem>
@@ -119,14 +138,20 @@ const CollapsibleIcons = ({ appearance }: VerticalNavigationProps) => {
                 <VerticalNavigationItem>
                   <VerticalNavigationItemContent>
                     <VerticalNavigationItemTrigger>
-                      <SaltShakerIcon /> Submenu Two
+                      <SaltShakerIcon />
+                      <VerticalNavigationItemLabel>
+                        Submenu Two
+                      </VerticalNavigationItemLabel>
                     </VerticalNavigationItemTrigger>
                   </VerticalNavigationItemContent>
                 </VerticalNavigationItem>
                 <VerticalNavigationItem>
                   <VerticalNavigationItemContent>
                     <VerticalNavigationItemTrigger>
-                      <SaltShakerIcon /> Submenu Three
+                      <SaltShakerIcon />
+                      <VerticalNavigationItemLabel>
+                        Submenu Three
+                      </VerticalNavigationItemLabel>
                     </VerticalNavigationItemTrigger>
                   </VerticalNavigationItemContent>
                 </VerticalNavigationItem>
