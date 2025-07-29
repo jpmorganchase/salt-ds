@@ -20,11 +20,10 @@
   background-color: var(--salt-category-2-bold-background);
 }
 
-
 .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, var(--salt-size-base));
-  grid-template-rows: repeat(6, var(--salt-size-base));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   text-align: center;
-  margin: var(--salt-spacing-fixed-100);
+  gap: var(--salt-spacing-fixed-100);
 }
