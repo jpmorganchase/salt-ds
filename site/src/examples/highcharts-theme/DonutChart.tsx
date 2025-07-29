@@ -29,6 +29,22 @@ import { useChart } from "./useChart";
 </clipPath>
 </defs>
 </svg>
+*/
+
+/*
+<svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="1.67966" cy="1.25532" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="4.44313" cy="3.93025" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="1.67966" cy="1.25532" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="4.44313" cy="3.93025" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="6.97799" cy="1.25532" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="1.67966" cy="6.60517" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="6.97799" cy="6.60517" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="9.74145" cy="3.93025" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="4.44313" cy="9.2801" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+<ellipse cx="9.74145" cy="9.2801" rx="0.9691" ry="0.98762" fill="#9F55C2"/>
+</svg>
+
 
 */
 
