@@ -716,7 +716,7 @@ export const HighlightedDates: StoryFn<
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startOfMonth = dateAdapter.startOf(day, "month");
-    return dateAdapter.isSame(startOfMonth, day, "day")
+    return dateAdapter.isSame(dateAdapter.add(startOfMonth, {days: 7}), day, "day")
       ? "Start of month reminder"
       : false;
   };
@@ -724,7 +724,7 @@ export const HighlightedDates: StoryFn<
     <Calendar
       // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
-      selectionVariant="single"
+      selectionVariant="range"
       isDayHighlighted={isDayHighlighted}
     >
       <CalendarNavigation />
