@@ -23,7 +23,7 @@
 }
 
 .saltDialogContent-overflow {
-  min-height: calc(var(--salt-text-lineHeight) * 2);
+  min-height: calc(var(--salt-text-lineHeight) * 4);
   padding-right: var(--salt-spacing-100);
 }
 
