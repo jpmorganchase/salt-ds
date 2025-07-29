@@ -1,6 +1,9 @@
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
+import { useRef } from "react";
+import { useChart } from "./useChart";
+import { useDensity } from "@salt-ds/core";
 
 accessibility(Highcharts);
 
@@ -145,6 +148,12 @@ const lineDataOptions: Options = {
 };
 
 export const LineChart = () => {
+  const LineChartRef = useRef<HighchartsReact.RefObject>(null);
+
+  const density = useDensity();
+
+  useChart({chartRef: LineChartRef, somethingToTrigger: density});
+
   return (
     <div
       className={"highcharts-theme-salt salt-line-patterns"}

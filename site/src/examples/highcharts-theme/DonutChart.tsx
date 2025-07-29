@@ -3,11 +3,14 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import accessibility from "highcharts/modules/accessibility";
 import patternFill from "highcharts/modules/pattern-fill";
+import { useRef } from "react";
 
 patternFill(Highcharts);
 accessibility(Highcharts);
 
 import styles from "./PatternFill.module.css";
+import { useDensity } from "@salt-ds/core";
+import { useChart } from "./useChart";
 
 const fillPatternProps = [
   {
@@ -353,12 +356,18 @@ const donutChartOptions = {
 };
 
 export const DonutChart = () => {
+
+  const DonutRef = useRef<HighchartsReact.RefObject>(null);
+  const density = useDensity();
+
+  useChart({chartRef: DonutRef, somethingToTrigger: density});
+
   return (
     <div
       className={clsx("highcharts-theme-salt", styles.patternFills)}
       style={{ maxWidth: 700, width: "100%" }}
     >
-      <HighchartsReact highcharts={Highcharts} options={donutChartOptions} />
+      <HighchartsReact highcharts={Highcharts} options={donutChartOptions} ref={DonutRef} />
     </div>
   );
 };
