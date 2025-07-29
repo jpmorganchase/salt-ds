@@ -9,7 +9,7 @@
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
-  --verticalNavigationItem-paddingLeft: calc(var(--salt-spacing-150) + var(--verticalNavigationItem-depthPadding) + var(--verticalNavigationItem-iconPadding));
+  --verticalNavigationItem-paddingLeft: calc(var(--salt-spacing-100) + var(--verticalNavigationItem-depthPadding) + var(--verticalNavigationItem-iconPadding));
   --verticalNavigationItem-paddingBlock: calc(var(--salt-spacing-50) - var(--salt-size-fixed-100));
 }
 
