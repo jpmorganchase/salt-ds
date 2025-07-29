@@ -303,6 +303,14 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isOutsideAllowedYears: (date: TDate) => boolean;
 
     /**
+     * Determines if the date range is on the same day
+     *
+     * @param date - The range to check.
+     * @returns `true` if the range start and end date are the same
+     */
+    isSameDay: (date: TDate) => boolean;
+
+    /**
      * Sets the selected date in the calendar.
      *
      * @param event - The event triggering the change.

@@ -1,6 +1,6 @@
 .saltCalendar {
   --calendar-gap: var(--salt-spacing-fixed-100);
-  --calendar-day-size: 28px;
+  --calendar-day-size: var(--salt-size-base);
 
   background: var(--salt-container-primary-background);
   padding: var(--salt-spacing-100);
