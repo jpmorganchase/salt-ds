@@ -1011,9 +1011,9 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           isDateRangeSelection(range) &&
           range?.startDate &&
           range?.endDate &&
-          dateAdapter.isSame(range?.startDate, date, 'day')
+          dateAdapter.isSame(range?.startDate, date, "day")
         ) {
-          return dateAdapter.isSame(range?.startDate, range?.endDate, 'day');
+          return dateAdapter.isSame(range?.startDate, range?.endDate, "day");
         }
         return false;
       });
@@ -1218,7 +1218,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
         [withBaseName("selectedEnd")]:
           selectionVariant !== "single" ? selectedEnd : undefined,
         [withBaseName("selectedSameDay")]:
-        selectionVariant !== "single" && selectedOnSameDay,
+          selectionVariant !== "single" && selectedOnSameDay,
         [withBaseName("hoveredStart")]:
           selectionVariant !== "single" && hoveredStart,
         [withBaseName("hoveredSpan")]:
