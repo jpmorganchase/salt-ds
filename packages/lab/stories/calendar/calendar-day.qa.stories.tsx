@@ -1,8 +1,8 @@
 import { withDateMock } from ".storybook/decorators/withDateMock";
 import { Calendar } from "@salt-ds/lab";
-import { CalendarDay } from "../../../lab/src/calendar/internal/CalendarDay";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import { CalendarDay } from "../../../lab/src/calendar/internal/CalendarDay";
 import { useLocalization } from "../../src";
 import "./calendar.stories.css";
 
@@ -47,49 +47,32 @@ export const CalendayDaySingle: StoryFn<QAContainerProps> = () => {
         <div className={"saltCalendarMonth-single"}>
           <CalendarDay date={date} month={month} />
           <CalendarDay
-            className={"saltCalendarDay-selected"}
+            className={"saltCalendarDay saltCalendarDay-selected"}
             date={date}
             month={month}
           />
           <CalendarDay
-            className={"saltCalendarDay-hovered"}
+            className={"saltCalendarDay saltCalendarDay-hovered"}
             date={date}
             month={month}
           />
           <CalendarDay
-            className={"saltCalendarDay-disabled"}
+            className={"saltCalendarDay saltCalendarDay-disabled"}
             date={date}
             month={month}
           />
           <CalendarDay
-            className={"saltCalendarDay-unselectable"}
+            className={"saltCalendarDay saltCalendarDay-unselectable"}
             date={date}
             month={month}
           />
           <CalendarDay
-            className={"saltCalendarDay-highlighted"}
+            className={"saltCalendarDay saltCalendarDay-outOfRange"}
             date={date}
             month={month}
           />
           <CalendarDay
-            className={"saltCalendarDay-outOfRange"}
-            date={date}
-            month={month}
-          />
-          <CalendarDay
-            className={"saltCalendarDay-outOfRange saltCalendarDay-highlighted"}
-            date={date}
-            month={month}
-          />
-          <CalendarDay
-            className={"saltCalendarDay-focused"}
-            date={date}
-            month={month}
-          />
-          <CalendarDay
-            className={
-              "saltCalendarDay-selected saltCalendarDay-focused saltCalendarDay-highlighted"
-            }
+            className={"saltCalendarDay saltCalendarDay-focused"}
             date={date}
             month={month}
           />
@@ -202,13 +185,6 @@ export const CalendayDayRange: StoryFn<QAContainerProps> = () => {
             <CalendarDay
               className={
                 "saltCalendarDay saltCalendarDay-selectedSpan saltCalendarDay-hoveredSpan"
-              }
-              date={date}
-              month={month}
-            />
-            <CalendarDay
-              className={
-                "saltCalendarDay saltCalendarDay-selectedSpan saltCalendarDay-hoveredSpan saltCalendarDay-highlighted"
               }
               date={date}
               month={month}

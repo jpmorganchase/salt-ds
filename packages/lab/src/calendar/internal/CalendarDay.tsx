@@ -102,10 +102,10 @@ export const CalendarDay = forwardRef<
     "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
     children: (
       <>
-      {highlighted ? <div className={withBaseName("highlighted")}></div> : null}
-      <span className={withBaseName("content")}>
-        {dateAdapter.format(date, format)}
-      </span>
+        {highlighted ? <div className={withBaseName("highlighted")} /> : null}
+        <span className={withBaseName("content")}>
+          {dateAdapter.format(date, format)}
+        </span>
       </>
     ),
     disabled,
@@ -128,7 +128,7 @@ export const CalendarDay = forwardRef<
   };
 
   const defaultButtonElement = (
-      <button type={"button"} {...defaultButtonProps} />
+    <button type={"button"} {...defaultButtonProps} />
   );
 
   const buttonElement = render
