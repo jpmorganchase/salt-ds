@@ -11,7 +11,7 @@
 .saltVerticalNavigation > .saltDivider-horizontal,
 .saltVerticalNavigationSubMenu > .saltDivider-horizontal,
 .saltVerticalNavigationItem > .saltDivider-horizontal {
-  margin: calc(var(--salt-size-fixed-100) * -1) 0;
+  margin-bottom: calc(var(--salt-size-fixed-100) * -1);
 }
 
 .saltVerticalNavigation[data-has-direct-icons="false"] .saltCollapsiblePanel-inner {

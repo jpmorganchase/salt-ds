@@ -39,7 +39,8 @@
   font-size: var(--salt-text-h4-fontSize);
 }
 
-.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active,
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active:hover {
   background: var(--salt-navigable-accent-background-active);
 }
 
@@ -60,7 +61,8 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
 }
 
-.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active,
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active:hover {
   background: var(--salt-navigable-accent-background-active);
   border-color: var(--salt-navigable-accent-borderColor-active);
 }
@@ -85,12 +87,8 @@
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.saltVerticalNavigationItemContent-active:hover {
-  background: linear-gradient(var(--salt-navigable-background-hover), var(--salt-navigable-background-hover)) var(--salt-navigable-accent-background-active);
-}
-
 @supports selector(:has(*)) {
-  .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[href]) {
-    background: var(--salt-navigable-accent-background-active);
+  .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[aria-controls]) {
+    background: linear-gradient(var(--salt-navigable-background-hover), var(--salt-navigable-background-hover)) var(--salt-navigable-accent-background-active);
   }
 }
