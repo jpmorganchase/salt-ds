@@ -4,7 +4,6 @@ export const StageStatus = () => {
   return (
     <Stepper>
       <Step label="Pending" description="stage" stage="pending" />
-      <Step label="Inprogress" description="stage" stage="inprogress" />
       <Step label="Active" description="stage" stage="active" />
       <Step label="Completed" description="stage" stage="completed" />
       <Step label="Locked" description="stage" stage="locked" />
