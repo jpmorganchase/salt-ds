@@ -90,7 +90,6 @@
   left: calc(var(--calendar-gap) * -1);
   right: calc(var(--calendar-gap) * -1);
   bottom: calc(var(--calendar-gap) * -1);
-  background-color: var(--salt-selectable-background-hover);
   background-color: var(--salt-selectable-background-selected);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
 }
