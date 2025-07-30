@@ -43,9 +43,9 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.0.0",
-    "@biomejs/js-api": "^1.0.0",
-    "@biomejs/wasm-nodejs": "^2.0.0",
+    "@biomejs/biome": "^2.1.2",
+    "@biomejs/js-api": "^2.0.3",
+    "@biomejs/wasm-nodejs": "^2.1.2",
     "@changesets/cli": "^2.27.12",
     "@cypress/code-coverage": "^3.13.6",
     "@faker-js/faker": "^8.0.0",

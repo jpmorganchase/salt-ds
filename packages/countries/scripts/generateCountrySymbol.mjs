@@ -1,28 +1,42 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Biome, Distribution } from "@biomejs/js-api";
+import { Biome } from "@biomejs/js-api/nodejs";
 import glob from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const biome = await Biome.create({
-  distribution: Distribution.NODE,
-});
+const biome = new Biome();
 
 const project = biome.openProject();
 
 biome.applyConfiguration(project.projectKey, {
-  organizeImports: {
-    enabled: true,
-  },
+  assist: { actions: { source: { organizeImports: "on" } } },
   formatter: {
     enabled: true,
     indentStyle: "space",
   },
 });
+
+function biomeFormat(content, filePath) {
+  const formattedResult = biome.formatContent(project.projectKey, content, {
+    filePath: filePath,
+  });
+
+  // Linting is needed to sort imports.
+  const result = biome.lintContent(
+    project.projectKey,
+    formattedResult.content,
+    {
+      filePath: filePath,
+      fixFileMode: "safeFixes",
+    },
+  );
+
+  return result.content;
+}
 
 const REPLACE_START = "$START";
 const REPLACE_END = "$END";
@@ -84,13 +98,12 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const ALL_CSS = `[class*=' saltCountry-'],[class^='saltCountry-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
 
-  const formattedResult = biome.formatContent(
-    project.projectKey,
+  const result = biomeFormat(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
-    { filePath: cssOutputPath },
+    cssOutputPath,
   );
 
-  fs.writeFileSync(cssOutputPath, formattedResult.content, {
+  fs.writeFileSync(cssOutputPath, result, {
     encoding: "utf8",
   });
 };
@@ -124,13 +137,12 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const ALL_CSS = `[class*=' saltCountrySharp-'],[class^='saltCountrySharp-'] {background-size: cover;height:var(--salt-size-base, 20px);width:calc(var(--salt-size-base, 20px) * 1.44);}\n`;
 
-  const formattedResult = biome.formatContent(
-    project.projectKey,
+  const result = biomeFormat(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
-    { filePath: cssOutputPath },
+    cssOutputPath,
   );
 
-  fs.writeFileSync(cssOutputPath, formattedResult.content, {
+  fs.writeFileSync(cssOutputPath, result, {
     encoding: "utf8",
   });
 };
@@ -186,12 +198,6 @@ const generateCountrySymbolComponents = ({
       plugins: [
         {
           name: "preset-default",
-          params: {
-            overrides: {
-              // makes country symbol scaled into width/height box
-              removeViewBox: false,
-            },
-          },
         },
         {
           name: "removeAttrs",
@@ -315,13 +321,12 @@ const generateCountrySymbolComponents = ({
       .replaceAll(`"${REPLACE_START}`, "")
       .replaceAll(`${REPLACE_END}"`, "");
 
-    const formattedResult = biome.formatContent(
-      project.projectKey,
+    const result = biomeFormat(
       GENERATED_WARNING_COMMENT.concat(replacedText),
-      { filePath: newFilePath },
+      newFilePath,
     );
 
-    fs.writeFileSync(newFilePath, formattedResult.content, {
+    fs.writeFileSync(newFilePath, result, {
       encoding: "utf8",
     });
   }
@@ -350,13 +355,11 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
 
   const outputFile = path.join(componentsPath, "index.ts");
 
-  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
-    filePath: outputFile,
-  });
+  const result = biomeFormat(joinedText, outputFile);
 
   console.log("creating index at:", outputFile);
 
-  fs.writeFileSync(outputFile, formattedResult.content, { encoding: "utf8" });
+  fs.writeFileSync(outputFile, result, { encoding: "utf8" });
 };
 
 // Generate countryMetaMap for use in stories and by consumers to map code to countryMeta
@@ -390,11 +393,9 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
     endText,
   ].join("\n");
 
-  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
-    filePath: outputFile,
-  });
+  const result = biomeFormat(joinedText, outputFile);
 
-  fs.writeFileSync(outputFile, formattedResult.content, { encoding: "utf8" });
+  fs.writeFileSync(outputFile, result, { encoding: "utf8" });
 };
 
 // generate lazyMap for use in the LazyCountrySymbol component
@@ -428,11 +429,9 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
     lazyMapText.join("\n"),
   ].join("\n");
 
-  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
-    filePath: outputFile,
-  });
+  const result = biomeFormat(joinedText, outputFile);
 
-  fs.writeFileSync(outputFile, formattedResult.content, { encoding: "utf8" });
+  fs.writeFileSync(outputFile, result, { encoding: "utf8" });
 };
 
 // Run the script
