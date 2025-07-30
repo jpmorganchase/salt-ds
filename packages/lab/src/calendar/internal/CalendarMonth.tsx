@@ -27,6 +27,14 @@ export interface CalendarMonthProps<TDate>
   CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
 }
 
+const chunkArray = (array: DateFrameworkType[], chunkSize: number) => {
+  const result = [];
+  for (let chunkIndex = 0; chunkIndex < array.length; chunkIndex += chunkSize) {
+    result.push(array.slice(chunkIndex, chunkIndex + chunkSize));
+  }
+  return result;
+};
+
 const withBaseName = makePrefixer("saltCalendarMonth");
 
 export const CalendarMonth = forwardRef<
@@ -53,18 +61,6 @@ export const CalendarMonth = forwardRef<
   const handleMouseLeave = (event: SyntheticEvent) => {
     setHoveredDate(event, null);
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
-  };
-
-  const chunkArray = (array: TDate[], chunkSize: number) => {
-    const result = [];
-    for (
-      let chunkIndex = 0;
-      chunkIndex < array.length;
-      chunkIndex += chunkSize
-    ) {
-      result.push(array.slice(chunkIndex, chunkIndex + chunkSize));
-    }
-    return result;
   };
 
   const weeks = chunkArray(days, 7);

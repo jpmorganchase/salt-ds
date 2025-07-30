@@ -1,9 +1,9 @@
 .saltCalendarDay {
-  --calendar-day-zindex-hover: calc(var(--salt-zIndex-default, 1) + 1);
-  --calendar-day-zindex-selected-span: calc(var(--calendar-day-zindex-hover) + 1);
-  --calendar-day-zindex-selected-endcap: calc(var(--calendar-day-zindex-hover) + 2);
-  --calendar-day-zindex-content: calc(var(--calendar-day-zindex-hover) + 3);
-  --calendar-day-zindex-highlight: calc(var(--calendar-day-zindex-hover) + 4);
+  --calendar-day-zIndex-hover: calc(var(--salt-zIndex-default, 1) + 1);
+  --calendar-day-zIndex-selected-span: calc(var(--calendar-day-zIndex-hover) + 1);
+  --calendar-day-zIndex-selected-endcap: calc(var(--calendar-day-zIndex-hover) + 2);
+  --calendar-day-zIndex-content: calc(var(--calendar-day-zIndex-hover) + 3);
+  --calendar-day-zIndex-highlight: calc(var(--calendar-day-zIndex-hover) + 4);
   --calendar-day-highlight-size: 10px;
 
   font-family: var(--salt-text-fontFamily);
@@ -25,7 +25,7 @@
 .saltCalendarDay-content {
   margin: 0 var(--salt-spacing-50);
   width: 100%;
-  z-index: var(--calendar-day-zindex-content);
+  z-index: var(--calendar-day-zIndex-content);
 }
 
 .saltCalendarDay-focused,
@@ -40,7 +40,7 @@
 .saltCalendarDay-hoveredSpan,
 .saltCalendarDay-hoveredEnd {
   position: relative;
-  z-index: var(--calendar-day-zindex-hover);
+  z-index: var(--calendar-day-zIndex-hover);
 }
 
 .saltCalendarDay-selectedStart,
@@ -50,14 +50,14 @@
 .saltCalendarDay-hoveredEnd.saltCalendarDay-selectedEnd,
 .saltCalendarDay-hoveredEnd.saltCalendarDay-selectedEnd::before {
   position: relative;
-  z-index: var(--calendar-day-zindex-selected-endcap);
+  z-index: var(--calendar-day-zIndex-selected-endcap);
 }
 
 .saltCalendarDay-selectedSpan,
 .saltCalendarDay-hoveredSpan.saltCalendarDay-selectedSpan,
 .saltCalendarDay-hoveredSpan.saltCalendarDay-selectedSpan::before {
   position: relative;
-  z-index: var(--calendar-day-zindex-selected-span);
+  z-index: var(--calendar-day-zIndex-selected-span);
 }
 
 .saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before,
@@ -103,7 +103,7 @@
 
 .saltCalendarDay-selectedStart,
 .saltCalendarDay-selectedStart::before {
-  z-index: var(--calendar-day-zindex-selected-endcap);
+  z-index: var(--calendar-day-zIndex-selected-endcap);
   border-radius: var(--salt-palette-corner-weak, 0) 0 0 var(--salt-palette-corner-weak, 0);
 }
 
@@ -118,7 +118,7 @@
 .saltCalendarDay-focused.saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart)::before,
 .saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart),
 .saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart)::before {
-  z-index: var(--calendar-day-zindex-selected-endcap);
+  z-index: var(--calendar-day-zIndex-selected-endcap);
   border-radius: 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0;
 }
 
@@ -154,7 +154,7 @@
     left: calc(var(--calendar-gap) * -1);
     right: calc(var(--calendar-gap) * -1);
     bottom: calc(var(--calendar-gap) * -1);
-    z-index: var(--calendar-day-zindex-selected-span);
+    z-index: var(--calendar-day-zIndex-selected-span);
     color: var(--salt-content-primary-foreground);
     background-color: var(--salt-selectable-background-selected);
     border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
@@ -199,7 +199,7 @@
     right: calc(var(--calendar-gap) * -1);
     bottom: calc(var(--calendar-gap) * -1);
     background-color: var(--salt-selectable-background-hover);
-    z-index: var(--calendar-day-zindex-hover);
+    z-index: var(--calendar-day-zIndex-hover);
     border-radius: 0;
     border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
     border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
@@ -292,7 +292,7 @@
   background-color: var(--salt-accent-background);
   position: absolute;
   clip-path: polygon(100% 0, 100% 100%, 0 0);
-  z-index: var(--calendar-day-zindex-highlight);
+  z-index: var(--calendar-day-zIndex-highlight);
 }
 .saltCalendarDay-focused .saltCalendarDay-highlighted::after {
   border: var(--salt-focused-outline);
