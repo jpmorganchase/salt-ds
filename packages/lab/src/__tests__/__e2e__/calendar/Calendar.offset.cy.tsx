@@ -27,11 +27,11 @@ function getAllDatesInRange(
   startDate: DateFrameworkType,
   endDate: DateFrameworkType,
 ) {
-  const dates = [];
+  const dates = [startDate];
   let currentDate = startDate;
-  while (adapter.compare(currentDate, endDate) <= 0) {
-    dates.push(startDate);
+  while (!adapter.isSame(currentDate, endDate, "day")) {
     currentDate = adapter.add(currentDate, { days: 1 });
+    dates.push(currentDate);
   }
   return dates;
 }
@@ -52,27 +52,39 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
       const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
 
       it("SHOULD allow a defined range to be selected", () => {
+        const endDateOffset = (date: ReturnType<typeof adapter.date>) =>
+          adapter.add(date, { days: 4 });
+        const offsetDate = endDateOffset(testDate);
+        const datesInRange = getAllDatesInRange(adapter, testDate, offsetDate);
+
         cy.mount(
-          <Calendar selectionVariant="offset" defaultVisibleMonth={testDate}>
+          <Calendar
+            selectionVariant="offset"
+            defaultVisibleMonth={testDate}
+            endDateOffset={endDateOffset}
+          >
             <CalendarNavigation />
             <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
 
-        const offsetDate = adapter.add(testDate, { days: 4 });
-        const datesInRange = getAllDatesInRange(adapter, testDate, offsetDate);
-
         // Simulate hovering over the base date button
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
         }).realHover();
 
-        // Verify that all dates in the range are highlighted
-        datesInRange.forEach((dateInRange) => {
+        // Verify that all dates in the range are highlighted correctly
+        datesInRange.forEach((dateInRange, index) => {
+          let expectedClassName = "saltCalendarDay-hoveredSpan";
+          if (index === 0) {
+            expectedClassName = "saltCalendarDay-hoveredStart";
+          } else if (index === datesInRange.length - 1) {
+            expectedClassName = "saltCalendarDay-hoveredEnd";
+          }
           cy.findByRole("button", {
             name: adapter.format(dateInRange, "DD MMMM YYYY"),
-          }).should("have.class", "saltCalendarDay-hoveredOffset");
+          }).should("have.class", expectedClassName);
         });
 
         // Simulate clicking the base date button to select the range

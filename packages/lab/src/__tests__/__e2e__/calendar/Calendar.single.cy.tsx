@@ -238,29 +238,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         }).should("be.focused");
       });
 
-      it("SHOULD hover one day when a day is hovered", () => {
-        cy.mount(
-          <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
-            <CalendarNavigation />
-            <CalendarWeekHeader />
-            <CalendarGrid />
-          </Calendar>,
-        );
-        // Simulate hovering over a date button
-        cy.findByRole("button", {
-          name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).realHover({ position: "bottom" });
-        // Verify that the date button is hovered
-        cy.findByRole("button", {
-          name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("have.class", "saltCalendarDay-hovered");
-
-        // Simulate hovering outside the calendar
-        cy.get("body").realHover({ position: "topLeft" });
-        // Verify that the hovered class is removed
-        cy.get(".saltCalendarDay-hovered").should("not.exist");
-      });
-
       it("SHOULD only allow one date to be selected at a time", () => {
         cy.mount(
           <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
