@@ -78,8 +78,8 @@ export const QAContainer = ({
 }: QAContainerProps) => {
   const style = {
     "--qaContainer-cols": cols,
-    "--qaContainer-height": height === undefined ? "auto" : `${height}px`,
-    "--qaContainer-width": width === undefined ? "auto" : `${width}px`,
+    "--qaContainer-height": height === undefined ? undefined : `${height}px`,
+    "--qaContainer-width": width === undefined ? undefined : `${width}px`,
     "--qaContainer-item-padding":
       itemPadding === undefined ? undefined : `${itemPadding}px`,
     "--qaContainer-item-width": itemWidthAuto ? "auto" : undefined,
