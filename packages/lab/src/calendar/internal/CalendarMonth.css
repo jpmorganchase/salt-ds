@@ -14,17 +14,11 @@
   width: 100%;
 }
 
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredStart:last-child::before,
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredSpan:last-child::before,
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredEnd:last-child::before,
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-selectedSpan:last-child::before {
-  right: 0px;
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay:last-child::before {
+  right: 0;
 }
 
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredStart:first-child::before,
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredSpan:first-child::before,
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-hoveredEnd:first-child::before,
-.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay.saltCalendarDay-selectedSpan:first-child::before {
+.saltCalendarMonth-grid > .saltCalendarMonth-week > .saltCalendarDay:first-child::before {
   left: 0;
 }
 
