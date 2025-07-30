@@ -281,7 +281,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         }).should("have.class", "saltCalendarDay-hoveredSpan");
         cy.findByRole("button", {
           name: adapter.format(endDate, "DD MMMM YYYY"),
-        }).should("have.class", "saltCalendarDay-hoveredSpan");
+        }).should("have.class", "saltCalendarDay-hoveredEnd");
 
         // Simulate clicking on the end date button to select the range
         cy.findByRole("button", {

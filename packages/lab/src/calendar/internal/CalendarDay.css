@@ -13,7 +13,7 @@
   width: var(--salt-size-base);
   height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);
-  background: var(--salt-selectable-background);
+  background-color: var(--salt-selectable-background);
   cursor: var(--salt-cursor-hover);
   border: none;
   padding: 0;
@@ -46,22 +46,22 @@
 .saltCalendarDay-selectedStart,
 .saltCalendarDay-selectedEnd,
 .saltCalendarDay-hoveredStart.saltCalendarDay-selectedStart,
-.saltCalendarDay-hoveredStart.saltCalendarDay-selectedStart:before,
+.saltCalendarDay-hoveredStart.saltCalendarDay-selectedStart::before,
 .saltCalendarDay-hoveredEnd.saltCalendarDay-selectedEnd,
-.saltCalendarDay-hoveredEnd.saltCalendarDay-selectedEnd:before {
+.saltCalendarDay-hoveredEnd.saltCalendarDay-selectedEnd::before {
   position: relative;
   z-index: var(--calendar-day-z-index-selected-endcap);
 }
 
 .saltCalendarDay-selectedSpan,
 .saltCalendarDay-hoveredSpan.saltCalendarDay-selectedSpan,
-.saltCalendarDay-hoveredSpan.saltCalendarDay-selectedSpan:before {
+.saltCalendarDay-hoveredSpan.saltCalendarDay-selectedSpan::before {
   position: relative;
   z-index: var(--calendar-day-z-index-selected-span);
 }
 
-.saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before,
-.saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before {
+.saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before,
+.saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before {
   content: "";
   position: absolute;
   box-sizing: border-box;
@@ -73,16 +73,16 @@
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
 }
-.saltCalendarDay-focused.saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before,
-.saltCalendarDay-focused.saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before {
+.saltCalendarDay-focused.saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before,
+.saltCalendarDay-focused.saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before {
   outline: var(--salt-focused-outline);
   outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1) - var(--salt-size-fixed-100));
 }
 
-.saltCalendarDay-selectedStart:before,
-.saltCalendarDay-selectedStart.saltCalendarDay-hoveredStart:before,
-.saltCalendarDay-selectedEnd:before,
-.saltCalendarDay-selectedEnd.saltCalendarDay-hoveredEnd:before {
+.saltCalendarDay-selectedStart::before,
+.saltCalendarDay-selectedStart.saltCalendarDay-hoveredStart::before,
+.saltCalendarDay-selectedEnd::before,
+.saltCalendarDay-selectedEnd.saltCalendarDay-hoveredEnd::before {
   content: "";
   position: absolute;
   box-sizing: border-box;
@@ -91,52 +91,52 @@
   right: calc(var(--calendar-gap) * -1);
   bottom: calc(var(--calendar-gap) * -1);
   background-color: var(--salt-selectable-background-hover);
-  background: var(--salt-selectable-background-selected);
+  background-color: var(--salt-selectable-background-selected);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
 }
-.saltCalendarDay-focused.saltCalendarDay-selectedStart:before,
-.saltCalendarDay-focused.saltCalendarDay-selectedStart.saltCalendarDay-hoveredStart:before,
-.saltCalendarDay-focused.saltCalendarDay-selectedEnd:before,
-.saltCalendarDay-focused.saltCalendarDay-selectedEnd.saltCalendarDay-hoveredEnd:before {
+.saltCalendarDay-focused.saltCalendarDay-selectedStart::before,
+.saltCalendarDay-focused.saltCalendarDay-selectedStart.saltCalendarDay-hoveredStart::before,
+.saltCalendarDay-focused.saltCalendarDay-selectedEnd::before,
+.saltCalendarDay-focused.saltCalendarDay-selectedEnd.saltCalendarDay-hoveredEnd::before {
   outline: var(--salt-focused-outline);
   outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1) - var(--salt-size-fixed-100));
 }
 
 .saltCalendarDay-selectedStart,
-.saltCalendarDay-selectedStart:before {
+.saltCalendarDay-selectedStart::before {
   z-index: var(--calendar-day-z-index-selected-endcap);
   border-radius: var(--salt-palette-corner-weak, 0) 0 0 var(--salt-palette-corner-weak, 0);
 }
 
 .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd),
-.saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before,
+.saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before,
 .saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd),
-.saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before {
+.saltCalendarDay-selectedSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before {
   border-radius: 0;
 }
 
 .saltCalendarDay-focused.saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart),
-.saltCalendarDay-focused.saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart):before,
+.saltCalendarDay-focused.saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart)::before,
 .saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart),
-.saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart):before {
+.saltCalendarDay-selectedEnd:not(.saltCalendarDay-selectedStart)::before {
   z-index: var(--calendar-day-z-index-selected-endcap);
   border-radius: 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0;
 }
 
 .saltCalendarDay-focused.saltCalendarDay-selectedSameDay,
-.saltCalendarDay-focused.saltCalendarDay-selectedSameDay:before,
+.saltCalendarDay-focused.saltCalendarDay-selectedSameDay::before,
 .saltCalendarDay-selectedSameDay,
-.saltCalendarDay-selectedSameDay:before {
+.saltCalendarDay-selectedSameDay::before {
   border-radius: var(--salt-palette-corner-weak, 0);
 }
 /**
  * The following namespaced styles are used to highlight the hovered days in different selection modes.
  */
 .saltCalendarMonth-single {
-  .saltCalendarDay-focused:before,
-  .saltCalendarDay:focus:before,
-  .saltCalendarDay:focus-visible:before,
-  .saltCalendarDay:hover:before {
+  .saltCalendarDay-focused::before,
+  .saltCalendarDay:focus::before,
+  .saltCalendarDay:focus-visible::before,
+  .saltCalendarDay:hover::before {
     outline: var(--salt-focused-outline);
     outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1) - 1px);
     border-radius: var(--salt-palette-corner-weak, 0);
@@ -145,10 +145,10 @@
   .saltCalendarDay:hover:not(.saltCalendarDay-selected),
   .saltCalendarDay:hover:not(.saltCalendarDay-selected) {
     color: var(--salt-content-primary-foreground);
-    background: var(--salt-selectable-background-hover);
+    background-color: var(--salt-selectable-background-hover);
   }
 
-  .saltCalendarDay-selected:before {
+  .saltCalendarDay-selected::before {
     content: "";
     position: absolute;
     top: calc(var(--calendar-gap) * -1);
@@ -157,7 +157,7 @@
     bottom: calc(var(--calendar-gap) * -1);
     z-index: var(--calendar-day-z-index-selected-span);
     color: var(--salt-content-primary-foreground);
-    background: var(--salt-selectable-background-selected);
+    background-color: var(--salt-selectable-background-selected);
     border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
     border-radius: var(--salt-palette-corner-weak, 0);
   }
@@ -173,17 +173,17 @@
 
   .saltCalendarDay:hover:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd) {
     color: var(--salt-content-primary-foreground);
-    background: var(--salt-selectable-background-hover);
+    background-color: var(--salt-selectable-background-hover);
   }
 
-  .saltCalendarDay:hover.saltCalendarDay-selectedSpan:before,
-  .saltCalendarDay:hover.saltCalendarDay-hoveredSpan:before .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart):before,
-  .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart):before {
+  .saltCalendarDay:hover.saltCalendarDay-selectedSpan::before,
+  .saltCalendarDay:hover.saltCalendarDay-hoveredSpan::before .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart)::before,
+  .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart)::before {
     border-radius: 0;
   }
 
-  .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart):before,
-  .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart):before {
+  .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart)::before,
+  .saltCalendarDay-focused.saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-selectedStart)::before {
     outline: var(--salt-focused-outline);
     outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1) - var(--salt-size-fixed-100));
   }
@@ -192,7 +192,7 @@
     border-radius: 0;
   }
 
-  .saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):before {
+  .saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before {
     content: "";
     position: absolute;
     top: calc(var(--calendar-gap) * -1);
@@ -213,11 +213,11 @@
   .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd),
   .saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd) {
     color: var(--salt-content-primary-foreground);
-    background: var(--salt-selectable-background-hover);
+    background-color: var(--salt-selectable-background-hover);
   }
 
   .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd),
-  .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd):before {
+  .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd)::before {
     border: none;
   }
 
@@ -251,15 +251,15 @@
   border-bottom: var(--salt-size-indicator) var(--salt-borderStyle-solid) var(--salt-content-secondary-foreground);
 }
 
-.saltCalendarDay-outOfRange.saltCalendarDay-highlighted:before {
-  background: var(--salt-content-secondary-foreground);
+.saltCalendarDay-outOfRange.saltCalendarDay-highlighted::before {
+  background-color: var(--salt-content-secondary-foreground);
 }
 
 .saltCalendarDay-disabled,
 .saltCalendarDay-disabled:hover,
 .saltCalendarDay-unselectable,
 .saltCalendarDay-unselectable:hover {
-  background: var(--salt-selectable-background-disabled);
+  background-color: var(--salt-selectable-background-disabled);
   cursor: var(--salt-cursor-disabled);
 }
 
@@ -283,27 +283,27 @@
   border-radius: var(--salt-palette-corner-weak, 0);
 }
 
-.saltCalendarDay-highlighted:after {
+.saltCalendarDay-highlighted::after {
   content: "";
   top: 0px;
   right: 0px;
   box-sizing: border-box;
   height: var(--calendar-day-highlight-size); /* TODO: change for size-modifier when available */
   width: var(--calendar-day-highlight-size);
-  background: var(--salt-accent-background);
+  background-color: var(--salt-accent-background);
   position: absolute;
   clip-path: polygon(100% 0, 100% 100%, 0 0);
   z-index: var(--calendar-day-z-index-highlight);
 }
-.saltCalendarDay-focused .saltCalendarDay-highlighted:after {
+.saltCalendarDay-focused .saltCalendarDay-highlighted::after {
   border: var(--salt-focused-outline);
 }
 
-.saltCalendarDay-unselectable:after {
+.saltCalendarDay-unselectable::after {
   content: "";
   height: var(--salt-size-fixed-100);
   width: calc(100% - var(--salt-spacing-100));
-  background: var(--salt-content-secondary-foreground);
+  background-color: var(--salt-content-secondary-foreground);
   position: absolute;
 }
 
