@@ -22,6 +22,7 @@
 
 .saltStepText-description {
   grid-area: description;
+  color: var(--salt-content-secondary-foreground);
 }
 
 .saltStepper-vertical .saltStepText-description {
