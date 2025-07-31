@@ -1,0 +1,94 @@
+.saltVerticalNavigationItemContent {
+  --verticalNavigationItem-iconPadding: calc(var(--saltVerticalNavigationItem-iconPaddingMultiplier, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)));
+  --verticalNavigationItem-depthPadding: calc(var(--salt-spacing-100) * max(0, calc(var(--verticalNavigationItem-depth, 0) - 1)));
+}
+
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent {
+  --verticalNavigationItem-paddingLeft: calc(var(--salt-spacing-150) + var(--salt-size-indicator) + var(--verticalNavigationItem-depthPadding) + var(--verticalNavigationItem-iconPadding));
+  --verticalNavigationItem-paddingBlock: var(--salt-spacing-50);
+}
+
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
+  --verticalNavigationItem-paddingLeft: calc(var(--salt-spacing-100) + var(--verticalNavigationItem-depthPadding) + var(--verticalNavigationItem-iconPadding));
+  --verticalNavigationItem-paddingBlock: calc(var(--salt-spacing-50) - var(--salt-size-fixed-100));
+}
+
+.saltVerticalNavigationItemContent {
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  appearance: none;
+  -webkit-appearance: none;
+  white-space: pre;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-width: 4em;
+  padding: var(--verticalNavigationItem-paddingBlock) var(--salt-spacing-100) var(--verticalNavigationItem-paddingBlock) var(--verticalNavigationItem-paddingLeft);
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner-weak, 0);
+  overflow: hidden;
+
+  cursor: var(--salt-cursor-hover);
+  color: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-h4-fontWeight);
+  font-family: var(--salt-text-h4-fontFamily);
+  text-align: var(--salt-text-textAlign);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-h4-lineHeight);
+  font-size: var(--salt-text-h4-fontSize);
+}
+
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active,
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active:hover {
+  background: var(--salt-navigable-accent-background-active);
+}
+
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent::before {
+  left: var(--salt-spacing-50);
+  content: "";
+  position: absolute;
+  height: var(--salt-size-base);
+  border-radius: var(--salt-palette-corner-strongest);
+  width: var(--salt-size-indicator);
+}
+
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active::before {
+  background: var(--salt-navigable-accent-indicator-active);
+}
+
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+}
+
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active,
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active:hover {
+  background: var(--salt-navigable-accent-background-active);
+  border-color: var(--salt-navigable-accent-borderColor-active);
+}
+
+.saltVerticalNavigationItemContent .saltIcon,
+.saltVerticalNavigationItemContent .saltBadge {
+  min-height: var(--salt-text-lineHeight);
+}
+
+.saltVerticalNavigationItemContent-focused {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+  z-index: 1;
+}
+
+.saltVerticalNavigationItemContent:hover {
+  background: var(--salt-navigable-background-hover);
+}
+
+.saltVerticalNavigation .saltVerticalNavigationItemContent-active,
+.saltVerticalNavigation .saltVerticalNavigationSubMenu .saltVerticalNavigationItemContent-active {
+  font-weight: var(--salt-text-h4-fontWeight);
+}
+
+@supports selector(:has(*)) {
+  .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[aria-controls]) {
+    background: linear-gradient(var(--salt-navigable-background-hover), var(--salt-navigable-background-hover)) var(--salt-navigable-accent-background-active);
+  }
+}

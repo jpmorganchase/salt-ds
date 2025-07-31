@@ -1,0 +1,35 @@
+.saltVerticalNavigation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-fixed-100);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.saltVerticalNavigation > .saltDivider-horizontal,
+.saltVerticalNavigationSubMenu > .saltDivider-horizontal,
+.saltVerticalNavigationItem > .saltDivider-horizontal {
+  margin-bottom: calc(var(--salt-size-fixed-100) * -1);
+}
+
+.saltVerticalNavigation[data-has-direct-icons="false"] .saltCollapsiblePanel-inner {
+  margin-bottom: calc(var(--salt-size-fixed-100) * -1);
+}
+
+.saltVerticalNavigation[data-has-direct-icons="false"] .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+}
+
+/* Only show border at the top-level */
+
+.saltVerticalNavigation .saltCollapsiblePanel-inner .saltCollapsiblePanel-inner,
+.saltVerticalNavigation .saltCollapsiblePanel[aria-hidden="true"] .saltCollapsiblePanel-inner {
+  margin-bottom: 0;
+}
+
+.saltVerticalNavigation .saltCollapsiblePanel-inner .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu,
+.saltVerticalNavigation .saltCollapsiblePanel[aria-hidden="true"] .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu {
+  border-bottom: none;
+}

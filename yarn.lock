@@ -3374,6 +3374,7 @@ __metadata:
     react-docgen-typescript: "npm:2.4.0"
     react-dom: "npm:^18.3.1"
     react-resizable-panels: "npm:^3.0.0"
+    react-router: "npm:^7.6.3"
     rifm: "npm:^0.12.0"
     rollup: "npm:^4.24.2"
     rollup-plugin-esbuild: "npm:^6.1.1"
@@ -14110,6 +14111,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router@npm:^7.6.3":
+  version: 7.6.3
+  resolution: "react-router@npm:7.6.3"
+  dependencies:
+    cookie: "npm:^1.0.1"
+    set-cookie-parser: "npm:^2.6.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 10/c970729d17e705d793ffe602cc034274c6064f514fe401ee03e37c4c27baa70be04367bbf6242f9a1c7777a19e4cb67f5a024954224622ce6bee2cefc52e0b90
+  languageName: node
+  linkType: hard
+
 "react-split@npm:^2.0.14":
   version: 2.0.14
   resolution: "react-split@npm:2.0.14"
@@ -16566,11 +16583,11 @@ __metadata:
   linkType: hard
 
 "use-sync-external-store@npm:^1.2.0, use-sync-external-store@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "use-sync-external-store@npm:1.4.0"
+  version: 1.5.0
+  resolution: "use-sync-external-store@npm:1.5.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/08bf581a8a2effaefc355e9d18ed025d436230f4cc973db2f593166df357cf63e47b9097b6e5089b594758bde322e1737754ad64905e030d70f8ff7ee671fd01
+  checksum: 10/ddae7c4572511f7f641d6977bd0725340aa7dbeda8250418b54c1a57ec285083d96cf50d1a1acbd6cf729f7a87071b2302c6fbd29310432bf1b21a961a313279
   languageName: node
   linkType: hard
 
