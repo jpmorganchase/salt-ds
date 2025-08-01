@@ -1,7 +1,6 @@
 import { FlexLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -14,12 +13,8 @@ export const Basic = (): ReactElement => {
   const slideId = useId();
   const slides = Array.from(Array(4).keys());
   return (
-    <Carousel
-      aria-label="default carousel example"
-      className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
-    >
-      <FlexLayout justify={"start"} direction={"row"} gap={1}>
+    <Carousel aria-label="default carousel example" className={styles.carousel}>
+      <FlexLayout gap={1} wrap={true} align={"center"}>
         <CarouselPreviousButton />
         <CarouselNextButton />
         <CarouselProgressLabel />
@@ -27,14 +22,13 @@ export const Basic = (): ReactElement => {
       <CarouselSlides>
         {slides.map((index) => (
           <div
-            role="tabpanel"
+            aria-label={`Placeholder slide ${index + 1}`}
+            role="group"
             aria-roledescription="slide"
-            aria-label={`Example slide ${index + 1}`}
             className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
+            key={`slide-${slideId}-${index}`}
           >
-            <Text styleAs={"display1"} className={styles.carouselNumber}>
+            <Text styleAs="display1" className={styles.carouselNumber}>
               {index + 1}
             </Text>
           </div>

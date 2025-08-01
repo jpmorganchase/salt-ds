@@ -1,7 +1,6 @@
 import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -9,19 +8,19 @@ import {
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import type { ReactElement } from "react";
-import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const Card = (): ReactElement => {
+export const TabListBottom = (): ReactElement => {
   const carouselId = useId();
 
+  const slides = Array.from(Array(4).keys());
   return (
     <Carousel
       aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
     >
       <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Carousel cards example
+        Tablist bottom aligned example
       </H2>
       <div
         style={{
@@ -37,30 +36,19 @@ export const Card = (): ReactElement => {
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
-          {sliderData.map((slide, index) => {
-            const id = `${carouselId}-${index}`;
-            return (
-              <CarouselCard
-                className={styles.carouselSlide}
-                key={`slide-${id}`}
-                aria-labelledby={`title-${id}`}
-                media={
-                  <img
-                    alt={`stock content to show in carousel slide ${index}`}
-                    className={styles.carouselImage}
-                    src={slide.image}
-                  />
-                }
-                header={
-                  <Text id={`title-${id}`} styleAs="h3">
-                    {slide.title}
-                  </Text>
-                }
-              >
-                <Text>{slide.content}</Text>
-              </CarouselCard>
-            );
-          })}
+          {slides.map((index) => (
+            <div
+              role={"tabpanel"}
+              aria-roledescription="slide"
+              aria-label={`Placeholder slide ${index + 1}`}
+              className={styles.carouselSlide}
+              key={`${carouselId}-card-${index}`}
+            >
+              <Text styleAs="display1" className={styles.carouselNumber}>
+                {index + 1}
+              </Text>
+            </div>
+          ))}
         </CarouselSlides>
       </div>
     </Carousel>

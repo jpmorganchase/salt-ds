@@ -9,10 +9,12 @@ import {
   type KeyboardEvent,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
 import { createCustomSettle } from "./createCustomSettle";
+import { getVisibleSlideDescriptions } from "./getVisibleSlideDescriptions";
 
 /**
  * Props for the CarouselSlides component.
@@ -29,28 +31,26 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       css: carouselSlidesCss,
       window: targetWindow,
     });
-    const { emblaApi, emblaRef } = useCarouselContext();
+    const {
+      disableSlideAnnouncements,
+      emblaApi,
+      emblaRef,
+      silenceNextAnnoucement,
+      setSilenceNextAnnoucement,
+    } = useCarouselContext();
 
     const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
 
     const usingArrowNavigation = useRef<boolean>();
+    const [liveAnnouncement, setLiveAnnouncement] = useState<string>("");
+    const [stableScrollSnap, setStableScrollSnap] = useState<
+      number | undefined
+    >(undefined);
 
     useEffect(() => {
       const handleSettle = (emblaApi: EmblaCarouselType) => {
-        if (!usingArrowNavigation.current) {
-          return;
-        }
-        const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
-        const snappedSlide = emblaApi.slideNodes()[slideIndexInView];
-        if (snappedSlide) {
-          const focusableElements = snappedSlide.querySelectorAll<HTMLElement>(
-            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
-          );
-          if (focusableElements.length > 0) {
-            focusableElements[0].focus();
-          }
-        }
-        usingArrowNavigation.current = false;
+        const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
+        setStableScrollSnap(selectedScrollSnap);
       };
 
       if (!emblaApi) {
@@ -63,6 +63,22 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("scroll", scrollCallback);
       };
     }, [emblaApi]);
+
+    useEffect(() => {
+      if (silenceNextAnnoucement || stableScrollSnap === undefined) {
+        setSilenceNextAnnoucement(false);
+        return;
+      }
+      const contentDescriptions = getVisibleSlideDescriptions(
+        emblaApi,
+        stableScrollSnap,
+      );
+      const announcement =
+        contentDescriptions?.length > 1
+          ? `Currently visible slides: ${contentDescriptions.join(", ")}`
+          : contentDescriptions[0];
+      setLiveAnnouncement(announcement);
+    }, [stableScrollSnap]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.repeat) {
@@ -85,15 +101,35 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       onKeyDown?.(event);
     };
 
+    const handleContainerKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.stopPropagation();
+      }
+    };
+
     return (
-      <div
-        onKeyDown={handleKeyDown}
-        ref={carouselRef}
-        className={clsx(withBaseName(), className)}
-        {...rest}
-      >
-        <div className={withBaseName("container")}>{children}</div>
-      </div>
+      <>
+        <div
+          onKeyDown={handleKeyDown}
+          ref={carouselRef}
+          className={clsx(withBaseName(), className)}
+          tabIndex={0}
+          {...rest}
+        >
+          <div
+            className={withBaseName("container")}
+            onKeyDown={handleContainerKeyDown}
+          >
+            {children}
+          </div>
+        </div>
+        <div
+          aria-live={disableSlideAnnouncements ? "off" : "polite"}
+          className={withBaseName("sr-only")}
+        >
+          {liveAnnouncement}
+        </div>
+      </>
     );
   },
 );
