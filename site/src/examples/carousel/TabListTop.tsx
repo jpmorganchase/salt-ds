@@ -1,4 +1,4 @@
-import { H2, StackLayout, Text, useBreakpoint, useId } from "@salt-ds/core";
+import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselNextButton,
@@ -11,36 +11,28 @@ import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const TabListTop = (): ReactElement => {
-  const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const carouselId = useId();
 
-  const slides = Array.from(Array(isMobile ? 2 : 4).keys());
+  const slides = Array.from(Array(4).keys());
   return (
     <Carousel
-      aria-label="Pagination carousel example"
+      aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
     >
-      <StackLayout direction="row" gap={1}>
-        <CarouselPreviousButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
-        {!isMobile ? <CarouselTabList /> : null}
-        <CarouselNextButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
+      <FlexLayout gap={1} wrap={true}>
+        <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+        <CarouselTabList />
+        <CarouselNextButton tabIndex={-1} appearance="transparent" />
         <CarouselProgressLabel />
-      </StackLayout>
+      </FlexLayout>
       <CarouselSlides>
         {slides.map((index) => (
           <div
-            role={!isMobile ? "tabpanel" : "group"}
-            aria-roledescription={!isMobile ? undefined : "slide"}
-            aria-label={`Example slide ${index + 1}`}
+            role="tabpanel"
+            aria-roledescription="slide"
+            aria-label={`Placeholder slide ${index + 1}`}
             className={styles.carouselSlide}
-            key={`slide-${slideId}-${index}`}
+            key={`${carouselId}-card${index}`}
           >
             <Text styleAs="display1" className={styles.carouselNumber}>
               {index + 1}
@@ -48,7 +40,9 @@ export const TabListTop = (): ReactElement => {
           </div>
         ))}
       </CarouselSlides>
-      <H2 className={styles.carouselHeading}>Title</H2>
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Tablist top aligned example
+      </H2>
     </Carousel>
   );
 };

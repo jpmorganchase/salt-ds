@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
-const { Default } = composedStories;
+const { Default, SlideGroup } = composedStories;
 
 describe("Given a Carousel", () => {
   let emblaTestApi: CarouselEmblaApiType | null | undefined;
@@ -71,11 +71,31 @@ describe("Given a Carousel", () => {
     ).should("have.text", expectedText);
   };
 
-  it("should render the carousel with four slides", () => {
+  it("should render the carousel with four slides as a tabbed list", () => {
     cy.mount(<Default />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="default carousel example"]').should("exist");
-    cy.get('[role="tabpanel"]').should("have.length", 4);
+    cy.get('[aria-label="Numbered carousel example"]').should("exist");
+    cy.get('[aria-live="polite"]').should("exist");
+    cy.get('[role="group"]').should("not.exist");
+    cy.get('[role="tabpanel"]')
+      .should("have.length", 4)
+      .each(($el) => {
+        cy.wrap($el).should("have.attr", "aria-roledescription", "slide");
+      });
+  });
+
+  it("should render the carousel with four slides as a slide group", () => {
+    cy.mount(<SlideGroup ariaVariant="group" />);
+    cy.findByRole("region").should("exist");
+    cy.get('[aria-label="Carousel cards example"]').should("exist");
+    cy.get('[aria-live="polite"]').should("exist");
+    cy.get('[role="group"]').should("exist");
+    cy.get('[role="tabpanel"]').should("have.length", 0);
+  });
+
+  it("can disable slide announcements", () => {
+    cy.mount(<Default disableSlideAnnouncements={true} />);
+    cy.get('[aria-live="off"]').should("exist");
   });
 
   describe("WITH the current slide as slide 1", () => {

@@ -1,4 +1,4 @@
-import { H2, StackLayout, Text, useId } from "@salt-ds/core";
+import { FlexLayout, H2, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -13,14 +13,22 @@ import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const MultipleSlides = (): ReactElement => {
-  const slideId = useId();
+  const carouselId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1; // switch to single slide for mobile
+
+  console.log("isMobile:", isMobile);
   return (
     <Carousel
-      aria-label="Multiple slides carousel example"
-      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
+      aria-labelledby={`${carouselId}-title`}
+      className={clsx(styles.carousel, {
+        [styles.carouselMultipleSlides]: !isMobile,
+      })}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
     >
-      <H2 className={styles.carouselHeading}>Title</H2>
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Multiple slides carousel example
+      </H2>
       <div
         style={{
           display: "flex",
@@ -28,19 +36,20 @@ export const MultipleSlides = (): ReactElement => {
           gap: "var(--salt-spacing-100)",
         }}
       >
-        <StackLayout direction="row" gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
+        <FlexLayout gap={1} wrap={true} align={"center"}>
+          <CarouselPreviousButton aria-label="Previous slide group" />
+          <CarouselNextButton aria-label="Next slide group" />
           <CarouselProgressLabel />
-        </StackLayout>
+        </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const id = `${slideId}-${index}`;
+            const id = `${carouselId}-card${index}`;
             return (
               <CarouselCard
                 className={styles.carouselSlide}
                 key={`slide-${id}`}
-                aria-labelledby={id}
+                aria-labelledby={`title-${id}`}
+                aria-roledescription={undefined}
                 appearance="bordered"
                 media={
                   <img
@@ -50,7 +59,7 @@ export const MultipleSlides = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text styleAs="h3" id={id}>
+                  <Text id={`title-${id}`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }

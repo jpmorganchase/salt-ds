@@ -31,25 +31,26 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       css: carouselSlidesCss,
       window: targetWindow,
     });
-    const { emblaApi, emblaRef } = useCarouselContext();
+    const {
+      disableSlideAnnouncements,
+      emblaApi,
+      emblaRef,
+      silenceNextAnnoucement,
+      setSilenceNextAnnoucement,
+    } = useCarouselContext();
 
     const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
 
     const usingArrowNavigation = useRef<boolean>();
     const [liveAnnouncement, setLiveAnnouncement] = useState<string>("");
+    const [stableScrollSnap, setStableScrollSnap] = useState<
+      number | undefined
+    >(undefined);
 
     useEffect(() => {
       const handleSettle = (emblaApi: EmblaCarouselType) => {
         const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
-        const contentDescriptions = getVisibleSlideDescriptions(
-          emblaApi,
-          selectedScrollSnap,
-        );
-        const announcement =
-          contentDescriptions?.length > 1
-            ? `Currently visible slides: ${contentDescriptions.join(", ")}`
-            : contentDescriptions[0];
-        setLiveAnnouncement(announcement);
+        setStableScrollSnap(selectedScrollSnap);
       };
 
       if (!emblaApi) {
@@ -62,6 +63,22 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("scroll", scrollCallback);
       };
     }, [emblaApi]);
+
+    useEffect(() => {
+      if (silenceNextAnnoucement || stableScrollSnap === undefined) {
+        setSilenceNextAnnoucement(false);
+        return;
+      }
+      const contentDescriptions = getVisibleSlideDescriptions(
+        emblaApi,
+        stableScrollSnap,
+      );
+      const announcement =
+        contentDescriptions?.length > 1
+          ? `Currently visible slides: ${contentDescriptions.join(", ")}`
+          : contentDescriptions[0];
+      setLiveAnnouncement(announcement);
+    }, [stableScrollSnap]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.repeat) {
@@ -93,7 +110,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     return (
       <>
         <div
-          aria-live={"off"}
           onKeyDown={handleKeyDown}
           ref={carouselRef}
           className={clsx(withBaseName(), className)}
@@ -107,7 +123,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
             {children}
           </div>
         </div>
-        <div aria-live="polite" className={withBaseName("sr-only")}>
+        <div
+          aria-live={disableSlideAnnouncements ? "off" : "polite"}
+          className={withBaseName("sr-only")}
+        >
           {liveAnnouncement}
         </div>
       </>

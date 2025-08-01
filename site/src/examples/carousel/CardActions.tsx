@@ -1,11 +1,4 @@
-import {
-  H2,
-  Link,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { FlexLayout, H2, Link, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -21,13 +14,11 @@ import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const CardActions = (): ReactElement => {
-  const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const carouselId = useId();
 
   return (
     <Carousel
-      aria-label="Card actions example"
+      aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
       emblaPlugins={[
         Classnames({
@@ -35,7 +26,9 @@ export const CardActions = (): ReactElement => {
         }),
       ]}
     >
-      <H2 className={styles.carouselHeading}>Title</H2>
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Card actions example
+      </H2>
       <div
         style={{
           display: "flex",
@@ -43,28 +36,20 @@ export const CardActions = (): ReactElement => {
           gap: "var(--salt-spacing-100)",
         }}
       >
-        <StackLayout direction="row" gap={1}>
-          <CarouselPreviousButton
-            tabIndex={!isMobile ? -1 : 0}
-            appearance={!isMobile ? "transparent" : "bordered"}
-          />
-          {!isMobile ? <CarouselTabList /> : null}
-          <CarouselNextButton
-            tabIndex={!isMobile ? -1 : 0}
-            appearance={!isMobile ? "transparent" : "bordered"}
-          />
+        <FlexLayout gap={1} wrap={true}>
+          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+          <CarouselTabList />
+          <CarouselNextButton tabIndex={-1} appearance="transparent" />
           <CarouselProgressLabel />
-        </StackLayout>
+        </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const id = `${slideId}-${index}`;
+            const id = `${carouselId}-card${index}`;
             return (
               <CarouselCard
-                role={!isMobile ? "tabpanel" : "group"}
-                aria-roledescription={!isMobile ? undefined : "slide"}
                 className={styles.carouselSlide}
                 key={`slide-${id}`}
-                aria-labelledby={id}
+                aria-labelledby={`title-${id}`}
                 appearance="bordered"
                 media={
                   <img
@@ -74,7 +59,7 @@ export const CardActions = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text styleAs="h3" id={id}>
+                  <Text id={`title-${id}`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }

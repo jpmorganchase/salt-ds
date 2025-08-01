@@ -1,4 +1,5 @@
 import type { EmblaCarouselType } from "embla-carousel";
+import { getSlideDescription } from "./getSlideDescription";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 /** Get a description of the visible slide(s) content.
@@ -15,20 +16,13 @@ export const getVisibleSlideDescriptions = (
   }
 
   const visibleSlideIndexes = getVisibleSlideIndexes(emblaApi, scrollSnapIndex);
+  const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
 
   return visibleSlideIndexes.reduce<string[]>((result, slideIndex) => {
-    const slideElement = emblaApi.slideNodes()[slideIndex - 1];
-    let description: string | undefined;
-    const labelledById = slideElement?.getAttribute("aria-labelledby");
-    const { ownerDocument } = emblaApi.internalEngine();
-    if (labelledById) {
-      const labelledByElement = ownerDocument.getElementById(labelledById);
-      description = labelledByElement?.textContent ?? undefined;
-    }
-    if (!description) {
-      description = slideElement?.getAttribute("aria-label") ?? undefined;
-    }
-
-    return [...result, description || ""];
+    const description = getSlideDescription(emblaApi, slideIndex);
+    return [
+      ...result,
+      `${description}, slide, ${slideIndex} of ${numberOfSlides}` || "",
+    ];
   }, []);
 };

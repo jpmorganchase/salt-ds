@@ -1,9 +1,10 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentProps, forwardRef, type ReactNode } from "react";
 import saltCarouselCardCss from "./CarouselCard.css";
+import { useCarouselContext } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarouselCard");
 
@@ -55,9 +56,13 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
       window: targetWindow,
     });
 
+    const id = useId();
+    const { ariaVariant } = useCarouselContext();
+
     return (
       <div
-        role="group"
+        id={id}
+        role={ariaVariant === "group" ? "group" : undefined}
         aria-roledescription="slide"
         className={clsx(withBaseName(), className)}
         {...rest}
@@ -67,6 +72,7 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
           className={clsx(withBaseName("content"), {
             [withBaseName("bordered")]: appearance === "bordered",
           })}
+          role={ariaVariant === "tabpanel" ? "tabpanel" : undefined}
         >
           {media}
           {children && (
