@@ -1,0 +1,51 @@
+.salt-theme[data-mode="light"][data-brand="commercial"] {
+  --salt-palette-categorical-1: var(--salt-color-blue-600);
+  --salt-palette-categorical-1-strong: var(--salt-color-blue-700);
+  --salt-palette-categorical-1-weakest: var(--salt-color-blue-50);
+
+  --salt-palette-categorical-2: var(--salt-color-quartz-600);
+  --salt-palette-categorical-2-strong: var(--salt-color-quartz-700);
+  --salt-palette-categorical-2-weakest: var(--salt-color-quartz-50);
+
+  --salt-palette-categorical-3: var(--salt-color-orange-600);
+  --salt-palette-categorical-3-strong: var(--salt-color-orange-600);
+  --salt-palette-categorical-3-weakest: var(--salt-color-orange-50);
+
+  --salt-palette-categorical-4: var(--salt-color-topaz-600);
+  --salt-palette-categorical-4-strong: var(--salt-color-topaz-700);
+  --salt-palette-categorical-4-weakest: var(--salt-color-topaz-50);
+
+  --salt-palette-categorical-5: var(--salt-color-gold-700);
+  --salt-palette-categorical-5-strong: var(--salt-color-gold-800);
+  --salt-palette-categorical-5-weakest: var(--salt-color-gold-50);
+
+  --salt-palette-categorical-6: var(--salt-color-teal-700);
+  --salt-palette-categorical-6-strong: var(--salt-color-teal-800);
+  --salt-palette-categorical-6-weakest: var(--salt-color-teal-50);
+}
+
+.salt-theme[data-mode="dark"][data-brand="commercial"] {
+  --salt-palette-categorical-1: var(--salt-color-blue-600);
+  --salt-palette-categorical-1-strong: var(--salt-color-blue-300);
+  --salt-palette-categorical-1-weakest: var(--salt-color-blue-800);
+
+  --salt-palette-categorical-2: var(--salt-color-quartz-600);
+  --salt-palette-categorical-2-strong: var(--salt-color-quartz-300);
+  --salt-palette-categorical-2-weakest: var(--salt-color-quartz-900);
+
+  --salt-palette-categorical-3: var(--salt-color-orange-600);
+  --salt-palette-categorical-3-strong: var(--salt-color-orange-300);
+  --salt-palette-categorical-3-weakest: var(--salt-color-orange-800);
+
+  --salt-palette-categorical-4: var(--salt-color-topaz-600);
+  --salt-palette-categorical-4-strong: var(--salt-color-topaz-300);
+  --salt-palette-categorical-4-weakest: var(--salt-color-topaz-900);
+
+  --salt-palette-categorical-5: var(--salt-color-gold-700);
+  --salt-palette-categorical-5-strong: var(--salt-color-gold-300);
+  --salt-palette-categorical-5-weakest: var(--salt-color-gold-900);
+
+  --salt-palette-categorical-6: var(--salt-color-teal-600);
+  --salt-palette-categorical-6-strong: var(--salt-color-teal-300);
+  --salt-palette-categorical-6-weakest: var(--salt-color-teal-900);
+}

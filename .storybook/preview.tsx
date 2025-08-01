@@ -11,7 +11,11 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
-import "@salt-ds/theme/css/theme-next.css";
+
+import "@salt-ds/theme/css/commercial/index.css";
+import "@salt-ds/theme/css/consumer/index.css";
+import "@salt-ds/theme/css/legacy/index.css";
+
 import "@salt-ds/theme/index.css";
 import "./styles.css";
 
@@ -42,6 +46,7 @@ if (!window.Cypress) {
 const preview: Preview = {
   initialGlobals: {
     mode: "light",
+    brand: "salt",
     density: "medium",
     responsive: "unwrap",
     textSpacing: "disable",
@@ -66,6 +71,20 @@ const preview: Preview = {
             title: "Side by side",
           },
           { value: "stacked", icon: "bottombar", title: "Stacked" },
+        ],
+      },
+    },
+    brand: {
+      name: "Brand",
+      description: "Set the brand",
+      toolbar: {
+        title: "Brand",
+        // show the brand name once selected in the toolbar
+        dynamicTitle: true,
+        items: [
+          { value: "commercial", title: "Commercial" },
+          { value: "legacy", title: "Legacy" },
+          { value: "consumer", title: "Consumer" },
         ],
       },
     },
@@ -157,6 +176,8 @@ const preview: Preview = {
         return (
           <DocsContainer context={context} {...rest}>
             <ChosenProvider
+              /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+              brand={context.store.userGlobals.globals?.brand}
               /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
               mode={context.store.userGlobals.globals?.mode}
               enableStyleInjection={

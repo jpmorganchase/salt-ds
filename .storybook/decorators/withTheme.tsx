@@ -67,6 +67,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 
 export const withTheme: Decorator = (StoryFn, context) => {
   const {
+    brand,
     density,
     mode,
     styleInjection,
@@ -100,6 +101,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
           <Provider
             applyClassesTo={"child"}
             density={density}
+            brand={brand}
             mode={mode}
             key={`${mode}-${styleInjection}`}
             enableStyleInjection={styleInjection === "enable"}
@@ -119,6 +121,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
 
   return (
     <Provider
+      brand={brand}
       density={density}
       mode={mode}
       key={`${mode}-${styleInjection}`}
