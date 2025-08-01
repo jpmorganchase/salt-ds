@@ -1,5 +1,31 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.74
+
+### Minor Changes
+
+- 7440996: A new component (`VerticalNavigation`) has been introduced to replace the existing `NavigationItem` component for vertical navigation. The new component provides a more structured and flexible way to create vertical navigation.
+- 7440996: Added `Collapsible`, `CollapsibleTrigger` and `CollapsiblePanel`.
+
+  Collapsible enables content to be either collapsed (hidden) or expanded (visible). It has two elements: a trigger and a panel whose visibility is controlled by the button.
+
+  ```tsx
+  <Collapsible>
+    <CollapsibleTrigger>
+      <Button>Click</Button>
+    </CollapsibleTrigger>
+    <CollapsiblePanel>Content</CollapsiblePanel>
+  </Collapsible>
+  ```
+
+### Patch Changes
+
+- d747775: Updated Table's footer text style to body strong.
+- Updated dependencies [c58279f]
+- Updated dependencies [239d20c]
+- Updated dependencies [fe8da62]
+  - @salt-ds/core@1.47.4
+
 ## 1.0.0-alpha.73
 
 ### Patch Changes
