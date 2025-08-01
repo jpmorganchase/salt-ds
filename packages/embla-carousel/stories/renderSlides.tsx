@@ -8,8 +8,11 @@ import carouselSlide4 from "@stories/assets/carouselSlide4.png";
 
 export const renderSlides = ({
   withActions,
+  ...rest
 }: {
   withActions?: boolean;
+  role?: string;
+  "aria-roledescription"?: string;
 } = {}) => {
   const slideId = useId();
   const content = [
@@ -45,7 +48,6 @@ export const renderSlides = ({
   return content.map((slide, index) => {
     return (
       <CarouselCard
-        role="tabpanel"
         key={`slide-${slideId}-${index}`}
         appearance="bordered"
         header={<H3 id={`${slideId}-${index}`}>{slide.title}</H3>}
@@ -58,6 +60,7 @@ export const renderSlides = ({
           />
         }
         actions={withActions && <Link href="#">{slide.link}</Link>}
+        {...rest}
       >
         <Text>{slide.content}</Text>
       </CarouselCard>

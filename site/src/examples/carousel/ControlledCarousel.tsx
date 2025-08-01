@@ -1,11 +1,4 @@
-import {
-  Button,
-  FlexLayout,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -23,9 +16,7 @@ import styles from "./index.module.css";
 export const ControlledCarousel = (): ReactElement => {
   const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
 
-  const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const carouselId = useId();
 
   useEffect(() => {
     if (!emblaApi) {
@@ -54,28 +45,20 @@ export const ControlledCarousel = (): ReactElement => {
         className={styles.carousel}
         getEmblaApi={setEmblaApi}
       >
-        <StackLayout direction="row" gap={1}>
-          <CarouselPreviousButton
-            tabIndex={!isMobile ? -1 : 0}
-            appearance={!isMobile ? "transparent" : "bordered"}
-          />
-          {!isMobile ? <CarouselTabList /> : null}
-          <CarouselNextButton
-            tabIndex={!isMobile ? -1 : 0}
-            appearance={!isMobile ? "transparent" : "bordered"}
-          />
+        <FlexLayout gap={1} wrap={true}>
+          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+          <CarouselTabList />
+          <CarouselNextButton tabIndex={-1} appearance="transparent" />
           <CarouselProgressLabel />
-        </StackLayout>
+        </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const id = `${slideId}-${index}`;
+            const id = `${carouselId}-card${index}`;
             return (
               <CarouselCard
-                role={!isMobile ? "tabpanel" : "group"}
-                aria-roledescription={!isMobile ? undefined : "slide"}
                 className={styles.carouselSlide}
                 key={`slide-${id}`}
-                aria-labelledby={id}
+                aria-labelledby={`title-${id}`}
                 appearance="bordered"
                 media={
                   <img
@@ -85,7 +68,7 @@ export const ControlledCarousel = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text styleAs="h3" id={id}>
+                  <Text id={`title-${id}`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }

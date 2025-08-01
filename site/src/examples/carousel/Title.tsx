@@ -5,19 +5,22 @@ import {
   CarouselPreviousButton,
   CarouselProgressLabel,
   CarouselSlides,
+  CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const Title = (): ReactElement => {
-  const slideId = useId();
+  const carouselId = useId();
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel
-      aria-label="Carousel example with title"
+      aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
     >
-      <H2 className={styles.carouselHeading}>Title</H2>
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Carousel example with title
+      </H2>
       <div
         style={{
           display: "flex",
@@ -25,17 +28,20 @@ export const Title = (): ReactElement => {
           gap: "var(--salt-spacing-100)",
         }}
       >
-        <FlexLayout justify="start" direction="row" gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
+        <FlexLayout gap={1} wrap={true}>
+          <CarouselPreviousButton tabIndex={-1} />
+          <CarouselTabList />
+          <CarouselNextButton tabIndex={-1} />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
           {slides.map((index) => (
             <div
-              aria-label={`Example slide ${index + 1}`}
+              aria-label={`Placeholder slide ${index + 1}`}
+              role="group"
+              aria-roledescription="slide"
               className={styles.carouselSlide}
-              key={`slide-${slideId}-${index}`}
+              key={`${carouselId}-card-${index}`}
             >
               <Text styleAs="display1" className={styles.carouselNumber}>
                 {index + 1}

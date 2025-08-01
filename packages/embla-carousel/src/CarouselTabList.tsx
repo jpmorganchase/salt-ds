@@ -7,6 +7,7 @@ import {
   type HTMLAttributes,
   type KeyboardEventHandler,
   type SyntheticEvent,
+  useEffect,
   useRef,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
@@ -16,6 +17,7 @@ import {
   useCarouselTab,
 } from "./CarouselTab";
 import carouselControlsCss from "./CarouselTabList.css";
+import { getSlideDescriptions } from "./getSlideDescription";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 const withBaseName = makePrefixer("saltCarouselTabList");
@@ -50,14 +52,9 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
       window: targetWindow,
     });
 
-    const { emblaApi } = useCarouselContext();
+    const { emblaApi, setAriaVariant, setSilenceNextAnnoucement } =
+      useCarouselContext();
     const { selectedIndex, scrollSnaps } = useCarouselTab(emblaApi);
-
-    const slideNodes = emblaApi?.slideNodes();
-    const numberOfSlides = slideNodes?.length ?? 0;
-    const slidesPerTransition = numberOfSlides
-      ? Math.ceil(numberOfSlides / scrollSnaps.length)
-      : 0;
 
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -82,11 +79,13 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
       onKeyDown?.(event);
     };
 
+    useEffect(() => {
+      setAriaVariant("tabpanel");
+    }, [setAriaVariant]);
+
     return (
       <div
         role="tablist"
-        aria-label="Choose slide"
-        tabIndex={-1}
         className={clsx(withBaseName(), className)}
         onKeyDown={handleKeyDown}
         ref={ref}
@@ -107,7 +106,15 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
             ? `${startSlideNumber}-${endSlideNumber}`
             : startSlideNumber;
 
+          const descriptions = getSlideDescriptions(
+            emblaApi,
+            startSlideNumber,
+            endSlideNumber ? endSlideNumber : undefined,
+          );
+          const ariaLabel = descriptions.join(",");
+
           const selected = selectedIndex === scrollSnapIndex;
+          const slideNodes = emblaApi?.slideNodes();
           const ariaControls = slideNodes?.length
             ? slideNodes[startSlideNumber - 1].id
             : undefined;
@@ -121,10 +128,12 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
               render={render}
               role={"tab"}
               selected={selected}
-              onClick={(_event: SyntheticEvent) =>
-                emblaApi?.scrollTo(scrollSnapIndex)
-              }
-              aria-label={`Slide ${slidePosition}`}
+              onClick={(_event: SyntheticEvent) => {
+                // avoids announcing the slide twice
+                setSilenceNextAnnoucement(true);
+                emblaApi?.scrollTo(scrollSnapIndex);
+              }}
+              aria-label={ariaLabel}
               aria-selected={selected}
               tabIndex={selected ? 0 : -1}
               aria-controls={ariaControls}

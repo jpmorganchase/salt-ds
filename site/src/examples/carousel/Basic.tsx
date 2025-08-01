@@ -14,7 +14,7 @@ export const Basic = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel aria-label="default carousel example" className={styles.carousel}>
-      <FlexLayout justify="start" direction="row" gap={1}>
+      <FlexLayout gap={1} wrap={true} align={"center"}>
         <CarouselPreviousButton />
         <CarouselNextButton />
         <CarouselProgressLabel />
@@ -22,7 +22,9 @@ export const Basic = (): ReactElement => {
       <CarouselSlides>
         {slides.map((index) => (
           <div
-            aria-label={`Example slide ${index + 1}`}
+            aria-label={`Placeholder slide ${index + 1}`}
+            role="group"
+            aria-roledescription="slide"
             className={styles.carouselSlide}
             key={`slide-${slideId}-${index}`}
           >
