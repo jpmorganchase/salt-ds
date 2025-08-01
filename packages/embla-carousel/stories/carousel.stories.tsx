@@ -104,7 +104,10 @@ export const Default = CarouselNumberExample.bind({});
 
 export const Card = CarouselCardExample.bind({});
 
-export const SlideGroup = CarouselCardExample.bind({ ariaVariant: "group" });
+export const SlideGroup = CarouselCardExample.bind({});
+SlideGroup.args = {
+  ariaVariant: "group",
+};
 
 export const Loop = CarouselNumberExample.bind({});
 Loop.args = {
