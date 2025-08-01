@@ -95,8 +95,15 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     },
     ref,
   ) {
-    const inputRef = useRef<HTMLTextAreaElement>(null);
-    const handleRef = useForkRef(inputRef, textAreaRef);
+    const [inputElement, setInputElement] =
+      useState<HTMLTextAreaElement | null>(null);
+    const handleInputElement = useCallback(
+      (element: HTMLTextAreaElement | null) => {
+        setInputElement(element);
+      },
+      [],
+    );
+    const handleRef = useForkRef(handleInputElement, textAreaRef);
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -149,10 +156,12 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     });
 
     const previousHeight = useRef<string | undefined>(undefined);
-    const input = inputRef.current;
 
     const changeHeight = useCallback(() => {
+      const input = inputElement;
+
       if (!input) return;
+
       const hasBeenManuallyResized =
         previousHeight.current !== undefined &&
         input.style.height !== previousHeight.current;
@@ -168,7 +177,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         previousHeight.current = newHeight;
         input.style.overflow = previousOverflow;
       }
-    }, [input]);
+    }, [inputElement]);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       const value = event.target.value;
@@ -220,26 +229,28 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
             {startAdornment}
           </div>
         )}
-        <textarea
-          aria-describedby={clsx(formFieldDescribedBy, textAreaDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, textAreaLabelledBy)}
-          className={clsx(withBaseName("textarea"), textAreaProps?.className)}
-          disabled={isDisabled}
-          id={id}
-          readOnly={isReadOnly}
-          ref={handleRef}
-          required={isRequired}
-          role={role}
-          rows={rows}
-          tabIndex={isDisabled ? -1 : 0}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={!isDisabled ? handleFocus : undefined}
-          placeholder={placeholder}
-          value={value}
-          {...restA11yProps}
-          {...restTextAreaProps}
-        />
+        <div className={withBaseName("wrapper")}>
+          <textarea
+            aria-describedby={clsx(formFieldDescribedBy, textAreaDescribedBy)}
+            aria-labelledby={clsx(formFieldLabelledBy, textAreaLabelledBy)}
+            className={clsx(withBaseName("textarea"), textAreaProps?.className)}
+            disabled={isDisabled}
+            id={id}
+            readOnly={isReadOnly}
+            ref={handleRef}
+            required={isRequired}
+            role={role}
+            rows={rows}
+            tabIndex={isDisabled ? -1 : 0}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onFocus={!isDisabled ? handleFocus : undefined}
+            placeholder={placeholder}
+            value={value}
+            {...restA11yProps}
+            {...restTextAreaProps}
+          />
+        </div>
         <div className={withBaseName("suffixAdornments")}>
           {!isDisabled && validationStatus && (
             <div className={withBaseName("statusAdornmentContainer")}>
