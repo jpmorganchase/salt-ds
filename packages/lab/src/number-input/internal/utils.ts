@@ -2,7 +2,7 @@
 export const isAllowedNonNumeric = (inputCharacter: number | string) => {
   if (typeof inputCharacter === "number") return;
   return (
-    ("-+".includes(inputCharacter) && inputCharacter.length === 1) ||
+    ("-+.".includes(inputCharacter) && inputCharacter.length === 1) ||
     inputCharacter === ""
   );
 };
@@ -35,7 +35,7 @@ export const isValidNumber = (num: string | number) => {
 
 export const sanitizeInput = (value: string | number) => {
   if (typeof value === "number") return value;
-  let sanitizedInput = value.replace(/[^0-9.+-]/g, "");
+  let sanitizedInput = value.replace(/[^0-9.,+-]/g, "");
   sanitizedInput = sanitizedInput.replace(
     /^([+-]?)(.*)$/,
     (match, sign, rest) => {
@@ -48,6 +48,11 @@ export const sanitizeInput = (value: string | number) => {
   }
 
   return sanitizedInput;
+};
+
+export const isAllowed = (value: string) => {
+  const validPatternRegex = /^-?\d*(\.\d*)?$/;
+  return validPatternRegex.test(value);
 };
 
 export const isOutOfRange = (
