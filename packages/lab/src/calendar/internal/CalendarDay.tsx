@@ -101,9 +101,12 @@ export const CalendarDay = forwardRef<
   const defaultButtonProps = {
     "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
     children: (
-      <span className={withBaseName("content")}>
-        {dateAdapter.format(date, format)}
-      </span>
+      <>
+        {highlighted ? <div className={withBaseName("highlighted")} /> : null}
+        <span className={withBaseName("content")}>
+          {dateAdapter.format(date, format)}
+        </span>
+      </>
     ),
     disabled,
     ...dayProps,
@@ -116,7 +119,6 @@ export const CalendarDay = forwardRef<
         [withBaseName("outOfRange")]: outOfRange,
         [withBaseName("disabled")]: disabled,
         [withBaseName("unselectable")]: !!unselectable,
-        [withBaseName("highlighted")]: !!highlighted,
         [withBaseName("focused")]: !!focused,
         [withBaseName("today")]: today,
       },
