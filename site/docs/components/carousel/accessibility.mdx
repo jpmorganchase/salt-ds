@@ -12,23 +12,22 @@ data:
 
 - Avoid using infographics, maps, charts as images or [images of text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
 - Order slides by importance, with the most critical info first.
-- If composing with navigation controls (including tablist), ensure they are the first element to receive focus, enabling them to control the carousel, upon focus.
+- If composing with navigation controls (previous/next slide or tablist), ensure they are the first elements to receive focus, enabling the user to control the carousel.
 
 ### With tablist
 
 If composing with a tablist:
 
-- If composing with a tablist, ensure they are the first element to receive focus, enabling them to control the carousel, upon focus.
-- Tablist components provide keyboard navigation, making them less suitable for mobile devices where space is limited and users often prefer gesture-based slide navigation.
+- Ensure the tablist is the first element to receive focus, enabling the user to control the carousel, on initial focus.
 - Remove the next and prev buttons from the focus order, as the tablist provides sufficient navigation controls.
-- If multiple cards are visible, within one slide, do not include a tablist, as a tablist should only be used with single cards.
-- If using a tablist, ensure each card has`role="tabpanel"`.
+- If multiple cards are visible at one time, do not include a tablist, as a tablist should only be used with single cards.
+- Ensure each card has `role="tabpanel"` and `aria-roledescription="slide".
 
 ### Without tablist
 
 If composing without a tablist:
 
-- If not using a tablist, ensure each card has`role="group" and `aria-roledescription="slide".
+- Ensure each card with a carousel has `role="group"` and `aria-roledescription="slide"`.
 
 ### Autoplay
 
@@ -39,7 +38,16 @@ If using Autoplay, then additional considerations are required
   - stop the autoplay if the user hovers over the carousel.
   - stop the autoplay if the user drags a slide.
   - stop the autoplay when content within a carousel slide receives focus, ensuring users can interact with the content without distraction.
-- ensure screen readers announce changes in slide content during autoplay, providing context for visually impaired users.
+- ensure screen readers do not announce changes in slide content during autoplay" as the constant interruptions make the page unusable for a screen reader user.
+- unset `aria-roledescription` to align with JPM accessibility recommendations.
+
+### Multiple slides per tab
+
+If using with multiple slides per tab, this will create increased complexity for the users relying on assistive technologies.
+
+- consider whether a single slide view is sufficient for your use case, as it simplifies navigation and interaction.
+  - unset `aria-roledescription` to align with JPM accessibility recommendations.
+  - change the `aria-label` of the next and previous buttons to reflect the multiple slides. For example, "previous group of slides" rather than "previous slide" and "next group of slides" rather than "next slide" .
 
 ## Keyboard interactions
 

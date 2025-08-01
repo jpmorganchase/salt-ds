@@ -9,14 +9,7 @@ import {
 } from "@salt-ds/embla-carousel";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
-import {
-  FlexLayout,
-  H2,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
 import Fade from "embla-carousel-fade";
 import { sliderData } from "./exampleData";
@@ -27,10 +20,10 @@ export default {
   component: Carousel,
 } as Meta<typeof Carousel>;
 
-const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
-
+const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
+  ariaVariant = "tabpanel",
+  ...args
+}) => {
   return (
     <Carousel
       aria-label="Carousel cards example"
@@ -45,46 +38,43 @@ const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
           gap: "var(--salt-spacing-100)",
         }}
       >
-        <StackLayout direction="row" gap={1}>
+        <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton
-            tabIndex={!isMobile ? -1 : 0}
-            appearance={!isMobile ? "transparent" : "bordered"}
+            tabIndex={-1}
+            appearance={ariaVariant === "tabpanel" ? "transparent" : "bordered"}
           />
-          {!isMobile ? <CarouselTabList /> : null}
+          {ariaVariant === "tabpanel" ? <CarouselTabList /> : null}
           <CarouselNextButton
-            tabIndex={!isMobile ? -1 : 0}
-            appearance={!isMobile ? "transparent" : "bordered"}
+            tabIndex={-1}
+            appearance={ariaVariant === "tabpanel" ? "transparent" : "bordered"}
           />
           <CarouselProgressLabel />
-        </StackLayout>
-        <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
+        </FlexLayout>
+        <CarouselSlides>
+          {renderSlides({
+            withActions: true,
+          })}
+        </CarouselSlides>
       </div>
     </Carousel>
   );
 };
 
 const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const carouselId = useId();
 
   const slides = Array.from(Array(4).keys());
-  const slideId = useId();
+
   return (
     <Carousel
-      aria-label="default carousel example"
+      aria-label="Numbered carousel example"
       className="carousel"
       {...args}
     >
-      <FlexLayout justify="start" direction="row" gap={1}>
-        <CarouselPreviousButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
-        {!isMobile ? <CarouselTabList /> : null}
-        <CarouselNextButton
-          tabIndex={!isMobile ? -1 : 0}
-          appearance={!isMobile ? "transparent" : "bordered"}
-        />
+      <FlexLayout gap={1} wrap={true} align={"center"}>
+        <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+        <CarouselTabList />
+        <CarouselNextButton tabIndex={-1} appearance="transparent" />
         <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
@@ -92,9 +82,10 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
           return (
             <div
               role="tabpanel"
-              aria-label={`Example slide ${index + 1}`}
+              aria-roledescription="slide"
+              aria-label={`Placeholder slide ${index + 1}`}
               className="carouselSlide"
-              key={`slide-${slideId}-${index}`}
+              key={`slide-${carouselId}-${index}`}
             >
               <div className="carouselNumber">
                 <Text styleAs="display1" className="carouselHeading">
@@ -113,21 +104,25 @@ export const Default = CarouselNumberExample.bind({});
 
 export const Card = CarouselCardExample.bind({});
 
+export const SlideGroup = CarouselCardExample.bind({ ariaVariant: "group" });
+
 export const Loop = CarouselNumberExample.bind({});
 Loop.args = {
   emblaOptions: { loop: true },
 };
 
 export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
-  const slideId = useId();
+  const carouselId = useId();
   return (
     <Carousel
-      aria-label="Multiple slides carousel example"
+      aria-labelledby={`${carouselId}-title`}
       className="carouselMultipleSlide"
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
       {...args}
     >
-      <H2 className="carouselHeading">Title</H2>
+      <H2 id={`${carouselId}-title`} className="carouselHeading">
+        Multiple slides carousel example
+      </H2>
       <div
         style={{
           display: "flex",
@@ -135,18 +130,19 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
           gap: "var(--salt-spacing-100)",
         }}
       >
-        <StackLayout direction="row" gap={1} align="center">
-          <CarouselPreviousButton />
-          <CarouselNextButton />
+        <FlexLayout gap={1} wrap={true} align={"center"}>
+          <CarouselPreviousButton aria-label="Previous slide group" />
+          <CarouselNextButton aria-label="Next slide group" />
           <CarouselProgressLabel />
-        </StackLayout>
+        </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
+            const id = `${carouselId}-card${index}`;
             return (
               <CarouselCard
                 className="carouselSlide"
-                key={`slide-${slideId}-${index}`}
-                aria-labelledby={`${slideId}-${index}`}
+                key={`slide-${id}`}
+                aria-labelledby={`title-${id}`}
                 appearance="bordered"
                 media={
                   <img
@@ -156,7 +152,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
                   />
                 }
                 header={
-                  <Text styleAs="h3" id={`${slideId}-${index}`}>
+                  <Text id={`title-${id}`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }
