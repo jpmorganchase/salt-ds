@@ -8,6 +8,7 @@ import {
   Default,
   ProvidedCellEditors,
   ToolPanel,
+  VariantZebra,
 } from "../src/examples";
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -462,4 +463,21 @@ FloatingFilterFocus.play = async ({ canvasElement }) => {
 // Regression of #3351, icon should match Default
 export const WithExtraContainerClass = () => {
   return <Default containerClassName="foo" />;
+};
+
+// Regression of #5056, zebra variant row selection border color
+export const ZebraVariantRowSelection: StoryObj<typeof AgGridReact> = () => {
+  return <VariantZebra />;
+};
+ZebraVariantRowSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const rows = await canvas.findAllByRole("row");
+
+  // Filter to find the element with the attribute `row-index="5"`
+  const fifthRows = rows.find((row) => row.getAttribute("row-index") === "5");
+  if (fifthRows) {
+    await userEvent.click(within(fifthRows).getByRole("checkbox"));
+  }
 };
