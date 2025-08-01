@@ -11,18 +11,12 @@
   height: var(--salt-size-base);
 }
 
-.saltStep-stage-pending > .saltStepIcon {
-  --saltIcon-color: var(--salt-content-secondary-foreground);
-}
-
+.saltStep-stage-pending > .saltStepIcon,
 .saltStep-stage-locked > .saltStepIcon {
   --saltIcon-color: var(--salt-content-secondary-foreground);
 }
 
-.saltStep-stage-inprogress > .saltStepIcon {
-  --saltIcon-color: var(--salt-status-info-foreground-decorative);
-}
-
+.saltStep-stage-inprogress > .saltStepIcon,
 .saltStep-stage-active > .saltStepIcon {
   --saltIcon-color: var(--salt-status-info-foreground-decorative);
 }

@@ -111,8 +111,8 @@ table.saltTable tfoot {
   color: var(--salt-content-primary-foreground);
   height: var(--table-footer-height);
   min-height: var(--table-footer-height);
-  font-size: var(--salt-text-label-fontSize);
-  line-height: var(--salt-text-label-lineHeight);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
   font-weight: var(--salt-text-fontWeight-strong);
   white-space: nowrap;
 }
