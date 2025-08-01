@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.47.4
+
+### Patch Changes
+
+- c58279f: Fixed `Step` description's color being incorrect.
+- 239d20c: - Fixed MutilineInput's end adornments scrolling off-screen when a max-height is applied.
+  - Fixed MultilineInput's start adornments appearing at the top of the field when its width is reduced.
+- fe8da62: Fixed `StatusIndicator` crashing if given invalid `status` prop.
+
 ## 1.47.3
 
 ### Patch Changes
