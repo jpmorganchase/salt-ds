@@ -3,6 +3,7 @@
   display: inline-grid;
   grid-template-areas: "start-adornment textarea end-adornment";
   grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: 1fr;
   background: var(--multilineInput-background);
   border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--salt-content-primary-foreground);
