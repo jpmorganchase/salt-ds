@@ -28,7 +28,6 @@ const HDCompactGrid = () => {
   // We've created a local custom hook to set the rows and column sizes.
   // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { containerProps, agGridProps } = useAgGridHelpers(true);
-  const className = `ag-theme-salt-high-compact-${mode}`;
 
   return (
     <StackLayout style={{ width: "100%" }}>

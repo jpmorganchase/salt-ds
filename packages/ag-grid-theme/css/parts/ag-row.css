@@ -1,0 +1,12 @@
+.ag-theme-salt-variant-secondary.ag-theme-salt-variant-secondary {
+  --ag-header-background-color: var(--salt-container-secondary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+  --ag-background-color: var(--salt-container-secondary-background);
+}
+
+.ag-theme-salt-variant-zebra.ag-theme-salt-variant-zebra {
+  --ag-background-color: var(--salt-container-secondary-background);
+  --ag-odd-row-background-color: var(--salt-container-primary-background);
+  --ag-header-background-color: var(--salt-container-primary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+}

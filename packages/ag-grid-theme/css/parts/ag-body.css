@@ -18,7 +18,11 @@
 .ag-theme-salt-light .ag-row-selected:before,
 .ag-theme-salt-dark .ag-row-selected:before,
 .ag-theme-salt-compact-light .ag-row-selected:before,
-.ag-theme-salt-compact-dark .ag-row-selected:before {
+.ag-theme-salt-compact-dark .ag-row-selected:before,
+.ag-theme-salt-light .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-compact-dark .ag-row-hover.ag-row-selected::before {
   background-color: var(--salt-selectable-borderColor-selected);
   background-image: none;
   height: var(--salt-size-fixed-100);
