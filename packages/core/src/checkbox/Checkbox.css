@@ -31,7 +31,7 @@
 
 /* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
-  outline-offset: var(--salt-focused-outlineOffset);
+  outline-offset: var(--salt-spacing-fixed-100);
   outline: var(--saltCheckbox-outline, var(--salt-focused-outline));
   border-color: var(--salt-selectable-borderColor-hover);
   color: var(--salt-selectable-foreground-hover);
