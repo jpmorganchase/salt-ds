@@ -10,6 +10,7 @@
   flex: 1 1 auto;
   position: relative;
   display: flex;
+  box-sizing: border-box;
 }
 
 .saltDialogContent-inner {
@@ -18,6 +19,7 @@
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   max-height: inherit;
   flex: 1;
+  box-sizing: border-box;
 }
 
 .saltDialogContent-overflow {
