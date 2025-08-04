@@ -124,6 +124,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
+  const disabledReason = isDayDisabled(date);
   const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
 
@@ -155,6 +156,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     } as ComponentPropsWithoutRef<"button">,
     focusedDateRef: focused ? focusedDateRef : null,
     unselectableReason,
+    disabledReason,
     highlightedReason,
   };
 }

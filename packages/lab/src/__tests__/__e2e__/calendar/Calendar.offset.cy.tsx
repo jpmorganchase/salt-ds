@@ -10,7 +10,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   type DateRangeSelection,
 } from "@salt-ds/lab";
 
@@ -64,7 +63,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
             endDateOffset={endDateOffset}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -186,7 +184,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             hideOutOfRangeDates
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -199,7 +196,9 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Verify that the focus moves to the first selected date of the visible month
         cy.findByRole("button", {
           name: adapter.format(testDate.startDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
       });
 
       it("SHOULD move to today's date if selected date is not within the visible month", () => {
@@ -219,7 +218,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             hideOutOfRangeDates
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -232,7 +230,9 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
       });
 
       it("SHOULD move to today's date if there is no selected date", () => {
@@ -245,7 +245,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             endDateOffset={endDateOffset}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -258,7 +257,9 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
       });
 
       it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
@@ -271,7 +272,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             endDateOffset={endDateOffset}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -290,7 +290,9 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         startOfMonth = adapter.add(startOfMonth, { months: 2 });
         cy.findByRole("button", {
           name: adapter.format(startOfMonth, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
       });
 
       it("SHOULD allow multiple dates to be selected and unselected", () => {
@@ -331,7 +333,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             select={selectStub}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -375,7 +376,9 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Simulate selecting the offset through keyboard selection
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
         // Simulate pressing the Enter key to select the current date
         cy.realPress("Enter");
         // Verify that the offset is selected
@@ -384,7 +387,9 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Simulate unselecting the offset through keyboard selection
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
         // Simulate pressing the Enter key to select the current date
         cy.realPress("Enter");
         // Verify that the offset is unselected
