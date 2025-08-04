@@ -76,6 +76,7 @@ export const CalendarDay = forwardRef<
     focusedDateRef = null,
     dayProps,
     unselectableReason,
+    disabledReason,
     highlightedReason,
   } = useCalendarDay({
     date,
@@ -108,7 +109,6 @@ export const CalendarDay = forwardRef<
         </span>
       </>
     ),
-    disabled,
     ...dayProps,
     ref: buttonRef,
     ...rest,
@@ -140,23 +140,22 @@ export const CalendarDay = forwardRef<
       })
     : defaultButtonElement;
 
-  const hasTooltip = unselectableReason || highlightedReason;
-  if (!hasTooltip) {
-    return buttonElement;
+  const tooltipContent =
+    unselectableReason || highlightedReason || disabledReason;
+  if (tooltipContent && tooltipContent?.length) {
+    return (
+      <Tooltip
+        hideIcon
+        status={unselectableReason ? "error" : "info"}
+        content={tooltipContent}
+        placement="top"
+        enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
+        {...TooltipProps}
+      >
+        {buttonElement}
+      </Tooltip>
+    );
   }
-  return (
-    <Tooltip
-      hideIcon
-      status={unselectableReason ? "error" : "info"}
-      content={
-        unselectableReason || highlightedReason || "Date is out of range"
-      }
-      placement="top"
-      enterDelay={0} // --salt-duration-instant
-      leaveDelay={0} // --salt-duration-instant
-      {...TooltipProps}
-    >
-      {buttonElement}
-    </Tooltip>
-  );
+  return buttonElement;
 });
