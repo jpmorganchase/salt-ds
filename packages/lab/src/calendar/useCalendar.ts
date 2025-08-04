@@ -553,7 +553,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
       focusedDate &&
       !focusedDateProp !== undefined &&
       !isDayVisible(focusedDate) &&
-      isDaySelectable(focusedDate) &&
       !isOutsideAllowedDates(focusedDate);
 
     if (shouldTransition) {
@@ -563,7 +562,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     dateAdapter,
     focusedDateProp,
     isOutsideAllowedDates,
-    isDaySelectable,
     selectionManager?.state?.focusedDate,
   ]);
 

@@ -670,7 +670,7 @@ export const UnselectableDates: StoryFn<
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "weekends are un-selectable" : false;
+    return isWeekend ? "Weekends are un-selectable" : false;
   };
   return (
     <Calendar
