@@ -1,0 +1,19 @@
+.salt-theme[data-brand="commercial"][data-mode="light"] {
+  --salt-palette-warning: var(--salt-color-orange-500);
+  --salt-palette-warning-disabled: var(--salt-color-orange-500-40a);
+  --salt-palette-warning-strong: var(--salt-color-orange-600);
+  --salt-palette-warning-strong-disabled: var(--salt-color-orange-600-40a);
+  --salt-palette-warning-weak: var(--salt-color-orange-100);
+  --salt-palette-warning-action-hover: var(--salt-color-orange-600);
+  --salt-palette-warning-action-active: var(--salt-color-orange-800);
+}
+
+.salt-theme[data-brand="commercial"][data-mode="dark"] {
+  --salt-palette-warning: var(--salt-color-orange-500);
+  --salt-palette-warning-disabled: var(--salt-color-orange-500-40a);
+  --salt-palette-warning-strong: var(--salt-color-orange-400);
+  --salt-palette-warning-strong-disabled: var(--salt-color-orange-400-40a);
+  --salt-palette-warning-weak: var(--salt-color-orange-900);
+  --salt-palette-warning-action-hover: var(--salt-color-orange-600);
+  --salt-palette-warning-action-active: var(--salt-color-orange-800);
+}

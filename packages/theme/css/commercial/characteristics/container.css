@@ -1,0 +1,20 @@
+.salt-theme-next /* for backwards compatibility */,
+.salt-theme[data-brand="commercial"] {
+  --salt-container-primary-background: var(--salt-palette-background-primary);
+  --salt-container-primary-background-disabled: var(--salt-palette-background-primary-disabled);
+  --salt-container-primary-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-primary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower);
+
+  --salt-container-secondary-background: var(--salt-palette-background-secondary);
+  --salt-container-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
+  --salt-container-secondary-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-secondary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower);
+
+  --salt-container-tertiary-background: var(--salt-palette-background-tertiary);
+  --salt-container-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
+  --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower);
+
+  --salt-container-ghost-background: var(--salt-palette-alpha-medium);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-medium);
+}

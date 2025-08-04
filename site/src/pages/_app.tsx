@@ -7,14 +7,15 @@ import * as saltComponents from "../components";
 import { amplitude, openSans, ptMono } from "../fonts";
 import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
+import { Metadata } from "../Metadata/index";
 import { ThemeProvider } from "../ThemeProvider";
 import type { MyAppProps } from "../types/mosaic";
 
-import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/commercial/index.css";
+import "@salt-ds/theme/css/legacy/index.css";
 
 import "../css/index.css";
-import { Metadata } from "../Metadata/index";
 
 const components = {
   ...saltComponents,
