@@ -1,4 +1,4 @@
-import {
+import type {
   DateFrameworkType,
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
@@ -559,14 +559,16 @@ describe("GIVEN a Calendar", () => {
           );
 
           cy.get("@selectionChangeSpy").should("not.have.been.called");
-          cy.findByRole("button", { name: "02 March 2024" }).realHover().realClick();
+          cy.findByRole("button", { name: "02 March 2024" })
+            .realHover()
+            .realClick();
 
           // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date)).to.be.true;
             expect(adapter.format(date, "DD MMMM YYYY")).to.equal(
-              "02 March 2024" ,
+              "02 March 2024",
             );
           });
         });
