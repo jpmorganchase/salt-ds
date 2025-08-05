@@ -74,8 +74,10 @@
 }
 
 .saltCheckboxIcon-readOnly,
-.saltCheckbox:hover .saltCheckboxIcon-readOnly {
+.saltCheckbox:hover .saltCheckboxIcon-readOnly,
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon-readOnly {
   border-color: var(--salt-selectable-borderColor-readonly);
+  border-style: var(--salt-borderStyle-dashed);
   color: var(--salt-content-primary-foreground);
 }
 

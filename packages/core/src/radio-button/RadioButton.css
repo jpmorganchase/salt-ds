@@ -45,7 +45,7 @@
 /* Styles applied to icon when :focus-visible */
 .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
   outline: var(--saltRadioButton-outline, var(--salt-focused-outline));
-  outline-offset: var(--salt-focused-outlineOffset);
+  outline-offset: var(--salt-spacing-fixed-100);
   border-color: var(--salt-selectable-borderColor-hover);
   color: var(--salt-selectable-foreground-hover);
   clip-path: unset;
