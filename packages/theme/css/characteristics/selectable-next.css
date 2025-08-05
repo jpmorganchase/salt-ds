@@ -4,7 +4,7 @@
   --salt-selectable-borderColor-selected: var(--salt-palette-accent);
   --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-accent-disabled);
   --salt-selectable-borderColor-disabled: var(--salt-palette-neutral-disabled);
-  --salt-selectable-borderColor-readonly: var(--salt-palette-neutral-readonly);
+  --salt-selectable-borderColor-readonly: var(--salt-palette-neutral);
 
   --salt-selectable-foreground: var(--salt-palette-neutral-strong);
   --salt-selectable-foreground-disabled: var(--salt-palette-neutral-strong-disabled);
