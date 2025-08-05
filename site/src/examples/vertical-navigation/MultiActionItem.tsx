@@ -22,8 +22,8 @@ function ExpandButtonItem(props: { item: Item }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible>
-        <VerticalNavigationItem active={location.pathname === item.href}>
+      <VerticalNavigationItem active={location.pathname === item.href}>
+        <Collapsible>
           <VerticalNavigationItemContent>
             <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
               <VerticalNavigationItemLabel>
@@ -43,8 +43,8 @@ function ExpandButtonItem(props: { item: Item }) {
               ))}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
-        </VerticalNavigationItem>
-      </Collapsible>
+        </Collapsible>
+      </VerticalNavigationItem>
     );
   }
 

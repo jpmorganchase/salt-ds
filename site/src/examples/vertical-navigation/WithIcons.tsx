@@ -24,10 +24,10 @@ function NestedItem(props: { item: Item }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
-        <VerticalNavigationItem
-          active={location.pathname.startsWith(item.href) && collapsed}
-        >
+      <VerticalNavigationItem
+        active={location.pathname.startsWith(item.href) && collapsed}
+      >
+        <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
@@ -46,8 +46,8 @@ function NestedItem(props: { item: Item }) {
               ))}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
-        </VerticalNavigationItem>
-      </Collapsible>
+        </Collapsible>
+      </VerticalNavigationItem>
     );
   }
 
