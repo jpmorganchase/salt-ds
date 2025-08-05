@@ -1209,14 +1209,13 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
     },
     dayProps: {
       className: clsx({
-        [withBaseName("selected")]:
-          selectionVariant === "single" ? selected : undefined,
+        [withBaseName("selected")]: selectionVariant === "single" && selected,
         [withBaseName("selectedStart")]:
-          selectionVariant !== "single" ? selectedStart : undefined,
+          selectionVariant !== "single" && selectedStart,
         [withBaseName("selectedSpan")]:
-          selectionVariant !== "single" ? selectedSpan : undefined,
+          selectionVariant !== "single" && selectedSpan,
         [withBaseName("selectedEnd")]:
-          selectionVariant !== "single" ? selectedEnd : undefined,
+          selectionVariant !== "single" && selectedEnd,
         [withBaseName("selectedSameDay")]:
           selectionVariant !== "single" && selectedOnSameDay,
         [withBaseName("hoveredStart")]:
