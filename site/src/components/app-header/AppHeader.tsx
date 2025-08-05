@@ -35,7 +35,11 @@ export const AppHeader = () => {
       )}
       <div className={styles.content}>
         {homeLink && !isMobileOrTablet && (
-          <LinkBase className={styles.logoLink} href={homeLink}>
+          <LinkBase
+            aria-label="Go to Salt Home"
+            className={styles.logoLink}
+            href={homeLink}
+          >
             <Logo />
           </LinkBase>
         )}

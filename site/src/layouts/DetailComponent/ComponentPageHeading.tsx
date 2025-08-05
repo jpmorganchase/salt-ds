@@ -61,7 +61,11 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
             <Overlay>
               <Tooltip content="Theme controls">
                 <OverlayTrigger>
-                  <Button sentiment="neutral" appearance="bordered">
+                  <Button
+                    aria-label="Theme controls"
+                    sentiment="neutral"
+                    appearance="bordered"
+                  >
                     <SettingsSolidIcon aria-hidden />
                   </Button>
                 </OverlayTrigger>
