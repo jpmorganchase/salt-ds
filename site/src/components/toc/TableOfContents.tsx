@@ -108,7 +108,7 @@ export function TableOfContents(props: ComponentPropsWithoutRef<"aside">) {
 
   return (
     <aside className={clsx(styles.root, className)} {...rest}>
-      <Text className={styles.heading} id={headingId}>
+      <H3 className={styles.heading} id={headingId}>
         On this page
       </Text>
       <ul aria-labelledby={headingId} className={styles.list}>

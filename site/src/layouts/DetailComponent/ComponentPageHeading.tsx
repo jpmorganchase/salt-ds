@@ -59,7 +59,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
               <GithubIcon aria-hidden /> View source code
             </CTALink>
             <Overlay>
-              <Tooltip content="Theme controls">
+              <Tooltip aria-hidden="true" content="Theme controls">
                 <OverlayTrigger>
                   <Button
                     aria-label="Theme controls"
