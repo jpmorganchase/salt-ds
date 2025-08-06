@@ -12,7 +12,7 @@ const {
   Default,
   ControlledFormatting,
   MinAndMaxValue,
-  ResetAdornment,
+  ButtonAdornment,
   ReadOnly,
   UncontrolledFormatting,
 } = composedStories;
@@ -400,7 +400,7 @@ describe("Number Input", () => {
   });
 
   it("resets to default value in ResetAdornment example", () => {
-    cy.mount(<ResetAdornment />);
+    cy.mount(<ButtonAdornment />);
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
     cy.findByRole("spinbutton").should("have.value", "11");
@@ -514,7 +514,7 @@ describe("Number Input", () => {
 
       cy.findByRole("spinbutton").focus();
       cy.realPress("ArrowUp");
-      cy.findByRole("spinbutton").should("have.value", "100.001K");
+      cy.findByRole("spinbutton").should("have.value", "101K");
       cy.realPress("ArrowDown");
       cy.findByRole("spinbutton").should("have.value", "100K");
     });
@@ -523,7 +523,7 @@ describe("Number Input", () => {
       cy.mount(<ControlledFormatting />);
 
       cy.findByLabelText("increment value").realClick({ clickCount: 2 });
-      cy.findByRole("spinbutton").should("have.value", "100.002K");
+      cy.findByRole("spinbutton").should("have.value", "102K");
       cy.findByLabelText("decrement value").realClick({ clickCount: 2 });
       cy.findByRole("spinbutton").should("have.value", "100K");
     });
