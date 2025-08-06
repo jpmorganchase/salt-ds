@@ -163,19 +163,20 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
 
 export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState(2);
+  const [accessibleText, setAccessibleText] = useState("");
+  const accessibleTextId = useId();
   const max = 5;
   const min = 0;
 
+  const clearAccessibleText = () => {
+    setTimeout(() => {
+      setAccessibleText("");
+    }, 3000);
+  };
+
   const getValidationStatus = () => {
-    if (typeof value === "number") {
-      if (value > max || value < min) {
-        return "error";
-      }
-    } else {
-      const numericValue = Number.parseFloat(value);
-      if (numericValue > max || numericValue < min) {
-        return "error";
-      }
+    if (value > max || value < min) {
+      return "error";
     }
     return undefined;
   };
@@ -188,11 +189,24 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
         value={value}
         onChange={(_event, value) => {
           setValue(value);
+          if (value > max || value < min) {
+            setAccessibleText(
+              `Invalid value, please enter a value between ${min} and ${max}`,
+            );
+            clearAccessibleText();
+          }
         }}
         max={max}
         min={min}
         style={{ width: "250px" }}
       />
+      <span
+        id={accessibleTextId}
+        style={accessibleTextStyles}
+        aria-live="polite"
+      >
+        {accessibleText}
+      </span>
       <FormFieldHelperText>
         Please enter a value between {min} and {max}
       </FormFieldHelperText>
@@ -209,7 +223,7 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
 
   const clearAccessibleText = () => {
     setTimeout(() => {
-      setAccessibleText(" ");
+      setAccessibleText("");
     }, 3000);
   };
 
@@ -224,11 +238,10 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
             setValue(value);
             if (value > max) {
               setAccessibleText(`${value} is greater than the maximum value`);
-              clearAccessibleText();
             } else if (value < min) {
               setAccessibleText(`${value} is less than the minimum value`);
-              clearAccessibleText();
             }
+            clearAccessibleText();
           }}
           clamp
           max={max}
@@ -313,7 +326,7 @@ export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
 
   const clearAccessibleText = () =>
     setTimeout(() => {
-      setAccessibleText(" ");
+      setAccessibleText("");
     }, 3000);
 
   return (
@@ -368,32 +381,12 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         }}
         value={value}
         startAdornment={
-          <Button
-            aria-hidden
-            tabIndex={-1}
-            onClick={() =>
-              setValue(
-                typeof value === "string"
-                  ? Number.parseFloat(value) - 1
-                  : value - 1,
-              )
-            }
-          >
+          <Button aria-hidden tabIndex={-1} onClick={() => setValue(value - 1)}>
             <RemoveIcon aria-hidden />
           </Button>
         }
         endAdornment={
-          <Button
-            aria-hidden
-            tabIndex={-1}
-            onClick={() =>
-              setValue(
-                typeof value === "string"
-                  ? Number.parseFloat(value) + 1
-                  : value + 1,
-              )
-            }
-          >
+          <Button aria-hidden tabIndex={-1} onClick={() => setValue(value + 1)}>
             <AddIcon aria-hidden />
           </Button>
         }

@@ -173,9 +173,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
       "aria-valuetext": ariaValueTextProp,
-      bordered = false,
+      bordered,
       className: classNameProp,
-      clamp = false,
+      clamp,
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
