@@ -470,7 +470,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             validationStatusId,
           )}
           aria-invalid={
-            !isReadOnly
+            !isReadOnly && !isEmpty(displayValue)
               ? isOutOfRange(value, min, max) || validationStatus === "error"
               : undefined
           }
@@ -497,7 +497,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               "aria-valuemin": min,
             })}
           {...(!isReadOnly && {
-            "aria-valuetext": ariaValueTextProp ?? displayValue,
+            "aria-valuenow": value ?? 0,
+            "aria-valuetext": !isEmpty(displayValue)
+              ? (ariaValueTextProp ?? displayValue)
+              : "Empty",
           })}
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}

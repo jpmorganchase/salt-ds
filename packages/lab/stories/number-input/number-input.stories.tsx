@@ -240,6 +240,10 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
               setAccessibleText(`${value} is greater than the maximum value`);
             } else if (value < min) {
               setAccessibleText(`${value} is less than the minimum value`);
+            } else if (value === min) {
+              setAccessibleText("Minimum value reached");
+            } else if (value === max) {
+              setAccessibleText("Maximum value reached");
             }
             clearAccessibleText();
           }}

@@ -41,6 +41,10 @@ export const ClampBehaviour = () => {
             } else if (value < min) {
               setAccessibleText(`${value} is less than the minimum value`);
               clearAccessibleText();
+            } else if (value === min) {
+              setAccessibleText("Minimum value reached");
+            } else if (value === max) {
+              setAccessibleText("Maximum value reached");
             }
           }}
           min={min}
