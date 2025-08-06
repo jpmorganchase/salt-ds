@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+  <rect width="10" height="10" fill="#FFFFFF"/>
+  <path d="M0,7.00198364 L0,5 L5,0 L7,0 L0,7.00198364 Z M7,10 L5,10 L10,5 L10,6.99545288 L7,10 Z" transform="translate(5.000000, 5.000000) rotate(90.000000) translate(-5.000000, -5.000000) " fill="#000000" />
+</svg>
