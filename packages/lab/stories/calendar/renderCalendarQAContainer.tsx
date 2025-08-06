@@ -164,11 +164,10 @@ export const renderCalendarQAContainer = () => {
       </Calendar>
       <Calendar
         selectionVariant="offset"
-        selectedDate={
-          {
-            startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-            endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
-          }}
+        selectedDate={{
+          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+        }}
         isDayHighlighted={isDayHighlighted}
       >
         <CalendarNavigation />
