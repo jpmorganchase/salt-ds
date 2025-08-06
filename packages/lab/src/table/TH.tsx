@@ -6,10 +6,17 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export interface THProps extends ComponentPropsWithoutRef<"th"> {}
+export interface THProps extends ComponentPropsWithoutRef<"th"> {
+  /**
+   * Specifies the alignment of the text within the `TH`.
+   *
+   * @default "left"
+   */
+  textAlign?: "left" | "right";
+}
 
 export const TH = forwardRef<HTMLTableCellElement, THProps>(function TH(
-  { children, className, ...rest },
+  { children, className, textAlign = "left", ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -22,7 +29,11 @@ export const TH = forwardRef<HTMLTableCellElement, THProps>(function TH(
   return (
     <th
       ref={ref}
-      className={clsx(withTableBaseName("th"), className)}
+      className={clsx(
+        withTableBaseName("th"),
+        withTableBaseName("th", "align", textAlign),
+        className,
+      )}
       {...rest}
     >
       {children}
