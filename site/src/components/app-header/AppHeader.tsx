@@ -46,7 +46,11 @@ export const AppHeader = () => {
         <div className={styles.actions}>
           <Search className={styles.search} />
           {!isMobileOrTablet && (
-            <Tooltip aria-hidden="true" content="GitHub repository" placement="bottom">
+            <Tooltip
+              aria-hidden="true"
+              content="GitHub repository"
+              placement="bottom"
+            >
               <CTALink
                 href="https://github.com/jpmorganchase/salt-ds"
                 aria-label="GitHub repository"

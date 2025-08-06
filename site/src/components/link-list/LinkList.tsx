@@ -1,4 +1,4 @@
-import { Link, Text } from "@salt-ds/core";
+import { Link, Text, useId } from "@salt-ds/core";
 import { LinkBase } from "../link/Link";
 import { Heading4 } from "../mdx/h4";
 import { Image } from "../mdx/image";
@@ -71,17 +71,28 @@ export function LinkList({
   subheader?: string;
   links: { href: string; label: string }[];
 }) {
+  const titleId = useId();
+
   if (!Array.isArray(links) || links.length === 0) {
     return null;
   }
 
+  const hasHeader = Boolean(heading || subheader);
+
   return (
-    <div className={styles.root}>
-      {heading && <Heading4 className={styles.heading}>{heading}</Heading4>}
-      {subheader && (
-        <Text className={styles.subheader} styleAs="label">
-          {subheader}
-        </Text>
+    <aside
+      aria-labelledby={hasHeader ? titleId : undefined}
+      className={styles.root}
+    >
+      {hasHeader && (
+        <div id={titleId}>
+          {heading && <Heading4 className={styles.heading}>{heading}</Heading4>}
+          {subheader && (
+            <Text className={styles.subheader} styleAs="label">
+              {subheader}
+            </Text>
+          )}
+        </div>
       )}
       <ul className={styles.list}>
         {links
@@ -92,6 +103,6 @@ export function LinkList({
             </li>
           ))}
       </ul>
-    </div>
+    </aside>
   );
 }
