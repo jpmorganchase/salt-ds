@@ -6,10 +6,17 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export interface TDProps extends ComponentPropsWithoutRef<"td"> {}
+export interface TDProps extends ComponentPropsWithoutRef<"td"> {
+  /**
+   * Specifies the alignment of the text within the `TD`.
+   *
+   * @default "left"
+   */
+  textAlign?: "left" | "right";
+}
 
 export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
-  { children, className, ...rest },
+  { children, className, textAlign = "left", ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -22,7 +29,11 @@ export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
   return (
     <td
       ref={ref}
-      className={clsx(withTableBaseName("td"), className)}
+      className={clsx(
+        withTableBaseName("td"),
+        withTableBaseName("td", "align", textAlign),
+        className,
+      )}
       {...rest}
     >
       {children}

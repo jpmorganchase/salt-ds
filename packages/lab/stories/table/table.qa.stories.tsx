@@ -28,7 +28,11 @@ const TableComp = (props: TableProps) => {
       <THead>
         <TR>
           {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-            return <TH key={`col-${arrItem}`}>Column {i}</TH>;
+            return (
+              <TH key={`col-${arrItem}`} textAlign={i === 1 ? "right" : "left"}>
+                Column {i}
+              </TH>
+            );
           })}
         </TR>
       </THead>
@@ -36,8 +40,15 @@ const TableComp = (props: TableProps) => {
         {Array.from({ length: NUM_ROWS }, (arrItem, x) => {
           return (
             <TR key={`tr-${arrItem}`}>
-              {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
-                return <TD key={`tr-td-${nestedArrItem}`}>Row {x}</TD>;
+              {Array.from({ length: NUM_COLS }, (nestedArrItem, i) => {
+                return (
+                  <TD
+                    key={`tr-td-${nestedArrItem}`}
+                    textAlign={i === 1 ? "right" : "left"}
+                  >
+                    Row {x}
+                  </TD>
+                );
               })}
             </TR>
           );
@@ -46,7 +57,14 @@ const TableComp = (props: TableProps) => {
       <TFoot>
         <TR>
           {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-            return <TD key={`footer-${arrItem}`}>Footer {i}</TD>;
+            return (
+              <TD
+                key={`footer-${arrItem}`}
+                textAlign={i === 1 ? "right" : "left"}
+              >
+                Footer {i}
+              </TD>
+            );
           })}
         </TR>
       </TFoot>
