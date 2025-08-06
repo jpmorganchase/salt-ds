@@ -1,5 +1,5 @@
 import { useTableOfContents } from "@jpmorganchase/mosaic-store";
-import { NavigationItem, Text, useId } from "@salt-ds/core";
+import { NavigationItem, Text, H3, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -110,7 +110,7 @@ export function TableOfContents(props: ComponentPropsWithoutRef<"aside">) {
     <aside className={clsx(styles.root, className)} {...rest}>
       <H3 className={styles.heading} id={headingId}>
         On this page
-      </Text>
+      </H3>
       <ul aria-labelledby={headingId} className={styles.list}>
         {tableOfContents.map((item, index) => (
           <li key={item.id}>
