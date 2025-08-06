@@ -4,7 +4,7 @@
   --calendar-day-zIndex-selected-endcap: calc(var(--calendar-day-zIndex-hover) + 2);
   --calendar-day-zIndex-content: calc(var(--calendar-day-zIndex-hover) + 3);
   --calendar-day-zIndex-highlight: calc(var(--calendar-day-zIndex-hover) + 4);
-  --calendar-day-highlight-size: 10px;
+  --calendar-day-highlight-size: 12px;
 
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
@@ -260,8 +260,8 @@
 
 .saltCalendarDay-highlighted {
   position: absolute;
-  left: calc(var(--salt-size-fixed-100) * -1);
-  right: calc(var(--salt-size-fixed-100) * -1);
+  left: 0;
+  right: 0;
   height: 100%;
   overflow: hidden;
   border-radius: var(--salt-palette-corner-weak, 0);

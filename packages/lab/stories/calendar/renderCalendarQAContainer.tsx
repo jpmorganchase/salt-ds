@@ -31,7 +31,7 @@ const renderQAContainer = () => {
     const endDate = dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date;
     return dateAdapter.compare(day, startDate) >= 0 &&
       dateAdapter.compare(day, endDate) <= 0
-      ? "Start of month reminder"
+      ? "Test date highlighting"
       : false;
   };
   return (
@@ -176,6 +176,18 @@ const renderQAContainer = () => {
             endDate: dateAdapter.parse("2024-05-10", "YYYY-MM-DD").date,
           },
         ]}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <Calendar
+        selectionVariant="offset"
+        selectedDate={
+          {
+            startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
+            endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
+          }}
+        isDayHighlighted={isDayHighlighted}
       >
         <CalendarNavigation />
         <CalendarGrid />
