@@ -432,7 +432,7 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
           }}
           step={1000}
           parse={(value) => {
-            const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbBtT]?)$/);
+            const match = value.match(/^(\d+(\.\d*)?)([kKmMbBtT]?)$/);
             if (!match) return;
 
             const [_, num, , unit] = match;
@@ -465,20 +465,19 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           clamp
           format={(value) => `${value}%`}
           parse={(value) => {
-            const match = String(value).match(/^\d*(\.\d*)?%?$/);
+            const match = value.match(/^\d*(\.\d*)?%?$/);
             if (!match) return;
 
-            return toFloat(String(value).replace(/%/g, ""));
+            return toFloat(value.replace(/%/g, ""));
           }}
         />
-        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
         <FormFieldLabel>With Intl Number Format</FormFieldLabel>
         <NumberInput
           defaultValue={1000000}
           format={(value) => {
-            return new Intl.NumberFormat("en-GB").format(toFloat(value));
+            return new Intl.NumberFormat("en-GB").format(value);
           }}
           parse={(value) => {
             const match = value.match(/^[\d,.-]*$/);

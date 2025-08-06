@@ -82,7 +82,37 @@ The `format` callback is designed to work seamlessly with most formatting librar
 
 **Note**: If a `format` callback is provided, it will override the `decimalScale` prop, allowing you to define custom rules for decimal places directly within your formatting logic.
 
-<LivePreview componentName="number-input" exampleName="Formatting" />
+### Thousands separator
+
+To make large numbers easier to read, you can use a combination of `format` and `parse` callbacks to insert commas and separate thousands.
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingThousandsSeparator"
+/>
+
+### Compact notation
+
+Large numbers can be transformed into their compact forms to be used in, for example, charts or other data visualizations. You can use `format` to convert the numerical value into its shortened form and `parse` to convert the shortened form back to the numerical value. The example below supports the following conversion:
+
+- Thousands to K
+- Millions to M
+- Billions to B
+- Trillions to T
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingCompactNotation"
+/>
+
+### With suffix and prefix
+
+You can add a suffix or prefix to the value.
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingSuffixPrefix"
+/>
 
 ## Custom steps
 
