@@ -1,9 +1,14 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type HTMLAttributes,
+  type ReactNode,
+} from "react";
 import { useIcon } from "../semantic-icon-provider";
-import { makePrefixer } from "../utils";
+import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
 import avatarCss from "./Avatar.css";
 import { useAvatarImage } from "./useAvatarImage";
 
@@ -56,6 +61,10 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
     | "category-18"
     | "category-19"
     | "category-20";
+  /**
+   * Render prop to enable customisation of anchor element.
+   */
+  render?: RenderPropsType["render"];
 }
 
 const withBaseName = makePrefixer("saltAvatar");
@@ -69,6 +78,14 @@ const defaultNameToInitials = (name?: string) =>
     .join("")
     .toUpperCase();
 
+// biome-ignore lint/suspicious/noExplicitAny: We don't know the exact type here
+const AvatarAction = forwardRef(function AvatarAction(
+  props: ComponentPropsWithoutRef<any>,
+  ref,
+) {
+  return renderProps("div", { ref, ...props });
+});
+
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
     className,
@@ -80,6 +97,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
     fallbackIcon: fallbackIconProp,
+    render,
     ...rest
   },
   ref,
@@ -118,7 +136,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const avatarInitials = nameToInitials(name);
 
   return (
-    <div
+    <AvatarAction
       ref={ref}
       style={style}
       className={clsx(
@@ -129,11 +147,12 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
         },
         className,
       )}
-      role={name ? "img" : undefined}
+      role={name && !render ? "img" : undefined}
       aria-label={name}
+      render={render}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}
-    </div>
+    </AvatarAction>
   );
 });
