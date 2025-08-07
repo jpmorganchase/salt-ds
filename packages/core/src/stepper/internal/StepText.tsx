@@ -31,7 +31,6 @@ export function StepText({
   return (
     <Text
       id={id}
-      styleAs="label"
       className={clsx(withBaseName(), withBaseName(purpose), className)}
       {...props}
     >
