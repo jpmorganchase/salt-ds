@@ -54,13 +54,10 @@ SingleLevelExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -109,13 +106,10 @@ MultilevelExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -157,13 +151,10 @@ GroupedExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -211,13 +202,10 @@ WithIconExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },

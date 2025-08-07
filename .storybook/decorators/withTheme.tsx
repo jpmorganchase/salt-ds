@@ -66,18 +66,9 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 }
 
 export const withTheme: Decorator = (StoryFn, context) => {
-  const {
-    density,
-    mode,
-    styleInjection,
-    themeNext,
-    corner,
-    headingFont,
-    accent,
-    actionFont,
-  } = context.globals;
+  const { density, mode, styleInjection, theme } = context.globals;
 
-  const Provider = themeNext === "enable" ? SaltProviderNext : SaltProvider;
+  const Provider = theme === "brand" ? SaltProviderNext : SaltProvider;
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";
@@ -103,10 +94,10 @@ export const withTheme: Decorator = (StoryFn, context) => {
             mode={mode}
             key={`${mode}-${styleInjection}`}
             enableStyleInjection={styleInjection === "enable"}
-            corner={corner}
-            headingFont={headingFont}
-            accent={accent}
-            actionFont={actionFont}
+            accent="teal"
+            corner="rounded"
+            headingFont="Amplitude"
+            actionFont="Amplitude"
           >
             <Panel>
               <StoryFn />
@@ -123,10 +114,10 @@ export const withTheme: Decorator = (StoryFn, context) => {
       mode={mode}
       key={`${mode}-${styleInjection}`}
       enableStyleInjection={styleInjection === "enable"}
-      corner={corner}
-      headingFont={headingFont}
-      accent={accent}
-      actionFont={actionFont}
+      accent="teal"
+      corner="rounded"
+      headingFont="Amplitude"
+      actionFont="Amplitude"
     >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />

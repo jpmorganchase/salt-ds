@@ -76,13 +76,10 @@ ExamplesGrid.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disabled",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },

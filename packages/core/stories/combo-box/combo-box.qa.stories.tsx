@@ -56,13 +56,10 @@ OpenExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -89,13 +86,10 @@ OpenMultiselectExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -247,13 +241,10 @@ ClosedExamples.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },

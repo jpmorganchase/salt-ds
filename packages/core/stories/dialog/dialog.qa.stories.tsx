@@ -94,13 +94,10 @@ DeprecatedClosedButton.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -143,13 +140,10 @@ StatusVariants.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -234,13 +228,10 @@ ContentVariants.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },
@@ -307,13 +298,10 @@ DialogHeaders.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disable",
+        theme: "legacy",
       },
       themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
+        theme: "brand",
       },
     },
   },

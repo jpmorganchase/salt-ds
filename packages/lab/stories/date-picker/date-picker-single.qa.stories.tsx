@@ -23,12 +23,10 @@ const QAContainerParameters = {
   chromatic: { disableSnapshot: false },
   modes: {
     theme: {
-      themeNext: "disable",
+      theme: "legacy",
     },
     themeNext: {
-      themeNext: "enable",
-      corner: "rounded",
-      accent: "teal",
+      theme: "brand",
     },
   },
 };
