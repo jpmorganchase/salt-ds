@@ -28,6 +28,11 @@
   z-index: var(--calendar-day-zIndex-content);
 }
 
+.saltCalendarDay:focus,
+.saltCalendarDay:focus-visible {
+  outline: none;
+}
+
 .saltCalendarDay-focused,
 .saltCalendarDay:focus,
 .saltCalendarDay:focus-visible {
@@ -131,18 +136,16 @@
 
 /** Single selection styles */
 .saltCalendarMonth-single .saltCalendarDay-focused::before,
-.saltCalendarMonth-single .saltCalendarDay:focus::before,
-.saltCalendarMonth-single .saltCalendarDay:focus-visible::before,
 .saltCalendarMonth-single .saltCalendarDay:hover::before {
   outline: var(--salt-focused-outline);
   outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1) - 1px);
-  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltCalendarMonth-single .saltCalendarDay:hover:not(.saltCalendarDay-selected),
 .saltCalendarMonth-single .saltCalendarDay:hover:not(.saltCalendarDay-selected) {
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-selectable-background-hover);
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltCalendarMonth-single .saltCalendarDay-selected::before {
@@ -161,15 +164,14 @@
 
 /** Range selection styles */
 .saltCalendarMonth-range .saltCalendarDay-focused.saltCalendarDay-selectedSpan,
-.saltCalendarMonth-range .saltCalendarDay-focused.saltCalendarDay-hoveredSpan,
-.saltCalendarMonth-range .saltCalendarDay:focus,
-.saltCalendarMonth-range .saltCalendarDay:focus-visible {
+.saltCalendarMonth-range .saltCalendarDay-focused.saltCalendarDay-hoveredSpan {
   outline-offset: calc(calc(var(--salt-focused-outlineWidth) * -1));
 }
 
 .saltCalendarMonth-range .saltCalendarDay:hover:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd) {
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-selectable-background-hover);
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltCalendarMonth-range .saltCalendarDay:hover.saltCalendarDay-selectedSpan::before,
@@ -214,7 +216,8 @@
 
 .saltCalendarMonth-offset .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd),
 .saltCalendarMonth-offset .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedSpan):not(.saltCalendarDay-selectedEnd)::before {
-  border: none;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-background-hover);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-background-hover);
 }
 
 .saltCalendarMonth-offset .saltCalendarDay-hoveredStart,
