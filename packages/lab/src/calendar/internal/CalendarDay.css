@@ -70,10 +70,10 @@
   content: "";
   position: absolute;
   box-sizing: border-box;
-  top: calc(var(--calendar-gap) * -1);
+  top: 0;
   left: calc(var(--calendar-gap) * -1);
   right: calc(var(--calendar-gap) * -1);
-  bottom: calc(var(--calendar-gap) * -1);
+  bottom: 0;
   background-color: var(--salt-selectable-background-hover);
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
@@ -91,10 +91,10 @@
   content: "";
   position: absolute;
   box-sizing: border-box;
-  top: calc(var(--calendar-gap) * -1);
-  left: calc(var(--calendar-gap) * -1);
-  right: calc(var(--calendar-gap) * -1);
-  bottom: calc(var(--calendar-gap) * -1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: var(--salt-selectable-background-selected);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
 }
@@ -110,6 +110,11 @@
 .saltCalendarDay-selectedStart::before {
   z-index: var(--calendar-day-zIndex-selected-endcap);
   border-radius: var(--salt-palette-corner-weak, 0) 0 0 var(--salt-palette-corner-weak, 0);
+}
+
+.saltCalendarDay:hover {
+  color: var(--salt-content-primary-foreground);
+  background-color: var(--salt-selectable-background-hover);
 }
 
 .saltCalendarDay-hoveredSpan:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd),
@@ -151,10 +156,10 @@
 .saltCalendarMonth-single .saltCalendarDay-selected::before {
   content: "";
   position: absolute;
-  top: calc(var(--calendar-gap) * -1);
-  left: calc(var(--calendar-gap) * -1);
-  right: calc(var(--calendar-gap) * -1);
-  bottom: calc(var(--calendar-gap) * -1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: var(--calendar-day-zIndex-selected-span);
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-selectable-background-selected);
@@ -194,10 +199,10 @@
 .saltCalendarMonth-range .saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before {
   content: "";
   position: absolute;
-  top: calc(var(--calendar-gap) * -1);
-  left: calc(var(--calendar-gap) * -1);
-  right: calc(var(--calendar-gap) * -1);
-  bottom: calc(var(--calendar-gap) * -1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: var(--salt-selectable-background-hover);
   z-index: var(--calendar-day-zIndex-hover);
   border-radius: 0;
