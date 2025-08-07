@@ -65,7 +65,7 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.3.7",
     "@types/tinycolor2": "^1.4.3",
-    "@vitejs/plugin-react": "^4.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
     "ag-grid-community": "^32.0.0",
     "ag-grid-enterprise": "^32.0.0",
     "ag-grid-react": "^32.0.0",
