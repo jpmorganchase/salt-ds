@@ -162,6 +162,10 @@ table.saltTable th {
   text-align: start;
 }
 
+table.saltTable th.saltTable-th-align-right {
+  text-align: end;
+}
+
 .table.saltTable th[scope="row"] {
   font-weight: var(--salt-text-fontWeight-strong);
   line-height: var(--salt-text-lineHeight);
@@ -199,4 +203,9 @@ table.saltTable-divider-none tbody tr {
 table.saltTable td {
   height: 100%;
   padding: var(--salt-spacing-100);
+  text-align: start;
+}
+
+table.saltTable td.saltTable-td-align-right {
+  text-align: end;
 }
