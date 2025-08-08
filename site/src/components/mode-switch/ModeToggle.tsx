@@ -17,6 +17,7 @@ export function ModeToggle(props: ComponentPropsWithoutRef<typeof Button>) {
     <Tooltip
       content={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}
       placement="bottom"
+      aria-hidden="true"
     >
       <Button
         appearance="bordered"

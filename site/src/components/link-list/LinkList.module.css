@@ -4,6 +4,7 @@
   flex-wrap: nowrap;
   flex-direction: row;
   max-width: 18em;
+  padding-inline: var(--salt-spacing-200);
 }
 
 .linkImage {
