@@ -1,14 +1,23 @@
 import {
   Avatar,
+  Button,
+  FlexItem,
+  FlexLayout,
   FlowLayout,
   Label,
+  Menu,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+  NavigationItem,
   StackLayout,
   useAvatarImage,
 } from "@salt-ds/core";
-import { UserGroupSolidIcon } from "@salt-ds/icons";
+import { MicroMenuIcon, UserGroupSolidIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 import persona1 from "../assets/avatar.png";
+import logo from "../assets/logo.svg";
 
 export default {
   title: "Core/Avatar",
@@ -79,4 +88,73 @@ export const WithCustomImg: StoryFn<typeof Avatar> = () => {
       {children}
     </Avatar>
   );
+};
+
+const items = ["Home", "About", "Services", "Contact", "Blog"];
+
+export const InteractiveAvatar = () => {
+  return (
+    <header>
+      <FlexLayout
+        style={{
+          paddingLeft: "var(--salt-spacing-300)",
+          paddingRight: "var(--salt-spacing-300)",
+          backgroundColor: "var(--salt-container-primary-background)",
+          position: "fixed",
+          width: "100%",
+          borderBottom:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        }}
+        justify="space-between"
+        gap={3}
+      >
+        <FlexItem align="center">
+          <img
+            alt="logo"
+            src={logo}
+            style={{
+              display: "block",
+              height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
+            }}
+          />
+        </FlexItem>
+        <nav>
+          <ul
+            style={{
+              display: "flex",
+              listStyle: "none",
+              padding: "0",
+              margin: "0",
+            }}
+          >
+            {items?.map((item) => (
+              <li key={item}>
+                <NavigationItem href="#">{item}</NavigationItem>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <FlexItem align="center">
+          <Menu>
+            <MenuTrigger>
+              <Avatar size={1} render={<button />} />
+            </MenuTrigger>
+            <MenuPanel>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Log out</MenuItem>
+            </MenuPanel>
+          </Menu>
+        </FlexItem>
+      </FlexLayout>
+    </header>
+  );
+};
+
+InteractiveAvatar.parameters = {
+  layout: "fullscreen",
+};
+
+export const LinkAvatar = Template.bind({});
+LinkAvatar.args = {
+  render: <a href="#" />,
 };
