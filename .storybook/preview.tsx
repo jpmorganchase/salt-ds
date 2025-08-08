@@ -35,6 +35,10 @@ if (!window.Cypress) {
   });
 }
 
+const fontLoader = async () => ({
+  fonts: await document.fonts.ready,
+});
+
 const preview: Preview = {
   initialGlobals: {
     mode: "light",
