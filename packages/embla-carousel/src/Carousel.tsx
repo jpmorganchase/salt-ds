@@ -5,9 +5,14 @@ import { clsx } from "clsx";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { type ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import carouselCss from "./Carousel.css";
-import { CarouselContext } from "./CarouselContext";
+import { type CarouselAriaVariant, CarouselContext } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
 
@@ -34,8 +39,14 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"section"> {
    * These options are passed directly to the Embla Carousel instance.
    */
   emblaPlugins?: CarouselPlugin;
-  /** Get embla API instance, use this to manage the state of the Carousel */
+  /**
+   * Get embla API instance, use this to manage the state of the Carousel
+   **/
   getEmblaApi?: (embla: CarouselEmblaApiType) => void;
+  /**
+   * Disable screenreader announcing slide updates, defaults to false.
+   */
+  disableSlideAnnouncements?: boolean;
 }
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
@@ -43,6 +54,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     {
       children,
       className,
+      disableSlideAnnouncements,
       emblaOptions = {},
       emblaPlugins = [],
       getEmblaApi,
@@ -68,9 +80,25 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       return undefined;
     }, [emblaApi]);
 
+    const [ariaVariant, setAriaVariant] =
+      useState<CarouselAriaVariant>("group");
+    const [silenceNextAnnoucement, setSilenceNextAnnoucement] =
+      useState<boolean>(false);
+
     return (
-      <CarouselContext.Provider value={{ emblaApi, emblaRef }}>
+      <CarouselContext.Provider
+        value={{
+          ariaVariant,
+          disableSlideAnnouncements,
+          emblaApi,
+          emblaRef,
+          setAriaVariant,
+          setSilenceNextAnnoucement,
+          silenceNextAnnoucement,
+        }}
+      >
         <section
+          key={`carousel-${ariaVariant}}`}
           aria-roledescription="carousel"
           role="region"
           className={clsx(withBaseName(), className)}
