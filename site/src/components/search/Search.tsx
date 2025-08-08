@@ -124,9 +124,12 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
   return (
     <search {...props}>
       <ComboBox
+        inputProps={{
+          "aria-label": "Site Search",
+        }}
         onChange={handleChange}
         onSelectionChange={handleSelectionChange}
-        startAdornment={<SearchIcon />}
+        startAdornment={<SearchIcon aria-hidden />}
         bordered
         endAdornment={
           value && (
