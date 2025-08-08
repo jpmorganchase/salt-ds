@@ -90,13 +90,5 @@ export function Variants() {
 Variants.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

@@ -46,14 +46,6 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
 Default.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -99,14 +91,6 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
 CloseButton.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -141,13 +125,5 @@ export const DeprecatedCloseButton: StoryFn<QAContainerProps> = (props) => {
 DeprecatedCloseButton.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

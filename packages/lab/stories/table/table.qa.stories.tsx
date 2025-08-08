@@ -82,13 +82,5 @@ export const QA: StoryFn<QAContainerProps> = () => (
 QA.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

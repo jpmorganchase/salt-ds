@@ -74,13 +74,5 @@ export const ExamplesGrid: StoryFn = (props) => (
 ExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

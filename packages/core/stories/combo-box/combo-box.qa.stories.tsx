@@ -54,14 +54,6 @@ export const OpenExamples: StoryFn<QAContainerProps> = () => (
 OpenExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -84,14 +76,6 @@ export const OpenMultiselectExamples: StoryFn<QAContainerProps> = () => (
 OpenMultiselectExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -239,14 +223,6 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
 ClosedExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 

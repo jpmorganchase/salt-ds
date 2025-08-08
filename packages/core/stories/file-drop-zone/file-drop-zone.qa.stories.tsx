@@ -33,13 +33,5 @@ export const AllExamplesGrid: StoryFn = () => {
 AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

@@ -12,14 +12,6 @@ export default {
 
 const QAContainerParameters = {
   chromatic: { disableSnapshot: false },
-  modes: {
-    theme: {
-      theme: "legacy",
-    },
-    themeNext: {
-      theme: "brand",
-    },
-  },
 };
 
 const renderQAContainer = () => {

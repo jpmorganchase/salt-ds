@@ -182,6 +182,14 @@ const preview: Preview = {
     // disables snapshotting on a global level and enable modes
     chromatic: {
       disableSnapshot: true,
+      modes: {
+        theme: {
+          theme: "legacy",
+        },
+        themeNext: {
+          theme: "brand",
+        },
+      },
     },
     viewport: {
       options: {

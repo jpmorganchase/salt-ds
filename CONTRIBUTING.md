@@ -120,14 +120,6 @@ To enable Chromatic to run these stories, you will need to add extra parameters 
 Story.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 ```

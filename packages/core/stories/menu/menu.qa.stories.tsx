@@ -52,14 +52,6 @@ export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
 SingleLevelExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -104,14 +96,6 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
 MultilevelExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -149,14 +133,6 @@ export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
 GroupedExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -200,13 +176,5 @@ export const WithIconExamples: StoryFn<QAContainerProps> = (props) => {
 WithIconExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

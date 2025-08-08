@@ -52,13 +52,5 @@ export const AllExamplesUsingText: StoryFn<
 AllExamplesUsingText.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

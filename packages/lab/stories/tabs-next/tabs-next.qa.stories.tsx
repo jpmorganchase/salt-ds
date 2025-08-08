@@ -81,13 +81,5 @@ export const LotsOfTabsTabstrip: StoryFn = () => {
 LotsOfTabsTabstrip.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

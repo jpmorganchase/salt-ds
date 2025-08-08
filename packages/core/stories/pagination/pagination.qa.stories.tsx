@@ -77,13 +77,5 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => {
 AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };

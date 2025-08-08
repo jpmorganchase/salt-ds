@@ -87,14 +87,6 @@ export const DeprecatedClosedButton: StoryFn = () => {
 DeprecatedClosedButton.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -133,14 +125,6 @@ export const StatusVariants: StoryFn = () => {
 StatusVariants.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -221,14 +205,6 @@ export const ContentVariants: StoryFn = () => {
 ContentVariants.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
 
@@ -291,13 +267,5 @@ export const DialogHeaders: StoryFn<QAContainerProps> = () => (
 DialogHeaders.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        theme: "legacy",
-      },
-      themeNext: {
-        theme: "brand",
-      },
-    },
   },
 };
