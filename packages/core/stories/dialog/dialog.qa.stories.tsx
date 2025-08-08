@@ -15,12 +15,7 @@ import {
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
 import { Fragment } from "react";
@@ -305,72 +300,4 @@ DialogHeaders.parameters = {
       },
     },
   },
-};
-
-export const NoStyleInjectionDialogHeaders: StoryFn<
-  QAContainerNoStyleInjectionProps
-> = (props) => (
-  <QAContainerNoStyleInjection
-    height={600}
-    cols={1}
-    itemPadding={5}
-    width={1200}
-    {...props}
-  >
-    <DialogHeader
-      header="Terms and conditions"
-      style={{
-        width: 600,
-      }}
-    />
-    <DialogHeader
-      style={{
-        width: 600,
-      }}
-      header="Terms and conditions"
-      preheader="Ensure you read and agree to these Terms"
-    />
-    <DialogHeader
-      status="info"
-      header="Terms and conditions"
-      style={{
-        width: 600,
-      }}
-    />
-    <DialogHeader
-      status="info"
-      style={{
-        width: 600,
-      }}
-      header="Terms and conditions"
-      preheader="Ensure you read and agree to these Terms"
-    />
-    <DialogHeader
-      actions={
-        <Button aria-label="Close dialog" appearance="transparent">
-          <CloseIcon aria-hidden />
-        </Button>
-      }
-      status="info"
-      style={{
-        width: 600,
-      }}
-      header="Terms and conditions"
-    />
-    <DialogHeader
-      actions={
-        <Button aria-label="Close dialog" appearance="transparent">
-          <CloseIcon aria-hidden />
-        </Button>
-      }
-      status="info"
-      style={{
-        width: 600,
-      }}
-      header="Complete terms and conditions for using the services provided by our company"
-    />
-  </QAContainerNoStyleInjection>
-);
-NoStyleInjectionDialogHeaders.parameters = {
-  chromatic: { disableSnapshot: false },
 };

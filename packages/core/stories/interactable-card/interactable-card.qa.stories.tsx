@@ -5,12 +5,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Interactable Card/Interactable Card QA",
@@ -82,65 +77,4 @@ AllExamples.parameters = {
       },
     },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection
-    itemPadding={4}
-    cols={4}
-    itemWidthAuto
-    {...props}
-  >
-    <InteractableCard>
-      <H1>Primary card</H1>
-      <Text>Content</Text>
-    </InteractableCard>
-    <InteractableCard variant="secondary">
-      <H1>Secondary card</H1>
-      <Text>Content</Text>
-    </InteractableCard>
-    <InteractableCard variant="tertiary">
-      <H1>Tertiary card</H1>
-      <Text>Content</Text>
-    </InteractableCard>
-    <InteractableCardGroup
-      defaultValue={["top", "right", "bottom", "left"]}
-      multiSelect
-    >
-      <InteractableCard accent="top">
-        <H1>Accent top</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard accent="right">
-        <H1>Accent right</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard accent="bottom">
-        <H1>Accent bottom</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard accent="left">
-        <H1>Accent left</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-    </InteractableCardGroup>
-    <InteractableCard disabled>
-      <H1>Disabled primary</H1>
-      <Text>Content</Text>
-    </InteractableCard>
-    <InteractableCard disabled variant="secondary">
-      <H1>Disabled secondary</H1>
-      <Text>Content</Text>
-    </InteractableCard>
-    <InteractableCard disabled variant="tertiary">
-      <H1>Disabled tertiary</H1>
-      <Text>Content</Text>
-    </InteractableCard>
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };
