@@ -6,12 +6,7 @@ import {
   type RadioButtonGroupProps,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Radio Button/Radio Button QA",
@@ -97,20 +92,5 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
 };
 
 AllExamplesGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection cols={1} itemPadding={8} {...props}>
-    <RadioButtonGroupExample direction="vertical" />
-    <RadioButtonGroupExample direction="horizontal" />
-    <RadioButtonCheckedReadonlyGroupExample />
-    <RadioButtonInFormFieldExample />
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };

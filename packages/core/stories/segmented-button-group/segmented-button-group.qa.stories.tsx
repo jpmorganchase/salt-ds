@@ -42,17 +42,6 @@ export const Default: StoryFn<SegmentedButtonGroupProps> = () => {
 Default.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };
 

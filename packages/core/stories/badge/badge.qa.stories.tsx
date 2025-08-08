@@ -14,12 +14,7 @@ import {
   TabsNext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Badge/Badge QA",
@@ -72,56 +67,5 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
 AllExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection height={500} width={1500} {...props}>
-    <GridLayout columns={12} gap={4}>
-      <Badge value={9}>
-        <Button>
-          <NotificationSolidIcon />
-        </Button>
-      </Badge>
-      <Badge value={200} max={99}>
-        <Button>
-          <NotificationSolidIcon />
-        </Button>
-      </Badge>
-      <Badge value={"NEW"}>
-        <Button>
-          <MessageIcon />
-        </Button>
-      </Badge>
-      <GridItem colSpan={9}>
-        <TabListNext defaultValue="Checks">
-          <TabNext value="Checks">
-            <TabNextTrigger>
-              <StackLayout direction="row" gap={1}>
-                Checks
-                <Badge value={30} />
-              </StackLayout>
-            </TabNextTrigger>
-          </TabNext>
-        </TabListNext>
-      </GridItem>
-    </GridLayout>
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

@@ -155,7 +155,7 @@ const GriActionCellRenderer = () => (
   </FlexLayout>
 );
 
-export const Example1 = () => {
+export const Components = () => {
   return (
     <StackLayout>
       <StackLayout direction="row">
