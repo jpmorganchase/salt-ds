@@ -136,6 +136,65 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           }).should("have.attr", "aria-pressed", "true");
         });
       });
+
+      it("SHOULD be able to navigate between months through focus", () => {
+        const endDateOffset = (date: ReturnType<typeof adapter.date>) =>
+          adapter.add(date, { days: 4 });
+        const offsetDate = endDateOffset(testDate);
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 2 });
+
+        cy.mount(
+          <Calendar
+            selectionVariant="offset"
+            defaultVisibleMonth={startDate}
+            endDateOffset={endDateOffset}
+          >
+            <CalendarNavigation />
+            <CalendarGrid />
+          </Calendar>,
+        );
+
+        // Simulate pressing the ArrowDown key to move the next month
+        const weekbeforeEndOfMonth = adapter.subtract(
+          adapter.endOf(startDate, "month"),
+          { days: 6 },
+        );
+        const nextMonth = adapter.startOf(
+          adapter.add(startDate, { months: 1 }),
+          "month",
+        );
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        }).realClick();
+        cy.realPress("ArrowDown");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(nextMonth, "DD MMMM YYYY"),
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(nextMonth, "MMM"),
+        );
+
+        // Simulate pressing the ArrowUp key to move back to previous month
+        cy.realPress("ArrowUp");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(startDate, "MMM"),
+        );
+      });
     });
   });
 });
