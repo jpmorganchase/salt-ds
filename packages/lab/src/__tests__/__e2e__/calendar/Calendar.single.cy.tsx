@@ -284,6 +284,54 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         }).should("have.attr", "aria-pressed", "true");
       });
 
+      it("SHOULD be able to navigate between months through focus", () => {
+        cy.mount(
+          <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
+            <CalendarNavigation />
+            <CalendarGrid />
+          </Calendar>,
+        );
+
+        // Simulate pressing the ArrowDown key to move the next month
+        const weekbeforeEndOfMonth = adapter.subtract(
+          adapter.endOf(testDate, "month"),
+          { days: 6 },
+        );
+        const nextMonth = adapter.startOf(
+          adapter.add(testDate, { months: 1 }),
+          "month",
+        );
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        }).realClick();
+        cy.realPress("ArrowDown");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(nextMonth, "DD MMMM YYYY"),
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(nextMonth, "MMM"),
+        );
+
+        // Simulate pressing the ArrowUp key to move back to previous month
+        cy.realPress("ArrowUp");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        })
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(testDate, "MMM"),
+        );
+      });
+
       it("SHOULD not allow deselection", () => {
         cy.mount(
           <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>

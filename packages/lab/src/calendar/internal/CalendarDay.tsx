@@ -109,6 +109,7 @@ export const CalendarDay = forwardRef<
         </span>
       </>
     ),
+    disabled,
     ...dayProps,
     ref: buttonRef,
     ...rest,
@@ -146,7 +147,7 @@ export const CalendarDay = forwardRef<
     return (
       <Tooltip
         hideIcon
-        status={unselectableReason ? "error" : "info"}
+        status="info"
         content={tooltipContent}
         placement="top"
         enterDelay={0} // --salt-duration-instant
