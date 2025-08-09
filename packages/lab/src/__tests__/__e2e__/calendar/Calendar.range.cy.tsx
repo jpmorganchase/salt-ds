@@ -339,34 +339,59 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         cy.findAllByRole("button", {
           pressed: true,
         }).should("have.length", 1);
+      });
 
-        // Simulate pressing the ArrowRight key to move the focus
-        cy.realPress("ArrowRight");
-        cy.realPress("ArrowRight");
-        // Verify that the hovered span class is not removed
-        cy.get(".saltCalendarDay-hoveredSpan").should("exist");
-        // Simulate pressing the Enter key to select the range
-        cy.realPress("Enter");
-        // Verify that the start date button is selected and has the correct class
+      it("SHOULD be able to navigate between months through focus", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 2 });
+        const endDate = adapter.add(startDate, { days: 2 });
+
+        cy.mount(
+          <Calendar selectionVariant="range" defaultVisibleMonth={startDate}>
+            <CalendarNavigation />
+            <CalendarGrid />
+          </Calendar>,
+        );
+
+        // Simulate pressing the ArrowDown key to move the next month
+        const weekbeforeEndOfMonth = adapter.subtract(
+          adapter.endOf(startDate, "month"),
+          { days: 6 },
+        );
+        const nextMonth = adapter.startOf(
+          adapter.add(startDate, { months: 1 }),
+          "month",
+        );
         cy.findByRole("button", {
-          name: adapter.format(startDate, "DD MMMM YYYY"),
-        })
-          .should("have.attr", "aria-pressed", "true")
-          .and("have.class", "saltCalendarDay-selectedStart");
-        // Verify that the dates in the range are selected and have the correct class
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        }).realClick();
+        cy.realPress("ArrowDown");
+        // Verify that the focus moves to the next month
         cy.findByRole("button", {
-          name: adapter.format(
-            adapter.add(startDate, { days: 1 }),
-            "DD MMMM YYYY",
-          ),
+          name: adapter.format(nextMonth, "DD MMMM YYYY"),
         })
-          .should("have.attr", "aria-pressed", "true")
-          .and("have.class", "saltCalendarDay-selectedSpan");
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(nextMonth, "MMM"),
+        );
+
+        // Simulate pressing the ArrowUp key to move back to previous month
+        cy.realPress("ArrowUp");
+        // Verify that the focus moves to the next month
         cy.findByRole("button", {
-          name: adapter.format(endDate, "DD MMMM YYYY"),
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
         })
-          .should("have.attr", "aria-pressed", "true")
-          .and("have.class", "saltCalendarDay-selectedEnd");
+          .invoke("attr", "class")
+          .should("match", /saltCalendarDay-focused/);
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(startDate, "MMM"),
+        );
       });
 
       describe("timezone", () => {
