@@ -76,6 +76,7 @@ export const CalendarDay = forwardRef<
     focusedDateRef = null,
     dayProps,
     unselectableReason,
+    disabledReason,
     highlightedReason,
   } = useCalendarDay({
     date,
@@ -101,9 +102,12 @@ export const CalendarDay = forwardRef<
   const defaultButtonProps = {
     "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
     children: (
-      <span className={withBaseName("content")}>
-        {dateAdapter.format(date, format)}
-      </span>
+      <>
+        {highlighted ? <div className={withBaseName("highlighted")} /> : null}
+        <span className={withBaseName("content")}>
+          {dateAdapter.format(date, format)}
+        </span>
+      </>
     ),
     disabled,
     ...dayProps,
@@ -116,7 +120,6 @@ export const CalendarDay = forwardRef<
         [withBaseName("outOfRange")]: outOfRange,
         [withBaseName("disabled")]: disabled,
         [withBaseName("unselectable")]: !!unselectable,
-        [withBaseName("highlighted")]: !!highlighted,
         [withBaseName("focused")]: !!focused,
         [withBaseName("today")]: today,
       },
@@ -138,23 +141,22 @@ export const CalendarDay = forwardRef<
       })
     : defaultButtonElement;
 
-  const hasTooltip = unselectableReason || highlightedReason;
-  if (!hasTooltip) {
-    return buttonElement;
+  const tooltipContent =
+    unselectableReason || highlightedReason || disabledReason;
+  if (tooltipContent && tooltipContent?.length) {
+    return (
+      <Tooltip
+        hideIcon
+        status="info"
+        content={tooltipContent}
+        placement="top"
+        enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
+        {...TooltipProps}
+      >
+        {buttonElement}
+      </Tooltip>
+    );
   }
-  return (
-    <Tooltip
-      hideIcon
-      status={unselectableReason ? "error" : "info"}
-      content={
-        unselectableReason || highlightedReason || "Date is out of range"
-      }
-      placement="top"
-      enterDelay={0} // --salt-duration-instant
-      leaveDelay={0} // --salt-duration-instant
-      {...TooltipProps}
-    >
-      {buttonElement}
-    </Tooltip>
-  );
+  return buttonElement;
 });

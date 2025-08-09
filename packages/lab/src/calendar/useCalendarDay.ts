@@ -103,7 +103,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     setHoveredDate(event, date);
   };
 
-  const handleMouseEnter: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleMouseMove: MouseEventHandler<HTMLButtonElement> = (event) => {
     setHoveredDate(event, date);
   };
 
@@ -111,7 +111,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onFocus: handleFocus,
-    onMouseEnter: handleMouseEnter,
+    onMouseMove: handleMouseMove,
   };
 
   const outOfRange = !dateAdapter.isSame(date, month, "month");
@@ -124,6 +124,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
+  const disabledReason = isDayDisabled(date);
   const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
 
@@ -155,6 +156,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     } as ComponentPropsWithoutRef<"button">,
     focusedDateRef: focused ? focusedDateRef : null,
     unselectableReason,
+    disabledReason,
     highlightedReason,
   };
 }
