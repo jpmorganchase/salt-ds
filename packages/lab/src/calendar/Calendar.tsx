@@ -7,6 +7,7 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  useEffect,
   useRef,
 } from "react";
 import { useLocalization } from "../localization-provider";
@@ -188,6 +189,8 @@ function getStartOrEndDate<TDate>(
   return range?.startDate ?? range?.endDate;
 }
 
+let warnedOnce = false;
+
 export const Calendar = forwardRef<
   HTMLDivElement,
   CalendarProps<DateFrameworkType>
@@ -230,6 +233,17 @@ export const Calendar = forwardRef<
       timezone: timezoneProp,
       ...propsRest
     } = props;
+
+    useEffect(() => {
+      if (process.env.NODE_ENV !== "production") {
+        if (!warnedOnce && multiselect && selectionVariant !== "single") {
+          console.warn(
+            `'multiselect' with selection variant '${selectionVariant}' is experimental and not for production use.`,
+          );
+          warnedOnce = true;
+        }
+      }
+    }, [multiselect, warnedOnce, selectionVariant]);
 
     let timezone: Timezone = "default";
     if (timezoneProp) {

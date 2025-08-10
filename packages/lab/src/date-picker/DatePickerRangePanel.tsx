@@ -137,6 +137,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
       CalendarRangeProps<TDate> | CalendarOffsetProps<TDate>,
       | "selectedDate"
       | "defaultSelectedDate"
+      | "multiselect"
       | "onFocusedDateChange"
       | "onHoveredDateChange"
       | "onSelectionChange"
@@ -156,6 +157,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
       CalendarRangeProps<TDate>,
       | "selectedDate"
       | "defaultSelectedDate"
+      | "multiselect"
       | "onFocusedDateChange"
       | "onHoveredDateChange"
       | "onSelectionChange"
