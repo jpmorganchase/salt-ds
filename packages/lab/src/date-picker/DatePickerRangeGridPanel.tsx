@@ -58,6 +58,7 @@ export type DatePickerRangeGridPanelProps<TDate extends DateFrameworkType> =
           | "selectionVariant"
           | "selectedDate"
           | "defaultSelectedDate"
+          | "multiselect"
           | "onHoveredDateChange"
           | "onSelectionChange"
           | "onVisibleMonthChange"
