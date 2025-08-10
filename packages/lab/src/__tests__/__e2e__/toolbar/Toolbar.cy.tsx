@@ -269,7 +269,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized to trigger first overflow", () => {
       it("THEN rightmost priority 5 item will overflow", () => {
         cy.mount(<ToolbarUsingOverflowPriorities width={600} />);
-        cy.get(".saltToolbar").invoke("css", "width", "520px");
+        cy.get(".saltToolbar").invoke("css", "width", "500px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
