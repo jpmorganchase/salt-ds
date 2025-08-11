@@ -8,23 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-## Accessible Name
-
-* Recommended: Use a clear, descriptive label.
-
-  * **Accessible Name Required** if more than one navigation landmark is present on the page.
-* Avoid adding the word “navigation” to the accessible name. Assistive technologies will announce it automatically due to its role.
-
 ## Best Practices
 
-* Display only links that all users can access.
-* Limit expandable sections to two levels.
-
-## Additional Consideration
-
-* Provide a skip link to bypass the vertical navigation.
-
-  * **Required** if the navigation appears across multiple pages **and** there is no “Skip to main” link as the first item on the page, to meet WCAG 2.4.1 requirement for bypassing repeated content.
+- Display only links that all users can access.
+- If more than one vertical navigation component is present on the page, ensure that each has a unique accessible name e.g. `aria-label` or `aria-labelledby`.
+  - Avoid adding the word “navigation” to the accessible name. Assistive technologies will announce it automatically due to its role.
 
 ## Keyboard interactions
 

@@ -455,60 +455,6 @@ export const MultiAction: StoryFn<typeof VerticalNavigation> = (args) => {
   );
 };
 
-function DualActionItem(props: { item: NavItem }) {
-  const { item } = props;
-
-  const location = useLocation();
-
-  if (Array.isArray(item.children) && item.children.length > 0) {
-    return (
-      <VerticalNavigationItem active={location.pathname === item.href}>
-        <Collapsible open={location.pathname.startsWith(item.href)}>
-          <VerticalNavigationItemContent>
-            <CollapsibleTrigger>
-              <MockedTrigger to={item.href}>
-                <VerticalNavigationItemLabel>
-                  {item.title}
-                </VerticalNavigationItemLabel>
-                <VerticalNavigationItemExpansionIcon />
-              </MockedTrigger>
-            </CollapsibleTrigger>
-          </VerticalNavigationItemContent>
-          <CollapsiblePanel>
-            <VerticalNavigationSubMenu>
-              {item.children.map((child) => (
-                <DualActionItem key={child.title} item={child} />
-              ))}
-            </VerticalNavigationSubMenu>
-          </CollapsiblePanel>
-        </Collapsible>
-      </VerticalNavigationItem>
-    );
-  }
-
-  return (
-    <VerticalNavigationItem active={location.pathname === item.href}>
-      <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>
-          <VerticalNavigationItemLabel>
-            {item.title}
-          </VerticalNavigationItemLabel>
-        </MockedTrigger>
-      </VerticalNavigationItemContent>
-    </VerticalNavigationItem>
-  );
-}
-
-export const DualAction: StoryFn<typeof VerticalNavigation> = (args) => {
-  return (
-    <VerticalNavigation {...args}>
-      {multiLevel.map((item) => (
-        <DualActionItem key={item.title} item={item} />
-      ))}
-    </VerticalNavigation>
-  );
-};
-
 export const NestedCollapseWithIcon: StoryFn<typeof VerticalNavigation> = (
   args,
 ) => {

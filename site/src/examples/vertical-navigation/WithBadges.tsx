@@ -55,7 +55,7 @@ function NestedItem(props: { item: Item }) {
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
           <VerticalNavigationItemLabel>
-            {item.title}
+            {item.title}{" "}
           </VerticalNavigationItemLabel>
           {item.status && <Badge value={item.status} />}
         </VerticalNavigationItemTrigger>
