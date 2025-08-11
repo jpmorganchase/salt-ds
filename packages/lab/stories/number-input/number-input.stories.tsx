@@ -419,7 +419,7 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           value={value}
-          onChange={(e, value) => {
+          onChange={(_e, value) => {
             setValue(value);
           }}
           format={(value) => {
