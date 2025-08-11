@@ -1,12 +1,7 @@
 import { Button, StackLayout, Toast, ToastContent } from "@salt-ds/core";
 import { CloseIcon, GlobeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Toast/Toast QA",
@@ -81,34 +76,5 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => (
 ExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection
-    cols={1}
-    itemWidthAuto
-    height={600}
-    width={1000}
-    {...props}
-  >
-    <UI />
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

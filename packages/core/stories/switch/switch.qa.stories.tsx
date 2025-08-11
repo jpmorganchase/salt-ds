@@ -6,12 +6,7 @@ import {
   Switch,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Switch/Switch QA",
@@ -40,18 +35,6 @@ export const AllExamplesGrid: StoryFn<
 AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };
 
@@ -82,32 +65,5 @@ export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
 FormFieldAlignments.parameters = {
   chromatic: {
     disableSnapshot: false,
-
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<
-  QAContainerNoStyleInjectionProps
-> = ({ className, ...restProps }) => (
-  <QAContainerNoStyleInjection cols={4} {...restProps}>
-    <Switch className={className} label="Default" />
-    <Switch className={className} checked label="Checked" />
-    <Switch className={className} disabled label="Disabled" />
-    <Switch className={className} checked disabled label="Checked + Disabled" />
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

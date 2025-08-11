@@ -25,10 +25,6 @@ import { withLocalization } from "./decorators/withLocalization";
 import { withResponsiveWrapper } from "./decorators/withResponsiveWrapper";
 import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
 import { withTheme } from "./decorators/withTheme";
-import {
-  defaultValues as themeNextDefaultValues,
-  globalOptions as themeNextGlobals,
-} from "./toolbar/ThemeNextToolbar";
 
 // @ts-ignore
 if (!window.Cypress) {
@@ -47,9 +43,21 @@ const preview: Preview = {
     textSpacing: "disable",
     styleInjection: "enable",
     dateAdapter: "date-fns",
-    ...themeNextDefaultValues,
+    theme: "brand",
   },
   globalTypes: {
+    theme: {
+      name: "Theme",
+      description: "Theme to use for the components",
+      toolbar: {
+        dynamicTitle: true,
+        items: [
+          { value: "brand", title: "Brand" },
+          { value: "legacy", title: "Legacy" },
+        ],
+        title: "Theme",
+      },
+    },
     mode: {
       name: "Mode",
       description: "Set the theme mode",
@@ -117,7 +125,6 @@ const preview: Preview = {
         title: "Date Adapter",
       },
     },
-    ...themeNextGlobals,
   },
   argTypes: {
     ref: { control: false },
@@ -151,7 +158,7 @@ const preview: Preview = {
       }: ComponentProps<typeof DocsContainer>) => {
         const ChosenProvider =
           /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-          context.store.userGlobals.globals?.themeNext === "enable"
+          context.store.userGlobals.globals?.theme === "brand"
             ? SaltProviderNext
             : SaltProvider;
         return (
@@ -175,6 +182,14 @@ const preview: Preview = {
     // disables snapshotting on a global level and enable modes
     chromatic: {
       disableSnapshot: true,
+      modes: {
+        legacy: {
+          theme: "legacy",
+        },
+        brand: {
+          theme: "brand",
+        },
+      },
     },
     viewport: {
       options: {

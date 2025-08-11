@@ -8,11 +8,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-} from "docs/components";
+import { QAContainer } from "docs/components";
 import type { FC } from "react";
 
 export default {
@@ -52,37 +48,5 @@ export const ExamplesGrid: StoryFn = (props) => (
 ExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection
-    cols={1}
-    itemPadding={10}
-    height={600}
-    width={1000}
-    {...props}
-  >
-    <InfoBanner />
-    <ErrorBanner />
-    <WarningBanner />
-    <SuccessBanner />
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

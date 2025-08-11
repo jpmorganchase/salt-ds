@@ -1,6 +1,6 @@
 import { AddDocumentIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
+import { QAContainer } from "docs/components";
 import { allIcons } from "./icon.all";
 import "@salt-ds/icons/saltIcons.css";
 export default {
@@ -49,26 +49,6 @@ export const AllIcons: StoryFn = () => {
 };
 
 AllIcons.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const NoStyleInjection: StoryFn = () => {
-  return (
-    <QAContainerNoStyleInjection
-      height={500}
-      width={1500}
-      cols={4}
-      enableStyleInjection={false}
-    >
-      <AddDocumentIcon size={1} />
-      <AddDocumentIcon size={2} />
-      <AddDocumentIcon size={3} />
-      <AddDocumentIcon size={4} />
-    </QAContainerNoStyleInjection>
-  );
-};
-
-NoStyleInjection.parameters = {
   chromatic: { disableSnapshot: false },
 };
 

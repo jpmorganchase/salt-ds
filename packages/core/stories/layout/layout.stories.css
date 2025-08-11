@@ -1,31 +1,32 @@
 .layout-container > div,
 .layout-content {
-  background: var(--salt-color-orange-20);
-  padding: 1rem;
+  padding: var(--salt-spacing-200);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
+  font-weight: var(--salt-text-fontWeight-small);
 }
 .layout-container > .layout-active-content,
 .layout-active-content {
-  background: var(--salt-color-gray-40);
-  padding: 1rem;
+  background: var(--salt-container-secondary-background);
+  padding: var(--salt-spacing-200);
 }
 .layout-content-right {
-  background: var(--salt-color-orange-20);
   padding: 2rem 1rem;
 }
 
 .footer-column p {
-  color: var(--salt-color-gray-200);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .footer-column p:first-child {
-  color: var(--salt-color-gray-200);
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  color: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-h3-fontSize);
+  font-weight: var(--salt-text-h3-fontWeight-strong);
+  line-height: var(--salt-text-h3-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 .copy-right {
-  color: var(--salt-color-gray-200);
-  border-top: 1px solid var(--salt-color-gray-300);
+  color: var(--salt-content-secondary-foreground);
+  border-top: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   text-align: center;
 }
 
@@ -39,30 +40,30 @@
 .border-header,
 .grid-blog-featured,
 .grid-blog-image-five {
-  background-color: var(--salt-color-orange-20);
+  background-color: var(--salt-category-1-subtle-background);
 }
 
 .border-left,
 .grid-blog-image-one,
 .flex-blog-image-one,
 .grid-blog-image-six {
-  background-color: var(--salt-color-gray-40);
+  background-color: var(--salt-category-2-subtle-background);
 }
 .border-right,
 .grid-blog-image-two,
 .flex-blog-image-two {
-  background-color: var(--salt-color-teal-30);
+  background-color: var(--salt-category-3-subtle-background);
 }
 
 .border-main,
 .grid-blog-image-three,
 .flex-blog-image-three {
-  background-color: var(--salt-color-red-30);
+  background-color: var(--salt-category-4-subtle-background);
 }
 
 .border-bottom,
 .grid-blog-image-four {
-  background-color: var(--salt-color-purple-30);
+  background-color: var(--salt-category-5-subtle-background);
 }
 
 .grid-blog-featured {
@@ -116,7 +117,7 @@
   min-width: 350px;
   width: 100%;
   height: 140px;
-  background-color: var(--salt-color-gray-40);
+  background-color: var(--salt-container-secondary-background);
 }
 
 .custom-layer-container .custom-animation.saltLayerLayout-fullScreen.saltLayerLayout-enter-animation {
