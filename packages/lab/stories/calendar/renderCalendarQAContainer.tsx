@@ -5,8 +5,6 @@ import {
   CalendarNavigation,
   useLocalization,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react-vite";
-import { enUS as dateFnsEnUs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
@@ -24,7 +22,7 @@ const QAContainerParameters = {
   chromatic: { disableSnapshot: false },
 };
 
-const renderQAContainer = () => {
+export const renderCalendarQAContainer = () => {
   const { dateAdapter } = useLocalization();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startDate = dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date;
@@ -193,35 +191,4 @@ const renderQAContainer = () => {
       </Calendar>
     </QAContainer>
   );
-};
-
-export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithMoment.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "moment",
-};
-
-export const AllExamplesWithDateFns: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithDateFns.parameters = {
-  ...QAContainerParameters,
-  dateLocale: dateFnsEnUs,
-  dateAdapter: "date-fns",
-};
-
-export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithDayjs.parameters = {
-  dateLocale: "en",
-  dateAdapter: "dayjs",
-};
-
-export const AllExamplesWithLuxon: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-AllExamplesWithLuxon.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "luxon",
 };
