@@ -57,7 +57,7 @@ export const CalendayDaySingle: StoryFn<QAContainerProps> = () => {
             month={month}
           />
           <CalendarDay
-            className={"saltCalendarDay saltCalendarDay-disabled"}
+            className={"saltCalendarDay saltCalendarDay-outsideCurrentMonth"}
             date={date}
             month={month}
           />

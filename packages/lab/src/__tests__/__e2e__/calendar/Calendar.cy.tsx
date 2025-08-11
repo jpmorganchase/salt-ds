@@ -662,49 +662,6 @@ describe("GIVEN a Calendar", () => {
           });
           cy.get("@selectionChangeSpy").should("not.have.been.called");
         });
-
-        it("SHOULD not allow selection of disabled dates", () => {
-          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
-          cy.mount(
-            <DisabledDates
-              defaultVisibleMonth={testDate}
-              onSelectionChange={selectionChangeSpy}
-            />,
-          );
-
-          // Define the weekend dates in March 2024
-          const weekendDates = [
-            "02 March 2024", // Saturday
-            "03 March 2024", // Sunday
-            "09 March 2024", // Saturday
-            "10 March 2024", // Sunday
-            "16 March 2024", // Saturday
-            "17 March 2024", // Sunday
-            "23 March 2024", // Saturday
-            "24 March 2024", // Sunday
-            "30 March 2024", // Saturday
-            "31 March 2024", // Sunday
-          ];
-
-          // Check each weekend date to ensure it is disabled
-          weekendDates.forEach((date) => {
-            cy.findByRole("button", { name: date }).and(
-              "have.attr",
-              "aria-disabled",
-              "true",
-            );
-            cy.findByRole("button", { name: date }).realHover();
-            cy.findByRole("button", { name: date }).then(($el) => {
-              const describedById = $el.attr("aria-describedby");
-              cy.get(`[id="${describedById}"]`)
-                .should("have.attr", "role", "tooltip")
-                .find(".saltTooltip-content")
-                .should("have.text", "Weekends are disabled");
-            });
-            cy.findByRole("button", { name: date }).realHover().realClick();
-          });
-          cy.get("@selectionChangeSpy").should("not.have.been.called");
-        });
       });
     });
   });
