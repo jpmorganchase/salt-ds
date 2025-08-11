@@ -248,8 +248,12 @@ describe("GIVEN a Calendar", () => {
             cy.findByRole("button", {
               name: adapter.format(testDate, "DD MMMM YYYY"),
             })
-              .invoke("attr", "class")
-              .should("match", /saltCalendarDay-focused/);
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowRight key
             cy.realPress("ArrowRight");
@@ -257,8 +261,12 @@ describe("GIVEN a Calendar", () => {
             cy.findByRole("button", {
               name: adapter.format(nextDay, "DD MMMM YYYY"),
             })
-              .invoke("attr", "class")
-              .should("match", /saltCalendarDay-focused/);
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowLeft key
             cy.realPress("ArrowLeft");
@@ -266,8 +274,12 @@ describe("GIVEN a Calendar", () => {
             cy.findByRole("button", {
               name: adapter.format(previousDay, "DD MMMM YYYY"),
             })
-              .invoke("attr", "class")
-              .should("match", /saltCalendarDay-focused/);
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowDown key
             cy.realPress("ArrowDown");
@@ -275,8 +287,12 @@ describe("GIVEN a Calendar", () => {
             cy.findByRole("button", {
               name: adapter.format(nextWeek, "DD MMMM YYYY"),
             })
-              .invoke("attr", "class")
-              .should("match", /saltCalendarDay-focused/);
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowUp key
             cy.realPress("ArrowUp");
@@ -284,8 +300,12 @@ describe("GIVEN a Calendar", () => {
             cy.findByRole("button", {
               name: adapter.format(previousWeek, "DD MMMM YYYY"),
             })
-              .invoke("attr", "class")
-              .should("match", /saltCalendarDay-focused/);
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
           });
 
           describe("SHOULD move the focus when the shortcut keys are pressed", () => {
@@ -308,8 +328,12 @@ describe("GIVEN a Calendar", () => {
               cy.findByRole("button", {
                 name: adapter.format(testDate, "DD MMMM YYYY"),
               })
-                .invoke("attr", "class")
-                .should("match", /saltCalendarDay-focused/);
+                .should(($button) =>
+                  expect($button.attr("class")).to.match(
+                    /saltCalendarDay-focused/,
+                  ),
+                )
+                .should("be.focused");
             });
 
             it("HOME", () => {
@@ -319,8 +343,12 @@ describe("GIVEN a Calendar", () => {
                 cy.findByRole("button", {
                   name: adapter.format(startOfWeek, "DD MMMM YYYY"),
                 })
-                  .invoke("attr", "class")
-                  .should("match", /saltCalendarDay-focused/);
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -331,8 +359,12 @@ describe("GIVEN a Calendar", () => {
                 cy.findByRole("button", {
                   name: adapter.format(endOfWeek, "DD MMMM YYYY"),
                 })
-                  .invoke("attr", "class")
-                  .should("match", /saltCalendarDay-focused/);
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -343,8 +375,12 @@ describe("GIVEN a Calendar", () => {
                 cy.findByRole("button", {
                   name: adapter.format(lastMonth, "DD MMMM YYYY"),
                 })
-                  .invoke("attr", "class")
-                  .should("match", /saltCalendarDay-focused/);
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -355,8 +391,12 @@ describe("GIVEN a Calendar", () => {
                 cy.findByRole("button", {
                   name: adapter.format(nextMonth, "DD MMMM YYYY"),
                 })
-                  .invoke("attr", "class")
-                  .should("match", /saltCalendarDay-focused/);
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -367,8 +407,12 @@ describe("GIVEN a Calendar", () => {
                 cy.findByRole("button", {
                   name: adapter.format(lastYear, "DD MMMM YYYY"),
                 })
-                  .invoke("attr", "class")
-                  .should("match", /saltCalendarDay-focused/);
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -379,8 +423,12 @@ describe("GIVEN a Calendar", () => {
                 cy.findByRole("button", {
                   name: adapter.format(nextYear, "DD MMMM YYYY"),
                 })
-                  .invoke("attr", "class")
-                  .should("match", /saltCalendarDay-focused/);
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
           });
