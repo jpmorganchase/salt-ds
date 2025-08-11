@@ -20,7 +20,7 @@ const QAContainerParameters = {
 };
 
 export default {
-  title: "Lab/Calendar/QA",
+  title: "Lab/Calendar/Calendar date-fns QA",
   component: Calendar,
   decorators: [withDateMock],
   globals: {
