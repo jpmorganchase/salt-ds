@@ -374,7 +374,7 @@ function MultiActionItem(props: { item: NavItem }) {
             </MockedTrigger>
             <Menu>
               <MenuTrigger>
-                <Button appearance="transparent" aria-label="Open Menu">
+                <Button appearance="transparent" aria-labelledby={itemId}>
                   <MicroMenuIcon aria-hidden />
                 </Button>
               </MenuTrigger>
@@ -412,8 +412,8 @@ function MultiActionItem(props: { item: NavItem }) {
             <CollapsibleTrigger>
               <Button
                 id={actionId}
-                aria-labelledby={clsx(actionId, itemId)}
-                aria-label="Expand"
+                aria-labelledby={clsx(itemId, actionId)}
+                aria-label="Sub list"
                 appearance="transparent"
               >
                 <VerticalNavigationItemExpansionIcon />
