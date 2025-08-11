@@ -251,7 +251,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       minDate = dateAdapter.startOf(dateAdapter.today(timezone), "month"),
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
-    helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
+    helpers: { select, isDayHighlighted, isDayUnselectable },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
 
   const {
@@ -398,12 +398,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       );
     };
     const isDaySelectable = (date: TDate) =>
-      !(
-        date &&
-        (isDayUnselectable?.(date) ||
-          isDayDisabled?.(date) ||
-          isOutsideAllowedDates(date))
-      );
+      !(date && (isDayUnselectable?.(date) || isOutsideAllowedDates(date)));
 
     const getVisibleSelectedDate = (visibleMonth: TDate) => {
       if (
@@ -529,7 +524,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     visibleMonth: startVisibleMonth,
     hoveredDate,
     selectedDate: calendarSelectedDate,
-    isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,
@@ -554,7 +548,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
-    isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,

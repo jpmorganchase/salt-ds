@@ -174,7 +174,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           name: adapter.format(nextMonth, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Verify that the calendar navigates to the next month
@@ -190,7 +190,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Verify that the calendar navigates to the next month
@@ -261,7 +261,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: adapter.format(testDate.startDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -297,7 +297,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -326,7 +326,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -361,7 +361,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: adapter.format(startOfMonth, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -449,7 +449,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: adapter.format(testDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Simulate pressing the Enter key to select the current date
@@ -462,7 +462,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: adapter.format(testDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Simulate pressing the Enter key to select the current date
