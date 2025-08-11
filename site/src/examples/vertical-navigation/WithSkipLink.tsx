@@ -55,7 +55,7 @@ export const WithSkipLink = () => {
             <SkipLink targetId={headerId}>Skip to main content</SkipLink>
           )}
           <VerticalNavigation
-            aria-label="Basic bordered sidebar"
+            aria-label="Sidebar with skip link"
             appearance="bordered"
             style={{ minWidth: "30ch" }}
           >

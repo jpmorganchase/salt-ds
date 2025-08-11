@@ -82,7 +82,7 @@ function MockedTrigger(props: ComponentPropsWithoutRef<typeof Link>) {
   return <VerticalNavigationItemTrigger render={<Link to={to} />} {...rest} />;
 }
 
-export const Default: StoryFn<typeof VerticalNavigation> = (args) => {
+export const Basic: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
 
   return (
@@ -226,7 +226,9 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
   );
 }
 
-export const NestedCollapse: StoryFn<typeof VerticalNavigation> = (args) => {
+export const CollapsibleSubmenu: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
   return (
     <VerticalNavigation {...args}>
       {nested.map((item) => (
@@ -236,9 +238,9 @@ export const NestedCollapse: StoryFn<typeof VerticalNavigation> = (args) => {
   );
 };
 
-export const MultipleLevelsCollapse: StoryFn<typeof VerticalNavigation> = (
-  args,
-) => {
+export const CollapsibleMultiLevelSubmenu: StoryFn<
+  typeof VerticalNavigation
+> = (args) => {
   return (
     <VerticalNavigation {...args}>
       {multiLevel.map((item) => (
@@ -248,7 +250,7 @@ export const MultipleLevelsCollapse: StoryFn<typeof VerticalNavigation> = (
   );
 };
 
-export const Nested: StoryFn<typeof VerticalNavigation> = (args) => {
+export const SubmenuFlat: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
 
   return (
@@ -312,7 +314,7 @@ function ExpandButtonItem(props: { item: NavItem }) {
               <Button
                 id={actionId}
                 aria-labelledby={clsx(actionId, itemId)}
-                aria-label="Expand"
+                aria-label="Subpages"
                 appearance="transparent"
               >
                 <VerticalNavigationItemExpansionIcon />
@@ -344,7 +346,7 @@ function ExpandButtonItem(props: { item: NavItem }) {
   );
 }
 
-export const ExpandButton: StoryFn<typeof VerticalNavigation> = (args) => {
+export const WithExpandButton: StoryFn<typeof VerticalNavigation> = (args) => {
   return (
     <VerticalNavigation {...args}>
       {multiLevel.map((item) => (
@@ -413,7 +415,7 @@ function MultiActionItem(props: { item: NavItem }) {
               <Button
                 id={actionId}
                 aria-labelledby={clsx(itemId, actionId)}
-                aria-label="Sub list"
+                aria-label="Subpages"
                 appearance="transparent"
               >
                 <VerticalNavigationItemExpansionIcon />
@@ -445,7 +447,9 @@ function MultiActionItem(props: { item: NavItem }) {
   );
 }
 
-export const MultiAction: StoryFn<typeof VerticalNavigation> = (args) => {
+export const WithMultipleActions: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
   return (
     <VerticalNavigation {...args}>
       {multiLevel.map((item) => (
@@ -455,9 +459,7 @@ export const MultiAction: StoryFn<typeof VerticalNavigation> = (args) => {
   );
 };
 
-export const NestedCollapseWithIcon: StoryFn<typeof VerticalNavigation> = (
-  args,
-) => {
+export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
   return (
     <VerticalNavigation {...args}>
       {nested.map((item) => (

@@ -11,7 +11,9 @@ data:
 ## Best Practices
 
 - Display only links that all users can access.
-- If more than one vertical navigation component is present on the page, ensure that each has a unique accessible name e.g. `aria-label` or `aria-labelledby`.
+- Provide an accessible name for each vertical navigation component. This is important for screen reader users to understand the purpose of the navigation.
+  - Use `aria-label` or `aria-labelledby` to provide an accessible name.
+  - If more than one vertical navigation component is present on the page, ensure that each has a unique accessible name.
   - Avoid adding the word “navigation” to the accessible name. Assistive technologies will announce it automatically due to its role.
 
 ## Keyboard interactions
