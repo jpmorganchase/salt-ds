@@ -313,7 +313,7 @@ function ExpandButtonItem(props: { item: NavItem }) {
             <CollapsibleTrigger>
               <Button
                 id={actionId}
-                aria-labelledby={clsx(actionId, itemId)}
+                aria-labelledby={clsx(itemId, actionId)}
                 aria-label="Subpages"
                 appearance="transparent"
               >
