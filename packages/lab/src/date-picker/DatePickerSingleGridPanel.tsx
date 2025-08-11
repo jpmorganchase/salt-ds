@@ -83,20 +83,11 @@ export interface DatePickerPanelBaseProps<TDate extends DateFrameworkType>
   /**
    * Callback fired when the focused date changes.
    * @param event - The synthetic event or null if triggered by code.
-   * @param hoveredDate - The new hovered date.
+   * @param focusedDate - The new focused date.
    */
   onFocusedDateChange?: (
     event: SyntheticEvent | null,
-    hoveredDate?: TDate | null,
-  ) => void;
-  /**
-   * Callback fired when the hovered date changes.
-   * @param event - The synthetic event.
-   * @param hoveredDate - The new hovered date.
-   */
-  onHoveredDateChange?: (
-    event: SyntheticEvent,
-    hoveredDate?: TDate | null,
+    focusedDate?: TDate | null,
   ) => void;
   /**
    * Props to be passed to the CalendarNavigation component.
@@ -146,7 +137,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       onVisibleMonthChange,
       helperText,
       onFocusedDateChange,
-      onHoveredDateChange,
       onSelectionChange,
       numberOfVisibleMonths = 1,
       columns = numberOfVisibleMonths,
@@ -185,8 +175,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       state: { focused, initialFocusRef },
     } = useDatePickerOverlay();
 
-    const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
-
     const [uncontrolledDefaultVisibleMonth] = useState(() => {
       const validDate = dateAdapter.isValid(selectedDate)
         ? selectedDate
@@ -213,14 +201,6 @@ export const DatePickerSingleGridPanel = forwardRef(
         onSelectionChange?.(event, singleDate);
       },
       [onSelectionChange, select],
-    );
-
-    const handleHoveredDateChange = useCallback(
-      (event: SyntheticEvent, newHoveredDate: TDate | null) => {
-        setHoveredDate(newHoveredDate);
-        onHoveredDateChange?.(event, newHoveredDate);
-      },
-      [onHoveredDateChange],
     );
 
     const handleVisibleMonthChange = useCallback(
@@ -373,7 +353,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       visibleMonth,
       focusedDateRef: initialFocusRef,
       focusedDate: calendarGridFocused?.current ? focusedDate : null,
-      hoveredDate,
       isDayHighlighted,
       isDayUnselectable,
       hideOutOfRangeDates: true,
@@ -382,7 +361,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       maxDate,
       numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
       onFocusedDateChange: handleFocusedDateChange,
-      onHoveredDateChange: handleHoveredDateChange,
       onSelectionChange: handleSelectionChange,
       onVisibleMonthChange: handleVisibleMonthChange,
       timezone,
