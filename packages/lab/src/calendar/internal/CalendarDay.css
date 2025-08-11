@@ -109,7 +109,6 @@
 
 /** Single selection styles */
 
-.saltCalendarMonth-single .saltCalendarDay:hover:not(.saltCalendarDay-selected),
 .saltCalendarMonth-single .saltCalendarDay:hover:not(.saltCalendarDay-selected) {
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-selectable-background-hover);
@@ -220,7 +219,7 @@
   border-bottom: var(--salt-size-indicator) var(--salt-borderStyle-solid) var(--salt-content-secondary-foreground);
 }
 
-.saltCalendarDay-outOfRange .saltCalendarDay-highlighted::after{
+.saltCalendarDay-outOfRange .saltCalendarDay-highlighted::after {
   background-color: var(--salt-content-secondary-foreground);
 }
 
