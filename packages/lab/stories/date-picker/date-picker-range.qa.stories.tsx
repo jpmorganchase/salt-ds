@@ -63,7 +63,6 @@ const renderQAContainer = ({
           startDate,
           endDate,
         }}
-        isDayDisabled={isMonday}
         isDayHighlighted={isFriday}
         isDayUnselectable={isSaturday}
         selectionVariant="range"

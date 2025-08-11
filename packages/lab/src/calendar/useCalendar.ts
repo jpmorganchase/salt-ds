@@ -51,12 +51,6 @@ interface UseCalendarBaseProps<TDate>
    */
   isDayHighlighted?: (date: TDate) => string | false | undefined;
   /**
-   * Function to determine if a day is disabled.
-   * @param date - The date to check.
-   * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
-   */
-  isDayDisabled?: (date: TDate) => string | false | undefined;
-  /**
    * If `true`, hides dates that are out of the selectable range.
    */
   hideOutOfRangeDates?: boolean;
@@ -263,14 +257,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isDayHighlighted: (date: TDate) => string | false | undefined;
 
     /**
-     * Determines if a day is disabled.
-     *
-     * @param date - The date to check.
-     * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
-     */
-    isDayDisabled: (date: TDate) => string | false | undefined;
-
-    /**
      * Determines if a day is visible in the calendar.
      *
      * @param date - The date to check.
@@ -423,7 +409,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     hoveredDate,
     focusedDate: focusedDateProp,
     focusedDateRef,
-    isDayDisabled = defaultIsDayDisabled,
     isDayHighlighted = defaultIsDayHighlighted,
     isDayUnselectable = defaultIsDayUnselectable,
     multiselect,
@@ -495,13 +480,8 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const isDaySelectable = useCallback(
     (date?: TDate) =>
-      !(
-        date &&
-        (isDayUnselectable(date) ||
-          isDayDisabled(date) ||
-          isOutsideAllowedDates(date))
-      ),
-    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates],
+      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date))),
+    [isDayUnselectable, isOutsideAllowedDates],
   );
 
   const isDayVisible = useCallback(
@@ -591,7 +571,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
           setVisibleMonth,
           isDayUnselectable,
           isDayHighlighted,
-          isDayDisabled,
           isDayVisible,
           isOutsideAllowedDates,
           isOutsideAllowedMonths,
@@ -610,7 +589,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
       setVisibleMonth,
       isDayUnselectable,
       isDayHighlighted,
-      isDayDisabled,
       isDayVisible,
       isOutsideAllowedDates,
       isOutsideAllowedMonths,

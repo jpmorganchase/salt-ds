@@ -65,7 +65,9 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
         })
-          .should(($button) =>  expect($button.attr("class")).to.match(/saltCalendarDay-focused/))
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
           .should("be.focused");
       });
 
@@ -110,7 +112,9 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
         })
-          .should(($button) =>  expect($button.attr("class")).to.match(/saltCalendarDay-focused/))
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
           .should("be.focused");
       });
 
@@ -135,7 +139,9 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
-          .should(($button) =>  expect($button.attr("class")).to.match(/saltCalendarDay-focused/))
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
           .should("be.focused");
       });
 
@@ -160,7 +166,9 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
-          .should(($button) =>  expect($button.attr("class")).to.match(/saltCalendarDay-focused/))
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
           .should("be.focused");
       });
 
@@ -205,7 +213,9 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
-          .should(($button) =>  expect($button.attr("class")).to.match(/saltCalendarDay-focused/))
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
           .should("be.focused");
       });
 
@@ -239,7 +249,9 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             "DD MMMM YYYY",
           ),
         })
-          .should(($button) =>  expect($button.attr("class")).to.match(/saltCalendarDay-focused/))
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
           .should("be.focused");
       });
 
@@ -310,7 +322,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
           name: adapter.format(nextMonth, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Verify that the calendar navigates to the next month
@@ -326,7 +338,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
           name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Verify that the calendar navigates to the next month
@@ -456,7 +468,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
           name: adapter.format(testDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -488,7 +500,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -516,7 +528,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -550,7 +562,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
           name: adapter.format(startOfMonth, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
       });
@@ -624,7 +636,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
           name: adapter.format(testDate, "DD MMMM YYYY"),
         })
           .should(($button) =>
-            expect($button.attr("class")).to.match(/saltCalendarDay-focused/)
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
           )
           .should("be.focused");
         // Simulate pressing the Enter key to select the current date

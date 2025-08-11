@@ -76,7 +76,6 @@ export const CalendarDay = forwardRef<
     focusedDateRef = null,
     dayProps,
     unselectableReason,
-    disabledReason,
     highlightedReason,
   } = useCalendarDay({
     date,
@@ -90,6 +89,7 @@ export const CalendarDay = forwardRef<
     highlighted,
     hidden,
     disabled,
+    outsideCurrentMonth,
   } = status;
   const buttonRef = useForkRef(ref, focusedDateRef);
 
@@ -120,6 +120,7 @@ export const CalendarDay = forwardRef<
         [withBaseName("outOfRange")]: outOfRange,
         [withBaseName("disabled")]: disabled,
         [withBaseName("unselectable")]: !!unselectable,
+        [withBaseName("outsideCurrentMonth")]: outsideCurrentMonth,
         [withBaseName("focused")]: !!focused,
         [withBaseName("today")]: today,
       },
@@ -141,8 +142,7 @@ export const CalendarDay = forwardRef<
       })
     : defaultButtonElement;
 
-  const tooltipContent =
-    unselectableReason || highlightedReason || disabledReason;
+  const tooltipContent = unselectableReason || highlightedReason;
   if (tooltipContent && tooltipContent?.length) {
     return (
       <Tooltip

@@ -20,6 +20,10 @@ export interface DayStatus {
    */
   outOfRange?: boolean;
   /**
+   * If `true`, the day is selectable but outside of current month.
+   */
+  outsideCurrentMonth?: boolean;
+  /**
    * If `true`, the day is selected.
    */
   selected?: boolean;
@@ -82,7 +86,6 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       isDayUnselectable,
       isDaySelectable,
       isDayHighlighted,
-      isDayDisabled,
       isOutsideAllowedMonths,
     },
   } = useCalendarContext<TDate>();
@@ -124,9 +127,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     onMouseDown: handleMouseDown,
   };
 
-  const outOfRange = !dateAdapter.isSame(date, month, "month");
-  const focused =
-    focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange;
+  const focused = focusedDate && dateAdapter.isSame(date, focusedDate, "day");
   const tabIndex = focusableDates.find((tabbableDate) =>
     dateAdapter.isSame(date, tabbableDate, "day"),
   )
@@ -134,21 +135,19 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
-  const disabledReason = isDayDisabled(date);
   const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
 
-  const disabled =
-    isDayDisabled(date) ||
-    (outOfRange && isOutsideAllowedMonths(date)) ||
-    (isDaySelectable && !isDaySelectable(date));
-  const unselectable = Boolean(unselectableReason);
+  const outsideCurrentMonth = !dateAdapter.isSame(date, month, "month");
+  const disabled = isDaySelectable && !isDaySelectable(date);
+  const unselectable =
+    Boolean(unselectableReason) || isOutsideAllowedMonths(date);
   const highlighted = Boolean(highlightedReason);
-  const hidden = hideOutOfRangeDates ? outOfRange : false;
+  const hidden = hideOutOfRangeDates ? outsideCurrentMonth : false;
 
   return {
     status: {
-      outOfRange,
+      outsideCurrentMonth,
       today,
       unselectable,
       focused,
@@ -166,7 +165,6 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     } as ComponentPropsWithoutRef<"button">,
     focusedDateRef: focused ? focusedDateRef : null,
     unselectableReason,
-    disabledReason,
     highlightedReason,
   };
 }

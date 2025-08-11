@@ -54,7 +54,6 @@ const renderQAContainer = (
         <DatePicker
           defaultSelectedDate={dateAdapter.today()}
           selectionVariant="single"
-          isDayDisabled={isMonday}
           isDayHighlighted={isFriday}
           isDayUnselectable={isSaturday}
           open

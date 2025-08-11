@@ -685,31 +685,6 @@ export const UnselectableDates: StoryFn<
   );
 };
 
-export const DisabledDates: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
-  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
-
-    return isWeekend ? "Weekends are disabled" : false;
-  };
-  return (
-    <Calendar
-      // biome-ignore lint/suspicious/noExplicitAny: story args
-      {...(args as any)}
-      selectionVariant="single"
-      isDayDisabled={isDayDisabled}
-    >
-      <CalendarNavigation />
-      <CalendarGrid />
-    </Calendar>
-  );
-};
-
 export const HighlightedDates: StoryFn<
   React.FC<CalendarSingleProps<DateFrameworkType>>
 > = (args) => {
