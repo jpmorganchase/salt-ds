@@ -220,7 +220,7 @@
   border-bottom: var(--salt-size-indicator) var(--salt-borderStyle-solid) var(--salt-content-secondary-foreground);
 }
 
-.saltCalendarDay-outOfRange .saltCalendarDay-highlighted::before {
+.saltCalendarDay-outOfRange .saltCalendarDay-highlighted::after{
   background-color: var(--salt-content-secondary-foreground);
 }
 
