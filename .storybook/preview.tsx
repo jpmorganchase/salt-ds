@@ -183,10 +183,10 @@ const preview: Preview = {
     chromatic: {
       disableSnapshot: true,
       modes: {
-        theme: {
+        legacy: {
           theme: "legacy",
         },
-        themeNext: {
+        brand: {
           theme: "brand",
         },
       },
