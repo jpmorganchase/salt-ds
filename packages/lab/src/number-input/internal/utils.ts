@@ -38,7 +38,7 @@ export const sanitizeInput = (value: string | number) => {
   let sanitizedInput = value.replace(/[^0-9.,+-]/g, "");
   sanitizedInput = sanitizedInput.replace(
     /^([+-]?)(.*)$/,
-    (match, sign, rest) => {
+    (_match, sign, rest) => {
       return sign + rest.replace(/[+-]/g, "");
     },
   );

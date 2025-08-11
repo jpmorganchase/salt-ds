@@ -11,7 +11,7 @@ export const FormattingCompactNotation = () => {
         <FormFieldLabel>Compact notation</FormFieldLabel>
         <NumberInput
           value={value}
-          onChange={(e, value) => {
+          onChange={(_e, value) => {
             setValue(value);
           }}
           format={(value) => {
