@@ -1,10 +1,22 @@
 import type { Options } from "highcharts";
-// Properties relating to color will be overrided due to styledMode: true
+import { saltPatternDef } from "./patterns";
+import type { HighchartsOptionsCompat } from "./types";
 
-export const highchartsOptionsSalt: Options = {
+/*
+Typing note:
+We type the literal as HighchartsOptionsCompat so we can include options added after v10
+(e.g. plotOptions.pie.borderRadius) while compiling against v10–v12. We then export the
+value as Highcharts.Options so consumers only see/use the standard upstream type for
+their installed Highcharts version and never depend on this compat alias. Due to TS
+structural typing, Options & X is assignable to Options, so setOptions(highchartsOptionsSalt)
+is valid; older Highcharts will ignore unknown fields at runtime.
+*/
+export const saltThemeDefaults: HighchartsOptionsCompat = {
   chart: {
     styledMode: true,
+    colorCount: 20,
   },
+  defs: saltPatternDef,
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
@@ -17,6 +29,7 @@ export const highchartsOptionsSalt: Options = {
     symbolWidth: 32,
     itemMarginBottom: 8,
     margin: 24,
+    symbolRadius: 3,
   },
   yAxis: {
     title: {
@@ -34,8 +47,20 @@ export const highchartsOptionsSalt: Options = {
         enabled: false,
       },
     },
+    pie: {
+      borderRadius: 0,
+      dataLabels: {
+        distance: 6,
+        format:
+          '{point.name} <span class="value">{point.percentage:.1f}%</span>',
+        enabled: true,
+      },
+      innerSize: "80%",
+    },
   },
   title: {
     margin: 24,
   },
 };
+
+export const highchartsOptionsSalt: Options = saltThemeDefaults;
