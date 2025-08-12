@@ -3811,7 +3811,7 @@ __metadata:
   resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
-    highcharts: ^10.2.0
+    highcharts: ">=10 <13"
     highcharts-react-official: ^3.2.2
   languageName: unknown
   linkType: soft
