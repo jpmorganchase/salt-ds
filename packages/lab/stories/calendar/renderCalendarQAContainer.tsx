@@ -5,7 +5,7 @@ import {
   CalendarNavigation,
   useLocalization,
 } from "@salt-ds/lab";
-import { QAContainer, type QAContainerProps } from "docs/components";
+import { QAContainer } from "docs/components";
 
 export default {
   title: "Lab/Calendar/QA",
