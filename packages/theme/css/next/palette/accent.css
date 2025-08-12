@@ -10,8 +10,8 @@
   --salt-palette-accent-weaker: var(--salt-color-blue-200);
   --salt-palette-accent-weaker-disabled: var(--salt-color-blue-200-40a);
   --salt-palette-accent-weakest: var(--salt-color-blue-100);
-  --salt-palette-accent-action-hover: var(--salt-color-blue-600);
-  --salt-palette-accent-action-active: var(--salt-color-blue-800);
+  --salt-palette-accent-action-hover: var(--salt-color-blue-100);
+  --salt-palette-accent-action-active: var(--salt-color-blue-200);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"][data-accent="blue"] {
@@ -26,7 +26,7 @@
   --salt-palette-accent-weaker: var(--salt-color-blue-800);
   --salt-palette-accent-weaker-disabled: var(--salt-color-blue-800-40a);
   --salt-palette-accent-weakest: var(--salt-color-blue-900);
-  --salt-palette-accent-action-hover: var(--salt-color-blue-600);
+  --salt-palette-accent-action-hover: var(--salt-color-blue-900);
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
 }
 
@@ -42,8 +42,8 @@
   --salt-palette-accent-weaker: var(--salt-color-teal-200);
   --salt-palette-accent-weaker-disabled: var(--salt-color-teal-200-40a);
   --salt-palette-accent-weakest: var(--salt-color-teal-100);
-  --salt-palette-accent-action-hover: var(--salt-color-teal-600);
-  --salt-palette-accent-action-active: var(--salt-color-teal-800);
+  --salt-palette-accent-action-hover: var(--salt-color-teal-100);
+  --salt-palette-accent-action-active: var(--salt-color-teal-200);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"][data-accent="teal"] {
@@ -58,6 +58,6 @@
   --salt-palette-accent-weaker: var(--salt-color-teal-800);
   --salt-palette-accent-weaker-disabled: var(--salt-color-teal-800-40a);
   --salt-palette-accent-weakest: var(--salt-color-teal-900);
-  --salt-palette-accent-action-hover: var(--salt-color-teal-600);
+  --salt-palette-accent-action-hover: var(--salt-color-teal-900);
   --salt-palette-accent-action-active: var(--salt-color-teal-800);
 }
