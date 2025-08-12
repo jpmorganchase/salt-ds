@@ -8,8 +8,8 @@
   --salt-palette-positive-weaker: var(--salt-color-green-200);
   --salt-palette-positive-weakest: var(--salt-color-green-100);
 
-  --salt-palette-positive-action-hover: var(--salt-color-green-600);
-  --salt-palette-positive-action-active: var(--salt-color-green-800);
+  --salt-palette-positive-action-hover: var(--salt-color-green-100);
+  --salt-palette-positive-action-active: var(--salt-color-green-200);
 }
 .salt-theme.salt-theme-next[data-mode="dark"] {
   --salt-palette-positive: var(--salt-color-green-500);
@@ -21,6 +21,6 @@
   --salt-palette-positive-weaker: var(--salt-color-green-800);
   --salt-palette-positive-weakest: var(--salt-color-green-900);
 
-  --salt-palette-positive-action-hover: var(--salt-color-green-600);
+  --salt-palette-positive-action-hover: var(--salt-color-green-900);
   --salt-palette-positive-action-active: var(--salt-color-green-800);
 }
