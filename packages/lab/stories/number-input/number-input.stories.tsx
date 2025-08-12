@@ -22,7 +22,7 @@ const Template: StoryFn = ({ ...args }) => {
   return (
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
-      <NumberInput {...args} />
+      <NumberInput defaultValue={0} emptyReadOnlyMarker={"X"} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
@@ -96,7 +96,7 @@ export const DecimalPlaces = Template.bind({});
 
 DecimalPlaces.args = {
   defaultValue: 0,
-  decimalScale: 2,
+  decimalScale: 4,
   fixedDecimalScale: true,
 };
 
@@ -407,7 +407,7 @@ CustomButtons.args = {
 export const HiddenButtons = Template.bind({});
 HiddenButtons.args = {
   hideButtons: true,
-  defaultValue: 0,
+  defaultValue: undefined,
 };
 
 export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
