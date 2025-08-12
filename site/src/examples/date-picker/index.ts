@@ -6,7 +6,6 @@ export * from "./RangeGridPanel";
 export * from "./RangeResponsiveGridPanel";
 export * from "./RangeWithConfirmation";
 export * from "./RangeWithCustomPanel";
-export * from "./RangeWithDisabledDates";
 export * from "./RangeWithFormField";
 export * from "./RangeWithHighlightedDates";
 export * from "./RangeWithInitialError";
