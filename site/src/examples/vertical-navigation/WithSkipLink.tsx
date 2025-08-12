@@ -67,9 +67,10 @@ export const WithSkipLink = () => {
         </BorderItem>
         <BorderItem position="center">
           <StackLayout direction="column" gap={1}>
+            {/* The heading levels in this example are demonstrational only */}
             <H3 styleAs="h1" id={headerId}>
               With skip link
-            </Text>
+            </H3>
             <Text>
               This example demonstrates a vertical navigation with a skip link
               for accessibility. The skip link allows users to bypass the
