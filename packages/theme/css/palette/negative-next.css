@@ -7,8 +7,8 @@
 
   --salt-palette-negative-weakest: var(--salt-color-red-100);
 
-  --salt-palette-negative-action-hover: var(--salt-color-red-600);
-  --salt-palette-negative-action-active: var(--salt-color-red-800);
+  --salt-palette-negative-action-hover: var(--salt-color-red-100);
+  --salt-palette-negative-action-active: var(--salt-color-red-200);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"] {
@@ -20,6 +20,6 @@
 
   --salt-palette-negative-weakest: var(--salt-color-red-900);
 
-  --salt-palette-negative-action-hover: var(--salt-color-red-600);
+  --salt-palette-negative-action-hover: var(--salt-color-red-900);
   --salt-palette-negative-action-active: var(--salt-color-red-800);
 }

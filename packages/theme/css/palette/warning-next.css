@@ -7,8 +7,8 @@
 
   --salt-palette-warning-weakest: var(--salt-color-orange-100);
 
-  --salt-palette-warning-action-hover: var(--salt-color-orange-600);
-  --salt-palette-warning-action-active: var(--salt-color-orange-800);
+  --salt-palette-warning-action-hover: var(--salt-color-orange-100);
+  --salt-palette-warning-action-active: var(--salt-color-orange-200);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"] {
@@ -20,6 +20,6 @@
 
   --salt-palette-warning-weakest: var(--salt-color-orange-900);
 
-  --salt-palette-warning-action-hover: var(--salt-color-orange-600);
+  --salt-palette-warning-action-hover: var(--salt-color-orange-900);
   --salt-palette-warning-action-active: var(--salt-color-orange-800);
 }
