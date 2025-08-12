@@ -1,6 +1,7 @@
 import {
   BorderItem,
   BorderLayout,
+  H3,
   SkipLink,
   StackLayout,
   Text,
@@ -66,7 +67,7 @@ export const WithSkipLink = () => {
         </BorderItem>
         <BorderItem position="center">
           <StackLayout direction="column" gap={1}>
-            <Text styleAs="h1" id={headerId}>
+            <H3 styleAs="h1" id={headerId}>
               With skip link
             </Text>
             <Text>
