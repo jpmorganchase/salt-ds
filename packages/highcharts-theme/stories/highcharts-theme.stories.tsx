@@ -1,12 +1,12 @@
+import { highchartsOptionsSalt } from "@salt-ds/highcharts-theme";
 import type { Decorator } from "@storybook/react-vite";
 import Highcharts from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
-
-import "@salt-ds/highcharts-theme/stories/highcharts-default.css";
-import "@salt-ds/highcharts-theme/index.css";
-
-import { highchartsOptionsSalt } from "@salt-ds/highcharts-theme";
+import {
+  DonutChart as DonutChartComponent,
+  LineChart as LineChartComponent,
+} from "../src/examples";
 
 accessibility(Highcharts);
 
@@ -24,6 +24,25 @@ export default {
       disableSnapshot: false,
     },
   },
+  argTypes: {
+    patterns: {
+      control: "boolean",
+      description: "Toggle fill/line patterns for better accessibility",
+      defaultValue: false,
+    },
+  },
 };
 
-export { LineChart } from "../src/examples";
+export const LineChart = {
+  render: (args: { patterns?: boolean }) => <LineChartComponent {...args} />,
+  args: {
+    patterns: false,
+  },
+};
+
+export const DonutChart = {
+  render: (args: { patterns?: boolean }) => <DonutChartComponent {...args} />,
+  args: {
+    patterns: false,
+  },
+};

@@ -13,6 +13,8 @@ import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
+import "highcharts/css/highcharts.css";
+import "@salt-ds/highcharts-theme/index.css";
 import "./styles.css";
 
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
