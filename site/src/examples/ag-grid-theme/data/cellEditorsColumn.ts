@@ -2,8 +2,8 @@ import type { IDateFilterParams } from "ag-grid-community";
 import { languages, shortColorData } from "./cellEditorsData";
 
 const dateFilterParams: IDateFilterParams = {
-  comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
-    const dateAsString = cellValue;
+  comparator: (filterLocalDateAtMidnight, cellValue) => {
+    const dateAsString = cellValue != null ? String(cellValue) : null;
     if (dateAsString == null) return -1;
     const dateParts = dateAsString.split("-");
     const cellDate = new Date(
