@@ -220,6 +220,13 @@ describe("GIVEN a Tooltip", () => {
     });
   });
 
+  describe("WHEN content is null", () => {
+    it("then tooltip doesn't display", () => {
+      cy.mount(<Open content={null} />);
+      cy.findByRole("tooltip").should("not.exist");
+    });
+  });
+
   describe("WHEN content is falsy", () => {
     it("then tooltip should still display", () => {
       cy.mount(<Open content={0} />);
