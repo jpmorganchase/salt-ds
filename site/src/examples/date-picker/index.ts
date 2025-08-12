@@ -23,7 +23,6 @@ export * from "./SingleWithConfirmation";
 export * from "./SingleWithCustomPanel";
 export * from "./SingleWithCustomParser";
 export * from "./SingleWithCustomRendering";
-export * from "./SingleWithDisabledDates";
 export * from "./SingleWithFormField";
 export * from "./SingleWithHighlightedDates";
 export * from "./SingleWithInitialError";
