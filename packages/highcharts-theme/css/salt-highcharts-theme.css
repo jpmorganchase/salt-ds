@@ -48,6 +48,60 @@
   stroke: var(--salt-category-10-subtle-borderColor);
 }
 
+.highcharts-theme-salt .highcharts-color-10 {
+  fill: var(--salt-category-11-bold-background);
+  stroke: var(--salt-category-11-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-11 {
+  fill: var(--salt-category-12-bold-background);
+  stroke: var(--salt-category-12-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-12 {
+  fill: var(--salt-category-13-bold-background);
+  stroke: var(--salt-category-13-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-13 {
+  fill: var(--salt-category-14-bold-background);
+  stroke: var(--salt-category-14-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-14 {
+  fill: var(--salt-category-15-bold-background);
+  stroke: var(--salt-category-15-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-15 {
+  fill: var(--salt-category-16-bold-background);
+  stroke: var(--salt-category-16-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-16 {
+  fill: var(--salt-category-17-bold-background);
+  stroke: var(--salt-category-17-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-17 {
+  fill: var(--salt-category-18-bold-background);
+  stroke: var(--salt-category-18-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-18 {
+  fill: var(--salt-category-19-bold-background);
+  stroke: var(--salt-category-19-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-19 {
+  fill: var(--salt-category-20-bold-background);
+  stroke: var(--salt-category-20-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-container {
+  font-family: var(--salt-text-fontFamily);
+}
+
 .highcharts-theme-salt .highcharts-grid-line {
   stroke: var(--salt-separable-tertiary-borderColor);
 }
@@ -70,9 +124,19 @@
 
 /* Deselected legend state, requires !important to override default styles, which also use !important */
 .highcharts-theme-salt .highcharts-legend-item-hidden * {
-  stroke: revert !important;
   fill: revert !important;
   opacity: 0.2;
+}
+
+/* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
+.highcharts-theme-salt .highcharts-line-series.highcharts-legend-item-hidden path {
+  stroke: revert !important;
+}
+
+/* Maintain full opacity on legend items during hover. Only reduce opacity when item is hidden */
+.highcharts-theme-salt .highcharts-legend-series-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) *,
+.highcharts-theme-salt .highcharts-legend-point-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) * {
+  opacity: 1;
 }
 
 .highcharts-theme-salt .highcharts-legend-item > text,
@@ -117,6 +181,11 @@
   fill: var(--salt-content-secondary-foreground-disabled);
 }
 
+.highcharts-theme-salt circle.highcharts-legend-nav-active,
+.highcharts-theme-salt circle.highcharts-legend-nav-inactive {
+  fill: transparent;
+}
+
 .highcharts-theme-salt text.highcharts-legend-navigation {
   fill: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-label-fontWeight);
@@ -125,6 +194,27 @@
   font-family: var(--salt-text-label-fontFamily);
 }
 
+/* Override default stroke for line chart data series hover point circle */
 .highcharts-theme-salt .highcharts-point {
   stroke: var(--salt-color-white);
+}
+
+/* Override default stroke for pie chart segment border */
+.highcharts-theme-salt .highcharts-pie-series .highcharts-point {
+  stroke: var(--salt-container-primary-background);
+}
+
+/* Data connector line for Donut/Pie chart */
+.highcharts-theme-salt .highcharts-data-label-connector {
+  fill: none;
+}
+
+/* Removes extra hover style for Donut/Pie */
+.highcharts-theme-salt .highcharts-halo {
+  display: none;
+}
+
+/* Reduces opacity of deselected segments for Donut/Pie */
+.highcharts-theme-salt .highcharts-point-inactive {
+  opacity: 0.25;
 }

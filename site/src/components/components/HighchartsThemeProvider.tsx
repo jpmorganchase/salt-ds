@@ -1,8 +1,6 @@
-import { type FC, type ReactNode, useEffect } from "react";
-
-import "@salt-ds/highcharts-theme/index.css";
 import { highchartsOptionsSalt } from "@salt-ds/highcharts-theme";
 import Highcharts from "highcharts";
+import { type FC, type ReactNode, useEffect } from "react";
 
 interface HighchartsThemeProviderProps {
   children: ReactNode;
