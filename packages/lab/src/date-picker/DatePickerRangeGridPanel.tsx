@@ -59,6 +59,7 @@ export type DatePickerRangeGridPanelProps<TDate extends DateFrameworkType> =
           | "selectedDate"
           | "defaultSelectedDate"
           | "multiselect"
+          | "onHoveredDateChange"
           | "onSelectionChange"
           | "onVisibleMonthChange"
         >
@@ -80,6 +81,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       defaultVisibleMonth,
       visibleMonth: visibleMonthProp,
       onFocusedDateChange,
+      onHoveredDateChange,
       onVisibleMonthChange,
       helperText,
       onSelectionChange,
@@ -103,6 +105,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       state: { focused, initialFocusRef },
     } = useDatePickerOverlay();
 
+    const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
     const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
     const calendarGridFocused = useRef(false);
 
@@ -238,6 +241,14 @@ export const DatePickerRangeGridPanel = forwardRef(
       [onSelectionChange, select],
     );
 
+    const handleHoveredDateChange = useCallback(
+      (event: SyntheticEvent, newHoveredDate: TDate | null) => {
+        setHoveredDate(newHoveredDate);
+        onHoveredDateChange?.(event, newHoveredDate);
+      },
+      [onHoveredDateChange],
+    );
+
     const handleVisibleMonthChange = useCallback(
       (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
         setVisibleMonth(newVisibleMonth);
@@ -305,8 +316,10 @@ export const DatePickerRangeGridPanel = forwardRef(
       visibleMonth,
       focusedDateRef: initialFocusRef,
       focusedDate: calendarGridFocused?.current ? focusedDate : null,
+      hoveredDate,
       numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
       onFocusedDateChange: handleFocusedDateChange,
+      onHoveredDateChange: handleHoveredDateChange,
       onSelectionChange: handleSelectionChange,
       onVisibleMonthChange: handleVisibleMonthChange,
       hideOutOfRangeDates: true,
