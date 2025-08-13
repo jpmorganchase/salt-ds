@@ -54,14 +54,22 @@ export const Submenu = () => {
   return (
     <StackLayout direction="row" gap={6}>
       <MockHistory>
-        <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
+        <VerticalNavigation
+          aria-label="Indicator sidebar with submenus"
+          appearance="indicator"
+          style={{ minWidth: "30ch" }}
+        >
           {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
-        <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
+        <VerticalNavigation
+          aria-label="Bordered sidebar with submenus"
+          appearance="bordered"
+          style={{ minWidth: "30ch" }}
+        >
           {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
