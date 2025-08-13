@@ -265,13 +265,6 @@
   display: contents;
 }
 
-.saltPillInput .saltPill:focus-visible {
-  background: var(--salt-actionable-bold-background-active);
-  color: var(--salt-actionable-bold-foreground-active);
-  --saltIcon-color: var(--salt-actionable-bold-foreground-active);
-  border-color: var(--salt-actionable-bold-borderColor-active);
-}
-
 .saltPillInput-pillList div[role="listitem"] {
   display: inline;
 }
