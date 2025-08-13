@@ -7,8 +7,6 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -41,7 +39,6 @@ import {
   useForkRef,
   useId,
 } from "../utils";
-import comboBoxCss from "./ComboBox.css";
 import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
 export type ComboBoxProps<Item = string> = {
@@ -91,12 +88,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     ...rest
   } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-combo-box",
-    css: comboBoxCss,
-    window: targetWindow,
-  });
   const { CollapseIcon, ExpandIcon } = useIcon();
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
