@@ -147,11 +147,6 @@ const defaultIsDayUnselectable = (): string | false => false;
  */
 const defaultIsDayHighlighted = (): string | false => false;
 
-/**
- * Default function to determine if a day is disabled.
- * @returns `false` indicating the day is not disabled.
- */
-const defaultIsDayDisabled = (): false => false;
 
 /**
  * Represents the return type of the useCalendar hook.

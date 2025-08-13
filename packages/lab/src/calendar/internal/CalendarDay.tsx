@@ -88,7 +88,6 @@ export const CalendarDay = forwardRef<
     unselectable,
     highlighted,
     hidden,
-    disabled,
     outsideCurrentMonth,
   } = status;
   const buttonRef = useForkRef(ref, focusedDateRef);
@@ -109,7 +108,6 @@ export const CalendarDay = forwardRef<
         </span>
       </>
     ),
-    disabled,
     ...dayProps,
     ref: buttonRef,
     ...rest,
@@ -118,7 +116,6 @@ export const CalendarDay = forwardRef<
       {
         [withBaseName("hidden")]: hidden,
         [withBaseName("outOfRange")]: outOfRange,
-        [withBaseName("disabled")]: disabled,
         [withBaseName("unselectable")]: !!unselectable,
         [withBaseName("outsideCurrentMonth")]: outsideCurrentMonth,
         [withBaseName("focused")]: !!focused,

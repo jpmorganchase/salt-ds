@@ -33,6 +33,7 @@ import {
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarOffsetProps,
+  type CalendarProps,
   type CalendarRangeProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
@@ -113,6 +114,15 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
     event: SyntheticEvent | null,
     focusedDate?: TDate | null,
   ) => void;
+  /**
+   * Callback fired when the hovered date changes.
+   * @param event - The synthetic event.
+   * @param hoveredDate - The new hovered date.
+   */
+  onHoveredDateChange?: (
+    event: SyntheticEvent,
+    hoveredDate?: TDate | null,
+  ) => void;
 
   /**
    * Props to be passed to the start date CalendarNavigation component.
@@ -129,6 +139,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
       | "defaultSelectedDate"
       | "multiselect"
       | "onFocusedDateChange"
+      | "onHoveredDateChange"
       | "onSelectionChange"
       | "onVisibleMonthChange"
     >
@@ -148,6 +159,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
       | "defaultSelectedDate"
       | "multiselect"
       | "onFocusedDateChange"
+      | "onHoveredDateChange"
       | "onSelectionChange"
       | "onVisibleMonthChange"
     >
@@ -211,6 +223,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     onEndVisibleMonthChange,
     helperText,
     onFocusedDateChange,
+    onHoveredDateChange,
     onSelectionChange,
     StartCalendarProps: StartCalendarPropsProp,
     StartCalendarNavigationProps,
@@ -245,6 +258,8 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     state: { initialFocusRef, focused },
   } = useDatePickerOverlay();
 
+  const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
+
   const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
     getFallbackVisibleMonths<TDate>(dateAdapter, selectedDate, timezone),
   );
@@ -269,6 +284,23 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       onSelectionChange?.(event, newDate);
     },
     [select, onSelectionChange],
+  );
+
+  const handleHoveredStartDateChange: CalendarProps<TDate>["onHoveredDateChange"] =
+    useCallback(
+      (event: SyntheticEvent, newHoveredDate: TDate | null) => {
+        setHoveredDate(newHoveredDate);
+        onHoveredDateChange?.(event, newHoveredDate);
+      },
+      [onHoveredDateChange],
+    );
+
+  const handleHoveredEndDateChange = useCallback(
+    (event: SyntheticEvent, newHoveredDate: TDate | null) => {
+      setHoveredDate(newHoveredDate);
+      onHoveredDateChange?.(event, newHoveredDate);
+    },
+    [onHoveredDateChange],
   );
 
   const handleStartVisibleMonthChange = useCallback(
@@ -490,6 +522,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
 
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
+    hoveredDate,
     selectedDate: calendarSelectedDate,
     isDayHighlighted,
     isDayUnselectable,
@@ -502,6 +535,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       ) < 0
         ? focusedDate
         : null,
+    onHoveredDateChange: handleHoveredStartDateChange,
     onFocusedDateChange: handleStartCalendarFocusedDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
     onSelectionChange: handleSelectionChange,
@@ -513,6 +547,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   } as Partial<UseCalendarSelectionRangeProps<TDate>>;
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
+    hoveredDate,
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,
@@ -526,6 +561,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         : null,
     selectedDate: calendarSelectedDate,
     onFocusedDateChange: handleEndCalendarFocusedDateChange,
+    onHoveredDateChange: handleHoveredEndDateChange,
     onVisibleMonthChange: handleEndVisibleMonthChange,
     onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
