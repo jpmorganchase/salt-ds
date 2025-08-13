@@ -662,6 +662,48 @@ describe("GIVEN a Calendar", () => {
           });
           cy.get("@selectionChangeSpy").should("not.have.been.called");
         });
+
+        it("SHOULD navigate to an un-selectable date and then to a selectable date using keyboard", () => {
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <UnselectableDates
+              defaultVisibleMonth={testDate}
+              onSelectionChange={selectionChangeSpy}
+            />,
+          );
+
+          // Define the weekend dates in March 2024
+          const weekendDates = [
+            "02 March 2024", // Saturday
+            "03 March 2024", // Sunday
+          ];
+
+          // Focus on the day before the first unselectable date
+          cy.findByRole("button", { name: "01 March 2024" }).focus();
+
+          cy.focused().type("{rightarrow}");
+
+          // Check that the date is unselectable and has the correct tooltip
+          cy.focused().should("have.attr", "aria-disabled", "true");
+          cy.focused().realHover();
+          cy.focused().then(($el) => {
+            const describedById = $el.attr("aria-describedby");
+            cy.get(`[id="${describedById}"]`)
+              .should("have.attr", "role", "tooltip")
+              .find(".saltTooltip-content")
+              .should("have.text", "Weekends are un-selectable");
+          });
+
+          // Arrow right again to the next unselectable date
+          cy.focused().type("{rightarrow}");
+          // Check that the date is unselectable
+          cy.focused().should("have.attr", "aria-disabled", "true");
+
+          // Arrow right again to a selectable date
+          cy.focused().type("{rightarrow}");
+          // Check that the 4th March is selectable
+          cy.focused().should("not.have.attr", "aria-disabled", "true");
+        });
       });
     });
   });
