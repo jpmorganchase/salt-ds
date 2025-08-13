@@ -44,10 +44,6 @@ export interface DayStatus {
    */
   focused?: boolean;
   /**
-   * If `true`, the day is disabled.
-   */
-  disabled?: boolean;
-  /**
    * If `true`, the day is hidden.
    */
   hidden?: boolean;
@@ -139,7 +135,6 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const highlightedReason = isDayHighlighted(date);
 
   const outsideCurrentMonth = !dateAdapter.isSame(date, month, "month");
-  const disabled = isDaySelectable && !isDaySelectable(date);
   const unselectable =
     Boolean(unselectableReason) || isOutsideAllowedMonths(date);
   const highlighted = Boolean(highlightedReason);
@@ -152,7 +147,6 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       unselectable,
       focused,
       hidden,
-      disabled,
       highlighted,
       ...selectionManager.status,
     } as DayStatus,
