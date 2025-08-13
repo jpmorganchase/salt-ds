@@ -246,11 +246,6 @@
   outline: none;
 }
 
-/* Style applied to selected input */
-.saltInput-input::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
 /* Style applied to placeholder text */
 .saltInput-input::placeholder {
   color: var(--salt-content-secondary-foreground);

@@ -119,11 +119,6 @@
   outline: none;
 }
 
-/* Style applied to selected input */
-.saltNumberInput-input::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
 /* Style applied to placeholder text */
 .saltNumberInput-input::placeholder {
   color: var(--salt-content-secondary-foreground);

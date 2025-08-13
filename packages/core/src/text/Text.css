@@ -12,10 +12,6 @@
   letter-spacing: var(--salt-text-letterSpacing);
 }
 
-.saltText::selection {
-  background: var(--saltText-highlight, var(--salt-content-foreground-highlight));
-}
-
 /* Allows truncation */
 .saltText-lineClamp {
   display: -webkit-box;

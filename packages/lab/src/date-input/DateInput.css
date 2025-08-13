@@ -232,11 +232,6 @@
   outline: none;
 }
 
-/* Style applied to selected input */
-.saltDateInput-input::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
 /* Style applied to selected input if `disabled={true}` */
 .saltDateInput-disabled .saltDateInput-input::selection {
   background: none;
