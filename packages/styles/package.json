@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/styles"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
