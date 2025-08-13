@@ -46,7 +46,7 @@
   z-index: var(--calendar-day-zIndex-content);
 }
 
-.saltCalendarDay.saltCalendarDay-focused:focus-visible::before {
+.saltCalendarDay-focused:focus-visible::before {
   content: "";
   position: absolute;
   box-sizing: border-box;
