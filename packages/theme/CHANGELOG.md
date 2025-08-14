@@ -1,5 +1,34 @@
 # @salt-ds/theme
 
+## 1.32.0
+
+### Minor Changes
+
+- 512b0e7: Fixed `-weak` suffix in palette and characteristic tokens for negative, positive, info, and warning, where `-weakest` should have been used.
+
+  Deprecated the following `-weak` palette tokens and renamed to the correct:
+
+  | Name                           | Replacement                       |
+  | ------------------------------ | --------------------------------- |
+  | `--salt-palette-positive-weak` | `--salt-palette-positive-weakest` |
+  | `--salt-palette-negative-weak` | `--salt-palette-negative-weakest` |
+  | `--salt-palette-warning-weak`  | `--salt-palette-warning-weakest`  |
+  | `--salt-palette-info-weak`     | `--salt-palette-info-weakest`     |
+
+- 64ef723: Update `--salt-selectable-borderColor-readonly` to fix contrast issues.
+
+  ```diff
+  - --salt-selectable-borderColor-readonly: var(--salt-palette-interact-border-readonly);
+  + --salt-selectable-borderColor-readonly: var(--salt-palette-interact-border);
+  ```
+
+  ```diff
+  - --salt-selectable-borderColor-readonly: var(--salt-palette-neutral-readonly);
+  + --salt-selectable-borderColor-readonly: var(--salt-palette-neutral);
+  ```
+
+- 8538730: Removed global text selection background color override.
+
 ## 1.31.0
 
 ### Minor Changes

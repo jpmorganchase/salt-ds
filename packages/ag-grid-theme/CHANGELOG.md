@@ -1,5 +1,25 @@
 # @salt-ds/ag-grid-theme
 
+## 2.5.0
+
+### Minor Changes
+
+- d2055e1: Added date filter support.
+
+  ```js
+  const dateColumnDef = {
+    // ...
+    filter: "agDateColumnFilter",
+  };
+  ```
+
+### Patch Changes
+
+- Updated dependencies [512b0e7]
+- Updated dependencies [64ef723]
+- Updated dependencies [8538730]
+  - @salt-ds/theme@1.32.0
+
 ## 2.4.4
 
 ### Patch Changes
