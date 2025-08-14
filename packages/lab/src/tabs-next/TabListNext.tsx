@@ -98,7 +98,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.scrollIntoView({
+          nextItem.element?.parentElement?.scrollIntoView({
             block: "nearest",
             inline: "nearest",
           });

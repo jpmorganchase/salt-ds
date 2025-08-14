@@ -10,6 +10,7 @@
   gap: var(--salt-spacing-100);
   max-width: 100%;
   width: 100%;
+  min-width: 0;
 }
 
 .saltTabListNext-center {

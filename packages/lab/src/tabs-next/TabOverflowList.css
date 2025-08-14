@@ -46,6 +46,7 @@
   box-sizing: border-box;
   flex-shrink: 0;
   justify-content: flex-start;
+  max-width: unset;
 }
 
 .saltTabOverflow-list .saltTabNext .saltTabNextTrigger {

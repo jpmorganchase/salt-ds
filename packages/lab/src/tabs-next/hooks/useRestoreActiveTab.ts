@@ -46,13 +46,11 @@ export function useRestoreActiveTab({
         const removedItemWasTab =
           removedActiveTabRef.current && removedItem?.dataset?.overflowitem;
 
-        const activeTabWasRemoved =
-          removedItemWasTab &&
-          !tabsRef.current.find(
-            ({ value }) => value === removedActiveTabRef.current,
-          );
+        const activeTabWasRemoved = !tabsRef.current.find(
+          ({ value }) => value === removedActiveTabRef.current,
+        );
 
-        if (activeTabWasRemoved) {
+        if (removedItemWasTab && activeTabWasRemoved) {
           const removedTab =
             removedItem?.querySelector<HTMLElement>('[role="tab"]');
 
@@ -131,7 +129,8 @@ export function useRestoreActiveTab({
             if (win.document.activeElement === win.document.body) {
               tabElement?.focus();
             }
-          } else if (removedItem?.dataset.overflow) {
+            // If the active tab was removed and the overflow menu has been removed focus the last visible tab.
+          } else if (activeTabWasRemoved && removedItem?.dataset.overflow) {
             tabsRef.current[tabsRef.current.length - 1]?.element?.focus();
           }
         }
