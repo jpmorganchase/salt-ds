@@ -20,17 +20,17 @@ export interface UseNumberInputProps
     | "max"
     | "min"
     | "onChange"
-    | "parse"
+    | "onChangeEnd"
     | "readOnly"
     | "step"
     | "stepMultiplier"
   > {
-  clampAndFix: (value: number) => string | number;
+  clampAndFix: (value: number) => number | string;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   isAdjustingRef: MutableRefObject<boolean>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
-  setValue: Dispatch<SetStateAction<string | number>>;
-  value: string | number;
+  setValue: Dispatch<SetStateAction<number | undefined>>;
+  value?: number;
 }
 
 /**
@@ -46,7 +46,7 @@ export const useNumberInput = ({
   max = Number.MAX_SAFE_INTEGER,
   min = Number.MIN_SAFE_INTEGER,
   onChange,
-  parse,
+  onChangeEnd,
   readOnly,
   setIsEditing,
   setValue,
@@ -60,9 +60,9 @@ export const useNumberInput = ({
       if (readOnly) return;
       isAdjustingRef.current = true;
 
-      const updatedValue = clampAndFix(nextValue);
-      setValue(toFloat(updatedValue));
-      onChange?.(event, toFloat(updatedValue));
+      const updatedValue = toFloat(clampAndFix(nextValue));
+      setValue(updatedValue);
+      onChange?.(event, updatedValue);
     },
     [onChange, readOnly, setValue, decimalScale, format],
   );
@@ -70,23 +70,21 @@ export const useNumberInput = ({
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse?.(value) || value;
-      const nextValue = toFloat(parsedValue) - decrementStep;
+      const nextValue = toFloat(value) - decrementStep;
       if (nextValue < min) return;
       updateValue(event, nextValue);
     },
-    [value, min, step, stepMultiplier, updateValue, parse],
+    [value, min, step, stepMultiplier, updateValue],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse?.(value) || value;
-      const nextValue = toFloat(parsedValue) + incrementStep;
+      const nextValue = toFloat(value) + incrementStep;
       if (nextValue > max) return;
       updateValue(event, nextValue);
     },
-    [value, max, step, stepMultiplier, updateValue, parse],
+    [value, max, step, stepMultiplier, updateValue],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
@@ -99,7 +97,10 @@ export const useNumberInput = ({
     toFloat(value) >= max,
   );
 
-  const handleButtonMouseUp = () => inputRef.current?.focus();
+  const handleButtonMouseUp = (event: MouseEvent<HTMLButtonElement>) => {
+    inputRef.current?.focus();
+    onChangeEnd?.(event, toFloat(value));
+  };
 
   const commonButtonProps = {
     "aria-hidden": true,
