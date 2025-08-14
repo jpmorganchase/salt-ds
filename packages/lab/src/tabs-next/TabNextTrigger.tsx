@@ -78,15 +78,18 @@ export const TabNextTrigger = forwardRef<
   const handleRef = useForkRef<HTMLButtonElement>(tabRef, ref);
   const panelId = getPanelId(value);
 
+  const ariaActionsProps = ariaActionSupported
+    ? {
+        "aria-actions": clsx(actions) || undefined,
+      }
+    : {};
+
   return (
-    // biome-ignore lint/a11y/useValidAriaProps: aria-actions is a draft spec https://pr-preview.s3.amazonaws.com/w3c/aria/pull/1805.html#aria-actions
     <button
       aria-selected={selected}
       aria-disabled={disabled}
       aria-controls={panelId}
-      aria-actions={
-        ariaActionSupported ? clsx(actions) || undefined : undefined
-      }
+      {...ariaActionsProps}
       aria-description={getAriaDescription(actions.length)}
       tabIndex={focused || selected ? undefined : -1}
       role="tab"

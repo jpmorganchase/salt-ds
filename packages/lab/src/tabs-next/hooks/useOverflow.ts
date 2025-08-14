@@ -104,7 +104,7 @@ export function useOverflow({
           while (currentWidth + selectedTabWidth > maxWidth) {
             const removed = visible.pop();
             if (!removed) break;
-            currentWidth -= getTabWidth(selectedTab) + gap;
+            currentWidth -= getTabWidth(removed) + gap;
             newVisibleCount--;
           }
         }
