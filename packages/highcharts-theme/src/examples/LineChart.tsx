@@ -1,7 +1,8 @@
+import { useChart } from "@salt-ds/highcharts-theme";
+import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import type { FC } from "react";
-import "../../index.css";
+import { type FC, useRef } from "react";
 
 const lineDataOptions: Options = {
   chart: {
@@ -143,17 +144,28 @@ const lineDataOptions: Options = {
   ],
 };
 
-export const LineChart: FC = () => (
-  <div
-    className="highcharts-theme-salt salt-line-patterns"
-    style={{ width: "100%", height: 500 }}
-  >
-    <HighchartsReact
-      highcharts={Highcharts}
-      options={lineDataOptions}
-      containerProps={{ style: { height: "100%" } }}
-    />
-  </div>
-);
+export interface LineChartProps {
+  patterns?: boolean;
+}
+
+const LineChart: FC<LineChartProps> = ({ patterns = false }) => {
+  const LineChartRef = useRef<HighchartsReact.RefObject>(null);
+
+  useChart({ chartRef: LineChartRef });
+
+  return (
+    <div
+      className={clsx("highcharts-theme-salt", {
+        "salt-line-patterns": patterns,
+      })}
+    >
+      <HighchartsReact
+        ref={LineChartRef}
+        highcharts={Highcharts}
+        options={lineDataOptions}
+      />
+    </div>
+  );
+};
 
 export default LineChart;
