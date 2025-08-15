@@ -56,23 +56,20 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
       window: targetWindow,
     });
 
-    const id = useId();
     const { ariaVariant } = useCarouselContext();
 
     return (
       <div
-        id={id}
-        role={ariaVariant === "group" ? "group" : undefined}
-        aria-roledescription="slide"
-        className={clsx(withBaseName(), className)}
-        {...rest}
+        aria-roledescription={ariaVariant === "tabpanel" ? "tab" : "slide"}
+        className={clsx([withBaseName(), className])}
         ref={ref}
+        role={ariaVariant}
+        {...rest}
       >
         <div
           className={clsx(withBaseName("content"), {
             [withBaseName("bordered")]: appearance === "bordered",
           })}
-          role={ariaVariant === "tabpanel" ? "tabpanel" : undefined}
         >
           {media}
           {children && (

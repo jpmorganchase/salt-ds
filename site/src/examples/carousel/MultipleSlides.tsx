@@ -16,8 +16,6 @@ export const MultipleSlides = (): ReactElement => {
   const carouselId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1; // switch to single slide for mobile
-
-  console.log("isMobile:", isMobile);
   return (
     <Carousel
       aria-labelledby={`${carouselId}-title`}
@@ -43,23 +41,22 @@ export const MultipleSlides = (): ReactElement => {
         </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const id = `${carouselId}-card${index}`;
+            const slideId = `${carouselId}-slide${index}`;
             return (
               <CarouselCard
                 className={styles.carouselSlide}
-                key={`slide-${id}`}
-                aria-labelledby={`title-${id}`}
-                aria-roledescription={undefined}
+                key={slideId}
+                aria-labelledby={`${slideId}-title`}
                 appearance="bordered"
                 media={
                   <img
-                    alt={`stock content to show in carousel slide ${index}`}
+                    aria-hidden={true}
                     className={styles.carouselImage}
                     src={slide.image}
                   />
                 }
                 header={
-                  <Text id={`title-${id}`} styleAs="h3">
+                  <Text id={`${slideId}-title`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }

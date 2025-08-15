@@ -10,7 +10,7 @@ import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const Basic = (): ReactElement => {
-  const slideId = useId();
+  const carouselId = useId();
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel aria-label="default carousel example" className={styles.carousel}>
@@ -20,19 +20,27 @@ export const Basic = (): ReactElement => {
         <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            aria-label={`Placeholder slide ${index + 1}`}
-            role="group"
-            aria-roledescription="slide"
-            className={styles.carouselSlide}
-            key={`slide-${slideId}-${index}`}
-          >
-            <Text styleAs="display1" className={styles.carouselNumber}>
-              {index + 1}
-            </Text>
-          </div>
-        ))}
+        {slides.map((index) => {
+          const slideId = `${carouselId}-slide${index}`;
+          return (
+            <div
+              aria-labelledby={`${slideId}-title`}
+              role="group"
+              aria-roledescription="slide"
+              className={styles.carouselSlide}
+              key={slideId}
+            >
+              <Text
+                id={`${slideId}-title`}
+                styleAs="display1"
+                className={styles.carouselNumber}
+                aria-label={"Placeholder slide"}
+              >
+                {index + 1}
+              </Text>
+            </div>
+          );
+        })}
       </CarouselSlides>
     </Carousel>
   );

@@ -14,7 +14,7 @@ export const renderSlides = ({
   role?: string;
   "aria-roledescription"?: string;
 } = {}) => {
-  const slideId = useId();
+  const carouselId = useId();
   const content = [
     {
       title: "Your accounts, on the move",
@@ -46,16 +46,17 @@ export const renderSlides = ({
   ];
 
   return content.map((slide, index) => {
+    const cardId = `${carouselId}-card${index}`;
     return (
       <CarouselCard
-        key={`slide-${slideId}-${index}`}
+        key={cardId}
         appearance="bordered"
-        header={<H3 id={`${slideId}-${index}`}>{slide.title}</H3>}
-        aria-labelledby={`${slideId}-${index}`}
+        header={<H3 id={`${cardId}-title`}>{slide.title}</H3>}
+        aria-labelledby={`${cardId}-title`}
         media={
           <img
+            aria-hidden={true}
             className="carouselImagePlaceholder"
-            alt="stock content to show carousel slide"
             src={slide.image}
           />
         }

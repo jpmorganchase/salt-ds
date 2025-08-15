@@ -17,7 +17,7 @@ import {
   useCarouselTab,
 } from "./CarouselTab";
 import carouselControlsCss from "./CarouselTabList.css";
-import { getSlideDescriptions } from "./getSlideDescription";
+import { getSlideDescription } from "./getSlideDescription";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 const withBaseName = makePrefixer("saltCarouselTabList");
@@ -102,19 +102,20 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
             visibleSlides.length > 1
               ? visibleSlides[visibleSlides.length - 1]
               : 0;
-          const slidePosition = endSlideNumber
-            ? `${startSlideNumber}-${endSlideNumber}`
-            : startSlideNumber;
+          const slideNodes = emblaApi?.slideNodes();
+          const numberOfSlides = slideNodes?.length;
 
-          const descriptions = getSlideDescriptions(
-            emblaApi,
-            startSlideNumber,
-            endSlideNumber ? endSlideNumber : undefined,
-          );
-          const ariaLabel = descriptions.join(",");
+          let ariaLabel: string;
+          if (endSlideNumber >= 1) {
+            ariaLabel = `Slide ${startSlideNumber} to ${endSlideNumber} of ${numberOfSlides}`;
+          } else {
+            const description = getSlideDescription(emblaApi, startSlideNumber);
+            const slide = emblaApi?.slideNodes()[startSlideNumber - 1];
+            const slideRoleDescription = slide?.ariaRoleDescription ?? "slide";
+            ariaLabel = `${description}, ${slideRoleDescription}, ${startSlideNumber} of ${numberOfSlides}`;
+          }
 
           const selected = selectedIndex === scrollSnapIndex;
-          const slideNodes = emblaApi?.slideNodes();
           const ariaControls = slideNodes?.length
             ? slideNodes[startSlideNumber - 1].id
             : undefined;
@@ -128,7 +129,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
               render={render}
               role={"tab"}
               selected={selected}
-              onClick={(_event: SyntheticEvent) => {
+              onFocus={(_event: SyntheticEvent) => {
                 // avoids announcing the slide twice
                 setSilenceNextAnnoucement(true);
                 emblaApi?.scrollTo(scrollSnapIndex);

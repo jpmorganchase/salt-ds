@@ -96,10 +96,12 @@ export const Autoplay = () => {
             direction="row"
             gap={1}
             onMouseEnter={stop}
+            onFocus={stop}
           >
             <ToggleButton
+              aria-pressed={undefined}
               value={isActive ? "playing" : "stopped"}
-              aria-label={`${isActive ? "start" : "stop"} automatic slide rotation`}
+              aria-label={`${isActive ? "stop" : "start"} automatic slide rotation`}
               onChange={() => (isActive ? stop() : play())}
               selected={isActive}
             >
@@ -116,11 +118,6 @@ export const Autoplay = () => {
               slideIndex={slideIndex}
               duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
               isPlaying={isPlaying}
-              aria-label={
-                isPlaying
-                  ? "Progress bar indicating time until next slide"
-                  : `Carousel paused on slide ${slideIndex}`
-              }
             />
           </FlexLayout>
           <CarouselSlides
@@ -133,23 +130,22 @@ export const Autoplay = () => {
             onFocus={() => stop()}
           >
             {sliderData.map((slide, index) => {
-              const id = `${carouselId}-card${index}`;
+              const slideId = `${carouselId}-slide${index}`;
               return (
                 <CarouselCard
                   appearance="bordered"
                   className={styles.carouselSlide}
-                  key={`slide-${id}`}
-                  aria-labelledby={`title-${id}`}
-                  aria-roledescription={undefined}
+                  key={slideId}
+                  aria-labelledby={`${slideId}-title`}
                   media={
                     <img
-                      alt={`stock content to show in carousel slide ${index}`}
+                      aria-hidden={true}
                       className={styles.carouselImage}
                       src={slide.image}
                     />
                   }
                   header={
-                    <Text id={`title-${id}`} styleAs="h3">
+                    <Text id={`${slideId}-title`} styleAs="h3">
                       {slide.title}
                     </Text>
                   }

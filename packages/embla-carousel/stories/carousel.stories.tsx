@@ -24,13 +24,16 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
   ariaVariant = "tabpanel",
   ...args
 }) => {
+  const carouselId = useId();
   return (
     <Carousel
-      aria-label="Carousel cards example"
+      aria-labelledby={`${carouselId}-title`}
       className="carousel"
       {...args}
     >
-      <H2 className="carouselHeading">Title</H2>
+      <H2 id={`${carouselId}-title`} className="carouselHeading">
+        Carousel card example
+      </H2>
       <div
         style={{
           display: "flex",
@@ -61,16 +64,10 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
 };
 
 const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
+  const cards = Array.from(Array(4).keys());
   const carouselId = useId();
-
-  const slides = Array.from(Array(4).keys());
-
   return (
-    <Carousel
-      aria-label="Numbered carousel example"
-      className="carousel"
-      {...args}
-    >
+    <Carousel aria-label="Numbered tab example" className="carousel" {...args}>
       <FlexLayout gap={1} wrap={true} align={"center"}>
         <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
         <CarouselTabList />
@@ -78,17 +75,23 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
         <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
-        {slides.map((index) => {
+        {cards.map((index) => {
+          const tabId = `${carouselId}-tab${index}`;
           return (
             <div
               role="tabpanel"
               aria-roledescription="slide"
-              aria-label={`Placeholder slide ${index + 1}`}
+              aria-labelledby={`${tabId}-title`}
               className="carouselSlide"
-              key={`slide-${carouselId}-${index}`}
+              key={tabId}
             >
               <div className="carouselNumber">
-                <Text styleAs="display1" className="carouselHeading">
+                <Text
+                  id={`${tabId}-title`}
+                  styleAs="display1"
+                  className="carouselHeading"
+                  aria-label={"Placeholder tab"}
+                >
                   {index + 1}
                 </Text>
               </div>
@@ -107,6 +110,7 @@ export const Card = CarouselCardExample.bind({});
 export const SlideGroup = CarouselCardExample.bind({});
 SlideGroup.args = {
   ariaVariant: "group",
+  "aria-label": "Carousel group example",
 };
 
 export const Loop = CarouselNumberExample.bind({});
@@ -140,22 +144,22 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
         </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const id = `${carouselId}-card${index}`;
+            const slideId = `${carouselId}-slide${index}`;
             return (
               <CarouselCard
                 className="carouselSlide"
-                key={`slide-${id}`}
-                aria-labelledby={`title-${id}`}
+                key={slideId}
+                aria-labelledby={`${slideId}-title`}
                 appearance="bordered"
                 media={
                   <img
-                    alt={`stock content to show in carousel slide ${index}`}
+                    aria-hidden={true}
                     className="carouselImagePlaceholder"
                     src={slide.image}
                   />
                 }
                 header={
-                  <Text id={`title-${id}`} styleAs="h3">
+                  <Text id={`${slideId}-title`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }
