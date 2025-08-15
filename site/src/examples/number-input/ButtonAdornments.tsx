@@ -36,7 +36,8 @@ const ResetAdornment = () => {
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
+        // TODO sort out the conditional events bleeding into public API
+        onNumberChange={(_, newValue = 0) => setValue(newValue)}
         step={5}
         stepMultiplier={10}
         endAdornment={
@@ -97,7 +98,8 @@ const SyncAdornment = () => {
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
+        // TODO sort out the conditional events bleeding into public API
+        onNumberChange={(_, newValue = 0) => setValue(newValue)}
         step={0.01}
         stepMultiplier={3}
         endAdornment={
@@ -148,7 +150,8 @@ const CustomButtons = () => {
         hideButtons
         value={value}
         textAlign="center"
-        onChange={(_, newValue) => setValue(newValue)}
+        // TODO sort out the conditional events bleeding into public API
+        onNumberChange={(_, newValue = 0) => setValue(newValue)}
         startAdornment={
           <Button aria-hidden tabIndex={-1} onClick={() => updateValue(-1)}>
             <RemoveIcon aria-hidden />
