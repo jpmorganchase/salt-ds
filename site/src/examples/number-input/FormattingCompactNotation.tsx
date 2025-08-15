@@ -11,8 +11,8 @@ export const FormattingCompactNotation = () => {
         <FormFieldLabel>Compact notation</FormFieldLabel>
         <NumberInput
           value={value}
-          onChange={(_e, value) => {
-            setValue(value);
+          onNumberChange={(_e, value) => {
+            setValue(value ?? 0);
           }}
           format={(value) => {
             const formattedValue = new Intl.NumberFormat("en-GB", {
@@ -25,7 +25,7 @@ export const FormattingCompactNotation = () => {
           step={10000}
           parse={(value) => {
             const match = value.match(/^(\d+(\.\d*)?)([kKmMbBtT]?)$/);
-            if (!match) return;
+            if (!match) return NaN;
 
             const [_, num, , unit] = match;
             const multiplier =

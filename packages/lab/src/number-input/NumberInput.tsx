@@ -5,7 +5,8 @@ import {
   StatusAdornment,
   useControlled,
   useForkRef,
-  useFormFieldProps, useIcon,
+  useFormFieldProps,
+  useIcon,
   useId,
   type ValidationStatus,
 } from "@salt-ds/core";
@@ -21,7 +22,9 @@ import {
   type KeyboardEvent,
   type ReactNode,
   type Ref,
+  type MouseEvent,
   type SyntheticEvent,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -63,6 +66,11 @@ export interface NumberInputProps
    */
   disabled?: boolean;
   /**
+   * Number of decimal places.
+   * @default undefined
+   */
+  decimalScale?: number | undefined;
+  /**
    * The marker to use in an empty read only Input.
    * Use `''` to disable this feature.
    * @default "—"
@@ -79,7 +87,7 @@ export interface NumberInputProps
   /**
    * A callback to format the value of the `NumberInput`.
    */
-  format?: (value: number | undefined) => string;
+  format?: (value: string) => string;
   /**
    * Hide the number buttons.
    * @default false
@@ -107,14 +115,21 @@ export interface NumberInputProps
    * Callback function that is triggered when the value of the `NumberInput` changes.
    *
    * @param event - The event that triggers the value change. This may be `undefined` during a long press on the increment or decrement buttons.
-   * @param value - The new value of the `NumberInput`, which can be a number or a string.
+   * @param value - The entered value of the `NumberInput`.
    */
-  onChange?: (event: SyntheticEvent | undefined, value: number) => void;
+  onChange?: (event?: SyntheticEvent | undefined, value?: string) => void;
+  /**
+   * Callback function that is triggered when the value of the `NumberInput` changes.
+   *
+   * @param event - The event that triggers the value change. This may be `undefined` during a long press on the increment or decrement buttons.
+   * @param value - The parsed value of the `NumberInput`
+   */
+  onNumberChange?: (event?: SyntheticEvent, value?: number) => void;
   /**
    *
    * A callback to parse the value of the `NumberInput`. To be used alongside the `format` callback.
    */
-  parse?: (value: string) => number | undefined;
+  parse?: (value: string) => number;
   /**
    * A string displayed in a dimmed color when the `NumberInput` value is empty.
    */
@@ -165,6 +180,12 @@ export interface NumberInputProps
   value?: number | null;
 }
 
+const defaultFormat = (value: string):string => {
+  const floatValue = toFloat(value);
+  const updatedValue = Number.isNaN(floatValue) ? sanitizeInput(value) : value;
+  return String(updatedValue);
+};
+
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
@@ -172,18 +193,21 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       bordered,
       className: classNameProp,
       clamp,
+      decimalScale,
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
       fixedDecimalScale,
-      format = (value: number | undefined) => String(value),
+      format = defaultFormat,
       hideButtons,
       id: idProp,
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
-      onChange: onChangeProp,
+      onChange,
+      onClick,
+      onNumberChange,
       parse = (value: string) => toFloat(sanitizeInput(value)),
       placeholder,
       decimalScale: decimalScaleProp,
@@ -240,6 +264,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
+    const [renderRaw, setRenderRaw] = useState(false);
+
     const [isFocused, setIsFocused] = useState(false);
     const [isStepping, setIsStepping] = useState(false);
     const { DecreaseIcon, IncreaseIcon } = useIcon();
@@ -251,73 +277,65 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       state: "value",
     });
 
-    const decimalScale =
-      decimalScaleProp ??
-      Math.max(getNumberPrecision(value), getNumberPrecision(step));
-
-    const clampAndFix = (value: number): number | string => {
-      const clampedValue = clamp ? clampToRange(min, max, value) : value;
-      // TODO: TT/JW Can we remove fixedDecimalScale and just use format, create examples in docs, which show how to do it ?
-      // if (format) {
-      //   return clampedValue;
-      // }
-      return fixedDecimalScale
-        ? clampedValue.toFixed(decimalScale)
-        : toFloat(clampedValue.toFixed(decimalScale));
-    };
+    // const decimalScale =
+    //   decimalScaleProp ??
+    //   Math.max(getNumberPrecision(value), getNumberPrecision(step));
+    //
+    // TODO: Move to docs.
+    // const clampAndFix = (value: number): number | string => {
+    //   const clampedValue = clamp ? clampToRange(min, max, value) : value;
+    //   // TODO: TT/JW Can we remove fixedDecimalScale and just use format, create examples in docs, which show how to do it ?
+    //   // if (format) {
+    //   //   return clampedValue;
+    //   // }
+    //   return fixedDecimalScale
+    //     ? clampedValue.toFixed(decimalScale)
+    //     : toFloat(clampedValue.toFixed(decimalScale));
+    // };
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
+      setRenderRaw(true);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
       setIsStepping(false);
-      if (isReadOnly) return;
-      const inputValue = event.target.value;
-      setValue(inputValue);
-      if (!inputValue.length) {
-        return;
-      }
-      const parsedValue = parse(inputValue);
-      if (parsedValue === undefined || Number.isNaN(parsedValue)) {
-        return;
-      }
-      const clampAndFixed = clampAndFix(parsedValue);
-      const nextValue = toFloat(clampAndFixed);
-      if (nextValue !== toFloat(value)) {
-        onChangeProp?.(event, nextValue);
-      }
-      inputOnBlur?.(event);
+      setRenderRaw(false);
+    };
+
+    const handleClick = (event: MouseEvent<HTMLInputElement>) => {
+      setRenderRaw(true);
+      onClick?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
-      if (!isAllowed(inputValue)) {
+      if (!parse && !isAllowed(inputValue)) {
         return;
       }
+      setRenderRaw(true);
       if (!inputValue?.length) {
         setValue("");
-        onChangeProp?.(event, 0);
+        onNumberChange?.(event, 0);
       } else {
         const parsedValue = parse(inputValue);
-        if (parsedValue === undefined || Number.isNaN(parsedValue)) {
-          return;
-        }
+        onNumberChange?.(event, parsedValue);
         setValue(inputValue);
-        if (parsedValue !== toFloat(value)) {
-          onChangeProp?.(event, parsedValue);
-        }
       }
+      onChange?.(event);
     };
 
     const decrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = block ? stepMultiplier * step : step;
-      const nextValue = toFloat(value) - decrementStep;
+      let decrementedValue = parseFloat(value) - decrementStep;
+      const nextValue = decimalScale ? parseFloat(decrementedValue.toFixed(decimalScale)) : decrementedValue;
+      setRenderRaw(false);
       if (nextValue < min) return;
       setValue(String(nextValue));
-      onChangeProp?.(event, nextValue);
+      onChange?.(event, String(nextValue));
+      onNumberChange?.(event, nextValue);
     };
 
     const { activate: activateDecrement } = useActivateWhileMouseDown(
@@ -328,10 +346,13 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     // TODO: Investigate these optional values
     const incrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = block ? stepMultiplier * step : step;
-      const nextValue = toFloat(value) + incrementStep;
+      let incrementedValue = parseFloat(value) + incrementStep;
+      const nextValue = decimalScale ? parseFloat(incrementedValue.toFixed(decimalScale)) : incrementedValue;
+      setRenderRaw(false);
       if (nextValue > max) return;
       setValue(String(nextValue));
-      onChangeProp?.(event, nextValue);
+      onChange?.(event, String(nextValue));
+      onNumberChange?.(event, nextValue);
     };
 
     const { activate: activateIncrement } = useActivateWhileMouseDown(
@@ -356,13 +377,17 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         case "Home": {
           event.preventDefault();
           setValue(String(min));
-          onChangeProp?.(event, min);
+          setRenderRaw(false);
+          onChange?.(event, String(min));
+          onNumberChange?.(event, min);
           break;
         }
         case "End": {
           event.preventDefault();
           setValue(String(max));
-          onChangeProp?.(event, max);
+          setRenderRaw(false);
+          onChange?.(event, String(max));
+          onNumberChange?.(event, max);
           break;
         }
         case "PageUp": {
@@ -387,27 +412,23 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleDecrementMouseDown = (event: SyntheticEvent) => {
       event.preventDefault();
+      setRenderRaw(false);
       setIsStepping(true);
       activateDecrement(event);
     };
 
     const handleButtonMouseUp = () => {
       inputRef?.current?.focus();
+      setRenderRaw(false);
       setIsStepping(false);
     };
 
-    let formattedValue: string | undefined = undefined;
 
-    if (value?.length) {
-      const floatValue = toFloat(value);
-      const updatedValue = Number.isNaN(floatValue) ? sanitizeInput(value) : value;
-      const fixedValue = clampAndFix(toFloat(updatedValue));
-
-      if (!isStepping && (isFocused || isReadOnly)) {
-        formattedValue = /\.$/.test(value) ? value : format(floatValue);
-      } else {
-        formattedValue = format(toFloat(fixedValue));
-      }
+    let formattedValue: string  = "";
+    if (renderRaw) {
+      formattedValue = value;
+    } else {
+      formattedValue = format(value);
     }
 
     return (
@@ -453,6 +474,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           disabled={isDisabled}
           onBlur={handleInputBlur}
           onChange={handleInputChange}
+          onClick={handleClick}
           onFocus={handleInputFocus}
           onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
