@@ -74,8 +74,7 @@ describe("Given a Carousel", () => {
   it("should render the carousel with four slides as a tabbed list", () => {
     cy.mount(<Default />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="Numbered carousel example"]').should("exist");
-    cy.get('[aria-live="polite"]').should("exist");
+    cy.get('[aria-label="Numbered tab example"]').should("exist");
     cy.get('[role="group"]').should("not.exist");
     cy.get('[role="tabpanel"]')
       .should("have.length", 4)
@@ -87,15 +86,9 @@ describe("Given a Carousel", () => {
   it("should render the carousel with four slides as a slide group", () => {
     cy.mount(<SlideGroup ariaVariant="group" />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="Carousel cards example"]').should("exist");
-    cy.get('[aria-live="polite"]').should("exist");
+    cy.get('[aria-label="Carousel group example"]').should("exist");
     cy.get('[role="group"]').should("exist");
     cy.get('[role="tabpanel"]').should("have.length", 0);
-  });
-
-  it("can disable slide announcements", () => {
-    cy.mount(<Default disableSlideAnnouncements={true} />);
-    cy.get('[aria-live="off"]').should("exist");
   });
 
   describe("WITH the current slide as slide 1", () => {

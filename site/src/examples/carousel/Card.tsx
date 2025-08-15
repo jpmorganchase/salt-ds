@@ -38,21 +38,21 @@ export const Card = (): ReactElement => {
         </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const id = `${carouselId}-${index}`;
+            const tabId = `${carouselId}-tab${index}`;
             return (
               <CarouselCard
                 className={styles.carouselSlide}
-                key={`slide-${id}`}
-                aria-labelledby={`title-${id}`}
+                key={tabId}
+                aria-labelledby={`${tabId}-title`}
                 media={
                   <img
-                    alt={`stock content to show in carousel slide ${index}`}
+                    aria-hidden={true}
                     className={styles.carouselImage}
                     src={slide.image}
                   />
                 }
                 header={
-                  <Text id={`title-${id}`} styleAs="h3">
+                  <Text id={`${tabId}-title`} styleAs="h3">
                     {slide.title}
                   </Text>
                 }

@@ -43,6 +43,10 @@ interface CarouselContextType {
    * Disable screenreader announcing slide updates, defaults to false.
    */
   disableSlideAnnouncements?: boolean;
+  /**
+   * Id for the carousel
+   */
+  carouselId: string | undefined;
 }
 
 export const CarouselContext = createContext<CarouselContextType | undefined>(

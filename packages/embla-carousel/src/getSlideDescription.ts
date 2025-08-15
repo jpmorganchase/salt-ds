@@ -47,36 +47,3 @@ export const getSlideDescription = (
 
   return description || "";
 };
-
-/**
- * Get a description of a range of slide content.
- * @param emblaApi
- * @param startSlideIndex
- * @param endSlideIndex
- */
-export function getSlideDescriptions(
-  emblaApi: EmblaCarouselType | undefined,
-  startSlideNumber: number,
-  endSlideNumber = 0,
-) {
-  if (
-    !emblaApi ||
-    startSlideNumber < 0 ||
-    endSlideNumber > emblaApi.slideNodes().length
-  ) {
-    return [""];
-  }
-  if (endSlideNumber) {
-    const slideDescriptions = [];
-    for (
-      let slideNumber = endSlideNumber;
-      slideNumber <= endSlideNumber;
-      slideNumber++
-    ) {
-      slideDescriptions.push(getSlideDescription(emblaApi, slideNumber));
-    }
-    return slideDescriptions;
-  }
-  const description = getSlideDescription(emblaApi, startSlideNumber);
-  return [description];
-}
