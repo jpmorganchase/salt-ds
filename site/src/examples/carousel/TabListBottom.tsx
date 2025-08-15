@@ -36,19 +36,27 @@ export const TabListBottom = (): ReactElement => {
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
-          {slides.map((index) => (
-            <div
-              role={"tabpanel"}
-              aria-roledescription="slide"
-              aria-label={`Placeholder slide ${index + 1}`}
-              className={styles.carouselSlide}
-              key={`${carouselId}-card-${index}`}
-            >
-              <Text styleAs="display1" className={styles.carouselNumber}>
-                {index + 1}
-              </Text>
-            </div>
-          ))}
+          {slides.map((index) => {
+            const tabId = `${carouselId}-tab${index}`;
+            return (
+              <div
+                aria-labelledby={`${tabId}-title`}
+                role={"tabpanel"}
+                aria-roledescription="slide"
+                className={styles.carouselSlide}
+                key={tabId}
+              >
+                <Text
+                  id={`${tabId}-title`}
+                  styleAs="display1"
+                  className={styles.carouselNumber}
+                  aria-label="Placeholder slide"
+                >
+                  {index + 1}
+                </Text>
+              </div>
+            );
+          })}
         </CarouselSlides>
       </div>
     </Carousel>

@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -58,6 +58,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       emblaOptions = {},
       emblaPlugins = [],
       getEmblaApi,
+      id,
       ...rest
     },
     ref,
@@ -72,6 +73,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, [
       ...emblaPlugins,
     ]);
+
+    const carouselId = useId();
 
     useEffect(() => {
       if (emblaApi) {
@@ -95,6 +98,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           setAriaVariant,
           setSilenceNextAnnoucement,
           silenceNextAnnoucement,
+          carouselId: id ?? carouselId,
         }}
       >
         <section
