@@ -42,7 +42,8 @@ export const Limits = () => {
       <FormFieldLabel>Number input with limited range</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, value) => {
+        // TODO sort out the conditional events bleeding into public API
+        onNumberChange={(_, value = 0) => {
           setValue(value);
           if (value > max || value < min) {
             setAccessibleText(

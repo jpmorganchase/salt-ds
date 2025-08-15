@@ -33,7 +33,8 @@ export const ClampBehaviour = () => {
         <FormFieldLabel>Number input with clamped range</FormFieldLabel>
         <NumberInput
           value={value}
-          onChange={(_, value) => {
+          // TODO sort out the conditional events bleeding into public API
+          onNumberChange={(_, value = 0) => {
             setValue(value);
             if (value > max) {
               setAccessibleText(`${value} is greater than the maximum value`);
