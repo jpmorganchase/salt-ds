@@ -147,7 +147,6 @@ const defaultIsDayUnselectable = (): string | false => false;
  */
 const defaultIsDayHighlighted = (): string | false => false;
 
-
 /**
  * Represents the return type of the useCalendar hook.
  * @template TDate - The type of the date object.
