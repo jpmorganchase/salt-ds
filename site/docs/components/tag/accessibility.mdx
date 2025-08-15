@@ -8,4 +8,14 @@ data:
   $ref: ./#/data
 ---
 
-This component has no accessibility guidance.
+## Best practices
+- Position tags close to the elements they describe, maintaining visual connection to ensure clear contextual relationships for all users. 
+  - While typically placed after or below associated elements, alternative placements may be appropriate based on your specific layout requirements.
+- Use sentence case for tag labels.
+- Keep tag content brief and meaningful, preferably limiting to one or two words.
+
+## WCAG considerations
+
+### [WCAG 1.4.1 Use of Color](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html)
+When implementing tags to categorize content, ensure that color is not used as the only visual means of conveying information. Text labels and/or icons should be the primary indicators for differentiating between tag categories, with color serving as a secondary, complementary indicator. 
+  - This approach ensures that users who cannot perceive color differences (such as those with color blindness) can still understand the categorization system.
