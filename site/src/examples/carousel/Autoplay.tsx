@@ -1,4 +1,4 @@
-import { FlexLayout, H2, Link, Text, ToggleButton, useId } from "@salt-ds/core";
+import { Button, FlexLayout, H2, Link, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselAutoplayIndicator,
@@ -98,19 +98,18 @@ export const Autoplay = () => {
             onMouseEnter={stop}
             onFocus={stop}
           >
-            <ToggleButton
-              aria-pressed={undefined}
-              value={isActive ? "playing" : "stopped"}
+            <Button
               aria-label={`${isActive ? "stop" : "start"} automatic slide rotation`}
-              onChange={() => (isActive ? stop() : play())}
-              selected={isActive}
+              appearance="bordered"
+              sentiment="neutral"
+              onClick={() => (isActive ? stop() : play())}
             >
               {isActive ? (
                 <PauseIcon style={{ pointerEvents: "none" }} />
               ) : (
                 <PlayIcon style={{ pointerEvents: "none" }} />
               )}
-            </ToggleButton>
+            </Button>
             <CarouselPreviousButton onClick={() => stop()} />
             <CarouselNextButton onClick={() => stop()} />
             <CarouselProgressLabel aria-hidden={true} />
