@@ -50,11 +50,6 @@
   outline-offset: var(--saltInputLegacy-focused-outlineOffset, var(--salt-focused-outlineOffset));
 }
 
-/* Style applied to selected input */
-.saltInputLegacy-input::selection {
-  background-color: var(--saltInputLegacy-highlight-color, var(--salt-content-foreground-highlight));
-}
-
 /* Style applied to inner input component */
 .saltInputLegacy-input {
   background: var(--saltInputLegacy-background, none);

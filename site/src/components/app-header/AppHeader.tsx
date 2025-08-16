@@ -35,14 +35,22 @@ export const AppHeader = () => {
       )}
       <div className={styles.content}>
         {homeLink && !isMobileOrTablet && (
-          <LinkBase className={styles.logoLink} href={homeLink}>
+          <LinkBase
+            aria-label="Salt Design System Homepage"
+            className={styles.logoLink}
+            href={homeLink}
+          >
             <Logo />
           </LinkBase>
         )}
         <div className={styles.actions}>
           <Search className={styles.search} />
           {!isMobileOrTablet && (
-            <Tooltip content="GitHub repository" placement="bottom">
+            <Tooltip
+              aria-hidden="true"
+              content="GitHub repository"
+              placement="bottom"
+            >
               <CTALink
                 href="https://github.com/jpmorganchase/salt-ds"
                 aria-label="GitHub repository"

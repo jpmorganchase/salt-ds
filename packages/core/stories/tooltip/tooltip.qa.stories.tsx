@@ -1,12 +1,7 @@
 import { Tooltip, type TooltipProps } from "@salt-ds/core";
 import { InfoSolidIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Tooltip/Tooltip QA",
@@ -52,47 +47,5 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
 AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection
-    height={670}
-    itemPadding={25}
-    width={1200}
-    {...props}
-  >
-    <IconWithTooltip content="Default" />
-    <IconWithTooltip status="info" content="Info" />
-    <IconWithTooltip status="error" content="Error" />
-    <IconWithTooltip status="success" content="Success" />
-    <IconWithTooltip status="warning" content="Warning" />
-    <div
-      style={{
-        width: 10,
-        height: 10,
-        overflow: "hidden",
-        position: "absolute",
-      }}
-    >
-      <IconWithTooltip content="Hidden trigger" />
-    </div>
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

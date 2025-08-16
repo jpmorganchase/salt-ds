@@ -1,4 +1,4 @@
-.saltVerticalNavigation {
+.saltVerticalNavigation ol {
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-fixed-100);
@@ -8,17 +8,17 @@
   position: relative;
 }
 
-.saltVerticalNavigation > .saltDivider-horizontal,
 .saltVerticalNavigationSubMenu > .saltDivider-horizontal,
-.saltVerticalNavigationItem > .saltDivider-horizontal {
+.saltVerticalNavigationItem > .saltDivider-horizontal,
+.saltVerticalNavigation ol > .saltDivider-horizontal {
   margin-bottom: calc(var(--salt-size-fixed-100) * -1);
 }
 
-.saltVerticalNavigation[data-has-direct-icons="false"] .saltCollapsiblePanel-inner {
+.saltVerticalNavigation [data-has-direct-icons="false"] .saltCollapsiblePanel-inner {
   margin-bottom: calc(var(--salt-size-fixed-100) * -1);
 }
 
-.saltVerticalNavigation[data-has-direct-icons="false"] .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu {
+.saltVerticalNavigation [data-has-direct-icons="false"] .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu {
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }
 

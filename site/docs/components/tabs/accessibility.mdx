@@ -64,17 +64,6 @@ This aXe issue is flagged in two scenarios:
 
 2. When using nested action buttons within tabs. This example follows the W3C's experimental "Tabs with Action Buttons" example and maintains expected keyboard and screen reader interaction patterns
 
-### ARIA attributes must conform to valid names ([aria-valid-attr](https://dequeuniversity.com/rules/axe/4.9/aria-valid-attr))
-
-#### Issue context
-
-This aXe issue is flagged due to the use of aria-actions, which is currently in draft status for the upcoming WAI-ARIA 1.3 release. However:
-
-- The implementation follows the W3C's experimental "Tabs with Action Buttons" example and maintains expected keyboard and screen reader interaction patterns
-- Screen readers properly announce and interact with the actions
-
-We anticipate when the release is published and aria actions is officially supported that this will no longer be a defect. We will confirm and update this guidance after the release.
-
 ### Note for overflow example
 
 - VoiceOver users receive inaccurate tab position information when navigating the overflow menu as it's treated as a separate tab list

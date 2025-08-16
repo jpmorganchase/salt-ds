@@ -52,17 +52,6 @@ export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
 SingleLevelExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };
 
@@ -107,17 +96,6 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
 MultilevelExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };
 
@@ -155,17 +133,6 @@ export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
 GroupedExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };
 
@@ -209,16 +176,5 @@ export const WithIconExamples: StoryFn<QAContainerProps> = (props) => {
 WithIconExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };

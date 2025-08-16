@@ -8,20 +8,20 @@ export const dateString: DateStringDataTypeDefinition<
   baseDataType: "dateString",
   extendsDataType: "dateString",
   valueParser: (params) =>
-    params.newValue?.match("\\d{2}/\\d{2}/\\d{4}") ? params.newValue : null,
+    params.newValue?.match("\\d{4}-\\d{2}-\\d{2}") ? params.newValue : null,
   valueFormatter: (params) => (params.value == null ? "" : params.value),
   dataTypeMatcher: (value) =>
-    typeof value === "string" && !!value.match("\\d{2}/\\d{2}/\\d{4}"),
+    typeof value === "string" && !!value.match("\\d{4}-\\d{2}-\\d{2}"),
   dateParser: (value) => {
     if (value == null || value === "") {
       return undefined;
     }
-    const dateParts = value.split("/");
+    const dateParts = value.split("-");
     return dateParts.length === 3
       ? new Date(
-          Number.parseInt(dateParts[2]),
-          Number.parseInt(dateParts[1]) - 1,
           Number.parseInt(dateParts[0]),
+          Number.parseInt(dateParts[1]) - 1,
+          Number.parseInt(dateParts[2]),
         )
       : undefined;
   },
@@ -31,6 +31,6 @@ export const dateString: DateStringDataTypeDefinition<
     }
     const date = String(value.getDate());
     const month = String(value.getMonth() + 1);
-    return `${date.length === 1 ? `0${date}` : date}/${month.length === 1 ? `0${month}` : month}/${value.getFullYear()}`;
+    return `${value.getFullYear()}-${month.length === 1 ? `0${month}` : month}-${date.length === 1 ? `0${date}` : date}`;
   },
 };

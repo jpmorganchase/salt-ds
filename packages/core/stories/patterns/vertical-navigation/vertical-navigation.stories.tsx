@@ -32,7 +32,7 @@ const Item = () => {
       style={{
         padding: "calc(var(--salt-spacing-400)*4)",
         margin: "var(--salt-spacing-400)",
-        backgroundColor: "var(--salt-color-gray-10)",
+        backgroundColor: "var(--salt-container-tertiary-background)",
       }}
     />
   );
@@ -43,7 +43,7 @@ const Header = () => {
     <header
       style={{
         padding: "var(--salt-spacing-300)",
-        backgroundColor: "var(--salt-color-gray-40)",
+        backgroundColor: "var(--salt-container-secondary-background)",
       }}
     />
   );

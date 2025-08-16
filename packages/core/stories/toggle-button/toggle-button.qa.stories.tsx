@@ -1,12 +1,7 @@
 import { FlowLayout, StackLayout, ToggleButton } from "@salt-ds/core";
 import { HomeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Toggle Button/Toggle Button QA",
@@ -202,34 +197,5 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
 AllVariantsGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection cols={1} height={2200} width={1700} {...props}>
-    <StackLayout gap={2}>
-      <ToggleButtonDefault />
-      <ToggleButtonSentiments />
-      <ToggleButtonReadOnly />
-      <ToggleButtonDisabled />
-    </StackLayout>
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

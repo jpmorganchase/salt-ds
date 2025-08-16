@@ -10,10 +10,6 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.salt-theme ::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
 .salt-theme[data-mode="light"] {
   color-scheme: light;
 }

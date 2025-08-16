@@ -2,7 +2,6 @@ import { type SearchIndex, useSearchIndex } from "@jpmorganchase/mosaic-store";
 import {
   Button,
   ComboBox,
-  type ComboBoxProps,
   capitalize,
   Option,
   OptionGroup,
@@ -12,6 +11,7 @@ import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useRouter } from "next/router";
 import {
   type ChangeEvent,
+  type ComponentPropsWithoutRef,
   type SyntheticEvent,
   useDeferredValue,
   useEffect,
@@ -60,7 +60,7 @@ function useSearchData() {
   return { searchIndex, searchConfig };
 }
 
-export function Search(props: ComboBoxProps) {
+export function Search(props: ComponentPropsWithoutRef<"search">) {
   const router = useRouter();
   const { searchIndex, searchConfig } = useSearchData();
   const [value, setValue] = useState("");
@@ -122,43 +122,47 @@ export function Search(props: ComboBoxProps) {
   }, [data]);
 
   return (
-    <ComboBox
-      onChange={handleChange}
-      onSelectionChange={handleSelectionChange}
-      startAdornment={<SearchIcon />}
-      bordered
-      endAdornment={
-        value && (
-          <Button
-            aria-label="Clear search"
-            variant="secondary"
-            onClick={() => setValue("")}
+    <search {...props}>
+      <ComboBox
+        inputProps={{
+          "aria-label": "Site Search",
+        }}
+        onChange={handleChange}
+        onSelectionChange={handleSelectionChange}
+        startAdornment={<SearchIcon aria-hidden />}
+        bordered
+        endAdornment={
+          value && (
+            <Button
+              aria-label="Clear search"
+              variant="secondary"
+              onClick={() => setValue("")}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          )
+        }
+        value={value}
+        placeholder="Search"
+      >
+        {Object.entries(results).length === 0 && query.length > 2 ? (
+          <div
+            className={styles.statusOption}
+            role="option"
+            aria-selected="false"
           >
-            <CloseIcon aria-hidden />
-          </Button>
-        )
-      }
-      value={value}
-      placeholder="Search"
-      {...props}
-    >
-      {Object.entries(results).length === 0 && query.length > 2 ? (
-        <div
-          className={styles.statusOption}
-          role="option"
-          aria-selected="false"
-        >
-          No results found for &quot;{query}&quot;
-        </div>
-      ) : (
-        Object.entries(results).map(([category, results], index) => (
-          <OptionGroup label={category} key={index}>
-            {results.slice(0, 5).map((result, index) => (
-              <SearchResult result={result} key={index} />
-            ))}
-          </OptionGroup>
-        ))
-      )}
-    </ComboBox>
+            No results found for &quot;{query}&quot;
+          </div>
+        ) : (
+          Object.entries(results).map(([category, results], index) => (
+            <OptionGroup label={category} key={index}>
+              {results.slice(0, 5).map((result, index) => (
+                <SearchResult result={result} key={index} />
+              ))}
+            </OptionGroup>
+          ))
+        )}
+      </ComboBox>
+    </search>
   );
 }

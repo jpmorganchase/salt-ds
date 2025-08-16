@@ -1,5 +1,10 @@
 .saltStepText-label {
   grid-area: label;
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  color: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 .saltStepper-horizontal .saltStepText-label {
@@ -9,11 +14,7 @@
 .saltStepper-vertical .saltStepText-label {
   padding-top: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
   padding-bottom: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
-  padding-left: calc((var(--step-depth)) * var(--salt-spacing-100));
-}
-
-.saltStep-depth-0 > .saltText.saltStepText-label {
-  font-weight: var(--salt-text-fontWeight-strong);
+  padding-left: calc(var(--step-depth) * var(--salt-spacing-100));
 }
 
 .saltStep-depth-0 > .saltText.saltStepText-label {
@@ -23,11 +24,16 @@
 .saltStepText-description {
   grid-area: description;
   color: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-family: var(--salt-text-label-fontFamily);
+  line-height: var(--salt-text-label-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 .saltStepper-vertical .saltStepText-description {
   padding-bottom: var(--salt-spacing-300);
-  padding-left: calc((var(--step-depth)) * var(--salt-spacing-100));
+  padding-left: calc(var(--step-depth) * var(--salt-spacing-100));
 }
 
 .saltStep-status-warning > .saltStepText-description {

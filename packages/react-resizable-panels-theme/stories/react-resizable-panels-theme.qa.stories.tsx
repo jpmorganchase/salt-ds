@@ -90,16 +90,5 @@ export function Variants() {
 Variants.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
 };

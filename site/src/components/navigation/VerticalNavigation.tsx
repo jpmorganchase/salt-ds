@@ -19,6 +19,12 @@ export type VerticalNavigationProps = {
   className?: string;
 };
 
+function statusToBadgeValue(status: string) {
+  return status.split(" ").reduce((acc, word) => {
+    return acc + word[0].toUpperCase();
+  }, "");
+}
+
 const renderItem: NavigationItemProps["render"] = ({ href, ...rest }) => {
   if (href) {
     return <LinkBase {...rest} href={href} />;
@@ -90,7 +96,10 @@ const renderNavigationItem = (
         expanded={isExpanded}
         level={level}
       >
-        {name} {status && <Badge value={status} />}
+        {name}
+        {status && (
+          <Badge aria-label={status} value={statusToBadgeValue(status)} />
+        )}
       </NavigationItem>
       {shouldRenderAsParent && isExpanded ? (
         <StackLayout
@@ -134,7 +143,7 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
   }
 
   return (
-    <nav className={className}>
+    <nav aria-label="Sidebar" className={className}>
       <StackLayout
         data-testid="vertical-navigation"
         as="ul"

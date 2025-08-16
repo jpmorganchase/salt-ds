@@ -36,6 +36,7 @@
   padding: var(--bgBlock-padding);
   width: var(--bgBlock-outer-width);
   box-sizing: border-box;
+  background: var(--salt-container-primary-background);
 }
 
 .saltQAContainer-vertical {

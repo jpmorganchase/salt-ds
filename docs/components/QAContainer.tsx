@@ -8,17 +8,16 @@ import {
 import { clsx } from "clsx";
 import {
   Children,
+  type ComponentPropsWithoutRef,
   type CSSProperties,
-  type DetailedHTMLProps,
   Fragment,
-  type HTMLAttributes,
 } from "react";
 
 import "./QAContainer.css";
 
 const withBaseName = makePrefixer("saltQAContainer");
 
-export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
+export interface QAContainerProps extends ComponentPropsWithoutRef<"div"> {
   cols?: number;
   height?: number;
   enableStyleInjection?: boolean;
@@ -29,18 +28,8 @@ export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
   width?: number;
 }
 
-const BackgroundBlock = ({
-  background = "rgb(36, 37, 38)",
-  children,
-}: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-  background?: string;
-}) => (
-  <div
-    className="background-block"
-    style={{
-      background,
-    }}
-  >
+const BackgroundBlock = ({ children }: ComponentPropsWithoutRef<"div">) => (
+  <div className="background-block">
     {Children.map(children, (child, i) => (
       <div className="background-item-wrapper" key={i}>
         {child}
@@ -54,20 +43,22 @@ const DensityValues = ["high", "medium", "low", "touch"] as const;
 const DensityBlock = ({
   mode,
   children,
-}: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+}: ComponentPropsWithoutRef<"div"> & {
   mode: Mode;
 }) => {
   const { themeNext } = useTheme();
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
-    <BackgroundBlock background={mode === "light" ? "white" : undefined}>
-      {DensityValues.map((d) => (
-        <ChosenSaltProvider mode={mode} density={d} key={d}>
-          <div className="background-item-wrapper">{children}</div>
-        </ChosenSaltProvider>
-      ))}
-    </BackgroundBlock>
+    <ChosenSaltProvider mode={mode}>
+      <BackgroundBlock>
+        {DensityValues.map((d) => (
+          <ChosenSaltProvider mode={mode} density={d} key={d}>
+            <div className="background-item-wrapper">{children}</div>
+          </ChosenSaltProvider>
+        ))}
+      </BackgroundBlock>
+    </ChosenSaltProvider>
   );
 };
 
@@ -125,7 +116,7 @@ export const QAContainer = ({
               density={d}
               enableStyleInjection={enableStyleInjection}
             >
-              <BackgroundBlock background="white">{children}</BackgroundBlock>
+              <BackgroundBlock>{children}</BackgroundBlock>
             </ChosenSaltProvider>
             <ChosenSaltProvider
               mode="dark"

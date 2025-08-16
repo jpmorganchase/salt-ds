@@ -13,7 +13,7 @@
   line-height: var(--salt-text-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
   cursor: var(--salt-cursor-hover);
-  border-radius: var(--salt-palette-corner-weak, 0);
+  border-radius: var(--salt-palette-corner-weak);
 }
 
 .saltPageButton:hover,
@@ -36,7 +36,7 @@
 }
 
 .saltPageButton[aria-current="page"] {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   background: var(--salt-selectable-background-selected);
 }
 

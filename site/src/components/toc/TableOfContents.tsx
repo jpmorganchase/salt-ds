@@ -1,5 +1,5 @@
 import { useTableOfContents } from "@jpmorganchase/mosaic-store";
-import { NavigationItem, Text, useId } from "@salt-ds/core";
+import { H3, NavigationItem, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -107,11 +107,15 @@ export function TableOfContents(props: ComponentPropsWithoutRef<"aside">) {
   }
 
   return (
-    <aside className={clsx(styles.root, className)} {...rest}>
-      <Text className={styles.heading} id={headingId}>
+    <nav
+      aria-labelledby={headingId}
+      className={clsx(styles.root, className)}
+      {...rest}
+    >
+      <H3 className={styles.heading} id={headingId}>
         On this page
-      </Text>
-      <ul aria-labelledby={headingId} className={styles.list}>
+      </H3>
+      <ul className={styles.list}>
         {tableOfContents.map((item, index) => (
           <li key={item.id}>
             <NavigationItem
@@ -125,6 +129,6 @@ export function TableOfContents(props: ComponentPropsWithoutRef<"aside">) {
           </li>
         ))}
       </ul>
-    </aside>
+    </nav>
   );
 }

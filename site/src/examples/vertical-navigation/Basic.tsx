@@ -30,14 +30,22 @@ export const Basic = () => {
   return (
     <StackLayout direction="row" gap={6}>
       <MockHistory>
-        <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
+        <VerticalNavigation
+          aria-label="Basic indicator sidebar"
+          appearance="indicator"
+          style={{ minWidth: "30ch" }}
+        >
           {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
-        <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
+        <VerticalNavigation
+          aria-label="Basic bordered sidebar"
+          appearance="bordered"
+          style={{ minWidth: "30ch" }}
+        >
           {navData.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}

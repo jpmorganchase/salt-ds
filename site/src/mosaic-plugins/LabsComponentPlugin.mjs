@@ -24,9 +24,7 @@ const LabsComponentPlugin = {
 
       if (RCPackages.includes(page.data?.package?.name)) {
         page.data.status = statusLabel;
-        page.data.groupStatus = statusLabel.split(" ").reduce((acc, word) => {
-          return acc + word[0].toUpperCase();
-        }, "");
+        page.data.groupStatus = statusLabel;
       }
     }
     return pages;

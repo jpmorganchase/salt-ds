@@ -34,6 +34,9 @@ function getAriaDescription(count: number) {
   return `${count} actions available`;
 }
 
+const ariaActionSupported =
+  typeof HTMLElement !== "undefined" && "ariaActions" in HTMLElement.prototype;
+
 export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
@@ -81,7 +84,9 @@ export const TabNextTrigger = forwardRef<
       aria-selected={selected}
       aria-disabled={disabled}
       aria-controls={panelId}
-      aria-actions={clsx(actions) || undefined}
+      aria-actions={
+        ariaActionSupported ? clsx(actions) || undefined : undefined
+      }
       aria-description={getAriaDescription(actions.length)}
       tabIndex={focused || selected ? undefined : -1}
       role="tab"

@@ -33,7 +33,7 @@ jobs:
               context: "Storybook"
             })
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -45,7 +45,7 @@ jobs:
         run: yarn
 
       - name: "Download run metadata"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: metadata
           path: ./METADATA
@@ -62,7 +62,7 @@ jobs:
             core.setOutput("branchName", branchName);
 
       - name: "Download build artifact"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: storybook-build
           path: ./storybook-static

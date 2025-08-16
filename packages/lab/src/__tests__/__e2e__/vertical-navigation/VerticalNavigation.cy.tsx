@@ -1,19 +1,19 @@
 import * as verticalNavigationStories from "@stories/vertical-navigation/vertical-navigation.stories";
 import { composeStories } from "@storybook/react-vite";
 
-const { Default, NestedCollapse, ExpandButton } = composeStories(
+const { Basic, CollapsibleSubmenu, WithExpandButton } = composeStories(
   verticalNavigationStories,
 );
 
 describe("Given a VerticalNavigation", () => {
   it("should render a list of links", () => {
-    cy.mount(<Default />);
+    cy.mount(<Basic />);
 
     cy.findAllByRole("link").should("have.length", 5);
   });
 
   it("should allow navigation via mouse click", () => {
-    cy.mount(<Default />);
+    cy.mount(<Basic />);
 
     cy.findByRole("link", { name: "Home" }).realClick();
     cy.findByRole("link", { name: "Home" }).should(
@@ -24,7 +24,7 @@ describe("Given a VerticalNavigation", () => {
   });
 
   it("should allow navigation via keyboard", () => {
-    cy.mount(<Default />);
+    cy.mount(<Basic />);
 
     cy.realPress("Tab");
     cy.findByRole("link", { name: "Home" }).should("be.focused");
@@ -37,7 +37,7 @@ describe("Given a VerticalNavigation", () => {
   });
 
   it("should allow nested collapsible items", () => {
-    cy.mount(<NestedCollapse />);
+    cy.mount(<CollapsibleSubmenu />);
 
     cy.findByRole("button", { name: "Products" }).should("be.visible");
     cy.findByRole("button", { name: "Products" }).should(
@@ -60,15 +60,17 @@ describe("Given a VerticalNavigation", () => {
   });
 
   it("should support separate expand and navigate actions", () => {
-    cy.mount(<ExpandButton />);
+    cy.mount(<WithExpandButton />);
 
     cy.findByRole("link", { name: "Solutions" }).should("be.visible");
     cy.findByRole("link", { name: "Solutions" }).should(
       "not.have.attr",
       "aria-expanded",
     );
-    cy.findByRole("button", { name: "Expand Solutions" }).should("be.visible");
-    cy.findByRole("button", { name: "Expand Solutions" }).should(
+    cy.findByRole("button", { name: "Solutions Subpages" }).should(
+      "be.visible",
+    );
+    cy.findByRole("button", { name: "Solutions Subpages" }).should(
       "have.attr",
       "aria-expanded",
       "false",
@@ -80,14 +82,14 @@ describe("Given a VerticalNavigation", () => {
       "aria-current",
       "page",
     );
-    cy.findByRole("button", { name: "Expand Solutions" }).should(
+    cy.findByRole("button", { name: "Solutions Subpages" }).should(
       "have.attr",
       "aria-expanded",
       "false",
     );
 
-    cy.findByRole("button", { name: "Expand Solutions" }).realClick();
-    cy.findByRole("button", { name: "Expand Solutions" }).should(
+    cy.findByRole("button", { name: "Solutions Subpages" }).realClick();
+    cy.findByRole("button", { name: "Solutions Subpages" }).should(
       "have.attr",
       "aria-expanded",
       "true",
@@ -97,7 +99,7 @@ describe("Given a VerticalNavigation", () => {
     cy.realPress("Tab");
     cy.findByRole("link", { name: "By Industry" }).should("be.focused");
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Expand By Industry" }).should(
+    cy.findByRole("button", { name: "By Industry Subpages" }).should(
       "be.focused",
     );
   });

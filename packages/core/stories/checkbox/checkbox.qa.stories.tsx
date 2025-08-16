@@ -7,12 +7,7 @@ import {
   FormFieldLabel,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  type QAContainerNoStyleInjectionProps,
-  type QAContainerProps,
-} from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Checkbox/Checkbox QA",
@@ -79,30 +74,5 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
 AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
-    modes: {
-      theme: {
-        themeNext: "disable",
-      },
-      themeNext: {
-        themeNext: "enable",
-        corner: "rounded",
-        accent: "teal",
-        // Ignore headingFont given font is not loaded
-      },
-    },
   },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props,
-) => (
-  <QAContainerNoStyleInjection cols={1} itemPadding={8} {...props}>
-    <CheckboxGroupExample direction="vertical" />
-    <CheckboxGroupExample direction="horizontal" />
-    <CheckboxInFormFieldExample />
-  </QAContainerNoStyleInjection>
-);
-
-NoStyleInjectionGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

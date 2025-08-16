@@ -24,10 +24,10 @@ function NestedItem(props: { item: Item }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
-        <VerticalNavigationItem
-          active={location.pathname.startsWith(item.href) && collapsed}
-        >
+      <VerticalNavigationItem
+        active={location.pathname.startsWith(item.href) && collapsed}
+      >
+        <Collapsible onOpenChange={(_, expanded) => setCollapsed(!expanded)}>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
@@ -45,8 +45,8 @@ function NestedItem(props: { item: Item }) {
               ))}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
-        </VerticalNavigationItem>
-      </Collapsible>
+        </Collapsible>
+      </VerticalNavigationItem>
     );
   }
 
@@ -55,7 +55,7 @@ function NestedItem(props: { item: Item }) {
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
           <VerticalNavigationItemLabel>
-            {item.title}
+            {item.title}{" "}
           </VerticalNavigationItemLabel>
           {item.status && <Badge value={item.status} />}
         </VerticalNavigationItemTrigger>
@@ -68,14 +68,22 @@ export const WithBadges = () => {
   return (
     <StackLayout direction="row" gap={6}>
       <MockHistory>
-        <VerticalNavigation appearance="indicator" style={{ minWidth: "30ch" }}>
+        <VerticalNavigation
+          aria-label="Indicator sidebar with badges"
+          appearance="indicator"
+          style={{ minWidth: "30ch" }}
+        >
           {navData.map((item) => (
             <NestedItem key={item.title} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
-        <VerticalNavigation appearance="bordered" style={{ minWidth: "30ch" }}>
+        <VerticalNavigation
+          aria-label="Bordered sidebar with badges"
+          appearance="bordered"
+          style={{ minWidth: "30ch" }}
+        >
           {navData.map((item) => (
             <NestedItem key={item.title} item={item} />
           ))}
