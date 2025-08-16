@@ -6,16 +6,6 @@ import { renderCalendarQAContainer } from "./renderCalendarQAContainer";
 
 const QAContainerParameters = {
   chromatic: { disableSnapshot: false },
-  modes: {
-    theme: {
-      themeNext: "disable",
-    },
-    themeNext: {
-      themeNext: "enable",
-      corner: "rounded",
-      accent: "teal",
-    },
-  },
 };
 
 export default {
