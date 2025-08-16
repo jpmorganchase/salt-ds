@@ -1,11 +1,4 @@
-import {
-  Button,
-  FlexLayout,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -23,9 +16,7 @@ import styles from "./index.module.css";
 export const ControlledCarousel = (): ReactElement => {
   const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
 
-  const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const carouselId = useId();
 
   useEffect(() => {
     if (!emblaApi) {
@@ -54,39 +45,41 @@ export const ControlledCarousel = (): ReactElement => {
         className={styles.carousel}
         getEmblaApi={setEmblaApi}
       >
+        <FlexLayout gap={1} wrap={true}>
+          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+          <CarouselTabList />
+          <CarouselNextButton tabIndex={-1} appearance="transparent" />
+          <CarouselProgressLabel />
+        </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
+            const tabId = `${carouselId}-tab${index}`;
             return (
               <CarouselCard
                 className={styles.carouselSlide}
-                key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-                id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-                aria-label={slide.title}
-                appearance={"bordered"}
+                key={tabId}
+                aria-labelledby={`${tabId}-title`}
+                appearance="bordered"
                 media={
                   <img
-                    alt={`stock content to show in carousel slide ${index}`}
+                    aria-hidden={true}
                     className={styles.carouselImage}
                     src={slide.image}
                   />
                 }
-                header={<Text styleAs={"h3"}>{slide.title}</Text>}
+                header={
+                  <Text id={`${tabId}-title`} styleAs="h3">
+                    {slide.title}
+                  </Text>
+                }
               >
                 <Text>{slide.content}</Text>
               </CarouselCard>
             );
           })}
         </CarouselSlides>
-        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-          <StackLayout direction={"row"} gap={1}>
-            <CarouselPreviousButton />
-            <CarouselNextButton />
-            <CarouselProgressLabel />
-          </StackLayout>
-          {!isMobile ? <CarouselTabList /> : null}
-        </FlexLayout>
       </Carousel>
-      <FlexLayout justify={"center"} align={"center"} direction={"row"}>
+      <FlexLayout justify="center" align="center" direction="row">
         <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
       </FlexLayout>
     </StackLayout>

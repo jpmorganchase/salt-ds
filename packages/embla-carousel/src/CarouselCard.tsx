@@ -4,6 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentProps, forwardRef, type ReactNode } from "react";
 import saltCarouselCardCss from "./CarouselCard.css";
+import { useCarouselContext } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarouselCard");
 
@@ -55,13 +56,15 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
       window: targetWindow,
     });
 
+    const { ariaVariant } = useCarouselContext();
+
     return (
       <div
-        role="tabpanel"
-        aria-roledescription="slide"
-        className={clsx(withBaseName(), className)}
-        {...rest}
+        aria-roledescription={ariaVariant === "tabpanel" ? "tab" : "slide"}
+        className={clsx([withBaseName(), className])}
         ref={ref}
+        role={ariaVariant}
+        {...rest}
       >
         <div
           className={clsx(withBaseName("content"), {
