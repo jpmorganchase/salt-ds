@@ -286,11 +286,6 @@
   outline: none;
 }
 
-/* Style applied to selected input */
-.saltMultilineInput-textarea::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
 /* Style applied to selected text if `disabled={true}` */
 .saltMultilineInput-disabled .saltMultilineInput-textarea::selection {
   background: none;

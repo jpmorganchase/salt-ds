@@ -262,15 +262,16 @@ describe("Given a Tabstrip", () => {
   it("should add the correct aria when tab actions are used", () => {
     cy.mount(<Closable />);
 
-    cy.findByRole("tab", { name: "Home" })
-      .invoke("attr", "aria-actions")
-      .then((actionId) => {
-        cy.findByRole("button", { name: "Home Close tab" }).should(
-          "have.attr",
-          "id",
-          actionId,
-        );
-      });
+    // TODO: enable when aria-actions is supported in browsers.
+    // cy.findByRole("tab", { name: "Home" })
+    //   .invoke("attr", "aria-actions")
+    //   .then((actionId) => {
+    //     cy.findByRole("button", { name: "Home Close tab" }).should(
+    //       "have.attr",
+    //       "id",
+    //       actionId,
+    //     );
+    //   });
 
     cy.findByRole("tab", { name: "Home" }).should(
       "have.accessibleDescription",

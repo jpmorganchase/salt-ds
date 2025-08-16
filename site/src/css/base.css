@@ -27,7 +27,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-::selection {
-  background: var(--salt-content-foreground-highlight);
-}

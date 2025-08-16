@@ -4,7 +4,7 @@ import {
   Button,
   FlexItem,
   FlexLayout,
-  H2,
+  H3,
   H4,
   NavigationItem,
   SkipLink,
@@ -63,16 +63,17 @@ export const Default = (): ReactElement => {
         </BorderItem>
         <BorderItem position="center" className={styles.center}>
           <StackLayout as="article" className={styles.section} gap={6}>
+            {/* The heading levels in this example are demonstrational only */}
             <section>
-              <H2 styleAs="h1" id={headerId} className={styles.header}>
+              <H3 styleAs="h1" id={headerId} className={styles.header}>
                 Glossary
-              </H2>
-              <H2>Characteristics</H2>
+              </H3>
+              <H4 styleAs="h2">Characteristics</H4>
               <p>
                 A Salt characteristic refers to a design token that aligns with
                 a holistic semantic used throughout the design language.
               </p>
-              <H2>Components</H2>
+              <H4 styleAs="h2">Components</H4>
               <p>
                 Salt components serve as foundational building blocks as well as
                 representing design primitives. Users of Salt can design and

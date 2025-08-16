@@ -40,7 +40,6 @@ export const CollapsibleTrigger = forwardRef<
     ...mergeProps(
       {
         className: clsx(withBaseName(), className),
-        type: "button",
         "aria-expanded": open,
         "aria-controls": panelId,
         onClick: handleClick,

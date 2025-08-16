@@ -310,11 +310,6 @@
   outline: none;
 }
 
-/* Style applied to selected input */
-.saltPillInput-input::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
 /* Style applied to selected input if `disabled={true}` */
 .saltPillInput-disabled .saltPillInput-input::selection {
   background: none;

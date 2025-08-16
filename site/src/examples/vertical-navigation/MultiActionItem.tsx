@@ -22,8 +22,8 @@ function ExpandButtonItem(props: { item: Item }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible>
-        <VerticalNavigationItem active={location.pathname === item.href}>
+      <VerticalNavigationItem active={location.pathname === item.href}>
+        <Collapsible>
           <VerticalNavigationItemContent>
             <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
               <VerticalNavigationItemLabel>
@@ -43,8 +43,8 @@ function ExpandButtonItem(props: { item: Item }) {
               ))}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
-        </VerticalNavigationItem>
-      </Collapsible>
+        </Collapsible>
+      </VerticalNavigationItem>
     );
   }
 
@@ -65,14 +65,20 @@ export const MultiActionItem = () => {
   return (
     <StackLayout direction="row" gap={6}>
       <MockHistory>
-        <VerticalNavigation appearance="indicator">
+        <VerticalNavigation
+          aria-label="Indicator sidebar with multi-action items"
+          appearance="indicator"
+        >
           {navData.map((item) => (
             <ExpandButtonItem key={item.title} item={item} />
           ))}
         </VerticalNavigation>
       </MockHistory>
       <MockHistory>
-        <VerticalNavigation appearance="bordered">
+        <VerticalNavigation
+          aria-label="Bordered sidebar with multi-action items"
+          appearance="bordered"
+        >
           {navData.map((item) => (
             <ExpandButtonItem key={item.title} item={item} />
           ))}

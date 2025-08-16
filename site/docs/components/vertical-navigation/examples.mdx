@@ -31,6 +31,7 @@ Compose `VerticalNavigation` with `Collapsible` to create a collapsible menu str
 ### Best practices
 
 - When a collapsed submenu contains an active navigation item, the parent item should be set to active. This allows users to see where they are in the navigation hierarchy even when the submenu is collapsed.
+- Limit expandable sections to two levels.
 
 <LivePreview
   componentName="vertical-navigation"
@@ -53,6 +54,15 @@ You can add a [badge](../badge) to a navigation item to serve as a visual cue. A
 
 ### Best practices
 
-Only place a badge in a navigation item that does not include nested items, i.e., it will not have a chevron.
+- Follow the [badge accessibility guidelines](/salt/components/badge/accessibility#best-practices).
+- Only place a badge in a navigation item that does not include nested items, i.e., it will not have a chevron.
 
 <LivePreview componentName="vertical-navigation" exampleName="WithBadges" />
+
+## With skip link
+
+It is recommented to provide a skip link to bypass the vertical navigation for a better keyboard navigation experience.
+
+**Note:** If the navigation appears across multiple pages **and** there is no “Skip to main” link as the first item on the page, to meet WCAG 2.4.1 requirement for bypassing repeated content a skip link is required.
+
+<LivePreview componentName="vertical-navigation" exampleName="WithSkipLink" />
