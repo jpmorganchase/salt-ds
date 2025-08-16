@@ -5,6 +5,7 @@ import type {
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
+import { useRef } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
@@ -18,6 +19,10 @@ export interface DayStatus {
    * If `true`, the day is out of the selectable range.
    */
   outOfRange?: boolean;
+  /**
+   * If `true`, the day is selectable but outside of current month.
+   */
+  outsideCurrentMonth?: boolean;
   /**
    * If `true`, the day is selected.
    */
@@ -38,10 +43,6 @@ export interface DayStatus {
    * If `true`, the day is focused.
    */
   focused?: boolean;
-  /**
-   * If `true`, the day is disabled.
-   */
-  disabled?: boolean;
   /**
    * If `true`, the day is hidden.
    */
@@ -81,12 +82,12 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       isDayUnselectable,
       isDaySelectable,
       isDayHighlighted,
-      isDayDisabled,
       isOutsideAllowedMonths,
     },
   } = useCalendarContext<TDate>();
   const selectionManager = useCalendarSelectionDay<TDate>({ date });
   const focusManager = useFocusManagement<TDate>({ date });
+  const focusTriggeredByClick = useRef(false);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     selectionManager?.handleClick(event);
@@ -94,29 +95,35 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
+    focusTriggeredByClick.current = false;
     focusManager.handleKeyDown(event);
     selectionManager?.handleKeyDown(event);
   };
 
   const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {
-    focusManager.handleFocus(event);
+    if (!focusTriggeredByClick.current) {
+      focusManager.handleFocus(event);
+    }
     setHoveredDate(event, date);
   };
 
-  const handleMouseEnter: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleMouseMove: MouseEventHandler<HTMLButtonElement> = (event) => {
     setHoveredDate(event, date);
+  };
+
+  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = () => {
+    focusTriggeredByClick.current = true;
   };
 
   const eventHandlers = {
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onFocus: handleFocus,
-    onMouseEnter: handleMouseEnter,
+    onMouseMove: handleMouseMove,
+    onMouseDown: handleMouseDown,
   };
 
-  const outOfRange = !dateAdapter.isSame(date, month, "month");
-  const focused =
-    focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange;
+  const focused = focusedDate && dateAdapter.isSame(date, focusedDate, "day");
   const tabIndex = focusableDates.find((tabbableDate) =>
     dateAdapter.isSame(date, tabbableDate, "day"),
   )
@@ -127,22 +134,19 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
 
-  const disabled =
-    isDayDisabled(date) ||
-    (outOfRange && isOutsideAllowedMonths(date)) ||
-    (isDaySelectable && !isDaySelectable(date));
-  const unselectable = Boolean(unselectableReason);
+  const outsideCurrentMonth = !dateAdapter.isSame(date, month, "month");
+  const unselectable =
+    Boolean(unselectableReason) || isOutsideAllowedMonths(date);
   const highlighted = Boolean(highlightedReason);
-  const hidden = hideOutOfRangeDates ? outOfRange : false;
+  const hidden = hideOutOfRangeDates ? outsideCurrentMonth : false;
 
   return {
     status: {
-      outOfRange,
+      outsideCurrentMonth,
       today,
       unselectable,
       focused,
       hidden,
-      disabled,
       highlighted,
       ...selectionManager.status,
     } as DayStatus,
