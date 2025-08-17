@@ -699,7 +699,7 @@ describe("Grid", () => {
   //           .filter(Boolean) ?? [];
 
   //       const response = db.investor.findMany({
-  //         // @ts-ignore
+  //         // @ts-expect-error
   //         orderBy,
   //         take: 50,
   //       });

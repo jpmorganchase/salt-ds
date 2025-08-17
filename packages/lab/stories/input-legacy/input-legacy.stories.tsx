@@ -23,7 +23,6 @@ export default {
 
 const Template: StoryFn<typeof InputLegacy> = (args) => {
   // let text;
-  // @ts-ignore
   // if (args.multiline) {
   //   text =
   //     "This is a Multiline Input with text which wraps onto more than one line.";

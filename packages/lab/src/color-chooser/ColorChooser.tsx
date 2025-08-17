@@ -174,7 +174,6 @@ export const ColorChooser = ({
           className={clsx(withBaseName("overlayButton"), {
             [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
           })}
-          // @ts-ignore
           data-testid="color-chooser-overlay-button"
           disabled={readOnly}
           {...buttonProps}

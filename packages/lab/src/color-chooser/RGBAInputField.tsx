@@ -83,7 +83,7 @@ export const RGBInput = ({
   return (
     <Input
       inputProps={{
-        // @ts-ignore
+        // @ts-expect-error
         "data-testid": `${value}-input`,
       }}
       className={withBaseName("rgbaInput")}

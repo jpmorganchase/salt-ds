@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useUniqueElementIds: GridColumns need static ids */
 import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
 import type { Decorator } from "@storybook/react-vite";
@@ -8,7 +9,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { http } from "msw";
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import {
   createDummyInvestors,
   db,
@@ -16,6 +17,11 @@ import {
   investorKeyGetter,
 } from "./dummyData";
 import "./grid.stories.css";
+import type { OrderBy } from "@mswjs/data/lib/query/queryTypes";
+
+function isDefined<T>(value: T | null | undefined): value is NonNullable<T> {
+  return value !== null && value !== undefined;
+}
 
 export default {
   title: "Lab/Data Grid",
@@ -35,13 +41,13 @@ export default {
                 if (sortOrder && sortColumn) {
                   return {
                     [sortColumn]: sortOrder,
-                  } as Record<keyof Investor, SortOrder>;
+                  } as unknown as OrderBy<Investor>;
                 }
+                return null;
               })
-              .filter(Boolean) ?? [];
+              .filter(isDefined) ?? [];
 
           const response = db.investor.findMany({
-            // @ts-ignore
             orderBy,
             take: 50,
           });
@@ -106,14 +112,15 @@ export function ServerSideSort() {
 
   return (
     <div
-      style={{
-        position: "relative",
-        // @ts-ignore
-        "--salt-overlayable-background":
-          mode === "light"
-            ? "var(--salt-color-gray-60-fade-background)"
-            : "var(--salt-color-gray-300-fade-background)",
-      }}
+      style={
+        {
+          position: "relative",
+          "--salt-overlayable-background":
+            mode === "light"
+              ? "var(--salt-color-gray-60-fade-background)"
+              : "var(--salt-color-gray-300-fade-background)",
+        } as CSSProperties
+      }
     >
       <Scrim
         aria-label="Example Scrim"

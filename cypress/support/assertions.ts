@@ -263,7 +263,7 @@ const announces: ChaiPlugin = (_chai, utils) => {
     this: AssertionStatic,
     msgMatcher?: string | RegExp,
   ) {
-    // @ts-ignore
+    // @ts-expect-error
     const announcement = cy.state("announcement") as string | null;
 
     // Checking if error was thrown
@@ -303,7 +303,7 @@ const announces: ChaiPlugin = (_chai, utils) => {
       );
     }
 
-    // @ts-ignore
+    // @ts-expect-error
     cy.state("announcement", null);
     utils.flag(this, "object", announcement);
   }

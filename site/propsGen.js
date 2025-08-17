@@ -32,12 +32,12 @@ const filePaths = componentPackages.map(
   (pkg) => `./src/props/${pkg}-props.json`,
 );
 
-components.forEach((component, index) =>
+components.forEach((component, index) => {
   writeFile(filePaths[index], JSON.stringify(component, null, 2), (error) => {
     if (error) {
       console.log("An error has occurred ", error);
       return;
     }
     console.log(`${filePaths[index]} successfully generated`);
-  }),
-);
+  });
+});

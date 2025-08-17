@@ -403,7 +403,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    */
   public getTimezone = (date: Dayjs): string => {
     if (this.dayjs.tz) {
-      // @ts-ignore
+      // @ts-expect-error
       const zone = date.$x?.$timezone;
       if (zone) {
         return zone;
@@ -444,7 +444,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
       // Change only what is needed to avoid creating a new object with unwanted data
       // Especially important when used in an environment where utc or timezone dates are used only in some places
       // Reference: https://github.com/mui/mui-x/issues/13290
-      // @ts-ignore
+      // @ts-expect-error
       date.$offset = fixedValue.$offset;
     }
 

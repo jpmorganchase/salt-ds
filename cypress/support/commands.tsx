@@ -129,7 +129,7 @@ Cypress.Commands.add(
     options?: MountOptions,
   ): Cypress.Chainable<MountReturn> => {
     const handleAnnouncement = (announcement: string) => {
-      // @ts-ignore
+      // @ts-expect-error
       cy.state("announcement", announcement);
     };
 
@@ -174,7 +174,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("mountPerformance", (children, options) => {
   const handleRender = (result: PerformanceResult) => {
-    // @ts-ignore
+    // @ts-expect-error
     cy.state("performanceResult", result);
   };
 
@@ -185,12 +185,12 @@ Cypress.Commands.add("mountPerformance", (children, options) => {
 });
 
 Cypress.Commands.add("getRenderTime", () => {
-  // @ts-ignore
+  // @ts-expect-error
   return cy.state("performanceResult").renderTime;
 });
 
 Cypress.Commands.add("getRenderCount", () => {
-  // @ts-ignore
+  // @ts-expect-error
   return cy.state("performanceResult").renderCount;
 });
 

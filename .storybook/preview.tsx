@@ -26,7 +26,6 @@ import { withResponsiveWrapper } from "./decorators/withResponsiveWrapper";
 import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
 import { withTheme } from "./decorators/withTheme";
 
-// @ts-ignore
 if (!window.Cypress) {
   // Initialize MSW
   initialize({
@@ -157,20 +156,20 @@ const preview: Preview = {
         ...rest
       }: ComponentProps<typeof DocsContainer>) => {
         const ChosenProvider =
-          /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+          /* @ts-expect-error Waiting for https://github.com/storybookjs/storybook/issues/12982 */
           context.store.userGlobals.globals?.theme === "brand"
             ? SaltProviderNext
             : SaltProvider;
         return (
           <DocsContainer context={context} {...rest}>
             <ChosenProvider
-              /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+              /* @ts-expect-error Waiting for https://github.com/storybookjs/storybook/issues/12982 */
               mode={context.store.userGlobals.globals?.mode}
               enableStyleInjection={
-                /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+                /* @ts-expect-error Waiting for https://github.com/storybookjs/storybook/issues/12982 */
                 context.store.userGlobals.globals?.styleInjection === "enable"
               }
-              /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+              /* @ts-expect-error Waiting for https://github.com/storybookjs/storybook/issues/12982 */
               accent={context.store.userGlobals.globals?.accent}
             >
               {children}

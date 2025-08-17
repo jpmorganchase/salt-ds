@@ -69,8 +69,10 @@ export const db = factory({
   },
 });
 
-// Create 50 investors
-Array.from({ length: 2000 }).forEach(() => db.investor.create());
+// Create 2000 investors
+for (let i = 0; i < 2000; i++) {
+  db.investor.create();
+}
 
 export const createDummyInvestors = ({ limit }: { limit?: number } = {}) => {
   return db.investor.findMany({ take: limit ?? 50 }) as unknown as Investor[];

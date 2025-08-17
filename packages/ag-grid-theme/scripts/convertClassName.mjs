@@ -14,7 +14,7 @@ const replacementClasses = [
 
 let count = 0;
 
-glob.sync("packages/ag-grid-theme/css/parts/*.css").forEach(async (file) => {
+for (const file of glob.sync("packages/ag-grid-theme/css/parts/*.css")) {
   const cssContent = readFileSync(file, { encoding: "utf-8" });
   const ast = parse(cssContent);
 
@@ -66,4 +66,4 @@ glob.sync("packages/ag-grid-theme/css/parts/*.css").forEach(async (file) => {
 
   // Save the modified CSS back to the file (or a new file)
   writeFileSync(file, prettierCss, { encoding: "utf-8" });
-});
+}

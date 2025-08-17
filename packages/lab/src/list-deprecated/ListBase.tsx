@@ -291,7 +291,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
               disableMouseDown,
               getItemId,
               getItemHeight,
-              //@ts-ignore
+              //@ts-expect-error
               itemToString,
               itemTextHighlightPattern,
             }}
@@ -312,7 +312,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
           value={{
             disableMouseDown,
             getItemId,
-            //@ts-ignore
+            //@ts-expect-error
             itemToString,
             itemTextHighlightPattern,
           }}
@@ -340,7 +340,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
             disableMouseDown,
             getItemId,
             getItemHeight,
-            //@ts-ignore
+            //@ts-expect-error
             itemToString,
             itemTextHighlightPattern,
           }}

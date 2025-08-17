@@ -7,12 +7,14 @@ import {
 import { useWindow } from "@salt-ds/window";
 import {
   Children,
+  isValidElement,
   type ReactNode,
   type RefObject,
   useEffect,
   useMemo,
   useRef,
 } from "react";
+import type { TabNextProps } from "../TabNext";
 import type { Item } from "./useCollection";
 
 interface UseOverflowProps {
@@ -212,15 +214,16 @@ export function useOverflow({
   );
 
   const hiddenSelectedIndex = hidden.findIndex(
-    // @ts-ignore
-    (child) => child?.props?.value === selected,
+    (child) =>
+      isValidElement<TabNextProps>(child) && child?.props?.value === selected,
   );
 
   useIsomorphicLayoutEffect(() => {
     if (visibleCount === childArray.length) {
       realSelectedIndex.current = childArray.findIndex(
-        // @ts-ignore
-        (child) => child?.props?.value === selected,
+        (child) =>
+          isValidElement<TabNextProps>(child) &&
+          child?.props?.value === selected,
       );
     }
   }, [visibleCount, childArray, selected]);

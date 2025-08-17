@@ -10,17 +10,6 @@ const positiveLookUp = [
 
 const negativeLookUp = ['[aria-live="off"]'];
 
-const walkTheDOM = (node: Element, handler: (node: Element) => void) => {
-  if (node.nodeType === 1) {
-    handler(node);
-    if (node.children.length) {
-      for (const childNode of node.children) {
-        walkTheDOM(childNode, handler);
-      }
-    }
-  }
-};
-
 export function AnnouncementListener(props: {
   onAnnouncement?: (announcement: string) => void;
 }) {
@@ -38,7 +27,7 @@ export function AnnouncementListener(props: {
   const obs = useRef(new MutationObserver(handleAnnouncement));
 
   useEffect(() => {
-    document.querySelectorAll(positiveLookUp.join(",")).forEach((node) => {
+    for (const node of document.querySelectorAll(positiveLookUp.join(","))) {
       if (!node.matches(negativeLookUp.join(","))) {
         obs.current.observe(node, {
           attributes: true,
@@ -47,7 +36,7 @@ export function AnnouncementListener(props: {
           characterData: true,
         });
       }
-    });
+    }
   }, []);
 
   useEffect(() => {

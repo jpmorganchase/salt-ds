@@ -120,7 +120,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       <ListNextContext.Provider value={contextValue}>
         <ul
           // TODO: fix type from useIsFocusVisible
-          // @ts-ignore
+          // @ts-expect-error
           ref={setListRef}
           id={listId}
           className={clsx(withBaseName(), className)}

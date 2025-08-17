@@ -256,7 +256,6 @@ export const useCollectionItems = <Item>({
       // TODO what about Tree structures, we need to search flattened source
       const collectionItem = flattenedDataRef.current.find((i) =>
         // const collectionItem = collectionItemsRef.current.find((i) =>
-        //@ts-ignore
         isValidElement(i.value) ? i.label === item : i.value === item,
       );
       if (collectionItem) {
@@ -318,7 +317,6 @@ export const useCollectionItems = <Item>({
         // TODO what about Tree structures, we need to search flattened source
         const collectionItem = flattenedDataRef.current.find((i) =>
           // const collectionItem = collectionItemsRef.current.find((i) =>
-          //@ts-ignore
           isValidElement(i.value)
             ? i.label === item
             : i.value !== null && itemToString(i.value) === item,

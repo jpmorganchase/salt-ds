@@ -211,6 +211,7 @@ const generateCountrySymbolComponents = ({
     const optimizedSvg = optimize(svgString, optimizeOptions);
 
     const getUidString = (countryCode, value) => {
+      // biome-ignore lint/suspicious/noUselessEscapeInString: We want uid to be provided for the template literal elsewhere.
       return `\$\{uid\}-${countryCode}-${value}`;
     };
 
