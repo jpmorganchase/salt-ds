@@ -9,7 +9,7 @@ const QAContainerParameters = {
 };
 
 export default {
-  title: "Lab/Calendar/QA",
+  title: "Lab/Calendar/Calendar QA",
   component: Calendar,
   decorators: [withDateMock],
   globals: {
@@ -19,9 +19,9 @@ export default {
   },
 };
 
-export const CalendarExamplesWithDayjs: StoryFn<QAContainerProps> = () =>
+export const CalendarWithDayjs: StoryFn<QAContainerProps> = () =>
   renderCalendarQAContainer();
-CalendarExamplesWithDayjs.parameters = {
+CalendarWithDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "en",
   dateAdapter: "dayjs",

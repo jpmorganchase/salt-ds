@@ -9,7 +9,7 @@ const QAContainerParameters = {
 };
 
 export default {
-  title: "Lab/Calendar/QA",
+  title: "Lab/Calendar/Calendar QA",
   component: Calendar,
   decorators: [withDateMock],
   globals: {
@@ -19,9 +19,9 @@ export default {
   },
 };
 
-export const CalendarExamplesWithLuxon: StoryFn<QAContainerProps> = () =>
+export const CalendarWithLuxon: StoryFn<QAContainerProps> = () =>
   renderCalendarQAContainer();
-CalendarExamplesWithLuxon.parameters = {
+CalendarWithLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "luxon",
