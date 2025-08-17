@@ -7,7 +7,7 @@ import { useLocalization } from "../../src";
 import "./calendar.stories.css";
 
 export default {
-  title: "Lab/Calendar/Calendar Day QA",
+  title: "Lab/Calendar/Calendar QA",
   component: CalendarDay,
   decorators: [withDateMock],
   globals: {
