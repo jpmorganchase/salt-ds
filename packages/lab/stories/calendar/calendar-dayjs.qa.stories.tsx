@@ -19,8 +19,6 @@ export default {
   },
 };
 
-/** Disabled for performance reasons - dayjs is slow with multiple calendars */
-/*
 export const CalendarWithDayjs: StoryFn<QAContainerProps> = () =>
   renderCalendarQAContainer();
 CalendarWithDayjs.parameters = {
@@ -28,4 +26,3 @@ CalendarWithDayjs.parameters = {
   dateLocale: "en",
   dateAdapter: "dayjs",
 };
- */
