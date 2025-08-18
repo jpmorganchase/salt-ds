@@ -45,7 +45,10 @@ export const renderCalendarQAContainer = () => {
         selectionVariant="single"
         selectedDate={dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{ bordered: true }}
+          YearDropdownProps={{ bordered: true }}
+        />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -55,6 +58,7 @@ export const renderCalendarQAContainer = () => {
           dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
           dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
         ]}
+        isDayHighlighted={isDayHighlighted}
       >
         <CalendarNavigation />
         <CalendarGrid />
@@ -65,6 +69,7 @@ export const renderCalendarQAContainer = () => {
           startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
           endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
         }}
+        isDayHighlighted={isDayHighlighted}
       >
         <CalendarNavigation />
         <CalendarGrid />
@@ -83,72 +88,7 @@ export const renderCalendarQAContainer = () => {
           },
         ]}
       >
-        <CalendarNavigation />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="range"
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
-        }}
-      >
-        <CalendarNavigation hideYearDropdown />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="range"
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
-        }}
-      >
-        <CalendarNavigation
-          MonthDropdownProps={{ bordered: true }}
-          YearDropdownProps={{ bordered: true }}
-        />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="range"
-        isDayHighlighted={isDayHighlighted}
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
-        }}
-      >
-        <CalendarNavigation
-          MonthDropdownProps={{ bordered: true }}
-          YearDropdownProps={{ bordered: true }}
-        />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="range"
-        isDayHighlighted={isDayHighlighted}
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-        }}
-      >
-        <CalendarNavigation
-          MonthDropdownProps={{ bordered: true }}
-          YearDropdownProps={{ bordered: true }}
-        />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="range"
-        isDayHighlighted={isDayHighlighted}
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-05-03", "YYYY-MM-DD").date,
-        }}
-      >
-        <CalendarNavigation
-          MonthDropdownProps={{ bordered: true }}
-          YearDropdownProps={{ bordered: true }}
-        />
+        <CalendarNavigation hideYearDropdown/>
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -157,6 +97,7 @@ export const renderCalendarQAContainer = () => {
           startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
           endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
         }}
+        isDayHighlighted={isDayHighlighted}
       >
         <CalendarNavigation />
         <CalendarGrid />
@@ -174,17 +115,6 @@ export const renderCalendarQAContainer = () => {
             endDate: dateAdapter.parse("2024-05-10", "YYYY-MM-DD").date,
           },
         ]}
-      >
-        <CalendarNavigation />
-        <CalendarGrid />
-      </Calendar>
-      <Calendar
-        selectionVariant="offset"
-        selectedDate={{
-          startDate: dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date,
-          endDate: dateAdapter.parse("2024-05-04", "YYYY-MM-DD").date,
-        }}
-        isDayHighlighted={isDayHighlighted}
       >
         <CalendarNavigation />
         <CalendarGrid />

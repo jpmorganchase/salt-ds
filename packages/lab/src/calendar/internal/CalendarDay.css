@@ -1,8 +1,19 @@
+.salt-density-touch .saltCalendarDay {
+  --calendar-day-highlight-size: 20px;
+}
+.salt-density-low .saltCalendarDay {
+  --calendar-day-highlight-size: 16px;
+}
+.salt-density-medium .saltCalendarDay {
+  --calendar-day-highlight-size: 12px;
+}
+.salt-density-high .saltCalendarDay {
+  --calendar-day-highlight-size: 10px;
+}
+
 .saltCalendarDay {
   --calendar-day-zIndex-content: calc(var(--salt-zIndex-default) + 1);
   --calendar-day-zIndex-highlight: calc(var(--calendar-day-zIndex-content) + 2);
-  --calendar-day-highlight-size: 12px;
-
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
@@ -249,6 +260,13 @@
   height: 100%;
   overflow: hidden;
   border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+.saltCalendarDay-selectedEnd .saltCalendarDay-highlighted {
+  right: 1px;
+}
+.saltCalendarDay-selectedSpan .saltCalendarDay-highlighted {
+  right: -1px;
 }
 
 .saltCalendarDay-selectedStart .saltCalendarDay-highlighted,
