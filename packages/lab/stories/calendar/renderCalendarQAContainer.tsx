@@ -88,7 +88,7 @@ export const renderCalendarQAContainer = () => {
           },
         ]}
       >
-        <CalendarNavigation hideYearDropdown/>
+        <CalendarNavigation hideYearDropdown />
         <CalendarGrid />
       </Calendar>
       <Calendar
