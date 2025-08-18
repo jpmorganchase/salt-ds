@@ -5,7 +5,7 @@ import {
   CalendarNavigation,
   useLocalization,
 } from "@salt-ds/lab";
-import { QAContainer } from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Calendar/QA",
@@ -18,11 +18,7 @@ export default {
   },
 };
 
-const QAContainerParameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const renderCalendarQAContainer = () => {
+export const renderCalendarQAContainer = (props: QAContainerProps = {}) => {
   const { dateAdapter } = useLocalization();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startDate = dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date;
@@ -40,6 +36,7 @@ export const renderCalendarQAContainer = () => {
       itemWidthAuto
       transposeDensity
       vertical
+      {...props}
     >
       <Calendar
         selectionVariant="single"

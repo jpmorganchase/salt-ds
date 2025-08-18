@@ -19,8 +19,9 @@ export default {
   },
 };
 
+// Due to performance issues with dayjs, render just "medium"
 export const CalendarWithDayjs: StoryFn<QAContainerProps> = () =>
-  renderCalendarQAContainer();
+  renderCalendarQAContainer({ densities: ["medium"] });
 CalendarWithDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "en",
