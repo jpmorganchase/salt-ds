@@ -1,14 +1,14 @@
 .salt-density-touch .saltCalendarDay {
-  --calendar-day-highlight-size: 20px;
+  --calendar-day-highlight-size: 14px; // TODO replace with --salt-size-modifier
 }
 .salt-density-low .saltCalendarDay {
-  --calendar-day-highlight-size: 16px;
+  --calendar-day-highlight-size: 12px; // TODO replace with --salt-size-modifier
 }
 .salt-density-medium .saltCalendarDay {
-  --calendar-day-highlight-size: 12px;
+  --calendar-day-highlight-size: 10px; // TODO replace with --salt-size-modifier
 }
 .salt-density-high .saltCalendarDay {
-  --calendar-day-highlight-size: 10px;
+  --calendar-day-highlight-size: 8px; // TODO replace with --salt-size-modifier
 }
 
 .saltCalendarDay {
