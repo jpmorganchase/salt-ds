@@ -1,4 +1,4 @@
-import { type FocusEvent, type KeyboardEvent, useState } from "react";
+import { type KeyboardEvent, useState } from "react";
 
 export interface UsePopperStatusProps {
   initialOpen?: boolean;
@@ -24,11 +24,11 @@ export function usePopperStatus(props: UsePopperStatusProps) {
     }
   };
 
-  const onFocus = (event: FocusEvent) => {
+  const onFocus = () => {
     setIsOpen(true);
   };
 
-  const onBlur = (event: FocusEvent) => {
+  const onBlur = () => {
     setIsOpen(false);
   };
 

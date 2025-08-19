@@ -122,11 +122,12 @@ describe("A combo box", () => {
         cy.realPress("ArrowDown");
         cy.realPress("Enter");
 
+        if (!Default.args.source) {
+          throw new Error("Invalid test. source is not defined");
+        }
+
         // input value updated
-        cy.findByRole("combobox").should(
-          "have.value",
-          Default.args!.source?.[0],
-        );
+        cy.findByRole("combobox").should("have.value", Default.args.source[0]);
 
         // list is closed
         cy.findByRole("listbox").should("not.exist");
@@ -135,7 +136,7 @@ describe("A combo box", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          Default.args!.source?.[0],
+          Default.args.source[0],
         );
       });
     });

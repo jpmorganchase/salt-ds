@@ -5,6 +5,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
+  type ComponentType,
   cloneElement,
   forwardRef,
   type HTMLAttributes,
@@ -34,7 +35,14 @@ function insertSeparators(
     if (index < items.length - 1) {
       return acc.concat(
         current,
-        <li aria-hidden className={className} key={`separator-${index}`}>
+        <li
+          aria-hidden
+          className={className}
+          key={`separator-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: Using index as key is acceptable here
+            index
+          }`}
+        >
           {separator}
         </li>,
       );
@@ -47,7 +55,7 @@ function insertSeparators(
 }
 
 export interface BreadcrumbsProps extends HTMLAttributes<HTMLElement> {
-  Menu?: any;
+  Menu?: ComponentType;
   SeparatorProps?: IconProps;
   hideCurrentLevel?: boolean;
   itemsAfterCollapse?: number;
@@ -74,7 +82,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
       itemsMinWidth: itemsMinWidthProp,
       itemsMaxWidth,
       wrap,
-      Menu,
+      Menu: _Menu,
       SeparatorProps = {},
       ...other
     } = props;

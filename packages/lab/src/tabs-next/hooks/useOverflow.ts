@@ -64,7 +64,7 @@ export function useOverflow({
         const containerStyles = targetWindow.getComputedStyle(
           container.current,
         );
-        const gap = Number.parseInt(containerStyles.gap || "0");
+        const gap = Number.parseInt(containerStyles.gap || "0", 10);
 
         let currentWidth = 0;
         let newVisibleCount = 0;

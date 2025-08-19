@@ -14,7 +14,7 @@ export class KeySet {
 
   next(): number {
     if (this.free.length) {
-      return this.free.pop()!;
+      return this.free.pop() as number;
     }
     return this.nextKeyValue++;
   }

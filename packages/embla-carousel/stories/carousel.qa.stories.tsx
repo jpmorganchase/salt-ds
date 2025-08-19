@@ -16,7 +16,7 @@ export default {
   component: Carousel,
 } as Meta<typeof Carousel>;
 
-export const AllExamples: StoryFn = (props: { className?: string }) => {
+export const AllExamples: StoryFn = () => {
   return (
     <QAContainer cols={2} transposeDensity vertical>
       <Carousel style={{ width: "600px" }}>

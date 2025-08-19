@@ -1,4 +1,4 @@
-import { type ReactNode, useContext, useState } from "react";
+import { type ReactNode, useContext, useMemo, useState } from "react";
 import { createContext } from "../utils/createContext";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import type { Breakpoints } from "./Breakpoints";
@@ -29,8 +29,10 @@ export function BreakpointProvider(props: BreakpointProviderProps) {
 }
 
 export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
-  const entries = Object.entries(breakpoints).sort(([, a], [, b]) => b - a);
-  const queries = entries.map(([, value]) => `(min-width: ${value}px)`);
+  const entries = useMemo(
+    () => Object.entries(breakpoints).sort(([, a], [, b]) => b - a),
+    [breakpoints],
+  );
 
   const supportsMatchMedia =
     typeof window !== "undefined" && typeof window.matchMedia === "function";
@@ -43,6 +45,8 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
     if (!supportsMatchMedia) {
       return;
     }
+
+    const queries = entries.map(([, value]) => `(min-width: ${value}px)`);
 
     const matchers = queries.map((query, index) => {
       const mq = window.matchMedia(query);
@@ -61,17 +65,17 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
       };
     });
 
-    matchers.forEach(({ mq, handler }) => {
+    for (const { mq, handler } of matchers) {
       handler();
       mq.addEventListener("change", handler);
-    });
+    }
 
     return () => {
-      matchers.forEach(({ mq, handler }) => {
+      for (const { mq, handler } of matchers) {
         mq.removeEventListener("change", handler);
-      });
+      }
     };
-  }, [supportsMatchMedia]);
+  }, [supportsMatchMedia, entries]);
 
   return Object.keys(matchedBreakpoints).filter(
     (bp) => matchedBreakpoints[bp as Breakpoint],

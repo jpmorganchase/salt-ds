@@ -228,7 +228,6 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @param date - The Day.js date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: date object
   public isValid(date: Dayjs | null | undefined): date is Dayjs {
     return this.isDayjs(date) ? date.isValid() : false;
   }

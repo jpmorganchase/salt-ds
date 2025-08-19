@@ -84,10 +84,8 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     useEffect(() => {
       const element = menuTextRef.current;
-      if (element) {
-        if (element.offsetWidth < element.scrollWidth) {
-          setHasTooltip(true);
-        }
+      if (element && menuText != null) {
+        setHasTooltip(element.offsetWidth < element.scrollWidth);
       }
     }, [menuText]);
 
@@ -173,6 +171,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               />
             </div>
           )}
+          {/** biome-ignore lint/a11y/useAriaPropsForRole: Separator is not focusable, so it doesn't need aria-valuenow. */}
           {divider && <div role="separator" />}
         </ListItem>
       </Tooltip>

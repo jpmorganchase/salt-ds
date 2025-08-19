@@ -121,7 +121,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
     if (allowAnnouncementRef.current && value && firstItem) {
       announce(getAnnouncement(itemCount, firstItem));
     }
-  }, [firstItem, value, itemCount, announce]);
+  }, [value, itemCount, announce]);
 
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined,

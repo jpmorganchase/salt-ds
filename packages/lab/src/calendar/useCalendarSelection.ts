@@ -823,7 +823,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
 
     if (Array.isArray(selectedDate)) {
       // Handle array of selections
-      selectedDate.forEach((selection) => {
+      for (const selection of selectedDate) {
         if (isDateRangeSelection(selection)) {
           if (selection.startDate && isDayVisible(selection.startDate)) {
             focusableDates.push(selection.startDate);
@@ -833,7 +833,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
         } else if (isDayVisible(selection as TDate)) {
           focusableDates.push(selection as TDate);
         }
-      });
+      }
     } else if (selectedDate) {
       // Handle single selection
       if (isDateRangeSelection(selectedDate)) {

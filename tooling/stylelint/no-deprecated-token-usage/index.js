@@ -44,7 +44,7 @@ const deprecatedTokensSet = new Set(
       return csstree
         .findAll(
           ast,
-          (node, item, list) =>
+          (node) =>
             node.type === "Declaration" && node.property.startsWith("--salt"),
         )
         .map((decl) => decl.property);
@@ -74,7 +74,7 @@ function isDeprecatedToken(property, verboseLog) {
 
 module.exports = stylelint.createPlugin(
   ruleName,
-  (primaryOption, secondaryOptionObject, context) => {
+  (primaryOption, secondaryOptionObject) => {
     return (root, result) => {
       const verboseLog = primaryOption.logLevel === "verbose";
 

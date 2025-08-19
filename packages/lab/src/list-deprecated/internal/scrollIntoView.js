@@ -11,8 +11,8 @@ export function scrollIntoView(item, list) {
     scrollMode: "if-needed",
   });
 
-  actions.forEach(({ el, top, left }) => {
+  for (const { el, top, left } of actions) {
     el.scrollTop = top;
     el.scrollLeft = left;
-  });
+  }
 }

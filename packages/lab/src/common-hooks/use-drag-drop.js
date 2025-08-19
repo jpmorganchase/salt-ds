@@ -227,6 +227,7 @@ export const useDragDrop = ({
     }
   }, [clearDisplacedItem, dragMouseMoveHandler, onDrop]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: preDragMouseUpHandler is defined after preDragMouseMoveHandler
   const preDragMouseMoveHandler = useCallback(
     (evt) => {
       const { DIMENSION, POS, START } = dimensions(orientation);

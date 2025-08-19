@@ -142,22 +142,20 @@ export function IconPreview() {
     });
   };
 
-  const [filteredIcons, filteredCount] = useMemo(() => {
-    const filtered = allIcons.filter(
-      ({ componentName: name, synonym, category }) => {
-        const iconNameToMatch = name.toLowerCase();
-        const matchesSearch = [iconNameToMatch, ...synonym].some((word) =>
-          word.includes(deferredSearch),
-        );
-        const isOutlineIcon = !name.endsWith("SolidIcon");
-        const isSolidIcon = name.endsWith("SolidIcon");
-        return (
-          matchesSearch &&
-          ((variants.includes("outline") && isOutlineIcon) ||
-            (variants.includes("solid") && isSolidIcon))
-        );
-      },
-    );
+  const [filteredIcons] = useMemo(() => {
+    const filtered = allIcons.filter(({ componentName: name, synonym }) => {
+      const iconNameToMatch = name.toLowerCase();
+      const matchesSearch = [iconNameToMatch, ...synonym].some((word) =>
+        word.includes(deferredSearch),
+      );
+      const isOutlineIcon = !name.endsWith("SolidIcon");
+      const isSolidIcon = name.endsWith("SolidIcon");
+      return (
+        matchesSearch &&
+        ((variants.includes("outline") && isOutlineIcon) ||
+          (variants.includes("solid") && isSolidIcon))
+      );
+    });
 
     return [groupByCategory(filtered), filtered.length];
   }, [deferredSearch, variants, allIcons]);
@@ -218,8 +216,6 @@ export function IconPreview() {
       </StackLayout>
     );
   }, [filteredIcons, deferredSearch]);
-
-  const totalCount = Object.entries(allIcons).length;
 
   return (
     <StackLayout className={styles.root} gap={3}>

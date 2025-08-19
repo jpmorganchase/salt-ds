@@ -1,7 +1,6 @@
 /**
  * This function only capitalise the first letter of a string.
  */
-export const capitalise = (target: any) =>
-  typeof target === "string"
-    ? target.charAt(0).toUpperCase() + target.slice(1)
-    : "";
+export function capitalise(value: string): string {
+  return value.length > 0 ? value[0].toUpperCase() + value.slice(1) : value;
+}

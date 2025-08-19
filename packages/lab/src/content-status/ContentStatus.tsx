@@ -27,7 +27,7 @@ export interface ContentStatusProps
   extends HTMLAttributes<HTMLDivElement>,
     StatusIndicatorProps {
   actionLabel?: string;
-  buttonRef?: Ref<any>;
+  buttonRef?: Ref<HTMLButtonElement>;
   onActionClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
 }
 

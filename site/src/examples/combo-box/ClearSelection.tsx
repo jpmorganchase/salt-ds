@@ -18,7 +18,7 @@ export const ClearSelection = (): ReactElement => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: string[],
   ) => {
     setSelected(newSelected);

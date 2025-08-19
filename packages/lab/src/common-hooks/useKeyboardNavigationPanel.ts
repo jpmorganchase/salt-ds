@@ -48,6 +48,14 @@ export const useKeyboardNavigationPanel = ({
       name: "UseKeyboardNavigation",
     });
 
+  // does this belong here or should it be a method passed in?
+  const keyboardNavigation = useRef(true);
+  const ignoreFocus = useRef<boolean>(false);
+  const setIgnoreFocus = useCallback(
+    (value: boolean) => (ignoreFocus.current = value),
+    [],
+  );
+
   const setHighlightedIndex = useCallback(
     (idx: number) => {
       onHighlight?.(idx);
@@ -60,7 +68,7 @@ export const useKeyboardNavigationPanel = ({
         targetEl?.focus();
       }
     },
-    [focusOnHighlight, indexPositions, onHighlight],
+    [focusOnHighlight, indexPositions, onHighlight, setIgnoreFocus],
   );
 
   const nextFocusableItemIdx = useCallback(
@@ -89,14 +97,6 @@ export const useKeyboardNavigationPanel = ({
       return nextIdx;
     },
     [cycleFocus, indexPositions],
-  );
-
-  // does this belong here or should it be a method passed in?
-  const keyboardNavigation = useRef(true);
-  const ignoreFocus = useRef<boolean>(false);
-  const setIgnoreFocus = useCallback(
-    (value: boolean) => (ignoreFocus.current = value),
-    [],
   );
 
   const handleFocus = useCallback(() => {

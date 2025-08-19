@@ -44,7 +44,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/custom-property-starts-with-component-name";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) =>
+  expected: () =>
     "Local tokens should start with --componentName, CSS API variables should start with --saltComponentName", // Can encode option in error message if needed
 });
 
@@ -90,82 +90,79 @@ const isComponentCustomProperty = (property) =>
 const isCssApi = (property) =>
   allowedNames.some((component) => property.startsWith(`--salt${component}-`));
 
-module.exports = stylelint.createPlugin(
-  ruleName,
-  (primary, secondaryOptionObject, context) => {
-    return (root, result) => {
-      const verboseLog = primary.logLevel === "verbose";
+module.exports = stylelint.createPlugin(ruleName, (primary) => {
+  return (root, result) => {
+    const verboseLog = primary.logLevel === "verbose";
 
-      function check(property) {
-        const checkResult =
-          isCssApi(property) ||
-          isComponentCustomProperty(property) ||
-          property.startsWith("--backwardsCompat-") || // Do not check backwardsCompat CSS
-          property.startsWith("--svg-"); // FIXME: Do not check SVG tokens for now
-        verboseLog && console.log("Checking", checkResult, property);
-        return checkResult;
+    function check(property) {
+      const checkResult =
+        isCssApi(property) ||
+        isComponentCustomProperty(property) ||
+        property.startsWith("--backwardsCompat-") || // Do not check backwardsCompat CSS
+        property.startsWith("--svg-"); // FIXME: Do not check SVG tokens for now
+      verboseLog && console.log("Checking", checkResult, property);
+      return checkResult;
+    }
+
+    root.walkDecls((decl) => {
+      if (
+        decl.parent?.type === "rule" &&
+        decl.parent?.selector?.includes?.("backwardsCompat")
+      ) {
+        // Do not check backwardsCompat CSS
+        return;
       }
 
-      root.walkDecls((decl) => {
+      const { prop, value } = decl;
+
+      const parsedValue = valueParser(value);
+
+      parsedValue.walk((node) => {
+        if (!isValueFunction(node)) return;
+
+        if (node.value.toLowerCase() !== "var") return;
+
+        const { nodes } = node;
+
+        const firstNode = nodes[0];
+
+        verboseLog && console.log({ nodes });
+
         if (
-          decl.parent?.type === "rule" &&
-          decl.parent?.selector?.includes?.("backwardsCompat")
-        ) {
-          // Do not check backwardsCompat CSS
-          return;
-        }
-
-        const { prop, value } = decl;
-
-        const parsedValue = valueParser(value);
-
-        parsedValue.walk((node) => {
-          if (!isValueFunction(node)) return;
-
-          if (node.value.toLowerCase() !== "var") return;
-
-          const { nodes } = node;
-
-          const firstNode = nodes[0];
-
-          verboseLog && console.log({ nodes });
-
-          if (
-            !firstNode ||
-            firstNode.value.startsWith("--salt-") ||
-            !firstNode.value.startsWith("--") ||
-            check(firstNode.value)
-          )
-            return;
-
-          complain(
-            declarationValueIndex(decl) + firstNode.sourceIndex,
-            firstNode.value.length,
-            decl,
-          );
-        });
-
-        verboseLog && console.log({ prop });
-
-        if (!prop.startsWith("--") || prop.startsWith("--salt-") || check(prop))
+          !firstNode ||
+          firstNode.value.startsWith("--salt-") ||
+          !firstNode.value.startsWith("--") ||
+          check(firstNode.value)
+        )
           return;
 
-        complain(0, prop.length, decl);
+        complain(
+          declarationValueIndex(decl) + firstNode.sourceIndex,
+          firstNode.value.length,
+          decl,
+        );
       });
 
-      function complain(index, length, decl) {
-        report({
-          result,
-          ruleName,
-          message: messages.expected(primary),
-          node: decl,
-          index,
-          endIndex: index + length,
-        });
-      }
-    };
-  },
-);
+      verboseLog && console.log({ prop });
+
+      if (!prop.startsWith("--") || prop.startsWith("--salt-") || check(prop))
+        return;
+
+      complain(0, prop.length, decl);
+    });
+
+    function complain(index, length, decl) {
+      report({
+        result,
+        ruleName,
+        message: messages.expected(primary),
+        node: decl,
+        index,
+        endIndex: index + length,
+      });
+    }
+  };
+});
 
 module.exports.ruleName = ruleName;
 module.exports.messages = messages;

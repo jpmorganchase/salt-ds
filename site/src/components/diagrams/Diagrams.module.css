@@ -48,6 +48,10 @@
   margin-top: 0;
 }
 
+.diagram:not(.contentTop) ul {
+  margin-bottom: 0px;
+}
+
 @media not screen and (min-width: 960px) {
   .diagram:not(.contentTop) {
     flex-direction: column-reverse;
@@ -58,8 +62,8 @@
     margin-top: 0;
   }
 
-  .diagram ul {
-    margin-bottom: var(--salt-spacing-100) !important;
+  .diagram .textContainer ul {
+    margin-bottom: var(--salt-spacing-100);
   }
 }
 

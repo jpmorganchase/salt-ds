@@ -9,6 +9,7 @@ export function usePrevious<T>(
 
   useEffect(() => {
     ref.current = value;
+    // biome-ignore lint/correctness/useExhaustiveDependencies: usePrevious is takes a dependency list to control when it updates, so we don't need to include value in the deps array.
   }, deps);
   return ref.current;
 }

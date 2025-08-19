@@ -46,7 +46,7 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           className="StoryContainer-slider"
           max={maxUnits}
           min={10}
-          onChange={(event, value) => setWidth([toFloat(value)])}
+          onChange={(_event, value) => setWidth([toFloat(value)])}
           value={containerWidth[0]}
         />
         <NumberInput
@@ -59,7 +59,7 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           className="StoryContainer-slider"
           max={maxUnits}
           min={10}
-          onChange={(event, value) => setHeight([toFloat(value)])}
+          onChange={(_event, value) => setHeight([toFloat(value)])}
           value={containerHeight[0]}
         />
       </div>

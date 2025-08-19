@@ -115,7 +115,7 @@ export const Tree = forwardRef(function Tree<
       // itemGapSize,
     });
 
-  const autoSize = useAutoSizer<HTMLDivElement>({
+  const autoSize = useAutoSizer({
     containerRef: rootRef,
     responsive: width === undefined || height === undefined,
     height: preferredHeight,

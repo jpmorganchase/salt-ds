@@ -1,4 +1,5 @@
 import {
+  type Dispatch,
   type HTMLAttributes,
   isValidElement,
   type KeyboardEvent,
@@ -7,12 +8,12 @@ import {
 import { useEventCallback } from "../../utils";
 import type { CascadingMenuProps } from "../CascadingMenuProps";
 import { stateChangeTypes } from "../stateChangeTypes";
-import { CascadingMenuAction } from "./CascadingMenuAction";
+import { CascadingMenuAction, type menuAction } from "./CascadingMenuAction";
 import type { menuState } from "./stateUtils";
 import type { stateItem } from "./useStateReducer";
 
 interface useMenuTriggerHandlersProps {
-  dispatch: (action: any) => void;
+  dispatch: Dispatch<menuAction>;
   children: CascadingMenuProps["children"];
   setIsNavigatingWithKeyboard: (value: boolean) => void;
   openCloseMenu: (open: boolean) => void;
@@ -54,6 +55,9 @@ export function useMenuTriggerHandlers({
           event.stopPropagation();
           event.preventDefault();
           setIsNavigatingWithKeyboard(true);
+          if (!rootMenuId) {
+            break;
+          }
           dispatch({
             type: rootMenuState
               ? CascadingMenuAction.CLOSE_MENU
@@ -66,7 +70,7 @@ export function useMenuTriggerHandlers({
           event.stopPropagation();
           event.preventDefault();
           setIsNavigatingWithKeyboard(true);
-          if (rootMenuState) {
+          if (rootMenuState || !rootMenuId) {
             break;
           }
           dispatch({

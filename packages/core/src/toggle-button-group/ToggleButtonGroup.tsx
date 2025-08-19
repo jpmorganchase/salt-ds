@@ -13,7 +13,12 @@ import {
 } from "react";
 
 import type { ButtonAppearance, ButtonSentiment } from "../button";
-import { makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  makePrefixer,
+  ownerDocument,
+  useControlled,
+  useForkRef,
+} from "../utils";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 import {
   ToggleButtonGroupContext,
@@ -155,9 +160,10 @@ export const ToggleButtonGroup = forwardRef<
     const elements: HTMLElement[] = Array.from(
       groupRef.current?.querySelectorAll("button:not([disabled])") ?? [],
     );
-    const currentIndex = elements.findIndex(
-      (element) => element === document.activeElement,
-    );
+
+    const doc = ownerDocument(groupRef.current);
+
+    const currentIndex = elements.indexOf(doc.activeElement as HTMLElement);
     switch (event.key) {
       case "ArrowDown":
       case "ArrowRight":

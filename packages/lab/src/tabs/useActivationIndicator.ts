@@ -19,14 +19,17 @@ type activationIndicatorStyles = {
   hasChanged?: boolean;
 };
 
-const MEASUREMENTS = {
+const MEASUREMENTS: Record<
+  orientationType,
+  { pos: "left" | "top"; size: "width" | "height" }
+> = {
   horizontal: {
-    pos: "left" as keyof activationIndicatorStyles,
-    size: "width" as keyof activationIndicatorStyles,
+    pos: "left",
+    size: "width",
   },
   vertical: {
-    pos: "top" as keyof activationIndicatorStyles,
-    size: "height" as keyof activationIndicatorStyles,
+    pos: "top",
+    size: "height",
   },
 };
 
@@ -58,9 +61,9 @@ export function useActivationIndicator({
   const createIndicatorStyle = useCallback(
     (tabElement: HTMLElement | null): activationIndicatorStyles => {
       if (tabElement) {
-        const tabRect = tabElement.getBoundingClientRect() as any;
+        const tabRect = tabElement.getBoundingClientRect();
         if (rootRef.current && tabRect) {
-          const rootRect = rootRef.current.getBoundingClientRect() as any;
+          const rootRect = rootRef.current.getBoundingClientRect();
           const [pos, size] = getTabPos();
           const { [pos]: existingPos, [size]: existingSize } = styleRef.current;
           const newPos = tabRect[pos] - rootRect[pos];

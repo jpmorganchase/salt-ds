@@ -23,9 +23,7 @@ export const InfoToast = () => {
         <CloseIcon aria-hidden />
       </Button>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export const ErrorToast = () => {
@@ -52,9 +50,7 @@ export const ErrorToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export const WarningToast = () => {
@@ -81,9 +77,7 @@ export const WarningToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export const SuccessToast = () => {
@@ -109,7 +103,5 @@ export const SuccessToast = () => {
         <CloseIcon aria-hidden />
       </Button>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };

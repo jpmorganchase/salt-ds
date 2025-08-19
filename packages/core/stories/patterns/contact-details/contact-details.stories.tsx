@@ -369,7 +369,7 @@ export const List = () => {
   ]);
 
   const handleSelectionChange: DropdownProps<Contact>["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     setSelectedContact(newSelected);

@@ -44,7 +44,7 @@ AllLazyCountrySymbols.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const AllLazyCountrySharpSymbols: StoryFn = (props) => {
+export const AllLazyCountrySharpSymbols: StoryFn = () => {
   return (
     <Suspense fallback="Loading...">
       {sizes.map((size) => (

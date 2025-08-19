@@ -97,7 +97,7 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
       <BorderItem position="center" className="center">
         <StackLayout as="article">
           <StackLayout as="section">
-            <H1 id="main" className="header">
+            <H1 id={args.targetId} className="header">
               Explore our offering
             </H1>
             <Text>

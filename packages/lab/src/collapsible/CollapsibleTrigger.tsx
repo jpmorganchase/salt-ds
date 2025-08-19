@@ -12,7 +12,7 @@ import {
 import { useCollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleTriggerProps
-  extends ComponentPropsWithoutRef<"button"> {
+  extends Pick<ComponentPropsWithoutRef<"button">, "className" | "onClick"> {
   children: ReactNode;
 }
 
@@ -22,7 +22,7 @@ export const CollapsibleTrigger = forwardRef<
   HTMLButtonElement,
   CollapsibleTriggerProps
 >(function CollapsibleTrigger(props, ref) {
-  const { children, className, onClick, ...rest } = props;
+  const { children, className, onClick } = props;
 
   const { open, setOpen, panelId } = useCollapsibleContext();
 

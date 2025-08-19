@@ -45,7 +45,7 @@ export const MandatoryAction = (): ReactElement => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: string[],
   ) => {
     setValue(newSelected.length === 1 ? newSelected[0] : "");

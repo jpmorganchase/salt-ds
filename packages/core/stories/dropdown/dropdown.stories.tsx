@@ -315,7 +315,7 @@ const people: Person[] = [
 export const ObjectValue: StoryFn<DropdownProps<Person>> = () => {
   const [selected, setSelected] = useState<Person[]>([]);
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: Person[],
   ) => {
     setSelected(newSelected);

@@ -4,7 +4,7 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(systemStatusStories);
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+// biome-ignore lint/suspicious/noShadowRestrictedNames: Error is the story name.
 const { Info, Success, Error, Warning } = composedStories;
 
 describe("GIVEN a System status", () => {

@@ -162,7 +162,7 @@ export const sourceItems = <T>(
       ];
     }
     return source.map(
-      (item: { description?: string; expanded?: boolean }, index) =>
+      (item: { description?: string; expanded?: boolean }) =>
         ({
           childNodes: sourceItems(
             (item as unknown as SourceGroup<T>).childNodes,

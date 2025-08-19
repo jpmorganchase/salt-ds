@@ -28,7 +28,7 @@ export const ContactSecondaryInfo = forwardRef<
     text,
     icon: Icon,
     className,
-    ValueComponent,
+    ValueComponent: _ValueComponent,
     ...restProps
   } = props;
   const { setSecondary, setSecondaryId, variant } = useContactDetailsContext();

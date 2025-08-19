@@ -17,6 +17,7 @@ import {
   Option,
   StackLayout,
   Text,
+  useId,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
@@ -34,7 +35,7 @@ export default {
 const UnmountLogger = () => {
   useEffect(() => {
     return () => {
-      console.log(new Date().getTime(), "Dummy unmount");
+      console.log(Date.now(), "Dummy unmount");
     };
   }, []);
   return null;
@@ -51,7 +52,6 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         {...args}
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
-        id="primary"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
@@ -65,7 +65,6 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         open={openSecondary}
         onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
         variant="secondary"
-        id="secondary"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
@@ -87,7 +86,6 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         {...args}
         open={openLeft}
         onOpenChange={(newOpen) => setOpenLeft(newOpen)}
-        id="left-drawer"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenLeft(false)} />
@@ -98,7 +96,6 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         open={openRight}
         onOpenChange={(newOpen) => setOpenRight(newOpen)}
         position="right"
-        id="right-drawer"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenRight(false)} />
@@ -109,7 +106,6 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         open={openTop}
         onOpenChange={(newOpen) => setOpenTop(newOpen)}
         position="top"
-        id="top-drawer"
         style={{ height: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenTop(false)} />
@@ -120,7 +116,6 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         open={openBottom}
         onOpenChange={(newOpen) => setOpenBottom(newOpen)}
         position="bottom"
-        id="bottom-drawer"
         style={{ height: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenBottom(false)} />
@@ -139,7 +134,6 @@ const FormFieldExample = () => (
 
 export const TopDrawerUsageExample = () => {
   const [open, setOpen] = useState(false);
-  const id = "top-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -153,13 +147,20 @@ export const TopDrawerUsageExample = () => {
     setOpen(false);
   };
 
+  const headerId = useId();
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Top Drawer</Button>
-      <Drawer open={open} onOpenChange={onOpenChange} position="top" id="top">
+      <Drawer
+        open={open}
+        onOpenChange={onOpenChange}
+        position="top"
+        aria-labelledby={headerId}
+      >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <H2 id={`${id}-header`}>Section title</H2>
+          <H2 id={headerId}>Section title</H2>
           <Text>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
@@ -167,9 +168,10 @@ export const TopDrawerUsageExample = () => {
             reprehenderit nostrud eu aute voluptate quis quis.
           </Text>
           <FlexLayout>
-            {Array.from({ length: 4 }, (_, index) => (
-              <FormFieldExample key={index} />
-            ))}
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
           </FlexLayout>
         </StackLayout>
       </Drawer>
@@ -179,7 +181,6 @@ export const TopDrawerUsageExample = () => {
 
 export const RightDrawerUsageExample = () => {
   const [open, setOpen] = useState(false);
-  const id = "right-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -193,6 +194,8 @@ export const RightDrawerUsageExample = () => {
     setOpen(false);
   };
 
+  const headerId = useId();
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Right Drawer</Button>
@@ -201,20 +204,24 @@ export const RightDrawerUsageExample = () => {
         onOpenChange={onOpenChange}
         position="right"
         style={{ width: 500 }}
-        id={id}
+        aria-labelledby={headerId}
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <H2 id={`${id}-header`}>Section Title</H2>
+          <H2 id={headerId}>Section Title</H2>
           <Text>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
           </Text>
-          {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
-          ))}
+          <FormFieldExample />
+          <FormFieldExample />
+          <FormFieldExample />
+          <FormFieldExample />
+          <FormFieldExample />
+          <FormFieldExample />
+          <FormFieldExample />
         </StackLayout>
       </Drawer>
     </>
@@ -223,7 +230,6 @@ export const RightDrawerUsageExample = () => {
 
 export const BottomDrawerUsageExample = () => {
   const [open, setOpen] = useState(false);
-  const id = "bottom-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -255,6 +261,8 @@ export const BottomDrawerUsageExample = () => {
     },
   ];
 
+  const headerId = useId();
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Bottom Drawer</Button>
@@ -263,11 +271,11 @@ export const BottomDrawerUsageExample = () => {
         onOpenChange={onOpenChange}
         position="bottom"
         style={{ height: 350 }}
-        id={id}
+        aria-labelledby={headerId}
       >
         <DrawerCloseButton onClick={handleClose} />
         <StackLayout>
-          <H2 id={`${id}-header`}>Bottom drawer use case</H2>
+          <H2 id={headerId}>Bottom drawer use case</H2>
           <FlowLayout>
             <Card style={{ width: "256px" }}>
               <H2>{exampleData[0].title}</H2>
@@ -293,7 +301,6 @@ export const OptionalCloseAction = () => {
   const [value, setValue] = useState("");
 
   const postcodes = ["05011", "01050", "03040", "11050"];
-  const id = "right-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -313,11 +320,13 @@ export const OptionalCloseAction = () => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: string[],
   ) => {
     return newSelected.length === 1 ? setValue(newSelected[0]) : setValue("");
   };
+
+  const headerId = useId();
 
   return (
     <>
@@ -327,10 +336,10 @@ export const OptionalCloseAction = () => {
         onOpenChange={onOpenChange}
         position="right"
         style={{ width: 500 }}
-        id={id}
+        aria-labelledby={headerId}
       >
         <StackLayout>
-          <H2 id={`${id}-header`}>Add your delivery details</H2>
+          <H2 id={headerId}>Add your delivery details</H2>
           <FormField>
             <FormFieldLabel>House no.</FormFieldLabel>
             <Input />

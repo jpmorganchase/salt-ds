@@ -618,7 +618,7 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
               ? newSelection[newSelection.length - 1]
               : undefined;
 
-            if (lastEntry && lastEntry.startDate && !lastEntry.endDate) {
+            if (lastEntry?.startDate && !lastEntry.endDate) {
               // If the last entry has only a startDate, set newDate as the endDate
               lastEntry.endDate = newDate;
             } else {

@@ -1,4 +1,5 @@
 import type {
+  CSSProperties,
   HTMLAttributes,
   KeyboardEvent,
   ReactElement,
@@ -56,7 +57,7 @@ export interface DropdownHookTriggerProps {
   onFocus?: (e: FocusEvent) => void;
   role: string;
   onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
-  style?: any;
+  style?: CSSProperties;
 }
 
 // We don't know what the popup component will be, but for those that

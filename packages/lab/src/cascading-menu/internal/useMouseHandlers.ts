@@ -105,7 +105,7 @@ export function useMouseHandlers(
           type: CascadingMenuAction.SET_CURRENT_INTERACTED_ITEM,
           cause: stateChangeTypes.ITEM_MOUSE_MOVE_TO_PARENT,
           targetId: menuId,
-          highlightedItemIndex: null,
+          highlightedItemIndex: -1,
         });
       }
       const didMouseMoveOutOfMenu = !(

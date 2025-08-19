@@ -18,7 +18,7 @@ export function PerformanceTester({
   const renderCount = useRef(0);
 
   const handleRender: ProfilerOnRenderCallback = (
-    id,
+    _id,
     phase,
     actualDuration,
   ) => {

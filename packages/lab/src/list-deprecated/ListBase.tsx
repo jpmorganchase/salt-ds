@@ -9,7 +9,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  type ComponentType,
+  type ComponentProps,
   createContext,
   type ForwardedRef,
   forwardRef,
@@ -17,6 +17,8 @@ import {
   memo,
   type ReactElement,
   type Ref,
+  type UIEvent,
+  useCallback,
   useContext,
   useImperativeHandle,
   useMemo,
@@ -36,18 +38,18 @@ import { useListItem, useVirtualizedListItem } from "./useListItem";
 
 const withBaseName = makePrefixer("saltListDeprecated");
 
-export interface ListboxContextProps<Item> {
+export interface ListboxContextProps<Item>
+  extends Pick<
+    ComponentProps<"div">,
+    "style" | "className" | "onScroll" | "id"
+  > {
   borderless?: boolean;
-  className?: string;
   disabled?: boolean;
   disableFocus?: boolean;
   getItemId?: (index: number) => string;
   getItemHeight?: (index?: number) => number;
-  id?: string;
   itemToString?: (item: Item) => string;
-  listRef?: Ref<any>;
-  style?: any;
-  onScroll?: (evt: any) => void;
+  listRef?: Ref<HTMLDivElement>;
 }
 
 const ListboxContext = createContext<ListboxContextProps<any>>({});
@@ -64,7 +66,7 @@ const DefaultVirtualizedItem = memo(function DefaultVirtualizedItem(
 }, areEqual);
 
 export interface ListboxProps extends HTMLAttributes<HTMLDivElement> {
-  onScroll?: (evt: any) => void;
+  onScroll?: (evt: UIEvent<HTMLDivElement>) => void;
 }
 
 /**
@@ -74,13 +76,13 @@ export interface ListboxProps extends HTMLAttributes<HTMLDivElement> {
  * forwardRef gives `react-window` a way to attach a ref to listen to "scroll" events.
  * And `onScroll` is added by `react-window` so we pass it on.
  */
-const Listbox: ComponentType<ListboxProps> = forwardRef(
+const Listbox = forwardRef<HTMLDivElement, ListboxProps>(
   function Listbox(props, ref) {
     const { style, onScroll, children } = props;
 
     const {
       className,
-      borderless,
+      borderless: _borderless,
       disabled,
       disableFocus,
       listRef,
@@ -91,7 +93,7 @@ const Listbox: ComponentType<ListboxProps> = forwardRef(
 
     const setListRef = useForkRef(ref, listRef);
 
-    const handleScroll = (event: any) => {
+    const handleScroll = (event: UIEvent<HTMLDivElement>) => {
       if (onScroll) {
         onScroll(event);
       }
@@ -129,9 +131,9 @@ export interface ListScrollHandles<Item> {
 }
 
 const noScrolling: ListScrollHandles<unknown> = {
-  scrollToIndex: (itemIndex: number) => undefined,
-  scrollToItem: (item) => undefined,
-  scrollTo: (scrollOffset: number) => undefined,
+  scrollToIndex: () => undefined,
+  scrollToItem: () => undefined,
+  scrollTo: () => undefined,
 };
 
 export const ListBase = forwardRef(function ListBase<Item>(
@@ -148,7 +150,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
   const { state } = useListStateContext();
 
   // Getting list id in the following order:
-  // 1. Use the id prop if it's defined, otherwise..
+  // 1. Use the id prop if it's defined, otherwise...
   // 2. Use the id from list context if it's defined, or finally...
   // 3. Generate a random id.
   const generatedId = useId(props.id);
@@ -216,17 +218,20 @@ export const ListBase = forwardRef(function ListBase<Item>(
    * This is used to access `react-window` API
    * @see https://react-window.now.sh/#/api/FixedSizeList (under `Methods`)
    */
-  const virtualizedListRef = useRef<any>(null);
+  const virtualizedListRef = useRef<{
+    scrollTo: (scrollOffset: number) => void;
+    scrollToItem: (index: number) => void;
+  } | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
 
   const setListRef = useForkRef(listRef, listRefProp);
 
-  const scrollToIndex = (itemIndex: number) => {
+  const scrollToIndex = useCallback((itemIndex: number) => {
     scrollIntoView(
       listRef.current?.querySelector(`[data-option-index="${itemIndex}"]`),
       listRef,
     );
-  };
+  }, []);
 
   const scrollHandles: ListScrollHandles<Item> = useMemo(
     () => ({
@@ -240,21 +245,19 @@ export const ListBase = forwardRef(function ListBase<Item>(
         }
       },
     }),
-    [getItemIndex],
+    [getItemIndex, scrollToIndex],
   );
 
   const virtualizedScrollHandles: ListScrollHandles<Item> = useMemo(
     () => ({
       scrollToIndex: (itemIndex: number) => {
-        if (virtualizedListRef.current) {
-          virtualizedListRef.current.scrollToItem(itemIndex);
-        }
+        virtualizedListRef.current?.scrollToItem(itemIndex);
       },
       scrollToItem: (item: Item) => {
-        virtualizedListRef.current.scrollToItem(getItemIndex(item));
+        virtualizedListRef.current?.scrollToItem(getItemIndex(item));
       },
       scrollTo: (scrollOffset: number) => {
-        virtualizedListRef.current.scrollTo(scrollOffset);
+        virtualizedListRef.current?.scrollTo(scrollOffset);
       },
     }),
     [getItemIndex],
@@ -280,7 +283,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
     } else if (listRef.current) {
       scrollToIndex(highlightedIndex);
     }
-  }, [highlightedIndex, virtualized]);
+  }, [highlightedIndex, virtualized, scrollToIndex]);
 
   const renderList = () => {
     if (Children.count(children)) {
@@ -350,7 +353,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
               <ListItem
                 index={index}
                 // No, getItemAtIndex can NOT be undefined, because hasIndexer is confirming that already. stupid stupid typescript !!!
-                item={hasIndexer ? getItemAtIndex!(index) : item}
+                item={(hasIndexer ? getItemAtIndex?.(index) : item) as Item}
                 key={getItemId(index)}
               />
             ),

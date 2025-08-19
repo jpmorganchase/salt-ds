@@ -193,14 +193,14 @@ export const useOverflow = ({
           innerContainerSize - overflowIndicatorSize.current,
         );
 
-        existingOverflow.forEach((item) => {
+        for (const item of existingOverflow) {
           if (!updates.some((i) => i.index === item.index)) {
             updates.push({
               ...item,
               overflowed: false,
             });
           }
-        });
+        }
 
         const overflowAdded = !existingOverflow.length && updates.length;
 

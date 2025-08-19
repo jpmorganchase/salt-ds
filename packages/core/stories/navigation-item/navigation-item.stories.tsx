@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type ComponentProps, useState } from "react";
 
 import "./navigation-item.stories.css";
 
@@ -627,7 +627,8 @@ export const VerticalNestedGroupNoIcon = () => {
   );
 };
 
-const CustomLinkImplementation = (props: any) => (
+const CustomLinkImplementation = (props: ComponentProps<"a">) => (
+  // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome is confused by the props spread.
   <a {...props} aria-label={"overridden-label"}>
     <Text>Your Own Link Implementation</Text>
   </a>
@@ -671,11 +672,17 @@ export const WithRenderElement = () => {
   );
 };
 
+function containsHref(
+  props: ComponentProps<"a" | "button">,
+): props is ComponentProps<"a"> {
+  return "href" in props;
+}
+
 export const WithRenderProp = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  const render = (props: any) => {
-    if (props.href) {
+  const render = (props: ComponentProps<"a" | "button">) => {
+    if (containsHref(props)) {
       return <a {...props} />;
     }
     return <button {...props} />;

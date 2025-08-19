@@ -1,4 +1,4 @@
-import { AriaAnnouncerProvider, useAriaAnnouncer } from "@salt-ds/core";
+import { AriaAnnouncerProvider, useAriaAnnouncer, useId } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -78,25 +78,28 @@ const Content = () => {
     return "Increment count, nothing fancy";
   };
 
+  const delayInputId = useId();
+  const debounceInputId = useId();
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       <div style={{ display: "flex" }}>
-        <label htmlFor="txt-delay" style={{ width: 160 }}>
+        <label htmlFor={delayInputId} style={{ width: 160 }}>
           Delay (ms):{" "}
         </label>
         <input
-          id="txt-delay"
+          id={delayInputId}
           onChange={handleDelay}
           style={{ width: 80 }}
           value={delay}
         />
       </div>
       <div style={{ display: "flex" }}>
-        <label htmlFor="txt-debounce" style={{ width: 160 }}>
+        <label htmlFor={debounceInputId} style={{ width: 160 }}>
           Debounce Interval (ms):{" "}
         </label>
         <input
-          id="txt-debounce"
+          id={debounceInputId}
           onChange={handleDebounce}
           style={{ width: 80 }}
           value={debounce}

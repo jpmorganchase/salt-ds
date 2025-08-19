@@ -227,7 +227,6 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param date - The Luxon DateTime object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: date object
   public isValid(date: DateTime | null | undefined): date is DateTime {
     return date instanceof DateTime ? date.isValid : false;
   }

@@ -32,6 +32,7 @@ export function useTruncatePills({
         const maxWidth = pillList.getBoundingClientRect().width;
         const listGap = Number.parseInt(
           targetWindow.getComputedStyle(pillList).gap,
+          10,
         );
         const isShowingOverflow = pillList.querySelector(
           "[data-overflowindicator]",

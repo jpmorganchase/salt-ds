@@ -268,6 +268,7 @@ export const AppHeader = () => {
       >
         {Array.from({ length: 12 }, (_, index) => (
           <div
+            // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
             key={index}
             style={{
               padding: "var(--salt-spacing-400)",

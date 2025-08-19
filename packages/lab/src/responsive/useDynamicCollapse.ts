@@ -93,18 +93,23 @@ export const useDynamicCollapse = ({
           const collapsingElement = getElementForItem(ref, collapsingChild);
           const dimension = orientation === "horizontal" ? "width" : "height";
           // can we avoid measuring ths element on every resize event ?
-          const size = measureElementSize(collapsingElement, dimension);
-          // collapsingElement.getBoundingClientRect();
+          if (collapsingElement) {
+            const size = measureElementSize(collapsingElement, dimension);
+            // collapsingElement.getBoundingClientRect();
 
-          // We don't restore a collapsing item unless there is at least one collapsed item
-          if (collapsedChild && size === collapsingChild.size) {
-            restoreCollapsingItem();
+            // We don't restore a collapsing item unless there is at least one collapsed item
+            if (collapsedChild && size === collapsingChild.size) {
+              restoreCollapsingItem();
+            }
           }
         } else {
           // Note we are going to compare width with minWidth. Margin is ignored
           // use getBoundingClientRect rather than measureNode
           const dimension = orientation === "horizontal" ? "width" : "height";
           const collapsingElement = getElementForItem(ref, collapsingChild);
+
+          if (!collapsingElement) return;
+
           const { [dimension]: measuredSizeOfCollapsingElement } =
             collapsingElement.getBoundingClientRect();
           // minsize should be the size of the last item in the tooltray

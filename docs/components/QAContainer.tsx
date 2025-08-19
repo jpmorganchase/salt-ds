@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: Only used in QA stories */
 import {
   type Mode,
   makePrefixer,

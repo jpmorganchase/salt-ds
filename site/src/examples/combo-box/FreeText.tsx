@@ -17,7 +17,7 @@ export const FreeText = (): ReactElement => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: string[],
   ) => {
     setSelectedValues(newSelected);

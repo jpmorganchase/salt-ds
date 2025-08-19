@@ -68,7 +68,7 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
     }, [showCategory]);
 
     const stringToItem: StringToItem<QueryInputItem> = (
-      selectedItems,
+      _selectedItems,
       value,
     ) => {
       return {

@@ -221,7 +221,7 @@ chai.use(hasAccessibleName);
  * @example
  * cy.findByRole('button).should('have.accessibleDescription','Close')
  */
-const hasAccessibleDescription: ChaiPlugin = (_chai, utils) => {
+const hasAccessibleDescription: ChaiPlugin = (_chai) => {
   function assertHasAccessibleDescription(
     this: AssertionStatic,
     expectedDescription: string,
@@ -318,7 +318,7 @@ chai.use(announces);
  * @example
  * cy.findByRole('option).should('be.highlighted')
  */
-const isHighlighted: ChaiPlugin = (_chai, utils) => {
+const isHighlighted: ChaiPlugin = (_chai, _utils) => {
   function assertIsHighlighted(this: AssertionStatic) {
     const root = this._obj.get(0);
     // make sure it's an Element
@@ -352,7 +352,7 @@ chai.use(isHighlighted);
  * @example
  * cy.findByRole('option).should('have.focusVisible')
  */
-const hasFocusVisible: ChaiPlugin = (_chai, utils) => {
+const hasFocusVisible: ChaiPlugin = (_chai, _utils) => {
   function assertHasFocusVisible(this: AssertionStatic) {
     const root = this._obj.get(0);
     // make sure it's an Element
@@ -386,7 +386,7 @@ chai.use(hasFocusVisible);
  * @example
  * cy.findByRole('option).should('be.highlighted')
  */
-const hasAriaSelected: ChaiPlugin = (_chai, utils) => {
+const hasAriaSelected: ChaiPlugin = (_chai, _utils) => {
   function assertHasAriaSelected(this: AssertionStatic) {
     const root = this._obj.get(0);
     // make sure it's an Element
@@ -422,7 +422,7 @@ chai.use(hasAriaSelected);
  * @example
  * cy.findByRole('option).should('be.inTheViewport')
  */
-const isInTheViewport: ChaiPlugin = (_chai, utils) => {
+const isInTheViewport: ChaiPlugin = (_chai, _utils) => {
   function assertIsInTheViewport(this: AssertionStatic) {
     const root = this._obj.get(0);
     // make sure it's an Element

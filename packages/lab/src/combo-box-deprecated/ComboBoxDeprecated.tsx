@@ -84,7 +84,7 @@ export const ComboBoxDeprecated = forwardRef<
     className,
     disabled = formFieldDisabled,
     source = [],
-    multiSelect,
+    multiSelect: _multiSelect,
     initialSelectedItem,
     selectedItem,
     width,

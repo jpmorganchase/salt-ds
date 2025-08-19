@@ -1,7 +1,5 @@
-import { Code, FlexLayout, FlowLayout, StackLayout } from "@salt-ds/core";
-import type { GridCellValueProps } from "@salt-ds/data-grid";
+import { Code, FlexLayout, FlowLayout } from "@salt-ds/core";
 import {
-  type IconProps,
   ProgressCancelledIcon,
   ProgressClosedIcon,
   ProgressCompleteIcon,
@@ -12,50 +10,6 @@ import {
   ProgressRejectedIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
-import type { FC } from "react";
-import { type ColorValueCellProps, IconDisplay } from "./ValueCells";
-
-type ProgressionData = {
-  progression: string;
-  icons: { name: string; ExampleIcon: FC<IconProps> }[];
-  usage: string[];
-} & ColorValueCellProps;
-
-const data = [
-  {
-    progression: "Static",
-    color: "gray",
-    icons: [
-      { name: "progress-todo", ExampleIcon: ProgressTodoIcon },
-      { name: "progress-draft", ExampleIcon: ProgressDraftIcon },
-    ],
-    usage: [
-      "To do – An item that is ready to be picked up or assigned to a user",
-      "Draft – An item has been picked up or assigned to a user, and is ready to be worked on/addressed",
-    ],
-  },
-] as ProgressionData[];
-
-const rowIdGetter = (row: ProgressionData) => row.progression;
-
-const IconValueCell = (props: GridCellValueProps<ProgressionData>) => {
-  const { row } = props;
-
-  const { color, icons } = row.data;
-
-  return (
-    <StackLayout gap={1}>
-      {icons.map(({ ExampleIcon, name }) => (
-        <IconDisplay
-          iconName={name}
-          ExampleIcon={ExampleIcon}
-          color={color}
-          key={name}
-        />
-      ))}
-    </StackLayout>
-  );
-};
 
 export const Progression = () => {
   return (

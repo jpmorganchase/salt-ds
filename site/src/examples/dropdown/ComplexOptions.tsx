@@ -36,7 +36,7 @@ export const ComplexOptions = (): ReactElement => {
   const [selected, setSelected] = useState<string[]>([]);
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     setSelected(newSelected);

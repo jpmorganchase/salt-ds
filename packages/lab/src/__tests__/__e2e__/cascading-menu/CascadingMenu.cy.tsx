@@ -39,7 +39,7 @@ describe("GIVEN a CascadingMenu component", () => {
         cy.findAllByRole("menu").should("have.length", 1);
       });
       describe("AND ENTER is pressed on MenuItem with sub-items", () => {
-        it("THEN thesub  menu will be displayed", () => {
+        it("THEN the submenu will be displayed", () => {
           cy.mount(<Default />);
           cy.findByTestId("cascading-menu-trigger").focus();
           cy.realPress("{downarrow}");

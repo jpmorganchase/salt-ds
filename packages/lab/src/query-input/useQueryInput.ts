@@ -76,8 +76,8 @@ export function useQueryInput(
     [],
   );
 
-  const onInputFocus: FocusEventHandler<HTMLInputElement> = (event) => {
-    popperStatus.onFocus(event);
+  const onInputFocus: FocusEventHandler<HTMLInputElement> = () => {
+    popperStatus.onFocus();
     setIsFocused(true);
   };
 
@@ -101,12 +101,12 @@ export function useQueryInput(
       return;
     }
     setIsFocused(false);
-    popperStatus.onBlur(event);
+    popperStatus.onBlur();
   };
 
-  const onFocus: FocusEventHandler<HTMLDivElement> = (event) => {
+  const onFocus: FocusEventHandler<HTMLDivElement> = () => {
     setIsFocused(true);
-    popperStatus.onFocus(event);
+    popperStatus.onFocus();
   };
 
   const onBlur: FocusEventHandler<HTMLDivElement> = (event) => {
@@ -124,7 +124,7 @@ export function useQueryInput(
       return;
     }
     setIsFocused(false);
-    popperStatus.onBlur(event);
+    popperStatus.onBlur();
   };
 
   const onSelectedItemsChange = (newItems: QueryInputItem[] | undefined) => {

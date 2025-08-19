@@ -32,12 +32,10 @@ export function useFocusOut(
   context: FloatingContext,
   props: UseFocusOutProps,
 ): ElementProps {
-  const { onOpenChange, open } = context;
+  const { onOpenChange } = context;
   const { enabled = true } = props;
 
-  const reference: ElementProps["reference"] = useMemo<
-    React.HTMLProps<Element>
-  >(() => {
+  const reference: ElementProps["reference"] = useMemo(() => {
     const referenceElement = context.elements.reference as Element | undefined;
 
     if (!referenceElement) {

@@ -91,6 +91,6 @@ export function useControlled<S>({
 }
 
 // Ignore ReactElements in JSON, they contain circular refs
-function ignoreReactElements<T>(key: string, value: T): T | null {
+function ignoreReactElements<T>(_key: string, value: T): T | null {
   return isValidElement(value) ? null : value;
 }

@@ -104,7 +104,7 @@ const footerLinks: Record<string, string[]> = {
   Legal: ["Claim", "Privacy", "Terms"],
 };
 
-const footerColumns = Object.keys(footerLinks).map((header, index) => (
+const footerColumns = Object.keys(footerLinks).map((header) => (
   <div key={header} className="footer-column">
     <p>{header}</p>
     {footerLinks[header].map((link: string) => (

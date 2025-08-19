@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useUniqueElementIds: id isn't the DOM id */
 import { StackLayout, Step, Stepper, Text, Tooltip } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 

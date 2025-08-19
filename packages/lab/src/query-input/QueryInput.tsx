@@ -28,17 +28,17 @@ export interface QueryInputProps
 export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
   function QueryInput(props, externalRef) {
     const {
-      disabled,
-      categories,
-      selectedItems,
-      onChange,
-      defaultSelectedItems,
+      disabled: _disabled,
+      categories: _categories,
+      selectedItems: _selectedItems,
+      onChange: _onChange,
+      defaultSelectedItems: _defaultSelectedItems,
       showCategory,
-      autoClose,
-      displayedItemCount,
-      booleanOperator,
-      onBooleanOperatorChange,
-      defaultBooleanOperator,
+      autoClose: _autoClose,
+      displayedItemCount: _displayedItemCount,
+      booleanOperator: _booleanOperator,
+      onBooleanOperatorChange: _onBooleanOperatorChange,
+      defaultBooleanOperator: _defaultBooleanOperator,
       className,
       ...restProps
     } = props;

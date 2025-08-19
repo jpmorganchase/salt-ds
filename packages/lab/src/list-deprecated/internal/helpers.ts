@@ -1,7 +1,9 @@
-export const isPlainObject = (obj) =>
+import type { ListBaseProps } from "../ListProps";
+
+export const isPlainObject = (obj: unknown): obj is Record<string, unknown> =>
   Object.prototype.toString.call(obj) === "[object Object]";
 
-export const calcPreferredListHeight = (props = {}) => {
+export const calcPreferredListHeight = (props: Partial<ListBaseProps> = {}) => {
   const {
     borderless,
     displayedItemCount = 0,
@@ -20,7 +22,7 @@ export const calcPreferredListHeight = (props = {}) => {
 
   if (typeof getItemHeight === "function") {
     preferredHeight += Array.from({ length: preferredItemCount }).reduce(
-      (total, _, index) => total + Number(getItemHeight(index)),
+      (total: number, _, index) => total + Number(getItemHeight(index)),
       0,
     );
   } else {

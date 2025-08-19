@@ -31,10 +31,10 @@ export const ContactDetailsContext = createContext<
 
 export const useContactDetailsContext = (): ContactDetailsContext => {
   const context = useContext(ContactDetailsContext);
-  if (!context && process.env.NODE_ENV !== "production") {
-    console.error(
+  if (!context) {
+    throw new Error(
       "useContactDetailsContext should be used inside of ContactDetails",
     );
   }
-  return context!;
+  return context;
 };

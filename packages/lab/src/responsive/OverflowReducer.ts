@@ -132,7 +132,6 @@ const createSourceItems = (
 ): OverflowItem<"source">[] | undefined => {
   if (Array.isArray(source)) {
     return source.map((item, index) => {
-      const priority = options?.getPriority?.(source, index);
       return sourceItem(item, `${idRoot}-${index}`, index, options);
     });
   }

@@ -71,7 +71,7 @@ export interface ListHelpers<
 export function useList<Item, Variant extends ListSelectionVariant>(
   props: ListProps<Item, Variant> = {},
 ): {
-  focusedRef: Ref<any>;
+  focusedRef: Ref<unknown>;
   listProps: Partial<ListProps<Item, Variant>> & listBoxAriaProps;
   state: ListState<Item, Variant>;
   helpers: ListHelpers<Item, Variant>;
@@ -145,7 +145,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
     getItemAtIndex = getItemAtIndexProp;
   }
 
-  const rootRef = useRef();
+  const rootRef = useRef<HTMLElement>(null);
   const [focusVisible, setFocusVisible] = useState(false);
   const [lastFocusedIndex, setLastFocusedIndex] = useState(-1);
 
@@ -204,7 +204,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         );
       }
     },
-    [isDeselectable, onChange, selectedItem],
+    [onChange, selectedItem],
   );
 
   const handleMultiSelect = useCallback(
@@ -328,7 +328,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       index: number | undefined,
       item: Item | null,
     ) => {
-      if (item == null || (item as any).disabled) {
+      if (item == null || (item as Record<string, unknown>).disabled) {
         return;
       }
 
@@ -345,14 +345,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         handleSingleSelect(event, index, item);
       }
     },
-    [
-      handleExtendedSelect,
-      handleMultiSelect,
-      handleSingleSelect,
-      isExtendedSelect,
-      isMultiSelect,
-      onSelect,
-    ],
+    [handleExtendedSelect, handleMultiSelect, handleSingleSelect, onSelect],
   );
 
   const saveFocusedIndex = (index: number) => {

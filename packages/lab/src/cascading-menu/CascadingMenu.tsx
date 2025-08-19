@@ -114,14 +114,17 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
 
     // Controlled opening/closing of the menu
     const openCloseMenu = useCallback(
-      (open: boolean) =>
-        dispatch({
-          type: open
-            ? CascadingMenuAction.OPEN_MENU
-            : CascadingMenuAction.CLOSE_CASCADING_MENU,
-          cause: stateChangeTypes.MOUSE_TOGGLE,
-          targetId: rootMenuId!,
-        }),
+      (open: boolean) => {
+        if (rootMenuId) {
+          dispatch({
+            type: open
+              ? CascadingMenuAction.OPEN_MENU
+              : CascadingMenuAction.CLOSE_CASCADING_MENU,
+            cause: stateChangeTypes.MOUSE_TOGGLE,
+            targetId: rootMenuId,
+          });
+        }
+      },
       [rootMenuId],
     );
     // do not re-render every time if prop does not change
@@ -141,11 +144,13 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       clickAwayNodes,
       containingDocument,
       () => {
-        dispatch({
-          type: CascadingMenuAction.CLOSE_CASCADING_MENU,
-          cause: stateChangeTypes.CLICKED_AWAY,
-          targetId: rootMenuId!,
-        });
+        if (rootMenuId) {
+          dispatch({
+            type: CascadingMenuAction.CLOSE_CASCADING_MENU,
+            cause: stateChangeTypes.CLICKED_AWAY,
+            targetId: rootMenuId,
+          });
+        }
       },
       () => {
         setIsNavigatingWithKeyboard(false);
@@ -153,11 +158,11 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
     );
 
     const handleResize = useEventCallback(() => {
-      if (rootMenuState) {
+      if (rootMenuState && rootMenuId) {
         dispatch({
           type: CascadingMenuAction.CLOSE_CASCADING_MENU,
           cause: stateChangeTypes.ON_RESIZE,
-          targetId: rootMenuId!,
+          targetId: rootMenuId,
         });
       }
     });
@@ -176,11 +181,11 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       (sourceItem: MenuDescriptor, event: KeyboardEvent | MouseEvent) => {
         onItemClick?.(sourceItem, event);
 
-        if (!isNavigatingWithKeyboard) {
+        if (!isNavigatingWithKeyboard && rootMenuId) {
           dispatch({
             type: CascadingMenuAction.CLOSE_CASCADING_MENU,
             cause: stateChangeTypes.ITEM_CLICKED,
-            targetId: rootMenuId!,
+            targetId: rootMenuId,
           });
         }
       },
@@ -246,6 +251,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       disableMouseOutInteractions,
     };
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: We want to run this if rootPlacementOffset changes.
     useEffect(() => {
       if (!openProp) {
         setIsNavigatingWithKeyboard(false);
@@ -261,7 +267,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
           const isRoot = data.level === 0;
           const parentElement = isRoot
             ? getMenuTriggerRef()
-            : refsManager.get(data.parentId!);
+            : refsManager.get(data?.parentId ?? "");
 
           const isChildMenuOpen = !!state[data.level + 1];
           return (

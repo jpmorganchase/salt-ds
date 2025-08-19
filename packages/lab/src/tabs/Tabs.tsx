@@ -5,7 +5,6 @@ import { clsx } from "clsx";
 import {
   type ForwardedRef,
   forwardRef,
-  useCallback,
   useImperativeHandle,
   useRef,
 } from "react";
@@ -82,14 +81,6 @@ export const Tabs = forwardRef(function Tabs(
     onMoveTab,
     overflowMenu,
   };
-  const getTabPanelId = useCallback(
-    (tabIndex: number) => {
-      if (tabIndex === activeTabIndex) {
-        return `${id}-${tabIndex}-panel`;
-      }
-    },
-    [id, activeTabIndex],
-  );
 
   // TODO need to inject aria-controls
   return (

@@ -7,13 +7,23 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  type Dispatch,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { List, type ListProps } from "../list-deprecated";
 import { Portal } from "../portal";
 import { useWindow as usePortalWindow } from "../window";
 import { DefaultMenuItem, type MenuItemProps } from "./CascadingMenuItem";
 import cascadingMenuListCss from "./CascadingMenuList.css";
-import { CascadingMenuAction } from "./internal/CascadingMenuAction";
+import {
+  CascadingMenuAction,
+  type menuAction,
+} from "./internal/CascadingMenuAction";
 import { getKeyDownHandlers } from "./internal/keydownHandlers";
 import {
   getHeight,
@@ -31,7 +41,7 @@ export interface CascadingMenuListProps {
   delay?: number;
   disableMouseOutInteractions?: boolean;
   // TODO any
-  dispatch: (action: any) => void;
+  dispatch: Dispatch<menuAction>;
   getBoundingClientRect?: (element: HTMLElement) => DOMRect;
   getScreenBounds?: () => screenBounds;
   height?: number;
@@ -95,24 +105,24 @@ export const CascadingMenuList = forwardRef<
 
   const [menuRef, setInternalMenuRef] = useState<HTMLElement | null>(null);
   const setMenuRef = useCallback(
-    (node: HTMLElement) => {
+    (node: HTMLDivElement) => {
       refsManager.set(menuId, node);
     },
     [refsManager, menuId],
   );
 
   // TODO removed useCharacteristic here
-  const sizeStackable = 36;
-  const defaultRowHeight = sizeStackable;
+  const defaultRowHeight = 36;
 
   // TODO removed useCharacteristic here
   const spacing = 8;
 
   const isMenuActiveState = useState(true);
   const [isMenuActive, setIsMenuActive] = isMenuActiveState;
-  const listRef = useForkRef<HTMLElement>(ref, setInternalMenuRef);
-  const handleRef = useForkRef(setMenuRef, listRef);
+  const listRef = useForkRef<HTMLDivElement>(ref, setInternalMenuRef);
+  const handleRef = useForkRef<HTMLDivElement>(setMenuRef, listRef);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We want to run this if rootPlacementOffset changes.
   useEffect(() => {
     if (menuRef?.focus) {
       // timeout prevents scrolling issue by waiting a split second

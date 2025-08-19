@@ -211,7 +211,6 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param date - The Date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: date object
   public isValid(date: Date | null | undefined): date is Date {
     return date instanceof Date && isValidDateFns(date);
   }
@@ -524,7 +523,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
     try {
       const date = parseISO(value);
       return isValidDateFns(date);
-    } catch (error) {
+    } catch {
       return false;
     }
   }

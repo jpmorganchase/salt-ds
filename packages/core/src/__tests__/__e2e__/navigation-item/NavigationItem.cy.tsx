@@ -131,7 +131,7 @@ describe("GIVEN a NavItem", () => {
       const mockRender = cy
         .stub()
         .as("render")
-        // biome-ignore lint/a11y/useValidAnchor: <explanation>
+        // biome-ignore lint/a11y/useValidAnchor: Anchor is only used for testing purposes.
         .returns(<a>Navigation Link</a>);
       cy.mount(
         <NavigationItem

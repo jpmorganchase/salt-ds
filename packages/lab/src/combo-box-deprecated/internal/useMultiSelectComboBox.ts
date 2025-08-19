@@ -12,6 +12,7 @@ import {
   type KeyboardEvent,
   type KeyboardEventHandler,
   type MouseEvent,
+  type Ref,
   type RefObject,
   type SyntheticEvent,
   useEffect,
@@ -64,7 +65,7 @@ export const useMultiSelectComboBox = <Item>(
     "aria-labelledby": ariaLabelledBy,
     getFilterRegex = getDefaultFilterRegex,
     itemToString = defaultItemToString,
-    stringToItem: stringToItemProp = (_: any, value: string) => value.trim(),
+    stringToItem: stringToItemProp = (_: Item[], value: string) => value.trim(),
     InputProps = {
       onBlur,
       onFocus,
@@ -251,7 +252,10 @@ export const useMultiSelectComboBox = <Item>(
     >,
   });
 
-  const handleFocusVisibleRef = useForkRef(focusVisibleRef, focusedRef);
+  const handleFocusVisibleRef = useForkRef(
+    focusVisibleRef,
+    focusedRef,
+  ) as Ref<HTMLInputElement>;
   const handleInputRef = useForkRef(inputRef, handleFocusVisibleRef);
 
   const { setHighlightedIndex: setHighlightedPillIndex } = inputHelpers;
@@ -303,7 +307,9 @@ export const useMultiSelectComboBox = <Item>(
 
   // Keep highlighted index in sync with the filtered source
   useEffect(() => {
-    setHighlightedListIndex(undefined);
+    if (source) {
+      setHighlightedListIndex(undefined);
+    }
   }, [source, setHighlightedListIndex]);
 
   const handleFirstItemSelection = (event: KeyboardEvent | ChangeEvent) => {

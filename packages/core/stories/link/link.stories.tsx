@@ -1,6 +1,7 @@
 import { Link, Text } from "@salt-ds/core";
 import { StackoverflowIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { ComponentProps } from "react";
 
 export default {
   title: "Core/Link",
@@ -100,7 +101,7 @@ export const Truncation: StoryFn<typeof Link> = (args) => {
   );
 };
 
-const CustomLinkImplementation = (props: any) => (
+const CustomLinkImplementation = (props: ComponentProps<"a">) => (
   <a href="#root" aria-label={"overridden-label"} {...props}>
     Your own Link implementation
   </a>

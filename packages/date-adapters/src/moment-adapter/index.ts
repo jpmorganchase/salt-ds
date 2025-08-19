@@ -204,7 +204,6 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param date - The Moment.js date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: date framework
   public isValid(date: Moment | null | undefined): date is Moment {
     return this.moment.isMoment(date) ? date.isValid() : false;
   }

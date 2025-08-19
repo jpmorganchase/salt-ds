@@ -455,7 +455,7 @@ export function SaltProviderNext({
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {
-  const { window, ...contextWithoutWindow } = useContext(ThemeContext);
+  const { window: _window, ...contextWithoutWindow } = useContext(ThemeContext);
 
   return contextWithoutWindow;
 };

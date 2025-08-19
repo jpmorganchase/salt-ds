@@ -10,12 +10,14 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from "react";
+import type { CascadingMenuProps } from "../cascading-menu/CascadingMenuProps";
 import breadcrumbCss from "./Breadcrumb.css";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 
 const withBaseName = makePrefixer("saltBreadcrumb");
 
-export interface BreadcrumbProps {
+export interface BreadcrumbProps
+  extends Pick<CascadingMenuProps, "onItemClick"> {
   children?: ReactNode;
   ContainerProps?: HTMLAttributes<HTMLLIElement>;
   tooltipText?: string;
@@ -25,7 +27,6 @@ export interface BreadcrumbProps {
   isCurrentLevel?: boolean;
   maxWidth?: number;
   minWidth?: number;
-  onItemClick?: (item: any, event: any) => void; // TODO
   overflowLabel?: string;
   Icon?: ComponentType<IconProps>;
 }

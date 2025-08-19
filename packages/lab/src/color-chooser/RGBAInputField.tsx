@@ -45,7 +45,7 @@ export const RGBInput = ({
   ): void => {
     let rgb: string | number;
 
-    rgb = Number.parseInt(value);
+    rgb = Number.parseInt(value, 10);
 
     if (value.trim() === "" || Number.isNaN(rgb)) {
       rgb = "";

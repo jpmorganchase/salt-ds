@@ -63,7 +63,7 @@ export class AdapterDateFnsTZ extends AdapterDateFns {
   /**
    * Set the timezone for the Date object
    * @param date - A Date object
-   * @param _timezone - Timezone to set date object to (un-used)
+   * @param timezone - Timezone to set date object to
    * @returns  date object set to the timezone
    */
   public setTimezone = (date: Date, timezone: Timezone = "default"): Date => {

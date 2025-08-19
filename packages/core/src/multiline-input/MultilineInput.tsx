@@ -186,6 +186,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       changeHeight();
     };
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: We want to run this effect when value changes in a controlled component.
     useLayoutEffect(() => {
       changeHeight();
     }, [value, changeHeight]);

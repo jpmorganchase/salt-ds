@@ -89,6 +89,12 @@ export function useResizeObserver(
     );
   }, []);
 
+  const resizeCallback = useRef(onResize);
+
+  useIsomorphicLayoutEffect(() => {
+    resizeCallback.current = onResize;
+  }, [onResize]);
+
   // TODO use ref to store resizeHandler here
   // resize handler registered with REsizeObserver will never change
   // use ref to store user onResize callback here
@@ -122,7 +128,7 @@ export function useResizeObserver(
           observedTarget.measurements = measurements;
           resizeObserver.observe(target);
           if (reportInitialSize) {
-            onResize(measurements);
+            resizeCallback.current?.(measurements);
           }
         }
       }
@@ -144,7 +150,7 @@ export function useResizeObserver(
         cleanedUp = true;
       }
     };
-  }, [ref, measure]);
+  }, [ref, measure, reportInitialSize]);
 
   useIsomorphicLayoutEffect(() => {
     const target = ref.current as HTMLElement;

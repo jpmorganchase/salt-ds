@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 import type { StoryObj } from "@storybook/react-vite";
 import { AgGridReact } from "ag-grid-react";
 import { expect, userEvent, within } from "storybook/test";
@@ -90,8 +91,8 @@ ColumnMenuGeneral.play = async ({ canvasElement }) => {
 
     await userEvent.click(
       cell
-        .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu-alt")!,
+        .closest(".ag-header-cell-comp-wrapper")
+        ?.querySelector(".ag-icon.ag-icon-menu-alt")!,
     );
 
     const menu = within(gridRoot).getByRole("presentation", {
@@ -121,8 +122,8 @@ ColumnMenuFilter.play = async ({ canvasElement }) => {
 
     await userEvent.click(
       cell
-        .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-filter")!,
+        .closest(".ag-header-cell-comp-wrapper")
+        ?.querySelector(".ag-icon.ag-icon-filter")!,
     );
 
     const menu = within(gridRoot).getByRole("presentation", {
@@ -155,8 +156,8 @@ ColumnMenuFilterFiltered.play = async ({ canvasElement }) => {
 
     await userEvent.click(
       cell
-        .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-filter")!,
+        .closest(".ag-header-cell-comp-wrapper")
+        ?.querySelector(".ag-icon.ag-icon-filter")!,
     );
 
     const menu = within(gridRoot).getByRole("presentation", {
@@ -205,8 +206,8 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
 
     await userEvent.click(
       cell
-        .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu-alt")!,
+        .closest(".ag-header-cell-comp-wrapper")
+        ?.querySelector(".ag-icon.ag-icon-menu-alt")!,
     );
 
     const menu = within(gridRoot).getByRole("presentation", {
@@ -240,8 +241,8 @@ ColumnMenuNumberFilter.play = async ({ canvasElement }) => {
 
     await userEvent.click(
       cell
-        .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-filter")!,
+        .closest(".ag-header-cell-comp-wrapper")
+        ?.querySelector(".ag-icon.ag-icon-filter")!,
     );
 
     const menu = within(gridRoot).getByRole("presentation", {

@@ -62,7 +62,7 @@ const StyleInjection = () => {
 export const FloatingComponentWindow = forwardRef(
   (
     { children, title, style, ...rest }: Props,
-    ref: ForwardedRef<HTMLIFrameElement>,
+    _ref: ForwardedRef<HTMLIFrameElement>,
   ) => {
     const [contentRef, setContentRef] = useState<HTMLIFrameElement | null>(
       null,

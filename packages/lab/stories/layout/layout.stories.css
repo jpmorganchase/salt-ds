@@ -4,8 +4,8 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
   font-weight: var(--salt-text-fontWeight-small);
 }
-.layout-container > .layout-active-content,
-.layout-active-content {
+.layout-active-content,
+.layout-container > .layout-active-content {
   background: var(--salt-container-secondary-background);
   padding: var(--salt-spacing-200);
 }

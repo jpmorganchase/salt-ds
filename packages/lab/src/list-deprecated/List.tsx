@@ -5,6 +5,7 @@ import {
   forwardRef,
   type KeyboardEvent,
   type ReactElement,
+  type Ref,
   useContext,
   useRef,
 } from "react";
@@ -54,7 +55,10 @@ const ListWithDescendants = forwardRef(function ListWithDescendants<
     setHighlightedIndex,
   });
 
-  const setListRef = useForkRef(focusedRef, props.listRef);
+  const setListRef = useForkRef(
+    focusedRef,
+    props.listRef,
+  ) as Ref<HTMLDivElement>;
 
   const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
     if (disabled) {

@@ -86,6 +86,7 @@
 }
 
 .saltListItem-proxy {
+  /* biome-ignore lint/complexity/noImportantStyles: Needed to ensure the proxy doesn't take any space. */
   position: absolute !important;
   visibility: hidden;
 }

@@ -221,9 +221,9 @@ export const measureOverflowItems = (
 export const addAll = (sum: number, m: OverflowItem): number => sum + m.size;
 
 export const getElementForItem = (ref: ElementRef, item: OverflowItem) =>
-  ref.current!.querySelector(
+  ref.current?.querySelector<HTMLElement>(
     `:scope > [data-index='${item.index}']`,
-  ) as HTMLElement;
+  );
 
 type dimension = "left" | "right" | "top" | "bottom";
 

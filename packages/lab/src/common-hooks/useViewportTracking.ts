@@ -10,7 +10,7 @@ import type { CollectionItem } from "./collectionTypes";
 
 const HeightOnly = ["height"];
 const HeightWithScroll = ["height", "scrollHeight"];
-const EMPTY_ARRAY: any[] = [];
+const EMPTY_ARRAY: string[] = [];
 
 const ObservedDimensions = {
   containerOnly: [HeightWithScroll, EMPTY_ARRAY],
@@ -30,7 +30,7 @@ const getItemTop = (
   const { transform = "none" } = getComputedStyle(element);
   if (transform.startsWith("matrix")) {
     const pos = transform.lastIndexOf(",");
-    return Number.parseInt(transform.slice(pos + 1));
+    return Number.parseInt(transform.slice(pos + 1), 10);
   }
   let offsetParent = element.offsetParent as HTMLElement;
   if (offsetParent === offsetContainer || offsetContainer === null) {
