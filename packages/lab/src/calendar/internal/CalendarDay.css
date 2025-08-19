@@ -173,7 +173,7 @@
   border-radius: 0;
 }
 
-.saltCalendarMonth-range .saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd)::before {
+.saltCalendarMonth-range .saltCalendarDay-hoveredEnd:not(.saltCalendarDay-selectedStart):not(.saltCalendarDay-selectedEnd):not(.saltCalendarDay-unselectable)::before {
   content: "";
   position: absolute;
   top: 0;
