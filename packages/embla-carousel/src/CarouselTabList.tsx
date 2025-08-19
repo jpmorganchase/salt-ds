@@ -110,9 +110,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
             ariaLabel = `Slide ${startSlideNumber} to ${endSlideNumber} of ${numberOfSlides}`;
           } else {
             const description = getSlideDescription(emblaApi, startSlideNumber);
-            const slide = emblaApi?.slideNodes()[startSlideNumber - 1];
-            const slideRoleDescription = slide?.ariaRoleDescription ?? "slide";
-            ariaLabel = `${description}, ${slideRoleDescription}, ${startSlideNumber} of ${numberOfSlides}`;
+            ariaLabel = `${description}`;
           }
 
           const selected = selectedIndex === scrollSnapIndex;
