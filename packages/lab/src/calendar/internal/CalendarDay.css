@@ -231,7 +231,6 @@
   border-radius: var(--salt-palette-corner-weak, 0);
 }
 
-.saltCalendarDay-outsideCurrentMonth,
 .saltCalendarDay-outOfRange {
   color: var(--salt-content-secondary-foreground);
 }
