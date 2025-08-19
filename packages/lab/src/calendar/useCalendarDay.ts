@@ -16,13 +16,9 @@ import { useCalendarSelectionDay } from "./useCalendarSelection";
  */
 export interface DayStatus {
   /**
-   * If `true`, the day is out of the selectable range.
-   */
-  outOfRange?: boolean;
-  /**
    * If `true`, the day is selectable but outside of current month.
    */
-  outsideCurrentMonth?: boolean;
+  outOfRange?: boolean;
   /**
    * If `true`, the day is selected.
    */
@@ -80,7 +76,6 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     helpers: {
       setHoveredDate,
       isDayUnselectable,
-      isDaySelectable,
       isDayHighlighted,
       isOutsideAllowedMonths,
     },
@@ -134,15 +129,15 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
 
-  const outsideCurrentMonth = !dateAdapter.isSame(date, month, "month");
+  const outOfRange = !dateAdapter.isSame(date, month, "month");
   const unselectable =
     Boolean(unselectableReason) || isOutsideAllowedMonths(date);
   const highlighted = Boolean(highlightedReason);
-  const hidden = hideOutOfRangeDates ? outsideCurrentMonth : false;
+  const hidden = hideOutOfRangeDates ? outOfRange : false;
 
   return {
     status: {
-      outsideCurrentMonth,
+      outOfRange,
       today,
       unselectable,
       focused,
