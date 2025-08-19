@@ -202,6 +202,8 @@
   --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
   --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
 
+  --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
+
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);

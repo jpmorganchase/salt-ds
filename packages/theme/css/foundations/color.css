@@ -31,6 +31,7 @@
   --salt-color-orange-700-rgb: 214, 85, 19;
   --salt-color-orange-800-rgb: 204, 68, 13;
   --salt-color-orange-850-rgb: 194, 52, 7;
+  --salt-color-orange-875-rgb: 138, 43, 15;
   --salt-color-orange-900-rgb: 54, 44, 36;
 
   --salt-color-green-10-rgb: 209, 244, 201;
@@ -145,6 +146,7 @@
   --salt-color-orange-700: rgb(var(--salt-color-orange-700-rgb));
   --salt-color-orange-800: rgb(var(--salt-color-orange-800-rgb));
   --salt-color-orange-850: rgb(var(--salt-color-orange-850-rgb));
+  --salt-color-orange-875: rgb(var(--salt-color-orange-875-rgb));
   --salt-color-orange-900: rgb(var(--salt-color-orange-900-rgb));
 
   --salt-color-green-10: rgb(var(--salt-color-green-10-rgb));
