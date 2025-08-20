@@ -156,32 +156,40 @@ table.saltTable tfoot.saltTable-tfoot-divider-none tr {
 
 /* TH */
 table.saltTable th {
-  overflow: hidden;
-  padding: var(--salt-spacing-100);
+  padding: calc(var(--salt-spacing-75) + var(--salt-spacing-50)) var(--salt-spacing-100);
+  padding-top: calc(var(--salt-spacing-75) + var(--salt-spacing-50) + var(--salt-size-fixed-100));
   position: relative;
   text-align: start;
+  vertical-align: top;
+  white-space: normal;
+  font-weight: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.table.saltTable th[scope="row"] {
+table.saltTable th.saltTable-th-lineClamp {
+  line-clamp: var(--table-th-max-rows, 0);
+}
+
+table.saltTable tbody th[scope="row"] {
   font-weight: var(--salt-text-fontWeight-strong);
   line-height: var(--salt-text-lineHeight);
 }
 
 table.saltTable th + th::before {
-  --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   background: var(--salt-separable-tertiary-borderColor);
   content: "";
   position: absolute;
   z-index: 1;
   display: block;
-  width: var(--salt-size-border);
-  height: var(--table-th-separator-height);
-  top: calc(50% - var(--table-th-separator-height) * 0.5);
+  width: var(--salt-size-fixed-100);
+  height: calc(100% - var(--salt-spacing-200));
   left: 0;
+  top: var(--salt-spacing-100);
 }
 
 /* TR */
-table.saltTable tr {
+table.saltTable tbody tr {
   background: var(--table-background);
   height: var(--table-row-height);
   min-height: var(--table-row-height);
@@ -191,12 +199,20 @@ table.saltTable tbody tr:not(:last-child) {
   border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
 }
 
-table.saltTable-divider-none tbody tr {
+table.saltTable.saltTable-divider-none tbody tr {
   --table-divider-color: transparent;
 }
 
 /* TD */
 table.saltTable td {
   height: 100%;
-  padding: var(--salt-spacing-100);
+  vertical-align: top;
+  padding: calc(var(--salt-spacing-75) + var(--salt-spacing-50)) var(--salt-spacing-100);
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table.saltTable td.saltTable-td-lineClamp {
+  line-clamp: var(--table-td-max-rows, 0);
 }

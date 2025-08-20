@@ -209,7 +209,13 @@ StickyHeaderFooter.args = {
   TFootProps: { sticky: true },
 };
 
-export const ColumnHeaders: StoryFn<typeof Table> = (args) => {
+export const ColumnHeaders: StoryFn = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  ...args
+}) => {
   return (
     <Table divider="none" {...args}>
       <THead>
@@ -234,4 +240,44 @@ export const ColumnHeaders: StoryFn<typeof Table> = (args) => {
       </TBody>
     </Table>
   );
+};
+
+export const LongCellContent: StoryFn = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <Table style={{ width: 200 }} {...args}>
+      <THead>
+        <TR>
+          <TH {...THProps}>Super long column header that will wrap</TH>
+          <TH {...THProps}>Two</TH>
+        </TR>
+      </THead>
+      <TBody>
+        <TR>
+          <TD {...TDProps}>Super long cell content that will wrap</TD>
+          <TD {...TDProps}>Value</TD>
+        </TR>
+        <TR>
+          <TD {...TDProps}>Value</TD>
+          <TD {...TDProps}>Value</TD>
+        </TR>
+        <TR>
+          <TD {...TDProps}>Value</TD>
+          <TD {...TDProps}>Value</TD>
+        </TR>
+      </TBody>
+    </Table>
+  );
+};
+
+LongCellContent.args = {
+  TDProps: { maxRows: 2 },
+  THProps: { maxRows: 2 },
 };
