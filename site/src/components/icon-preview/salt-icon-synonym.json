@@ -2,7 +2,6 @@
   {
     "iconName": "accessible",
     "synonym": [
-      "disability",
       "wheelchair",
       "support",
       "wcag",
@@ -15,7 +14,7 @@
   },
   {
     "iconName": "add",
-    "synonym": ["create", "plus", "new", "insert", "add"],
+    "synonym": ["create", "plus", "new", "insert"],
     "category": "organize"
   },
   {
@@ -67,7 +66,7 @@
   },
   {
     "iconName": "bank",
-    "synonym": ["finance", "building", "account", "bank"],
+    "synonym": ["finance", "building", "account"],
     "category": "places"
   },
   {
@@ -97,7 +96,7 @@
   },
   {
     "iconName": "browser",
-    "synonym": ["browse", "window", "web", "internet", "browser"],
+    "synonym": ["browse", "window", "web", "internet"],
     "category": "media"
   },
   {
@@ -107,7 +106,7 @@
   },
   {
     "iconName": "buildings",
-    "synonym": ["property", "location", "office", "apartment", "buildings"],
+    "synonym": ["property", "location", "office", "apartment"],
     "category": "places"
   },
   {
@@ -117,12 +116,12 @@
   },
   {
     "iconName": "calculator",
-    "synonym": ["calculate", "number", "math", "arithmetic", "calculator"],
+    "synonym": ["calculate", "number", "math", "arithmetic"],
     "category": "actions"
   },
   {
     "iconName": "calendar",
-    "synonym": ["schedule", "date", "planner", "calendar", "event"],
+    "synonym": ["schedule", "date", "planner", "event"],
     "category": "actions"
   },
   {
@@ -132,14 +131,7 @@
   },
   {
     "iconName": "cart",
-    "synonym": [
-      "purchase",
-      "basket",
-      "shopping",
-      "checkout",
-      "trolley",
-      "cart"
-    ],
+    "synonym": ["purchase", "basket", "shopping", "checkout", "trolley"],
     "category": "finance"
   },
   {
@@ -175,14 +167,7 @@
   },
   {
     "iconName": "checkmark",
-    "synonym": [
-      "confirmation",
-      "tick",
-      "complete",
-      "verify",
-      "checkmark",
-      "check"
-    ],
+    "synonym": ["confirmation", "tick", "complete", "verify", "check"],
     "category": "indicators"
   },
   {
@@ -249,16 +234,7 @@
   },
   {
     "iconName": "close",
-    "synonym": [
-      "dismiss",
-      "x",
-      "status",
-      "cancel",
-      "shut",
-      "minus",
-      "exit",
-      "close"
-    ],
+    "synonym": ["dismiss", "x", "status", "cancel", "shut", "minus", "exit"],
     "category": "actions"
   },
   {
@@ -288,7 +264,7 @@
   },
   {
     "iconName": "cloud",
-    "synonym": ["storage", "cloud", "sync", "internet", "connect"],
+    "synonym": ["storage", "sync", "internet", "connect"],
     "category": "computing"
   },
   {
@@ -328,7 +304,6 @@
       "arrow",
       "hide",
       "minus",
-      "triangle",
       "close",
       "media collapse"
     ],
@@ -341,7 +316,6 @@
       "arrow",
       "hide",
       "minus",
-      "triangle",
       "close",
       "media collapse"
     ],
@@ -367,12 +341,12 @@
   },
   {
     "iconName": "compass",
-    "synonym": ["navigate", "explore", "direction", "compass"],
+    "synonym": ["navigate", "explore", "direction"],
     "category": "objects"
   },
   {
     "iconName": "cookie",
-    "synonym": ["tracking", "privacy", "biscuit", "cookie"],
+    "synonym": ["tracking", "privacy", "biscuit"],
     "category": "objects"
   },
   {
@@ -406,7 +380,7 @@
   },
   {
     "iconName": "csv",
-    "synonym": ["export", "spreadsheet", "file", "excel", "csv"],
+    "synonym": ["export", "spreadsheet", "file", "excel"],
     "category": "documents"
   },
   {
@@ -419,11 +393,7 @@
     "synonym": ["night", "moon", "theme", "mode"],
     "category": "actions"
   },
-  {
-    "iconName": "dashboard",
-    "synonym": ["car gauge"],
-    "category": "data"
-  },
+  { "iconName": "dashboard", "synonym": ["car gauge"], "category": "data" },
   {
     "iconName": "database",
     "synonym": ["stack", "backend"],
@@ -431,43 +401,27 @@
   },
   {
     "iconName": "delete",
-    "synonym": [
-      "remove",
-      "trash",
-      "discard",
-      "close",
-      "erase",
-      "bin",
-      "trash can"
-    ],
+    "synonym": ["remove", "trash", "discard", "erase", "bin", "trash can"],
     "category": "actions"
   },
   {
     "iconName": "devices",
-    "synonym": ["screen", "tech", "equipment", "monitor", "devices"],
+    "synonym": ["screen", "tech", "equipment", "monitor"],
     "category": "media"
   },
   {
     "iconName": "diamond",
-    "synonym": ["gem", "premium", "jewel", "exclusive", "diamond"],
+    "synonym": ["gem", "premium", "jewel", "exclusive"],
     "category": "finance"
   },
   {
     "iconName": "display",
-    "synonym": ["display", "screen", "monitor", "desktop"],
+    "synonym": ["screen", "monitor", "desktop"],
     "category": "media"
   },
   {
     "iconName": "document",
-    "synonym": [
-      "page",
-      "file",
-      "paper",
-      "draft",
-      "create",
-      "document",
-      "view transcript"
-    ],
+    "synonym": ["page", "file", "paper", "draft", "create", "view transcript"],
     "category": "documents"
   },
   {
@@ -508,7 +462,7 @@
   },
   {
     "iconName": "download",
-    "synonym": ["save", "arrow", "transfer", "download"],
+    "synonym": ["save", "arrow", "transfer"],
     "category": "arrows & chevrons"
   },
   {
@@ -523,29 +477,16 @@
   },
   {
     "iconName": "error",
-    "synonym": [
-      "alert",
-      "stop",
-      "failure",
-      "crash",
-      "mistake",
-      "alert triangle",
-      "exclamation circle"
-    ],
+    "synonym": ["alert", "stop", "failure", "crash", "mistake", "exclamation"],
     "category": "indicators"
   },
-  {
-    "iconName": "error-execute",
-    "synonym": [],
-    "category": "indicators"
-  },
+  { "iconName": "error-execute", "synonym": [], "category": "indicators" },
   {
     "iconName": "expand",
     "synonym": [
       "enlarge",
       "arrow",
       "size",
-      "triangle",
       "maximize",
       "reveal",
       "media expand"
@@ -586,7 +527,7 @@
   },
   {
     "iconName": "flag",
-    "synonym": ["marker", "report", "flag"],
+    "synonym": ["marker", "report"],
     "category": "actions"
   },
   {
@@ -601,22 +542,35 @@
   },
   {
     "iconName": "forward-10",
-    "synonym": ["skip", "media", "media fast forward 10 seconds", "forward 10"],
+    "synonym": [
+      "skip",
+      "media",
+      "video",
+      "audio",
+      "media fast forward 10 seconds",
+      "forward 10"
+    ],
     "category": "media"
   },
   {
     "iconName": "forward-15",
-    "synonym": ["skip", "media", "media fast forward 15 seconds"],
+    "synonym": [
+      "skip",
+      "media",
+      "video",
+      "audio",
+      "media fast forward 15 seconds"
+    ],
     "category": "media"
   },
   {
     "iconName": "forward-30",
-    "synonym": ["skip", "media"],
+    "synonym": ["skip", "media", "video", "audio"],
     "category": "media"
   },
   {
     "iconName": "forward-5",
-    "synonym": ["skip", "media"],
+    "synonym": ["skip", "media", "video", "audio"],
     "category": "media"
   },
   {
@@ -626,7 +580,7 @@
   },
   {
     "iconName": "globe",
-    "synonym": ["global", "earth", "international", "world", "globe"],
+    "synonym": ["global", "earth", "international", "world"],
     "category": "places"
   },
   {
@@ -662,12 +616,11 @@
   {
     "iconName": "help",
     "synonym": [
-      "help",
       "question",
       "support",
       "information",
       "assist",
-      "question mark circle"
+      "question mark"
     ],
     "category": "indicators"
   },
@@ -686,12 +639,12 @@
   },
   {
     "iconName": "history",
-    "synonym": ["clock", "time", "archive", "clock expiring", "history"],
+    "synonym": ["clock", "time", "archive", "clock expiring"],
     "category": "arrows & chevrons"
   },
   {
     "iconName": "home",
-    "synonym": ["house", "navigation", "start"],
+    "synonym": ["house", "navigation"],
     "category": "places"
   },
   {
@@ -716,7 +669,7 @@
   },
   {
     "iconName": "inbox",
-    "synonym": ["mail", "tray", "message", "email", "inbox"],
+    "synonym": ["mail", "tray", "message", "email"],
     "category": "communication"
   },
   {
@@ -727,7 +680,7 @@
       "support",
       "assist",
       "detail",
-      "info tip filled"
+      "info tip"
     ],
     "category": "indicators"
   },
@@ -791,7 +744,7 @@
   },
   {
     "iconName": "laptop",
-    "synonym": ["screen", "computer", "device", "laptop"],
+    "synonym": ["screen", "computer", "device"],
     "category": "media"
   },
   {
@@ -816,7 +769,7 @@
   },
   {
     "iconName": "list",
-    "synonym": ["content", "bulleted", "item", "notes", "list"],
+    "synonym": ["content", "bulleted", "item", "notes"],
     "category": "organize"
   },
   {
@@ -826,7 +779,7 @@
   },
   {
     "iconName": "location",
-    "synonym": ["place", "pin", "navigation", "map", "position", "location"],
+    "synonym": ["place", "pin", "navigation", "map", "position"],
     "category": "actions"
   },
   {
@@ -838,7 +791,7 @@
       "safety",
       "restrict",
       "secure",
-      "lock locked outline"
+      "lock locked"
     ],
     "category": "actions"
   },
@@ -912,16 +865,7 @@
   },
   {
     "iconName": "microphone",
-    "synonym": [
-      "audio",
-      "mic",
-      "sound",
-      "voice",
-      "on",
-      "record",
-      "microphone",
-      "podcast"
-    ],
+    "synonym": ["audio", "mic", "sound", "voice", "on", "record", "podcast"],
     "category": "media"
   },
   {
@@ -945,14 +889,7 @@
   },
   {
     "iconName": "mobile",
-    "synonym": [
-      "smartphone",
-      "device",
-      "responsive",
-      "cell",
-      "telephone",
-      "mobile"
-    ],
+    "synonym": ["smartphone", "device", "responsive", "cell", "telephone"],
     "category": "media"
   },
   {
@@ -992,12 +929,12 @@
   },
   {
     "iconName": "notification",
-    "synonym": ["alert", "bell", "reminder", "ping"],
+    "synonym": ["alert", "bell", "reminder", "message"],
     "category": "actions"
   },
   {
     "iconName": "notification-read",
-    "synonym": ["alert", "bell", "reminder", "seen", "tick"],
+    "synonym": ["alert", "bell", "reminder", "seen", "tick", "message"],
     "category": "actions"
   },
   {
@@ -1017,15 +954,7 @@
   },
   {
     "iconName": "pdf",
-    "synonym": [
-      "download",
-      "file",
-      "export",
-      "document",
-      "convert",
-      "format",
-      "pdf icon"
-    ],
+    "synonym": ["download", "file", "export", "document", "convert", "format"],
     "category": "documents"
   },
   {
@@ -1074,12 +1003,12 @@
   },
   {
     "iconName": "pot-food",
-    "synonym": ["cooking", "bowl", "meal", "dish"],
+    "synonym": ["cooking", "bowl", "dish"],
     "category": "objects"
   },
   {
     "iconName": "presentation",
-    "synonym": ["display", "meeting", "slideshow", "deck", "presentation"],
+    "synonym": ["display", "meeting", "slideshow", "deck"],
     "category": "media"
   },
   {
@@ -1089,7 +1018,7 @@
   },
   {
     "iconName": "print",
-    "synonym": ["printer", "document", "scan", "print"],
+    "synonym": ["printer", "document", "scan"],
     "category": "actions"
   },
   {
@@ -1164,7 +1093,15 @@
   },
   {
     "iconName": "redo",
-    "synonym": ["repeat", "arrow", "action", "refresh", "forward", "sync"],
+    "synonym": [
+      "repeat",
+      "arrow",
+      "action",
+      "refresh",
+      "forward",
+      "sync",
+      "reset"
+    ],
     "category": "arrows & chevrons"
   },
   {
@@ -1177,7 +1114,7 @@
       "repeat",
       "forward",
       "sync",
-      "refresh"
+      "reset"
     ],
     "category": "arrows & chevrons"
   },
@@ -1259,14 +1196,7 @@
   },
   {
     "iconName": "search",
-    "synonym": [
-      "lookup",
-      "magnifier",
-      "discover",
-      "find",
-      "magnifying glass",
-      "search"
-    ],
+    "synonym": ["lookup", "magnifier", "discover", "find", "magnifying glass"],
     "category": "actions"
   },
   {
@@ -1296,38 +1226,17 @@
   },
   {
     "iconName": "send",
-    "synonym": [
-      "deliver",
-      "mail",
-      "action",
-      "email",
-      "location navigate outlined"
-    ],
+    "synonym": ["deliver", "mail", "action", "email", "location navigate"],
     "category": "communication"
   },
   {
     "iconName": "settings",
-    "synonym": [
-      "preferences",
-      "gear",
-      "configuration",
-      "options",
-      "controls",
-      "settings"
-    ],
+    "synonym": ["preferences", "gear", "configuration", "options", "controls"],
     "category": "actions"
   },
   {
     "iconName": "share",
-    "synonym": [
-      "send",
-      "nodes",
-      "action",
-      "deliver",
-      "forward",
-      "socials",
-      "share"
-    ],
+    "synonym": ["send", "nodes", "action", "deliver", "forward", "socials"],
     "category": "communication"
   },
   {
@@ -1408,14 +1317,7 @@
   },
   {
     "iconName": "stethoscope",
-    "synonym": [
-      "healthcare",
-      "medicine",
-      "medical",
-      "clinic",
-      "doctor",
-      "stethoscope"
-    ],
+    "synonym": ["healthcare", "medicine", "medical", "clinic", "doctor"],
     "category": "objects"
   },
   {
@@ -1425,14 +1327,7 @@
   },
   {
     "iconName": "storefront",
-    "synonym": [
-      "shop",
-      "building",
-      "retail",
-      "business",
-      "commerce",
-      "storefront"
-    ],
+    "synonym": ["shop", "building", "retail", "business", "commerce"],
     "category": "places"
   },
   {
@@ -1455,7 +1350,7 @@
       "done",
       "approve",
       "tick",
-      "checkmark filled"
+      "checkmark"
     ],
     "category": "indicators"
   },
@@ -1503,7 +1398,7 @@
   },
   {
     "iconName": "target",
-    "synonym": ["focus", "bullseye", "goal", "target", "objective"],
+    "synonym": ["focus", "bullseye", "goal", "objective"],
     "category": "actions"
   },
   {
@@ -1639,14 +1534,7 @@
   },
   {
     "iconName": "upload",
-    "synonym": [
-      "import",
-      "arrow",
-      "transfer",
-      "share",
-      "upload",
-      "back to top"
-    ],
+    "synonym": ["import", "arrow", "transfer", "share", "back to top"],
     "category": "arrows & chevrons"
   },
   {
@@ -1708,7 +1596,7 @@
   },
   {
     "iconName": "video",
-    "synonym": ["stream", "camera", "media", "film", "media video", "video"],
+    "synonym": ["stream", "camera", "media", "film", "media video"],
     "category": "media"
   },
   {
@@ -1728,14 +1616,7 @@
   },
   {
     "iconName": "volume-off",
-    "synonym": [
-      "mute",
-      "x speaker",
-      "audio",
-      "disable",
-      "off",
-      "media volume mute"
-    ],
+    "synonym": ["mute", "x speaker", "audio", "sound", "media volume mute"],
     "category": "media"
   },
   {
@@ -1746,7 +1627,6 @@
       "audio",
       "sound",
       "start",
-      "stop",
       "media volume high",
       "volume"
     ],
@@ -1771,7 +1651,7 @@
   },
   {
     "iconName": "waveform",
-    "synonym": ["sound", "waveform", "audio"],
+    "synonym": ["sound", "audio"],
     "category": "media"
   },
   {
@@ -1781,14 +1661,7 @@
   },
   {
     "iconName": "wifi",
-    "synonym": [
-      "internet",
-      "signal",
-      "network",
-      "connection",
-      "online",
-      "wifi"
-    ],
+    "synonym": ["internet", "signal", "network", "connection", "online"],
     "category": "computing"
   },
   {
@@ -1833,14 +1706,13 @@
       "insight",
       "inspiration",
       "illuminate",
-      "dim",
-      "ico lightbulb"
+      "dim"
     ],
     "category": "objects"
   },
   {
     "iconName": "growth",
-    "synonym": ["increase", "arrow", "data", "graph", "rise", "ico growth"],
+    "synonym": ["increase", "arrow", "data", "graph", "rise"],
     "category": "data"
   },
   {
@@ -1883,7 +1755,7 @@
       "view",
       "find",
       "magnifying glass",
-      "ico overview"
+      "overview"
     ],
     "category": "documents"
   },
@@ -1904,7 +1776,7 @@
   },
   {
     "iconName": "dataset-manager",
-    "synonym": ["stack", "data"],
+    "synonym": ["stack", "data", "user"],
     "category": "people"
   },
   {
@@ -1914,7 +1786,7 @@
   },
   {
     "iconName": "pie-chart",
-    "synonym": ["breakdown", "graph", "segment", "analytics", "ico chart pie"],
+    "synonym": ["breakdown", "graph", "segment", "analytics", "chart pie"],
     "category": "data"
   },
   {
@@ -1974,11 +1846,7 @@
     "synonym": ["start", "beginning"],
     "category": "arrows & chevrons"
   },
-  {
-    "iconName": "last",
-    "synonym": ["end"],
-    "category": "arrows & chevrons"
-  },
+  { "iconName": "last", "synonym": ["end"], "category": "arrows & chevrons" },
   {
     "iconName": "school",
     "synonym": [
@@ -1995,7 +1863,7 @@
   },
   {
     "iconName": "linkedin",
-    "synonym": ["social", "logo", "network", "ico logo linkedin", "linkedin"],
+    "synonym": ["social", "logo", "network", "logo linkedin"],
     "category": "logos"
   },
   {
@@ -2004,7 +1872,7 @@
     "category": "actions"
   },
   {
-    "iconName": "urgency-onTime",
+    "iconName": "urgency-ontime",
     "synonym": ["status"],
     "category": "indicators"
   },
@@ -2027,34 +1895,235 @@
       "luggage",
       "baggage",
       "vacation",
-      "ico suitcase checked"
+      "suitcase checked"
     ],
     "category": "objects"
   },
   {
     "iconName": "currency",
-    "synonym": [
-      "money",
-      "coin",
-      "finance",
-      "dollar",
-      "ico currency usd circle"
-    ],
+    "synonym": ["money", "coin", "finance", "dollar", "currency usd"],
     "category": "finance"
   },
   {
     "iconName": "currency-exchange",
-    "synonym": ["money", "finance", "dollar", "ico lending"],
+    "synonym": ["money", "finance", "dollar", "lending"],
     "category": "finance"
   },
   {
     "iconName": "like",
-    "synonym": ["heart", "love", "favorite", "favourite", "ico like outlined"],
+    "synonym": ["heart", "love", "favorite", "favourite"],
     "category": "actions"
   },
   {
     "iconName": "magic-wand",
     "synonym": ["clean up", "tool", "transform", "effect"],
     "category": "objects"
+  },
+  {
+    "iconName": "close-left-panel",
+    "synonym": ["collapse", "arrow", "navigation", "hide", "minimize"],
+    "category": "organize"
+  },
+  {
+    "iconName": "close-right-panel",
+    "synonym": ["collapse", "arrow", "navigation", "hide", "minimize"],
+    "category": "organize"
+  },
+  {
+    "iconName": "divide",
+    "synonym": ["division", "math", "formula", "fraction", "calculate"],
+    "category": "organize"
+  },
+  {
+    "iconName": "document-compose",
+    "synonym": ["create", "page", "write", "edit", "pen"],
+    "category": "documents"
+  },
+  {
+    "iconName": "document-draft",
+    "synonym": [
+      "create",
+      "page",
+      "write",
+      "edit",
+      "pen",
+      "work in progress",
+      "edit note"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "does-not-equal",
+    "synonym": ["compare", "math"],
+    "category": "organize"
+  },
+  {
+    "iconName": "equal",
+    "synonym": ["compare", "math", "same as", "calculate"],
+    "category": "organize"
+  },
+  {
+    "iconName": "exponentiation",
+    "synonym": [
+      "power",
+      "raised number",
+      "math",
+      "algebra",
+      "exponential",
+      "calculate"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "forward",
+    "synonym": ["share", "arrow", "email", "message", "communication"],
+    "category": "organize"
+  },
+  {
+    "iconName": "greater-than",
+    "synonym": ["calculate", "math"],
+    "category": "organize"
+  },
+  {
+    "iconName": "greater-than-equal-to",
+    "synonym": ["calculate", "math"],
+    "category": "organize"
+  },
+  {
+    "iconName": "infinite",
+    "synonym": ["infinity", "math"],
+    "category": "organize"
+  },
+  {
+    "iconName": "less-than",
+    "synonym": ["calculate", "math"],
+    "category": "organize"
+  },
+  {
+    "iconName": "less-than-equal-to",
+    "synonym": ["calculate", "math"],
+    "category": "organize"
+  },
+  {
+    "iconName": "multiply",
+    "synonym": ["times", "x", "math", "multiplication", "calculate"],
+    "category": "organize"
+  },
+  {
+    "iconName": "open-left-panel",
+    "synonym": ["expand", "arrow", "navigation", "show"],
+    "category": "organize"
+  },
+  {
+    "iconName": "open-right-panel",
+    "synonym": ["expand", "arrow", "navigation", "show"],
+    "category": "organize"
+  },
+  {
+    "iconName": "percentage",
+    "synonym": [
+      "percent",
+      "math",
+      "proportion",
+      "interest",
+      "ratio",
+      "calculate"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "pi",
+    "synonym": ["constant", "math", "ratio", "geometry", "calculate"],
+    "category": "organize"
+  },
+  {
+    "iconName": "reply",
+    "synonym": ["respond", "arrow", "email", "communication"],
+    "category": "organize"
+  },
+  {
+    "iconName": "reply-all",
+    "synonym": ["respond", "arrow", "email", "communication"],
+    "category": "organize"
+  },
+  {
+    "iconName": "reply-forward",
+    "synonym": ["share", "arrow", "email", "communication"],
+    "category": "organize"
+  },
+  {
+    "iconName": "schedule",
+    "synonym": ["plan", "calendar", "event", "appointment", "schedule meeting"],
+    "category": "organize"
+  },
+  {
+    "iconName": "split-view",
+    "synonym": ["compare", "panel", "dual"],
+    "category": "organize"
+  },
+  {
+    "iconName": "square-root",
+    "synonym": ["calculate", "radical", "math", "root"],
+    "category": "organize"
+  },
+  {
+    "iconName": "stop",
+    "synonym": ["end", "square", "action", "finish", "audio", "start", "video"],
+    "category": "media"
+  },
+  {
+    "iconName": "text-align-center",
+    "synonym": ["format", "paragraph", "typography"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-align-left",
+    "synonym": ["format", "paragraph", "typography"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-align-right",
+    "synonym": ["format", "paragraph", "typography"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-bold",
+    "synonym": ["format", "typography", "strong", "emphasize", "font"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-color",
+    "synonym": ["format", "typography", "font"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-highlight",
+    "synonym": ["format", "typography", "emphasize", "font"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-italics",
+    "synonym": ["format", "slanted", "typography", "font"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-justify",
+    "synonym": ["format", "typography", "justified", "font"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-ordered-list",
+    "synonym": ["format", "sequence", "typography", "numbered", "font", "list"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-strikethrough",
+    "synonym": ["format", "crossed", "typography", "remove", "font"],
+    "category": "documents"
+  },
+  {
+    "iconName": "text-underline",
+    "synonym": ["format", "typography", "emphasize", "font"],
+    "category": "documents"
   }
 ]
