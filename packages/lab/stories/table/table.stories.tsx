@@ -25,7 +25,7 @@ export default {
   subcomponents: { TD, TH, Text, Code, TBody, THead, TR, TFoot },
   args: {
     variant: "primary",
-    zebra: undefined,
+    zebra: false,
     THeadProps: { sticky: false, variant: undefined, divider: "primary" },
     TFootProps: { sticky: false, variant: undefined, divider: "tertiary" },
     TRProps: { divider: "secondary" },
@@ -110,7 +110,7 @@ Tertiary.args = {
 
 export const Zebra = Template.bind({});
 Zebra.args = {
-  zebra: "tertiary",
+  zebra: true,
 };
 
 export const HeaderVariant = Template.bind({});
@@ -209,7 +209,13 @@ StickyHeaderFooter.args = {
   TFootProps: { sticky: true },
 };
 
-export const ColumnHeaders: StoryFn<typeof Table> = (args) => {
+export const ColumnHeaders: StoryFn = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  ...args
+}) => {
   return (
     <Table divider="none" {...args}>
       <THead>
@@ -230,6 +236,41 @@ export const ColumnHeaders: StoryFn<typeof Table> = (args) => {
         <TR>
           <TH scope="row">Label</TH>
           <TD>Value</TD>
+        </TR>
+      </TBody>
+    </Table>
+  );
+};
+
+export const LongCellContent: StoryFn = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <Table style={{ width: 200 }} {...args}>
+      <THead>
+        <TR>
+          <TH {...THProps}>Super long column header that will wrap</TH>
+          <TH {...THProps}>Two</TH>
+        </TR>
+      </THead>
+      <TBody>
+        <TR>
+          <TD {...TDProps}>Super long cell content that will wrap</TD>
+          <TD {...TDProps}>Value</TD>
+        </TR>
+        <TR>
+          <TD {...TDProps}>Value</TD>
+          <TD {...TDProps}>Value</TD>
+        </TR>
+        <TR>
+          <TD {...TDProps}>Value</TD>
+          <TD {...TDProps}>Value</TD>
         </TR>
       </TBody>
     </Table>
