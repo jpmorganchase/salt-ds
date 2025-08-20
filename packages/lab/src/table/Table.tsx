@@ -18,10 +18,10 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
-   * Zebra styling. Applies variant to every other row.
-   * @default undefined
+   * Zebra styling. Applies a different fill to every other row.
+   * @default false
    */
-  zebra?: "primary" | "secondary" | "tertiary";
+  zebra?: boolean;
 }
 
 export const withTableBaseName = makePrefixer("saltTable");
@@ -32,7 +32,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     className,
     variant = "primary",
     divider = "tertiary",
-    zebra,
+    zebra = false,
     ...rest
   },
   ref,
@@ -50,7 +50,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
         withTableBaseName(),
         {
           [withTableBaseName(variant)]: variant,
-          [withTableBaseName(`zebra-${zebra}`)]: zebra,
+          [withTableBaseName("zebra")]: zebra,
           [withTableBaseName(`divider-${divider}`)]: divider,
         },
         className,
