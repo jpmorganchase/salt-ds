@@ -1,12 +1,9 @@
 import type { Meta } from "@storybook/react-vite";
-// @ts-ignore
 import coreCss from "docs/css/salt-core.css?inline";
-// @ts-ignore
 import countriesCss from "docs/css/salt-countries.css?inline";
-// @ts-ignore
 import labCss from "docs/css/salt-lab.css?inline";
 import { useEffect } from "react";
-// @ts-ignore
+
 import iconCss from "../../../icons/src/icon/Icon.css?inline";
 import { Components } from "./kitchen-sink.stories";
 

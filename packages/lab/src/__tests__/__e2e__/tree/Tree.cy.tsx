@@ -1,13 +1,13 @@
 import { Tree } from "@salt-ds/lab";
 import { useEffect, useReducer } from "react";
 
-function createNodes(count: number, factory: (index: number) => any) {
-  const nodes = [];
-  for (let i = 0; i < count; i++) {
-    nodes.push(factory(i));
-  }
-  return nodes;
-}
+// function createNodes(count: number, factory: (index: number) => any) {
+//   const nodes = [];
+//   for (let i = 0; i < count; i++) {
+//     nodes.push(factory(i));
+//   }
+//   return nodes;
+// }
 
 function createSampleTreeData(autoExpanded = true, wideLeafNodeParentId = "") {
   return [
@@ -88,9 +88,9 @@ function createSampleTreeData(autoExpanded = true, wideLeafNodeParentId = "") {
   ];
 }
 
-const noop = () => {
-  // noop
-};
+// const noop = () => {
+//   // noop
+// };
 
 describe("GIVEN a Tree", () => {
   describe("AND when the component renders with empty root childNodes", () => {

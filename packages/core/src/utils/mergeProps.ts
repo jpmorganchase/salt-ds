@@ -18,7 +18,7 @@ export function mergeProps(
 ): Record<string, unknown> {
   const props = { ...propsA };
 
-  Object.keys(propsB).forEach((key) => {
+  for (const key of Object.keys(propsB)) {
     const a: any = props[key];
     const b: any = propsB[key];
 
@@ -37,7 +37,7 @@ export function mergeProps(
     } else {
       props[key] = b !== undefined ? b : a;
     }
-  });
+  }
 
   return props;
 }

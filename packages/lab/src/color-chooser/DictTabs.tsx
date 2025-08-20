@@ -59,7 +59,7 @@ export const DictTabs = ({
             key={idx}
           >
             {tab?.props ? (
-              // @ts-ignore
+              // @ts-expect-error
               <TabComponent {...tab?.props} />
             ) : null}
           </div>

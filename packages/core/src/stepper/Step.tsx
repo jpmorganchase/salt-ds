@@ -132,7 +132,7 @@ export const Step = forwardRef<HTMLLIElement, StepProps>(function Step(
         );
       }
     }
-  }, [depth, orientation]);
+  }, [depth, orientation, hasNestedSteps]);
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
   const iconSizeMultiplier = depth === 0 ? 1.5 : 1;

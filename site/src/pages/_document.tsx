@@ -8,7 +8,7 @@ export default function Document() {
     <Html lang="en" className="salt-theme salt-theme-next salt-editorial">
       <Head>
         <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed to set the initial theme based on localStorage and avoid a flash of unstyled content (FOUC).
           dangerouslySetInnerHTML={{
             __html: `
               try {

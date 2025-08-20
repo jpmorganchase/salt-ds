@@ -19,7 +19,9 @@ export function useRefsManager(): refsManager {
 
   const values = useCallback(() => {
     const vals: HTMLElement[] = [];
-    refs.current.forEach((value) => vals.push(value));
+    for (const value of refs.current.values()) {
+      vals.push(value);
+    }
     return vals;
   }, []);
 

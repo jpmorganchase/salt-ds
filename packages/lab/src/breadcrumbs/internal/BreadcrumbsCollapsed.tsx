@@ -3,8 +3,6 @@ import {
   Children,
   type Component,
   isValidElement,
-  type KeyboardEvent,
-  type MouseEvent,
   type ReactNode,
   useCallback,
 } from "react";
@@ -45,14 +43,11 @@ export const BreadcrumbsCollapsed = ({
     }
     const { overflowLabel, tooltipText, children } = child.props;
     return overflowLabel || tooltipText || String(children);
-  }, []);
+  }, []) as (item: MenuDescriptor) => string;
 
-  const onItemClick = useCallback(
-    (sourceItem: MenuDescriptor, event: MouseEvent | KeyboardEvent): void => {
-      shouldFocusOnMount.current = true;
-    },
-    [shouldFocusOnMount],
-  );
+  const onItemClick = useCallback((): void => {
+    shouldFocusOnMount.current = true;
+  }, [shouldFocusOnMount]);
 
   const menuItems: MenuDescriptor[] = [];
   Children.forEach(children, (x) => {

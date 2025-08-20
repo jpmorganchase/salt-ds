@@ -55,7 +55,7 @@ export function StatusIndicator({
         className={clsx(withBaseName("indeterminateLoading"), spinnerClassName)}
         // Announcement of the content status is more useful than completion announcement from spinner
         completionAnnouncement={null}
-        data-testid={`spinner-${id!}`}
+        data-testid={`spinner-${id}`}
         disableAnnouncer={disableAnnouncer}
         {...restSpinnerProps}
       />
@@ -65,7 +65,7 @@ export function StatusIndicator({
   return (
     <BaseStatusIndicator
       status={status}
-      data-jpmui-test={`icon-${status}-${id!}`}
+      data-jpmui-test={`icon-${status}-${id}`}
       size={2}
     />
   );

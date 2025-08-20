@@ -62,7 +62,7 @@ export const Default: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
       }}
@@ -130,7 +130,7 @@ export const MaximumWidth: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       maxWidth={255}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
@@ -190,7 +190,7 @@ export const WithSeparators: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
       }}
@@ -248,7 +248,7 @@ export const WithDisabledItems: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
       }}
@@ -323,7 +323,7 @@ export const WithIcons: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
       }}
@@ -392,7 +392,7 @@ export const ControlledOpenClose: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       onClose={() => {
         setOpen(false);
       }}
@@ -521,7 +521,7 @@ export const ControlledSource: StoryFn<typeof CascadingMenu> = () => {
 
   return (
     <CascadingMenu
-      itemToString={(item) => item?.title}
+      itemToString={(item) => item?.title ?? ""}
       menuTriggerRef={menuTriggerRef}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);

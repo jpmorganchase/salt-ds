@@ -38,7 +38,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   });
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
-  const { tabIndex, ...restButtonProps } = buttonProps;
+  const { tabIndex: _tabIndex, ...restButtonProps } = buttonProps;
   return (
     <button
       data-testid="pill"

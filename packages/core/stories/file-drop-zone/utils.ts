@@ -20,15 +20,14 @@ export type FilesValidator<ErrorType = string> = (
   | string
   | undefined;
 
+const trimSlashAsterisk = (type: string) => type.replace(/\/.*$/, "");
+
 /**
  * Factory method for creating a common file type validator.
  *
  * @param {string} accept - It is the same as 'accept' attribute for HTML <input>.
  * @param {function} getError - A callback function for generating a customised user error.
  */
-
-const trimSlashAsterisk = (type: string) => type.replace(/\/.*$/, "");
-
 export function createFileTypeValidator<ErrorType = string>({
   accept,
   getError,

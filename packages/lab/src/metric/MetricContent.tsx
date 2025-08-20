@@ -101,6 +101,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       <div
         {...restProps}
         className={clsx(withBaseName(), className)}
+        role="presentation"
         aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
         ref={ref}
       >

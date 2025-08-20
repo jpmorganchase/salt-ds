@@ -153,6 +153,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="checkbox"
+          // biome-ignore lint/a11y/useAriaPropsForRole: aria-checked is not needed when input and checked is used.
           role="switch"
           {...restInputProps}
         />

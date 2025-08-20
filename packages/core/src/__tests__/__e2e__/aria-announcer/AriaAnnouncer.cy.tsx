@@ -14,11 +14,12 @@ const TestComponent = ({
   debounce,
   getAnnouncement,
 }: {
-  announcement?: string;
   delay?: number;
-  debounce?: any;
-  getAnnouncement?: any;
-}) => {
+  debounce?: number;
+} & (
+  | { announcement?: never; getAnnouncement: () => string }
+  | { announcement: string; getAnnouncement?: never }
+)) => {
   const { announce } = useAriaAnnouncer({ debounce });
   const getMessageToAnnounce = () =>
     getAnnouncement ? getAnnouncement() : announcement;
@@ -46,7 +47,7 @@ const TestComponent = ({
 describe("Given a AriaAnnouncerProvider", () => {
   it("should not affect the document flow", () => {
     mount(
-      <div id="test-1" style={{ height: "100%", width: "100%" }}>
+      <div style={{ height: "100%", width: "100%" }}>
         <AriaAnnouncerProvider>
           <div style={{ height: "100%", width: "100%" }} />
         </AriaAnnouncerProvider>

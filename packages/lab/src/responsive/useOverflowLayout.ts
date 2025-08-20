@@ -176,7 +176,7 @@ export const useOverflowLayout = ({
   // This hook runs after a measurememnt cycle, not after every single change to
   // collection data. The version attribute has been introduced specifically for this.
   useEffect(() => {
-    if (!disableOverflow) {
+    if (!disableOverflow && collectionVersion != null) {
       measureAndInitialize();
     }
   }, [collectionVersion, disableOverflow, measureAndInitialize]);

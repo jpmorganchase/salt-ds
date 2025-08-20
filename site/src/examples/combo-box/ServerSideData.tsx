@@ -45,7 +45,7 @@ export const ServerSideData = (): ReactElement => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: string[],
   ) => {
     if (newSelected.length === 1) {

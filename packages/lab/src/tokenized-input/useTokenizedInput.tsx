@@ -88,15 +88,15 @@ export function useTokenizedInput<Item>(
 
   const {
     inFormField,
-    // @ts-ignore
+    // @ts-expect-error
     popoutMode,
-    // @ts-ignore
+    // @ts-expect-error
     popoutActions,
-    // @ts-ignore
+    // @ts-expect-error
     setIsPoppedOut,
-    // @ts-ignore
+    // @ts-expect-error
     setManagedPopout,
-    // @ts-ignore
+    // @ts-expect-error
     setIntendedHeight,
     a11yProps: {
       "aria-labelledby": ariaLabelledBy,

@@ -133,7 +133,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
         }, 300); // var(--salt-duration-perceptible)
         return () => clearTimeout(animate);
       }
-    }, [open, showComponent, setShowComponent]);
+    }, [open, showComponent]);
 
     const contextValue = useMemo(() => ({ status, id }), [status, id]);
 

@@ -1,8 +1,8 @@
 import { isPlainObject } from "./internal/helpers";
 
-export type ItemToStringFunction = (item: any) => string;
+export type ItemToStringFunction<Item = unknown> = (item: Item) => string;
 
-export function itemToString(item: any) {
+export function itemToString<Item>(item: Item) {
   if (!isPlainObject(item)) {
     return String(item);
   }

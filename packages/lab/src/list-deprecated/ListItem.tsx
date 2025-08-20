@@ -31,8 +31,7 @@ function ListItem<Item = string>(
     ...restProps,
   });
 
-  //TODO how can we type Item when child can be any React Node
-  const itemText = itemToString(item as any);
+  const itemText = itemToString(item as Item);
 
   return (
     <ListItemBase tooltipText={itemText} {...itemProps} ref={ref}>

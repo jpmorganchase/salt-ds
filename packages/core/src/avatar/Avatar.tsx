@@ -117,6 +117,13 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
 
   const avatarInitials = nameToInitials(name);
 
+  const ariaProps = name
+    ? {
+        role: "img",
+        "aria-label": name,
+      }
+    : {};
+
   return (
     <div
       ref={ref}
@@ -129,8 +136,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
         },
         className,
       )}
-      role={name ? "img" : undefined}
-      aria-label={name}
+      {...ariaProps}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}

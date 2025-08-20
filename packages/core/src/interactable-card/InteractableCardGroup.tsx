@@ -13,7 +13,12 @@ import {
   useState,
 } from "react";
 
-import { makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  makePrefixer,
+  ownerDocument,
+  useControlled,
+  useForkRef,
+} from "../utils";
 import interactableCardGroupCss from "./InteractableCardGroup.css";
 import {
   InteractableCardGroupContext,
@@ -152,9 +157,9 @@ export const InteractableCardGroup = forwardRef<
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const currentIndex = elements.findIndex(
-      (element) => element === document.activeElement,
-    );
+    const doc = ownerDocument(groupRef.current);
+
+    const currentIndex = elements.indexOf(doc.activeElement as HTMLElement);
     const nextIndex = (currentIndex + 1) % elements.length;
     const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
 

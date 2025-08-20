@@ -43,6 +43,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
           className,
         )}
         aria-orientation={orientation}
+        // biome-ignore lint/a11y/useAriaPropsForRole: Separator is not focusable, so it doesn't need aria-valuenow.
         role="separator"
         ref={ref}
         {...rest}

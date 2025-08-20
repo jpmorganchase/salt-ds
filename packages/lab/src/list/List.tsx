@@ -338,9 +338,7 @@ export const List = forwardRef(function List<
     >
       <ListItemProxy ref={rowHeightProxyRef} />
       {collectionHook.data.length === 0 && ListPlaceholder !== undefined ? (
-        <>
-          <ListPlaceholder />
-        </>
+        <ListPlaceholder />
       ) : (
         <div
           className={withBaseName("scrollingContentContainer")}

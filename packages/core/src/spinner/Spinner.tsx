@@ -74,7 +74,6 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       announcerTimeout = 20000,
       completionAnnouncement = `finished ${ariaLabel}`,
       disableAnnouncer,
-      role = "img",
       className,
       size = "medium",
       id: idProp,
@@ -100,12 +99,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
 
       announce(ariaLabel);
 
-      const startTime = new Date().getTime();
+      const startTime = Date.now();
 
       const interval =
         announcerInterval > 0 &&
         setInterval(() => {
-          if (new Date().getTime() - startTime > announcerTimeout) {
+          if (Date.now() - startTime > announcerTimeout) {
             // The announcer will stop after `announcerTimeout` time
             announce(
               `${ariaLabel} is still in progress, but will no longer announce.`,
@@ -138,7 +137,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         aria-label={ariaLabel}
         className={clsx(withBaseName(), withBaseName(size), className)}
         ref={ref}
-        role={role}
+        role="img"
         {...rest}
       >
         <SpinnerSVG size={size} density={density} id={id} />

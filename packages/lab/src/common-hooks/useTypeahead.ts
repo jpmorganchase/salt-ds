@@ -32,11 +32,12 @@ export const useTypeahead = <Item>({
       if (intermediateSearch || !applyIncrementalSearch) {
         const regex = new RegExp(`^${searchChars.current}`, "i");
         let idx = items.findIndex(
-          ({ label }, i) => i > startIdx.current && regex.test(label!),
+          ({ label }, i) => i > startIdx.current && label && regex.test(label),
         );
         if (idx === -1) {
           idx = items.findIndex(
-            ({ label }, i) => i <= startIdx.current && regex.test(label!),
+            ({ label }, i) =>
+              i <= startIdx.current && label && regex.test(label),
           );
         }
         if (idx !== -1) {

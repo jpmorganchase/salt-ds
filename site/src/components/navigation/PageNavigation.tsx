@@ -6,7 +6,7 @@ export function PageNavigation() {
   const { selectedNodeId, selectedGroupIds } = useSidebar();
   return (
     <VerticalNavigation
-      // @ts-ignore
+      // @ts-expect-error
       menu={menu}
       selectedNodeId={selectedNodeId}
       selectedGroupIds={selectedGroupIds}

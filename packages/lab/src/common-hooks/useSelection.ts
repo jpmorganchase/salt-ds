@@ -2,6 +2,7 @@ import { useControlled } from "@salt-ds/core";
 import {
   type KeyboardEvent,
   type MouseEvent,
+  type SyntheticEvent,
   useCallback,
   useRef,
 } from "react";
@@ -44,7 +45,7 @@ export const useSelection = <
   // groupSelection = GROUP_SELECTION_NONE,
   highlightedIdx,
   indexPositions,
-  label = "",
+  label: _label = "",
   onSelect,
   onSelectionChange,
   selected: selectedProp,
@@ -140,7 +141,7 @@ export const useSelection = <
 
   const selectItemAtIndex = useCallback(
     (
-      evt: any,
+      evt: SyntheticEvent,
       idx: number,
       item: collectionItem,
       rangeSelect: boolean,

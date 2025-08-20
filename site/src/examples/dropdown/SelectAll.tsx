@@ -7,7 +7,7 @@ export const SelectAll = (): ReactElement => {
   const allSelectedOptionValue = "all";
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     let newOptionsSelected = [...newSelected];

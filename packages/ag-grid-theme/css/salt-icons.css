@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noUselessEscapeInString: Biome removes unicode escaping  */
 @font-face {
   font-family: "salt-icons";
   src: url(../fonts/salt-icons.woff) format("woff");

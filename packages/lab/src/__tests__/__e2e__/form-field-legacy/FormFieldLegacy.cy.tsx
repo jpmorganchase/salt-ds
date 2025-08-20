@@ -1,6 +1,7 @@
 import { FormField, Input, useFormFieldLegacyProps } from "@salt-ds/lab";
+import type { ComponentProps } from "react";
 
-const MockControl = ({ ...rest }: any) => {
+const MockControl = ({ ...rest }: ComponentProps<"div">) => {
   const FormFieldLegacyProps = useFormFieldLegacyProps();
 
   return (

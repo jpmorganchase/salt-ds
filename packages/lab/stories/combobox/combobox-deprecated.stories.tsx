@@ -296,7 +296,7 @@ export const ControlledSelection: StoryFn<typeof ComboBoxDeprecated> = ({
     newSelectedItem,
   ) => {
     setSelectedItem(newSelectedItem as string);
-    onChange?.(event, newSelectedItem as any);
+    onChange?.(event, newSelectedItem as never);
   };
 
   const handleMultiChange: ListChangeHandlerDeprecated<string, "multiple"> = (

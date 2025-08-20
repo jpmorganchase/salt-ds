@@ -1,5 +1,5 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { type Ref, useCallback, useRef, useState } from "react";
+import { type CSSProperties, useCallback, useRef, useState } from "react";
 
 export interface ListAutosizerProps {
   responsive: boolean;
@@ -7,16 +7,11 @@ export interface ListAutosizerProps {
   width?: number | string;
 }
 
-interface size {
-  height?: number | string;
-  width?: number | string;
-}
-
 export function useListAutoSizer<Element extends HTMLElement>(
   props: ListAutosizerProps,
-): [Ref<Element>, size] {
+) {
   const { responsive, width, height } = props;
-  const [size, setSize] = useState({ width, height });
+  const [size, setSize] = useState<CSSProperties>({ width, height });
   const ref = useRef<Element>(null);
 
   const handleResize = useCallback(function handleResize(contentRect: DOMRect) {
@@ -52,5 +47,5 @@ export function useListAutoSizer<Element extends HTMLElement>(
     }
   }, [handleResize, responsive]);
 
-  return [ref, size];
+  return [ref, size] as const;
 }

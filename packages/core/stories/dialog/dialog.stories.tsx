@@ -33,7 +33,7 @@ export default {
 const UnmountLogger = () => {
   useEffect(() => {
     return () => {
-      console.log(new Date().getTime(), "Dummy unmount");
+      console.log(Date.now(), "Dummy unmount");
     };
   }, []);
   return null;
@@ -287,15 +287,13 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
       <Dialog
         size="small"
         status="error"
-        aria-labelledby="mandatory-action"
         role="alertdialog"
         open={open}
         onOpenChange={onOpenChange}
         initialFocus={1}
         disableDismiss
       >
-        <DialogHeader id="mandatory-action" header="Delete Transaction" />
-
+        <DialogHeader header="Delete Transaction" />
         <DialogContent>
           Are you sure you want to permanently delete this transaction
         </DialogContent>

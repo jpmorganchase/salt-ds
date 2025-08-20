@@ -1,5 +1,5 @@
 import { createContext, makePrefixer } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type CSSProperties,

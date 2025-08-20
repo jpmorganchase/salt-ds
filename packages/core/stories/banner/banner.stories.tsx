@@ -2,7 +2,6 @@ import {
   Banner,
   BannerActions,
   BannerContent,
-  type BannerProps,
   Button,
   FlowLayout,
   Link,
@@ -170,12 +169,10 @@ const statuses: { status: ValidationStatus; content: string }[] = [
 ];
 
 export const StatusesPrimary: StoryFn<typeof Banner> = (props) => {
-  const { status, ...restProps } = props;
-
   return (
     <StackLayout style={{ width: 500 }}>
       {statuses.map((example) => (
-        <Banner status={example.status} {...restProps} key={example.status}>
+        <Banner {...props} status={example.status} key={example.status}>
           <BannerContent>{example.content}</BannerContent>
         </Banner>
       ))}
@@ -218,7 +215,7 @@ export const Dismissible = () => {
   );
 };
 
-export const MultipleLines = (props: BannerProps) => {
+export const MultipleLines: StoryFn = () => {
   return (
     <StackLayout style={{ width: 500 }}>
       <Banner status="error">

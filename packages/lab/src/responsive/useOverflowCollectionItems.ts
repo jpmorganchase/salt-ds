@@ -74,7 +74,7 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
   injectedItems = [],
   options = defaultOptions,
   orientation,
-  label = "",
+  label: _label = "",
   source,
 }) => {
   const dataRef = useRef<OverflowItem[]>([]);

@@ -1,4 +1,11 @@
-import type { HTMLAttributes, Ref, SyntheticEvent } from "react";
+import type {
+  ComponentProps,
+  ComponentType,
+  HTMLAttributes,
+  Ref,
+  SyntheticEvent,
+} from "react";
+import type { IndexedListItemProps } from "./useListItem";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";
@@ -24,11 +31,11 @@ export interface ListBaseProps<Item = string>
   /**
    * The component used for item instead of the default.
    */
-  ListItem?: any;
+  ListItem?: ComponentType<IndexedListItemProps<Item>>;
   /**
    * The component used when there are no items.
    */
-  ListPlaceholder?: any;
+  ListPlaceholder?: ComponentType<ComponentProps<"div">>;
   /**
    * If `true`, the component will have no border.
    */
@@ -121,10 +128,10 @@ export interface ListBaseProps<Item = string>
    */
   itemToString?: (item: Item) => string;
   /**
-   * Used for accessing the scrollable list node inside of the component. If you want to access
+   * Used for accessing the scrollable list node inside the component. If you want to access
    * the outer wrapper node use `ref` instead.
    */
-  listRef?: Ref<HTMLElement>;
+  listRef?: Ref<HTMLDivElement>;
   /**
    * Maximum list height.
    */
@@ -144,7 +151,7 @@ export interface ListBaseProps<Item = string>
   /**
    * @external - react-window
    *
-   * The number of items to render outside of the visible area.
+   * The number of items to render outside the visible area.
    */
   overscanCount?: number;
   /**

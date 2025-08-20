@@ -204,7 +204,6 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param date - The Moment.js date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: date framework
   public isValid(date: Moment | null | undefined): date is Moment {
     return this.moment.isMoment(date) ? date.isValid() : false;
   }
@@ -378,10 +377,10 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @returns  'UTC' | 'system' or the IANA time zone
    */
   public getTimezone = (date: Moment): string => {
-    // @ts-ignore
+    // @ts-expect-error
     const zone = date._z?.name;
     const defaultZone = date.isUTC() ? "UTC" : "system";
-    // @ts-ignore
+    // @ts-expect-error
     return zone ?? this.moment.defaultZone?.name ?? defaultZone;
   };
 

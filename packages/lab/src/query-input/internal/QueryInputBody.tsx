@@ -68,7 +68,7 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
     }, [showCategory]);
 
     const stringToItem: StringToItem<QueryInputItem> = (
-      selectedItems,
+      _selectedItems,
       value,
     ) => {
       return {
@@ -90,9 +90,9 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
           disabled={disabled}
           className={withBaseName("input")}
           selectedItems={selectedItems}
-          // @ts-ignore
+          // @ts-expect-error
           itemToString={itemToString}
-          // @ts-ignore
+          // @ts-expect-error
           stringToItem={stringToItem}
           onInputFocus={onInputFocus}
           onInputBlur={onInputBlur}
@@ -101,7 +101,7 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
           onInputChange={onInputChange}
           expanded={isFocused}
           onClear={onInputClear}
-          // @ts-ignore
+          // @ts-expect-error
           onChange={onSelectedItemsChange}
           onKeyDown={onKeyDown}
         />

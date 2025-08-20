@@ -66,7 +66,7 @@ export function useListItem<Item>(
     // 2. Passing a disabled prop directly or
     // 3. Using the disabled state in list context
     //TODO Not sure where disabled needs to be defined
-    disabled = (item as any).disabled || isDisabled,
+    disabled = (item as Record<string, unknown>).disabled || isDisabled,
     ariaProps: ariaPropsProp,
     style: styleProp,
     ...restProps
@@ -136,7 +136,7 @@ export function useListItem<Item>(
   }
 
   return {
-    item: item!,
+    item: item as Item,
     itemToString,
     itemProps: {
       "data-option-index": index,

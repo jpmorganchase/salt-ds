@@ -30,7 +30,7 @@ function getLogoFromHref(href: string) {
       default:
         return null;
     }
-  } catch (e) {
+  } catch {
     return null;
   }
 }

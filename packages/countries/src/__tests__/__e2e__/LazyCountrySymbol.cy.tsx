@@ -10,7 +10,7 @@ describe("Given an LazyCountrySymbol", () => {
   it("should not crash if passed in invalid code", () => {
     const { LazyCountrySymbol } = composedStories;
     cy.mount(
-      // @ts-ignore
+      // @ts-expect-error
       <LazyCountrySymbol code="invalid" />,
     );
   });

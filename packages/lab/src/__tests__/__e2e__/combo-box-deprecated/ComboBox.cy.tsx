@@ -16,7 +16,11 @@ describe("A combo box", () => {
 
     cy.realPress("Tab");
 
-    Default.args!.source!.forEach((item) => {
+    if (!Default.args.source) {
+      throw new Error("Invalid test. source is not defined");
+    }
+
+    Default.args.source.forEach((item) => {
       cy.findByRole("option", { name: item }).should("exist");
     });
   });
@@ -63,12 +67,13 @@ describe("A combo box", () => {
   });
 
   it('should become a multi-select combo box if "initialSelectedItem" is an array', () => {
+    if (!Default.args.source) {
+      throw new Error("Invalid test. source is not defined");
+    }
+
     cy.mount(
       <Default
-        initialSelectedItem={[
-          Default.args!.source![0],
-          Default.args!.source![1],
-        ]}
+        initialSelectedItem={[Default.args.source[0], Default.args.source[1]]}
       />,
     );
 
@@ -81,18 +86,18 @@ describe("A combo box", () => {
     cy.findAllByTestId("pill").should("have.length", 2);
     cy.findAllByTestId("pill")
       .eq(0)
-      .should("have.text", Default.args!.source![0]);
+      .should("have.text", Default.args.source[0]);
     cy.findAllByTestId("pill")
       .eq(1)
-      .should("have.text", Default.args!.source![1]);
+      .should("have.text", Default.args.source[1]);
 
     // and they should be "selected" in the list
     cy.findByRole("listbox")
-      .findByRole("option", { name: Default.args!.source![0] })
+      .findByRole("option", { name: Default.args.source[0] })
       .should("have.attr", "aria-selected", "true");
 
     cy.findByRole("listbox")
-      .findByRole("option", { name: Default.args!.source![1] })
+      .findByRole("option", { name: Default.args.source[1] })
       .should("have.attr", "aria-selected", "true");
   });
 
@@ -119,9 +124,14 @@ describe("A combo box", () => {
 
       // clear
       cy.findByRole("combobox").clear();
+
+      if (!Default.args.source) {
+        throw new Error("Invalid test. source is not defined");
+      }
+
       cy.findAllByRole("option").should(
         "have.length",
-        Default.args!.source!.length,
+        Default.args.source.length,
       );
     });
 

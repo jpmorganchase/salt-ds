@@ -184,7 +184,7 @@ export const useCombobox = <
   );
 
   const applySelection = useCallback(
-    (evt: any, selected: selectedCollectionType) => {
+    (evt: SyntheticEvent, selected: selectedCollectionType) => {
       if (!isMultiSelect) {
         setIsOpen(false);
       }

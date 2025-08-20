@@ -1,5 +1,5 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
-import { useAriaAnnouncer, useFloatingUI, useForkRef } from "@salt-ds/core";
+import { useFloatingUI, useForkRef } from "@salt-ds/core";
 import { useEffect, useRef, useState } from "react";
 import { ListBase, ListStateContext } from "../../list-deprecated";
 import { Portal } from "../../portal";
@@ -9,7 +9,6 @@ import {
 } from "../../tokenized-input";
 import { isDesktop, useWindow } from "../../window";
 import type { BaseComboBoxProps } from "./DefaultComboBox";
-import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
@@ -47,7 +46,7 @@ export function MultiSelectComboBox<Item>(
     ...restProps
   } = props;
 
-  const { announce } = useAriaAnnouncer({ debounce: 1000 });
+  // const { announce } = useAriaAnnouncer({ debounce: 1000 });
 
   const expandButtonRef = useRef(null);
   const listRef = useRef(null);
@@ -64,18 +63,18 @@ export function MultiSelectComboBox<Item>(
   const { isListOpen, itemCount, itemToString, source, ...restListProps } =
     listProps;
 
-  const firstItem = null;
+  // const firstItem = null;
 
   const allowAnnouncementRef = useRef(allowAnnouncement);
   useEffect(() => {
     allowAnnouncementRef.current = allowAnnouncement;
   }, [allowAnnouncement]);
 
-  useEffect(() => {
-    if (allowAnnouncementRef.current && value && firstItem) {
-      announce(getAnnouncement(itemCount, firstItem));
-    }
-  }, [value, firstItem, itemCount, announce]);
+  // useEffect(() => {
+  //   if (allowAnnouncementRef.current && value && firstItem) {
+  //     announce(getAnnouncement(itemCount, firstItem));
+  //   }
+  // }, [value, firstItem, itemCount, announce]);
 
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined,

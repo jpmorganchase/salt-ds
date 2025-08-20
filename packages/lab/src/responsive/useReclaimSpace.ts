@@ -59,7 +59,7 @@ const mightBeAbleToReclaimSpace = (items: OverflowItem[]) =>
 
 export const useReclaimSpace = ({
   collectionHook,
-  label = "Toolbar",
+  label: _label = "Toolbar",
   overflowItemsRef: managedItemsRef,
   overflowContainerRef: ref,
   orientation,

@@ -69,7 +69,7 @@ export type OverflowItem<T extends overflowItemType = "child"> = {
   reclaimSpace?: boolean;
   reclaimedSpace?: boolean;
   size: number;
-  source: T extends "source" ? any : null;
+  source: T extends "source" ? unknown : null;
   type: overflowItemType;
 
   // collection types

@@ -43,7 +43,7 @@ export function SearchList(props: SearchListProps) {
 
   const onChange: SelectionChangeHandler<QueryInputItem, "multiple"> =
     useCallback(
-      (event, items) => {
+      (_event, items) => {
         onChangeProp(items || []);
       },
       [onChangeProp],

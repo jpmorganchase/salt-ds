@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/nursery/useUniqueElementIds: id props aren't being used as DOM ids */
+/** biome-ignore-all lint/correctness/useUniqueElementIds: id props aren't being used as DOM ids */
 import { Grid, type GridCellValueProps, GridColumn } from "@salt-ds/data-grid";
 import {
   ErrorIcon,

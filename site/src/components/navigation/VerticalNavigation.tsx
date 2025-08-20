@@ -40,7 +40,7 @@ const renderNavigationItem = (
   setExpanded: React.Dispatch<React.SetStateAction<Set<string>>>,
   level: number,
 ) => {
-  // @ts-ignore
+  // @ts-expect-error
   const { id, kind, name, data } = item;
   const isGroup = kind === "group";
   const hasSinglePageInGroup = isGroup && item.childNodes.length === 1;

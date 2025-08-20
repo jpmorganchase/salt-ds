@@ -69,7 +69,6 @@ function SortIcon({ sort, ...rest }: SortIconProps) {
 
 function sortData(data: string[], sort: SortType): string[] {
   if (!sort) return data;
-  // @ts-ignore
   return data.toSorted((a, b) =>
     sort === "asc" ? a.localeCompare(b) : b.localeCompare(a),
   );

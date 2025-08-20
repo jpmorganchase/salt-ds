@@ -64,6 +64,7 @@ export const ListItemBase = memo(
         <div
           aria-label={typeof children === "string" ? children : undefined}
           ref={detectTruncation ? ref : setItemRef}
+          role="option"
           {...restProps}
           className={clsx(
             withBaseName(),

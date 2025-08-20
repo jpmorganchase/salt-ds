@@ -25,7 +25,7 @@ export const useListHeight = ({
   displayedItemCount,
   getItemHeight,
   // TODO no need to incur the cost of a resizeObserver if height is explicit
-  height,
+  height: _height,
   itemCount,
   itemGapSize,
   itemHeight: itemHeightProp,

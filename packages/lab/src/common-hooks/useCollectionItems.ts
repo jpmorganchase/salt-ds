@@ -31,7 +31,7 @@ const defaultCollectionOptions = {};
 export const useCollectionItems = <Item>({
   children,
   id: idRoot,
-  label = "",
+  label: _label = "",
   options = defaultCollectionOptions,
   // revealSelected = false,
   source,
@@ -52,17 +52,14 @@ export const useCollectionItems = <Item>({
     itemToString = defaultItemToString,
   } = options;
 
-  const isExpanded = useCallback(
-    (path: string) => {
-      // We can't do this here because itemToId won't work until we complete this phase
-      // if (Array.isArray(revealSelected)) {
-      //   const selectedIds = revealSelected.map(itemToId);
-      //   return selectedIds.some((id) => isParentPath(path, id));
-      // }
-      return options.defaultExpanded || false;
-    },
-    [options.defaultExpanded],
-  );
+  const isExpanded = useCallback(() => {
+    // We can't do this here because itemToId won't work until we complete this phase
+    // if (Array.isArray(revealSelected)) {
+    //   const selectedIds = revealSelected.map(itemToId);
+    //   return selectedIds.some((id) => isParentPath(path, id));
+    // }
+    return options.defaultExpanded || false;
+  }, [options.defaultExpanded]);
 
   const addMetadataToItems = useCallback(
     <Item>(
@@ -90,7 +87,7 @@ export const useCollectionItems = <Item>({
 
         const expanded = nonCollapsible
           ? undefined
-          : (item.expanded ?? isExpanded(id));
+          : (item.expanded ?? isExpanded());
         //TODO dev time check - if id is provided by user, make sure
         // hierarchical pattern is consistent
         const normalisedItem: CollectionItem<Item> = {
@@ -239,9 +236,9 @@ export const useCollectionItems = <Item>({
       const sourceWithId = target.find(
         (i) => i.id === id || (i?.childNodes?.length && isParentPath(i.id, id)),
       );
-      if (sourceWithId?.id === id) {
+      if (sourceWithId?.id === id && sourceWithId.index != null) {
         //TODO do we need the flattered source at all ?
-        return flattenedSource?.[sourceWithId.index!] as Item;
+        return flattenedSource?.[sourceWithId.index] as Item;
       }
       if (sourceWithId) {
         return itemById(id, sourceWithId.childNodes);
@@ -256,7 +253,6 @@ export const useCollectionItems = <Item>({
       // TODO what about Tree structures, we need to search flattened source
       const collectionItem = flattenedDataRef.current.find((i) =>
         // const collectionItem = collectionItemsRef.current.find((i) =>
-        //@ts-ignore
         isValidElement(i.value) ? i.label === item : i.value === item,
       );
       if (collectionItem) {
@@ -318,7 +314,6 @@ export const useCollectionItems = <Item>({
         // TODO what about Tree structures, we need to search flattened source
         const collectionItem = flattenedDataRef.current.find((i) =>
           // const collectionItem = collectionItemsRef.current.find((i) =>
-          //@ts-ignore
           isValidElement(i.value)
             ? i.label === item
             : i.value !== null && itemToString(i.value) === item,

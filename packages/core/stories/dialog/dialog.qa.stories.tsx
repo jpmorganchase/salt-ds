@@ -67,7 +67,6 @@ const DialogTemplate: StoryFn<
 };
 
 export const DeprecatedClosedButton: StoryFn = () => {
-  const DensityValues = ["high", "medium", "low", "touch"] as const;
   return (
     <StackLayout gap={1}>
       <Dialog open={true}>

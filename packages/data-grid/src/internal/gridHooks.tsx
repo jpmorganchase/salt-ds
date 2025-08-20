@@ -805,9 +805,13 @@ export function useRowSelection<T>(
           rowIdxs.push(i);
         }
         if (selRowIdxs.has(rowIndex)) {
-          rowIdxs.forEach((k) => s.delete(k));
+          for (const k of rowIdxs) {
+            s.delete(k);
+          }
         } else {
-          rowIdxs.forEach((k) => s.add(k));
+          for (const k of rowIdxs) {
+            s.add(k);
+          }
         }
         nextSelRowIdxs = s;
         nextLastSelRowIdx = rowIndex;

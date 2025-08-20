@@ -78,7 +78,7 @@ export interface CascadingMenuProps extends HTMLAttributes<HTMLElement> {
   /**
    * Used to determine the string value for the selected item.
    */
-  itemToString?: ItemToStringFunction;
+  itemToString?: ItemToStringFunction<MenuDescriptor>;
   /**
    * Maximum menu width  (text longer than the max width will end with ellipsis)
    * set to "null" to allow the content to take as much space as needed with no truncating. Defaults to 544

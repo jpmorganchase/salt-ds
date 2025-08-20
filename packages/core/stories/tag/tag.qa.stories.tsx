@@ -12,6 +12,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} height={1800} itemPadding={1} width={2000} {...props}>
       {Array.from({ length: 20 }, (_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: This is acceptable here as the index is used to get each category.
         <FlexLayout gap={1} key={index}>
           <Tag category={index + 1}>Primary</Tag>
           <Tag category={index + 1}>

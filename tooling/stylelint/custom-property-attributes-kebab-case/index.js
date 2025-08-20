@@ -44,7 +44,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/custom-property-attributes-kebab-case";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) => "CSS attributes in tokens should be kebab case", // Can encode option in error message if needed
+  expected: () => "CSS attributes in tokens should be kebab case", // Can encode option in error message if needed
 });
 
 const meta = {
@@ -70,62 +70,59 @@ const includesCssAttribute = (property) =>
         property !== `--salt-${attr}`) /* --salt-animation-duration */,
   );
 
-module.exports = stylelint.createPlugin(
-  ruleName,
-  (primary, secondaryOptionObject, context) => {
-    return (root, result) => {
-      const verboseLog = primary.logLevel === "verbose";
+module.exports = stylelint.createPlugin(ruleName, (primary) => {
+  return (root, result) => {
+    const verboseLog = primary.logLevel === "verbose";
 
-      function check(property) {
-        const checkResult = includesCssAttribute(property);
-        verboseLog && console.log("Checking", checkResult, property);
-        return !checkResult;
-      }
-      root.walkDecls((decl) => {
-        const { prop, value } = decl;
+    function check(property) {
+      const checkResult = includesCssAttribute(property);
+      verboseLog && console.log("Checking", checkResult, property);
+      return !checkResult;
+    }
+    root.walkDecls((decl) => {
+      const { prop, value } = decl;
 
-        const parsedValue = valueParser(value);
+      const parsedValue = valueParser(value);
 
-        parsedValue.walk((node) => {
-          if (!isValueFunction(node)) return;
+      parsedValue.walk((node) => {
+        if (!isValueFunction(node)) return;
 
-          if (node.value.toLowerCase() !== "var") return;
+        if (node.value.toLowerCase() !== "var") return;
 
-          const { nodes } = node;
+        const { nodes } = node;
 
-          const firstNode = nodes[0];
+        const firstNode = nodes[0];
 
-          verboseLog && console.log({ nodes });
+        verboseLog && console.log({ nodes });
 
-          if (!firstNode || check(firstNode.value)) return;
+        if (!firstNode || check(firstNode.value)) return;
 
-          complain(
-            declarationValueIndex(decl) + firstNode.sourceIndex,
-            firstNode.value.length,
-            decl,
-          );
-        });
-
-        if (check(prop)) return;
-
-        verboseLog && console.log({ prop });
-
-        complain(0, prop.length, decl);
+        complain(
+          declarationValueIndex(decl) + firstNode.sourceIndex,
+          firstNode.value.length,
+          decl,
+        );
       });
 
-      function complain(index, length, decl) {
-        report({
-          result,
-          ruleName,
-          message: messages.expected(primary),
-          node: decl,
-          index,
-          endIndex: index + length,
-        });
-      }
-    };
-  },
-);
+      if (check(prop)) return;
+
+      verboseLog && console.log({ prop });
+
+      complain(0, prop.length, decl);
+    });
+
+    function complain(index, length, decl) {
+      report({
+        result,
+        ruleName,
+        message: messages.expected(primary),
+        node: decl,
+        index,
+        endIndex: index + length,
+      });
+    }
+  };
+});
 
 module.exports.ruleName = ruleName;
 module.exports.messages = messages;

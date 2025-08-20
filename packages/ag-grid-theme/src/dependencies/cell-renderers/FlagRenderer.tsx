@@ -16,6 +16,7 @@ export const FlagRenderer = (props: CustomCellRendererProps) => {
     >
       <span
         className={`saltCountrySharp-${isoCode}`}
+        role="img"
         aria-label={countryMetaMap[isoCode]?.countryName}
       />
     </div>

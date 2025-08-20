@@ -3,10 +3,6 @@ import { composeStories } from "@storybook/react-vite";
 
 const { SimpleTabstrip } = composeStories(tabstripStories);
 
-const OVERFLOWED_ITEMS = '.saltTabstrip-inner > *[data-overflowed="true"]';
-const OVERFLOW_IND = '.saltTabstrip-inner > *[data-overflow-indicator="true"]';
-const ADD_BUTTON = '.saltTabstrip-inner  > *[aria-label="Create Tab"]';
-
 describe("Given a Tabstrip", () => {
   describe("WHEN no id is specified", () => {
     it("THEN Tabstrip will be rendered with a generated id", () => {

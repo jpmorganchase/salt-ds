@@ -23,7 +23,7 @@ export const ObjectValues = (): ReactElement => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: LargeCity[],
   ) => {
     if (newSelected.length === 1) {

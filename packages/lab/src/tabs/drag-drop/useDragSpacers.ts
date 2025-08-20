@@ -13,11 +13,11 @@ export const useDragSpacers = () => {
     [],
   );
 
-  const clearSpacers = useCallback(
-    () =>
-      spacers.forEach((spacer) => spacer.parentElement?.removeChild(spacer)),
-    [spacers],
-  );
+  const clearSpacers = useCallback(() => {
+    for (const spacer of spacers) {
+      spacer.parentElement?.removeChild(spacer);
+    }
+  }, [spacers]);
 
   const animateTransition = useCallback(
     (size: number) => {

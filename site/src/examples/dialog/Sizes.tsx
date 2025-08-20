@@ -60,19 +60,19 @@ const SmallDialog = (): ReactElement => {
 };
 
 const AccountView = () => {
-  return <>Account View</>;
+  return "Account View";
 };
 
 const GenralView = () => {
-  return <>General View</>;
+  return "General View";
 };
 
 const GridView = () => {
-  return <>Grid View</>;
+  return "Grid View";
 };
 
 const ExportView = () => {
-  return <>Export View</>;
+  return "Export View";
 };
 
 const items = [

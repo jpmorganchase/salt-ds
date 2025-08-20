@@ -15,7 +15,7 @@ export const ExpansionIcon = ({
   expanded = false,
   orientation = "horizontal",
 }: ExpansionIconProps) => {
-  const { ExpandGroupIcon, ExpandIcon, CollapseGroupIcon } = useIcon();
+  const { ExpandGroupIcon, CollapseGroupIcon } = useIcon();
   const iconExpansionMap = {
     vertical: {
       expanded: CollapseGroupIcon,

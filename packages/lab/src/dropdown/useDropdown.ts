@@ -23,7 +23,7 @@ export interface DropdownListHookResult<
   Selection extends SelectionStrategy,
 > extends Partial<ListHookResult<Item, Selection>>,
     Partial<DropdownHookResult> {
-  onOpenChange: any;
+  onOpenChange: (open: boolean) => void;
   triggerLabel?: string;
 }
 

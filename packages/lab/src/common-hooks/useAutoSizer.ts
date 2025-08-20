@@ -13,9 +13,7 @@ interface size {
   width?: number | string;
 }
 
-export function useAutoSizer<Element extends HTMLElement>(
-  props: ListAutosizerProps,
-): size {
+export function useAutoSizer(props: ListAutosizerProps): size {
   const { containerRef: ref, responsive, width, height } = props;
   const [size, setSize] = useState({ width, height });
 
@@ -34,21 +32,21 @@ export function useAutoSizer<Element extends HTMLElement>(
 
   useIsomorphicLayoutEffect(() => {
     if (responsive) {
-      let observer: ResizeObserver;
+      // let observer: ResizeObserver;
       if (ref.current) {
         handleResize(ref.current.getBoundingClientRect());
-        observer = new ResizeObserver(
-          ([{ contentRect }]: ResizeObserverEntry[]) => {
-            // TODO (currently firing because of scrollbar)
-            // handleResize(contentRect);
-          },
-        );
-        observer.observe(ref.current);
+        // observer = new ResizeObserver(
+        //   ([{ contentRect }]: ResizeObserverEntry[]) => {
+        //     // TODO (currently firing because of scrollbar)
+        //     // handleResize(contentRect);
+        //   },
+        // );
+        // observer.observe(ref.current);
       }
       return () => {
-        if (observer) {
-          observer.disconnect();
-        }
+        // if (observer) {
+        //   observer.disconnect();
+        // }
       };
     }
   }, [handleResize, responsive, ref]);

@@ -208,7 +208,7 @@ const SidebarPlugin = {
             sidebarSortConfigSchema.parse(sharedSortConfig);
             sortConfigPages[`${path.posix.dirname(page.fullPath)}`] =
               sharedSortConfig;
-          } catch (e) {
+          } catch {
             /**
              * Don't throw a PluginError here as this will stop the sidebar being generated.
              * Plugins need a way to log errors/warnings without exceptions

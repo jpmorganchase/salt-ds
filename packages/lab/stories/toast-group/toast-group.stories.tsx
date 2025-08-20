@@ -35,9 +35,7 @@ const InfoToast = () => {
         <CloseIcon />
       </Button>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 const ErrorToast = () => {
@@ -64,9 +62,7 @@ const ErrorToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 const WarningToast = () => {
@@ -93,9 +89,7 @@ const WarningToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 const SuccessToast = () => {
@@ -115,9 +109,7 @@ const SuccessToast = () => {
         <CloseIcon />
       </Button>
     </Toast>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 type ToastEntryType = {

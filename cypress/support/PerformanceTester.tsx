@@ -18,7 +18,7 @@ export function PerformanceTester({
   const renderCount = useRef(0);
 
   const handleRender: ProfilerOnRenderCallback = (
-    id,
+    _id,
     phase,
     actualDuration,
   ) => {
@@ -39,7 +39,7 @@ export function PerformanceTester({
   };
 
   return (
-    // biome-ignore lint/nursery/useUniqueElementIds: Profiler needs a static id
+    // biome-ignore lint/correctness/useUniqueElementIds: Profiler needs a static id
     <Profiler id="performanceTest" onRender={handleRender}>
       {children}
     </Profiler>

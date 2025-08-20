@@ -18,7 +18,7 @@ export const CustomFiltering = (): ReactElement => {
   };
 
   const handleSelectionChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newSelected: string[],
   ) => {
     if (newSelected.length === 1) {
@@ -28,7 +28,10 @@ export const CustomFiltering = (): ReactElement => {
     }
   };
 
-  const handleOpenChange: ComboBoxProps["onOpenChange"] = (newOpen, reason) => {
+  const handleOpenChange: ComboBoxProps["onOpenChange"] = (
+    _newOpen,
+    reason,
+  ) => {
     if (reason === "manual") {
       setShowAll(true);
     }

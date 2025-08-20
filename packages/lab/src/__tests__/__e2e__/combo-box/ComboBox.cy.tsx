@@ -17,7 +17,11 @@ describe("A combo box", () => {
 
     cy.realPress("Tab");
 
-    Default.args!.source!.forEach((item) => {
+    if (!Default.args.source) {
+      throw new Error("Invalid test. source is not defined");
+    }
+
+    Default.args.source.forEach((item) => {
       cy.findByRole("option", { name: item }).should("exist");
     });
   });
@@ -114,9 +118,13 @@ describe("A combo box", () => {
 
       // clear
       cy.findByRole("combobox").clear();
+      if (!Default.args.source) {
+        throw new Error("Invalid test. source is not defined");
+      }
+
       cy.findAllByRole("option").should(
         "have.length",
-        Default.args!.source!.length,
+        Default.args.source.length,
       );
 
       // change callback invoked

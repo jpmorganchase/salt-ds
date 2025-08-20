@@ -20,6 +20,6 @@ export const AriaAnnounce: ComponentType<AriaAnnounceProps> = ({
     }
   }, [announce, announcement]);
 
-  // If we return null here, react-docgen wouldn't be able to locate the component
+  // biome-ignore lint/complexity/noUselessFragments: If we return null here, react-docgen wouldn't be able to locate the component.
   return <></>;
 };

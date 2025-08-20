@@ -111,69 +111,62 @@ function isAllowedKeys(property, verboseLog) {
   return checkResult;
 }
 
-module.exports = stylelint.createPlugin(
-  ruleName,
-  (primaryOption, secondaryOptionObject, context) => {
-    return (root, result) => {
-      const verboseLog = primaryOption.logLevel === "verbose";
+module.exports = stylelint.createPlugin(ruleName, (primaryOption) => {
+  return (root, result) => {
+    const verboseLog = primaryOption.logLevel === "verbose";
 
-      root.walkDecls((decl) => {
-        const { prop, value } = decl;
+    root.walkDecls((decl) => {
+      const { prop, value } = decl;
 
-        const parsedValue = valueParser(value);
+      const parsedValue = valueParser(value);
 
-        parsedValue.walk((node) => {
-          if (!isValueFunction(node)) return;
+      parsedValue.walk((node) => {
+        if (!isValueFunction(node)) return;
 
-          if (node.value.toLowerCase() !== "var") return;
+        if (node.value.toLowerCase() !== "var") return;
 
-          const { nodes } = node;
+        const { nodes } = node;
 
-          const firstNode = nodes[0];
+        const firstNode = nodes[0];
 
-          verboseLog && console.log({ nodes });
+        verboseLog && console.log({ nodes });
 
-          if (!firstNode) return;
+        if (!firstNode) return;
 
-          if (!isAllowedKeys(firstNode.value, verboseLog)) {
-            complainNoExpectedFoundationOrPalette(
-              declarationValueIndex(decl) + firstNode.sourceIndex,
-              firstNode.value.length,
-              decl,
-              firstNode.value,
-            );
-          }
-
-          return;
-        });
-
-        verboseLog && console.log({ prop });
-
-        if (!isAllowedKeys(prop, verboseLog)) {
-          complainNoExpectedFoundationOrPalette(0, prop.length, decl, prop);
+        if (!isAllowedKeys(firstNode.value, verboseLog)) {
+          complainNoExpectedFoundationOrPalette(
+            declarationValueIndex(decl) + firstNode.sourceIndex,
+            firstNode.value.length,
+            decl,
+            firstNode.value,
+          );
         }
-
-        return;
       });
 
-      function complainNoExpectedFoundationOrPalette(
-        index,
-        length,
-        decl,
-        propertyChecked,
-      ) {
-        report({
-          result,
-          ruleName,
-          message: messages.noExpectedFoundationPalette(propertyChecked),
-          node: decl,
-          index,
-          endIndex: index + length,
-        });
+      verboseLog && console.log({ prop });
+
+      if (!isAllowedKeys(prop, verboseLog)) {
+        complainNoExpectedFoundationOrPalette(0, prop.length, decl, prop);
       }
-    };
-  },
-);
+    });
+
+    function complainNoExpectedFoundationOrPalette(
+      index,
+      length,
+      decl,
+      propertyChecked,
+    ) {
+      report({
+        result,
+        ruleName,
+        message: messages.noExpectedFoundationPalette(propertyChecked),
+        node: decl,
+        index,
+        endIndex: index + length,
+      });
+    }
+  };
+});
 
 module.exports.ruleName = ruleName;
 module.exports.messages = messages;

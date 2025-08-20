@@ -78,11 +78,11 @@ export const Navigation = () => {
   const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
   const [offset, setOffset] = useState(0);
 
-  const setScroll = () => {
-    setOffset(window.scrollY);
-  };
-
   useEffect(() => {
+    const setScroll = () => {
+      setOffset(window.scrollY);
+    };
+
     window.addEventListener("scroll", setScroll);
     return () => {
       window.removeEventListener("scroll", setScroll);

@@ -50,7 +50,7 @@ export const Spacing = (): ReactElement => {
         <FormField>
           <FormFieldLabel>Gap</FormFieldLabel>
           <RadioButtonGroup
-            onChange={(e) => setGap(Number.parseInt(e.target.value))}
+            onChange={(e) => setGap(Number.parseInt(e.target.value, 10))}
             direction="horizontal"
             value={`${gap}`}
           >
@@ -63,7 +63,7 @@ export const Spacing = (): ReactElement => {
         <FormField>
           <FormFieldLabel>Padding</FormFieldLabel>
           <RadioButtonGroup
-            onChange={(e) => setPadding(Number.parseInt(e.target.value))}
+            onChange={(e) => setPadding(Number.parseInt(e.target.value, 10))}
             direction="horizontal"
             value={`${padding}`}
           >
@@ -76,7 +76,7 @@ export const Spacing = (): ReactElement => {
         <FormField>
           <FormFieldLabel>Margin</FormFieldLabel>
           <RadioButtonGroup
-            onChange={(e) => setMargin(Number.parseInt(e.target.value))}
+            onChange={(e) => setMargin(Number.parseInt(e.target.value, 10))}
             direction="horizontal"
             value={`${margin}`}
           >

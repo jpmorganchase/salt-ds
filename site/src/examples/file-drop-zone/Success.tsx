@@ -6,7 +6,7 @@ import {
 } from "@salt-ds/core";
 import type { ReactElement, SyntheticEvent } from "react";
 
-const validate = (event: SyntheticEvent, files: File[]) => {
+const validate = (_event: SyntheticEvent, files: File[]) => {
   console.log("validate files", files);
 };
 

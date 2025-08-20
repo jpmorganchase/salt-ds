@@ -9,6 +9,7 @@ import {
   type FocusEvent,
   type KeyboardEvent,
   type MouseEvent,
+  type Ref,
   type SyntheticEvent,
   useCallback,
   useEffect,
@@ -85,7 +86,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   });
 
   const [selectionChanged, setSelectionChanged] = useState(false);
-  const inputRef = useRef<HTMLElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [allowAnnouncement, setAllowAnnouncement] = useState(false);
 
@@ -130,9 +131,12 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
     onFocus: handleFocusVisible,
     onBlur: handleBlurVisible,
     ref: focusVisibleRef,
-  } = useIsFocusVisible();
+  } = useIsFocusVisible<HTMLInputElement>();
 
-  const handleFocusVisibleRef = useForkRef(focusVisibleRef, focusedRef);
+  const handleFocusVisibleRef = useForkRef(
+    focusVisibleRef,
+    focusedRef,
+  ) as Ref<HTMLInputElement>;
   const handleInputRef = useForkRef(inputRef, handleFocusVisibleRef);
 
   const { "aria-activedescendant": ariaActiveDescendant, ...restListProps } =

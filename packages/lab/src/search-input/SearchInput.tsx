@@ -28,7 +28,7 @@ export interface SearchInputProps extends Omit<InputProps, "onSubmit"> {
    * Override "search" icon.
    * Set to `null` to hide.
    */
-  IconComponent?: ComponentType<any> | null;
+  IconComponent?: ComponentType | null;
   /**
    * Callback for when clear button is clicked.
    */

@@ -12,7 +12,7 @@ import {
   type SelectHandler,
   type SelectionChangeHandler,
   type SelectionStrategy,
-  type selectedType,
+  type SingleSelectionStrategy,
   useCollapsibleGroups,
   useKeyboardNavigation,
   useSelection,
@@ -52,8 +52,6 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   stickyHeaders,
   tabToSelect,
 }: ListHookProps<Item, Selection>): ListHookResult<Item, Selection> => {
-  type selectedItem = selectedType<Item, Selection>;
-
   const lastSelection = useRef<typeof selected>(selected || defaultSelected);
   const handleKeyboardNavigation = (
     evt: KeyboardEvent<HTMLElement>,
@@ -68,7 +66,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
     (evt, selectedItem) => {
       if (onSelect) {
         if (isValidElement(selectedItem.value)) {
-          onSelect(evt, selectedItem.label as any);
+          onSelect(evt, selectedItem.label as Item);
         } else if (selectedItem.value !== null) {
           onSelect(evt, selectedItem.value);
         }
@@ -84,14 +82,14 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
       if (onSelectionChange) {
         onSelectionChange(
           evt,
-          Array.isArray(selected)
-            ? (selected.map((s) =>
-                isValidElement(s.value) ? s.label : s.value,
-              ) as selectedItem)
+          (Array.isArray(selected)
+            ? selected.map((s) => (isValidElement(s.value) ? s.label : s.value))
             : selected &&
-                ((isValidElement(selected.value)
-                  ? selected.label
-                  : selected.value) as any),
+              (isValidElement(selected.value)
+                ? selected.label
+                : selected.value)) as Selection extends SingleSelectionStrategy
+            ? Item
+            : Item[],
         );
       }
     },

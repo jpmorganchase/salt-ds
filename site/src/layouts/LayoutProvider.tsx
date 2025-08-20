@@ -27,6 +27,6 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
   return LayoutComponent ? (
     <LayoutComponent {...LayoutProps}>{children}</LayoutComponent>
   ) : (
-    <>children</>
+    children
   );
 };

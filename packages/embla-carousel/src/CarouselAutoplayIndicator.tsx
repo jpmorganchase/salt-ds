@@ -4,6 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type CSSProperties,
   forwardRef,
   useEffect,
   useRef,
@@ -104,12 +105,13 @@ export const CarouselAutoplayIndicator = forwardRef<
     return (
       <div
         ref={ref}
-        style={{
-          width: size,
-          height: size,
-          // @ts-ignore
-          "--carousel-svg-circumference": circumference,
-        }}
+        style={
+          {
+            width: size,
+            height: size,
+            "--carousel-svg-circumference": circumference,
+          } as CSSProperties
+        }
         className={clsx(withBaseName(), className)}
         {...props}
       >

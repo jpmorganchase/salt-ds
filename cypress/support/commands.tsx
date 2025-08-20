@@ -21,7 +21,7 @@ type SupportedDensity = (typeof SupportedDensityValues)[number];
 // Must be declared global to be detected by typescript (allows import/export)
 declare global {
   namespace Cypress {
-    interface Chainable<Subject> {
+    interface Chainable {
       /**
        * Set Theme Mode
        * @example
@@ -57,10 +57,9 @@ declare global {
 
       /**
        * Set the date locale used by the date adapter
-       * @param any
+       * @param {unknown} locale
        */
-      // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
-      setDateLocale(locale: any): Chainable<void>;
+      setDateLocale(locale: unknown): Chainable<void>;
       mountPerformance(
         jsx: ReactNode,
         options?: MountOptions,
@@ -129,7 +128,7 @@ Cypress.Commands.add(
     options?: MountOptions,
   ): Cypress.Chainable<MountReturn> => {
     const handleAnnouncement = (announcement: string) => {
-      // @ts-ignore
+      // @ts-expect-error
       cy.state("announcement", announcement);
     };
 
@@ -174,7 +173,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("mountPerformance", (children, options) => {
   const handleRender = (result: PerformanceResult) => {
-    // @ts-ignore
+    // @ts-expect-error
     cy.state("performanceResult", result);
   };
 
@@ -185,12 +184,12 @@ Cypress.Commands.add("mountPerformance", (children, options) => {
 });
 
 Cypress.Commands.add("getRenderTime", () => {
-  // @ts-ignore
+  // @ts-expect-error
   return cy.state("performanceResult").renderTime;
 });
 
 Cypress.Commands.add("getRenderCount", () => {
-  // @ts-ignore
+  // @ts-expect-error
   return cy.state("performanceResult").renderCount;
 });
 

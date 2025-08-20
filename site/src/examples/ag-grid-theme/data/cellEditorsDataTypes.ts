@@ -19,9 +19,9 @@ export const dateString: DateStringDataTypeDefinition<
     const dateParts = value.split("-");
     return dateParts.length === 3
       ? new Date(
-          Number.parseInt(dateParts[0]),
-          Number.parseInt(dateParts[1]) - 1,
-          Number.parseInt(dateParts[2]),
+          Number.parseInt(dateParts[0], 10),
+          Number.parseInt(dateParts[1], 10) - 1,
+          Number.parseInt(dateParts[2], 10),
         )
       : undefined;
   },

@@ -14,7 +14,7 @@ const withBaseName = makePrefixer("saltListItem");
 // case of runtime density switch). This allows ListItem height to
 // be controlled purely through CSS.
 export const ListItemProxy = forwardRef(function ListItemNextProxy(
-  props: HTMLAttributes<HTMLDivElement>,
+  _props: HTMLAttributes<HTMLDivElement>,
   forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
   return (
@@ -70,6 +70,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     return (
       <div
         className={className}
+        role="option"
         {...props}
         aria-disabled={disabled || undefined}
         aria-selected={selected || undefined}

@@ -88,7 +88,7 @@ export const AlphaInput = ({
   return (
     <Input
       inputProps={{
-        // @ts-ignore
+        // @ts-expect-error
         "data-testid": "a-input",
       }}
       className={clsx({

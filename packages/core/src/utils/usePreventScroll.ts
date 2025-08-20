@@ -285,10 +285,10 @@ function addEvent<K extends keyof GlobalEventHandlersEventMap>(
   options?: boolean | AddEventListenerOptions,
 ) {
   // internal function, so it's ok to ignore the difficult to fix type error
-  // @ts-ignore
+  // @ts-expect-error
   target.addEventListener(event, handler, options);
   return () => {
-    // @ts-ignore
+    // @ts-expect-error
     target.removeEventListener(event, handler, options);
   };
 }

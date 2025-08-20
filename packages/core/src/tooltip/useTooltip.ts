@@ -114,8 +114,8 @@ export function useTooltip(props?: UseTooltipProps) {
   };
 
   const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
-    // tabIndex raises false positives because it is set to "-1".
-    const { tabIndex, ...tooltipProps } = getFloatingProps({
+    // tabIndex causes axe errors because it is set to "-1".
+    const { tabIndex: _tabIndex, ...tooltipProps } = getFloatingProps({
       // @ts-expect-error - `data-*` props need extra typing when not used on a DOM element.
       "data-placement": placement,
       ref: floating,

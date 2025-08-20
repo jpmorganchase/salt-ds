@@ -14,6 +14,7 @@ import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
 
+// biome-ignore lint/suspicious/noExplicitAny: any is used here to allow flexibility in the type of keys
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 
 type ButtonBarOrderKey = "order" | "alignLeftOrder" | "stackOrder";
@@ -253,7 +254,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
         alignedIndex: secondaryChildAlignment.index,
         align: secondaryChildAlignment.align,
       }),
-      [matches, secondaryChildAlignment.align, secondaryChildAlignment.index],
+      [secondaryChildAlignment.align, secondaryChildAlignment.index],
     );
 
     return (
