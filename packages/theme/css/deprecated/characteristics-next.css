@@ -1,6 +1,8 @@
 .salt-theme.salt-theme-next {
   --salt-navigable-indicator-active: var(--salt-palette-accent);
 
+  --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
+
   --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);
 
   --salt-status-static-foreground: var(--salt-palette-foreground-secondary); /* Use --salt-content-secondary-foreground */
