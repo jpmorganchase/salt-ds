@@ -8,19 +8,17 @@ data:
   $ref: ./#/data
 ---
 
-## Basic usage
+We include all countries and subdivisions that appear in the International Organization for Standardization [(ISO) 3166-1 standard](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). Though we use the country names, alpha-2 codes and corresponding alphabetical order from ISO, our symbols derive from whichever flag the official [United Nations list](https://data.un.org/en/index.html) provides for each country. Of the 249 countries currently in the ISO list, 193 are sovereign states with UN membership. We also include the EU symbol, due to its economic importance.
+
+## Circular
 
 Import and use each country symbol individually.
 
 <LivePreview componentName="country-symbol" exampleName="BasicUsage" />
 
-We include all countries and subdivisions that appear in the International Organization for Standardization [(ISO) 3166-1 standard](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). Though we use the country names, alpha-2 codes and corresponding alphabetical order from ISO, our symbols derive from whichever flag the official [United Nations list](https://data.un.org/en/index.html) provides for each country. Of the 249 countries currently in the ISO list, 193 are sovereign states with UN membership. We also include the EU symbol, due to its economic importance.
+## Rectangular
 
-Note: While the ISO country codes do correlate with top-level domains (TLD) on the internet, for example, they don't always map perfectly to languages, national currencies or telephone country codes. So, sometimes they may not be the best corresponding visuals, given cultural, historical and political sensitivities. Regardless, since the symbols are decorative, there must be correct labels and accessible text to convey the information.   
-
-## Sharp variants
-
-Import and use the sharp version of each country symbol individually using the `_Sharp` suffix (e.g. `TT` becomes `TT_Sharp` for the sharp variant).
+Import and use the rectangular version of each country symbol individually using the `_Sharp` suffix (e.g. `TT` becomes `TT_Sharp` for the sharp variant).
 
 <LivePreview componentName="country-symbol" exampleName="SharpVariants" />
 
