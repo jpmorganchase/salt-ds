@@ -9,13 +9,13 @@ import styles from "./index.module.css";
 
 accessibility(Highcharts);
 
-export const DonutChart = () => {
-  const DonutRef = useRef<HighchartsReact.RefObject>(null);
+export const PieChart = () => {
+  const PieRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  useChart({ chartRef: DonutRef });
+  useChart({ chartRef: PieRef });
 
-  const donutChartOptions: Options = {
+  const pieChartOptions: Options = {
     chart: {
       type: "pie",
     },
@@ -28,12 +28,7 @@ export const DonutChart = () => {
     },
     accessibility: {
       description:
-        "A donut chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
-    },
-    plotOptions: {
-      pie: {
-        innerSize: "80%",
-      },
+        "A pie chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
     },
     series: [
       {
@@ -82,8 +77,8 @@ export const DonutChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={donutChartOptions}
-          ref={DonutRef}
+          options={pieChartOptions}
+          ref={PieRef}
         />
       </div>
     </div>
