@@ -1,21 +1,19 @@
-import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
-import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
-import { useRef, useState } from "react";
-import styles from "./index.module.css";
+import { type FC, useRef } from "react";
 
-accessibility(Highcharts);
+export interface PieChartProps {
+  patterns?: boolean;
+}
 
-export const DonutChart = () => {
-  const DonutRef = useRef<HighchartsReact.RefObject>(null);
-  const [patterns, setPatterns] = useState(false);
+const PieChart: FC<PieChartProps> = ({ patterns = false }) => {
+  const PieRef = useRef<HighchartsReact.RefObject>(null);
 
-  useChart({ chartRef: DonutRef });
+  useChart({ chartRef: PieRef });
 
-  const donutChartOptions: Options = {
+  const pieChartOptions: Options = {
     chart: {
       type: "pie",
     },
@@ -23,17 +21,12 @@ export const DonutChart = () => {
       text: "Bank revenue mix",
       align: "center",
     },
-    tooltip: {
-      enabled: false,
-    },
     accessibility: {
       description:
-        "A donut chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+        "A pie chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
     },
-    plotOptions: {
-      pie: {
-        innerSize: "80%",
-      },
+    tooltip: {
+      enabled: false,
     },
     series: [
       {
@@ -66,26 +59,19 @@ export const DonutChart = () => {
   };
 
   return (
-    <div className={styles.chartContainer}>
-      <div className={styles.controlsRow}>
-        <Switch
-          label="Show patterns"
-          checked={patterns}
-          onChange={(e) => setPatterns(e.target.checked)}
-        />
-      </div>
-      <div
-        className={clsx("highcharts-theme-salt", {
-          "salt-fill-patterns": patterns,
-        })}
-      >
-        <HighchartsReact
-          className={styles.chart}
-          highcharts={Highcharts}
-          options={donutChartOptions}
-          ref={DonutRef}
-        />
-      </div>
+    <div
+      className={clsx("highcharts-theme-salt", {
+        "salt-fill-patterns": patterns,
+      })}
+      style={{ maxWidth: 700, width: "100%" }}
+    >
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={pieChartOptions}
+        ref={PieRef}
+      />
     </div>
   );
 };
+
+export default PieChart;
