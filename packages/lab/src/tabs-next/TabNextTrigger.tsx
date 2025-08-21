@@ -18,7 +18,7 @@ import tabTriggerCss from "./TabNextTrigger.css";
 import { useTabsNext } from "./TabsNextContext";
 
 export interface TabNextTriggerProps
-  extends ComponentPropsWithoutRef<"button"> {}
+  extends Omit<ComponentPropsWithoutRef<"button">, "id"> {}
 
 const withBaseName = makePrefixer("saltTabNextTrigger");
 
@@ -41,7 +41,7 @@ export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
 >(function TabNextTrigger(props, ref) {
-  const { children, id: idProp, onClick, onKeyDown, ...rest } = props;
+  const { children, onClick, onKeyDown, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -64,6 +64,8 @@ export const TabNextTrigger = forwardRef<
   }, [value, id, registerTab]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
+
     setSelected(event, value);
   };
 
@@ -78,6 +80,7 @@ export const TabNextTrigger = forwardRef<
   const handleRef = useForkRef<HTMLButtonElement>(tabRef, ref);
   const panelId = getPanelId(value);
 
+  // Applying aria-actions this way avoid React warnings about unknown props
   const ariaActionsProps = ariaActionSupported
     ? {
         "aria-actions": clsx(actions) || undefined,
