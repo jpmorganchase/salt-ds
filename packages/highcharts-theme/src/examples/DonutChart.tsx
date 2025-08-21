@@ -28,6 +28,11 @@ const DonutChart: FC<DonutChartProps> = ({ patterns = false }) => {
     tooltip: {
       enabled: false,
     },
+    plotOptions: {
+      pie: {
+        innerSize: "80%",
+      },
+    },
     series: [
       {
         type: "pie",

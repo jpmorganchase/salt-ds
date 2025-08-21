@@ -1,5 +1,5 @@
 ---
-"@salt-ds/highcharts-theme": patch
+"@salt-ds/highcharts-theme": minor
 ---
 
 - `useChart` hook is density-aware. When Salt density changes, it triggers a `chart.redraw()` and returns a `legendIconSize` mapped to Salt size tokens, enabling responsive legend symbol sizing.

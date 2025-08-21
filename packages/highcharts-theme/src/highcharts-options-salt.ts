@@ -21,6 +21,7 @@ export const saltThemeDefaults: HighchartsOptionsCompat = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">{point.y}</span>',
+    stickOnContact: true,
   },
   legend: {
     layout: "vertical",
@@ -55,7 +56,6 @@ export const saltThemeDefaults: HighchartsOptionsCompat = {
           '{point.name} <span class="value">{point.percentage:.1f}%</span>',
         enabled: true,
       },
-      innerSize: "80%",
     },
   },
   title: {
