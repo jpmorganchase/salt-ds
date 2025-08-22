@@ -45,6 +45,7 @@ export const useButton = <T extends Element>({
   const enter = "Enter";
   const space = " ";
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: active is needed to remove the active styling on mouse up
   useEffect(() => {
     const t = setTimeout(() => {
       // This key state check is to stop continual visual state change when using Enter Key, which the browser treats as both key and click events on a Button
@@ -57,7 +58,7 @@ export const useButton = <T extends Element>({
     return () => {
       clearTimeout(t);
     };
-  }, [keyIsDown]);
+  }, [active, keyIsDown]);
 
   const handleKeyUp = (event: KeyboardEvent<T>) => {
     setKeyIsDown("");
