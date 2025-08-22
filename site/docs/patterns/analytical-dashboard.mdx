@@ -73,11 +73,11 @@ Ensure that the dashboard is responsive and can adapt to different viewport size
 
 The following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
 
-- [`BorderLayout`](/salt/components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
-- [`FlowLayout`](/salt/components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
-- [`StackLayout`](/salt/components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
+- [`BorderLayout`](/salt/components/layout/border): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
+- [`FlowLayout`](/salt/components/layout/flow): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
+- [`StackLayout`](/salt/components/layout/stack): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
 - [`Tabs`](/salt/components/tabs): Use to organize and categorize dashboard widgets into local groupings. You can also organize content into multiple dashboards using tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information.
-- [`GridLayout`](/salt/components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard.
+- [`GridLayout`](/salt/components/layout/grid): Use to manage the layout and responsiveness of the main content area in your dashboard.
 
 <Diagram
   src="/img/patterns/dashboards/analytical-dashboard/dashboard_layout.png"
@@ -320,6 +320,6 @@ Metric bars should remain clean and concise to provide a higher level oversight 
 
 - Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
 - Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
-- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](/salt/components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](/salt/components/stack-layout) or [`FlowLayout`](/salt/components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
+- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](/salt/components/layout/split) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](/salt/components/layout/stack) or [`FlowLayout`](/salt/components/layout/flow) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
 
 :fragment{src="./fragments/feedback.mdx"}
