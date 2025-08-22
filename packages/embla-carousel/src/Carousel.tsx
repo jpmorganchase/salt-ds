@@ -12,7 +12,11 @@ import {
   useState,
 } from "react";
 import carouselCss from "./Carousel.css";
-import { type CarouselAriaVariant, CarouselContext } from "./CarouselContext";
+import {
+  type CarouselAnnouncementTrigger,
+  type CarouselAriaVariant,
+  CarouselContext,
+} from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
 
@@ -85,8 +89,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
 
     const [ariaVariant, setAriaVariant] =
       useState<CarouselAriaVariant>("group");
-    const [silenceNextAnnoucement, setSilenceNextAnnoucement] =
-      useState<boolean>(false);
+    const [announcementState, setAnnouncementState] = useState<
+      CarouselAnnouncementTrigger | undefined
+    >(undefined);
 
     return (
       <CarouselContext.Provider
@@ -96,8 +101,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           emblaApi,
           emblaRef,
           setAriaVariant,
-          setSilenceNextAnnoucement,
-          silenceNextAnnoucement,
+          announcementState,
+          setAnnouncementState,
           carouselId: id ?? carouselId,
         }}
       >
