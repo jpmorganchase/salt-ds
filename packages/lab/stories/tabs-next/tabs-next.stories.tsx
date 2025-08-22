@@ -47,6 +47,7 @@ import {
   type ComponentType,
   type ReactElement,
   type SyntheticEvent,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -387,6 +388,12 @@ function AddTabDialog({
   onCancel: () => void;
 }) {
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    if (open) {
+      setValue("");
+    }
+  }, [open]);
 
   return (
     <Dialog open={open}>

@@ -16,8 +16,6 @@
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
-  --tabNext-radius: var(--salt-palette-corner-weak, 0);
-  border-radius: var(--tab-radius) var(--tab-radius) 0 0;
   overflow: hidden;
 
   cursor: var(--salt-cursor-hover);
@@ -28,6 +26,14 @@
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
+  max-width: 100%;
+}
+
+@supports selector(:has(*)) {
+  .saltTabListNext:has([data-overflowbutton]) .saltTabNext {
+    /* 100% of the tab list but reserving space for the overflow button */
+    max-width: calc(100% - var(--salt-spacing-100) - var(--salt-size-base));
+  }
 }
 
 .saltTabNext::after {
