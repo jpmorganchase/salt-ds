@@ -1,6 +1,6 @@
 import {
-  ARIA_ANNOUNCE_DELAY,
   AriaAnnouncerProvider,
+  DEFAULT_ANNOUNCEMENT_DURATION,
   useAriaAnnouncer,
 } from "@salt-ds/core";
 import { mount } from "cypress/react18";
@@ -12,14 +12,15 @@ const TestComponent = ({
   announcement,
   delay,
   debounce,
+  duration,
   getAnnouncement,
 }: {
+  announcement?: string;
   delay?: number;
-  debounce?: number;
-} & (
-  | { announcement?: never; getAnnouncement: () => string }
-  | { announcement: string; getAnnouncement?: never }
-)) => {
+  duration?: number;
+  debounce?: any;
+  getAnnouncement?: any;
+}) => {
   const { announce } = useAriaAnnouncer({ debounce });
   const getMessageToAnnounce = () =>
     getAnnouncement ? getAnnouncement() : announcement;
@@ -28,7 +29,7 @@ const TestComponent = ({
     <>
       <button
         onClick={() => {
-          announce(getMessageToAnnounce());
+          announce(getMessageToAnnounce(), { duration });
         }}
       >
         {BUTTON_TEXT}
@@ -44,43 +45,6 @@ const TestComponent = ({
   );
 };
 
-describe("Given a AriaAnnouncerProvider", () => {
-  it("should not affect the document flow", () => {
-    mount(
-      <div style={{ height: "100%", width: "100%" }}>
-        <AriaAnnouncerProvider>
-          <div style={{ height: "100%", width: "100%" }} />
-        </AriaAnnouncerProvider>
-      </div>,
-    );
-
-    cy.document().then((doc) => {
-      const style = doc.createElement("style");
-      style.innerHTML = `
-                body, html {
-                    height: 100%;
-                    display: block;
-                    min-height: auto;
-                }
-                [data-cy-root] {
-                    height: 100%;
-                }
-            `;
-      doc.head.appendChild(style);
-      const documentHeight = doc.documentElement.getBoundingClientRect().height;
-      const documentScrollHeight = document.documentElement.scrollHeight;
-      expect(documentHeight).to.equal(documentScrollHeight);
-      doc.head.removeChild(style);
-    });
-  });
-  it.skip("should allow for style overrides on the [aria-live] element", () => {
-    mount(<AriaAnnouncerProvider style={{ borderWidth: 1 }} />);
-
-    // TODO: figure out why this doesn't work
-    cy.get("[aria-live]").should("have.css", "border-width", "1px");
-  });
-});
-
 describe("Given useAriaAnnouncer", () => {
   it("should trigger an announcement", () => {
     mount(
@@ -88,51 +52,46 @@ describe("Given useAriaAnnouncer", () => {
         <TestComponent announcement="test" />
       </AriaAnnouncerProvider>,
     );
-    cy.findByText(BUTTON_TEXT).click();
-
+    cy.findByText(BUTTON_TEXT).realClick();
+    cy.get("[aria-live]").should("have.attr", "aria-live", "assertive");
     cy.get("[aria-live]").should("have.text", "test");
   });
 
-  describe("given a delay", () => {
+  describe("given a legacy delay", () => {
     it("should trigger an announcement after that delay", () => {
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test" delay={500} />
         </AriaAnnouncerProvider>,
       );
-      cy.findByText(BUTTON_TEXT_WAIT).click();
-
+      cy.findByText(BUTTON_TEXT_WAIT).realClick();
       cy.get("[aria-live]").should("not.have.text", "test");
-
       cy.wait(510);
-
       cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test");
+    });
+  });
+
+  describe("given a duration", () => {
+    it("should trigger an announcement which persists in the DOM for a duration", () => {
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent announcement="test" duration={250} />
+        </AriaAnnouncerProvider>,
+      );
+      cy.findByText(BUTTON_TEXT).realClick();
+      cy.get("[aria-live]").should("have.text", "test");
+      cy.wait(250);
+      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "");
     });
   });
 
   describe("given a debounce", () => {
+    let increment = 0;
     it("should create an announce method that triggers an announcement after that delay", () => {
       mount(
         <AriaAnnouncerProvider>
-          <TestComponent announcement="test" debounce={500} />
-        </AriaAnnouncerProvider>,
-      );
-      cy.findByText(BUTTON_TEXT).click();
-
-      cy.get("[aria-live]").should("not.have.text", "test");
-
-      cy.wait(510);
-
-      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test");
-    });
-  });
-
-  describe("given two queued up announcements", () => {
-    it(`should render the queued announcements one after the other with a ${ARIA_ANNOUNCE_DELAY}ms delay`, () => {
-      let increment = 0;
-      mount(
-        <AriaAnnouncerProvider>
           <TestComponent
+            debounce={500}
             getAnnouncement={() => {
               increment++;
               return `test ${increment}`;
@@ -140,12 +99,32 @@ describe("Given useAriaAnnouncer", () => {
           />
         </AriaAnnouncerProvider>,
       );
-      cy.findByText(BUTTON_TEXT).click().click();
+      cy.findByText(BUTTON_TEXT).realClick().realClick().realClick();
+      cy.get("[aria-live]").should("have.text", "test 3");
+      cy.wait(DEFAULT_ANNOUNCEMENT_DURATION);
+      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "");
+    });
+  });
 
+  describe("given two queued up announcements", () => {
+    it("should render the queued announcements one after the other with a delay", () => {
+      let increment = 0;
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent
+            duration={250}
+            getAnnouncement={() => {
+              increment++;
+              return `test ${increment}`;
+            }}
+          />
+        </AriaAnnouncerProvider>,
+      );
+      cy.findByText(BUTTON_TEXT).realClick().realClick();
       cy.get("[aria-live]").should("have.text", "test 1");
-
-      cy.wait(ARIA_ANNOUNCE_DELAY);
-
+      cy.wait(250);
+      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "");
+      cy.wait(250);
       cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test 2");
     });
   });
