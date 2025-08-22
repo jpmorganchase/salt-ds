@@ -159,7 +159,14 @@ table.saltTable th {
   overflow: hidden;
   padding: var(--salt-spacing-100);
   position: relative;
+}
+
+table.saltTable th.saltTable-th-align-left {
   text-align: start;
+}
+
+table.saltTable th.saltTable-th-align-right {
+  text-align: end;
 }
 
 .table.saltTable th[scope="row"] {
@@ -199,4 +206,12 @@ table.saltTable-divider-none tbody tr {
 table.saltTable td {
   height: 100%;
   padding: var(--salt-spacing-100);
+}
+
+table.saltTable td.saltTable-td-align-left {
+  text-align: start;
+}
+
+table.saltTable td.saltTable-td-align-right {
+  text-align: end;
 }
