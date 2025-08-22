@@ -30,9 +30,9 @@ export const TodayButton = (): ReactElement => {
         <CalendarGrid />
         <Divider />
         <Button
-          style={{ margin: "var(--salt-spacing-50)" }}
+          style={{ margin: "var(--salt-spacing-100)" }}
           sentiment="accented"
-          appearance="bordered"
+          appearance="solid"
           onClick={() => setSelectedDate(today)}
         >
           Today

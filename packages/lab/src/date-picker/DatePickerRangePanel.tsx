@@ -108,11 +108,11 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
   /**
    * Callback fired when the focused date changes.
    * @param event - The synthetic event or null if triggered by code.
-   * @param hoveredDate - The new hovered date.
+   * @param focusedDate - The new focused date.
    */
   onFocusedDateChange?: (
     event: SyntheticEvent | null,
-    hoveredDate?: TDate | null,
+    focusedDate?: TDate | null,
   ) => void;
   /**
    * Callback fired when the hovered date changes.
@@ -137,6 +137,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
       CalendarRangeProps<TDate> | CalendarOffsetProps<TDate>,
       | "selectedDate"
       | "defaultSelectedDate"
+      | "multiselect"
       | "onFocusedDateChange"
       | "onHoveredDateChange"
       | "onSelectionChange"
@@ -156,6 +157,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
       CalendarRangeProps<TDate>,
       | "selectedDate"
       | "defaultSelectedDate"
+      | "multiselect"
       | "onFocusedDateChange"
       | "onHoveredDateChange"
       | "onSelectionChange"
@@ -249,7 +251,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       minDate = dateAdapter.startOf(dateAdapter.today(timezone), "month"),
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
-    helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
+    helpers: { select, isDayHighlighted, isDayUnselectable },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
 
   const {
@@ -396,12 +398,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       );
     };
     const isDaySelectable = (date: TDate) =>
-      !(
-        date &&
-        (isDayUnselectable?.(date) ||
-          isDayDisabled?.(date) ||
-          isOutsideAllowedDates(date))
-      );
+      !(date && (isDayUnselectable?.(date) || isOutsideAllowedDates(date)));
 
     const getVisibleSelectedDate = (visibleMonth: TDate) => {
       if (
@@ -527,7 +524,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     visibleMonth: startVisibleMonth,
     hoveredDate,
     selectedDate: calendarSelectedDate,
-    isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,
@@ -552,7 +548,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
-    isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,
