@@ -16,8 +16,6 @@
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
-  --tabNext-radius: var(--salt-palette-corner-weak, 0);
-  border-radius: var(--tabNext-radius) var(--tabNext-radius) 0 0;
   overflow: hidden;
 
   cursor: var(--salt-cursor-hover);
