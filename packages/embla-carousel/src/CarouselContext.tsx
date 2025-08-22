@@ -5,6 +5,15 @@ import type { CarouselEmblaApiType, CarouselEmblaRefType } from "./Carousel";
 export const CarouselAriaVariantValues = ["group", "tabpanel"] as const;
 export type CarouselAriaVariant = (typeof CarouselAriaVariantValues)[number];
 
+export const CarouselAnnouncementTriggerValues = [
+  "tab",
+  "navigation",
+  "drag",
+  "focus",
+] as const;
+export type CarouselAnnouncementTrigger =
+  (typeof CarouselAnnouncementTriggerValues)[number];
+
 /**
  * Type definition for the Carousel context.
  * Provides access to the Embla Carousel API and reference.
@@ -32,14 +41,6 @@ interface CarouselContextType {
    */
   setAriaVariant: React.Dispatch<React.SetStateAction<CarouselAriaVariant>>;
   /**
-   * `silenceNextAnnoucement` is used to prevent the next slide announcement from being read by screen readers.
-   */
-  silenceNextAnnoucement: boolean;
-  /**
-   * Function to silence the next annoucement.
-   */
-  setSilenceNextAnnoucement: React.Dispatch<React.SetStateAction<boolean>>;
-  /**
    * Disable screenreader announcing slide updates, defaults to false.
    */
   disableSlideAnnouncements?: boolean;
@@ -47,6 +48,18 @@ interface CarouselContextType {
    * Id for the carousel
    */
   carouselId: string | undefined;
+  /**
+   * Announcement state, determines whether change is communicated to screenreader.
+   * @param trigger
+   */
+  announcementState: CarouselAnnouncementTrigger | undefined;
+  /**
+   * Set announcement state, determines whether change is communicated to screenreader.
+   * @param trigger
+   */
+  setAnnouncementState: (
+    trigger: CarouselAnnouncementTrigger | undefined,
+  ) => void;
 }
 
 export const CarouselContext = createContext<CarouselContextType | undefined>(
