@@ -52,7 +52,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
       window: targetWindow,
     });
 
-    const { emblaApi, setAriaVariant, setSilenceNextAnnoucement } =
+    const { emblaApi, setAriaVariant, setAnnouncementState } =
       useCarouselContext();
     const { selectedIndex, scrollSnaps } = useCarouselTab(emblaApi);
 
@@ -127,9 +127,9 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
               render={render}
               role={"tab"}
               selected={selected}
-              onFocus={(_event: SyntheticEvent) => {
-                // avoids announcing the slide twice
-                setSilenceNextAnnoucement(true);
+              onFocus={(event: SyntheticEvent) => {
+                event.preventDefault();
+                setAnnouncementState("tab");
                 emblaApi?.scrollTo(scrollSnapIndex);
               }}
               aria-label={ariaLabel}

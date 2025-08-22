@@ -60,7 +60,7 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
 
     return (
       <div
-        aria-roledescription={ariaVariant === "tabpanel" ? "tab" : "slide"}
+        aria-roledescription="slide"
         className={clsx([withBaseName(), className])}
         ref={ref}
         role={ariaVariant}

@@ -25,13 +25,15 @@ export const usePrevNextButtons = (): UsePrevNextButtonsType => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
 
-  const { emblaApi } = useCarouselContext();
+  const { emblaApi, setAnnouncementState } = useCarouselContext();
 
   const handlePrevButtonClick = () => {
+    setAnnouncementState("navigation");
     emblaApi?.scrollPrev();
   };
 
   const handleNextButtonClick = () => {
+    setAnnouncementState("navigation");
     emblaApi?.scrollNext();
   };
 
