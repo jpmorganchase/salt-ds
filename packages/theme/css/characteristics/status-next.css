@@ -24,7 +24,7 @@
   --salt-status-warning-bold-background: var(--salt-palette-warning);
   --salt-status-success-bold-background: var(--salt-palette-positive);
 
-  --salt-status-success-background-selected: var(--salt-palette-positive-weakest);
-  --salt-status-warning-background-selected: var(--salt-palette-warning-weakest);
-  --salt-status-error-background-selected: var(--salt-palette-negative-weakest);
+  --salt-status-success-background-selected: var(--salt-palette-positive-weaker);
+  --salt-status-warning-background-selected: var(--salt-palette-warning-weaker);
+  --salt-status-error-background-selected: var(--salt-palette-negative-weaker);
 }

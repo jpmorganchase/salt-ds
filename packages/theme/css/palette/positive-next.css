@@ -5,6 +5,7 @@
   --salt-palette-positive-strong: var(--salt-color-green-600);
   --salt-palette-positive-strong-disabled: var(--salt-color-green-600-40a);
 
+  --salt-palette-positive-weaker: var(--salt-color-green-200);
   --salt-palette-positive-weakest: var(--salt-color-green-100);
 
   --salt-palette-positive-action-hover: var(--salt-color-green-600);
@@ -17,6 +18,7 @@
   --salt-palette-positive-strong: var(--salt-color-green-400);
   --salt-palette-positive-strong-disabled: var(--salt-color-green-400-40a);
 
+  --salt-palette-positive-weaker: var(--salt-color-green-800);
   --salt-palette-positive-weakest: var(--salt-color-green-900);
 
   --salt-palette-positive-action-hover: var(--salt-color-green-600);
