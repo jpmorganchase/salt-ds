@@ -1,7 +1,6 @@
 import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
@@ -9,19 +8,19 @@ import {
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import type { ReactElement } from "react";
-import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const BorderedCard = (): ReactElement => {
+export const TabListBottom = (): ReactElement => {
   const carouselId = useId();
 
+  const slides = Array.from(Array(4).keys());
   return (
     <Carousel
       aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
     >
       <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Bordered carousel example
+        Tablist bottom aligned example
       </H2>
       <div
         style={{
@@ -37,29 +36,25 @@ export const BorderedCard = (): ReactElement => {
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
-          {sliderData.map((slide, index) => {
+          {slides.map((index) => {
             const tabId = `${carouselId}-tab${index}`;
             return (
-              <CarouselCard
+              <div
+                aria-labelledby={`${tabId}-title`}
+                role={"tabpanel"}
+                aria-roledescription="slide"
                 className={styles.carouselSlide}
                 key={tabId}
-                aria-labelledby={`${tabId}-title`}
-                appearance="bordered"
-                media={
-                  <img
-                    aria-hidden={true}
-                    className={styles.carouselImage}
-                    src={slide.image}
-                  />
-                }
-                header={
-                  <Text id={`${tabId}-title`} styleAs="h3">
-                    {slide.title}
-                  </Text>
-                }
               >
-                <Text>{slide.content}</Text>
-              </CarouselCard>
+                <Text
+                  id={`${tabId}-title`}
+                  styleAs="display1"
+                  className={styles.carouselNumber}
+                  aria-label="Placeholder slide"
+                >
+                  {index + 1}
+                </Text>
+              </div>
             );
           })}
         </CarouselSlides>

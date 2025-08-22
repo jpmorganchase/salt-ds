@@ -25,13 +25,6 @@ type UseCarouselTabProps = {
    * An array of scroll snap positions for the carousel slides.
    */
   scrollSnaps: number[];
-
-  /**
-   * Handler function for clicking a tab button to navigate to a specific slide.
-   *
-   * @param index - The index of the slide to navigate to.
-   */
-  onClick: (index: number) => void;
 };
 
 const withBaseName = makePrefixer("saltCarouselTab");
@@ -41,10 +34,6 @@ export const useCarouselTab = (
 ): UseCarouselTabProps => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-
-  const handleClick = (index: number) => {
-    emblaApi?.scrollTo(index);
-  };
 
   useEffect(() => {
     const handleInit = (emblaApi: EmblaCarouselType) => {
@@ -74,7 +63,6 @@ export const useCarouselTab = (
   return {
     selectedIndex,
     scrollSnaps,
-    onClick: handleClick,
   };
 };
 
