@@ -46,8 +46,8 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
       </Badge>
       <GridItem colSpan={7}>
         <TabsNext defaultValue="Checks">
-          <TabListNext>
-            <TabBar>
+          <TabBar>
+            <TabListNext>
               <TabNext value="Checks">
                 <TabNextTrigger>
                   <StackLayout direction="row" gap={1}>
@@ -56,8 +56,8 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
                   </StackLayout>
                 </TabNextTrigger>
               </TabNext>
-            </TabBar>
-          </TabListNext>
+            </TabListNext>
+          </TabBar>
         </TabsNext>
       </GridItem>
     </GridLayout>

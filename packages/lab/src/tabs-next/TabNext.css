@@ -28,9 +28,14 @@
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
+  max-width: 100%;
+}
 
-  /* 100% of the tablist but reserving space for the overflow button */
-  max-width: calc(100% - var(--salt-spacing-100) - var(--salt-size-base));
+@supports selector(:has(*)) {
+  .saltTabListNext:has([data-overflowbutton]) .saltTabNext {
+    /* 100% of the tab list but reserving space for the overflow button */
+    max-width: calc(100% - var(--salt-spacing-100) - var(--salt-size-base));
+  }
 }
 
 .saltTabNext::after {
