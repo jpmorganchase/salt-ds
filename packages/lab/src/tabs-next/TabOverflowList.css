@@ -46,7 +46,12 @@
   box-sizing: border-box;
   flex-shrink: 0;
   justify-content: flex-start;
-  max-width: unset;
+}
+
+@supports selector(:has(*)) {
+  .saltTabListNext:has([data-overflowbutton]) .saltTabOverflow-list .saltTabNext {
+    max-width: unset;
+  }
 }
 
 .saltTabOverflow-list .saltTabNext .saltTabNextTrigger {
