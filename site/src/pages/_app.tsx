@@ -13,6 +13,9 @@ import type { MyAppProps } from "../types/mosaic";
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
 
+import "highcharts/css/highcharts.css";
+import "@salt-ds/highcharts-theme/index.css";
+
 import "../css/index.css";
 import { Metadata } from "../Metadata/index";
 
