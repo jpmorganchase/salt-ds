@@ -1,5 +1,75 @@
 # @salt-ds/theme
 
+## 1.32.0
+
+### Minor Changes
+
+- 512b0e7: Fixed `-weak` suffix in palette and characteristic tokens for negative, positive, info, and warning, where `-weakest` should have been used.
+
+  Deprecated the following `-weak` palette tokens and renamed to the correct:
+
+  | Name                           | Replacement                       |
+  | ------------------------------ | --------------------------------- |
+  | `--salt-palette-positive-weak` | `--salt-palette-positive-weakest` |
+  | `--salt-palette-negative-weak` | `--salt-palette-negative-weakest` |
+  | `--salt-palette-warning-weak`  | `--salt-palette-warning-weakest`  |
+  | `--salt-palette-info-weak`     | `--salt-palette-info-weakest`     |
+
+- 64ef723: Update `--salt-selectable-borderColor-readonly` to fix contrast issues.
+
+  ```diff
+  - --salt-selectable-borderColor-readonly: var(--salt-palette-interact-border-readonly);
+  + --salt-selectable-borderColor-readonly: var(--salt-palette-interact-border);
+  ```
+
+  ```diff
+  - --salt-selectable-borderColor-readonly: var(--salt-palette-neutral-readonly);
+  + --salt-selectable-borderColor-readonly: var(--salt-palette-neutral);
+  ```
+
+- 9277313: Added `--salt-color-orange-875`. This is needed for color contrast requirements for warning-background-selected.
+- 9277313: Added status weaker tokens to the next theme:
+
+  ### Light mode
+
+  ```css
+  --salt-palette-positive-weaker: var(--salt-color-green-200);
+  --salt-palette-negative-weaker: var(--salt-color-red-200);
+  --salt-palette-warning-weaker: var(--salt-color-orange-200);
+  ```
+
+  ### Dark mode
+
+  ```css
+  --salt-palette-positive-weaker: var(--salt-color-green-800);
+  --salt-palette-negative-weaker: var(--salt-color-red-800);
+  --salt-palette-warning-weaker: var(--salt-color-orange-800);
+  ```
+
+- 8538730: Removed global text selection background color override.
+- 9277313: - Added `--salt-overlayable-background-hover` to replace `--salt-navigable-background-hover`.
+  - Deprecated `--salt-navigable-background-hover`.
+
+### Patch Changes
+
+- 9277313: Updated the status background selected tokens in the legacy theme:
+
+  - In light mode, background selected tokens have moved from their respective 20 colors to 30 to improve the visual distinction between default and selected states.
+    - For example: `--salt-palette-error-background-selected` went from `--salt-color-red-20` to `--salt-color-red-30`.
+  - In dark mode, background selected tokens have moved from their respective 900 color to 800 to provide a visual distinction between default and selected states. Except for warning which went from 900 to 875.
+    - For example: `--salt-palette-error-background-selected` went from `--salt-color-red-900` to `--salt-color-red-800`.
+
+- 9277313: Updated status background selected tokens to differentiate them from the status background tokens.
+
+  ```diff
+  - --salt-status-success-background-selected: var(--salt-palette-positive-weakest);
+  - --salt-status-warning-background-selected: var(--salt-palette-warning-weakest);
+  - --salt-status-error-background-selected: var(--salt-palette-negative-weakest);
+  + --salt-status-success-background-selected: var(--salt-palette-positive-weaker);
+  + --salt-status-warning-background-selected: var(--salt-palette-warning-weaker);
+  + --salt-status-error-background-selected: var(--salt-palette-negative-weaker);
+  ```
+
 ## 1.31.0
 
 ### Minor Changes
