@@ -1,5 +1,17 @@
 # @salt-ds/core
 
+## 1.47.5
+
+### Patch Changes
+
+- 846d975: Fixed Pagination active border color.
+- 8538730: Removed text selection background color override.
+- 8261887: Fixed Tooltip showing when content is null.
+- e6445dc: Fixed Stepper using incorrect font styles in steps.
+- ff646e2: Fixed Dialog having an unnecessary scrollbar.
+- 9a25824: Updated `DialogHeader`'s responsive behaviour to meet WCAG 2.1 Reflow success criterion.
+- 64ef723: Updated read-only style for RadioButton and Checkbox to meet color contrast requirements.
+
 ## 1.47.4
 
 ### Patch Changes
