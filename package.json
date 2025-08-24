@@ -48,7 +48,7 @@
     "@biomejs/wasm-nodejs": "^2.2.0",
     "@changesets/cli": "^2.27.12",
     "@cypress/code-coverage": "^3.13.6",
-    "@faker-js/faker": "^8.0.0",
+    "@faker-js/faker": "^10.0.0",
     "@fontsource/open-sans": "^4.5.13",
     "@fontsource/pt-mono": "^5.0.12",
     "@mswjs/data": "^0.16.1",
