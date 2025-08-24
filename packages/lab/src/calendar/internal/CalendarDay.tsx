@@ -89,7 +89,7 @@ export const CalendarDay = forwardRef<
     if (focused) {
       focusedDateRef?.current?.focus({ preventScroll: true });
     }
-  }, [focused, focusedDateRef?.current?.focus]);
+  }, [focused]);
 
   const defaultButtonProps = {
     "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
@@ -118,18 +118,16 @@ export const CalendarDay = forwardRef<
     ),
   };
 
-  const defaultButtonElement = (
+  const buttonElement = render ? (
+    renderProps<React.ElementType<renderCalendarDayProps<TDate>>>("button", {
+      render,
+      ...defaultButtonProps,
+      status,
+      date,
+    })
+  ) : (
     <button type={"button"} {...defaultButtonProps} />
   );
-
-  const buttonElement = render
-    ? renderProps<React.ElementType<renderCalendarDayProps<TDate>>>("button", {
-        render,
-        ...defaultButtonProps,
-        status,
-        date,
-      })
-    : defaultButtonElement;
 
   const tooltipContent = unselectableReason || highlightedReason;
   if (tooltipContent && tooltipContent?.length) {
