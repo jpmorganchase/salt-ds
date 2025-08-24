@@ -9,6 +9,7 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
   forwardRef,
+  useMemo,
   useRef,
 } from "react";
 import { useLocalization } from "../localization-provider";
@@ -78,15 +79,29 @@ export const CalendarGrid = forwardRef<
       event,
     ) => {
       event.stopPropagation();
-      setTimeout(() => {
-        if (calendarGridRef?.current?.contains(document.activeElement)) {
-          return;
-        }
-        setFocusedDate(event, null);
-        setHoveredDate(event, null);
-      }, 0);
+      const relatedTarget = event.relatedTarget as HTMLElement;
+      if (
+        calendarGridRef.current &&
+        relatedTarget &&
+        calendarGridRef.current.contains(relatedTarget)
+      ) {
+        return;
+      }
+      setFocusedDate(event, null);
+      setHoveredDate(event, null);
       onBlur?.(event);
     };
+
+    const visibleMonths = useMemo(
+      () =>
+        Array.from({ length: numberOfVisibleMonths }, (_value, index) => {
+          const gridItemVisibleMonth: TDate = dateAdapter.add(visibleMonth, {
+            months: index,
+          });
+          return gridItemVisibleMonth;
+        }),
+      [dateAdapter, numberOfVisibleMonths, visibleMonth],
+    );
 
     return (
       <GridLayout
@@ -96,28 +111,23 @@ export const CalendarGrid = forwardRef<
         onBlur={handleCalendarGridBlur}
         {...rest}
       >
-        {Array.from({ length: numberOfVisibleMonths }, (_value, index) => {
-          const gridItemVisibleMonth: TDate = dateAdapter.add(visibleMonth, {
-            months: index,
-          });
-          return (
-            <GridItem
-              key={`calendar-grid-item-${dateAdapter.format(gridItemVisibleMonth, "MMMM YYYY")}`}
-            >
-              {numberOfVisibleMonths > 1 ? (
-                <CalendarMonthHeader
-                  {...CalendarMonthHeaderProps}
-                  month={gridItemVisibleMonth}
-                />
-              ) : null}
-              <CalendarWeekHeader {...CalendarWeekHeaderProps} />
-              <CalendarMonth
-                date={gridItemVisibleMonth}
-                CalendarDayProps={CalendarDayProps}
+        {visibleMonths.map((gridItemVisibleMonth) => (
+          <GridItem
+            key={`calendar-grid-item-${dateAdapter.format(gridItemVisibleMonth, "MMMM YYYY")}`}
+          >
+            {numberOfVisibleMonths > 1 ? (
+              <CalendarMonthHeader
+                {...CalendarMonthHeaderProps}
+                month={gridItemVisibleMonth}
               />
-            </GridItem>
-          );
-        })}
+            ) : null}
+            <CalendarWeekHeader {...CalendarWeekHeaderProps} />
+            <CalendarMonth
+              date={gridItemVisibleMonth}
+              CalendarDayProps={CalendarDayProps}
+            />
+          </GridItem>
+        ))}
       </GridLayout>
     );
   },

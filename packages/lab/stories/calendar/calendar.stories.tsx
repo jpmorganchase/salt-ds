@@ -94,6 +94,25 @@ export const Single: StoryFn<
   );
 };
 
+export const Grid: StoryFn<
+  React.FC<CalendarSingleProps<DateFrameworkType>>
+> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const selectedDate = dateAdapter.today();
+  return (
+    <Calendar
+      {...args}
+      defaultSelectedDate={selectedDate}
+      numberOfVisibleMonths={12}
+      selectionVariant="single"
+    >
+      <CalendarNavigation />
+      <CalendarGrid columns={4} />
+    </Calendar>
+  );
+};
+
+
 export const SingleControlled: StoryFn<
   React.FC<CalendarSingleProps<DateFrameworkType>>
 > = (args) => {

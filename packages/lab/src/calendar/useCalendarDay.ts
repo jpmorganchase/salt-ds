@@ -5,7 +5,6 @@ import type {
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
-import { useRef } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
@@ -82,23 +81,19 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   } = useCalendarContext<TDate>();
   const selectionManager = useCalendarSelectionDay<TDate>({ date });
   const focusManager = useFocusManagement<TDate>({ date });
-  const focusTriggeredByClick = useRef(false);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    selectionManager?.handleClick(event);
+    selectionManager.handleClick(event);
     focusManager.handleClick(event);
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    focusTriggeredByClick.current = false;
     focusManager.handleKeyDown(event);
-    selectionManager?.handleKeyDown(event);
+    selectionManager.handleKeyDown(event);
   };
 
   const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {
-    if (!focusTriggeredByClick.current) {
-      focusManager.handleFocus(event);
-    }
+    focusManager.handleFocus(event);
     setHoveredDate(event, date);
   };
 
@@ -106,16 +101,11 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     setHoveredDate(event, date);
   };
 
-  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = () => {
-    focusTriggeredByClick.current = true;
-  };
-
   const eventHandlers = {
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onFocus: handleFocus,
     onMouseMove: handleMouseMove,
-    onMouseDown: handleMouseDown,
   };
 
   const focused = focusedDate && dateAdapter.isSame(date, focusedDate, "day");
