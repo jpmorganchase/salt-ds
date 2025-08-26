@@ -41,7 +41,7 @@ const preview: Preview = {
     responsive: "unwrap",
     textSpacing: "disable",
     styleInjection: "enable",
-    dateAdapter: "date-fns",
+    dateAdapter: "luxon",
     theme: "brand",
   },
   globalTypes: {
@@ -116,9 +116,9 @@ const preview: Preview = {
       description: "Date adapter type",
       toolbar: {
         items: [
+          { value: "luxon", title: "luxon" },
           { value: "date-fns", title: "date-fns" },
           { value: "dayjs", title: "dayjs" },
-          { value: "luxon", title: "luxon" },
           { value: "moment", title: "moment (legacy)" },
         ],
         title: "Date Adapter",
