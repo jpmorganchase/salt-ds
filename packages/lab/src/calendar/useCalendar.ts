@@ -426,8 +426,13 @@ export function useCalendar<TDate extends DateFrameworkType>(
     resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
 
   const [visibleMonth, setVisibleMonthState] = useControlled({
-    controlled: useMemo(() =>
-      visibleMonthProp ? dateAdapter.startOf(visibleMonthProp, "month") : undefined,  [visibleMonthProp]),
+    controlled: useMemo(
+      () =>
+        visibleMonthProp
+          ? dateAdapter.startOf(visibleMonthProp, "month")
+          : undefined,
+      [visibleMonthProp],
+    ),
     // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
     default: useMemo(
       () => dateAdapter.startOf(defaultVisibleMonth, "month"),

@@ -6,9 +6,9 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
   forwardRef,
-  useMemo,
   type MouseEvent,
   type SyntheticEvent,
+  useMemo,
 } from "react";
 import { useLocalization } from "../../localization-provider";
 import { useCalendarContext } from "./CalendarContext";
@@ -58,7 +58,10 @@ export const CalendarMonth = forwardRef<
     state: { selectionVariant, timezone = "default" },
     helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
-  const days = useMemo(() => generateVisibleDays<TDate>(dateAdapter, date, timezone), [dateAdapter, date, timezone]);
+  const days = useMemo(
+    () => generateVisibleDays<TDate>(dateAdapter, date, timezone),
+    [dateAdapter, date, timezone],
+  );
   const handleMouseLeave = (event: SyntheticEvent) => {
     setHoveredDate(event, null);
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
