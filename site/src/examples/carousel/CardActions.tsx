@@ -1,4 +1,4 @@
-import { FlexLayout, H2, Link, Text, useId } from "@salt-ds/core";
+import { FlexLayout, H2, H3, Link, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -59,9 +59,9 @@ export const CardActions = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text id={`${tabId}-title`} styleAs="h3">
+                  <H3 id={`${tabId}-title`}>
                     {slide.title}
-                  </Text>
+                  </H3>
                 }
                 actions={
                   <Link aria-label="demo action" tabIndex={0} href="#">
