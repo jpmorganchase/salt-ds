@@ -371,7 +371,8 @@ export const CalendarNavigation = forwardRef<
       [dateAdapter, formatYearProp],
     );
 
-    const MonthDropdown = useMemo(() => (
+    const MonthDropdown = useMemo(
+      () => (
         <Dropdown
           aria-label="Month Dropdown"
           selected={selectedMonth ? [selectedMonth] : []}
@@ -380,18 +381,22 @@ export const CalendarNavigation = forwardRef<
           {...MonthDropdownProps}
         >
           {months.map((month) => {
-            const outsideAllowedMonths = isOutsideAllowedMonths(month)
-            return <OptionWithTooltip
-              key={formatMonth(month)}
-              value={month}
-              disabled={outsideAllowedMonths}
-              tooltipContent={"This month is out of range"}
-            >
-              {formatMonth(month)}
-            </OptionWithTooltip>
+            const outsideAllowedMonths = isOutsideAllowedMonths(month);
+            return (
+              <OptionWithTooltip
+                key={formatMonth(month)}
+                value={month}
+                disabled={outsideAllowedMonths}
+                tooltipContent={"This month is out of range"}
+              >
+                {formatMonth(month)}
+              </OptionWithTooltip>
+            );
           })}
         </Dropdown>
-      ), [months]);
+      ),
+      [months],
+    );
 
     const YearDropdown = useMemo(
       () => (

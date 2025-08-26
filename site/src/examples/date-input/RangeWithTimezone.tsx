@@ -276,7 +276,7 @@ export const RangeWithTimezone = (): ReactElement => {
   );
 
   const handleAdapterChange: DropdownProps["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     setDateAdapterName(newSelected[0] ?? "date-fns");

@@ -94,9 +94,9 @@ export const Single: StoryFn<
   );
 };
 
-export const Grid: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
+export const Grid: StoryFn<React.FC<CalendarSingleProps<DateFrameworkType>>> = (
+  args,
+) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const selectedDate = dateAdapter.today();
   return (
@@ -111,7 +111,6 @@ export const Grid: StoryFn<
     </Calendar>
   );
 };
-
 
 export const SingleControlled: StoryFn<
   React.FC<CalendarSingleProps<DateFrameworkType>>
@@ -853,7 +852,7 @@ export const MinMaxDate: StoryFn<
 export const TwinCalendars: StoryFn<
   React.FC<CalendarRangeProps<DateFrameworkType>>
 > = ({
-  defaultSelectedDate = { startDate: undefined, endDate:undefined },
+  defaultSelectedDate = { startDate: undefined, endDate: undefined },
   defaultVisibleMonth,
   selectionVariant,
   ...args
