@@ -12,7 +12,13 @@ data:
 
 - Avoid using infographics, maps, charts as images or [images of text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
 - Order slides by importance, with the most critical info first.
-- If composing with navigation controls (previous/next slide or tablist), ensure they are the first elements to receive focus, enabling the user to control the carousel.
+- If composing with navigation controls (previous/next buttons or tablist), ensure they are the first elements to receive focus, enabling the user to control the carousel, on initial focus.
+
+### Accessible name
+- If the carousel has a visible label, its accessible label is provided by aria-labelledby on the carousel container set to the ID of the the visible label. Otherwise, an accessible label is provided using aria-label set on the carousel container. 
+  - Note that since the aria-roledescription is set to "carousel", the label does not contain the word "carousel".
+- If a slide has a visible label, its accessible label is provided by aria-labelledby on the slide container set to the ID of the visible label. Otherwise, an accessible label is provided by using aria-label set on the slide container.
+  - Note that since the aria-roledescription is set to "slide", the label does not contain the word "slide."
 
 ### With tablist
 
@@ -20,14 +26,14 @@ If composing with a tablist:
 
 - Ensure the tablist is the first element to receive focus, enabling the user to control the carousel, on initial focus.
 - Remove the next and prev buttons from the focus order, as the tablist provides sufficient navigation controls.
-- If multiple cards are visible at one time, do not include a tablist, as a tablist should only be used with single cards.
-- Ensure each card has `role="tabpanel"` and `aria-roledescription="slide".
+- If multiple slides are visible at one time, do not include a tablist, as a tablist should only be used with single slides.
+- Ensure each slide has `role="tabpanel"` and `aria-roledescription="slide".
 
 ### Without tablist
 
 If composing without a tablist:
 
-- Ensure each card with a carousel has `role="group"` and `aria-roledescription="slide"`.
+- Ensure each slide with a carousel has `role="group"` and `aria-roledescription="slide"`.
 
 ### Autoplay
 
@@ -38,7 +44,7 @@ If using Autoplay, then additional considerations are required
   - stop the autoplay if the user hovers over the carousel.
   - stop the autoplay if the user drags a slide.
   - stop the autoplay when content within a carousel slide receives focus, ensuring users can interact with the content without distraction.
-- ensure screen readers do not announce changes in slide content during autoplay" as the constant interruptions make the page unusable for a screen reader user.
+- ensure screen readers do not announce changes in slide content during autoplay as the constant interruptions make the page unusable for a screen reader user.
 - unset `aria-roledescription` to align with JPM accessibility recommendations.
 - if autoplay of content starts upon init, the slides should pause upon hover.
 - if the user has to press play to see more content, the slides do not need to pause upon hover.
@@ -57,49 +63,50 @@ If using with multiple slides per tab, this will create increased complexity for
 
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is outside the carousel, moves focus into the carousel, setting focus on the previous button.
+- If focus is on the element immediately before the carousel, moves focus into the carousel, setting focus on the appropriate carousel navigation control (previous button or selected tab).
 - If focus is on the previous button, moves focus to the next button.
-- Assuming the carousel controls are at the top, when the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, direct the focus to the next focusable element within the current slide or the sequence of the page.
-- Assuming the carousel controls are at the bottom, when the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, direct the focus to the next focusable element in the sequence of the page.
-
-</KeyboardControl>
-
-<KeyboardControl keyOrCombos="Enter">
-
-- If focus is on the next button, it moves to the next slide and keeps focus on the button, allowing for continuous navigation.
-- If focus is on the previous button, it moves to the previous slide and keeps focus on the button, facilitating backward navigation.
+- If focus is on a selected tab in the tablist, moves focus to the slide.
+- If focus is on the slide, moves focus to the next focusable element within the current slide or the next appropriate focusable element on the page outside the carousel.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
 
 - If focus is on the next button, moves focus to the previous button, enabling backward navigation through controls.
-- If focus is within a visible slide, moves focus to the tablist (if available) or next button, ensuring logical navigation order.
-- If focus is on the element after the carousel, sets focus on the last interactive element on the visible slide, allowing for backward navigation through slide content.
+- If focus is on a selected tab in the tablist, moves focus to the previous appropriate focusable element on the page outside the carousel.
+- If focus is on a slide, moves focus to the previous slide (if available), otherwise the appropriate carousel navigation control (next button or selected tab), ensuring logical backward navigation order.
+- If focus is on the element immediately after the carousel, sets focus on the last interactive element on the visible slide (if available), otherwise focus on the visible slide, allowing for backward navigation through the carousel.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Enter">
+
+- If focus is on the next button, the next slide is displayed and keeps focus on the button, allowing for continuous navigation.
+- If focus is on the previous button, the previous slide is displayed and keeps focus on the button, facilitating backward navigation.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Right arrow">
 
-- If focus is in a tablist and there are more slides to the right, moves the focus to the next slide.
+- If focus is on a selected tab in the tablist and there are more tabs to the right, moves the focus to the next tab.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Left arrow">
 
-- If focus is in a tablist and there are more slides to the right, moves the focus to the next slide, facilitating forward navigation through slides.
+- If focus is on a selected tab in the tablist and there are more tabs to the left, moves the focus to the previous tab.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Home">
 
-- If focus is in a tablist and there are more slides to the left, moves the focus to the previous slide, enabling backward navigation through slides.
+- If focus is on a selected tab in the tablist and there are more tabs to the left, moves the focus to the first tab, allowing quick access to the beginning of the carousel
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="End">
 
-- If focus is in a tablist, move to the last slide, allowing quick access to the end of the carousel.
+- If focus is on a selected tab in the tablist and there are more tabs to the right, moves the focus to the last tab, allowing quick access to the end of the carousel.
 
 </KeyboardControl>
 
