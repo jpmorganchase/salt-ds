@@ -86,7 +86,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
     return (
       <div
         role="tablist"
-        aria-label="Choose slide to display"
+        aria-label="Slides"
         className={clsx(withBaseName(), className)}
         onKeyDown={handleKeyDown}
         ref={ref}
