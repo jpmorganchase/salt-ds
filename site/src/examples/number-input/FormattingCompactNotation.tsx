@@ -4,15 +4,19 @@ import { toFloat } from "@salt-ds/lab/src/number-input/internal/utils";
 import { useState } from "react";
 
 export const FormattingCompactNotation = () => {
-  const [value, setValue] = useState(100000);
+  const [value, setValue] = useState<string | number>(100000);
   return (
     <StackLayout gap={2} style={{ width: "256px" }}>
       <FormField>
         <FormFieldLabel>Compact notation</FormFieldLabel>
         <NumberInput
           value={value}
-          onNumberChange={(_e, value) => {
-            setValue(value ?? 0);
+          onChange={(e) => {
+            setValue(e?.target?.value ?? "");
+          }}
+          onNumberChange={(e: any, value) => {
+            console.log("Number changed to ", value);
+            setValue(value ?? "");
           }}
           format={(value) => {
             const formattedValue = new Intl.NumberFormat("en-GB", {
@@ -20,11 +24,14 @@ export const FormattingCompactNotation = () => {
               compactDisplay: "short",
               maximumFractionDigits: 3,
             }).format(toFloat(value));
-            return formattedValue;
+            return formattedValue === "0" ? "" : formattedValue;
           }}
           step={10000}
           parse={(value) => {
-            const match = value.match(/^(\d+(\.\d*)?)([kKmMbBtT]?)$/);
+            if (!value?.length) {
+              return 0;
+            }
+            const match = value.match(/^(-?\d+(\.\d*)?)([kKmMbBtT]?)$/);
             if (!match) return NaN;
 
             const [_, num, , unit] = match;
