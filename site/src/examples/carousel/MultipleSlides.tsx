@@ -1,4 +1,4 @@
-import { FlexLayout, H2, Text, useBreakpoint, useId } from "@salt-ds/core";
+import { FlexLayout, H2, H3, Text, useBreakpoint, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -56,9 +56,9 @@ export const MultipleSlides = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text id={`${slideId}-title`} styleAs="h3">
+                  <H3 id={`${slideId}-title`}>
                     {slide.title}
-                  </Text>
+                  </H3>
                 }
               >
                 <Text>{slide.content}</Text>

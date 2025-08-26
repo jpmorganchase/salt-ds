@@ -1,4 +1,4 @@
-import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
+import { Display1, FlexLayout, H2, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselNextButton,
@@ -46,14 +46,13 @@ export const TabListBottom = (): ReactElement => {
                 className={styles.carouselSlide}
                 key={tabId}
               >
-                <Text
+                <Display1
                   id={`${tabId}-title`}
-                  styleAs="display1"
                   className={styles.carouselNumber}
                   aria-label="Placeholder slide"
                 >
                   {index + 1}
-                </Text>
+                </Display1>
               </div>
             );
           })}

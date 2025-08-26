@@ -1,4 +1,4 @@
-import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
+import { FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -53,9 +53,9 @@ export const BorderedCard = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text id={`${tabId}-title`} styleAs="h3">
+                  <H3 id={`${tabId}-title`}>
                     {slide.title}
-                  </Text>
+                  </H3>
                 }
               >
                 <Text>{slide.content}</Text>

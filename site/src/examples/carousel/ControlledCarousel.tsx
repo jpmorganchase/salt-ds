@@ -1,4 +1,4 @@
-import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
+import { Button, Display1, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -68,9 +68,9 @@ export const ControlledCarousel = (): ReactElement => {
                   />
                 }
                 header={
-                  <Text id={`${tabId}-title`} styleAs="h3">
+                  <Display1 id={`${tabId}-title`}>
                     {slide.title}
-                  </Text>
+                  </Display1>
                 }
               >
                 <Text>{slide.content}</Text>

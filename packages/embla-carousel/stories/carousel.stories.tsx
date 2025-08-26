@@ -9,7 +9,7 @@ import {
 } from "@salt-ds/embla-carousel";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
-import { FlexLayout, H2, Text, useId } from "@salt-ds/core";
+import { Display1, FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
 import Fade from "embla-carousel-fade";
 import { sliderData } from "./exampleData";
@@ -86,14 +86,13 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
               key={tabId}
             >
               <div className="carouselNumber">
-                <Text
+                <Display1
                   id={`${tabId}-title`}
-                  styleAs="display1"
                   className="carouselHeading"
                   aria-label={"Placeholder tab"}
                 >
                   {index + 1}
-                </Text>
+                </Display1>
               </div>
             </div>
           );
@@ -158,11 +157,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <Text id={`${slideId}-title`} styleAs="h3">
-                    {slide.title}
-                  </Text>
-                }
+                header={<H3 id={`${slideId}-title`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselCard>

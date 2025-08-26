@@ -1,4 +1,4 @@
-import { Button, FlexLayout, H2, Link, Text, useId } from "@salt-ds/core";
+import { Button, FlexLayout, H2, H3, Link, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselAutoplayIndicator,
@@ -22,7 +22,7 @@ const DELAY_MSECS = 8000;
 export const Autoplay = () => {
   const carouselId = useId();
   const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -64,7 +64,6 @@ export const Autoplay = () => {
 
   const isActive = isPlaying && !isPaused;
   return (
-    <div className="saltCarouselAutoplayExample">
       <Carousel
         aria-labelledby={`${carouselId}-title`}
         className={styles.carousel}
@@ -73,7 +72,7 @@ export const Autoplay = () => {
         emblaPlugins={[
           AutoplayPlugin({
             delay: DELAY_MSECS,
-            playOnInit: false,
+            playOnInit: true,
           }),
           Classnames({
             snapped: styles.carouselSlideIsSnapped,
@@ -144,12 +143,12 @@ export const Autoplay = () => {
                     />
                   }
                   header={
-                    <Text id={`${slideId}-title`} styleAs="h3">
+                    <H3 id={`${slideId}-title`} >
                       {slide.title}
-                    </Text>
+                    </H3>
                   }
                   actions={
-                    <Link aria-label="demo action" tabIndex={0} href="#">
+                    <Link tabIndex={0} href="#">
                       Usage examples
                     </Link>
                   }
@@ -161,6 +160,5 @@ export const Autoplay = () => {
           </CarouselSlides>
         </div>
       </Carousel>
-    </div>
   );
 };
