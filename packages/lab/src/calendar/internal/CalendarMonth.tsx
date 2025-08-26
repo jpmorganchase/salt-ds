@@ -64,7 +64,10 @@ export const CalendarMonth = forwardRef<
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
   };
 
-  const weeks = chunkArray(days, 7);
+  const weeks = useMemo(() => {
+    const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
+    return chunkArray(days, 7);
+  }, [dateAdapter, date, timezone]);
 
   return (
     <div
