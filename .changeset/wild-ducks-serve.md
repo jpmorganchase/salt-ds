@@ -8,3 +8,8 @@ Visual updates for `CalendarDay` rendering
 - re-factored `CalendarWeekHeader` to make it align with refactored `CalendarMonth`.
 - removed usage of `small` text style.
 - range selection with rounded corners fixed
+
+Visual updates for `DatePicker` rendering
+
+- use bordered buttons for cancel action in `DatePickerActions`
+-
