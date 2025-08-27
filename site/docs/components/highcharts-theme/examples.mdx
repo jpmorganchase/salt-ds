@@ -9,23 +9,30 @@ data:
 ---
 
 <Callout title="Note">
-  This package is a WIP. Highcharts CSS files and Options object are not
-  finalized. Only charts with provided examples are supported.
+  This package is a WIP. Highcharts CSS files and Options object are not finalized. Only charts with provided examples are supported.
+
+Current issues to be resolved before lab release:
+
+  <ul>
+    <li>
+      Legend positioning is not consistent with Figma examples due to Highcharts API limitations - [track issue](https://github.com/jpmorganchase/salt-ds/issues/5555).
+    </li>
+  </ul>
 </Callout>
 
-## Line Chart
+## Line chart
 
 Use a line chart to show changes in data over time. To ensure accessible presentation, line patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
 
 <LivePreview componentName="highcharts-theme" exampleName="LineChart" />
 
-## Pie Chart
+## Pie chart
 
 Use a pie chart to show proportions of a whole. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
 
 <LivePreview componentName="highcharts-theme" exampleName="PieChart" />
 
-## Donut Chart
+## Donut chart
 
 Use a donut chart to show proportions of a whole, with space in the center to highlight key values or additional information. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
 
@@ -36,3 +43,11 @@ A donut chart is a variation of the pie chart, with the `plotOptions.pie.innerSi
 - An `innerSize` value of `80%` is recommended for a good default visual balance.
 
 <LivePreview componentName="highcharts-theme" exampleName="DonutChart" />
+
+## Stacked bar chart
+
+Use a stacked bar chart to compare part-to-whole relationships across categories. Each bar shows the total, with segments representing series values. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+A stacked bar chart is a variation of the bar chart, with the `plotOptions.series.stacking` set to `normal` within the `Options` object.
+
+<LivePreview componentName="highcharts-theme" exampleName="StackedBarChart" />
