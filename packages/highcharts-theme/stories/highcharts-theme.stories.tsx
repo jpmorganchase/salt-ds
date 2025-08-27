@@ -2,12 +2,14 @@ import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
+  BulletChart as BulletChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
   StackedBarChart as StackedBarChartComponent,
 } from "../src/examples";
 import {
+  bulletOptions,
   donutOptions,
   lineOptions,
   pieOptions,
@@ -71,5 +73,12 @@ export const StackedBarChart = {
   args: {
     patterns: false,
     options: stackedBarOptions,
+  },
+};
+export const BulletChart = {
+  render: (args: ChartStoryArgs) => <BulletChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: bulletOptions,
   },
 };
