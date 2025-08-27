@@ -38,6 +38,7 @@ export const getDefaultOptions = (
       symbolRadius: tokens["--salt-palette-corner-weaker"],
       itemMarginBottom: tokens["--salt-spacing-150"],
       margin: tokens["--salt-spacing-150"],
+      y: tokens["--salt-spacing-200"] + tokens["--salt-size-icon"],
     },
     plotOptions: {
       line: {
