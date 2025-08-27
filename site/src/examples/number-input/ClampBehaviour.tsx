@@ -16,7 +16,7 @@ const accessibleTextStyles = {
 } as React.CSSProperties;
 
 export const ClampBehaviour = () => {
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState<number | string>(2);
   const [accessibleText, setAccessibleText] = useState("");
   const accessibleTextId = useId();
   const max = 10;
@@ -33,8 +33,14 @@ export const ClampBehaviour = () => {
         <FormFieldLabel>Number input with clamped range</FormFieldLabel>
         <NumberInput
           value={value}
+          onChange={(e) => {
+            setValue(e?.target?.value ? parseFloat(e?.target?.value) : "");
+          }}
           // TODO sort out the conditional events bleeding into public API
-          onNumberChange={(_, value = 0) => {
+          onNumberChange={(_, value ) => {
+            if (value === undefined) {
+              return;
+            }
             setValue(value);
             if (value > max) {
               setAccessibleText(`${value} is greater than the maximum value`);
@@ -53,11 +59,12 @@ export const ClampBehaviour = () => {
           clamp
           inputProps={{
             onBlur: () => {
-              if (value > max) {
+              const parsedValue = parseFloat(String(value));
+              if (parsedValue > max) {
                 setAccessibleText(
                   `${value} is greater than the maximum value, value was set to ${max}`,
                 );
-              } else if (value < min) {
+              } else if (parsedValue < min) {
                 setAccessibleText(
                   `${value} is less than the minimum value, value was set to ${min}`,
                 );

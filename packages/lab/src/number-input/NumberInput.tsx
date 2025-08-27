@@ -27,7 +27,7 @@ import {
   useState,
 } from "react";
 import {
-  isAllowed,
+  clampToRange,
   isOutOfRange,
   sanitizeInput,
   toFloat,
@@ -178,6 +178,14 @@ const defaultFormat = (value: string): string => {
   return String(updatedValue);
 };
 
+const defaultParse = (value: string) => {
+  const sanitizedValue = sanitizeInput(value);
+  if (sanitizedValue === "") {
+    return NaN;
+  }
+  return toFloat(sanitizedValue);
+};
+
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
@@ -199,7 +207,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       onChange,
       onClick,
       onNumberChange,
-      parse = (value: string) => toFloat(sanitizeInput(value)),
+      parse = defaultParse,
       placeholder,
       decimalScale,
       readOnly: readOnlyProp,
@@ -276,23 +284,34 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       setIsEditing(false);
       setIsFocused(false);
       inputOnBlur?.(event);
-      onNumberChange?.(event, parse(value));
+      const parsedValue = parse(value);
+      const clampedValue =
+        clamp && !isNaN(parsedValue)
+          ? clampToRange(min, max,parsedValue)
+          : parsedValue;
+      onNumberChange?.(event, clampedValue);
     };
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const inputValue = event.target.value;
-      setIsEditing(true);
-      if (!parse && !isAllowed(inputValue)) {
-        return
+    const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+      const inputValue = event.currentTarget.value;
+      if (
+        !isNaN(Number(inputValue)) &&
+        Number(inputValue) >= min &&
+        Number(inputValue) <= max
+      ) {
+        setIsEditing(true);
+        const parsedValue = parse ? parse(inputValue) : inputValue;
+        setValue(String(parsedValue));
+        onChange?.(event as unknown as ChangeEvent<HTMLInputElement>);
+      } else {
+        event.preventDefault();
       }
-      const parsedValue = parse(inputValue);
-      setValue(String(parsedValue));
-      onChange?.(event);
     };
 
     const decrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse(value);
+      let parsedValue = parse(value);
+      parsedValue = isNaN(parsedValue) ? 0 : parsedValue;
       let decrementedValue = parsedValue - decrementStep;
       const nextValue = decimalScale
         ? parseFloat(decrementedValue.toFixed(decimalScale))
@@ -310,7 +329,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     // TODO: Investigate these optional values
     const incrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse(value);
+      let parsedValue = parse(value);
+      parsedValue = isNaN(parsedValue) ? 0 : parsedValue;
       let incrementedValue = parsedValue + incrementStep;
       const nextValue = decimalScale
         ? parseFloat(incrementedValue.toFixed(decimalScale))
