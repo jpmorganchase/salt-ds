@@ -6,36 +6,40 @@ sidebar:
   groupLabel: Designing
 ---
 
-Salt provides a comprehensive set of components and styles, which include themes, typography, color palettes, iconography and more. Use the components as they are, out of the box, or adapt them to suit the needs of your business or application.
+Salt provides a comprehensive set of components and styles, which include themes, typography, color palettes, iconography and more. Designers can use the components as they are, out of the box, or adapt them to suit the needs of a business or application.
 
-<Callout title="Start Your Migration">
+## Checking off the prerequisites
 
-New Salt DS Figma libraries are live! Plan your migration now to ensure a seamless transition before the existing libraries are unpublished. We’re here to help!
+To start designing with Salt, you should allow 30 minutes and begin with the following:
 
-**When can you expect this change?**
+- Make sure you have an active Figma account.
+- To use the Salt [typography](https://www.saltdesignsystem.com/salt/foundations/typography) style, install the Open Sans, PT Mono and Amplitude fonts. If you don't already have them, you can [download Open Sans and PT Mono from Google Fonts.](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono)
+  - If you are a JPMC employee and Mac user, download the Amplitude font from Self Service by searching for JPMC Brand Fonts. You can find additional guidance on [Salt's Resources page about fonts.](https://go/salt-ds/resources/index)
 
-- New libraries published: January 6th, 2025
-- Existing libraries retired: Immediately after release
-- Existing libraries unpublished
-  - Light/ Dark Figma Libraries (non-variable based, UITK themed): February 28th
-  - Salt (Next) Libraries (variable based, Brand themed): May 2nd
+## Setting up Figma libraries
 
-For more details, read our [Migration Guide](https://go/salt-ds-internal/product/migration-strategies/salt-ds-figma-libraries/index). Have questions? Visit our [support page](https://go/salt-ds-internal/support) or [contact us](/salt/support-and-contributions/index).
+Watch our [tutorial video](https://go/salt-ds/content/insights/tutorials/20250109-saltds-figma-getting-started)(JPMC Employees Only) on setting up Salt DS Figma libraries for your project.
+We maintain a comprehensive set of up-to-date libraries in Figma to help you make beautiful, consistently designed UIs and applications. If you want to start using Salt Design System for your project, first you need to set up the Salt libraries on Figma with the steps below.
 
+## Salt DS libraries
+
+Salt offers the following libraries in Figma. You'll be installing those that best suit your needs.
+
+| Library                         | Description                                                                                                                                                                                                                                     |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Salt DS Components and Patterns | This library includes all Salt DS components and patterns that are represented in code and are documented on the site. To use Salt components and patterns directly, please install this library.                                               |
+| Salt DS Themes                  | This library includes all typography and effect styles as well as all color, size, and spacing variables needed for the themes available within the components and patterns library. All variables are reflective of the design tokens in code. |
+| Salt DS Assets                  | This library offers Salt icons and country symbols.                                                                                                                                                                                             |
+| Salt DS Logos                   | This library contains logo variations, including J.P. Morgan, Chase, and dual brand logos. This library is for internal JPMC use only.                                                                                                          |
+
+<Callout>
+The color libraries below provide the color variables for each theme. Using these color variables directly in a design file is not recommended as it does not reflect the way Salt components reference colors in code. Instead please use the semantic variables provided in the Salt DS Theme Figma library.
 </Callout>
 
-## What you’ll need
-
-To start designing with Salt, you should:
-
-- Have an active Figma account.
-- To use the Salt typography style, install the Open Sans, PT Mono, and Amplitude fonts. If you don't already have them, you can [download Open Sans and PT Mono from Google Fonts](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono). If you are a JPMC employee, you can download the Amplitude font from Self Service.
-
-## Set up the Figma libraries
-
-Watch our [tutorial video](https://go/salt-ds/content/insights/tutorials/20250109-saltds-figma-getting-started) on setting up Salt DS Figma libraries for your project. (JPMC Employees Only)
-
-We maintain a comprehensive set of up-to-date libraries in Figma, to help you make beautiful, consistently designed UIs and applications. If you want to start using Salt Design System for your project, first you need to set up the Salt libraries on your Figma.
+| Library                         | Description                                                                                                                                                                                                                                     |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Salt DS JPM Brand Colors        | This library provides variables for each foundational color needed for the Salt DS JPM Brand theme.                                                                                                                                             |
+| Salt DS Legacy (UITK) Colors    | This library provides variables for each foundational color needed for the Salt DS Legacy (UITK) theme.                                                                                                                                         |
 
 <QuickLinks columns={{ xs: 1, md: 2 }}>
 
@@ -44,93 +48,76 @@ We maintain a comprehensive set of up-to-date libraries in Figma, to help you ma
     action="Explore the Salt team space"
     href="https://www.figma.com/files/858076651348346387/project/72279506?fuid=1055082680458678350"
   >
-    To start using the Salt libraries, enable them directly from the “Assets”
-    panel within your Figma file.
+    To start using the Salt libraries, enable them directly from the “Assets” panel within your Figma file.
   </QuickLink>
   <QuickLink
     title="Community users"
     action="Explore the Community"
     href="https://www.figma.com/@jpmorgan_salt"
   >
-    To start using the Salt libraries, search for the **@jpmorgan_salt** handle
-    in the Figma Community.
+    To start using the Salt libraries, search for the **@jpmorgan_salt** handle in the Figma Community. Next, publish your library to Figma. Then, proceed with the steps below.
   </QuickLink>
 </QuickLinks>
 
-<DesignCards>
+### Step 1: Open new design file
+Start by opening a new design file in Figma. You’ll notice some pre-installed libraries in the 'Assets' panel. Click on the library icon located in the 'Assets' panel to manage your libraries.
+<Diagram
+  src="/img/design-getting-started/get-started-step1.png"
+  srcDark="/img/design-getting-started/get-started-step1-dark.png"
+  alt="Screenshot of navigating to Figma assets panel"
+  border
+  background= "secondary"
+/>
 
-<DesignCard
-      src="/img/design-getting-started/assets1.png"
-      alt="Screenshot of Figma's assets panel"
->
+### Step 2: Declutter your workspace
+Identify any libraries you don’t need and click the 'Remove' button on the right side to tidy your workspace.
+<Diagram
+  src="/img/design-getting-started/get-started-step2.png"
+  srcDark="/img/design-getting-started/get-started-step2-dark.png"
+  alt="Screenshot of decluttering workspace"
+  border
+  background= "secondary"
+/>
 
-1\. Start by opening a new design file in Figma. You’ll notice some pre-installed libraries in the assets panel. Click on the library icon located in the assets panel to manage your libraries.
+### Step 3: Browse libraries
+Once your workspace is clean, click the 'Browse team libraries' button to search for and install new libraries.
+<Diagram
+  src="/img/design-getting-started/get-started-step3.png"
+  srcDark="/img/design-getting-started/get-started-step3-dark.png"
+  alt="Screenshot of clicking Browse team libraries button"
+  border
+  background= "secondary"
+/>
 
-</DesignCard>
+### Step 4: Search for Salt DS libraries
+In the search field, type “Salt DS” to see the Salt DS libraries. Alternatively, type the whole name of the library you want to install. You can find the essential Salt DS libraries info in the table above.
+<Diagram
+  src="/img/design-getting-started/get-started-step4.png"
+  srcDark="/img/design-getting-started/get-started-step4-dark.png"
+  alt="Screenshot of searching Sald DS libraries"
+  border
+  background= "secondary"
+/>
 
-<DesignCard
-      src="/img/design-getting-started/assets2.png"
-      alt="Screenshot of clicking remove button on the Manage libraries panel"
->
+### Step 5: Add library to your file
+Click the 'Add to file' button to include a Salt DS library in your design file. For details on each library, see the section below.
+<Diagram
+  src="/img/design-getting-started/get-started-step5.png"
+  srcDark="/img/design-getting-started/get-started-step5-dark.png"
+  alt="Screenshot of clicking Add to file button"
+  border
+  background= "secondary"
+/>
 
-2\. Identify any libraries you don’t need and click the “Remove” button on the right side to declutter your workspace.
-
-</DesignCard>
-
-<DesignCard
-      src="/img/design-getting-started/assets3.png"
-      alt="Screenshot of clicking Browse team libraries on assets panel"
->
-
-3\. Once your workspace is clean, click the “Browse team libraries” button to search for and install new libraries.
-
-</DesignCard>
-
-<DesignCard
-      src="/img/design-getting-started/assets4.png"
-      alt="Screenshot of typing Salt DS on search field of Manage libraries panel"
->
-
-4\. In the search field, type “Salt DS” to see the Salt DS libraries.
-
-</DesignCard>
-
-<DesignCard
-      src="/img/design-getting-started/assets5.png"
-      alt="Screenshot of clicking Add to file button of Salt DS Assets library on Manage libraries panel"
->
- 
-5\. Click the “Add to file” button to include a Salt DS library in your design file. For details on each library, see the section below.
-
-</DesignCard>
-
-<DesignCard
-      src="/img/design-getting-started/assets6.png"
-      alt="Screenshot of Salt DS Components and Patterns library has been installed in the assets panel"
->
-
-6\. Now, you will be able to see the available Salt DS libraries in the assets panel. You can start using it in your design projects.
-
-</DesignCard>
-
-</DesignCards>
-
-## Salt DS libraries
-
-Salt offers six libraries in Figma. Install the library that best suits your needs.
-
-| Library                         | Description                                                                                                                                                                                                                                     |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Salt DS Components and Patterns | This library includes all Salt DS components and patterns that are represented in code and are documented on the site. To use Salt components and patterns directly, please install this library.                                               |
-| Salt DS Themes                  | This library includes all typography and effect styles as well as all color, size, and spacing variables needed for the themes available within the components and patterns library. All variables are reflective of the design tokens in code. |
-| Salt DS Assets                  | This library offers Salt icons and country symbols.                                                                                                                                                                                             |
-| Salt DS JPM Brand Colors        | This library provides variables for each foundational color needed for the Salt DS JPM Brand theme.                                                                                                                                             |
-| Salt DS Legacy (UITK) Colors    | This library provides variables for each foundational color needed for the Salt DS Legacy (UITK) theme.                                                                                                                                         |
-| Salt DS Logos                   | This library contains logo variations, including J.P. Morgan, Chase, and dual brand logos. This library is for internal JPMC use only.                                                                                                          |
-
-## Migrating from other libraries
-
-If you are migrating from other libraries, including Salt (Next), Salt Light, Dark libraries, and UITK, please refer to our [migration guide](https://go/salt-ds-internal/product/migration-strategies/salt-ds-figma-libraries/index) (JPMC employees only).
+### Step 6: Confirm library setup completion
+Now, you'll be able to see the available Salt DS libraries in the 'Assets' panel. You can start using it in your design projects. Next, when you successfully add a component to your project, you'll know for certain that the library is in place.
+<Diagram
+  src="/img/design-getting-started/get-started-step6.png"
+  srcDark="/img/design-getting-started/get-started-step6-dark.png"
+  alt="Screenshot of Sald DS components and Patterns library has been installed on assets panel"
+  border
+  background= "secondary"
+/>
 
 ## Salt Design Asset Definitions
 
@@ -138,24 +125,30 @@ This table shows the definitions of different Salt design assets in Figma:
 
 | Figma mechanisms           | Salt Code equivalent: Component or Pattern                                          | Definition                                                                                                                                                                                                         |
 | -------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Figma Component            | [Salt Component](/salt/components/index/)                                           | A Figma component that **shouldn’t be detached** and is configured by props, kept as close as possible to the coded component. May contain ‘swap’ elements for additional composability.                           |
-| Figma 'Template' Component | [Salt Component](/salt/components/index/) and [Salt Pattern](/salt/patterns/index/) | A Figma component that comprises of nested components and is **designed to be detached** for further reuse. Basic configuration props enable you to define and configure the best starting point before detaching. |
-| Figma Sticker              | [Salt Component](/salt/components/index/) and [Salt Pattern](/salt/patterns/index/) | Figma examples built by Salt or App teams with Salt DS. Provided as frames, not components, that can be copied and pasted from our Sticker sheet file into your projects as a starter.                             |
+| Figma Component            | [Salt Component](/salt/components/index/)                                           | Should not be detached because it's configured by props and should be kept as close as possible to the coded component. May contain ‘swap’ elements for additional composability.                       |
+| Figma 'Template' Component | [Salt Component](/salt/components/index/) and [Salt Pattern](/salt/patterns/index/) | Designed to be detached for further reuse and comprised of nested components. Basic configuration props enable you to define and configure the best starting point before detaching.|
+| Figma Sticker              | [Salt Component](/salt/components/index/) and [Salt Pattern](/salt/patterns/index/) | Figma examples built by Salt or App teams with Salt DS. Provided as frames, not components, that can be copied and pasted from our Sticker sheet file into your projects as a starter.                           |
 
-## Need further assistance?
+## Migrating from other libraries
 
-If you encounter any issues or need additional help despite following the guide, please don’t hesitate to reach out. Our support team is here to assist you.
+If you are migrating from other libraries, including Salt (Next), Salt Light, Dark libraries, and UITK, please refer to our [migration guide](https://go/salt-ds-internal/product/migration-strategies/salt-ds-figma-libraries/index) (JPMC employees only).
+
+
+## Further assistance?
+
+If you encounter any issues or need additional help, please don’t hesitate to reach out. Our support team is here to assist you:
 
 <QuickLinks
   columns={{ xs: 1, md: 2 }}
   links={[
     {
-      title: "Support (Internal)",
-      description: "For JPMC employees only",
+      title: "Support(for JPMC employees only)",
+      action="Go to support page"
       href: "https://go/salt-ds-internal/support",
     },
     {
-      title: "Support (External)",
+      title: "Support(Public)",
+      action="Go to GitHub"
       href: "/salt/support-and-contributions",
     },
   ]}
