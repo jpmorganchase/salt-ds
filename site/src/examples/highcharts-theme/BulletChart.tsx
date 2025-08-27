@@ -3,71 +3,56 @@ import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
+import bullet from "highcharts/modules/bullet";
 import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
+bullet(Highcharts);
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibilty tab.
 accessibility(Highcharts);
 
 const options: Options = {
   chart: {
     type: "bar",
+    height: 180,
   },
   title: {
-    text: "Regional revenue by product",
+    text: "Revenue Performance vs Target",
   },
   accessibility: {
-    description:
-      "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
+    description: "A bullet chart showing revenue performance vs target for Q4",
   },
   xAxis: {
-    categories: ["North America", "EMEA", "APAC", "LATAM"],
-    title: {
-      text: "Region",
-    },
+    categories: ["Q4"],
   },
   yAxis: {
-    min: 0,
     title: {
-      text: "Total revenue (normalized)",
+      text: "Revenue ($M)",
     },
-    reversedStacks: false,
-  },
-  plotOptions: {
-    series: {
-      stacking: "normal",
-    },
+    min: 0,
+    max: 100,
+    tickPositions: [0, 20, 40, 60, 80, 100],
   },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">{point.y}</span><br/><span>Total: </span><span class="value">{point.stackTotal}</span>',
+      '<span>{series.name}: </span><span class="value">${point.y}M</span><br/><span>Target: </span><span class="value">${point.target}M</span>',
   },
   series: [
     {
-      name: "Equities",
-      type: "bar",
-      data: [5, 3, 4, 7],
-    },
-    {
-      name: "Fixed Income",
-      type: "bar",
-      data: [2, 2, 3, 2],
-    },
-    {
-      name: "FX",
-      type: "bar",
-      data: [3, 4, 4, 2],
+      name: "Current Revenue",
+      type: "bullet",
+      data: [{ y: 60, target: 80 }],
     },
   ],
 };
 
-export const StackedBarChart = () => {
+export const BulletChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const stackedBarOptions = useChart(chartRef, options);
+  const bulletOptions = useChart(chartRef, options);
 
   return (
     <div className={styles.chartContainer}>
@@ -86,7 +71,7 @@ export const StackedBarChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={stackedBarOptions}
+          options={bulletOptions}
           ref={chartRef}
         />
       </div>
