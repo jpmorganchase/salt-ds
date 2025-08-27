@@ -40,6 +40,9 @@ export const getDefaultOptions = (
       margin: tokens["--salt-spacing-150"],
       y: tokens["--salt-spacing-200"] + tokens["--salt-size-icon"],
     },
+    tooltip: {
+      stickOnContact: true,
+    },
     plotOptions: {
       line: {
         marker: {
