@@ -190,7 +190,9 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
                   element.props?.onFocus?.(event);
                 },
                 tabIndex: !isHidden ? 0 : -1,
-                ref: (el: HTMLDivElement) => (slideRefs.current[index] = el),
+                ref: (el: HTMLDivElement) => {
+                  slideRefs.current[index] = el;
+                },
               });
             })}
           </div>

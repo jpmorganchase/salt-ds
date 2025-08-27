@@ -1,4 +1,4 @@
-import { FlexLayout, H2, Display1, useId } from "@salt-ds/core";
+import { Display1, FlexLayout, H2, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselNextButton,

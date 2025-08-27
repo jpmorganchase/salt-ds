@@ -58,11 +58,7 @@ export const CardActions = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <H3 id={`${tabId}-title`}>
-                    {slide.title}
-                  </H3>
-                }
+                header={<H3 id={`${tabId}-title`}>{slide.title}</H3>}
                 actions={
                   <Link aria-label="demo action" tabIndex={0} href="#">
                     Usage examples

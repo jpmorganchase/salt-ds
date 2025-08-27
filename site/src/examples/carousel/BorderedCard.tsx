@@ -52,11 +52,7 @@ export const BorderedCard = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <H3 id={`${tabId}-title`}>
-                    {slide.title}
-                  </H3>
-                }
+                header={<H3 id={`${tabId}-title`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselCard>

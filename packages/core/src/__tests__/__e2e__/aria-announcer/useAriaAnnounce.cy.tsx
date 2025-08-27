@@ -9,7 +9,6 @@ import { type ReactNode, useState } from "react";
 
 const BUTTON_LEGACY_TEXT = "LEGACY";
 const BUTTON_TEXT = "CLICK ME";
-const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
 const ANNOUNCEMENT = "ANNOUNCEMENT";
 
 const TestWrapper = ({ children }: { children?: ReactNode }) => (
