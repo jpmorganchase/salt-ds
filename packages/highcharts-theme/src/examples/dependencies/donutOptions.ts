@@ -1,25 +1,19 @@
-import { Switch } from "@salt-ds/core";
-import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
-import Highcharts, { type Options } from "highcharts";
-import accessibility from "highcharts/modules/accessibility";
-import HighchartsReact from "highcharts-react-official";
-import { useRef, useState } from "react";
-import styles from "./index.module.css";
+import type { Options } from "highcharts";
 
-accessibility(Highcharts);
-
-const options: Options = {
+export const donutOptions: Options = {
+  chart: {
+    type: "pie",
+  },
   title: {
     text: "Bank revenue mix",
     align: "center",
   },
-  tooltip: {
-    enabled: false,
-  },
   accessibility: {
     description:
       "A donut chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+  },
+  tooltip: {
+    enabled: false,
   },
   series: [
     {
@@ -50,35 +44,4 @@ const options: Options = {
       ],
     },
   ],
-};
-
-export const DonutChart = () => {
-  const donutRef = useRef<HighchartsReact.RefObject>(null);
-  const [patterns, setPatterns] = useState(false);
-
-  const donutChartOptions = useChart(donutRef, options);
-
-  return (
-    <div className={styles.chartContainer}>
-      <div className={styles.controlsRow}>
-        <Switch
-          label="Show patterns"
-          checked={patterns}
-          onChange={(e) => setPatterns(e.target.checked)}
-        />
-      </div>
-      <div
-        className={clsx("highcharts-theme-salt", {
-          "salt-fill-patterns": patterns,
-        })}
-      >
-        <HighchartsReact
-          className={styles.chart}
-          highcharts={Highcharts}
-          options={donutChartOptions}
-          ref={donutRef}
-        />
-      </div>
-    </div>
-  );
 };
