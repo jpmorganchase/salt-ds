@@ -18,12 +18,12 @@ const TestComponent = ({
   announcement?: string;
   delay?: number;
   duration?: number;
-  debounce?: any;
-  getAnnouncement?: any;
+  debounce?: number;
+  getAnnouncement?: () => string;
 }) => {
   const { announce } = useAriaAnnouncer({ debounce });
-  const getMessageToAnnounce = () =>
-    getAnnouncement ? getAnnouncement() : announcement;
+  const getMessageToAnnounce = (): string =>
+    getAnnouncement ? getAnnouncement() : (announcement ?? "");
 
   return (
     <>

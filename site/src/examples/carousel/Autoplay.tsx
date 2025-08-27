@@ -64,101 +64,97 @@ export const Autoplay = () => {
 
   const isActive = isPlaying && !isPaused;
   return (
-      <Carousel
-        aria-labelledby={`${carouselId}-title`}
-        className={styles.carousel}
-        disableSlideAnnouncements={isPlaying}
-        emblaOptions={{ loop: true, duration: 20 }}
-        emblaPlugins={[
-          AutoplayPlugin({
-            delay: DELAY_MSECS,
-            playOnInit: true,
-          }),
-          Classnames({
-            snapped: styles.carouselSlideIsSnapped,
-          }),
-        ]}
-        getEmblaApi={setEmblaApi}
+    <Carousel
+      aria-labelledby={`${carouselId}-title`}
+      className={styles.carousel}
+      disableSlideAnnouncements={isPlaying}
+      emblaOptions={{ loop: true, duration: 20 }}
+      emblaPlugins={[
+        AutoplayPlugin({
+          delay: DELAY_MSECS,
+          playOnInit: true,
+        }),
+        Classnames({
+          snapped: styles.carouselSlideIsSnapped,
+        }),
+      ]}
+      getEmblaApi={setEmblaApi}
+    >
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Autoplay example
+      </H2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
       >
-        <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-          Autoplay example
-        </H2>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column-reverse",
-            gap: "var(--salt-spacing-100)",
-          }}
+        <FlexLayout
+          justify="start"
+          direction="row"
+          gap={1}
+          onMouseEnter={stop}
+          onFocus={stop}
         >
-          <FlexLayout
-            justify="start"
-            direction="row"
-            gap={1}
-            onMouseEnter={stop}
-            onFocus={stop}
+          <Button
+            aria-label={`${isActive ? "stop" : "start"} automatic slide rotation`}
+            appearance="bordered"
+            sentiment="neutral"
+            onClick={() => (isActive ? stop() : play())}
           >
-            <Button
-              aria-label={`${isActive ? "stop" : "start"} automatic slide rotation`}
-              appearance="bordered"
-              sentiment="neutral"
-              onClick={() => (isActive ? stop() : play())}
-            >
-              {isActive ? (
-                <PauseIcon style={{ pointerEvents: "none" }} />
-              ) : (
-                <PlayIcon style={{ pointerEvents: "none" }} />
-              )}
-            </Button>
-            <CarouselPreviousButton onClick={() => stop()} />
-            <CarouselNextButton onClick={() => stop()} />
-            <CarouselProgressLabel aria-hidden={true} />
-            <CarouselAutoplayIndicator
-              slideIndex={slideIndex}
-              duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
-              isPlaying={isPlaying}
-            />
-          </FlexLayout>
-          <CarouselSlides
-            onMouseEnter={() => pause()}
-            onMouseLeave={() => {
-              if (isPlaying) {
-                play();
-              }
-            }}
-            onFocus={() => stop()}
-          >
-            {sliderData.map((slide, index) => {
-              const slideId = `${carouselId}-slide${index}`;
-              return (
-                <CarouselCard
-                  appearance="bordered"
-                  className={styles.carouselSlide}
-                  key={slideId}
-                  aria-labelledby={`${slideId}-title`}
-                  media={
-                    <img
-                      aria-hidden={true}
-                      className={styles.carouselImage}
-                      src={slide.image}
-                    />
-                  }
-                  header={
-                    <H3 id={`${slideId}-title`} >
-                      {slide.title}
-                    </H3>
-                  }
-                  actions={
-                    <Link tabIndex={0} href="#">
-                      Usage examples
-                    </Link>
-                  }
-                >
-                  <Text>{slide.content}</Text>
-                </CarouselCard>
-              );
-            })}
-          </CarouselSlides>
-        </div>
-      </Carousel>
+            {isActive ? (
+              <PauseIcon style={{ pointerEvents: "none" }} />
+            ) : (
+              <PlayIcon style={{ pointerEvents: "none" }} />
+            )}
+          </Button>
+          <CarouselPreviousButton onClick={() => stop()} />
+          <CarouselNextButton onClick={() => stop()} />
+          <CarouselProgressLabel aria-hidden={true} />
+          <CarouselAutoplayIndicator
+            slideIndex={slideIndex}
+            duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
+            isPlaying={isPlaying}
+          />
+        </FlexLayout>
+        <CarouselSlides
+          onMouseEnter={() => pause()}
+          onMouseLeave={() => {
+            if (isPlaying) {
+              play();
+            }
+          }}
+          onFocus={() => stop()}
+        >
+          {sliderData.map((slide, index) => {
+            const slideId = `${carouselId}-slide${index}`;
+            return (
+              <CarouselCard
+                appearance="bordered"
+                className={styles.carouselSlide}
+                key={slideId}
+                aria-labelledby={`${slideId}-title`}
+                media={
+                  <img
+                    aria-hidden={true}
+                    className={styles.carouselImage}
+                    src={slide.image}
+                  />
+                }
+                header={<H3 id={`${slideId}-title`}>{slide.title}</H3>}
+                actions={
+                  <Link tabIndex={0} href="#">
+                    Usage examples
+                  </Link>
+                }
+              >
+                <Text>{slide.content}</Text>
+              </CarouselCard>
+            );
+          })}
+        </CarouselSlides>
+      </div>
+    </Carousel>
   );
 };

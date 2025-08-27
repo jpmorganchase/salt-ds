@@ -40,20 +40,21 @@ export function AriaAnnouncerProvider({
   const isAnnouncingRef = useRef(false);
   const mountedRef = useRef(true);
 
-  const clearAnnouncement = () => {
+  const clearAnnouncement = useCallback(() => {
     setCurrentAnnouncement("");
-  };
+  }, []);
 
-  const makeAnnouncement = (
-    announcement: string,
-    ariaLive: AnnounceFnOptions["ariaLive"],
-  ) => {
-    setAriaLive(ariaLive);
-    setCurrentAnnouncement(announcement);
-  };
+  const makeAnnouncement = useCallback(
+    (announcement: string, ariaLive: AnnounceFnOptions["ariaLive"]) => {
+      setAriaLive(ariaLive);
+      setCurrentAnnouncement(announcement);
+    },
+    [],
+  );
 
   /** Each announcement has a minimum duration */
-  const processNextAnnouncement = () => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: clearAnnouncement will not change
+  const processNextAnnouncement = useCallback(() => {
     if (!mountedRef.current || !announcementsRef.current.length) {
       isAnnouncingRef.current = false;
       return;
@@ -68,8 +69,9 @@ export function AriaAnnouncerProvider({
       clearAnnouncement();
       setTimeout(announceAll, ARIA_ANNOUNCE_DELAY);
     }, duration);
-  };
+  }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: processNextAnnouncement will not change
   const announceAll = useCallback(() => {
     isAnnouncingRef.current = true;
     requestAnimationFrame(processNextAnnouncement);

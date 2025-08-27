@@ -15,7 +15,8 @@ data:
 - If composing with navigation controls (previous/next buttons or tablist), ensure they are the first elements to receive focus, enabling the user to control the carousel, on initial focus.
 
 ### Accessible name
-- If the carousel has a visible label, its accessible label is provided by `aria-labelledby` on the carousel container set to the ID of the the visible label. Otherwise, an accessible label is provided using `aria-label` set on the carousel container. 
+
+- If the carousel has a visible label, its accessible label is provided by `aria-labelledby` on the carousel container set to the ID of the the visible label. Otherwise, an accessible label is provided using `aria-label` set on the carousel container.
   - Note that since the `aria-roledescription` is set to "carousel", the label does not contain the word "carousel".
 - If a slide has a visible label, its accessible label is provided by `aria-labelledby` on the slide container set to the ID of the visible label. Otherwise, an accessible label is provided by using `aria-label` set on the slide container.
   - Note that since the `aria-roledescription` is set to "slide", the label does not contain the word "slide."

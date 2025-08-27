@@ -55,11 +55,7 @@ export const MultipleSlides = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <H3 id={`${slideId}-title`}>
-                    {slide.title}
-                  </H3>
-                }
+                header={<H3 id={`${slideId}-title`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselCard>
