@@ -24,9 +24,15 @@
     "directory": "../../dist/salt-ds-highcharts-theme",
     "provenance": true
   },
+  "dependencies": {
+    "@salt-ds/core": "workspace:^",
+    "@salt-ds/window": "workspace:^"
+  },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",
     "highcharts": ">=10 <13",
-    "highcharts-react-official": "^3.2.2"
+    "highcharts-react-official": "^3.2.2",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
   }
 }
