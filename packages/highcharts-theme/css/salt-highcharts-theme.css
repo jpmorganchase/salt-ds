@@ -153,7 +153,7 @@
 
 .highcharts-theme-salt .highcharts-data-label text,
 .highcharts-theme-salt text.highcharts-data-label {
-  fill: var(--salt-content-primary-foreground);
+  fill: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
@@ -167,6 +167,11 @@
 .highcharts-theme-salt .highcharts-tooltip text,
 .highcharts-theme-salt .highcharts-tooltip foreignObject span {
   fill: var(--salt-content-primary-foreground);
+}
+
+/* stickOnContact: true conflicts with default styles  */
+.highcharts-theme-salt .highcharts-tooltip .highcharts-tracker {
+  opacity: 0;
 }
 
 .highcharts-theme-salt .highcharts-background {
