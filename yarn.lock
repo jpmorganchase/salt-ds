@@ -3752,10 +3752,15 @@ __metadata:
 "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"
+  dependencies:
+    "@salt-ds/core": "workspace:^"
+    "@salt-ds/window": "workspace:^"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
     highcharts: ">=10 <13"
     highcharts-react-official: ^3.2.2
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   languageName: unknown
   linkType: soft
 
@@ -3959,7 +3964,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/window@workspace:*, @salt-ds/window@workspace:packages/window":
+"@salt-ds/window@workspace:*, @salt-ds/window@workspace:^, @salt-ds/window@workspace:packages/window":
   version: 0.0.0-use.local
   resolution: "@salt-ds/window@workspace:packages/window"
   peerDependencies:
