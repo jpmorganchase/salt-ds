@@ -220,6 +220,11 @@
   stroke: var(--salt-container-primary-background);
 }
 
+/* Override default stroke for bullet chart segment border */
+.highcharts-theme-salt .highcharts-bullet-series .highcharts-point {
+  stroke: none;
+}
+
 /* Data connector line for Donut/Pie chart */
 .highcharts-theme-salt .highcharts-data-label-connector {
   fill: none;
