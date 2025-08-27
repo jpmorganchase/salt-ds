@@ -19,7 +19,7 @@ const options: Options = {
       "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
   },
   title: {
-    text: "Currency Performance Trends",
+    text: "Currency performance trends",
   },
   yAxis: {
     title: {
@@ -30,7 +30,6 @@ const options: Options = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">{point.y}</span>',
-    stickOnContact: true,
   },
   xAxis: {
     title: {
