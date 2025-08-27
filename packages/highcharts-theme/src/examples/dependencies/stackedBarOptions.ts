@@ -33,7 +33,6 @@ export const stackedBarOptions: Options = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">{point.y}</span><br/><span>Total: </span><span class="value">{point.stackTotal}</span>',
-    stickOnContact: true,
   },
   series: [
     {
