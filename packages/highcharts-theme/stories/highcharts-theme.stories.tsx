@@ -5,11 +5,13 @@ import {
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
+  StackedBarChart as StackedBarChartComponent,
 } from "../src/examples";
 import {
   donutOptions,
   lineOptions,
   pieOptions,
+  stackedBarOptions,
 } from "../src/examples/dependencies";
 
 accessibility(Highcharts);
@@ -61,5 +63,13 @@ export const PieChart = {
   args: {
     patterns: false,
     options: pieOptions,
+  },
+};
+
+export const StackedBarChart = {
+  render: (args: ChartStoryArgs) => <StackedBarChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: stackedBarOptions,
   },
 };
