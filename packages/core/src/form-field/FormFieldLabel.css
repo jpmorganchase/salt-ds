@@ -1,6 +1,6 @@
 .saltFormFieldLabel.saltText {
   font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
-  width: 100%;
+  width: fit-content;
 }
 
 .saltFormFieldLabel:hover + .saltFormField-controls * {
