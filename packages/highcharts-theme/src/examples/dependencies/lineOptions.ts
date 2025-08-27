@@ -20,7 +20,6 @@ export const lineOptions: Options = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">{point.y}</span>',
-    stickOnContact: true,
   },
   xAxis: {
     title: {
