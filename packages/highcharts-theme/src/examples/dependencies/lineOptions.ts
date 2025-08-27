@@ -1,17 +1,6 @@
-import { Switch } from "@salt-ds/core";
-import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
-import Highcharts, { type Options } from "highcharts";
-import accessibility from "highcharts/modules/accessibility";
-import HighchartsReact from "highcharts-react-official";
-import { useRef, useState } from "react";
-import styles from "./index.module.css";
+import type { Options } from "highcharts";
 
-accessibility(Highcharts);
-
-Highcharts.Pointer.prototype.reset = () => undefined;
-
-const options: Options = {
+export const options: Options = {
   chart: {
     type: "line",
   },
@@ -20,7 +9,7 @@ const options: Options = {
       "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
   },
   title: {
-    text: "Currency Performance Trends",
+    text: "Title",
   },
   yAxis: {
     title: {
@@ -157,35 +146,4 @@ const options: Options = {
       type: "line",
     },
   ],
-};
-
-export const LineChart = () => {
-  const LineChartRef = useRef<HighchartsReact.RefObject>(null);
-  const [patterns, setPatterns] = useState(false);
-
-  const lineDataOptions = useChart(LineChartRef, options);
-
-  return (
-    <div className={styles.chartContainer}>
-      <div className={styles.controlsRow}>
-        <Switch
-          label="Show patterns"
-          checked={patterns}
-          onChange={(e) => setPatterns(e.target.checked)}
-        />
-      </div>
-      <div
-        className={clsx("highcharts-theme-salt", {
-          "salt-line-patterns": patterns,
-        })}
-      >
-        <HighchartsReact
-          className={styles.chart}
-          highcharts={Highcharts}
-          options={lineDataOptions}
-          ref={LineChartRef}
-        />
-      </div>
-    </div>
-  );
 };

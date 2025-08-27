@@ -1,30 +1,23 @@
-import type { Density } from "@salt-ds/core";
 import { useDensity } from "@salt-ds/core";
+import type { Options } from "highcharts";
+import Highcharts from "highcharts";
 import type HighchartsReact from "highcharts-react-official";
-import { useEffect } from "react";
+import { type RefObject, useEffect, useMemo } from "react";
+import { getDefaultOptions } from "./default-options";
 
-export const useChart = ({
-  chartRef,
-}: {
-  chartRef: React.RefObject<HighchartsReact.RefObject>;
-}): { legendIconSize: number } => {
+export const useChart = (
+  chartRef: RefObject<HighchartsReact.RefObject>,
+  chartOptions: Options,
+) => {
   const density = useDensity();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: triggered by density change
+  /* biome-ignore lint/correctness/useExhaustiveDependencies: redraw on density change */
   useEffect(() => {
-    chartRef.current?.chart?.redraw();
-  }, [chartRef, density]);
+    chartRef.current?.chart.redraw();
+  }, [density]);
 
-  // Map density to the value of the `--salt-size-icon` design token (in pixels)
-  // as defined in packages/theme/css/foundations/size.css.
-  const legendIconSizeMap: Record<Density, number> = {
-    high: 10,
-    medium: 12,
-    low: 14,
-    touch: 16,
-  } as const;
-
-  return {
-    legendIconSize: legendIconSizeMap[density] ?? legendIconSizeMap.medium,
-  };
+  return useMemo(() => {
+    const defaultOptions = getDefaultOptions(density);
+    return Highcharts.merge(defaultOptions, chartOptions);
+  }, [density, chartOptions]);
 };
