@@ -106,6 +106,13 @@ await fs.writeJSON(
   {
     ...packageJson,
     dependencies: await transformWorkspaceDeps(packageJson.dependencies),
+    ...(packageJson.peerDependencies
+      ? {
+          peerDependencies: await transformWorkspaceDeps(
+            packageJson.peerDependencies,
+          ),
+        }
+      : {}),
     main: "dist-cjs/index.js",
     module: "dist-es/index.js",
     typings: "dist-types/index.d.ts",
