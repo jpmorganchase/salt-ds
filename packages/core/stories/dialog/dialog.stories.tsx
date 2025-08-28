@@ -51,12 +51,12 @@ const CloseButton = ({
 
 const DialogTemplate: StoryFn<
   Omit<DialogProps, "content"> &
-  Pick<
-    ComponentProps<typeof DialogHeader>,
-    "header" | "preheader" | "description"
-  > & {
-    content: DialogContentProps["children"];
-  }
+    Pick<
+      ComponentProps<typeof DialogHeader>,
+      "header" | "preheader" | "description"
+    > & {
+      content: DialogContentProps["children"];
+    }
 > = ({
   header,
   preheader,
@@ -67,63 +67,64 @@ const DialogTemplate: StoryFn<
   open: openProp = false,
   ...args
 }) => {
-    const [open, setOpen] = useState(openProp);
+  const [open, setOpen] = useState(openProp);
 
-    const handleRequestOpen = () => {
-      setOpen(true);
-    };
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
 
-    const onOpenChange = (value: boolean) => {
-      setOpen(value);
-    };
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
 
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    return (
-      <>
-        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-          Open dialog
-        </Button>
-        <Dialog
-          {...args}
-          open={open}
-          onOpenChange={onOpenChange}
-          id={id}
-          size={size}
-        >
-          <DialogHeader
-            header={header}
-            preheader={preheader}
-            description={description}
-            actions={<CloseButton onClick={handleClose} />}
-          />
-          <DialogContent>
-            {content}
-            <UnmountLogger />
-          </DialogContent>
-          <DialogActions>
-            <StackLayout direction={{
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Open dialog
+      </Button>
+      <Dialog
+        {...args}
+        open={open}
+        onOpenChange={onOpenChange}
+        id={id}
+        size={size}
+      >
+        <DialogHeader
+          header={header}
+          preheader={preheader}
+          description={description}
+          actions={<CloseButton onClick={handleClose} />}
+        />
+        <DialogContent>
+          {content}
+          <UnmountLogger />
+        </DialogContent>
+        <DialogActions>
+          <StackLayout
+            direction={{
               xs: "column",
               sm: "row",
             }}
-              gap={1}
-              style={{ width: "100%", justifyContent: "flex-end" }}
-            >
-              <Button appearance="transparent" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button onClick={handleClose}>Previous</Button>
-              <Button sentiment="accented" onClick={handleClose}>
-                Next
-              </Button>
-            </StackLayout>
-          </DialogActions>
-        </Dialog>
-      </>
-    );
-  };
+            gap={1}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+          >
+            <Button appearance="transparent" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button onClick={handleClose}>Previous</Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Next
+            </Button>
+          </StackLayout>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 export const Default = DialogTemplate.bind({});
 Default.args = {
@@ -204,55 +205,56 @@ const AlertDialogTemplate: StoryFn<
   content,
   ...args
 }) => {
-    const [open, setOpen] = useState(openProp);
+  const [open, setOpen] = useState(openProp);
 
-    const handleRequestOpen = () => {
-      setOpen(true);
-    };
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
 
-    const onOpenChange = (value: boolean) => {
-      setOpen(value);
-    };
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
 
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    return (
-      <>
-        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-          Click to open dialog
-        </Button>
-        <Dialog
-          size={size}
-          {...args}
-          role="alertdialog"
-          status={status}
-          open={open}
-          onOpenChange={onOpenChange}
-          // focus the ok instead of the cancel button
-          initialFocus={1}
-        >
-          <DialogHeader header={header} />
-          <DialogContent>{content}</DialogContent>
-          <DialogActions>
-            <StackLayout direction={{
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <Dialog
+        size={size}
+        {...args}
+        role="alertdialog"
+        status={status}
+        open={open}
+        onOpenChange={onOpenChange}
+        // focus the ok instead of the cancel button
+        initialFocus={1}
+      >
+        <DialogHeader header={header} />
+        <DialogContent>{content}</DialogContent>
+        <DialogActions>
+          <StackLayout
+            direction={{
               xs: "column",
               sm: "row",
             }}
-              gap={1}
-              style={{ width: "100%", justifyContent: "flex-end" }}
-            >
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button sentiment="accented" onClick={handleClose}>
-                Ok
-              </Button>
-            </StackLayout>
-          </DialogActions>
-        </Dialog>
-      </>
-    );
-  };
+            gap={1}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+          >
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Ok
+            </Button>
+          </StackLayout>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
@@ -314,10 +316,11 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
           Are you sure you want to permanently delete this transaction
         </DialogContent>
         <DialogActions>
-          <StackLayout direction={{
-            xs: "column",
-            sm: "row",
-          }}
+          <StackLayout
+            direction={{
+              xs: "column",
+              sm: "row",
+            }}
             gap={1}
             style={{ width: "100%", justifyContent: "flex-end" }}
           >
@@ -408,10 +411,11 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
           scrambled it to make a type specimen book.
         </DialogContent>
         <DialogActions>
-          <StackLayout direction={{
-            xs: "column",
-            sm: "row",
-          }}
+          <StackLayout
+            direction={{
+              xs: "column",
+              sm: "row",
+            }}
             gap={1}
             style={{ width: "100%", justifyContent: "flex-end" }}
           >
