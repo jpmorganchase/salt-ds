@@ -14,7 +14,7 @@ const accessibleTextStyles = {
   transform: "translate(-100%, -100%)",
 } as React.CSSProperties;
 
-export const ClampBehavior = () => {
+export const MinMax = () => {
   const [value, setValue] = useState<number | string>(2);
   const [accessibleText, setAccessibleText] = useState("");
   const accessibleTextId = useId();
@@ -31,9 +31,19 @@ export const ClampBehavior = () => {
     return () => clearTimeout(timeoutId);
   }, [accessibleText]);
 
+  const getValidationStatus = () => {
+    if (typeof value === "number" && (value > max || value < min)) {
+      return "error";
+    }
+    return undefined;
+  };
+
   return (
-    <FormField style={{ width: "256px" }}>
-      <FormFieldLabel>Number input with clamped range</FormFieldLabel>
+    <FormField
+      validationStatus={getValidationStatus()}
+      style={{ width: "256px" }}
+    >
+      <FormFieldLabel>Number input with limited range</FormFieldLabel>
       <NumberInput
         value={value}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -42,38 +52,14 @@ export const ClampBehavior = () => {
         onNumberChange={(newValue) => {
           console.log(`Number changed to ${newValue}`);
           setValue(newValue ?? "");
-          if (newValue === null) {
-            return;
-          }
-          if (newValue > max) {
-            setAccessibleText(`${value} is greater than the maximum value`);
-          } else if (newValue < min) {
-            setAccessibleText(`${value} is less than the minimum value`);
-          } else if (newValue === min) {
-            setAccessibleText("Minimum value reached");
-          } else if (newValue === max) {
-            setAccessibleText("Maximum value reached");
+          if (newValue !== null && (newValue > max || newValue < min)) {
+            setAccessibleText(
+              `Invalid value, please enter a value between ${min} and ${max}`,
+            );
           }
         }}
-        clamp
         max={max}
         min={min}
-        style={{ width: "250px" }}
-        inputProps={{
-          onBlur: () => {
-            if (typeof value === "number") {
-              if (value > max) {
-                setAccessibleText(
-                  `${value} is greater than the maximum value, value was set to ${max}`,
-                );
-              } else if (value < min) {
-                setAccessibleText(
-                  `${value} is less than the minimum value, value was set to ${min}`,
-                );
-              }
-            }
-          },
-        }}
       />
       <span
         id={accessibleTextId}
@@ -83,7 +69,7 @@ export const ClampBehavior = () => {
         {accessibleText}
       </span>
       <FormFieldHelperText>
-        Please enter a value between {min} and {max}.
+        Please enter a value between {min} and {max}
       </FormFieldHelperText>
     </FormField>
   );
