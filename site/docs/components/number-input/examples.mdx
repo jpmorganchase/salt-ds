@@ -28,91 +28,6 @@ By default, the `NumberInput` is transparent. You can add borders using the `bor
 
 <LivePreview componentName="number-input" exampleName="Bordered" />
 
-## Min and max value
-
-To limit the range of accepted values, you can specify a minimum, maximum, or both using the `min` and `max` props.
-
-### Best practices
-
-- Clearly communicate the accepted value range by utilizing the `FormField`'s helper text to guide users.
-- Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
-- Use the `clamp` prop to enforce the value to be within range.
-
-<LivePreview componentName="number-input" exampleName="Limits" />
-
-## Clamp behavior
-
-By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clamp` to true, the
-input will automatically adjust to the nearest minimum or maximum value when the input field loses focus.
-
-<LivePreview componentName="number-input" exampleName="ClampBehavior" />
-
-## Validation
-
-The `NumberInput` can display validation states, `error`, `warning`, and `success`, through the `validationStatus` prop.
-
-### Best practices
-
-- **Error state**: Utilize the error state to notify users of a critical issue related to the input. This issue may hinder task completion and typically requires user intervention to resolve.
-- **Warning state** Use the warning state to caution users about a potential issue. While this issue won't stop users from proceeding with the task, it may lead to errors if not addressed.
-
-<LivePreview componentName="number-input" exampleName="Validation" />
-
-## Decimal scale
-
-By default, the decimal scale is derived from the highest number of decimal places found in the `step` prop, or if not defined, in either the `defaultValue` or `value` prop.
-However, you can set it to any value of your choice using the `decimalScale` prop and that will have priority.
-
-### Best practices
-
-When configuring the number of decimal places, ensure it aligns with the specific use case. For example, when dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
-
-<LivePreview componentName="number-input" exampleName="Decimals" />
-
-## Formatting
-
-You can format the value of the `NumberInput` using the `format` callback prop. It typically works alongside a `parse` callback for complex formatting.
-
-Users will be able to see the formatted value in the input, e.g. "5K". When the input gains focus, the value will be parsed into its numerical form, so "5K" becomes "5000". This allows users to edit the values with precision. When the input loses focus, the value will be formatted again.
-
-### Best practices
-
-The `format` callback has been designed to work with most formatting libraries, e.g. Intl.NumberFormat. However, it is highly recommended to provide a `parse` callback alongside `format` to determine the correct numerical value so the precision of the value can be maintained.
-
-**Note**: If a `format` callback is provided, it will override the `decimalScale`, enabling you to handle decimal place rules directly within your formatting function.
-
-<LivePreview componentName="number-input" exampleName="Formatting" />
-
-## Custom steps
-
-The `step` prop allows you to define the increment and decrement sizes for value adjustments.
-
-### Best practices
-
-Make sure the `step` value is suitable for the context. For example, when users are inputting a "Number of people," increments of 0.5 may cause confusion. If unsure, maintain the step at 1 to ensure clarity and simplicity.
-
-<LivePreview componentName="number-input" exampleName="StepAndBlock" />
-
-## Button adornments
-
-You can add a custom [Button](/salt/components/button) at the end of the `NumberInput` using the `endAdornment` prop. This allows for custom interactivity within the input field.
-
-When using `endAdornment` buttons for tasks such as reset or synchronization, it is essential to provide immediate feedback to users, especially those using screen readers. Implementing an `aria-live` region ensures that screen readers announce dynamic content changes, keeping users informed about actions such as resetting or synchronizing the input field. This improves user understanding and interaction with the application.
-
-**Reset adornment**:
-
-Use a reset button to return the `NumberInput` to its default value.
-
-**Synchronize adornment**:
-
-Synchronize the `NumberInput` with a live value from a constantly changing source, such as ticking stock values. The `NumberInput`'s value does not automatically update with changes in the live value. In this scenario, the synchronize button appears when the displayed value and live value differ.
-
-**Custom buttons**:
-
-Customize the positioning and appearance of `NumberInput`'s arrow buttons to align with specific product requirements or constraints.
-
-<LivePreview componentName="number-input" exampleName="ButtonAdornments" />
-
 ## Disabled
 
 The `NumberInput` can be disabled to prevent any user interaction or input.
@@ -143,3 +58,128 @@ To maintain a cohesive visual flow, numeric values are left-aligned by default, 
 - Center alignment can be used to emphasize a particular value, but it should be applied sparingly and only in exceptional cases to avoid disrupting the visual consistency.
 
 <LivePreview componentName="number-input" exampleName="TextAlignment" />
+
+## Customise input value
+
+By default, any numeric decimal value, with an optional sign prefix can be entered, such as `+123.456`.
+To support such use-cases as `10x` an `isAllowed` callback can be provided to create custom forms of entry.
+
+<LivePreview componentName="number-input" exampleName="CustomInputPattern" />
+
+## Min and max value
+
+To limit the range of accepted values, you can specify a minimum, maximum, or both using the `min` and `max` props.
+
+### Best practices
+
+- Clearly communicate the accepted value range by utilizing the `FormField`'s helper text to guide users.
+- Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
+- Use the `clamp` prop to enforce the value to be within range.
+
+<LivePreview componentName="number-input" exampleName="MinMax" />
+
+## Clamp behavior
+
+By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clamp` to true, the
+input will automatically adjust to the nearest minimum or maximum value when the input field loses focus.
+
+**Note:** When using the `clamp` prop, ensure that the screen reader is updated to announce the clamped value, providing an accessible experience for users relying on assistive technologies.
+
+<LivePreview componentName="number-input" exampleName="ClampBehavior" />
+
+## Validation
+
+The `NumberInput` can display validation states, `error`, `warning`, and `success`, through the `validationStatus` prop.
+
+### Best practices
+
+- **Error state**: Utilize the error state to notify users of a critical issue related to the input. This issue may hinder task completion and typically requires user intervention to resolve.
+- **Warning state** Use the warning state to caution users about a potential issue. While this issue won't stop users from proceeding with the task, it may lead to errors if not addressed.
+
+<LivePreview componentName="number-input" exampleName="Validation" />
+
+## Decimal Scale
+
+The `decimalScale` prop allows you to define the number of decimal places displayed in the `NumberInput`. By default, the decimal scale is determined by the greater number of decimal places between the `step` value and the `value` or `defaultValue` provided.
+
+### Best practices
+
+- when dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
+
+<LivePreview componentName="number-input" exampleName="Decimals" />
+
+To provide a fixed scale provide a custom format function.
+
+<LivePreview componentName="number-input" exampleName="FixedDecimalScale" />
+
+## Formatting
+
+The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which can be used to determine the valid input format and extract the numerical value of the formatted input.
+
+### Best Practice
+
+The `format` callback is designed to work seamlessly with most formatting libraries, such as Intl.NumberFormat. It is strongly recommended to provide a `parse` callback alongside `format` to ensure that valid input is entered and its correct numerical value is derived, maintaining precision and consistency.
+
+**Note**: If a `format` callback is provided, it will override the `decimalScale` prop, allowing you to define custom rules for decimal places directly within your formatting logic.
+
+### Thousands separator
+
+To make large numbers easier to read, you can use a combination of `format` and `parse` callbacks to insert commas and separate thousands.
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingThousandsSeparator"
+/>
+
+### Compact notation
+
+Large numbers can be transformed into their compact forms to be used in, for example, charts or other data visualizations. You can use `format` to convert the numerical value into its shortened form and `parse` to convert the shortened form back to the numerical value. The example below supports the following conversion:
+
+- Thousands to K
+- Millions to M
+- Billions to B
+- Trillions to T
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingCompactNotation"
+/>
+
+### With suffix or prefix
+
+You can add a suffix or prefix with a custom `format` function.
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingSuffixPrefix"
+/>
+
+## Custom steps
+
+The `step` prop allows you to define the increment and decrement sizes for value adjustments.
+
+### Best practices
+
+Make sure the `step` value is suitable for the context. For example, when users are inputting a "Number of people," increments of 0.5 may cause confusion. If unsure, maintain the step at 1 to ensure clarity and simplicity.
+
+<LivePreview componentName="number-input" exampleName="StepAndBlock" />
+
+## Button adornments
+
+You can add a custom [Button](/salt/components/button) at the end of the `NumberInput` using the `endAdornment` prop. This allows for custom interactivity within the input field.
+
+When using `endAdornment` buttons for tasks such as reset or synchronization, it is essential to provide immediate feedback to users, especially those using screen readers. Implementing an `aria-live` region ensures that screen readers announce dynamic content changes, keeping users informed about actions such as resetting or synchronizing the input field. This improves user understanding and interaction with the application.
+
+**Reset adornment**:
+
+Use a reset button to return the `NumberInput` to its default value.
+
+**Synchronize adornment**:
+
+Synchronize the `NumberInput` with a live value from a constantly changing source, such as ticking stock values. The `NumberInput`'s value does not automatically update with changes in the live value. In this scenario, the synchronize button appears when the displayed value and live value differ.
+
+**Custom buttons**:
+
+Customize the positioning and appearance of `NumberInput`'s arrow buttons to align with specific product requirements or constraints.
+
+<LivePreview componentName="number-input" exampleName="ButtonAdornments" />

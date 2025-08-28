@@ -7,18 +7,30 @@ export default {
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
-export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
+const formatWithDecimalScale =
+  (decimalScale: number) => (value: string | null) => {
+    if (value === null) {
+      return "";
+    }
+    const floatValue = Number.parseFloat(value);
+    if (Number.isNaN(floatValue)) {
+      return "";
+    }
+    return String(floatValue.toFixed(decimalScale));
+  };
+
+export const ExamplesGrid: StoryFn<QAContainerProps> = () => {
   return (
-    <QAContainer itemPadding={4} {...props}>
+    <QAContainer itemPadding={4}>
       <NumberInput
-        decimalScale={2}
+        format={formatWithDecimalScale(2)}
         defaultValue={0.5}
         max={10}
         min={-5}
         step={0.5}
       />
       <NumberInput
-        decimalScale={3}
+        format={formatWithDecimalScale(3)}
         defaultValue={-5}
         max={10}
         min={-5}
@@ -26,7 +38,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         textAlign={"center"}
       />
       <NumberInput
-        decimalScale={1}
+        format={formatWithDecimalScale(1)}
         defaultValue={5}
         max={5}
         min={0}
@@ -34,7 +46,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         textAlign={"right"}
       />
       <NumberInput
-        decimalScale={2}
+        format={formatWithDecimalScale(2)}
         defaultValue={5}
         max={10}
         min={-5}
@@ -42,7 +54,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         step={0.5}
       />
       <NumberInput
-        decimalScale={2}
+        format={formatWithDecimalScale(2)}
         defaultValue={5}
         disabled
         max={10}
