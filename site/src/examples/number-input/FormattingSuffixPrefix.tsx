@@ -1,0 +1,48 @@
+import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import { NumberInput } from "@salt-ds/lab";
+
+export const FormattingSuffixPrefix = () => {
+  return (
+    <StackLayout style={{ width: "256px" }}>
+      <FormField>
+        <FormFieldLabel>With suffix</FormFieldLabel>
+        <NumberInput
+          defaultValue={12}
+          isAllowed={(inputValue) =>
+            /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
+          }
+          format={(value) => `${value}%`}
+          parse={(value) => {
+            if (!value.length) {
+              return null;
+            }
+            return Number.parseFloat(value.replace(/%/g, ""));
+          }}
+          onNumberChange={(newValue) => {
+            console.log(`Number changed to ${newValue}`);
+          }}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With prefix</FormFieldLabel>
+        <NumberInput
+          defaultValue={12}
+          isAllowed={(inputValue) =>
+            /^\$?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
+          }
+          format={(value) => `$${value.replace(/\$/g, "")}`}
+          parse={(value) => {
+            if (!value.length) {
+              return null;
+            }
+            const parsedValue = value.replace(/\$/g, "");
+            return Number.parseFloat(parsedValue);
+          }}
+          onNumberChange={(newValue) => {
+            console.log(`Number changed to ${newValue}`);
+          }}
+        />
+      </FormField>
+    </StackLayout>
+  );
+};

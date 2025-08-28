@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon, SyncIcon } from "@salt-ds/icons";
 import { NumberInput } from "@salt-ds/lab";
-import { useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 
 const accessibleTextStyles = {
   position: "fixed",
@@ -25,50 +25,60 @@ const ResetAdornment = () => {
   const formFieldLabel = "Number input with reset adornment";
   const accessibleTextId = useId();
 
-  const clearAccessibleText = () =>
-    setTimeout(() => {
-      setAccessibleText(" ");
-    }, 3000);
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    if (accessibleText?.length) {
+      timeoutId = setTimeout(() => {
+        setAccessibleText("");
+      }, 3000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [accessibleText]);
 
   return (
     <FormField>
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
-        step={5}
-        stepMultiplier={10}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          setValue(event.target.value);
+        }}
+        onNumberChange={(newValue) => {
+          console.log(`Number changed to ${newValue}`);
+          setValue(newValue ?? "");
+        }}
         endAdornment={
           <>
             <Button
               aria-describedby={accessibleTextId}
+              appearance="solid"
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(defaultValue);
-                setAccessibleText("Value was reset");
-                clearAccessibleText();
+                setAccessibleText(
+                  `${formFieldLabel} value was reset ${defaultValue}`,
+                );
               }}
-              appearance="transparent"
             >
               <RefreshIcon aria-hidden />
             </Button>
             <span
               id={accessibleTextId}
-              aria-live="polite"
               style={accessibleTextStyles}
+              aria-live="polite"
             >
               {accessibleText}
             </span>
           </>
         }
       />
-      <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
+      <FormFieldHelperText>Please enter a value</FormFieldHelperText>
     </FormField>
   );
 };
 
 const SyncAdornment = () => {
-  const [randomLiveValue, setRandomLiveValue] = useState("14.75");
+  const [randomLiveValue, setRandomLiveValue] = useState(14.75);
   const [value, setValue] = useState<number | string>(randomLiveValue);
   const [accessibleText, setAccessibleText] = useState("");
 
@@ -76,27 +86,38 @@ const SyncAdornment = () => {
   const accessibleTextId = useId();
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    if (accessibleText?.length) {
+      timeoutId = setTimeout(() => {
+        setAccessibleText("");
+      }, 3000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [accessibleText]);
+
+  useEffect(() => {
     const intervalId = setInterval(() => {
       const randomDelta = Number.parseFloat((Math.random() * 2 - 1).toFixed(2));
       setRandomLiveValue((prev) =>
-        (Number.parseFloat(prev) + randomDelta).toFixed(2),
+        Number.parseFloat((prev + randomDelta).toFixed(2)),
       );
     }, 500);
 
     return () => clearInterval(intervalId);
   }, []);
 
-  const clearAccessibleText = () =>
-    setTimeout(() => {
-      setAccessibleText(" ");
-    }, 3000);
-
   return (
     <FormField>
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          setValue(event.target.value);
+        }}
+        onNumberChange={(newValue) => {
+          console.log(`Number changed to ${newValue}`);
+          setValue(newValue ?? "");
+        }}
         step={0.01}
         stepMultiplier={3}
         endAdornment={
@@ -104,12 +125,13 @@ const SyncAdornment = () => {
             <Button
               aria-describedby={accessibleTextId}
               aria-label={`Sync ${formFieldLabel}`}
+              appearance="solid"
               onClick={() => {
                 setValue(randomLiveValue);
-                setAccessibleText(`Synchronized value to ${randomLiveValue}`);
-                clearAccessibleText();
+                setAccessibleText(
+                  `Sync ${formFieldLabel} value with live value ${randomLiveValue}`,
+                );
               }}
-              appearance="transparent"
             >
               <SyncIcon aria-hidden />
             </Button>
@@ -129,34 +151,42 @@ const SyncAdornment = () => {
 };
 
 const CustomButtons = () => {
-  const step = 1;
   const [value, setValue] = useState<number | string>(10);
-
-  const updateValue = (multiplier: -1 | 1) => {
-    if (typeof value === "number") {
-      setValue(value + multiplier * step);
-    }
-  };
 
   return (
     <FormField>
       <FormFieldLabel>Number input with custom buttons</FormFieldLabel>
       <NumberInput
         hideButtons
-        value={value}
         textAlign="center"
-        onChange={(_, newValue) => setValue(newValue)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          setValue(event.target.value);
+        }}
+        onNumberChange={(newValue) => {
+          console.log(`Number changed to ${newValue}`);
+          setValue(newValue ?? "");
+        }}
+        value={value}
         startAdornment={
-          <Button aria-hidden tabIndex={-1} onClick={() => updateValue(-1)}>
+          <Button
+            aria-hidden
+            tabIndex={-1}
+            onClick={() => setValue(Number(value) - 1)}
+          >
             <RemoveIcon aria-hidden />
           </Button>
         }
         endAdornment={
-          <Button aria-hidden tabIndex={-1} onClick={() => updateValue(1)}>
+          <Button
+            aria-hidden
+            tabIndex={-1}
+            onClick={() => setValue(Number(value) + 1)}
+          >
             <AddIcon aria-hidden />
           </Button>
         }
       />
+      <FormFieldHelperText>Please enter a value</FormFieldHelperText>
     </FormField>
   );
 };

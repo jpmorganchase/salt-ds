@@ -18,7 +18,7 @@ import {
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 
 const tenorOptions = [
   { tenor: "5", label: "5 years" },
@@ -74,6 +74,7 @@ export const CustomDatePickerPanel = forwardRef<
               List header
             </FormFieldLabel>
             <ListBox
+              tabIndex={0}
               style={{ width: "10em" }}
               onSelectionChange={(event, item) => {
                 if (!item) {
