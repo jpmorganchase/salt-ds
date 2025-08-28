@@ -1,4 +1,5 @@
 import {
+  type AnnounceFnOptions,
   AriaAnnouncerProvider,
   DEFAULT_ANNOUNCEMENT_DURATION,
   useAriaAnnouncer,
@@ -10,14 +11,16 @@ const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
 
 const TestComponent = ({
   announcement,
+  ariaLive,
   delay,
   debounce,
   duration,
   getAnnouncement,
 }: {
   announcement?: string;
+  ariaLive: AnnounceFnOptions["ariaLive"];
   delay?: number;
-  duration?: number;
+  duration?: AnnounceFnOptions["duration"];
   debounce?: number;
   getAnnouncement?: () => string;
 }) => {
@@ -29,7 +32,7 @@ const TestComponent = ({
     <>
       <button
         onClick={() => {
-          announce(getMessageToAnnounce(), { duration });
+          announce(getMessageToAnnounce(), { duration, ariaLive });
         }}
       >
         {BUTTON_TEXT}
@@ -82,6 +85,19 @@ describe("Given useAriaAnnouncer", () => {
       cy.get("[aria-live]").should("have.text", "test");
       cy.wait(250);
       cy.get("[aria-live]", { timeout: 0 }).should("have.text", "");
+    });
+  });
+
+  describe("given an ariaLive", () => {
+    it("should trigger an announcement with the specified urgency", () => {
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent announcement="test" ariaLive={"polite"} />
+        </AriaAnnouncerProvider>,
+      );
+      cy.findByText(BUTTON_TEXT).realClick();
+      cy.get("[aria-live]").should("have.attr", "aria-live", "polite");
+      cy.get("[aria-live]").should("have.text", "test");
     });
   });
 
