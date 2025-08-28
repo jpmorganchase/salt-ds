@@ -18,7 +18,7 @@ const TestComponent = ({
   getAnnouncement,
 }: {
   announcement?: string;
-  ariaLive: AnnounceFnOptions["ariaLive"];
+  ariaLive?: AnnounceFnOptions["ariaLive"];
   delay?: number;
   duration?: AnnounceFnOptions["duration"];
   debounce?: number;
