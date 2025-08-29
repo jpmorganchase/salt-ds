@@ -7,6 +7,7 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  StackLayout,
   useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
@@ -54,12 +55,21 @@ export const Preheader = (): ReactElement => {
           </FormField>
         </DialogContent>
         <DialogActions>
-          <Button appearance="bordered" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Subscribe
-          </Button>
+          <StackLayout
+            gap={1}
+            direction={{
+              xs: "column-reverse",
+              sm: "row",
+            }}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+          >
+            <Button appearance="bordered" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Subscribe
+            </Button>
+          </StackLayout>
         </DialogActions>
       </Dialog>
     </>

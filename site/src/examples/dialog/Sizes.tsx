@@ -9,11 +9,13 @@ import {
   ParentChildLayout,
   SplitLayout,
   StackLayout,
+  type StackLayoutProps,
   Step,
   Stepper,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 const SmallDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -47,12 +49,18 @@ const SmallDialog = (): ReactElement => {
           will not be saved
         </DialogContent>
         <DialogActions>
-          <Button appearance="bordered" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Accept
-          </Button>
+          <StackLayout
+            gap={1}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+            direction={{ xs: "column-reverse", sm: "row" }}
+          >
+            <Button appearance="bordered" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Accept
+            </Button>
+          </StackLayout>
         </DialogActions>
       </Dialog>
     </>
@@ -160,12 +168,21 @@ const MediumDialog = (): ReactElement => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <Button appearance="bordered" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Save
-          </Button>
+          <StackLayout
+            gap={1}
+            direction={{
+              xs: "column-reverse",
+              sm: "row",
+            }}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+          >
+            <Button appearance="bordered" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Save
+            </Button>
+          </StackLayout>
         </DialogActions>
       </Dialog>
     </>
@@ -186,6 +203,15 @@ const LargeDialog = (): ReactElement => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
 
   return (
     <>
@@ -227,16 +253,30 @@ const LargeDialog = (): ReactElement => {
           Wizard Content Area
         </DialogContent>
         <DialogActions>
-          <Button
-            appearance="bordered"
-            onClick={handleClose}
-            style={{ marginRight: "auto" }}
-          >
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Next
-          </Button>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              <Button sentiment="accented" onClick={handleClose}>
+                Next
+              </Button>
+              <Button appearance="bordered" onClick={handleClose}>
+                Cancel
+              </Button>
+            </StackLayout>
+          ) : (
+            <SplitLayout
+              style={{ width: "100%" }}
+              startItem={
+                <Button appearance="bordered" onClick={handleClose}>
+                  Cancel
+                </Button>
+              }
+              endItem={
+                <Button sentiment="accented" onClick={handleClose}>
+                  Next
+                </Button>
+              }
+            />
+          )}
         </DialogActions>
       </Dialog>
     </>

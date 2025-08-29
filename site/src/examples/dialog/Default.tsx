@@ -4,11 +4,15 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexItem,
   H3,
+  SplitLayout,
   StackLayout,
+  type StackLayoutProps,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 export const Default = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -25,6 +29,59 @@ export const Default = (): ReactElement => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const privacySettings = (
+    <FlexItem>
+      <Button
+        appearance="bordered"
+        onClick={handleClose}
+        style={{ width: "100%" }}
+      >
+        My privacy settings
+      </Button>
+    </FlexItem>
+  );
+
+  const cancel = (
+    <FlexItem>
+      <Button
+        sentiment="accented"
+        appearance="bordered"
+        onClick={handleClose}
+        style={{ width: "100%" }}
+      >
+        Cancel
+      </Button>
+    </FlexItem>
+  );
+
+  const accept = (
+    <FlexItem>
+      <Button
+        sentiment="accented"
+        onClick={handleClose}
+        style={{ width: "100%" }}
+      >
+        Accept
+      </Button>
+    </FlexItem>
+  );
+
+  const endItem = (
+    <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
+      {cancel}
+      {accept}
+    </StackLayout>
+  );
 
   return (
     <>
@@ -70,23 +127,27 @@ export const Default = (): ReactElement => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <Button
-            appearance="bordered"
-            onClick={handleClose}
-            style={{ marginRight: "auto" }}
-          >
-            My privacy settings
-          </Button>
-          <Button
-            sentiment="accented"
-            appearance="bordered"
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Accept
-          </Button>
+          {direction === "column" ? (
+            <StackLayout
+              gap={1}
+              style={{
+                width: "100%",
+              }}
+            >
+              {accept}
+              {cancel}
+              {privacySettings}
+            </StackLayout>
+          ) : (
+            <SplitLayout
+              direction={"row"}
+              startItem={privacySettings}
+              endItem={endItem}
+              style={{
+                width: "100%",
+              }}
+            />
+          )}
         </DialogActions>
       </Dialog>
     </>

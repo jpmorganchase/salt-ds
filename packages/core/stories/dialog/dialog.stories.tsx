@@ -106,7 +106,7 @@ const DialogTemplate: StoryFn<
         <DialogActions>
           <StackLayout
             direction={{
-              xs: "column",
+              xs: "column-reverse",
               sm: "row",
             }}
             gap={1}
@@ -239,7 +239,7 @@ const AlertDialogTemplate: StoryFn<
         <DialogActions>
           <StackLayout
             direction={{
-              xs: "column",
+              xs: "column-reverse",
               sm: "row",
             }}
             gap={1}
@@ -318,7 +318,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         <DialogActions>
           <StackLayout
             direction={{
-              xs: "column",
+              xs: "column-reverse",
               sm: "row",
             }}
             gap={1}
@@ -413,7 +413,7 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
         <DialogActions>
           <StackLayout
             direction={{
-              xs: "column",
+              xs: "column-reverse",
               sm: "row",
             }}
             gap={1}

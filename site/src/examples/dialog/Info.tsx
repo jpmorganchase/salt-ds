@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  StackLayout,
   useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
@@ -39,12 +40,21 @@ export const Info = (): ReactElement => {
           A new version of this file is available with 26 updates.
         </DialogContent>
         <DialogActions>
-          <Button appearance="bordered" onClick={handleClose}>
-            Close
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            See updates
-          </Button>
+          <StackLayout
+            gap={1}
+            direction={{
+              xs: "column-reverse",
+              sm: "row",
+            }}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+          >
+            <Button appearance="bordered" onClick={handleClose}>
+              Close
+            </Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              See updates
+            </Button>
+          </StackLayout>
         </DialogActions>
       </Dialog>
     </>
