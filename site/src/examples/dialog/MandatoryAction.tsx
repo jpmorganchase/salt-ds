@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  StackLayout,
   useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
@@ -40,12 +41,21 @@ export const MandatoryAction = (): ReactElement => {
           Are you sure you want to permenantly delete transaction?
         </DialogContent>
         <DialogActions>
-          <Button appearance="bordered" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Delete
-          </Button>
+          <StackLayout
+            gap={1}
+            direction={{
+              xs: "column-reverse",
+              sm: "row",
+            }}
+            style={{ width: "100%", justifyContent: "flex-end" }}
+          >
+            <Button appearance="bordered" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Delete
+            </Button>
+          </StackLayout>
         </DialogActions>
       </Dialog>
     </>
