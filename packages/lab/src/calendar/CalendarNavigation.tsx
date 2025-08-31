@@ -406,6 +406,10 @@ export const CalendarNavigation = forwardRef<
           value={formatYear(selectedYear)}
           onSelectionChange={handleYearSelect}
           {...YearDropdownProps}
+          className={clsx(
+            withBaseName("yearDropdown"),
+            YearDropdownProps?.className,
+          )}
         >
           {years.map((year) => (
             <Option key={formatYear(year)} value={year}>
