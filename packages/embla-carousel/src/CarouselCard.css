@@ -37,8 +37,18 @@
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  gap: var(--salt-spacing-200);
   flex-grow: 1;
+  padding-bottom: var(--salt-spacing-200);
+}
+
+.saltCarouselCard-header {
+  padding-bottom: var(--salt-spacing-100);
+}
+.saltCarouselCard-actions {
+  padding-top: var(--salt-spacing-200);
+}
+
+.saltCarouselCard-body.saltCarouselCard-bordered-body {
   padding: 0 var(--salt-spacing-200) var(--salt-spacing-200) var(--salt-spacing-200);
 }
 

@@ -73,10 +73,18 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
         >
           {media}
           {children && (
-            <div className={withBaseName("body")}>
-              <div>{header}</div>
-              <div>{children}</div>
-              {actions}
+            <div
+              className={clsx(withBaseName("body"), {
+                [withBaseName("bordered-body")]: appearance === "bordered",
+              })}
+            >
+              {header ? (
+                <div className={withBaseName("header")}>{header}</div>
+              ) : null}
+              {children}
+              {actions ? (
+                <div className={withBaseName("actions")}>{actions}</div>
+              ) : null}
             </div>
           )}
         </div>
