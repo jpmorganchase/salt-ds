@@ -9,7 +9,7 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel";
-import { PauseIcon, PlayIcon } from "@salt-ds/icons";
+import { PauseSolidIcon, PlaySolidIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
@@ -104,9 +104,9 @@ export const Autoplay = () => {
             onClick={() => (isActive ? stop() : play())}
           >
             {isActive ? (
-              <PauseIcon style={{ pointerEvents: "none" }} />
+              <PauseSolidIcon style={{ pointerEvents: "none" }} />
             ) : (
-              <PlayIcon style={{ pointerEvents: "none" }} />
+              <PlaySolidIcon style={{ pointerEvents: "none" }} />
             )}
           </Button>
           <CarouselPreviousButton onClick={() => stop()} />
