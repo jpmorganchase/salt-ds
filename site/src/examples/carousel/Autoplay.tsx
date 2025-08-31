@@ -23,7 +23,6 @@ export const Autoplay = () => {
   const carouselId = useId();
   const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
   const autoplay = emblaApi?.plugins().autoplay;
@@ -31,18 +30,11 @@ export const Autoplay = () => {
   const play = () => {
     autoplay?.play();
     setIsPlaying(true);
-    setIsPaused(false);
-  };
-
-  const pause = () => {
-    autoplay?.stop();
-    setIsPaused(true);
   };
 
   const stop = () => {
     autoplay?.stop();
     setIsPlaying(false);
-    setIsPaused(true);
   };
 
   useEffect(() => {
@@ -62,7 +54,6 @@ export const Autoplay = () => {
 
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
-  const isActive = isPlaying && !isPaused;
   return (
     <Carousel
       aria-labelledby={`${carouselId}-title`}
@@ -90,20 +81,14 @@ export const Autoplay = () => {
           gap: "var(--salt-spacing-100)",
         }}
       >
-        <FlexLayout
-          justify="start"
-          direction="row"
-          gap={1}
-          onMouseEnter={stop}
-          onFocus={stop}
-        >
+        <FlexLayout justify="start" direction="row" gap={1}>
           <Button
-            aria-label={`${isActive ? "stop" : "start"} automatic slide rotation`}
+            aria-label={`${isPlaying ? "stop" : "start"} automatic slide rotation`}
             appearance="bordered"
             sentiment="neutral"
-            onClick={() => (isActive ? stop() : play())}
+            onClick={() => (isPlaying ? stop() : play())}
           >
-            {isActive ? (
+            {isPlaying ? (
               <PauseSolidIcon style={{ pointerEvents: "none" }} />
             ) : (
               <PlaySolidIcon style={{ pointerEvents: "none" }} />
@@ -119,7 +104,7 @@ export const Autoplay = () => {
           />
         </FlexLayout>
         <CarouselSlides
-          onMouseEnter={() => pause()}
+          onMouseEnter={() => stop()}
           onMouseLeave={() => {
             if (isPlaying) {
               play();
