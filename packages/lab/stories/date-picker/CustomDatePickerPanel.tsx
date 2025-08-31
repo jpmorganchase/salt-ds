@@ -18,7 +18,7 @@ import {
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
-import { forwardRef, useRef } from "react";
+import { forwardRef } from "react";
 
 const tenorOptions = [
   { tenor: "5", label: "5 years" },
