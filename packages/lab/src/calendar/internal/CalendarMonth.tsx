@@ -84,7 +84,7 @@ export const CalendarMonth = forwardRef<
         className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}
       >
         {weeks.map((week, index) => (
-          <div key={`row-${index}`} className={clsx(withBaseName("week"))}>
+          <div key={`row-${index}`} className={withBaseName("week")}>
             {week.map((day: TDate) => (
               <CalendarDay
                 {...CalendarDayProps}
