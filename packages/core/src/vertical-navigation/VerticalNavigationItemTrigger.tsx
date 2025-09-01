@@ -1,4 +1,3 @@
-import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,6 +8,7 @@ import {
   type MouseEvent,
   useRef,
 } from "react";
+import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
 import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
 

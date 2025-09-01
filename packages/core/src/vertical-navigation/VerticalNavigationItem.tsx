@@ -1,4 +1,3 @@
-import { createContext, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -10,6 +9,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { createContext, makePrefixer } from "../utils";
 import { useSubMenuContext } from "./SubMenuContext";
 
 export interface VerticalNavigationItemProps

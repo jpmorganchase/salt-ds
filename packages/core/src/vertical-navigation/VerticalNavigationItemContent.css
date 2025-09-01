@@ -19,7 +19,6 @@
   gap: var(--salt-spacing-100);
   appearance: none;
   -webkit-appearance: none;
-  white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
   padding: var(--verticalNavigationItem-paddingBlock) var(--salt-spacing-100) var(--verticalNavigationItem-paddingBlock) var(--verticalNavigationItem-paddingLeft);
@@ -79,7 +78,7 @@
 }
 
 .saltVerticalNavigationItemContent:hover {
-  background: var(--salt-navigable-background-hover);
+  background: var(--salt-overlayable-background-hover);
 }
 
 .saltVerticalNavigation .saltVerticalNavigationItemContent-active,
@@ -89,6 +88,6 @@
 
 @supports selector(:has(*)) {
   .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[aria-controls]) {
-    background: linear-gradient(var(--salt-navigable-background-hover), var(--salt-navigable-background-hover)) var(--salt-navigable-accent-background-active);
+    background: linear-gradient(var(--salt-overlayable-background-hover), var(--salt-overlayable-background-hover)) var(--salt-navigable-accent-background-active);
   }
 }
