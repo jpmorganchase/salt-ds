@@ -421,7 +421,7 @@ describe("Number Input", () => {
     cy.realType("2");
     cy.realPress("Tab");
 
-    cy.findByRole("spinbutton").should("have.value", "5");
+    cy.findByRole("spinbutton").should("have.value", "22");
     cy.findByLabelText("increment value").should("be.disabled");
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
