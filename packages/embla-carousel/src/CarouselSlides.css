@@ -1,5 +1,6 @@
 .saltCarouselSlides {
   overflow: hidden;
+  cursor: var(--salt-cursor-grab);
 }
 
 .saltCarouselSlides-container {
@@ -19,3 +20,8 @@
   white-space: nowrap;
   border-width: 0;
 }
+
+.saltCarouselSlides-dragging {
+  cursor: var(--salt-cursor-grab-active);
+}
+

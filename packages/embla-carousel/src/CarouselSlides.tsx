@@ -13,7 +13,7 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
-  useState,
+  useState, MouseEventHandler,
 } from "react";
 import {
   type CarouselAnnouncementTrigger,
@@ -62,6 +62,8 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [focusSlideIndex, setFocusedSlideIndex] = useState<number>(-1);
+    const [dragging, setDragging] = useState(false);
+
     const [stableScrollSnap, setStableScrollSnap] = useState<
       number | undefined
     >(undefined);
@@ -163,12 +165,23 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       onKeyDown?.(event);
     };
 
+    const handleMouseDown:MouseEventHandler<HTMLDivElement> = (event) => {
+      setDragging(true);
+      rest.onMouseDown?.(event)
+    }
+    const handleMouseUp:MouseEventHandler<HTMLDivElement> = (event) => {
+      setDragging(false);
+      rest.onMouseUp?.(event)
+    }
+
     return (
       <>
         <div
           onKeyDown={handleKeyDown}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
           ref={carouselRef}
-          className={clsx(withBaseName(), className)}
+          className={clsx(withBaseName(), {[withBaseName("dragging")]: dragging}, className)}
           {...rest}
         >
           <div
