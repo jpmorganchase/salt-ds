@@ -34,3 +34,9 @@
 .saltDialogContent-scrollBottom.saltDialogContent-inner {
   border-bottom-color: var(--salt-separable-tertiary-borderColor);
 }
+
+@supports selector(:has(*)) {
+  .saltDialogContent:has(.saltDialogContent-overflow) {
+    min-height: calc(var(--salt-text-lineHeight) * 4);
+  }
+}
