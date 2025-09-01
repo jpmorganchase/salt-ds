@@ -1,9 +1,8 @@
 import { withDateMock } from ".storybook/decorators/withDateMock";
-import { Calendar } from "@salt-ds/lab";
+import { Calendar, useLocalization } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { CalendarDay } from "../../../lab/src/calendar/internal/CalendarDay";
-import { useLocalization } from "../../src";
 import "./calendar.stories.css";
 
 export default {

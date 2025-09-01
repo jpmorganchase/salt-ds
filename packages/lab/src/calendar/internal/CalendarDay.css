@@ -290,7 +290,7 @@
   clip-path: polygon(100% 0, 100% 100%, 0 0);
   z-index: var(--calendar-day-zIndex-highlight);
 }
-.saltCalendarDay-focused .saltCalendarDay-highlighted::after {
+.saltCalendarDay-focused:focus-visible .saltCalendarDay-highlighted::after {
   border: var(--salt-focused-outline);
 }
 
