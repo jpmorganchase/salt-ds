@@ -9,11 +9,12 @@ import {
   cloneElement,
   forwardRef,
   type KeyboardEvent,
+  type MouseEventHandler,
   type SyntheticEvent,
   useEffect,
   useLayoutEffect,
   useRef,
-  useState, MouseEventHandler,
+  useState,
 } from "react";
 import {
   type CarouselAnnouncementTrigger,
@@ -165,14 +166,14 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       onKeyDown?.(event);
     };
 
-    const handleMouseDown:MouseEventHandler<HTMLDivElement> = (event) => {
+    const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
       setDragging(true);
-      rest.onMouseDown?.(event)
-    }
-    const handleMouseUp:MouseEventHandler<HTMLDivElement> = (event) => {
+      rest.onMouseDown?.(event);
+    };
+    const handleMouseUp: MouseEventHandler<HTMLDivElement> = (event) => {
       setDragging(false);
-      rest.onMouseUp?.(event)
-    }
+      rest.onMouseUp?.(event);
+    };
 
     return (
       <>
@@ -181,7 +182,11 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           ref={carouselRef}
-          className={clsx(withBaseName(), {[withBaseName("dragging")]: dragging}, className)}
+          className={clsx(
+            withBaseName(),
+            { [withBaseName("dragging")]: dragging },
+            className,
+          )}
           {...rest}
         >
           <div
