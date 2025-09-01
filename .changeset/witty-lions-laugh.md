@@ -2,5 +2,5 @@
 "@salt-ds/core": patch
 ---
 
-- Fixed checkbox, radio button and switch clickable area taking full width of container
-- Fixed form label whitespace triggering input focus
+- Fixed `Checkbox`, `RadioButton` and `Switch`'s clickable areas taking full width of container.
+- Fixed clicking `FormFieldLabel`'s whitespace triggering input focus.
