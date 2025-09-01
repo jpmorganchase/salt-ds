@@ -18,6 +18,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  color: var(--salt-content-primary-foreground);
 }
 
 /* Styles applied to icon */
