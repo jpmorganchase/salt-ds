@@ -101,13 +101,13 @@ export interface NumberInputProps
    */
   min?: number;
   /**
-   * Callback function that is triggered when the value of the input changes.
+   * Callback function that is triggered when the value changes via user input.
    *
-   * @param event - The event that triggers the value change, providing access to the unformatted value.
+   * @param event - The event that triggers the value change, providing access to the raw input value.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   /**
-   * Callback function that is triggered when the value of the `NumberInput` changes.
+   * Callback function that is triggered when the value changes via increment/decrement or on blur.
    *
    * @param value - The parsed number value or null if an empty value
    */
