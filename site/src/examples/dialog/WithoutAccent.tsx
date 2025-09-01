@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
-  FlexItem,
   H3,
   SplitLayout,
   StackLayout,
@@ -40,40 +39,21 @@ export const WithoutAccent = (): ReactElement => {
     );
 
   const privacySettings = (
-    <FlexItem>
-      <Button
-        appearance="bordered"
-        onClick={handleClose}
-        style={{ width: "100%" }}
-      >
-        My privacy settings
-      </Button>
-    </FlexItem>
+    <Button appearance="bordered" onClick={handleClose}>
+      My privacy settings
+    </Button>
   );
 
   const cancel = (
-    <FlexItem>
-      <Button
-        sentiment="accented"
-        appearance="bordered"
-        onClick={handleClose}
-        style={{ width: "100%" }}
-      >
-        Cancel
-      </Button>
-    </FlexItem>
+    <Button sentiment="accented" appearance="bordered" onClick={handleClose}>
+      Cancel
+    </Button>
   );
 
   const accept = (
-    <FlexItem>
-      <Button
-        sentiment="accented"
-        onClick={handleClose}
-        style={{ width: "100%" }}
-      >
-        Accept
-      </Button>
-    </FlexItem>
+    <Button sentiment="accented" onClick={handleClose}>
+      Accept
+    </Button>
   );
 
   const endItem = (
