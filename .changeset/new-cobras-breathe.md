@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Add foreground color to Banner
+Fixed foreground color not being applied explicitly to Banner.
