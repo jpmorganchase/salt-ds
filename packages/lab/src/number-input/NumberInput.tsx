@@ -387,7 +387,13 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     let floatValue = parse(value) ?? 0;
-    floatValue = Math.max(min, Math.min(max, floatValue));
+    floatValue = Math.max(
+      Number.MIN_SAFE_INTEGER,
+      Math.min(Number.MAX_SAFE_INTEGER, floatValue),
+    );
+    if (clamp) {
+      floatValue = Math.max(min, Math.min(max, floatValue));
+    }
 
     const { activate: activateDecrement } = useActivateWhileMouseDown(
       decrementValue,
