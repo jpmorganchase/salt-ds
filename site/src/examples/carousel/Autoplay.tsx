@@ -13,7 +13,7 @@ import { PauseSolidIcon, PlaySolidIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
@@ -22,19 +22,25 @@ const DELAY_MSECS = 8000;
 export const Autoplay = () => {
   const carouselId = useId();
   const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [playState, setPlayState] = useState<"stop" | "play" | "pause">("play");
+  const manualControlRef = useRef<boolean>(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
   const autoplay = emblaApi?.plugins().autoplay;
 
   const play = () => {
     autoplay?.play();
-    setIsPlaying(true);
+    setPlayState("play");
+  };
+
+  const pause = () => {
+    autoplay?.stop();
+    setPlayState("pause");
   };
 
   const stop = () => {
     autoplay?.stop();
-    setIsPlaying(false);
+    setPlayState("stop");
   };
 
   useEffect(() => {
@@ -54,11 +60,44 @@ export const Autoplay = () => {
 
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
+  const handleMouseEnter = () => {
+    if (!manualControlRef.current && playState === "play") {
+      pause();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!manualControlRef.current && playState === "pause") {
+      play();
+    }
+  };
+
+  const handleFocus = () => {
+    if (!manualControlRef.current) {
+      pause();
+    }
+  };
+
+  const handleBlur = () => {
+    if (!manualControlRef.current && playState === "pause") {
+      play();
+    }
+  };
+
+  const togglePlayState = () => {
+    manualControlRef.current = true; // Once a user interaction occurs, then autoplay is furthermore disabled
+    if (playState === "play") {
+      stop();
+    } else {
+      play();
+    }
+  };
+
   return (
     <Carousel
       aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
-      disableSlideAnnouncements={isPlaying}
+      disableSlideAnnouncements={playState === "play"}
       emblaOptions={{ loop: true, duration: 20 }}
       emblaPlugins={[
         AutoplayPlugin({
@@ -70,6 +109,8 @@ export const Autoplay = () => {
         }),
       ]}
       getEmblaApi={setEmblaApi}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
     >
       <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
         Autoplay example
@@ -83,34 +124,38 @@ export const Autoplay = () => {
       >
         <FlexLayout justify="start" direction="row" gap={1}>
           <Button
-            aria-label={`${isPlaying ? "stop" : "start"} automatic slide rotation`}
+            aria-label={`${playState === "play" ? "stop" : "start"} automatic slide rotation`}
             appearance="bordered"
             sentiment="neutral"
-            onClick={() => (isPlaying ? stop() : play())}
+            onMouseDown={() => {
+              manualControlRef.current = true;
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "space") {
+                manualControlRef.current = true;
+              }
+            }}
+            onClick={togglePlayState}
           >
-            {isPlaying ? (
+            {playState === "play" ? (
               <PauseSolidIcon style={{ pointerEvents: "none" }} />
             ) : (
               <PlaySolidIcon style={{ pointerEvents: "none" }} />
             )}
           </Button>
-          <CarouselPreviousButton onClick={() => stop()} />
-          <CarouselNextButton onClick={() => stop()} />
+          <CarouselPreviousButton onClick={stop} />
+          <CarouselNextButton onClick={stop} />
           <CarouselProgressLabel aria-hidden={true} />
           <CarouselAutoplayIndicator
             slideIndex={slideIndex}
             duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
-            isPlaying={isPlaying}
+            isPlaying={playState === "play"}
           />
         </FlexLayout>
         <CarouselSlides
-          onMouseEnter={() => stop()}
-          onMouseLeave={() => {
-            if (isPlaying) {
-              play();
-            }
-          }}
-          onFocus={() => stop()}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onFocus={handleFocus}
         >
           {sliderData.map((slide, index) => {
             const slideId = `${carouselId}-slide${index}`;
