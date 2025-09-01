@@ -59,13 +59,6 @@ To maintain a cohesive visual flow, numeric values are left-aligned by default, 
 
 <LivePreview componentName="number-input" exampleName="TextAlignment" />
 
-## Customise input value
-
-By default, any numeric decimal value, with an optional sign prefix can be entered, such as `+123.456`.
-To support such use-cases as `10x` an `isAllowed` callback can be provided to create custom forms of entry.
-
-<LivePreview componentName="number-input" exampleName="CustomInputPattern" />
-
 ## Min and max value
 
 To limit the range of accepted values, you can specify a minimum, maximum, or both using the `min` and `max` props.
@@ -153,6 +146,12 @@ You can add a suffix or prefix with a custom `format` function.
   componentName="number-input"
   exampleName="FormattingSuffixPrefix"
 />
+
+### Custom input pattern
+
+You can support custom input patterns, such as "10x", using a combination of `isAllowed`, `format` and `parse` callbacks.
+
+<LivePreview componentName="number-input" exampleName="CustomInputPattern" />
 
 ## Custom steps
 

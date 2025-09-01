@@ -175,7 +175,7 @@ describe("Number Input", () => {
     cy.findByLabelText("decrement value").should("be.disabled");
   });
 
-  it("calls the `onChange` callback when the value is decremented", () => {
+  it("calls the `onNumberChange` callback when the value is decremented", () => {
     const numberChangeSpy = cy.stub().as("numberChangeSpy");
     const changeSpy = cy.stub().as("changeSpy");
 
@@ -557,7 +557,7 @@ describe("Number Input", () => {
       cy.findByRole("spinbutton").should("have.value", "0");
     });
 
-    it("should allow typing formatted values and call onChange with correct numerical values", () => {
+    it("should allow editing formatted values and call onNumberChange and onChange with correct values", () => {
       const numberChangeSpy = cy.stub().as("numberChangeSpy");
       const changeSpy = cy.stub().as("changeSpy");
 
@@ -737,10 +737,8 @@ describe("Number Input", () => {
       cy.findByRole("spinbutton").should("have.value", "-12.12");
     });
 
-    it("pads with zeros to correct number of decimal places when fixedDecimalScale is set", () => {
-      cy.mount(
-        <Default decimalScale={3} defaultValue={-5.8} fixedDecimalScale />,
-      );
+    it("pads with zeros to correct number of decimal places", () => {
+      cy.mount(<Default decimalScale={3} defaultValue={-5.8} />);
 
       cy.findByRole("spinbutton").focus();
       cy.realPress("Tab");
