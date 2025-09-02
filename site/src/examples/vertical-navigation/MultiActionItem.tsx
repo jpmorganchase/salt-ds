@@ -1,8 +1,9 @@
-import { Button, StackLayout } from "@salt-ds/core";
 import {
+  Button,
   Collapsible,
   CollapsiblePanel,
   CollapsibleTrigger,
+  StackLayout,
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -10,7 +11,7 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { Link, useLocation } from "react-router";
 import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";

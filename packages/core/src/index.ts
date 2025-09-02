@@ -13,6 +13,7 @@ export {
 export * from "./button";
 export * from "./card";
 export * from "./checkbox";
+export * from "./collapsible";
 export * from "./combo-box";
 export * from "./dialog";
 export * from "./divider";
@@ -65,4 +66,5 @@ export * from "./toggle-button-group";
 export * from "./tooltip";
 export * from "./types";
 export * from "./utils";
+export * from "./vertical-navigation";
 export * from "./viewport";

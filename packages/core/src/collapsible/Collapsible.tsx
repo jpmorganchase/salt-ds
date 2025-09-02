@@ -1,4 +1,3 @@
-import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -8,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { makePrefixer, useControlled } from "../utils";
 import { CollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleProps

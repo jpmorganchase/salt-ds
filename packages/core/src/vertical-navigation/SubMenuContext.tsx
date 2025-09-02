@@ -1,4 +1,3 @@
-import { createContext } from "@salt-ds/core";
 import {
   type Dispatch,
   type ReactNode,
@@ -6,6 +5,7 @@ import {
   useContext,
   useMemo,
 } from "react";
+import { createContext } from "../utils";
 
 type SubMenuContextValue = {
   depth: number;

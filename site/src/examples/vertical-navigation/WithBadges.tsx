@@ -1,8 +1,9 @@
-import { Badge, StackLayout } from "@salt-ds/core";
 import {
+  Badge,
   Collapsible,
   CollapsiblePanel,
   CollapsibleTrigger,
+  StackLayout,
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -10,7 +11,7 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { type Item, navData } from "./data";

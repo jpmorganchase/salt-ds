@@ -1,9 +1,9 @@
-import { Button } from "@salt-ds/core";
 import {
+  Button,
   Collapsible,
   CollapsiblePanel,
   CollapsibleTrigger,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => {
