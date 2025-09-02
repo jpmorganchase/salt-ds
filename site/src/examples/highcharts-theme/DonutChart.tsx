@@ -26,7 +26,6 @@ const options: Options = {
       type: "pie",
       name: "Revenue by product line",
       innerSize: "80%",
-      showInLegend: true,
       data: [
         { name: "Checking Accounts", y: 5 },
         { name: "Savings Accounts", y: 5 },
