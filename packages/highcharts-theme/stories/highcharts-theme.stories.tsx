@@ -2,11 +2,13 @@ import Highcharts from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
+  BulletChart as BulletChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
 } from "../src/examples";
 import {
+  bulletOptions,
   donutOptions,
   lineOptions,
   pieOptions,
@@ -52,5 +54,13 @@ export const PieChart = {
   args: {
     patterns: false,
     options: pieOptions,
+  },
+};
+
+export const BulletChart = {
+  render: (args: { patterns?: boolean }) => <BulletChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: bulletOptions,
   },
 };
