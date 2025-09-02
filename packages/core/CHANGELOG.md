@@ -1,5 +1,44 @@
 # @salt-ds/core
 
+## 1.48.0
+
+### Minor Changes
+
+- f1dc9fc: Added `VerticalNavigation` and related components.
+
+  `VerticalNavigation` has been introduced to replace the existing `NavigationItem` component for vertical navigation. The new component provides a more structured and flexible way to create vertical navigation. For now you can continue to use the `NavigationItem` component, but we recommend migrating to the new `VerticalNavigation` component as the `NavigationItem` component will be deprecated in a future release and removed in the future major release.
+
+  ```tsx
+  <VerticalNavigation aria-label="Basic sidebar" appearance="indicator">
+    <VerticalNavigationItem active>
+      <VerticalNavigationItemContent>
+        <VerticalNavigationItemTrigger>
+          <VerticalNavigationItemLabel>Item 1</VerticalNavigationItemLabel>
+        </VerticalNavigationItemTrigger>
+      </VerticalNavigationItemContent>
+    </VerticalNavigationItem>
+  </VerticalNavigation>
+  ```
+
+- f1dc9fc: Added `Collapsible` and related components.
+
+  `Collapsible` enables content to be either collapsed (hidden) or expanded (visible). It has two elements: a trigger and a panel whose visibility is controlled by the button.
+
+  ```tsx
+  <Collapsible>
+    <CollapsibleTrigger>
+      <Button>Click</Button>
+    </CollapsibleTrigger>
+    <CollapsiblePanel>
+      <p>Content</p>
+    </CollapsiblePanel>
+  </Collapsible>
+  ```
+
+### Patch Changes
+
+- 9560539: Fixed foreground color not being applied explicitly to Banner.
+
 ## 1.47.5
 
 ### Patch Changes
