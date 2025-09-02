@@ -22,7 +22,6 @@ const Template: StoryFn = ({ ...args }) => {
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput
-        defaultValue={0}
         onNumberChange={(newValue) =>
           console.log(`Number changed to ${newValue}`)
         }
@@ -231,6 +230,7 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
 export const Clamping: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const [accessibleText, setAccessibleText] = useState("");
+  const [focused, setFocused] = useState(false);
   const accessibleTextId = useId();
   const max = 5;
   const min = 0;
@@ -245,6 +245,39 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
     return () => clearTimeout(timeoutId);
   }, [accessibleText]);
 
+  const handleBlur = () => {
+    const numValue = Number(value);
+    setFocused(false);
+    if (numValue > max) {
+      setAccessibleText(
+        `${numValue} is greater than the maximum value, value was set to ${max}`,
+      );
+    } else if (numValue < min) {
+      setAccessibleText(
+        `${numValue} is less than the minimum value, value was set to ${min}`,
+      );
+    }
+  };
+
+  const handleFocus = () => {
+    setFocused(true);
+  };
+
+  useEffect(() => {
+    if (focused) {
+      const numValue = Number(value);
+      if (numValue > max) {
+        setAccessibleText(`${value} is greater than the maximum value`);
+      } else if (numValue < min) {
+        setAccessibleText(`${value} is less than the minimum value`);
+      } else if (numValue === min) {
+        setAccessibleText("Minimum value reached");
+      } else if (numValue === max) {
+        setAccessibleText("Maximum value reached");
+      }
+    }
+  }, [value, focused]);
+
   return (
     <StackLayout>
       <FormField>
@@ -258,37 +291,14 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
           onNumberChange={(newValue) => {
             console.log(`Number changed to ${newValue}`);
             setValue(newValue ?? "");
-            if (newValue === null) {
-              return;
-            }
-            if (newValue > max) {
-              setAccessibleText(`${value} is greater than the maximum value`);
-            } else if (newValue < min) {
-              setAccessibleText(`${value} is less than the minimum value`);
-            } else if (newValue === min) {
-              setAccessibleText("Minimum value reached");
-            } else if (newValue === max) {
-              setAccessibleText("Maximum value reached");
-            }
           }}
           clamp
           max={max}
           min={min}
           style={{ width: "250px" }}
           inputProps={{
-            onBlur: () => {
-              if (typeof value === "number") {
-                if (value > max) {
-                  setAccessibleText(
-                    `${value} is greater than the maximum value, value was set to ${max}`,
-                  );
-                } else if (value < min) {
-                  setAccessibleText(
-                    `${value} is less than the minimum value, value was set to ${min}`,
-                  );
-                }
-              }
-            },
+            onBlur: handleBlur,
+            onFocus: handleFocus,
           }}
         />
         <span

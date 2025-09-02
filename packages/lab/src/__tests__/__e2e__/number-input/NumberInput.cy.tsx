@@ -23,16 +23,6 @@ describe("Number Input", () => {
 
     // Component should render with two buttons - increment, and decrement
     cy.findAllByRole("button", { hidden: true }).should("have.length", 2);
-
-    cy.findByRole("spinbutton").should("exist");
-    cy.findByRole("spinbutton").should("have.value", "0");
-  });
-
-  it("can render with an empty value", () => {
-    cy.mount(<Default defaultValue={undefined} />);
-
-    cy.findAllByRole("button", { hidden: true }).should("have.length", 2);
-
     cy.findByRole("spinbutton").should("exist");
     cy.findByRole("spinbutton").should("have.value", "");
   });
@@ -388,7 +378,7 @@ describe("Number Input", () => {
   });
 
   it("sanitizes input to only allow numbers, decimal points, and plus/minus symbols", () => {
-    cy.mount(<Default defaultValue={undefined} />);
+    cy.mount(<Default />);
 
     cy.findByRole("spinbutton").focus().realType("abc-12.3.+-def");
     cy.findByRole("spinbutton").should("have.value", "-12.3");
@@ -438,7 +428,6 @@ describe("Number Input", () => {
 
     cy.mount(
       <Default
-        defaultValue={undefined}
         max={100}
         clamp
         onChange={changeSpy}
@@ -729,7 +718,7 @@ describe("Number Input", () => {
     });
 
     it("displays value with correct number of decimal places when decimal scale is set", () => {
-      cy.mount(<Default defaultValue={undefined} decimalScale={2} />);
+      cy.mount(<Default decimalScale={2} />);
 
       cy.findByRole("spinbutton").focus();
       cy.realType("-12.1234");
@@ -759,7 +748,7 @@ describe("Number Input", () => {
     });
 
     it("correctly formats a number starting with decimal point when decimal scale is set", () => {
-      cy.mount(<Default defaultValue={undefined} decimalScale={1} />);
+      cy.mount(<Default decimalScale={1} />);
 
       cy.findByRole("spinbutton").focus().realType(".1");
       cy.realPress("Tab");
@@ -778,11 +767,7 @@ describe("Number Input", () => {
       const changeSpy = cy.stub().as("changeSpy");
 
       cy.mount(
-        <Default
-          defaultValue={undefined}
-          onChange={changeSpy}
-          onNumberChange={numberChangeSpy}
-        />,
+        <Default onChange={changeSpy} onNumberChange={numberChangeSpy} />,
       );
       cy.findByRole("spinbutton").focus().realType(".");
       cy.get("@changeSpy")
@@ -817,7 +802,7 @@ describe("Number Input", () => {
     });
 
     it("should maintain its value on focus and on blur", () => {
-      cy.mount(<ReadOnly defaultValue={5} decimalScale={2} />);
+      cy.mount(<ReadOnly decimalScale={2} />);
 
       cy.findByRole("textbox").focus().should("have.value", "5.00");
       cy.realPress("Tab");
