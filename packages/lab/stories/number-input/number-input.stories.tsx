@@ -291,9 +291,6 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
           onNumberChange={(newValue) => {
             console.log(`Number changed to ${newValue}`);
             setValue(newValue ?? "");
-            if (newValue === null) {
-              return;
-            }
           }}
           clamp
           max={max}
