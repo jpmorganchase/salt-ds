@@ -374,6 +374,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const decrementValue = (_event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = (block ? stepMultiplier : 1) * step;
       const parsedValue = parse(value) ?? 0;
+      if (Number.isNaN(parsedValue)) {
+        return;
+      }
       const decrementedValue = Math.max(
         min,
         Math.min(max, parsedValue - decrementStep),
@@ -403,6 +406,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const incrementValue = (_event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = (block ? stepMultiplier : 1) * step;
       const parsedValue = parse(value) ?? 0;
+      if (Number.isNaN(parsedValue)) {
+        return;
+      }
       const incrementedValue = Math.max(
         min,
         Math.min(max, parsedValue + incrementStep),
