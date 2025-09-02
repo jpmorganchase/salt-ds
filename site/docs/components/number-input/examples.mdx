@@ -42,7 +42,7 @@ By default, a dash ('-') serves as the empty marker. You can customize this mark
 
 **Note:** To address browser and screen reader limitations in conveying a read-only state, the `NumberInput`'s role is changed to `textbox` when set to read-only.
 
-### Best practices
+### Best practice
 
 Utilize the read-only state when users need to view the value for their workflow or current task but are not permitted to edit it, such as due to user permissions.
 
@@ -91,13 +91,13 @@ The `NumberInput` can display validation states, `error`, `warning`, and `succes
 
 <LivePreview componentName="number-input" exampleName="Validation" />
 
-## Decimal Scale
+## Decimal scale
 
 The `decimalScale` prop allows you to define the number of decimal places displayed in the `NumberInput`. By default, the decimal scale is determined by the greater number of decimal places between the `step` value and the `value` or `defaultValue` provided.
 
-### Best practices
+### Best practice
 
-- when dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
+When dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
 
 <LivePreview componentName="number-input" exampleName="Decimals" />
 
@@ -109,7 +109,7 @@ To provide a fixed scale provide a custom format function.
 
 The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which can be used to determine the valid input format and extract the numerical value of the formatted input.
 
-### Best Practice
+### Best practice
 
 The `format` callback is designed to work seamlessly with most formatting libraries, such as Intl.NumberFormat. It is strongly recommended to provide a `parse` callback alongside `format` to ensure that valid input is entered and its correct numerical value is derived, maintaining precision and consistency.
 
@@ -157,7 +157,7 @@ You can support custom input patterns, such as "10x", using a combination of `is
 
 The `step` prop allows you to define the increment and decrement sizes for value adjustments.
 
-### Best practices
+### Best practice
 
 Make sure the `step` value is suitable for the context. For example, when users are inputting a "Number of people," increments of 0.5 may cause confusion. If unsure, maintain the step at 1 to ensure clarity and simplicity.
 
