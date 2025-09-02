@@ -8,6 +8,9 @@ import verticalNavigationCss from "./VerticalNavigation.css";
 
 export interface VerticalNavigationProps
   extends ComponentPropsWithoutRef<"nav"> {
+  /**
+   * The appearance of the tabs. Defaults to "bordered".
+   */
   appearance?: "indicator" | "bordered";
 }
 
@@ -17,7 +20,7 @@ export const VerticalNavigation = forwardRef<
   HTMLElement,
   VerticalNavigationProps
 >(function VerticalNavigation(props, ref) {
-  const { appearance = "indicator", children, className, ...rest } = props;
+  const { appearance = "bordered", children, className, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
