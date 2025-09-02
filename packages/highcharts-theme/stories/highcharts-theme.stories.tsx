@@ -2,11 +2,13 @@ import Highcharts from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
+  ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
 } from "../src/examples";
 import {
+  columnOptions,
   donutOptions,
   lineOptions,
   pieOptions,
@@ -52,5 +54,13 @@ export const PieChart = {
   args: {
     patterns: false,
     options: pieOptions,
+  },
+};
+
+export const ColumnChart = {
+  render: (args: { patterns?: boolean }) => <ColumnChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: columnOptions,
   },
 };
