@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
+  overflow: hidden;
 }
 
 /* The action should be triggered by clicking anywhere on the tab. */
