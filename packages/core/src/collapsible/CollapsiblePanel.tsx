@@ -1,7 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, useEffect } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
 import { makePrefixer, useId } from "../utils";
 
 import { useCollapsibleContext } from "./CollapsibleContext";
@@ -12,7 +12,10 @@ export interface CollapsiblePanelProps
 
 const withBaseName = makePrefixer("saltCollapsiblePanel");
 
-export const CollapsiblePanel = (props: CollapsiblePanelProps) => {
+export const CollapsiblePanel = forwardRef<
+  HTMLDivElement,
+  CollapsiblePanelProps
+>((props, ref) => {
   const { children, className, id: idProp, ...rest } = props;
 
   const targetWindow = useWindow();
@@ -37,9 +40,10 @@ export const CollapsiblePanel = (props: CollapsiblePanelProps) => {
       id={id}
       aria-hidden={!open ? "true" : undefined}
       hidden={!open}
+      ref={ref}
       {...rest}
     >
       <div className={withBaseName("inner")}>{children}</div>
     </div>
   );
-};
+});
