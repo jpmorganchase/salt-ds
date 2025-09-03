@@ -2,6 +2,7 @@ import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
+  AreaChart as AreaChartComponent,
   BarChart as BarChartComponent,
   BulletChart as BulletChartComponent,
   ColumnChart as ColumnChartComponent,
@@ -11,6 +12,7 @@ import {
   StackedBarChart as StackedBarChartComponent,
 } from "../src/examples";
 import {
+  areaOptions,
   barOptions,
   bulletOptions,
   columnOptions,
@@ -53,6 +55,14 @@ export const LineChart = {
   args: {
     patterns: false,
     options: lineOptions,
+  },
+};
+
+export const AreaChart = {
+  render: (args: ChartStoryArgs) => <AreaChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: areaOptions,
   },
 };
 
