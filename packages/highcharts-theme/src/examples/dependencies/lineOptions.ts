@@ -1,6 +1,6 @@
 import type { Options } from "highcharts";
 
-export const options: Options = {
+export const lineOptions: Options = {
   chart: {
     type: "line",
   },

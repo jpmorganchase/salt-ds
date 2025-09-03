@@ -2,8 +2,7 @@
 "@salt-ds/highcharts-theme": minor
 ---
 
-- Move default options to useChart hook pattern
-- Remove global options object
-- Add density-sensitive values
-- Clean up examples and documentation
-- Remove unnecessary theme provider
+- Moved default options to be provided by `useChart`
+- Added density-sensitive values to default options
+- Updated usage docs
+- Removed stale implementation across site and package

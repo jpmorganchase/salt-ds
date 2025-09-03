@@ -1,6 +1,6 @@
 import type { Options } from "highcharts";
 
-export const options: Options = {
+export const pieOptions: Options = {
   chart: {
     type: "pie",
   },
