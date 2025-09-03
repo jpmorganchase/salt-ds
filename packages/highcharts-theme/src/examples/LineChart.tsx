@@ -7,7 +7,7 @@ import { lineOptions } from "./dependencies";
 
 export interface LineChartProps {
   patterns?: boolean;
-  options?: Options;
+  options: Options;
 }
 
 const LineChart: FC<LineChartProps> = ({

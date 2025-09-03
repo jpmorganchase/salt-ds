@@ -16,7 +16,7 @@ accessibility(Highcharts);
 
 interface ChartStoryArgs {
   patterns?: boolean;
-  options?: Options;
+  options: Options;
 }
 
 export default {
