@@ -1,6 +1,6 @@
 import type { Options } from "highcharts";
 
-export const options: Options = {
+export const stackedBarOptions: Options = {
   chart: {
     type: "bar",
   },
@@ -9,7 +9,7 @@ export const options: Options = {
   },
   accessibility: {
     description:
-      "A stacked bar chart showing a categorical breakdown with series that stack to a total per category.",
+      "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
   },
   xAxis: {
     categories: ["North America", "EMEA", "APAC", "LATAM"],
@@ -22,6 +22,7 @@ export const options: Options = {
     title: {
       text: "Total revenue (normalized)",
     },
+    reversedStacks: false,
   },
   plotOptions: {
     series: {

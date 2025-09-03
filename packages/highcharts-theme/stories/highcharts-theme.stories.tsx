@@ -67,9 +67,7 @@ export const PieChart = {
 };
 
 export const StackedBarChart = {
-  render: (args: { patterns?: boolean }) => (
-    <StackedBarChartComponent {...args} />
-  ),
+  render: (args: ChartStoryArgs) => <StackedBarChartComponent {...args} />,
   args: {
     patterns: false,
     options: stackedBarOptions,

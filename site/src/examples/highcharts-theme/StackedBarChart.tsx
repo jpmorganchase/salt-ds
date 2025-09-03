@@ -14,7 +14,7 @@ const options: Options = {
     type: "bar",
   },
   title: {
-    text: "Regional Revenue by Product",
+    text: "Regional revenue by product",
   },
   accessibility: {
     description:

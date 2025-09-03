@@ -3,16 +3,20 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { options } from "./dependencies/stackedBarOptions";
+import { stackedBarOptions } from "./dependencies";
 
 export interface StackedBarChartProps {
   patterns?: boolean;
+  options?: Options;
 }
 
-const StackedBarChart: FC<StackedBarChartProps> = ({ patterns = false }) => {
+const StackedBarChart: FC<StackedBarChartProps> = ({
+  patterns = false,
+  options = stackedBarOptions,
+}) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const stackedBarOptions: Options = useChart(chartRef, options);
+  const chartOptions: Options = useChart(chartRef, options);
 
   return (
     <div
@@ -22,7 +26,7 @@ const StackedBarChart: FC<StackedBarChartProps> = ({ patterns = false }) => {
     >
       <HighchartsReact
         highcharts={Highcharts}
-        options={stackedBarOptions}
+        options={chartOptions}
         ref={chartRef}
       />
     </div>
