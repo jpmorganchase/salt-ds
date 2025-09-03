@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { barOptions } from "./dependencies/barOptions";
+import { barOptions } from "./dependencies";
 
 export interface BarChartProps {
   patterns?: boolean;
@@ -16,7 +16,7 @@ const BarChart: FC<BarChartProps> = ({
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions: Options = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, options);
 
   return (
     <div
