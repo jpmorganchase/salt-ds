@@ -3,16 +3,20 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { options } from "./dependencies/pieOptions";
+import { pieOptions } from "./dependencies";
 
 export interface PieChartProps {
   patterns?: boolean;
+  options?: Options;
 }
 
-const PieChart: FC<PieChartProps> = ({ patterns = false }) => {
+const PieChart: FC<PieChartProps> = ({
+  patterns = false,
+  options = pieOptions,
+}) => {
   const PieRef = useRef<HighchartsReact.RefObject>(null);
 
-  const pieChartOptions: Options = useChart(PieRef, options);
+  const chartOptions = useChart(PieRef, options);
 
   return (
     <div
@@ -22,7 +26,7 @@ const PieChart: FC<PieChartProps> = ({ patterns = false }) => {
     >
       <HighchartsReact
         highcharts={Highcharts}
-        options={pieChartOptions}
+        options={chartOptions}
         ref={PieRef}
       />
     </div>

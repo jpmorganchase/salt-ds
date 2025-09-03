@@ -9,8 +9,6 @@ import styles from "./index.module.css";
 
 accessibility(Highcharts);
 
-Highcharts.Pointer.prototype.reset = () => undefined;
-
 const options: Options = {
   chart: {
     type: "line",
