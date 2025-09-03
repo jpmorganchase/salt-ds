@@ -23,6 +23,7 @@ import {
   type ReactNode,
   type Ref,
   type SyntheticEvent,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -214,6 +215,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
+      onBlur,
       onChange,
       onNumberChange: onNumberChangeProp,
       parse: parseProp,
@@ -331,15 +333,13 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
     };
 
-    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      setIsEditing(false);
-      setIsFocused(true);
-      inputOnFocus?.(event);
+    const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      setIsFocused(false);
+      onBlur?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setIsEditing(false);
-      setIsFocused(false);
       inputOnBlur?.(event);
       const parsedValue = parse(value);
       if (!clamp || parsedValue === null) {
@@ -352,6 +352,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       clampedValue = Number.parseFloat(clampedValue.toFixed(decimalScale));
       setValue(!Number.isNaN(clampedValue) ? String(clampedValue) : value);
       onNumberChange(clampedValue, value);
+    };
+
+    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      setIsEditing(false);
+      inputOnFocus?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -373,20 +378,24 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const decrementValue = (_event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = (block ? stepMultiplier : 1) * step;
-      const parsedValue = parse(value) ?? 0;
-      if (Number.isNaN(parsedValue)) {
-        return;
+      const preDecrementedValue = value;
+      let adjustedValue = parse(preDecrementedValue) ?? 0;
+      if (adjustedValue > max) {
+        adjustedValue = max;
+      } else if (adjustedValue < min) {
+        adjustedValue = min;
+      } else {
+        adjustedValue -= decrementStep;
       }
-      const decrementedValue = Math.max(
-        min,
-        Math.min(max, parsedValue - decrementStep),
-      );
+
+      const decrementedValue = Math.max(min, Math.min(max, adjustedValue));
       const newValue = Number.parseFloat(
         decrementedValue.toFixed(decimalScale),
       );
       const newValueStr = String(newValue);
+
       setValue(newValueStr);
-      onNumberChange(newValue, newValueStr);
+      onNumberChange(newValue, preDecrementedValue);
     };
 
     let floatValue = parse(value) ?? 0;
@@ -405,21 +414,29 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const incrementValue = (_event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = (block ? stepMultiplier : 1) * step;
-      const parsedValue = parse(value) ?? 0;
-      if (Number.isNaN(parsedValue)) {
-        return;
+      const preIncrementedValue = value;
+      let adjustedValue = parse(preIncrementedValue) ?? 0;
+      if (adjustedValue > max) {
+        adjustedValue = max;
+      } else if (adjustedValue < min) {
+        adjustedValue = min;
+      } else {
+        adjustedValue += incrementStep;
       }
-      const incrementedValue = Math.max(
-        min,
-        Math.min(max, parsedValue + incrementStep),
-      );
+
+      const incrementedValue = Math.max(min, Math.min(max, adjustedValue));
       const newValue = Number.parseFloat(
         incrementedValue.toFixed(decimalScale),
       );
       const newValueStr = String(newValue);
+
       setValue(newValueStr);
-      onNumberChange(newValue, newValueStr);
+      onNumberChange(newValue, preIncrementedValue);
     };
+
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, [isFocused]);
 
     const { activate: activateIncrement } = useActivateWhileMouseDown(
       incrementValue,
@@ -480,8 +497,19 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       activateDecrement(event);
     };
 
-    const handleButtonMouseUp = () => {
-      inputRef?.current?.focus();
+    const handleContainerMouseUp = () => {
+      setIsFocused(true);
+    };
+
+    const handleButtonMouseDownWhenDisabled = (event: SyntheticEvent) => {
+      event.preventDefault();
+      setIsFocused(true);
+    };
+
+    const handleButtonDoubleClickWhenDisabled = () => {
+      if (inputRef.current) {
+        inputRef.current.select();
+      }
     };
 
     let renderedValue: string;
@@ -494,6 +522,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         Number.isNaN(floatValue) ? value : String(floatValue),
       );
     }
+
+    const cannotIncrement = disabled || floatValue + step > max;
+    const cannotDecrement = disabled || floatValue - step < min;
 
     return (
       <div
@@ -510,6 +541,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           },
           classNameProp,
         )}
+        onBlur={handleBlur}
+        onMouseUp={handleContainerMouseUp}
         {...restProps}
         ref={ref}
       >
@@ -577,7 +610,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           </div>
         )}
         {!isReadOnly && (
-          <div className={clsx(withBaseName("buttonContainer"))}>
+          <div
+            className={clsx(withBaseName("buttonContainer"))}
+            onMouseDown={handleButtonMouseDownWhenDisabled}
+            onDoubleClick={handleButtonDoubleClickWhenDisabled}
+          >
             <Button
               aria-hidden={true}
               aria-label={"increment value"}
@@ -585,8 +622,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               tabIndex={-1}
               className={withBaseName("increment")}
               onMouseDown={handleIncrementMouseDown}
-              onMouseUp={handleButtonMouseUp}
-              disabled={disabled || floatValue + step > max}
+              disabled={cannotIncrement}
+              style={cannotIncrement ? { pointerEvents: "none" } : undefined}
             >
               <IncreaseIcon aria-hidden />
             </Button>
@@ -597,8 +634,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               tabIndex={-1}
               className={withBaseName("decrement")}
               onMouseDown={handleDecrementMouseDown}
-              onMouseUp={handleButtonMouseUp}
-              disabled={disabled || floatValue - step < min}
+              disabled={cannotDecrement}
+              style={cannotDecrement ? { pointerEvents: "none" } : undefined}
             >
               <DecreaseIcon aria-hidden />
             </Button>
