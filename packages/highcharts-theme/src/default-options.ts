@@ -52,9 +52,7 @@ export const getDefaultOptions = (density: Density): Options => {
         },
       },
       bullet: {
-        targetOptions: {
-          width: "120%",
-        },
+        borderRadius: 0,
       },
     },
   };
