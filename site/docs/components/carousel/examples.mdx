@@ -10,26 +10,32 @@ data:
 
 ## Default
 
-Carousel is a pre-defined pattern of Salt components that uses the [Embla](https://www.embla-carousel.com/) API.
+<Callout>
+  Carousel is a pre-defined composition of Salt components that uses the
+  [Embla](https://www.embla-carousel.com/) API.
+</Callout>
 
-You can customize the content within carousel slides according to your needs (see the [usage](./usage) documentation for guidance).
-Alternatively, the `CarouselCard` component offers a straightforward option for creating slide elements.
+You can customize both the content and navigation, according to your needs, see the [usage](./usage) documentation for guidance.
+
+Alternatively, the `CarouselCard` component offers an option for creating slide elements.
 
 <LivePreview componentName="carousel" exampleName="Card" />
 
 ## Bordered
 
-Bordered cards add a visual distinction to each slide, enhancing the overall appearance and making it easier for users to differentiate between individual slides.
-
-`CarouselCard` can include a border by setting the `bordered` prop to `true`.
+Bordered slides enhance differentiation between individual slides. Enable `CarouselCard` borders by setting the `bordered` prop to true.
 
 <LivePreview componentName="carousel" exampleName="BorderedCard" />
 
 ## Multiple slides
 
-This carousel component can display multiple slides simultaneously.
+The carousel can showcase multiple slides simultaneously, offering flexibility in single or multiple slide increments.
 
-Allow a recommended, 4%, of space to enable the next slide in the sequence to be visible.
+<GuidanceCallout type="positive" customPillText="Best practices">
+  It is recommended to include a preview of the next slide in the sequence to
+  enhance user anticipation. Allow a recommended, 4%, of space to enable the
+  next slide in the sequence to be visible.
+</GuidanceCallout>
 
 <LivePreview componentName="carousel" exampleName="MultipleSlides" />
 
@@ -37,6 +43,25 @@ Allow a recommended, 4%, of space to enable the next slide in the sequence to be
 
 Autoplay can be added through the embla plugin [`Autoplay`](https://www.embla-carousel.com/plugins/autoplay/), but requires additional code to support accessibility.
 
-The example below provides accessibility support but if you compose your own, then refer to the [APG guidelines](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - Continue cycling through the frames with 5–7s delays - Add a progress
+  indicator - Pause the animation upon hover - Stop the slideshow upon any user
+  interaction with content and do not resume, unless the user restarts it with
+  the play button
+</GuidanceCallout>
+
+The example below demonstrates accessible autoplay for illustrative purposes.
 
 <LivePreview componentName="carousel" exampleName="Autoplay" />
+
+### Embla
+
+The Embla API enables programmatic control, such as the visible slide.
+
+<Callout>
+  Refer to the [Embla](https://www.embla-carousel.com/) documentation for the
+  full API.
+</Callout>
+
+<LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+<br />
