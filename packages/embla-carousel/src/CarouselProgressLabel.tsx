@@ -1,11 +1,8 @@
 import { makePrefixer, Text, type TextProps } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
 import { useEffect, useState } from "react";
 import { useCarouselContext } from "./CarouselContext";
-import carouselProgressLabelCss from "./CarouselProgressLabel.css";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 /**
@@ -21,13 +18,6 @@ export function CarouselProgressLabel({
   children,
   ...props
 }: CarouselProgressLabelProps) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-carousel-progress-label",
-    css: carouselProgressLabelCss,
-    window: targetWindow,
-  });
-
   const { emblaApi } = useCarouselContext();
 
   const [progress, setProgress] = useState("");

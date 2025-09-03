@@ -50,7 +50,7 @@ export const renderSlides = ({
     return (
       <CarouselCard
         key={cardId}
-        appearance="bordered"
+        appearance="transparent"
         header={<H3 id={`${cardId}-title`}>{slide.title}</H3>}
         aria-labelledby={`${cardId}-title`}
         media={

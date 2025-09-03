@@ -33,12 +33,8 @@
 }
 
 .saltCarouselTab:focus-visible {
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  outline-color: var(--salt-focused-outlineColor);
-  outline-offset: var(--salt-focused-outlineOffset);
-  background: var(--salt-selectable-background-hover);
-  border-color: var(--salt-selectable-borderColor-hover);
+  outline: var(--saltRadioButton-outline, var(--salt-focused-outline));
+  outline-offset: var(--salt-spacing-fixed-100);
 }
 
 .saltCarouselTab-selected {

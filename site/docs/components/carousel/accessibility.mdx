@@ -8,37 +8,42 @@ data:
   $ref: ./#/data
 ---
 
-## Best practices
-
-- Avoid using infographics, maps, charts as images or [images of text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
-- Order slides by importance, with the most critical info first.
-- If composing with navigation controls (previous/next buttons or tablist), ensure they are the first elements to receive focus, enabling the user to control the carousel, on initial focus.
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - Avoid using infographics, maps, or charts as images, and do not use [images
+  of
+  text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
+  - Prioritize slides by placing the most critical information first. - Tablist
+  components offer keyboard navigation, which may not be ideal for mobile
+  devices where space is limited and users prefer gesture-based navigation.
+</GuidanceCallout>
 
 ### Accessible name
 
-- If the carousel has a visible label, its accessible label is provided by `aria-labelledby` on the carousel container set to the ID of the the visible label. Otherwise, an accessible label is provided using `aria-label` set on the carousel container.
-  - Note that since the `aria-roledescription` is set to "carousel", the label does not contain the word "carousel".
-- If a slide has a visible label, its accessible label is provided by `aria-labelledby` on the slide container set to the ID of the visible label. Otherwise, an accessible label is provided by using `aria-label` set on the slide container.
-  - Note that since the `aria-roledescription` is set to "slide", the label does not contain the word "slide."
+If a slide has a visible label, its accessible label is provided by the visible label, using `aria-labelledby`.
 
-### With tablist
+- Note, that since the `aria-roledescription` is set to "slide", the label should not also contain the word "slide."
 
-If composing with a tablist:
+### Sequential content
 
-- Ensure the tablist is the first element to receive focus, enabling the user to control the carousel, on initial focus.
-- Remove the next and prev buttons from the focus order, as the tablist provides sufficient navigation controls.
-- If multiple slides are visible at one time, do not include a tablist, as a tablist should only be used with single slides.
-- Ensure each slide has `role="tabpanel"` and `aria-roledescription="slide".
-
-### Without tablist
-
-If composing without a tablist:
+If composing sequential content:
 
 - Ensure each slide within a carousel has `role="group"` and `aria-roledescription="slide"`.
 
+### Non-sequential content with tablist
+
+If composing non-sequential content:
+
+- Restrict the use of progress dots to five slides or fewer slides.
+- Ensure progress dots are not the sole navigation method for users to interact with the carousel.
+- Refrain from using progress dots on mobile devices, as space is limited and users favor gesture-based navigation.
+- Ensure each slide has `role="tabpanel"` and `aria-roledescription="slide".
+- Ensure the tablist is the first element to receive focus, enabling the user to control the carousel, on initial focus.
+- Remove the next and prev buttons from the focus order, as the tablist provides sufficient navigation controls.
+- If multiple slides are visible at one time, do not include a tablist, as a tablist should only be used with single slides.
+
 ### Autoplay
 
-If using Autoplay, then additional considerations are required
+When implementing autoplay, consider the following accessibility guidelines:
 
 - include accessible controls to start and stop the autoplay feature, allowing users to manage the animation according to their preferences.
 - consider requiring user consent to enable autoplay, especially for users who may find automatic movement disorienting.
@@ -55,8 +60,7 @@ If using Autoplay, then additional considerations are required
 If using with multiple slides per tab, this will create increased complexity for the users relying on assistive technologies.
 
 - consider whether a single slide view is sufficient for your use case, as it simplifies navigation and interaction.
-  - unset `aria-roledescription` to align with JPM accessibility recommendations.
-  - change the `aria-label` of the next and previous buttons to reflect the multiple slides. For example, "previous group of slides" rather than "previous slide" and "next group of slides" rather than "next slide" .
+- change the `aria-label` of the next and previous buttons to reflect the multiple slides. For example, "previous group of slides" rather than "previous slide" and "next group of slides" rather than "next slide" .
 
 ## Keyboard interactions
 
@@ -67,16 +71,19 @@ If using with multiple slides per tab, this will create increased complexity for
 - If focus is on the element immediately before the carousel, moves focus into the carousel, setting focus on the appropriate carousel navigation control (previous button or selected tab).
 - If focus is on the previous button, moves focus to the next button.
 - If focus is on a selected tab in the tablist, moves focus to the slide.
-- If focus is on the slide, moves focus to the next focusable element within the current slide or the next appropriate focusable element on the page outside the carousel.
+- If focus is on the slide, moves focus to the next focusable element within the current slide, the next slide, or the next focusable element on the page outside the carousel.
+- If multiple slides are visible then move focus forwards, in the order of the slides
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is on the next button, moves focus to the previous button, enabling backward navigation through controls.
-- If focus is on a selected tab in the tablist, moves focus to the previous appropriate focusable element on the page outside the carousel.
-- If focus is on a slide, moves focus to the previous slide (if available), otherwise the appropriate carousel navigation control (next button or selected tab), ensuring logical backward navigation order.
-- If focus is on the element immediately after the carousel, sets focus on the last interactive element on the visible slide (if available), otherwise focus on the visible slide, allowing for backward navigation through the carousel.
+- When there is no tablist, if focus is on the next button, moves focus to the previous button, enabling backward navigation through controls.
+- If focus is on a selected tab in the tablist, moves focus to the previous focusable element on the page, outside the carousel.
+- If focus is on a slide, move focus back to the carousel navigation controls ensuring logical backward navigation order.
+- If focus is within the visible slide, moves focus to the slide.
+- If focus is on the element immediately after the carousel, sets focus on the last interactive element on the visible slide, otherwise focus on the visible slide, allowing for backward navigation through the carousel.
+- If multiple slides are visible then move focus backwards, in the order of the slides
 
 </KeyboardControl>
 

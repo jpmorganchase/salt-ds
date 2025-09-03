@@ -18,8 +18,8 @@ export const Basic = (): ReactElement => {
         Carousel example with title
       </H2>
       <FlexLayout gap={1} wrap={true} align={"center"}>
-        <CarouselPreviousButton />
-        <CarouselNextButton />
+        <CarouselPreviousButton appearance="transparent" />
+        <CarouselNextButton appearance="transparent" />
         <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>

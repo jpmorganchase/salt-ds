@@ -42,15 +42,9 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
         }}
       >
         <FlexLayout gap={1} wrap={true} align={"center"}>
-          <CarouselPreviousButton
-            tabIndex={-1}
-            appearance={ariaVariant === "tabpanel" ? "transparent" : "bordered"}
-          />
+          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
           {ariaVariant === "tabpanel" ? <CarouselTabList /> : null}
-          <CarouselNextButton
-            tabIndex={-1}
-            appearance={ariaVariant === "tabpanel" ? "transparent" : "bordered"}
-          />
+          <CarouselNextButton tabIndex={-1} appearance="transparent" />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
@@ -137,8 +131,14 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
         }}
       >
         <FlexLayout gap={1} wrap={true} align={"center"}>
-          <CarouselPreviousButton aria-label="Previous slide group" />
-          <CarouselNextButton aria-label="Next slide group" />
+          <CarouselPreviousButton
+            aria-label="Previous slide group"
+            appearance="transparent"
+          />
+          <CarouselNextButton
+            aria-label="Next slide group"
+            appearance="transparent"
+          />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
@@ -149,7 +149,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
                 className="carouselSlide"
                 key={slideId}
                 aria-labelledby={`${slideId}-title`}
-                appearance="bordered"
+                appearance="transparent"
                 media={
                   <img
                     aria-hidden={true}
