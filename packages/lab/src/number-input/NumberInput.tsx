@@ -435,7 +435,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     useEffect(() => {
+      if (isFocused) {
         inputRef.current?.focus();
+      }
     }, [isFocused]);
 
     const { activate: activateIncrement } = useActivateWhileMouseDown(
@@ -522,9 +524,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         Number.isNaN(floatValue) ? value : String(floatValue),
       );
     }
-
-    const cannotIncrement = disabled || floatValue + step > max;
-    const cannotDecrement = disabled || floatValue - step < min;
 
     return (
       <div
@@ -622,8 +621,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               tabIndex={-1}
               className={withBaseName("increment")}
               onMouseDown={handleIncrementMouseDown}
-              disabled={cannotIncrement}
-              style={cannotIncrement ? { pointerEvents: "none" } : undefined}
+              disabled={disabled || floatValue + step > max}
             >
               <IncreaseIcon aria-hidden />
             </Button>
@@ -634,8 +632,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               tabIndex={-1}
               className={withBaseName("decrement")}
               onMouseDown={handleDecrementMouseDown}
-              disabled={cannotDecrement}
-              style={cannotDecrement ? { pointerEvents: "none" } : undefined}
+              disabled={disabled || floatValue - step < min}
             >
               <DecreaseIcon aria-hidden />
             </Button>
