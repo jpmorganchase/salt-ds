@@ -14,8 +14,7 @@ accessibility(Highcharts);
 const options: Options = {
   chart: {
     type: "bar",
-    className: "highcharts-bullet-series-tymon",
-    height: 150,
+    height: 170,
   },
   title: {
     text: "Revenue Performance vs Target",
@@ -38,17 +37,17 @@ const options: Options = {
       {
         from: 0,
         to: 50,
-        className: "segment-1",
+        className: "contrast-lowest",
       },
       {
         from: 50,
         to: 100,
-        color: "var(--salt-palette-neutral-strong-background)",
+        className: "contrast-low",
       },
       {
         from: 100,
-        to: 150,
-        color: "var(--salt-palette-accent-background)",
+        to: 120,
+        className: "contrast-medium",
       },
     ],
     gridLineWidth: 0,
@@ -63,7 +62,7 @@ const options: Options = {
     {
       name: "Current Revenue",
       type: "bullet",
-      data: [{ y: 85, target: 90 }],
+      data: [{ y: 85, target: 100 }],
     },
   ],
 };
