@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const options: Options = {
+const donutChartOptions: Options = {
   title: {
     text: "Bank revenue mix",
     align: "center",
@@ -54,10 +54,10 @@ const options: Options = {
 };
 
 export const DonutChart = () => {
-  const donutRef = useRef<HighchartsReact.RefObject>(null);
+  const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const donutChartOptions = useChart(donutRef, options);
+  const chartOptions = useChart(chartRef, donutChartOptions);
 
   return (
     <div className={styles.chartContainer}>
@@ -76,8 +76,8 @@ export const DonutChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={donutChartOptions}
-          ref={donutRef}
+          options={chartOptions}
+          ref={chartRef}
         />
       </div>
     </div>

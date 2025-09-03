@@ -7,9 +7,10 @@ import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
+// This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const options: Options = {
+const columnChartOptions: Options = {
   chart: {
     type: "column",
   },
@@ -36,7 +37,6 @@ const options: Options = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">${point.y}M</span>',
-    stickOnContact: true,
   },
   series: [
     {
@@ -51,7 +51,7 @@ export const ColumnChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const columnOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, columnChartOptions);
 
   return (
     <div className={styles.chartContainer}>
@@ -70,7 +70,7 @@ export const ColumnChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={columnOptions}
+          options={chartOptions}
           ref={chartRef}
         />
       </div>

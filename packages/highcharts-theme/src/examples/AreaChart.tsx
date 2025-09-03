@@ -3,16 +3,16 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { donutOptions } from "./dependencies";
+import { areaOptions } from "./dependencies";
 
-export interface DonutChartProps {
+export interface AreaChartProps {
   patterns?: boolean;
   options: Options;
 }
 
-const DonutChart: FC<DonutChartProps> = ({
+const AreaChart: FC<AreaChartProps> = ({
   patterns = false,
-  options = donutOptions,
+  options = areaOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
@@ -33,4 +33,4 @@ const DonutChart: FC<DonutChartProps> = ({
   );
 };
 
-export default DonutChart;
+export default AreaChart;
