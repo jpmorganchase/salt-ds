@@ -110,7 +110,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         }
         setTimeout(() => {
           slideRefs.current[focusSlideIndex]?.focus();
-        }, 100);
+        }, 0);
       }
     }, [focusSlideIndex, emblaApi, setAnnouncementState]);
 

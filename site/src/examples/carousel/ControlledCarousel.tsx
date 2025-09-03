@@ -1,7 +1,8 @@
 import {
   Button,
-  Display1,
   FlexLayout,
+  H2,
+  H3,
   StackLayout,
   Text,
   useId,
@@ -52,6 +53,9 @@ export const ControlledCarousel = (): ReactElement => {
         className={styles.carousel}
         getEmblaApi={setEmblaApi}
       >
+        <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+          Controlled carousel example
+        </H2>
         <FlexLayout gap={1} wrap={true}>
           <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
           <CarouselTabList />
@@ -74,9 +78,7 @@ export const ControlledCarousel = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <Display1 id={`${tabId}-title`}>{slide.title}</Display1>
-                }
+                header={<H3 id={`${tabId}-title`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselCard>

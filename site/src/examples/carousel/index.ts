@@ -8,4 +8,3 @@ export * from "./ControlledCarousel";
 export * from "./MultipleSlides";
 export * from "./TabListBottom";
 export * from "./TabListTop";
-export * from "./Title";
