@@ -1,18 +1,22 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
-import Highcharts from "highcharts";
+import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { options } from "./dependencies/lineOptions";
+import { lineOptions } from "./dependencies/lineOptions";
 
 export interface LineChartProps {
   patterns?: boolean;
+  options?: Options;
 }
 
-const LineChart: FC<LineChartProps> = ({ patterns = false }) => {
+const LineChart: FC<LineChartProps> = ({
+  patterns = false,
+  options = lineOptions,
+}) => {
   const LineChartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const lineDataOptions = useChart(LineChartRef, options);
+  const chartOptions = useChart(LineChartRef, options);
 
   return (
     <div
@@ -23,7 +27,7 @@ const LineChart: FC<LineChartProps> = ({ patterns = false }) => {
       <HighchartsReact
         ref={LineChartRef}
         highcharts={Highcharts}
-        options={lineDataOptions}
+        options={chartOptions}
       />
     </div>
   );

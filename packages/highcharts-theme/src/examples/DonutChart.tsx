@@ -1,18 +1,22 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
-import Highcharts from "highcharts";
+import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { options } from "./dependencies/donutOptions";
+import { donutOptions } from "./dependencies/donutOptions";
 
 export interface DonutChartProps {
   patterns?: boolean;
+  options?: Options;
 }
 
-const DonutChart: FC<DonutChartProps> = ({ patterns = false }) => {
+const DonutChart: FC<DonutChartProps> = ({
+  patterns = false,
+  options = donutOptions,
+}) => {
   const DonutRef = useRef<HighchartsReact.RefObject>(null);
 
-  const donutChartOptions = useChart(DonutRef, options);
+  const chartOptions = useChart(DonutRef, options);
 
   return (
     <div
@@ -22,7 +26,7 @@ const DonutChart: FC<DonutChartProps> = ({ patterns = false }) => {
     >
       <HighchartsReact
         highcharts={Highcharts}
-        options={donutChartOptions}
+        options={chartOptions}
         ref={DonutRef}
       />
     </div>

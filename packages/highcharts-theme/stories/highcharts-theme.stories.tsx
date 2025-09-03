@@ -1,4 +1,4 @@
-import Highcharts from "highcharts";
+import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
@@ -14,6 +14,11 @@ import {
 
 accessibility(Highcharts);
 
+interface ChartStoryArgs {
+  patterns?: boolean;
+  options?: Options;
+}
+
 export default {
   title: "Highcharts/Highcharts Theme",
   component: HighchartsReact,
@@ -28,11 +33,15 @@ export default {
       description: "Toggle fill/line patterns for better accessibility",
       defaultValue: false,
     },
+    options: {
+      control: "object",
+      description: "Highcharts options",
+    },
   },
 };
 
 export const LineChart = {
-  render: (args: { patterns?: boolean }) => <LineChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <LineChartComponent {...args} />,
   args: {
     patterns: false,
     options: lineOptions,
@@ -40,7 +49,7 @@ export const LineChart = {
 };
 
 export const DonutChart = {
-  render: (args: { patterns?: boolean }) => <DonutChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <DonutChartComponent {...args} />,
   args: {
     patterns: false,
     options: donutOptions,
@@ -48,7 +57,7 @@ export const DonutChart = {
 };
 
 export const PieChart = {
-  render: (args: { patterns?: boolean }) => <PieChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <PieChartComponent {...args} />,
   args: {
     patterns: false,
     options: pieOptions,

@@ -1,3 +1,3 @@
-export { options as donutOptions } from "./donutOptions";
-export { options as lineOptions } from "./lineOptions";
-export { options as pieOptions } from "./pieOptions";
+export { donutOptions } from "./donutOptions";
+export { lineOptions } from "./lineOptions";
+export { pieOptions } from "./pieOptions";
