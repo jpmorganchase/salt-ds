@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { pieOptions } from "./dependencies/pieOptions";
+import { pieOptions } from "./dependencies";
 
 export interface PieChartProps {
   patterns?: boolean;
