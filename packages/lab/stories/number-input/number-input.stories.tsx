@@ -4,8 +4,7 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  StackLayout,
-  useId,
+  StackLayout, useAriaAnnouncer,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
@@ -101,29 +100,11 @@ DecimalPlaces.args = {
   decimalScale: 2,
 };
 
-const accessibleTextStyles = {
-  position: "fixed",
-  top: "0",
-  left: "0",
-  transform: "translate(-100%, -100%)",
-} as React.CSSProperties;
-
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(1.25);
-  const [accessibleText, setAccessibleText] = useState("");
+  const { announce } = useAriaAnnouncer();
 
   const formFieldLabel = "Number input";
-  const accessibleTextId = useId();
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (accessibleText?.length) {
-      timeoutId = setTimeout(() => {
-        setAccessibleText("");
-      }, 3000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [accessibleText]);
 
   return (
     <FormField>
@@ -141,26 +122,16 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
           setValue(newValue ?? "");
         }}
         endAdornment={
-          <>
             <Button
-              aria-describedby={accessibleTextId}
               appearance="solid"
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(1.11);
-                setAccessibleText(`${formFieldLabel} value was reset to 1.11`);
+                announce(`${formFieldLabel} value was reset to 1.11`, 1000);
               }}
             >
               <RefreshIcon aria-hidden />
             </Button>
-            <span
-              id={accessibleTextId}
-              style={accessibleTextStyles}
-              aria-live="polite"
-            >
-              {accessibleText}
-            </span>
-          </>
         }
       />
     </FormField>
@@ -169,20 +140,9 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
 
 export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
-  const [accessibleText, setAccessibleText] = useState("");
-  const accessibleTextId = useId();
+  const { announce } = useAriaAnnouncer();
   const max = 5;
   const min = 0;
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (accessibleText?.length) {
-      timeoutId = setTimeout(() => {
-        setAccessibleText("");
-      }, 3000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [accessibleText]);
 
   const getValidationStatus = () => {
     if (typeof value === "number" && (value > max || value < min)) {
@@ -204,7 +164,7 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
           console.log(`Number changed to ${newValue}`);
           setValue(newValue ?? "");
           if (newValue !== null && (newValue > max || newValue < min)) {
-            setAccessibleText(
+            announce(
               `Invalid value, please enter a value between ${min} and ${max}`,
             );
           }
@@ -213,13 +173,6 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
         min={min}
         style={{ width: "250px" }}
       />
-      <span
-        id={accessibleTextId}
-        style={accessibleTextStyles}
-        aria-live="polite"
-      >
-        {accessibleText}
-      </span>
       <FormFieldHelperText>
         Please enter a value between {min} and {max}
       </FormFieldHelperText>
@@ -229,33 +182,22 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
 
 export const Clamping: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
-  const [accessibleText, setAccessibleText] = useState("");
+  const { announce } = useAriaAnnouncer();
   const [focused, setFocused] = useState(false);
-  const accessibleTextId = useId();
   const max = 5;
   const min = 0;
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (accessibleText?.length) {
-      timeoutId = setTimeout(() => {
-        setAccessibleText("");
-      }, 3000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [accessibleText]);
 
   const handleBlur = () => {
     const numValue = Number(value);
     setFocused(false);
     if (numValue > max) {
-      setAccessibleText(
+      announce(
         `${numValue} is greater than the maximum value, value was set to ${max}`,
-      );
+      1000);
     } else if (numValue < min) {
-      setAccessibleText(
+      announce(
         `${numValue} is less than the minimum value, value was set to ${min}`,
-      );
+      1000);
     }
   };
 
@@ -267,13 +209,13 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
     if (focused) {
       const numValue = Number(value);
       if (numValue > max) {
-        setAccessibleText(`${value} is greater than the maximum value`);
+        announce(`${value} is greater than the maximum value`, 1000);
       } else if (numValue < min) {
-        setAccessibleText(`${value} is less than the minimum value`);
+        announce(`${value} is less than the minimum value`, 1000);
       } else if (numValue === min) {
-        setAccessibleText("Minimum value reached");
+        announce("Minimum value reached", 1000);
       } else if (numValue === max) {
-        setAccessibleText("Maximum value reached");
+        announce("Maximum value reached", 1000);
       }
     }
   }, [value, focused]);
@@ -288,6 +230,8 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setValue(event.target.value);
           }}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           onNumberChange={(newValue) => {
             console.log(`Number changed to ${newValue}`);
             setValue(newValue ?? "");
@@ -296,18 +240,7 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
           max={max}
           min={min}
           style={{ width: "250px" }}
-          inputProps={{
-            onBlur: handleBlur,
-            onFocus: handleFocus,
-          }}
         />
-        <span
-          id={accessibleTextId}
-          style={accessibleTextStyles}
-          aria-live="polite"
-        >
-          {accessibleText}
-        </span>
         <FormFieldHelperText>
           Please enter a value between {min} and {max}.
         </FormFieldHelperText>
@@ -363,20 +296,9 @@ TextAlignment.args = {
 
 export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
-  const [accessibleText, setAccessibleText] = useState("");
+  const { announce } = useAriaAnnouncer();
 
   const formFieldLabel = "Number input with adornment";
-  const accessibleTextId = useId();
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (accessibleText?.length) {
-      timeoutId = setTimeout(() => {
-        setAccessibleText("");
-      }, 3000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [accessibleText]);
 
   return (
     <FormField>
@@ -392,26 +314,16 @@ export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
           setValue(newValue ?? "");
         }}
         endAdornment={
-          <>
             <Button
-              aria-describedby={accessibleTextId}
               appearance="solid"
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(10);
-                setAccessibleText(`${formFieldLabel} value was reset to 10`);
+                announce(`${formFieldLabel} value was reset to 10`);
               }}
             >
               <RefreshIcon aria-hidden />
             </Button>
-            <span
-              id={accessibleTextId}
-              style={accessibleTextStyles}
-              aria-live="polite"
-            >
-              {accessibleText}
-            </span>
-          </>
         }
       />
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
