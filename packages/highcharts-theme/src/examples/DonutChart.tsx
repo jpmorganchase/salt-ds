@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { donutOptions } from "./dependencies/donutOptions";
+import { donutOptions } from "./dependencies";
 
 export interface DonutChartProps {
   patterns?: boolean;
