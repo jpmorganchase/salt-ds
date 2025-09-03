@@ -1,6 +1,6 @@
 import type { Options } from "highcharts";
 
-export const options: Options = {
+export const bulletOptions: Options = {
   chart: {
     type: "bar",
     className: "highcharts-bullet-series-tymon",

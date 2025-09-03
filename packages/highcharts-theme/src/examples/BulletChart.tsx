@@ -4,18 +4,22 @@ import Highcharts, { type Options } from "highcharts";
 import bullet from "highcharts/modules/bullet";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { options } from "./dependencies/bulletOptions";
+import { bulletOptions } from "./dependencies";
 
 bullet(Highcharts);
 
 export interface BulletChartProps {
   patterns?: boolean;
+  options?: Options;
 }
 
-const BulletChart: FC<BulletChartProps> = ({ patterns = false }) => {
+const BulletChart: FC<BulletChartProps> = ({
+  patterns = false,
+  options = bulletOptions,
+}) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const bulletOptions: Options = useChart(chartRef, options);
+  const chartOptions: Options = useChart(chartRef, options);
 
   return (
     <div
@@ -25,7 +29,7 @@ const BulletChart: FC<BulletChartProps> = ({ patterns = false }) => {
     >
       <HighchartsReact
         highcharts={Highcharts}
-        options={bulletOptions}
+        options={chartOptions}
         ref={chartRef}
       />
     </div>

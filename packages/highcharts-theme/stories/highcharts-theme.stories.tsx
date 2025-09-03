@@ -67,7 +67,7 @@ export const PieChart = {
 };
 
 export const BulletChart = {
-  render: (args: { patterns?: boolean }) => <BulletChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <BulletChartComponent {...args} />,
   args: {
     patterns: false,
     options: bulletOptions,
