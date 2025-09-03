@@ -122,7 +122,12 @@
   font-family: var(--salt-text-label-fontFamily);
 }
 
-.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph {
+/* Hidden legend state: reduce opacity for icon, points, and labels.
+   Note: .highcharts-graph is line-chart specific and represents the series line icon. */
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph,
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point,
+.highcharts-theme-salt .highcharts-legend-item-hidden > text,
+.highcharts-theme-salt .highcharts-legend-item-hidden span {
   opacity: 0.2;
 }
 
@@ -132,6 +137,7 @@
 
 .highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point {
   stroke: none !important;
+  fill: inherit !important;
 }
 
 /* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
@@ -146,27 +152,30 @@
 }
 
 .highcharts-theme-salt .highcharts-legend-item > text,
-.highcharts-theme-salt .highcharts-legend-item span {
+.highcharts-theme-salt .highcharts-legend-item span,
+.highcharts-theme-salt text.highcharts-legend-navigation,
+.highcharts-theme-salt .highcharts-data-label text,
+.highcharts-theme-salt text.highcharts-data-label {
   fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight);
   line-height: var(--salt-text-label-lineHeight);
   font-family: var(--salt-text-label-fontFamily);
 }
+
+.highcharts-theme-salt .highcharts-legend-item-hidden > text,
+.highcharts-theme-salt .highcharts-legend-item-hidden span {
+  /* Highcharts default CSS uses !important for fill/stroke; mirror to override */
+  fill: var(--salt-content-secondary-foreground) !important;
+  stroke: var(--salt-content-secondary-foreground) !important;
+}
+
 .highcharts-theme-salt .highcharts-axis-line {
   stroke: var(--salt-separable-primary-borderColor);
 }
 
-.highcharts-theme-salt .highcharts-data-label text,
-.highcharts-theme-salt text.highcharts-data-label {
-  fill: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-label-fontWeight);
-  font-size: var(--salt-text-label-fontSize);
-  line-height: var(--salt-text-label-lineHeight);
-  font-family: var(--salt-text-label-fontFamily);
-}
-
-.highcharts-theme-salt .highcharts-tooltip-box {
+.highcharts-theme-salt .highcharts-tooltip-box,
+.highcharts-theme-salt .highcharts-background {
   fill: var(--salt-container-primary-background);
 }
 
@@ -178,10 +187,6 @@
 /* stickOnContact: true conflicts with default styles  */
 .highcharts-theme-salt .highcharts-tooltip .highcharts-tracker {
   opacity: 0;
-}
-
-.highcharts-theme-salt .highcharts-background {
-  fill: var(--salt-container-primary-background);
 }
 
 .highcharts-theme-salt path.highcharts-legend-nav-active {
@@ -197,20 +202,18 @@
   fill: transparent;
 }
 
-.highcharts-theme-salt text.highcharts-legend-navigation {
-  fill: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-label-fontWeight);
-  font-size: var(--salt-text-label-fontSize);
-  line-height: var(--salt-text-label-lineHeight);
-  font-family: var(--salt-text-label-fontFamily);
-}
-
 /* Override default stroke for line chart data series hover point circle */
-.highcharts-theme-salt .highcharts-line-series .highcharts-point {
+.highcharts-theme-salt .highcharts-line-series .highcharts-point,
+.highcharts-theme-salt .highcharts-area-series .highcharts-point {
   stroke: var(--salt-color-white);
 }
 
 /* Override default stroke for chart series segment borders */
+.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point {
+  stroke: none;
+}
+
+/* Override default stroke for chart segments borders */
 .highcharts-theme-salt .highcharts-bar-series .highcharts-point,
 .highcharts-theme-salt .highcharts-pie-series .highcharts-point,
 .highcharts-theme-salt .highcharts-column-series .highcharts-point {
@@ -234,7 +237,7 @@
 
 /* Reduces opacity of deselected segments for Donut/Pie */
 .highcharts-theme-salt .highcharts-point-inactive {
-  opacity: 0.25;
+  opacity: 0.2;
 }
 
 /* Remove fill-opacity and transition on column chart hover */

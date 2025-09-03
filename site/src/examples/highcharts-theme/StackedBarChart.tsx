@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const options: Options = {
+const stackedBarChartOptions: Options = {
   chart: {
     type: "bar",
   },
@@ -67,7 +67,7 @@ export const StackedBarChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const stackedBarOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, stackedBarChartOptions);
 
   return (
     <div className={styles.chartContainer}>
@@ -86,7 +86,7 @@ export const StackedBarChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={stackedBarOptions}
+          options={chartOptions}
           ref={chartRef}
         />
       </div>

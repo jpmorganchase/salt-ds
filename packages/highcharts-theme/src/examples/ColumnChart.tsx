@@ -16,7 +16,7 @@ const ColumnChart: FC<ColumnChartProps> = ({
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions: Options = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, options);
 
   return (
     <div

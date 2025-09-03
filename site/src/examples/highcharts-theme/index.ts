@@ -1,3 +1,4 @@
+export * from "./AreaChart";
 export * from "./BarChart";
 export * from "./BulletChart";
 export * from "./ColumnChart";

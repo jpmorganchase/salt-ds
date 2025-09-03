@@ -49,6 +49,9 @@ export const getDefaultOptions = (
           enabled: false,
         },
       },
+      area: {
+        legendSymbol: "rectangle",
+      },
       pie: {
         borderRadius: 0,
         dataLabels: {
