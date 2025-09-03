@@ -487,31 +487,34 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       inputOnKeyDown?.(event);
     };
 
-    const handleIncrementMouseDown = (event: SyntheticEvent) => {
+    const handleIncrementMouseDown = (
+      event: SyntheticEvent,
+      disableIncrement: boolean,
+    ) => {
       event.preventDefault();
-      setIsEditing(false);
-      activateIncrement(event);
+      if (!disableIncrement) {
+        setIsEditing(false);
+        activateIncrement(event);
+      } else if (inputRef.current) {
+        inputRef.current.select();
+      }
     };
 
-    const handleDecrementMouseDown = (event: SyntheticEvent) => {
+    const handleDecrementMouseDown = (
+      event: SyntheticEvent,
+      disableDecrement: boolean,
+    ) => {
       event.preventDefault();
-      setIsEditing(false);
-      activateDecrement(event);
+      if (!disableDecrement) {
+        setIsEditing(false);
+        activateDecrement(event);
+      } else if (inputRef.current) {
+        inputRef.current.select();
+      }
     };
 
     const handleContainerMouseUp = () => {
       setIsFocused(true);
-    };
-
-    const handleButtonMouseDownWhenDisabled = (event: SyntheticEvent) => {
-      event.preventDefault();
-      setIsFocused(true);
-    };
-
-    const handleButtonDoubleClickWhenDisabled = () => {
-      if (inputRef.current) {
-        inputRef.current.select();
-      }
     };
 
     let renderedValue: string;
@@ -525,6 +528,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       );
     }
 
+    const disableDecrement = disabled || floatValue - step < min;
+    const disableIncrement = disabled || floatValue + step > max;
     return (
       <div
         className={clsx(
@@ -609,19 +614,18 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           </div>
         )}
         {!isReadOnly && (
-          <div
-            className={clsx(withBaseName("buttonContainer"))}
-            onMouseDown={handleButtonMouseDownWhenDisabled}
-            onDoubleClick={handleButtonDoubleClickWhenDisabled}
-          >
+          <div className={clsx(withBaseName("buttonContainer"))}>
             <Button
               aria-hidden={true}
               aria-label={"increment value"}
               appearance="transparent"
               tabIndex={-1}
-              className={withBaseName("increment")}
-              onMouseDown={handleIncrementMouseDown}
-              disabled={disabled || floatValue + step > max}
+              className={clsx(withBaseName("increment"), {
+                [withBaseName("increment-disabled")]: disableIncrement,
+              })}
+              onMouseDown={(event) =>
+                handleIncrementMouseDown(event, disableIncrement)
+              }
             >
               <IncreaseIcon aria-hidden />
             </Button>
@@ -630,9 +634,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               aria-label={"decrement value"}
               appearance="transparent"
               tabIndex={-1}
-              className={withBaseName("decrement")}
-              onMouseDown={handleDecrementMouseDown}
-              disabled={disabled || floatValue - step < min}
+              className={clsx(withBaseName("decrement"), {
+                [withBaseName("decrement-disabled")]: disableDecrement,
+              })}
+              onMouseDown={(event) =>
+                handleDecrementMouseDown(event, disableDecrement)
+              }
             >
               <DecreaseIcon aria-hidden />
             </Button>
