@@ -1,4 +1,4 @@
-import { Display1, FlexLayout, useId } from "@salt-ds/core";
+import { Display1, FlexLayout, H2, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselNextButton,
@@ -14,6 +14,9 @@ export const Basic = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel aria-label="default carousel example" className={styles.carousel}>
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Carousel example with title
+      </H2>
       <FlexLayout gap={1} wrap={true} align={"center"}>
         <CarouselPreviousButton />
         <CarouselNextButton />
