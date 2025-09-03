@@ -4,7 +4,8 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  StackLayout, useAriaAnnouncer,
+  StackLayout,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
@@ -122,16 +123,16 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
           setValue(newValue ?? "");
         }}
         endAdornment={
-            <Button
-              appearance="solid"
-              aria-label={`Reset ${formFieldLabel}`}
-              onClick={() => {
-                setValue(1.11);
-                announce(`${formFieldLabel} value was reset to 1.11`, 1000);
-              }}
-            >
-              <RefreshIcon aria-hidden />
-            </Button>
+          <Button
+            appearance="solid"
+            aria-label={`Reset ${formFieldLabel}`}
+            onClick={() => {
+              setValue(1.11);
+              announce(`${formFieldLabel} value was reset to 1.11`, 1000);
+            }}
+          >
+            <RefreshIcon aria-hidden />
+          </Button>
         }
       />
     </FormField>
@@ -193,11 +194,13 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
     if (numValue > max) {
       announce(
         `${numValue} is greater than the maximum value, value was set to ${max}`,
-      1000);
+        1000,
+      );
     } else if (numValue < min) {
       announce(
         `${numValue} is less than the minimum value, value was set to ${min}`,
-      1000);
+        1000,
+      );
     }
   };
 
@@ -314,16 +317,16 @@ export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
           setValue(newValue ?? "");
         }}
         endAdornment={
-            <Button
-              appearance="solid"
-              aria-label={`Reset ${formFieldLabel}`}
-              onClick={() => {
-                setValue(10);
-                announce(`${formFieldLabel} value was reset to 10`);
-              }}
-            >
-              <RefreshIcon aria-hidden />
-            </Button>
+          <Button
+            appearance="solid"
+            aria-label={`Reset ${formFieldLabel}`}
+            onClick={() => {
+              setValue(10);
+              announce(`${formFieldLabel} value was reset to 10`);
+            }}
+          >
+            <RefreshIcon aria-hidden />
+          </Button>
         }
       />
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
