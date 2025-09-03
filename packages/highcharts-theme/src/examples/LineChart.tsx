@@ -1,6 +1,6 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
-import Highcharts, { type Options } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { options } from "./dependencies/lineOptions";
@@ -12,7 +12,7 @@ export interface LineChartProps {
 const LineChart: FC<LineChartProps> = ({ patterns = false }) => {
   const LineChartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const lineDataOptions: Options = useChart(LineChartRef, options);
+  const lineDataOptions = useChart(LineChartRef, options);
 
   return (
     <div

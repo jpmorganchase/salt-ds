@@ -1,6 +1,6 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
-import Highcharts, { type Options } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { options } from "./dependencies/pieOptions";
@@ -12,7 +12,7 @@ export interface PieChartProps {
 const PieChart: FC<PieChartProps> = ({ patterns = false }) => {
   const PieRef = useRef<HighchartsReact.RefObject>(null);
 
-  const pieChartOptions: Options = useChart(PieRef, options);
+  const pieChartOptions = useChart(PieRef, options);
 
   return (
     <div
