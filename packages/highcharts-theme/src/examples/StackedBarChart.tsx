@@ -7,7 +7,7 @@ import { stackedBarOptions } from "./dependencies";
 
 export interface StackedBarChartProps {
   patterns?: boolean;
-  options?: Options;
+  options: Options;
 }
 
 const StackedBarChart: FC<StackedBarChartProps> = ({
