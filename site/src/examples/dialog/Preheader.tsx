@@ -4,14 +4,17 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexLayout,
   FormField,
   FormFieldLabel,
   Input,
   StackLayout,
+  type StackLayoutProps,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 export const Preheader = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -29,6 +32,15 @@ export const Preheader = (): ReactElement => {
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
   const closeButton = (
     <Button
       aria-label="Close dialog"
@@ -36,6 +48,18 @@ export const Preheader = (): ReactElement => {
       onClick={handleClose}
     >
       <CloseIcon aria-hidden />
+    </Button>
+  );
+
+  const cancel = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+
+  const subscribe = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Subscribe
     </Button>
   );
 
@@ -55,21 +79,17 @@ export const Preheader = (): ReactElement => {
           </FormField>
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            gap={1}
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button appearance="bordered" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Subscribe
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {subscribe}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {subscribe}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>

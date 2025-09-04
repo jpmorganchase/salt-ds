@@ -6,11 +6,15 @@ import {
   type DialogContentProps,
   DialogHeader,
   type DialogProps,
+  FlexLayout,
   StackLayout,
+  type StackLayoutProps,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ComponentProps,
+  type ElementType,
   type MouseEventHandler,
   type PropsWithChildren,
   type ReactNode,
@@ -81,6 +85,27 @@ const DialogTemplate: StoryFn<
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button appearance="transparent" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+  const previous = <Button onClick={handleClose}>Previous</Button>;
+  const next = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Next
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -104,22 +129,19 @@ const DialogTemplate: StoryFn<
           <UnmountLogger />
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            gap={1}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button appearance="transparent" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={handleClose}>Previous</Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Next
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {next}
+              {previous}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {previous}
+              {next}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
@@ -219,6 +241,23 @@ const AlertDialogTemplate: StoryFn<
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const ok = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Ok
+    </Button>
+  );
+
+  const cancel = <Button onClick={handleClose}>Cancel</Button>;
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -231,25 +270,21 @@ const AlertDialogTemplate: StoryFn<
         status={status}
         open={open}
         onOpenChange={onOpenChange}
-        // focus the ok instead of the cancel button
-        initialFocus={1}
       >
         <DialogHeader header={header} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
-          <StackLayout
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            gap={1}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Ok
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {ok}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {ok}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
@@ -297,6 +332,22 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = <Button onClick={handleClose}>Cancel</Button>;
+  const deleteAction = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Delete
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -308,7 +359,6 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         role="alertdialog"
         open={open}
         onOpenChange={onOpenChange}
-        initialFocus={1}
         disableDismiss
       >
         <DialogHeader header="Delete Transaction" />
@@ -316,19 +366,17 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
           Are you sure you want to permanently delete this transaction
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            gap={1}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Delete
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {deleteAction}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {deleteAction}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
@@ -394,6 +442,27 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button appearance="transparent" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+  const previous = <Button onClick={handleClose}>Previous</Button>;
+  const next = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Next
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -411,6 +480,74 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
           scrambled it to make a type specimen book.
         </DialogContent>
         <DialogActions>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {next}
+              {previous}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {previous}
+              {next}
+            </FlexLayout>
+          )}
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const KeyboardInitialActionFocus: StoryFn<
+  DialogProps & { header: string; content: ReactNode }
+> = ({
+  open: openProp = false,
+  status,
+  header,
+  size = "small",
+  content,
+  ...args
+}) => {
+  const [open, setOpen] = useState(openProp);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const ok = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Ok
+    </Button>
+  );
+  const cancel = <Button onClick={handleClose}>Cancel</Button>;
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <Dialog
+        size={size}
+        {...args}
+        role="alertdialog"
+        status={status}
+        open={open}
+        onOpenChange={onOpenChange}
+        // Set initial keyboard focus to the "Ok" button
+        initialFocus={1}
+      >
+        <DialogHeader header={header} />
+        <DialogContent>{content}</DialogContent>
+        <DialogActions>
           <StackLayout
             direction={{
               xs: "column-reverse",
@@ -419,13 +556,8 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
             gap={1}
             style={{ width: "100%", justifyContent: "flex-end" }}
           >
-            <Button appearance="transparent" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={handleClose}>Previous</Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Next
-            </Button>
+            {cancel}
+            {ok}
           </StackLayout>
         </DialogActions>
       </Dialog>
