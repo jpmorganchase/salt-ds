@@ -28,7 +28,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
       - name: Get branch for Chromatic
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         id: run_metadata
         with:
           script: |
@@ -91,7 +91,7 @@ jobs:
           LOG_LEVEL: "debug"
       - name: Remove Chromatic label
         if: ${{ steps.run_metadata.outputs.branchName != 'main' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {
