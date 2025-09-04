@@ -48,6 +48,9 @@ export const ControlledCarousel = (): ReactElement => {
 
   return (
     <StackLayout>
+      <FlexLayout justify="center" align="center" direction="row">
+        <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
+      </FlexLayout>
       <Carousel
         aria-label="Controlled carousel example"
         className={styles.carousel}
@@ -56,12 +59,6 @@ export const ControlledCarousel = (): ReactElement => {
         <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
           Controlled carousel example
         </H2>
-        <FlexLayout gap={1} wrap={true}>
-          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
-          <CarouselTabList />
-          <CarouselNextButton tabIndex={-1} appearance="transparent" />
-          <CarouselProgressLabel />
-        </FlexLayout>
         <CarouselSlides>
           {sliderData.map((slide, index) => {
             const tabId = `${carouselId}-tab${index}`;
@@ -85,10 +82,13 @@ export const ControlledCarousel = (): ReactElement => {
             );
           })}
         </CarouselSlides>
+        <FlexLayout gap={1} wrap={true}>
+          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+          <CarouselTabList />
+          <CarouselNextButton tabIndex={-1} appearance="transparent" />
+          <CarouselProgressLabel />
+        </FlexLayout>
       </Carousel>
-      <FlexLayout justify="center" align="center" direction="row">
-        <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
-      </FlexLayout>
     </StackLayout>
   );
 };
