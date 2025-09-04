@@ -32,10 +32,6 @@
   border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-status-success-borderColor);
 }
 
-.saltFileDropZone .input-hidden {
-  display: none;
-}
-
 /* Styles applied if `disabled={true}` */
 .saltFileDropZone-disabled {
   background: var(--salt-container-primary-background-disabled);
