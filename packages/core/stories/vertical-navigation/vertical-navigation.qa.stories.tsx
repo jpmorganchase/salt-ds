@@ -10,14 +10,14 @@ import {
   VerticalNavigationItemTrigger,
   type VerticalNavigationProps,
   VerticalNavigationSubMenu,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 import "./vertical-navigation.stories.css";
 import { SaltShakerIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Vertical Navigation/Vertical Navigation QA",
+  title: "Core/Vertical Navigation/Vertical Navigation QA",
   component: VerticalNavigation,
 };
 

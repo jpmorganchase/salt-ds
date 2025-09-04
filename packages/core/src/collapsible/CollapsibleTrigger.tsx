@@ -1,4 +1,3 @@
-import { makePrefixer, mergeProps } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -9,6 +8,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { makePrefixer, mergeProps } from "../utils";
 import { useCollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleTriggerProps

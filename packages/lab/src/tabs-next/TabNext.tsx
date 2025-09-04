@@ -34,7 +34,6 @@ export interface TabNextProps extends ComponentPropsWithoutRef<"div"> {
 export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
   function Tab(props, ref): ReactElement<TabNextProps> {
     const {
-      "aria-labelledby": ariaLabelledBy,
       children,
       className,
       disabled: disabledProp,

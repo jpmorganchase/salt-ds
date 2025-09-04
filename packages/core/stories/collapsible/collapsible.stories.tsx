@@ -4,6 +4,9 @@ import {
   Card,
   Checkbox,
   CheckboxGroup,
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
   FlowLayout,
   Link,
   SplitLayout,
@@ -20,17 +23,12 @@ import {
   MessageIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import {
-  Collapsible,
-  CollapsiblePanel,
-  CollapsibleTrigger,
-} from "@salt-ds/lab";
 import persona from "@stories/assets/avatar.png";
 import type { StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
-  title: "Lab/Collapsible",
+  title: "Core/Collapsible",
   component: Collapsible,
 };
 

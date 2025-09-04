@@ -1,7 +1,8 @@
-import { makePrefixer, useIcon } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { useCollapsibleContext } from "../collapsible/CollapsibleContext";
+import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer } from "../utils";
 
 const withBaseName = makePrefixer("saltVerticalNavigationItemExpansionIcon");
 
