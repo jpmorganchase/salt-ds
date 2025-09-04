@@ -73,7 +73,7 @@ export const FileDropZoneTrigger = forwardRef<
       </Button>
       <input
         accept={accept}
-        className="input-hidden"
+        style={{ display: "none" }}
         disabled={disabled}
         multiple={multiple}
         onChange={handleChange}

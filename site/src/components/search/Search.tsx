@@ -86,7 +86,12 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
         ...searchConfig,
         minMatchCharLength: 3,
         threshold: 0,
-        keys: [{ name: "title", weight: 5 }, "content", "route"],
+        keys: [
+          { name: "title", weight: 5 },
+          { name: "keywords", weight: 4 },
+          "content",
+          "route",
+        ],
       }).then((newData) => setData(newData));
     }
   }, [searchIndex, query, searchConfig]);
@@ -135,7 +140,7 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
           value && (
             <Button
               aria-label="Clear search"
-              variant="secondary"
+              appearance="transparent"
               onClick={() => setValue("")}
             >
               <CloseIcon aria-hidden />

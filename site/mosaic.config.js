@@ -27,7 +27,11 @@ const saltConfig = {
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",
       previewDisabled: true,
-      options: { maxLineLength: 240, maxLineCount: 240 },
+      options: {
+        maxLineLength: 240,
+        maxLineCount: 240,
+        keys: ["keywords", "content"],
+      },
       priority: Number.NEGATIVE_INFINITY,
     },
     {
