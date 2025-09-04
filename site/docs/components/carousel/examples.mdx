@@ -21,6 +21,13 @@ Alternatively, the `CarouselCard` component offers an option for creating slide 
 
 <LivePreview componentName="carousel" exampleName="Card" />
 
+<GuidanceCallout type="positive" customPillText="Best practices">
+Consider how the Carousel integrates within the page structure.
+
+You can use a heading element like `H1` or `H2` as the Carousel’s title and associate it with the Carousel using the `aria-labelledby` attribute.
+
+</GuidanceCallout>
+
 ## Bordered
 
 Bordered slides enhance differentiation between individual slides. Enable `CarouselCard` borders by setting the `bordered` prop to true.
@@ -44,10 +51,12 @@ The carousel can showcase multiple slides simultaneously, offering flexibility i
 Autoplay can be added through the embla plugin [`Autoplay`](https://www.embla-carousel.com/plugins/autoplay/), but requires additional code to support accessibility.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Continue cycling through the frames with 5–7s delays - Add a progress
-  indicator - Pause the animation upon hover - Stop the slideshow upon any user
-  interaction with content and do not resume, unless the user restarts it with
-  the play button
+  
+- Continue cycling through the frames with 5–7s delays. 
+- Add a progress indicator. 
+- Pause the animation upon hover. 
+- Stop the slideshow upon any user interaction with content and do not resume, unless the user restarts it with the play button.
+
 </GuidanceCallout>
 
 The example below demonstrates accessible autoplay for illustrative purposes.
