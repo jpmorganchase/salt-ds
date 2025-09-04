@@ -16,4 +16,3 @@ Visual updates for `Calendar` rendering
 Visual updates for `DatePicker` rendering
 
 - use bordered buttons for cancel action in `DatePickerActions`.
--

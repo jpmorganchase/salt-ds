@@ -371,56 +371,6 @@ export const CalendarNavigation = forwardRef<
       [dateAdapter, formatYearProp],
     );
 
-    const MonthDropdown = useMemo(
-      () => (
-        <Dropdown
-          aria-label="Month Dropdown"
-          selected={selectedMonth ? [selectedMonth] : []}
-          value={formatMonth(selectedMonth)}
-          onSelectionChange={handleMonthSelect}
-          {...MonthDropdownProps}
-        >
-          {months.map((month) => {
-            const outsideAllowedMonths = isOutsideAllowedMonths(month);
-            return (
-              <OptionWithTooltip
-                key={formatMonth(month)}
-                value={month}
-                disabled={outsideAllowedMonths}
-                tooltipContent={"This month is out of range"}
-              >
-                {formatMonth(month)}
-              </OptionWithTooltip>
-            );
-          })}
-        </Dropdown>
-      ),
-      [months],
-    );
-
-    const YearDropdown = useMemo(
-      () => (
-        <Dropdown
-          aria-label="Year Dropdown"
-          selected={selectedYear ? [selectedYear] : []}
-          value={formatYear(selectedYear)}
-          onSelectionChange={handleYearSelect}
-          {...YearDropdownProps}
-          className={clsx(
-            withBaseName("yearDropdown"),
-            YearDropdownProps?.className,
-          )}
-        >
-          {years.map((year) => (
-            <Option key={formatYear(year)} value={year}>
-              {formatYear(year)}
-            </Option>
-          ))}
-        </Dropdown>
-      ),
-      [years],
-    );
-
     return (
       <div
         className={clsx(
@@ -452,8 +402,46 @@ export const CalendarNavigation = forwardRef<
         <div
           className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}
         >
-          {MonthDropdown}
-          {!hideYearDropdown && YearDropdown}
+          <Dropdown
+            aria-label="Month Dropdown"
+            selected={selectedMonth ? [selectedMonth] : []}
+            value={formatMonth(selectedMonth)}
+            onSelectionChange={handleMonthSelect}
+            {...MonthDropdownProps}
+          >
+            {months.map((month) => {
+              const outsideAllowedMonths = isOutsideAllowedMonths(month);
+              return (
+                <OptionWithTooltip
+                  key={formatMonth(month)}
+                  value={month}
+                  disabled={outsideAllowedMonths}
+                  tooltipContent={"This month is out of range"}
+                >
+                  {formatMonth(month)}
+                </OptionWithTooltip>
+              );
+            })}
+          </Dropdown>
+          {!hideYearDropdown ? (
+            <Dropdown
+              aria-label="Year Dropdown"
+              selected={selectedYear ? [selectedYear] : []}
+              value={formatYear(selectedYear)}
+              onSelectionChange={handleYearSelect}
+              {...YearDropdownProps}
+              className={clsx(
+                withBaseName("yearDropdown"),
+                YearDropdownProps?.className,
+              )}
+            >
+              {years.map((year) => (
+                <Option key={formatYear(year)} value={year}>
+                  {formatYear(year)}
+                </Option>
+              ))}
+            </Dropdown>
+          ) : null}
         </div>
         <ConditionalTooltip
           placement="top"
