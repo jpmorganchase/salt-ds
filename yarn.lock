@@ -3174,6 +3174,7 @@ __metadata:
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
     clsx: "npm:^2.0.0"
+    use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
     react: ">=16.14.0"
@@ -16600,7 +16601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0, use-sync-external-store@npm:^1.4.0":
+"use-sync-external-store@npm:^1.2.0, use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.5.0":
   version: 1.5.0
   resolution: "use-sync-external-store@npm:1.5.0"
   peerDependencies:
