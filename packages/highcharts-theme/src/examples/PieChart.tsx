@@ -7,7 +7,7 @@ import { pieOptions } from "./dependencies";
 
 export interface PieChartProps {
   patterns?: boolean;
-  options?: Options;
+  options: Options;
 }
 
 const PieChart: FC<PieChartProps> = ({

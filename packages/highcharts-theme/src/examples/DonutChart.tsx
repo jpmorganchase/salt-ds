@@ -7,7 +7,7 @@ import { donutOptions } from "./dependencies";
 
 export interface DonutChartProps {
   patterns?: boolean;
-  options?: Options;
+  options: Options;
 }
 
 const DonutChart: FC<DonutChartProps> = ({
