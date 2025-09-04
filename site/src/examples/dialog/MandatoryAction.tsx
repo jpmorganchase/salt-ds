@@ -4,10 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexLayout,
   StackLayout,
+  type StackLayoutProps,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -25,6 +28,27 @@ export const MandatoryAction = (): ReactElement => {
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+
+  const deleteAction = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Delete
+    </Button>
+  );
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Mandatory Action Dialog</Button>
@@ -41,21 +65,17 @@ export const MandatoryAction = (): ReactElement => {
           Are you sure you want to permenantly delete transaction?
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            gap={1}
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button appearance="bordered" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Delete
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {deleteAction}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {deleteAction}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>

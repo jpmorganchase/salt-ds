@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexLayout,
   H2,
   NavigationItem,
   ParentChildLayout,
@@ -33,6 +34,27 @@ const SmallDialog = (): ReactElement => {
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+
+  const accept = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Accept
+    </Button>
+  );
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Small Dialog</Button>
@@ -49,18 +71,17 @@ const SmallDialog = (): ReactElement => {
           will not be saved
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            gap={1}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-            direction={{ xs: "column-reverse", sm: "row" }}
-          >
-            <Button appearance="bordered" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Accept
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {accept}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {accept}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
@@ -107,6 +128,15 @@ const MediumDialog = (): ReactElement => {
 
   const [active, setActive] = useState(items[0]);
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
   const parent = (
     <nav
       style={{
@@ -150,6 +180,18 @@ const MediumDialog = (): ReactElement => {
     </StackLayout>
   );
 
+  const cancel = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+
+  const save = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Save
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -168,21 +210,17 @@ const MediumDialog = (): ReactElement => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            gap={1}
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button appearance="bordered" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Save
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {save}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {save}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
@@ -212,6 +250,18 @@ const LargeDialog = (): ReactElement => {
       },
       "row",
     );
+
+  const next = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Next
+    </Button>
+  );
+
+  const cancel = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
 
   return (
     <>
@@ -255,26 +305,14 @@ const LargeDialog = (): ReactElement => {
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
-              <Button sentiment="accented" onClick={handleClose}>
-                Next
-              </Button>
-              <Button appearance="bordered" onClick={handleClose}>
-                Cancel
-              </Button>
+              {next}
+              {cancel}
             </StackLayout>
           ) : (
             <SplitLayout
               style={{ width: "100%" }}
-              startItem={
-                <Button appearance="bordered" onClick={handleClose}>
-                  Cancel
-                </Button>
-              }
-              endItem={
-                <Button sentiment="accented" onClick={handleClose}>
-                  Next
-                </Button>
-              }
+              startItem={cancel}
+              endItem={next}
             />
           )}
         </DialogActions>

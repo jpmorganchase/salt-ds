@@ -4,10 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexLayout,
   StackLayout,
+  type StackLayoutProps,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 export const Info = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -25,6 +28,27 @@ export const Info = (): ReactElement => {
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const close = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Close
+    </Button>
+  );
+
+  const seeUpdates = (
+    <Button sentiment="accented" onClick={handleClose}>
+      See updates
+    </Button>
+  );
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open info dialog</Button>
@@ -40,21 +64,17 @@ export const Info = (): ReactElement => {
           A new version of this file is available with 26 updates.
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            gap={1}
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button appearance="bordered" onClick={handleClose}>
-              Close
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              See updates
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {seeUpdates}
+              {close}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {close}
+              {seeUpdates}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>

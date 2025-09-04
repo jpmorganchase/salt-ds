@@ -4,10 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexLayout,
   StackLayout,
+  type StackLayoutProps,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 export const Success = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -25,6 +28,27 @@ export const Success = (): ReactElement => {
     setOpen(false);
   };
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const close = (
+    <Button appearance="bordered" onClick={handleClose}>
+      Close
+    </Button>
+  );
+
+  const file = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Go to file
+    </Button>
+  );
+
   return (
     <>
       <Button onClick={handleRequestOpen}>Open success dialog</Button>
@@ -40,21 +64,17 @@ export const Success = (): ReactElement => {
           File has been successfully uploaded to the shared drive.
         </DialogContent>
         <DialogActions>
-          <StackLayout
-            gap={1}
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-            }}
-            style={{ width: "100%", justifyContent: "flex-end" }}
-          >
-            <Button appearance="bordered" onClick={handleClose}>
-              Close
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Go to file
-            </Button>
-          </StackLayout>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {file}
+              {close}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {close}
+              {file}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
