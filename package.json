@@ -94,6 +94,7 @@
     "vite-plugin-istanbul": "^6.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^3.0.0",
+    "xlsx": "0.18.5",
     "yup": "^1.0.2"
   },
   "resolutions": {
