@@ -102,17 +102,20 @@ export interface NumberInputProps
    */
   min?: number;
   /**
-   * Callback function that is triggered when the value changes via user input.
+   * Callback function that is triggered when the value changes via user input or increment/decrement.
+   * Use `onNumberChange` if you want stable number, after blur or through increment/decrement
    *
-   * @param event - The event that triggers the value change, providing access to the raw input value.
+   * @param event - The event that triggers the value change, can be null if called by long-press of increment/decrement
+   * @param value - value as string
    */
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: SyntheticEvent | null, value: string) => void;
   /**
    * Callback function that is triggered when the value changes via increment/decrement or on blur.
    *
-   * @param value - The parsed number value or null if an empty value
+   * @param event - The event that triggers the change, can be null if called by long-press of increment/decrement
+   * @param value - The committed, parsed number value or null if an empty value
    */
-  onNumberChange?: (value: number | null) => void;
+  onNumberChange?: (event: SyntheticEvent | null, value: number | null) => void;
   /**
    *
    * A callback to parse the value of the `NumberInput`. To be used alongside the `format` callback.
@@ -162,7 +165,7 @@ export interface NumberInputProps
   /**
    * Value of the `NumberInput`, to be used when in a controlled state.
    */
-  value?: number | string;
+  value?: string;
 }
 
 export const isOutOfRange = (
@@ -283,10 +286,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       name: "NumberInput",
       state: "value",
     });
-    const lastNumberChange = useRef<{
-      value: number | null;
-      inputValue: string;
-    }>({ value: Number.parseFloat(value), inputValue: value });
+    const lastCommitValue = useRef<string>(value);
 
     const decimalScale =
       decimalScaleProp ||
@@ -322,15 +322,21 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const format = formatProp ?? defaultFormat;
     const parse = parseProp ?? defaultParse;
 
-    const onNumberChange = (newValue: number | null, inputValue: string) => {
-      // Note: clamp on blur can mean we call onNumberChange upon blur
-      if (
-        lastNumberChange.current.value !== newValue ||
-        lastNumberChange.current.inputValue !== inputValue
-      ) {
-        onNumberChangeProp?.(newValue);
-        lastNumberChange.current = { value: newValue, inputValue };
+    // Committed values are complete numbers, created through blur or increment/decrement, not partial entries such as "0." created by input/onChange.
+    const commit = (
+      event: SyntheticEvent | null,
+      newNumber: number | null,
+      newInputValue: string,
+    ) => {
+      const commitValue =
+        newNumber !== null && !Number.isNaN(newNumber)
+          ? newNumber.toFixed(decimalScale)
+          : newInputValue;
+      if (lastCommitValue.current !== commitValue) {
+        onChange?.(event, commitValue);
+        onNumberChangeProp?.(event, newNumber);
       }
+      lastCommitValue.current = commitValue;
     };
 
     const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
@@ -343,7 +349,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       inputOnBlur?.(event);
       const parsedValue = parse(value);
       if (!clamp || parsedValue === null) {
-        onNumberChange(parsedValue, value);
+        commit(event, parsedValue, value);
         return;
       }
       let clampedValue = Number.isNaN(parsedValue)
@@ -351,7 +357,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         : Math.max(min, Math.min(max, parsedValue));
       clampedValue = Number.parseFloat(clampedValue.toFixed(decimalScale));
       setValue(!Number.isNaN(clampedValue) ? String(clampedValue) : value);
-      onNumberChange(clampedValue, value);
+      commit(event, clampedValue, value);
     };
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -361,22 +367,23 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.currentTarget.value;
+
       if (!inputValue.length) {
         setValue("");
-        onChange?.(event);
+        onChange?.(event, "");
         return;
       }
       const allowedInput = isAllowed ? isAllowed(inputValue) : true;
       if (allowedInput) {
         setIsEditing(true);
-        onChange?.(event);
+        onChange?.(event, event.target.value);
         setValue(inputValue);
       } else {
         event.preventDefault();
       }
     };
 
-    const decrementValue = (_event?: SyntheticEvent, block?: boolean) => {
+    const decrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = (block ? stepMultiplier : 1) * step;
       const preDecrementedValue = value;
       let adjustedValue = parse(preDecrementedValue) ?? 0;
@@ -395,7 +402,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const newValueStr = String(newValue);
 
       setValue(newValueStr);
-      onNumberChange(newValue, preDecrementedValue);
+      commit(event ?? null, newValue, newValueStr);
     };
 
     let floatValue = parse(value) ?? 0;
@@ -412,7 +419,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       floatValue <= min,
     );
 
-    const incrementValue = (_event?: SyntheticEvent, block?: boolean) => {
+    const incrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = (block ? stepMultiplier : 1) * step;
       const preIncrementedValue = value;
       let adjustedValue = parse(preIncrementedValue) ?? 0;
@@ -431,7 +438,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const newValueStr = String(newValue);
 
       setValue(newValueStr);
-      onNumberChange(newValue, preIncrementedValue);
+      commit(event ?? null, newValue, preIncrementedValue);
     };
 
     useEffect(() => {
@@ -463,14 +470,14 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           event.preventDefault();
           const newValue = String(min);
           setValue(newValue);
-          onNumberChange(min, newValue);
+          commit(event, min, newValue);
           break;
         }
         case "End": {
           event.preventDefault();
           const newValue = String(max);
           setValue(newValue);
-          onNumberChange(max, newValue);
+          commit(event, max, newValue);
           break;
         }
         case "PageUp": {

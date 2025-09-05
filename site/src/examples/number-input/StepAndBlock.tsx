@@ -8,7 +8,7 @@ export const StepAndBlock = () => (
       defaultValue={10}
       step={5}
       stepMultiplier={10}
-      onNumberChange={(newValue) => {
+      onNumberChange={(_event, newValue) => {
         console.log(`Number changed to ${newValue}`);
       }}
       style={{ width: "256px" }}

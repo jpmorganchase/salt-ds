@@ -10,7 +10,7 @@ import {
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Lab/Number Input",
@@ -22,7 +22,7 @@ const Template: StoryFn = ({ ...args }) => {
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput
-        onNumberChange={(newValue) =>
+        onNumberChange={(_event, newValue) =>
           console.log(`Number changed to ${newValue}`)
         }
         {...args}
@@ -102,7 +102,7 @@ DecimalPlaces.args = {
 };
 
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(1.25);
+  const [value, setValue] = useState<string>(String(1.25));
   const { announce } = useAriaAnnouncer();
 
   const formFieldLabel = "Number input";
@@ -115,19 +115,18 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
         clamp
         decimalScale={2}
         value={value}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, value) => {
+          setValue(value);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
         }}
         endAdornment={
           <Button
             appearance="solid"
             aria-label={`Reset ${formFieldLabel}`}
             onClick={() => {
-              setValue(1.11);
+              setValue("1.11");
               announce(`${formFieldLabel} value was reset to 1.11`, 1000);
             }}
           >
@@ -140,13 +139,14 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
 };
 
 export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(2);
+  const [value, setValue] = useState<string>(String(2));
   const { announce } = useAriaAnnouncer();
   const max = 5;
   const min = 0;
 
   const getValidationStatus = () => {
-    if (typeof value === "number" && (value > max || value < min)) {
+    const currentValue = Number.parseFloat(value);
+    if (!isNaN(currentValue) && (currentValue > max || currentValue < min)) {
       return "error";
     }
     return undefined;
@@ -158,12 +158,11 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
       <NumberInput
         {...args}
         value={value}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, value) => {
+          setValue(value);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
           if (newValue !== null && (newValue > max || newValue < min)) {
             announce(
               `Invalid value, please enter a value between ${min} and ${max}`,
@@ -182,7 +181,7 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
 };
 
 export const Clamping: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(2);
+  const [value, setValue] = useState<string>("2");
   const { announce } = useAriaAnnouncer();
   const [focused, setFocused] = useState(false);
   const max = 5;
@@ -230,14 +229,13 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           value={value}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setValue(event.target.value);
+          onChange={(_event, value) => {
+            setValue(value);
           }}
           onBlur={handleBlur}
           onFocus={handleFocus}
-          onNumberChange={(newValue) => {
+          onNumberChange={(_event, newValue) => {
             console.log(`Number changed to ${newValue}`);
-            setValue(newValue ?? "");
           }}
           clamp
           max={max}
@@ -257,9 +255,9 @@ export const CustomStep: StoryFn<NumberInputProps> = (args) => {
     <FormField>
       <FormFieldLabel>Number input with custom step</FormFieldLabel>
       <NumberInput
-        onNumberChange={(newValue) =>
-          console.log(`Number changed to ${newValue}`)
-        }
+        onNumberChange={(_event, newValue) => {
+          console.log(`Number changed to ${newValue}`);
+        }}
         {...args}
       />
       <FormFieldHelperText>
@@ -298,7 +296,7 @@ TextAlignment.args = {
 };
 
 export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState<string>("10");
   const { announce } = useAriaAnnouncer();
 
   const formFieldLabel = "Number input with adornment";
@@ -309,19 +307,18 @@ export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
       <NumberInput
         {...args}
         value={value}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, value) => {
+          setValue(value);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
         }}
         endAdornment={
           <Button
             appearance="solid"
             aria-label={`Reset ${formFieldLabel}`}
             onClick={() => {
-              setValue(10);
+              setValue("10");
               announce(`${formFieldLabel} value was reset to 10`);
             }}
           >
@@ -335,7 +332,7 @@ export const ButtonAdornment: StoryFn<NumberInputProps> = (args) => {
 };
 
 export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState<string>(String(10));
   return (
     <FormField>
       <FormFieldLabel>Number input with custom buttons</FormFieldLabel>
@@ -343,19 +340,27 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         {...args}
         hideButtons
         textAlign={"center"}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, value) => {
+          setValue(value);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
         }}
         value={value}
         startAdornment={
           <Button
             aria-hidden
             tabIndex={-1}
-            onClick={() => setValue(Number(value) - 1)}
+            onClick={() => {
+              const newValue = Number.parseFloat(value);
+              if (!isNaN(newValue)) {
+                const validValue = Math.max(
+                  Number.MIN_SAFE_INTEGER,
+                  Math.min(Number.MAX_SAFE_INTEGER, newValue - 1),
+                );
+                setValue(String(validValue));
+              }
+            }}
           >
             <RemoveIcon aria-hidden />
           </Button>
@@ -364,7 +369,16 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
           <Button
             aria-hidden
             tabIndex={-1}
-            onClick={() => setValue(Number(value) + 1)}
+            onClick={() => {
+              const newValue = Number.parseFloat(value);
+              if (!isNaN(newValue)) {
+                const validValue = Math.max(
+                  Number.MIN_SAFE_INTEGER,
+                  Math.min(Number.MAX_SAFE_INTEGER, newValue + 1),
+                );
+                setValue(String(validValue));
+              }
+            }}
           >
             <AddIcon aria-hidden />
           </Button>
@@ -382,8 +396,10 @@ HiddenButtons.args = {
 };
 
 export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(100000);
-  const validValue = /^[+-]?(\d+(\.\d*)?|\.\d+)([kKmMbBtT]?)$/;
+  const [value, setValue] = useState<string>("100K");
+
+  const validValue = /^(-?(?:\d+)?(?:\.\d*)?)([kmbt])?$/i;
+
   const parse = (raw: string) => {
     if (!raw.length) {
       return null;
@@ -392,12 +408,13 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
     if (!match) {
       return Number.NaN;
     }
-    const [_, num, , unit] = match;
-    const multiplier =
-      { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[unit.toLowerCase() as string] || 1;
+    const [_, num, unit] = match;
+    const multiplier = unit
+      ? { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[unit.toLowerCase()] || 1
+      : 1;
     return Number.parseFloat(num) * multiplier;
   };
-  const parsedValue = typeof value !== "number" ? parse(value) : value;
+
   return (
     <StackLayout gap={2}>
       <FormField>
@@ -406,12 +423,11 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
           {...args}
           value={value}
           isAllowed={(inputValue) => validValue.test(inputValue)}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setValue(event.target.value);
+          onChange={(_event, value) => {
+            setValue(value);
           }}
-          onNumberChange={(newValue) => {
+          onNumberChange={(_event, newValue) => {
             console.log(`Number changed to ${newValue}`);
-            setValue(newValue ?? "");
           }}
           format={(value) => {
             if (!value.length) {
@@ -432,19 +448,24 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
         />
       </FormField>
       <FlexLayout>
-        <Button onClick={() => setValue(123456)}>Set value to 123456</Button>
+        <Button onClick={() => setValue("123.456K")}>
+          Set value to 123.456K
+        </Button>
         <Button
-          onClick={() =>
-            setValue(
-              parsedValue === null || Number.isNaN(parsedValue)
-                ? 0
-                : parsedValue + 100,
-            )
-          }
+          onClick={() => {
+            const newValue = parse(value);
+            if (newValue !== null && !isNaN(newValue)) {
+              const validValue = Math.max(
+                Number.MIN_SAFE_INTEGER,
+                Math.min(Number.MAX_SAFE_INTEGER, newValue + 100),
+              );
+              setValue(String(validValue));
+            }
+          }}
         >
           Increment by 100
         </Button>
-        <Button onClick={() => setValue(0)}>Clear</Button>
+        <Button onClick={() => setValue("")}>Clear</Button>
       </FlexLayout>
     </StackLayout>
   );

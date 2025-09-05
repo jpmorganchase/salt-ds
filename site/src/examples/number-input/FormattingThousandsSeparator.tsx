@@ -24,7 +24,7 @@ export const FormattingThousandsSeparator = () => {
           }
           return Number.parseFloat(value.replace(/,/g, ""));
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
         }}
       />

@@ -1,22 +1,22 @@
 import { FormField, FormFieldLabel } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
-import { type ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export const FormattingCompactNotation = () => {
-  const [value, setValue] = useState<number | string>(100000);
-  const validValue = /^[+-]?(\d+(\.\d*)?|\.\d+)([kKmMbBtT]?)$/;
+  const [value, setValue] = useState<string>("100000");
+  const validValue = /^[+-]?(\d+(\.\d*)?|\.\d+)([kmbt]?)$/;
+
   return (
     <FormField style={{ width: "256px" }}>
       <FormFieldLabel>Compact notation</FormFieldLabel>
       <NumberInput
         value={value}
         isAllowed={(inputValue) => validValue.test(inputValue)}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, newValue) => {
+          setValue(newValue);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
         }}
         format={(value) => {
           if (!value.length) {
@@ -41,10 +41,10 @@ export const FormattingCompactNotation = () => {
           if (!match) {
             return Number.NaN;
           }
-          const [_, num, , unit] = match;
-          const multiplier =
-            { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[unit.toLowerCase() as string] ||
-            1;
+          const [_, num, unit] = match;
+          const multiplier = unit
+            ? { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[unit.toLowerCase()] || 1
+            : 1;
           return Number.parseFloat(num) * multiplier;
         }}
       />
