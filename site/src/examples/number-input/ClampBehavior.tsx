@@ -2,46 +2,32 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  useId,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
-import { type ChangeEvent, useEffect, useState } from "react";
-
-const accessibleTextStyles = {
-  position: "fixed",
-  top: "0",
-  left: "0",
-  transform: "translate(-100%, -100%)",
-} as React.CSSProperties;
+import { useEffect, useState } from "react";
 
 export const ClampBehavior = () => {
-  const [value, setValue] = useState<number | string>(2);
-  const [accessibleText, setAccessibleText] = useState("");
+  const [value, setValue] = useState<string>("2");
   const [focused, setFocused] = useState(false);
-  const accessibleTextId = useId();
+
+  const { announce } = useAriaAnnouncer();
+
   const max = 5;
   const min = 0;
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (accessibleText?.length) {
-      timeoutId = setTimeout(() => {
-        setAccessibleText("");
-      }, 3000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [accessibleText]);
 
   const handleBlur = () => {
     const numValue = Number(value);
     setFocused(false);
     if (numValue > max) {
-      setAccessibleText(
+      announce(
         `${numValue} is greater than the maximum value, value was set to ${max}`,
+        1000,
       );
     } else if (numValue < min) {
-      setAccessibleText(
+      announce(
         `${numValue} is less than the minimum value, value was set to ${min}`,
+        1000,
       );
     }
   };
@@ -54,28 +40,27 @@ export const ClampBehavior = () => {
     if (focused) {
       const numValue = Number(value);
       if (numValue > max) {
-        setAccessibleText(`${value} is greater than the maximum value`);
+        announce(`${value} is greater than the maximum value`, 1000);
       } else if (numValue < min) {
-        setAccessibleText(`${value} is less than the minimum value`);
+        announce(`${value} is less than the minimum value`, 1000);
       } else if (numValue === min) {
-        setAccessibleText("Minimum value reached");
+        announce("Minimum value reached", 1000);
       } else if (numValue === max) {
-        setAccessibleText("Maximum value reached");
+        announce("Maximum value reached", 1000);
       }
     }
-  }, [value, focused]);
+  }, [announce, value, focused]);
 
   return (
     <FormField style={{ width: "256px" }}>
       <FormFieldLabel>Number input with clamped range</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, newValue) => {
+          setValue(newValue);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
         }}
         clamp
         max={max}
@@ -86,13 +71,6 @@ export const ClampBehavior = () => {
           onFocus: handleFocus,
         }}
       />
-      <span
-        id={accessibleTextId}
-        style={accessibleTextStyles}
-        aria-live="polite"
-      >
-        {accessibleText}
-      </span>
       <FormFieldHelperText>
         Please enter a value between {min} and {max}.
       </FormFieldHelperText>

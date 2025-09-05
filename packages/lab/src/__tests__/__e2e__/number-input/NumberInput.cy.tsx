@@ -2,7 +2,7 @@ import { FormField, FormFieldLabel } from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
 import { NumberInput } from "packages/lab/src/number-input";
-import { type ChangeEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(numberInputStories);
@@ -155,14 +155,20 @@ describe("Number Input", () => {
     cy.mount(<Default defaultValue={9} max={10} />);
 
     cy.findByLabelText("increment value").realClick();
-    cy.findByLabelText("increment value").should("be.disabled");
+    cy.findByLabelText("increment value").should(
+      "have.class",
+      "saltNumberInput-increment-disabled",
+    );
   });
 
   it("disables the decrement button at `min`", () => {
     cy.mount(<Default defaultValue={1} min={0} />);
 
     cy.findByLabelText("decrement value").realClick();
-    cy.findByLabelText("decrement value").should("be.disabled");
+    cy.findByLabelText("decrement value").should(
+      "have.class",
+      "saltNumberInput-decrement-disabled",
+    );
   });
 
   it("calls the `onNumberChange` callback when the value is decremented", () => {
@@ -178,8 +184,16 @@ describe("Number Input", () => {
     );
 
     cy.findByLabelText("decrement value").realClick();
-    cy.get("@changeSpy").should("not.have.been.called");
-    cy.get("@numberChangeSpy").should("have.been.calledWith", 15);
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "15",
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      15,
+    );
   });
 
   it("calls the `onNumberChange` callback when the value is incremented", () => {
@@ -196,8 +210,16 @@ describe("Number Input", () => {
     );
 
     cy.findByLabelText("increment value").realClick();
-    cy.get("@changeSpy").should("not.have.been.called");
-    cy.get("@numberChangeSpy").should("have.been.calledWith", -109.44);
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "-109.44",
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      -109.44,
+    );
   });
 
   it("does not allow inputting non-numeric values", () => {
@@ -276,7 +298,10 @@ describe("Number Input", () => {
 
     cy.findByLabelText("increment value").realClick();
 
-    cy.findByLabelText("increment value").should("be.disabled");
+    cy.findByLabelText("increment value").should(
+      "have.class",
+      "saltNumberInput-increment-disabled",
+    );
     cy.get("@numberChangeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
       "have.value",
@@ -295,8 +320,10 @@ describe("Number Input", () => {
     );
 
     cy.findByLabelText("decrement value").realClick();
-
-    cy.findByLabelText("decrement value").should("be.disabled");
+    cy.findByLabelText("decrement value").should(
+      "have.class",
+      "saltNumberInput-decrement-disabled",
+    );
     cy.get("@numberChangeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
       "have.value",
@@ -331,33 +358,58 @@ describe("Number Input", () => {
   });
 
   it("increments the value on arrow up key press", () => {
+    const changeSpy = cy.stub().as("changeSpy");
     const numberChangeSpy = cy.stub().as("numberChangeSpy");
-    cy.mount(<Default onNumberChange={numberChangeSpy} />);
+    cy.mount(<Default onChange={changeSpy} onNumberChange={numberChangeSpy} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realPress("ArrowUp");
 
-    cy.get("@numberChangeSpy").should("have.been.calledWith", 1);
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "1",
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      1,
+    );
     cy.findByRole("spinbutton").should("have.value", "1");
   });
 
   it("decrements the value on arrow down key press", () => {
+    const changeSpy = cy.stub().as("changeSpy");
     const numberChangeSpy = cy.stub().as("numberChangeSpy");
-    cy.mount(<Default onNumberChange={numberChangeSpy} />);
+    cy.mount(<Default onChange={changeSpy} onNumberChange={numberChangeSpy} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realPress("ArrowDown");
 
-    cy.get("@numberChangeSpy").should("have.been.calledWith", -1);
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "-1",
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      -1,
+    );
     cy.findByRole("spinbutton").should("have.value", "-1");
   });
 
   it("is disabled when the `disabled` prop is true", () => {
     cy.mount(<Default disabled />);
 
-    cy.findByRole("spinbutton").should("be.disabled");
-    cy.findByLabelText("increment value").should("be.disabled");
-    cy.findByLabelText("decrement value").should("be.disabled");
+    cy.findByLabelText("increment value").should(
+      "have.class",
+      "saltNumberInput-increment-disabled",
+    );
+    cy.findByLabelText("decrement value").should(
+      "have.class",
+      "saltNumberInput-decrement-disabled",
+    );
   });
 
   it("is controlled when the `value` prop is provided", () => {
@@ -412,7 +464,10 @@ describe("Number Input", () => {
     cy.realPress("Tab");
 
     cy.findByRole("spinbutton").should("have.value", "22");
-    cy.findByLabelText("increment value").should("be.disabled");
+    cy.findByLabelText("increment value").should(
+      "have.class",
+      "saltNumberInput-increment-disabled",
+    );
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
@@ -437,13 +492,24 @@ describe("Number Input", () => {
 
     cy.findByRole("spinbutton").focus();
     cy.realType("10000000");
-    cy.get("@changeSpy")
-      .its("lastCall.args[0].target.value")
-      .should("eq", "10000000");
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "10000000",
+    );
     cy.get("@numberChangeSpy").should("not.have.been.called");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "100");
-    cy.get("@numberChangeSpy").should("have.been.calledWith", 100);
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "100",
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      100,
+    );
   });
 
   it("increments and decrements from the correct value when value gets clamped", () => {
@@ -453,14 +519,20 @@ describe("Number Input", () => {
     cy.realType("10000000");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "100");
-    cy.findByLabelText("increment value").should("be.disabled");
+    cy.findByLabelText("increment value").should(
+      "have.class",
+      "saltNumberInput-increment-disabled",
+    );
     cy.findByLabelText("decrement value").realClick();
     cy.findByRole("spinbutton").should("have.value", "99");
     cy.findByRole("spinbutton").focus().clear();
     cy.realType("1");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "10");
-    cy.findByLabelText("decrement value").should("be.disabled");
+    cy.findByLabelText("decrement value").should(
+      "have.class",
+      "saltNumberInput-decrement-disabled",
+    );
     cy.findByLabelText("increment value").realClick();
     cy.findByRole("spinbutton").should("have.value", "11");
   });
@@ -543,7 +615,7 @@ describe("Number Input", () => {
 
       // Click the clear value button
       cy.findAllByRole("button").eq(2).click();
-      cy.findByRole("spinbutton").should("have.value", "0");
+      cy.findByRole("spinbutton").should("have.value", "");
     });
 
     it("should allow editing formatted values and call onNumberChange and onChange with correct values", () => {
@@ -551,17 +623,18 @@ describe("Number Input", () => {
       const changeSpy = cy.stub().as("changeSpy");
 
       function ControlledNumberInput() {
-        const [value, setValue] = useState<number | string>(15);
+        const [value, setValue] = useState<string>("15");
 
-        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-          const value = event.target.value;
-          setValue(event.target.value);
+        const onChange = (event: SyntheticEvent | null, value: string) => {
+          setValue(value);
           changeSpy(event, value);
         };
 
-        const onNumberChange = (value: number | null) => {
-          setValue(value ?? "");
-          numberChangeSpy(value);
+        const onNumberChange = (
+          event: SyntheticEvent | null,
+          value: number | null,
+        ) => {
+          numberChangeSpy(event, value);
         };
 
         return (
@@ -586,20 +659,52 @@ describe("Number Input", () => {
       cy.mount(<ControlledNumberInput />);
       cy.findByRole("spinbutton").should("have.value", "15%");
       cy.findByRole("spinbutton").focus().realPress("ArrowUp");
-      cy.get("@changeSpy").should("not.have.been.called");
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 16);
+      cy.get("@changeSpy").should("have.callCount", 1);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "16",
+      );
+      cy.get("@numberChangeSpy").should("have.callCount", 1);
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        16,
+      );
       cy.findByRole("spinbutton").realPress("ArrowDown");
-      cy.get("@changeSpy").should("not.have.been.called");
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 15);
+      cy.get("@changeSpy").should("have.callCount", 2);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "15",
+      );
+      cy.get("@numberChangeSpy").should("have.callCount", 2);
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        15,
+      );
       cy.findByRole("spinbutton").clear().focus().realType("30%");
+      cy.get("@changeSpy").should("have.callCount", 6);
       cy.get("@changeSpy").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
         "30%",
       );
-      cy.get("@numberChangeSpy").should("not.have.been.calledWith", 30);
+      cy.get("@numberChangeSpy").should("have.callCount", 2);
       cy.realPress("Tab");
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 30);
+      cy.get("@changeSpy").should("have.callCount", 7);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "30",
+      );
+      cy.get("@numberChangeSpy").should("have.callCount", 3);
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        30,
+      );
       cy.findByRole("spinbutton").should("have.value", "30%");
     });
   });
@@ -662,11 +767,31 @@ describe("Number Input", () => {
       );
       cy.findByLabelText("increment value").realClick({ clickCount: 2 });
       cy.findByRole("spinbutton").should("have.value", "14%");
-      cy.get("@changeSpy").should("not.have.been.called");
+      cy.get("@changeSpy").should("have.callCount", 2);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "13",
+      );
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "14",
+      );
       cy.get("@numberChangeSpy").should("have.callCount", 2);
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 13);
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 14);
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        13,
+      );
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        14,
+      );
       cy.realPress("Tab");
+      cy.get("@changeSpy").should("have.callCount", 2);
+      cy.get("@numberChangeSpy").should("have.callCount", 2);
       cy.findByRole("spinbutton").should("have.value", "14%");
     });
 
@@ -696,7 +821,16 @@ describe("Number Input", () => {
         .its("lastCall.args[0].target.value")
         .should("eq", "30%");
       cy.realPress("Tab");
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 30);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "30",
+      );
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        30,
+      );
     });
   });
 
@@ -770,16 +904,38 @@ describe("Number Input", () => {
         <Default onChange={changeSpy} onNumberChange={numberChangeSpy} />,
       );
       cy.findByRole("spinbutton").focus().realType(".");
-      cy.get("@changeSpy")
-        .its("lastCall.args[0].target.value")
-        .should("eq", ".");
+      cy.get("@changeSpy").should("have.callCount", 1);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ".",
+      );
+      cy.get("@numberChangeSpy").should("not.have.been.called");
       cy.realPress("Tab");
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 0);
+      cy.get("@changeSpy").should("have.callCount", 2);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "0",
+      );
+      cy.get("@numberChangeSpy").should("have.callCount", 1);
+      cy.get("@numberChangeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        0,
+      );
       cy.findByRole("spinbutton").should("have.value", "0");
       cy.findByRole("spinbutton").clear().focus().realType("-");
+      cy.get("@changeSpy").should("have.callCount", 4);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "-",
+      );
       cy.realPress("Tab");
       cy.findByRole("spinbutton").should("have.value", "0");
-      cy.get("@numberChangeSpy").should("have.been.calledWith", 0);
+      cy.get("@changeSpy").should("have.callCount", 4);
+      cy.get("@numberChangeSpy").should("have.callCount", 1);
     });
   });
 

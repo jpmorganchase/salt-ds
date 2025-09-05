@@ -8,7 +8,7 @@ export const FixedDecimalScale = () => {
       <NumberInput
         defaultValue={100.25}
         decimalScale={4}
-        onNumberChange={(newValue) =>
+        onNumberChange={(_event, newValue) =>
           console.log(`Number changed to ${newValue}`)
         }
         format={(value: string) => {
