@@ -11,7 +11,7 @@ export const useChart = (
 ) => {
   const density = useDensity();
 
-  /* biome-ignore lint/correctness/useExhaustiveDependencies: redraw on density change */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: redraw on density change
   useEffect(() => {
     chartRef.current?.chart.redraw();
   }, [density]);
