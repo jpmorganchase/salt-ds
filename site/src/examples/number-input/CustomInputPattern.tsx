@@ -15,7 +15,7 @@ export const CustomInputPattern = () => (
         }
         return Number.parseFloat(value.replace(/x/g, ""));
       }}
-      onNumberChange={(newValue) => {
+      onNumberChange={(_event, newValue) => {
         console.log(`Number changed to ${newValue}`);
       }}
     />

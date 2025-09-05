@@ -18,7 +18,7 @@ export const FormattingSuffixPrefix = () => {
             }
             return Number.parseFloat(value.replace(/%/g, ""));
           }}
-          onNumberChange={(newValue) => {
+          onNumberChange={(_event, newValue) => {
             console.log(`Number changed to ${newValue}`);
           }}
         />
@@ -38,7 +38,7 @@ export const FormattingSuffixPrefix = () => {
             const parsedValue = value.replace(/\$/g, "");
             return Number.parseFloat(parsedValue);
           }}
-          onNumberChange={(newValue) => {
+          onNumberChange={(_event, newValue) => {
             console.log(`Number changed to ${newValue}`);
           }}
         />

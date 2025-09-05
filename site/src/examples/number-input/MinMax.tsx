@@ -2,37 +2,25 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  useId,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
-import { type ChangeEvent, useEffect, useState } from "react";
-
-const accessibleTextStyles = {
-  position: "fixed",
-  top: "0",
-  left: "0",
-  transform: "translate(-100%, -100%)",
-} as React.CSSProperties;
+import { useState } from "react";
 
 export const MinMax = () => {
-  const [value, setValue] = useState<number | string>(2);
-  const [accessibleText, setAccessibleText] = useState("");
-  const accessibleTextId = useId();
+  const [value, setValue] = useState<string>("2");
+
+  const { announce } = useAriaAnnouncer();
+
   const max = 5;
   const min = 0;
 
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (accessibleText?.length) {
-      timeoutId = setTimeout(() => {
-        setAccessibleText("");
-      }, 3000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [accessibleText]);
-
   const getValidationStatus = () => {
-    if (typeof value === "number" && (value > max || value < min)) {
+    const currentValue = Number.parseFloat(value);
+    if (
+      !Number.isNaN(currentValue) &&
+      (currentValue > max || currentValue < min)
+    ) {
       return "error";
     }
     return undefined;
@@ -46,28 +34,25 @@ export const MinMax = () => {
       <FormFieldLabel>Number input with limited range</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
+        onChange={(_event, newValue) => {
+          setValue(newValue);
         }}
-        onNumberChange={(newValue) => {
+        onNumberChange={(_event, newValue) => {
           console.log(`Number changed to ${newValue}`);
-          setValue(newValue ?? "");
-          if (newValue !== null && (newValue > max || newValue < min)) {
-            setAccessibleText(
+          if (
+            newValue !== null &&
+            !Number.isNaN(newValue) &&
+            (newValue > max || newValue < min)
+          ) {
+            announce(
               `Invalid value, please enter a value between ${min} and ${max}`,
+              1000,
             );
           }
         }}
         max={max}
         min={min}
       />
-      <span
-        id={accessibleTextId}
-        style={accessibleTextStyles}
-        aria-live="polite"
-      >
-        {accessibleText}
-      </span>
       <FormFieldHelperText>
         Please enter a value between {min} and {max}
       </FormFieldHelperText>
