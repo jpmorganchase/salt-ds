@@ -169,6 +169,11 @@
   fill: var(--salt-content-primary-foreground);
 }
 
+/* stickOnContact: true conflicts with default styles  */
+.highcharts-theme-salt .highcharts-tooltip .highcharts-tracker {
+  opacity: 0;
+}
+
 .highcharts-theme-salt .highcharts-background {
   fill: var(--salt-container-primary-background);
 }

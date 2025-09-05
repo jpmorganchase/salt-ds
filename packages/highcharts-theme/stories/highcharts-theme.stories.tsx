@@ -1,6 +1,4 @@
-import { highchartsOptionsSalt } from "@salt-ds/highcharts-theme";
-import type { Decorator } from "@storybook/react-vite";
-import Highcharts from "highcharts";
+import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
@@ -8,18 +6,22 @@ import {
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
 } from "../src/examples";
+import {
+  donutOptions,
+  lineOptions,
+  pieOptions,
+} from "../src/examples/dependencies";
 
 accessibility(Highcharts);
 
-const withHighchartsTheme: Decorator = (Story) => {
-  Highcharts.setOptions(highchartsOptionsSalt);
-  return <Story />;
-};
+interface ChartStoryArgs {
+  patterns?: boolean;
+  options: Options;
+}
 
 export default {
   title: "Highcharts/Highcharts Theme",
   component: HighchartsReact,
-  decorators: [withHighchartsTheme],
   parameters: {
     chromatic: {
       disableSnapshot: false,
@@ -31,26 +33,33 @@ export default {
       description: "Toggle fill/line patterns for better accessibility",
       defaultValue: false,
     },
+    options: {
+      control: "object",
+      description: "Highcharts options",
+    },
   },
 };
 
 export const LineChart = {
-  render: (args: { patterns?: boolean }) => <LineChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <LineChartComponent {...args} />,
   args: {
     patterns: false,
+    options: lineOptions,
   },
 };
 
 export const DonutChart = {
-  render: (args: { patterns?: boolean }) => <DonutChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <DonutChartComponent {...args} />,
   args: {
     patterns: false,
+    options: donutOptions,
   },
 };
 
 export const PieChart = {
-  render: (args: { patterns?: boolean }) => <PieChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => <PieChartComponent {...args} />,
   args: {
     patterns: false,
+    options: pieOptions,
   },
 };
