@@ -51,6 +51,9 @@ export const getDefaultOptions = (density: Density): Options => {
           enabled: true,
         },
       },
+      bullet: {
+        borderRadius: 0,
+      },
     },
   };
 
