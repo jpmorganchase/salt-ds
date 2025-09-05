@@ -1,6 +1,6 @@
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { SaltProvider, SaltProviderNext, Switch, useId } from "@salt-ds/core";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { LocalizationProvider } from "@salt-ds/lab";
 import {
   type ChangeEvent,
@@ -61,7 +61,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.componentPreview}>
-        <LocalizationProvider DateAdapter={AdapterDateFns}>
+        <LocalizationProvider DateAdapter={AdapterLuxon}>
           <div className={styles.exampleWithSwitch}>
             <ChosenSaltProvider
               mode={mode}

@@ -8,6 +8,7 @@ import {
   forwardRef,
   type MouseEvent,
   type SyntheticEvent,
+  useMemo,
 } from "react";
 import { useLocalization } from "../../localization-provider";
 import { useCalendarContext } from "./CalendarContext";
@@ -26,6 +27,14 @@ export interface CalendarMonthProps<TDate>
    */
   CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
 }
+
+const chunkArray = (array: DateFrameworkType[], chunkSize: number) => {
+  const result = [];
+  for (let chunkIndex = 0; chunkIndex < array.length; chunkIndex += chunkSize) {
+    result.push(array.slice(chunkIndex, chunkIndex + chunkSize));
+  }
+  return result;
+};
 
 const withBaseName = makePrefixer("saltCalendarMonth");
 
@@ -46,14 +55,22 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
-    state: { timezone = "default" },
+    state: { selectionVariant, timezone = "default" },
     helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
-  const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
+  const days = useMemo(
+    () => generateVisibleDays<TDate>(dateAdapter, date, timezone),
+    [dateAdapter, date, timezone],
+  );
   const handleMouseLeave = (event: SyntheticEvent) => {
     setHoveredDate(event, null);
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
   };
+
+  const weeks = useMemo(() => {
+    const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
+    return chunkArray(days, 7);
+  }, [dateAdapter, date, timezone]);
 
   return (
     <div
@@ -62,14 +79,21 @@ export const CalendarMonth = forwardRef<
       onMouseLeave={handleMouseLeave}
       {...rest}
     >
-      <div data-testid="CalendarGrid" className={withBaseName("grid")}>
-        {days.map((day) => (
-          <CalendarDay
-            {...CalendarDayProps}
-            key={dateAdapter.format(day, "DD MMM YYYY")}
-            date={day}
-            month={date}
-          />
+      <div
+        data-testid="CalendarGrid"
+        className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}
+      >
+        {weeks.map((week, index) => (
+          <div key={`row-${index}`} className={withBaseName("week")}>
+            {week.map((day: TDate) => (
+              <CalendarDay
+                {...CalendarDayProps}
+                key={dateAdapter.format(day, "DD MMM YYYY")}
+                date={day}
+                month={date}
+              />
+            ))}
+          </div>
         ))}
       </div>
     </div>

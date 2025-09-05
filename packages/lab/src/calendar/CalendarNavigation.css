@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+.saltCalendarNavigation-yearDropdown {
+  min-width: 4.3em;
+}
+
 .saltCalendarNavigation-hideYearDropdown {
   grid-template-columns: min-content auto min-content;
   grid-gap: var(--salt-spacing-300);
