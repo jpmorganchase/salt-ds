@@ -6,14 +6,12 @@ import {
   StackLayout,
   Text,
   useId,
-} from "@salt-ds/core";
-import {
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { Link, useLocation } from "react-router";
 import { type Item, navData } from "./data";
 import { MockHistory } from "./MockHistory";

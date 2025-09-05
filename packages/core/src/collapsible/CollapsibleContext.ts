@@ -1,5 +1,5 @@
-import { createContext } from "@salt-ds/core";
 import { type SyntheticEvent, useContext } from "react";
+import { createContext } from "../utils";
 
 export type CollapsibleContextValue = {
   open: boolean;

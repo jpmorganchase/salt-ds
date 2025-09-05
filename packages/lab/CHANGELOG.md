@@ -1,5 +1,24 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.76
+
+### Minor Changes
+
+- f1dc9fc: Removed `Collapsible`, `CollapsibleTrigger` and `CollapsiblePanel` from labs and promoted to core.
+- f1dc9fc: Removed `VerticalNavigation`, `VerticalNavigationItem`, `VerticalNavigationItemContent`, `VerticalNavigationItemExpansionIcon`, `VerticalNavigationItemLabel`, `VerticalNavigationItemTrigger` and `VerticalNavigationSubMenu` from labs and promoted to core.
+
+### Patch Changes
+
+- 315e686: - Improved TabsNext's handling of long tabs.
+  - Fixed long selected tabs overflowing the tablist.
+  - Fixed focus not being handled in some cases when tabs are being added or removed.
+  - Fixed tabs not always being scrolled into view properly when navigating with a keyboard.
+  - Fixed aria-actions usage causing an error to be logged in React.
+- Updated dependencies [f1dc9fc]
+- Updated dependencies [f1dc9fc]
+- Updated dependencies [9560539]
+  - @salt-ds/core@1.48.0
+
 ## 1.0.0-alpha.75
 
 ### Patch Changes

@@ -1,4 +1,3 @@
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { makePrefixer, useForkRef, useId } from "../utils";
 import { useSubMenuContext } from "./SubMenuContext";
 import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemContentCss from "./VerticalNavigationItemContent.css";

@@ -1,16 +1,14 @@
 import {
   Button,
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
   Divider,
   Menu,
   MenuItem,
   MenuPanel,
   MenuTrigger,
   useId,
-} from "@salt-ds/core";
-import {
-  Collapsible,
-  CollapsiblePanel,
-  CollapsibleTrigger,
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -18,7 +16,7 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { type ComponentPropsWithoutRef, type ReactNode, useState } from "react";
 import { Link, MemoryRouter, useLocation } from "react-router";
@@ -33,7 +31,7 @@ import {
 import { clsx } from "clsx";
 
 export default {
-  title: "Lab/Vertical Navigation",
+  title: "Core/Vertical Navigation",
   component: VerticalNavigation,
   decorators: [
     (Story) => {
