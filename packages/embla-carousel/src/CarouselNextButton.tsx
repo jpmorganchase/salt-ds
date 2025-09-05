@@ -1,5 +1,6 @@
 import { Button, type ButtonProps, useIcon } from "@salt-ds/core";
 import { forwardRef, type MouseEventHandler } from "react";
+import { useCarouselContext } from "./CarouselContext";
 import { usePrevNextButtons } from "./usePrevNextButtons";
 
 /**
@@ -15,6 +16,8 @@ export const CarouselNextButton = forwardRef<
   const { NextIcon } = useIcon();
   const { nextBtnDisabled, onNextButtonClick } = usePrevNextButtons();
 
+  const { carouselId } = useCarouselContext();
+
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     onNextButtonClick();
     onClick?.(event);
@@ -26,6 +29,7 @@ export const CarouselNextButton = forwardRef<
       disabled={nextBtnDisabled}
       focusableWhenDisabled
       appearance="bordered"
+      aria-controls={`${carouselId}-slides`}
       sentiment="neutral"
       aria-label="Next slide"
       ref={ref}
