@@ -43,10 +43,6 @@
   padding-top: var(--salt-spacing-100);
 }
 
-.saltFormField-labelRight .saltFormFieldLabel {
-  text-align: right;
-}
-
 .saltFormField-controls {
   align-items: center;
   display: grid;

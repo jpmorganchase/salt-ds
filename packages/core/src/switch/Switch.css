@@ -1,5 +1,6 @@
 .saltSwitch {
   display: flex;
+  width: fit-content;
   gap: var(--salt-spacing-100);
   position: relative;
   cursor: var(--salt-cursor-hover);
