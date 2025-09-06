@@ -63,19 +63,15 @@ export const QA: StoryFn<QAContainerProps> = () => (
     width={1400}
     itemWidthAuto
   >
-    {(["primary", "secondary", "tertiary"] as TableProps["variant"][]).map(
-      (variant) => (
-        <StackLayout key={variant} direction="row" gap={1}>
-          <TableComp variant={variant} />
-          <TableComp variant={variant} zebra="primary" />
-          <TableComp variant={variant} zebra="secondary" />
-          <TableComp variant={variant} zebra="tertiary" />
-          <TableComp variant={variant} divider="primary" />
-          <TableComp variant={variant} divider="secondary" />
-          <TableComp variant={variant} divider="tertiary" />
-        </StackLayout>
-      ),
-    )}
+    {(["primary", "secondary", "tertiary"] as const).map((variant) => (
+      <StackLayout key={variant} direction="row" gap={1}>
+        <TableComp variant={variant} />
+        <TableComp variant={variant} zebra />
+        <TableComp variant={variant} divider="primary" />
+        <TableComp variant={variant} divider="secondary" />
+        <TableComp variant={variant} divider="tertiary" />
+      </StackLayout>
+    ))}
   </QAContainer>
 );
 
