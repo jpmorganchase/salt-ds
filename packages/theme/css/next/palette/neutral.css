@@ -13,7 +13,6 @@
   --salt-palette-neutral-weaker-readonly: var(--salt-color-gray-300-10a);
   --salt-palette-neutral-weakest: var(--salt-color-gray-200);
   --salt-palette-neutral-action-hover: var(--salt-color-gray-100);
-  --salt-palette-neutral-action-active: var(--salt-color-gray-200);
 }
 .salt-theme.salt-theme-next[data-mode="dark"] {
   --salt-palette-neutral: var(--salt-color-gray-500);
@@ -30,5 +29,4 @@
   --salt-palette-neutral-weaker-readonly: var(--salt-color-gray-700-10a);
   --salt-palette-neutral-weakest: var(--salt-color-gray-800);
   --salt-palette-neutral-action-hover: var(--salt-color-gray-900);
-  --salt-palette-neutral-action-active: var(--salt-color-gray-800);
 }

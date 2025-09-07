@@ -1,6 +1,6 @@
 .salt-theme.salt-theme-next {
   /* accented solid- previous CTA */
-  --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-action-active);
+  --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-weaker);
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-accent-disabled);
   --salt-actionable-accented-bold-background-hover: var(--salt-palette-accent);
   --salt-actionable-accented-bold-background: var(--salt-palette-accent);
@@ -14,7 +14,7 @@
   --salt-actionable-accented-bold-foreground: var(--salt-palette-foreground-primary-alt);
 
   /* accented bordered */
-  --salt-actionable-accented-background-active: var(--salt-palette-accent-action-active);
+  --salt-actionable-accented-background-active: var(--salt-palette-accent-weaker);
   --salt-actionable-accented-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-accented-background-hover: var(--salt-palette-accent-action-hover);
   --salt-actionable-accented-background: var(--salt-palette-alpha-none);
@@ -28,7 +28,7 @@
   --salt-actionable-accented-foreground: var(--salt-palette-accent-strong);
 
   /* accented transparent  */
-  --salt-actionable-accented-subtle-background-active: var(--salt-palette-accent-action-active);
+  --salt-actionable-accented-subtle-background-active: var(--salt-palette-accent-weaker);
   --salt-actionable-accented-subtle-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-accented-subtle-background-hover: var(--salt-palette-accent-action-hover);
   --salt-actionable-accented-subtle-background: var(--salt-palette-alpha-none);
@@ -42,7 +42,7 @@
   --salt-actionable-accented-subtle-foreground: var(--salt-palette-accent-strong);
 
   /* neutral solid previous Primary */
-  --salt-actionable-bold-background-active: var(--salt-palette-neutral-action-active);
+  --salt-actionable-bold-background-active: var(--salt-palette-neutral-weaker);
   --salt-actionable-bold-background-disabled: var(--salt-palette-neutral-disabled);
   --salt-actionable-bold-background-hover: var(--salt-palette-neutral);
   --salt-actionable-bold-background: var(--salt-palette-neutral);
@@ -56,7 +56,7 @@
   --salt-actionable-bold-foreground: var(--salt-palette-foreground-primary-alt);
 
   /* neutral bordered */
-  --salt-actionable-background-active: var(--salt-palette-neutral-action-active);
+  --salt-actionable-background-active: var(--salt-palette-neutral-weaker);
   --salt-actionable-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-background: var(--salt-palette-alpha-none);
@@ -70,7 +70,7 @@
   --salt-actionable-foreground: var(--salt-palette-foreground-primary);
 
   /* neutral transparent - previous Secondary */
-  --salt-actionable-subtle-background-active: var(--salt-palette-neutral-action-active);
+  --salt-actionable-subtle-background-active: var(--salt-palette-neutral-weaker);
   --salt-actionable-subtle-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-subtle-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-subtle-background: var(--salt-palette-alpha-none);
@@ -84,7 +84,7 @@
   --salt-actionable-subtle-foreground: var(--salt-palette-foreground-primary);
 
   /* negative solid */
-  --salt-actionable-negative-bold-background-active: var(--salt-palette-negative-action-active);
+  --salt-actionable-negative-bold-background-active: var(--salt-palette-negative-weaker);
   --salt-actionable-negative-bold-background-disabled: var(--salt-palette-negative-disabled);
   --salt-actionable-negative-bold-background-hover: var(--salt-palette-negative);
   --salt-actionable-negative-bold-background: var(--salt-palette-negative);
@@ -98,7 +98,7 @@
   --salt-actionable-negative-bold-foreground: var(--salt-palette-foreground-primary-alt);
 
   /* negative bordered */
-  --salt-actionable-negative-background-active: var(--salt-palette-negative-action-active);
+  --salt-actionable-negative-background-active: var(--salt-palette-negative-weaker);
   --salt-actionable-negative-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-negative-background-hover: var(--salt-palette-negative-action-hover);
   --salt-actionable-negative-background: var(--salt-palette-alpha-none);
@@ -112,7 +112,7 @@
   --salt-actionable-negative-foreground: var(--salt-palette-negative-strong);
 
   /* negative transparent */
-  --salt-actionable-negative-subtle-background-active: var(--salt-palette-negative-action-active);
+  --salt-actionable-negative-subtle-background-active: var(--salt-palette-negative-weaker);
   --salt-actionable-negative-subtle-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-negative-subtle-background-hover: var(--salt-palette-negative-action-hover);
   --salt-actionable-negative-subtle-background: var(--salt-palette-alpha-none);
@@ -126,7 +126,7 @@
   --salt-actionable-negative-subtle-foreground: var(--salt-palette-negative-strong);
 
   /* positive solid */
-  --salt-actionable-positive-bold-background-active: var(--salt-palette-positive-action-active);
+  --salt-actionable-positive-bold-background-active: var(--salt-palette-positive-weaker);
   --salt-actionable-positive-bold-background-disabled: var(--salt-palette-positive-disabled);
   --salt-actionable-positive-bold-background-hover: var(--salt-palette-positive);
   --salt-actionable-positive-bold-background: var(--salt-palette-positive);
@@ -140,7 +140,7 @@
   --salt-actionable-positive-bold-foreground: var(--salt-palette-foreground-primary-alt);
 
   /* positive bordered */
-  --salt-actionable-positive-background-active: var(--salt-palette-positive-action-active);
+  --salt-actionable-positive-background-active: var(--salt-palette-positive-weaker);
   --salt-actionable-positive-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-positive-background-hover: var(--salt-palette-positive-action-hover);
   --salt-actionable-positive-background: var(--salt-palette-alpha-none);
@@ -154,7 +154,7 @@
   --salt-actionable-positive-foreground: var(--salt-palette-positive-strong);
 
   /* positive transparent */
-  --salt-actionable-positive-subtle-background-active: var(--salt-palette-positive-action-active);
+  --salt-actionable-positive-subtle-background-active: var(--salt-palette-positive-weaker);
   --salt-actionable-positive-subtle-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-positive-subtle-background-hover: var(--salt-palette-positive-action-hover);
   --salt-actionable-positive-subtle-background: var(--salt-palette-alpha-none);
@@ -168,7 +168,7 @@
   --salt-actionable-positive-subtle-foreground: var(--salt-palette-positive-strong);
 
   /* caution solid */
-  --salt-actionable-caution-bold-background-active: var(--salt-palette-warning-action-active);
+  --salt-actionable-caution-bold-background-active: var(--salt-palette-warning-weaker);
   --salt-actionable-caution-bold-background-disabled: var(--salt-palette-warning-disabled);
   --salt-actionable-caution-bold-background-hover: var(--salt-palette-warning);
   --salt-actionable-caution-bold-background: var(--salt-palette-warning);
@@ -182,7 +182,7 @@
   --salt-actionable-caution-bold-foreground: var(--salt-palette-foreground-primary-alt);
 
   /* caution bordered */
-  --salt-actionable-caution-background-active: var(--salt-palette-warning-action-active);
+  --salt-actionable-caution-background-active: var(--salt-palette-warning-weaker);
   --salt-actionable-caution-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-caution-background-hover: var(--salt-palette-warning-action-hover);
   --salt-actionable-caution-background: var(--salt-palette-alpha-none);
@@ -196,7 +196,7 @@
   --salt-actionable-caution-foreground: var(--salt-palette-warning-strong);
 
   /* caution transparent */
-  --salt-actionable-caution-subtle-background-active: var(--salt-palette-warning-action-active);
+  --salt-actionable-caution-subtle-background-active: var(--salt-palette-warning-weaker);
   --salt-actionable-caution-subtle-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-caution-subtle-background-hover: var(--salt-palette-warning-action-hover);
   --salt-actionable-caution-subtle-background: var(--salt-palette-alpha-none);
