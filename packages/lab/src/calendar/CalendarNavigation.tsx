@@ -409,32 +409,39 @@ export const CalendarNavigation = forwardRef<
             onSelectionChange={handleMonthSelect}
             {...MonthDropdownProps}
           >
-            {months.map((month) => (
-              <OptionWithTooltip
-                key={formatMonth(month)}
-                value={month}
-                disabled={isOutsideAllowedMonths(month)}
-                tooltipContent="This month is out of range"
-              >
-                {formatMonth(month)}
-              </OptionWithTooltip>
-            ))}
+            {months.map((month) => {
+              const outsideAllowedMonths = isOutsideAllowedMonths(month);
+              return (
+                <OptionWithTooltip
+                  key={formatMonth(month)}
+                  value={month}
+                  disabled={outsideAllowedMonths}
+                  tooltipContent={"This month is out of range"}
+                >
+                  {formatMonth(month)}
+                </OptionWithTooltip>
+              );
+            })}
           </Dropdown>
-          {!hideYearDropdown && (
+          {!hideYearDropdown ? (
             <Dropdown
               aria-label="Year Dropdown"
               selected={selectedYear ? [selectedYear] : []}
               value={formatYear(selectedYear)}
               onSelectionChange={handleYearSelect}
               {...YearDropdownProps}
+              className={clsx(
+                withBaseName("yearDropdown"),
+                YearDropdownProps?.className,
+              )}
             >
               {years.map((year) => (
-                <OptionWithTooltip key={formatYear(year)} value={year}>
+                <Option key={formatYear(year)} value={year}>
                   {formatYear(year)}
-                </OptionWithTooltip>
+                </Option>
               ))}
             </Dropdown>
-          )}
+          ) : null}
         </div>
         <ConditionalTooltip
           placement="top"

@@ -94,6 +94,24 @@ export const Single: StoryFn<
   );
 };
 
+export const Grid: StoryFn<React.FC<CalendarSingleProps<DateFrameworkType>>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const selectedDate = dateAdapter.today();
+  return (
+    <Calendar
+      {...args}
+      defaultSelectedDate={selectedDate}
+      numberOfVisibleMonths={12}
+      selectionVariant="single"
+    >
+      <CalendarNavigation />
+      <CalendarGrid columns={4} />
+    </Calendar>
+  );
+};
+
 export const SingleControlled: StoryFn<
   React.FC<CalendarSingleProps<DateFrameworkType>>
 > = (args) => {
@@ -670,7 +688,7 @@ export const UnselectableDates: StoryFn<
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "weekends are un-selectable" : false;
+    return isWeekend ? "Weekends are un-selectable" : false;
   };
   return (
     <Calendar
@@ -685,38 +703,17 @@ export const UnselectableDates: StoryFn<
   );
 };
 
-export const DisabledDates: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
-  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
-
-    return isWeekend ? "Weekends are disabled" : false;
-  };
-  return (
-    <Calendar
-      // biome-ignore lint/suspicious/noExplicitAny: story args
-      {...(args as any)}
-      selectionVariant="single"
-      isDayDisabled={isDayDisabled}
-    >
-      <CalendarNavigation />
-      <CalendarGrid />
-    </Calendar>
-  );
-};
-
 export const HighlightedDates: StoryFn<
   React.FC<CalendarSingleProps<DateFrameworkType>>
 > = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startOfMonth = dateAdapter.startOf(day, "month");
-    return dateAdapter.isSame(startOfMonth, day, "day")
+    return dateAdapter.isSame(
+      dateAdapter.add(startOfMonth, { days: 7 }),
+      day,
+      "day",
+    )
       ? "Start of month reminder"
       : false;
   };
@@ -724,7 +721,7 @@ export const HighlightedDates: StoryFn<
     <Calendar
       // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
-      selectionVariant="single"
+      selectionVariant="range"
       isDayHighlighted={isDayHighlighted}
     >
       <CalendarNavigation />
@@ -855,7 +852,7 @@ export const MinMaxDate: StoryFn<
 export const TwinCalendars: StoryFn<
   React.FC<CalendarRangeProps<DateFrameworkType>>
 > = ({
-  defaultSelectedDate,
+  defaultSelectedDate = { startDate: undefined, endDate: undefined },
   defaultVisibleMonth,
   selectionVariant,
   ...args
@@ -876,9 +873,6 @@ export const TwinCalendars: StoryFn<
   const [endVisibleMonth, setEndVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
-  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
-    dateAdapter.startOf(startVisibleMonth, "month"),
-  );
 
   const handleStartVisibleMonthChange = useCallback(
     (
@@ -923,34 +917,22 @@ export const TwinCalendars: StoryFn<
     useState<CalendarRangeProps<DateFrameworkType>["selectedDate"]>(
       defaultSelectedDate,
     );
+
   const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
       args?.onSelectionChange?.(event, newSelectedDate);
     };
 
-  const handleFocusedDateChange: CalendarProps<DateFrameworkType>["onFocusedDateChange"] =
-    (_event, newFocusedDate) => {
-      setFocusedDate(newFocusedDate);
-    };
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <Calendar
         selectionVariant="range"
-        focusedDate={
-          dateAdapter.compare(
-            focusedDate,
-            dateAdapter.startOf(endVisibleMonth, "month"),
-          ) < 0
-            ? focusedDate
-            : null
-        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
         {...args}
-        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
@@ -960,20 +942,11 @@ export const TwinCalendars: StoryFn<
       </Calendar>
       <Calendar
         selectionVariant="range"
-        focusedDate={
-          dateAdapter.compare(
-            focusedDate,
-            dateAdapter.startOf(endVisibleMonth, "month"),
-          ) >= 0
-            ? focusedDate
-            : null
-        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
         visibleMonth={endVisibleMonth}
         {...args}
-        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}

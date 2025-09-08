@@ -1,6 +1,4 @@
 export * from "./Bordered";
-export * from "./CustomDayRendering";
-export * from "./DisabledDates";
 export * from "./HideOutOfRangeDates";
 export * from "./HideYearDropdown";
 export * from "./HighlightedDates";

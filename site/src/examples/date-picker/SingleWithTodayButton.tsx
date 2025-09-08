@@ -37,9 +37,9 @@ const TodayButton = () => {
   return (
     <div style={{ display: "flex" }}>
       <Button
-        style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
+        style={{ flexGrow: 1 }}
         sentiment="accented"
-        appearance="bordered"
+        appearance="solid"
         onClick={(event: SyntheticEvent) => select(event, dateAdapter.today())}
       >
         Select Today
@@ -108,7 +108,7 @@ export const SingleWithTodayButton = (): ReactElement => {
             <FlexItem>
               <Divider />
             </FlexItem>
-            <FlexItem>
+            <FlexItem margin={1}>
               <TodayButton />
             </FlexItem>
           </FlexLayout>
