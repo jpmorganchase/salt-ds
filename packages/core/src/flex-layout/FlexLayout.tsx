@@ -21,11 +21,7 @@ import { parseSpacing } from "./parseSpacing";
 const withBaseName = makePrefixer("saltFlexLayout");
 
 export type LayoutSeparator = "start" | "center" | "end";
-export type LayoutDirection =
-  | "row"
-  | "column"
-  | "row-reverse"
-  | "column-reverse";
+export type LayoutDirection = "row" | "column";
 
 export const FLEX_ALIGNMENT_BASE = ["start", "end", "center"] as const;
 export const FLEX_CONTENT_ALIGNMENT_BASE = [
