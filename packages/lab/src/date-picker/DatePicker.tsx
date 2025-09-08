@@ -90,7 +90,6 @@ export const DatePickerMain = forwardRef<
       children,
       readOnly,
       disabled,
-      isDayDisabled,
       isDayHighlighted,
       isDayUnselectable,
       selectionVariant,
@@ -108,7 +107,6 @@ export const DatePickerMain = forwardRef<
     const useDatePickerProps: any = {
       readOnly,
       disabled,
-      isDayDisabled,
       isDayHighlighted,
       isDayUnselectable,
       selectionVariant,

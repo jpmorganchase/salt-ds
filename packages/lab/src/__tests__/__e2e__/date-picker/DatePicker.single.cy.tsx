@@ -32,7 +32,6 @@ const {
   SingleWithConfirmation,
   SingleWithCustomPanel,
   SingleWithCustomParser,
-  SingleWithDisabledDates,
   SingleWithFormField,
   SingleWithMinMaxDate,
   SingleWithTodayButton,
@@ -744,46 +743,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", {
             name: adapter.format(initialDate, "DD MMMM YYYY"),
           }).should("have.attr", "aria-pressed", "true");
-        });
-
-        it("SHOULD not be able to select disabled dates", () => {
-          cy.mount(
-            <SingleWithDisabledDates defaultSelectedDate={initialDate} />,
-          );
-
-          const startDate = adapter.parse("01 Jan 2025", "DD MMM YYYY").date;
-          const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
-          let currentDate = adapter.clone(startDate);
-
-          // Simulate opening the calendar
-          cy.findByRole("button", { name: "Open Calendar" }).realClick();
-          // Verify that the calendar is displayed
-          cy.findByRole("application").should("exist");
-
-          while (currentDate <= endDate) {
-            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
-            const dayOfWeek = adapter.getDayOfWeek(currentDate);
-            const isWeekend =
-              (adapter.lib === "luxon" &&
-                (dayOfWeek === 7 || dayOfWeek === 6)) ||
-              (adapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
-            if (isWeekend) {
-              // Verify weekend dates are disabled
-              cy.findByRole("button", { name: formattedDate }).should(
-                "have.attr",
-                "aria-disabled",
-                "true",
-              );
-            } else {
-              // Verify weekday dates are enabled
-              cy.findByRole("button", { name: formattedDate }).should(
-                "not.have.attr",
-                "aria-disabled",
-                "true",
-              );
-            }
-            currentDate = adapter.add(currentDate, { days: 1 });
-          }
         });
 
         it("SHOULD not be able to select un-selectable dates", () => {

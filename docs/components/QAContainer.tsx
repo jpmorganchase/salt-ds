@@ -20,6 +20,7 @@ const withBaseName = makePrefixer("saltQAContainer");
 
 export interface QAContainerProps extends ComponentPropsWithoutRef<"div"> {
   cols?: number;
+  densities?: Array<(typeof DensityValues)[number]>;
   height?: number;
   enableStyleInjection?: boolean;
   itemPadding?: number;
@@ -44,7 +45,9 @@ const DensityValues = ["high", "medium", "low", "touch"] as const;
 const DensityBlock = ({
   mode,
   children,
+  densities = [],
 }: ComponentPropsWithoutRef<"div"> & {
+  densities: QAContainerProps["densities"];
   mode: Mode;
 }) => {
   const { themeNext } = useTheme();
@@ -53,7 +56,7 @@ const DensityBlock = ({
   return (
     <ChosenSaltProvider mode={mode}>
       <BackgroundBlock>
-        {DensityValues.map((d) => (
+        {densities.map((d) => (
           <ChosenSaltProvider mode={mode} density={d} key={d}>
             <div className="background-item-wrapper">{children}</div>
           </ChosenSaltProvider>
@@ -67,6 +70,7 @@ export const QAContainer = ({
   children,
   className,
   cols = 3,
+  densities = ["high", "medium", "low", "touch"],
   enableStyleInjection = true,
   height,
   itemPadding,
@@ -99,18 +103,18 @@ export const QAContainer = ({
       {transposeDensity ? (
         <>
           {Children.map(children, (child, i) => (
-            <DensityBlock key={i} mode="light">
+            <DensityBlock key={i} mode="light" densities={densities}>
               {child}
             </DensityBlock>
           ))}
           {Children.map(children, (child, i) => (
-            <DensityBlock key={i} mode="dark">
+            <DensityBlock key={i} mode="dark" densities={densities}>
               {child}
             </DensityBlock>
           ))}
         </>
       ) : (
-        DensityValues.map((d) => (
+        densities.map((d) => (
           <Fragment key={d}>
             <ChosenSaltProvider
               mode="light"

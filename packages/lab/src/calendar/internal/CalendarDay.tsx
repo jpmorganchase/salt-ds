@@ -81,31 +81,26 @@ export const CalendarDay = forwardRef<
     date,
     month,
   });
-  const {
-    focused,
-    outOfRange,
-    today,
-    unselectable,
-    highlighted,
-    hidden,
-    disabled,
-  } = status;
+  const { focused, today, unselectable, highlighted, hidden, outOfRange } =
+    status;
   const buttonRef = useForkRef(ref, focusedDateRef);
 
   useLayoutEffect(() => {
     if (focused) {
       focusedDateRef?.current?.focus({ preventScroll: true });
     }
-  }, [focused, focusedDateRef?.current?.focus]);
+  }, [focused]);
 
   const defaultButtonProps = {
     "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
     children: (
-      <span className={withBaseName("content")}>
-        {dateAdapter.format(date, format)}
-      </span>
+      <>
+        {highlighted ? <div className={withBaseName("highlighted")} /> : null}
+        <span className={withBaseName("content")}>
+          {dateAdapter.format(date, format)}
+        </span>
+      </>
     ),
-    disabled,
     ...dayProps,
     ref: buttonRef,
     ...rest,
@@ -113,10 +108,8 @@ export const CalendarDay = forwardRef<
       withBaseName(),
       {
         [withBaseName("hidden")]: hidden,
-        [withBaseName("outOfRange")]: outOfRange,
-        [withBaseName("disabled")]: disabled,
         [withBaseName("unselectable")]: !!unselectable,
-        [withBaseName("highlighted")]: !!highlighted,
+        [withBaseName("outOfRange")]: outOfRange,
         [withBaseName("focused")]: !!focused,
         [withBaseName("today")]: today,
       },
@@ -125,36 +118,32 @@ export const CalendarDay = forwardRef<
     ),
   };
 
-  const defaultButtonElement = (
+  const buttonElement = render ? (
+    renderProps<React.ElementType<renderCalendarDayProps<TDate>>>("button", {
+      render,
+      ...defaultButtonProps,
+      status,
+      date,
+    })
+  ) : (
     <button type={"button"} {...defaultButtonProps} />
   );
 
-  const buttonElement = render
-    ? renderProps<React.ElementType<renderCalendarDayProps<TDate>>>("button", {
-        render,
-        ...defaultButtonProps,
-        status,
-        date,
-      })
-    : defaultButtonElement;
-
-  const hasTooltip = unselectableReason || highlightedReason;
-  if (!hasTooltip) {
-    return buttonElement;
+  const tooltipContent = unselectableReason || highlightedReason;
+  if (tooltipContent && tooltipContent?.length) {
+    return (
+      <Tooltip
+        hideIcon
+        status="info"
+        content={tooltipContent}
+        placement="top"
+        enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
+        {...TooltipProps}
+      >
+        {buttonElement}
+      </Tooltip>
+    );
   }
-  return (
-    <Tooltip
-      hideIcon
-      status={unselectableReason ? "error" : "info"}
-      content={
-        unselectableReason || highlightedReason || "Date is out of range"
-      }
-      placement="top"
-      enterDelay={0} // --salt-duration-instant
-      leaveDelay={0} // --salt-duration-instant
-      {...TooltipProps}
-    >
-      {buttonElement}
-    </Tooltip>
-  );
+  return buttonElement;
 });
