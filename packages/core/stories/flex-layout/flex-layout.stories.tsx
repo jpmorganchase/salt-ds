@@ -14,7 +14,7 @@ export default {
       control: { type: "select" },
     },
     direction: {
-      options: ["row", "column", "row-reverse", "column-reverse"],
+      options: ["row", "column"],
       control: { type: "select" },
     },
     gap: {
