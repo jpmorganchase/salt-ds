@@ -95,11 +95,15 @@ const DialogTemplate: StoryFn<
     );
 
   const cancel = (
-    <Button appearance="transparent" onClick={handleClose}>
+    <Button sentiment="accented" appearance="transparent" onClick={handleClose}>
       Cancel
     </Button>
   );
-  const previous = <Button onClick={handleClose}>Previous</Button>;
+  const previous = (
+    <Button sentiment="accented" appearance="bordered" onClick={handleClose}>
+      Previous
+    </Button>
+  );
   const next = (
     <Button sentiment="accented" onClick={handleClose}>
       Next
@@ -256,7 +260,11 @@ const AlertDialogTemplate: StoryFn<
     </Button>
   );
 
-  const cancel = <Button onClick={handleClose}>Cancel</Button>;
+  const cancel = (
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
 
   return (
     <>
@@ -341,7 +349,11 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
       "row",
     );
 
-  const cancel = <Button onClick={handleClose}>Cancel</Button>;
+  const cancel = (
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
   const deleteAction = (
     <Button sentiment="accented" onClick={handleClose}>
       Delete
@@ -399,7 +411,9 @@ export const DesktopDialog = () => {
         <DialogHeader header="Window Dialog" />
         <DialogContent>Hello world!</DialogContent>
         <DialogActions>
-          <Button>Cancel</Button>
+          <Button appearance="bordered" sentiment="accented">
+            Cancel
+          </Button>
           <Button sentiment="accented">Save</Button>
         </DialogActions>
       </FakeWindow>
@@ -408,7 +422,9 @@ export const DesktopDialog = () => {
         <DialogHeader header="Window Dialog" />
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
-          <Button>Cancel</Button>
+          <Button appearance="bordered" sentiment="accented">
+            Cancel
+          </Button>
           <Button sentiment="accented">Save</Button>
         </DialogActions>
       </FakeWindow>
@@ -417,7 +433,9 @@ export const DesktopDialog = () => {
         <DialogHeader status="warning" header="Warning Dialog" />
         <DialogContent>Potential issues abound!</DialogContent>
         <DialogActions>
-          <Button>Cancel</Button>
+          <Button appearance="bordered" sentiment="accented">
+            Cancel
+          </Button>
           <Button sentiment="accented">Ok</Button>
         </DialogActions>
       </FakeWindow>
@@ -452,11 +470,15 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
     );
 
   const cancel = (
-    <Button appearance="transparent" onClick={handleClose}>
+    <Button appearance="transparent" sentiment="accented" onClick={handleClose}>
       Cancel
     </Button>
   );
-  const previous = <Button onClick={handleClose}>Previous</Button>;
+  const previous = (
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
+      Previous
+    </Button>
+  );
   const next = (
     <Button sentiment="accented" onClick={handleClose}>
       Next
@@ -528,7 +550,11 @@ export const KeyboardInitialActionFocus: StoryFn<
       Ok
     </Button>
   );
-  const cancel = <Button onClick={handleClose}>Cancel</Button>;
+  const cancel = (
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
 
   return (
     <>

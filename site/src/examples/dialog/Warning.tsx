@@ -38,7 +38,7 @@ export const Warning = (): ReactElement => {
     );
 
   const cancel = (
-    <Button appearance="bordered" onClick={handleClose}>
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
       Cancel
     </Button>
   );
