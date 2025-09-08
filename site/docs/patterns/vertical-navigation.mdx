@@ -36,7 +36,7 @@ A vertical navigation consists of a stack of navigation item components:
 1. [Default navigation item](/salt/components/navigation-item/examples#vertical): When clicked on, a navigation item links the user to a different section of a website or application. Only one navigation item can be active at a single time.
 2. [Parent navigation item](/salt/components/navigation-item/examples#vertical-nested-group): Displayed with a chevron and is expandable only. Upon interaction a parent navigation item doesn’t direct the user anywhere and, instead, reveals reveals nested navigation items inside it.
 
-You'll typically use vertical navigation in a sidebar, on the left side of the screen, within a [drawer](/salt/components/drawer), or a [parent-child layout](/salt/components/parent-child-layout).
+You'll typically use vertical navigation in a sidebar, on the left side of the screen, within a [drawer](/salt/components/drawer), or a [parent-child layout](/salt/components/layout/parent-child-layout).
 
 <Diagram
   src="/img/patterns/vertical-navigation/vertical-navigation-anatomy.png"
@@ -50,7 +50,7 @@ You'll typically use vertical navigation in a sidebar, on the left side of the s
 
 ### Layout
 
-Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to display navigation items in a column formation. Use `--size-border` for spacing between the items.
+Vertical navigation uses [`StackLayout`](/salt/components/layout/stack-layout) to display navigation items in a column formation. Use `--size-border` for spacing between the items.
 
 <Diagram
   src="/img/patterns/vertical-navigation/vert-nav-layout.png"
