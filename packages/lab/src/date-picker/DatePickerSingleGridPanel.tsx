@@ -83,11 +83,11 @@ export interface DatePickerPanelBaseProps<TDate extends DateFrameworkType>
   /**
    * Callback fired when the focused date changes.
    * @param event - The synthetic event or null if triggered by code.
-   * @param hoveredDate - The new hovered date.
+   * @param focusedDate - The new hovered date.
    */
   onFocusedDateChange?: (
     event: SyntheticEvent | null,
-    hoveredDate?: TDate | null,
+    focusedDate?: TDate | null,
   ) => void;
   /**
    * Callback fired when the hovered date changes.
@@ -171,7 +171,7 @@ export const DatePickerSingleGridPanel = forwardRef(
         minDate = dateAdapter.startOf(dateAdapter.today(timezone), "month"),
         maxDate = dateAdapter.add(minDate, { months: 1 }),
       },
-      helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
+      helpers: { select, isDayHighlighted, isDayUnselectable },
     } = stateAndHelpers;
 
     const { matchedBreakpoints } = useBreakpoint();
@@ -282,12 +282,7 @@ export const DatePickerSingleGridPanel = forwardRef(
         );
       };
       const isDaySelectable = (date: TDate) =>
-        !(
-          date &&
-          (isDayUnselectable?.(date) ||
-            isDayDisabled?.(date) ||
-            isOutsideAllowedDates(date))
-        );
+        !(date && (isDayUnselectable?.(date) || isOutsideAllowedDates(date)));
 
       const startVisibleMonth = dateAdapter.startOf(visibleMonth, "month");
       const endVisibleMonth = dateAdapter.add(visibleMonth, {
@@ -351,7 +346,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       );
     }, [
       dateAdapter,
-      isDayDisabled,
       isDayUnselectable,
       minDate,
       maxDate,
@@ -380,7 +374,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       focusedDateRef: initialFocusRef,
       focusedDate: calendarGridFocused?.current ? focusedDate : null,
       hoveredDate,
-      isDayDisabled,
       isDayHighlighted,
       isDayUnselectable,
       hideOutOfRangeDates: true,

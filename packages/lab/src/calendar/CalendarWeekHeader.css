@@ -1,15 +1,13 @@
 .saltCalendarWeekHeader {
-  display: grid;
-  gap: var(--salt-spacing-fixed-100);
-  grid-template-columns: repeat(7, var(--salt-size-base));
+  display: flex;
   text-align: center;
   align-items: center;
   height: var(--salt-size-base);
-  margin: var(--salt-spacing-fixed-100);
+  gap: var(--calendar-gap);
 }
 
 .saltCalendarWeekHeader-dayOfWeek {
-  width: var(--salt-size-base);
+  width: var(--calendar-day-size);
   color: var(--salt-content-secondary-foreground);
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);

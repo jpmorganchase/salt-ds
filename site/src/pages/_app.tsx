@@ -1,5 +1,5 @@
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { LocalizationProvider } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import type { AppProps } from "next/app";
@@ -47,7 +47,7 @@ export default function MyApp({
   return (
     <StoreProvider value={createStore()}>
       <Metadata />
-      <LocalizationProvider DateAdapter={AdapterDateFns}>
+      <LocalizationProvider DateAdapter={AdapterLuxon}>
         <ThemeProvider
           themeClassName={clsx(
             "salt-editorial",

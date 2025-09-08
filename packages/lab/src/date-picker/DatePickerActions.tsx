@@ -155,7 +155,7 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
     <div className={clsx(className, withBaseName())} ref={ref} {...rest}>
       <div className={withBaseName("body")}>{children}</div>
       <Button
-        appearance="transparent"
+        appearance="bordered"
         sentiment="neutral"
         ref={cancelButtonRef}
         {...CancelButtonProps}
