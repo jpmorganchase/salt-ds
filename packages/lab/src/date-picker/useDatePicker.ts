@@ -23,12 +23,6 @@ interface UseDatePickerBaseProps<TDate> {
   /** If `true`, the component is disabled. */
   disabled?: boolean;
   /**
-   * Function to determine if a day is disabled.
-   * @param date - The date to check.
-   * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
-   */
-  isDayDisabled?: (date: TDate) => string | false | undefined;
-  /**
    * Function to determine if a day is highlighted.
    * @param date - The date to check.
    * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
@@ -180,7 +174,6 @@ export function useDatePicker<
     disabled,
     selectionVariant,
     defaultSelectedDate,
-    isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
     selectedDate: selectedDateProp,
@@ -275,7 +268,6 @@ export function useDatePicker<
       const canBeApplied =
         dateAdapter.isValid(date) && !details?.errors?.length;
       setSelectedDate(date);
-      checkAndAddError(date, isDayDisabled, "disabled", details);
       checkAndAddError(date, isDayUnselectable, "unselectable", details);
 
       if (selectionVariant === "single") {
@@ -289,7 +281,6 @@ export function useDatePicker<
       checkAndAddError,
       dateAdapter,
       applySingle,
-      isDayDisabled,
       isDayUnselectable,
       enableApply,
       onSelectionChange,
@@ -315,18 +306,6 @@ export function useDatePicker<
       details: DateInputRangeDetails,
     ) => {
       setSelectedDate(date);
-      checkAndAddError(
-        date?.startDate,
-        isDayDisabled,
-        "disabled",
-        details?.startDate,
-      );
-      checkAndAddError(
-        date?.endDate,
-        isDayDisabled,
-        "disabled",
-        details?.endDate,
-      );
       checkAndAddError(
         date?.startDate,
         isDayUnselectable,
@@ -358,7 +337,6 @@ export function useDatePicker<
       checkAndAddError,
       dateAdapter,
       applyRange,
-      isDayDisabled,
       isDayUnselectable,
       enableApply,
       onSelectionChange,
@@ -390,7 +368,6 @@ export function useDatePicker<
     },
     helpers: {
       cancel,
-      isDayDisabled,
       isDayHighlighted,
       isDayUnselectable,
       setEnableApply,

@@ -10,7 +10,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   type DateRangeSelection,
 } from "@salt-ds/lab";
 
@@ -27,11 +26,11 @@ function getAllDatesInRange(
   startDate: DateFrameworkType,
   endDate: DateFrameworkType,
 ) {
-  const dates = [];
+  const dates = [startDate];
   let currentDate = startDate;
-  while (adapter.compare(currentDate, endDate) <= 0) {
-    dates.push(startDate);
+  while (!adapter.isSame(currentDate, endDate, "day")) {
     currentDate = adapter.add(currentDate, { days: 1 });
+    dates.push(currentDate);
   }
   return dates;
 }
@@ -52,27 +51,38 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
       const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
 
       it("SHOULD allow a defined range to be selected", () => {
+        const endDateOffset = (date: ReturnType<typeof adapter.date>) =>
+          adapter.add(date, { days: 4 });
+        const offsetDate = endDateOffset(testDate);
+        const datesInRange = getAllDatesInRange(adapter, testDate, offsetDate);
+
         cy.mount(
-          <Calendar selectionVariant="offset" defaultVisibleMonth={testDate}>
+          <Calendar
+            selectionVariant="offset"
+            defaultVisibleMonth={testDate}
+            endDateOffset={endDateOffset}
+          >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
-
-        const offsetDate = adapter.add(testDate, { days: 4 });
-        const datesInRange = getAllDatesInRange(adapter, testDate, offsetDate);
 
         // Simulate hovering over the base date button
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
         }).realHover();
 
-        // Verify that all dates in the range are highlighted
-        datesInRange.forEach((dateInRange) => {
+        // Verify that all dates in the range are highlighted correctly
+        datesInRange.forEach((dateInRange, index) => {
+          let expectedClassName = "saltCalendarDay-hoveredSpan";
+          if (index === 0) {
+            expectedClassName = "saltCalendarDay-hoveredStart";
+          } else if (index === datesInRange.length - 1) {
+            expectedClassName = "saltCalendarDay-hoveredEnd";
+          }
           cy.findByRole("button", {
             name: adapter.format(dateInRange, "DD MMMM YYYY"),
-          }).should("have.class", "saltCalendarDay-hoveredOffset");
+          }).should("have.class", expectedClassName);
         });
 
         // Simulate clicking the base date button to select the range
@@ -126,6 +136,69 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           }).should("have.attr", "aria-pressed", "true");
         });
       });
+
+      it("SHOULD be able to navigate between months through focus", () => {
+        const endDateOffset = (date: ReturnType<typeof adapter.date>) =>
+          adapter.add(date, { days: 4 });
+        const offsetDate = endDateOffset(testDate);
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 2 });
+
+        cy.mount(
+          <Calendar
+            selectionVariant="offset"
+            defaultVisibleMonth={startDate}
+            endDateOffset={endDateOffset}
+          >
+            <CalendarNavigation />
+            <CalendarGrid />
+          </Calendar>,
+        );
+
+        // Simulate pressing the ArrowDown key to move the next month
+        const weekbeforeEndOfMonth = adapter.subtract(
+          adapter.endOf(startDate, "month"),
+          { days: 6 },
+        );
+        const nextMonth = adapter.startOf(
+          adapter.add(startDate, { months: 1 }),
+          "month",
+        );
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        }).realClick();
+        cy.realPress("ArrowDown");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(nextMonth, "DD MMMM YYYY"),
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(nextMonth, "MMM"),
+        );
+
+        // Simulate pressing the ArrowUp key to move back to previous month
+        cy.realPress("ArrowUp");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(startDate, "MMM"),
+        );
+      });
     });
   });
 });
@@ -174,7 +247,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             hideOutOfRangeDates
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -187,7 +259,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Verify that the focus moves to the first selected date of the visible month
         cy.findByRole("button", {
           name: adapter.format(testDate.startDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if selected date is not within the visible month", () => {
@@ -207,7 +283,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             hideOutOfRangeDates
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -220,7 +295,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if there is no selected date", () => {
@@ -233,7 +312,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             endDateOffset={endDateOffset}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -246,7 +324,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
@@ -259,7 +341,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             endDateOffset={endDateOffset}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -278,7 +359,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         startOfMonth = adapter.add(startOfMonth, { months: 2 });
         cy.findByRole("button", {
           name: adapter.format(startOfMonth, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD allow multiple dates to be selected and unselected", () => {
@@ -319,7 +404,6 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
             select={selectStub}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -363,7 +447,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Simulate selecting the offset through keyboard selection
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
         // Simulate pressing the Enter key to select the current date
         cy.realPress("Enter");
         // Verify that the offset is selected
@@ -372,7 +460,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Simulate unselecting the offset through keyboard selection
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
         // Simulate pressing the Enter key to select the current date
         cy.realPress("Enter");
         // Verify that the offset is unselected

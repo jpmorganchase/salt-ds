@@ -51,12 +51,6 @@ interface UseCalendarBaseProps<TDate>
    */
   isDayHighlighted?: (date: TDate) => string | false | undefined;
   /**
-   * Function to determine if a day is disabled.
-   * @param date - The date to check.
-   * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
-   */
-  isDayDisabled?: (date: TDate) => string | false | undefined;
-  /**
    * If `true`, hides dates that are out of the selectable range.
    */
   hideOutOfRangeDates?: boolean;
@@ -152,12 +146,6 @@ const defaultIsDayUnselectable = (): string | false => false;
  * @returns `false` indicating the day is not highlighted.
  */
 const defaultIsDayHighlighted = (): string | false => false;
-
-/**
- * Default function to determine if a day is disabled.
- * @returns `false` indicating the day is not disabled.
- */
-const defaultIsDayDisabled = (): false => false;
 
 /**
  * Represents the return type of the useCalendar hook.
@@ -263,14 +251,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isDayHighlighted: (date: TDate) => string | false | undefined;
 
     /**
-     * Determines if a day is disabled.
-     *
-     * @param date - The date to check.
-     * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
-     */
-    isDayDisabled: (date: TDate) => string | false | undefined;
-
-    /**
      * Determines if a day is visible in the calendar.
      *
      * @param date - The date to check.
@@ -303,6 +283,14 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isOutsideAllowedYears: (date: TDate) => boolean;
 
     /**
+     * Determines if the date range is on the same day
+     *
+     * @param date - The range to check.
+     * @returns `true` if the range start and end date are the same
+     */
+    isSameDay: (date: TDate) => boolean;
+
+    /**
      * Sets the selected date in the calendar.
      *
      * @param event - The event triggering the change.
@@ -324,6 +312,14 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isSelected: (date: TDate) => boolean;
 
     /**
+     * Determines if a date is hovered.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is hovered, otherwise `false`.
+     */
+    isHovered: (date: TDate) => boolean;
+
+    /**
      * Sets the hovered date in the calendar.
      *
      * @param event - The event triggering the change.
@@ -343,14 +339,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isSelectedSpan: (date: TDate) => boolean;
 
     /**
-     * Determines if a date is part of a hovered span.
-     *
-     * @param date - The date to check.
-     * @returns `true` if the date is part of a hovered span, otherwise `false`.
-     */
-    isHoveredSpan: (date: TDate) => boolean;
-
-    /**
      * Determines if a date is the start of a selected range.
      *
      * @param date - The date to check.
@@ -367,20 +355,28 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     isSelectedEnd: (date: TDate) => boolean;
 
     /**
-     * Determines if a date is hovered.
+     * Determines if the hovered and a new date range would be created, if selected.
      *
      * @param date - The date to check.
-     * @returns `true` if the date is hovered, otherwise `false`.
+     * @returns `true` if the date is the start of a hovered offset, otherwise `false`.
      */
-    isHovered: (date: TDate) => boolean;
+    isHoveredStart: (date: TDate) => boolean;
 
     /**
-     * Determines if a date is part of a hovered offset.
+     * Determines if a date is part of a hovered range.
      *
      * @param date - The date to check.
      * @returns `true` if the date is part of a hovered offset, otherwise `false`.
      */
-    isHoveredOffset: (date: TDate) => boolean;
+    isHoveredSpan: (date: TDate) => boolean;
+
+    /**
+     * Determines if the hovered and a date range would be completed, if selected.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is the end of a hovered offset, otherwise `false`.
+     */
+    isHoveredEnd: (date: TDate) => boolean;
 
     /**
      * Determines if a day is selectable.
@@ -407,7 +403,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     hoveredDate,
     focusedDate: focusedDateProp,
     focusedDateRef,
-    isDayDisabled = defaultIsDayDisabled,
     isDayHighlighted = defaultIsDayHighlighted,
     isDayUnselectable = defaultIsDayUnselectable,
     multiselect,
@@ -431,9 +426,13 @@ export function useCalendar<TDate extends DateFrameworkType>(
     resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
 
   const [visibleMonth, setVisibleMonthState] = useControlled({
-    controlled: visibleMonthProp
-      ? dateAdapter.startOf(visibleMonthProp, "month")
-      : undefined,
+    controlled: useMemo(
+      () =>
+        visibleMonthProp
+          ? dateAdapter.startOf(visibleMonthProp, "month")
+          : undefined,
+      [visibleMonthProp],
+    ),
     // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
     default: useMemo(
       () => dateAdapter.startOf(defaultVisibleMonth, "month"),
@@ -479,13 +478,8 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const isDaySelectable = useCallback(
     (date?: TDate) =>
-      !(
-        date &&
-        (isDayUnselectable(date) ||
-          isDayDisabled(date) ||
-          isOutsideAllowedDates(date))
-      ),
-    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates],
+      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date))),
+    [isDayUnselectable, isOutsideAllowedDates],
   );
 
   const isDayVisible = useCallback(
@@ -537,7 +531,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
       focusedDate &&
       !focusedDateProp !== undefined &&
       !isDayVisible(focusedDate) &&
-      isDaySelectable(focusedDate) &&
       !isOutsideAllowedDates(focusedDate);
 
     if (shouldTransition) {
@@ -547,7 +540,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     dateAdapter,
     focusedDateProp,
     isOutsideAllowedDates,
-    isDaySelectable,
     selectionManager?.state?.focusedDate,
   ]);
 
@@ -577,7 +569,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
           setVisibleMonth,
           isDayUnselectable,
           isDayHighlighted,
-          isDayDisabled,
           isDayVisible,
           isOutsideAllowedDates,
           isOutsideAllowedMonths,
@@ -596,7 +587,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
       setVisibleMonth,
       isDayUnselectable,
       isDayHighlighted,
-      isDayDisabled,
       isDayVisible,
       isOutsideAllowedDates,
       isOutsideAllowedMonths,

@@ -63,9 +63,7 @@ export const CalendarMonthHeader = forwardRef<
         ref={ref}
         {...rest}
       >
-        <Text>
-          <small>{formatMonth(month)}</small>
-        </Text>
+        <Text>{formatMonth(month)}</Text>
       </div>
     );
   },

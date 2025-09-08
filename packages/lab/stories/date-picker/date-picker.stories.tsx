@@ -2024,7 +2024,7 @@ export const SingleWithUnselectableDates: StoryFn<
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "weekends are un-selectable" : false;
+    return isWeekend ? "Weekends are un-selectable" : false;
   };
 
   return (
@@ -2120,7 +2120,7 @@ export const RangeWithUnselectableDates: StoryFn<
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "weekends are un-selectable" : false;
+    return isWeekend ? "Weekends are un-selectable" : false;
   };
 
   return (
@@ -2130,175 +2130,6 @@ export const RangeWithUnselectableDates: StoryFn<
         selectionVariant="range"
         {...args}
         isDayUnselectable={isDayUnselectable}
-        onSelectionChange={handleSelectionChange}
-      >
-        <DatePickerTrigger>
-          <DatePickerRangeInput />
-        </DatePickerTrigger>
-        <DatePickerOverlay>
-          <DatePickerRangePanel helperText={helperText} />
-        </DatePickerOverlay>
-        <DatePickerHelperText>{helperText}</DatePickerHelperText>
-      </DatePicker>
-    </FormField>
-  );
-};
-
-export const SingleWithDisabledDates: StoryFn<
-  DatePickerSingleProps<DateFrameworkType>
-> = ({ selectionVariant, ...args }) => {
-  const { dateAdapter } = useLocalization();
-  const defaultHelperText =
-    "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const handleSelectionChange = useCallback(
-    (
-      event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
-      details: DateInputSingleDetails | undefined,
-    ) => {
-      const { value, errors } = details || {};
-      console.log(
-        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
-      );
-      if (errors?.length) {
-        console.log(
-          `Error(s): ${errors
-            .map(({ type, message }) => `type=${type} message=${message}`)
-            .join(",")}`,
-        );
-        if (value) {
-          console.log(`Original Value: ${value}`);
-        }
-      }
-      if (errors?.length && details?.value?.length) {
-        setHelperText(`${errorHelperText} - ${errors[0].message}`);
-        setValidationStatus("error");
-      } else {
-        setHelperText(defaultHelperText);
-        setValidationStatus(undefined);
-      }
-      args?.onSelectionChange?.(event, date, details);
-    },
-    [args?.onSelectionChange, dateAdapter],
-  );
-
-  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
-
-    return isWeekend ? "weekends are disabled" : false;
-  };
-
-  return (
-    <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
-      <DatePicker
-        selectionVariant="single"
-        {...args}
-        isDayDisabled={isDayDisabled}
-        onSelectionChange={handleSelectionChange}
-      >
-        <DatePickerTrigger>
-          <DatePickerSingleInput />
-        </DatePickerTrigger>
-        <DatePickerOverlay>
-          <DatePickerSingleGridPanel helperText={helperText} />
-        </DatePickerOverlay>
-        <DatePickerHelperText>{helperText}</DatePickerHelperText>
-      </DatePicker>
-    </FormField>
-  );
-};
-
-export const RangeWithDisabledDates: StoryFn<
-  DatePickerRangeProps<DateFrameworkType>
-> = ({ selectionVariant, ...args }) => {
-  const { dateAdapter } = useLocalization();
-  const defaultHelperText =
-    "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const handleSelectionChange = useCallback(
-    (
-      event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
-      details: DateInputRangeDetails | undefined,
-    ) => {
-      const { startDate, endDate } = date ?? {};
-      const {
-        startDate: {
-          value: startDateOriginalValue = undefined,
-          errors: startDateErrors = undefined,
-        } = {},
-        endDate: {
-          value: endDateOriginalValue = undefined,
-          errors: endDateErrors = undefined,
-        } = {},
-      } = details || {};
-      console.log(
-        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
-      );
-      if (startDateErrors?.length) {
-        console.log(
-          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
-        );
-        if (startDateOriginalValue) {
-          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
-        }
-      }
-      if (endDateErrors?.length) {
-        console.log(
-          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
-        );
-        if (endDateOriginalValue) {
-          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
-        }
-      }
-      if (startDateErrors?.length && startDateOriginalValue) {
-        setValidationStatus("error");
-        setHelperText(
-          `${errorHelperText} - start date, ${startDateErrors[0].message}`,
-        );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
-        setValidationStatus("error");
-        setHelperText(
-          `${errorHelperText} - end date, ${endDateErrors[0].message}`,
-        );
-      } else {
-        setValidationStatus(undefined);
-        setHelperText(defaultHelperText);
-      }
-      args?.onSelectionChange?.(event, date, details);
-    },
-    [args?.onSelectionChange, dateAdapter],
-  );
-
-  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
-
-    return isWeekend ? "weekends are disabled" : false;
-  };
-
-  return (
-    <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
-      <DatePicker
-        selectionVariant="range"
-        {...args}
-        isDayDisabled={isDayDisabled}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
@@ -2362,7 +2193,7 @@ export const SingleWithHighlightedDates: StoryFn<
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "weekends are highlighted" : false;
+    return isWeekend ? "Weekends are highlighted" : false;
   };
 
   return (
@@ -2458,7 +2289,7 @@ export const RangeWithHighlightedDates: StoryFn<
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "weekends are highlighted" : false;
+    return isWeekend ? "Weekends are highlighted" : false;
   };
 
   return (

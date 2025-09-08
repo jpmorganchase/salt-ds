@@ -46,7 +46,7 @@
     "@biomejs/biome": "^2.2.0",
     "@biomejs/js-api": "^3.0.0",
     "@biomejs/wasm-nodejs": "^2.2.0",
-    "@changesets/cli": "^2.27.12",
+    "@changesets/cli": "^2.29.6",
     "@cypress/code-coverage": "^3.13.6",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
@@ -97,7 +97,7 @@
     "yup": "^1.0.2"
   },
   "resolutions": {
-    "@changesets/assemble-release-plan@npm:^6.0.5": "patch:@changesets/assemble-release-plan@npm%3A6.0.5#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.5-3055b7bcad.patch",
+    "@changesets/assemble-release-plan@npm:^6.0.9": "patch:@changesets/assemble-release-plan@npm%3A6.0.9#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.9-e01af97ef4.patch",
     "@salt-ds/lab": "workspace:*",
     "next": "^14.0.0",
     "whatwg-url": "^14.0.0",

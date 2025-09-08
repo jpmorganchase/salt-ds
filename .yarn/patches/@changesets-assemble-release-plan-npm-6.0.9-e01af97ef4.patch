@@ -1,48 +1,50 @@
 diff --git a/dist/changesets-assemble-release-plan.cjs.js b/dist/changesets-assemble-release-plan.cjs.js
-index e32a5e5d39c3bd920201b5694632d2b44c92d486..16b2a8322956c5c97c3c62f48c9c550c335a52f6 100644
+index e07ba6e793021b6cfdec898afca517e293386ddb..5c8283962f76000c998ec6aacebd408a2594286a 100644
 --- a/dist/changesets-assemble-release-plan.cjs.js
 +++ b/dist/changesets-assemble-release-plan.cjs.js
-@@ -159,6 +159,9 @@ function incrementVersion(release, preInfo) {
+@@ -146,6 +146,10 @@ function incrementVersion(release, preInfo) {
+     return release.oldVersion;
    }
- 
    let version = semverInc__default["default"](release.oldVersion, release.type);
 +  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/date-adapters") {
 +    version = semverInc__default["default"](release.oldVersion, "prerelease")
 +  }
- 
++
    if (preInfo !== undefined && preInfo.state.mode !== "exit") {
      let preVersion = preInfo.preVersions.get(release.name);
-@@ -345,7 +348,8 @@ function shouldBumpMajor({
+     if (preVersion === undefined) {
+@@ -318,7 +322,8 @@ function shouldBumpMajor({
    onlyUpdatePeerDependentsWhenOutOfRange
  }) {
    // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
--  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+-  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && (
 +  // Salt patch: add `minor` to the condition. We don't want major bump when a peerDependency is minor bumped. e.g. `ag-grid-theme` should be bumped minor, when `theme` is minor bumped as well (in both it's own package.json as well as ag-grid-theme's peerDep object)
-+  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && nextRelease.type !== "minor" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
++  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && nextRelease.type !== "minor" && (
+   // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
    // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
-   !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
-   !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
+   !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && (
 diff --git a/dist/changesets-assemble-release-plan.esm.js b/dist/changesets-assemble-release-plan.esm.js
-index 221822a2e3ac86431b8aadeaf5f01eaee72a5c8e..1d1eb7c999c3e6bf3d5ec19d6703335e5ed3b657 100644
+index ea2be567403c4ef94a65f3218ccb683cf5cb4bc1..022c8c63f38ebfbda35467a518352bad2aca3733 100644
 --- a/dist/changesets-assemble-release-plan.esm.js
 +++ b/dist/changesets-assemble-release-plan.esm.js
-@@ -148,6 +148,9 @@ function incrementVersion(release, preInfo) {
+@@ -135,6 +135,10 @@ function incrementVersion(release, preInfo) {
+     return release.oldVersion;
    }
- 
    let version = semverInc(release.oldVersion, release.type);
 +  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/date-adapters") {
 +    version = semverInc(release.oldVersion, "prerelease");
 +  }
- 
++
    if (preInfo !== undefined && preInfo.state.mode !== "exit") {
      let preVersion = preInfo.preVersions.get(release.name);
-@@ -334,7 +337,8 @@ function shouldBumpMajor({
+     if (preVersion === undefined) {
+@@ -307,7 +311,8 @@ function shouldBumpMajor({
    onlyUpdatePeerDependentsWhenOutOfRange
  }) {
    // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
--  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+-  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && (
 +  // Salt patch: add `minor` to the condition. We don't want major bump when a peerDependency is minor bumped. e.g. `ag-grid-theme` should be bumped minor, when `theme` is minor bumped as well (in both it's own package.json as well as ag-grid-theme's peerDep object)
-+  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && nextRelease.type !== "minor" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
++  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && nextRelease.type !== "minor" && (
+   // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
    // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
-   !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies(incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
-   !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
+   !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies(incrementVersion(nextRelease, preInfo), versionRange)) && (
