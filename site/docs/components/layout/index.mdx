@@ -1,0 +1,18 @@
+---
+title: Overview
+layout: DetailTechnical
+sidebar:
+  groupLabel: Layouts
+data:
+  description: "`SplitLayout` displays items in two separate areas at opposite ends of a container. You can define the container in a vertical or horizontal orientation."
+  sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/split-layout"
+  package:
+    name: "@salt-ds/core"
+  alsoKnownAs: ["CSS Flexbox", "Responsive Layout"]
+  items:
+    $ref: ./*/index
+---
+
+Salt layout components are each tailored to specific structural needs:
+
+{meta.data.items?.map(({ title, data }, index) => <div style={{ marginTop: 'var(--salt-spacing-100)' }} key={`${title}-${index}`}><Text styleAs="h2">{title}</Text>{data?.description.replaceAll("`", "")}</div>)}
