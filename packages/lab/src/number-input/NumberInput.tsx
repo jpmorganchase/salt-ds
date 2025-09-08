@@ -387,6 +387,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const decrementStep = (block ? stepMultiplier : 1) * step;
       const preDecrementedValue = value;
       let adjustedValue = parse(preDecrementedValue) ?? 0;
+      if (Number.isNaN(adjustedValue)) {
+        return;
+      }
       if (adjustedValue > max) {
         adjustedValue = max;
       } else if (adjustedValue < min) {
@@ -423,6 +426,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const incrementStep = (block ? stepMultiplier : 1) * step;
       const preIncrementedValue = value;
       let adjustedValue = parse(preIncrementedValue) ?? 0;
+      if (Number.isNaN(adjustedValue)) {
+        return;
+      }
       if (adjustedValue > max) {
         adjustedValue = max;
       } else if (adjustedValue < min) {

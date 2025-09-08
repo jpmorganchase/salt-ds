@@ -442,8 +442,13 @@ describe("Number Input", () => {
   });
 
   it("as a controlled component, emulates native input and cannot type non-numeric but can set an invalid value through default value", () => {
-    cy.mount(<Default value={"abc-12.3.+-def"} />);
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<Default value={"abc-12.3.+-def"} onChange={changeSpy} />);
+
     cy.findByRole("spinbutton").should("have.value", "abc-12.3.+-def");
+    cy.findByLabelText("decrement value").realClick();
+    cy.findByRole("spinbutton").should("have.value", "abc-12.3.+-def");
+    cy.get("@changeSpy").should("not.have.been.called");
   });
 
   it("resets to default value in ResetAdornment example", () => {
