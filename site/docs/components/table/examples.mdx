@@ -14,7 +14,7 @@ The table component is used to display tabular data in a structured format. All 
 
 <LivePreview componentName="table" exampleName="Default" />
 
-## Body
+## Body variant
 
 Table is available in several variants: primary, secondary and tertiary. The `variant` prop controls the background color of the table. This can be used to create different levels of hierarchy within your UI.
 
@@ -22,18 +22,21 @@ The `divider` prop can be used to adjust the appearance of the dividers in the t
 
 <LivePreview componentName="table" exampleName="Variants" />
 
-## Body - Zebra
+## Zebra
 
-The zebra variant of the table adds alternating row colors to improve readability. This is particularly useful for large datasets where distinguishing between rows can be challenging.
-The `zebra` prop can be used with the `variant` prop to achieve different styles.
+The `zebra` prop adds alternating row colors to improve readability. This is particularly useful for large datasets where distinguishing between rows can be challenging.
 
-Like `variant` the `zebra` prop supports three values: `primary`, `secondary`, and `tertiary`.
+The color of the alternating rows is determined by the `variant` prop:
+
+- `primary` variant uses the secondary background for alternating rows.
+- `secondary` variant uses the primary background for alternating rows.
+- `tertiary` variant uses the primary background for alternating rows.
 
 The `divider` prop can be used to adjust the appearance of the dividers in the table. It accepts: `primary`, `secondary`, `tertiary` or `none`.
 
 <LivePreview componentName="table" exampleName="Zebra" />
 
-## Header
+## Header variant
 
 The `variant` prop can also be applied to the table header. This allows you to create a visual distinction between the header and the body of the table.
 
@@ -41,7 +44,7 @@ The `divider` prop can be used to adjust the appearance of the dividers in the t
 
 <LivePreview componentName="table" exampleName="THeadVariant" />
 
-## Footer
+## Footer variant
 
 The `variant` prop can also be applied to the table footer. This allows you to create a visual distinction between the footer and the body of the table.
 
