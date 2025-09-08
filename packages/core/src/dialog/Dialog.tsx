@@ -115,7 +115,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { enabled: !disableDismiss }),
+      useDismiss(context, { outsidePress: !disableDismiss }),
     ]);
 
     const { Component: FloatingComponent } = useFloatingComponent();
