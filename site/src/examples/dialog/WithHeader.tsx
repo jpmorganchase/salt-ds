@@ -40,7 +40,7 @@ export const WithHeader = (): ReactElement => {
     );
 
   const privacySettings = (
-    <Button appearance="bordered" onClick={handleClose}>
+    <Button sentiment="accented" appearance="transparent" onClick={handleClose}>
       My privacy settings
     </Button>
   );

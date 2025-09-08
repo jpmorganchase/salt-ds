@@ -43,7 +43,8 @@ export const CloseButton = (): ReactElement => {
   const privacySettings = (
     <FlexItem>
       <Button
-        appearance="bordered"
+        sentiment="accented"
+        appearance="transparent"
         onClick={handleClose}
         style={{ width: "100%" }}
       >
