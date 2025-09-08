@@ -53,10 +53,16 @@ const DialogTemplate: StoryFn<
           {content ?? defaultContent}
         </DialogContent>
         <DialogActions>
-          <Button style={{ marginRight: "auto" }} appearance="transparent">
+          <Button
+            style={{ marginRight: "auto" }}
+            sentiment="accented"
+            appearance="transparent"
+          >
             Cancel
           </Button>
-          <Button>Previous</Button>
+          <Button sentiment="accented" appearance="bordered">
+            Previous
+          </Button>
           <Button sentiment="accented" appearance="solid">
             Next
           </Button>
@@ -73,8 +79,12 @@ export const DeprecatedClosedButton: StoryFn = () => {
         <DialogHeader header="Header" />
         <DialogContent>Dialog content</DialogContent>
         <DialogActions>
-          <Button appearance="transparent">Cancel</Button>
-          <Button>Previous</Button>
+          <Button sentiment="accented" appearance="transparent">
+            Cancel
+          </Button>
+          <Button sentiment="accented" appearance="bordered">
+            Previous
+          </Button>
           <Button sentiment="accented">Next</Button>
         </DialogActions>
         <DialogCloseButton />

@@ -38,7 +38,7 @@ export const Info = (): ReactElement => {
     );
 
   const close = (
-    <Button appearance="bordered" onClick={handleClose}>
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
       Close
     </Button>
   );
