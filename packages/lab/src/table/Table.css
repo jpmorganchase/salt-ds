@@ -30,12 +30,16 @@
 }
 
 /* Zebra styling */
-table.saltTable-zebra-primary tbody tr:nth-of-type(odd) {
+table.saltTable-primary.saltTable-zebra tbody tr:nth-of-type(odd) {
+  --table-background: var(--salt-container-secondary-background);
+}
+
+table.saltTable-secondary.saltTable-zebra tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-primary-background);
 }
 
-table.saltTable-zebra-secondary tbody tr:nth-of-type(odd) {
-  --table-background: var(--salt-container-secondary-background);
+table.saltTable-tertiary.saltTable-zebra tbody tr:nth-of-type(odd) {
+  --table-background: var(--salt-container-primary-background);
 }
 
 table.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
@@ -64,7 +68,6 @@ table.saltTable thead {
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
   line-height: var(--salt-text-label-lineHeight);
-  white-space: nowrap;
 }
 
 table.saltTable thead.saltTable-thead-sticky {
@@ -114,7 +117,6 @@ table.saltTable tfoot {
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   font-weight: var(--salt-text-fontWeight-strong);
-  white-space: nowrap;
 }
 
 table.saltTable tfoot.saltTable-tfoot-sticky {
@@ -156,33 +158,37 @@ table.saltTable tfoot.saltTable-tfoot-divider-none tr {
 
 /* TH */
 table.saltTable th {
-  overflow: hidden;
-  padding: var(--salt-spacing-100);
+  padding: calc(var(--salt-spacing-75) + var(--salt-spacing-50)) var(--salt-spacing-100);
+  padding-top: calc(var(--salt-spacing-75) + var(--salt-spacing-50) + var(--salt-size-fixed-100));
   position: relative;
   text-align: start;
+  vertical-align: top;
+  font-weight: inherit;
 }
 
-.table.saltTable th[scope="row"] {
+table.saltTable tbody th[scope="row"] {
   font-weight: var(--salt-text-fontWeight-strong);
   line-height: var(--salt-text-lineHeight);
 }
 
 table.saltTable th + th::before {
-  --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   background: var(--salt-separable-tertiary-borderColor);
   content: "";
   position: absolute;
   z-index: 1;
   display: block;
-  width: var(--salt-size-border);
-  height: var(--table-th-separator-height);
-  top: calc(50% - var(--table-th-separator-height) * 0.5);
+  width: var(--salt-size-fixed-100);
+  height: calc(100% - var(--salt-spacing-200));
   left: 0;
+  top: var(--salt-spacing-100);
 }
 
 /* TR */
 table.saltTable tr {
   background: var(--table-background);
+}
+
+table.saltTable tbody tr {
   height: var(--table-row-height);
   min-height: var(--table-row-height);
 }
@@ -191,12 +197,13 @@ table.saltTable tbody tr:not(:last-child) {
   border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
 }
 
-table.saltTable-divider-none tbody tr {
+table.saltTable.saltTable-divider-none tbody tr {
   --table-divider-color: transparent;
 }
 
 /* TD */
 table.saltTable td {
   height: 100%;
-  padding: var(--salt-spacing-100);
+  vertical-align: top;
+  padding: calc(var(--salt-spacing-75) + var(--salt-spacing-50)) var(--salt-spacing-100);
 }

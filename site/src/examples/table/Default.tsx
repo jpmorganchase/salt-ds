@@ -1,34 +1,32 @@
-import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import type { ReactElement } from "react";
+import { planetData, planetDataColumns } from "./exampleData";
+
+const columns = planetDataColumns.filter(({ key }) =>
+  ["planet", "type", "atmosphere"].includes(key),
+);
 
 export const Default = (): ReactElement => {
   return (
     <Table>
       <THead>
         <TR>
-          {Array.from({ length: 3 }, (arrItem, i) => {
-            return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;
+          {columns.map(({ title }) => {
+            return <TH key={title}>{title}</TH>;
           })}
         </TR>
       </THead>
       <TBody>
-        {Array.from({ length: 5 }, (arrItem, x) => {
+        {planetData.map((data) => {
           return (
-            <TR key={`tr-${arrItem}`}>
-              {Array.from({ length: 3 }, (nestedArrItem) => {
-                return <TD key={`td-${nestedArrItem}`}>Row {x + 1}</TD>;
+            <TR key={data.planet}>
+              {columns.map(({ key }) => {
+                return <TD key={key}>{data[key]}</TD>;
               })}
             </TR>
           );
         })}
       </TBody>
-      <TFoot>
-        <TR>
-          {Array.from({ length: 3 }, (arrItem, i) => {
-            return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;
-          })}
-        </TR>
-      </TFoot>
     </Table>
   );
 };

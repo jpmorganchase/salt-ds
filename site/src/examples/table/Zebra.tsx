@@ -19,11 +19,11 @@ import {
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Zebra = (): ReactElement => {
-  const [zebra, setZebra] = useState<TableProps["zebra"]>("secondary");
+  const [variant, setVariant] = useState<TableProps["variant"]>("primary");
   const [divider, setDivider] = useState<"on" | "off">("on");
 
-  const onChangeZebra = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setZebra(event.currentTarget.value as TableProps["zebra"]);
+  const onChangeVariant = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setVariant(event.currentTarget.value as TableProps["variant"]);
   };
 
   const onChangeDivider = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -34,8 +34,8 @@ export const Zebra = (): ReactElement => {
     <StackLayout style={{ width: "100%" }}>
       <FlexLayout direction="row">
         <FormField>
-          <FormFieldLabel>Zebra</FormFieldLabel>
-          <ToggleButtonGroup onChange={onChangeZebra} value={zebra}>
+          <FormFieldLabel>Variant</FormFieldLabel>
+          <ToggleButtonGroup onChange={onChangeVariant} value={variant}>
             <ToggleButton value="primary">Primary</ToggleButton>
             <ToggleButton value="secondary">Secondary</ToggleButton>
             <ToggleButton value="tertiary">Tertiary</ToggleButton>
@@ -49,20 +49,24 @@ export const Zebra = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <Table zebra={zebra} divider={divider === "on" ? "tertiary" : "none"}>
+      <Table
+        zebra
+        variant={variant}
+        divider={divider === "on" ? "tertiary" : "none"}
+      >
         <THead>
           <TR>
-            {Array.from({ length: 3 }, (arrItem, i) => {
-              return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;
+            {Array.from({ length: 3 }, (_arrItem, i) => {
+              return <TH key={`col-${i}`}>Column {i + 1}</TH>;
             })}
           </TR>
         </THead>
         <TBody>
-          {Array.from({ length: 5 }, (arrItem, x) => {
+          {Array.from({ length: 5 }, (_arrItem, x) => {
             return (
-              <TR key={`tr-${arrItem}`}>
-                {Array.from({ length: 3 }, (nestedArrItem) => {
-                  return <TD key={`td-${nestedArrItem}`}>Row {x + 1}</TD>;
+              <TR key={`tr-${x}`}>
+                {Array.from({ length: 3 }, (_nestedArrItem, i) => {
+                  return <TD key={`td-${i}`}>Row {x + 1}</TD>;
                 })}
               </TR>
             );
@@ -70,8 +74,8 @@ export const Zebra = (): ReactElement => {
         </TBody>
         <TFoot>
           <TR>
-            {Array.from({ length: 3 }, (arrItem, i) => {
-              return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;
+            {Array.from({ length: 3 }, (_arrItem, i) => {
+              return <TD key={`footer-${i}`}>Footer {i + 1}</TD>;
             })}
           </TR>
         </TFoot>
