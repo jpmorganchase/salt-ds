@@ -3,9 +3,3 @@
   flex-direction: column;
   gap: var(--salt-spacing-300);
 }
-
-.radioButtonGroups {
-  display: flex;
-  flex-direction: column;
-  gap: var(--salt-spacing-100);
-}

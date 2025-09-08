@@ -12,10 +12,10 @@ import styles from "./index.module.css";
 import layoutDirectionStyles from "./LayoutDirection.module.css";
 
 const layoutDirectionOptions = [
-  "row",
-  "row-reverse",
   "column",
   "column-reverse",
+  "row",
+  "row-reverse",
 ];
 
 export const LayoutDirection = (): ReactElement => {
@@ -37,28 +37,26 @@ export const LayoutDirection = (): ReactElement => {
           </FlexItem>
         ))}
       </StackLayout>
-      <div className={layoutDirectionStyles.radioButtonGroups}>
-        <FormField>
-          <FormFieldLabel>Direction</FormFieldLabel>
-          <RadioButtonGroup
-            direction={"horizontal"}
-            aria-label="Direction Controls"
-            name="direction"
-            onChange={handleDirectionChange}
-            value={direction}
-          >
-            {layoutDirectionOptions.map((alignment) => (
-              <RadioButton
-                key={alignment}
-                label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1,
-                )}`}
-                value={alignment}
-              />
-            ))}
-          </RadioButtonGroup>
-        </FormField>
-      </div>
+      <FormField>
+        <FormFieldLabel>Direction</FormFieldLabel>
+        <RadioButtonGroup
+          direction={"horizontal"}
+          aria-label="Direction Controls"
+          name="direction"
+          onChange={handleDirectionChange}
+          value={direction}
+        >
+          {layoutDirectionOptions.map((alignment) => (
+            <RadioButton
+              key={alignment}
+              label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
+                1,
+              )}`}
+              value={alignment}
+            />
+          ))}
+        </RadioButtonGroup>
+      </FormField>
     </div>
   );
 };

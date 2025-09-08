@@ -12,10 +12,10 @@ import styles from "./index.module.css";
 import layoutDirectionStyles from "./LayoutDirection.module.css";
 
 const layoutDirectionOptions = [
-  "column",
-  "column-reverse",
   "row",
   "row-reverse",
+  "column",
+  "column-reverse",
 ];
 
 export const LayoutDirection = (): ReactElement => {
