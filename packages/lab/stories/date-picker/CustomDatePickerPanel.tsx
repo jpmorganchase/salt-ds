@@ -63,7 +63,7 @@ export const CustomDatePickerPanel = forwardRef<
   return (
     <StackLayout separators gap={0} ref={ref}>
       {helperText && (
-        <FlexItem className={"saltDatePickerPanel-header"}>
+        <FlexItem style={{ padding: "var(--salt-spacing-100)" }}>
           <FormFieldHelperText>{helperText}</FormFieldHelperText>
         </FlexItem>
       )}

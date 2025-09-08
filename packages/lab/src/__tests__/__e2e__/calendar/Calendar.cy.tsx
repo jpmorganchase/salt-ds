@@ -6,12 +6,7 @@ import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
-import {
-  Calendar,
-  CalendarGrid,
-  CalendarNavigation,
-  CalendarWeekHeader,
-} from "@salt-ds/lab";
+import { Calendar, CalendarGrid, CalendarNavigation } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import "moment/dist/locale/es";
 
@@ -73,7 +68,6 @@ describe("GIVEN a Calendar", () => {
           cy.mount(
             <Calendar selectionVariant={"single"}>
               <CalendarNavigation />
-              <CalendarWeekHeader />
               <CalendarGrid />
             </Calendar>,
           );
@@ -99,7 +93,6 @@ describe("GIVEN a Calendar", () => {
                 defaultVisibleMonth={testDate}
               >
                 <CalendarNavigation />
-                <CalendarWeekHeader />
                 <CalendarGrid />
               </Calendar>,
             );
@@ -121,7 +114,6 @@ describe("GIVEN a Calendar", () => {
                 defaultVisibleMonth={testDate}
               >
                 <CalendarNavigation />
-                <CalendarWeekHeader />
                 <CalendarGrid />
               </Calendar>,
             );
@@ -145,7 +137,6 @@ describe("GIVEN a Calendar", () => {
                 defaultVisibleMonth={testDate}
               >
                 <CalendarNavigation />
-                <CalendarWeekHeader />
                 <CalendarGrid />
               </Calendar>,
             );
@@ -181,7 +172,6 @@ describe("GIVEN a Calendar", () => {
                 defaultVisibleMonth={testDate}
               >
                 <CalendarNavigation />
-                <CalendarWeekHeader />
                 <CalendarGrid />
               </Calendar>,
             );
@@ -217,7 +207,6 @@ describe("GIVEN a Calendar", () => {
                 defaultVisibleMonth={testDate}
               >
                 <CalendarNavigation />
-                <CalendarWeekHeader />
                 <CalendarGrid />
               </Calendar>,
             );
@@ -248,7 +237,6 @@ describe("GIVEN a Calendar", () => {
                 defaultVisibleMonth={testDate}
               >
                 <CalendarNavigation />
-                <CalendarWeekHeader />
                 <CalendarGrid />
               </Calendar>,
             );
@@ -259,35 +247,65 @@ describe("GIVEN a Calendar", () => {
             }).focus();
             cy.findByRole("button", {
               name: adapter.format(testDate, "DD MMMM YYYY"),
-            }).should("be.focused");
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowRight key
             cy.realPress("ArrowRight");
             const nextDay = adapter.add(testDate, { days: 1 });
             cy.findByRole("button", {
               name: adapter.format(nextDay, "DD MMMM YYYY"),
-            }).should("be.focused");
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowLeft key
             cy.realPress("ArrowLeft");
             const previousDay = adapter.subtract(nextDay, { days: 1 });
             cy.findByRole("button", {
               name: adapter.format(previousDay, "DD MMMM YYYY"),
-            }).should("be.focused");
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowDown key
             cy.realPress("ArrowDown");
             const nextWeek = adapter.add(previousDay, { weeks: 1 });
             cy.findByRole("button", {
               name: adapter.format(nextWeek, "DD MMMM YYYY"),
-            }).should("be.focused");
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
 
             // Simulate pressing the ArrowUp key
             cy.realPress("ArrowUp");
             const previousWeek = adapter.subtract(nextWeek, { weeks: 1 });
             cy.findByRole("button", {
               name: adapter.format(previousWeek, "DD MMMM YYYY"),
-            }).should("be.focused");
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
           });
 
           describe("SHOULD move the focus when the shortcut keys are pressed", () => {
@@ -298,7 +316,6 @@ describe("GIVEN a Calendar", () => {
                   defaultVisibleMonth={testDate}
                 >
                   <CalendarNavigation />
-                  <CalendarWeekHeader />
                   <CalendarGrid />
                 </Calendar>,
               );
@@ -310,7 +327,13 @@ describe("GIVEN a Calendar", () => {
 
               cy.findByRole("button", {
                 name: adapter.format(testDate, "DD MMMM YYYY"),
-              }).should("be.focused");
+              })
+                .should(($button) =>
+                  expect($button.attr("class")).to.match(
+                    /saltCalendarDay-focused/,
+                  ),
+                )
+                .should("be.focused");
             });
 
             it("HOME", () => {
@@ -319,7 +342,13 @@ describe("GIVEN a Calendar", () => {
               cy.realPress("Home").then(() => {
                 cy.findByRole("button", {
                   name: adapter.format(startOfWeek, "DD MMMM YYYY"),
-                }).should("be.focused");
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -329,7 +358,13 @@ describe("GIVEN a Calendar", () => {
               cy.realPress("End").then(() => {
                 cy.findByRole("button", {
                   name: adapter.format(endOfWeek, "DD MMMM YYYY"),
-                }).should("be.focused");
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -339,7 +374,13 @@ describe("GIVEN a Calendar", () => {
               cy.realPress("PageUp").then(() => {
                 cy.findByRole("button", {
                   name: adapter.format(lastMonth, "DD MMMM YYYY"),
-                }).should("be.focused");
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -349,7 +390,13 @@ describe("GIVEN a Calendar", () => {
               cy.realPress("PageDown").then(() => {
                 cy.findByRole("button", {
                   name: adapter.format(nextMonth, "DD MMMM YYYY"),
-                }).should("be.focused");
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -359,7 +406,13 @@ describe("GIVEN a Calendar", () => {
               cy.realPress(["Shift", "PageUp"]).then(() => {
                 cy.findByRole("button", {
                   name: adapter.format(lastYear, "DD MMMM YYYY"),
-                }).should("be.focused");
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
 
@@ -369,7 +422,13 @@ describe("GIVEN a Calendar", () => {
               cy.realPress(["Shift", "PageDown"]).then(() => {
                 cy.findByRole("button", {
                   name: adapter.format(nextYear, "DD MMMM YYYY"),
-                }).should("be.focused");
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
               });
             });
           });
@@ -384,7 +443,6 @@ describe("GIVEN a Calendar", () => {
               defaultVisibleMonth={testDate}
             >
               <CalendarNavigation hideYearDropdown />
-              <CalendarWeekHeader />
               <CalendarGrid />
             </Calendar>,
           );
@@ -486,7 +544,6 @@ describe("GIVEN a Calendar", () => {
               maxDate={maxDate}
             >
               <CalendarNavigation />
-              <CalendarWeekHeader />
               <CalendarGrid />
             </Calendar>,
           );
@@ -536,33 +593,42 @@ describe("GIVEN a Calendar", () => {
       });
 
       describe("Selection", () => {
-        it("SHOULD not allow selection of disabled dates", () => {
-          cy.mount(<DisabledDates defaultVisibleMonth={testDate} />);
+        it("SHOULD allow selection of dates", () => {
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <Calendar
+              defaultVisibleMonth={testDate}
+              selectionVariant={"single"}
+              onSelectionChange={selectionChangeSpy}
+            >
+              <CalendarNavigation />
+              <CalendarGrid />
+            </Calendar>,
+          );
 
-          // Define the weekend dates in March 2024
-          const weekendDates = [
-            "02 March 2024", // Saturday
-            "03 March 2024", // Sunday
-            "09 March 2024", // Saturday
-            "10 March 2024", // Sunday
-            "16 March 2024", // Saturday
-            "17 March 2024", // Sunday
-            "23 March 2024", // Saturday
-            "24 March 2024", // Sunday
-            "30 March 2024", // Saturday
-            "31 March 2024", // Sunday
-          ];
+          cy.get("@selectionChangeSpy").should("not.have.been.called");
+          cy.findByRole("button", { name: "02 March 2024" })
+            .realHover()
+            .realClick();
 
-          // Check each weekend date to ensure it is disabled
-          weekendDates.forEach((date) => {
-            cy.findByRole("button", { name: date })
-              .should("be.disabled")
-              .and("have.attr", "aria-disabled", "true");
+          // biome-ignore lint/suspicious/noExplicitAny: spy
+          cy.get("@selectionChangeSpy").should((spy: any) => {
+            const [_event, date] = spy.lastCall.args;
+            expect(adapter.isValid(date)).to.be.true;
+            expect(adapter.format(date, "DD MMMM YYYY")).to.equal(
+              "02 March 2024",
+            );
           });
         });
 
         it("SHOULD not allow selection of un-selectable dates", () => {
-          cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <UnselectableDates
+              defaultVisibleMonth={testDate}
+              onSelectionChange={selectionChangeSpy}
+            />,
+          );
 
           // Define the weekend dates in March 2024
           const weekendDates = [
@@ -580,10 +646,63 @@ describe("GIVEN a Calendar", () => {
 
           // Check each weekend date to ensure it is disabled
           weekendDates.forEach((date) => {
-            cy.findByRole("button", { name: date })
-              .should("be.disabled")
-              .and("have.attr", "aria-disabled", "true");
+            cy.findByRole("button", { name: date }).and(
+              "have.attr",
+              "aria-disabled",
+              "true",
+            );
+            cy.findByRole("button", { name: date }).realHover();
+            cy.findByRole("button", { name: date }).then(($el) => {
+              const describedById = $el.attr("aria-describedby");
+              cy.get(`[id="${describedById}"]`)
+                .should("have.attr", "role", "tooltip")
+                .find(".saltTooltip-content")
+                .should("have.text", "Weekends are un-selectable");
+            });
           });
+          cy.get("@selectionChangeSpy").should("not.have.been.called");
+        });
+
+        it("SHOULD navigate to an un-selectable date and then to a selectable date using keyboard", () => {
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <UnselectableDates
+              defaultVisibleMonth={testDate}
+              onSelectionChange={selectionChangeSpy}
+            />,
+          );
+
+          // Define the weekend dates in March 2024
+          const weekendDates = [
+            "02 March 2024", // Saturday
+            "03 March 2024", // Sunday
+          ];
+
+          // Focus on the day before the first unselectable date
+          cy.findByRole("button", { name: "01 March 2024" }).focus();
+
+          cy.focused().type("{rightarrow}");
+
+          // Check that the date is unselectable and has the correct tooltip
+          cy.focused().should("have.attr", "aria-disabled", "true");
+          cy.focused().realHover();
+          cy.focused().then(($el) => {
+            const describedById = $el.attr("aria-describedby");
+            cy.get(`[id="${describedById}"]`)
+              .should("have.attr", "role", "tooltip")
+              .find(".saltTooltip-content")
+              .should("have.text", "Weekends are un-selectable");
+          });
+
+          // Arrow right again to the next unselectable date
+          cy.focused().type("{rightarrow}");
+          // Check that the date is unselectable
+          cy.focused().should("have.attr", "aria-disabled", "true");
+
+          // Arrow right again to a selectable date
+          cy.focused().type("{rightarrow}");
+          // Check that the 4th March is selectable
+          cy.focused().should("not.have.attr", "aria-disabled", "true");
         });
       });
     });

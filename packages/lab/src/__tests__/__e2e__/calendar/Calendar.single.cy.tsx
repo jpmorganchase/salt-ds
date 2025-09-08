@@ -10,7 +10,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   type SingleDateSelection,
 } from "@salt-ds/lab";
 
@@ -53,7 +52,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             defaultVisibleMonth={testDate}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -66,7 +64,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the focus moves to the selected date within the visible month
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to selected date when navigating back to selection month", () => {
@@ -77,7 +79,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             defaultVisibleMonth={testDate}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -110,7 +111,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the focus moves to the selected date within the visible month
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if selected date is not within the visible month", () => {
@@ -121,7 +126,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             defaultVisibleMonth={todayTestDate}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -134,7 +138,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if there is no selected date", () => {
@@ -145,7 +153,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             defaultVisibleMonth={todayTestDate}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -158,7 +165,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if there is no selected date", () => {
@@ -169,7 +180,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             defaultVisibleMonth={todayTestDate}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -202,7 +212,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
@@ -214,7 +228,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             defaultVisibleMonth={defaultVisibleMonth}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -235,37 +248,17 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             adapter.add(startOfMonth, { months: 2 }),
             "DD MMMM YYYY",
           ),
-        }).should("be.focused");
-      });
-
-      it("SHOULD hover one day when a day is hovered", () => {
-        cy.mount(
-          <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
-            <CalendarNavigation />
-            <CalendarWeekHeader />
-            <CalendarGrid />
-          </Calendar>,
-        );
-        // Simulate hovering over a date button
-        cy.findByRole("button", {
-          name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).realHover({ position: "bottom" });
-        // Verify that the date button is hovered
-        cy.findByRole("button", {
-          name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("have.class", "saltCalendarDay-hovered");
-
-        // Simulate hovering outside the calendar
-        cy.get("body").realHover({ position: "topLeft" });
-        // Verify that the hovered class is removed
-        cy.get(".saltCalendarDay-hovered").should("not.exist");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD only allow one date to be selected at a time", () => {
         cy.mount(
           <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -303,11 +296,62 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         }).should("have.attr", "aria-pressed", "true");
       });
 
+      it("SHOULD be able to navigate between months through focus", () => {
+        cy.mount(
+          <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
+            <CalendarNavigation />
+            <CalendarGrid />
+          </Calendar>,
+        );
+
+        // Simulate pressing the ArrowDown key to move the next month
+        const weekbeforeEndOfMonth = adapter.subtract(
+          adapter.endOf(testDate, "month"),
+          { days: 6 },
+        );
+        const nextMonth = adapter.startOf(
+          adapter.add(testDate, { months: 1 }),
+          "month",
+        );
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        }).realClick();
+        cy.realPress("ArrowDown");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(nextMonth, "DD MMMM YYYY"),
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(nextMonth, "MMM"),
+        );
+
+        // Simulate pressing the ArrowUp key to move back to previous month
+        cy.realPress("ArrowUp");
+        // Verify that the focus moves to the next month
+        cy.findByRole("button", {
+          name: adapter.format(weekbeforeEndOfMonth, "DD MMMM YYYY"),
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
+        // Verify that the calendar navigates to the next month
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          adapter.format(testDate, "MMM"),
+        );
+      });
+
       it("SHOULD not allow deselection", () => {
         cy.mount(
           <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -410,7 +454,6 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
             hideOutOfRangeDates
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -423,7 +466,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the focus moves to the first selected date of the visible month
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if selected date is not within the visible month", () => {
@@ -439,7 +486,6 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
             hideOutOfRangeDates
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -452,7 +498,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to today's date if there is not selected date", () => {
@@ -464,7 +514,6 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
             defaultVisibleMonth={todayTestDate}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -477,7 +526,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the focus moves to today's date
         cy.findByRole("button", {
           name: adapter.format(todayTestDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
@@ -489,7 +542,6 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
             defaultVisibleMonth={adapter.add(todayTestDate, { months: 1 })}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -508,7 +560,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         startOfMonth = adapter.add(startOfMonth, { months: 2 });
         cy.findByRole("button", {
           name: adapter.format(startOfMonth, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
       });
 
       it("SHOULD allow multiple dates to be selected and unselected", () => {
@@ -536,7 +592,6 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
             select={selectStub}
           >
             <CalendarNavigation />
-            <CalendarWeekHeader />
             <CalendarGrid />
           </Calendar>,
         );
@@ -579,7 +634,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Simulate focusing on the current date button
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
-        }).should("be.focused");
+        })
+          .should(($button) =>
+            expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
+          )
+          .should("be.focused");
         // Simulate pressing the Enter key to select the current date
         cy.realPress("Enter");
         // Simulate pressing the ArrowRight key to move to the next date
