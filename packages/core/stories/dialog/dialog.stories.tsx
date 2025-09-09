@@ -266,6 +266,8 @@ const AlertDialogTemplate: StoryFn<
     </Button>
   );
 
+  const initialFocusButtonIndex = direction === "column" ? 0 : 1;
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -278,6 +280,8 @@ const AlertDialogTemplate: StoryFn<
         status={status}
         open={open}
         onOpenChange={onOpenChange}
+        // focus the ok instead of the cancel button
+        initialFocus={initialFocusButtonIndex}
       >
         <DialogHeader header={header} />
         <DialogContent>{content}</DialogContent>
@@ -349,6 +353,8 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
       "row",
     );
 
+  const initialFocusButtonIndex = direction === "column" ? 0 : 1;
+
   const cancel = (
     <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
       Cancel
@@ -371,6 +377,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         role="alertdialog"
         open={open}
         onOpenChange={onOpenChange}
+        initialFocus={initialFocusButtonIndex}
         disableDismiss
       >
         <DialogHeader header="Delete Transaction" />
