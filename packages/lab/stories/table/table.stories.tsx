@@ -36,7 +36,7 @@ export default {
 const NUM_COLS = 7;
 const NUM_ROWS = 10;
 
-const Template: StoryFn = ({
+const Template: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps,
@@ -123,7 +123,7 @@ FooterVariant.args = {
   TFootProps: { variant: "tertiary" },
 };
 
-export const CustomContent: StoryFn<typeof Text> = () => {
+export const CustomContent: StoryFn<TablePropsAndCustomArgs> = () => {
   return (
     <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
       <Table>
@@ -165,7 +165,7 @@ export const CustomContent: StoryFn<typeof Text> = () => {
   );
 };
 
-export const StickyHeaderFooter: StoryFn<typeof Text> = ({
+export const StickyHeaderFooter: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TFootProps,
 }) => {
@@ -209,7 +209,7 @@ StickyHeaderFooter.args = {
   TFootProps: { sticky: true },
 };
 
-export const ColumnHeaders: StoryFn = ({
+export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
   TBodyProps: _TBodyProps,
   TFootProps: _TFootProps,
@@ -236,7 +236,7 @@ export const ColumnHeaders: StoryFn = ({
   );
 };
 
-export const LongCellContent: StoryFn = ({
+export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
   TBodyProps: _TBodyProps,
   TFootProps: _TFootProps,
@@ -271,7 +271,7 @@ export const LongCellContent: StoryFn = ({
   );
 };
 
-export const NumericalData: StoryFn<typeof Table> = ({
+export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
   TBodyProps: _TBodyProps,
   TFootProps: _TFootProps,
