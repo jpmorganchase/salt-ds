@@ -28,16 +28,20 @@
 
 .salt-theme.salt-theme-next[data-mode="light"][data-accent="blue"] {
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
+  --salt-palette-accent-action-hover: var(--salt-color-blue-100);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"][data-accent="blue"] {
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
+  --salt-palette-accent-action-hover: var(--salt-color-blue-900);
 }
 
 .salt-theme.salt-theme-next[data-mode="light"][data-accent="teal"] {
   --salt-palette-accent-action-active: var(--salt-color-teal-800);
+  --salt-palette-accent-action-hover: var(--salt-color-teal-100);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"][data-accent="teal"] {
   --salt-palette-accent-action-active: var(--salt-color-teal-800);
+  --salt-palette-accent-action-hover: var(--salt-color-teal-900);
 }

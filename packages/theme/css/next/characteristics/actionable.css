@@ -16,7 +16,7 @@
   /* accented bordered */
   --salt-actionable-accented-background-active: var(--salt-palette-accent-weaker);
   --salt-actionable-accented-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-accented-background-hover: var(--salt-palette-accent-action-hover);
+  --salt-actionable-accented-background-hover: var(--salt-palette-accent-weakest);
   --salt-actionable-accented-background: var(--salt-palette-alpha-none);
   --salt-actionable-accented-borderColor-active: var(--salt-palette-accent);
   --salt-actionable-accented-borderColor-disabled: var(--salt-palette-accent-disabled);
@@ -30,7 +30,7 @@
   /* accented transparent  */
   --salt-actionable-accented-subtle-background-active: var(--salt-palette-accent-weaker);
   --salt-actionable-accented-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-accented-subtle-background-hover: var(--salt-palette-accent-action-hover);
+  --salt-actionable-accented-subtle-background-hover: var(--salt-palette-accent-weakest);
   --salt-actionable-accented-subtle-background: var(--salt-palette-alpha-none);
   --salt-actionable-accented-subtle-borderColor-active: var(--salt-palette-accent);
   --salt-actionable-accented-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
