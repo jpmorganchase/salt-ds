@@ -282,10 +282,13 @@ export const DateInputSingle = forwardRef<
     const apply = (event: SyntheticEvent) => {
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
       const parseResult = parse(dateValue ?? "", format);
-      let { date: parsedDate, ...parseDetails } = parseResult;
+      let parsedDate: TDate | null;
+      let parseDetails: DateDetail;
+      ({ date: parsedDate, ...parseDetails } = parseResult);
+      parsedDate = dateValue ? parsedDate : null;
       let formattedValue = "";
       const isDateValid = dateAdapter.isValid(parsedDate);
-      if (isDateValid) {
+      if (isDateValid && parsedDate) {
         parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
         if (preservedTime.current) {
           parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
