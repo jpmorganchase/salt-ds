@@ -29,11 +29,11 @@ export type DateRangeSelection<TDate extends DateFrameworkType> = {
   /**
    * The start date of the range.
    */
-  startDate?: TDate | null;
+  startDate?: TDate;
   /**
    * The end date of the range.
    */
-  endDate?: TDate | null;
+  endDate?: TDate;
 };
 
 /**
