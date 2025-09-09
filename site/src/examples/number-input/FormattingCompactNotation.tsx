@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export const FormattingCompactNotation = () => {
   const [value, setValue] = useState<string>("100000");
-  const validValue = /^[+-]?(\d+(\.\d*)?|\.\d+)([kmbt]?)$/;
+  const validValue = /^([+-]?\d+(?:\.\d*)?|\.[0-9]+)([kmbt]?)$/i;
 
   return (
     <FormField style={{ width: "256px" }}>

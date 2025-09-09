@@ -398,7 +398,7 @@ HiddenButtons.args = {
 export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<string>("100K");
 
-  const validValue = /^(-?(?:\d+)?(?:\.\d*)?)([kmbt])?$/i;
+  const validValue = /^([+-]?\d+(?:\.\d*)?|\.[0-9]+)([kmbt]?)$/i;
 
   const parse = (raw: string) => {
     if (!raw.length) {
