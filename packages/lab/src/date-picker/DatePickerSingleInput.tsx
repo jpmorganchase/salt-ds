@@ -53,10 +53,15 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
 ): DateInputSingleDetails {
   if (!date) {
     details.errors = details.errors ?? [];
-    details.errors?.push({
-      type: DateDetailError.UNSET,
-      message: "no date defined",
-    });
+    const hasUnsetError = details.errors.some(
+      (err) => err.type === DateDetailError.UNSET,
+    );
+    if (!hasUnsetError) {
+      details.errors.push({
+        type: DateDetailError.UNSET,
+        message: "no date defined",
+      });
+    }
   } else {
     if (
       minDate &&
