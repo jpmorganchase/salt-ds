@@ -15,4 +15,4 @@ data:
 
 Salt layout components are each tailored to specific structural needs:
 
-{meta.data.items?.map(({ title, data }, index) => <div style={{ marginTop: 'var(--salt-spacing-100)' }} key={`${title}-${index}`}><Text styleAs="h2">{title}</Text>{data?.description.replaceAll("`", "")}</div>)}
+{meta.data.items?.map(({ title, data }, index) => <div style={{ marginTop: 'var(--salt-spacing-100)' }} key={`${title}-${index}`}><Text styleAs="h2">{title}</Text>{(data?.description.replaceAll("`", "").match(/[^.]*\./)?.[0] || "")}</div>)}
