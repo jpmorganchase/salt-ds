@@ -158,10 +158,10 @@ const options: Options = {
 };
 
 export const LineChart = () => {
-  const LineChartRef = useRef<HighchartsReact.RefObject>(null);
+  const lineChartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const lineDataOptions = useChart(LineChartRef, options);
+  const lineDataOptions = useChart(lineChartRef, options);
 
   return (
     <div className={styles.chartContainer}>
@@ -181,7 +181,7 @@ export const LineChart = () => {
           className={styles.chart}
           highcharts={Highcharts}
           options={lineDataOptions}
-          ref={LineChartRef}
+          ref={lineChartRef}
         />
       </div>
     </div>

@@ -14,9 +14,9 @@ const LineChart: FC<LineChartProps> = ({
   patterns = false,
   options = lineOptions,
 }) => {
-  const LineChartRef = useRef<HighchartsReact.RefObject>(null);
+  const lineRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions = useChart(LineChartRef, options);
+  const chartOptions = useChart(lineRef, options);
 
   return (
     <div
@@ -25,7 +25,7 @@ const LineChart: FC<LineChartProps> = ({
       })}
     >
       <HighchartsReact
-        ref={LineChartRef}
+        ref={lineRef}
         highcharts={Highcharts}
         options={chartOptions}
       />

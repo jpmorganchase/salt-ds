@@ -53,10 +53,10 @@ const options: Options = {
 };
 
 export const DonutChart = () => {
-  const DonutRef = useRef<HighchartsReact.RefObject>(null);
+  const donutRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const donutChartOptions = useChart(DonutRef, options);
+  const donutChartOptions = useChart(donutRef, options);
 
   return (
     <div className={styles.chartContainer}>
@@ -76,7 +76,7 @@ export const DonutChart = () => {
           className={styles.chart}
           highcharts={Highcharts}
           options={donutChartOptions}
-          ref={DonutRef}
+          ref={donutRef}
         />
       </div>
     </div>

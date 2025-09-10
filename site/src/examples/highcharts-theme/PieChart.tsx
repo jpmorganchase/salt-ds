@@ -55,10 +55,10 @@ const options: Options = {
 };
 
 export const PieChart = () => {
-  const PieRef = useRef<HighchartsReact.RefObject>(null);
+  const pieRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const pieChartOptions = useChart(PieRef, options);
+  const pieChartOptions = useChart(pieRef, options);
 
   return (
     <div className={styles.chartContainer}>
@@ -78,7 +78,7 @@ export const PieChart = () => {
           className={styles.chart}
           highcharts={Highcharts}
           options={pieChartOptions}
-          ref={PieRef}
+          ref={pieRef}
         />
       </div>
     </div>
