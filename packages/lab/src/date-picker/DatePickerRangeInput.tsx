@@ -57,7 +57,7 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     details.startDate = details.startDate || {};
     details.startDate.errors = details.startDate.errors || [];
     const unsetStartDateError = details.startDate.errors.find(
-      (err) => err.type === DateDetailError.UNSET
+      (err) => err.type === DateDetailError.UNSET,
     );
     if (unsetStartDateError) {
       unsetStartDateError.message = "no start date defined";
@@ -73,7 +73,7 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     details.endDate = details.endDate || {};
     details.endDate.errors = details.endDate.errors || [];
     const unsetEndDateError = details.endDate.errors.find(
-      (err) => err.type === DateDetailError.UNSET
+      (err) => err.type === DateDetailError.UNSET,
     );
     if (unsetEndDateError) {
       unsetEndDateError.message = "no end date defined";

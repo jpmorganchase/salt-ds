@@ -482,8 +482,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         );
 
         // Clear start date
-        cy.findByLabelText("Start date")
-          .clear();
+        cy.findByLabelText("Start date").clear();
         cy.realPress("Tab");
         // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
@@ -491,7 +490,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           expect(date.startDate).to.be.null;
           expect(adapter.isValid(date.endDate)).to.be.true;
           expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
-            initialRangeDateValue.endDate
+            initialRangeDateValue.endDate,
           );
           expect(details).to.deep.equal({
             startDate: {
@@ -506,13 +505,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             endDate: { value: initialRangeDateValue.endDate },
           });
         });
-        cy.findByLabelText("Start date").should(
-          "have.value",
-          "",
-        );
+        cy.findByLabelText("Start date").should("have.value", "");
         // Clear end date
-        cy.findByLabelText("End date")
-          .clear();
+        cy.findByLabelText("End date").clear();
         cy.realPress("Tab");
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -539,11 +534,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             },
           });
         });
-        cy.findByLabelText("End date").should(
-          "have.value",
-          "",
-        );
-      })
+        cy.findByLabelText("End date").should("have.value", "");
+      });
 
       it("SHOULD render helper text in the panel when opened ", () => {
         cy.mount(<RangeWithFormField />);
