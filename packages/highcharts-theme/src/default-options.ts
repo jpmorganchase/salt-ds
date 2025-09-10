@@ -4,8 +4,11 @@ import { getDensityTokenMap } from "./density-token-map";
 import { saltPatternDef } from "./patterns";
 import type { HighchartsOptionsCompat } from "./types";
 
-export const getDefaultOptions = (density: Density): Options => {
-  const tokens = getDensityTokenMap(density);
+export const getDefaultOptions = (
+  density: Density,
+  hostElement?: Element | null,
+): Options => {
+  const tokens = getDensityTokenMap(density, hostElement ?? undefined);
 
   const defaultOptions: HighchartsOptionsCompat = {
     chart: {
@@ -32,7 +35,7 @@ export const getDefaultOptions = (density: Density): Options => {
       verticalAlign: "top",
       symbolWidth: tokens["--salt-size-icon"],
       symbolHeight: tokens["--salt-size-icon"],
-      symbolRadius: 3,
+      symbolRadius: tokens["--salt-palette-corner-weaker"],
       itemMarginBottom: tokens["--salt-spacing-150"],
       margin: tokens["--salt-spacing-150"],
     },
