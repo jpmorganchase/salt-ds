@@ -1,6 +1,6 @@
 .saltFormFieldLabel.saltText {
   font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
-  width: fit-content;
+  width: 100%;
 }
 
 .saltFormFieldLabel:hover + .saltFormField-controls * {
@@ -12,9 +12,8 @@
   padding-top: var(--salt-spacing-100);
 }
 
-.saltFormField-labelRight .saltFormFieldLabel.saltText {
-  margin-left: auto;
-  text-align: right;
+.saltFormField-labelTop .saltFormFieldLabel.saltText {
+  width: fit-content;
 }
 
 .saltFormFieldLabel-necessityLabel {
