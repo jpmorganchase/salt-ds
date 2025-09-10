@@ -4,7 +4,6 @@
  * Provides utilities for generating numeric token values that correspond
  * to Salt's density. Reads CSS custom properties from the DOM when available
  * and falls back to hardcoded defaults based on the density.
- *
  */
 
 import type { Density } from "@salt-ds/core";
