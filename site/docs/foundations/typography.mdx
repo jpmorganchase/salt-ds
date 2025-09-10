@@ -5,101 +5,102 @@ sidebar:
   priority: 1
 ---
 
-Typography involves the style and appearance of written language. It plays a crucial role in enhancing readability, establishing hierarchy, and setting a visual tone, resulting in more effective and expressive communication.
+Typography refers to the predefined typographic styles that guide the presentation of written language. Typography is essential for improving readability, creating a clear hierarchy, and establishing a visual tone, all of which contribute to more effective and expressive communication. Each text style in Salt includes a font family, font size, line height and font weight. The specific values for each is dependent on the applied theme.
 
 ## Font family
 
-The Legacy UITK theme uses the open-source, sans-serif typeface **Open Sans**. The JPM brand theme uses the **Amplitude** font which is in line with updated brand guidelines. Code uses the mono space typeface **PT Mono**.
-
-For more information about the themes offered in Salt, please refer to the guidance on the [themes page](https://www.saltdesignsystem.com/salt/themes/index).
+The typography foundation offers two font families for UI design: Open Sans and Amplitude, along with PT Mono for code blocks.
 
 <Image
-  src="/img/foundations/typography-options.png"
-  alt="Example of Open Sans and Amplitude font"
+  src="/img/foundations/typography-fontfamily.png"
+  srcDark="/img/foundations/typography-fontfamily-dark.png"
+  alt=""
+  aria-hidden="true"
 />
 
-To download the Amplitude font, please refer to the [font brand resources](https://go/salt-ds-internal/resources/index) on our internal site. (Internal users only)
+Font families are used differently by each theme. For more information about the themes offered in Salt, please refer to [theme guidance](https://www.saltdesignsystem.com/salt/themes/index).
+
+Each theme uses font families differently:
+
+- JPM Brand
+
+  - Amplitude - heading, display and action styles
+  - Open Sans - body, label and notation styles
+
+- Legacy (UITK)
+
+  - Open Sans - all typographic styles
+
+To download the Amplitude font, please refer to the [font brand resources](https://go/salt-ds-internal/resources/index) (Internal users only).
+
+## Hierarchy
+
+Salt offers a series of text styles designed to create a visual hierarchy through typographic design. Each text style is dependent on the applied theme. By effectively utilizing Salt's styles, you can guide the reader's focus and clearly convey the content's structure.
+
+### Font size
+
+Font size is determined by the selected text style and the [density](https://www.saltdesignsystem.com/salt/foundations/density). Density influences how much content fits on a screen by adjusting the size and spacing of components. As density changes, font size adjusts accordingly to maintain proportionate and harmonious design elements.
+
+### Line height
+
+Line height controls the space between baselines in a block of text and is proportional to the text size. It's set to 1.3 times the font size across all styles and is influenced by the selected density.
+
+<Image
+  src="/img/foundations/typography-textstyles.png"
+  srcDark="/img/foundations/typography-textstyles-dark.png"
+  alt="List of all text styles in JPM Brand theme and Legacy theme"
+/>
+
+The typographic hierarchy has seven levels, with variants within some levels:
+
+| Text style | Purpose                                                                                                                                                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Display    | Display1 to Display4. Display styles are intended for showcasing key metrics or highlighting prominent messaging within a masthead.                                                                                |
+| Heading    | H1 to H4. Headings are used to divide content into a clear hierarchy and adhere to HTML standards.                                                                                                                 |
+| Body       | Body is the default style for most components and textual content. If no specific style is applied, the text will default to the body style.                                                                       |
+| Action     | Reserved for actionable items such as buttons.                                                                                                                                                                     |
+| Label      | Label provides clear and concise style for form fields and data grid headings, ensuring users can easily understand and interact with various interface elements.                                                  |
+| Notation   | Notation provides a small font size, ideal for compact components, footnotes, and disclaimers. It ensures important but less prominent information is clearly communicated without overshadowing the main content. |
+| Code       | Reserved for representing code examples.                                                                                                                                                                           |
 
 ## Font weight
 
-Weight refers to the relative thickness of a font’s stroke. Each type style includes three weights which enable you to create visual hierarchy within the same text size.
-
-| Font weight | Purpose                                                         |
-| ----------- | --------------------------------------------------------------- |
-| Small       | A thinner weight alternative to de-emphasize default weight     |
-| Default     | The default weight across the system for visual balance         |
-| Strong      | A stronger, bold weight alternative to emphasize default weight |
+Font weight refers to the relative thickness of a font's stroke. Each text style in Salt offers three different weights, allowing you to establish a visual hierarchy even when using the same text style. The specific font weight is dependent on the text style and theme being used. Each text style has a default weight which can be made ‘small’ to de-emphasize the text or ‘strong’ to emphasize it.
 
 <Image
-  src="/img/foundations/typography-weight.png"
+  src="/img/foundations/typography-fontweight.png"
+  srcDark="/img/foundations/typography-fontweight-dark.png"
   alt="Example of small, default and strong font weights"
 />
 
-## Type hierarchy
-
-Type hierarchy arranges text elements by varying font sizes, weights, and styles. This guides the reader's attention and conveys content structure.
-
-| Text style | Purpose                                                                                                                     |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Display    | Display styles are primarily for representing key metrics and mastheads                                                     |
-| Headings   | Headings separate sections of content into varying levels                                                                   |
-| Body       | Body is the default style for most components and text blocks                                                               |
-| Label      | Labels display a small amount of text that helps people understand the current context of a component                       |
-| Help       | Help text provides additional information or instructions, such as accepted data formats for input or file types for upload |
-
-<Image
-  src="/img/foundations/typography-headers.png"
-  alt="Example of Open Sans and Amplitude font"
-/>
-
-<Image
-  src="/img/foundations/typography-style-body-label.png"
-  alt="Graphical representation of Body and Label styles"
-/>
-
-## Line height
-
-Line height controls the space between baselines within a block of text and should be proportional to the text size, typically set at 1.3x the font size across all styles. Line height may also vary with text density.
-
 ## Case
-
-There are three cases recommended within our content guidelines:
 
 ### Sentence case
 
-Sentence case is primarily used for body copy, page titles, navigation, subheadings, form titles, field labels, and chart/data visualization titles and text.
+Sentence case is mainly used for body copy, page titles, navigation, subheadings, form titles, field labels, and chart titles and text.
 
 ### Title case
 
-Title case should only be used for proper nouns and job titles. Proper nouns refer to specific individuals, companies, products, or objects.
+Title case is reserved for proper nouns and job titles, referring to specific individuals, companies, products, or objects.
 
 ### All capitals
 
-All capitals are used for button labels to give them prominence and to differentiate them from other graphical elements. Never use all caps in general writing.
+All capitals are used for button labels to give them prominence and differentiate them from other non-actionable items. All caps should be avoided in general writing.
 
 <Image
-  src="/img/foundations/typography-allcaps.png"
-  alt="Example of allcaps buttons in Dialog"
+  src="/img/foundations/typography-case.png"
+  srcDark="/img/foundations/typography-case-dark.png"
+  alt="Example use case where the user's name is using title case, timezone information is using sentence case and button label is using all caps"
 />
 
 ## Italics
 
-Italics are applied sparingly to short pieces of text to help differentiate text. They serve to differentiate text from the surrounding content and should be used independent of changing font weight.
-
-Full sentences or blocks of text are generally not italicized. Combining italics with font weight for emphasis is not recommended.
+Italics are applied sparingly to short pieces of text to help differentiate them from the surrounding content. They should be used independently of font weight changes. Full sentences or blocks of text are generally not italicized, and combining italics with font weight for emphasis is not recommended.
 
 <Image
   src="/img/foundations/typography-italics.png"
-  alt="Example of italicized text in Form field"
-/>
-
-## Notation
-
-Notation is a text style characterized by its discrete font size, making it ideal for use in confined spaces such as the Avatar and Badge components. This style is also well-suited for footnotes and disclaimers, ensuring that important but less prominent information is clearly communicated without overwhelming the main content.
-
-<Image
-  src="/img/foundations/typography-notation.png"
-  alt="Example of Avatar which uses notation for initials"
+  srcDark="/img/foundations/typography-italics-dark.png"
+  alt="Example italics use case, using italics on the supporting helper text for a form field"
 />
 
 :fragment{src="./fragments/feedback.mdx"}

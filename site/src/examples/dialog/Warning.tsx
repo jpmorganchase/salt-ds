@@ -4,9 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexLayout,
+  StackLayout,
+  type StackLayoutProps,
   useId,
+  useResponsiveProp,
 } from "@salt-ds/core";
-import { type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useState } from "react";
 
 export const Warning = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -23,6 +27,27 @@ export const Warning = (): ReactElement => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
+      Cancel
+    </Button>
+  );
+
+  const giveAccess = (
+    <Button sentiment="accented" onClick={handleClose}>
+      Give access
+    </Button>
+  );
 
   return (
     <>
@@ -41,12 +66,17 @@ export const Warning = (): ReactElement => {
           access anyway?
         </DialogContent>
         <DialogActions>
-          <Button appearance="bordered" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Give access
-          </Button>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {giveAccess}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {giveAccess}
+            </FlexLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
