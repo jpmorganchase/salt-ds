@@ -36,7 +36,7 @@ export default {
 const NUM_COLS = 7;
 const NUM_ROWS = 10;
 
-const Template: StoryFn = ({
+const Template: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps,
@@ -123,7 +123,7 @@ FooterVariant.args = {
   TFootProps: { variant: "tertiary" },
 };
 
-export const CustomContent: StoryFn<typeof Text> = () => {
+export const CustomContent: StoryFn<TablePropsAndCustomArgs> = () => {
   return (
     <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
       <Table>
@@ -165,7 +165,7 @@ export const CustomContent: StoryFn<typeof Text> = () => {
   );
 };
 
-export const StickyHeaderFooter: StoryFn<typeof Text> = ({
+export const StickyHeaderFooter: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TFootProps,
 }) => {
@@ -209,7 +209,7 @@ StickyHeaderFooter.args = {
   TFootProps: { sticky: true },
 };
 
-export const ColumnHeaders: StoryFn = ({
+export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
   TBodyProps: _TBodyProps,
   TFootProps: _TFootProps,
@@ -218,12 +218,6 @@ export const ColumnHeaders: StoryFn = ({
 }) => {
   return (
     <Table divider="none" {...args}>
-      <THead>
-        <TR>
-          <TH>One</TH>
-          <TH>Two</TH>
-        </TR>
-      </THead>
       <TBody>
         <TR>
           <TH scope="row">Label</TH>
@@ -242,7 +236,7 @@ export const ColumnHeaders: StoryFn = ({
   );
 };
 
-export const LongCellContent: StoryFn = ({
+export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
   TBodyProps: _TBodyProps,
   TFootProps: _TFootProps,
@@ -271,6 +265,37 @@ export const LongCellContent: StoryFn = ({
         <TR>
           <TD {...TDProps}>Value</TD>
           <TD {...TDProps}>Value</TD>
+        </TR>
+      </TBody>
+    </Table>
+  );
+};
+
+export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <Table {...args}>
+      <THead>
+        <TR>
+          <TH>City</TH>
+          <TH textAlign="right">Population</TH>
+        </TR>
+      </THead>
+      <TBody>
+        <TR>
+          <TD>London</TD>
+          <TD textAlign="right">9.8 million</TD>
+        </TR>
+        <TR>
+          <TD>New York</TD>
+          <TD textAlign="right">8.8 million</TD>
         </TR>
       </TBody>
     </Table>
