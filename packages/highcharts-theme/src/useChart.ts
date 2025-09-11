@@ -7,7 +7,7 @@ import { type RefObject, useState } from "react";
 import { getDefaultOptions } from "./default-options";
 
 export const useChart = (
-  chartRef: RefObject<HighchartsReact.RefObject>,
+  chartRef: RefObject<HighchartsReact.RefObject | null>,
   chartOptions: Options,
 ) => {
   const density = useDensity();
@@ -29,7 +29,7 @@ export const useChart = (
   // First effect: Capture the chart's DOM container element once it's available
   // Needed to read CSS custom properties from the actual DOM element
   useIsomorphicLayoutEffect(() => {
-    const chart = chartRef.current?.chart as Highcharts.Chart | undefined;
+    const chart = chartRef.current?.chart as Highcharts.Chart | null;
     const container = chart?.container ?? null;
     if (container && hostElement == null) {
       setHostElement(container);
