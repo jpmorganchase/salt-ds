@@ -63,3 +63,11 @@ export const Icon: StoryFn<typeof Pill> = () => {
     </Pill>
   );
 };
+
+export const Selectable: StoryFn<typeof Pill> = () => {
+  return (
+    <Pill selectable onClick={() => console.log("Clicked.")}>
+      Selectable Pill
+    </Pill>
+  );
+};
