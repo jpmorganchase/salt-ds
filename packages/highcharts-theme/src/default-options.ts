@@ -54,6 +54,9 @@ export const getDefaultOptions = (
           enabled: true,
         },
       },
+      bullet: {
+        borderRadius: 0,
+      },
     },
   };
 

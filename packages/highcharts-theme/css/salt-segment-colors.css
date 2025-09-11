@@ -1,0 +1,44 @@
+.highcharts-theme-salt .contrast-highest {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-highest);
+}
+
+.highcharts-theme-salt .contrast-higher {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-higher);
+}
+
+.highcharts-theme-salt .contrast-high {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-high);
+}
+
+.highcharts-theme-salt .contrast-mediumHigh {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-mediumHigh);
+}
+
+.highcharts-theme-salt .contrast-medium {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-medium);
+}
+
+.highcharts-theme-salt .contrast-mediumLow {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-mediumLow);
+}
+
+.highcharts-theme-salt .contrast-low {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-low);
+}
+
+.highcharts-theme-salt .contrast-lower {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-lower);
+}
+
+.highcharts-theme-salt .contrast-lowest {
+  fill-opacity: 1;
+  fill: var(--salt-palette-alpha-contrast-lowest);
+}
