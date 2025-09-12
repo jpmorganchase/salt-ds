@@ -1,14 +1,6 @@
-import {
-  Button,
-  FlexLayout,
-  Link,
-  StackLayout,
-  Text,
-  useId,
-} from "@salt-ds/core";
+import { Button, FlexLayout, H2, H3, Link, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselAutoplayIndicator,
   CarouselCard,
   type CarouselEmblaApiType,
@@ -17,40 +9,38 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel";
-import { PauseIcon, PlayIcon } from "@salt-ds/icons";
+import { PauseSolidIcon, PlaySolidIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 const DELAY_MSECS = 8000;
 
 export const Autoplay = () => {
-  const slideId = useId();
+  const carouselId = useId();
   const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [playState, setPlayState] = useState<"stop" | "play" | "pause">("play");
+  const manualControlRef = useRef<boolean>(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
   const autoplay = emblaApi?.plugins().autoplay;
 
   const play = () => {
     autoplay?.play();
-    setIsPlaying(true);
-    setIsPaused(false);
+    setPlayState("play");
   };
 
   const pause = () => {
     autoplay?.stop();
-    setIsPaused(true);
+    setPlayState("pause");
   };
 
   const stop = () => {
     autoplay?.stop();
-    setIsPlaying(false);
-    setIsPaused(true);
+    setPlayState("stop");
   };
 
   useEffect(() => {
@@ -70,96 +60,131 @@ export const Autoplay = () => {
 
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
+  const handleMouseEnter = () => {
+    if (!manualControlRef.current && playState === "play") {
+      pause();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!manualControlRef.current && playState === "pause") {
+      play();
+    }
+  };
+
+  const handleFocus = () => {
+    if (!manualControlRef.current) {
+      pause();
+    }
+  };
+
+  const handleBlur = () => {
+    if (!manualControlRef.current && playState === "pause") {
+      play();
+    }
+  };
+
+  const togglePlayState = () => {
+    manualControlRef.current = true; // Once a user interaction occurs, then autoplay is furthermore disabled
+    if (playState === "play") {
+      stop();
+    } else {
+      play();
+    }
+  };
+
   return (
-    <div className={"saltCarouselAutoplayExample"}>
-      <Carousel
-        aria-label="Autoplay example"
-        className={styles.carousel}
-        emblaOptions={{ loop: true, duration: 20 }}
-        emblaPlugins={[
-          AutoplayPlugin({ delay: DELAY_MSECS, playOnInit: false }),
-          Classnames({
-            snapped: styles.carouselSlideIsSnapped,
-          }),
-          CarouselAnnouncement(),
-        ]}
-        getEmblaApi={setEmblaApi}
+    <Carousel
+      aria-labelledby={`${carouselId}-title`}
+      className={styles.carousel}
+      disableSlideAnnouncements={playState === "play"}
+      emblaOptions={{ loop: true, duration: 20 }}
+      emblaPlugins={[
+        AutoplayPlugin({
+          delay: DELAY_MSECS,
+          playOnInit: true,
+        }),
+        Classnames({
+          snapped: styles.carouselSlideIsSnapped,
+        }),
+      ]}
+      getEmblaApi={setEmblaApi}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+    >
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Autoplay example
+      </H2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
       >
-        <Text styleAs="h2" className={styles.carouselHeading}>
-          Title
-        </Text>
-        <CarouselSlides
-          onMouseEnter={() => pause()}
-          onMouseLeave={() => {
-            if (isPlaying) {
-              play();
-            }
-          }}
-          onFocus={() => stop()}
-        >
-          {sliderData.map((slide, index) => (
-            <CarouselCard
-              appearance="bordered"
-              className={styles.carouselSlide}
-              key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-              id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-              aria-label={slide.title}
-              media={
-                <img
-                  alt={`stock content to show in carousel slide ${index}`}
-                  className={styles.carouselImage}
-                  src={slide.image}
-                />
+        <FlexLayout justify="start" direction="row" gap={1}>
+          <Button
+            aria-label={`${playState === "play" ? "stop" : "start"} automatic slide rotation`}
+            appearance="bordered"
+            sentiment="neutral"
+            onMouseDown={() => {
+              manualControlRef.current = true;
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "space") {
+                manualControlRef.current = true;
               }
-              header={<Text styleAs="h3">{slide.title}</Text>}
-              actions={
-                <Link aria-label={"demo action"} tabIndex={0} href="#">
-                  Usage examples
-                </Link>
-              }
-            >
-              <Text>{slide.content}</Text>
-            </CarouselCard>
-          ))}
-        </CarouselSlides>
-        <FlexLayout justify="space-between" direction="row" gap={1}>
-          <StackLayout direction="row" gap={1}>
-            {isPlaying && !isPaused ? (
-              <Button
-                aria-label="Pause play"
-                appearance="bordered"
-                sentiment="neutral"
-                onClick={() => stop()}
-              >
-                <PauseIcon aria-hidden />
-              </Button>
+            }}
+            onClick={togglePlayState}
+          >
+            {playState === "play" ? (
+              <PauseSolidIcon style={{ pointerEvents: "none" }} />
             ) : (
-              <Button
-                aria-label="Resume play"
-                appearance="bordered"
-                sentiment="neutral"
-                onClick={() => play()}
-              >
-                <PlayIcon aria-hidden />
-              </Button>
+              <PlaySolidIcon style={{ pointerEvents: "none" }} />
             )}
-            <CarouselPreviousButton onClick={() => stop()} />
-            <CarouselNextButton onClick={() => stop()} />
-            <CarouselProgressLabel />
-            <CarouselAutoplayIndicator
-              slideIndex={slideIndex}
-              duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
-              isPlaying={isPlaying}
-              isPaused={isPlaying && isPaused}
-              aria-label={
-                isPlaying
-                  ? "Progress bar indicating time until next slide"
-                  : `Carousel paused on slide ${slideIndex}`
-              }
-            />
-          </StackLayout>
+          </Button>
+          <CarouselPreviousButton onClick={stop} />
+          <CarouselNextButton onClick={stop} />
+          <CarouselProgressLabel aria-hidden={true} />
+          <CarouselAutoplayIndicator
+            slideIndex={slideIndex}
+            duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
+            isPlaying={playState === "play"}
+          />
         </FlexLayout>
-      </Carousel>
-    </div>
+        <CarouselSlides
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onFocus={handleFocus}
+        >
+          {sliderData.map((slide, index) => {
+            const slideId = `${carouselId}-slide${index}`;
+            return (
+              <CarouselCard
+                appearance="bordered"
+                className={styles.carouselSlide}
+                key={slideId}
+                aria-labelledby={`${slideId}-title`}
+                media={
+                  <img
+                    aria-hidden={true}
+                    className={styles.carouselImage}
+                    src={slide.image}
+                  />
+                }
+                header={<H3 id={`${slideId}-title`}>{slide.title}</H3>}
+                actions={
+                  <Link tabIndex={0} href="#">
+                    Usage examples
+                  </Link>
+                }
+              >
+                <Text>{slide.content}</Text>
+              </CarouselCard>
+            );
+          })}
+        </CarouselSlides>
+      </div>
+    </Carousel>
   );
 };
