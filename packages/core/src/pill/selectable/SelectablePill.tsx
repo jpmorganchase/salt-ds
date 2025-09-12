@@ -8,9 +8,11 @@ import {
   type Ref,
   useId,
   useRef,
+  useState,
 } from "react";
 import { CheckboxIcon } from "../../checkbox";
 import { useCheckboxGroup } from "../../checkbox/internal/useCheckboxGroup";
+import { useFormFieldProps } from "../../form-field-context";
 import type { DataAttributes } from "../../types";
 import { makePrefixer, useControlled, useForkRef } from "../../utils";
 import pillCss from "../Pill.css";
@@ -38,7 +40,7 @@ export const SelectablePill = forwardRef<HTMLLabelElement, SelectablePillProps>(
       checked: checkedProp,
       children,
       className,
-      disabled,
+      disabled: disabledProp,
       inputRef: inputRefProp,
       defaultChecked,
       inputProps = {},
@@ -49,25 +51,43 @@ export const SelectablePill = forwardRef<HTMLLabelElement, SelectablePillProps>(
     },
     ref,
   ) {
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      onChange: inputOnChange,
+      ...restInputProps
+    } = inputProps;
+
+    const [focusVisible, setFocusVisible] = useState(false);
+
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (e.target.matches(":focus-visible")) setFocusVisible(true);
+    };
+    const handleBlur = () => setFocusVisible(false);
+
+    const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
+      useFormFieldProps();
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-pill",
       css: pillCss,
       window: targetWindow,
     });
-    const { onChange: inputOnChange, ...restInputProps } = inputProps;
 
+    const id = useId();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const handleInputRef = useForkRef(inputRefProp, inputRef);
     const checkboxGroup = useCheckboxGroup();
+
+    const disabled =
+      checkboxGroup?.disabled || formFieldDisabled || disabledProp;
 
     const checkboxGroupChecked =
       checkedProp ??
       (checkboxGroup?.checkedValues && value
         ? checkboxGroup.checkedValues.includes(value)
         : checkedProp);
-
-    const id = useId();
-    const inputRef = useRef<HTMLInputElement>(null);
-    const handleInputRef = useForkRef(inputRefProp, inputRef);
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
@@ -82,28 +102,13 @@ export const SelectablePill = forwardRef<HTMLLabelElement, SelectablePillProps>(
       checkboxGroup?.onChange?.(event);
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLLabelElement>) => {
-      if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        setChecked(!checked);
-        if (inputRef.current) {
-          inputRef.current.checked = !checked;
-          inputRef.current.dispatchEvent(
-            new Event("change", { bubbles: true }),
-          );
-        }
-      }
-    };
-
     const [checked, setChecked] = useControlled({
       controlled: checkboxGroupChecked,
       default: Boolean(defaultChecked),
-      name: "Checkbox",
+      name: "SelectablePill",
       state: "checked",
     });
 
-    // we do not want to spread tab index in this case because the input element
-    // does not require tabindex="0" attribute
     const { tabIndex: _tabIndex, ...restLabelProps } = rest;
     return (
       <label
@@ -112,21 +117,37 @@ export const SelectablePill = forwardRef<HTMLLabelElement, SelectablePillProps>(
           withBaseName(),
           withBaseName("clickable"),
           { [withBaseName("active")]: checked },
+          { [withBaseName("focusVisible")]: focusVisible },
           className,
         )}
         htmlFor={id}
-        onKeyDown={handleKeyDown}
         ref={ref}
-        tabIndex={0}
         {...restLabelProps}
       >
         <input
           id={id}
+          aria-describedby={clsx(
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-describedby"]
+              : undefined,
+            inputDescribedBy,
+          )}
+          aria-labelledby={clsx(
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-labelledby"]
+              : undefined,
+            inputLabelledBy,
+          )}
           type="checkbox"
-          tabIndex={-1}
           ref={handleInputRef}
           onChange={handleChange}
-          className={clsx(withBaseName("input"))}
+          className={withBaseName("input")}
+          disabled={disabled}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          defaultChecked={defaultChecked}
+          value={value}
+          checked={checked}
           {...restInputProps}
         />
         <CheckboxIcon checked={checked} disabled={disabled} />
