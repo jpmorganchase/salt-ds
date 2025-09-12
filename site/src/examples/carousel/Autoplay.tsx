@@ -143,8 +143,8 @@ export const Autoplay = () => {
               <PlaySolidIcon style={{ pointerEvents: "none" }} />
             )}
           </Button>
-          <CarouselPreviousButton onClick={stop} appearance="transparent" />
-          <CarouselNextButton onClick={stop} appearance="transparent" />
+          <CarouselPreviousButton onClick={stop} />
+          <CarouselNextButton onClick={stop} />
           <CarouselProgressLabel aria-hidden={true} />
           <CarouselAutoplayIndicator
             slideIndex={slideIndex}

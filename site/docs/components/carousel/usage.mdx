@@ -17,7 +17,7 @@ Carousels offer two types of navigation, sequential and non-sequential.
 When content is sequential, create a slide group, to ensure slides are read in a specific order.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Do not include a tablist, as this would enable the content to be read out of
+  Do not include a tablist, as this would enable the content to be read out of
   sequence.
 </GuidanceCallout>
 
@@ -47,11 +47,10 @@ If you position a `tablist` or navigation controls at the bottom of the carousel
 Incorporate actions, such as a `Link`, into a slide. `CarouselCard` supports actions, through the `actions` prop.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - actions such as[`Link`](../link), can be incorporated into a carousel slide,
-  but avoid embedding other clickable actions during animation to prevent
-  accidental clicks while slides are transitioning. - content within slides can
-  be tabbable but ensure that off-screen content is not tabbable and hidden from
-  the screen-reader, as this can lead to a poor user experience.
+
+- Actions such as[`Link`](../link), can be incorporated into a carousel slide, but avoid embedding other clickable actions during animation to prevent accidental clicks while slides are transitioning.
+- Content within slides can be tabbable but ensure that off-screen content is not tabbable and hidden from the screen-reader, as this can lead to a poor user experience.
+
 </GuidanceCallout>
 
 <LivePreview componentName="carousel" exampleName="CardActions" />
@@ -71,14 +70,14 @@ Incorporate actions, such as a `Link`, into a slide. `CarouselCard` supports act
 - To display less than 2 or more than 5 pieces of content.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Always provide navigation controls for the carousel, alongside a visual
-  indicator of the current slide. - When tabbing through the focus order, ensure
-  that any tablist or navigation controls recieve focus before the slide. -
-  Include 5 or fewer slides. The most important slide always comes first. - Not
-  all content is visible within a carousel until selected, ensure that important
-  content is also placed on another page of your site. - To access content,
-  un-ordered content, out of sequence, add a tablist. - Do not use a tablist
-  when more than one slide is visible.
+
+- Always provide navigation controls for the carousel, alongside a visual indicator of the current slide.
+- When tabbing through the focus order, ensure that any tablist or navigation controls recieve focus before the slide.
+- Include 5 or fewer slides. The most important slide always comes first.
+- Not all content is visible within a carousel until selected, ensure that important content is also placed on another page of your site.
+- To access content, un-ordered content, out of sequence, add a tablist.
+- Do not use a tablist when more than one slide is visible.
+
 </GuidanceCallout>
 
 ## Import

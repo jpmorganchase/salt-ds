@@ -74,9 +74,9 @@ describe("Given a Carousel", () => {
   it("should render the carousel with four slides as a tabbed list", () => {
     cy.mount(<Default />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="Numbered tab example"]').should("exist");
-    cy.get('[role="group"]').should("not.exist");
-    cy.get('[role="tabpanel"]')
+    cy.findByLabelText(/Numbered tab example/).should("exist");
+    cy.findByRole("group").should("not.exist");
+    cy.findByRole("tabpanel")
       .should("have.length", 4)
       .each(($el) => {
         cy.wrap($el).should("have.attr", "aria-roledescription", "slide");
@@ -86,9 +86,9 @@ describe("Given a Carousel", () => {
   it("should render the carousel with four slides as a slide group", () => {
     cy.mount(<SlideGroup ariaVariant="group" />);
     cy.findByRole("region").should("exist");
-    cy.get('[aria-label="Carousel group example"]').should("exist");
-    cy.get('[role="group"]').should("exist");
-    cy.get('[role="tabpanel"]').should("have.length", 0);
+    cy.findByLabelText(/Carousel group example/).should("exist");
+    cy.findByRole("group").should("exist");
+    cy.findByRole("tabpanel").should("have.length", 0);
   });
 
   describe("WITH the current slide as slide 1", () => {

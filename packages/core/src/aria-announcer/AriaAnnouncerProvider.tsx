@@ -1,5 +1,6 @@
 import {
   type ComponentPropsWithRef,
+  forwardRef,
   useCallback,
   useEffect,
   useMemo,
@@ -15,9 +16,6 @@ import {
 export const ARIA_ANNOUNCE_DELAY = 150; // time between DOM updates
 export const DEFAULT_ANNOUNCEMENT_DURATION = 500; // time between announcements
 
-/**
- * TODO add forwardRef at a breaking change
- */
 export interface AriaAnnouncerProviderProps
   extends ComponentPropsWithRef<"div"> {}
 
@@ -28,11 +26,10 @@ interface AnnouncementItem extends AnnounceFnOptions {
   announcement: string;
 }
 
-export function AriaAnnouncerProvider({
-  children,
-  style,
-  ...rest
-}: AriaAnnouncerProviderProps) {
+export const AriaAnnouncerProvider = forwardRef<
+  HTMLDivElement,
+  AriaAnnouncerProviderProps
+>(function AriaAnnouncerProvider({ children, style, ...rest }, ref) {
   const [currentAnnouncement, setCurrentAnnouncement] = useState("");
   const [ariaLive, setAriaLive] = useState<AnnounceFnOptions["ariaLive"]>();
 
@@ -95,9 +92,7 @@ export function AriaAnnouncerProvider({
     }
   }, []);
 
-  /**
-   *  TODO default to `assertive` until a breaking change, when we should switch to `polite`
-   */
+  /** TODO default to `assertive` until a breaking change, when we should switch to `polite` */
   const announce = useCallback(
     (
       announcement: string,
@@ -138,9 +133,8 @@ export function AriaAnnouncerProvider({
       {children}
       <div
         aria-atomic="true"
-        aria-live={
-          (ariaLive as React.AriaAttributes["aria-live"]) ?? "assertive"
-        }
+        aria-live={ariaLive ?? "assertive"}
+        ref={ref}
         // hidden styling based on https://tailwindcss.com/docs/screen-readers
         style={{
           position: "absolute",
@@ -160,4 +154,4 @@ export function AriaAnnouncerProvider({
       </div>
     </AriaAnnouncerContext.Provider>
   );
-}
+});

@@ -2,17 +2,13 @@ import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 import type { CarouselEmblaApiType, CarouselEmblaRefType } from "./Carousel";
 
-export const CarouselAriaVariantValues = ["group", "tabpanel"] as const;
-export type CarouselAriaVariant = (typeof CarouselAriaVariantValues)[number];
+export type CarouselAriaVariant = "group" | "tabpanel";
 
-export const CarouselAnnouncementTriggerValues = [
-  "tab",
-  "navigation",
-  "drag",
-  "focus",
-] as const;
 export type CarouselAnnouncementTrigger =
-  (typeof CarouselAnnouncementTriggerValues)[number];
+  | "tab"
+  | "navigation"
+  | "drag"
+  | "focus";
 
 /**
  * Type definition for the Carousel context.

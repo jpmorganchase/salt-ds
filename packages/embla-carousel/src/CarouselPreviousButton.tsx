@@ -28,7 +28,7 @@ export const CarouselPreviousButton = forwardRef<
       onClick={handleClick}
       disabled={prevBtnDisabled}
       focusableWhenDisabled
-      appearance="bordered"
+      appearance="transparent"
       aria-controls={`${carouselId}-slides`}
       sentiment="neutral"
       aria-label="Previous slide"

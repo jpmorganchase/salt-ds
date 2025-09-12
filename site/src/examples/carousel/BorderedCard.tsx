@@ -31,9 +31,9 @@ export const BorderedCard = (): ReactElement => {
         }}
       >
         <FlexLayout gap={1} wrap={true}>
-          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+          <CarouselPreviousButton tabIndex={-1} />
           <CarouselTabList />
-          <CarouselNextButton tabIndex={-1} appearance="transparent" />
+          <CarouselNextButton tabIndex={-1} />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>

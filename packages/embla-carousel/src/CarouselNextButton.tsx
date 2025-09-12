@@ -28,7 +28,7 @@ export const CarouselNextButton = forwardRef<
       onClick={handleClick}
       disabled={nextBtnDisabled}
       focusableWhenDisabled
-      appearance="bordered"
+      appearance="transparent"
       aria-controls={`${carouselId}-slides`}
       sentiment="neutral"
       aria-label="Next slide"

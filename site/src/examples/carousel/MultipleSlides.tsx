@@ -35,14 +35,8 @@ export const MultipleSlides = (): ReactElement => {
         }}
       >
         <FlexLayout gap={1} wrap={true} align={"center"}>
-          <CarouselPreviousButton
-            aria-label="Previous slide group"
-            appearance="transparent"
-          />
-          <CarouselNextButton
-            aria-label="Next slide group"
-            appearance="transparent"
-          />
+          <CarouselPreviousButton aria-label="Previous slide group" />
+          <CarouselNextButton aria-label="Next slide group" />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>

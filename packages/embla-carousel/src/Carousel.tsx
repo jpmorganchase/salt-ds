@@ -78,7 +78,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       ...emblaPlugins,
     ]);
 
-    const carouselId = useId();
+    const carouselId = useId(id);
 
     useEffect(() => {
       if (emblaApi) {
@@ -103,7 +103,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           setAriaVariant,
           announcementState,
           setAnnouncementState,
-          carouselId: id ?? carouselId,
+          carouselId,
         }}
       >
         <section

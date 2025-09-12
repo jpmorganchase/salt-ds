@@ -42,9 +42,9 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
         }}
       >
         <FlexLayout gap={1} wrap={true} align={"center"}>
-          <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+          <CarouselPreviousButton tabIndex={-1} />
           {ariaVariant === "tabpanel" ? <CarouselTabList /> : null}
-          <CarouselNextButton tabIndex={-1} appearance="transparent" />
+          <CarouselNextButton tabIndex={-1} />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
@@ -63,9 +63,9 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
   return (
     <Carousel aria-label="Numbered tab example" className="carousel" {...args}>
       <FlexLayout gap={1} wrap={true} align={"center"}>
-        <CarouselPreviousButton tabIndex={-1} appearance="transparent" />
+        <CarouselPreviousButton tabIndex={-1} />
         <CarouselTabList />
-        <CarouselNextButton tabIndex={-1} appearance="transparent" />
+        <CarouselNextButton tabIndex={-1} />
         <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
@@ -131,14 +131,8 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
         }}
       >
         <FlexLayout gap={1} wrap={true} align={"center"}>
-          <CarouselPreviousButton
-            aria-label="Previous slide group"
-            appearance="transparent"
-          />
-          <CarouselNextButton
-            aria-label="Next slide group"
-            appearance="transparent"
-          />
+          <CarouselPreviousButton aria-label="Previous slide group" />
+          <CarouselNextButton aria-label="Next slide group" />
           <CarouselProgressLabel />
         </FlexLayout>
         <CarouselSlides>
