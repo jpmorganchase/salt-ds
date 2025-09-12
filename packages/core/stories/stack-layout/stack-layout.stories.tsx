@@ -16,7 +16,7 @@ export default {
       control: { type: "select" },
     },
     direction: {
-      options: ["row", "column"],
+      options: ["row", "column", "row-reverse", "column-reverse"],
       control: { type: "select" },
     },
     separators: {
