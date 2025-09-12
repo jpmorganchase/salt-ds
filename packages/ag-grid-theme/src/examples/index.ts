@@ -1,3 +1,4 @@
+export { CellValidation } from "./CellValidation";
 export { default as CheckboxSelection } from "./CheckboxSelection";
 export { default as Coloration } from "./Coloration";
 export { default as ColumnGroup } from "./ColumnGroup";
@@ -20,6 +21,7 @@ export { ProvidedCellEditors } from "./ProvidedCellEditors";
 export { RangeSelection } from "./RangeSelection";
 export { default as RowGrouping } from "./RowGrouping";
 export { default as RowGroupPanel } from "./RowGroupPanel";
+export { RowValidation } from "./RowValidation";
 export { default as SortAndFilter } from "./SortAndFilter";
 export { default as StatusBar } from "./StatusBar";
 export { SuppressMenuHide } from "./SuppressMenuHide";
