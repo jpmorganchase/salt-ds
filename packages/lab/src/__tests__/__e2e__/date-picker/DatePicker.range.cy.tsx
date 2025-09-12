@@ -369,7 +369,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
               errors: [
                 {
                   type: DateDetailError.UNSET,
-                  message: "no date defined",
+                  message: "no end date defined",
                 },
               ],
             },
@@ -450,6 +450,91 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         );
         // Verify there is no change event
         cy.get("@selectionChangeSpy").should("have.callCount", 4);
+      });
+
+      it("SHOULD support clearing dates", () => {
+        const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+        cy.mount(
+          <RangeWithFormField
+            selectionVariant={"range"}
+            onSelectionChange={selectionChangeSpy}
+          />,
+        );
+        // Simulate entering a valid start date
+        cy.findByLabelText("Start date")
+          .click()
+          .clear()
+          .type(initialRangeDateValue.startDate);
+        cy.findByLabelText("End date")
+          .click()
+          .clear()
+          .type(initialRangeDateValue.endDate);
+        cy.realPress("Tab");
+        cy.get("@selectionChangeSpy").should("have.callCount", 2);
+        // Verify there is a valid change event
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          initialRangeDateValue.startDate,
+        );
+        cy.findByLabelText("End date").should(
+          "have.value",
+          initialRangeDateValue.endDate,
+        );
+
+        // Clear start date
+        cy.findByLabelText("Start date").clear();
+        cy.realPress("Tab");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
+        cy.get("@selectionChangeSpy").should((spy: any) => {
+          const [_event, date, details] = spy.lastCall.args;
+          expect(date.startDate).to.be.null;
+          expect(adapter.isValid(date.endDate)).to.be.true;
+          expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
+            initialRangeDateValue.endDate,
+          );
+          expect(details).to.deep.equal({
+            startDate: {
+              value: "",
+              errors: [
+                {
+                  type: DateDetailError.UNSET,
+                  message: "no start date defined",
+                },
+              ],
+            },
+            endDate: { value: initialRangeDateValue.endDate },
+          });
+        });
+        cy.findByLabelText("Start date").should("have.value", "");
+        // Clear end date
+        cy.findByLabelText("End date").clear();
+        cy.realPress("Tab");
+        cy.get("@selectionChangeSpy").should((spy: any) => {
+          const [_event, date, details] = spy.lastCall.args;
+          expect(date.startDate).to.be.null;
+          expect(date.endDate).to.be.null;
+          expect(details).to.deep.equal({
+            startDate: {
+              value: "",
+              errors: [
+                {
+                  type: DateDetailError.UNSET,
+                  message: "no start date defined",
+                },
+              ],
+            },
+            endDate: {
+              value: "",
+              errors: [
+                {
+                  type: DateDetailError.UNSET,
+                  message: "no end date defined",
+                },
+              ],
+            },
+          });
+        });
+        cy.findByLabelText("End date").should("have.value", "");
       });
 
       it("SHOULD render helper text in the panel when opened ", () => {

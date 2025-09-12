@@ -10,6 +10,7 @@ import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   DateInputRange,
+  type DateInputRangeDetails,
   type DateParserField,
   type DateRangeSelection,
 } from "@salt-ds/lab";
@@ -704,65 +705,65 @@ describe("GIVEN a DateInputRange", () => {
         let dateChangeSpy: Cypress.Agent<sinon.SinonStub>;
         let dateValueChangeSpy: Cypress.Agent<sinon.SinonStub>;
 
+        function ControlledDateInput() {
+          const [date, setDate] = useState<
+            DateRangeSelection<DateFrameworkType> | null | undefined
+          >(initialDate);
+
+          const handleDateChange = (
+            event: SyntheticEvent,
+            newDate: DateRangeSelection<DateFrameworkType> | null | undefined,
+            details: DateInputRangeDetails,
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            setDate(newDate);
+            dateChangeSpy(event, newDate, details);
+          };
+          const handleStartInputChange = (
+            event: ChangeEvent<HTMLInputElement>,
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            startInputChangeSpy(event);
+          };
+          const handleEndInputChange = (
+            event: ChangeEvent<HTMLInputElement>,
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            endInputChangeSpy(event);
+          };
+
+          return (
+            <DateInputRange
+              date={date}
+              startInputProps={{ onChange: handleStartInputChange }}
+              endInputProps={{ onChange: handleEndInputChange }}
+              onDateValueChange={dateValueChangeSpy}
+              onDateChange={handleDateChange}
+            />
+          );
+        }
+
         beforeEach(() => {
           startInputChangeSpy = cy.stub().as("startInputChangeSpy");
           endInputChangeSpy = cy.stub().as("endInputChangeSpy");
           dateChangeSpy = cy.stub().as("dateChangeSpy");
           dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+          cy.mount(<ControlledDateInput />);
         });
 
-        it("SHOULD update when changed with a valid date", () => {
-          function ControlledDateInput() {
-            const [date, setDate] = useState<
-              DateRangeSelection<DateFrameworkType> | null | undefined
-            >(initialDate);
-
-            const handleDateChange = (
-              event: SyntheticEvent,
-              newDate: DateRangeSelection<DateFrameworkType> | null | undefined,
-            ) => {
-              // React 16 backwards compatibility
-              event.persist();
-              setDate(newDate);
-              dateChangeSpy(event, newDate);
-            };
-            const handleStartInputChange = (
-              event: ChangeEvent<HTMLInputElement>,
-            ) => {
-              // React 16 backwards compatibility
-              event.persist();
-              startInputChangeSpy(event);
-            };
-            const handleEndInputChange = (
-              event: ChangeEvent<HTMLInputElement>,
-            ) => {
-              // React 16 backwards compatibility
-              event.persist();
-              endInputChangeSpy(event);
-            };
-
-            return (
-              <DateInputRange
-                date={date}
-                startInputProps={{ onChange: handleStartInputChange }}
-                endInputProps={{ onChange: handleEndInputChange }}
-                onDateValueChange={dateValueChangeSpy}
-                onDateChange={handleDateChange}
-              />
-            );
-          }
-
-          cy.mount(<ControlledDateInput />);
-
-          // Test update start date
+        it("SHOULD call onDateChange only if value changes", () => {
+          // update start date
           cy.findByLabelText("Start date")
             .click()
             .clear()
             .type(updatedDateValue.startDate);
+          // assert start date value changes
           cy.get("@startInputChangeSpy").should("have.been.calledWithMatch", {
             target: { value: updatedDateValue.startDate },
           });
-          cy.realPress("Tab");
           cy.get("@dateValueChangeSpy").should(
             "have.been.calledWithMatch",
             Cypress.sinon.match.any,
@@ -771,6 +772,9 @@ describe("GIVEN a DateInputRange", () => {
               endDate: initialDateValue.endDate,
             },
           );
+          cy.realPress("Tab");
+          // assert start date changes
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 1);
           cy.get("@dateChangeSpy").then((spy) =>
             assertDateChange(
               spy,
@@ -786,16 +790,15 @@ describe("GIVEN a DateInputRange", () => {
             ),
           );
 
-          // Test update end date
+          // update end date
           cy.findByLabelText("End date")
             .click()
             .clear()
             .type(updatedDateValue.endDate);
+          // assert end date value changes
           cy.get("@endInputChangeSpy").should("have.been.calledWithMatch", {
             target: { value: updatedDateValue.endDate },
           });
-          cy.get("@dateChangeSpy").should("have.been.calledOnce");
-          cy.realPress("Tab");
           cy.get("@dateValueChangeSpy").should(
             "have.been.calledWithMatch",
             Cypress.sinon.match.any,
@@ -804,6 +807,149 @@ describe("GIVEN a DateInputRange", () => {
               endDate: updatedFormattedDateValue.endDate,
             },
           );
+          cy.realPress("Tab");
+          // assert end date changes
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 2);
+          cy.get("@dateChangeSpy").then((spy) =>
+            assertDateChange(
+              spy,
+              {
+                startDate: updatedDateValue.startDate,
+                endDate: updatedDateValue.endDate,
+              },
+              {
+                startDate: updatedDate.startDate,
+                endDate: updatedDate.endDate,
+              },
+              adapter,
+            ),
+          );
+        });
+
+        it("SHOULD be able to clear date and update", () => {
+          // set initial state
+          cy.findByLabelText("End date")
+            .click()
+            .clear()
+            .type(updatedDateValue.startDate);
+          cy.findByLabelText("End date")
+            .click()
+            .clear()
+            .type(updatedDateValue.endDate);
+          cy.realPress("Tab");
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 1);
+          // clear start date
+          cy.findByLabelText("Start date").click().clear();
+          // assert start date clears
+          cy.get("@startInputChangeSpy").should("have.been.calledWithMatch", {
+            target: { value: "" },
+          });
+          cy.realPress("Tab");
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 2);
+          cy.get("@dateValueChangeSpy").should(
+            "have.been.calledWithMatch",
+            Cypress.sinon.match.any,
+            {
+              startDate: "",
+              endDate: updatedDateValue.endDate,
+            },
+          );
+          cy.get("@dateChangeSpy").then((spy) =>
+            assertDateChange(
+              spy,
+              {
+                startDate: "",
+                endDate: updatedDateValue.endDate,
+              },
+              {
+                startDate: undefined,
+                endDate: updatedDate.endDate,
+              },
+              adapter,
+            ),
+          );
+
+          // Re-enter start date
+          cy.findByLabelText("Start date")
+            .click()
+            .clear()
+            .type(updatedDateValue.startDate);
+          // assert start date updates
+          cy.get("@startInputChangeSpy").should("have.been.calledWithMatch", {
+            target: { value: updatedDateValue.startDate },
+          });
+          cy.get("@dateValueChangeSpy").should(
+            "have.been.calledWithMatch",
+            Cypress.sinon.match.any,
+            {
+              startDate: updatedFormattedDateValue.startDate,
+              endDate: updatedDateValue.endDate,
+            },
+          );
+          cy.realPress("Tab");
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 3);
+          cy.get("@dateChangeSpy").then((spy) =>
+            assertDateChange(
+              spy,
+              {
+                startDate: updatedDateValue.startDate,
+                endDate: updatedDateValue.endDate,
+              },
+              {
+                startDate: updatedDate.startDate,
+                endDate: updatedDateValue.endDate,
+              },
+              adapter,
+            ),
+          );
+
+          // clear end date
+          cy.findByLabelText("End date").click().clear();
+          cy.get("@endInputChangeSpy").should("have.been.calledWithMatch", {
+            target: { value: "" },
+          });
+          cy.realPress("Tab");
+          // assert start date cleared
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 4);
+          cy.get("@dateValueChangeSpy").should(
+            "have.been.calledWithMatch",
+            Cypress.sinon.match.any,
+            {
+              startDate: updatedDateValue.startDate,
+              endDate: "",
+            },
+          );
+          cy.get("@dateChangeSpy").then((spy) =>
+            assertDateChange(
+              spy,
+              {
+                startDate: updatedDateValue.startDate,
+                endDate: "",
+              },
+              {
+                startDate: updatedDate.startDate,
+                endDate: undefined,
+              },
+              adapter,
+            ),
+          );
+
+          // re-enter end date
+          cy.findByLabelText("End date").click().type(updatedDateValue.endDate);
+          cy.get("@endInputChangeSpy").should("have.been.calledWithMatch", {
+            target: { value: updatedDateValue.endDate },
+          });
+          cy.get("@dateValueChangeSpy").should(
+            "have.been.calledWithMatch",
+            Cypress.sinon.match.any,
+            {
+              startDate: updatedFormattedDateValue.startDate,
+              endDate: updatedFormattedDateValue.endDate,
+            },
+          );
+          cy.realPress("Tab");
+          // assert end date updates
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 5);
           cy.get("@dateChangeSpy").then((spy) =>
             assertDateChange(
               spy,
