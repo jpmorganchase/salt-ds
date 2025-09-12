@@ -52,6 +52,11 @@
   outline: var(--salt-focused-outline);
 }
 
+/* Show focus outline on selectable pill when input inside is focused */
+.saltPill-clickable.saltPill-focusVisible {
+  outline: var(--salt-focused-outline);
+}
+
 /* Styles applied when the pill triggers a menu */
 .saltPill[aria-expanded="true"][aria-haspopup="menu"] {
   --pill-color: var(--salt-actionable-bold-foreground-active);
@@ -69,9 +74,21 @@
 }
 
 .saltPill-input {
-  cursor: inherit;
-  opacity: 0;
-  padding: 0;
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
   z-index: var(--salt-zIndex-default);
+  cursor: pointer;
+  appearance: none;
+  border: none;
+}
+
+@supports selector(:has(*)) {
+  .saltPill:has(input:focus-visible) {
+    outline: var(--salt-focused-outline);
+  }
 }

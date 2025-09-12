@@ -1,4 +1,10 @@
-import { Button, FlowLayout, Pill } from "@salt-ds/core";
+import {
+  Button,
+  FlowLayout,
+  Pill,
+  SelectablePill,
+  SelectablePillGroup,
+} from "@salt-ds/core";
 import { CloseIcon, FavoriteIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
@@ -64,10 +70,16 @@ export const Icon: StoryFn<typeof Pill> = () => {
   );
 };
 
-export const Selectable: StoryFn<typeof Pill> = () => {
+export const Selectable: StoryFn = () => {
   return (
-    <Pill selectable onClick={() => console.log("Clicked.")}>
-      Selectable Pill
-    </Pill>
+    <SelectablePillGroup
+      defaultCheckedValues={["Apple"]}
+      direction="horizontal"
+    >
+      <SelectablePill value="Apple">Apple</SelectablePill>
+      <SelectablePill value="Banana">Banana</SelectablePill>
+      <SelectablePill value="Cherry">Cherry</SelectablePill>
+      <SelectablePill value="Date">Date</SelectablePill>
+    </SelectablePillGroup>
   );
 };
