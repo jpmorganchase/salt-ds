@@ -200,8 +200,13 @@
 }
 
 /* Override default stroke for line chart data series hover point circle */
-.highcharts-theme-salt .highcharts-point {
+.highcharts-theme-salt .highcharts-line-series .highcharts-point {
   stroke: var(--salt-color-white);
+}
+
+/* Override default stroke for stacked bar chart segment stroke */
+.highcharts-theme-salt .highcharts-bar-series .highcharts-point {
+  stroke: var(--salt-container-primary-background);
 }
 
 /* Override default stroke for pie chart segment border */

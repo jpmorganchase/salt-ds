@@ -9,7 +9,7 @@ export const lineOptions: Options = {
       "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
   },
   title: {
-    text: "Title",
+    text: "Currency performance trends",
   },
   yAxis: {
     title: {
