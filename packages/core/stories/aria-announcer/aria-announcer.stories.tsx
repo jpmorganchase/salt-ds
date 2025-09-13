@@ -1,11 +1,12 @@
-import { AriaAnnouncerProvider, useAriaAnnouncer, useId } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
-  type ChangeEvent,
-  type CSSProperties,
-  useCallback,
-  useState,
-} from "react";
+  AriaAnnouncerProvider,
+  RadioButton,
+  RadioButtonGroup,
+  useAriaAnnouncer,
+  useId,
+} from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react-vite";
+import { type ChangeEvent, type CSSProperties, useState } from "react";
 
 export default {
   title: "Core/Aria Announcer Provider",
@@ -16,73 +17,110 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof AriaAnnouncerProvider>;
 
-type changeEvt = ChangeEvent<HTMLInputElement>;
-type interval = "delay" | "debounce";
+type Interval = "delay" | "debounce" | "duration";
+type AriaLive = "assertive" | "polite" | undefined;
 /**
  * Do not apply visible style in a production app. This is for debug purposes only.
  */
 const visibleStyle: CSSProperties = {
+  display: "block",
   clip: "auto",
   clipPath: "none",
   height: "auto",
-
   width: "auto",
   margin: 0,
   overflow: "visible",
   padding: 0,
-  position: "relative",
+  position: "absolute",
 };
 
 const Content = () => {
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState("");
+  const [ariaLive, setAriaLive] = useState<AriaLive>("assertive");
   const [debounce, setDebounce] = useState("");
+  const [duration, setDuration] = useState("");
 
-  const getMilliseconds = useCallback(
-    (type: interval) => {
-      const value = type === "delay" ? delay : debounce;
-      const maybeNumber = Number.parseInt(value, 10);
-      return Number.isNaN(maybeNumber) ? undefined : maybeNumber;
-    },
-    [debounce, delay],
-  );
+  const getMilliseconds = (type: Interval) => {
+    let value;
+    if (type === "delay") {
+      value = delay;
+    } else if (type === "debounce") {
+      value = debounce;
+    } else {
+      value = duration;
+    }
+    const maybeNumber = Number.parseInt(value, 10);
+    return Number.isNaN(maybeNumber) ? undefined : maybeNumber;
+  };
 
   const { announce } = useAriaAnnouncer({
     debounce: getMilliseconds("debounce"),
   });
 
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     setCount((currentValue) => {
       const newValue = currentValue + 1;
-      announce(`count = ${newValue}`, getMilliseconds("delay"));
+      const delay = getMilliseconds("delay");
+      const duration = getMilliseconds("duration");
+      announce(
+        `count = ${newValue}`,
+        delay !== undefined ? delay : { ariaLive, duration },
+      );
       return newValue;
     });
-  }, [announce, getMilliseconds]);
+  };
 
-  const handleDelay = (e: changeEvt) => {
+  const handleDelay = (e: ChangeEvent<HTMLInputElement>) => {
     setDelay(e.target.value);
     setDebounce("");
+    setDuration("");
   };
-  const handleDebounce = (e: changeEvt) => {
+
+  const handleDebounce = (e: ChangeEvent<HTMLInputElement>) => {
     setDebounce(e.target.value);
     setDelay("");
+    setDuration("");
+  };
+
+  const handleDuration = (e: ChangeEvent<HTMLInputElement>) => {
+    setDuration(e.target.value);
+    setDelay("");
+    setDebounce("");
+  };
+
+  const handleAriaLive = (e: ChangeEvent<HTMLInputElement>) => {
+    setAriaLive(e.target.value as AriaLive);
   };
 
   const getButtonLabel = () => {
     if (delay) {
-      return `Increment count with ${delay}ms delay`;
+      return `Increment count with ${delay}ms delay ${getMilliseconds("debounce") !== undefined ? ` and debounce=${debounce}ms` : ""}`;
+    }
+    if (duration) {
+      return `Increment count with ${duration}ms duration ${getMilliseconds("debounce") !== undefined ? ` and debounce=${debounce}ms` : ""}`;
     }
     if (debounce) {
-      return `Increment count with ${debounce}ms debounce`;
+      return `Increment count with debounce=${debounce}ms only`;
     }
     return "Increment count, nothing fancy";
   };
 
   const delayInputId = useId();
   const debounceInputId = useId();
+  const durationInputId = useId();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <RadioButtonGroup
+        name="ariaLive"
+        direction="horizontal"
+        onChange={handleAriaLive}
+        value={ariaLive}
+      >
+        <RadioButton label="Assertive" value="assertive" />
+        <RadioButton label="Polite" value="polite" />
+      </RadioButtonGroup>
       <div style={{ display: "flex" }}>
         <label htmlFor={delayInputId} style={{ width: 160 }}>
           Delay (ms):{" "}
@@ -105,11 +143,19 @@ const Content = () => {
           value={debounce}
         />
       </div>
-
-      <div style={{ display: "flex", gap: 12 }}>
-        <button onClick={handleClick}>{getButtonLabel()}</button>
-        <span>{count}</span>
+      <div style={{ display: "flex" }}>
+        <label htmlFor={durationInputId} style={{ width: 160 }}>
+          Duration (ms):{" "}
+        </label>
+        <input
+          id={durationInputId}
+          onChange={handleDuration}
+          style={{ width: 80 }}
+          value={duration}
+        />
       </div>
+      <label style={{ display: "flex", width: 160 }}>Count: {count}</label>
+      <button onClick={handleClick}>{getButtonLabel()}</button>
     </div>
   );
 };
