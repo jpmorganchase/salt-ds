@@ -1,5 +1,11 @@
 /* Component class applied to the root element */
 .saltTabListNext {
+  max-width: 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.saltTabListNext [role="tablist"] {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
