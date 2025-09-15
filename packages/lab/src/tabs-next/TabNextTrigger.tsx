@@ -1,3 +1,4 @@
+import { useListItem } from "@floating-ui/react";
 import {
   makePrefixer,
   useForkRef,
@@ -15,6 +16,7 @@ import {
 } from "react";
 import { useTabNext } from "./TabNextContext";
 import tabTriggerCss from "./TabNextTrigger.css";
+import { useTabOverflow } from "./TabOverflowContext";
 import { useTabsNext } from "./TabsNextContext";
 
 export interface TabNextTriggerProps
@@ -52,6 +54,8 @@ export const TabNextTrigger = forwardRef<
 
   const { setSelected, registerTab, getPanelId } = useTabsNext();
   const { selected, value, focused, disabled, tabId, actions } = useTabNext();
+  const overflowContext = useTabOverflow();
+  const item = useListItem();
 
   const tabRef = useRef<HTMLButtonElement>(null);
 
@@ -77,7 +81,8 @@ export const TabNextTrigger = forwardRef<
     }
   };
 
-  const handleRef = useForkRef<HTMLButtonElement>(tabRef, ref);
+  const handleTabRef = useForkRef<HTMLButtonElement>(item.ref, tabRef);
+  const handleRef = useForkRef<HTMLButtonElement>(handleTabRef, ref);
   const panelId = getPanelId(value);
 
   // Applying aria-actions this way avoid React warnings about unknown props
@@ -87,6 +92,9 @@ export const TabNextTrigger = forwardRef<
       }
     : {};
 
+  const active = overflowContext && item.index === overflowContext?.activeIndex;
+  console.log("TabNextTrigger", { overflowContext, item });
+
   return (
     <button
       aria-selected={selected}
@@ -94,7 +102,7 @@ export const TabNextTrigger = forwardRef<
       aria-controls={panelId}
       {...ariaActionsProps}
       aria-description={getAriaDescription(actions.length)}
-      tabIndex={focused || selected ? undefined : -1}
+      tabIndex={focused || selected || active ? undefined : -1}
       role="tab"
       type="button"
       onClick={!disabled ? handleClick : undefined}
