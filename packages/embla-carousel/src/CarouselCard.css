@@ -57,10 +57,6 @@
   margin: 0;
 }
 
-.saltCarouselCard[data-visibility="off-screen"] a {
-  visibility: hidden;
-}
-
 .saltCarouselCard-bordered {
   background: var(--salt-container-primary-background);
   border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
