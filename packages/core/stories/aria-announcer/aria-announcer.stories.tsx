@@ -157,9 +157,7 @@ const Content = () => {
       <span aria-hidden="true" style={{ display: "flex", width: 160 }}>
         Count: {count}
       </span>
-      <button onClick={handleClick}>
-        {getButtonLabel()}
-      </button>
+      <button onClick={handleClick}>{getButtonLabel()}</button>
     </div>
   );
 };
