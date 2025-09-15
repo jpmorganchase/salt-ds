@@ -86,8 +86,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         ArrowLeft: getPrevious,
         Home: getFirst,
         End: getLast,
-        ArrowUp: menuOpen ? getPrevious : undefined,
-        ArrowDown: menuOpen ? getNext : undefined,
+        ArrowUp: getPrevious,
+        ArrowDown: getNext,
       };
 
       const action = actionMap[event.key as keyof typeof actionMap];
