@@ -81,13 +81,13 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
 
+      if (menuOpen) return;
+
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
         Home: getFirst,
         End: getLast,
-        ArrowUp: menuOpen ? getPrevious : undefined,
-        ArrowDown: menuOpen ? getNext : undefined,
       };
 
       const action = actionMap[event.key as keyof typeof actionMap];
@@ -111,7 +111,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     return (
       <div
-        role="tablist"
         className={clsx(
           withBaseName(),
           withBaseName(appearance),
@@ -120,7 +119,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           className,
         )}
         data-ismeasuring={isMeasuring ? true : undefined}
-        ref={handleRef}
         onKeyDown={handleKeyDown}
         aria-describedby={clsx(ariaDescribedBy, warningId) || undefined}
         {...rest}
@@ -131,16 +129,17 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
             inaccurate or change when a tab is selected
           </span>
         )}
-        {visible}
-        <TabOverflowList
-          isMeasuring={isMeasuring}
-          buttonRef={overflowButtonRef}
-          tabstripRef={tabstripRef}
-          open={menuOpen}
-          setOpen={setMenuOpen}
-        >
-          {hidden}
-        </TabOverflowList>
+        <div role="tablist" ref={handleRef}>
+          {visible}
+          <TabOverflowList
+            isMeasuring={isMeasuring}
+            buttonRef={overflowButtonRef}
+            open={menuOpen}
+            setOpen={setMenuOpen}
+          >
+            {hidden}
+          </TabOverflowList>
+        </div>
       </div>
     );
   },
