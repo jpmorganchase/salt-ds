@@ -12,6 +12,10 @@
   padding-top: var(--salt-spacing-100);
 }
 
+.saltFormField-labelTop .saltFormFieldLabel.saltText {
+  width: fit-content;
+}
+
 .saltFormFieldLabel-necessityLabel {
   font-weight: var(--salt-text-fontWeight);
   font-style: var(--salt-editable-help-fontStyle);
