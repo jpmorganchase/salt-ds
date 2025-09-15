@@ -109,6 +109,7 @@ const Content = () => {
   const delayInputId = useId();
   const debounceInputId = useId();
   const durationInputId = useId();
+  const countId = useId();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -154,8 +155,12 @@ const Content = () => {
           value={duration}
         />
       </div>
-      <label style={{ display: "flex", width: 160 }}>Count: {count}</label>
-      <button onClick={handleClick}>{getButtonLabel()}</button>
+      <label htmlFor={countId} style={{ display: "flex", width: 160 }}>
+        Count: {count}
+      </label>
+      <button id={countId} onClick={handleClick}>
+        {getButtonLabel()}
+      </button>
     </div>
   );
 };
