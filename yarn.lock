@@ -3270,7 +3270,7 @@ __metadata:
     "@salt-ds/window": "workspace:^"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
-    highcharts: ">=10 <13"
+    highcharts: ^10.2.0
     highcharts-react-official: ^3.2.2
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
