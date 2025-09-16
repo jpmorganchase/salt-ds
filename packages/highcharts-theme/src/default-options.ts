@@ -55,6 +55,9 @@ export const getDefaultOptions = (
           enabled: true,
         },
       },
+      bar: {
+        borderRadius: 0,
+      },
     },
   };
 
