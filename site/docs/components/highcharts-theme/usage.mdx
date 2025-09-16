@@ -12,12 +12,16 @@ data:
 
 ## Import
 
-To install the Salt Highcharts theme package, ensure you have a supported version of Highcharts installed and add `@salt-ds/highcharts-theme` via your package manager
+Install the following dependencies:
+
+- `highcharts` - version 10.2.0 to v12.
+- `highcharts-react-official`
+- `@salt-ds/highcharts-theme@0.0.0-snapshot-20250915124856`
 
 ```bash
-npm install @salt-ds/highcharts-theme
+npm install highcharts highcharts-react-official @salt-ds/highcharts-theme@0.0.0-snapshot-20250915124856
 # or
-yarn add @salt-ds/highcharts-theme
+yarn add highcharts highcharts-react-official @salt-ds/highcharts-theme@0.0.0-snapshot-20250915124856
 ```
 
 ### Import Highcharts CSS
@@ -51,7 +55,7 @@ Then wrap your Highcharts with `highcharts-theme-salt` class name as shown below
 
 ## useChart hook
 
-Many Highchart stylistic properties can't be configured via CSS alone and are not density sensitive. Wrap your Highcharts options with the `useChart` hook to ensure the theme is applied correctly.
+Wrap your Highcharts options with the `useChart` hook to ensure the theme is applied correctly.
 
 ```jsx
 import { useChart } from "@salt-ds/highcharts-theme";
