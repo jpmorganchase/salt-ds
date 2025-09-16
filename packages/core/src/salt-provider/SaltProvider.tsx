@@ -258,7 +258,10 @@ function InternalSaltProvider({
     actionFont: inheritedActionFont,
   } = useContext(ThemeContext);
 
-  const isRootProvider = inheritedTheme === undefined || inheritedTheme === "";
+  const targetWindow = useWindow();
+
+  const isRootProvider =
+    inheritedWindow === undefined || inheritedWindow !== targetWindow;
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
@@ -273,8 +276,6 @@ function InternalSaltProvider({
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
-
-  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-provider",
     css: saltProviderCss,
@@ -348,7 +349,11 @@ function InternalSaltProvider({
       }
     }
     return () => {
-      if (applyClassesTo === "root" && targetWindow) {
+      if (
+        applyClassesTo === "root" &&
+        targetWindow &&
+        (inheritedWindow === undefined || inheritedWindow !== targetWindow)
+      ) {
         // When unmounting/remounting, remove the applied styles from the root
         targetWindow.document.documentElement.classList.remove(
           ...themeNames,
