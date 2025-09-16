@@ -19,25 +19,6 @@ const layoutDirectionOptions = [
   "column-reverse",
 ];
 
-const startItem = (
-  <StackLayout>
-    {Array.from({ length: 3 }, (_, index) => (
-      <FlexItem key={index} className={styles.flexItem}>
-        {index + 1}
-      </FlexItem>
-    ))}
-  </StackLayout>
-);
-const endItem = (
-  <StackLayout>
-    {Array.from({ length: 2 }, (_, index) => (
-      <FlexItem key={index} className={styles.flexItem}>
-        {index + 4}
-      </FlexItem>
-    ))}
-  </StackLayout>
-);
-
 export const LayoutDirection = (): ReactElement => {
   const [direction, setDirection] = useState<LayoutDirectionType>("column");
 
@@ -47,6 +28,26 @@ export const LayoutDirection = (): ReactElement => {
     const { value } = event.target;
     setDirection(value as LayoutDirectionType);
   };
+
+  const startItem = (
+    <StackLayout direction={direction}>
+      {Array.from({ length: 3 }, (_, index) => (
+        <FlexItem key={index} className={styles.flexItem}>
+          {index + 1}
+        </FlexItem>
+      ))}
+    </StackLayout>
+  );
+
+  const endItem = (
+    <StackLayout direction={direction}>
+      {Array.from({ length: 2 }, (_, index) => (
+        <FlexItem key={index} className={styles.flexItem}>
+          {index + 4}
+        </FlexItem>
+      ))}
+    </StackLayout>
+  );
 
   return (
     <div className={layoutDirectionStyles.container}>
