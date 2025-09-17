@@ -19,12 +19,24 @@ export interface a11yValueAriaProps {
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 
+export interface FormFieldValidationStatuses {
+  error: string;
+  warning: string;
+  success: string;
+};
+export type FormFieldValidationStatus = keyof FormFieldValidationStatuses;
+export const FormFieldValidationStatusValues:FormFieldValidationStatus[] = [
+  "error",
+  "warning",
+  "success",
+];
+
 export interface FormFieldContextValue {
   a11yProps: a11yValueAriaProps;
   disabled: boolean;
   necessity: NecessityType | undefined;
   readOnly: boolean;
-  validationStatus: "error" | "warning" | "success" | undefined;
+  validationStatus: FormFieldValidationStatus | undefined;
   formFieldRef?: RefObject<HTMLDivElement>;
 }
 
