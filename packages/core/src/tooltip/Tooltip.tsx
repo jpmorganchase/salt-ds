@@ -8,9 +8,7 @@ import {
   type Ref,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import {
-  type ValidationStatus,
-} from "../status-indicator";
+import type { ValidationStatus } from "../status-indicator";
 import {
   getRefFromChildren,
   makePrefixer,
