@@ -23,9 +23,9 @@ export interface FormFieldValidationStatuses {
   error: string;
   warning: string;
   success: string;
-};
+}
 export type FormFieldValidationStatus = keyof FormFieldValidationStatuses;
-export const FormFieldValidationStatusValues:FormFieldValidationStatus[] = [
+export const FormFieldValidationStatusValues: FormFieldValidationStatus[] = [
   "error",
   "warning",
   "success",
