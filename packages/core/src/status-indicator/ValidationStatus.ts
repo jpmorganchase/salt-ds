@@ -3,14 +3,14 @@ export interface ValidationStatuses {
   warning: string;
   success: string;
   info: string;
-};
+}
 export type ValidationStatus = keyof ValidationStatuses;
-export const ValidationStatusValues:ValidationStatus[] = [
+export const ValidationStatusValues: ValidationStatus[] = [
   "error",
   "warning",
   "success",
-  "info"
-] ;
+  "info",
+];
 
 /**
  * @deprecated use ValidationStatusValues
