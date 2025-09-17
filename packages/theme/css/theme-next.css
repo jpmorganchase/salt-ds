@@ -1,34 +1,41 @@
-@import url(foundations/alpha-next.css);
-@import url(foundations/color-next.css);
+/* Foundations (base values) */
+@import url(foundations/index.css);
 
-@import url(palette/accent-next.css);
-@import url(palette/background-next.css);
-@import url(palette/corner-next.css);
-@import url(palette/foreground-next.css);
-@import url(palette/info-next.css);
-@import url(palette/negative-next.css);
-@import url(palette/neutral-next.css);
-@import url(palette/positive-next.css);
-@import url(palette/text-next.css);
-@import url(palette/warning-next.css);
+@import url(next/foundations/alpha.css);
+@import url(next/foundations/color.css);
 
-@import url(characteristics/accent-next.css);
-@import url(characteristics/actionable-next.css);
-@import url(characteristics/category-next.css);
-@import url(characteristics/container-next.css);
-@import url(characteristics/content-next.css);
-@import url(characteristics/editable-next.css);
-@import url(characteristics/focused-next.css);
-@import url(characteristics/navigable-next.css);
-@import url(characteristics/overlayable-next.css);
-@import url(characteristics/selectable-next.css);
-@import url(characteristics/sentiment-next.css);
-@import url(characteristics/separable-next.css);
-@import url(characteristics/status-next.css);
-@import url(characteristics/target-next.css);
-@import url(characteristics/text-next.css);
+/* Intermediate palette (refined colors) */
+@import url(next/palette/accent.css);
+@import url(next/palette/alpha.css);
+@import url(next/palette/background.css);
+@import url(next/palette/categorical.css);
+@import url(next/palette/corner.css);
+@import url(next/palette/foreground.css);
+@import url(next/palette/info.css);
+@import url(next/palette/negative.css);
+@import url(next/palette/neutral.css);
+@import url(next/palette/positive.css);
+@import url(next/palette/text.css);
+@import url(next/palette/warning.css);
+
+/* Each characteristic file references values from above foundations */
+@import url(next/characteristics/accent.css);
+@import url(next/characteristics/actionable.css);
+@import url(next/characteristics/category.css);
+@import url(next/characteristics/container.css);
+@import url(next/characteristics/content.css);
+@import url(next/characteristics/editable.css);
+@import url(next/characteristics/focused.css);
+@import url(next/characteristics/navigable.css);
+@import url(next/characteristics/overlayable.css);
+@import url(next/characteristics/selectable.css);
+@import url(next/characteristics/sentiment.css);
+@import url(next/characteristics/separable.css);
+@import url(next/characteristics/status.css);
+@import url(next/characteristics/target.css);
+@import url(next/characteristics/text.css);
 
 /* Deprecated */
-@import url(deprecated/characteristics-next.css);
-@import url(deprecated/foundations-next.css);
-@import url(deprecated/palette-next.css);
+@import url(next/deprecated/characteristics.css);
+@import url(next/deprecated/foundations.css);
+@import url(next/deprecated/palette.css);
