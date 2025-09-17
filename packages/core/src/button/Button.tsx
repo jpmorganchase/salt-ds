@@ -21,13 +21,13 @@ export interface ButtonAppearances {
   solid: string;
   bordered: string;
   transparent: string;
-};
-export  type ButtonAppearance = keyof ButtonAppearances;
-export const ButtonAppearanceValues:ButtonAppearance[] = [
+}
+export type ButtonAppearance = keyof ButtonAppearances;
+export const ButtonAppearanceValues: ButtonAppearance[] = [
   "solid",
   "bordered",
-  "transparent"
-] ;
+  "transparent",
+];
 
 export interface ButtonSentiments {
   accented: string;
@@ -35,15 +35,15 @@ export interface ButtonSentiments {
   positive: string;
   negative: string;
   caution: string;
-};
-export  type ButtonSentiment = keyof ButtonSentiments;
-export const ButtonSentimentValues:ButtonSentiment[] = [
+}
+export type ButtonSentiment = keyof ButtonSentiments;
+export const ButtonSentimentValues: ButtonSentiment[] = [
   "accented",
   "neutral",
   "positive",
   "negative",
   "caution",
-] ;
+];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
