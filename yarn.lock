@@ -3404,7 +3404,7 @@ __metadata:
     stylelint: "npm:^16.0.0"
     typescript: "npm:^5.8.3"
     vite: "npm:^7.1.5"
-    vite-plugin-istanbul: "npm:6.0.0"
+    vite-plugin-istanbul: "npm:6.0.2"
     vite-tsconfig-paths: "npm:^5.1.4"
     vitest: "npm:^3.2.4"
     yup: "npm:^1.0.2"
@@ -16787,9 +16787,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-istanbul@npm:6.0.0":
-  version: 6.0.0
-  resolution: "vite-plugin-istanbul@npm:6.0.0"
+"vite-plugin-istanbul@npm:6.0.2":
+  version: 6.0.2
+  resolution: "vite-plugin-istanbul@npm:6.0.2"
   dependencies:
     "@istanbuljs/load-nyc-config": "npm:^1.1.0"
     espree: "npm:^10.0.1"
@@ -16799,7 +16799,7 @@ __metadata:
     test-exclude: "npm:^6.0.0"
   peerDependencies:
     vite: ">=4 <=6"
-  checksum: 10/9a989707b7d6faed1d3d6e58f246f4632d229d0d5524b1886a0338f7ec082b37a172a648132bced5a3e439639a0052dfe5117123944ac7c352df73298687c34a
+  checksum: 10/fddd8367fa02159a047179c9c576c309f9a14bb970116e35fe543d40e3acc615c1671387b9de2394a5bc75d2ab0cfb7b7ebb9e29ec4ddff5411fa7bfee663e42
   languageName: node
   linkType: hard
 
