@@ -16,7 +16,7 @@ import "@salt-ds/theme/index.css";
 import "./styles.css";
 
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
-import { DocsContainer } from "@storybook/addon-docs";
+import { DocsContainer } from "@storybook/addon-docs/blocks";
 import type { Preview } from "@storybook/react-vite";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import type { ComponentProps } from "react";

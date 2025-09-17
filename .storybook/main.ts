@@ -1,4 +1,3 @@
-import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import { cssInline } from "css-inline-plugin";
@@ -6,7 +5,6 @@ import remarkGfm from "remark-gfm";
 import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 
-const require = createRequire(import.meta.url);
 const config: StorybookConfig = {
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
@@ -22,7 +20,7 @@ const config: StorybookConfig = {
   },
   addons: [
     {
-      name: "@storybook/addon-docs",
+      name: getAbsolutePath("@storybook/addon-docs"),
       options: {
         mdxPluginOptions: {
           mdxCompileOptions: {
@@ -64,6 +62,6 @@ export default config;
 
 function getAbsolutePath<Value>(value: string): Value {
   return dirname(
-    require.resolve(join(value, "package.json")),
+    import.meta.resolve(join(value, "package.json")),
   ) as unknown as Value;
 }
