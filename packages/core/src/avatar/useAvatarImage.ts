@@ -44,14 +44,10 @@ export function useAvatarImage({
   }, [image, src]);
 
   useIsomorphicLayoutEffect(() => {
-    const updateStatus = (status: ImageLoadingStatus) => () => {
-      setStatus(status);
-    };
-
     if (!image) return;
 
-    const handleLoad = updateStatus("loaded");
-    const handleError = updateStatus("error");
+    const handleLoad = () => setStatus("loaded");
+    const handleError = () => setStatus("error");
     image.addEventListener("load", handleLoad);
     image.addEventListener("error", handleError);
     if (referrerPolicy) {
