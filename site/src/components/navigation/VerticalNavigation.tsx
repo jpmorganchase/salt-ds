@@ -13,7 +13,6 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/core";
-import { usePathname } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 import { LinkBase } from "../link/Link";
@@ -21,6 +20,8 @@ import { LinkBase } from "../link/Link";
 export type VerticalNavigationProps = {
   /** Selected item groups ids to expand */
   selectedGroupIds?: Set<string>;
+  /** String ID of the selected item */
+  selectedNodeId?: string;
   /** Navigation item data */
   menu: SidebarItem[];
   className?: string;
@@ -30,39 +31,6 @@ function statusToBadgeValue(status: string) {
   return status.split(" ").reduce((acc, word) => {
     return acc + word[0].toUpperCase();
   }, "");
-}
-
-function findAncestorGroupIds(
-  menu: SidebarItem[],
-  pathname: string,
-): Set<string> {
-  const result = new Set<string>();
-
-  function traverse(nodes: SidebarItem[], ancestors: string[] = []): boolean {
-    for (const node of nodes) {
-      // @ts-expect-error
-      const { id, kind, data } = node;
-
-      if (kind === "group" && node.childNodes) {
-        if (traverse(node.childNodes, [...ancestors, id])) {
-          return true;
-        }
-      } else if (!kind || kind === "data") {
-        // Check if this is a leaf node with a link that matches pathname
-        const nodeLink = data?.link;
-        if (nodeLink === pathname) {
-          for (const ancestorId of ancestors) {
-            result.add(ancestorId);
-          }
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  traverse(menu);
-  return result;
 }
 
 const renderNavigationItem = (
@@ -96,8 +64,9 @@ const renderNavigationItem = (
   if (shouldRenderAsParent) {
     isActive = !isExpanded && containsSelectedNode;
   } else if (selectedNodeId) {
-    // Compare pathname with the actual link href
-    isActive = selectedNodeId === link;
+    isActive = singlePageInGroup
+      ? selectedNodeId.startsWith(id.replace("/index", ""))
+      : selectedNodeId === id;
   }
 
   const status = data?.status;
@@ -105,7 +74,7 @@ const renderNavigationItem = (
   if (shouldRenderAsParent) {
     return (
       <VerticalNavigationItem active={isActive} key={id}>
-        <Collapsible open={isExpanded}>
+        <Collapsible>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
@@ -125,11 +94,7 @@ const renderNavigationItem = (
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>
-            <VerticalNavigationSubMenu
-              style={{
-                marginBottom: 10,
-              }}
-            >
+            <VerticalNavigationSubMenu>
               {childNodes?.map((childItem) =>
                 renderNavigationItem(
                   childItem,
@@ -171,45 +136,29 @@ const renderNavigationItem = (
 export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
   menu,
   selectedGroupIds = new Set(),
-  className,
+  selectedNodeId,
 }) => {
-  const pathname = usePathname();
-
-  // Find ancestor groups for current pathname to ensure they're expanded
-  const ancestorGroupIds = findAncestorGroupIds(menu, pathname);
-  const allSelectedGroupIds = new Set([
-    ...selectedGroupIds,
-    ...ancestorGroupIds,
-  ]);
-
-  const [expandedGroupIds, setExpandedGroupIds] = useState(allSelectedGroupIds);
-  const [prevPathname, setPreviousPathname] = useState(pathname);
-
-  if (prevPathname !== pathname) {
-    const newAncestorGroupIds = findAncestorGroupIds(menu, pathname);
-    const uniqueSet = new Set([
-      ...expandedGroupIds,
-      ...selectedGroupIds,
-      ...newAncestorGroupIds,
-    ]);
+  const [expandedGroupIds, setExpandedGroupIds] = useState(selectedGroupIds);
+  const [prevSelectedNodeId, setPreviousSelectedNodeId] =
+    useState(selectedNodeId);
+  if (prevSelectedNodeId !== selectedNodeId) {
+    const uniqueSet = new Set([...expandedGroupIds, ...selectedGroupIds]);
     setExpandedGroupIds(uniqueSet);
-    setPreviousPathname(pathname);
+    setPreviousSelectedNodeId(selectedNodeId);
   }
 
   return (
     <VerticalNavigationComponent
       aria-label="Sidebar"
       data-testid="vertical-navigation"
-      appearance="bordered"
-      style={{ marginLeft: 24 }}
-      className={className}
+      appearance="indicator"
     >
       {menu.map((item) =>
         renderNavigationItem(
           item,
-          pathname,
+          selectedNodeId,
           expandedGroupIds,
-          allSelectedGroupIds,
+          selectedGroupIds,
           setExpandedGroupIds,
           0,
         ),
