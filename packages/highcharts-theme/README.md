@@ -33,6 +33,7 @@ yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme@0
 The Salt Highcharts theme overrides the default Highcharts CSS. To ensure the theme is applied correctly, import the Highcharts CSS before the Salt Highcharts theme CSS.
 
 You can download the Highcharts CSS from the official CDN:
+
 - [For v10.2.0](https://code.highcharts.com/10.2.0/css/highcharts.css)
 - For v11+: https://code.highcharts.com/your-version/highcharts.css
 
