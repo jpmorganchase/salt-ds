@@ -4,6 +4,7 @@ import {
   Collapsible,
   CollapsiblePanel,
   CollapsibleTrigger,
+  FlexLayout,
   VerticalNavigation as VerticalNavigationComponent,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -78,13 +79,15 @@ const renderNavigationItem = (
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
                 <VerticalNavigationItemLabel>
-                  {name}
-                  {status && (
-                    <Badge
-                      aria-label={status}
-                      value={statusToBadgeValue(status)}
-                    />
-                  )}
+                  <FlexLayout justify="space-between">
+                    {name}
+                    {status && (
+                      <Badge
+                        aria-label={status}
+                        value={statusToBadgeValue(status)}
+                      />
+                    )}
+                  </FlexLayout>
                 </VerticalNavigationItemLabel>
                 <VerticalNavigationItemExpansionIcon />
               </VerticalNavigationItemTrigger>
@@ -116,7 +119,14 @@ const renderNavigationItem = (
           href={link}
           render={(props) => <LinkBase {...props} href={link} />}
         >
-          <VerticalNavigationItemLabel>{name}</VerticalNavigationItemLabel>
+          <VerticalNavigationItemLabel>
+            <FlexLayout justify="space-between">
+              {name}
+              {status && (
+                <Badge aria-label={status} value={statusToBadgeValue(status)} />
+              )}
+            </FlexLayout>
+          </VerticalNavigationItemLabel>
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
