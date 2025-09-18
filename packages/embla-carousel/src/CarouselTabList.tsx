@@ -9,6 +9,7 @@ import {
   type SyntheticEvent,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import {
@@ -58,23 +59,24 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
 
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+    const [focusedTabIndex, setFocusedTabIndex] = useState<number | null>(null);
+
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
-      let newIndex = selectedIndex;
+      let newIndex = focusedTabIndex ?? selectedIndex;
 
       if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
         const direction = event.key === "ArrowLeft" ? -1 : 1;
         newIndex =
-          (selectedIndex + direction + scrollSnaps.length) % scrollSnaps.length;
+          (newIndex + direction + scrollSnaps.length) % scrollSnaps.length;
       } else if (event.key === "Home") {
         newIndex = 0;
       } else if (event.key === "End") {
         newIndex = scrollSnaps.length - 1;
       }
-      if (newIndex !== selectedIndex) {
-        emblaApi?.scrollTo(newIndex);
+
+      if (newIndex !== focusedTabIndex) {
         buttonRefs.current[newIndex]?.focus();
-        event.preventDefault();
-        event.stopPropagation();
+        setFocusedTabIndex(newIndex);
       }
       onKeyDown?.(event);
     };
@@ -127,14 +129,17 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
               render={render}
               role={"tab"}
               selected={selected}
-              onFocus={(event: SyntheticEvent) => {
-                event.preventDefault();
+              onBlur={() => {
+                setFocusedTabIndex(null);
+              }}
+              onFocus={() => {
+                setFocusedTabIndex(scrollSnapIndex);
                 setAnnouncementState("tab");
                 emblaApi?.scrollTo(scrollSnapIndex);
               }}
               aria-label={ariaLabel}
               aria-selected={selected}
-              tabIndex={selected ? 0 : -1}
+              tabIndex={selected && focusedTabIndex === null ? 0 : -1}
               aria-controls={ariaControls}
             />
           );
