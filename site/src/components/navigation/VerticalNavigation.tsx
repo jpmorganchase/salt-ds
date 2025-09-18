@@ -151,7 +151,8 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
     <VerticalNavigationComponent
       aria-label="Sidebar"
       data-testid="vertical-navigation"
-      appearance="indicator"
+      appearance="bordered"
+      style={{ paddingLeft: 24 }}
     >
       {menu.map((item) =>
         renderNavigationItem(
