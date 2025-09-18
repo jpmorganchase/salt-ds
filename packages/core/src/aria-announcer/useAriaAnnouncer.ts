@@ -35,7 +35,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       const isReactAnnouncerInstalled = context?.announce;
 
       if (process.env.NODE_ENV !== "production") {
-        if (legacyDelay && !warnedLegacyOnce) {
+        if (legacyDelay !== undefined && !warnedLegacyOnce) {
           console.warn(
             "useAriaAnnouncer `delay` prop is deprecated, use `duration` through `AnnounceFnOptions` instead.",
           );
