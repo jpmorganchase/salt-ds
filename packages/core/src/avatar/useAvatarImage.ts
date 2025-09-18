@@ -1,35 +1,67 @@
-import { type ImgHTMLAttributes, useEffect, useState } from "react";
+import { type ImgHTMLAttributes, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../utils";
+import { useIsHydrated } from "./useIsHydrated";
 
-export function useAvatarImage({ src }: ImgHTMLAttributes<HTMLImageElement>) {
-  const [status, setStatus] = useState<
-    "pending" | "loading" | "loaded" | "error"
-  >("loading");
+type ImageLoadingStatus = "pending" | "loading" | "loaded" | "error";
 
-  useEffect(() => {
-    setStatus(src ? "loading" : "pending");
-  }, [src]);
+function resolveStatus(
+  image: HTMLImageElement | null,
+  src?: string,
+): ImageLoadingStatus {
+  if (!image) {
+    return "pending";
+  }
+  if (!src) {
+    return "error";
+  }
+  if (image.src !== src) {
+    image.src = src;
+  }
+  return image.complete && image.naturalWidth > 0 ? "loaded" : "loading";
+}
+
+export function useAvatarImage({
+  src,
+  referrerPolicy,
+  crossOrigin,
+}: ImgHTMLAttributes<HTMLImageElement>) {
+  const isHydrated = useIsHydrated();
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const image = (() => {
+    if (!isHydrated) return null;
+    if (!imageRef.current) {
+      imageRef.current = new Image();
+    }
+    return imageRef.current;
+  })();
+
+  const [status, setStatus] = useState<ImageLoadingStatus>(() =>
+    resolveStatus(image, src),
+  );
 
   useIsomorphicLayoutEffect(() => {
-    if (!src) {
-      return;
+    setStatus(resolveStatus(image, src));
+  }, [image, src]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!image) return;
+
+    const handleLoad = () => setStatus("loaded");
+    const handleError = () => setStatus("error");
+    image.addEventListener("load", handleLoad);
+    image.addEventListener("error", handleError);
+    if (referrerPolicy) {
+      image.referrerPolicy = referrerPolicy;
+    }
+    if (typeof crossOrigin === "string") {
+      image.crossOrigin = crossOrigin;
     }
 
-    let active = true;
-    const image = new Image();
-    image.src = src;
-    const onLoad = () => active && setStatus("loaded");
-    const onError = () => active && setStatus("error");
-
-    image.addEventListener("load", onLoad, { once: true });
-    image.addEventListener("error", onError, { once: true });
-
     return () => {
-      image.removeEventListener("load", onLoad);
-      image.removeEventListener("load", onError);
-      active = false;
+      image.removeEventListener("load", handleLoad);
+      image.removeEventListener("error", handleError);
     };
-  }, [src]);
+  }, [image, crossOrigin, referrerPolicy]);
 
   return status;
 }
