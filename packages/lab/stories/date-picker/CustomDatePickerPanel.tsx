@@ -97,13 +97,14 @@ export const CustomDatePickerPanel = forwardRef<
                       };
                   select(event, newSelection);
                 } else {
-                  newSelection = selectedDate
-                    ? dateAdapter.add(selectedDate, {
-                        years: tenor,
-                      })
-                    : dateAdapter.add(dateAdapter.today(), {
-                        years: tenor,
-                      });
+                  newSelection =
+                    selectedDate && dateAdapter.isValid(selectedDate)
+                      ? dateAdapter.add(selectedDate, {
+                          years: tenor,
+                        })
+                      : dateAdapter.add(dateAdapter.today(), {
+                          years: tenor,
+                        });
                   select(event, newSelection);
                 }
               }}
