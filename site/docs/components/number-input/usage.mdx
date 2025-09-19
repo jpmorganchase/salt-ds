@@ -29,6 +29,8 @@ To avoid misleading users, set the width to correlate to the length of the value
 
 ### Accepted characters
 
+By default:
+
 - The `NumberInput` component accepts numeric digits 0-9, decimal point (.), plus sign (+) and minus sign (-).
 - Note it does not accept the character e, which is allowed in native HTML `type="number"` inputs to represent exponential notation. This design choice ensures that all input values remain simple numerical values without exponential formatting.
 - For consistent number input interaction in your application, use `NumberInput` rather than `Input` with `type="number"`.
@@ -37,7 +39,41 @@ To avoid misleading users, set the width to correlate to the length of the value
 
 Just like native input elements in React, number inputs can be controlled or uncontrolled. By default a number input is uncontrolled. Use the `defaultValue` prop to control the default value of the number input.
 
-If you want to control the value of the number input, use the `value` prop. The `onChange` prop is required when using the controlled approach.
+If you want to control the value of the number input:
+
+- use the `value` prop to provide the current value.
+- use the `onChange` prop to update the value as a string
+- if using `clamp` the current value can change upon blur, ensure you update the current value `onNumberChange`.
+
+The `onNumberChange` callback is called with either the parsed `number`, `NaN` or `null` if the string is empty, when incremented/decremented or upon blur.
+The `onChange` event handler is called, when the user changes the input.
+
+### Custom parsers
+
+The default parser, parses signed decimal numbers.
+
+A custom parser can parse an entered string value and should return back the parsed `number`, `NaN` or `null` if the string is empty.
+
+To render a custom value such as `25K` or partial value `25,` return back `NaN` and the entered value renders as-typed.
+
+### Custom formatters
+
+The default formatter, supports signed decimal numbers.
+
+A custom formatter can be provided through the `format` prop.
+
+- Formatting does not occur, whilst the input has focus and is being edited.
+
+### Ignoring invalid characters
+
+By default the accepted characters must match a signed decimal numbers, eg. +23.456
+
+When creating custom parsers, you can use the `isAllowed` callback to ignore invalid characters.
+
+### Listening to changes
+
+The `onNumberChange` callback is called with either the parsed `number`, `NaN` or `null` if the string is empty, when incremented/decremented or upon blur.
+The `onChange` event handler is called, when the user changes the input value and can be used to create a controlled `NumberInput`.
 
 ## Props
 
