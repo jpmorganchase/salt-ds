@@ -15,7 +15,7 @@ import {
 } from "@salt-ds/core";
 import { useRouter } from "next/router";
 import type React from "react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { LinkBase } from "../link/Link";
 
 export type VerticalNavigationProps = {
@@ -88,6 +88,8 @@ const renderNavigationItem = (
   selectedGroupIds: Set<string>,
   setExpanded: React.Dispatch<React.SetStateAction<Set<string>>>,
   level: number,
+  activeItemRef: React.MutableRefObject<HTMLElement | null>,
+  hasInitiallyScrolled: React.MutableRefObject<boolean>,
 ) => {
   // @ts-expect-error
   const { id, kind, name, data } = item;
@@ -121,6 +123,22 @@ const renderNavigationItem = (
 
   const status = data?.status;
 
+  // Callback ref to capture active item
+  const isCurrentlyActive =
+    selectedNodeId === id ||
+    (singlePageInGroup && selectedNodeId?.startsWith(id.replace("/index", "")));
+
+  const setItemRef = (element: HTMLLIElement | null) => {
+    if (isCurrentlyActive && element) {
+      activeItemRef.current = element;
+      // Only scroll on initial load, not on subsequent navigation changes
+      if (!hasInitiallyScrolled.current) {
+        hasInitiallyScrolled.current = true;
+        element.scrollIntoView();
+      }
+    }
+  };
+
   const handleToggle = (
     _event: React.SyntheticEvent<HTMLButtonElement>,
     open: boolean,
@@ -137,7 +155,12 @@ const renderNavigationItem = (
 
   if (shouldRenderAsParent) {
     return (
-      <VerticalNavigationItem active={isActive} key={id}>
+      <VerticalNavigationItem
+        active={isActive}
+        key={id}
+        ref={setItemRef}
+        style={{ scrollMarginTop: 24 }}
+      >
         <Collapsible open={isExpanded} onOpenChange={handleToggle}>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
@@ -167,6 +190,8 @@ const renderNavigationItem = (
                   selectedGroupIds,
                   setExpanded,
                   level + 1,
+                  activeItemRef,
+                  hasInitiallyScrolled,
                 ),
               )}
             </VerticalNavigationSubMenu>
@@ -177,7 +202,12 @@ const renderNavigationItem = (
   }
 
   return (
-    <VerticalNavigationItem active={isActive} key={id}>
+    <VerticalNavigationItem
+      active={isActive}
+      key={id}
+      ref={setItemRef}
+      style={{ scrollMarginTop: 24 }}
+    >
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger
           href={link}
@@ -204,6 +234,11 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
 }) => {
   const router = useRouter();
   const currentPath = router.asPath;
+
+  // Ref to track the active navigation item
+  const activeItemRef = useRef<HTMLElement | null>(null);
+  // Flag to track if this is the initial load
+  const hasInitiallyScrolled = useRef(false);
 
   // Calculate which groups should be auto-expanded based on current path
   const autoExpandedGroupIds = useMemo(() => {
@@ -241,6 +276,8 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
           selectedGroupIds,
           setExpandedGroupIds,
           0,
+          activeItemRef,
+          hasInitiallyScrolled,
         ),
       )}
     </VerticalNavigationComponent>
