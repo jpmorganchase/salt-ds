@@ -1,7 +1,7 @@
 ---
 title: Flex layout
 data:
-  description: "`FlexLayout` controls the direction, size and position of items displayed in a UI container. Use when the direction needs complex customization that can't be achieved by `StackLayout`, `FlowLayout` or `SplitLayout`. For additional control of the size and position of content, use `FlexItem` for each content item inside `FlexLayout`."
+  description: "Flex Layout enables complex arrangement of UI elements within a container, enabling responsive design by controlling the alignment, direction and size of items, for example, use it to arrange a items in a row, evenly spaced and centered vertically. Use when the direction needs complex customization that can't be achieved by `StackLayout`, `FlowLayout` or `SplitLayout`. For additional control of the size and position of content, use `FlexItem` for each content item inside `FlexLayout`."
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/flex-layout"
   package:
     name: "@salt-ds/core"
@@ -13,8 +13,9 @@ data:
       { name: "Split layout", relationship: "similarTo" },
       { name: "Stack layout", relationship: "similarTo" },
     ]
-
 keywords:
   $ref: "#/data/alsoKnownAs"
 layout: DetailComponent
+aliases:
+  - /salt/components/flex-layout
 ---
