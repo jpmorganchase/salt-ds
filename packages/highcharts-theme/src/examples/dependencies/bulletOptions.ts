@@ -2,7 +2,8 @@ import type { Options } from "highcharts";
 
 export const bulletOptions: Options = {
   chart: {
-    type: "bar",
+    type: "bullet",
+    inverted: true,
     height: 180,
   },
   title: {
