@@ -6,5 +6,5 @@ export * from "./CardActions";
 export * from "./CardActions";
 export * from "./ControlledCarousel";
 export * from "./MultipleSlides";
-export * from "./TabList";
-export * from "./Title";
+export * from "./TabListBottom";
+export * from "./TabListTop";

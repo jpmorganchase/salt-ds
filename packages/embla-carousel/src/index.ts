@@ -1,5 +1,4 @@
 export * from "./Carousel";
-export * from "./CarouselAnnouncementPlugin";
 export * from "./CarouselAutoplayIndicator";
 export * from "./CarouselCard";
 export * from "./CarouselContext";
