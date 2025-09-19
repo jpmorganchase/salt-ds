@@ -1,6 +1,6 @@
 import {
-  type CSSProperties,
-  type ReactNode,
+  type ComponentPropsWithRef,
+  forwardRef,
   useCallback,
   useEffect,
   useMemo,
@@ -8,44 +8,83 @@ import {
   useState,
 } from "react";
 
-import { AriaAnnouncerContext } from "./AriaAnnouncerContext";
+import {
+  type AnnounceFnOptions,
+  AriaAnnouncerContext,
+} from "./AriaAnnouncerContext";
 
-export const ARIA_ANNOUNCE_DELAY = 150;
+export const ARIA_ANNOUNCE_DELAY = 150; // time between DOM updates
+export const DEFAULT_ANNOUNCEMENT_DURATION = 500; // time between announcements
 
-export interface AriaAnnouncerProviderProps {
-  children?: ReactNode;
+export interface AriaAnnouncerProviderProps
+  extends ComponentPropsWithRef<"div"> {}
+
+interface AnnouncementItem extends AnnounceFnOptions {
   /**
-   * Style overrides for the aria-live element
+   * concise announcement message.
    */
-  style?: CSSProperties;
+  announcement: string;
 }
 
-export function AriaAnnouncerProvider({
-  children,
-  style,
-}: AriaAnnouncerProviderProps) {
-  // announcement that gets rendered inside aria-live and read out by screen readers
+export const AriaAnnouncerProvider = forwardRef<
+  HTMLDivElement,
+  AriaAnnouncerProviderProps
+>(function AriaAnnouncerProvider({ children, style, ...rest }, ref) {
   const [currentAnnouncement, setCurrentAnnouncement] = useState("");
-  // queue that stores all the requested announcements
-  const announcementsRef = useRef<string[]>([]);
-  // we use this variable to decide whether to start the announcement queue if one is not already in progress
+  const [ariaLive, setAriaLive] = useState<AnnounceFnOptions["ariaLive"]>();
+
+  const announcementsRef = useRef<AnnouncementItem[]>([]);
   const isAnnouncingRef = useRef(false);
-  // we need to keep track of the state of the component mount since all the async function calls
-  // might trigger a setState after a component has been unmounted
   const mountedRef = useRef(true);
 
-  // announceAll will get called recursively until all the announcements are rendered and cleared from the queue
+  const clearAnnouncement = useCallback(() => {
+    setCurrentAnnouncement("");
+  }, []);
+
+  const makeAnnouncement = useCallback(
+    (announcement: string, ariaLive: AnnounceFnOptions["ariaLive"]) => {
+      setAriaLive(ariaLive);
+      setCurrentAnnouncement(announcement);
+    },
+    [],
+  );
+
+  /** Each announcement has a minimum duration */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: clearAnnouncement will not change
+  const processNextAnnouncement = useCallback(() => {
+    if (!mountedRef.current || !announcementsRef.current.length) {
+      isAnnouncingRef.current = false;
+      return;
+    }
+    const {
+      announcement,
+      duration = DEFAULT_ANNOUNCEMENT_DURATION,
+      ariaLive = "assertive",
+    } = announcementsRef.current.shift() as AnnouncementItem;
+    makeAnnouncement(announcement, ariaLive);
+    setTimeout(() => {
+      clearAnnouncement();
+      setTimeout(announceAll, ARIA_ANNOUNCE_DELAY);
+    }, duration);
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: processNextAnnouncement will not change
   const announceAll = useCallback(() => {
+    isAnnouncingRef.current = true;
+    requestAnimationFrame(processNextAnnouncement);
+  }, []);
+
+  /** TODO Legacy code would delay before announcement, remove as a breaking change */
+  const announceAllLegacy = useCallback(() => {
     isAnnouncingRef.current = true;
     if (mountedRef.current) {
       setCurrentAnnouncement("");
       requestAnimationFrame(() => {
         if (mountedRef.current && announcementsRef.current.length) {
-          const announcement = announcementsRef.current.shift() as string;
+          const { announcement } =
+            announcementsRef.current.shift() as AnnouncementItem;
           setCurrentAnnouncement(announcement);
-          setTimeout(() => {
-            announceAll();
-          }, ARIA_ANNOUNCE_DELAY);
+          setTimeout(announceAllLegacy, ARIA_ANNOUNCE_DELAY);
         } else {
           isAnnouncingRef.current = false;
         }
@@ -53,14 +92,31 @@ export function AriaAnnouncerProvider({
     }
   }, []);
 
+  /** TODO default to `assertive` until a breaking change, when we should switch to `polite` */
   const announce = useCallback(
-    (announcement: string) => {
-      announcementsRef.current.push(announcement);
-      if (!isAnnouncingRef.current) {
+    (
+      announcement: string,
+      legacyDelayOrOptions: number | AnnounceFnOptions | undefined = {},
+    ) => {
+      let options: AnnounceFnOptions = {};
+      let isLegacy = false;
+      if (typeof legacyDelayOrOptions === "number") {
+        isLegacy = true;
+      } else {
+        options = legacyDelayOrOptions;
+      }
+      announcementsRef.current.push({ announcement, ...options });
+      if (isAnnouncingRef.current) {
+        return;
+      }
+      if (isLegacy) {
+        isAnnouncingRef.current = true;
+        announceAllLegacy();
+      } else {
         announceAll();
       }
     },
-    [announceAll],
+    [announceAll, announceAllLegacy],
   );
 
   useEffect(() => {
@@ -71,12 +127,14 @@ export function AriaAnnouncerProvider({
   }, []);
 
   const value = useMemo(() => ({ announce }), [announce]);
+
   return (
     <AriaAnnouncerContext.Provider value={value}>
       {children}
       <div
         aria-atomic="true"
-        aria-live="assertive"
+        aria-live={ariaLive ?? "assertive"}
+        ref={ref}
         // hidden styling based on https://tailwindcss.com/docs/screen-readers
         style={{
           position: "absolute",
@@ -90,9 +148,10 @@ export function AriaAnnouncerProvider({
           borderWidth: 0,
           ...style,
         }}
+        {...rest}
       >
         {currentAnnouncement}
       </div>
     </AriaAnnouncerContext.Provider>
   );
-}
+});
