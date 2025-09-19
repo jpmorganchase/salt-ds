@@ -173,46 +173,44 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     };
 
     return (
-      <>
+      <div
+        onKeyDown={handleKeyDown}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        ref={carouselRef}
+        className={clsx(
+          withBaseName(),
+          { [withBaseName("dragging")]: dragging },
+          className,
+        )}
+        {...rest}
+      >
         <div
-          onKeyDown={handleKeyDown}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          ref={carouselRef}
-          className={clsx(
-            withBaseName(),
-            { [withBaseName("dragging")]: dragging },
-            className,
-          )}
-          {...rest}
+          className={withBaseName("container")}
+          id={id ?? `${carouselId}-slides`}
         >
-          <div
-            className={withBaseName("container")}
-            id={id ?? `${carouselId}-slides`}
-          >
-            {Children.map(children, (child, index) => {
-              const childElement = child as React.ReactElement;
-              const existingId = childElement.props.id;
-              const isHidden = !visibleSlideIndexes.includes(index + 1);
-              const element = child as React.ReactElement;
-              return cloneElement(element, {
-                "aria-hidden": isHidden,
-                id: existingId ?? `${carouselId}-slide${index + 1}`,
-                onMouseDown: (event: SyntheticEvent) => event.preventDefault(),
-                onFocus: (event: FocusEvent) => {
-                  event.preventDefault();
-                  setFocusedSlideIndex(index);
-                  element.props?.onFocus?.(event);
-                },
-                tabIndex: !isHidden ? 0 : -1,
-                ref: (el: HTMLDivElement) => {
-                  slideRefs.current[index] = el;
-                },
-              });
-            })}
-          </div>
+          {Children.map(children, (child, index) => {
+            const childElement = child as React.ReactElement;
+            const existingId = childElement.props.id;
+            const isHidden = !visibleSlideIndexes.includes(index + 1);
+            const element = child as React.ReactElement;
+            return cloneElement(element, {
+              "aria-hidden": isHidden,
+              id: existingId ?? `${carouselId}-slide${index + 1}`,
+              onMouseDown: (event: SyntheticEvent) => event.preventDefault(),
+              onFocus: (event: FocusEvent) => {
+                event.preventDefault();
+                setFocusedSlideIndex(index);
+                element.props?.onFocus?.(event);
+              },
+              tabIndex: !isHidden ? 0 : -1,
+              ref: (el: HTMLDivElement) => {
+                slideRefs.current[index] = el;
+              },
+            });
+          })}
         </div>
-      </>
+      </div>
     );
   },
 );
