@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import { useContext } from "react";
+import { type Dispatch, type SetStateAction, useContext } from "react";
 import type { CarouselEmblaApiType, CarouselEmblaRefType } from "./Carousel";
 
 export type CarouselAriaVariant = "group" | "tabpanel";
