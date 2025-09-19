@@ -14,7 +14,8 @@ accessibility(Highcharts);
 
 const options: Options = {
   chart: {
-    type: "bar",
+    type: "bullet",
+    inverted: true,
     height: 180,
   },
   title: {
