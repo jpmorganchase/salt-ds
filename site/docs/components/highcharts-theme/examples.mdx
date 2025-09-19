@@ -1,0 +1,67 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<Callout title="Note">
+  This package is a WIP. Highcharts CSS files and Options object are not finalized. Only charts with provided examples are supported.
+
+Current issues to be resolved before lab release:
+
+  <ul>
+    <li>
+      Legend positioning isn't consistent with Figma examples due to Highcharts API limitations - [track issue](https://github.com/jpmorganchase/salt-ds/issues/5548).
+    </li>
+    <li>
+      Plot bands aren't currently supported due to v10 accessibility and token issues. If you need to use plot bands, you need to ensure that appropriate color contrast is maintained - [track issue](https://github.com/jpmorganchase/salt-ds/issues/5548 )
+    </li>
+  </ul>
+</Callout>
+
+## Line chart
+
+Use a line chart to show changes in data over time. To ensure accessible presentation, line patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+<LivePreview componentName="highcharts-theme" exampleName="LineChart" />
+
+## Pie chart
+
+Use a pie chart to show proportions of a whole. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+<LivePreview componentName="highcharts-theme" exampleName="PieChart" />
+
+## Donut chart
+
+Use a donut chart to show proportions of a whole, with space in the center to highlight key values or additional information. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+A donut chart is a variation of the pie chart, with the `plotOptions.pie.innerSize` set to less than `100%` within the `Options` object.
+
+### Best practices
+
+- An `innerSize` value of `80%` is recommended for a good default visual balance.
+
+<LivePreview componentName="highcharts-theme" exampleName="DonutChart" />
+
+## Stacked bar chart
+
+Use a stacked bar chart to compare part-to-whole relationships across categories. Each bar shows the total, with segments representing series values. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+A stacked bar chart is a variation of the bar chart, with the `plotOptions.series.stacking` set to `normal` within the `Options` object.
+
+<LivePreview componentName="highcharts-theme" exampleName="StackedBarChart" />
+
+## Bullet Chart
+
+Use a bullet chart to show performance against a target across categories. Each category displays a single bar with a marker indicating the target value. To ensure accessible presentation, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+<Callout title="Note">
+  To use the bullet chart, ensure you import the Highcharts `bullet` module and
+  use it to wrap the `Highcharts` object as shown in the example below.
+</Callout>
+
+<LivePreview componentName="highcharts-theme" exampleName="BulletChart" />
