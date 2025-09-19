@@ -23,7 +23,7 @@ export interface FileDropZoneProps
   /**
    * Status indicator to be displayed.
    */
-  status?: Omit<ValidationStatus, "info" | "warning">;
+  status?: Exclude<ValidationStatus, "info" | "warning">;
   /**
    * Callback for on drop event
    */
