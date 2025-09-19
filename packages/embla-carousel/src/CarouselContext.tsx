@@ -35,7 +35,7 @@ interface CarouselContextType {
   /**
    * Function to set the aria variant for the Carousel.
    */
-  setAriaVariant: React.Dispatch<React.SetStateAction<CarouselAriaVariant>>;
+  setAriaVariant: Dispatch<SetStateAction<CarouselAriaVariant>>;
   /**
    * Disable screenreader announcing slide updates, defaults to false.
    */
