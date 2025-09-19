@@ -122,10 +122,16 @@
   font-family: var(--salt-text-label-fontFamily);
 }
 
-/* Deselected legend state, requires !important to override default styles, which also use !important */
-.highcharts-theme-salt .highcharts-legend-item-hidden * {
-  fill: revert !important;
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph {
   opacity: 0.2;
+}
+
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-focus-border {
+  stroke: inherit !important;
+}
+
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point {
+  stroke: none !important;
 }
 
 /* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
