@@ -142,7 +142,10 @@ const renderNavigationItem = ({
       // Only scroll on initial load, not on subsequent navigation changes
       if (!hasInitiallyScrolled.current) {
         hasInitiallyScrolled.current = true;
-        element.scrollIntoView();
+        element.scrollIntoView({
+          block: "nearest",
+          behavior: "smooth",
+        });
       }
     }
   };
