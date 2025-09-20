@@ -24,7 +24,6 @@ export type VerticalNavigationProps = {
   selectedNodeId?: string;
   /** Navigation item data */
   menu: SidebarItem[];
-  className?: string;
 };
 
 function statusToBadgeValue(status: string) {
