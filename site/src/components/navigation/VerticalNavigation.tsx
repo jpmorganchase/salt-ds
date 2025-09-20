@@ -1,12 +1,21 @@
 import type { SidebarItem, SidebarNode } from "@jpmorganchase/mosaic-store";
 import {
   Badge,
-  NavigationItem,
-  type NavigationItemProps,
-  StackLayout,
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+  FlexLayout,
+  VerticalNavigation as VerticalNavigationComponent,
+  VerticalNavigationItem,
+  VerticalNavigationItemContent,
+  VerticalNavigationItemExpansionIcon,
+  VerticalNavigationItemLabel,
+  VerticalNavigationItemTrigger,
+  VerticalNavigationSubMenu,
 } from "@salt-ds/core";
+import { useRouter } from "next/router";
 import type React from "react";
-import { type MouseEventHandler, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { LinkBase } from "../link/Link";
 
 export type VerticalNavigationProps = {
@@ -25,12 +34,52 @@ function statusToBadgeValue(status: string) {
   }, "");
 }
 
-const renderItem: NavigationItemProps["render"] = ({ href, ...rest }) => {
-  if (href) {
-    return <LinkBase {...rest} href={href} />;
+// Helper function to find all parent group IDs for a given path
+function findParentGroupIds(
+  items: SidebarItem[],
+  targetPath: string,
+  parentIds: string[] = [],
+): string[] {
+  for (const item of items) {
+    // @ts-expect-error
+    const { id, kind, data, childNodes } = item;
+    const isGroup = kind === "group";
+
+    // Get the link for this item
+    const hasSinglePageInGroup = isGroup && childNodes?.length === 1;
+    const singlePageInGroup =
+      hasSinglePageInGroup && childNodes[0].kind === "data"
+        ? childNodes[0]
+        : undefined;
+
+    const link =
+      singlePageInGroup?.data?.link || (!isGroup ? data?.link : undefined);
+
+    // Check if this item matches the target path
+    if (link) {
+      const matches = singlePageInGroup
+        ? targetPath.startsWith(id.replace("/index", ""))
+        : targetPath === id || targetPath.startsWith(id);
+
+      if (matches) {
+        return parentIds;
+      }
+    }
+
+    // If this is a group with children, search recursively
+    if (isGroup && childNodes) {
+      const result = findParentGroupIds(childNodes, targetPath, [
+        ...parentIds,
+        id,
+      ]);
+      if (result.length > 0) {
+        return result;
+      }
+    }
   }
-  return <button {...rest} />;
-};
+
+  return [];
+}
 
 const renderNavigationItem = (
   item: SidebarItem,
@@ -39,11 +88,13 @@ const renderNavigationItem = (
   selectedGroupIds: Set<string>,
   setExpanded: React.Dispatch<React.SetStateAction<Set<string>>>,
   level: number,
+  activeItemRef: React.MutableRefObject<HTMLElement | null>,
+  hasInitiallyScrolled: React.MutableRefObject<boolean>,
 ) => {
   // @ts-expect-error
   const { id, kind, name, data } = item;
   const isGroup = kind === "group";
-  const hasSinglePageInGroup = isGroup && item.childNodes.length === 1;
+  const hasSinglePageInGroup = isGroup && item.childNodes?.length === 1;
   const singlePageInGroup: SidebarNode | undefined =
     hasSinglePageInGroup && item.childNodes[0].kind === "data"
       ? item.childNodes[0]
@@ -61,6 +112,8 @@ const renderNavigationItem = (
   let isActive = false;
 
   if (shouldRenderAsParent) {
+    // For parent groups, show as active only when collapsed AND contains selected node
+    // This allows parent groups to be collapsed even when they contain active items
     isActive = !isExpanded && containsSelectedNode;
   } else if (selectedNodeId) {
     isActive = singlePageInGroup
@@ -68,11 +121,29 @@ const renderNavigationItem = (
       : selectedNodeId === id;
   }
 
-  const handleExpand: MouseEventHandler<
-    HTMLAnchorElement | HTMLButtonElement
-  > = (event) => {
-    event.stopPropagation();
-    if (!expandedGroupIds.has(id)) {
+  const status = data?.status;
+
+  // Callback ref to capture active item
+  const isCurrentlyActive =
+    selectedNodeId === id ||
+    (singlePageInGroup && selectedNodeId?.startsWith(id.replace("/index", "")));
+
+  const setItemRef = (element: HTMLLIElement | null) => {
+    if (isCurrentlyActive && element) {
+      activeItemRef.current = element;
+      // Only scroll on initial load, not on subsequent navigation changes
+      if (!hasInitiallyScrolled.current) {
+        hasInitiallyScrolled.current = true;
+        element.scrollIntoView();
+      }
+    }
+  };
+
+  const handleToggle = (
+    _event: React.SyntheticEvent<HTMLButtonElement>,
+    open: boolean,
+  ) => {
+    if (open) {
       setExpanded(new Set([...expandedGroupIds, id]));
     } else {
       const filteredArray = Array.from(expandedGroupIds).filter(
@@ -82,48 +153,77 @@ const renderNavigationItem = (
     }
   };
 
-  const status = data?.status;
+  if (shouldRenderAsParent) {
+    return (
+      <VerticalNavigationItem
+        active={isActive}
+        key={id}
+        ref={setItemRef}
+        style={{ scrollMarginTop: 24 }}
+      >
+        <Collapsible open={isExpanded} onOpenChange={handleToggle}>
+          <VerticalNavigationItemContent>
+            <CollapsibleTrigger>
+              <VerticalNavigationItemTrigger>
+                <VerticalNavigationItemLabel>
+                  <FlexLayout justify="space-between">
+                    {name}
+                    {status && (
+                      <Badge
+                        aria-label={status}
+                        value={statusToBadgeValue(status)}
+                      />
+                    )}
+                  </FlexLayout>
+                </VerticalNavigationItemLabel>
+                <VerticalNavigationItemExpansionIcon />
+              </VerticalNavigationItemTrigger>
+            </CollapsibleTrigger>
+          </VerticalNavigationItemContent>
+          <CollapsiblePanel>
+            <VerticalNavigationSubMenu>
+              {childNodes?.map((childItem) =>
+                renderNavigationItem(
+                  childItem,
+                  selectedNodeId,
+                  expandedGroupIds,
+                  selectedGroupIds,
+                  setExpanded,
+                  level + 1,
+                  activeItemRef,
+                  hasInitiallyScrolled,
+                ),
+              )}
+            </VerticalNavigationSubMenu>
+          </CollapsiblePanel>
+        </Collapsible>
+      </VerticalNavigationItem>
+    );
+  }
 
   return (
-    <li key={id}>
-      <NavigationItem
-        href={link}
-        active={isActive}
-        orientation="vertical"
-        onExpand={shouldRenderAsParent ? handleExpand : undefined}
-        parent={shouldRenderAsParent}
-        render={renderItem}
-        expanded={isExpanded}
-        level={level}
-      >
-        {name}
-        {status && (
-          <Badge aria-label={status} value={statusToBadgeValue(status)} />
-        )}
-      </NavigationItem>
-      {shouldRenderAsParent && isExpanded ? (
-        <StackLayout
-          as="ul"
-          gap="var(--salt-spacing-fixed-100)"
-          style={{
-            width: "100%",
-            listStyle: "none",
-            paddingLeft: 0,
-          }}
+    <VerticalNavigationItem
+      active={isActive}
+      key={id}
+      ref={setItemRef}
+      style={{ scrollMarginTop: 24 }}
+    >
+      <VerticalNavigationItemContent>
+        <VerticalNavigationItemTrigger
+          href={link}
+          render={(props) => <LinkBase {...props} href={link} />}
         >
-          {childNodes?.map((childItem) =>
-            renderNavigationItem(
-              childItem,
-              selectedNodeId,
-              expandedGroupIds,
-              selectedGroupIds,
-              setExpanded,
-              level + 1,
-            ),
-          )}
-        </StackLayout>
-      ) : null}
-    </li>
+          <VerticalNavigationItemLabel>
+            <FlexLayout justify="space-between">
+              {name}
+              {status && (
+                <Badge aria-label={status} value={statusToBadgeValue(status)} />
+              )}
+            </FlexLayout>
+          </VerticalNavigationItemLabel>
+        </VerticalNavigationItemTrigger>
+      </VerticalNavigationItemContent>
+    </VerticalNavigationItem>
   );
 };
 
@@ -131,36 +231,55 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
   menu,
   selectedGroupIds = new Set(),
   selectedNodeId,
-  className,
 }) => {
-  const [expandedGroupIds, setExpandedGroupIds] = useState(selectedGroupIds);
-  const [prevSelectedNodeId, setPreviousSelectedNodeId] =
-    useState(selectedNodeId);
-  if (prevSelectedNodeId !== selectedNodeId) {
-    const uniqueSet = new Set([...expandedGroupIds, ...selectedGroupIds]);
-    setExpandedGroupIds(uniqueSet);
-    setPreviousSelectedNodeId(selectedNodeId);
+  const router = useRouter();
+  const currentPath = router.asPath;
+
+  // Ref to track the active navigation item
+  const activeItemRef = useRef<HTMLElement | null>(null);
+  // Flag to track if this is the initial load
+  const hasInitiallyScrolled = useRef(false);
+
+  // Calculate which groups should be auto-expanded based on current path
+  const autoExpandedGroupIds = useMemo(() => {
+    const parentGroupIds = findParentGroupIds(menu, currentPath);
+    return new Set([...selectedGroupIds, ...parentGroupIds]);
+  }, [menu, currentPath, selectedGroupIds]);
+
+  const [expandedGroupIds, setExpandedGroupIds] =
+    useState(autoExpandedGroupIds);
+  const [prevPath, setPrevPath] = useState(currentPath);
+
+  // Update expanded groups when path changes, but preserve manual state
+  if (prevPath !== currentPath) {
+    const newAutoExpanded = new Set([
+      ...selectedGroupIds,
+      ...findParentGroupIds(menu, currentPath),
+    ]);
+    // Merge with current expanded state to preserve manual expansions
+    setExpandedGroupIds(new Set([...expandedGroupIds, ...newAutoExpanded]));
+    setPrevPath(currentPath);
   }
 
   return (
-    <nav aria-label="Sidebar" className={className}>
-      <StackLayout
-        data-testid="vertical-navigation"
-        as="ul"
-        gap="var(--salt-spacing-fixed-100)"
-        style={{ listStyle: "none", paddingLeft: 0 }}
-      >
-        {menu.map((item) =>
-          renderNavigationItem(
-            item,
-            selectedNodeId,
-            expandedGroupIds,
-            selectedGroupIds,
-            setExpandedGroupIds,
-            0,
-          ),
-        )}
-      </StackLayout>
-    </nav>
+    <VerticalNavigationComponent
+      aria-label="Sidebar"
+      data-testid="vertical-navigation"
+      appearance="bordered"
+      style={{ paddingLeft: 24 }}
+    >
+      {menu.map((item) =>
+        renderNavigationItem(
+          item,
+          selectedNodeId,
+          expandedGroupIds,
+          selectedGroupIds,
+          setExpandedGroupIds,
+          0,
+          activeItemRef,
+          hasInitiallyScrolled,
+        ),
+      )}
+    </VerticalNavigationComponent>
   );
 };
