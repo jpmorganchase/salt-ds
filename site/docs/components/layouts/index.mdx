@@ -1,0 +1,21 @@
+---
+title: Overview
+layout: DetailTechnical
+sidebar:
+  groupLabel: Layouts
+data:
+  items:
+    $ref: ./*/index
+---
+
+Salt layouts are a special category of components designed to manage the overall structure and arrangement of user interface elements, rather than providing visual UI elements themselves. Layouts are responsible for organizing how other components are positioned and flow within an application or page.
+
+<Callout>
+  Salt does not provide a Figma equivalent for these layouts. Instead, Figma
+  offers autolayout functionality, which serves a similar purpose in design
+  tools by controlling the arrangement and responsiveness of elements.
+</Callout>
+
+Salt layout components are each tailored to specific structural needs:
+
+{meta.data.items?.map(({ title, data }, index) => <div style={{ marginTop: 'var(--salt-spacing-100)' }} key={`${title}-${index}`}><Text styleAs="h2">{title}</Text>{(data?.description?.replaceAll("`", "").match(/^.*?\./)?.[0]?.trim() || data?.description?.replaceAll("`", "").trim() || "")}</div>)}

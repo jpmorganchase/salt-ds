@@ -15,6 +15,23 @@
   padding-left: var(--carousel-slide-spacing);
 }
 
+.carouselSlide:focus-visible {
+  outline: none;
+}
+
+.carouselSlide:focus-visible::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--carousel-slide-spacing);
+  right: 0;
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
+  cursor: var(--salt-cursor-hover);
+  border-radius: var(--salt-palette-corner, 0);
+}
+
 .carouselNumber {
   border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   border-radius: var(--salt-palette-corner, 0);

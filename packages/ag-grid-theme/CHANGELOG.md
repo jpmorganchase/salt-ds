@@ -1,5 +1,13 @@
 # @salt-ds/ag-grid-theme
 
+## 2.5.1
+
+### Patch Changes
+
+- 3db3703: Fixed menus showing up as secondary using secondary and zebra variants.
+- Updated dependencies [9c74ceb]
+  - @salt-ds/theme@1.33.0
+
 ## 2.5.0
 
 ### Minor Changes

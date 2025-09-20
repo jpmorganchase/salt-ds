@@ -1,0 +1,37 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+A parent-child layout displays the parent component to the left and child component to the right.
+
+<LivePreview componentName="parent-child-layout" exampleName="Default" />
+
+## Collapsed
+
+The parent-child layout component changes to a collapsed view once it approaches a specified breakpoint. Only one of the regions remains visible and fills the width of the parent.
+The breakpoint and visible view can customized using the `collapsedAtBreakpoint` and `visibleView` props.
+
+<LivePreview componentName="parent-child-layout" exampleName="Collapsed" />
+
+## Reduced motion
+
+You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
+
+<LivePreview componentName="parent-child-layout" exampleName="ReducedMotion" />
+
+## Preferences dialog
+
+This is an example of a [preferences dialog](../../../patterns/preferences-dialog) using the parent-child layout.
+
+<LivePreview
+  componentName="parent-child-layout"
+  exampleName="PreferencesDialog"
+/>

@@ -18,6 +18,11 @@
   color-scheme: dark;
 }
 
+/* This uses the :where selector so it doesn't add any specificity */
+:where(.salt-theme) :focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
 .salt-visuallyHidden {
   position: absolute;
   height: 1px;

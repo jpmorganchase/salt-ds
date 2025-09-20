@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.33.0
+
+### Minor Changes
+
+- 9c74ceb: Added focus-ring styling to global.css. This ensures that any focus ring shown when focus-visible is true is styled using Salt tokens.
+
 ## 1.32.0
 
 ### Minor Changes

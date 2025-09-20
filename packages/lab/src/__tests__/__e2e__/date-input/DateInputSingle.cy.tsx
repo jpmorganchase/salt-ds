@@ -361,46 +361,49 @@ describe("GIVEN a DateInputSingle", () => {
         let dateChangeSpy: Cypress.Agent<sinon.SinonStub>;
         let dateValueChangeSpy: Cypress.Agent<sinon.SinonStub>;
 
+        function ControlledDateInput() {
+          const [date, setDate] = useState<DateFrameworkType | null>(
+            initialDate,
+          );
+
+          const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+            // React 16 backwards compatibility
+            event.persist();
+            inputChangeSpy(event);
+          };
+
+          const handleDateChange = (
+            event: SyntheticEvent,
+            newDate: DateFrameworkType | null,
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+
+            setDate(newDate);
+            dateChangeSpy(event, newDate);
+          };
+
+          return (
+            <DateInputSingle
+              date={date}
+              onChange={handleChange}
+              onDateValueChange={dateValueChangeSpy}
+              onDateChange={handleDateChange}
+            />
+          );
+        }
+
         beforeEach(() => {
           inputChangeSpy = cy.stub().as("inputChangeSpy");
           dateChangeSpy = cy.stub().as("dateChangeSpy");
           dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+          cy.mount(<ControlledDateInput />);
         });
 
         it("SHOULD update when changed with a valid date", () => {
-          function ControlledDateInput() {
-            const [date, setDate] = useState<DateFrameworkType | null>(
-              initialDate,
-            );
-
-            const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-              // React 16 backwards compatibility
-              event.persist();
-              inputChangeSpy(event);
-            };
-
-            const handleDateChange = (
-              event: SyntheticEvent,
-              newDate: DateFrameworkType | null,
-            ) => {
-              // React 16 backwards compatibility
-              event.persist();
-              setDate(newDate);
-              dateChangeSpy(event, newDate);
-            };
-
-            return (
-              <DateInputSingle
-                date={date}
-                onChange={handleChange}
-                onDateValueChange={dateValueChangeSpy}
-                onDateChange={handleDateChange}
-              />
-            );
-          }
-
-          cy.mount(<ControlledDateInput />);
+          // Change the date
           cy.findByRole("textbox").click().clear().type(updatedDateValue);
+          // assert the value is updated
           cy.get("@dateValueChangeSpy").should(
             "have.been.calledWithMatch",
             Cypress.sinon.match.any,
@@ -411,11 +414,41 @@ describe("GIVEN a DateInputSingle", () => {
             target: { value: updatedDateValue },
           });
           cy.realPress("Tab");
+          // assert the date is updated
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 1);
+          cy.get("@dateChangeSpy").then((spy) =>
+            assertDateChange(spy, updatedDateValue, updatedDate, adapter),
+          );
+          cy.findByRole("textbox").should(
+            "have.value",
+            updatedFormattedDateValue,
+          );
+        });
+
+        it("SHOULD be able to clear date and update", () => {
+          // clear the date
+          cy.findByRole("textbox").click().clear();
+          cy.realPress("Tab");
+          // assert date is cleared
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 1);
+          cy.get("@dateChangeSpy").then((spy) =>
+            assertDateChange(spy, "", null, adapter),
+          );
+          cy.findByRole("textbox").should("have.value", "");
+
+          // re-select a date
+          cy.findByRole("textbox").click().type(updatedDateValue);
+          // assert date is re-selected
           cy.get("@dateValueChangeSpy").should(
             "have.been.calledWithMatch",
             Cypress.sinon.match.any,
             updatedDateValue,
           );
+          cy.get("@inputChangeSpy").should("have.been.calledWithMatch", {
+            target: { value: updatedDateValue },
+          });
+          cy.realPress("Tab");
+          cy.get("@dateChangeSpy").its("callCount").should("eq", 2);
           cy.get("@dateChangeSpy").then((spy) =>
             assertDateChange(spy, updatedDateValue, updatedDate, adapter),
           );

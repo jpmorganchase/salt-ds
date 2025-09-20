@@ -16,22 +16,45 @@
   flex-grow: 1;
 }
 
+.saltCarouselCard:focus-visible {
+  outline: none;
+}
+
+.saltCarouselCard:focus-visible::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--carousel-slide-spacing);
+  right: 0;
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
+  cursor: var(--salt-cursor-hover);
+  border-radius: var(--salt-palette-corner, 0);
+}
+
 .saltCarouselCard-body {
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  gap: var(--salt-spacing-200);
   flex-grow: 1;
+  padding-bottom: var(--salt-spacing-200);
+}
+
+.saltCarouselCard-header {
+  padding-bottom: var(--salt-spacing-100);
+}
+.saltCarouselCard-actions {
+  padding-top: var(--salt-spacing-200);
+}
+
+.saltCarouselCard-body.saltCarouselCard-bordered-body {
   padding: 0 var(--salt-spacing-200) var(--salt-spacing-200) var(--salt-spacing-200);
 }
 
 .saltCarouselCard-content h2,
 .saltCarouselCard-content h3 {
   margin: 0;
-}
-
-.saltCarouselCard[data-visibility="off-screen"] a {
-  visibility: hidden;
 }
 
 .saltCarouselCard-bordered {
