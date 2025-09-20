@@ -80,16 +80,27 @@ function findParentGroupIds(
   return [];
 }
 
-const renderNavigationItem = (
-  item: SidebarItem,
-  selectedNodeId: string | undefined,
-  expandedGroupIds: Set<string>,
-  selectedGroupIds: Set<string>,
-  setExpanded: React.Dispatch<React.SetStateAction<Set<string>>>,
-  level: number,
-  activeItemRef: React.MutableRefObject<HTMLElement | null>,
-  hasInitiallyScrolled: React.MutableRefObject<boolean>,
-) => {
+interface RenderNavigationItemParams {
+  item: SidebarItem;
+  selectedNodeId?: string;
+  expandedGroupIds: Set<string>;
+  selectedGroupIds: Set<string>;
+  setExpanded: React.Dispatch<React.SetStateAction<Set<string>>>;
+  level: number;
+  activeItemRef: React.MutableRefObject<HTMLElement | null>;
+  hasInitiallyScrolled: React.MutableRefObject<boolean>;
+}
+
+const renderNavigationItem = ({
+  item,
+  selectedNodeId,
+  expandedGroupIds,
+  selectedGroupIds,
+  setExpanded,
+  level,
+  activeItemRef,
+  hasInitiallyScrolled,
+}: RenderNavigationItemParams) => {
   // @ts-expect-error
   const { id, kind, name, data } = item;
   const isGroup = kind === "group";
@@ -111,8 +122,6 @@ const renderNavigationItem = (
   let isActive = false;
 
   if (shouldRenderAsParent) {
-    // For parent groups, show as active only when collapsed AND contains selected node
-    // This allows parent groups to be collapsed even when they contain active items
     isActive = !isExpanded && containsSelectedNode;
   } else if (selectedNodeId) {
     isActive = singlePageInGroup
@@ -182,16 +191,16 @@ const renderNavigationItem = (
           <CollapsiblePanel>
             <VerticalNavigationSubMenu>
               {childNodes?.map((childItem) =>
-                renderNavigationItem(
-                  childItem,
+                renderNavigationItem({
+                  item: childItem,
                   selectedNodeId,
                   expandedGroupIds,
                   selectedGroupIds,
                   setExpanded,
-                  level + 1,
+                  level: level + 1,
                   activeItemRef,
                   hasInitiallyScrolled,
-                ),
+                }),
               )}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
@@ -265,16 +274,16 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
       style={{ paddingLeft: 24 }}
     >
       {menu.map((item) =>
-        renderNavigationItem(
+        renderNavigationItem({
           item,
           selectedNodeId,
           expandedGroupIds,
           selectedGroupIds,
-          setExpandedGroupIds,
-          0,
+          setExpanded: setExpandedGroupIds,
+          level: 0,
           activeItemRef,
           hasInitiallyScrolled,
-        ),
+        }),
       )}
     </VerticalNavigationComponent>
   );
