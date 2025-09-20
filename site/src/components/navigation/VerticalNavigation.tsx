@@ -13,7 +13,6 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/core";
-import { useRouter } from "next/router";
 import type React from "react";
 import { useMemo, useRef, useState } from "react";
 import { LinkBase } from "../link/Link";
@@ -232,33 +231,30 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
   selectedGroupIds = new Set(),
   selectedNodeId,
 }) => {
-  const router = useRouter();
-  const currentPath = router.asPath;
-
   // Ref to track the active navigation item
   const activeItemRef = useRef<HTMLElement | null>(null);
   // Flag to track if this is the initial load
   const hasInitiallyScrolled = useRef(false);
 
-  // Calculate which groups should be auto-expanded based on current path
+  // Calculate which groups should be auto-expanded based on selectedNodeId
   const autoExpandedGroupIds = useMemo(() => {
-    const parentGroupIds = findParentGroupIds(menu, currentPath);
+    if (!selectedNodeId) return new Set([...selectedGroupIds]);
+    const parentGroupIds = findParentGroupIds(menu, selectedNodeId);
     return new Set([...selectedGroupIds, ...parentGroupIds]);
-  }, [menu, currentPath, selectedGroupIds]);
+  }, [menu, selectedNodeId, selectedGroupIds]);
 
   const [expandedGroupIds, setExpandedGroupIds] =
     useState(autoExpandedGroupIds);
-  const [prevPath, setPrevPath] = useState(currentPath);
+  const [prevSelectedNodeId, setPrevSelectedNodeId] = useState(selectedNodeId);
 
-  // Update expanded groups when path changes, but preserve manual state
-  if (prevPath !== currentPath) {
+  // Update expanded groups when selectedNodeId changes, but preserve manual state
+  if (prevSelectedNodeId !== selectedNodeId) {
     const newAutoExpanded = new Set([
       ...selectedGroupIds,
-      ...findParentGroupIds(menu, currentPath),
+      ...(selectedNodeId ? findParentGroupIds(menu, selectedNodeId) : []),
     ]);
-    // Merge with current expanded state to preserve manual expansions
     setExpandedGroupIds(new Set([...expandedGroupIds, ...newAutoExpanded]));
-    setPrevPath(currentPath);
+    setPrevSelectedNodeId(selectedNodeId);
   }
 
   return (
