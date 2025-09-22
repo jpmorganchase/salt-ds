@@ -98,7 +98,7 @@ jobs:
         react: [16, 17, 18]
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node-24.0.0-chrome-136.0.7103.92-1-ff-138.0.1-edge-136.0.3240.50-1
+      image: cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
       options: --user 1001
     steps:
       - name: Checkout
@@ -106,7 +106,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: "24"
+          node-version: "22"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
