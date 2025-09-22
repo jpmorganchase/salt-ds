@@ -64,7 +64,7 @@ export const ControlledOpen = (): ReactElement => {
 
   const handleOpenChange = useCallback(
     (newOpen: boolean, reason?: DatePickerOpenChangeReason) => {
-      // reason === undefined denotes a programmatic/controlled open, so focus behaviour is owned by the code
+      // reason === undefined denotes a programmatic/controlled open, so focus behavior is owned by the code
       if (reason === undefined) {
         triggerRef.current?.focus();
         setTimeout(() => {

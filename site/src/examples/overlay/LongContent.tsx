@@ -41,18 +41,10 @@ export const LongContent = (): ReactElement => {
         <OverlayPanelContent style={{ height: 200 }}>
           <StackLayout>
             <div>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+              This example text is intended to demonstrate layout and formatting within the component. The content shown here is for illustrative purposes and does not represent actual information or advice.
             </div>
             <div>
-              It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              Sample paragraphs like this can be used to visualize how text will appear in different scenarios. The wording is generic and designed to help review spacing, alignment, and overall presentation in the user interface.
             </div>
           </StackLayout>
         </OverlayPanelContent>

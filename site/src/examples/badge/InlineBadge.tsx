@@ -20,7 +20,7 @@ export const InlineBadge = (): ReactElement => (
           <TabNextTrigger>Home</TabNextTrigger>
         </TabNext>
         <TabNext value="Transactions">
-          <TabNextTrigger aria-label="Transations - 30 updates">
+          <TabNextTrigger aria-label="Transactions - 30 updates">
             Transactions
             <Badge value={30} />
           </TabNextTrigger>

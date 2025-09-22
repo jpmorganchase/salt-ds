@@ -92,7 +92,7 @@ const AccountView = () => {
   return "Account View";
 };
 
-const GenralView = () => {
+const GeneralView = () => {
   return "General View";
 };
 
@@ -106,7 +106,7 @@ const ExportView = () => {
 
 const items = [
   { label: "Account", view: AccountView },
-  { label: "General", view: GenralView },
+  { label: "General", view: GeneralView },
   { label: "Grid", view: GridView },
   { label: "Export", view: ExportView },
 ];
