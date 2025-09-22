@@ -15,3 +15,7 @@
   left: 0;
   top: 0;
 }
+
+.saltVerticalNavigationItemTrigger:focus-visible {
+  outline: none;
+}
