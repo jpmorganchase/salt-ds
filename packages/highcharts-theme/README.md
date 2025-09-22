@@ -20,12 +20,12 @@ Install the following dependencies:
 
 - `highcharts` - version 10.2.0 specifically, or version 11+
 - `highcharts-react-official`
-- `@salt-ds/highcharts-theme@0.0.0-snapshot-20250915124856`
+- `@salt-ds/highcharts-theme@0.0.0-snapshot-20250922124201`
 
 ```bash
-npm install highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme@0.0.0-snapshot-20250915124856
+npm install highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme@0.0.0-snapshot-20250922124201
 # or
-yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme@0.0.0-snapshot-20250915124856
+yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme@0.0.0-snapshot-20250922124201
 ```
 
 ### Import Highcharts CSS
