@@ -169,7 +169,7 @@ const renderNavigationItem = ({
         active={isActive}
         key={id}
         ref={setItemRef}
-        style={{ scrollMarginTop: 24 }}
+        style={{ scrollMarginTop: "var(--salt-spacing-200)" }}
       >
         <Collapsible open={isExpanded} onOpenChange={handleToggle}>
           <VerticalNavigationItemContent>
@@ -216,7 +216,7 @@ const renderNavigationItem = ({
       active={isActive}
       key={id}
       ref={setItemRef}
-      style={{ scrollMarginTop: 24 }}
+      style={{ scrollMarginTop: "var(--salt-spacing-200)" }}
     >
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger
@@ -273,7 +273,7 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
       aria-label="Sidebar"
       data-testid="vertical-navigation"
       appearance="bordered"
-      style={{ paddingLeft: 24 }}
+      style={{ paddingLeft: "var(--salt-spacing-200)" }}
     >
       {menu.map((item) =>
         renderNavigationItem({
