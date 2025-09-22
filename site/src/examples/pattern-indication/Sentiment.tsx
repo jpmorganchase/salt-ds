@@ -10,7 +10,7 @@ type SentimentData = {
 const data = [
   { sentiment: "Neutral", color: "gray", feeling: "Comfort" },
   { sentiment: "Accented", color: "accent", feeling: "Trust" },
-  { sentiment: "Caution", color: "orange", feeling: "Carefullness" },
+  { sentiment: "Caution", color: "orange", feeling: "Carefulness" },
   { sentiment: "Negative", color: "red", feeling: "Negativity" },
   { sentiment: "Positive", color: "green", feeling: "Positivity" },
 ] as SentimentData[];
