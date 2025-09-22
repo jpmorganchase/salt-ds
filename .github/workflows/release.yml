@@ -8,9 +8,9 @@ on:
 
 permissions:
   contents: write
-  deployments: write
   pull-requests: write
   id-token: write
+  issues: write
 
 jobs:
   release:

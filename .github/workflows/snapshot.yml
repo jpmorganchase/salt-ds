@@ -6,7 +6,9 @@ on:
     types:
       - created
 
-permissions: write-all
+permissions:
+  issues: write
+  id-token: write
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
