@@ -18,7 +18,7 @@
 
 .saltFormFieldLabel-necessityLabel {
   font-weight: var(--salt-text-fontWeight);
-  font-style: var(--salt-editable-help-fontStyle);
+  font-style: var(--salt-typography-textDecoration-italic);
 }
 
 .saltFormFieldLabel-sentence.saltText {

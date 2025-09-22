@@ -22,6 +22,7 @@
   --salt-editable-tertiary-background-hover: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-readonly: var(--salt-palette-neutral-tertiary-background-readonly);
   --salt-editable-borderWidth-active: 2px;
+  --salt-editable-help-fontStyle: italic;
 
   /* Measured */
   --salt-measured-borderStyle: solid;

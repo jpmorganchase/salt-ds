@@ -1,7 +1,4 @@
 .salt-theme {
-  --salt-color-white-rgb: 255, 255, 255;
-  --salt-color-black-rgb: 0, 0, 0;
-
   --salt-color-red-10-rgb: 255, 227, 224;
   --salt-color-red-20-rgb: 255, 207, 201;
   --salt-color-red-30-rgb: 255, 187, 178;
@@ -114,9 +111,6 @@
   --salt-color-gray-900-rgb: 22, 22, 22;
 
   /* Color palette will stay the same no matter of theming */
-  --salt-color-white: rgb(var(--salt-color-white-rgb));
-  --salt-color-black: rgb(var(--salt-color-black-rgb));
-
   --salt-color-red-10: rgb(var(--salt-color-red-10-rgb));
   --salt-color-red-20: rgb(var(--salt-color-red-20-rgb));
   --salt-color-red-30: rgb(var(--salt-color-red-30-rgb));

@@ -1,9 +1,10 @@
 {
   "plugins": [
-    "./tooling/stylelint/correct-theme-token-usage/index.js",
-    "./tooling/stylelint/no-deprecated-token-usage/index.js",
-    "./tooling/stylelint/custom-property-attributes-kebab-case/index.js",
-    "./tooling/stylelint/custom-property-starts-with-component-name/index.js"
+    "./tooling/stylelint/correct-theme-token-usage/index.mjs",
+    "./tooling/stylelint/no-deprecated-token-usage/index.mjs",
+    "./tooling/stylelint/custom-property-attributes-kebab-case/index.mjs",
+    "./tooling/stylelint/custom-property-starts-with-component-name/index.mjs",
+    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs"
   ],
   "rules": {
     "salt/correct-theme-token-usage": {
@@ -17,7 +18,8 @@
     },
     "salt/custom-property-starts-with-component-name": {
       "logLevel": "default"
-    }
+    },
+    "salt/characteristic-token-in-all-themes": null
   },
   "overrides": [
     {
@@ -39,6 +41,12 @@
         "salt/correct-theme-token-usage": null,
         "salt/custom-property-attributes-kebab-case": null,
         "salt/custom-property-starts-with-component-name": null
+      }
+    },
+    {
+      "files": ["**/theme/css/*/characteristics/*.css"],
+      "rules": {
+        "salt/characteristic-token-in-all-themes": true
       }
     },
     {

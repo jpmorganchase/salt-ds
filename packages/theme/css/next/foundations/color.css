@@ -1,5 +1,4 @@
 .salt-theme.salt-theme-next {
-  --salt-color-white-rgb: 255, 255, 255;
   --salt-color-gray-100-rgb: 230, 233, 235;
   --salt-color-gray-200-rgb: 211, 213, 216;
   --salt-color-gray-300-rgb: 177, 181, 185;
@@ -9,7 +8,6 @@
   --salt-color-gray-700-rgb: 76, 81, 87;
   --salt-color-gray-800-rgb: 58, 63, 68;
   --salt-color-gray-900-rgb: 41, 46, 51;
-  --salt-color-black-rgb: 0, 0, 0;
   --salt-color-blue-100-rgb: 234, 246, 255;
   --salt-color-blue-200-rgb: 199, 222, 255;
   --salt-color-blue-300-rgb: 154, 189, 245;
@@ -81,7 +79,6 @@
   --salt-color-background-granite-rgb: 26, 34, 41;
   --salt-color-background-leather-rgb: 38, 41, 43;
   --salt-color-logo-brown-rgb: 58, 34, 6;
-  --salt-color-white: rgb(var(--salt-color-white-rgb));
   --salt-color-gray-100: rgb(var(--salt-color-gray-100-rgb));
   --salt-color-gray-200: rgb(var(--salt-color-gray-200-rgb));
   --salt-color-gray-300: rgb(var(--salt-color-gray-300-rgb));
@@ -91,7 +88,6 @@
   --salt-color-gray-700: rgb(var(--salt-color-gray-700-rgb));
   --salt-color-gray-800: rgb(var(--salt-color-gray-800-rgb));
   --salt-color-gray-900: rgb(var(--salt-color-gray-900-rgb));
-  --salt-color-black: rgb(var(--salt-color-black-rgb));
   --salt-color-blue-100: rgb(var(--salt-color-blue-100-rgb));
   --salt-color-blue-200: rgb(var(--salt-color-blue-200-rgb));
   --salt-color-blue-300: rgb(var(--salt-color-blue-300-rgb));
