@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import {
   BarChart as BarChartComponent,
   BulletChart as BulletChartComponent,
+  ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
@@ -12,6 +13,7 @@ import {
 import {
   barOptions,
   bulletOptions,
+  columnOptions,
   donutOptions,
   lineOptions,
   pieOptions,
@@ -90,5 +92,13 @@ export const BarChart = {
   args: {
     patterns: false,
     options: barOptions,
+  },
+};
+
+export const ColumnChart = {
+  render: (args: ChartStoryArgs) => <ColumnChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: columnOptions,
   },
 };
