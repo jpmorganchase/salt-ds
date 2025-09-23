@@ -1,5 +1,5 @@
 import { useSidebar, useStore } from "@jpmorganchase/mosaic-store";
-import { VerticalNavigation } from "./VerticalNavigation";
+import { VerticalNavigation } from "./vertical-navigation";
 
 export function PageNavigation() {
   const menu = useStore((data) => data?.sharedConfig?.sidebar);
