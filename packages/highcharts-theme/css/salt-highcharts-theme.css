@@ -210,12 +210,8 @@
   stroke: var(--salt-color-white);
 }
 
-/* Override default stroke for stacked bar chart segment stroke */
-.highcharts-theme-salt .highcharts-bar-series .highcharts-point {
-  stroke: var(--salt-container-primary-background);
-}
-
-/* Override default stroke for pie chart segment border */
+/* Override default stroke for bar and pie chart segment borders */
+.highcharts-theme-salt .highcharts-bar-series .highcharts-point,
 .highcharts-theme-salt .highcharts-pie-series .highcharts-point {
   stroke: var(--salt-container-primary-background);
 }
