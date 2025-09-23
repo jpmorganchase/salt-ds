@@ -13,11 +13,3 @@
   --salt-shadow-400-color: rgba(0, 0, 0, 0.55);
   --salt-shadow-500-color: rgba(0, 0, 0, 0.65);
 }
-
-.salt-theme {
-  --salt-shadow-100: 0 1px 3px 0 var(--salt-shadow-100-color);
-  --salt-shadow-200: 0 2px 4px 0 var(--salt-shadow-200-color);
-  --salt-shadow-300: 0 4px 8px 0 var(--salt-shadow-300-color);
-  --salt-shadow-400: 0 6px 10px 0 var(--salt-shadow-400-color);
-  --salt-shadow-500: 0 12px 40px 0 var(--salt-shadow-500-color);
-}

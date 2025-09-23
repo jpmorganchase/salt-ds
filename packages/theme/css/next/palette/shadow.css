@@ -1,0 +1,15 @@
+.salt-theme.salt-theme-next[data-mode="light"] {
+  --salt-shadow-100-color: rgba(0, 0, 0, 0.1);
+  --salt-shadow-200-color: rgba(0, 0, 0, 0.1);
+  --salt-shadow-300-color: rgba(0, 0, 0, 0.15);
+  --salt-shadow-400-color: rgba(0, 0, 0, 0.2);
+  --salt-shadow-500-color: rgba(0, 0, 0, 0.3);
+}
+
+.salt-theme.salt-theme-next[data-mode="dark"] {
+  --salt-shadow-100-color: rgba(0, 0, 0, 0.5);
+  --salt-shadow-200-color: rgba(0, 0, 0, 0.5);
+  --salt-shadow-300-color: rgba(0, 0, 0, 0.55);
+  --salt-shadow-400-color: rgba(0, 0, 0, 0.55);
+  --salt-shadow-500-color: rgba(0, 0, 0, 0.65);
+}
