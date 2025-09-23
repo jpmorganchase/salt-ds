@@ -1,21 +1,18 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
-import bullet from "highcharts/modules/bullet";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { bulletOptions } from "./dependencies";
+import { barOptions } from "./dependencies/barOptions";
 
-bullet(Highcharts);
-
-export interface BulletChartProps {
+export interface BarChartProps {
   patterns?: boolean;
   options: Options;
 }
 
-const BulletChart: FC<BulletChartProps> = ({
+const BarChart: FC<BarChartProps> = ({
   patterns = false,
-  options = bulletOptions,
+  options = barOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
@@ -36,4 +33,4 @@ const BulletChart: FC<BulletChartProps> = ({
   );
 };
 
-export default BulletChart;
+export default BarChart;
