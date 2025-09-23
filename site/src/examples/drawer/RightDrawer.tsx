@@ -51,11 +51,12 @@ export const RightDrawer = (): ReactElement => {
           <DrawerCloseButton onClick={handleClose} />
           <H2 id={id}>Section Title</H2>
           <Text>
-            This placeholder text is provided to illustrate how content will appear
-            within the component. The sentences are intended for demonstration only
-            and do not convey specific information. Generic examples like this help
-            review layout, spacing, and overall design. Adjust the wording as needed
-            to fit your use case or display requirements.
+            This placeholder text is provided to illustrate how content will
+            appear within the component. The sentences are intended for
+            demonstration only and do not convey specific information. Generic
+            examples like this help review layout, spacing, and overall design.
+            Adjust the wording as needed to fit your use case or display
+            requirements.
           </Text>
           {Array.from({ length: 7 }, (_, index) => (
             <FormFieldExample key={index} />
