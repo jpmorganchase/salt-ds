@@ -1,77 +1,115 @@
 import type { Options } from "highcharts";
 
+const generateBellCurve = (
+  center: number,
+  amplitude: number,
+  width: number,
+  offset = 0,
+  dataPoints = 200,
+) => {
+  return Array.from({ length: dataPoints }, (_, i) => {
+    const x = (i / dataPoints) * 10 - 5; // Range from -5 to 5
+    const bellValue =
+      amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+    return Math.max(0, bellValue + offset);
+  });
+};
+
 export const areaOptions: Options = {
   chart: {
     type: "area",
   },
   accessibility: {
     description:
-      "Stacked area chart showing how categories contribute to the total over time.",
+      "Overlapping bell curves showing distribution patterns with high precision data points.",
   },
   title: {
-    text: "Assets under management by asset class (2015–2024)",
+    text: "Overlapping Distribution Curves",
   },
   yAxis: {
     title: {
-      text: "AUM (bn USD)",
+      text: "Value",
     },
+    min: 0,
+    startOnTick: true,
+    endOnTick: false,
   },
   tooltip: {
-    headerFormat: "<span>{point.key}</span><br/>",
+    headerFormat: "<span>Point {point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">{point.y}</span>',
+      '<span>{series.name}: </span><span class="value">{point.y:.2f}</span>',
     stickOnContact: true,
-    shared: true,
+    shared: false,
   },
   xAxis: {
     title: {
-      text: "Years 2015 to 2024",
+      text: "Data Points (High Precision)",
     },
     accessibility: {
-      description: "Years from 2015 to 2024",
+      description:
+        "200 high precision data points showing overlapping bell curves",
     },
-    categories: [
-      "2015",
-      "2016",
-      "2017",
-      "2018",
-      "2019",
-      "2020",
-      "2021",
-      "2022",
-      "2023",
-      "2024",
-    ],
+    categories: Array.from({ length: 200 }, (_, i) => `${i + 1}`),
     min: 0,
     endOnTick: false,
     startOnTick: false,
     maxPadding: 0,
+    labels: {
+      step: 20,
+    },
   },
   legend: {
     symbolWidth: 32,
   },
   plotOptions: {
+    series: {
+      states: {
+        hover: {
+          enabled: true,
+        },
+        inactive: {
+          opacity: 0.3,
+        },
+      },
+    },
     area: {
-      stacking: "normal",
       marker: {
         enabled: false,
+        radius: 2,
+        states: {
+          hover: {
+            enabled: true,
+          },
+        },
       },
+      states: {
+        hover: {
+          enabled: true,
+        },
+      },
+      threshold: 0,
+      fillOpacity: 1,
     },
   },
   series: [
     {
-      name: "Equities",
-      data: [120, 135, 150, 165, 180, 210, 245, 230, 255, 275],
+      name: "Primary Distribution",
+      data: generateBellCurve(-1, 100, 1.5),
       type: "area",
     },
     {
-      name: "Fixed Income",
-      data: [90, 95, 105, 110, 120, 140, 160, 170, 165, 180],
+      name: "Secondary Distribution",
+      data: generateBellCurve(1.5, 80, 1.2),
       type: "area",
     },
     {
-      name: "Alternatives",
-      data: [30, 35, 45, 50, 55, 65, 80, 85, 95, 105],
+      name: "Secondary Distribution",
+      data: generateBellCurve(2.5, 50, 1.2),
+      type: "area",
+    },
+    {
+      name: "Secondary Distribution",
+      data: generateBellCurve(5, 70, 1.2),
       type: "area",
     },
   ],

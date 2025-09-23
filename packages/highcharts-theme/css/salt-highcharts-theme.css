@@ -235,3 +235,16 @@
 .highcharts-theme-salt .highcharts-point-inactive {
   opacity: 0.25;
 }
+
+/* Area: overlapping transparency and interactive states in styled mode */
+/* .highcharts-theme-salt .highcharts-area {
+  fill-opacity: 0.5;
+}
+
+.highcharts-theme-salt .highcharts-series-hover .highcharts-area {
+  fill-opacity: 0.8;
+}
+
+.highcharts-theme-salt .highcharts-series-inactive {
+  opacity: 0.3;
+} */
