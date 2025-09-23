@@ -2,6 +2,7 @@ import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import {
+  BarChart as BarChartComponent,
   BulletChart as BulletChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
@@ -9,6 +10,7 @@ import {
   StackedBarChart as StackedBarChartComponent,
 } from "../src/examples";
 import {
+  barOptions,
   bulletOptions,
   donutOptions,
   lineOptions,
@@ -80,5 +82,13 @@ export const BulletChart = {
   args: {
     patterns: false,
     options: bulletOptions,
+  },
+};
+
+export const BarChart = {
+  render: (args: ChartStoryArgs) => <BarChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: barOptions,
   },
 };
