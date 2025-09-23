@@ -19,7 +19,7 @@ const options: Options = {
   },
   accessibility: {
     description:
-      "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
+      "A bar chart comparing revenue by product across regions. Each region shows side-by-side values for each product category.",
   },
   xAxis: {
     categories: ["NA", "EMEA", "APAC", "LATAM"],
@@ -28,46 +28,29 @@ const options: Options = {
     },
   },
   yAxis: {
-    min: 0,
     title: {
       text: "Revenue ($ millions)",
-    },
-    reversedStacks: false,
-  },
-  plotOptions: {
-    series: {
-      stacking: "normal",
     },
   },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">{point.y}</span><br/><span>Total: </span><span class="value">{point.stackTotal}</span>',
+      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
   },
   series: [
     {
       name: "Equities",
       type: "bar",
-      data: [5, 3, 4, 7],
-    },
-    {
-      name: "Fixed Income",
-      type: "bar",
-      data: [2, 2, 3, 2],
-    },
-    {
-      name: "FX",
-      type: "bar",
-      data: [3, 4, 4, 2],
+      data: [45, 38, 42, 37],
     },
   ],
 };
 
-export const StackedBarChart = () => {
+export const BarChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const stackedBarOptions = useChart(chartRef, options);
+  const barChartOptions = useChart(chartRef, options);
 
   return (
     <div className={styles.chartContainer}>
@@ -86,7 +69,7 @@ export const StackedBarChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={stackedBarOptions}
+          options={barChartOptions}
           ref={chartRef}
         />
       </div>
