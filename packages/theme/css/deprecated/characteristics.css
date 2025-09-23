@@ -1,0 +1,132 @@
+.salt-theme {
+  /* Container */
+  --salt-container-borderStyle: solid;
+
+  /* Editable */
+  --salt-editable-borderStyle: solid;
+  --salt-editable-borderStyle-hover: solid;
+  --salt-editable-borderStyle-active: solid;
+  --salt-editable-borderStyle-disabled: solid;
+  --salt-editable-borderStyle-readonly: solid;
+  --salt-editable-cursor-hover: text;
+  --salt-editable-cursor-active: text;
+  --salt-editable-cursor-disabled: not-allowed;
+  --salt-editable-cursor-readonly: text;
+  --salt-editable-borderWidth-active: 2px;
+  --salt-editable-help-fontStyle: italic;
+
+  /* Measured */
+  --salt-measured-borderStyle: solid;
+  --salt-measured-borderStyle-active: solid;
+  --salt-measured-borderStyle-complete: solid;
+  --salt-measured-borderStyle-incomplete: dotted;
+  --salt-measured-borderWidth: 2px;
+  --salt-measured-borderWidth-active: 2px;
+  --salt-measured-borderWidth-complete: 2px;
+  --salt-measured-borderWidth-incomplete: 2px;
+
+  --salt-measured-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-measured-textAlign: center;
+
+  /* Selectable */
+  --salt-selectable-borderStyle: solid;
+  --salt-selectable-borderStyle-hover: solid;
+  --salt-selectable-borderStyle-selected: solid;
+  --salt-selectable-borderStyle-blurSelected: solid;
+
+  --salt-selectable-cursor-hover: pointer;
+  --salt-selectable-cursor-selected: pointer;
+  --salt-selectable-cursor-blurSelected: pointer;
+  --salt-selectable-cursor-disabled: not-allowed;
+  --salt-selectable-cursor-readonly: not-allowed;
+
+  /* Separable */
+  --salt-separable-borderStyle: solid;
+
+  /* Draggable */
+  --salt-draggable-horizontal-cursor-hover: row-resize;
+  --salt-draggable-horizontal-cursor-active: row-resize;
+  --salt-draggable-vertical-cursor-hover: col-resize;
+  --salt-draggable-vertical-cursor-active: col-resize;
+  --salt-draggable-grab-cursor-hover: grab;
+  --salt-draggable-grab-cursor-active: grabbing;
+
+  /* Actionable */
+  --salt-actionable-cursor-hover: pointer;
+  --salt-actionable-cursor-active: pointer;
+  --salt-actionable-cursor-disabled: not-allowed;
+  --salt-actionable-letterSpacing: 0.6px;
+  --salt-actionable-textTransform: uppercase;
+  --salt-actionable-textAlign: center;
+  --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
+  --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
+  --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);
+
+  /* Target */
+  --salt-target-cursor-disabled: not-allowed;
+  --salt-target-borderStyle: dashed;
+  --salt-target-borderStyle-hover: solid;
+  --salt-target-borderStyle-disabled: dashed;
+
+  --salt-text-link-textDecoration: underline;
+  --salt-text-link-textDecoration-hover: none;
+  --salt-text-link-textDecoration-selected: underline;
+  --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
+  --salt-text-textTransform: none;
+
+  /* Navigable */
+  --salt-navigable-cursor-active: pointer;
+  --salt-navigable-cursor-hover: pointer;
+  --salt-navigable-cursor-disabled: not-allowed;
+  --salt-navigable-cursor-edit: text;
+  --salt-navigable-textDecoration: var(--salt-typography-textDecoration-underline);
+  --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  --salt-navigable-textDecoration-selected: var(--salt-typography-textDecoration-underline);
+
+  --salt-navigable-fontWeight: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-hover: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
+  --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
+
+  /* Accent */
+  --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */
+
+  /* Track */
+  --salt-track-borderStyle: solid;
+  --salt-track-borderStyle-active: solid;
+  --salt-track-borderStyle-complete: solid;
+  --salt-track-borderStyle-incomplete: dotted;
+  --salt-track-borderWidth: 2px; /* Use --salt-size-border-strong */
+  --salt-track-borderWidth-active: 2px; /* Use --salt-size-border-strong */
+  --salt-track-borderWidth-complete: 2px; /* Use --salt-size-border-strong */
+  --salt-track-borderWidth-incomplete: 2px; /* Use --salt-size-border-strong */
+  --salt-track-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-track-textAlign: center;
+
+  /* Taggable */
+  --salt-taggable-cursor-hover: pointer;
+  --salt-taggable-cursor-active: pointer;
+  --salt-taggable-cursor-disabled: not-allowed;
+
+  /* Overlayable */
+  --salt-overlayable-shadow-scroll-color: var(--salt-shadow-1-color);
+  --salt-overlayable-shadow-borderRegion: var(--salt-shadow-2);
+}
+
+/* Accent */
+.salt-density-high {
+  --salt-accent-fontSize: 8px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 11px; /* Use --salt-text-notation-lineHeight */
+}
+.salt-density-medium {
+  --salt-accent-fontSize: 10px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 13px; /* Use --salt-text-notation-lineHeight */
+}
+.salt-density-low {
+  --salt-accent-fontSize: 12px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 16px; /* Use --salt-text-notation-lineHeight */
+}
+.salt-density-touch {
+  --salt-accent-fontSize: 14px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 18px; /* Use --salt-text-notation-lineHeight */
+}

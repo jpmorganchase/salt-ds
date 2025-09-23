@@ -38,7 +38,9 @@
 @import url(legacy/characteristics/text.css);
 
 /* Deprecated */
+@import url(deprecated/foundations.css);
+@import url(deprecated/characteristics.css);
+
 @import url(legacy/deprecated/characteristics.css);
 @import url(legacy/deprecated/fade.css);
-@import url(legacy/deprecated/foundations.css);
 @import url(legacy/deprecated/palette.css);

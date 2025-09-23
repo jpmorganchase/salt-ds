@@ -36,6 +36,9 @@
 @import url(next/characteristics/text.css);
 
 /* Deprecated */
+@import url(deprecated/foundations.css);
+@import url(deprecated/characteristics.css);
+
 @import url(next/deprecated/characteristics.css);
 @import url(next/deprecated/foundations.css);
 @import url(next/deprecated/palette.css);
