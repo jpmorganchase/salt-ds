@@ -68,7 +68,7 @@ export const areaOptions: Options = {
           enabled: true,
         },
         inactive: {
-          opacity: 0.3,
+          opacity: 0.1,
         },
       },
     },
