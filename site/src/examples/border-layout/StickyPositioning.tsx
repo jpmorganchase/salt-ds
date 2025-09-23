@@ -15,7 +15,7 @@ export const StickyPositioning = (): ReactElement => (
     <BorderItem
       position="center"
       className={clsx(styles.borderItem, stickyPositioningStyles.center)}
-      style={{overflow: "auto"}}
+      style={{ overflow: "auto" }}
     >
       <p>Center</p>
       <p>

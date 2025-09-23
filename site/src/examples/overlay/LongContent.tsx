@@ -41,10 +41,15 @@ export const LongContent = (): ReactElement => {
         <OverlayPanelContent style={{ height: 200 }}>
           <StackLayout>
             <div>
-              This example text is intended to demonstrate layout and formatting within the component. The content shown here is for illustrative purposes and does not represent actual information or advice.
+              This example text is intended to demonstrate layout and formatting
+              within the component. The content shown here is for illustrative
+              purposes and does not represent actual information or advice.
             </div>
             <div>
-              Sample paragraphs like this can be used to visualize how text will appear in different scenarios. The wording is generic and designed to help review spacing, alignment, and overall presentation in the user interface.
+              Sample paragraphs like this can be used to visualize how text will
+              appear in different scenarios. The wording is generic and designed
+              to help review spacing, alignment, and overall presentation in the
+              user interface.
             </div>
           </StackLayout>
         </OverlayPanelContent>

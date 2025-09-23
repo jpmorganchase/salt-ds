@@ -75,11 +75,12 @@ export const WithSkipLink = () => {
               navigation and go directly to the main content.
             </Text>
             <Text>
-              This placeholder text is provided to illustrate how content will appear
-              within the component. The sentences are intended for demonstration only
-              and do not convey specific information. Generic examples like this help
-              review layout, spacing, and overall design. Adjust the wording as needed
-              to fit your use case or display requirements.
+              This placeholder text is provided to illustrate how content will
+              appear within the component. The sentences are intended for
+              demonstration only and do not convey specific information. Generic
+              examples like this help review layout, spacing, and overall
+              design. Adjust the wording as needed to fit your use case or
+              display requirements.
             </Text>
           </StackLayout>
         </BorderItem>
