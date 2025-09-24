@@ -98,10 +98,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.parentElement?.scrollIntoView({
-            block: "nearest",
-            inline: "nearest",
-          });
+          // Scrolling is handled by TabTrigger.
           nextItem.element?.focus({ preventScroll: true });
         }
       }
@@ -111,6 +108,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     return (
       <div
+        role="tablist"
         className={clsx(
           withBaseName(),
           withBaseName(appearance),
@@ -119,6 +117,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           className,
         )}
         data-ismeasuring={isMeasuring ? true : undefined}
+        ref={handleRef}
         onKeyDown={handleKeyDown}
         aria-describedby={clsx(ariaDescribedBy, warningId) || undefined}
         {...rest}
@@ -129,17 +128,15 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
             inaccurate or change when a tab is selected
           </span>
         )}
-        <div role="tablist" ref={handleRef}>
-          {visible}
-          <TabOverflowList
-            isMeasuring={isMeasuring}
-            buttonRef={overflowButtonRef}
-            open={menuOpen}
-            setOpen={setMenuOpen}
-          >
-            {hidden}
-          </TabOverflowList>
-        </div>
+        {visible}
+        <TabOverflowList
+          isMeasuring={isMeasuring}
+          buttonRef={overflowButtonRef}
+          open={menuOpen}
+          setOpen={setMenuOpen}
+        >
+          {hidden}
+        </TabOverflowList>
       </div>
     );
   },

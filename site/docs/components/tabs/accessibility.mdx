@@ -48,26 +48,15 @@ You need to check and test any focusable elements included in the tab content.
 
 ## Accessibility considerations
 
-### Scrollable region must have keyboard access ([scrollable-region-focusable](https://dequeuniversity.com/rules/axe/4.9/scrollable-region-focusable))
-
-#### Issue context
-
-This aXe issue is flagged when tabindex="-1" is applied to the overflow menu, which is technically a scrollable region. This implementation was added to prevent an additional, unnecessary tab stop in the navigation flow due to new browser enhancements that automatically apply focus to scrollable regions. While the menu itself is not focusable, its contents remain accessible via arrow key navigation when revealed.
-
 ### Certain ARIA roles must contain particular children ([aria-required-children](https://dequeuniversity.com/rules/axe/4.9/aria-required-children))
 
 #### Issue context
 
-This aXe issue is flagged in two scenarios:
-
-1. When an overflow menu is present within the tab list, where tabindex="-1" is applied to prevent focus, due to new browser enhancements, ensuring users don't encounter an additional tab stop when navigating away from the tab list
-
-2. When using nested action buttons within tabs. This example follows the W3C's experimental "Tabs with Action Buttons" example and maintains expected keyboard and screen reader interaction patterns
+This aXe issue is flagged in when using nested action buttons within tabs. This example follows the W3C's experimental "Tabs with Action Buttons" example and maintains expected keyboard and screen reader interaction patterns
 
 ### Note for overflow example
 
-- VoiceOver users receive inaccurate tab position information when navigating the overflow menu as it's treated as a separate tab list
-- In addition, when selecting a tab in the overflow menu, that tab is visually repositioned before the tab list to ensure visibility. Due to these position issues, the following announcement is provided to screen reader users: "Note: This tab list includes overflow; tab positions may be inaccurate or change when a tab is selected"
+When selecting a tab in the overflow menu, that tab is visually repositioned before the tab list to ensure visibility. Due to these position issues, the following announcement is provided to screen reader users: "Note: This tab list includes overflow; tab positions may be inaccurate or change when a tab is selected"
 
 Digital accessibility guidance continues to evolve as new design patterns and component challenges emerge. While we have worked to align with existing guidelines, some complex interactions and modern UI patterns present unique accessibility challenges that current guidelines may not fully address. We have implemented solutions that we believe create the most understandable and accessible experience possible, even when they conflict with current automated testing tools.
 
