@@ -122,6 +122,11 @@
   font-family: var(--salt-text-label-fontFamily);
 }
 
+/* highcharts-graph is line-chart specifc and represents the legend series "line" icon */
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph {
+  opacity: 0.2;
+}
+
 .highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph {
   opacity: 0.2;
 }
@@ -153,6 +158,21 @@
   line-height: var(--salt-text-label-lineHeight);
   font-family: var(--salt-text-label-fontFamily);
 }
+
+/* TODO: Consolidate with other legend classes */
+.highcharts-theme-salt .highcharts-legend-item-hidden > text,
+.highcharts-theme-salt .highcharts-legend-item span {
+  /*  Highcharts default CSS uses !important for the following properties, so we need to use it here too */
+  fill: var(--salt-content-secondary-foreground) !important;
+  stroke: var(--salt-content-secondary-foreground) !important;
+  /* TODO: Decide on a value here */
+  opacity: 0.2;
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight);
+  line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
+}
+
 .highcharts-theme-salt .highcharts-axis-line {
   stroke: var(--salt-separable-primary-borderColor);
 }
@@ -206,11 +226,16 @@
 }
 
 /* Override default stroke for line chart data series hover point circle */
-.highcharts-theme-salt .highcharts-line-series .highcharts-point {
+.highcharts-theme-salt .highcharts-line-series .highcharts-point,
+.highcharts-theme-salt .highcharts-area-series .highcharts-point {
   stroke: var(--salt-color-white);
 }
 
-/* Override default stroke for bar and pie chart segment borders */
+.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point {
+  stroke: none;
+}
+
+/* Override default stroke for chart segments borders */
 .highcharts-theme-salt .highcharts-bar-series .highcharts-point,
 .highcharts-theme-salt .highcharts-pie-series .highcharts-point {
   stroke: var(--salt-container-primary-background);
