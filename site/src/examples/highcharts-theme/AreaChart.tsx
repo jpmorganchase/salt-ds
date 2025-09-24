@@ -10,62 +10,98 @@ import styles from "./index.module.css";
 accessibility(Highcharts);
 
 const options: Options = {
-  chart: { type: "area" },
+  chart: {
+    type: "area",
+  },
   accessibility: {
     description:
-      "Stacked area chart showing how categories contribute to the total over time.",
+      "Risk distribution curves showing probability density of portfolio returns across different asset classes.",
   },
-  title: { text: "Assets under management by asset class (2015–2024)" },
+  title: {
+    text: "Portfolio risk distribution by asset class",
+  },
   yAxis: {
-    title: { text: "AUM (bn USD)" },
+    title: {
+      text: "Probability density (%)",
+    },
   },
   tooltip: {
-    headerFormat: "<span>{point.key}</span><br/>",
+    headerFormat: "<span>Return: {point.key}%</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">{point.y}</span>',
-    stickOnContact: true,
-    shared: true,
+      '<span>{series.name}: </span><span class="value">{point.y:.2f}%</span>',
+    shared: false,
   },
   xAxis: {
-    title: { text: "Years 2015 to 2024" },
-    accessibility: { description: "Years from 2015 to 2024" },
-    categories: [
-      "2015",
-      "2016",
-      "2017",
-      "2018",
-      "2019",
-      "2020",
-      "2021",
-      "2022",
-      "2023",
-      "2024",
-    ],
-    min: 0,
-    endOnTick: false,
-    startOnTick: false,
-    maxPadding: 0,
-  },
-  legend: {
-    symbolWidth: 32,
-  },
-  plotOptions: {
-    area: { stacking: "normal", marker: { enabled: false } },
+    title: {
+      text: "Portfolio return (% annualized)",
+    },
+    accessibility: {
+      description:
+        "Portfolio return distribution from -25% to +25% showing risk profiles across asset classes",
+    },
+    categories: Array.from(
+      { length: 200 },
+      (_, i) => `${Math.round(((i / 200) * 50 - 25) * 100) / 100}`,
+    ),
+    labels: {
+      step: 30,
+    },
   },
   series: [
     {
-      name: "Equities",
-      data: [120, 135, 150, 165, 180, 210, 245, 230, 255, 275],
+      name: "Conservative portfolio",
+      // Bell curve calculation: center=2% return, low volatility (width=1.8), moderate amplitude
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 0.4; // 2% expected return (x = return/5)
+        const amplitude = 24; // Realistic probability density peak
+        const width = 1.8; // Low volatility
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
     {
-      name: "Fixed Income",
-      data: [90, 95, 105, 110, 120, 140, 160, 170, 165, 180],
+      name: "Balanced portfolio",
+      // Bell curve calculation: center=6% return, moderate volatility (width=2.0), good amplitude
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 1.2; // 6% expected return (x = return/5)
+        const amplitude = 22; // Realistic probability density peak
+        const width = 2.0; // Moderate volatility
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
     {
-      name: "Alternatives",
-      data: [30, 35, 45, 50, 55, 65, 80, 85, 95, 105],
+      name: "Growth portfolio",
+      // Bell curve calculation: center=10% return, higher volatility (width=2.2), lower amplitude due to spread
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 2.0; // 10% expected return (x = return/5)
+        const amplitude = 19; // Lower due to wider spread
+        const width = 2.2; // Higher volatility
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
+      type: "area",
+    },
+    {
+      name: "Aggressive portfolio",
+      // Bell curve calculation: center=13% return, high volatility (width=2.5), lower amplitude due to high spread
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 2.6; // 13% expected return (x = return/5)
+        const amplitude = 16; // Lower due to very wide spread
+        const width = 2.5; // High volatility
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
   ],

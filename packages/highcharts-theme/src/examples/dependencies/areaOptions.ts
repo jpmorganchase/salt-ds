@@ -1,115 +1,98 @@
 import type { Options } from "highcharts";
 
-const generateBellCurve = (
-  center: number,
-  amplitude: number,
-  width: number,
-  offset = 0,
-  dataPoints = 200,
-) => {
-  return Array.from({ length: dataPoints }, (_, i) => {
-    const x = (i / dataPoints) * 10 - 5; // Range from -5 to 5
-    const bellValue =
-      amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
-    return Math.max(0, bellValue + offset);
-  });
-};
-
 export const areaOptions: Options = {
   chart: {
     type: "area",
   },
   accessibility: {
     description:
-      "Overlapping bell curves showing distribution patterns with high precision data points.",
+      "Risk distribution curves showing probability density of portfolio returns across different asset classes.",
   },
   title: {
-    text: "Overlapping Distribution Curves",
+    text: "Portfolio risk distribution by asset class",
   },
   yAxis: {
     title: {
-      text: "Value",
+      text: "Probability density (%)",
     },
-    min: 0,
-    startOnTick: true,
-    endOnTick: false,
   },
   tooltip: {
-    headerFormat: "<span>Point {point.key}</span><br/>",
+    headerFormat: "<span>Return: {point.key}%</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">{point.y:.2f}</span>',
-    stickOnContact: true,
+      '<span>{series.name}: </span><span class="value">{point.y:.2f}%</span>',
     shared: false,
   },
   xAxis: {
     title: {
-      text: "Data Points (High Precision)",
+      text: "Portfolio return (% annualized)",
     },
     accessibility: {
       description:
-        "200 high precision data points showing overlapping bell curves",
+        "Portfolio return distribution from -25% to +25% showing risk profiles across asset classes",
     },
-    categories: Array.from({ length: 200 }, (_, i) => `${i + 1}`),
-    min: 0,
-    endOnTick: false,
-    startOnTick: false,
-    maxPadding: 0,
+    categories: Array.from(
+      { length: 200 },
+      (_, i) => `${Math.round(((i / 200) * 50 - 25) * 100) / 100}`,
+    ),
     labels: {
-      step: 20,
-    },
-  },
-  legend: {
-    symbolWidth: 32,
-  },
-  plotOptions: {
-    series: {
-      states: {
-        hover: {
-          enabled: true,
-        },
-        inactive: {
-          opacity: 0.1,
-        },
-      },
-    },
-    area: {
-      marker: {
-        enabled: false,
-        radius: 2,
-        states: {
-          hover: {
-            enabled: true,
-          },
-        },
-      },
-      states: {
-        hover: {
-          enabled: true,
-        },
-      },
-      threshold: 0,
-      fillOpacity: 1,
+      step: 30,
     },
   },
   series: [
     {
-      name: "Primary Distribution",
-      data: generateBellCurve(-1, 100, 1.5),
+      name: "Conservative portfolio",
+      // Bell curve calculation: center=2% return, low volatility (width=1.8), moderate amplitude
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 0.4;
+        const amplitude = 24;
+        const width = 1.8;
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
     {
-      name: "Secondary Distribution",
-      data: generateBellCurve(1.5, 80, 1.2),
+      name: "Balanced portfolio",
+      // Bell curve calculation: center=6% return, moderate volatility (width=2.0), good amplitude
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 1.2;
+        const amplitude = 22;
+        const width = 2.0;
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
     {
-      name: "Secondary Distribution",
-      data: generateBellCurve(2.5, 50, 1.2),
+      name: "Growth portfolio",
+      // Bell curve calculation: center=10% return, higher volatility (width=2.2), lower amplitude due to spread
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 2.0;
+        const amplitude = 19;
+        const width = 2.2;
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
     {
-      name: "Secondary Distribution",
-      data: generateBellCurve(5, 70, 1.2),
+      name: "Aggressive portfolio",
+      // Bell curve calculation: center=13% return, high volatility (width=2.5), lower amplitude due to high spread
+      data: Array.from({ length: 200 }, (_, i) => {
+        const x = (i / 200) * 10 - 5;
+        const center = 2.6;
+        const amplitude = 16;
+        const width = 2.5;
+        const bellValue =
+          amplitude * Math.exp(-((x - center) ** 2) / (2 * width ** 2));
+        return Math.max(0, bellValue);
+      }),
       type: "area",
     },
   ],
