@@ -52,6 +52,7 @@
     "@fontsource/open-sans": "^4.5.13",
     "@fontsource/pt-mono": "^5.0.12",
     "@mswjs/data": "^0.16.1",
+    "@salt-ds/core": "workspace:^",
     "@storybook/addon-a11y": "^9.0.4",
     "@storybook/addon-docs": "^9.0.4",
     "@storybook/addon-links": "^9.0.4",

@@ -45,21 +45,21 @@ export const CharacteristicsTokenTable = ({
   const [cssVariablesData, setCssVariablesData] =
     useState<CssVariableData | null>(null);
 
-  useEffect(() => {
-    const fetchJsonData = async () => {
-      const data = themeNext
-        ? await import("./cssCharacteristics-next.json")
-        : await import("./cssCharacteristics.json");
-      const groupedData = groupByType(data.default);
-      if (groupedData[group]) {
-        setCssVariablesData(groupedData[group]);
-      } else {
-        console.error(`Group "${group}" not found in the data.`);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchJsonData = async () => {
+  //     const data = themeNext
+  //       ? await import("./cssCharacteristics-next.json")
+  //       : await import("./cssCharacteristics.json");
+  //     const groupedData = groupByType(data.default);
+  //     if (groupedData[group]) {
+  //       setCssVariablesData(groupedData[group]);
+  //     } else {
+  //       console.error(`Group "${group}" not found in the data.`);
+  //     }
+  //   };
 
-    fetchJsonData();
-  }, [group, themeNext]);
+  //   fetchJsonData();
+  // }, [group, themeNext]);
 
   if (!cssVariablesData) {
     return (

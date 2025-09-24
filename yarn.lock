@@ -3360,6 +3360,7 @@ __metadata:
     "@rollup/plugin-commonjs": "npm:^28.0.1"
     "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-node-resolve": "npm:^15.3.0"
+    "@salt-ds/core": "workspace:^"
     "@storybook/addon-a11y": "npm:^9.0.4"
     "@storybook/addon-docs": "npm:^9.0.4"
     "@storybook/addon-links": "npm:^9.0.4"

@@ -1,5 +1,6 @@
 import {
   type CSSProperties,
+  HTMLAttributes,
   type ReactNode,
   useCallback,
   useEffect,
@@ -16,13 +17,17 @@ export interface AriaAnnouncerProviderProps {
   children?: ReactNode;
   /**
    * Style overrides for the aria-live element
-   */
-  style?: CSSProperties;
+  */
+ 
+ style?: CSSProperties;
+ ariaAnnounce?: "off" | "assertive" | "polite" | undefined,
+
 }
 
 export function AriaAnnouncerProvider({
   children,
   style,
+  ariaAnnounce = "assertive",
 }: AriaAnnouncerProviderProps) {
   // announcement that gets rendered inside aria-live and read out by screen readers
   const [currentAnnouncement, setCurrentAnnouncement] = useState("");
@@ -76,7 +81,7 @@ export function AriaAnnouncerProvider({
       {children}
       <div
         aria-atomic="true"
-        aria-live="assertive"
+        aria-live={ariaAnnounce}
         // hidden styling based on https://tailwindcss.com/docs/screen-readers
         style={{
           position: "absolute",
