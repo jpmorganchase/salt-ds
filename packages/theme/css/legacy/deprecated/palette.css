@@ -48,6 +48,8 @@
   --salt-palette-interact-secondary-background-disabled: transparent;
   --salt-palette-interact-cta-foreground-active: var(--salt-color-white);
   --salt-palette-interact-cta-foreground-hover: var(--salt-color-white);
+  --salt-palette-interact-cta-background-disabled: var(--salt-color-blue-600-40a);
+  --salt-palette-interact-primary-background-disabled: var(--salt-color-gray-60-40a);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-500);
@@ -121,6 +123,23 @@
   --salt-palette-accent-border: var(--salt-color-blue-500);
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
   --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
+  --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-600-40a);
+
+  /* Negative */
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-600-40a);
+  --salt-palette-negative-background-disabled: var(--salt-color-red-600-40a);
+  --salt-palette-negative-border-disabled: var(--salt-color-red-500-40a);
+
+  /* Positive */
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-600-40a);
+  --salt-palette-positive-background-disabled: var(--salt-color-green-600-40a);
+  --salt-palette-positive-border-disabled: var(--salt-color-green-500-40a);
+
+  /* Warning */
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-700-40a);
+  --salt-palette-warning-foreground-informative-disabled: var(--salt-color-orange-850-40a);
+  --salt-palette-warning-action-disabled: var(--salt-color-orange-600-40a);
+  --salt-palette-warning-action-foreground-disabled: var(--salt-color-gray-900-40a);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -141,6 +160,8 @@
   --salt-palette-interact-secondary-background-disabled: transparent;
   --salt-palette-interact-cta-foreground-active: var(--salt-color-white);
   --salt-palette-interact-cta-foreground-hover: var(--salt-color-white);
+  --salt-palette-interact-cta-background-disabled: var(--salt-color-blue-600-40a);
+  --salt-palette-interact-primary-background-disabled: var(--salt-color-gray-300-40a);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-300);
@@ -214,4 +235,21 @@
   --salt-palette-accent-border: var(--salt-color-blue-500);
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
   --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
+  --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-200-40a);
+
+  /* Negative */
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-200-40a);
+  --salt-palette-negative-background-disabled: var(--salt-color-red-600-40a);
+  --salt-palette-negative-border-disabled: var(--salt-color-red-500-40a);
+
+  /* Positive */
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-200-40a);
+  --salt-palette-positive-background-disabled: var(--salt-color-green-600-40a);
+  --salt-palette-positive-border-disabled: var(--salt-color-green-500-40a);
+
+  /* Warning */
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-500-40a);
+  --salt-palette-warning-foreground-informative-disabled: var(--salt-color-orange-400-40a);
+  --salt-palette-warning-action-disabled: var(--salt-color-orange-600-40a);
+  --salt-palette-warning-action-foreground-disabled: var(--salt-color-gray-900-40a);
 }
