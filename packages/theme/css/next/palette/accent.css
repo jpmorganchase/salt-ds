@@ -2,9 +2,7 @@
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-strong: var(--salt-color-blue-600);
-  --salt-palette-accent-strong-disabled: var(--salt-color-blue-600-40a);
   --salt-palette-accent-stronger: var(--salt-color-blue-700);
-  --salt-palette-accent-stronger-disabled: var(--salt-color-blue-700-40a);
   --salt-palette-accent-strongest: var(--salt-color-blue-800);
   --salt-palette-accent-weak: var(--salt-color-blue-400);
   --salt-palette-accent-weaker: var(--salt-color-blue-200);
@@ -16,9 +14,7 @@
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-strong: var(--salt-color-blue-400);
-  --salt-palette-accent-strong-disabled: var(--salt-color-blue-400-40a);
   --salt-palette-accent-stronger: var(--salt-color-blue-300);
-  --salt-palette-accent-stronger-disabled: var(--salt-color-blue-300-40a);
   --salt-palette-accent-strongest: var(--salt-color-blue-200);
   --salt-palette-accent-weak: var(--salt-color-blue-600);
   --salt-palette-accent-weaker: var(--salt-color-blue-800);
@@ -30,9 +26,7 @@
   --salt-palette-accent: var(--salt-color-teal-500);
   --salt-palette-accent-disabled: var(--salt-color-teal-500-40a);
   --salt-palette-accent-strong: var(--salt-color-teal-600);
-  --salt-palette-accent-strong-disabled: var(--salt-color-teal-600-40a);
   --salt-palette-accent-stronger: var(--salt-color-teal-700);
-  --salt-palette-accent-stronger-disabled: var(--salt-color-teal-700-40a);
   --salt-palette-accent-strongest: var(--salt-color-teal-800);
   --salt-palette-accent-weak: var(--salt-color-teal-400);
   --salt-palette-accent-weaker: var(--salt-color-teal-200);
@@ -44,9 +38,7 @@
   --salt-palette-accent: var(--salt-color-teal-500);
   --salt-palette-accent-disabled: var(--salt-color-teal-500-40a);
   --salt-palette-accent-strong: var(--salt-color-teal-400);
-  --salt-palette-accent-strong-disabled: var(--salt-color-teal-400-40a);
   --salt-palette-accent-stronger: var(--salt-color-teal-300);
-  --salt-palette-accent-stronger-disabled: var(--salt-color-teal-300-40a);
   --salt-palette-accent-strongest: var(--salt-color-teal-200);
   --salt-palette-accent-weak: var(--salt-color-teal-600);
   --salt-palette-accent-weaker: var(--salt-color-teal-800);
