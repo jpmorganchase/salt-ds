@@ -9,6 +9,7 @@ import {
   type ReactNode,
   useEffect,
   useRef,
+  useMemo
 } from "react";
 import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
@@ -22,12 +23,25 @@ import {
   type UseCalendarSingleProps,
   useCalendar,
 } from "./useCalendar";
-import type { DateRangeSelection } from "./useCalendarSelection";
+import type {
+  DateRangeSelection,
+} from "./useCalendarSelection";
+import {
+  useAriaCalendarAnnouncer,
+} from "./useAriaCalendarAnnouncer";
+import { singleSelectionAnnouncements } from "./internal/singleSelectionAnnouncements";
+import { rangeSelectionAnnouncements } from "./internal/rangeSelectionAnnouncements";
+
+export type CalendarError = "minFocusableDateExceeded" | "maxFocusableDateExceeded";
 
 /**
  * Base props for the Calendar component.
  */
 export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Disable the internal announcer for selection changes
+   */
+  disableSelectionAnnouncer?: boolean;
   /**
    * The content to be rendered inside the Calendar.
    */
@@ -209,6 +223,7 @@ export const Calendar = forwardRef<
     const {
       children,
       className,
+      disableSelectionAnnouncer,
       selectedDate,
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
@@ -310,6 +325,32 @@ export const Calendar = forwardRef<
     };
     const { state, helpers } = useCalendar<TDate>(useCalendarProps);
     const calendarLabel = dateAdapter.format(state.visibleMonth, "MMMM YYYY");
+
+    const endVisibleMonth = useMemo(
+      () =>
+        dateAdapter.add(state.visibleMonth, {
+          months: state.numberOfVisibleMonths - 1,
+        }),
+      [dateAdapter, state?.numberOfVisibleMonths, state.visibleMonth],
+    );
+
+    console.log('state.error', state.error)
+    useAriaCalendarAnnouncer<TDate>({
+      disabled: disableSelectionAnnouncer,
+      state: {
+        error: state.error,
+        selectionVariant,
+        multiselect: multiselect ?? false,
+        startVisibleMonth: state.visibleMonth,
+        endVisibleMonth,
+        selectedDate: state.selectedDate
+      },
+      announcement:
+        selectionVariant === "single"
+          ? singleSelectionAnnouncements
+          : rangeSelectionAnnouncements,
+      dateAdapter
+    });
 
     return (
       <CalendarContext.Provider

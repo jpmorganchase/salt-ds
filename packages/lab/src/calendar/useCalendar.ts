@@ -5,7 +5,13 @@ import {
   useControlled,
 } from "@salt-ds/core";
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { type SyntheticEvent, useCallback, useEffect, useMemo } from "react";
+import {
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import { useLocalization } from "../localization-provider";
 import {
   type UseCalendarSelectionBaseProps,
@@ -18,6 +24,7 @@ import {
   type UseCalendarSelectionSingleProps,
   useCalendarSelection,
 } from "./useCalendarSelection";
+import {CalendarError} from "./Calendar";
 
 /**
  * Base properties for the UseCalendar hook.
@@ -262,9 +269,9 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * Determines if a date is outside the allowed date range.
      *
      * @param date - The date to check.
-     * @returns `true` if the date is outside the allowed range, otherwise `false`.
+     * * @returns -1 if before the allowed range, 0 if inside, 1 if after.
      */
-    isOutsideAllowedDates: (date: TDate) => boolean;
+    isOutsideAllowedDates: (date: TDate) => -1 | 0 | 1;
 
     /**
      * Determines if a month is outside the allowed range.
@@ -443,11 +450,13 @@ export function useCalendar<TDate extends DateFrameworkType>(
   });
 
   const isOutsideAllowedDates = useCallback(
-    (date: TDate) => {
-      return (
-        dateAdapter.compare(date, minDate) < 0 ||
-        dateAdapter.compare(date, maxDate) > 0
-      );
+    (date: TDate): -1 | 0 | 1 => {
+      if (dateAdapter.compare(date, minDate) < 0) {
+        return -1;
+      } else if (dateAdapter.compare(date, maxDate) > 0) {
+        return 1;
+      }
+      return 0;
     },
     [dateAdapter, maxDate, minDate],
   );
@@ -478,7 +487,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const isDaySelectable = useCallback(
     (date?: TDate) =>
-      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date))),
+      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date) !== 0)),
     [isDayUnselectable, isOutsideAllowedDates],
   );
 
@@ -593,6 +602,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       isOutsideAllowedYears,
       responsiveNumberOfVisibleMonths,
       selectionManager,
+      selectionManager.state
     ],
   );
 }

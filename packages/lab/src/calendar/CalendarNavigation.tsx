@@ -42,51 +42,22 @@ export interface CalendarNavigationProps<TDate extends DateFrameworkType>
    * Props for the month dropdown component.
    */
   MonthDropdownProps?: DropdownProps<TDate>;
-
   /**
    * Props for the year dropdown component.
    */
   YearDropdownProps?: DropdownProps<TDate>;
-
   /**
-   * Callback fired when a month is selected.
-   * @param event - The change event.
+   * Additional props for Previous button.
    */
-  onMonthSelect?: DropdownProps<TDate>["onChange"];
-
+  PreviousButtonProps?: ButtonProps;
   /**
-   * Callback fired when a year is selected.
-   * @param event - The change event.
+   * Additional props for Next button.
    */
-  onYearSelect?: DropdownProps<TDate>["onChange"];
-
-  /**
-   * Callback fired when navigating to the next month.
-   * @param event - The click event.
-   */
-  onNavigateNext?: ButtonProps["onClick"];
-
-  /**
-   * If `true` then navigate next button is enabled
-   */
-  disableNavigateNext?: boolean;
-
-  /**
-   * Callback fired when navigating to the previous month.
-   * @param event - The click event.
-   */
-  onNavigatePrevious?: ButtonProps["onClick"];
-
-  /**
-   * If `true` then navigate previous button is enabled
-   */
-  disableNavigatePrevious?: boolean;
-
+  NextButtonProps?: ButtonProps;
   /**
    * If `true`, hides the year dropdown.
    */
   hideYearDropdown?: boolean;
-
   /**
    * The step value for navigation. Defaults to 1.
    */
@@ -144,6 +115,9 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
 
   const { dateAdapter } = useLocalization<TDate>();
 
+  const disableNavigatePrevious = isDayVisible(minDate);
+  const disableNavigateNext = isDayVisible(maxDate);
+
   const moveToNextMonth = useCallback(
     (event: SyntheticEvent, step = 1) => {
       setVisibleMonth(event, dateAdapter.add(visibleMonth, { months: step }));
@@ -156,7 +130,7 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
       setVisibleMonth(
         event,
         dateAdapter.subtract(visibleMonth, { months: step }),
-      );
+    );
     },
     [dateAdapter, setVisibleMonth, visibleMonth],
   );
@@ -212,9 +186,6 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
     dateAdapter.isSame(year, visibleMonth, "year"),
   );
 
-  const disableNavigatePrevious = isDayVisible(minDate);
-  const disableNavigateNext = isDayVisible(maxDate);
-
   return useMemo(
     () => ({
       moveToNextMonth,
@@ -250,6 +221,7 @@ function OptionWithTooltip<TDate extends DateFrameworkType>({
   children,
   disabled = false,
   tooltipContent,
+  ...rest
 }: OptionWithTooltipProps<TDate>) {
   const { activeState, openState } = useListControlContext();
   const open = activeState?.value === value;
@@ -262,7 +234,7 @@ function OptionWithTooltip<TDate extends DateFrameworkType>({
       enterDelay={0} // --salt-duration-instant
       leaveDelay={0} // --salt-duration-instant
     >
-      <Option value={value} disabled={disabled}>
+      <Option value={value} disabled={disabled} {...rest}>
         {children}
       </Option>
     </ConditionalTooltip>
@@ -279,11 +251,11 @@ export const CalendarNavigation = forwardRef<
   ) => {
     const {
       className,
-      disableNavigatePrevious: disableNavigatePreviousProp,
-      disableNavigateNext: disableNavigateNextProp,
       formatMonth: formatMonthProp,
       formatYear: formatYearProp,
       MonthDropdownProps,
+      NextButtonProps,
+      PreviousButtonProps,
       YearDropdownProps,
       hideYearDropdown,
       step = 1,
@@ -350,15 +322,14 @@ export const CalendarNavigation = forwardRef<
     );
 
     const formatMonth = useCallback(
-      (date?: TDate) => {
-        if (date && formatMonthProp) {
-          return dateAdapter.format(date, formatMonthProp);
+      (date?: TDate, formatString?: string) => {
+        const format = formatString || formatMonthProp || "MMM";
+        if (date) {
+          return dateAdapter.format(date, format);
         }
-        return date
-          ? dateAdapter.format(date, hideYearDropdown ? "MMMM" : "MMM")
-          : "";
+        return "";
       },
-      [dateAdapter, formatMonthProp, hideYearDropdown],
+      [dateAdapter, formatMonthProp],
     );
 
     const formatYear = useCallback(
@@ -371,11 +342,15 @@ export const CalendarNavigation = forwardRef<
       [dateAdapter, formatYearProp],
     );
 
+    const isPreviousMonthDisabled =
+      PreviousButtonProps?.disabled || disableNavigatePrevious;
+    const isNextMonthDisabled = NextButtonProps?.disabled || disableNavigateNext;
+
     return (
       <div
         className={clsx(
           withBaseName(),
-          { [withBaseName("hideYearDropdown")]: hideYearDropdown },
+          {[withBaseName("hideYearDropdown")]: hideYearDropdown},
           className,
         )}
         ref={ref}
@@ -383,24 +358,25 @@ export const CalendarNavigation = forwardRef<
       >
         <ConditionalTooltip
           placement="top"
-          disabled={!(disableNavigatePreviousProp || disableNavigatePrevious)}
+          disabled={!isPreviousMonthDisabled}
           content="Past dates are out of range"
           enterDelay={0} // --salt-duration-instant
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            aria-label="Previous Month"
-            disabled={disableNavigatePreviousProp || disableNavigatePrevious}
+            aria-label={isPreviousMonthDisabled ? "Previous Month" : "Past dates are out of range"}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigatePrevious}
             focusableWhenDisabled={true}
+            {...PreviousButtonProps}
+            disabled={isPreviousMonthDisabled}
           >
-            <PreviousIcon aria-hidden />
+            <PreviousIcon aria-hidden/>
           </Button>
         </ConditionalTooltip>
         <div
-          className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}
+          className={clsx({[withBaseName("dropdowns")]: !hideYearDropdown})}
         >
           <Dropdown
             aria-label="Month Dropdown"
@@ -409,19 +385,17 @@ export const CalendarNavigation = forwardRef<
             onSelectionChange={handleMonthSelect}
             {...MonthDropdownProps}
           >
-            {months.map((month) => {
-              const outsideAllowedMonths = isOutsideAllowedMonths(month);
-              return (
-                <OptionWithTooltip
-                  key={formatMonth(month)}
-                  value={month}
-                  disabled={outsideAllowedMonths}
-                  tooltipContent={"This month is out of range"}
-                >
-                  {formatMonth(month)}
-                </OptionWithTooltip>
-              );
-            })}
+
+            {months.map((month) => (<OptionWithTooltip
+              key={formatMonth(month)}
+            value={month}
+            aria-label={formatMonth(month, "MMMM")}
+            disabled={isOutsideAllowedMonths(month)}
+            tooltipContent="This month is out of range"
+          >
+            {formatMonth(month)}
+          </OptionWithTooltip>
+            ))}
           </Dropdown>
           {!hideYearDropdown ? (
             <Dropdown
@@ -436,29 +410,30 @@ export const CalendarNavigation = forwardRef<
               )}
             >
               {years.map((year) => (
-                <Option key={formatYear(year)} value={year}>
+                <OptionWithTooltip key={formatYear(year)} value={year}>
                   {formatYear(year)}
-                </Option>
+                </OptionWithTooltip>
               ))}
             </Dropdown>
           ) : null}
         </div>
         <ConditionalTooltip
           placement="top"
-          disabled={!(disableNavigateNextProp || disableNavigateNext)}
+          disabled={!isNextMonthDisabled}
           content="Future dates are out of range"
           enterDelay={0} // --salt-duration-instant
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            aria-label="Next Month"
-            disabled={disableNavigateNextProp || disableNavigateNext}
+            aria-label={isNextMonthDisabled ? "Previous Month" : "Future dates are out of range"}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigateNext}
             focusableWhenDisabled={true}
+            {...NextButtonProps}
+            disabled={isNextMonthDisabled}
           >
-            <NextIcon aria-hidden />
+            <NextIcon aria-hidden/>
           </Button>
         </ConditionalTooltip>
       </div>

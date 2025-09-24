@@ -5,15 +5,16 @@ import type {
   Timezone,
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
-import type {
+import {
   KeyboardEventHandler,
   MouseEventHandler,
-  SyntheticEvent,
+  SyntheticEvent, useState,
 } from "react";
 import { useCallback, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { generateDatesForMonth } from "./internal/utils";
+import {CalendarError} from "./Calendar";
 
 /**
  * Type representing a single date selection.
@@ -72,9 +73,9 @@ export interface UseCalendarSelectionBaseProps<
   /**
    * Determines if a date is outside the allowed date range.
    * @param date - The date to check.
-   * @returns `true` if the date is outside the allowed range, otherwise `false`.
+   * @returns 0 if inside the date range, -1 if before the min date, 1 if after the max date.
    */
-  isOutsideAllowedDates?: (date: TDate) => boolean;
+  isOutsideAllowedDates: (date: TDate) => -1 | 0 | -1;
   /**
    * Function to determine if a day is selectable.
    * @param date - The date to check.
@@ -487,7 +488,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     onHoveredDateChange,
     isDaySelectable = () => true,
     isDayVisible = () => true,
-    isOutsideAllowedDates = () => true,
+    isOutsideAllowedDates,
     focusedDateRef,
     onFocusedDateChange,
     select: selectProp,
@@ -504,6 +505,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     name: "Calendar",
     state: "selectedDate",
   });
+
+  const [error, setError] = useState<CalendarError | null>(null);
 
   const startDateOffset =
     selectionVariant === "offset" ? props.startDateOffset : undefined;
@@ -757,13 +760,19 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (focusedDateRef && event?.target instanceof HTMLElement) {
         focusedDateRef.current = event.target;
       }
+      const exceededRangeLimit = date ? isOutsideAllowedDates(date) : 0;
       if (
         date &&
         ((focusedDate && dateAdapter.isSame(date, focusedDate, "day")) ||
-          isOutsideAllowedDates(date))
+          exceededRangeLimit !== 0)
       ) {
+        if ( exceededRangeLimit !== 0) {
+          console.log('set error', exceededRangeLimit, focusedDate);
+          setError(exceededRangeLimit < 0 ? "minFocusableDateExceeded" :"maxFocusableDateExceeded");
+        }
         return;
       }
+      setError(null);
       setFocusedDateState(date);
       onFocusedDateChange?.(event, date);
     },
@@ -921,7 +930,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
             isDateRangeSelection(range) &&
             dateAdapter.isValid(range.startDate) &&
             !dateAdapter.isValid(range.endDate) &&
-            !isOutsideAllowedDates(range.startDate) &&
+            isOutsideAllowedDates(range.startDate) === 0 &&
             hoveredDate
           ) {
             const isForwardRange =
@@ -1034,7 +1043,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           (selectionVariant === "range" || selectionVariant === "offset") &&
           isDateRangeSelection(range) &&
           dateAdapter.isValid(range.startDate) &&
-          !isOutsideAllowedDates(range.startDate)
+          isOutsideAllowedDates(range.startDate) === 0
         ) {
           return dateAdapter.isSame(range.startDate, date, "day");
         }
@@ -1058,8 +1067,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           isDateRangeSelection(range) &&
           dateAdapter.isValid(range.startDate) &&
           dateAdapter.isValid(range.endDate) &&
-          !isOutsideAllowedDates(range.startDate) &&
-          !isOutsideAllowedDates(range.endDate)
+          isOutsideAllowedDates(range.startDate) === 0 &&
+          isOutsideAllowedDates(range.endDate) === 0
         ) {
           return (
             dateAdapter.compare(date, range.startDate) > 0 &&
@@ -1085,7 +1094,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           (selectionVariant === "range" || selectionVariant === "offset") &&
           isDateRangeSelection(range) &&
           dateAdapter.isValid(range.endDate) &&
-          !isOutsideAllowedDates(range.endDate)
+          isOutsideAllowedDates(range.endDate) === 0
         ) {
           return dateAdapter.isSame(range.endDate, date, "day");
         }
@@ -1147,6 +1156,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
 }: {
   date: TDate;
 }) {
+  const { dateAdapter } = useLocalization<TDate>();
   const {
     state: { selectionVariant },
     helpers: {
@@ -1194,6 +1204,26 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   const hoveredSpan = isHoveredSpan(date);
   const hoveredEnd = isHoveredEnd(date);
 
+  const formattedDate = dateAdapter.format(date,  "dddd D MMMM YYYY");
+
+  // Determine aria-label based on selection state
+  let ariaLabel = formattedDate;
+  if (selectionVariant === "single") {
+    if (selected) {
+      ariaLabel = `Selected date: ${formattedDate}`;
+    }
+  } else if (hoveredStart) {
+      ariaLabel = `Start new range: ${formattedDate}`;
+    } else if (hoveredEnd) {
+      ariaLabel = `Complete new range: ${formattedDate}`;
+    } else if (selectedStart) {
+      ariaLabel = `Start selected range: ${formattedDate}`;
+    } else if (selectedEnd) {
+      ariaLabel = `End selected range: ${formattedDate}`;
+    } else if (selectedSpan) {
+      ariaLabel = `In selected range: ${formattedDate}`;
+    }
+
   return {
     handleClick,
     handleKeyDown,
@@ -1232,6 +1262,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
           : undefined,
       "aria-disabled":
         isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
+      "aria-label": ariaLabel,
     },
   };
 }

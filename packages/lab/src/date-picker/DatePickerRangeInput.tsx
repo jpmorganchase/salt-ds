@@ -287,6 +287,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
             onClick={handleCalendarButton}
             disabled={disabled}
             aria-label="Open Calendar"
+            aria-expanded={open}
           >
             <CalendarIcon aria-hidden />
           </Button>

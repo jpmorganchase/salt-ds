@@ -43,6 +43,9 @@ import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 import datePickerPanelCss from "./DatePickerPanel.css";
+import {
+  rangeSelectionAnnouncements
+} from "../calendar/internal/rangeSelectionAnnouncements";
 
 /**
  * Props for the DatePickerRangePanel component.
@@ -521,6 +524,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   }, [dateAdapter, minDate, maxDate, focused]);
 
   const StartCalendarProps = {
+    disableSelectionAnnouncer: true,
     visibleMonth: startVisibleMonth,
     hoveredDate,
     selectedDate: calendarSelectedDate,
@@ -546,6 +550,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     ...StartCalendarPropsProp,
   } as Partial<UseCalendarSelectionRangeProps<TDate>>;
   const EndCalendarProps = {
+    disableSelectionAnnouncer: true,
     visibleMonth: endVisibleMonth,
     hoveredDate,
     isDayHighlighted,
@@ -589,22 +594,26 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation
-              disableNavigateNext={dateAdapter.isSame(
-                startVisibleMonth,
-                dateAdapter.subtract(maxDate, { months: 1 }),
-                "month",
-              )}
+              NextButtonProps={{
+                disabled: dateAdapter.isSame(
+                  startVisibleMonth,
+                  dateAdapter.subtract(maxDate, { months: 1 }),
+                  "month",
+                ),
+              }}
               {...StartCalendarNavigationProps}
             />
             <CalendarGrid {...StartCalendarGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation
-              disableNavigatePrevious={dateAdapter.isSame(
-                endVisibleMonth,
-                dateAdapter.add(minDate, { months: 1 }),
-                "month",
-              )}
+              NextButtonProps={{
+                disabled: dateAdapter.isSame(
+                  endVisibleMonth,
+                  dateAdapter.add(minDate, { months: 1 }),
+                  "month",
+                ),
+              }}
               {...EndCalendarNavigationProps}
             />
             <CalendarGrid {...EndCalendarGridProps} />

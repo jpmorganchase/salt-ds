@@ -16,6 +16,7 @@ import type {
 import {
   Calendar,
   CalendarGrid,
+  useAriaCalendarAnnouncer,
   type CalendarMultiselectOffsetProps,
   type CalendarMultiselectRangeProps,
   type CalendarMultiselectSingleProps,
@@ -44,6 +45,7 @@ import "dayjs/locale/es"; // Import the Spanish locale
 import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
+import { rangeSelectionAnnouncements } from "../../src/calendar/internal/rangeSelectionAnnouncements";
 
 export default {
   title: "Lab/Calendar",
@@ -778,6 +780,7 @@ export const TodayButton: StoryFn<
         <CalendarGrid />
         <Divider />
         <Button
+          aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
           style={{ margin: "var(--salt-spacing-50)" }}
           sentiment="accented"
           appearance="bordered"
@@ -873,6 +876,9 @@ export const TwinCalendars: StoryFn<
   const [endVisibleMonth, setEndVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
+  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+    dateAdapter.startOf(startVisibleMonth, "month"),
+  );
 
   const handleStartVisibleMonthChange = useCallback(
     (
@@ -913,45 +919,103 @@ export const TwinCalendars: StoryFn<
     [dateAdapter, startVisibleMonth],
   );
 
-  const [selectedDate, setSelectedDate] =
-    useState<CalendarRangeProps<DateFrameworkType>["selectedDate"]>(
-      defaultSelectedDate,
-    );
-
+  const [selectedDate, setSelectedDate] = useState<
+    CalendarRangeProps<DateFrameworkType>["selectedDate"]
+  >(defaultSelectedDate);
   const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
       args?.onSelectionChange?.(event, newSelectedDate);
     };
 
+  const handleFocusedDateChange: CalendarProps<DateFrameworkType>["onFocusedDateChange"] =
+    (_event, newFocusedDate) => {
+      setFocusedDate(newFocusedDate);
+    };
+
+  useAriaCalendarAnnouncer({
+    announcement: rangeSelectionAnnouncements,
+    state: {
+      selectionVariant: "range",
+      multiselect: false,
+      startVisibleMonth: startVisibleMonth,
+      endVisibleMonth: endVisibleMonth,
+      selectedDate: selectedDate ?? {},
+    },
+    dateAdapter,
+  });
   return (
-    <div style={{ display: "flex", gap: 16 }}>
+    <div role="region" aria-label="Twin Calendar example" style={{ display: "flex", gap: 16 }}>
       <Calendar
         selectionVariant="range"
+        disableSelectionAnnouncer={true}
+        focusedDate={
+          focusedDate && endVisibleMonth && dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) < 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month first calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month first calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month first calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year first calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="range"
+        disableSelectionAnnouncer={true}
+        focusedDate={
+          focusedDate && endVisibleMonth && dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) >= 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
         visibleMonth={endVisibleMonth}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month second calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month second calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month second calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year second calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
     </div>
@@ -970,7 +1034,7 @@ export const WithLocale: StoryFn<
   return (
     <FormField style={{ width: "180px" }}>
       <FormFieldLabel>ES locale calendar</FormFieldLabel>
-      <Calendar {...args}>
+      <Calendar lang="es" {...args}>
         <CalendarNavigation />
         <CalendarGrid />
       </Calendar>
