@@ -53,7 +53,7 @@
 }
 
 .saltAccordionHeader-success:focus-visible {
-  outline-color: var(--salt-status-error-borderColor);
+  outline-color: var(--salt-status-success-borderColor);
 }
 
 .saltAccordionHeader .saltAccordionHeader-statusIndicator {
