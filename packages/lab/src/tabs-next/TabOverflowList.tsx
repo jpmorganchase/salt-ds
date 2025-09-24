@@ -7,6 +7,7 @@ import {
   useDismiss,
   useInteractions,
   useListNavigation,
+  useRole,
 } from "@floating-ui/react";
 import {
   Button,
@@ -56,13 +57,21 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       window: targetWindow,
     });
 
+    const rootRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const overflowRef = useRef<HTMLButtonElement>(null);
+
     const { OverflowIcon } = useIcon();
     const { registerTab, activeTab } = useTabsNext();
 
     const { refs, x, y, strategy, context, elements } = useFloatingUI({
       open: open,
-      onOpenChange(open) {
+      onOpenChange(open, _, reason) {
         setOpen(open);
+
+        if (reason === "escape-key") {
+          overflowRef.current?.focus();
+        }
       },
       placement: "bottom-start",
       middleware: [
@@ -81,31 +90,33 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     const listNavigationRef = useRef<HTMLButtonElement[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-    const { getFloatingProps, getReferenceProps, getItemProps } =
+    const { getFloatingProps, getReferenceProps } = useInteractions([
+      useRole(context, { role: "dialog" }),
+      useClick(context),
+      useDismiss(context),
+    ]);
+
+    const { getFloatingProps: getListFloatingProps, getItemProps } =
       useInteractions([
-        useClick(context),
-        useDismiss(context),
         useListNavigation(context, {
           listRef: listNavigationRef,
           activeIndex,
           onNavigate: setActiveIndex,
           loop: true,
+          scrollItemIntoView: { block: "nearest", inline: "nearest" },
+          focusItemOnOpen: true,
         }),
       ]);
 
-    const rootRef = useRef<HTMLDivElement>(null);
     const handleRootRef = useForkRef(rootRef, ref);
-    const listRef = useRef<HTMLDivElement>(null);
     const handleListRef = useForkRef<HTMLDivElement>(listRef, refs.setFloating);
 
     const handleButtonRef = useForkRef<HTMLButtonElement>(
       buttonRef,
       refs.setReference,
     );
-    const overflowRef = useRef<HTMLButtonElement>(null);
     const handleRef = useForkRef(handleButtonRef, overflowRef);
 
-    const listId = useId();
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const overflowId = useId();
@@ -141,9 +152,8 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
               onFocus: handleFocus,
             })}
             ref={handleRef}
-            aria-label={`Overflow menu. ${childCount} tabs hidden`}
+            aria-label={`${childCount} tabs hidden`}
             role="tab"
-            data-open={open}
             tabIndex={-1}
             {...rest}
           >
@@ -153,28 +163,33 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             <FloatingComponent
               ref={handleListRef}
               {...getFloatingProps({
-                role: "tablist",
+                role: "dialog",
               })}
+              aria-label="Overflow Menu"
               focusManagerProps={
                 context
                   ? {
                       context,
-                      initialFocus: 1,
-                      returnFocus: true,
-                      modal: false,
+                      returnFocus: false,
+                      modal: true,
                     }
                   : undefined
               }
               className={withBaseName("list")}
               open={open}
-              id={listId}
               left={x ?? 0}
               top={y ?? 0}
               position={strategy}
               width={elements.floating?.offsetWidth}
               height={elements.floating?.offsetHeight}
             >
-              <div className={withBaseName("listContainer")}>{children}</div>
+              <div
+                role="tablist"
+                {...getListFloatingProps()}
+                className={withBaseName("listContainer")}
+              >
+                {children}
+              </div>
             </FloatingComponent>
           </FloatingList>
         </div>
