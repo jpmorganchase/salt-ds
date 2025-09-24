@@ -9,6 +9,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type MouseEvent,
@@ -43,7 +44,7 @@ export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
 >(function TabNextTrigger(props, ref) {
-  const { children, onClick, onKeyDown, ...rest } = props;
+  const { children, onClick, onKeyDown, onFocus, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -81,6 +82,16 @@ export const TabNextTrigger = forwardRef<
     }
   };
 
+  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+    onFocus?.(event);
+
+    // Ensures the associated tab in in view.
+    event.currentTarget.parentElement?.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+    });
+  };
+
   const handleTabRef = useForkRef<HTMLButtonElement>(item.ref, tabRef);
   const handleRef = useForkRef<HTMLButtonElement>(handleTabRef, ref);
   const panelId = getPanelId(value);
@@ -93,7 +104,6 @@ export const TabNextTrigger = forwardRef<
     : {};
 
   const active = overflowContext && item.index === overflowContext?.activeIndex;
-  console.log("TabNextTrigger", { overflowContext, item });
 
   return (
     <button
@@ -107,6 +117,7 @@ export const TabNextTrigger = forwardRef<
       type="button"
       onClick={!disabled ? handleClick : undefined}
       onKeyDown={!disabled ? handleKeyDown : undefined}
+      onFocus={handleFocus}
       className={withBaseName()}
       id={id}
       ref={handleRef}
