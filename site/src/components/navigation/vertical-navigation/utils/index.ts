@@ -1,5 +1,6 @@
 import type { SidebarItem } from "@jpmorganchase/mosaic-store";
 import type { Item } from "../VerticalNavigation";
+
 // Helper function to determine if the item or any of its children is selected
 export function containsSelected(item: Item, selectedNodeId?: string): boolean {
   if (!selectedNodeId) return false;
@@ -11,11 +12,16 @@ export function containsSelected(item: Item, selectedNodeId?: string): boolean {
 }
 
 export function statusToBadgeValue(status: string) {
+  if (!status) return "";
   return status.split(" ").reduce((acc, word) => {
     return acc + word[0].toUpperCase();
   }, "");
 }
 
+/** 
+ Component links currently redirect from /index to /examples
+ This function normalizes the selectedNodeId to match the href in navData
+ **/
 export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
   if (link.endsWith("/examples")) {
     const indexLink = link.replace(/\/examples$/, "/index");
@@ -34,19 +40,26 @@ export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
   return link;
 }
 
-export function mapMenu(items: SidebarItem[]): Item[] {
+type SidebarNodeWithStatus = SidebarItem & {
+  data?: {
+    status?: string;
+  };
+};
+
+export function mapMenu(items: SidebarNodeWithStatus[]): Item[] {
   return (
     items?.map((item) => {
-      // @ts-expect-error -- Fix later
-      const children = mapMenu(item.childNodes || []);
+      let children: Item[] = [];
+      if (item.kind === "group" && Array.isArray(item.childNodes)) {
+        children = mapMenu(item.childNodes as SidebarNodeWithStatus[]);
+      }
       // Remove children if only one child and its title matches the parent
       const shouldRemoveChildren =
         children.length === 1 && children[0].title === item.name;
       return {
         title: item.name,
         href: shouldRemoveChildren ? children[0].href : item.id,
-        // @ts-expect-error -- Fix later
-        status: item?.status || item.data?.status,
+        status: item.data?.status,
         children: shouldRemoveChildren ? undefined : children,
       };
     }) || []

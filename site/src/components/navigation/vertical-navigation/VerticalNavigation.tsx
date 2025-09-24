@@ -47,10 +47,11 @@ const NestedItem = ({ item, selectedNodeId }: NestedItemProps) => {
   const [collapsed, setCollapsed] = useState(isOpen);
 
   const { title, status, href, children } = item;
+  const isItemSelected = selectedNodeId === href;
 
   if (Array.isArray(children) && children.length > 0) {
     return (
-      <VerticalNavigationItem active={selectedNodeId === href && collapsed}>
+      <VerticalNavigationItem active={isItemSelected && collapsed}>
         <Collapsible
           onOpenChange={() => setCollapsed(!collapsed)}
           open={collapsed}
@@ -90,7 +91,7 @@ const NestedItem = ({ item, selectedNodeId }: NestedItemProps) => {
   }
 
   return (
-    <VerticalNavigationItem active={selectedNodeId === href}>
+    <VerticalNavigationItem active={isItemSelected}>
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<LinkBase href={href} />}>
           <VerticalNavigationItemLabel>
@@ -111,15 +112,11 @@ export const VerticalNavigation = ({
   menu,
   selectedNodeId,
 }: VerticalNavigationProps) => {
-  const navData = mapMenu(menu);
-
-  // console.log("navData: ", navData);
-  // console.log("menu: ", menu);
-  // console.log("selectedNodeId: ", selectedNodeId);
+  const mappedNavData = mapMenu(menu);
 
   const normalizedSelectedNodeId = useMemo(
-    () => normalizeSelectedNodeId(selectedNodeId || "", navData),
-    [selectedNodeId, navData],
+    () => normalizeSelectedNodeId(selectedNodeId || "", mappedNavData),
+    [selectedNodeId, mappedNavData],
   );
 
   return (
@@ -129,7 +126,7 @@ export const VerticalNavigation = ({
       appearance="bordered"
       className={styles.verticalNavigation}
     >
-      {navData.map((item) => (
+      {mappedNavData.map((item) => (
         <NestedItem
           key={item.title}
           item={item}
