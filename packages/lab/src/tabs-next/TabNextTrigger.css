@@ -17,3 +17,7 @@
   left: 0;
   top: 0;
 }
+
+.saltTabNextTrigger:focus-visible {
+  outline: none;
+}
