@@ -1,13 +1,6 @@
-import {
-  FlexLayout,
-  StackLayout,
-  Text,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
@@ -20,48 +13,53 @@ import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const BorderedCard = (): ReactElement => {
-  const slideId = useId();
-  const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const carouselId = useId();
 
   return (
     <Carousel
-      aria-label="Bordered carousel example"
+      aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
     >
-      <Text styleAs={"h2"}>Title</Text>
-      <CarouselSlides>
-        {sliderData.map((slide, index) => {
-          return (
-            <CarouselCard
-              className={styles.carouselSlide}
-              key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-              id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-              aria-label={slide.title}
-              appearance={"bordered"}
-              media={
-                <img
-                  alt={`stock content to show in carousel slide ${index}`}
-                  className={styles.carouselImage}
-                  src={slide.image}
-                />
-              }
-              header={<Text styleAs={"h3"}>{slide.title}</Text>}
-            >
-              <Text>{slide.content}</Text>
-            </CarouselCard>
-          );
-        })}
-      </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Bordered carousel example
+      </H2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          gap: "var(--salt-spacing-100)",
+        }}
+      >
+        <FlexLayout gap={1} wrap={true}>
+          <CarouselPreviousButton tabIndex={-1} />
+          <CarouselTabList />
+          <CarouselNextButton tabIndex={-1} />
           <CarouselProgressLabel />
-        </StackLayout>
-        {!isMobile ? <CarouselTabList /> : null}
-      </FlexLayout>
+        </FlexLayout>
+        <CarouselSlides>
+          {sliderData.map((slide, index) => {
+            const tabId = `${carouselId}-tab${index}`;
+            return (
+              <CarouselCard
+                className={styles.carouselSlide}
+                key={tabId}
+                aria-labelledby={`${tabId}-title`}
+                appearance="bordered"
+                media={
+                  <img
+                    aria-hidden={true}
+                    className={styles.carouselImage}
+                    src={slide.image}
+                  />
+                }
+                header={<H3 id={`${tabId}-title`}>{slide.title}</H3>}
+              >
+                <Text>{slide.content}</Text>
+              </CarouselCard>
+            );
+          })}
+        </CarouselSlides>
+      </div>
     </Carousel>
   );
 };

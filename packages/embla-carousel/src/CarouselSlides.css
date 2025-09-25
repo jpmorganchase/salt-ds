@@ -1,8 +1,26 @@
 .saltCarouselSlides {
   overflow: hidden;
+  cursor: var(--salt-cursor-grab);
 }
+
 .saltCarouselSlides-container {
   display: flex;
   touch-action: pan-y pinch-zoom;
   margin-left: calc(var(--carousel-slide-spacing) * -1);
+}
+
+.saltCarouselSlides-sr-only {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.saltCarouselSlides-dragging {
+  cursor: var(--salt-cursor-grab-active);
 }

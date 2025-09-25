@@ -8,12 +8,16 @@ import carouselSlide4 from "@stories/assets/carouselSlide4.png";
 
 export const renderSlides = ({
   withActions,
+  ...rest
 }: {
   withActions?: boolean;
+  role?: string;
+  "aria-roledescription"?: string;
 } = {}) => {
+  const carouselId = useId();
   const content = [
     {
-      title: "Your accounts. On the move",
+      title: "Your accounts, on the move",
       image: carouselSlide1,
       content: "Discover our latest personal accounts app for iOS.",
       link: "Open an account",
@@ -42,22 +46,22 @@ export const renderSlides = ({
   ];
 
   return content.map((slide, index) => {
-    const slideId = useId();
+    const cardId = `${carouselId}-card${index}`;
     return (
       <CarouselCard
-        key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-        id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-        appearance="bordered"
-        header={<H3>{slide.title}</H3>}
-        aria-label={`label for slide ${index + 1}`}
+        key={cardId}
+        appearance="transparent"
+        header={<H3 id={`${cardId}-title`}>{slide.title}</H3>}
+        aria-labelledby={`${cardId}-title`}
         media={
           <img
+            aria-hidden={true}
             className="carouselImagePlaceholder"
-            alt="stock content to show carousel slide"
             src={slide.image}
           />
         }
         actions={withActions && <Link href="#">{slide.link}</Link>}
+        {...rest}
       >
         <Text>{slide.content}</Text>
       </CarouselCard>
