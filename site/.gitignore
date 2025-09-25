@@ -12,7 +12,4 @@ next-env.d.ts
 /public/sitemap.xml
 /public/search-data.json
 /src/props/*.json
-/src/components/css-display/cssCharacteristics-legacy.json
-/src/components/css-display/cssCharacteristics-next.json
-/src/components/css-display/cssFoundations-legacy.json
-/src/components/css-display/cssFoundations-next.json
+/src/components/css-display/*.json

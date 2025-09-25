@@ -1,15 +1,15 @@
 .salt-theme.salt-theme-next[data-mode="light"] {
-  --salt-shadow-100-color: rgba(0, 0, 0, 0.1);
-  --salt-shadow-200-color: rgba(0, 0, 0, 0.1);
-  --salt-shadow-300-color: rgba(0, 0, 0, 0.15);
-  --salt-shadow-400-color: rgba(0, 0, 0, 0.2);
-  --salt-shadow-500-color: rgba(0, 0, 0, 0.3);
+  --salt-shadow-lowest: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --salt-shadow-lower: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --salt-shadow-low: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+  --salt-shadow-mediumLow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+  --salt-shadow-medium: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"] {
-  --salt-shadow-100-color: rgba(0, 0, 0, 0.5);
-  --salt-shadow-200-color: rgba(0, 0, 0, 0.5);
-  --salt-shadow-300-color: rgba(0, 0, 0, 0.55);
-  --salt-shadow-400-color: rgba(0, 0, 0, 0.55);
-  --salt-shadow-500-color: rgba(0, 0, 0, 0.65);
+  --salt-shadow-lowest: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  --salt-shadow-lower: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  --salt-shadow-low: 0 4px 8px 0 rgba(0, 0, 0, 0.55);
+  --salt-shadow-mediumLow: 0 6px 10px 0 rgba(0, 0, 0, 0.55);
+  --salt-shadow-medium: 0 12px 40px 0 rgba(0, 0, 0, 0.65);
 }

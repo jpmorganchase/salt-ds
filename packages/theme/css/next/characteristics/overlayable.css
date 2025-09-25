@@ -1,11 +1,11 @@
 .salt-theme.salt-theme-next {
-  --salt-overlayable-shadow-scroll: 0 1px 3px 0 var(--salt-shadow-100-color);
-  --salt-overlayable-shadow-region: 0 2px 4px 0 var(--salt-shadow-200-color);
-  --salt-overlayable-shadow: 0 2px 4px 0 var(--salt-shadow-200-color);
-  --salt-overlayable-shadow-hover: 0 4px 8px 0 var(--salt-shadow-300-color);
-  --salt-overlayable-shadow-popout: 0 6px 10px 0 var(--salt-shadow-400-color);
-  --salt-overlayable-shadow-drag: 0 6px 10px 0 var(--salt-shadow-400-color);
-  --salt-overlayable-shadow-modal: 0 12px 40px 0 var(--salt-shadow-500-color);
+  --salt-overlayable-shadow-scroll: var(--salt-shadow-lowest);
+  --salt-overlayable-shadow-region: var(--salt-shadow-lower);
+  --salt-overlayable-shadow: var(--salt-shadow-lower);
+  --salt-overlayable-shadow-hover: var(--salt-shadow-low);
+  --salt-overlayable-shadow-popout: var(--salt-shadow-mediumLow);
+  --salt-overlayable-shadow-drag: var(--salt-shadow-mediumLow);
+  --salt-overlayable-shadow-modal: var(--salt-shadow-medium);
 
   --salt-overlayable-background: var(--salt-palette-alpha-higher);
   --salt-overlayable-background-hover: var(--salt-palette-alpha-contrast-lowest);

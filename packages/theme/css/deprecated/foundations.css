@@ -60,6 +60,11 @@
   --salt-shadow-3-color: rgba(0, 0, 0, 0.15); /* Use --salt-shadow-300-color */
   --salt-shadow-4-color: rgba(0, 0, 0, 0.2); /* Use --salt-shadow-400-color */
   --salt-shadow-5-color: rgba(0, 0, 0, 0.3); /* Use --salt-shadow-500-color */
+  --salt-shadow-100-color: rgba(0, 0, 0, 0.1);
+  --salt-shadow-200-color: rgba(0, 0, 0, 0.1);
+  --salt-shadow-300-color: rgba(0, 0, 0, 0.15);
+  --salt-shadow-400-color: rgba(0, 0, 0, 0.2);
+  --salt-shadow-500-color: rgba(0, 0, 0, 0.3);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -68,6 +73,11 @@
   --salt-shadow-3-color: rgba(0, 0, 0, 0.55); /* Use --salt-shadow-300-color */
   --salt-shadow-4-color: rgba(0, 0, 0, 0.55); /* Use --salt-shadow-400-color */
   --salt-shadow-5-color: rgba(0, 0, 0, 0.65); /* Use --salt-shadow-500-color */
+  --salt-shadow-100-color: rgba(0, 0, 0, 0.5);
+  --salt-shadow-200-color: rgba(0, 0, 0, 0.5);
+  --salt-shadow-300-color: rgba(0, 0, 0, 0.55);
+  --salt-shadow-400-color: rgba(0, 0, 0, 0.55);
+  --salt-shadow-500-color: rgba(0, 0, 0, 0.65);
 }
 
 .salt-density-touch,
