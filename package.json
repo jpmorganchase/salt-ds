@@ -39,7 +39,6 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsc --noEmit",
-    "typecheck:v4": "tsc --noEmit --project tsconfig.v4.json",
     "chromatic": "chromatic"
   },
   "dependencies": {
@@ -61,7 +60,7 @@
     "@tanstack/react-query": "^5.0.0",
     "@testing-library/cypress": "^10.0.0",
     "@testing-library/dom": "^10.0.0",
-    "@types/node": "^20.0.0",
+    "@types/node": "^22.0.0",
     "@types/react": "^18.3.22",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.3.7",
@@ -125,7 +124,7 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.3",
   "msw": {
     "workerDirectory": "docs/public"
   },
