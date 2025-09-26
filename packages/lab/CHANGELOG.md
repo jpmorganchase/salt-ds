@@ -1,5 +1,16 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.78
+
+### Patch Changes
+
+- 630f412: Fixed TabsNext having double focus rings.
+- Updated dependencies [3b02e9e]
+- Updated dependencies [31e992a]
+- Updated dependencies [9e27ba2]
+- Updated dependencies [3ad2fc4]
+  - @salt-ds/core@1.50.0
+
 ## 1.0.0-alpha.77
 
 ### Minor Changes
