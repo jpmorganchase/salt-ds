@@ -36,6 +36,7 @@ import { OptionList } from "../option/OptionList";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { ValidationStatus } from "../status-indicator";
+import type { DataAttributes } from "../types";
 import {
   makePrefixer,
   type UseFloatingUIProps,
@@ -91,9 +92,14 @@ export type DropdownProps<Item = string> = {
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: Exclude<ValidationStatus, "info">;
-  /** Styling variant with full border. Defaults to false
+  /** Styling variant with a full border. Defaults to false
    */
   bordered?: boolean;
+  /**
+   *  Props to pass to Dropdown's overlay.
+   */
+  OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
+    DataAttributes;
 } & Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue"> &
   ListControlProps<Item>;
 
@@ -138,6 +144,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     onBlur,
     valueToString = defaultValueToString,
     bordered = false,
+    OverlayProps,
     ...rest
   } = props;
 
@@ -486,6 +493,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
           onMouseOver: handleListMouseOver,
           onFocus: handleFocusButton,
           onClick: handleFocusButton,
+          ...OverlayProps,
         })}
         left={x ?? 0}
         top={y ?? 0}
