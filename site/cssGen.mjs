@@ -1,50 +1,25 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { parse, walk } from "css-tree";
+import { findAll, parse } from "css-tree";
+import glob from "fast-glob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-function getCssVariablesFromDir(dirPath, themeNext = false) {
-  console.log("Extracting CSS variable from", dirPath);
+const themeFolder = "../packages/theme/css";
 
-  const cssVariables = {};
+function getTokensFromCssFile(cssFilePath) {
+  const ast = parse(fs.readFileSync(cssFilePath, { encoding: "utf-8" }));
 
-  const files = fs.readdirSync(dirPath);
+  return findAll(
+    ast,
+    (node) => node.type === "Declaration" && node.property.startsWith("--salt"),
+  ).reduce((acc, node) => {
+    acc[node.property] = node.value.value.trim();
 
-  for (const file of files) {
-    const filePath = path.join(dirPath, file);
-    const stats = fs.statSync(filePath);
-
-    if (stats.isDirectory()) {
-      // Recursively process subdirectories
-      Object.assign(cssVariables, getCssVariablesFromDir(filePath));
-    } else if (
-      stats.isFile() &&
-      path.extname(file) === ".css" &&
-      (themeNext
-        ? path.basename(file).includes("-next")
-        : !path.basename(file).includes("-next"))
-    ) {
-      // Process CSS files
-      const cssContent = fs.readFileSync(filePath, "utf8");
-      const ast = parse(cssContent);
-
-      // Traverse the AST to find CSS variables
-      walk(ast, (node) => {
-        if (node.type === "Declaration" && node.property.startsWith("--salt")) {
-          cssVariables[node.property] = node.value.children
-            ? node.value.children
-                .map((child) => child.name || child.value)
-                .join("")
-            : node.value.value.trim();
-        }
-      });
-    }
-  }
-
-  return cssVariables;
+    return acc;
+  }, {});
 }
 
 function writeObjectToFile(object, outputFile) {
@@ -64,40 +39,66 @@ function writeObjectToFile(object, outputFile) {
   }
 }
 
-function filterColorTokenInLegacy(token) {
-  return Object.entries(token).reduce((acc, [key, value]) => {
-    // temprorary fix for color variables not being overridden, in brand theme, all color token are 3 digits
-    if (/--salt-color-\w+-\d*$/.test(key)) {
-      // not double digits as well as special e.g. orange-850
-      if (/--salt-color-\w+-\d00/.test(key)) {
-        acc[key] = value;
-      }
-    } else {
-      // all other variables
-      acc[key] = value;
-    }
-    return acc;
-  }, {});
+/* Generate CSS Characteristics JSON */
+
+const characteristicFiles = glob.sync("*/characteristics/*.css", {
+  cwd: themeFolder,
+});
+
+const characteristicSets = {};
+
+for (const file of characteristicFiles) {
+  const themeName = path.basename(path.dirname(path.dirname(file)));
+
+  const tokens = getTokensFromCssFile(path.join(themeFolder, file));
+
+  characteristicSets[themeName] = {
+    ...characteristicSets[themeName],
+    ...tokens,
+  };
 }
 
-function extractVariables(folder, outputFileBaseName) {
-  const themeDirPath = path.resolve(__dirname, folder);
+for (const [themeName, tokens] of Object.entries(characteristicSets)) {
+  writeObjectToFile(tokens, `cssCharacteristics-${themeName}.json`);
+}
 
-  const legacyCssVariables = getCssVariablesFromDir(themeDirPath);
+/* Generate CSS Foundations JSON */
 
-  writeObjectToFile(legacyCssVariables, `${outputFileBaseName}.json`);
+const sharedFoundationFiles = glob.sync("foundations/*.css", {
+  cwd: themeFolder,
+});
 
-  const brandThemeCssVariables = {
-    ...legacyCssVariables,
-    // FIXME: foundation tokens are different (e.g. red.10 is only a legacy theme color), so can't be overridden as simple as this
-    ...getCssVariablesFromDir(themeDirPath, true),
+let sharedFoundations = {};
+
+for (const file of sharedFoundationFiles) {
+  const tokens = getTokensFromCssFile(path.join(themeFolder, file));
+
+  sharedFoundations = {
+    ...sharedFoundations,
+    ...tokens,
   };
+}
 
+const themeFoundationFiles = glob.sync("*/foundations/*.css", {
+  cwd: themeFolder,
+});
+
+const foundationSets = {};
+
+for (const file of themeFoundationFiles) {
+  const themeName = path.basename(path.dirname(path.dirname(file)));
+
+  const tokens = getTokensFromCssFile(path.join(themeFolder, file));
+
+  foundationSets[themeName] = {
+    ...foundationSets[themeName],
+    ...tokens,
+  };
+}
+
+for (const [themeName, tokens] of Object.entries(foundationSets)) {
   writeObjectToFile(
-    filterColorTokenInLegacy(brandThemeCssVariables),
-    `${outputFileBaseName}-next.json`,
+    { ...sharedFoundations, ...tokens },
+    `cssFoundations-${themeName}.json`,
   );
 }
-
-extractVariables("../packages/theme/css/characteristics", "cssCharacteristics");
-extractVariables("../packages/theme/css/foundations", "cssFoundations");

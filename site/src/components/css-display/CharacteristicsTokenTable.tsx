@@ -49,7 +49,7 @@ export const CharacteristicsTokenTable = ({
     const fetchJsonData = async () => {
       const data = themeNext
         ? await import("./cssCharacteristics-next.json")
-        : await import("./cssCharacteristics.json");
+        : await import("./cssCharacteristics-legacy.json");
       const groupedData = groupByType(data.default);
       if (groupedData[group]) {
         setCssVariablesData(groupedData[group]);

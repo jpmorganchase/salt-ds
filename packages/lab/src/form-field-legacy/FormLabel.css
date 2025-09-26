@@ -62,7 +62,7 @@
 
 /* Styles applied when displayedNecessity or necessityText provided */
 .saltFormLabel-necessityIndicator {
-  font-style: var(--saltFormFieldLegacy-label-necessityIndicator-fontStyle, var(--salt-editable-help-fontStyle));
+  font-style: var(--saltFormFieldLegacy-label-necessityIndicator-fontStyle, var(--salt-typography-textDecoration-italic));
   margin-left: 1ch;
 }
 

@@ -89,9 +89,4 @@
   --salt-color-black-fade-background-highlight: rgba(0, 0, 0, var(--salt-opacity-25));
   --salt-color-white-fade-background-selection: rgba(255, 255, 255, var(--salt-opacity-15));
   --salt-color-white-fade-background-highlight: rgba(255, 255, 255, var(--salt-opacity-25));
-
-  --salt-color-white-15a: rgba(var(--salt-color-white-rgb), 0.15);
-  --salt-color-white-45a: rgba(var(--salt-color-white-rgb), 0.45);
-  --salt-color-black-15a: rgba(var(--salt-color-black-rgb), 0.15);
-  --salt-color-black-45a: rgba(var(--salt-color-black-rgb), 0.45);
 }

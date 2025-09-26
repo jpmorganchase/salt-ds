@@ -6,7 +6,7 @@
 }
 
 .saltFormFieldHelperText .saltText {
-  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-typography-textDecoration-italic));
 }
 
 .saltFormFieldHelperText-withValidation {
