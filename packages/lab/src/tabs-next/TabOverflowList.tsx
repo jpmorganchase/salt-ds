@@ -12,6 +12,7 @@ import {
 import {
   Button,
   makePrefixer,
+  ownerDocument,
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
@@ -29,6 +30,7 @@ import {
   type ReactNode,
   type Ref,
   type SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -57,7 +59,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       window: targetWindow,
     });
 
-    const rootRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
     const overflowRef = useRef<HTMLButtonElement>(null);
 
@@ -108,7 +109,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
         }),
       ]);
 
-    const handleRootRef = useForkRef(rootRef, ref);
     const handleListRef = useForkRef<HTMLDivElement>(listRef, refs.setFloating);
 
     const handleButtonRef = useForkRef<HTMLButtonElement>(
@@ -139,11 +139,62 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       }
     }, [overflowId, registerTab, childCount]);
 
+    const previousListNavigationRef = useRef(listNavigationRef.current);
+    useEffect(() => {
+      const listElement = elements.floating;
+
+      if (!open || !listElement) return;
+
+      const handleFocusIn = (event: FocusEvent) => {
+        if (
+          event.target instanceof HTMLButtonElement &&
+          listNavigationRef.current.includes(event.target)
+        ) {
+          previousListNavigationRef.current = Array.from(
+            listNavigationRef.current,
+          );
+        }
+      };
+
+      const handleFocusOut = (event: FocusEvent) => {
+        queueMicrotask(() => {
+          const doc = ownerDocument(listElement);
+
+          const listOpen = listElement.isConnected;
+          const tabWasRemoved =
+            doc.activeElement === doc.body &&
+            event.target instanceof HTMLElement &&
+            !event.target.isConnected;
+
+          if (listOpen && tabWasRemoved) {
+            const index = previousListNavigationRef.current
+              .filter(Boolean)
+              .findIndex((node) => node.id === activeTab.current?.id);
+
+            // Focus the tab that was after the removed tab, or the one before if it was the last tab.
+            if (listNavigationRef.current[index]) {
+              listNavigationRef.current[index].focus();
+            } else {
+              listNavigationRef.current[index - 1].focus();
+            }
+          }
+        });
+      };
+
+      listElement.addEventListener("focusout", handleFocusOut, true);
+      listElement.addEventListener("focusin", handleFocusIn);
+
+      return () => {
+        listElement.removeEventListener("focusout", handleFocusOut, true);
+        listElement.removeEventListener("focusin", handleFocusIn);
+      };
+    }, [open, elements.floating, activeTab]);
+
     if (childCount === 0 && !isMeasuring) return null;
 
     return (
       <TabOverflowContext.Provider value={{ activeIndex, getItemProps }}>
-        <div className={withBaseName()} ref={handleRootRef} data-overflow>
+        <div className={withBaseName()} ref={ref} data-overflow>
           <Button
             data-overflowbutton
             appearance="transparent"
