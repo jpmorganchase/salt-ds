@@ -210,9 +210,10 @@
   stroke: var(--salt-color-white);
 }
 
-/* Override default stroke for bar and pie chart segment borders */
+/* Override default stroke for chart series segment borders */
 .highcharts-theme-salt .highcharts-bar-series .highcharts-point,
-.highcharts-theme-salt .highcharts-pie-series .highcharts-point {
+.highcharts-theme-salt .highcharts-pie-series .highcharts-point,
+.highcharts-theme-salt .highcharts-column-series .highcharts-point {
   stroke: var(--salt-container-primary-background);
 }
 
@@ -234,4 +235,10 @@
 /* Reduces opacity of deselected segments for Donut/Pie */
 .highcharts-theme-salt .highcharts-point-inactive {
   opacity: 0.25;
+}
+
+/* Remove fill-opacity and transition on column chart hover */
+.highcharts-theme-salt .highcharts-column-series .highcharts-point-hover {
+  fill-opacity: 1;
+  transition: none;
 }

@@ -61,6 +61,12 @@ export const getDefaultOptions = (
       bar: {
         borderRadius: 0,
       },
+      column: {
+        borderRadius: 0,
+      },
+      bullet: {
+        borderRadius: 0,
+      },
     },
   };
 
