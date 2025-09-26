@@ -8,7 +8,6 @@
   overflow: hidden;
   overflow-y: auto;
   position: absolute;
-  z-index: var(--salt-zIndex-flyover);
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner, 0);
