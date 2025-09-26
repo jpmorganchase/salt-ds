@@ -17,9 +17,9 @@ const TestComponent = ({
   delay?: number;
   debounce?: number;
 } & (
-  | { announcement?: never; getAnnouncement: () => string }
-  | { announcement: string; getAnnouncement?: never }
-)) => {
+    | { announcement?: never; getAnnouncement: () => string }
+    | { announcement: string; getAnnouncement?: never }
+  )) => {
   const { announce } = useAriaAnnouncer({ debounce });
   const getMessageToAnnounce = () =>
     getAnnouncement ? getAnnouncement() : announcement;
@@ -96,7 +96,7 @@ describe("Given useAriaAnnouncer", () => {
   describe("given a delay", () => {
     it("should trigger an announcement after that delay", () => {
       mount(
-        <AriaAnnouncerProvider>
+        <AriaAnnouncerProvider >
           <TestComponent announcement="test" delay={500} />
         </AriaAnnouncerProvider>,
       );
@@ -147,6 +147,47 @@ describe("Given useAriaAnnouncer", () => {
       cy.wait(ARIA_ANNOUNCE_DELAY);
 
       cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test 2");
+    });
+  });
+  describe("AriaAnnouncerProvider ariaAnnounce prop", () => {
+    it("should set aria-live to 'assertive' by default", () => {
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent announcement="test" />
+        </AriaAnnouncerProvider>
+      );
+
+      cy.get("[aria-live]").should("have.attr", "aria-live", "assertive");
+    });
+
+    it("should set aria-live to 'polite' when ariaAnnounce is 'polite'", () => {
+      mount(
+        <AriaAnnouncerProvider ariaAnnounce="polite">
+          <TestComponent announcement="test" />
+        </AriaAnnouncerProvider>
+      );
+
+      cy.get("[aria-live]").should("have.attr", "aria-live", "polite");
+    });
+
+    it("should set aria-live to 'off' when ariaAnnounce is 'off'", () => {
+      mount(
+        <AriaAnnouncerProvider ariaAnnounce="off">
+          <TestComponent announcement="test" />
+        </AriaAnnouncerProvider>
+      );
+
+      cy.get("[aria-live]").should("have.attr", "aria-live", "off");
+    });
+
+    it("should handle undefined ariaAnnounce by using default 'assertive'", () => {
+      mount(
+        <AriaAnnouncerProvider ariaAnnounce={undefined}>
+          <TestComponent announcement="test" />
+        </AriaAnnouncerProvider>
+      );
+
+      cy.get("[aria-live]").should("have.attr", "aria-live", "assertive");
     });
   });
 });

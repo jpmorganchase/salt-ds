@@ -149,7 +149,7 @@ export const CardContent: StoryFn<typeof ContentStatus> = () => {
 
   const contentStatusProps = loadingCount % 2 ? loadingProps : errorProps;
   return (
-    <AriaAnnouncerProvider>
+    <AriaAnnouncerProvider >
       <Card>
         {loadingCount % 4 === 2 ? (
           <>
