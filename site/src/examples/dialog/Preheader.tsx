@@ -69,7 +69,7 @@ export const Preheader = (): ReactElement => {
       <Dialog open={open} onOpenChange={onOpenChange} size="small" id={id}>
         <DialogHeader
           header="Subscribe"
-          preheader="Recieve emails about the latest updates"
+          preheader="Receive emails about the latest updates"
           actions={closeButton}
         />
         <DialogContent>
