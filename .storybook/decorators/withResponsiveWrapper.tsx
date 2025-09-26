@@ -37,10 +37,14 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           </Tooltip>
         </ToggleButtonGroup>
         <NumberInput
-          value={containerWidth[0]}
+          value={String(containerWidth[0])}
           max={maxUnits}
           min={10}
-          onChange={(_event, nextValue) => setWidth([nextValue as number])}
+          onNumberChange={(_e, value) => {
+            if (value !== null) {
+              setWidth([value]);
+            }
+          }}
         />
         <Slider
           className="StoryContainer-slider"
@@ -50,10 +54,14 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           value={containerWidth[0]}
         />
         <NumberInput
-          value={containerHeight[0]}
+          value={String(containerWidth[0])}
           max={maxUnits}
           min={10}
-          onChange={(_event, nextValue) => setHeight([nextValue as number])}
+          onNumberChange={(_e, value) => {
+            if (value !== null) {
+              setHeight([value]);
+            }
+          }}
         />
         <Slider
           className="StoryContainer-slider"
