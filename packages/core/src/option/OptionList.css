@@ -8,6 +8,8 @@
   z-index: var(--salt-zIndex-flyover);
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
+  max-height: var(--overlay-maxHeight);
+  min-width: var(--overlay-minWidth);
 }
 
 .saltOptionList-container {

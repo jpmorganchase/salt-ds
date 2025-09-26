@@ -834,4 +834,11 @@ describe("Given a ComboBox", () => {
     cy.get("@onSelectionChangeSpy").should("not.have.been.called");
     cy.findAllByTestId("pill").should("have.length", "3");
   });
+
+  it("should allow props to be passed to the overlay container", () => {
+    cy.mount(<Default OverlayProps={{ "data-testid": "overlay" }} open />);
+    cy.findByTestId("overlay")
+      .should("exist")
+      .and("have.attr", "role", "listbox");
+  });
 });
