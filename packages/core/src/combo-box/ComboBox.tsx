@@ -194,10 +194,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         offset(1),
         size({
           apply({ rects, elements, availableHeight }) {
-            Object.assign(elements.floating.style, {
-              minWidth: `${rects.reference.width}px`,
-              maxHeight: `max(calc(${availableHeight}px - var(--salt-spacing-100)), calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5))`,
-            });
+            elements.floating.style.setProperty(
+              "--overlay-minWidth",
+              `${rects.reference.width}px`,
+            );
+            elements.floating.style.setProperty(
+              "--overlay-maxHeight",
+              `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
+            );
           },
         }),
         flip({ fallbackStrategy: "initialPlacement" }),
