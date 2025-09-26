@@ -11,4 +11,10 @@ export { rowDragColumns } from "./rowDragColumns";
 export { rowGroupColumns } from "./rowGroupColumns";
 export { rowGroupPanelColumns } from "./rowGroupPanelColumns";
 export { spannedColumns } from "./spannedColumns";
+export {
+  validationCellExampleColumns,
+  validationRowClassRules,
+  validationRowExampleColumns,
+} from "./validationExampleColumns";
+export { validationExampleData } from "./validationExampleData";
 export { wrappedColumns } from "./wrappedColumns";
