@@ -15,12 +15,12 @@ export function rangeSelectionAnnouncements<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
 ) {
   if (isRangeSelectionState(state) || isMultiselectRangeSelectionState(state)) {
-    const { error, multiselect, selectedDate, startVisibleMonth, endVisibleMonth } =
+    const { multiselect, selectedDate, startVisibleMonth, endVisibleMonth } =
       state;
 
-    if (error === "minFocusableDateExceeded") {
+    if (variant === "minFocusableDateExceeded") {
       return "cannot focus before minimum date";
-    } else if (error === "maxFocusableDateExceeded") {
+    } else if (variant === "maxFocusableDateExceeded") {
       return "cannot focus beyond maximum date";
     }
 

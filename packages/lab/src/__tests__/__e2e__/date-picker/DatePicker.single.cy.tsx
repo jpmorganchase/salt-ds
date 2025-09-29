@@ -55,19 +55,39 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
 
     it("SHOULD show calendar overlay when click the calendar icon button", () => {
       cy.mount(<Single />);
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false"
+      );
 
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "aria-expanded",
+        "true"
+      );
     });
 
     it("SHOULD open calendar overlay when using down arrow", () => {
       cy.mount(<Single />);
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false"
+      );
 
       cy.findByRole("textbox").click().type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "aria-expanded",
+        "true"
+      );
     });
 
     it("SHOULD be able to enable the overlay to open on click", () => {
@@ -192,7 +212,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("exist");
         // Verify the first element is focused
         cy.findByRole("button", {
-          name: adapter.format(initialDate, "DD MMMM YYYY"),
+          name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
         }).should("be.focused");
         // Simulate tabbing between all elements in the overlay
         cy.realPress("Tab");
@@ -206,7 +226,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify focus returns to the first element in the overlay
         cy.findByRole("button", {
-          name: adapter.format(initialDate, "DD MMMM YYYY"),
+          name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
         }).should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
@@ -327,7 +347,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is displayed
         cy.findByRole("application").should("exist");
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findByLabelText("Previous Month").should(
+        cy.findByLabelText("Past dates are out of range").should(
           "have.attr",
           "aria-disabled",
           "true",
@@ -339,14 +359,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         );
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
-          name: "15 January 2030",
+          name: "Tuesday 15 January 2030",
         }).should("be.focused");
         // Verify that dates outside the min/max range are disabled
         cy.findByRole("button", {
-          name: "14 January 2030",
+          name: "Monday 14 January 2030",
         }).should("have.attr", "aria-disabled", "true");
         cy.findByRole("button", {
-          name: "15 January 2030",
+          name: "Tuesday 15 January 2030",
         }).should("not.have.attr", "aria-disabled", "true");
         // Simulate selecting a year from the dropdown
         cy.findByRole("combobox", {
@@ -363,21 +383,21 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           "aria-disabled",
           "true",
         );
-        cy.findByLabelText("Next Month").should(
+        cy.findByLabelText("Future dates are out of range").should(
           "have.attr",
           "aria-disabled",
           "true",
         );
         // Verify that dates outside the min/max range are disabled
         cy.findByRole("button", {
-          name: "15 January 2031",
+          name: "Wednesday 15 January 2031",
         }).should("not.have.attr", "aria-disabled", "true");
         cy.findByRole("button", {
-          name: "16 January 2031",
+          name: "Thursday 16 January 2031",
         }).should("have.attr", "aria-disabled", "true");
         // Simulate selecting a date outside the min/max range
         cy.findByRole("button", {
-          name: "16 January 2031",
+          name: "Thursday 16 January 2031",
         })
           .realHover()
           .realClick();
@@ -385,7 +405,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.get("@selectionChangeSpy").should("not.have.been.called");
         // Simulate selecting a date within the min/max range
         cy.findByRole("button", {
-          name: "15 January 2031",
+          name: "Wednesday 15 January 2031",
         }).realClick();
         // Verify that the calendar is closed and the selected date is displayed
         cy.findByRole("application").should("not.exist");
@@ -437,7 +457,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is displayed
         cy.findByRole("application").should("exist");
         // Simulate selecting a tenor option
-        cy.findByRole("option", {
+        cy.findByRole("button", {
           name: "15 years",
         })
           .realHover()
@@ -515,7 +535,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           // Simulate selecting an unconfirmed date
           cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
           }).realClick();
           cy.findByRole("application").should("exist");
           cy.document()
@@ -562,7 +582,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           // Simulate selecting a new date
           cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
           }).realClick();
           cy.findByRole("application").should("exist");
           cy.document()
@@ -691,12 +711,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           //Verify the selected date is focused
           cy.findByRole("button", {
-            name: adapter.format(initialDate, "DD MMMM YYYY"),
+            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
           }).should("be.focused");
           // Verify that the default selected date is highlighted in the calendar
           cy.findByRole("button", {
-            name: adapter.format(initialDate, "DD MMMM YYYY"),
-          }).should("have.attr", "aria-pressed", "true");
+            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+          }).should("have.attr", "aria-selected", "true");
         });
 
         it("SHOULD be able to select a date", () => {
@@ -707,10 +727,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           // Simulate selecting a new date
           cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
           }).should("exist");
           cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
           }).realClick();
           // Verify that the calendar is closed and the new date is displayed
           cy.findByRole("application").should("not.exist");
@@ -737,12 +757,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           //Verify the selected date is focused
           cy.findByRole("button", {
-            name: adapter.format(initialDate, "DD MMMM YYYY"),
+            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
           }).should("be.focused");
           // Verify that the selected date is highlighted in the calendar
           cy.findByRole("button", {
-            name: adapter.format(initialDate, "DD MMMM YYYY"),
-          }).should("have.attr", "aria-pressed", "true");
+            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+          }).should("have.attr", "aria-selected", "true");
         });
 
         it("SHOULD not be able to select un-selectable dates", () => {
@@ -760,7 +780,13 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
 
           while (currentDate <= endDate) {
-            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
+            const formattedDate = adapter.isSame(
+              initialDate,
+              currentDate,
+              "day",
+            )
+              ? `Selected date: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`
+              : adapter.format(currentDate, "dddd D MMMM YYYY");
             const dayOfWeek = adapter.getDayOfWeek(currentDate);
             const isWeekend =
               (adapter.lib === "luxon" &&
@@ -793,10 +819,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           // Simulate selecting a new date
           cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
           }).should("exist");
           cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
           }).realClick();
           // Verify that the calendar is closed and the new date is displayed
           cy.findByRole("application").should("not.exist");

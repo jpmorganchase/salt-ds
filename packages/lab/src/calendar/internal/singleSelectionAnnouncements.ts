@@ -18,13 +18,12 @@ export function singleSelectionAnnouncements<TDate extends DateFrameworkType>(
     isSingleSelectionState(state) ||
     isMultiselectSingleSelectionState(state)
   ) {
-    const { error, multiselect, selectedDate, startVisibleMonth, endVisibleMonth } =
+    const { multiselect, selectedDate, startVisibleMonth, endVisibleMonth } =
       state;
 
-    console.log('asasasasasa single', error);
-    if (error === "minFocusableDateExceeded") {
+    if (variant === "minFocusableDateExceeded") {
       return "cannot focus before minimum date";
-    } else if (error === "maxFocusableDateExceeded") {
+    } else if (variant === "maxFocusableDateExceeded") {
       return "cannot focus beyond maximum date";
     }
 

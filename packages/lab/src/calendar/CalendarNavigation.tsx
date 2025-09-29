@@ -364,7 +364,7 @@ export const CalendarNavigation = forwardRef<
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            aria-label={isPreviousMonthDisabled ? "Previous Month" : "Past dates are out of range"}
+            aria-label={isPreviousMonthDisabled ? "Past dates are out of range" : "Previous Month" }
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigatePrevious}
@@ -425,7 +425,7 @@ export const CalendarNavigation = forwardRef<
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            aria-label={isNextMonthDisabled ? "Previous Month" : "Future dates are out of range"}
+            aria-label={isNextMonthDisabled ? "Future dates are out of range" :  "Next Month"}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigateNext}

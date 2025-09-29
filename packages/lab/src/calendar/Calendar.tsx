@@ -9,7 +9,6 @@ import {
   type ReactNode,
   useEffect,
   useRef,
-  useMemo
 } from "react";
 import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
@@ -23,25 +22,16 @@ import {
   type UseCalendarSingleProps,
   useCalendar,
 } from "./useCalendar";
-import type {
-  DateRangeSelection,
-} from "./useCalendarSelection";
-import {
-  useAriaCalendarAnnouncer,
-} from "./useAriaCalendarAnnouncer";
-import { singleSelectionAnnouncements } from "./internal/singleSelectionAnnouncements";
-import { rangeSelectionAnnouncements } from "./internal/rangeSelectionAnnouncements";
-
-export type CalendarError = "minFocusableDateExceeded" | "maxFocusableDateExceeded";
+import type { DateRangeSelection } from "./useCalendarSelection";
 
 /**
  * Base props for the Calendar component.
  */
 export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Disable the internal announcer for selection changes
+   * Disable the internal announcer for live changes
    */
-  disableSelectionAnnouncer?: boolean;
+  disableAnnouncer?: boolean;
   /**
    * The content to be rendered inside the Calendar.
    */
@@ -69,10 +59,6 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;
-  /**
-   * If `true`, the calendar will be multiselect.
-   */
-  multiselect?: boolean;
 }
 
 /**
@@ -223,7 +209,7 @@ export const Calendar = forwardRef<
     const {
       children,
       className,
-      disableSelectionAnnouncer,
+      disableAnnouncer,
       selectedDate,
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
@@ -300,6 +286,7 @@ export const Calendar = forwardRef<
     const useCalendarProps: any = {
       selectedDate,
       defaultSelectedDate,
+      disableAnnouncer,
       visibleMonth: visibleMonthProp,
       defaultVisibleMonth,
       onSelectionChange,
@@ -325,32 +312,6 @@ export const Calendar = forwardRef<
     };
     const { state, helpers } = useCalendar<TDate>(useCalendarProps);
     const calendarLabel = dateAdapter.format(state.visibleMonth, "MMMM YYYY");
-
-    const endVisibleMonth = useMemo(
-      () =>
-        dateAdapter.add(state.visibleMonth, {
-          months: state.numberOfVisibleMonths - 1,
-        }),
-      [dateAdapter, state?.numberOfVisibleMonths, state.visibleMonth],
-    );
-
-    console.log('state.error', state.error)
-    useAriaCalendarAnnouncer<TDate>({
-      disabled: disableSelectionAnnouncer,
-      state: {
-        error: state.error,
-        selectionVariant,
-        multiselect: multiselect ?? false,
-        startVisibleMonth: state.visibleMonth,
-        endVisibleMonth,
-        selectedDate: state.selectedDate
-      },
-      announcement:
-        selectionVariant === "single"
-          ? singleSelectionAnnouncements
-          : rangeSelectionAnnouncements,
-      dateAdapter
-    });
 
     return (
       <CalendarContext.Provider
