@@ -65,9 +65,11 @@ const DefaultFloatingComponent = forwardRef<
     height: _height,
     focusManagerProps,
     lockScroll,
+    style: styleProp,
     ...rest
   } = props;
   const style = {
+    ...styleProp,
     top,
     left,
     position,

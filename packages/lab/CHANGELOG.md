@@ -1,5 +1,57 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.78
+
+### Patch Changes
+
+- 630f412: Fixed TabsNext having double focus rings.
+- Updated dependencies [3b02e9e]
+- Updated dependencies [31e992a]
+- Updated dependencies [9e27ba2]
+- Updated dependencies [3ad2fc4]
+  - @salt-ds/core@1.50.0
+
+## 1.0.0-alpha.77
+
+### Minor Changes
+
+- 848272a: Added a `textAlign` prop to `TH` and `TD`. This allows for easy text alignment when using numerical data.
+- a2e614d: - Fixed multiple design inconsistencies in `Table`. For example, the alignment of wrapped text, column header separator height etc.
+
+  - Updated the `zebra` implementation in `Table`. Previously `zebra` supported `primary`, `secondary` and `tertiary` values. This has been simplified to `true` and `false`.
+
+  The color of the alternating rows is determined by the `variant` prop:
+
+  - `primary` variant uses the secondary background for alternating rows.
+  - `secondary` variant uses the primary background for alternating rows.
+  - `tertiary` variant uses the primary background for alternating rows.
+
+  ```diff
+  - <Table zebra="primary" />
+  - <Table zebra="secondary" />
+  - <Table zebra="tertiary" />
+  + <Table zebra={true} />
+  ```
+
+### Patch Changes
+
+- 77ce501: fix date input selection
+
+  empty dates should return null, rather than an invalid date
+
+  resolves: 5499
+
+- 5d4898c: - Fixed visual design issues with `Calendar`, `CalendarMonth`, `CalendarWeekHeader`, `CalendarDay`, `DatePicker` and `DatePickerActions` components.
+  - Fixed text being truncated in `Calendar`'s year dropdown when zooming out.
+- Updated dependencies [378fc01]
+- Updated dependencies [1f53f12]
+- Updated dependencies [22fed0d]
+- Updated dependencies [770bc9c]
+- Updated dependencies [54e4b19]
+- Updated dependencies [bbb7dba]
+- Updated dependencies [c3df8d8]
+  - @salt-ds/core@1.49.0
+
 ## 1.0.0-alpha.76
 
 ### Minor Changes
