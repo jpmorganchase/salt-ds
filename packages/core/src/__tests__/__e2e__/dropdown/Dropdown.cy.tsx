@@ -519,4 +519,11 @@ describe("Given a Dropdown", () => {
     // should not throw error
     cy.findByRole("button", { name: "test" }).should("be.focused");
   });
+
+  it("should allow props to be passed to the overlay container", () => {
+    cy.mount(<Default OverlayProps={{ "data-testid": "overlay" }} open />);
+    cy.findByTestId("overlay")
+      .should("exist")
+      .and("have.attr", "role", "listbox");
+  });
 });

@@ -1,5 +1,17 @@
 # @salt-ds/core
 
+## 1.50.0
+
+### Minor Changes
+
+- 3ad2fc4: Added `OverlayProps` prop to `ComboBox` and `Dropdown`. This can be used to provide a max height to their overlays.
+
+### Patch Changes
+
+- 3b02e9e: Fixed VerticalNavigation having double focus rings
+- 31e992a: Fixed Accordions with `status="success"` showing an incorrect focus ring.
+- 9e27ba2: Reverted a fix to `DialogContent` that caused issues.
+
 ## 1.49.0
 
 ### Minor Changes

@@ -13,6 +13,7 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   Children,
+  type ComponentPropsWithoutRef,
   type FocusEvent,
   type ForwardedRef,
   forwardRef,
@@ -34,6 +35,7 @@ import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
 import { PillInput, type PillInputProps } from "../pill-input";
 import { useIcon } from "../semantic-icon-provider";
+import type { DataAttributes } from "../types";
 import {
   makePrefixer,
   type UseFloatingUIProps,
@@ -50,9 +52,14 @@ export type ComboBoxProps<Item = string> = {
    */
   children?: ReactNode;
   /**
-   * If true, options will be selected on tab key press.
+   * If true, options will be selected when the tab key is pressed.
    */
   selectOnTab?: boolean;
+  /**
+   *  Props to pass to ComboBox's overlay.
+   */
+  OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
+    DataAttributes;
 } & UseComboBoxProps<Item> &
   Omit<PillInputProps, "onPillRemove">;
 
@@ -88,6 +95,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     valueToString = defaultValueToString,
     truncate,
     bordered = false,
+    OverlayProps,
     ...rest
   } = props;
 
@@ -186,10 +194,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         offset(1),
         size({
           apply({ rects, elements, availableHeight }) {
-            Object.assign(elements.floating.style, {
-              minWidth: `${rects.reference.width}px`,
-              maxHeight: `max(calc(${availableHeight}px - var(--salt-spacing-100)), calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5))`,
-            });
+            elements.floating.style.setProperty(
+              "--overlay-minWidth",
+              `${rects.reference.width}px`,
+            );
+            elements.floating.style.setProperty(
+              "--overlay-maxHeight",
+              `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
+            );
           },
         }),
         flip({ fallbackStrategy: "initialPlacement" }),
@@ -491,6 +503,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           onFocus: handleFocusInput,
           onClick: handleFocusInput,
           onMouseLeave: handleListMouseLeave,
+          ...OverlayProps,
         })}
         left={x ?? 0}
         top={y ?? 0}
