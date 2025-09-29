@@ -2,21 +2,15 @@ import type { ColDef, RowClassParams } from "ag-grid-community";
 import { StatusRenderer } from "./cell-renderers/StatusRenderer";
 
 export const validationRowClassRules = {
-  "salt-grid-row-error": (params: RowClassParams) =>
-    params.data.status === "error",
-  "salt-grid-row-warning": (params: RowClassParams) =>
-    params.data.status === "warning",
-  "salt-grid-row-success": (params: RowClassParams) =>
-    params.data.status === "success",
+  "error-row": (params: RowClassParams) => params.data.status === "error",
+  "warning-row": (params: RowClassParams) => params.data.status === "warning",
+  "success-row": (params: RowClassParams) => params.data.status === "success",
 };
 
 export const validationCellClassRules = {
-  "salt-grid-cell-error": (params: RowClassParams) =>
-    params.data.status === "error",
-  "salt-grid-cell-warning": (params: RowClassParams) =>
-    params.data.status === "warning",
-  "salt-grid-cell-success": (params: RowClassParams) =>
-    params.data.status === "success",
+  "error-cell": (params: RowClassParams) => params.data.status === "error",
+  "warning-cell": (params: RowClassParams) => params.data.status === "warning",
+  "success-cell": (params: RowClassParams) => params.data.status === "success",
 };
 
 export const validationRowExampleColumns: ColDef[] = [

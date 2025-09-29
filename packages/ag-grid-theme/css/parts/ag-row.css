@@ -11,7 +11,7 @@
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
 }
 
-.salt-grid-row-error {
+.error-row {
   --ag-background-color: var(--salt-status-error-background);
   --ag-selected-row-background-color: var(--salt-status-error-background-selected);
   --ag-selected-row-border-color: var(--salt-status-error-borderColor);
@@ -19,7 +19,7 @@
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
-.salt-grid-row-warning {
+.warning-row {
   --ag-background-color: var(--salt-status-warning-background);
   --ag-selected-row-background-color: var(--salt-status-warning-background-selected);
   --ag-selected-row-border-color: var(--salt-status-warning-borderColor);
@@ -27,7 +27,7 @@
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
-.salt-grid-row-success {
+.success-row {
   --ag-background-color: var(--salt-status-success-background);
   --ag-selected-row-background-color: var(--salt-status-success-background-selected);
   --ag-selected-row-border-color: var(--salt-status-success-borderColor);
