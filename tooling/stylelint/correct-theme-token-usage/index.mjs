@@ -1,36 +1,11 @@
-const valueParser = require("postcss-value-parser");
-const stylelint = require("stylelint");
+import valueParser from "postcss-value-parser";
+import stylelint from "stylelint";
+import { declarationValueIndex, isVarFunction } from "../utils.mjs";
 
-const { report, ruleMessages } = stylelint.utils;
-
-// A few stylelint utils are not exported
-// copied from https://github.com/stylelint/stylelint/tree/main/lib/utils
-
-const isValueFunction = function isValueFunction(node) {
-  return node.type === "function";
-};
-
-const declarationValueIndex = function declarationValueIndex(decl) {
-  const raws = decl.raws;
-
-  return [
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop?.prefix,
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop?.raw || decl.prop,
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop?.suffix,
-    raws.between || ":",
-    // @ts-expect-error -- TS2339: Property 'prefix' does not exist on type '{ value: string; raw: string; }'.
-    raws.value?.prefix,
-  ].reduce((count, str) => {
-    if (str) {
-      return count + str.length;
-    }
-
-    return count;
-  }, 0);
-};
+const {
+  createPlugin,
+  utils: { report, ruleMessages },
+} = stylelint;
 
 // ---- Start of plugin ----
 
@@ -111,8 +86,24 @@ function isAllowedKeys(property, verboseLog) {
   return checkResult;
 }
 
-module.exports = stylelint.createPlugin(ruleName, (primaryOption) => {
+const ruleFunction = (primaryOption) => {
   return (root, result) => {
+    function complainNoExpectedFoundationOrPalette(
+      index,
+      length,
+      decl,
+      propertyChecked,
+    ) {
+      report({
+        result,
+        ruleName,
+        message: messages.noExpectedFoundationPalette(propertyChecked),
+        node: decl,
+        index,
+        endIndex: index + length,
+      });
+    }
+
     const verboseLog = primaryOption.logLevel === "verbose";
 
     root.walkDecls((decl) => {
@@ -121,9 +112,7 @@ module.exports = stylelint.createPlugin(ruleName, (primaryOption) => {
       const parsedValue = valueParser(value);
 
       parsedValue.walk((node) => {
-        if (!isValueFunction(node)) return;
-
-        if (node.value.toLowerCase() !== "var") return;
+        if (!isVarFunction(node)) return;
 
         const { nodes } = node;
 
@@ -149,25 +138,11 @@ module.exports = stylelint.createPlugin(ruleName, (primaryOption) => {
         complainNoExpectedFoundationOrPalette(0, prop.length, decl, prop);
       }
     });
-
-    function complainNoExpectedFoundationOrPalette(
-      index,
-      length,
-      decl,
-      propertyChecked,
-    ) {
-      report({
-        result,
-        ruleName,
-        message: messages.noExpectedFoundationPalette(propertyChecked),
-        node: decl,
-        index,
-        endIndex: index + length,
-      });
-    }
   };
-});
+};
 
-module.exports.ruleName = ruleName;
-module.exports.messages = messages;
-module.exports.meta = meta;
+ruleFunction.ruleName = ruleName;
+ruleFunction.messages = messages;
+ruleFunction.meta = meta;
+
+export default createPlugin(ruleName, ruleFunction);

@@ -1,6 +1,0 @@
-.salt-theme.salt-theme-next {
-  --salt-overlayable-background: var(--salt-palette-alpha-higher);
-  --salt-overlayable-background-hover: var(--salt-palette-alpha-contrast-lowest);
-  --salt-overlayable-background-highlight: var(--salt-palette-alpha-contrast-medium);
-  --salt-overlayable-background-rangeSelection: var(--salt-palette-alpha-contrast-mediumLow);
-}

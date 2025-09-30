@@ -1,43 +1,17 @@
-const allProperties = require("known-css-properties").all;
+import { all as allProperties } from "known-css-properties";
+import valueParser from "postcss-value-parser";
+import stylelint from "stylelint";
+import { declarationValueIndex, isVarFunction } from "../utils.mjs";
 
 /* excluding `accent-color` property so `--card-accent-color` is allowed */
 const properties = allProperties.filter(
   (property) => property !== "accent-color",
 );
 
-const stylelint = require("stylelint");
-const valueParser = require("postcss-value-parser");
-
-const { report, ruleMessages } = stylelint.utils;
-
-// A few stylelint utils are not exported
-// copied from https://github.com/stylelint/stylelint/tree/main/lib/utils
-
-const isValueFunction = function isValueFunction(node) {
-  return node.type === "function";
-};
-
-const declarationValueIndex = function declarationValueIndex(decl) {
-  const raws = decl.raws;
-
-  return [
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop?.prefix,
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop?.raw || decl.prop,
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop?.suffix,
-    raws.between || ":",
-    // @ts-expect-error -- TS2339: Property 'prefix' does not exist on type '{ value: string; raw: string; }'.
-    raws.value?.prefix,
-  ].reduce((count, str) => {
-    if (str) {
-      return count + str.length;
-    }
-
-    return count;
-  }, 0);
-};
+const {
+  createPlugin,
+  utils: { report, ruleMessages },
+} = stylelint;
 
 // ---- Start of plugin ----
 
@@ -70,24 +44,34 @@ const includesCssAttribute = (property) =>
         property !== `--salt-${attr}`) /* --salt-animation-duration */,
   );
 
-module.exports = stylelint.createPlugin(ruleName, (primary) => {
+function check(property, verboseLog) {
+  const checkResult = includesCssAttribute(property);
+  verboseLog && console.log("Checking", checkResult, property);
+  return !checkResult;
+}
+
+const ruleFunction = (primary) => {
   return (root, result) => {
+    function complain(index, length, decl) {
+      report({
+        result,
+        ruleName,
+        message: messages.expected(primary),
+        node: decl,
+        index,
+        endIndex: index + length,
+      });
+    }
+
     const verboseLog = primary.logLevel === "verbose";
 
-    function check(property) {
-      const checkResult = includesCssAttribute(property);
-      verboseLog && console.log("Checking", checkResult, property);
-      return !checkResult;
-    }
     root.walkDecls((decl) => {
       const { prop, value } = decl;
 
       const parsedValue = valueParser(value);
 
       parsedValue.walk((node) => {
-        if (!isValueFunction(node)) return;
-
-        if (node.value.toLowerCase() !== "var") return;
+        if (!isVarFunction(node)) return;
 
         const { nodes } = node;
 
@@ -110,20 +94,11 @@ module.exports = stylelint.createPlugin(ruleName, (primary) => {
 
       complain(0, prop.length, decl);
     });
-
-    function complain(index, length, decl) {
-      report({
-        result,
-        ruleName,
-        message: messages.expected(primary),
-        node: decl,
-        index,
-        endIndex: index + length,
-      });
-    }
   };
-});
+};
 
-module.exports.ruleName = ruleName;
-module.exports.messages = messages;
-module.exports.meta = meta;
+ruleFunction.ruleName = ruleName;
+ruleFunction.messages = messages;
+ruleFunction.meta = meta;
+
+export default createPlugin(ruleName, ruleFunction);
