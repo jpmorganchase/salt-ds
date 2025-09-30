@@ -1,3 +1,4 @@
+export * from "./CellValidation";
 export * from "./CheckboxSelection";
 export * from "./Coloration";
 export * from "./ColumnGroup";
@@ -18,6 +19,7 @@ export * from "./PinnedRows";
 export * from "./ProvidedCellEditors";
 export * from "./RowGrouping";
 export * from "./RowGroupPanel";
+export * from "./RowValidation";
 export * from "./StatusBar";
 export * from "./Variants";
 export * from "./WrappedHeader";
