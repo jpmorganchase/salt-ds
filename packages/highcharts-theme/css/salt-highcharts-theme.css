@@ -245,3 +245,19 @@
   fill-opacity: 1;
   transition: none;
 }
+
+.highcharts-theme-salt .highcharts-scatter-series .highcharts-point {
+  fill-opacity: 0.75;
+}
+
+/* Remove line from scatter legend symbols */
+.highcharts-theme-salt .highcharts-scatter-series.highcharts-legend-item .highcharts-graph {
+  stroke-width: 0;
+}
+
+/* Show the y-axis line and grid lines when chart type has the additional .axes-grid-lines*/
+.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-axis-line,
+.highcharts-theme-salt.axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
+.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
+  stroke-width: 1;
+}
