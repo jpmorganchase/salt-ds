@@ -29,6 +29,7 @@ Popout
 Preheader
 Robo
 Selectability
+Scatterplot
 Stackable
 Stickersheet
 Substep

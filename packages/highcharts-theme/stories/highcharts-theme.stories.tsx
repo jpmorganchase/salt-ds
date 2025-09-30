@@ -9,6 +9,7 @@ import {
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
+  ScatterplotChart as ScatterplotChartComponent,
   StackedBarChart as StackedBarChartComponent,
 } from "../src/examples";
 import {
@@ -19,6 +20,7 @@ import {
   donutOptions,
   lineOptions,
   pieOptions,
+  scatterplotOptions,
   stackedBarOptions,
 } from "../src/examples/dependencies";
 
@@ -110,5 +112,13 @@ export const ColumnChart = {
   args: {
     patterns: false,
     options: columnOptions,
+  },
+};
+
+export const ScatterplotChart = {
+  render: (args: ChartStoryArgs) => <ScatterplotChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: scatterplotOptions,
   },
 };
