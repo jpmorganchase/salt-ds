@@ -33,7 +33,7 @@ const languages = [
   "Italian",
   "Spanish",
   "Turkish",
-  "Ukranian",
+  "Ukrainian",
 ];
 
 const displayView = () => (

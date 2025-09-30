@@ -14,13 +14,12 @@ export const Default = (): ReactElement => {
       </CollapsibleTrigger>
       <CollapsiblePanel>
         <p style={{ maxWidth: "80ch" }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          This sample paragraph is intended to demonstrate how text will appear
+          within the component. The content shown here is for illustrative
+          purposes and does not contain specific information or advice. Using
+          placeholder text like this helps review formatting, spacing, and
+          overall presentation in the user interface. Adjust the wording as
+          needed to suit your particular requirements or design preferences.
         </p>
       </CollapsiblePanel>
     </Collapsible>

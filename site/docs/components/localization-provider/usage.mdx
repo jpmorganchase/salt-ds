@@ -70,9 +70,9 @@ import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 const dateAdapter = new AdapterDateFns(locale);
 ```
 
-Each adapter imports the date library defined by your peer dependency but for dayjs and luxon, you may need to provide a preconfigured instance.
+Each adapter imports the date library defined by your peer dependency but for dayjs and luxon, you may need to provide a pre-configured instance.
 
-Passing `dayjs` to `AdapterDayjs` enables you to preconfigure defaults.
+Passing `dayjs` to `AdapterDayjs` enables you to pre-configure defaults.
 
 ```js
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";

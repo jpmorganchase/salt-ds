@@ -1,0 +1,18 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "dictionaryDefinitions": [
+    {
+      "name": "allowedWords",
+      "path": "./allowed-words.txt",
+      "addWords": true
+    }
+  ],
+  "ignoreRegExpList": [
+    "/[\\w-]+\\/[\\w-]+(\\.[\\w]+)?/", // Matches file paths like src/components/Button.js
+    "https?://[^\\s]+", // Matches URLs
+    "/\\/img\\/[^\\s'\"]+/", // Matches image paths like /img/logo.png
+    "/[\"']\\.\\.?[^\"'\\s]+[\"']/" // Matches relative paths like './image' or '../image'
+  ],
+  "dictionaries": ["allowedWords"]
+}

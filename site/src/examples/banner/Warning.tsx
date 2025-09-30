@@ -23,13 +23,11 @@ export const Warning = (): ReactElement => (
     </Banner>
     <Text styleAs="h1">Header</Text>
     <Text>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
+      This placeholder text is provided to illustrate how content will appear
+      within the component. The sentences are intended for demonstration only
+      and do not convey specific information. Generic examples like this help
+      review layout, spacing, and overall design. Adjust the wording as needed
+      to fit your use case or display requirements.
     </Text>
   </StackLayout>
 );

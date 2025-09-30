@@ -6,7 +6,7 @@ import {
 } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
 
-export const ClampBehaviour = () => {
+export const ClampBehavior = () => {
   return (
     <StackLayout style={{ width: "256px" }}>
       <FormField>
