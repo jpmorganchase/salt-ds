@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
 bullet(Highcharts);
-// This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibilty tab.
+// This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
 const options: Options = {
