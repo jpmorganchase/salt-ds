@@ -31,6 +31,8 @@ jobs:
             echo "Should not import from src in any typescript file"
             exit 1;
           fi
+      - name: Spellcheck
+        run: yarn workspace @salt-ds/site spellcheck
 
   dependency-check:
     runs-on: ubuntu-latest
