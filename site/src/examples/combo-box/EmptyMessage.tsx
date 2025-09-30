@@ -9,7 +9,7 @@ import { shortColorData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const EmptyMessage = (): ReactElement => {
-  const [value, setValue] = useState("Indigo");
+  const [value, setValue] = useState("Yelloww"); // cspell:disable-line
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

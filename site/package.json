@@ -20,7 +20,7 @@
     "serve": "concurrently --kill-others 'yarn dev' 'yarn serve:mosaic'",
     "gen:props": "yarn node './propsGen.js'",
     "gen:css": "yarn node './cssGen.mjs'",
-    "spellcheck": "yarn cspell --config cspell.json docs/**/*.mdx src/examples/**/*.tsx"
+    "spellcheck": "yarn cspell --config cspell.jsonc \"docs/**/*.mdx\" \"src/examples/**/*.tsx\""
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
