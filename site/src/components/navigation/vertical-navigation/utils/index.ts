@@ -40,7 +40,7 @@ export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
   return link;
 }
 
-type SidebarNodeWithStatus = SidebarItem & {
+export type SidebarNodeWithStatus = SidebarItem & {
   data?: {
     status?: string;
   };

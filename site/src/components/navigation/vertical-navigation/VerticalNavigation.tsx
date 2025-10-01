@@ -13,7 +13,7 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/core";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { LinkBase } from "../../link/Link";
 import {
   containsSelected,
@@ -114,9 +114,9 @@ export const VerticalNavigation = ({
 }: VerticalNavigationProps) => {
   const mappedNavData = mapMenu(menu);
 
-  const normalizedSelectedNodeId = useMemo(
-    () => normalizeSelectedNodeId(selectedNodeId || "", mappedNavData),
-    [selectedNodeId, mappedNavData],
+  const normalizedSelectedNodeId = normalizeSelectedNodeId(
+    selectedNodeId || "",
+    mappedNavData,
   );
 
   return (
@@ -128,7 +128,7 @@ export const VerticalNavigation = ({
     >
       {mappedNavData.map((item) => (
         <NestedItem
-          key={item.title}
+          key={item.href}
           item={item}
           selectedNodeId={normalizedSelectedNodeId}
         />
