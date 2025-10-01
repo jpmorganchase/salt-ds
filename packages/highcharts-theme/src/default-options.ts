@@ -14,6 +14,16 @@ export const getDefaultOptions = (
     chart: {
       styledMode: true,
       colorCount: 20,
+      events: {
+        load: function (this: Highcharts.Chart) {
+          const hasScatter = this.series.some((s) => s.type === "scatter");
+          this.container.classList.toggle("axes-grid-lines", hasScatter);
+        },
+        redraw: function (this: Highcharts.Chart) {
+          const hasScatter = this.series.some((s) => s.type === "scatter");
+          this.container.classList.toggle("axes-grid-lines", hasScatter);
+        },
+      },
     },
     defs: saltPatternDef,
     title: {
@@ -28,6 +38,7 @@ export const getDefaultOptions = (
       title: {
         margin: tokens["--salt-spacing-200"],
       },
+      tickLength: 0,
     },
     legend: {
       layout: "vertical",
@@ -66,6 +77,12 @@ export const getDefaultOptions = (
       },
       bullet: {
         borderRadius: 0,
+      },
+      scatter: {
+        marker: {
+          // This should be a token?
+          radius: 4,
+        },
       },
     },
   };
