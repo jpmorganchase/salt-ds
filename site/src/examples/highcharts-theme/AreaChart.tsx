@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const options: Options = {
+const areaChartOptions: Options = {
   chart: { type: "area" },
   title: {
     text: "Asset class balances since 1940",
@@ -91,10 +91,10 @@ const options: Options = {
 };
 
 export const AreaChart = () => {
-  const AreaChartRef = useRef<HighchartsReact.RefObject>(null);
+  const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const areaDataOptions = useChart(AreaChartRef, options);
+  const chartOptions = useChart(chartRef, areaChartOptions);
 
   return (
     <div className={styles.chartContainer}>
@@ -113,8 +113,8 @@ export const AreaChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={areaDataOptions}
-          ref={AreaChartRef}
+          options={chartOptions}
+          ref={chartRef}
         />
       </div>
     </div>

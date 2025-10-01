@@ -14,9 +14,9 @@ const DonutChart: FC<DonutChartProps> = ({
   patterns = false,
   options = donutOptions,
 }) => {
-  const donutRef = useRef<HighchartsReact.RefObject>(null);
+  const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions = useChart(donutRef, options);
+  const chartOptions = useChart(chartRef, options);
 
   return (
     <div
@@ -27,7 +27,7 @@ const DonutChart: FC<DonutChartProps> = ({
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
-        ref={donutRef}
+        ref={chartRef}
       />
     </div>
   );

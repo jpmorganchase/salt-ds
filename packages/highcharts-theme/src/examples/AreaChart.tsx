@@ -14,9 +14,9 @@ const AreaChart: FC<AreaChartProps> = ({
   patterns = false,
   options = areaOptions,
 }) => {
-  const AreaChartRef = useRef<HighchartsReact.RefObject>(null);
+  const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions = useChart(AreaChartRef, options);
+  const chartOptions = useChart(chartRef, options);
 
   return (
     <div
@@ -25,9 +25,9 @@ const AreaChart: FC<AreaChartProps> = ({
       })}
     >
       <HighchartsReact
-        ref={AreaChartRef}
         highcharts={Highcharts}
         options={chartOptions}
+        ref={chartRef}
       />
     </div>
   );
