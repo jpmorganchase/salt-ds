@@ -19,7 +19,8 @@
     "serve:mosaic": "yarn mosaic serve -c ./mosaic.config.js -p 8080",
     "serve": "concurrently --kill-others 'yarn dev' 'yarn serve:mosaic'",
     "gen:props": "yarn node './propsGen.js'",
-    "gen:css": "yarn node './cssGen.mjs'"
+    "gen:css": "yarn node './cssGen.mjs'",
+    "spellcheck": "yarn cspell --config cspell.jsonc \"docs/**/*.mdx\" \"src/examples/**/*.tsx\""
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
@@ -50,6 +51,7 @@
     "@types/react": "^18.3.22",
     "concurrently": "^9.0.0",
     "cross-env": "^10.0.0",
+    "cspell": "^9.2.1",
     "dotenv-load": "^2.0.1",
     "embla-carousel-class-names": "^8.6.0",
     "react": "^18.3.1",

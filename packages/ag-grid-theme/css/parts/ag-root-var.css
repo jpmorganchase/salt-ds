@@ -44,6 +44,7 @@ div[class*="ag-theme-salt"] {
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
   --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
   --ag-selected-row-background-color: var(--salt-selectable-background-selected);
+  --ag-selected-row-border-color: var(--salt-selectable-borderColor-selected);
   --ag-selected-tab-underline-color: var(--salt-navigable-accent-indicator-active);
   --ag-selected-tab-underline-width: var(--salt-size-indicator);
   --ag-subheader-background-color: var(--salt-container-primary-background);

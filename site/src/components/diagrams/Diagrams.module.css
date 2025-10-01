@@ -104,7 +104,7 @@
 }
 
 .caption {
-  font-style: var(--salt-editable-help-fontStyle);
+  font-style: var(--salt-typography-textDecoration-italic);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   color: var(--salt-content-primary-foreground);

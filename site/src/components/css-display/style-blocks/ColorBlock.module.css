@@ -2,7 +2,7 @@
   width: var(--salt-size-base);
   height: var(--salt-size-base);
 
-  border-color: transparent;
+  border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-borderStyle-solid);
   border-width: var(--salt-size-fixed-100);
   border-radius: var(--salt-palette-corner-weak, 0);
@@ -11,10 +11,6 @@
   background-position:
     -4px 4px,
     16px 16px;
-}
-
-.withBorder {
-  border-color: var(--salt-container-primary-borderColor);
 }
 
 .transparent {

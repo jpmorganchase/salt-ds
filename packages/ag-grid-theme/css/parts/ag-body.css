@@ -11,15 +11,19 @@
 .ag-theme-salt-dark .ag-row-selected,
 .ag-theme-salt-compact-light .ag-row-selected,
 .ag-theme-salt-compact-dark .ag-row-selected {
-  background-color: var(--salt-selectable-background-selected);
-  border-color: var(--salt-selectable-borderColor-selected);
+  background-color: var(--ag-selected-row-background-color);
+  border-color: var(--ag-selected-row-border-color);
 }
 
 .ag-theme-salt-light .ag-row-selected:before,
 .ag-theme-salt-dark .ag-row-selected:before,
 .ag-theme-salt-compact-light .ag-row-selected:before,
-.ag-theme-salt-compact-dark .ag-row-selected:before {
-  background-color: var(--salt-selectable-borderColor-selected);
+.ag-theme-salt-compact-dark .ag-row-selected:before,
+.ag-theme-salt-light .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-compact-dark .ag-row-hover.ag-row-selected::before {
+  background-color: var(--ag-selected-row-border-color);
   background-image: none;
   height: var(--salt-size-fixed-100);
   top: -1px;
@@ -88,6 +92,194 @@
   outline-offset: -1px;
 }
 
+.ag-theme-salt-light .editable-cell.error-cell,
+.ag-theme-salt-dark .editable-cell.error-cell,
+.ag-theme-salt-compact-light .editable-cell.error-cell,
+.ag-theme-salt-compact-dark .editable-cell.error-cell {
+  /* Editable border color */
+  --salt-editable-borderColor: var(--salt-status-error-borderColor);
+  /* Focus ring color */
+  --salt-focused-outlineColor: var(--salt-status-error-borderColor);
+  /* Corner adornment */
+  --salt-editable-borderColor-hover: var(--salt-status-error-borderColor);
+}
+
+.ag-theme-salt-light .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-error-background);
+  /* Give room for status adornment */
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-error-background);
+  /* Give room for status adornment */
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-dark .editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-light .editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-dark .editable-cell.error-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+
+  /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+
+  background-color: var(--salt-status-error-foreground-decorative);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E")
+    no-repeat 50% 50%;
+}
+
+.ag-theme-salt-light .editable-cell.error-cell:not(.numeric-cell)::after,
+.ag-theme-salt-dark .editable-cell.error-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-light .editable-cell.error-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-dark .editable-cell.error-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-dark .editable-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-compact-light .editable-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .editable-cell.error-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell,
+.ag-theme-salt-dark .editable-cell.warning-cell,
+.ag-theme-salt-compact-light .editable-cell.warning-cell,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell {
+  /* Editable border color */
+  --salt-editable-borderColor: var(--salt-status-warning-borderColor);
+  /* Focus ring color */
+  --salt-focused-outlineColor: var(--salt-status-warning-borderColor);
+  /* Corner adornment */
+  --salt-editable-borderColor-hover: var(--salt-status-warning-borderColor);
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-warning-background);
+  /* Give room for status adornment */
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-warning-background);
+  /* Give room for status adornment */
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-dark .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-light .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+
+  /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+
+  background-color: var(--salt-status-warning-foreground-decorative);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath d='M0 6L3 0L6 6H0Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell:not(.numeric-cell)::after,
+.ag-theme-salt-dark .editable-cell.warning-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-light .editable-cell.warning-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-dark .editable-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-compact-light .editable-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.success-cell,
+.ag-theme-salt-dark .editable-cell.success-cell,
+.ag-theme-salt-compact-light .editable-cell.success-cell,
+.ag-theme-salt-compact-dark .editable-cell.success-cell {
+  /* Editable border color */
+  --salt-editable-borderColor: var(--salt-status-success-borderColor);
+  /* Focus ring color */
+  --salt-focused-outlineColor: var(--salt-status-success-borderColor);
+  /* Corner adornment */
+  --salt-editable-borderColor-hover: var(--salt-status-success-borderColor);
+}
+
+.ag-theme-salt-light .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-success-background);
+  /* Give room for status adornment */
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-success-background);
+  /* Give room for status adornment */
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.success-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-dark .editable-cell.success-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-light .editable-cell.success-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-dark .editable-cell.success-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+
+  /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+
+  background-color: var(--salt-status-success-foreground-decorative);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A")
+    no-repeat 50% 50%;
+}
+
+.ag-theme-salt-light .editable-cell.success-cell:not(.numeric-cell)::after,
+.ag-theme-salt-dark .editable-cell.success-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-light .editable-cell.success-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-dark .editable-cell.success-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-dark .editable-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-compact-light .editable-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .editable-cell.success-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
 .ag-theme-salt-light .ag-cell.numeric-cell,
 .ag-theme-salt-light .editable-numeric-cell,
 .ag-theme-salt-dark .ag-cell.numeric-cell,
@@ -105,6 +297,13 @@
 .ag-theme-salt-compact-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
 .ag-theme-salt-compact-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
   text-align: right;
+}
+
+.ag-theme-salt-light .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-dark .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-light .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-dark .ag-cell-wrapper.ag-row-group {
+  align-items: center;
 }
 
 .ag-theme-salt-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
@@ -130,13 +329,6 @@
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
   border-color: transparent;
-}
-
-.ag-theme-salt-light .ag-cell-wrapper.ag-row-group,
-.ag-theme-salt-dark .ag-cell-wrapper.ag-row-group,
-.ag-theme-salt-compact-light .ag-cell-wrapper.ag-row-group,
-.ag-theme-salt-compact-dark .ag-cell-wrapper.ag-row-group {
-  align-items: center;
 }
 
 .ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus:before,
@@ -237,7 +429,7 @@
 .ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before {
   /* Change the icon to be aligned with Salt chevron instead of triangle */
-  /* We are not using different icons between collpase / expand, given only collapsed icon is available in ag salt icon font (.ag-picker-collapsed vs .ag-picker-expanded) */
+  /* We are not using different icons between collapse / expand, given only collapsed icon is available in ag salt icon font (.ag-picker-collapsed vs .ag-picker-expanded) */
   content: var(--ag-icon-font-code-contracted);
 }
 

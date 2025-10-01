@@ -59,7 +59,7 @@ const ColorTable = ({
 
   return (
     <div style={{ maxWidth: "100vw", overflowX: "auto" }}>
-      <Table>
+      <Table zebra divider="none">
         <THead>
           <TR>
             <TH>Preview</TH>
@@ -106,7 +106,7 @@ export const FoundationColorView = ({
   useEffect(() => {
     const fetchJsonData = async () => {
       const data = (
-        await import(`./cssFoundations${themeNext ? "-next" : ""}.json`)
+        await import(`./cssFoundations${themeNext ? "-next" : "-legacy"}.json`)
       ).default as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
         saltColorTokenRegex.test(x),
@@ -161,11 +161,5 @@ export const FoundationColorView = ({
     return <Spinner />;
   }
 
-  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
-
-  return (
-    <ChosenSaltProvider>
-      <ColorTable data={data} themeNext={themeNext} />
-    </ChosenSaltProvider>
-  );
+  return <ColorTable data={data} themeNext={themeNext} />;
 };
