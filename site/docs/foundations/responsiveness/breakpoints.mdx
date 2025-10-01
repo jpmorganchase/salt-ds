@@ -5,15 +5,15 @@ sidebar:
   priority: 2
 ---
 
-Responsive design utilizes breakpoints to adapt layouts across various screen sizes, orientations and web browsers from Extra Small (XS) to Extra Large (XL). This approach ensures content remains readable and accessible, enhancing user experience by allowing layouts to fluidly adjust across mobile, tablet, and desktop devices.
+Responsive design utilizes breakpoints to adapt UI layouts and optimize presentation of information across different application resolutions and orientations. This approach enhances user experience by ensuring content remains readable and accessible.
 
 ## Breakpoint ramps
 
-**Desktop devices**: On desktop, any density can be applied based on content need. This flexibility allows designers to select the most suitable density, whether for data-heavy or content-light applications.
+Salt’s breakpoints and column counts are optimized for the layout of Salt components across each density in desktop and web environments. This helps to ensure that application layout is fit-for-purpose, whether for data-heavy or content-light applications.
 
-**Mobile and tablet devices**: For these devices, touch density is recommended. It ensures optimal touch targets, facilitating easier interaction with the interface using fingers.
+Learn more about Salt densities in the [Density foundation](/salt/foundations/density) documentation.
 
-Learn more about Salt densities in the [density foundation](/salt/foundations/density).
+For guidance on breakpoints and column layouts for mobile and tablet devices, see the [Small screens](/salt/foundations/responsiveness/small-screens) documentation.
 
 ### High density
 
@@ -54,5 +54,9 @@ Learn more about Salt densities in the [density foundation](/salt/foundations/de
 | Medium      | 960 - 1279 | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Large       | 1280-1919  | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Extra Large | >1920      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+
+## Implementing breakpoints
+
+Use the Salt Provider component to [control the breakpoints](/salt/components/salt-provider/examples#breakpoints) you use in your application. Salt provides default breakpoints in its core foundation.
 
 :fragment{src="../fragments/feedback.mdx"}
