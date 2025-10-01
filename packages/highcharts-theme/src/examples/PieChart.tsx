@@ -14,9 +14,9 @@ const PieChart: FC<PieChartProps> = ({
   patterns = false,
   options = pieOptions,
 }) => {
-  const pieRef = useRef<HighchartsReact.RefObject>(null);
+  const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions = useChart(pieRef, options);
+  const chartOptions = useChart(chartRef, options);
 
   return (
     <div
@@ -27,7 +27,7 @@ const PieChart: FC<PieChartProps> = ({
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
-        ref={pieRef}
+        ref={chartRef}
       />
     </div>
   );

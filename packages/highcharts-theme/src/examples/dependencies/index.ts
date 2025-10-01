@@ -1,3 +1,4 @@
+export { areaOptions } from "./areaOptions";
 export { barOptions } from "./barOptions";
 export { bulletOptions } from "./bulletOptions";
 export { columnOptions } from "./columnOptions";

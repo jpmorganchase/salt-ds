@@ -1,3 +1,4 @@
+export { default as AreaChart } from "./AreaChart";
 export { default as BarChart } from "./BarChart";
 export { default as BulletChart } from "./BulletChart";
 export { default as ColumnChart } from "./ColumnChart";
