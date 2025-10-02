@@ -21,10 +21,6 @@
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMenuItem:hover {
-  outline: none;
-}
-
 .saltMenuItem:hover,
 .saltMenuItem:focus-visible {
   background: var(--salt-selectable-background-hover);
