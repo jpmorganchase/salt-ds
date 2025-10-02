@@ -26,11 +26,27 @@
   background: var(--salt-selectable-background-hover);
 }
 
-.saltMenuItem:active {
+.saltMenuItem:active,
+.saltMenuItem-blurActive:not(:hover) {
   background: var(--salt-selectable-background-selected);
   box-shadow:
     0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
     0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
+}
+
+.saltMenuItem-blurActive:not(:hover) {
+  z-index: var(--salt-zIndex-default);
+  /* Prevents box-shadow flickering when hovering between menu items  */
+  transition:
+    box-shadow 50ms ease-in-out,
+    background 50ms ease-in-out;
+}
+
+.saltMenuItem-blurActive:hover {
+  box-shadow: none;
+  transition:
+    box-shadow var(--salt-duration-instant),
+    background var(--salt-duration-instant);
 }
 
 .saltMenuItem[aria-disabled="true"],
@@ -39,14 +55,6 @@
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-cursor-disabled);
   box-shadow: none;
-}
-
-.saltMenuItem-blurActive {
-  z-index: var(--salt-zIndex-default);
-  background: var(--salt-selectable-background-selected);
-  box-shadow:
-    0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
-    0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
 }
 
 /* TODO: Find a better way of doing this */
