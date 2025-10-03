@@ -36,7 +36,7 @@
 
 .saltMenuItem-blurActive:not(:hover) {
   z-index: var(--salt-zIndex-default);
-  /* Prevents box-shadow flickering when hovering between menu items  */
+  /* Transitions prevent visual flicker when rapidly moving mouse between menu items */
   transition:
     box-shadow 50ms ease-in-out,
     background 50ms ease-in-out;
