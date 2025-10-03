@@ -9,6 +9,7 @@ const {
   GroupedItems,
   IconWithGroups,
   WithTooltip,
+  WithDisabledItems,
 } = composeStories(menuStories);
 
 describe("Given a Menu", () => {
@@ -185,6 +186,25 @@ describe("Given a Menu", () => {
     cy.findByRole("menu").should("exist");
     cy.findByRole("menuitem", { name: "Paste" }).should("not.be.focused");
     cy.get("@alertStub").should("not.have.been.called");
+  });
+
+  it("should not open items on hover when trigger is disabled", () => {
+    cy.mount(<WithDisabledItems />);
+
+    cy.findByRole("button", { name: "Open Menu" }).realClick();
+    cy.findByRole("menuitem", { name: "Edit styling" }).should(
+      "have.attr",
+      "aria-disabled",
+      "true",
+    );
+    cy.findByRole("menuitem", { name: "Export" }).should(
+      "have.attr",
+      "aria-disabled",
+      "true",
+    );
+    cy.findByRole("menuitem", { name: "Edit styling" }).realHover();
+    cy.findByRole("menuitem", { name: "Column" }).should("not.exist");
+    cy.findByRole("menuitem", { name: "Cell" }).should("not.exist");
   });
 
   it("should focus items on hover", () => {
