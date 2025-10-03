@@ -15,21 +15,35 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
-export const ButtonAppearanceValues = [
+export type ButtonVariant = (typeof ButtonVariantValues)[number];
+
+export interface ButtonAppearances {
+  solid: string;
+  bordered: string;
+  transparent: string;
+}
+export type ButtonAppearance = keyof ButtonAppearances;
+export const ButtonAppearanceValues: ButtonAppearance[] = [
   "solid",
   "bordered",
   "transparent",
-] as const;
-export const ButtonSentimentValues = [
+];
+
+export interface ButtonSentiments {
+  accented: string;
+  neutral: string;
+  positive: string;
+  negative: string;
+  caution: string;
+}
+export type ButtonSentiment = keyof ButtonSentiments;
+export const ButtonSentimentValues: ButtonSentiment[] = [
   "accented",
   "neutral",
   "positive",
   "negative",
   "caution",
-] as const;
-export type ButtonVariant = (typeof ButtonVariantValues)[number];
-export type ButtonAppearance = (typeof ButtonAppearanceValues)[number];
-export type ButtonSentiment = (typeof ButtonSentimentValues)[number];
+];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
