@@ -5,7 +5,7 @@ import {
   ChevronUpIcon,
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
-  SuccessTickIcon,
+  SuccessCircleSolidIcon,
   UserSolidIcon,
 } from "@salt-ds/icons";
 
@@ -15,7 +15,7 @@ const TestComponent = () => {
     <div>
       <icons.ExpandIcon data-testid="ChevronDownIcon" />
       <icons.CollapseIcon data-testid="ChevronUpIcon" />
-      <icons.SuccessIcon data-testid="SuccessTickIcon" />
+      <icons.SuccessIcon data-testid="SuccessCircleSolidIcon" />
       <icons.CalendarIcon data-testid="CalendarIcon" />
       <icons.UserIcon data-testid="UserSolidIcon" />
     </div>
@@ -26,7 +26,7 @@ describe("SemanticIconProvider", () => {
   it("should use default icons when provider is not wrapped", () => {
     cy.mount(<TestComponent />);
     cy.get('[data-testid="ChevronDownIcon"]').should("exist");
-    cy.get('[data-testid="SuccessTickIcon"]').should("exist");
+    cy.get('[data-testid="SuccessCircleSolidIcon"]').should("exist");
     cy.get('[data-testid="CalendarIcon"]').should("exist");
     cy.get('[data-testid="UserSolidIcon"]').should("exist");
   });
@@ -54,7 +54,7 @@ describe("SemanticIconProvider", () => {
       "double chevron up",
     );
 
-    cy.get('[data-testid="SuccessTickIcon"]').should("exist");
+    cy.get('[data-testid="SuccessCircleSolidIcon"]').should("exist");
     cy.get('[data-testid="CalendarIcon"]').should("exist");
     cy.get('[data-testid="UserSolidIcon"]').should("exist");
   });
@@ -66,7 +66,7 @@ describe("SemanticIconProvider", () => {
           CollapseIcon: ChevronDownIcon,
           ExpandIcon: ChevronUpIcon,
           SuccessIcon: UserSolidIcon,
-          CalendarIcon: SuccessTickIcon,
+          CalendarIcon: SuccessCircleSolidIcon,
           UserIcon: CalendarIcon,
         }}
       >
@@ -83,7 +83,7 @@ describe("SemanticIconProvider", () => {
       "aria-label",
       "chevron down",
     );
-    cy.get('[data-testid="SuccessTickIcon"]').should(
+    cy.get('[data-testid="SuccessCircleSolidIcon"]').should(
       "have.attr",
       "aria-label",
       "user solid",
@@ -91,7 +91,7 @@ describe("SemanticIconProvider", () => {
     cy.get('[data-testid="CalendarIcon"]').should(
       "have.attr",
       "aria-label",
-      "success tick",
+      "success circle solid",
     );
     cy.get('[data-testid="UserSolidIcon"]').should(
       "have.attr",
