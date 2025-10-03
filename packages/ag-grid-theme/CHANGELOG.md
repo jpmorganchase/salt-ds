@@ -1,5 +1,20 @@
 # @salt-ds/ag-grid-theme
 
+## 2.6.0
+
+### Minor Changes
+
+- 58d81ac: - Added row validation status support via classes: `.error-row`, `.warning-row` and `.success-row`.
+  - Added cell validation status support via classes: `.error-cell`, `.warning-cell` and `.success-cell`, when used together with `.editable-cell`.
+  - Refactored secondary and zebra variant to better align with ag grid CSS variables. This fixes row selection border color for zebra variant.
+
+### Patch Changes
+
+- Updated dependencies [e9838b5]
+- Updated dependencies [e9838b5]
+- Updated dependencies [e9838b5]
+  - @salt-ds/theme@1.34.0
+
 ## 2.5.1
 
 ### Patch Changes

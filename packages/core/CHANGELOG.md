@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.51.0
+
+### Minor Changes
+
+- fef411f: Replaced `SuccessTickIcon` usage with `SuccessCircleSolidIcon`.
+
 ## 1.50.0
 
 ### Minor Changes
