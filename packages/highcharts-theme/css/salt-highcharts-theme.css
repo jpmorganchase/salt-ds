@@ -1,0 +1,244 @@
+.highcharts-theme-salt .highcharts-color-0 {
+  fill: var(--salt-category-1-bold-background);
+  stroke: var(--salt-category-1-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-1 {
+  fill: var(--salt-category-2-bold-background);
+  stroke: var(--salt-category-2-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-2 {
+  fill: var(--salt-category-3-bold-background);
+  stroke: var(--salt-category-3-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-3 {
+  fill: var(--salt-category-4-bold-background);
+  stroke: var(--salt-category-4-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-4 {
+  fill: var(--salt-category-5-bold-background);
+  stroke: var(--salt-category-5-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-5 {
+  fill: var(--salt-category-6-bold-background);
+  stroke: var(--salt-category-6-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-6 {
+  fill: var(--salt-category-7-bold-background);
+  stroke: var(--salt-category-7-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-7 {
+  fill: var(--salt-category-8-bold-background);
+  stroke: var(--salt-category-8-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-8 {
+  fill: var(--salt-category-9-bold-background);
+  stroke: var(--salt-category-9-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-9 {
+  fill: var(--salt-category-10-bold-background);
+  stroke: var(--salt-category-10-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-10 {
+  fill: var(--salt-category-11-bold-background);
+  stroke: var(--salt-category-11-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-11 {
+  fill: var(--salt-category-12-bold-background);
+  stroke: var(--salt-category-12-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-12 {
+  fill: var(--salt-category-13-bold-background);
+  stroke: var(--salt-category-13-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-13 {
+  fill: var(--salt-category-14-bold-background);
+  stroke: var(--salt-category-14-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-14 {
+  fill: var(--salt-category-15-bold-background);
+  stroke: var(--salt-category-15-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-15 {
+  fill: var(--salt-category-16-bold-background);
+  stroke: var(--salt-category-16-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-16 {
+  fill: var(--salt-category-17-bold-background);
+  stroke: var(--salt-category-17-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-17 {
+  fill: var(--salt-category-18-bold-background);
+  stroke: var(--salt-category-18-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-18 {
+  fill: var(--salt-category-19-bold-background);
+  stroke: var(--salt-category-19-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-color-19 {
+  fill: var(--salt-category-20-bold-background);
+  stroke: var(--salt-category-20-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-container {
+  font-family: var(--salt-text-fontFamily);
+}
+
+.highcharts-theme-salt .highcharts-grid-line {
+  stroke: var(--salt-separable-tertiary-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-title {
+  fill: var(--salt-content-primary-foreground);
+  font-size: var(--salt-text-h4-fontSize);
+  font-weight: var(--salt-text-h4-fontWeight);
+  line-height: var(--salt-text-h4-lineHeight);
+  font-family: var(--salt-text-h4-fontFamily);
+}
+.highcharts-theme-salt .highcharts-subtitle,
+.highcharts-theme-salt .highcharts-axis-title,
+.highcharts-theme-salt .highcharts-axis-labels {
+  fill: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
+}
+
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph {
+  opacity: 0.2;
+}
+
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-focus-border {
+  stroke: inherit !important;
+}
+
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point {
+  stroke: none !important;
+}
+
+/* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
+.highcharts-theme-salt .highcharts-line-series.highcharts-legend-item-hidden path {
+  stroke: revert !important;
+}
+
+/* Maintain full opacity on legend items during hover. Only reduce opacity when item is hidden */
+.highcharts-theme-salt .highcharts-legend-series-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) *,
+.highcharts-theme-salt .highcharts-legend-point-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) * {
+  opacity: 1;
+}
+
+.highcharts-theme-salt .highcharts-legend-item > text,
+.highcharts-theme-salt .highcharts-legend-item span {
+  fill: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight);
+  line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
+}
+.highcharts-theme-salt .highcharts-axis-line {
+  stroke: var(--salt-separable-primary-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-data-label text,
+.highcharts-theme-salt text.highcharts-data-label {
+  fill: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-label-fontWeight);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
+}
+
+.highcharts-theme-salt .highcharts-tooltip-box {
+  fill: var(--salt-container-primary-background);
+}
+
+.highcharts-theme-salt .highcharts-tooltip text,
+.highcharts-theme-salt .highcharts-tooltip foreignObject span {
+  fill: var(--salt-content-primary-foreground);
+}
+
+/* stickOnContact: true conflicts with default styles  */
+.highcharts-theme-salt .highcharts-tooltip .highcharts-tracker {
+  opacity: 0;
+}
+
+.highcharts-theme-salt .highcharts-background {
+  fill: var(--salt-container-primary-background);
+}
+
+.highcharts-theme-salt path.highcharts-legend-nav-active {
+  fill: var(--salt-content-secondary-foreground);
+}
+
+.highcharts-theme-salt path.highcharts-legend-nav-inactive {
+  fill: var(--salt-content-secondary-foreground-disabled);
+}
+
+.highcharts-theme-salt circle.highcharts-legend-nav-active,
+.highcharts-theme-salt circle.highcharts-legend-nav-inactive {
+  fill: transparent;
+}
+
+.highcharts-theme-salt text.highcharts-legend-navigation {
+  fill: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-label-fontWeight);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
+}
+
+/* Override default stroke for line chart data series hover point circle */
+.highcharts-theme-salt .highcharts-line-series .highcharts-point {
+  stroke: var(--salt-color-white);
+}
+
+/* Override default stroke for chart series segment borders */
+.highcharts-theme-salt .highcharts-bar-series .highcharts-point,
+.highcharts-theme-salt .highcharts-pie-series .highcharts-point,
+.highcharts-theme-salt .highcharts-column-series .highcharts-point {
+  stroke: var(--salt-container-primary-background);
+}
+
+/* Override default stroke for bullet chart segment border */
+.highcharts-theme-salt .highcharts-bullet-series .highcharts-point {
+  stroke: none;
+}
+
+/* Data connector line for Donut/Pie chart */
+.highcharts-theme-salt .highcharts-data-label-connector {
+  fill: none;
+}
+
+/* Removes extra hover style for Donut/Pie */
+.highcharts-theme-salt .highcharts-halo {
+  display: none;
+}
+
+/* Reduces opacity of deselected segments for Donut/Pie */
+.highcharts-theme-salt .highcharts-point-inactive {
+  opacity: 0.25;
+}
+
+/* Remove fill-opacity and transition on column chart hover */
+.highcharts-theme-salt .highcharts-column-series .highcharts-point-hover {
+  fill-opacity: 1;
+  transition: none;
+}
