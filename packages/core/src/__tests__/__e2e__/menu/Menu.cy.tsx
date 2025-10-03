@@ -187,10 +187,10 @@ describe("Given a Menu", () => {
     cy.get("@alertStub").should("not.have.been.called");
   });
 
-  it("should focus items on hover", () => {
+  it("should not focus items on hover", () => {
     cy.mount(<SingleLevel open />);
     cy.findByRole("menuitem", { name: "Paste" }).realHover();
-    cy.findByRole("menuitem", { name: "Paste" }).should("have.focus");
+    cy.findByRole("menuitem", { name: "Paste" }).should("not.have.focus");
   });
 
   it("should support open being uncontrolled", () => {
