@@ -1,5 +1,6 @@
 export { areaOptions } from "./areaOptions";
 export { barOptions } from "./barOptions";
+export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
 export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";

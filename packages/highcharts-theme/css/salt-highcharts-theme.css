@@ -140,6 +140,11 @@
   fill: inherit !important;
 }
 
+/* Remove line across bubble series legend symbol in styled mode */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-graph {
+  stroke-width: 0;
+}
+
 /* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
 .highcharts-theme-salt .highcharts-line-series.highcharts-legend-item-hidden path {
   stroke: revert !important;
