@@ -11,6 +11,9 @@ import styles from "./index.module.css";
 accessibility(Highcharts);
 
 const donutChartOptions: Options = {
+  chart: {
+    type: "pie",
+  },
   title: {
     text: "Bank revenue mix",
     align: "center",

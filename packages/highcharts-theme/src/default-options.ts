@@ -73,7 +73,7 @@ export const getDefaultOptions = (
       },
       scatter: {
         marker: {
-          // This should be a token?
+          // Agreed in design set value
           radius: 4,
         },
       },

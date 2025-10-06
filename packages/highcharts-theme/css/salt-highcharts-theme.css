@@ -135,9 +135,15 @@
   stroke: inherit !important;
 }
 
-.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point {
+/* Prevents the added stroke on hidden legends for charts that have a 'square' symbols, which bubble + scatter does not have */
+.highcharts-theme-salt .highcharts-legend-item-hidden:not(.highcharts-bubble-series, .highcharts-scatter-series) .highcharts-point {
   stroke: none !important;
   fill: inherit !important;
+}
+
+/* Remove line across bubble series legend symbol */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-graph {
+  stroke-width: 0;
 }
 
 /* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
@@ -161,6 +167,16 @@
   font-weight: var(--salt-text-label-fontWeight);
   line-height: var(--salt-text-label-lineHeight);
   font-family: var(--salt-text-label-fontFamily);
+}
+
+/* Bubble chart data labels use primary foreground for better visibility */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
+.highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
+  fill: var(--salt-content-primary-foreground);
+}
+
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-point {
+  fill-opacity: 0.75;
 }
 
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
