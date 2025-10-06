@@ -41,9 +41,9 @@ Just like native input elements in React, number inputs can be controlled or unc
 
 If you want to control the value of the number input:
 
-- use the `value` prop to provide the current value.
-- use the `onChange` prop to update the value as a string
-- if using `clamp` the current value can change upon blur, ensure you update the current value `onNumberChange`.
+- Use the `value` prop to provide the current value.
+- Use the `onChange` prop to update the value as a string
+- If using `clamp` the current value can change upon blur, ensure you update the current value `onNumberChange`.
 
 The `onNumberChange` callback is called with either the parsed `number`, `NaN` or `null` if the string is empty, when incremented/decremented or upon blur.
 The `onChange` event handler is called, when the user changes the input.
@@ -66,9 +66,9 @@ A custom formatter can be provided through the `format` prop.
 
 ### Ignoring invalid characters
 
-By default the accepted characters must match a signed decimal numbers, eg. +23.456
+The `pattern` callback lets you control which input values are accepted. Provide a function that returns `true` for valid input and `false` for invalid input. When the user types, only values that match your pattern are allowed; others are ignored.
 
-When creating custom parsers, you can use the `isAllowed` callback to ignore invalid characters.
+By default the accepted characters must match a signed decimal numbers, eg. +23.456
 
 ### Listening to changes
 
