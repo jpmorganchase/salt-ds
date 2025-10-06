@@ -474,6 +474,13 @@ export const WithDisabledItems: StoryFn<typeof Menu> = (args) => {
         >
           Export
         </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Paste");
+          }}
+        >
+          Paste
+        </MenuItem>
       </MenuPanel>
     </Menu>
   );
