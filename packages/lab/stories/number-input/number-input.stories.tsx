@@ -422,7 +422,7 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           value={value}
-          isAllowed={(inputValue) => validValue.test(inputValue)}
+          pattern={(inputValue) => validValue.test(inputValue)}
           onChange={(_event, value) => {
             setValue(value);
           }}
@@ -483,7 +483,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           defaultValue={12}
-          isAllowed={(inputValue) =>
+          pattern={(inputValue) =>
             /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
           }
           max={100}
@@ -501,7 +501,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         <FormFieldLabel>With Intl Number Format</FormFieldLabel>
         <NumberInput
           defaultValue={1000000}
-          isAllowed={isInternationalFormat}
+          pattern={isInternationalFormat}
           format={(value) => {
             if (!value.length) {
               return value;
@@ -524,7 +524,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         </FormFieldLabel>
         <NumberInput
           defaultValue={10.5}
-          isAllowed={isInternationalFormat}
+          pattern={isInternationalFormat}
           format={(value) => {
             if (!value.length) {
               return value;
