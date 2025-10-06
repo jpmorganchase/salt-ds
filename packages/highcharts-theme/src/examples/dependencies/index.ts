@@ -1,9 +1,10 @@
 export { areaOptions } from "./areaOptions";
 export { barOptions } from "./barOptions";
+export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
 export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
 export { lineOptions } from "./lineOptions";
 export { pieOptions } from "./pieOptions";
-export { scatterChartOptions } from "./scatterOptions";
+export { scatterOptions } from "./scatterOptions";
 export { stackedBarOptions } from "./stackedBarOptions";
