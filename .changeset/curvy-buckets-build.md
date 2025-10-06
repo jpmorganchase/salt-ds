@@ -12,7 +12,7 @@ Updated the `NumberInput` API:
 + format?: (value: string) => string;
 ```
 
-2. Added `isAllowed`, a callback that matches as you type and determines whether the value can be ignored. By default, signed numeric decimal numbers can be entered.
+2. Added `pattern`, a callback that matches as you type and determines whether the value can be ignored. By default, signed numeric decimal numbers can be entered.
 3. Simplified `onChange`, reverted back to native `onChange`. Called for any text change to the input by the user.
 
 ```diff
@@ -38,7 +38,7 @@ Example
 ```diff
 <NumberInput
    defaultValue={12}
-   isAllowed={(inputValue) =>
+   pattern={(inputValue) =>
      /^\$?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
    }
    format={(value) => `£${value.replace(/\$/g, "")}`}

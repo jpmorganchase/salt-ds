@@ -9,7 +9,7 @@ export const FormattingThousandsSeparator = () => {
       <FormFieldLabel>Thousands separator</FormFieldLabel>
       <NumberInput
         defaultValue={1000000}
-        isAllowed={isInternationalFormat}
+        pattern={isInternationalFormat}
         format={(value) => {
           if (!value.length) {
             return value;

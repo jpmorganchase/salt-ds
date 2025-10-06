@@ -647,7 +647,7 @@ describe("Number Input", () => {
             value={value}
             onChange={onChange}
             onNumberChange={onNumberChange}
-            isAllowed={(inputValue) =>
+            pattern={(inputValue) =>
               /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
             }
             format={(value) => `${value}%`}
@@ -808,7 +808,7 @@ describe("Number Input", () => {
           defaultValue={12}
           onChange={changeSpy}
           onNumberChange={numberChangeSpy}
-          isAllowed={(inputValue: string) =>
+          pattern={(inputValue: string) =>
             /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
           }
           format={(value: string) => `${value}%`}

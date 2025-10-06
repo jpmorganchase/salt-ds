@@ -7,7 +7,7 @@ export const CustomInputPattern = () => (
     <NumberInput
       defaultValue={0}
       style={{ width: "256px" }}
-      isAllowed={(inputValue) => /^(\d+)x?$/.test(inputValue)}
+      pattern={(inputValue) => /^(\d+)x?$/.test(inputValue)}
       format={(value) => `${value}x`}
       parse={(value) => {
         if (!value.length) {

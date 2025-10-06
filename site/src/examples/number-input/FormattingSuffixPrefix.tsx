@@ -8,7 +8,7 @@ export const FormattingSuffixPrefix = () => {
         <FormFieldLabel>With suffix</FormFieldLabel>
         <NumberInput
           defaultValue={12}
-          isAllowed={(inputValue) =>
+          pattern={(inputValue) =>
             /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
           }
           format={(value) => `${value}%`}
@@ -27,7 +27,7 @@ export const FormattingSuffixPrefix = () => {
         <FormFieldLabel>With prefix</FormFieldLabel>
         <NumberInput
           defaultValue={12}
-          isAllowed={(inputValue) =>
+          pattern={(inputValue) =>
             /^\$?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
           }
           format={(value) => `$${value.replace(/\$/g, "")}`}

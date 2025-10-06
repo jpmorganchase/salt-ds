@@ -11,7 +11,7 @@ export const FormattingCompactNotation = () => {
       <FormFieldLabel>Compact notation</FormFieldLabel>
       <NumberInput
         value={value}
-        isAllowed={(inputValue) => validValue.test(inputValue)}
+        pattern={(inputValue) => validValue.test(inputValue)}
         onChange={(_event, newValue) => {
           setValue(newValue);
         }}

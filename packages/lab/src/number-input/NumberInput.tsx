@@ -90,7 +90,7 @@ export interface NumberInputProps
   /**
    * Callback that matches on values as you type and determines whether the value can be entered.
    */
-  isAllowed?: (inputValue: string) => boolean;
+  pattern?: (inputValue: string) => boolean;
   /**
    * The maximum value that can be selected.
    * @default Number.MAX_SAFE_INTEGER
@@ -212,7 +212,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       format: formatProp,
       hideButtons,
       id: idProp,
-      isAllowed = (inputValue) =>
+      pattern = (inputValue) =>
         /^[+-]?(\d+(\.\d*)?|\.\d*)?$/.test(inputValue),
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
@@ -373,8 +373,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         onChange?.(event, "");
         return;
       }
-      const allowedInput = isAllowed ? isAllowed(inputValue) : true;
-      if (allowedInput) {
+      const validValue = pattern ? pattern(inputValue) : true;
+      if (validValue) {
         setIsEditing(true);
         onChange?.(event, event.target.value);
         setValue(inputValue);
