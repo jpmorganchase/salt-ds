@@ -20,7 +20,7 @@ import {
   donutOptions,
   lineOptions,
   pieOptions,
-  scatterplotOptions,
+  scatterplotChartOptions,
   stackedBarOptions,
 } from "../src/examples/dependencies";
 
@@ -119,6 +119,6 @@ export const ScatterplotChart = {
   render: (args: ChartStoryArgs) => <ScatterplotChartComponent {...args} />,
   args: {
     patterns: false,
-    options: scatterplotOptions,
+    options: scatterplotChartOptions,
   },
 };

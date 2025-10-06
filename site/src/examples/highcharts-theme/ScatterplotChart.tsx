@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const options: Options = {
+const scatterplotChartOptions: Options = {
   chart: {
     type: "scatter",
   },
@@ -89,7 +89,7 @@ export const ScatterplotChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const scatterOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, scatterplotChartOptions);
 
   return (
     <div className={styles.chartContainer}>
@@ -108,7 +108,7 @@ export const ScatterplotChart = () => {
         <HighchartsReact
           className={styles.chart}
           highcharts={Highcharts}
-          options={scatterOptions}
+          options={chartOptions}
           ref={chartRef}
         />
       </div>
