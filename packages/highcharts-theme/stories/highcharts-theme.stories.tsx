@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import {
   AreaChart as AreaChartComponent,
   BarChart as BarChartComponent,
+  BubbleChart as BubbleChartComponent,
   BulletChart as BulletChartComponent,
   ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
@@ -15,12 +16,13 @@ import {
 import {
   areaOptions,
   barOptions,
+  bubbleOptions,
   bulletOptions,
   columnOptions,
   donutOptions,
   lineOptions,
   pieOptions,
-  scatterChartOptions,
+  scatterOptions,
   stackedBarOptions,
 } from "../src/examples/dependencies";
 
@@ -84,6 +86,14 @@ export const PieChart = {
   },
 };
 
+export const BubbleChart = {
+  render: (args: ChartStoryArgs) => <BubbleChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: bubbleOptions,
+  },
+};
+
 export const StackedBarChart = {
   render: (args: ChartStoryArgs) => <StackedBarChartComponent {...args} />,
   args: {
@@ -119,6 +129,6 @@ export const ScatterChart = {
   render: (args: ChartStoryArgs) => <ScatterChartComponent {...args} />,
   args: {
     patterns: false,
-    options: scatterChartOptions,
+    options: scatterOptions,
   },
 };
