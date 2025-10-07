@@ -1,0 +1,129 @@
+---
+title: Wizard
+description: "The wizard allows a workflow-based task to be displayed in a sequence of manageable steps, for easier completion."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/wizard
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-wizard", label: "Examples"},
+    ]
+  components: ["Dialog","Stepper" ]
+---
+
+## When to use
+
+Use wizard to guide users through a series of steps or tasks in a specific, linear order, often with the goal of completing a complex process (e.g., software installation, account setting/onboarding, checkout). Users must complete each step in order before moving to the next.
+
+## How to build
+
+### Trigger element
+
+Provide an actionable component, such as a button or menu item, to launch the wizard—making sure the label matches the workflow title.
+
+### Anatomy
+
+Wizard contains:
+1. Workflow title: features a standardised workflow title consistent across steps.
+2. Step title: to reflect the current step which vary per step.
+3. Stepper: to reflect status and progress through steps.
+4. Content area: opens over the application content, focusing the user’s attention on a particular task or piece of information.
+5. Button bar: possible actions for users to take. See more details about button options and order in Button bar pattern page.
+
+## Container
+
+A wizard can be displayed inside different containers such as dialogs, pages, or panels. Regardless of container, the arrangement of internal components and interactions remains consistent.
+
+## Layout
+- Refer to header block pattern to have a standardised workflow title, consistent across steps, and step titles which vary per step.
+- Use a stepper component to display the steps of the flow. 
+- Use a button bar pattern to display any actions at the bottom of the dialog. The button bar should behave the same across contexts, ensuring users have predictable access to navigation and primary/secondary actions. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
+
+## Horizontal stepper vs vertical stepper
+
+We recommend to use horizontal stepper for shorter and simpler tasks. On the other hand, we recommend to use vertical stepper to break down the steps and substeps for a more lengthy and complex task flow.
+
+## Responsive behavior
+
+The wizard is responsive to the size of its parent container, filling its width 100%. The height dynamically fills the available viewport space below the wizard.
+
+## Content area scrolling
+
+Fix the button bar at the bottom of the viewport, so users can always reach the actions with a scrolling content area. Check out the Fixed way in Button bar position. 
+
+
+## Optional step
+
+When a step is entirely optional and contains no required fields, you can indicate this with the “Optional” text beneath the step title (in stepper) and allow users to skip it by clicking the Next button. If an error or warning message must display, it temporarily obscures the “Optional” text until the issue is resolved.
+
+## Validation state
+
+### warning
+
+If a step contains a warning, the step in the stepper should reflect it. The next button remains enabled, as the next step can be accessed without the issue being resolved.
+
+The trigger that causes the step to reflect a warning state depends upon whether real-time validation or validation on submission is used.
+
+### Real-time error
+
+The stepper and the button bar update to reflect an inline error, or resolution. If the step contains an error, the step in the stepper displays an error state and the next button disables. When the error is resolved, both the step and the button return to their default state.
+
+### Submission error
+
+When the user actions the button with final action and the validation is unsuccessful, the step in the stepper reflects an error state and the button disables. The final action button must be actioned again to confirm if the change validates successfully. If it does, the next step displays. If it doesn’t, an inline error is once again reflected.
+
+## Cancel warning
+
+When the user click the cancel button, include a cancellation warning if there’s a risk of user-inputted data being lost on accidental cancel. This is particularly relevant if saving is not supported.
+
+## Repositioned Stepper
+
+By default, the stepper exists on the right of the titles, sharing 50% of the available width.
+
+However, if the step labels truncate, the stepper can be repositioned above the header elements, with both occupying 100% of the available width. Label truncation could be caused by a reduction in viewport width, inclusion of a large number of steps or lengthy labels.
+
+## Modal
+
+You can use a dialog component as a structure base for a modal wizard with horizontal stepper when you need to insert the izard within another task or flow. The header block in the dialog includes the wizard title, the stepper, and the close action. 
+
+When having shorter tasks that are temporarily the user’s main focus, the modal wizard uses a focus trap to prevent interaction with the rest of the UI while it’s open. 
+
+### Responsive behavior
+
+The modal wizard is responsive to the width of the application viewport and responds dynamically to the Salt breakpoints.
+
+## Optional step
+
+When a step is entirely optional and contains no required fields, you can indicate this with the “Optional” text beneath the step title (in stepper) and allow users to skip it by clicking the Next button. If an error or warning message must display, it temporarily obscures the “Optional” text until the issue is resolved.
+
+## Validation state
+
+### Warning
+
+If a step contains a warning, the step in the stepper should reflect it. The next button remains enabled, as the next step can be accessed without the issue being resolved.
+
+The trigger that causes the step to reflect a warning state depends upon whether real-time validation or validation on submission is used.
+
+### Real-time error
+
+The stepper and the button bar update to reflect an inline error, or resolution. If the step contains an error, the step in the stepper displays an error state and the next button disables. When the error is resolved, both the step and the button return to their default state.
+
+### Submission error
+
+When the user actions the button with final action and the validation is unsuccessful, the step in the stepper reflects an error state and the button disables. The final action button must be actioned again to confirm if the change validates successfully. If it does, the next step displays. If it doesn’t, an inline error is once again reflected.
+
+## Cancel warning
+
+When the user click the cancel button, include a cancellation warning if there’s a risk of user-inputted data being lost on accidental cancel. This is particularly relevant if saving is not supported.
+
+## Repositioned Stepper
+
+By default, the stepper exists on the right of the titles, sharing 50% of the available width.
+
+However, if the step labels truncate, the stepper can be repositioned above the header elements, with both occupying 100% of the available width. Label truncation could be caused by a reduction in viewport width, inclusion of a large number of steps or lengthy labels.
+
+
+
