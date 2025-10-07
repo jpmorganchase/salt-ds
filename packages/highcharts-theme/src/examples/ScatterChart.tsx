@@ -3,16 +3,16 @@ import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { scatterplotChartOptions } from "./dependencies";
+import { scatterChartOptions } from "./dependencies";
 
-export interface ScatterplotChartProps {
+export interface ScatterChartProps {
   patterns?: boolean;
   options: Options;
 }
 
-const ScatterplotChart: FC<ScatterplotChartProps> = ({
+const ScatterChart: FC<ScatterChartProps> = ({
   patterns = false,
-  options = scatterplotChartOptions,
+  options = scatterChartOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
@@ -33,4 +33,4 @@ const ScatterplotChart: FC<ScatterplotChartProps> = ({
   );
 };
 
-export default ScatterplotChart;
+export default ScatterChart;

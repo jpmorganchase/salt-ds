@@ -1,6 +1,6 @@
 import type { Options } from "highcharts";
 
-export const scatterplotChartOptions: Options = {
+export const scatterChartOptions: Options = {
   chart: {
     type: "scatter",
   },
