@@ -13,17 +13,10 @@ export const ColorBlock = ({
   hideToken?: boolean;
   replacementToken?: string;
 }) => {
-  const [withBorder, setWithBorder] = useState(false);
   const [transparent, setTransparent] = useState(false);
 
   const handleStyling = useCallback((node: HTMLDivElement) => {
     if (node) {
-      setWithBorder(
-        window
-          .getComputedStyle(node)
-          .backgroundColor.replaceAll(" ", "")
-          .includes("255,255,255"),
-      );
       setTransparent(
         window
           .getComputedStyle(node)
