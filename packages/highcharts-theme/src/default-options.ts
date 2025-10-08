@@ -14,16 +14,6 @@ export const getDefaultOptions = (
     chart: {
       styledMode: true,
       colorCount: 20,
-      events: {
-        load: function (this: Highcharts.Chart) {
-          const hasScatter = this.series.some((s) => s.type === "scatter");
-          this.container.classList.toggle("axes-grid-lines", hasScatter);
-        },
-        redraw: function (this: Highcharts.Chart) {
-          const hasScatter = this.series.some((s) => s.type === "scatter");
-          this.container.classList.toggle("axes-grid-lines", hasScatter);
-        },
-      },
     },
     defs: saltPatternDef,
     title: {

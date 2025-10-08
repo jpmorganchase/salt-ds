@@ -20,7 +20,7 @@ const ScatterChart: FC<ScatterChartProps> = ({
 
   return (
     <div
-      className={clsx("highcharts-theme-salt", {
+      className={clsx("highcharts-theme-salt", "axes-grid-lines", {
         "salt-fill-patterns": patterns,
       })}
     >

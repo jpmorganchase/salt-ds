@@ -101,7 +101,7 @@ export const ScatterChart = () => {
         />
       </div>
       <div
-        className={clsx("highcharts-theme-salt", {
+        className={clsx("highcharts-theme-salt", "axes-grid-lines", {
           "salt-fill-patterns": patterns,
         })}
       >

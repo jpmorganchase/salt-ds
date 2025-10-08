@@ -256,11 +256,11 @@
 }
 
 /* Show the y-axis line when chart type has the additional .axes-grid-lines*/
-.highcharts-theme-salt .axes-grid-lines .highcharts-yaxis .highcharts-axis-line {
+.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-axis-line {
   stroke-width: 1;
 }
 
-.highcharts-theme-salt .axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
-.highcharts-theme-salt .axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
+.highcharts-theme-salt.axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
+.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
   stroke-width: 1;
 }
