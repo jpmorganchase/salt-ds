@@ -1,44 +1,39 @@
 ---
-title: Small viewports
+title: Small screens
 layout: DetailTechnical
 sidebar:
   priority: 1
 ---
 
-Responsive design utilizes breakpoints to adapt layouts across various screen sizes and orientations, from Extra Small (XS) to Extra Large (XL). This approach ensures content remains readable and accessible, enhancing user experience by allowing layouts to fluidly adjust across mobile, tablet, and desktop devices.
+Touch density is recommended for mobile and tablet devices to ensure secure touch targets and achieve the best mobile experience. Salt doesn’t recommend [mixing densities](/salt/foundations/density#mixing-densities) within a single product, except for dynamically switching to Touch density in mobile and tablet views.
 
-## Responsive web breakpoints
+The number of columns and the size of gutters and margins in Salt’s [breakpoints](/salt/foundations/responsiveness/breakpoints) are designed to optimize the layout of Salt components in a desktop environment. Salt’s standard breakpoints don't consider small mobile and tablet screen sizes.
 
-For responsive web design, Salt recommends using 5 breakpoints, from Extra Small to Extra Large, to effectively accommodate mobile, tablet, and desktop devices.
+To effectively use Touch density on small screens, we recommend using alternative spacing tokens for gutters and margins across the Touch density breakpoints.
 
-<Image
-  src="/img/foundations/responsiveness-web-breakpoints.png"
-  alt="Example of the five individual breakpoints."
-/>
+## Touch density breakpoints for small screens
 
-\*Small and XS is only relevant if using Touch Density on smaller screens.
+| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| ----------- | -------------- | ------- | -------------------- | -------------------- |
+| Extra small | 0-599          | 1       | `--salt-spacing-100` | `--salt-spacing-100` |
+| Small       | 600-959        | 2       | `--salt-spacing-200` | `--salt-spacing-200` |
+| Medium      | 960-1279       | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919      | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra large | >1920          | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
 
-| Breakpoint  | Device                   | Width (pixels) | Columns           | Spacing (margin, gutter, padding) | Fixed grid width | Density  |
-| ----------- | ------------------------ | -------------- | ----------------- | --------------------------------- | ---------------- | -------- |
-| Extra large | Desktop                  | >1920          | Density dependent | --salt-spacing-300, -200, -100    | 1280px, centered | HD,MD,LD |
-| Large       | Desktop                  | 1280-1919      | Density dependent | --salt-spacing-300, -200, -100    | 1280px, centered | HD,MD,LD |
-| Medium      | Desktop                  | 960-1279       | Density dependent | --salt-spacing-300, -200, -100    | 100%             | HD,MD,LD |
-| Small       | Tablet, mobile landscape | 600-959        | 2                 | --salt-spacing-300, -200, -100    | 100%             | TD       |
-| Extra small | Mobile                   | 0-599          | 1                 | --salt-spacing-300, -200, -100    | 100%             | TD       |
-
-\*Density dependent means the number of columns in a layout changes based on the chosen breakpoint and its density. For each combination, the margin and gutter size remains constant, whereas the width of each column will vary as a percentage of the overall width.
-
-### Responsiveness for Touch Density
-
-Touch Density is recommended for mobile and tablet devices to achieve the best mobile experience and ensure secure touch targets. However, it's not recommended to mix densities within a single product, except for using Touch Density in mobile and tablet views. When breakpoint changes to Small or Extra Small spacing becomes smaller.
-
-For more information on how to adjust typography and spacing for designing with Touch Density on smaller screens, please refer to this [blog post](https://go/salt-ds-internal/content/insights/tutorials/20250226-demystifying-touch-density). (Internal users only)
+When breakpoint changes to Small or Extra Small, the margin and gutter size becomes smaller. This ensures more content can be displayed as the screen size becomes smaller.
 
 <Image
   src="/img/foundations/responsiveness-design.png"
   alt="Example of adjusted typography and spacing for touch density devices."
 />
 
-\*Desktop follows Salt standard header spacing while Touch Density devices go down to header spacing 200, 100. To learn more about the spacing between headers, please refer to the [forms pattern page](/salt/patterns/forms).
+\*For XL and L breakpoints, a centered content area with a max width of 1280px can improve the reading experience of your content.
+
+For more information on how to adjust typography and spacing for designing with Touch Density on smaller screens, please refer to this [blog post](https://go/salt-ds-internal/content/insights/tutorials/20250226-demystifying-touch-density). (Internal users only)
+
+## Implementing responsive density
+
+Use the Salt Provider component to [control the density used](/salt/components/salt-provider/examples#responsive-density) when your application is displayed on a specific device.
 
 :fragment{src="../fragments/feedback.mdx"}
