@@ -15,7 +15,6 @@ accessibility(Highcharts);
 const options: Options = {
   chart: {
     type: "bubble",
-    plotBorderWidth: 1,
   },
   title: {
     text: "GDP vs life expectancy (bubble size = population)",
@@ -30,8 +29,9 @@ const options: Options = {
       format: "{value}",
     },
     accessibility: { description: "GDP per capita in thousands of USD" },
-    startOnTick: false,
-    endOnTick: false,
+    startOnTick: true,
+    endOnTick: true,
+    tickWidth: 0,
   },
   yAxis: {
     title: { text: "Life expectancy (years)" },
@@ -40,6 +40,8 @@ const options: Options = {
     },
     min: 50,
     max: 85,
+    startOnTick: true,
+    endOnTick: true,
   },
   legend: { enabled: true },
   plotOptions: {

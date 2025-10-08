@@ -3,8 +3,6 @@ import type { Options } from "highcharts";
 export const bubbleOptions: Options = {
   chart: {
     type: "bubble",
-    plotBorderWidth: 1,
-    zoomType: "xy",
   },
   title: {
     text: "GDP vs life expectancy (bubble size = population)",
@@ -19,8 +17,9 @@ export const bubbleOptions: Options = {
       format: "{value}",
     },
     accessibility: { description: "GDP per capita in thousands of USD" },
-    startOnTick: false,
-    endOnTick: false,
+    startOnTick: true,
+    endOnTick: true,
+    tickWidth: 0,
   },
   yAxis: {
     title: { text: "Life expectancy (years)" },
@@ -29,8 +28,15 @@ export const bubbleOptions: Options = {
     },
     min: 50,
     max: 85,
+    startOnTick: true,
+    endOnTick: true,
   },
   legend: { enabled: true },
+  plotOptions: {
+    bubble: {
+      lineWidth: 0,
+    },
+  },
   tooltip: {
     useHTML: true,
     headerFormat: "<span>{series.name}</span><br/>",
