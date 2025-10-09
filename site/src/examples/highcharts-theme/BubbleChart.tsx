@@ -92,7 +92,7 @@ const options: Options = {
       data: [
         { name: "Crypto", x: 8.5, y: 14, z: 2 },
         { name: "RE", x: 4, y: 5, z: 8 },
-        { name: "Commod", x: 4.7, y: 8.5, z: 8 },
+        { name: "Commodities", x: 4.7, y: 8.5, z: 8 },
         { name: "Gold", x: 3.2, y: 6, z: 3 },
         { name: "PE", x: 6, y: 13, z: 4 },
         { name: "VC", x: 9.4, y: 13, z: 1 },
