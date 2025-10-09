@@ -4,8 +4,6 @@
   --salt-palette-negative: var(--salt-color-red-500);
   --salt-palette-negative-weaker: var(--salt-color-red-200);
   --salt-palette-negative-weakest: var(--salt-color-red-100);
-
-  --salt-palette-negative-action-hover: var(--salt-color-red-100);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"] {
@@ -14,6 +12,4 @@
   --salt-palette-negative: var(--salt-color-red-500);
   --salt-palette-negative-weaker: var(--salt-color-red-800);
   --salt-palette-negative-weakest: var(--salt-color-red-900);
-
-  --salt-palette-negative-action-hover: var(--salt-color-red-900);
 }
