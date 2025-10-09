@@ -359,13 +359,21 @@ export const Horizontal = () => {
     <StackLayout
       style={{
         width: 730,
+        height: 588,
         border: "1px solid red",
       }}
       padding={3}
       gap={3}
     >
       {header}
-      {content}
+      <div
+        style={{
+          overflowY: "auto",
+          flex: 1,
+        }}
+      >
+        {content}
+      </div>
       {actions}
     </StackLayout>
   );
