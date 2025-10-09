@@ -2,14 +2,11 @@
 "@salt-ds/theme": minor
 ---
 
-Updated action hover tokens to use their respective 100 (light) and 900 (dark) colors e.g.:
+Deprecated action hover tokens:
 
-```diff
-- --salt-palette-positive-action-hover: var(--salt-color-green-600);
-+ --salt-palette-positive-action-hover: var(--salt-color-green-100);
-```
+- `--salt-palette-warning-action-hover`
+- `--salt-palette-neutral-action-hover`
+- `--salt-palette-positive-action-hover`
+- `--salt-palette-accent-action-hover`
 
-```diff
-- --salt-palette-positive-action-hover: var(--salt-color-green-600);
-+ --salt-palette-positive-action-hover: var(--salt-color-green-900);
-```
+Use the respective weaker tokens instead e.g. `--salt-palette-accent-action-hover` becomes `--salt-palette-accent-weakest`.
