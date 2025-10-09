@@ -55,13 +55,27 @@ Then wrap your Highcharts with `highcharts-theme-salt` class name as shown below
 
 ## useChart hook
 
-Wrap your Highcharts options with the `useChart` hook to ensure the theme is applied correctly.
+Use the `useChart` hook to apply the Salt theme to your Highcharts. The hook merges your chart options with the default Salt theme options and handles density changes automatically.
 
 ```jsx
+import { useRef } from "react";
 import { useChart } from "@salt-ds/highcharts-theme";
+import HighchartsReact from "highcharts-react-official";
 
-const options = useChart(yourChartSpecificOptions);
+const chartRef = useRef(null);
+const options = useChart(chartRef, yourChartSpecificOptions);
+
+return (
+  <div className="highcharts-theme-salt">
+    <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />
+  </div>
+);
 ```
+
+The `useChart` hook takes two parameters:
+
+- `chartRef`: A ref object to be attached to the `HighchartsReact` component
+- `chartOptions`: Your chart-specific options
 
 See [examples](./examples) and the [Highcharts options](https://www.highcharts.com/docs/getting-started/how-to-set-options) documentation for more information.
 
@@ -71,7 +85,7 @@ The Salt Highcharts theme provides patterns and fills that can be applied to cre
 
 ### Line patterns
 
-To apply line patterns to charts such as LineChart, apply the `salt-line-patterns` class name to the chart container.
+To apply line patterns to line charts, apply the `salt-line-patterns` class name to the chart container.
 
 ```jsx
 <div className="highcharts-theme-salt salt-line-patterns">
@@ -81,7 +95,7 @@ To apply line patterns to charts such as LineChart, apply the `salt-line-pattern
 
 ### Fill patterns
 
-To apply fill patterns to charts such as DonutChart, apply the `salt-fill-patterns` class name to the chart container.
+To apply fill patterns to charts, for example the donut chart, apply the `salt-fill-patterns` class name to the chart container.
 
 ```jsx
 <div className="highcharts-theme-salt salt-fill-patterns">
