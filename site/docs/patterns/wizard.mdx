@@ -14,54 +14,84 @@ data:
   components: ["Button Bar", "Dialog", "Stepper"]
 ---
 
+<Diagram
+  src="/img/patterns/wizard/wizard-pattern-example.png"
+  alt="Wizard pattern example"
+  border
+  background="secondary"
+/>
+
 ## When to use
 
 Use wizard to guide users through a series of steps or tasks in a specific, linear order, often with the goal of completing a complex process (e.g., software installation, account setting/onboarding, checkout). Users must complete each step in order before moving to the next.
 
 ## How to build
 
-### Trigger element
-
-Provide an actionable component, such as a button or menu item, to launch the wizard—making sure the label matches the workflow title.
-
 ### Anatomy
 
 Wizard contains:
-1. Workflow title: features a standardised workflow title consistent across steps.
-2. Step title: to reflect the current step which vary per step.
-3. Stepper: to reflect status and progress through steps.
-4. Content area: opens over the application content, focusing the user’s attention on a particular task or piece of information.
-5. Button bar: possible actions for users to take. See more details about button options and order in Button bar pattern page.
+1. **Workflow title**: use a standardized, actionable title that clearly reflects the intent of the wizard (e.g., “Create a new account”). The title should remain consistent across all steps to maintain context.
+2. **Step title**: to reflect the current step which vary per step. Step titles should be concise, descriptive, and clearly reflect the purpose of each step. Use plain language that is easy for users to understand. 
+3. **Stepper**: to reflect status and progress through steps. 
+4. **Content area**: displays the relevant application content for the current step, guiding the user’s attention to a specific task or piece of information. Ensure the content is focused, uncluttered, and directly supports the user’s progress through the wizard.
+5. **Button bar**: possible actions for users to take. The button bar should behave the same across contexts, ensuring users have predictable access to navigation and primary/secondary actions.
+
+<Diagram
+  src="/img/patterns/wizard/wizard-pattern-anatomy.png"
+  alt="Wizard pattern anatomy"
+  border
+  background="secondary"
+/>
 
 ## Container
 
 A wizard can be displayed inside different containers such as dialogs, pages, or panels. Regardless of container, the arrangement of internal components and interactions remains consistent.
 
 ## Layout
-- Refer to header block pattern to have a standardised workflow title, consistent across steps, and step titles which vary per step.
-- Use a stepper component to display the steps of the flow. 
-- Use a button bar pattern to display any actions at the bottom of the dialog. The button bar should behave the same across contexts, ensuring users have predictable access to navigation and primary/secondary actions. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
+- Refer to [header block](/salt/patterns/header-block) pattern to have a standardised workflow title, consistent across steps, and step titles which vary per step.
+- Use a [stepper](/salt/components/stepper) component to display the steps of the flow. 
+- Use a [button bar](/salt/patterns/button-bar) pattern to display any actions at the bottom of the dialog. See more details about button options and order in Button bar pattern page.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+- Confirm completion of the wizard if the task is critical, you can show the confirmation within a dialog or on a new page, with a read-only summary. 
+- Only display one wizard at a time, and avoid linking from one wizard to another.
+</GuidanceCallout>
 
 ## Horizontal stepper vs vertical stepper
 
-We recommend to use horizontal stepper for shorter and simpler tasks. On the other hand, we recommend to use vertical stepper to break down the steps and substeps for a more lengthy and complex task flow.
+We recommend using a horizontal stepper for shorter and simpler tasks. For more lengthy and complex task flows, use a vertical stepper to break down the process into steps and substeps.
 
-## Responsive behavior
+### The number of steps
 
-The wizard is responsive to the size of its parent container, filling its width 100%. The height dynamically fills the available viewport space below the wizard.
+Most effective wizards display 3–5 steps, balancing user engagement and task completion while managing cognitive load.
+
+For simpler flows, a horizontal stepper with fewer steps is usually sufficient. If your process involves a large amount of content, consider using a vertical stepper and a wide, shallow structure. This means breaking the process into more steps with fewer fields per step (for example, 8 steps with 2 forms each), and using substeps to group closely related sections. This approach, supported by Miller’s Law (7 ± 2), helps reduce cognitive load and improves usability compared to having fewer steps with many fields (such as 3 steps with 20 forms).
 
 ## Content area scrolling
 
-Fix the button bar at the bottom of the viewport, so users can always reach the actions with a scrolling content area. Check out the Fixed way in Button bar position. 
+To improve usability in wizards with lengthy content, fix the button bar at the bottom of the viewport—refer to the fixed approach in Button bar position—so users can always access actions. Allow the main content area to scroll as needed, but avoid duplicative scrollbars (for example, both in the browser and within the wizard). This keeps the interface clean and ensures actions remain accessible at all times.
 
+## Modal
+
+You can use a dialog component as a structure base for a modal wizard with horizontal stepper when you need to insert the wizard within another task or flow. The header in the dialog should include the wizard title and stepper. To avoid confusion, we recommend omitting the close button and relying on the cancel button instead.
+
+For shorter tasks that temporarily become the user’s main focus, a modal experience is preferable, as it prevents interaction with the rest of the UI and helps focus the user’s attention on the specific task or information at hand.
+
+## Multicolumn behaviour
+
+For guidance on displaying form fields across multiple columns within a wizard, refer to [forms pattern](/salt/patterns/forms#multiple-columns). It provides recommendations for multicolumn layouts, including when to use them—such as for experienced users, routine tasks, or when vertical space is limited and scrolling should be minimized.
 
 ## Optional step
 
 When a step is entirely optional and contains no required fields, you can indicate this with the “Optional” text beneath the step title (in stepper) and allow users to skip it by clicking the Next button. If an error or warning message must display, it temporarily obscures the “Optional” text until the issue is resolved.
 
+<GuidanceCallout type="positive" customPillText="Best practices">
+If required fields are clearly indicated, it is not necessary to add an "optional" label to every other field. Use the "optional" label only when it helps clarify which fields are not mandatory, ensuring the form remains clear and uncluttered.
+</GuidanceCallout>
+
 ## Validation state
 
-### warning
+### Warning
 
 If a step contains a warning, the step in the stepper should reflect it. The next button remains enabled, as the next step can be accessed without the issue being resolved.
 
@@ -103,9 +133,7 @@ When a step is entirely optional and contains no required fields, you can indica
 
 ### Warning
 
-If a step contains a warning, the step in the stepper should reflect it. The next button remains enabled, as the next step can be accessed without the issue being resolved.
-
-The trigger that causes the step to reflect a warning state depends upon whether real-time validation or validation on submission is used.
+If a step contains a warning, you can indicate the text “Warning” under the step in the stepper as an option. The next button remains enabled, as the next step can be accessed without the issue being resolved.
 
 ### Real-time error
 
@@ -113,11 +141,15 @@ The stepper and the button bar update to reflect an inline error, or resolution.
 
 ### Submission error
 
-When the user actions the button with final action and the validation is unsuccessful, the step in the stepper reflects an error state and the button disables. The final action button must be actioned again to confirm if the change validates successfully. If it does, the next step displays. If it doesn’t, an inline error is once again reflected.
+When the user click the button with final action and the validation is unsuccessful, the step in the stepper reflects an error state and the button disables. The final action button must be clicked again to confirm if the change validates successfully. If it does, the next step displays. If it doesn’t, an inline error is once again reflected.
 
 ## Cancel warning
 
 When the user click the cancel button, include a cancellation warning if there’s a risk of user-inputted data being lost on accidental cancel. This is particularly relevant if saving is not supported.
+
+### 1. Wizard with the warning dialog
+
+### 2. Modal Wizard with the content change
 
 ## Repositioned Stepper
 

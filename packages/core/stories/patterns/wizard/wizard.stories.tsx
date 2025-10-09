@@ -358,7 +358,7 @@ export const Horizontal = () => {
   return (
     <StackLayout
       style={{
-        width: "730px",
+        width: 730,
         border: "1px solid red",
       }}
       padding={3}
