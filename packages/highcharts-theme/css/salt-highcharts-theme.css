@@ -168,6 +168,12 @@
   font-family: var(--salt-text-label-fontFamily);
 }
 
+/* Bubble chart data labels use primary foreground for better visibility */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
+.highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
+  fill: var(--salt-content-primary-foreground);
+}
+
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
 .highcharts-theme-salt .highcharts-legend-item-hidden span {
   /* Highcharts default CSS uses !important for fill/stroke; mirror to override */

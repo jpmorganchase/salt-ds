@@ -17,76 +17,85 @@ const options: Options = {
     type: "bubble",
   },
   title: {
-    text: "GDP vs life expectancy (bubble size = population)",
+    text: "Asset class risk-return profile (bubble size = market cap)",
   },
   accessibility: {
     description:
-      "A bubble chart showing the relationship between GDP per capita (x-axis) and life expectancy (y-axis). The bubble size represents population in millions.",
+      "A bubble chart showing the relationship between risk (x-axis) and expected return (y-axis). The bubble size represents market capitalization in trillions of dollars.",
   },
   xAxis: {
-    title: { text: "GDP per capita ($ thousands)" },
+    title: { text: "Risk score" },
     labels: {
       format: "{value}",
     },
-    accessibility: { description: "GDP per capita in thousands of USD" },
-    startOnTick: true,
-    endOnTick: true,
+    accessibility: { description: "Risk score from 1 to 10" },
+    min: 0,
+    max: 10,
+    tickInterval: 2,
     tickWidth: 0,
   },
   yAxis: {
-    title: { text: "Life expectancy (years)" },
+    title: { text: "Expected return (%)" },
     labels: {
       format: "{value}",
     },
-    min: 50,
-    max: 85,
-    startOnTick: true,
-    endOnTick: true,
+    min: 0,
+    max: 16,
+    tickInterval: 4,
   },
   legend: { enabled: true },
   plotOptions: {
     bubble: {
       lineWidth: 0,
+      dataLabels: {
+        enabled: true,
+        format: "{point.name}",
+      },
+      minSize: 50,
+      maxSize: 90,
     },
   },
   tooltip: {
-    useHTML: true,
     headerFormat: "<span>{series.name}</span><br/>",
     pointFormat:
       "<span>{point.name}</span><br/>" +
-      '<span>GDP per capita: </span><span class="value">{point.x}k</span><br/>' +
-      '<span>Life expectancy: </span><span class="value">{point.y} yrs</span><br/>' +
-      '<span>Population: </span><span class="value">{point.z}M</span>',
+      '<span>Risk: </span><span class="value">{point.x}</span><br/>' +
+      '<span>Return: </span><span class="value">{point.y}%</span><br/>' +
+      '<span>Market cap: </span><span class="value">&#36;{point.z}T</span>',
   },
   series: [
     {
       type: "bubble",
-      name: "Americas",
+      name: "Equity",
       data: [
-        { name: "USA", x: 63, y: 79, z: 331 },
-        { name: "Canada", x: 52, y: 82, z: 38 },
-        { name: "Brazil", x: 9, y: 76, z: 213 },
-        { name: "Mexico", x: 10, y: 75, z: 128 },
+        { name: "Stocks", x: 6.5, y: 10, z: 45 },
+        { name: "Tech", x: 7.5, y: 12.5, z: 18 },
+        { name: "Small", x: 8, y: 9, z: 3 },
+        { name: "Mid", x: 5.5, y: 11.5, z: 5 },
+        { name: "Intl", x: 7, y: 8, z: 4 },
       ],
     },
     {
       type: "bubble",
-      name: "Europe",
+      name: "Fixed Income",
       data: [
-        { name: "Germany", x: 53, y: 81, z: 83 },
-        { name: "UK", x: 47, y: 81, z: 67 },
-        { name: "France", x: 45, y: 82, z: 65 },
-        { name: "Italy", x: 36, y: 83, z: 60 },
+        { name: "Bonds", x: 2, y: 8, z: 25 },
+        { name: "Cash", x: 1, y: 6.4, z: 12 },
+        { name: "TIPS", x: 2.5, y: 5, z: 3 },
+        { name: "Muni", x: 1.5, y: 4, z: 4 },
+        { name: "Short", x: 0.7, y: 3, z: 6 },
       ],
     },
     {
       type: "bubble",
-      name: "APAC",
+      name: "Alternative",
       data: [
-        { name: "Japan", x: 41, y: 84, z: 126 },
-        { name: "China", x: 12, y: 77, z: 1441 },
-        { name: "India", x: 2.2, y: 70, z: 1393 },
-        { name: "Australia", x: 62, y: 83, z: 26 },
+        { name: "Crypto", x: 8.5, y: 14, z: 2 },
+        { name: "RE", x: 4, y: 5, z: 8 },
+        { name: "Commod", x: 4.7, y: 8.5, z: 8 },
+        { name: "Gold", x: 3.2, y: 6, z: 3 },
+        { name: "PE", x: 6, y: 13, z: 4 },
+        { name: "VC", x: 9.4, y: 13, z: 1 },
       ],
     },
   ],
