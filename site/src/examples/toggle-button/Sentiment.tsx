@@ -3,9 +3,6 @@ import type { ReactElement } from "react";
 
 export const Sentiment = (): ReactElement => (
   <FlexLayout>
-    <ToggleButton value="accented" sentiment="accented">
-      Accented
-    </ToggleButton>
     <ToggleButton value="positive" sentiment="positive">
       Positive
     </ToggleButton>

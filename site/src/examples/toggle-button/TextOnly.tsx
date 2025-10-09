@@ -3,7 +3,6 @@ import { type ReactElement, useState } from "react";
 
 export const TextOnly = (): ReactElement => {
   const [pinned, setPinned] = useState(false);
-  const [locked, setLocked] = useState(false);
 
   return (
     <FlowLayout>
@@ -11,16 +10,9 @@ export const TextOnly = (): ReactElement => {
         value={pinned ? "pinned" : "unpinned"}
         onChange={() => setPinned(!pinned)}
         selected={pinned}
+        style={{ minWidth: "9ch" }}
       >
         {pinned ? "Pinned" : "Pin"}
-      </ToggleButton>
-      <ToggleButton value="favorite">Favorite</ToggleButton>
-      <ToggleButton
-        onChange={() => setLocked(!locked)}
-        value={locked ? "unlocked" : "locked"}
-        selected={locked}
-      >
-        {locked ? "Unlock" : "Lock"}
       </ToggleButton>
     </FlowLayout>
   );
