@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useInjectedClassName,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -110,11 +113,20 @@ function variantToAppearanceAndColor(
   }
 }
 
+declare module "@salt-ds/core" {
+  interface ComponentPropMap {
+    Button: ButtonProps;
+  }
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(
-    {
+  function Button(props, ref?): ReactElement<ButtonProps> {
+    const { className, props: finalProps } = useInjectedClassName(
+      "saltButton",
+      props,
+    );
+    const {
       children,
-      className,
       disabled,
       focusableWhenDisabled,
       onKeyUp,
@@ -128,9 +140,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type: typeProp = "button",
       variant = "primary",
       ...restProps
-    },
-    ref?,
-  ): ReactElement<ButtonProps> {
+    } = finalProps;
+
     const { active, buttonProps } = useButton({
       loading,
       disabled,
