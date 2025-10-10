@@ -1,3 +1,4 @@
+import "./wizard.stories.css";
 import {
   Button,
   Dialog,
@@ -356,25 +357,10 @@ export const Horizontal = () => {
   );
 
   return (
-    <StackLayout
-      style={{
-        width: 730,
-        height: 588,
-        border: "1px solid red",
-      }}
-      padding={3}
-      gap={3}
-    >
-      {header}
-      <div
-        style={{
-          overflowY: "auto",
-          flex: 1,
-        }}
-      >
-        {content}
-      </div>
-      {actions}
+    <StackLayout className="container" gap={0}>
+      <div className="header">{header}</div>
+      <div className="content">{content}</div>
+      <div className="actions">{actions}</div>
     </StackLayout>
   );
 };
@@ -428,7 +414,7 @@ export const Modal = () => {
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogHeader
           header="Workflow title"
-          preheader="Preheader"
+          preheader="Create a new account"
           description="Description"
           actions={<StepperExample />}
         />
