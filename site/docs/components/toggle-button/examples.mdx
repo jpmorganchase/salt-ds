@@ -90,11 +90,17 @@ You can manage the state of the toggle button group externally using the `value`
 
 ## Standalone toggle button
 
-Standalone toggle buttons should be used sparingly, with the usage of other selection controls being preferred. They are best suited for situations where a single button is needed to switch between two distinct states.
+Standalone toggle buttons should be used sparingly, as other selection controls are often preferred. They are best for switching between two distinct states (i.e, yes/no, on/off, show/hid). Consider alternative controls to enhance user experience based on the context.
+
+### Alternative controls
+
+- [`Switch`](/salt/components/switch): Provides a clear visual indication of the current state and is commonly used to turn features on or off.
+- [`RadioButtonGroup`](/salt/components/radio-button): Preferred for boolean selections in forms or data input, especially when additional choices like "yes", "no" or "not applicable" are needed.
+- [`Dropdown`](/salt/components/dropdown): Ideal for boolean options when space is limited, favoring clear text labels over a simple switch.
 
 ### Best practices
 
 - Switching icon variants or entire icons based on the selection state of the toggle button can help communicate the current state of the button.
-- Follow [button](/salt/components/button)'s best practices for accessibility and interaction.
+- Follow [`Button`](/salt/components/button)'s best practices for accessibility and interaction.
 
 <LivePreview componentName="toggle-button" exampleName="ToggleButtonDefault" />
