@@ -38,7 +38,7 @@ export const MenuTrigger = forwardRef<HTMLElement, MenuTriggerProps>(
 
     return (
       <MenuTriggerContext.Provider
-        value={{ triggersSubmenu: true, blurActive: focusInside && openState }}
+        value={{ triggersSubmenu: true, blurActive: openState }}
       >
         {cloneElement(children, {
           ...mergeProps(
