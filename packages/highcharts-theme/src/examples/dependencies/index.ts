@@ -5,4 +5,5 @@ export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
 export { lineOptions } from "./lineOptions";
 export { pieOptions } from "./pieOptions";
+export { scatterChartOptions } from "./scatterOptions";
 export { stackedBarOptions } from "./stackedBarOptions";

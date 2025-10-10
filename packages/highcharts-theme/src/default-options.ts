@@ -28,6 +28,7 @@ export const getDefaultOptions = (
       title: {
         margin: tokens["--salt-spacing-200"],
       },
+      tickLength: 0,
     },
     legend: {
       layout: "vertical",
@@ -69,6 +70,12 @@ export const getDefaultOptions = (
       },
       bullet: {
         borderRadius: 0,
+      },
+      scatter: {
+        marker: {
+          // This should be a token?
+          radius: 4,
+        },
       },
     },
   };
