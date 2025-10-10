@@ -140,6 +140,11 @@
   fill: inherit !important;
 }
 
+/* Remove line across bubble series legend symbol in styled mode */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-graph {
+  stroke-width: 0;
+}
+
 /* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
 .highcharts-theme-salt .highcharts-line-series.highcharts-legend-item-hidden path {
   stroke: revert !important;
@@ -161,6 +166,12 @@
   font-weight: var(--salt-text-label-fontWeight);
   line-height: var(--salt-text-label-lineHeight);
   font-family: var(--salt-text-label-fontFamily);
+}
+
+/* Bubble chart data labels use primary foreground for better visibility */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
+.highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
+  fill: var(--salt-content-primary-foreground);
 }
 
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
@@ -244,4 +255,14 @@
 .highcharts-theme-salt .highcharts-column-series .highcharts-point-hover {
   fill-opacity: 1;
   transition: none;
+}
+
+/* Show the y-axis line when chart type has the additional .axes-grid-lines*/
+.highcharts-theme-salt .axes-grid-lines .highcharts-yaxis .highcharts-axis-line {
+  stroke-width: 1;
+}
+
+.highcharts-theme-salt .axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
+.highcharts-theme-salt .axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
+  stroke-width: 1;
 }

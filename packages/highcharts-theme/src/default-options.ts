@@ -4,6 +4,11 @@ import { getDensityTokenMap } from "./density-token-map";
 import { saltPatternDef } from "./patterns";
 import type { HighchartsOptionsCompat } from "./types";
 
+function toggleGridLines(this: Highcharts.Chart) {
+  const hasBubble = this.series.some((s) => s.type === "bubble");
+  this.container.classList.toggle("axes-grid-lines", hasBubble);
+}
+
 export const getDefaultOptions = (
   density: Density,
   hostElement?: Element | null,
@@ -14,6 +19,10 @@ export const getDefaultOptions = (
     chart: {
       styledMode: true,
       colorCount: 20,
+      events: {
+        load: toggleGridLines,
+        redraw: toggleGridLines,
+      },
     },
     defs: saltPatternDef,
     title: {
@@ -28,6 +37,7 @@ export const getDefaultOptions = (
       title: {
         margin: tokens["--salt-spacing-200"],
       },
+      tickLength: 0,
     },
     legend: {
       layout: "vertical",
