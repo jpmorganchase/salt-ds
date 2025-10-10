@@ -1,5 +1,16 @@
 # @salt-ds/core
 
+## 1.51.0
+
+### Minor Changes
+
+- fef411f: Replaced `SuccessTickIcon` usage with `SuccessCircleSolidIcon`.
+
+### Patch Changes
+
+- 61c2bad: - Fixed VerticalNavigation's indicator not growing when the item grows in height.
+  - Fixed the alignment of VerticalNavigation's expansion indicator.
+
 ## 1.50.0
 
 ### Minor Changes
