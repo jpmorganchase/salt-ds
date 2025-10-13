@@ -768,7 +768,7 @@
     "category": "actions"
   },
   {
-    "iconName": "list",
+    "iconName": "text-unordered-list",
     "synonym": ["content", "bulleted", "item", "notes"],
     "category": "organize"
   },
@@ -1920,23 +1920,23 @@
     "category": "objects"
   },
   {
-    "iconName": "close-left-panel",
+    "iconName": "panel-close-left",
     "synonym": ["collapse", "arrow", "navigation", "hide", "minimize"],
     "category": "organize"
   },
   {
-    "iconName": "close-right-panel",
+    "iconName": "panel-close-right",
     "synonym": ["collapse", "arrow", "navigation", "hide", "minimize"],
     "category": "organize"
   },
   {
     "iconName": "divide",
     "synonym": ["division", "math", "formula", "fraction", "calculate"],
-    "category": "organize"
+    "category": "data"
   },
   {
-    "iconName": "document-compose",
-    "synonym": ["create", "page", "write", "edit", "pen"],
+    "iconName": "document-edit",
+    "synonym": ["create", "page", "write", "edit", "pen", "compose"],
     "category": "documents"
   },
   {
@@ -1955,12 +1955,12 @@
   {
     "iconName": "does-not-equal",
     "synonym": ["compare", "math"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "equal",
     "synonym": ["compare", "math", "same as", "calculate"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "exponentiation",
@@ -1972,50 +1972,50 @@
       "exponential",
       "calculate"
     ],
-    "category": "organize"
+    "category": "data"
   },
   {
-    "iconName": "forward",
+    "iconName": "message-forward",
     "synonym": ["share", "arrow", "email", "message", "communication"],
-    "category": "organize"
+    "category": "communication"
   },
   {
     "iconName": "greater-than",
     "synonym": ["calculate", "math"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "greater-than-equal-to",
     "synonym": ["calculate", "math"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "infinite",
     "synonym": ["infinity", "math"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "less-than",
     "synonym": ["calculate", "math"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "less-than-equal-to",
     "synonym": ["calculate", "math"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "multiply",
     "synonym": ["times", "x", "math", "multiplication", "calculate"],
-    "category": "organize"
+    "category": "data"
   },
   {
-    "iconName": "open-left-panel",
+    "iconName": "panel-open-left",
     "synonym": ["expand", "arrow", "navigation", "show"],
     "category": "organize"
   },
   {
-    "iconName": "open-right-panel",
+    "iconName": "panel-open-right",
     "synonym": ["expand", "arrow", "navigation", "show"],
     "category": "organize"
   },
@@ -2029,27 +2029,22 @@
       "ratio",
       "calculate"
     ],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "pi",
     "synonym": ["constant", "math", "ratio", "geometry", "calculate"],
-    "category": "organize"
+    "category": "data"
   },
   {
-    "iconName": "reply",
+    "iconName": "message-reply",
     "synonym": ["respond", "arrow", "email", "communication"],
-    "category": "organize"
+    "category": "communication"
   },
   {
-    "iconName": "reply-all",
+    "iconName": "message-reply-all",
     "synonym": ["respond", "arrow", "email", "communication"],
-    "category": "organize"
-  },
-  {
-    "iconName": "reply-forward",
-    "synonym": ["share", "arrow", "email", "communication"],
-    "category": "organize"
+    "category": "communication"
   },
   {
     "iconName": "schedule",
@@ -2107,7 +2102,7 @@
     "category": "documents"
   },
   {
-    "iconName": "text-justify",
+    "iconName": "text-align-justify",
     "synonym": ["format", "typography", "justified", "font"],
     "category": "documents"
   },
@@ -2125,5 +2120,35 @@
     "iconName": "text-underline",
     "synonym": ["format", "typography", "emphasize", "font"],
     "category": "documents"
+  },
+  {
+    "iconName": "expand-all-horizontal",
+    "synonym": ["minimize", "arrow", "hide", "minus", "close"],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "collapse-all-horizontal",
+    "synonym": ["minimize", "arrow", "hide", "minus", "close"],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "panel-close-bottom",
+    "synonym": ["collapse", "arrow", "navigation", "hide", "minimize"],
+    "category": "organize"
+  },
+  {
+    "iconName": "panel-close-top",
+    "synonym": ["collapse", "arrow", "navigation", "hide", "minimize"],
+    "category": "organize"
+  },
+  {
+    "iconName": "panel-open-bottom",
+    "synonym": ["expand", "arrow", "navigation", "show"],
+    "category": "organize"
+  },
+  {
+    "iconName": "panel-open-top",
+    "synonym": ["expand", "arrow", "navigation", "show"],
+    "category": "organize"
   }
 ]

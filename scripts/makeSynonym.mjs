@@ -64,7 +64,10 @@ function getSynonymFromRow(row) {
   if (row["C"]) synonyms.add(row["C"].trim());
   if (row["D"]) synonyms.add(row["D"].trim());
   if (row["E"]) synonyms.add(row["E"].trim());
-  if (row["F"]) row["F"].split(",").forEach((s) => synonyms.add(s.trim()));
+  if (row["F"])
+    row["F"].split(",").forEach((s) => {
+      synonyms.add(s.trim());
+    });
   if (row["G"])
     synonyms.add(row["G"].split("/")[1].replaceAll("_", " ").trim());
   if (row["H"]) synonyms.add(row["H"].replaceAll("-", " ").trim());
