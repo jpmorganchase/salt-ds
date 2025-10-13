@@ -198,6 +198,9 @@ function getNumberPrecision(num: number | string) {
   return 0;
 }
 
+const defaultPattern: NumberInputProps["pattern"] = (inputValue) =>
+  /^[+-]?(\d+(\.\d*)?|\.\d*)?$/.test(inputValue);
+
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
@@ -212,8 +215,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       format: formatProp,
       hideButtons,
       id: idProp,
-      pattern = (inputValue) =>
-        /^[+-]?(\d+(\.\d*)?|\.\d*)?$/.test(inputValue),
+      pattern = defaultPattern,
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
@@ -293,12 +295,13 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       Math.max(getNumberPrecision(value), getNumberPrecision(step));
 
     const defaultFormat = (value: string): string => {
-      if (!value.length) {
+      const sanitized = value.trim();
+      if (!sanitized.length) {
         return "";
       }
-      const floatValue = Number.parseFloat(value);
+      const floatValue = Number.parseFloat(sanitized);
       const updatedValue = Number.isNaN(floatValue)
-        ? value
+        ? sanitized
         : floatValue.toFixed(decimalScale);
       return String(updatedValue);
     };
@@ -385,8 +388,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const decrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = (block ? stepMultiplier : 1) * step;
-      const preDecrementedValue = value;
-      let adjustedValue = parse(preDecrementedValue) ?? 0;
+      let adjustedValue = parse(value) ?? 0;
       if (Number.isNaN(adjustedValue)) {
         return;
       }
@@ -633,9 +635,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               aria-label={"increment value"}
               appearance="transparent"
               tabIndex={-1}
-              className={clsx(withBaseName("increment"), {
-                [withBaseName("increment-disabled")]: disableIncrement,
-              })}
+              disabled={disableIncrement}
+              className={withBaseName("increment")}
               onMouseDown={(event) =>
                 handleIncrementMouseDown(event, disableIncrement)
               }
@@ -647,9 +648,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               aria-label={"decrement value"}
               appearance="transparent"
               tabIndex={-1}
-              className={clsx(withBaseName("decrement"), {
-                [withBaseName("decrement-disabled")]: disableDecrement,
-              })}
+              disabled={disableDecrement}
+              className={withBaseName("decrement")}
               onMouseDown={(event) =>
                 handleDecrementMouseDown(event, disableDecrement)
               }

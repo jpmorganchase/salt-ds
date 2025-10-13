@@ -15,20 +15,15 @@ export const MinMax = () => {
   const max = 5;
   const min = 0;
 
-  const getValidationStatus = () => {
-    const currentValue = Number.parseFloat(value);
-    if (
-      !Number.isNaN(currentValue) &&
-      (currentValue > max || currentValue < min)
-    ) {
-      return "error";
-    }
-    return undefined;
-  };
+  const currentValue = Number.parseFloat(value);
+  const validationStatus =
+    !Number.isNaN(currentValue) && (currentValue > max || currentValue < min)
+      ? "error"
+      : undefined;
 
   return (
     <FormField
-      validationStatus={getValidationStatus()}
+      validationStatus={validationStatus}
       style={{ width: "256px" }}
     >
       <FormFieldLabel>Number input with limited range</FormFieldLabel>

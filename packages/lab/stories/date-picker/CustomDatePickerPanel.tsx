@@ -74,7 +74,6 @@ export const CustomDatePickerPanel = forwardRef<
               List header
             </FormFieldLabel>
             <ListBox
-              tabIndex={0}
               style={{ width: "10em" }}
               onSelectionChange={(event, item) => {
                 if (!item) {
