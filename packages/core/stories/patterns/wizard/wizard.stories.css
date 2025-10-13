@@ -1,23 +1,19 @@
 .container {
   width: 730px;
   height: 588px;
-  border: 1px solid red;
   padding: var(--salt-spacing-300) 0;
 }
 
 .header {
   padding: 0 var(--salt-spacing-300) var(--salt-spacing-300);
-  border: 1px dashed blue;
 }
 
 .content {
   overflow-y: auto;
   flex: 1;
   padding: 0 var(--salt-spacing-300) 0;
-  border: 1px dashed green;
 }
 
 .actions {
   padding: var(--salt-spacing-300) var(--salt-spacing-300) 0;
-  border: 1px dashed rgb(90, 69, 0);
 }

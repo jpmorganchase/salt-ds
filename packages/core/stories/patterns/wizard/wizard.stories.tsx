@@ -37,8 +37,8 @@ export default {
   title: "Patterns/Wizard",
 } as Meta;
 
-const AdditionalInfoContent = () => (
-  <FlowLayout style={{ width: "253px" }}>
+const AdditionalInfoContent = ({ style }: { style?: React.CSSProperties }) => (
+  <FlowLayout style={style}>
     <FormField necessity="optional">
       <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
       <Input placeholder="0.00" startAdornment={<Text>$</Text>} />
@@ -210,93 +210,74 @@ const CreateAccountContent = () => (
 const ReviewAccountContent = () => (
   <GridLayout columns={2}>
     <GridItem>
-      <FormField>
-        <FormFieldLabel>Full name</FormFieldLabel>
-        <Input defaultValue="Jane Doe" />
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Date of Birth</FormFieldLabel>
-        <DatePicker selectionVariant="single">
-          <DatePickerTrigger>
-            <DatePickerSingleInput />
-          </DatePickerTrigger>
-          <DatePickerOverlay>
-            <DatePickerSingleGridPanel helperText="Date format DD MMM YYYY (e.g. 09 Jun 2024)" />
-          </DatePickerOverlay>
-        </DatePicker>
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Phone Number</FormFieldLabel>
-        <Input defaultValue="Jane Doe" />
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Date of Birth</FormFieldLabel>
-        <Input defaultValue="+1 (212) 555-0100" />
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Email Address</FormFieldLabel>
-        <Input defaultValue="jane.doe@email.com" />
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Address 1</FormFieldLabel>
-        <Input defaultValue="Value text" />
-      </FormField>
-      <FormField necessity="optional">
-        <FormFieldLabel>Address 2</FormFieldLabel>
-        <Input defaultValue="Value text" />
-        <FormFieldHelperText>
-          Flat, Apt, Suite, Floor, Building etc.
-        </FormFieldHelperText>
-      </FormField>
-
-      <FlexLayout>
+      <StackLayout gap={3}>
         <FormField>
-          <FormFieldLabel>Postal code/PLZ</FormFieldLabel>
-          <Input defaultValue="E14 5JP" />
+          <FormFieldLabel>Full name</FormFieldLabel>
+          <Input defaultValue="Jane Doe" />
         </FormField>
         <FormField>
-          <FormFieldLabel>Town/City</FormFieldLabel>
-          <Input defaultValue="London" />
-          <FormFieldHelperText>Locality, Settlement etc.</FormFieldHelperText>
+          <FormFieldLabel>Date of Birth</FormFieldLabel>
+          <DatePicker selectionVariant="single">
+            <DatePickerTrigger>
+              <DatePickerSingleInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerSingleGridPanel helperText="Date format DD MMM YYYY (e.g. 09 Jun 2024)" />
+            </DatePickerOverlay>
+          </DatePicker>
         </FormField>
-      </FlexLayout>
+        <FormField>
+          <FormFieldLabel>Phone Number</FormFieldLabel>
+          <Input defaultValue="Jane Doe" />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Date of Birth</FormFieldLabel>
+          <Input defaultValue="+1 (212) 555-0100" />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Email Address</FormFieldLabel>
+          <Input defaultValue="jane.doe@email.com" />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Address 1</FormFieldLabel>
+          <Input defaultValue="Value text" />
+        </FormField>
+        <FormField necessity="optional">
+          <FormFieldLabel>Address 2</FormFieldLabel>
+          <Input defaultValue="Value text" />
+          <FormFieldHelperText>
+            Flat, Apt, Suite, Floor, Building etc.
+          </FormFieldHelperText>
+        </FormField>
 
-      <FormField>
-        <FormFieldLabel>Country</FormFieldLabel>
-        <Dropdown defaultSelected={["United Kingdom"]}>
-          <Option value="United Kingdom">United Kingdom</Option>
-        </Dropdown>
-      </FormField>
+        <FlexLayout>
+          <FormField>
+            <FormFieldLabel>Postal code/PLZ</FormFieldLabel>
+            <Input defaultValue="E14 5JP" />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Town/City</FormFieldLabel>
+            <Input defaultValue="London" />
+            <FormFieldHelperText>Locality, Settlement etc.</FormFieldHelperText>
+          </FormField>
+        </FlexLayout>
+
+        <FormField>
+          <FormFieldLabel>Country</FormFieldLabel>
+          <Dropdown defaultSelected={["United Kingdom"]}>
+            <Option value="United Kingdom">United Kingdom</Option>
+          </Dropdown>
+        </FormField>
+      </StackLayout>
     </GridItem>
 
     <GridItem>
-      {/* Account type */}
-      <AccountTypeContent />
-      {/* Additional info */}
-      <AdditionalInfoContent />
+      <StackLayout gap={3}>
+        <AccountTypeContent />
+        <AdditionalInfoContent />
+      </StackLayout>
     </GridItem>
   </GridLayout>
-);
-
-const StepperExample = () => (
-  <Stepper orientation="horizontal" style={{ width: 340 }}>
-    <Step label="Account details" stage="completed" />
-    <Step label="Account type" stage="completed" />
-    <Step label="Additional info" stage="pending" />
-    <Step label="Review and create" stage="pending" />
-  </Stepper>
-);
-
-const HeaderBlock = ({ title }: { title: string }) => (
-  <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
-    <div>
-      <Text>Create a new account</Text>
-      <Text color="secondary" styleAs="h2">
-        {title}
-      </Text>
-    </div>
-    <StepperExample />
-  </FlexLayout>
 );
 
 export const Horizontal = () => {
@@ -315,7 +296,7 @@ export const Horizontal = () => {
     {
       id: "additional-info",
       label: "Additional info",
-      content: <AdditionalInfoContent />,
+      content: <AdditionalInfoContent style={{ width: "50%" }} />,
     },
     {
       id: "review",
@@ -324,7 +305,32 @@ export const Horizontal = () => {
     },
   ];
 
-  const header = <HeaderBlock title={allSteps[activeStep].label} />;
+  const header = (
+    <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
+      <div>
+        <Text>Create a new account</Text>
+        <Text color="secondary" styleAs="h2">
+          {allSteps[activeStep].label}
+        </Text>
+      </div>
+      <Stepper orientation="horizontal" style={{ width: 340 }}>
+        {allSteps.map((step, index) => (
+          <Step
+            key={step.id}
+            label={step.label}
+            stage={
+              index === activeStep
+                ? "active"
+                : index < activeStep
+                  ? "completed"
+                  : "pending"
+            }
+          />
+        ))}
+      </Stepper>
+    </FlexLayout>
+  );
+
   const content = allSteps[activeStep].content;
 
   const nextStep = () =>
@@ -365,9 +371,31 @@ export const Horizontal = () => {
   );
 };
 
-// export const Vertical = () => {};
 export const Modal = () => {
   const [open, setOpen] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const allSteps = [
+    {
+      id: "account-details",
+      label: "Account details",
+      content: <CreateAccountContent />,
+    },
+    {
+      id: "account-type",
+      label: "Account type",
+      content: <AccountTypeContent />,
+    },
+    {
+      id: "additional-info",
+      label: "Additional info",
+      content: <AdditionalInfoContent style={{ width: "50%" }} />,
+    },
+    {
+      id: "review",
+      label: "Review and create",
+      content: <ReviewAccountContent />,
+    },
+  ];
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -377,9 +405,16 @@ export const Modal = () => {
     setOpen(value);
   };
 
-  const handleClose = () => {
+  const handleCancel = () => {
     setOpen(false);
   };
+
+  const content = allSteps[activeStep].content;
+
+  const nextStep = () =>
+    activeStep < allSteps.length - 1 && setActiveStep(activeStep + 1);
+  const previousStep = () => activeStep > 0 && setActiveStep(activeStep - 1);
+  // const resetSteps = () => setActiveStep(0);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -391,19 +426,41 @@ export const Modal = () => {
     );
 
   const cancel = (
-    <Button sentiment="accented" appearance="transparent" onClick={handleClose}>
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={handleCancel}
+    >
       Cancel
     </Button>
   );
-  const previous = (
-    <Button sentiment="accented" appearance="bordered" onClick={handleClose}>
+  const previous = activeStep > 0 && (
+    <Button sentiment="accented" appearance="bordered" onClick={previousStep}>
       Previous
     </Button>
   );
   const next = (
-    <Button sentiment="accented" onClick={handleClose}>
+    <Button sentiment="accented" onClick={nextStep}>
       Next
     </Button>
+  );
+
+  const stepperComponent = (
+    <Stepper orientation="horizontal" style={{ width: 300 }}>
+      {allSteps.map((step, index) => (
+        <Step
+          key={step.id}
+          label={step.label}
+          stage={
+            index === activeStep
+              ? "active"
+              : index < activeStep
+                ? "completed"
+                : "pending"
+          }
+        />
+      ))}
+    </Stepper>
   );
 
   return (
@@ -413,14 +470,11 @@ export const Modal = () => {
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogHeader
-          header="Workflow title"
+          header={allSteps[activeStep].label}
           preheader="Create a new account"
-          description="Description"
-          actions={<StepperExample />}
+          actions={stepperComponent}
         />
-        <DialogContent>
-          <AccountTypeContent />
-        </DialogContent>
+        <DialogContent style={{ height: 400 }}>{content}</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
