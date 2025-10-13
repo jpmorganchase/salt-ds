@@ -8,10 +8,7 @@ export default {
 } as Meta<typeof NumberInput>;
 
 const formatWithDecimalScale =
-  (decimalScale: number) => (value: string | null) => {
-    if (value === null) {
-      return "";
-    }
+  (decimalScale: number) => (value: string) => {
     const floatValue = Number.parseFloat(value);
     if (Number.isNaN(floatValue)) {
       return "";

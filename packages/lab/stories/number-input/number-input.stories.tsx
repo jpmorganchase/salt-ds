@@ -144,16 +144,14 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
   const max = 5;
   const min = 0;
 
-  const getValidationStatus = () => {
-    const currentValue = Number.parseFloat(value);
-    if (!isNaN(currentValue) && (currentValue > max || currentValue < min)) {
-      return "error";
-    }
-    return undefined;
-  };
+  const currentValue = Number.parseFloat(value);
+  const validationStatus =
+    !Number.isNaN(currentValue) && (currentValue > max || currentValue < min)
+      ? "error"
+      : undefined;
 
   return (
-    <FormField validationStatus={getValidationStatus()}>
+    <FormField validationStatus={validationStatus}>
       <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput
         {...args}
