@@ -33,7 +33,7 @@ export type Item = {
 type NestedItemProps = {
   item: Item;
   selectedNodeId?: string;
-  selectedGroupIds?: Set<string>;
+  selectedGroupIds: Set<string>;
 };
 
 export type VerticalNavigationProps = {
@@ -55,7 +55,7 @@ const NestedItem = ({
 
   const { title, status, href, children } = item;
   const isItemActive = selectedNodeId === href;
-  const isGroupActive = selectedGroupIds?.has(href) ?? false;
+  const isGroupActive = selectedGroupIds.has(href) ?? false;
 
   if (Array.isArray(children) && children.length > 0) {
     return (
@@ -120,8 +120,6 @@ export const VerticalNavigation = ({
   selectedNodeId,
   selectedGroupIds,
 }: VerticalNavigationProps) => {
-  console.log({ selectedGroupIds });
-
   const mappedNavData = mapMenu(menu);
 
   const normalizedSelectedNodeId = normalizeSelectedNodeId(
