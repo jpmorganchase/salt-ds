@@ -17,3 +17,19 @@
 .actions {
   padding: var(--salt-spacing-300) var(--salt-spacing-300) 0;
 }
+
+.verticalContainer {
+  width: 850px;
+  height: 588px;
+  padding: var(--salt-spacing-300) 0;
+  border: 1px solid blue;
+}
+
+.contentVerticalContainer {
+  flex: 1;
+  overflow-y: hidden;
+}
+
+.contentVertical {
+  overflow-y: auto;
+}

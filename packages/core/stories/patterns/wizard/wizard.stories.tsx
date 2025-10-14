@@ -21,6 +21,7 @@ import {
   type StackLayoutProps,
   Step,
   Stepper,
+  type StepperOrientation,
   Text,
   useResponsiveProp,
 } from "@salt-ds/core";
@@ -37,6 +38,41 @@ import { type ElementType, useState } from "react";
 export default {
   title: "Patterns/Wizard",
 } as Meta;
+
+const StepperComponent = ({
+  steps,
+  orientation,
+  activeStep,
+  style,
+}: {
+  orientation: StepperOrientation;
+  steps: {
+    id: string;
+    label: string;
+    content: React.ReactNode;
+    hidden?: boolean;
+  }[];
+  activeStep: number;
+  style?: React.CSSProperties;
+}) => (
+  <Stepper orientation={orientation} style={style}>
+    {steps
+      .filter((step) => !step.hidden)
+      .map((step, index) => (
+        <Step
+          key={step.id}
+          label={step.label}
+          stage={
+            index === activeStep
+              ? "active"
+              : index < activeStep
+                ? "completed"
+                : "pending"
+          }
+        />
+      ))}
+  </Stepper>
+);
 
 const CancelWarningDialog = ({
   open,
@@ -118,7 +154,12 @@ const AccountCreatedSuccessDialog = ({
 
 const AccountCreatedContent = () => (
   <StackLayout align="center">
-    <SuccessCircleSolidIcon size={2} />
+    <SuccessCircleSolidIcon
+      size={2}
+      style={{
+        color: "var(--salt-color-green-500)",
+      }}
+    />
     <Text styleAs="h2">Account created</Text>
     <Text>You can now start using this new account.</Text>
   </StackLayout>
@@ -461,7 +502,7 @@ export const Horizontal = () => {
         sentiment="accented"
         onClick={isLastStep ? handleSuccess : nextStep}
       >
-        Next
+        {isLastStep ? "Create" : "Next"}
       </Button>
     </FlexLayout>
   );
@@ -471,6 +512,115 @@ export const Horizontal = () => {
       <StackLayout className="container" gap={0}>
         <div className="header">{header}</div>
         <div className="content">{content}</div>
+        <div className="actions">{actions}</div>
+      </StackLayout>
+      <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
+      <AccountCreatedSuccessDialog
+        open={successOpen}
+        onOpenChange={setSuccessOpen}
+      />
+    </>
+  );
+};
+
+export const Vertical = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const [cancelOpen, setCancelOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
+
+  const allSteps = [
+    {
+      id: "account-details",
+      label: "Account details",
+      content: <CreateAccountContent />,
+    },
+    {
+      id: "account-type",
+      label: "Account type",
+      content: <AccountTypeContent />,
+    },
+    {
+      id: "additional-info",
+      label: "Additional info",
+      content: <AdditionalInfoContent style={{ width: "50%" }} />,
+    },
+    {
+      id: "review",
+      label: "Review and create",
+      content: <ReviewAccountContent />,
+    },
+  ];
+
+  const isLastStep = activeStep === allSteps.length - 1;
+
+  const nextStep = () =>
+    activeStep < allSteps.length - 1 &&
+    setActiveStep((prevStep) => prevStep + 1);
+  const previousStep = () =>
+    activeStep > 0 && setActiveStep((prevStep) => prevStep - 1);
+  // const resetSteps = () => setActiveStep(0);
+
+  const handleCancel = () => {
+    setCancelOpen(true);
+  };
+
+  const handleSuccess = () => {
+    setSuccessOpen(true);
+  };
+
+  const actions = (
+    <FlexLayout gap={1} justify="end">
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={handleCancel}
+      >
+        Cancel
+      </Button>
+      {activeStep > 0 && (
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={previousStep}
+        >
+          Previous
+        </Button>
+      )}
+      <Button
+        sentiment="accented"
+        onClick={isLastStep ? handleSuccess : nextStep}
+      >
+        {isLastStep ? "Create" : "Next"}
+      </Button>
+    </FlexLayout>
+  );
+
+  const content = allSteps[activeStep].content;
+  const header = (
+    <StackLayout gap={0}>
+      <Text>Create a new account</Text>
+      <Text color="secondary" styleAs="h2">
+        {allSteps[activeStep].label}
+      </Text>
+    </StackLayout>
+  );
+
+  return (
+    <>
+      <StackLayout className="verticalContainer">
+        <div className="header">{header}</div>
+        <GridLayout columns={3} gap={0} className="contentVerticalContainer">
+          <GridItem>
+            <StepperComponent
+              orientation="vertical"
+              steps={allSteps}
+              activeStep={activeStep}
+            />
+          </GridItem>
+          <GridItem colSpan={2} className="contentVertical">
+            {content}
+          </GridItem>
+        </GridLayout>
         <div className="actions">{actions}</div>
       </StackLayout>
       <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
@@ -565,26 +715,6 @@ export const Modal = () => {
     </Button>
   );
 
-  const stepperComponent = (
-    <Stepper orientation="horizontal" style={{ width: 300 }}>
-      {allSteps
-        .filter((step) => !step.hidden)
-        .map((step, index) => (
-          <Step
-            key={step.id}
-            label={step.label}
-            stage={
-              index === activeStep
-                ? "active"
-                : index < activeStep
-                  ? "completed"
-                  : "pending"
-            }
-          />
-        ))}
-    </Stepper>
-  );
-
   const isCompleted = activeStep === allSteps.length - 1;
 
   return (
@@ -600,7 +730,13 @@ export const Modal = () => {
       >
         {isCompleted ? (
           <>
-            <DialogContent>
+            <DialogContent
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <AccountCreatedContent />
             </DialogContent>
             <DialogActions>
@@ -614,7 +750,14 @@ export const Modal = () => {
             <DialogHeader
               header={allSteps[activeStep].label}
               preheader="Create a new account"
-              actions={stepperComponent}
+              actions={
+                <StepperComponent
+                  orientation="horizontal"
+                  steps={allSteps}
+                  activeStep={activeStep}
+                  style={{ width: 300 }}
+                />
+              }
             />
             <DialogContent>{content}</DialogContent>
             <DialogActions>
