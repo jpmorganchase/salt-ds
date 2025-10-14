@@ -7,6 +7,12 @@ export function PageNavigation() {
     (data) => data?.sharedConfig?.sidebar,
   ) as unknown as SidebarNodeWithStatus[];
 
-  const { selectedNodeId } = useSidebar();
-  return <VerticalNavigation menu={menu} selectedNodeId={selectedNodeId} />;
+  const { selectedNodeId, selectedGroupIds } = useSidebar();
+  return (
+    <VerticalNavigation
+      menu={menu}
+      selectedNodeId={selectedNodeId}
+      selectedGroupIds={selectedGroupIds}
+    />
+  );
 }

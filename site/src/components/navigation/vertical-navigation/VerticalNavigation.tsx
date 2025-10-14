@@ -33,43 +33,49 @@ export type Item = {
 type NestedItemProps = {
   item: Item;
   selectedNodeId?: string;
+  selectedGroupIds?: Set<string>;
 };
 
 export type VerticalNavigationProps = {
+  /** Selected item groups ids to expand */
+  selectedGroupIds: Set<string>;
   /** String ID of the selected item */
   selectedNodeId?: string;
   /** Navigation item data */
   menu: SidebarItem[];
 };
 
-const NestedItem = ({ item, selectedNodeId }: NestedItemProps) => {
+const NestedItem = ({
+  item,
+  selectedNodeId,
+  selectedGroupIds,
+}: NestedItemProps) => {
   const isOpen = containsSelected(item, selectedNodeId);
-  const [collapsed, setCollapsed] = useState(isOpen);
+  const [expanded, setExpanded] = useState(isOpen);
 
   const { title, status, href, children } = item;
-  const isItemSelected = selectedNodeId === href;
+  const isItemActive = selectedNodeId === href;
+  const isGroupActive = selectedGroupIds?.has(href) ?? false;
 
   if (Array.isArray(children) && children.length > 0) {
     return (
-      <VerticalNavigationItem active={isItemSelected && collapsed}>
+      <VerticalNavigationItem active={isGroupActive && !expanded}>
         <Collapsible
-          onOpenChange={() => setCollapsed(!collapsed)}
-          open={collapsed}
+          onOpenChange={() => setExpanded((old) => !old)}
+          open={expanded}
         >
           <VerticalNavigationItemContent>
             <CollapsibleTrigger>
               <VerticalNavigationItemTrigger>
                 <VerticalNavigationItemLabel>
-                  <FlexLayout justify="space-between">
-                    {title}
-                    {status && (
-                      <Badge
-                        aria-label={status}
-                        value={statusToBadgeValue(status)}
-                      />
-                    )}
-                  </FlexLayout>
+                  {title}
                 </VerticalNavigationItemLabel>
+                {status && (
+                  <Badge
+                    aria-label={status}
+                    value={statusToBadgeValue(status)}
+                  />
+                )}
                 <VerticalNavigationItemExpansionIcon />
               </VerticalNavigationItemTrigger>
             </CollapsibleTrigger>
@@ -78,9 +84,10 @@ const NestedItem = ({ item, selectedNodeId }: NestedItemProps) => {
             <VerticalNavigationSubMenu>
               {children.map((child) => (
                 <NestedItem
-                  key={child.title}
+                  key={child.href}
                   item={child}
                   selectedNodeId={selectedNodeId}
+                  selectedGroupIds={selectedGroupIds}
                 />
               ))}
             </VerticalNavigationSubMenu>
@@ -91,7 +98,7 @@ const NestedItem = ({ item, selectedNodeId }: NestedItemProps) => {
   }
 
   return (
-    <VerticalNavigationItem active={isItemSelected}>
+    <VerticalNavigationItem active={isItemActive}>
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<LinkBase href={href} />}>
           <VerticalNavigationItemLabel>
@@ -111,7 +118,10 @@ const NestedItem = ({ item, selectedNodeId }: NestedItemProps) => {
 export const VerticalNavigation = ({
   menu,
   selectedNodeId,
+  selectedGroupIds,
 }: VerticalNavigationProps) => {
+  console.log({ selectedGroupIds });
+
   const mappedNavData = mapMenu(menu);
 
   const normalizedSelectedNodeId = normalizeSelectedNodeId(
@@ -131,6 +141,7 @@ export const VerticalNavigation = ({
           key={item.href}
           item={item}
           selectedNodeId={normalizedSelectedNodeId}
+          selectedGroupIds={selectedGroupIds}
         />
       ))}
     </VerticalNavigationComponent>
