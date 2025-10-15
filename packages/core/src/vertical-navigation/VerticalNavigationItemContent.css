@@ -47,7 +47,8 @@
   left: var(--salt-spacing-50);
   content: "";
   position: absolute;
-  height: var(--salt-size-base);
+  top: var(--salt-spacing-50);
+  bottom: var(--salt-spacing-50);
   border-radius: var(--salt-palette-corner-strongest);
   width: var(--salt-size-indicator);
 }

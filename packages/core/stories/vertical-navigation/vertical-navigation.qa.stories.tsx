@@ -23,7 +23,7 @@ export default {
 
 const Simple = ({ appearance }: VerticalNavigationProps) => {
   return (
-    <VerticalNavigation appearance={appearance}>
+    <VerticalNavigation appearance={appearance} style={{ maxWidth: "30ch" }}>
       <VerticalNavigationItem>
         <VerticalNavigationItemContent>
           <VerticalNavigationItemTrigger>
@@ -34,7 +34,10 @@ const Simple = ({ appearance }: VerticalNavigationProps) => {
       <VerticalNavigationItem active>
         <VerticalNavigationItemContent>
           <VerticalNavigationItemTrigger>
-            <VerticalNavigationItemLabel>Two</VerticalNavigationItemLabel>
+            <VerticalNavigationItemLabel>
+              Super long title that should wrap to the next line and extend the
+              vertical indicator in the indicator appearance.
+            </VerticalNavigationItemLabel>
           </VerticalNavigationItemTrigger>
         </VerticalNavigationItemContent>
       </VerticalNavigationItem>
@@ -170,9 +173,9 @@ export const Example: StoryFn = () => {
       <Simple />
       <CollapsibleNested />
       <CollapsibleIcons />
-      <Simple appearance="bordered" />
-      <CollapsibleNested appearance="bordered" />
-      <CollapsibleIcons appearance="bordered" />
+      <Simple appearance="indicator" />
+      <CollapsibleNested appearance="indicator" />
+      <CollapsibleIcons appearance="indicator" />
     </QAContainer>
   );
 };
