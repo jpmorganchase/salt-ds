@@ -59,6 +59,7 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
     const { ariaVariant } = useCarouselContext();
 
     return (
+      // biome-ignore lint/a11y/useAriaPropsSupportedByRole: role is set dynamically by variable
       <div
         aria-roledescription="slide"
         className={clsx([withBaseName(), className])}
