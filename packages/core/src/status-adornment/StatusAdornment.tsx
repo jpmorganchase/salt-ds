@@ -22,10 +22,10 @@ const withBaseName = makePrefixer("saltStatusAdornment");
 export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
   function StatusAdornment({ className, status, ...restProps }, ref) {
     const icons = useIcon();
-    const titleCaseStatus =
-      status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+    const titleCaseStatus = status.charAt(0).toUpperCase() + status.slice(1);
     const iconKey = `${titleCaseStatus}StatusAdornment` as keyof typeof icons;
     const AdornmentComponent = icons[iconKey];
+
     const ariaLabel = status;
 
     const targetWindow = useWindow();
@@ -34,6 +34,10 @@ export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
       css: statusAdornmentCss,
       window: targetWindow,
     });
+
+    if (AdornmentComponent === undefined) {
+      return null;
+    }
 
     return (
       <AdornmentComponent
