@@ -250,7 +250,6 @@
   flex-direction: column;
   gap: var(--numberInput-buttonGap);
   justify-content: center;
-  cursor: var(--salt-cursor-disabled);
 }
 
 .saltNumberInput-hiddenButtons .saltNumberInput-buttonContainer {
