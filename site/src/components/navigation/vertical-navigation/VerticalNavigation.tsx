@@ -4,7 +4,6 @@ import {
   Collapsible,
   CollapsiblePanel,
   CollapsibleTrigger,
-  FlexLayout,
   VerticalNavigation as VerticalNavigationComponent,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -55,7 +54,7 @@ const NestedItem = ({
 
   const { title, status, href, children } = item;
   const isItemActive = selectedNodeId === href;
-  const isGroupActive = selectedGroupIds.has(href) ?? false;
+  const isGroupActive = selectedGroupIds.has(href);
 
   if (Array.isArray(children) && children.length > 0) {
     return (
@@ -101,14 +100,10 @@ const NestedItem = ({
     <VerticalNavigationItem active={isItemActive}>
       <VerticalNavigationItemContent>
         <VerticalNavigationItemTrigger render={<LinkBase href={href} />}>
-          <VerticalNavigationItemLabel>
-            <FlexLayout justify="space-between">
-              {title}
-              {status && (
-                <Badge aria-label={status} value={statusToBadgeValue(status)} />
-              )}
-            </FlexLayout>
-          </VerticalNavigationItemLabel>
+          <VerticalNavigationItemLabel>{title}</VerticalNavigationItemLabel>
+          {status && (
+            <Badge aria-label={status} value={statusToBadgeValue(status)} />
+          )}
         </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
