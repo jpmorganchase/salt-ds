@@ -77,6 +77,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       isDayUnselectable,
       isDayHighlighted,
       isOutsideAllowedMonths,
+      isOutsideAllowedDates
     },
   } = useCalendarContext<TDate>();
   const selectionManager = useCalendarSelectionDay<TDate>({ date });
@@ -121,7 +122,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
 
   const outOfRange = !dateAdapter.isSame(date, month, "month");
   const unselectable =
-    Boolean(unselectableReason) || isOutsideAllowedMonths(date);
+    Boolean(unselectableReason) || isOutsideAllowedMonths(date) || isOutsideAllowedDates(date);
   const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates ? outOfRange : false;
 
