@@ -50,6 +50,7 @@ const BLUR_TIMEOUT = 200;
  */
 const SINGLE_LINE_HEIGHT_MAP = {
   touch: 45,
+  mobile: 45,
   low: 36,
   medium: 28,
   high: 23,
