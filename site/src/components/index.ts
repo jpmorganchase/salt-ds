@@ -10,6 +10,7 @@ export {
   Panel,
   SaltProvider,
   StackLayout,
+  Tag,
   Text,
 } from "@salt-ds/core";
 
