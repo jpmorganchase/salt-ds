@@ -121,7 +121,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
 
           return (
             <CarouselTabRenderer
-              key={`carouselTab-${scrollSnapIndex}}`}
+              key={`carouselTab-${slideNodes?.[scrollSnapIndex].id}}`}
               ref={(element: HTMLButtonElement) => {
                 buttonRefs.current[scrollSnapIndex] = element;
               }}

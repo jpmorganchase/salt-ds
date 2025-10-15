@@ -95,7 +95,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("scroll", scrollCallback);
         emblaApi.off("pointerDown", pointerDownCallback);
       };
-    }, [emblaApi]);
+    }, [emblaApi, setAnnouncementState]);
 
     useLayoutEffect(() => {
       if (focusSlideIndex >= 0) {
@@ -118,7 +118,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       if (disableSlideAnnouncements === false) {
         setAnnouncementState(undefined);
       }
-    }, [disableSlideAnnouncements]);
+    }, [disableSlideAnnouncements, setAnnouncementState]);
 
     useEffect(() => {
       if (
