@@ -5,7 +5,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   DateInputRange,
   type DateInputRangeDetails,
   type DateRangeSelection,
@@ -91,7 +90,6 @@ export const MinMax = (): ReactElement => {
       </FormField>
       <Calendar selectionVariant="single">
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
     </LocalizationProvider>
