@@ -274,3 +274,12 @@
 .highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
   stroke-width: 1;
 }
+
+.highcharts-theme-salt .highcharts-boxplot-box {
+  fill: inherit;
+  fill-opacity: 0.1;
+}
+
+.highcharts-theme-salt .highcharts-point .highcharts-boxplot-box {
+  stroke-width: var(--salt-size-border-strong);
+}
