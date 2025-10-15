@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-Deprecated unused neutral and accent palette tokens:
+Deprecated unused neutral palette tokens:
 
 - `--salt-palette-neutral-weaker-disabled`
 - `--salt-palette-neutral-weaker-readonly`
