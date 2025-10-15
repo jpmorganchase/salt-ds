@@ -1,3 +1,0 @@
-.saltComboBox-focused {
-  outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
-}
