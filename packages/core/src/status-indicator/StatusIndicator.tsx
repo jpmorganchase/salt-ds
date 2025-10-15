@@ -30,8 +30,7 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
     });
 
     const icons = useIcon();
-    const titleCaseStatus =
-      status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+    const titleCaseStatus = status.charAt(0).toUpperCase() + status.slice(1);
     const iconKey = `${titleCaseStatus}Icon` as keyof typeof icons;
     const IconComponent = icons[iconKey];
     const ariaLabel = status;
