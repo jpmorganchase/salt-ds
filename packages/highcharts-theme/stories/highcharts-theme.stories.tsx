@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import {
   AreaChart as AreaChartComponent,
   BarChart as BarChartComponent,
+  BoxPlotChart as BoxPlotChartComponent,
   BulletChart as BulletChartComponent,
   ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
@@ -15,6 +16,7 @@ import {
 import {
   areaOptions,
   barOptions,
+  boxPlotOptions,
   bulletOptions,
   columnOptions,
   donutOptions,
@@ -91,6 +93,15 @@ export const StackedBarChart = {
     options: stackedBarOptions,
   },
 };
+
+export const BoxPlotChart = {
+  render: (args: ChartStoryArgs) => <BoxPlotChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: boxPlotOptions,
+  },
+};
+
 export const BulletChart = {
   render: (args: ChartStoryArgs) => <BulletChartComponent {...args} />,
   args: {
