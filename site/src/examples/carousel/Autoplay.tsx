@@ -13,7 +13,7 @@ import { PauseSolidIcon, PlaySolidIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
-import {type KeyboardEvent, useEffect, useRef, useState} from "react";
+import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
