@@ -22,10 +22,7 @@ export const MinMax = () => {
       : undefined;
 
   return (
-    <FormField
-      validationStatus={validationStatus}
-      style={{ width: "256px" }}
-    >
+    <FormField validationStatus={validationStatus} style={{ width: "256px" }}>
       <FormFieldLabel>Number input with limited range</FormFieldLabel>
       <NumberInput
         value={value}

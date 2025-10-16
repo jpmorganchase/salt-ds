@@ -7,14 +7,13 @@ export default {
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
-const formatWithDecimalScale =
-  (decimalScale: number) => (value: string) => {
-    const floatValue = Number.parseFloat(value);
-    if (Number.isNaN(floatValue)) {
-      return "";
-    }
-    return String(floatValue.toFixed(decimalScale));
-  };
+const formatWithDecimalScale = (decimalScale: number) => (value: string) => {
+  const floatValue = Number.parseFloat(value);
+  if (Number.isNaN(floatValue)) {
+    return "";
+  }
+  return String(floatValue.toFixed(decimalScale));
+};
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = () => {
   return (
