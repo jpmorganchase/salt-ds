@@ -58,9 +58,31 @@ export const Autoplay = () => {
     };
   }, [emblaApi]);
 
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
+    }
+
+    const handleAutoplayStop = () => {
+      setPlayState((prev) => (prev === "play" ? "pause" : prev));
+    };
+
+    const handleAutoplayPlay = () => {
+      setPlayState("play");
+    };
+
+    emblaApi.on("autoplay:stop", handleAutoplayStop);
+    emblaApi.on("autoplay:play", handleAutoplayPlay);
+
+    return () => {
+      emblaApi.off("autoplay:stop", handleAutoplayStop);
+      emblaApi.off("autoplay:play", handleAutoplayPlay);
+    };
+  }, [emblaApi]);
+
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
-  const handleMouseDown = () => stop();
+  const handlePointerDown = () => stop();
 
   const handleMouseEnter = () => {
     if (!manualControlRef.current && playState === "play") {
@@ -129,7 +151,7 @@ export const Autoplay = () => {
             aria-label={`${playState === "play" ? "stop" : "start"} automatic slide rotation`}
             appearance="bordered"
             sentiment="neutral"
-            onMouseDown={() => {
+            onPointerDown={() => {
               manualControlRef.current = true;
             }}
             onKeyDown={(event) => {
@@ -155,7 +177,7 @@ export const Autoplay = () => {
           />
         </FlexLayout>
         <CarouselSlides
-          onMouseDown={handleMouseDown}
+          onPointerDown={handlePointerDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onFocus={handleFocus}
