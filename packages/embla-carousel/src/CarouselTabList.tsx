@@ -61,6 +61,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
     const [focusedTabIndex, setFocusedTabIndex] = useState<number | null>(null);
 
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+      event.preventDefault();
       let newIndex = focusedTabIndex ?? selectedIndex;
 
       if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
