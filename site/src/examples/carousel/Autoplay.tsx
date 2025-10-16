@@ -13,7 +13,7 @@ import { PauseSolidIcon, PlaySolidIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
-import { useEffect, useRef, useState } from "react";
+import {type KeyboardEvent, useEffect, useRef, useState} from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
@@ -84,6 +84,12 @@ export const Autoplay = () => {
 
   const handlePointerDown = () => stop();
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Tab") {
+      stop();
+    }
+  };
+
   const handleMouseEnter = () => {
     if (!manualControlRef.current && playState === "play") {
       pause();
@@ -97,7 +103,7 @@ export const Autoplay = () => {
   };
 
   const handleFocus = () => {
-    if (!manualControlRef.current) {
+    if (!manualControlRef.current && playState === "play") {
       pause();
     }
   };
@@ -180,6 +186,7 @@ export const Autoplay = () => {
           onPointerDown={handlePointerDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onKeyDown={handleKeyDown}
           onFocus={handleFocus}
         >
           {sliderData.map((slide, index) => {
