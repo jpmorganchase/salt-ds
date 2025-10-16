@@ -1,4 +1,3 @@
-import "./wizard.stories.css";
 import {
   Button,
   Dialog,
@@ -35,6 +34,7 @@ import {
   DatePickerTrigger,
 } from "packages/lab/src";
 import { type ElementType, useState } from "react";
+import "./wizard.stories.css";
 export default {
   title: "Patterns/Wizard",
 } as Meta;
@@ -154,7 +154,7 @@ const AccountCreatedContent = () => (
     <SuccessCircleSolidIcon
       size={2}
       style={{
-        color: "var(--salt-color-green-500)",
+        color: "var(--salt-status-success-foreground-decorative)",
       }}
     />
     <Text styleAs="h2">Account created</Text>
@@ -167,7 +167,7 @@ const CancelWarningContent = () => (
     <WarningSolidIcon
       size={2}
       style={{
-        color: "var(--salt-color-orange-500)",
+        color: "var(--salt-status-warning-foreground-decorative)",
       }}
     />
     <Text styleAs="h2">Are you sure you want to cancel?</Text>
@@ -619,9 +619,9 @@ export const Vertical = () => {
 
   return (
     <>
-      <StackLayout className="verticalContainer">
+      <StackLayout className="verticalContainer" gap={0}>
         <div className="header">{header}</div>
-        <GridLayout columns={3} gap={0} className="contentVerticalContainer">
+        <GridLayout columns={3} gap={0} className="verticalContentContainer">
           <GridItem>
             <StepperComponent
               orientation="vertical"
@@ -629,7 +629,7 @@ export const Vertical = () => {
               activeStep={activeStep}
             />
           </GridItem>
-          <GridItem colSpan={2} className="contentVertical">
+          <GridItem colSpan={2} className="verticalContent">
             {content}
           </GridItem>
         </GridLayout>

@@ -11,7 +11,7 @@
 .content {
   overflow-y: auto;
   flex: 1;
-  padding: 0 var(--salt-spacing-300) 0;
+  padding: 0 var(--salt-spacing-300);
 }
 
 .actions {
@@ -21,15 +21,15 @@
 .verticalContainer {
   width: 850px;
   height: 588px;
-  padding: var(--salt-spacing-300) 0;
-  border: 1px solid blue;
+  padding: var(--salt-spacing-300) 0 var(--salt-spacing-300) var(--salt-spacing-300);
 }
 
-.contentVerticalContainer {
+.verticalContentContainer {
   flex: 1;
   overflow-y: hidden;
 }
 
-.contentVertical {
+.verticalContent {
+  padding-right: var(--salt-spacing-300);
   overflow-y: auto;
 }
