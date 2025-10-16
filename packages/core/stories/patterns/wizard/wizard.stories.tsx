@@ -26,7 +26,7 @@ import {
   useResponsiveProp,
 } from "@salt-ds/core";
 import type { Meta } from "@storybook/react-vite";
-import { SuccessCircleSolidIcon } from "packages/icons/src";
+import { SuccessCircleSolidIcon, WarningSolidIcon } from "packages/icons/src";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -50,27 +50,24 @@ const StepperComponent = ({
     id: string;
     label: string;
     content: React.ReactNode;
-    hidden?: boolean;
   }[];
   activeStep: number;
   style?: React.CSSProperties;
 }) => (
   <Stepper orientation={orientation} style={style}>
-    {steps
-      .filter((step) => !step.hidden)
-      .map((step, index) => (
-        <Step
-          key={step.id}
-          label={step.label}
-          stage={
-            index === activeStep
-              ? "active"
-              : index < activeStep
-                ? "completed"
-                : "pending"
-          }
-        />
-      ))}
+    {steps.map((step, index) => (
+      <Step
+        key={step.id}
+        label={step.label}
+        stage={
+          index === activeStep
+            ? "active"
+            : index < activeStep
+              ? "completed"
+              : "pending"
+        }
+      />
+    ))}
   </Stepper>
 );
 
@@ -162,6 +159,21 @@ const AccountCreatedContent = () => (
     />
     <Text styleAs="h2">Account created</Text>
     <Text>You can now start using this new account.</Text>
+  </StackLayout>
+);
+
+const CancelWarningContent = () => (
+  <StackLayout align="center">
+    <WarningSolidIcon
+      size={2}
+      style={{
+        color: "var(--salt-color-orange-500)",
+      }}
+    />
+    <Text styleAs="h2">Are you sure you want to cancel?</Text>
+    <Text>
+      Any updates you've made so far will be lost after you confirm cancelling.
+    </Text>
   </StackLayout>
 );
 
@@ -633,6 +645,8 @@ export const Vertical = () => {
 };
 
 export const Modal = () => {
+  type WizardState = "form" | "cancel-warning" | "success";
+  const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const allSteps = [
@@ -656,12 +670,6 @@ export const Modal = () => {
       label: "Review and create",
       content: <ReviewAccountContent />,
     },
-    {
-      id: "account-created",
-      label: "Account created",
-      content: <AccountCreatedContent />,
-      hidden: true,
-    },
   ];
 
   const handleRequestOpen = () => {
@@ -674,17 +682,29 @@ export const Modal = () => {
 
   const handleCancel = () => {
     setOpen(false);
+    setActiveStep(0);
     setTimeout(() => {
-      setActiveStep(0);
+      setWizardState("form");
     }, 300);
   };
 
   const content = allSteps[activeStep].content;
 
+  const createAccount = () => {
+    setWizardState("success");
+  };
+  const cancelWarning = () => {
+    setWizardState("cancel-warning");
+  };
+  const backToForm = () => {
+    setWizardState("form");
+  };
   const nextStep = () =>
     activeStep < allSteps.length - 1 && setActiveStep(activeStep + 1);
   const previousStep = () => activeStep > 0 && setActiveStep(activeStep - 1);
   // const resetSteps = () => setActiveStep(0);
+
+  const isLastFormStep = activeStep === allSteps.length - 1;
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -699,7 +719,7 @@ export const Modal = () => {
     <Button
       sentiment="accented"
       appearance="transparent"
-      onClick={handleCancel}
+      onClick={cancelWarning}
     >
       Cancel
     </Button>
@@ -710,12 +730,13 @@ export const Modal = () => {
     </Button>
   );
   const next = (
-    <Button sentiment="accented" onClick={nextStep}>
-      Next
+    <Button
+      sentiment="accented"
+      onClick={isLastFormStep ? createAccount : nextStep}
+    >
+      {isLastFormStep ? "Create" : "Next"}
     </Button>
   );
-
-  const isCompleted = activeStep === allSteps.length - 1;
 
   return (
     <>
@@ -725,58 +746,116 @@ export const Modal = () => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        status={isCompleted ? "success" : undefined}
+        status={
+          wizardState === "cancel-warning"
+            ? "warning"
+            : wizardState === "success"
+              ? "success"
+              : undefined
+        }
         style={{ height: 588 }}
       >
-        {isCompleted ? (
-          <>
-            <DialogContent
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <AccountCreatedContent />
-            </DialogContent>
-            <DialogActions>
-              <Button sentiment="accented" onClick={handleCancel}>
-                Done
-              </Button>
-            </DialogActions>
-          </>
-        ) : (
-          <>
-            <DialogHeader
-              header={allSteps[activeStep].label}
-              preheader="Create a new account"
-              actions={
-                <StepperComponent
-                  orientation="horizontal"
-                  steps={allSteps}
-                  activeStep={activeStep}
-                  style={{ width: 300 }}
-                />
-              }
-            />
-            <DialogContent>{content}</DialogContent>
-            <DialogActions>
-              {direction === "column" ? (
-                <StackLayout gap={1} style={{ width: "100%" }}>
-                  {next}
-                  {previous}
-                  {cancel}
-                </StackLayout>
-              ) : (
-                <FlexLayout gap={1}>
-                  {cancel}
-                  {previous}
-                  {next}
-                </FlexLayout>
-              )}
-            </DialogActions>
-          </>
-        )}
+        {(() => {
+          switch (wizardState) {
+            case "cancel-warning":
+              return (
+                <>
+                  <DialogContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <CancelWarningContent />
+                  </DialogContent>
+                  <DialogActions>
+                    {direction === "column" ? (
+                      <StackLayout gap={1} style={{ width: "100%" }}>
+                        <Button sentiment="accented" onClick={handleCancel}>
+                          Yes
+                        </Button>
+                        <Button
+                          appearance="bordered"
+                          sentiment="accented"
+                          onClick={backToForm}
+                        >
+                          No
+                        </Button>
+                      </StackLayout>
+                    ) : (
+                      <FlexLayout gap={1}>
+                        <Button
+                          appearance="bordered"
+                          sentiment="accented"
+                          onClick={backToForm}
+                        >
+                          No
+                        </Button>
+                        <Button sentiment="accented" onClick={handleCancel}>
+                          Yes
+                        </Button>
+                      </FlexLayout>
+                    )}
+                  </DialogActions>
+                </>
+              );
+            case "success":
+              return (
+                <>
+                  <DialogContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <AccountCreatedContent />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button sentiment="accented" onClick={handleCancel}>
+                      Done
+                    </Button>
+                  </DialogActions>
+                </>
+              );
+            default:
+              return (
+                <>
+                  <DialogHeader
+                    header={allSteps[activeStep].label}
+                    preheader="Create a new account"
+                    actions={
+                      <StepperComponent
+                        orientation="horizontal"
+                        steps={allSteps}
+                        activeStep={activeStep}
+                        style={{ width: 300 }}
+                      />
+                    }
+                  />
+                  <DialogContent>{content}</DialogContent>
+                  <DialogActions>
+                    {direction === "column" ? (
+                      <StackLayout gap={1} style={{ width: "100%" }}>
+                        {next}
+                        {previous}
+                        {cancel}
+                      </StackLayout>
+                    ) : (
+                      <FlexLayout gap={1}>
+                        {cancel}
+                        {previous}
+                        {next}
+                      </FlexLayout>
+                    )}
+                  </DialogActions>
+                </>
+              );
+          }
+        })()}
       </Dialog>
     </>
   );
