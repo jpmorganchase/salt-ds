@@ -58,31 +58,11 @@ export const Autoplay = () => {
     };
   }, [emblaApi]);
 
-  useEffect(() => {
-    if (!emblaApi) {
-      return;
-    }
-
-    const handleAutoplayStop = () => {
-      setPlayState((prev) => (prev === "play" ? "pause" : prev));
-    };
-
-    const handleAutoplayPlay = () => {
-      setPlayState("play");
-    };
-
-    emblaApi.on("autoplay:stop", handleAutoplayStop);
-    emblaApi.on("autoplay:play", handleAutoplayPlay);
-
-    return () => {
-      emblaApi.off("autoplay:stop", handleAutoplayStop);
-      emblaApi.off("autoplay:play", handleAutoplayPlay);
-    };
-  }, [emblaApi]);
-
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
-  const handlePointerDown = () => stop();
+  const handlePointerDown = () => {
+    stop();
+  };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== "Tab") {
@@ -183,11 +163,11 @@ export const Autoplay = () => {
           />
         </FlexLayout>
         <CarouselSlides
-          onPointerDown={handlePointerDown}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onKeyDown={handleKeyDown}
-          onFocus={handleFocus}
+          onPointerDown={handlePointerDown}
         >
           {sliderData.map((slide, index) => {
             const slideId = `${carouselId}-slide${index}`;
