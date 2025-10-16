@@ -175,10 +175,6 @@
   fill: var(--salt-content-primary-foreground);
 }
 
-.highcharts-theme-salt .highcharts-bubble-series .highcharts-point {
-  fill-opacity: 0.75;
-}
-
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
 .highcharts-theme-salt .highcharts-legend-item-hidden span {
   /* Highcharts default CSS uses !important for fill/stroke; mirror to override */
@@ -262,7 +258,8 @@
   transition: none;
 }
 
-.highcharts-theme-salt .highcharts-scatter-series .highcharts-point {
+.highcharts-theme-salt .highcharts-scatter-series .highcharts-point,
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-point {
   fill-opacity: 0.75;
 }
 
