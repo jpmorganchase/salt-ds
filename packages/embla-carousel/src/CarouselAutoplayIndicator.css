@@ -8,11 +8,6 @@
   transform: rotate(-90deg);
 }
 
-.saltCarouselAutoplayIndicatorSVG-track {
-  fill: none;
-  stroke: var(--salt-accent-foreground);
-}
-
 .saltCarouselAutoplayIndicatorSVG-bar {
   fill: none;
   stroke: var(--salt-accent-background);
