@@ -185,6 +185,13 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @returns 0 if equal, 1 if dateA is after dateB, -1 if dateA is before dateB.
    */
   public compare(dateA: Dayjs, dateB: Dayjs): number {
+    const isValidA = dateA.isValid();
+    const isValidB = dateB.isValid();
+
+    if (!isValidA && !isValidB) return 0;
+    if (!isValidA) return -1;
+    if (!isValidB) return 1;
+
     const timeA = dateA.utc().valueOf();
     const timeB = dateB.utc().valueOf();
 
