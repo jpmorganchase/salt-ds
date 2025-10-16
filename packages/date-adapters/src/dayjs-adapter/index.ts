@@ -469,6 +469,11 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     dateB: Dayjs,
     granularity: "day" | "month" | "year" = "day",
   ): boolean {
+    const isValidA = dateA.isValid();
+    const isValidB = dateB.isValid();
+    if (!isValidA || !isValidB) {
+      return false;
+    }
     const normalizedB = this.setTimezone(dateB, this.getTimezone(dateA));
     if (granularity === "year") {
       return dateA.year() === normalizedB.year();
