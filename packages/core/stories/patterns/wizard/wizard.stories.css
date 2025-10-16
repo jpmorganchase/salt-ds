@@ -18,6 +18,10 @@
   padding: var(--salt-spacing-300) var(--salt-spacing-300) 0;
 }
 
+.verticalHeader {
+  padding-bottom: var(--salt-spacing-300);
+}
+
 .verticalContainer {
   width: 850px;
   height: 588px;

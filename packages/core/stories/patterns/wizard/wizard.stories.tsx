@@ -314,11 +314,11 @@ const CreateAccountContent = () => (
       <StackLayout gap={3}>
         <FormField>
           <FormFieldLabel>Address 1</FormFieldLabel>
-          <Input defaultValue="Value text" />
+          <Input defaultValue="25 Bank Street" />
         </FormField>
         <FormField necessity="optional">
           <FormFieldLabel>Address 2</FormFieldLabel>
-          <Input defaultValue="Value text" />
+          <Input />
           <FormFieldHelperText>
             Flat, Apt, Suite, Floor, Building etc.
           </FormFieldHelperText>
@@ -380,11 +380,11 @@ const ReviewAccountContent = () => (
         </FormField>
         <FormField>
           <FormFieldLabel>Address 1</FormFieldLabel>
-          <Input defaultValue="Value text" />
+          <Input defaultValue="25 Bank Street" />
         </FormField>
         <FormField necessity="optional">
           <FormFieldLabel>Address 2</FormFieldLabel>
-          <Input defaultValue="Value text" />
+          <Input />
           <FormFieldHelperText>
             Flat, Apt, Suite, Floor, Building etc.
           </FormFieldHelperText>
@@ -446,12 +446,14 @@ export const Horizontal = () => {
       content: <ReviewAccountContent />,
     },
   ];
+  const content = allSteps[activeStep].content;
+  const isLastStep = activeStep === allSteps.length - 1;
 
   const header = (
     <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
       <div>
         <Text>Create a new account</Text>
-        <Text color="secondary" styleAs="h2">
+        <Text color="primary" styleAs="h2">
           {allSteps[activeStep].label}
         </Text>
       </div>
@@ -473,24 +475,18 @@ export const Horizontal = () => {
     </FlexLayout>
   );
 
-  const content = allSteps[activeStep].content;
-
   const nextStep = () =>
     activeStep < allSteps.length - 1 &&
     setActiveStep((prevStep) => prevStep + 1);
   const previousStep = () =>
     activeStep > 0 && setActiveStep((prevStep) => prevStep - 1);
-  // const resetSteps = () => setActiveStep(0);
 
   const handleCancel = () => {
     setCancelOpen(true);
   };
-
   const handleSuccess = () => {
     setSuccessOpen(true);
   };
-
-  const isLastStep = activeStep === allSteps.length - 1;
 
   const actions = (
     <FlexLayout gap={1} justify="end">
@@ -570,7 +566,6 @@ export const Vertical = () => {
     setActiveStep((prevStep) => prevStep + 1);
   const previousStep = () =>
     activeStep > 0 && setActiveStep((prevStep) => prevStep - 1);
-  // const resetSteps = () => setActiveStep(0);
 
   const handleCancel = () => {
     setCancelOpen(true);
@@ -611,7 +606,7 @@ export const Vertical = () => {
   const header = (
     <StackLayout gap={0}>
       <Text>Create a new account</Text>
-      <Text color="secondary" styleAs="h2">
+      <Text color="primary" styleAs="h2">
         {allSteps[activeStep].label}
       </Text>
     </StackLayout>
@@ -620,7 +615,7 @@ export const Vertical = () => {
   return (
     <>
       <StackLayout className="verticalContainer" gap={0}>
-        <div className="header">{header}</div>
+        <div className="verticalHeader">{header}</div>
         <GridLayout columns={3} gap={0} className="verticalContentContainer">
           <GridItem>
             <StepperComponent
@@ -649,6 +644,7 @@ export const Modal = () => {
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+
   const allSteps = [
     {
       id: "account-details",
@@ -671,6 +667,8 @@ export const Modal = () => {
       content: <ReviewAccountContent />,
     },
   ];
+  const content = allSteps[activeStep].content;
+  const isLastFormStep = activeStep === allSteps.length - 1;
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -688,8 +686,6 @@ export const Modal = () => {
     }, 300);
   };
 
-  const content = allSteps[activeStep].content;
-
   const createAccount = () => {
     setWizardState("success");
   };
@@ -702,9 +698,6 @@ export const Modal = () => {
   const nextStep = () =>
     activeStep < allSteps.length - 1 && setActiveStep(activeStep + 1);
   const previousStep = () => activeStep > 0 && setActiveStep(activeStep - 1);
-  // const resetSteps = () => setActiveStep(0);
-
-  const isLastFormStep = activeStep === allSteps.length - 1;
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
