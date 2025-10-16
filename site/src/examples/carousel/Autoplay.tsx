@@ -60,6 +60,8 @@ export const Autoplay = () => {
 
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
+  const handleMouseDown = () => stop();
+
   const handleMouseEnter = () => {
     if (!manualControlRef.current && playState === "play") {
       pause();
@@ -153,6 +155,7 @@ export const Autoplay = () => {
           />
         </FlexLayout>
         <CarouselSlides
+          onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onFocus={handleFocus}
