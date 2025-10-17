@@ -6,7 +6,7 @@ import * as fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Biome } from "@biomejs/js-api/nodejs";
-import * as XLSX from "xlsx/xlsx.mjs";
+import * as XLSX from "@e965/xlsx/xlsx.mjs";
 
 XLSX.set_fs(fs);
 
