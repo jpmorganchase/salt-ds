@@ -185,13 +185,20 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @returns 0 if equal, 1 if dateA is after dateB, -1 if dateA is before dateB.
    */
   public compare(dateA: Dayjs, dateB: Dayjs): number {
-    if (dateA.isSame(dateB)) {
+    const isValidA = dateA.isValid();
+    const isValidB = dateB.isValid();
+
+    if (!isValidA && !isValidB) return 0;
+    if (!isValidA) return -1;
+    if (!isValidB) return 1;
+
+    const timeA = dateA.utc().valueOf();
+    const timeB = dateB.utc().valueOf();
+
+    if (timeA === timeB) {
       return 0;
     }
-    if (dateA.isBefore(dateB)) {
-      return -1;
-    }
-    return 1;
+    return timeA < timeB ? -1 : 1;
   }
 
   /**
@@ -462,7 +469,26 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     dateB: Dayjs,
     granularity: "day" | "month" | "year" = "day",
   ): boolean {
-    return dateA.isSame(dateB, granularity);
+    const isValidA = dateA.isValid();
+    const isValidB = dateB.isValid();
+    if (!isValidA || !isValidB) {
+      return false;
+    }
+    const normalizedB = this.setTimezone(dateB, this.getTimezone(dateA));
+    if (granularity === "year") {
+      return dateA.year() === normalizedB.year();
+    }
+    if (granularity === "month") {
+      return (
+        dateA.year() === normalizedB.year() &&
+        dateA.month() === normalizedB.month()
+      );
+    }
+    return (
+      dateA.year() === normalizedB.year() &&
+      dateA.month() === normalizedB.month() &&
+      dateA.date() === normalizedB.date()
+    );
   }
 
   /**
