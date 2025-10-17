@@ -64,6 +64,11 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [focusSlideIndex, setFocusedSlideIndex] = useState<number>(0);
     const [dragging, setDragging] = useState(false);
+    // Tracks which slide should be focused after scroll animation completes.
+    // prevents focusing slides before they're visible
+    const [pendingFocusIndex, setPendingFocusIndex] = useState<
+      number | undefined
+    >(undefined);
 
     const [stableScrollSnap, setStableScrollSnap] = useState<
       number | undefined
@@ -79,6 +84,14 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       const handleSettle = (emblaApi: EmblaCarouselType) => {
         const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
         setStableScrollSnap(selectedScrollSnap);
+
+        // Focus the pending slide after scroll has settled.
+        // This synchronises focus with scroll completion, ensuring the slide is fully
+        // visible and has correct aria-hidden/tabIndex attributes before receiving focus
+        if (pendingFocusIndex !== undefined) {
+          slideRefs.current[pendingFocusIndex]?.focus();
+          setPendingFocusIndex(undefined);
+        }
       };
 
       if (!emblaApi) {
@@ -95,7 +108,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("scroll", scrollCallback);
         emblaApi.off("pointerDown", pointerDownCallback);
       };
-    }, [emblaApi]);
+    }, [emblaApi, pendingFocusIndex, setAnnouncementState]);
 
     useLayoutEffect(() => {
       if (focusSlideIndex >= 0) {
@@ -107,10 +120,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         if (emblaApi?.selectedScrollSnap() !== nearestScrollSnap) {
           setAnnouncementState("focus");
           emblaApi?.scrollTo(nearestScrollSnap);
-        }
-        setTimeout(() => {
+          setPendingFocusIndex(focusSlideIndex);
+        } else {
           slideRefs.current[focusSlideIndex]?.focus();
-        }, 100);
+        }
       }
     }, [focusSlideIndex, emblaApi, setAnnouncementState]);
 
@@ -118,7 +131,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       if (disableSlideAnnouncements === false) {
         setAnnouncementState(undefined);
       }
-    }, [disableSlideAnnouncements]);
+    }, [disableSlideAnnouncements, setAnnouncementState]);
 
     useEffect(() => {
       if (
