@@ -279,9 +279,16 @@
 }
 
 /* Styles applied to number buttons */
+.saltNumberInput-increment {
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker, 0) var(--salt-palette-corner-weaker, 0) 0 0;
+}
+
+.saltNumberInput-decrement {
+  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weaker, 0) var(--salt-palette-corner-weaker, 0);
+}
+
 .saltNumberInput-increment,
 .saltNumberInput-decrement {
   --saltButton-height: calc((var(--salt-size-base) - (var(--salt-spacing-50) * 2) - var(--salt-size-fixed-200)) / 2);
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--button-borderWidth));
-  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weaker, 0) var(--salt-palette-corner-weaker, 0);
 }
