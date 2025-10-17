@@ -62,7 +62,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
 
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const [focusSlideIndex, setFocusedSlideIndex] = useState<number>(-1);
+    const [focusSlideIndex, setFocusedSlideIndex] = useState<number>(0);
     const [dragging, setDragging] = useState(false);
 
     const [stableScrollSnap, setStableScrollSnap] = useState<
@@ -110,7 +110,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         }
         setTimeout(() => {
           slideRefs.current[focusSlideIndex]?.focus();
-        }, 0);
+        }, 100);
       }
     }, [focusSlideIndex, emblaApi, setAnnouncementState]);
 
