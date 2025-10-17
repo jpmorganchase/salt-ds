@@ -246,7 +246,7 @@ describe("GIVEN a AdapterDayjs", () => {
           const dateA = adapter.date(ISO_UTC, tz);
           const dateB = adapter.date(ISO_LOCAL, tz);
           // This will only be true if the UTC time and the local time represent the same calendar day in the given timezone.
-          let expected =
+          const expected =
             dateA.year() === dateB.year() &&
             (granularity === "year" || dateA.month() === dateB.month()) &&
             (granularity !== "day" || dateA.date() === dateB.date());
