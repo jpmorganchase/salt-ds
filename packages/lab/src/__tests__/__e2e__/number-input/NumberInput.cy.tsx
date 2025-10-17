@@ -950,6 +950,22 @@ describe("Number Input", () => {
       cy.get("@changeSpy").should("have.callCount", 4);
       cy.get("@numberChangeSpy").should("have.callCount", 1);
     });
+
+    it("should fallback to defaultValue when negative decimal scale is provided", () => {
+      cy.mount(<Default decimalScale={-1} defaultValue={3.15} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realPress("Tab");
+      cy.findByRole("spinbutton").should("have.value", "3.15");
+    });
+
+    it("should round up when decimal scale is set to zero", () => {
+      cy.mount(<Default decimalScale={0} defaultValue={7.89} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realPress("Tab");
+      cy.findByRole("spinbutton").should("have.value", "8");
+    });
   });
 
   describe("WHEN set to read-only", () => {

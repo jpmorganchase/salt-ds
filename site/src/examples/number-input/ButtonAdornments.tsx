@@ -83,21 +83,19 @@ const SyncAdornment = () => {
         step={0.01}
         stepMultiplier={3}
         endAdornment={
-          <>
-            <Button
-              aria-label={`Sync ${formFieldLabel}`}
-              appearance="solid"
-              onClick={() => {
-                setValue(randomLiveValue);
-                announce(
-                  `Sync ${formFieldLabel} value with live value ${randomLiveValue}`,
-                  1000,
-                );
-              }}
-            >
-              <SyncIcon aria-hidden />
-            </Button>
-          </>
+          <Button
+            aria-label={`Sync ${formFieldLabel}`}
+            appearance="solid"
+            onClick={() => {
+              setValue(randomLiveValue);
+              announce(
+                `Sync ${formFieldLabel} value with live value ${randomLiveValue}`,
+                1000,
+              );
+            }}
+          >
+            <SyncIcon aria-hidden />
+          </Button>
         }
       />
       <FormFieldHelperText>Live value {randomLiveValue}</FormFieldHelperText>

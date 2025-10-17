@@ -11,7 +11,6 @@ export const StepAndBlock = () => (
       onNumberChange={(_event, newValue) => {
         console.log(`Number changed to ${newValue}`);
       }}
-      style={{ width: "256px" }}
     />
     <FormFieldHelperText>
       Custom step 5 and step multiplier 10
