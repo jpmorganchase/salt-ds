@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.79
+
+### Patch Changes
+
+- b3d399b: - Fix `dayjs` adapter, where it showed dates as out of range.
+  - Fix a regression in disabled dates styles for dates outside of min/max.
+- Updated dependencies [b3d399b]
+- Updated dependencies [61c2bad]
+- Updated dependencies [fef411f]
+  - @salt-ds/date-adapters@0.1.0-alpha.6
+  - @salt-ds/core@1.51.0
+
 ## 1.0.0-alpha.78
 
 ### Patch Changes
