@@ -41,11 +41,11 @@ describe("Number Input - Accessibility", () => {
 
   it("sets the correct default ARIA attributes on the increment/decrement buttons", () => {
     cy.mount(<Default />);
-    cy.findByLabelText("increment value")
+    cy.get(".saltNumberInput-increment")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
 
-    cy.findByLabelText("decrement value")
+    cy.get(".saltNumberInput-decrement")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
   });
