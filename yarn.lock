@@ -1999,6 +1999,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@e965/xlsx@npm:^0.20.3":
+  version: 0.20.3
+  resolution: "@e965/xlsx@npm:0.20.3"
+  bin:
+    xlsx: bin/xlsx.njs
+  checksum: 10/0e92ca7622a7dc4de0b4f8f4b9b506c5e1dbd511cd759b27bf3131a3da877f33b15f446e628739ce265457486c617ac60416db2fd03415dc8b0f20150ef67e22
+  languageName: node
+  linkType: hard
+
 "@emotion/hash@npm:^0.9.0":
   version: 0.9.0
   resolution: "@emotion/hash@npm:0.9.0"
@@ -3904,6 +3913,7 @@ __metadata:
     "@changesets/cli": "npm:^2.29.6"
     "@cypress/code-coverage": "npm:^3.13.6"
     "@date-fns/tz": "npm:^1.2.0"
+    "@e965/xlsx": "npm:^0.20.3"
     "@faker-js/faker": "npm:^8.0.0"
     "@fontsource/open-sans": "npm:^4.5.13"
     "@fontsource/pt-mono": "npm:^5.0.12"

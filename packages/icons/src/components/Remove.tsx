@@ -16,7 +16,7 @@ export const RemoveIcon = forwardRef<SVGSVGElement, RemoveIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M12 5v2H0V5z" />
+        <path d="M1 5.5h10v1H1z" />
       </Icon>
     );
   },
