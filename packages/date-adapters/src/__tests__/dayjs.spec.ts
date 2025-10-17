@@ -14,20 +14,20 @@ dayjs.extend(customParseFormat);
 describe("GIVEN a AdapterDayjs", () => {
   const adapter = new AdapterDayjs({ locale: "en" });
 
-  it("should create a Dayjs date in the system timezone", () => {
+  it("SHOULD create a Dayjs date in the system timezone", () => {
     const date = adapter.date("2023-11-01", "system");
     expect(date.isValid()).toBe(true);
     expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
   });
 
-  it("should create a Dayjs date in UTC", () => {
+  it("SHOULD create a Dayjs date in UTC", () => {
     const date = adapter.date("2023-11-01", "UTC");
     expect(date.isValid()).toBe(true);
     expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
     expect(date.utcOffset()).toBe(0); // UTC offset should be 0
   });
 
-  it("should create a Dayjs date in a specific timezone", () => {
+  it("SHOULD create a Dayjs date in a specific timezone", () => {
     const timezone = "America/New_York";
     const date = adapter.date("2023-11-01", timezone);
     expect(date.isValid()).toBe(true);
@@ -35,17 +35,17 @@ describe("GIVEN a AdapterDayjs", () => {
     expect(date.tz(timezone).format("Z")).toBe(date.format("Z")); // Check if the timezone is applied
   });
 
-  it("should handle invalid date strings", () => {
+  it("SHOULD handle invalid date strings", () => {
     const date = adapter.date("invalid-date", "system");
     expect(date.isValid()).toBe(false);
   });
 
-  it("should handle empty date strings", () => {
+  it("SHOULD handle empty date strings", () => {
     const date = adapter.date("", "system");
     expect(date.isValid()).toBe(false);
   });
 
-  it("should handle default timezone when no timezone is specified", () => {
+  it("SHOULD handle default timezone when no timezone is specified", () => {
     const date = adapter.date("2023-11-01");
     expect(date.isValid()).toBe(true);
     expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
@@ -183,5 +183,245 @@ describe("GIVEN a AdapterDayjs", () => {
     const clonedDate = adapter.clone(date);
     expect(clonedDate.isSame(date)).toBe(true);
     expect(clonedDate).not.toBe(date); // Ensure it's a different instance
+  });
+
+  const TIMEZONES = ["America/New_York", "Europe/London"];
+  const ISO_UTC = "2025-10-13T03:30:00.000Z";
+  const ISO_LOCAL = "2025-10-13T03:30:00";
+
+  describe("GIVEN isSame is passed dates with timezones, London and New York", () => {
+    ["day", "month", "year"].forEach((granularity) => {
+      TIMEZONES.forEach((tz) => {
+        it(`SHOULD isSame: ${ISO_UTC} (${tz}) vs ${ISO_UTC} (${tz}) [granularity: ${granularity}]`, () => {
+          const dateA = adapter.date(ISO_UTC, tz);
+          const dateB = adapter.date(ISO_UTC, tz);
+          let expected;
+          switch (granularity) {
+            case "year":
+              expected = dateA.year() === dateB.year();
+              break;
+            case "month":
+              expected =
+                dateA.year() === dateB.year() &&
+                dateA.month() === dateB.month();
+              break;
+            case "day":
+              expected =
+                dateA.year() === dateB.year() &&
+                dateA.month() === dateB.month() &&
+                dateA.date() === dateB.date();
+              break;
+          }
+          const validGranularity: "month" | "day" | "year" | undefined =
+            granularity as "month" | "day" | "year" | undefined;
+          expect(adapter.isSame(dateA, dateB, validGranularity)).toBe(expected);
+        });
+
+        it(`SHOULD isSame: ${ISO_LOCAL} (${tz}) vs ${ISO_LOCAL} (${tz}) [granularity: ${granularity}]`, () => {
+          const dateA = adapter.date(ISO_LOCAL, tz);
+          const dateB = adapter.date(ISO_LOCAL, tz);
+          let expected;
+          switch (granularity) {
+            case "year":
+              expected = dateA.year() === dateB.year();
+              break;
+            case "month":
+              expected =
+                dateA.year() === dateB.year() &&
+                dateA.month() === dateB.month();
+              break;
+            case "day":
+              expected =
+                dateA.year() === dateB.year() &&
+                dateA.month() === dateB.month() &&
+                dateA.date() === dateB.date();
+              break;
+          }
+          const validGranularity: "month" | "day" | "year" | undefined =
+            granularity as "month" | "day" | "year" | undefined;
+          expect(adapter.isSame(dateA, dateB, validGranularity)).toBe(expected);
+        });
+
+        it(`SHOULD isSame: ${ISO_UTC} (${tz}) vs ${ISO_LOCAL} (${tz}) [granularity: ${granularity}]`, () => {
+          const dateA = adapter.date(ISO_UTC, tz);
+          const dateB = adapter.date(ISO_LOCAL, tz);
+          // This will only be true if the UTC time and the local time represent the same calendar day in the given timezone.
+          const expected =
+            dateA.year() === dateB.year() &&
+            (granularity === "year" || dateA.month() === dateB.month()) &&
+            (granularity !== "day" || dateA.date() === dateB.date());
+          const validGranularity: "month" | "day" | "year" | undefined =
+            granularity as "month" | "day" | "year" | undefined;
+          expect(adapter.isSame(dateA, dateB, validGranularity)).toBe(expected);
+        });
+      });
+    });
+
+    it("SHOULD isSame: different days, same timezone", () => {
+      const dateA = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      const dateB = adapter.date("2025-10-12T03:30:00.000Z", "UTC");
+      expect(adapter.isSame(dateA, dateB, "day")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "month")).toBe(true);
+      expect(adapter.isSame(dateA, dateB, "year")).toBe(true);
+    });
+
+    it("SHOULD isSame: different days, different timezones", () => {
+      const dateA = adapter.date(
+        "2025-10-13T00:00:00.000Z",
+        "America/New_York",
+      );
+      const dateB = adapter.date("2025-10-13T00:00:00.000Z", "Europe/London");
+      expect(adapter.isSame(dateA, dateB, "day")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "month")).toBe(true);
+      expect(adapter.isSame(dateA, dateB, "year")).toBe(true);
+    });
+
+    describe("GIVEN DST edge case for 2025", () => {
+      // DST ends in NY: Nov 2, 2025, at 2:00 AM (clocks go back to 1:00 AM)
+      // 1:30 AM EDT (before fallback) is 2025-11-02T05:30:00.000Z
+      // 1:30 AM EST (after fallback) is 2025-11-02T06:30:00.000Z
+      const utcBeforeFallback = "2025-11-02T05:30:00.000Z";
+      const utcAfterFallback = "2025-11-02T06:30:00.000Z";
+
+      it("SHOULD isSame: 1:30 AM before and after DST fallback in NY (should NOT be same hour)", () => {
+        const dateBefore = adapter.date(utcBeforeFallback, "America/New_York");
+        const dateAfter = adapter.date(utcAfterFallback, "America/New_York");
+
+        // Both are 1:30 AM local, but one is EDT, one is EST
+        expect(dateBefore.format("YYYY-MM-DD HH:mm a Z")).toBe(
+          "2025-11-02 01:30 am -04:00",
+        );
+        expect(dateAfter.format("YYYY-MM-DD HH:mm a Z")).toBe(
+          "2025-11-02 01:30 am -05:00",
+        );
+
+        expect(adapter.isSame(dateBefore, dateAfter, "day")).toBe(true);
+        expect(adapter.isSame(dateBefore, dateAfter, "month")).toBe(true);
+        expect(adapter.isSame(dateBefore, dateAfter, "year")).toBe(true);
+      });
+
+      it("SHOULD isSame: UTC vs NY time during DST transition", () => {
+        // 2025-11-02T05:30:00.000Z is 1:30 AM EDT in NY
+        const dateUTC = adapter.date(utcBeforeFallback, "UTC");
+        const dateNY = adapter.date(utcBeforeFallback, "America/New_York");
+
+        expect(adapter.isSame(dateUTC, dateNY, "day")).toBe(true);
+      });
+    });
+  });
+
+  describe("GIVEN isSame is passed an invalid date", () => {
+    it("SHOULD return false if dateA is invalid", () => {
+      const dateA = adapter.date("invalid-date", "UTC");
+      const dateB = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      expect(adapter.isSame(dateA, dateB, "day")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "month")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "year")).toBe(false);
+    });
+
+    it("SHOULD return false if dateB is invalid", () => {
+      const dateA = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      const dateB = adapter.date("invalid-date", "UTC");
+      expect(adapter.isSame(dateA, dateB, "day")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "month")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "year")).toBe(false);
+    });
+
+    it("SHOULD return false if both dates are invalid", () => {
+      const dateA = adapter.date("invalid-date", "UTC");
+      const dateB = adapter.date("invalid-date", "UTC");
+      expect(adapter.isSame(dateA, dateB, "day")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "month")).toBe(false);
+      expect(adapter.isSame(dateA, dateB, "year")).toBe(false);
+    });
+  });
+
+  describe("GIVEN compare is passed dates with timezones", () => {
+    // Basic comparisons
+    it("SHOULD compare: same UTC date/time returns 0", () => {
+      const dateA = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      const dateB = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      expect(adapter.compare(dateA, dateB)).toBe(0);
+    });
+
+    it("SHOULD compare: dateA before dateB returns -1", () => {
+      const dateA = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      const dateB = adapter.date("2025-10-14T03:30:00.000Z", "UTC");
+      expect(adapter.compare(dateA, dateB)).toBe(-1);
+    });
+
+    it("SHOULD compare: dateA after dateB returns 1", () => {
+      const dateA = adapter.date("2025-10-15T03:30:00.000Z", "UTC");
+      const dateB = adapter.date("2025-10-14T03:30:00.000Z", "UTC");
+      expect(adapter.compare(dateA, dateB)).toBe(1);
+    });
+
+    it("SHOULD compare: same moment, different timezones returns 0", () => {
+      const iso = "2025-10-13T03:30:00.000Z";
+      const dateUTC = adapter.date(iso, "UTC");
+      const dateNY = adapter.date(iso, "America/New_York");
+      const dateLondon = adapter.date(iso, "Europe/London");
+      expect(adapter.compare(dateUTC, dateNY)).toBe(0);
+      expect(adapter.compare(dateUTC, dateLondon)).toBe(0);
+      expect(adapter.compare(dateNY, dateLondon)).toBe(0);
+    });
+
+    it("SHOULD compare: local time string, different timezones", () => {
+      const local = "2025-10-13T03:30:00";
+      const dateNY = adapter.date(local, "America/New_York");
+      const dateLondon = adapter.date(local, "Europe/London");
+      // These represent different moments in time
+      if (dateNY.utc().valueOf() < dateLondon.utc().valueOf()) {
+        expect(adapter.compare(dateNY, dateLondon)).toBe(-1);
+      } else if (dateNY.utc().valueOf() > dateLondon.utc().valueOf()) {
+        expect(adapter.compare(dateNY, dateLondon)).toBe(1);
+      } else {
+        expect(adapter.compare(dateNY, dateLondon)).toBe(0);
+      }
+    });
+
+    // DST edge case (2025, New York)
+    describe("GIVEN compare and DST edge case (2025, NY)", () => {
+      // DST ends in NY: Nov 2, 2025, at 2:00 AM (clocks go back to 1:00 AM)
+      // 1:30 AM EDT (before fallback) is 2025-11-02T05:30:00.000Z
+      // 1:30 AM EST (after fallback) is 2025-11-02T06:30:00.000Z
+      const utcBeforeFallback = "2025-11-02T05:30:00.000Z";
+      const utcAfterFallback = "2025-11-02T06:30:00.000Z";
+
+      it("compare: 1:30 AM EDT vs 1:30 AM EST (should be -1)", () => {
+        const dateBefore = adapter.date(utcBeforeFallback, "America/New_York");
+        const dateAfter = adapter.date(utcAfterFallback, "America/New_York");
+        expect(adapter.compare(dateBefore, dateAfter)).toBe(-1);
+        expect(adapter.compare(dateAfter, dateBefore)).toBe(1);
+      });
+
+      it("compare: UTC vs NY time during DST transition", () => {
+        const dateUTC = adapter.date(utcBeforeFallback, "UTC");
+        const dateNY = adapter.date(utcBeforeFallback, "America/New_York");
+        expect(adapter.compare(dateUTC, dateNY)).toBe(0);
+      });
+    });
+
+    // Invalid dates
+    it("compare: invalid date returns -1 if dateA is invalid", () => {
+      const dateA = adapter.date("invalid-date", "UTC");
+      const dateB = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      // Your implementation may vary; adjust expectation if needed
+      expect(adapter.compare(dateA, dateB)).toBe(-1);
+    });
+
+    it("compare: invalid date returns 1 if dateB is invalid", () => {
+      const dateA = adapter.date("2025-10-13T03:30:00.000Z", "UTC");
+      const dateB = adapter.date("invalid-date", "UTC");
+      // Your implementation may vary; adjust expectation if needed
+      expect(adapter.compare(dateA, dateB)).toBe(1);
+    });
+
+    it("compare: both dates invalid returns 0", () => {
+      const dateA = adapter.date("invalid-date", "UTC");
+      const dateB = adapter.date("invalid-date", "UTC");
+      // Your implementation may vary; adjust expectation if needed
+      expect(adapter.compare(dateA, dateB)).toBe(0);
+    });
   });
 });
