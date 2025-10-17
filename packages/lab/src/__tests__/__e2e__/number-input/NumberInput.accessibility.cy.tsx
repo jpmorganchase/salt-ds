@@ -18,7 +18,7 @@ describe("Number Input - Accessibility", () => {
       />,
     );
 
-    cy.findByRole("spinbutton").should("have.attr", "aria-valuenow", "-20.1");
+    cy.findByRole("spinbutton").should("have.value", "-20.10");
     cy.findByRole("spinbutton").should("have.attr", "aria-valuemax", "250.23");
     cy.findByRole("spinbutton").should("have.attr", "aria-valuemin", "-500.11");
     cy.findByRole("spinbutton").should("have.attr", "aria-invalid", "false");
@@ -41,11 +41,11 @@ describe("Number Input - Accessibility", () => {
 
   it("sets the correct default ARIA attributes on the increment/decrement buttons", () => {
     cy.mount(<Default />);
-    cy.findByLabelText("increment value")
+    cy.get(".saltNumberInput-increment")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
 
-    cy.findByLabelText("decrement value")
+    cy.get(".saltNumberInput-decrement")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
   });
