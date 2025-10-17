@@ -290,9 +290,14 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     });
     const lastCommitValue = useRef<string>(value);
 
-    const decimalScale =
-      decimalScaleProp ||
-      Math.max(getNumberPrecision(value), getNumberPrecision(step));
+    const isValidDecimalScale =
+      typeof decimalScaleProp === "number" &&
+      Number.isInteger(decimalScaleProp) &&
+      decimalScaleProp >= 0;
+
+    const decimalScale = isValidDecimalScale
+      ? decimalScaleProp
+      : Math.max(getNumberPrecision(value), getNumberPrecision(step));
 
     const defaultFormat = (value: string): string => {
       const sanitized = value.trim();
