@@ -165,7 +165,7 @@ export interface NumberInputProps
   /**
    * Value of the `NumberInput`, to be used when in a controlled state.
    */
-  value?: string;
+  value?: number | string;
 }
 
 export const isOutOfRange = (
@@ -579,7 +579,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           )}
           aria-invalid={
             !isReadOnly && renderedValue.length
-              ? isOutOfRange(value, min, max) || validationStatus === "error"
+              ? isOutOfRange(floatValue, min, max) ||
+                validationStatus === "error"
               : undefined
           }
           className={clsx(
@@ -632,7 +633,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           <div className={clsx(withBaseName("buttonContainer"))}>
             <Button
               aria-hidden={true}
-              aria-label={"increment value"}
               appearance="transparent"
               tabIndex={-1}
               disabled={disableIncrement}
@@ -645,7 +645,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             </Button>
             <Button
               aria-hidden={true}
-              aria-label={"decrement value"}
               appearance="transparent"
               tabIndex={-1}
               disabled={disableDecrement}
