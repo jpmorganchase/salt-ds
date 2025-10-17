@@ -6,7 +6,6 @@ export const CustomInputPattern = () => (
     <FormFieldLabel>Multiplier</FormFieldLabel>
     <NumberInput
       defaultValue={0}
-      style={{ width: "256px" }}
       pattern={(inputValue) => /^(\d+)x?$/.test(inputValue)}
       format={(value) => `${value}x`}
       parse={(value) => {

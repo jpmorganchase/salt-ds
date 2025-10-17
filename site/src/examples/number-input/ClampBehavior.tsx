@@ -65,7 +65,6 @@ export const ClampBehavior = () => {
         clamp
         max={max}
         min={min}
-        style={{ width: "250px" }}
         inputProps={{
           onBlur: handleBlur,
           onFocus: handleFocus,
