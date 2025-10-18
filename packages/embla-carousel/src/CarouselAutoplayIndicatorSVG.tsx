@@ -51,13 +51,6 @@ export const CarouselAutoplayIndicatorSVG = forwardRef<
         ref={ref}
       >
         <circle
-          className={withBaseName("track")}
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          strokeWidth={strokeWidth}
-        />
-        <circle
           ref={barRef}
           className={withBaseName("bar")}
           cx={size / 2}

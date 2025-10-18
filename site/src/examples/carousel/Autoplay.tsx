@@ -13,7 +13,7 @@ import { PauseSolidIcon, PlaySolidIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
-import { useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
@@ -58,7 +58,39 @@ export const Autoplay = () => {
     };
   }, [emblaApi]);
 
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
+    }
+
+    const handleAutoplayStop = () => {
+      setPlayState((prev) => (prev === "play" ? "pause" : prev));
+    };
+
+    const handleAutoplayPlay = () => {
+      setPlayState("play");
+    };
+
+    emblaApi.on("autoplay:stop", handleAutoplayStop);
+    emblaApi.on("autoplay:play", handleAutoplayPlay);
+
+    return () => {
+      emblaApi.off("autoplay:stop", handleAutoplayStop);
+      emblaApi.off("autoplay:play", handleAutoplayPlay);
+    };
+  }, [emblaApi]);
+
   const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
+
+  const handlePointerDown = () => {
+    stop();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Tab") {
+      stop();
+    }
+  };
 
   const handleMouseEnter = () => {
     if (!manualControlRef.current && playState === "play") {
@@ -73,7 +105,7 @@ export const Autoplay = () => {
   };
 
   const handleFocus = () => {
-    if (!manualControlRef.current) {
+    if (!manualControlRef.current && playState === "play") {
       pause();
     }
   };
@@ -127,7 +159,7 @@ export const Autoplay = () => {
             aria-label={`${playState === "play" ? "stop" : "start"} automatic slide rotation`}
             appearance="bordered"
             sentiment="neutral"
-            onMouseDown={() => {
+            onPointerDown={() => {
               manualControlRef.current = true;
             }}
             onKeyDown={(event) => {
@@ -153,9 +185,11 @@ export const Autoplay = () => {
           />
         </FlexLayout>
         <CarouselSlides
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onFocus={handleFocus}
+          onPointerDown={handlePointerDown}
         >
           {sliderData.map((slide, index) => {
             const slideId = `${carouselId}-slide${index}`;

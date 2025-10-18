@@ -64,12 +64,15 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
       let newIndex = focusedTabIndex ?? selectedIndex;
 
       if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
         const direction = event.key === "ArrowLeft" ? -1 : 1;
         newIndex =
           (newIndex + direction + scrollSnaps.length) % scrollSnaps.length;
       } else if (event.key === "Home") {
+        event.preventDefault();
         newIndex = 0;
       } else if (event.key === "End") {
+        event.preventDefault();
         newIndex = scrollSnaps.length - 1;
       }
 
