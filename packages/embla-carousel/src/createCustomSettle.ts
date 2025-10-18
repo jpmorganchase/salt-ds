@@ -1,6 +1,6 @@
 import type { EmblaCarouselType } from "embla-carousel";
 
-const settlePixelThreshold = 5;
+const settlePixelThreshold = 25;
 
 export type SettleCallback = (emblaApi: EmblaCarouselType) => void;
 export type CreateCustomSettle = (callback: SettleCallback) => SettleCallback;

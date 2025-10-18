@@ -103,7 +103,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     }, [emblaApi, setAnnouncementState]);
 
     useEffect(() => {
-      if (!focusOnSettle.current && stableScrollSnap !== undefined) {
+      if (!focusOnSettle.current || stableScrollSnap === undefined) {
         return;
       }
       slideRefs.current[focusedSlideIndex]?.focus();
