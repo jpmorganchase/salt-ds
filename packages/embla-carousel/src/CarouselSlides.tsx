@@ -10,9 +10,7 @@ import {
   forwardRef,
   type KeyboardEvent,
   type MouseEventHandler,
-  type SyntheticEvent,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -36,6 +34,7 @@ const withBaseName = makePrefixer("saltCarouselSlides");
 
 const announceSlideChangesFrom: CarouselAnnouncementTrigger[] = [
   "drag",
+  "focus",
   "navigation",
 ];
 
@@ -59,16 +58,17 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       carouselId,
     } = useCarouselContext();
 
-    const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const forkedEmblaRef = useForkRef<HTMLDivElement>(ref, emblaRef);
+    const carouselRef = useForkRef<HTMLDivElement>(
+      forkedEmblaRef,
+      containerRef,
+    );
 
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const [focusSlideIndex, setFocusedSlideIndex] = useState<number>(0);
+    const [focusedSlideIndex, setFocusedSlideIndex] = useState<number>(-1);
     const [dragging, setDragging] = useState(false);
-    // Tracks which slide should be focused after scroll animation completes.
-    // prevents focusing slides before they're visible
-    const [pendingFocusIndex, setPendingFocusIndex] = useState<
-      number | undefined
-    >(undefined);
+    const focusOnSettle = useRef<boolean>(false);
 
     const [stableScrollSnap, setStableScrollSnap] = useState<
       number | undefined
@@ -84,14 +84,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       const handleSettle = (emblaApi: EmblaCarouselType) => {
         const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
         setStableScrollSnap(selectedScrollSnap);
-
-        // Focus the pending slide after scroll has settled.
-        // This synchronises focus with scroll completion, ensuring the slide is fully
-        // visible and has correct aria-hidden/tabIndex attributes before receiving focus
-        if (pendingFocusIndex !== undefined) {
-          slideRefs.current[pendingFocusIndex]?.focus();
-          setPendingFocusIndex(undefined);
-        }
       };
 
       if (!emblaApi) {
@@ -108,24 +100,30 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("scroll", scrollCallback);
         emblaApi.off("pointerDown", pointerDownCallback);
       };
-    }, [emblaApi, pendingFocusIndex, setAnnouncementState]);
+    }, [emblaApi, setAnnouncementState]);
 
-    useLayoutEffect(() => {
-      if (focusSlideIndex >= 0) {
+    useEffect(() => {
+      if (!focusOnSettle.current && stableScrollSnap !== undefined) {
+        return;
+      }
+      slideRefs.current[focusedSlideIndex]?.focus();
+      setAnnouncementState("focus");
+      focusOnSettle.current = false;
+    }, [stableScrollSnap, focusedSlideIndex, setAnnouncementState]);
+
+    useEffect(() => {
+      if (focusedSlideIndex >= 0) {
         const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
         const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
         const nearestScrollSnap = Math.floor(
-          focusSlideIndex / numberOfSlidesPerSnap,
+          focusedSlideIndex / numberOfSlidesPerSnap,
         );
         if (emblaApi?.selectedScrollSnap() !== nearestScrollSnap) {
-          setAnnouncementState("focus");
           emblaApi?.scrollTo(nearestScrollSnap);
-          setPendingFocusIndex(focusSlideIndex);
-        } else {
-          slideRefs.current[focusSlideIndex]?.focus();
+          focusOnSettle.current = true;
         }
       }
-    }, [focusSlideIndex, emblaApi, setAnnouncementState]);
+    }, [focusedSlideIndex, emblaApi]);
 
     useEffect(() => {
       if (disableSlideAnnouncements === false) {
@@ -159,17 +157,25 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       if (event.repeat) {
         return;
       }
+      const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
+      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+
+      // Find the current snap
+      const currentSnap = Math.floor(focusedSlideIndex / numberOfSlidesPerSnap);
+
       switch (event.key) {
         case "ArrowLeft": {
           event.preventDefault();
-          setFocusedSlideIndex((prevState) => Math.max(prevState - 1, 0));
+          const prevSnap = Math.max(currentSnap - 1, 0);
+          const newIndex = prevSnap * numberOfSlidesPerSnap;
+          setFocusedSlideIndex(newIndex);
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
-          setFocusedSlideIndex((prevState) =>
-            Math.min(prevState + 1, slideRefs.current.length - 1),
-          );
+          const nextSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
+          const newIndex = nextSnap * numberOfSlidesPerSnap;
+          setFocusedSlideIndex(newIndex);
           break;
         }
       }
@@ -185,8 +191,26 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       rest.onMouseUp?.(event);
     };
 
+    const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+      if (
+        !containerRef.current ||
+        !event.relatedTarget ||
+        !containerRef.current?.contains(event.relatedTarget)
+      ) {
+        const settledSnap = emblaApi?.selectedScrollSnap() ?? 0;
+        const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
+        const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+        const settledSlideIndex = Math.floor(
+          settledSnap * numberOfSlidesPerSnap,
+        );
+        setFocusedSlideIndex(settledSlideIndex);
+      }
+      rest.onBlur?.(event);
+    };
+
     return (
       <div
+        onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
@@ -205,14 +229,14 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           {Children.map(children, (child, index) => {
             const childElement = child as React.ReactElement;
             const existingId = childElement.props.id;
-            const isHidden = !visibleSlideIndexes.includes(index + 1);
+            const isFocused = focusedSlideIndex === index;
+            const isHidden =
+              !visibleSlideIndexes.includes(index + 1) && !isFocused;
             const element = child as React.ReactElement;
             return cloneElement(element, {
               "aria-hidden": isHidden,
               id: existingId ?? `${carouselId}-slide${index + 1}`,
-              onMouseDown: (event: SyntheticEvent) => event.preventDefault(),
               onFocus: (event: FocusEvent) => {
-                event.preventDefault();
                 setFocusedSlideIndex(index);
                 element.props?.onFocus?.(event);
               },
