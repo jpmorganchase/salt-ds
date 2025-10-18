@@ -75,7 +75,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     });
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
-      { duration: 20, ...emblaOptions },
+      emblaOptions,
       [...emblaPlugins],
     );
 
