@@ -74,10 +74,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       window: targetWindow,
     });
 
-    const [emblaRef, emblaApi] = useEmblaCarousel(
-      emblaOptions,
-      [...emblaPlugins],
-    );
+    const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, [
+      ...emblaPlugins,
+    ]);
 
     const carouselId = useId(id);
 
