@@ -11,6 +11,7 @@ data:
 ## Default
 
 The `NumberInput` has a default increment step of 1, which is adjustable via the `step` prop for precise value changes. For larger adjustments, users can hold the Shift key while using the arrow keys to apply a `stepMultiplier`, a prop that defaults to 2.
+The parsed numeric value can be accessed through the `onNumberChange` event handler.
 
 <LivePreview componentName="number-input" exampleName="Default" />
 
@@ -101,7 +102,7 @@ When dealing with currencies such as pounds sterling or U.S. dollars in a retail
 
 <LivePreview componentName="number-input" exampleName="Decimals" />
 
-To provide a fixed scale provide a custom format function.
+To provide a fixed scale, provide a custom format function.
 
 <LivePreview componentName="number-input" exampleName="FixedDecimalScale" />
 
@@ -126,7 +127,8 @@ To make large numbers easier to read, you can use a combination of `format` and 
 
 ### Compact notation
 
-Large numbers can be transformed into their compact forms to be used in, for example, charts or other data visualizations. You can use `format` to convert the numerical value into its shortened form and `parse` to convert the shortened form back to the numerical value. The example below supports the following conversion:
+You can use `format` to convert the numerical value into its compact notation and `parse` to convert compact notation back to its numerical value. This is useful when used with charts or other forms of data visualization. The example below supports the following compact notations:
+The example below supports the following conversion:
 
 - Thousands to K
 - Millions to M

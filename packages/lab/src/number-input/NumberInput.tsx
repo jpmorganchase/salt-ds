@@ -20,6 +20,7 @@ import {
   forwardRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
+  type MouseEventHandler,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
@@ -288,7 +289,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       name: "NumberInput",
       state: "value",
     });
-    const lastCommitValue = useRef<string>(value);
 
     const decimalScale =
       decimalScaleProp ||
@@ -326,18 +326,34 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const parse = parseProp ?? defaultParse;
 
     // Committed values are complete numbers, created through blur or increment/decrement, not partial entries such as "0." created by input/onChange.
+    const lastCommitValue = useRef<string>(value);
     const commit = (
       event: SyntheticEvent | null,
       newNumber: number | null,
       newInputValue: string,
     ) => {
+      let safeNumber = newNumber;
+      if (safeNumber !== null && !Number.isNaN(safeNumber)) {
+        safeNumber = Math.max(
+          Number.MIN_SAFE_INTEGER,
+          Math.min(Number.MAX_SAFE_INTEGER, safeNumber),
+        );
+        if (clamp) {
+          safeNumber = Math.max(min, Math.min(max, safeNumber));
+        }
+      }
       const commitValue =
-        newNumber !== null && !Number.isNaN(newNumber)
-          ? newNumber.toFixed(decimalScale)
+        safeNumber !== null && !Number.isNaN(safeNumber)
+          ? safeNumber.toFixed(decimalScale)
           : newInputValue;
+
+      if (commitValue !== value) {
+        setValue(commitValue);
+      }
+
       if (lastCommitValue.current !== commitValue) {
         onChange?.(event, commitValue);
-        onNumberChangeProp?.(event, newNumber);
+        onNumberChangeProp?.(event, safeNumber);
       }
       lastCommitValue.current = commitValue;
     };
@@ -351,16 +367,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       setIsEditing(false);
       inputOnBlur?.(event);
       const parsedValue = parse(value);
-      if (!clamp || parsedValue === null) {
-        commit(event, parsedValue, value);
-        return;
-      }
-      let clampedValue = Number.isNaN(parsedValue)
-        ? parsedValue
-        : Math.max(min, Math.min(max, parsedValue));
-      clampedValue = Number.parseFloat(clampedValue.toFixed(decimalScale));
-      setValue(!Number.isNaN(clampedValue) ? String(clampedValue) : value);
-      commit(event, clampedValue, value);
+      commit(event, parsedValue, value);
     };
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -377,6 +384,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         return;
       }
       const validValue = pattern ? pattern(inputValue) : true;
+      console.log("validValue", validValue);
       if (validValue) {
         setIsEditing(true);
         onChange?.(event, event.target.value);
@@ -392,22 +400,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       if (Number.isNaN(adjustedValue)) {
         return;
       }
-      if (adjustedValue > max) {
-        adjustedValue = max;
-      } else if (adjustedValue < min) {
-        adjustedValue = min;
-      } else {
-        adjustedValue -= decrementStep;
-      }
-
-      const decrementedValue = Math.max(min, Math.min(max, adjustedValue));
-      const newValue = Number.parseFloat(
-        decrementedValue.toFixed(decimalScale),
-      );
-      const newValueStr = String(newValue);
-
-      setValue(newValueStr);
-      commit(event ?? null, newValue, newValueStr);
+      adjustedValue -= decrementStep;
+      commit(event ?? null, adjustedValue, String(adjustedValue));
     };
 
     let floatValue = parse(value) ?? 0;
@@ -426,27 +420,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const incrementValue = (event?: SyntheticEvent, block?: boolean) => {
       const incrementStep = (block ? stepMultiplier : 1) * step;
-      const preIncrementedValue = value;
-      let adjustedValue = parse(preIncrementedValue) ?? 0;
+      let adjustedValue = parse(value) ?? 0;
       if (Number.isNaN(adjustedValue)) {
         return;
       }
-      if (adjustedValue > max) {
-        adjustedValue = max;
-      } else if (adjustedValue < min) {
-        adjustedValue = min;
-      } else {
-        adjustedValue += incrementStep;
-      }
-
-      const incrementedValue = Math.max(min, Math.min(max, adjustedValue));
-      const newValue = Number.parseFloat(
-        incrementedValue.toFixed(decimalScale),
-      );
-      const newValueStr = String(newValue);
-
-      setValue(newValueStr);
-      commit(event ?? null, newValue, preIncrementedValue);
+      adjustedValue += incrementStep;
+      commit(event ?? null, adjustedValue, String(adjustedValue));
     };
 
     useEffect(() => {
@@ -528,8 +507,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
     };
 
-    const handleContainerMouseUp = () => {
+    const handleContainerMouseUp: MouseEventHandler<HTMLDivElement> = (
+      event,
+    ) => {
       setIsFocused(true);
+      restProps.onMouseUp?.(event);
     };
 
     let renderedValue: string;
@@ -571,12 +553,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           </div>
         )}
         <input
-          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-          aria-labelledby={clsx(
-            formFieldLabelledBy,
-            inputLabelledBy,
-            validationStatusId,
-          )}
+          aria-describedby={
+            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
+          }
+          aria-labelledby={
+            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
+          }
           aria-invalid={
             !isReadOnly && renderedValue.length
               ? isOutOfRange(floatValue, min, max) ||
@@ -598,18 +580,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           aria-readonly={isReadOnly ? "true" : undefined}
           ref={handleInputRef}
           required={isRequired}
-          {...(!isReadOnly &&
-            // Workaround to not have the screen reader announce "50%" when the input is blank.
-            renderedValue.length && {
-              "aria-valuemax": max,
-              "aria-valuemin": min,
-            })}
-          {...(!isReadOnly && {
-            "aria-valuenow": floatValue,
-            "aria-valuetext": renderedValue.length
-              ? (ariaValueTextProp ?? renderedValue)
-              : "Empty",
-          })}
+          aria-valuemax={!isReadOnly && renderedValue.length ? max : undefined}
+          aria-valuemin={!isReadOnly && renderedValue.length ? min : undefined}
+          aria-valuenow={!isReadOnly ? floatValue : undefined}
+          aria-valuetext={
+            !isReadOnly
+              ? renderedValue.length
+                ? (ariaValueTextProp ?? renderedValue)
+                : "Empty"
+              : undefined
+          }
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}
           tabIndex={isDisabled ? -1 : 0}

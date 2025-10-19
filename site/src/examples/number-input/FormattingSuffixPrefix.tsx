@@ -9,6 +9,9 @@ export const FormattingSuffixPrefix = () => {
         <NumberInput
           defaultValue={12}
           pattern={(inputValue) =>
+            inputValue === "" ||
+            inputValue === "-" ||
+            inputValue === "+" ||
             /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
           }
           format={(value) => `${value}%`}
@@ -28,12 +31,18 @@ export const FormattingSuffixPrefix = () => {
         <NumberInput
           defaultValue={12}
           pattern={(inputValue) =>
-            /^\$?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
+            inputValue === "" ||
+            inputValue === "-" ||
+            inputValue === "+" ||
+            /^\$?[+-]?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
           }
           format={(value) => `$${value.replace(/\$/g, "")}`}
           parse={(value) => {
             if (!value.length) {
               return null;
+            }
+            if (value === "$") {
+              return 0;
             }
             const parsedValue = value.replace(/\$/g, "");
             return Number.parseFloat(parsedValue);

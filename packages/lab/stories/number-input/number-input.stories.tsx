@@ -482,6 +482,9 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           {...args}
           defaultValue={12}
           pattern={(inputValue) =>
+            inputValue === "" ||
+            inputValue === "-" ||
+            inputValue === "+" ||
             /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)
           }
           max={100}

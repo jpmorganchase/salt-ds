@@ -275,8 +275,8 @@ describe("Number Input", () => {
       "have.value",
       Number.MAX_SAFE_INTEGER.toString(),
     );
-    cy.get("@numberChangeSpy").should("not.have.been.called");
 
+    // Minimum safe integer
     cy.findByRole("spinbutton")
       .clear()
       .focus()
@@ -285,6 +285,27 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should(
       "have.value",
       Number.MIN_SAFE_INTEGER.toString(),
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      Number.MIN_SAFE_INTEGER,
+    );
+
+    // Maximum safe integer
+    cy.findByRole("spinbutton")
+      .clear()
+      .focus()
+      .realType("83491232183712983713791237");
+    cy.realPress("Tab");
+    cy.findByRole("spinbutton").should(
+      "have.value",
+      Number.MAX_SAFE_INTEGER.toString(),
+    );
+    cy.get("@numberChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      Number.MAX_SAFE_INTEGER,
     );
   });
 
