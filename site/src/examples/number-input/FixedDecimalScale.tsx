@@ -11,7 +11,7 @@ export const FixedDecimalScale = () => {
         onNumberChange={(_event, newValue) =>
           console.log(`Number changed to ${newValue}`)
         }
-        format={(value: string) => {
+        format={(value) => {
           if (!value.length) {
             return value;
           }
