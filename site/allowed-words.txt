@@ -39,6 +39,3 @@ Tabstrips
 Taurean
 Tickbox
 UITK
-testid
-datasource
-divs
