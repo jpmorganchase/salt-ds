@@ -33,7 +33,7 @@ export const FormattingCompactNotation = () => {
           }).format(floatValue);
         }}
         step={1000}
-        parse={(raw: string) => {
+        parse={(raw) => {
           if (!raw.length) {
             return null;
           }
