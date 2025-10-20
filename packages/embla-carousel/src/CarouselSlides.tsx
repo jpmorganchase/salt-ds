@@ -4,8 +4,10 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
 import {
-  Children,
+  type FocusEvent,
   type ComponentPropsWithoutRef,
+  type ReactElement,
+  Children,
   cloneElement,
   forwardRef,
   type KeyboardEvent,
@@ -84,11 +86,18 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       const handleSettle = (emblaApi: EmblaCarouselType) => {
         const selectedScrollSnap = emblaApi?.selectedScrollSnap() ?? 0;
         setStableScrollSnap(selectedScrollSnap);
+        const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
+        const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+        const settledSlideIndex = Math.floor(
+          selectedScrollSnap * numberOfSlidesPerSnap,
+        );
+        setFocusedSlideIndex(settledSlideIndex);
       };
 
       if (!emblaApi) {
         return;
       }
+
       const scrollCallback = createCustomSettle(handleSettle);
       const pointerDownCallback = () => {
         setAnnouncementState("drag");
@@ -112,9 +121,9 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     }, [stableScrollSnap, focusedSlideIndex, setAnnouncementState]);
 
     useEffect(() => {
+      const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
+      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
       if (focusedSlideIndex >= 0) {
-        const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
-        const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
         const nearestScrollSnap = Math.floor(
           focusedSlideIndex / numberOfSlidesPerSnap,
         );
@@ -122,6 +131,14 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           emblaApi?.scrollTo(nearestScrollSnap);
           focusOnSettle.current = true;
         }
+      } else if (focusedSlideIndex === -1) {
+        const initialSnap = emblaApi?.selectedScrollSnap();
+        const initialSlideIndex =
+          initialSnap !== undefined
+            ? Math.floor(initialSnap * numberOfSlidesPerSnap)
+            : 0;
+        setFocusedSlideIndex(initialSlideIndex);
+        setStableScrollSnap(initialSnap);
       }
     }, [focusedSlideIndex, emblaApi]);
 
@@ -191,26 +208,8 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       rest.onMouseUp?.(event);
     };
 
-    const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-      if (
-        !containerRef.current ||
-        !event.relatedTarget ||
-        !containerRef.current?.contains(event.relatedTarget)
-      ) {
-        const settledSnap = emblaApi?.selectedScrollSnap() ?? 0;
-        const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
-        const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
-        const settledSlideIndex = Math.floor(
-          settledSnap * numberOfSlidesPerSnap,
-        );
-        setFocusedSlideIndex(settledSlideIndex);
-      }
-      rest.onBlur?.(event);
-    };
-
     return (
       <div
-        onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
@@ -227,12 +226,12 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           id={id ?? `${carouselId}-slides`}
         >
           {Children.map(children, (child, index) => {
-            const childElement = child as React.ReactElement;
+            const childElement = child as ReactElement;
             const existingId = childElement.props.id;
             const isFocused = focusedSlideIndex === index;
             const isHidden =
               !visibleSlideIndexes.includes(index + 1) && !isFocused;
-            const element = child as React.ReactElement;
+            const element = child as ReactElement;
             return cloneElement(element, {
               "aria-hidden": isHidden,
               id: existingId ?? `${carouselId}-slide${index + 1}`,
