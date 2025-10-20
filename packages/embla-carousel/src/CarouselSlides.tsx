@@ -4,14 +4,14 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
 import {
-  type FocusEvent,
-  type ComponentPropsWithoutRef,
-  type ReactElement,
   Children,
+  type ComponentPropsWithoutRef,
   cloneElement,
+  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type MouseEventHandler,
+  type ReactElement,
   useEffect,
   useRef,
   useState,
