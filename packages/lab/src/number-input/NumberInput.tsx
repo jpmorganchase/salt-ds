@@ -223,6 +223,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       min = Number.MIN_SAFE_INTEGER,
       onBlur,
       onChange,
+      onMouseUp,
       onNumberChange: onNumberChangeProp,
       parse: parseProp,
       placeholder,
@@ -384,7 +385,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         return;
       }
       const validValue = pattern ? pattern(inputValue) : true;
-      console.log("validValue", validValue);
+
       if (validValue) {
         setIsEditing(true);
         onChange?.(event, event.target.value);
@@ -511,7 +512,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       event,
     ) => {
       setIsFocused(true);
-      restProps.onMouseUp?.(event);
+      onMouseUp?.(event);
     };
 
     let renderedValue: string;
