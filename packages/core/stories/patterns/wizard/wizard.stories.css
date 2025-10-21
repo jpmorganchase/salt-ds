@@ -1,7 +1,8 @@
-.container {
+.horizontalContainer {
   width: 730px;
-  height: 588px;
-  padding: var(--salt-spacing-300) 0;
+  /* height: 588px; */
+  padding: var(--salt-spacing-300);
+  border: 1px dashed green;
 }
 
 .header {
@@ -9,13 +10,13 @@
 }
 
 .content {
+  height: 396px;
   overflow-y: auto;
-  flex: 1;
-  padding: 0 var(--salt-spacing-300);
+  border: 1px solid red;
 }
 
 .actions {
-  padding: var(--salt-spacing-300) var(--salt-spacing-300) 0;
+  border: 1px solid blue;
 }
 
 .verticalHeader {
@@ -24,8 +25,9 @@
 
 .verticalContainer {
   width: 850px;
-  height: 588px;
-  padding: var(--salt-spacing-300) 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  /* padding: var(--salt-spacing-300) 0 var(--salt-spacing-300) var(--salt-spacing-300); */
+  padding: var(--salt-spacing-300);
+  border: 1px dashed green;
 }
 
 .verticalContentContainer {
@@ -34,6 +36,5 @@
 }
 
 .verticalContent {
-  padding-right: var(--salt-spacing-300);
   overflow-y: auto;
 }
