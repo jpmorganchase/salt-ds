@@ -61,14 +61,18 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
     return (
       <div
         aria-roledescription="slide"
-        className={clsx([withBaseName(), className])}
+        className={clsx([
+          withBaseName(),
+          { [withBaseName("bordered")]: appearance === "bordered" },
+          className,
+        ])}
         ref={ref}
         role={ariaVariant}
         {...rest}
       >
         <div
           className={clsx(withBaseName("content"), {
-            [withBaseName("bordered")]: appearance === "bordered",
+            [withBaseName("bordered-content")]: appearance === "bordered",
           })}
         >
           {media}
