@@ -1,5 +1,61 @@
 # @salt-ds/icons
 
+## 1.15.0
+
+### Minor Changes
+
+- d6dc07b: Deprecated ListIcon. TextUnorderedListIcon should be used instead.
+- d6dc07b: As part of our ongoing commitment to ensure greater consistency and legibility across applications, we have refined the stroke weight of two icons:
+
+  - AddIcon
+  - RemoveIcon
+
+- d6dc07b: Added 42 new icons designed to address common use cases in mathematical operations, document management, messaging, and text formatting:
+
+  - ScheduleIcon
+  - CollapseAllHorizontalIcon
+  - ExpandAllHorizontalIcon
+  - DivideIcon
+  - DoesNotEqualIcon
+  - EqualIcon
+  - ExponentiationIcon
+  - GreaterThanIcon
+  - GreaterThanEqualTo
+  - InfiniteIcon
+  - LessThanIcon
+  - LessThanEqualTo
+  - MultiplyIcon
+  - PercentageIcon
+  - PiIcon
+  - SquareRootIcon
+  - MessageForwardIcon
+  - MessageReplyIcon
+  - MessageReplyAllIcon
+  - PanelCloseLeftIcon
+  - PanelCloseRightIcon
+  - PanelOpenLeftIcon
+  - PanelOpenRightIcon
+  - PanelCloseBottomIcon
+  - PanelCloseTopIcon
+  - PanelOpenBottomIcon
+  - PanelOpenTopIcon
+  - SplitViewIcon
+  - TextOrderedListIcon
+  - TextUnorderedListIcon
+  - DocumentDraft
+  - DocumentEdit
+  - TextAlignCenterIcon
+  - TextAlignJustifyIcon
+  - TextAlignLeftIcon
+  - TextAlignRightIcon
+  - TextBoldIcon
+  - TextColorIcon
+  - TextHighlightIcon
+  - TextItalicsIcon
+  - TextStrikethroughIcon
+  - TextUnderlineIcon
+  - StopIcon
+
 ## 1.14.0
 
 ### Minor Changes
