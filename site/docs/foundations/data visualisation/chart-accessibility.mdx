@@ -1,0 +1,108 @@
+---
+title: Chart accessibility
+layout: DetailTechnical
+---
+
+Charts rely heavily on visuals to help users understand complex data, so it’s important to ensure that your charts meet all accessibility requirements. Use color appropriately, include visual cues, provide text for assistive technologies, and ensure any interactions are accessible.
+
+## Highcharts Accessibility module
+
+Since Salt charts only supports the styling of Highcharts, Highcharts entirely handles interactivity and certain accessible features including the target area size for mouse or touch devices ([WCAG 2.2](https://www.w3.org/TR/WCAG22/)), keyboard and screen-reader interactivity. Highcharts provides the ability to add a text alternative for your charts, which is essential for accessibility.
+
+For more information on how Highcharts’s addresses accessibility, please review the [Highcharts Accessibility module documentation](https://www.highcharts.com/docs/accessibility/accessibility-module).
+
+### Highcharts tooltip
+
+The tooltip used in the Highcharts theme package isn’t the Salt Tooltip component. The Highcharts tooltip is styled with a Salt categorical color specific to the data series selected.
+
+For more information about the Highcharts tooltip, please refer to [Highcharts tooltip documentation](https://www.highcharts.com/docs/chart-concepts/tooltip).
+
+<Image
+  src="/img/foundations/dataviz-tooltip.png"
+  alt="Diagram of Highcharts tooltip and Salt tooltip."
+/>
+
+## Categorical colors
+
+### Color contrast
+
+Users with visual impairments should be able to fully comprehend data sets that are represented by different colors. To cater for a broad spectrum of visual impairments, you must use the categorical colors which are WCAG 4.5:1 compliant.
+
+If you use custom colors or Hex codes, they may not meet non-text contrast requirements so you will be responsible to ensure that the resulting contrast is compliant. By using Salt tokens correctly, you will achieve at least 3:1 contrast between the background and other non-text chart elements such as bars, lines, segments and icons.
+
+<Image
+  src="/img/foundations/dataviz-hex.png"
+  alt="Diagram of best practices using categorical color versus color picking."
+/>
+
+### Color order
+
+Apply the categorical colors in the recommended order. All categorical colors have similar contrast levels, as they use the 500 series swatch from their respective color ramps.
+
+<Image
+  src="/img/foundations/dataviz-color-order.png"
+  alt="Diagram of the categorical color palette."
+/>
+
+A well-defined, distinct color palette ensures that everyone can easily interpret the data. Using the set categorical palette colors minimizes the risk of misinterpretation and ensures a visual order. Don’t use shades of the same color.
+
+<Image
+  src="/img/foundations/dataviz-monochromatic.png"
+  alt="Diagram of best practices using categorical palette versus monochromatic palette."
+/>
+
+You can enhance your chart’s accessibility by adopting additional visual strategies other than color such as:
+
+- Pattern overlays for different categories
+- Direct labelling where possible
+- Adding a border with at least a 3:1 contrast ratio to distinguish between segments
+
+You can show chart data in a table or list nearby, in an overlay, or on another screen as a last resort to support screen readers. If the essential information is in a separate screen, then it could disrupt the cohesive flow of information. Screen reader users would need to navigate back and forth between the two parts of the text alternative for the complex image, which could disrupt the flow of information.
+
+For more information about text alternatives, read the [JPMC UX Accessibility Resources](https://confluence.prod.aws.jpmchase.net/confluence/spaces/CIGECA/pages/3925555873/Text+Alternatives#TextAlternatives-Compleximages) (Internal users only).
+
+### Overlapping data series
+
+Some chart types including area, bubble and scatter have data series that overlap in certain use cases. Having too many data series in your chart can add complexity and make it harder for users to extract important information. In cases with multiple overlapping areas, always maintain at least a 3:1 color contrast between any 2 overlapping areas.
+
+<Image
+  src="/img/foundations/dataviz-overlapping-data.png"
+  alt="Diagram of bubble chart to show colors overlapping."
+/>
+
+## Line patterns
+
+Color shouldn’t be the only visual cue. Include other visual cues such as text, patterns, or symbols to help the user differentiate between different data sets. Patterns improve readability, especially for those with color vision requirements.
+
+<Image
+  src="/img/foundations/dataviz-line-patterns-2.png"
+  alt="Diagram of line chart using line patterns."
+/>
+
+## Pattern fills
+
+Consider using line patterns for multiple line series or pattern fills for 2-dimensional shapes, such as bars and slices. Pattern fills are always black and applied to solid categorical colors for charts. They’re beneficial in scenarios in which there is only one visual distinction between data points.
+
+<Image
+  src="/img/foundations/dataviz-pattern-fills-2.png"
+  alt="Diagram of donut chart using pattern fills."
+/>
+
+## Marker symbols
+
+In addition to line patterns and pattern fills, you can add shape or icon markers to make data points more distinctive. Varied marker symbols help differentiate lines. Marker symbols have a white border in both light and dark mode for accessibility.
+
+By default, Highcharts uses predefined symbols in the following order:
+
+- Circle
+- Square
+- Diamond
+- Triangle
+- Triangle-down
+
+<Image
+  src="/img/foundations/dataviz-markers.png"
+  alt="Diagram of line chart using marker symbols."
+/>
+
+:fragment{src="./fragments/feedback.mdx"}

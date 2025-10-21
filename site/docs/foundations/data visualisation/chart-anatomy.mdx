@@ -1,0 +1,100 @@
+---
+title: Chart anatomy
+layout: DetailTechnical
+---
+
+Salt charts are built on Highcharts, a third-party library, with an opinionated styling solution using Salt. Understanding the principles of Highcharts is important to learning how the different parts of Salt charts work.
+
+<Image
+  src="/img/foundations/dataviz-anatomy.png"
+  alt="Diagram of a typical bar chart anatomy."
+/>
+
+## Titles
+
+The chart’s title should summarize the data on display. If revealing key findings, supporting an argument, story or message, capture it in the title.
+
+## Axes
+
+Horizontal (x) and vertical (y) axes display two variables and include their range, scale and units of measurement. Axes are used in two-dimensional charts, with each axis representing a measure of data.
+
+<Image
+  src="/img/foundations/dataviz-labels.png"
+  alt="Diagram of labels on a bar chart."
+/>
+
+### Axes title
+
+The axis title should summarize the variables shown. Consider including the unit of measurement in the title to avoid repeating it on the axis labels, e.g., M for millions, or for percentages.
+
+### Axes labels
+
+Label each axis clearly and concisely to reduce visual clutter. Simplify axis labels by including the unit of measurement in the axis title. Keep labels horizontal where possible to maintain readability.
+
+## Grid lines
+
+Grid lines are vertical or horizontal lines that divide a chart, helping users read data values and make visual comparisons.
+
+When possible, keep the number of grid lines to a minimum to prevent your chart becoming cluttered. Some charts require both horizontal and vertical grid lines, i.e. bubble and scatter chart. This is built into the Salt chart package and doesn’t require manual adjustment.
+
+<Image
+  src="/img/foundations/dataviz-grid.png"
+  alt="Diagram of grid lines used in a chart."
+/>
+
+## Legends
+
+### Usage
+
+The legend uses symbols and labels to identify each data series and its corresponding segment within the chart. In Highcharts and in Salt, the legend is an opt-in feature.
+
+Certain chart types, such as scatter and bubble charts, use legend symbols that visually match the representation of the data points within the chart. This is built into Highcharts and is a design choice that enhances clarity and makes the chart easier to interpret.
+
+<Image
+  src="/img/foundations/dataviz-legend.png"
+  alt="Diagram of different legend types."
+/>
+
+### Legend layouts
+
+Position your legend where it’s most appropriate in your layout, considering the number of legend items. In Salt, chart legends are preset to be vertical and right-aligned. Use a vertical layout when displaying many legend items, if space allows.
+
+<Image
+  src="/img/foundations/dataviz-legend-layouts.png"
+  alt="Diagram of different legend orientations."
+/>
+
+### Pagination
+
+When you have more legend items than available to fit in the height of the chart, Highcharts default pagination will be used. This is entirely styled in Highcharts and should not be confused with the Salt Pagination component.
+
+## User interactions
+
+Salt charts include interactions that help users focus on or reveal additional information about your chart data, for example:
+
+- Tooltips that appear on hover
+- Individual data series or points that users can show, hide or highlight
+
+### Selected state
+
+Users can select or click on a legend item to show or hide the related data series, isolating data points that are important to them.
+
+<Image
+  src="/img/foundations/dataviz-selected.png"
+  alt="Diagram of a bar chart in a selected state."
+/>
+
+### Hover state
+
+When a user hovers over a data series, that series is highlighted. Simultaneously, other data series are dimmed in opacity. De-emphasizing the other series helps reduce visual noise, particularly in dense charts, and further highlights the data points in the hovered state.
+
+<Image
+  src="/img/foundations/dataviz-hover.png"
+  alt="Diagram of a pie chart in a hover state."
+/>
+
+### Tooltip
+
+The tooltip is a flexible tool for communicating within the chart, highlighting certain calculations or data points. Visually, the tooltip box border color matches the color of the selected data series.
+
+:fragment{src="./fragments/feedback.mdx"}

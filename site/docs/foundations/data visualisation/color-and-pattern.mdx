@@ -1,0 +1,64 @@
+---
+title: Color and pattern
+layout: DetailTechnical
+---
+
+Color is a valuable tool that helps effectively present data in your visualization. Using color correctly guides users’ attention and supports their understanding and interpretation of data.
+
+## Color usage
+
+Consider the purpose and impact of color in your chart. Color can be used to:
+
+**Show relationships**
+Use similar colors to imply that items are related. Contrasting colors, however, show that items are from distinct categories.
+
+**Represent data values**
+Color helps to give a clearer indication of range and how data values are distributed; for instance, highs and lows.
+
+**Highlight key elements**
+Use color to direct your audience's attention towards the main element or emphasize data that supports the story you’re communicating.
+
+**Indicate meaning**
+Some colors are strongly associated with certain objects, concepts or emotions. Leveraging these associations helps you communicate more efficiently and improves comprehension of your chart.
+
+<Image
+  src="/img/foundations/dataviz-color-usage.png"
+  alt="Diagram of bar chart in a hover state."
+/>
+
+## Categorical palette
+
+The categorical palette is designed to visualise distinct groups of items. It features contrasting colors with different hues, indicating the lack of visual relationship between the data sets. The categorical palette achieves a minimum of 3:1 contrast against each of the 3 supported background colors in Salt - in both light and dark mode.
+
+For more information, please refer to the [Categorical color page](salt/foundations/color/categorical-colors).
+
+<Image
+  src="/img/foundations/dataviz-color-order.png"
+  alt="Diagram of the categorical color palette."
+/>
+
+## Patterns
+
+According to [WCAG](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html), color shouldn’t be the only distinguisher to convey information about your data. To improve your chart’s accessibility for users with accessibility requirements, use additional visual cues, such as line and background patterns. The order of line patterns and pattern fills is pre-set.
+
+If you’re migrating from UITK to Salt, the line patterns and pattern fills used in the Salt charts are direct 1:1 copies from UITK’s patterns.
+
+### Line patterns
+
+Line patterns can be used in charts that display multiple lines. There are 19 line patterns.
+
+<Image
+  src="/img/foundations/dataviz-line-patterns.png"
+  alt="Diagram of the available line patterns."
+/>
+
+### Pattern fills
+
+Charts that contain two-dimensional shapes with area, such as rectangles or slices, can be filled with patterns. There are 20 pattern fills.
+
+<Image
+  src="/img/foundations/dataviz-pattern-fills.png"
+  alt="Diagram of the available pattern fills."
+/>
+
+:fragment{src="./fragments/feedback.mdx"}
