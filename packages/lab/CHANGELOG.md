@@ -1,5 +1,74 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.79
+
+### Patch Changes
+
+- 16aef1c: Updated the `NumberInput` API:
+
+  1. Simplified `format`, previously took `string` or `number` value, now receives value as a `string` and returns a `string`.
+     Used to render the final value before render.
+
+  ```diff
+  - format?: (value: number | string) => string | number;
+  + format?: (value: string) => string;
+  ```
+
+  2. Added `pattern`, a callback that matches as you type and determines whether the value can be ignored. By default, signed numeric decimal numbers can be entered.
+  3. Simplified `onChange`, reverted back to native `onChange`. Called for any text change to the input by the user.
+
+  ```diff
+  - onChange?: (event: SyntheticEvent | undefined, value: number | string) => void;
+  + onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  ```
+
+  5. Added `onNumberChange`, a callback called when the number value changes, due to increment/decrement or `onBlur`.
+
+  ```
+    onNumberChange?: (value: number | null) => void;
+  ```
+
+  6. Simplified `parse`, is now parsed a string form of the current value and returns either a `number`, `NaN` or `null` if empty.
+
+  ```diff
+  - parse?: (value: number | string) => string | number;
+  + parse?: (value: string) => number | null;
+  ```
+
+  Example
+
+  ```diff
+  <NumberInput
+     defaultValue={12}
+     pattern={(inputValue) =>
+       /^\$?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
+     }
+     format={(value) => `£${value.replace(/\$/g, "")}`}
+     parse={(value) => {
+       if (!value.length) {
+         return null;
+       }
+       const parsedValue = value.replace(/\$/g, "");
+       return Number.parseFloat(parsedValue);
+     }}
+     onNumberChange={(newValue) => {
+       console.log(`Number changed to ${newValue}`);
+     }}
+  />
+  ```
+
+- b3d399b: - Fix `dayjs` adapter, where it showed dates as out of range.
+  - Fix a regression in disabled dates styles for dates outside of min/max.
+- Updated dependencies [d6dc07b]
+- Updated dependencies [d6dc07b]
+- Updated dependencies [d6dc07b]
+- Updated dependencies [b3d399b]
+- Updated dependencies [61c2bad]
+- Updated dependencies [fef411f]
+  - @salt-ds/icons@1.15.0
+  - @salt-ds/date-adapters@0.1.0-alpha.6
+  - @salt-ds/core@1.51.0
+
 ## 1.0.0-alpha.78
 
 ### Patch Changes

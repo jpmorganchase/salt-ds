@@ -1,5 +1,25 @@
 # @salt-ds/embla-carousel
 
+## 1.0.0
+
+### Major Changes
+
+- da42e9a: Carousel is now a stable API.
+
+  Features include:
+
+  - Composable Salt controls for navigation and progress.
+  - Composable with custom content within slides.
+  - Built on the popular `embla-carousel` library, with Salt-specific accessibility and theming enhancements.
+
+  Refer to [example](https://saltdesignsystem.com/salt/components/carousel/usage#sequential-with-slide-group) for basic usage.
+
+### Patch Changes
+
+- Updated dependencies [61c2bad]
+- Updated dependencies [fef411f]
+  - @salt-ds/core@1.51.0
+
 ## 0.1.6
 
 ### Patch Changes
