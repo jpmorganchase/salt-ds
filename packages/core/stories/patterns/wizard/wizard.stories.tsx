@@ -23,6 +23,7 @@ import {
   Text,
   useResponsiveProp,
 } from "@salt-ds/core";
+import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import { type ElementType, useState } from "react";
 import "./wizard.stories.css";
@@ -36,11 +37,8 @@ enum ContentTypeEnum {
   AdditionalInfo = "additional-info",
   Review = "review",
 }
-
-type ContentType = keyof typeof ContentTypeEnum;
-
+type ContentType = (typeof ContentTypeEnum)[keyof typeof ContentTypeEnum];
 type ValidationStatus = "error" | "warning" | undefined;
-
 type FieldValidation = { status?: ValidationStatus; message?: string };
 
 interface AccountFormData {
@@ -58,73 +56,6 @@ interface AccountFormData {
   sourceOfFunds: string;
   paperlessStatements: string;
 }
-
-const stepFieldRules: Record<
-  ContentType,
-  Record<string, (value: string, data: AccountFormData) => FieldValidation>
-> = {
-  AccountDetails: {
-    fullName: (v) =>
-      !v.trim() ? { status: "error", message: "Full name is required." } : {},
-    phoneNumber: (v) =>
-      !v.trim()
-        ? { status: "error", message: "Phone number is required." }
-        : {},
-    emailAddress: (v) =>
-      !v.includes("@")
-        ? { status: "warning", message: "Email format looks incorrect." }
-        : {},
-    address1: (v) =>
-      !v.trim() ? { status: "error", message: "Address is required." } : {},
-  },
-  AccountType: {
-    accountType: (v) =>
-      !v.trim()
-        ? { status: "error", message: "Account type is required." }
-        : {},
-  },
-  AdditionalInfo: {
-    initialDeposit: (v) =>
-      v && Number(v) < 100
-        ? {
-            status: "warning",
-            message:
-              "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
-          }
-        : {},
-  },
-  Review: {},
-};
-
-const validateStep = (
-  stepId: ContentType,
-  data: AccountFormData,
-): {
-  fieldValidation: Record<string, FieldValidation>;
-  stepStatus: ValidationStatus;
-} => {
-  const rules = stepFieldRules[stepId];
-  const fieldValidation: Record<string, FieldValidation> = {};
-  Object.keys(rules).forEach((field) => {
-    fieldValidation[field] = rules[field](
-      data[field as keyof AccountFormData] || "",
-      data,
-    );
-  });
-  const stepStatus = deriveStepStatus(
-    fieldValidation as Record<string, { status?: ValidationStatus }>,
-  );
-  return { fieldValidation, stepStatus };
-};
-
-const deriveStepStatus = (
-  fields: Record<string, { status?: ValidationStatus }>,
-): ValidationStatus => {
-  if (Object.values(fields).some((f) => f.status === "error")) return "error";
-  if (Object.values(fields).some((f) => f.status === "warning"))
-    return "warning";
-  return undefined;
-};
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -152,6 +83,79 @@ interface FormContentProps {
   };
   style?: React.CSSProperties;
 }
+
+const stepFieldRules: Record<
+  ContentType,
+  Record<string, (value: string, data: AccountFormData) => FieldValidation>
+> = {
+  [ContentTypeEnum.AccountDetails]: {
+    fullName: (v) =>
+      !v.trim() ? { status: "error", message: "Full name is required." } : {},
+    phoneNumber: (v) =>
+      !v.trim()
+        ? { status: "error", message: "Phone number is required." }
+        : {},
+    emailAddress: (v) =>
+      !v.includes("@")
+        ? { status: "warning", message: "Email format looks incorrect." }
+        : {},
+    address1: (v) =>
+      !v.trim() ? { status: "error", message: "Address is required." } : {},
+  },
+  [ContentTypeEnum.AccountType]: {
+    accountType: (v) =>
+      !v.trim()
+        ? { status: "error", message: "Account type is required." }
+        : {},
+  },
+  [ContentTypeEnum.AdditionalInfo]: {
+    initialDeposit: (v) =>
+      v && Number(v) < 100
+        ? {
+            status: "warning",
+            message:
+              "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
+          }
+        : {},
+  },
+  [ContentTypeEnum.Review]: {},
+};
+
+const validateStep = (
+  stepId: ContentType,
+  data: AccountFormData,
+): {
+  fieldValidation: Record<string, FieldValidation>;
+  stepStatus: ValidationStatus;
+} => {
+  const rules = stepFieldRules[stepId];
+  const fieldValidation: Record<string, FieldValidation> = {};
+  Object.keys(rules).forEach((field) => {
+    fieldValidation[field] = rules[field](
+      data[field as keyof AccountFormData] || "",
+      data,
+    );
+  });
+  const stepStatus = deriveStepStatus(
+    fieldValidation as Record<string, { status?: ValidationStatus }>,
+  );
+  return { fieldValidation, stepStatus };
+};
+
+const getStepStatus = (index: number, activeStep: number) => {
+  if (index === activeStep) return "active";
+  if (index < activeStep) return "completed";
+  return "pending";
+};
+
+const deriveStepStatus = (
+  fields: Record<string, { status?: ValidationStatus }>,
+): ValidationStatus => {
+  if (Object.values(fields).some((f) => f.status === "error")) return "error";
+  if (Object.values(fields).some((f) => f.status === "warning"))
+    return "warning";
+  return undefined;
+};
 
 const CancelWarningDialog = ({
   open,
@@ -225,33 +229,33 @@ const AccountCreatedSuccessDialog = ({
   </Dialog>
 );
 
-// const AccountCreatedContent = () => (
-//   <StackLayout align="center">
-//     <SuccessCircleSolidIcon
-//       size={2}
-//       style={{
-//         color: "var(--salt-status-success-foreground-decorative)",
-//       }}
-//     />
-//     <Text styleAs="h2">Account created</Text>
-//     <Text>You can now start using this new account.</Text>
-//   </StackLayout>
-// );
+const AccountCreatedContent = () => (
+  <StackLayout align="center">
+    <SuccessCircleSolidIcon
+      size={2}
+      style={{
+        color: "var(--salt-status-success-foreground-decorative)",
+      }}
+    />
+    <Text styleAs="h2">Account created</Text>
+    <Text>You can now start using this new account.</Text>
+  </StackLayout>
+);
 
-// const CancelWarningContent = () => (
-//   <StackLayout align="center">
-//     <WarningSolidIcon
-//       size={2}
-//       style={{
-//         color: "var(--salt-status-warning-foreground-decorative)",
-//       }}
-//     />
-//     <Text styleAs="h2">Are you sure you want to cancel?</Text>
-//     <Text>
-//       Any updates you've made so far will be lost after you confirm cancelling.
-//     </Text>
-//   </StackLayout>
-// );
+const CancelWarningContent = () => (
+  <StackLayout align="center">
+    <WarningSolidIcon
+      size={2}
+      style={{
+        color: "var(--salt-status-warning-foreground-decorative)",
+      }}
+    />
+    <Text styleAs="h2">Are you sure you want to cancel?</Text>
+    <Text>
+      Any updates you've made so far will be lost after you confirm cancelling.
+    </Text>
+  </StackLayout>
+);
 
 const AdditionalInfoContent = ({
   formData,
@@ -814,6 +818,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
               inputProps={{
                 value: formData.postalCode,
               }}
+              readOnly
             />
           </FormField>
           <FormField>
@@ -1057,7 +1062,7 @@ export const Horizontal = () => {
       label: "Account details",
       content: (
         <CreateAccountForm
-          stepId="AccountDetails"
+          stepId={ContentTypeEnum.AccountDetails}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1067,11 +1072,11 @@ export const Horizontal = () => {
       ),
     },
     {
-      id: "account-type",
+      id: ContentTypeEnum.AccountType,
       label: "Account type",
       content: (
         <AccountTypeForm
-          stepId="AccountType"
+          stepId={ContentTypeEnum.AccountType}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1082,11 +1087,11 @@ export const Horizontal = () => {
       ),
     },
     {
-      id: "additional-info",
+      id: ContentTypeEnum.AdditionalInfo,
       label: "Additional info",
       content: (
         <AdditionalInfoForm
-          stepId="AdditionalInfo"
+          stepId={ContentTypeEnum.AdditionalInfo}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1098,11 +1103,11 @@ export const Horizontal = () => {
       ),
     },
     {
-      id: "review",
+      id: ContentTypeEnum.Review,
       label: "Review and create",
       content: (
         <ReviewAccountForm
-          stepId="Review"
+          stepId={ContentTypeEnum.Review}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1129,13 +1134,7 @@ export const Horizontal = () => {
             key={step.id}
             label={step.label}
             status={stepValidation[step.id]?.status}
-            stage={
-              index === activeStep
-                ? "active"
-                : index < activeStep
-                  ? "completed"
-                  : "pending"
-            }
+            stage={getStepStatus(index, activeStep)}
           />
         ))}
       </Stepper>
@@ -1199,11 +1198,11 @@ export const Vertical = () => {
 
   const allSteps = [
     {
-      id: "account-details",
+      id: ContentTypeEnum.AccountDetails,
       label: "Account details",
       content: (
         <CreateAccountForm
-          stepId="AccountDetails"
+          stepId={ContentTypeEnum.AccountDetails}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1214,11 +1213,11 @@ export const Vertical = () => {
       ),
     },
     {
-      id: "account-type",
+      id: ContentTypeEnum.AccountType,
       label: "Account type",
       content: (
         <AccountTypeForm
-          stepId="AccountType"
+          stepId={ContentTypeEnum.AccountType}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1229,11 +1228,11 @@ export const Vertical = () => {
       ),
     },
     {
-      id: "additional-info",
+      id: ContentTypeEnum.AdditionalInfo,
       label: "Additional info",
       content: (
         <AdditionalInfoForm
-          stepId="AdditionalInfo"
+          stepId={ContentTypeEnum.AdditionalInfo}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1245,11 +1244,11 @@ export const Vertical = () => {
       ),
     },
     {
-      id: "review",
+      id: ContentTypeEnum.Review,
       label: "Review and create",
       content: (
         <ReviewAccountForm
-          stepId="Review"
+          stepId={ContentTypeEnum.Review}
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1284,13 +1283,7 @@ export const Vertical = () => {
                   key={step.id}
                   label={step.label}
                   status={stepValidation[step.id]?.status}
-                  stage={
-                    index === activeStep
-                      ? "active"
-                      : index < activeStep
-                        ? "completed"
-                        : "pending"
-                  }
+                  stage={getStepStatus(index, activeStep)}
                 />
               ))}
             </Stepper>
@@ -1309,284 +1302,336 @@ export const Vertical = () => {
   );
 };
 
-// export const Modal = () => {
-//   type WizardState = "form" | "cancel-warning" | "success";
-//   const [wizardState, setWizardState] = useState<WizardState>("form");
-//   const [open, setOpen] = useState(false);
-//   const [activeStep, setActiveStep] = useState(0);
-//   const [formData, setFormData] = useState<AccountFormData>({
-//     // account details
-//     fullName: "Jane Doe",
-//     phoneNumber: "+1 (212) 555-0100",
-//     emailAddress: "jane.doe@gmail.com",
-//     address1: "25 Bank Street",
-//     postalCode: "E14 5JP",
-//     city: "London",
-//     country: "United Kingdom",
-//     // account type
-//     accountType: "",
-//     // additional info fields
-//     initialDeposit: "",
-//     beneficiaryName: "",
-//     sourceOfFunds: "",
-//     paperlessStatements: "",
-//   });
-//   const [stepValidation, setStepValidation] = useState<{
-//     [stepId: string]: { status?: "error" | "warning" };
-//   }>({});
+export const Modal = () => {
+  type WizardState = "form" | "cancel-warning" | "success";
+  const [wizardState, setWizardState] = useState<WizardState>("form");
+  const [open, setOpen] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState<AccountFormData>({
+    // account details
+    fullName: "Jane Doe",
+    phoneNumber: "+1 (212) 555-0100",
+    emailAddress: "jane.doe@gmail.com",
+    address1: "25 Bank Street",
+    address2: "",
+    postalCode: "E14 5JP",
+    city: "London",
+    country: "United Kingdom",
+    // account type
+    accountType: "",
+    // additional info fields
+    initialDeposit: "",
+    beneficiaryName: "",
+    sourceOfFunds: "",
+    paperlessStatements: "",
+  });
+  const [stepValidation, setStepValidation] = useState<{
+    [stepId: string]: { status?: "error" | "warning" };
+  }>({});
+  const [fieldValidation, setFieldValidation] = useState<{
+    [field: string]: { status?: ValidationStatus; message?: string };
+  }>({});
 
-//   const handleRequestOpen = () => {
-//     setOpen(true);
-//   };
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
 
-//   const onOpenChange = (value: boolean) => {
-//     setOpen(value);
-//   };
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
 
-//   const handleCancel = () => {
-//     setOpen(false);
-//     setActiveStep(0);
-//     setTimeout(() => {
-//       setWizardState("form");
-//     }, 300);
-//   };
+  const handleCancel = () => {
+    setOpen(false);
+    setActiveStep(0);
+    setTimeout(() => {
+      setWizardState("form");
+    }, 300);
+  };
 
-//   const createAccount = () => {
-//     setWizardState("success");
-//   };
-//   const cancelWarning = () => {
-//     setWizardState("cancel-warning");
-//   };
-//   const backToForm = () => {
-//     setWizardState("form");
-//   };
-//   const handleNextStep = () =>
-//     activeStep < allSteps.length - 1 && setActiveStep(activeStep + 1);
-//   const handlePreviousStep = () =>
-//     activeStep > 0 && setActiveStep(activeStep - 1);
+  const createAccount = () => {
+    setWizardState("success");
+  };
+  const cancelWarning = () => {
+    setWizardState("cancel-warning");
+  };
+  const backToForm = () => {
+    setWizardState("form");
+  };
 
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFormData((prev: AccountFormData) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
+  const attemptAdvance = (advance: boolean) => {
+    const currentStepId = allSteps[activeStep].id as ContentType;
+    const { fieldValidation: fv, stepStatus } = validateStep(
+      currentStepId,
+      formData,
+    );
+    setFieldValidation(fv);
+    setStepValidation((prev) => ({
+      ...prev,
+      [currentStepId]: { status: stepStatus },
+    }));
+    if (stepStatus === "error") return false;
+    if (advance && activeStep < allSteps.length - 1) {
+      setActiveStep((s) => s + 1);
+      setFieldValidation({});
+    }
+    return true;
+  };
 
-//     const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFieldValidation((prev) => ({
-//       ...prev,
-//       [name]: validateField(name, value),
-//     }));
-//   };
+  const handleNextClick = () => {
+    const isLast = activeStep === allSteps.length - 1;
+    if (isLast) {
+      if (attemptAdvance(false)) createAccount();
+    } else {
+      attemptAdvance(true);
+    }
+  };
 
-//   const allSteps = [
-//     {
-//       id: "account-details",
-//       label: "Account details",
-//       content: (
-//         <CreateAccountContent
-//           formData={formData}
-//           handleInputChange={handleInputChange}
-//           handleInputBlur={handleInputBlur}
-//           fieldValidation={fieldValidation}
-//         />
-//       ),
-//     },
-//     {
-//       id: "account-type",
-//       label: "Account type",
-//       content: (
-//         <AccountTypeContent
-//           formData={formData}
-//           handleInputChange={handleInputChange}
-//           handleInputBlur={handleInputBlur}
-//           fieldValidation={fieldValidation}
-//         />
-//       ),
-//     },
-//     {
-//       id: "additional-info",
-//       label: "Additional info",
-//       content: (
-//         <AdditionalInfoContent
-//           formData={formData}
-//           handleInputChange={handleInputChange}
-//           handleInputBlur={handleInputBlur}
-//           fieldValidation={fieldValidation}
-//           style={{ width: "50%" }}
-//         />
-//       ),
-//     },
-//     {
-//       id: "review",
-//       label: "Review and create",
-//       content: (
-//         <ReviewAccountContent
-//           formData={formData}
-//         />
-//       ),
-//     },
-//   ];
-//   const content = allSteps[activeStep].content;
-//   const isLastFormStep = activeStep === allSteps.length - 1;
+  const handlePreviousClick = () => {
+    if (activeStep === 0) return;
+    const prev = activeStep - 1;
+    setActiveStep(prev);
+    const prevStepId = allSteps[prev].id as ContentType;
+    const { fieldValidation: fv } = validateStep(prevStepId, formData);
+    setFieldValidation(fv);
+  };
 
-//   const direction: StackLayoutProps<ElementType>["direction"] =
-//     useResponsiveProp(
-//       {
-//         xs: "column",
-//         sm: "row",
-//       },
-//       "row",
-//     );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    const currentStepId = allSteps[activeStep].id as ContentType;
+    if (stepFieldRules[currentStepId][name]) {
+      const { fieldValidation: fv } = validateStep(currentStepId, {
+        ...formData,
+        [name]: value,
+      });
+      setFieldValidation(fv);
+    }
+  };
 
-//   const cancel = (
-//     <Button
-//       sentiment="accented"
-//       appearance="transparent"
-//       onClick={cancelWarning}
-//     >
-//       Cancel
-//     </Button>
-//   );
-//   const previous = activeStep > 0 && (
-//     <Button
-//       sentiment="accented"
-//       appearance="bordered"
-//       onClick={handlePreviousStep}
-//     >
-//       Previous
-//     </Button>
-//   );
-//   const next = (
-//     <Button
-//       sentiment="accented"
-//       onClick={isLastFormStep ? createAccount : handleNextStep}
-//     >
-//       {isLastFormStep ? "Create" : "Next"}
-//     </Button>
-//   );
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    if (stepFieldRules[stepId][name]) {
+      const { fieldValidation: fv } = validateStep(
+        stepId,
+        formData as AccountFormData,
+      );
+      setFieldValidation(fv);
+    }
+  };
 
-//   return (
-//     <>
-//       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-//         Open wizard
-//       </Button>
-//       <Dialog
-//         open={open}
-//         onOpenChange={onOpenChange}
-//         status={
-//           wizardState === "cancel-warning"
-//             ? "warning"
-//             : wizardState === "success"
-//               ? "success"
-//               : undefined
-//         }
-//         style={{ height: 588 }}
-//       >
-//         {(() => {
-//           switch (wizardState) {
-//             case "cancel-warning":
-//               return (
-//                 <>
-//                   <DialogContent
-//                     style={{
-//                       display: "flex",
-//                       justifyContent: "center",
-//                       alignItems: "center",
-//                       textAlign: "center",
-//                     }}
-//                   >
-//                     <CancelWarningContent />
-//                   </DialogContent>
-//                   <DialogActions>
-//                     {direction === "column" ? (
-//                       <StackLayout gap={1} style={{ width: "100%" }}>
-//                         <Button sentiment="accented" onClick={handleCancel}>
-//                           Yes
-//                         </Button>
-//                         <Button
-//                           appearance="bordered"
-//                           sentiment="accented"
-//                           onClick={backToForm}
-//                         >
-//                           No
-//                         </Button>
-//                       </StackLayout>
-//                     ) : (
-//                       <FlexLayout gap={1}>
-//                         <Button
-//                           appearance="bordered"
-//                           sentiment="accented"
-//                           onClick={backToForm}
-//                         >
-//                           No
-//                         </Button>
-//                         <Button sentiment="accented" onClick={handleCancel}>
-//                           Yes
-//                         </Button>
-//                       </FlexLayout>
-//                     )}
-//                   </DialogActions>
-//                 </>
-//               );
-//             case "success":
-//               return (
-//                 <>
-//                   <DialogContent
-//                     style={{
-//                       display: "flex",
-//                       justifyContent: "center",
-//                       alignItems: "center",
-//                       textAlign: "center",
-//                     }}
-//                   >
-//                     <AccountCreatedContent />
-//                   </DialogContent>
-//                   <DialogActions>
-//                     <Button sentiment="accented" onClick={handleCancel}>
-//                       Done
-//                     </Button>
-//                   </DialogActions>
-//                 </>
-//               );
-//             default:
-//               return (
-//                 <>
-//                   <DialogHeader
-//                     header={allSteps[activeStep].label}
-//                     preheader="Create a new account"
-//                     actions={
-//                       <StepperComponent
-//                         orientation="horizontal"
-//                         steps={allSteps}
-//                         activeStep={activeStep}
-//                         style={{ width: 300 }}
-//                       />
-//                     }
-//                   />
-//                   <DialogContent>{content}</DialogContent>
-//                   <DialogActions>
-//                     {direction === "column" ? (
-//                       <StackLayout gap={1} style={{ width: "100%" }}>
-//                         {next}
-//                         {previous}
-//                         {cancel}
-//                       </StackLayout>
-//                     ) : (
-//                       <FlexLayout gap={1}>
-//                         {cancel}
-//                         {previous}
-//                         {next}
-//                       </FlexLayout>
-//                     )}
-//                   </DialogActions>
-//                 </>
-//               );
-//           }
-//         })()}
-//       </Dialog>
-//     </>
-//   );
-// };
+  const allSteps = [
+    {
+      id: ContentTypeEnum.AccountDetails,
+      label: "Account details",
+      content: (
+        <CreateAccountContent
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleInputBlur={handleInputBlur}
+          fieldValidation={fieldValidation}
+        />
+      ),
+    },
+    {
+      id: ContentTypeEnum.AccountType,
+      label: "Account type",
+      content: (
+        <AccountTypeContent
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleInputBlur={handleInputBlur}
+          fieldValidation={fieldValidation}
+        />
+      ),
+    },
+    {
+      id: ContentTypeEnum.AdditionalInfo,
+      label: "Additional info",
+      content: (
+        <AdditionalInfoContent
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleInputBlur={handleInputBlur}
+          fieldValidation={fieldValidation}
+          style={{ width: "50%" }}
+        />
+      ),
+    },
+    {
+      id: ContentTypeEnum.Review,
+      label: "Review and create",
+      content: <ReviewAccountContent formData={formData} />,
+    },
+  ];
+  const content = allSteps[activeStep].content;
+  const stepId = allSteps[activeStep].id;
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={cancelWarning}
+    >
+      Cancel
+    </Button>
+  );
+
+  const nextBtn = (
+    <Button sentiment="accented" onClick={handleNextClick}>
+      {activeStep === allSteps.length - 1 ? "Create" : "Next"}
+    </Button>
+  );
+  const prevBtn = activeStep > 0 && (
+    <Button
+      sentiment="accented"
+      appearance="bordered"
+      onClick={handlePreviousClick}
+    >
+      Previous
+    </Button>
+  );
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Open wizard
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        status={
+          wizardState === "cancel-warning"
+            ? "warning"
+            : wizardState === "success"
+              ? "success"
+              : undefined
+        }
+        style={{ height: 588 }}
+      >
+        {(() => {
+          switch (wizardState) {
+            case "cancel-warning":
+              return (
+                <>
+                  <DialogContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <CancelWarningContent />
+                  </DialogContent>
+                  <DialogActions>
+                    {direction === "column" ? (
+                      <StackLayout gap={1} style={{ width: "100%" }}>
+                        <Button sentiment="accented" onClick={handleCancel}>
+                          Yes
+                        </Button>
+                        <Button
+                          appearance="bordered"
+                          sentiment="accented"
+                          onClick={backToForm}
+                        >
+                          No
+                        </Button>
+                      </StackLayout>
+                    ) : (
+                      <FlexLayout gap={1}>
+                        <Button
+                          appearance="bordered"
+                          sentiment="accented"
+                          onClick={backToForm}
+                        >
+                          No
+                        </Button>
+                        <Button sentiment="accented" onClick={handleCancel}>
+                          Yes
+                        </Button>
+                      </FlexLayout>
+                    )}
+                  </DialogActions>
+                </>
+              );
+            case "success":
+              return (
+                <>
+                  <DialogContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <AccountCreatedContent />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button sentiment="accented" onClick={handleCancel}>
+                      Done
+                    </Button>
+                  </DialogActions>
+                </>
+              );
+            default:
+              return (
+                <>
+                  <DialogHeader
+                    header={allSteps[activeStep].label}
+                    preheader="Create a new account"
+                    actions={
+                      <Stepper orientation="horizontal" style={{ width: 300 }}>
+                        {allSteps.map((step, index) => (
+                          <Step
+                            key={step.id}
+                            label={step.label}
+                            status={stepValidation[step.id]?.status}
+                            stage={getStepStatus(index, activeStep)}
+                          />
+                        ))}
+                      </Stepper>
+                    }
+                  />
+                  <DialogContent>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleNextClick();
+                      }}
+                    >
+                      {content}
+                    </form>
+                  </DialogContent>
+                  <DialogActions>
+                    {direction === "column" ? (
+                      <StackLayout gap={1} style={{ width: "100%" }}>
+                        {nextBtn}
+                        {prevBtn}
+                        {cancel}
+                      </StackLayout>
+                    ) : (
+                      <FlexLayout gap={1}>
+                        {cancel}
+                        {prevBtn}
+                        {nextBtn}
+                      </FlexLayout>
+                    )}
+                  </DialogActions>
+                </>
+              );
+          }
+        })()}
+      </Dialog>
+    </>
+  );
+};
