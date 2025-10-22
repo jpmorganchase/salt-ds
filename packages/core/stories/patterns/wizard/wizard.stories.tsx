@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   Dropdown,
+  FlexItem,
   FlexLayout,
   FlowLayout,
   FormField,
@@ -31,17 +32,9 @@ import {
   type ElementType,
   useState,
 } from "react";
-import "./wizard.stories.css";
 export default {
   title: "Patterns/Wizard",
 } as Meta;
-
-// function useWizard<TStepId extends string>(steps: TStepId[]) {
-//   const [activeStep, setActiveStep] = useState(0);
-//   const next = () => setActiveStep(s => Math.min(s + 1, steps.length - 1));
-//   const prev = () => setActiveStep(s => Math.max(s - 1, 0));
-//   return { activeStep, next, prev, isLast: activeStep === steps.length - 1 };
-// }
 
 enum ContentTypeEnum {
   AccountDetails = "account-details",
@@ -51,7 +44,11 @@ enum ContentTypeEnum {
 }
 type ContentType = (typeof ContentTypeEnum)[keyof typeof ContentTypeEnum];
 type ValidationStatus = "error" | "warning" | undefined;
-type FieldValidation = { status?: ValidationStatus; message?: string };
+
+interface FieldValidation {
+  status?: ValidationStatus;
+  message?: string;
+}
 
 interface AccountFormData {
   fullName: string;
@@ -384,8 +381,13 @@ const AdditionalInfoForm = ({
     handleNext?.();
   };
   return (
-    <form onSubmit={handleFormSubmit}>
-      <StackLayout gap={3}>
+    <StackLayout
+      gap={3}
+      as="form"
+      onSubmit={handleFormSubmit}
+      style={{ height: "100%" }}
+    >
+      <FlexItem grow={1}>
         <AdditionalInfoContent
           formData={formData}
           handleInputChange={handleInputChange}
@@ -394,29 +396,29 @@ const AdditionalInfoForm = ({
           fieldValidation={fieldValidation}
           style={style}
         />
-        <FlexLayout gap={1} justify="end">
-          <Button
-            sentiment="accented"
-            appearance="transparent"
-            onClick={handleCancel}
-          >
-            Cancel
-          </Button>
+      </FlexItem>
+      <FlexLayout gap={1} justify="end">
+        <Button
+          sentiment="accented"
+          appearance="transparent"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
 
-          <Button
-            sentiment="accented"
-            appearance="bordered"
-            onClick={handlePrevious}
-          >
-            Previous
-          </Button>
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
 
-          <Button sentiment="accented" type="submit">
-            Next
-          </Button>
-        </FlexLayout>
-      </StackLayout>
-    </form>
+        <Button sentiment="accented" type="submit">
+          Next
+        </Button>
+      </FlexLayout>
+    </StackLayout>
   );
 };
 
@@ -569,38 +571,42 @@ const AccountTypeForm = ({
     handleNext?.();
   };
   return (
-    <form onSubmit={handleFormSubmit}>
-      <StackLayout gap={3}>
+    <StackLayout
+      gap={3}
+      as="form"
+      onSubmit={handleFormSubmit}
+      style={{ height: "100%" }}
+    >
+      <FlexItem grow={1}>
         <AccountTypeContent
           formData={formData}
           handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
           handleRadioChange={handleRadioChange}
         />
-        <FlexLayout gap={1} justify="end">
-          <Button
-            sentiment="accented"
-            appearance="transparent"
-            onClick={handleCancel}
-          >
-            Cancel
-          </Button>
+      </FlexItem>
+      <FlexLayout gap={1} justify="end">
+        <Button
+          sentiment="accented"
+          appearance="transparent"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
 
-          <Button
-            sentiment="accented"
-            appearance="bordered"
-            onClick={handlePrevious}
-          >
-            Previous
-          </Button>
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
 
-          <Button sentiment="accented" type="submit">
-            Next
-          </Button>
-        </FlexLayout>
-      </StackLayout>
-      {/* </div> */}
-    </form>
+        <Button sentiment="accented" type="submit">
+          Next
+        </Button>
+      </FlexLayout>
+    </StackLayout>
   );
 };
 
@@ -780,8 +786,13 @@ const CreateAccountForm = ({
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <StackLayout gap={3}>
+    <StackLayout
+      gap={3}
+      style={{ height: "100%" }}
+      as="form"
+      onSubmit={handleFormSubmit}
+    >
+      <FlexItem grow={1}>
         <CreateAccountContent
           formData={formData}
           handleInputBlur={handleInputBlur}
@@ -789,20 +800,20 @@ const CreateAccountForm = ({
           handleInputChange={handleInputChange}
           handleSelectChange={handleSelectChange}
         />
-        <FlexLayout gap={1} justify="end">
-          <Button
-            sentiment="accented"
-            appearance="transparent"
-            onClick={handleCancel}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" sentiment="accented">
-            Next
-          </Button>
-        </FlexLayout>
-      </StackLayout>
-    </form>
+      </FlexItem>
+      <FlexLayout gap={1} justify="end">
+        <Button
+          sentiment="accented"
+          appearance="transparent"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" sentiment="accented">
+          Next
+        </Button>
+      </FlexLayout>
+    </StackLayout>
   );
 };
 
@@ -1036,8 +1047,10 @@ const ReviewAccountForm = ({
   handleNext,
   formData,
 }: FormProps) => (
-  <StackLayout gap={3}>
-    <ReviewAccountContent formData={formData} />
+  <StackLayout gap={3} style={{ height: "100%" }}>
+    <FlexItem grow={1} style={{ overflowY: "auto" }}>
+      <ReviewAccountContent formData={formData} />
+    </FlexItem>
     <FlexLayout gap={1} justify="end">
       <Button
         sentiment="accented"
@@ -1065,8 +1078,7 @@ const ReviewAccountForm = ({
 export const Horizontal = () => {
   const [formData, setFormData] = useState<AccountFormData>({
     // account details
-    // fullName: "Jane Doe",
-    fullName: "",
+    fullName: "Jane Doe",
     phoneNumber: "+1 (212) 555-0100",
     emailAddress: "jane.doe@gmail.com",
     address1: "25 Bank Street",
@@ -1088,8 +1100,6 @@ export const Horizontal = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
-
-  console.log("formData", formData);
 
   const handleNextStep = () =>
     activeStep < allSteps.length - 1 &&
@@ -1166,6 +1176,7 @@ export const Horizontal = () => {
       ),
     },
   ];
+
   const content = allSteps[activeStep].content;
 
   const header = (
@@ -1197,11 +1208,13 @@ export const Horizontal = () => {
         padding={3}
         style={{
           width: 730,
-          border: "1px dashed green",
+          height: 588,
         }}
       >
-        {header}
-        {content}
+        <FlexItem>{header}</FlexItem>
+        <FlexItem grow={1} style={{ overflowY: "hidden" }}>
+          {content}
+        </FlexItem>
       </StackLayout>
       <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
       <AccountCreatedSuccessDialog
@@ -1329,9 +1342,15 @@ export const Vertical = () => {
 
   return (
     <>
-      <StackLayout className="verticalContainer" gap={0}>
-        <div className="verticalHeader">{header}</div>
-        <GridLayout columns={3} gap={0} className="verticalContentContainer">
+      <StackLayout
+        gap={0}
+        style={{
+          width: 850,
+          height: 588,
+        }}
+      >
+        {header}
+        <GridLayout columns={3} gap={0}>
           <GridItem>
             <Stepper orientation="vertical">
               {allSteps.map((step, index) => (
@@ -1344,9 +1363,7 @@ export const Vertical = () => {
               ))}
             </Stepper>
           </GridItem>
-          <GridItem colSpan={2} className="verticalContent">
-            {content}
-          </GridItem>
+          <GridItem colSpan={2}>{content}</GridItem>
         </GridLayout>
       </StackLayout>
       <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
@@ -1662,14 +1679,15 @@ export const Modal = () => {
                     }
                   />
                   <DialogContent>
-                    <form
+                    <FlowLayout
+                      as="form"
                       onSubmit={(e) => {
                         e.preventDefault();
                         handleNextClick();
                       }}
                     >
                       {content}
-                    </form>
+                    </FlowLayout>
                   </DialogContent>
                   <DialogActions>
                     {direction === "column" ? (
