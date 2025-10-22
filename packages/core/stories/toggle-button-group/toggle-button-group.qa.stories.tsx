@@ -1,6 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
-import { CheckIcon } from "@storybook/icons";
+import {
+  AppSwitcherIcon,
+  CheckmarkIcon,
+  FolderClosedIcon,
+  VisibleIcon,
+} from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -39,7 +43,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
       <ToggleButton sentiment="positive" value="signed">
-        <CheckIcon aria-hidden />
+        <CheckmarkIcon aria-hidden />
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
@@ -57,7 +61,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
       <ToggleButton value="signed">
-        <CheckIcon aria-hidden />
+        <CheckmarkIcon aria-hidden />
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
@@ -75,7 +79,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
       <ToggleButton value="signed">
-        <CheckIcon aria-hidden />
+        <CheckmarkIcon aria-hidden />
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
@@ -107,7 +111,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
       <ToggleButton sentiment="positive" value="signed">
-        <CheckIcon aria-hidden />
+        <CheckmarkIcon aria-hidden />
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
@@ -139,7 +143,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
       <ToggleButton sentiment="positive" value="signed">
-        <CheckIcon aria-hidden />
+        <CheckmarkIcon aria-hidden />
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
@@ -171,7 +175,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
       <ToggleButton sentiment="positive" value="signed">
-        <CheckIcon aria-hidden />
+        <CheckmarkIcon aria-hidden />
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
