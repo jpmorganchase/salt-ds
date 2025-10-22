@@ -10,7 +10,7 @@
   border-radius: var(--salt-palette-corner-weak, 0);
   box-sizing: border-box;
   color: var(--toggleButton-text-color);
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
   display: inline-flex;
   gap: var(--salt-spacing-50);
   height: var(--salt-size-base);
@@ -43,10 +43,12 @@
   border-color: var(--toggleButton-borderColor-hover);
 }
 
-.saltToggleButton:hover {
-  background: var(--toggleButton-background-hover);
-  color: var(--toggleButton-text-color-hover);
-  border-color: var(--toggleButton-borderColor-hover);
+@media (hover: hover) {
+  .saltToggleButton:hover {
+    background: var(--toggleButton-background-hover);
+    color: var(--toggleButton-text-color-hover);
+    border-color: var(--toggleButton-borderColor-hover);
+  }
 }
 
 .saltToggleButton:active {
@@ -61,6 +63,14 @@
   color: var(--toggleButton-text-color-selected);
   cursor: var(--salt-cursor-active);
   border-color: var(--toggleButton-borderColor-selected);
+}
+
+.saltToggleButton[aria-checked="true"]:hover {
+  cursor: unset;
+}
+
+.saltToggleButton[aria-pressed="true"]:hover {
+  border-color: var(--toggleButton-borderColor-selectedHover);
 }
 
 .saltToggleButton[aria-disabled="true"] {
@@ -110,6 +120,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
   --toggleButton-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-bold-borderColor-hover);
 }
 
 .saltToggleButton-accented.saltToggleButton-solid {
@@ -125,6 +136,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-accented-subtle-borderColor-hover);
   --toggleButton-borderColor-active: var(--salt-actionable-accented-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-accented-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-accented-bold-borderColor-hover);
 }
 
 .saltToggleButton-positive.saltToggleButton-solid {
@@ -140,6 +152,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-positive-subtle-borderColor-hover);
   --toggleButton-borderColor-active: var(--salt-actionable-positive-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-positive-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-positive-bold-borderColor-hover);
 }
 
 .saltToggleButton-negative.saltToggleButton-solid {
@@ -155,6 +168,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-negative-subtle-borderColor-hover);
   --toggleButton-borderColor-active: var(--salt-actionable-negative-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-negative-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-negative-bold-borderColor-hover);
 }
 
 .saltToggleButton-caution.saltToggleButton-solid {
@@ -170,6 +184,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-caution-subtle-borderColor-hover);
   --toggleButton-borderColor-active: var(--salt-actionable-caution-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-caution-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-caution-bold-borderColor-hover);
 }
 
 .saltToggleButton-neutral.saltToggleButton-bordered {
@@ -185,6 +200,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-borderColor);
   --toggleButton-borderColor-active: var(--salt-actionable-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-bold-borderColor-hover);
 }
 
 .saltToggleButton-accented.saltToggleButton-bordered {
@@ -200,6 +216,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-accented-borderColor);
   --toggleButton-borderColor-active: var(--salt-actionable-accented-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-accented-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-accented-bold-borderColor-hover);
 }
 
 .saltToggleButton-positive.saltToggleButton-bordered {
@@ -215,6 +232,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-positive-borderColor);
   --toggleButton-borderColor-active: var(--salt-actionable-positive-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-positive-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-positive-bold-borderColor-hover);
 }
 
 .saltToggleButton-negative.saltToggleButton-bordered {
@@ -230,6 +248,7 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-negative-borderColor);
   --toggleButton-borderColor-active: var(--salt-actionable-negative-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-negative-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-negative-bold-borderColor-hover);
 }
 
 .saltToggleButton-caution.saltToggleButton-bordered {
@@ -245,4 +264,5 @@
   --toggleButton-borderColor-hover: var(--salt-actionable-caution-borderColor);
   --toggleButton-borderColor-active: var(--salt-actionable-caution-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-caution-borderColor-selected);
+  --toggleButton-borderColor-selectedHover: var(--salt-actionable-caution-bold-borderColor-hover);
 }

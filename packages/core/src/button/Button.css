@@ -52,12 +52,14 @@
   cursor: var(--salt-cursor-active);
 }
 
-/* Pseudo-class applied to the root element on hover when Button is not active or disabled */
-.saltButton:hover {
-  background: var(--saltButton-background-hover, var(--button-background-hover));
-  color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
-  border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
-  cursor: var(--salt-cursor-hover);
+@media (hover: hover) {
+  /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
+  .saltButton:hover {
+    background: var(--saltButton-background-hover, var(--button-background-hover));
+    color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
+    border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
+    cursor: var(--salt-cursor-hover);
+  }
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
