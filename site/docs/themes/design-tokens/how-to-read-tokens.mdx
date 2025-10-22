@@ -28,13 +28,13 @@ All semantic characteristic tokens in the Salt Design System follow this format:
 4. **Emphasis:** An optional term that helps to indicate where visual prominence is increased or decreased (e.g., bold, subtle)
 5. **Variant:** An optional term allowing variation within a set of attributes within a characteristic (e.g., primary, secondary, tertiary)
 6. **Property:** A mandatory term to indicate the UI attribute the token applies to (e.g., background, border, shadow, foreground)
-7. **State (optional):** An optional term indicating the current condition of an element (e.g., hover, active, selected, disabled, read-only)
+7. **State:** An optional term indicating the current condition of an element (e.g., hover, active, selected, disabled, read-only)
 
-If a token name doesn’t include a modifier, emphasis, variant, or state, it represents the ‘default’ value. However, Salt avoids using the term ‘default’ in token names, as it can be ambiguous and doesn’t clearly describe the token’s purpose or usage. This approach helps keep token naming clear and specific.
+If a token name doesn’t include a modifier, emphasis, variant or state, it represents the ‘default’ value. However, Salt avoids using the term ‘default’ in token names, as it can be ambiguous and doesn’t clearly describe the token’s purpose or usage. This approach helps keep token naming clear and specific.
 
 ## Characteristic
 
-Semantic characteristics are groups of tokens that share the same purpose or intent. In Salt, every characteristic token includes its semantic group directly after the design system prefix, for example: --salt-content-primary-foreground. Below are the semantic characteristics used in Salt:
+Semantic characteristics are groups of tokens that share the same purpose or intent. In Salt, every characteristic token includes its semantic group directly after the design system prefix, e.g., --salt-content-primary-foreground. Below are the semantic characteristics used in Salt:
 
 - Actionable
 - Category
@@ -53,11 +53,11 @@ Semantic characteristics are groups of tokens that share the same purpose or int
 
 ## Modifier
 
-Modifiers such as sentiment, status, and category are included in the list of characteristic tokens and are based on subsets of these groups. Modifiers can be used to indicate changes in a system or process, helping to convey details about a token’s purpose, such as its color function or interaction state.
+Modifiers such as sentiment, status and category are included in the list of characteristic tokens and are based on subsets of these groups. Modifiers can be used to indicate changes in a system or process, helping to convey details about a token’s purpose, such as its color function or interaction state.
 
 ### Sentiment
 
-Each sentiment in Salt is designed to evoke a particular feeling, such as negativity, caution, or positivity. Salt includes five sentiments: Accented, Caution, Negative, Positive, and Neutral. Like ‘default’ states, Neutral is implied when no sentiment is specified and is never explicitly named within a token.
+Each sentiment in Salt is designed to evoke a particular feeling, such as negativity, caution or positivity. Salt includes five sentiments: Accented, Caution, Negative, Positive and Neutral. Like ‘default’ states, Neutral is implied when no sentiment is specified. Therefore, it's never explicitly named within a token.
 
 <Image
   src="/img/theming/token-sentiment-light.png"
@@ -67,7 +67,7 @@ Each sentiment in Salt is designed to evoke a particular feeling, such as negati
 
 ### Status
 
-Status in Salt describes the condition of a system or process. Each status helps users understand what’s happening, what actions may be needed, and whether any issues require attention. The four statuses are: Error, Info, Success, and Warning.
+Status in Salt describes the condition of a system or process. Each status helps users understand what’s happening, what actions may be needed, and whether any issues require attention. The four statuses are: Error, Info, Success and Warning.
 
 <Image
   src="/img/theming/token-status-light.png"
@@ -87,7 +87,7 @@ Category provides a set of 20 numbered groups. These groups don't have predefine
 
 ## Emphasis
 
-Emphasis is an optional term used to adjust the visual prominence of an attribute when needed. In design tokens, emphasis is shown as either bold or subtle, with the default value used if neither is specified. Bold increases emphasis, while subtle decreases it. How emphasis appears may differ depending on the characteristic or property.
+Emphasis is an optional term used to adjust the visual prominence of an attribute when needed. In design tokens, emphasis is shown as either bold or subtle, with the default value used if neither is specified. Bold increases emphasis, whereas subtle decreases it. How emphasis appears may differ depending on the characteristic or property.
 
 <Image
   src="/img/theming/token-emphasis-light.png"
@@ -97,7 +97,7 @@ Emphasis is an optional term used to adjust the visual prominence of an attribut
 
 ## Variant
 
-Variant is an optional term with three values: primary, secondary, and tertiary. Variants help distinguish and customize design elements, providing flexibility in both styling and functionality.
+Variant is an optional term with three values: primary, secondary and tertiary. Variants help distinguish and customize design elements, providing flexibility in both styling and functionality.
 
 <Image
   src="/img/theming/token-variant-light.png"
@@ -107,7 +107,7 @@ Variant is an optional term with three values: primary, secondary, and tertiary.
 
 ## Property
 
-Property refers to the specific attribute a design token applies to, such as background, foreground, or border. In Salt, foreground covers both text and icons. When you need to differentiate between them, the states 'informative' (for text) and 'decorative' (for icons) are used alongside 'foreground'. This approach allows for subtle color differences between text and icons, while ensuring color contrast requirements are met.
+Property refers to the specific attribute to which a design token applies, such as background, foreground or border. In Salt, foreground covers both text and icons. When you need to differentiate between them, the states 'informative' (for text) and 'decorative' (for icons) are used alongside 'foreground'. This approach allows for subtle color differences between text and icons, while ensuring compliance with color contrast requirements.
 
 <Image
   src="/img/theming/token-property-light.png"
@@ -117,7 +117,7 @@ Property refers to the specific attribute a design token applies to, such as bac
 
 ## State
 
-State refers to the condition of a design attribute, such as hover, disabled, active, selected, or read-only. If no state is specified, it is considered the ‘default’ value.
+State refers to the condition of a design attribute, such as hover, disabled, active, selected or read-only. If no state is specified, it is considered the ‘default’ value.
 
 <Image
   src="/img/theming/token-state-light.png"
