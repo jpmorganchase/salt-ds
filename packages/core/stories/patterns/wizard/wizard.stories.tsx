@@ -30,15 +30,101 @@ export default {
   title: "Patterns/Wizard",
 } as Meta;
 
-const content = [
-  "account-details",
-  "account-type",
-  "additional-info",
-  "review",
-] as const;
-type ContentType = (typeof content)[number];
+enum ContentTypeEnum {
+  AccountDetails = "account-details",
+  AccountType = "account-type",
+  AdditionalInfo = "additional-info",
+  Review = "review",
+}
+
+type ContentType = keyof typeof ContentTypeEnum;
 
 type ValidationStatus = "error" | "warning" | undefined;
+
+type FieldValidation = { status?: ValidationStatus; message?: string };
+
+interface AccountFormData {
+  fullName: string;
+  phoneNumber: string;
+  emailAddress: string;
+  address1: string;
+  address2: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  accountType: string;
+  initialDeposit: string;
+  beneficiaryName: string;
+  sourceOfFunds: string;
+  paperlessStatements: string;
+}
+
+const stepFieldRules: Record<
+  ContentType,
+  Record<string, (value: string, data: AccountFormData) => FieldValidation>
+> = {
+  AccountDetails: {
+    fullName: (v) =>
+      !v.trim() ? { status: "error", message: "Full name is required." } : {},
+    phoneNumber: (v) =>
+      !v.trim()
+        ? { status: "error", message: "Phone number is required." }
+        : {},
+    emailAddress: (v) =>
+      !v.includes("@")
+        ? { status: "warning", message: "Email format looks incorrect." }
+        : {},
+    address1: (v) =>
+      !v.trim() ? { status: "error", message: "Address is required." } : {},
+  },
+  AccountType: {
+    accountType: (v) =>
+      !v.trim()
+        ? { status: "error", message: "Account type is required." }
+        : {},
+  },
+  AdditionalInfo: {
+    initialDeposit: (v) =>
+      v && Number(v) < 100
+        ? {
+            status: "warning",
+            message:
+              "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
+          }
+        : {},
+  },
+  Review: {},
+};
+
+const validateStep = (
+  stepId: ContentType,
+  data: AccountFormData,
+): {
+  fieldValidation: Record<string, FieldValidation>;
+  stepStatus: ValidationStatus;
+} => {
+  const rules = stepFieldRules[stepId];
+  const fieldValidation: Record<string, FieldValidation> = {};
+  Object.keys(rules).forEach((field) => {
+    fieldValidation[field] = rules[field](
+      data[field as keyof AccountFormData] || "",
+      data,
+    );
+  });
+  const stepStatus = deriveStepStatus(
+    fieldValidation as Record<string, { status?: ValidationStatus }>,
+  );
+  return { fieldValidation, stepStatus };
+};
+
+const deriveStepStatus = (
+  fields: Record<string, { status?: ValidationStatus }>,
+): ValidationStatus => {
+  if (Object.values(fields).some((f) => f.status === "error")) return "error";
+  if (Object.values(fields).some((f) => f.status === "warning"))
+    return "warning";
+  return undefined;
+};
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -47,8 +133,8 @@ interface ConfirmationDialogProps {
 
 interface FormProps {
   stepId: ContentType;
-  formData: { [key: string]: string };
-  setFormData: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
+  formData: AccountFormData;
+  setFormData: React.Dispatch<React.SetStateAction<AccountFormData>>;
   handleCancel: () => void;
   handleNext?: () => void;
   handlePrevious?: () => void;
@@ -58,7 +144,7 @@ interface FormProps {
 }
 
 interface FormContentProps {
-  formData: { [key: string]: string };
+  formData: AccountFormData;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleInputBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   fieldValidation: {
@@ -243,78 +329,37 @@ const AdditionalInfoForm = ({
   setStepValidation,
   style,
 }: FormProps & { style?: React.CSSProperties }) => {
-  const [fieldValidation, setFieldValidation] = useState<{
-    [field: string]: { status?: ValidationStatus; message?: string };
-  }>({});
-
-  const validateField = (
-    field: string,
-    value: string,
-  ): { status?: ValidationStatus; message?: string } => {
-    switch (field) {
-      case "initialDeposit":
-        if (value && Number(value) < 100) {
-          return {
-            status: "warning",
-            message:
-              "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
-          };
-        }
-        return {};
-      // Add more fields as needed
-      default:
-        return {};
-    }
-  };
+  const [fieldValidation, setFieldValidation] = useState<
+    Record<string, FieldValidation>
+  >({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev: { [key: string]: string }) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFieldValidation((prev) => ({
-      ...prev,
-      [name]: validateField(name, value),
-    }));
+  const handleInputBlur = () => {
+    const { fieldValidation: fv } = validateStep(
+      stepId,
+      formData as AccountFormData,
+    );
+    setFieldValidation(fv);
   };
-
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    // Validate all fields
-    const newFieldValidation: typeof fieldValidation = {};
-    Object.entries(formData).forEach(([field, value]) => {
-      newFieldValidation[field] = validateField(field, value as string);
-    });
-    setFieldValidation(newFieldValidation);
-
-    // Determine step status
-    let stepStatus: ValidationStatus;
-    Object.values(newFieldValidation).forEach((v) => {
-      if (v.status === "error") stepStatus = "error";
-      else if (v.status === "warning" && stepStatus !== "error")
-        stepStatus = "warning";
-    });
-
-    // Update global step validation
+    const { fieldValidation: fv, stepStatus } = validateStep(
+      stepId,
+      formData as AccountFormData,
+    );
+    setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
-      [stepId]: { status: stepStatus }, // Use your step id here
+      [stepId]: { status: stepStatus },
     }));
-
-    // Prevent navigation if error
     if (stepStatus === "error") return;
-
-    // Proceed to next step if no error
     handleNext?.();
   };
   return (
-    <form>
+    <form onSubmit={handleFormSubmit}>
       <div className="content">
         <AdditionalInfoContent
           formData={formData}
@@ -342,7 +387,7 @@ const AdditionalInfoForm = ({
             Previous
           </Button>
 
-          <Button sentiment="accented" onClick={handleFormSubmit} type="submit">
+          <Button sentiment="accented" type="submit">
             Next
           </Button>
         </FlexLayout>
@@ -454,68 +499,32 @@ const AccountTypeForm = ({
   formData,
   setStepValidation,
 }: FormProps) => {
-  const [fieldValidation, setFieldValidation] = useState<{
-    [field: string]: { status?: ValidationStatus; message?: string };
-  }>({});
-
-  const validateField = (
-    field: string,
-    value: string,
-  ): { status?: ValidationStatus; message?: string } => {
-    switch (field) {
-      case "accountType":
-        if (!value || value.trim() === "") {
-          return { status: "error", message: "Account type is required" };
-        }
-
-        return {};
-
-      default:
-        return {};
-    }
-  };
+  const [fieldValidation, setFieldValidation] = useState<
+    Record<string, FieldValidation>
+  >({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev: { [key: string]: string }) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    setFieldValidation((prev) => ({
-      ...prev,
-      [name]: validateField(name, value),
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { fieldValidation: fv } = validateStep(
+      stepId,
+      formData as AccountFormData,
+    );
+    setFieldValidation(fv);
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    // Validate all fields
-    const newFieldValidation: typeof fieldValidation = {};
-    Object.entries(formData).forEach(([field, value]) => {
-      newFieldValidation[field] = validateField(field, value as string);
-    });
-    setFieldValidation(newFieldValidation);
-
-    // Determine step status
-    let stepStatus: ValidationStatus;
-    Object.values(newFieldValidation).forEach((v) => {
-      if (v.status === "error") stepStatus = "error";
-      else if (v.status === "warning" && stepStatus !== "error")
-        stepStatus = "warning";
-    });
-
-    // Update global step validation
+    const { fieldValidation: fv, stepStatus } = validateStep(
+      stepId,
+      formData as AccountFormData,
+    );
+    setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
-      [stepId]: { status: stepStatus }, // Use your step id here
+      [stepId]: { status: stepStatus },
     }));
-
-    // Prevent navigation if error
     if (stepStatus === "error") return;
-
-    // Proceed to next step if no error
     handleNext?.();
   };
   return (
@@ -545,7 +554,7 @@ const AccountTypeForm = ({
             Previous
           </Button>
 
-          <Button sentiment="accented" onClick={handleFormSubmit} type="submit">
+          <Button sentiment="accented" type="submit">
             Next
           </Button>
         </FlexLayout>
@@ -689,84 +698,33 @@ const CreateAccountForm = ({
     [field: string]: { status?: ValidationStatus; message?: string };
   }>({});
 
-  const validateField = (
-    field: string,
-    value: string,
-  ): { status?: ValidationStatus; message?: string } => {
-    switch (field) {
-      case "fullName":
-        if (!value || value.trim() === "") {
-          return { status: "error", message: "Full name is required." };
-        }
-        return {};
-      case "emailAddress":
-        if (value && !value.includes("@")) {
-          return {
-            status: "warning",
-            message: "Email format looks incorrect.",
-          };
-        }
-        return {};
-      case "phoneNumber":
-        if (!value || value.trim() === "") {
-          return { status: "error", message: "Phone number is required." };
-        }
-        return {};
-      case "address1":
-        if (!value || value.trim() === "") {
-          return { status: "error", message: "Address is required." };
-        }
-        return {};
-      // Add more fields as needed
-      default:
-        return {};
-    }
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev: { [key: string]: string }) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFieldValidation((prev) => ({
-      ...prev,
-      [name]: validateField(name, value),
-    }));
+    const { name } = e.target;
+    if (stepFieldRules[stepId][name]) {
+      const { fieldValidation: fv } = validateStep(
+        stepId,
+        formData as AccountFormData,
+      );
+      setFieldValidation(fv);
+    }
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    // Validate all fields
-    const newFieldValidation: typeof fieldValidation = {};
-    Object.entries(formData).forEach(([field, value]) => {
-      newFieldValidation[field] = validateField(field, value as string);
-    });
-    setFieldValidation(newFieldValidation);
-
-    // Determine step status
-    let stepStatus: ValidationStatus;
-    Object.values(newFieldValidation).forEach((v) => {
-      if (v.status === "error") stepStatus = "error";
-      else if (v.status === "warning" && stepStatus !== "error")
-        stepStatus = "warning";
-    });
-
-    // Update global step validation
+    const { fieldValidation: fv, stepStatus } = validateStep(
+      stepId,
+      formData as AccountFormData,
+    );
+    setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
-      [stepId]: { status: stepStatus }, // Use your step id here
+      [stepId]: { status: stepStatus },
     }));
-
-    // Prevent navigation if error
     if (stepStatus === "error") return;
-
-    // Proceed to next step if no error
     handleNext?.();
   };
 
@@ -1055,12 +1013,13 @@ const ReviewAccountForm = ({
 );
 
 export const Horizontal = () => {
-  const [formData, setFormData] = useState<{ [key: string]: string }>({
+  const [formData, setFormData] = useState<AccountFormData>({
     // account details
     fullName: "Jane Doe",
     phoneNumber: "+1 (212) 555-0100",
     emailAddress: "jane.doe@gmail.com",
     address1: "25 Bank Street",
+    address2: "",
     postalCode: "E14 5JP",
     city: "London",
     country: "United Kingdom",
@@ -1094,11 +1053,11 @@ export const Horizontal = () => {
 
   const allSteps = [
     {
-      id: "account-details",
+      id: ContentTypeEnum.AccountDetails,
       label: "Account details",
       content: (
         <CreateAccountForm
-          stepId="account-details"
+          stepId="AccountDetails"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1112,7 +1071,7 @@ export const Horizontal = () => {
       label: "Account type",
       content: (
         <AccountTypeForm
-          stepId="account-type"
+          stepId="AccountType"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1127,7 +1086,7 @@ export const Horizontal = () => {
       label: "Additional info",
       content: (
         <AdditionalInfoForm
-          stepId="additional-info"
+          stepId="AdditionalInfo"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1143,7 +1102,7 @@ export const Horizontal = () => {
       label: "Review and create",
       content: (
         <ReviewAccountForm
-          stepId="review"
+          stepId="Review"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1199,12 +1158,13 @@ export const Horizontal = () => {
 };
 
 export const Vertical = () => {
-  const [formData, setFormData] = useState<{ [key: string]: string }>({
+  const [formData, setFormData] = useState<AccountFormData>({
     // account details
     fullName: "Jane Doe",
     phoneNumber: "+1 (212) 555-0100",
     emailAddress: "jane.doe@gmail.com",
     address1: "25 Bank Street",
+    address2: "",
     postalCode: "E14 5JP",
     city: "London",
     country: "United Kingdom",
@@ -1243,7 +1203,7 @@ export const Vertical = () => {
       label: "Account details",
       content: (
         <CreateAccountForm
-          stepId="account-details"
+          stepId="AccountDetails"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1258,7 +1218,7 @@ export const Vertical = () => {
       label: "Account type",
       content: (
         <AccountTypeForm
-          stepId="account-type"
+          stepId="AccountType"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1273,7 +1233,7 @@ export const Vertical = () => {
       label: "Additional info",
       content: (
         <AdditionalInfoForm
-          stepId="additional-info"
+          stepId="AdditionalInfo"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1289,7 +1249,7 @@ export const Vertical = () => {
       label: "Review and create",
       content: (
         <ReviewAccountForm
-          stepId="review"
+          stepId="Review"
           formData={formData}
           setFormData={setFormData}
           handleCancel={handleCancel}
@@ -1354,7 +1314,7 @@ export const Vertical = () => {
 //   const [wizardState, setWizardState] = useState<WizardState>("form");
 //   const [open, setOpen] = useState(false);
 //   const [activeStep, setActiveStep] = useState(0);
-//   const [formData, setFormData] = useState<{ [key: string]: string }>({
+//   const [formData, setFormData] = useState<AccountFormData>({
 //     // account details
 //     fullName: "Jane Doe",
 //     phoneNumber: "+1 (212) 555-0100",
@@ -1407,7 +1367,7 @@ export const Vertical = () => {
 
 //   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     const { name, value } = e.target;
-//     setFormData((prev: { [key: string]: string }) => ({
+//     setFormData((prev: AccountFormData) => ({
 //       ...prev,
 //       [name]: value,
 //     }));
