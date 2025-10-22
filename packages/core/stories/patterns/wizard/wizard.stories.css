@@ -1,23 +1,13 @@
-.horizontalContainer {
+/* .horizontalContainer {
   width: 730px;
-  /* height: 588px; */
+  height: 588px;
   padding: var(--salt-spacing-300);
   border: 1px dashed green;
-}
+} */
 
-.header {
+/* .header {
   padding: 0 var(--salt-spacing-300) var(--salt-spacing-300);
-}
-
-.content {
-  height: 396px;
-  overflow-y: auto;
-  border: 1px solid red;
-}
-
-.actions {
-  border: 1px solid blue;
-}
+} */
 
 .verticalHeader {
   padding-bottom: var(--salt-spacing-300);

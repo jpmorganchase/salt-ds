@@ -25,11 +25,23 @@ import {
 } from "@salt-ds/core";
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import { type ElementType, useState } from "react";
+import {
+  type ChangeEvent,
+  type ChangeEventHandler,
+  type ElementType,
+  useState,
+} from "react";
 import "./wizard.stories.css";
 export default {
   title: "Patterns/Wizard",
 } as Meta;
+
+// function useWizard<TStepId extends string>(steps: TStepId[]) {
+//   const [activeStep, setActiveStep] = useState(0);
+//   const next = () => setActiveStep(s => Math.min(s + 1, steps.length - 1));
+//   const prev = () => setActiveStep(s => Math.max(s - 1, 0));
+//   return { activeStep, next, prev, isLast: activeStep === steps.length - 1 };
+// }
 
 enum ContentTypeEnum {
   AccountDetails = "account-details",
@@ -76,12 +88,14 @@ interface FormProps {
 
 interface FormContentProps {
   formData: AccountFormData;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleInputBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   fieldValidation: {
     [field: string]: { status?: ValidationStatus; message?: string };
   };
   style?: React.CSSProperties;
+  handleSelectChange?: (value: string, name: string) => void;
+  handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const stepFieldRules: Record<
@@ -96,7 +110,7 @@ const stepFieldRules: Record<
         ? { status: "error", message: "Phone number is required." }
         : {},
     emailAddress: (v) =>
-      !v.includes("@")
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
         ? { status: "warning", message: "Email format looks incorrect." }
         : {},
     address1: (v) =>
@@ -262,6 +276,7 @@ const AdditionalInfoContent = ({
   style,
   handleInputChange,
   handleInputBlur,
+  handleSelectChange,
   fieldValidation,
 }: FormContentProps) => {
   return (
@@ -314,8 +329,11 @@ const AdditionalInfoContent = ({
         <Dropdown
           name="paperlessStatements"
           value={formData.paperlessStatements}
+          onSelectionChange={(_e, value) =>
+            handleSelectChange?.(value[0], "paperlessStatements")
+          }
         >
-          <Option value="Please select" />
+          <Option value="">Please select</Option>
           <Option value="Yes" />
           <Option value="No" />
         </Dropdown>
@@ -341,6 +359,9 @@ const AdditionalInfoForm = ({
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  const handleSelectChange = (value: string, name: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
   const handleInputBlur = () => {
     const { fieldValidation: fv } = validateStep(
       stepId,
@@ -364,16 +385,15 @@ const AdditionalInfoForm = ({
   };
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="content">
+      <StackLayout gap={3}>
         <AdditionalInfoContent
           formData={formData}
           handleInputChange={handleInputChange}
           handleInputBlur={handleInputBlur}
+          handleSelectChange={handleSelectChange}
           fieldValidation={fieldValidation}
           style={style}
         />
-      </div>
-      <div className="actions">
         <FlexLayout gap={1} justify="end">
           <Button
             sentiment="accented"
@@ -395,22 +415,26 @@ const AdditionalInfoForm = ({
             Next
           </Button>
         </FlexLayout>
-      </div>
+      </StackLayout>
     </form>
   );
 };
 
 const AccountTypeContent = ({
-  handleInputChange,
+  handleInputBlur,
   formData,
   fieldValidation,
+  handleRadioChange,
 }: FormContentProps) => {
   return (
     <FormField validationStatus={fieldValidation.accountType?.status}>
       <FormFieldLabel>Select Account Type</FormFieldLabel>
       <RadioButtonGroup
         direction="vertical"
-        onChange={handleInputChange}
+        onChange={handleRadioChange}
+        onBlur={(e) =>
+          handleInputBlur(e as unknown as React.FocusEvent<HTMLInputElement>)
+        }
         value={formData.accountType}
       >
         <RadioButton
@@ -507,14 +531,27 @@ const AccountTypeForm = ({
     Record<string, FieldValidation>
   >({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleInputBlur = () => {
     const { fieldValidation: fv } = validateStep(
       stepId,
       formData as AccountFormData,
     );
     setFieldValidation(fv);
+  };
+
+  const handleRadioChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    // update and validate on change
+    const { value } = event.target;
+    setFormData((prev) => ({ ...prev, accountType: value }));
+    const { fieldValidation: fv, stepStatus } = validateStep(stepId, {
+      ...formData,
+      accountType: value,
+    } as AccountFormData);
+    setFieldValidation(fv);
+    setStepValidation((prev) => ({
+      ...prev,
+      [stepId]: { status: stepStatus },
+    }));
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
@@ -533,14 +570,13 @@ const AccountTypeForm = ({
   };
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="content">
+      <StackLayout gap={3}>
         <AccountTypeContent
           formData={formData}
-          handleInputChange={handleInputChange}
+          handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
+          handleRadioChange={handleRadioChange}
         />
-      </div>
-      <div className="actions">
         <FlexLayout gap={1} justify="end">
           <Button
             sentiment="accented"
@@ -562,7 +598,8 @@ const AccountTypeForm = ({
             Next
           </Button>
         </FlexLayout>
-      </div>
+      </StackLayout>
+      {/* </div> */}
     </form>
   );
 };
@@ -572,6 +609,7 @@ const CreateAccountContent = ({
   fieldValidation,
   handleInputChange,
   handleInputBlur,
+  handleSelectChange,
 }: FormContentProps) => {
   return (
     <GridLayout columns={2} gap={3}>
@@ -680,7 +718,13 @@ const CreateAccountContent = ({
 
           <FormField>
             <FormFieldLabel>Country</FormFieldLabel>
-            <Dropdown name="country" value={formData.country}>
+            <Dropdown
+              name="country"
+              value={formData.country}
+              onSelectionChange={(_e, value) =>
+                handleSelectChange?.(value[0], "country")
+              }
+            >
               <Option value="United Kingdom">United Kingdom</Option>
               <Option value="United States">United States</Option>
             </Dropdown>
@@ -702,8 +746,8 @@ const CreateAccountForm = ({
     [field: string]: { status?: ValidationStatus; message?: string };
   }>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -715,6 +759,9 @@ const CreateAccountForm = ({
       );
       setFieldValidation(fv);
     }
+  };
+  const handleSelectChange = (value: string, name: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
@@ -734,26 +781,27 @@ const CreateAccountForm = ({
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="content">
+      <StackLayout gap={3}>
         <CreateAccountContent
           formData={formData}
-          handleInputChange={handleInputChange}
           handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
+          handleInputChange={handleInputChange}
+          handleSelectChange={handleSelectChange}
         />
-      </div>
-      <FlexLayout gap={1} justify="end">
-        <Button
-          sentiment="accented"
-          appearance="transparent"
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-        <Button type="submit" sentiment="accented">
-          Next
-        </Button>
-      </FlexLayout>
+        <FlexLayout gap={1} justify="end">
+          <Button
+            sentiment="accented"
+            appearance="transparent"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" sentiment="accented">
+            Next
+          </Button>
+        </FlexLayout>
+      </StackLayout>
     </form>
   );
 };
@@ -969,6 +1017,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
             <Dropdown
               name="paperlessStatements"
               value={formData.paperlessStatements}
+              defaultSelected={[formData.paperlessStatements]}
               readOnly
             >
               <Option value="Please select" />
@@ -987,40 +1036,37 @@ const ReviewAccountForm = ({
   handleNext,
   formData,
 }: FormProps) => (
-  <>
-    <div className="content">
-      <ReviewAccountContent formData={formData} />
-    </div>
-    <div className="actions">
-      <FlexLayout gap={1} justify="end">
-        <Button
-          sentiment="accented"
-          appearance="transparent"
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
+  <StackLayout gap={3}>
+    <ReviewAccountContent formData={formData} />
+    <FlexLayout gap={1} justify="end">
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={handleCancel}
+      >
+        Cancel
+      </Button>
 
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={handlePrevious}
-        >
-          Previous
-        </Button>
+      <Button
+        sentiment="accented"
+        appearance="bordered"
+        onClick={handlePrevious}
+      >
+        Previous
+      </Button>
 
-        <Button sentiment="accented" onClick={handleNext}>
-          Create
-        </Button>
-      </FlexLayout>
-    </div>
-  </>
+      <Button sentiment="accented" onClick={handleNext}>
+        Create
+      </Button>
+    </FlexLayout>
+  </StackLayout>
 );
 
 export const Horizontal = () => {
   const [formData, setFormData] = useState<AccountFormData>({
     // account details
-    fullName: "Jane Doe",
+    // fullName: "Jane Doe",
+    fullName: "",
     phoneNumber: "+1 (212) 555-0100",
     emailAddress: "jane.doe@gmail.com",
     address1: "25 Bank Street",
@@ -1042,6 +1088,8 @@ export const Horizontal = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+
+  console.log("formData", formData);
 
   const handleNextStep = () =>
     activeStep < allSteps.length - 1 &&
@@ -1122,12 +1170,13 @@ export const Horizontal = () => {
 
   const header = (
     <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
-      <div>
-        <Text>Create a new account</Text>
+      <Text>
+        Create a new account
         <Text color="primary" styleAs="h2">
           {allSteps[activeStep].label}
         </Text>
-      </div>
+      </Text>
+
       <Stepper orientation="horizontal" style={{ width: 340 }}>
         {allSteps.map((step, index) => (
           <Step
@@ -1143,10 +1192,17 @@ export const Horizontal = () => {
 
   return (
     <>
-      <div className="horizontalContainer">
+      <StackLayout
+        gap={3}
+        padding={3}
+        style={{
+          width: 730,
+          border: "1px dashed green",
+        }}
+      >
         {header}
         {content}
-      </div>
+      </StackLayout>
       <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
       <AccountCreatedSuccessDialog
         open={successOpen}
@@ -1358,7 +1414,7 @@ export const Modal = () => {
     setWizardState("form");
   };
 
-  const attemptAdvance = (advance: boolean) => {
+  const validateCurrentStep = (): boolean => {
     const currentStepId = allSteps[activeStep].id as ContentType;
     const { fieldValidation: fv, stepStatus } = validateStep(
       currentStepId,
@@ -1369,20 +1425,23 @@ export const Modal = () => {
       ...prev,
       [currentStepId]: { status: stepStatus },
     }));
-    if (stepStatus === "error") return false;
-    if (advance && activeStep < allSteps.length - 1) {
+    return stepStatus !== "error";
+  };
+
+  const goNext = () => {
+    if (activeStep < allSteps.length - 1) {
       setActiveStep((s) => s + 1);
       setFieldValidation({});
     }
-    return true;
   };
 
   const handleNextClick = () => {
     const isLast = activeStep === allSteps.length - 1;
+    if (!validateCurrentStep()) return;
     if (isLast) {
-      if (attemptAdvance(false)) createAccount();
+      createAccount();
     } else {
-      attemptAdvance(true);
+      goNext();
     }
   };
 
@@ -1438,9 +1497,9 @@ export const Modal = () => {
       content: (
         <AccountTypeContent
           formData={formData}
-          handleInputChange={handleInputChange}
           handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
+          handleRadioChange={handleInputChange}
         />
       ),
     },
@@ -1450,10 +1509,10 @@ export const Modal = () => {
       content: (
         <AdditionalInfoContent
           formData={formData}
-          handleInputChange={handleInputChange}
           handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
           style={{ width: "50%" }}
+          handleInputChange={handleInputChange}
         />
       ),
     },
