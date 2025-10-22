@@ -3,7 +3,6 @@
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-foreground: var(--salt-color-white);
   --salt-palette-accent-foreground-informative: var(--salt-color-blue-600);
-  --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-600-40a);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -11,5 +10,4 @@
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-foreground: var(--salt-color-white);
   --salt-palette-accent-foreground-informative: var(--salt-color-blue-200);
-  --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-200-40a);
 }
