@@ -1,5 +1,73 @@
 # @salt-ds/theme
 
+## 1.35.0
+
+### Minor Changes
+
+- 764916b: Updated actionable tokens to address consumer feedback around the active and hover states of actionable components.
+- 764916b: Deprecated action hover tokens:
+
+  - `--salt-palette-warning-action-hover`
+  - `--salt-palette-neutral-action-hover`
+  - `--salt-palette-positive-action-hover`
+  - `--salt-palette-accent-action-hover`
+
+  Use the respective weaker tokens instead e.g. `--salt-palette-accent-action-hover` becomes `--salt-palette-accent-weakest`.
+
+- 764916b: Deprecated unused neutral palette tokens:
+
+  - `--salt-palette-neutral-weaker-disabled`
+  - `--salt-palette-neutral-weaker-readonly`
+  - `--salt-palette-neutral-weak-disabled`
+
+- 764916b: Added strong tokens to positive, warning and negative palettes in the brand theme.
+
+  ### Light
+
+  ```css
+  --salt-palette-positive-stronger: var(--salt-color-green-700);
+  --salt-palette-warning-stronger: var(--salt-color-orange-700);
+  --salt-palette-negative-stronger: var(--salt-color-red-700);
+  ```
+
+  ### Dark
+
+  ```css
+  --salt-palette-positive-stronger: var(--salt-color-green-300);
+  --salt-palette-warning-stronger: var(--salt-color-orange-300);
+  --salt-palette-negative-stronger: var(--salt-color-red-300);
+  ```
+
+- 764916b: Deprecated action active tokens:
+
+  - `--salt-palette-warning-action-active`
+  - `--salt-palette-neutral-action-active`
+  - `--salt-palette-positive-action-active`
+  - `--salt-palette-accent-action-active`
+
+  Use the respective weaker tokens instead e.g. `--salt-palette-accent-action-active` becomes `--salt-palette-accent-weaker`.
+
+### Patch Changes
+
+- 764916b: Fixed the neutral palette so that it's aligned with the other palette token sets.
+
+  ```diff
+  .salt-theme.salt-theme-next[data-mode="light"]
+  -  --salt-palette-neutral-weaker: var(--salt-color-gray-300);
+  -  --salt-palette-neutral-weakest: var(--salt-color-gray-200);
+  +  --salt-palette-neutral-weaker: var(--salt-color-gray-200);
+  +  --salt-palette-neutral-weakest: var(--salt-color-gray-100);
+
+  }
+
+  .salt-theme.salt-theme-next[data-mode="dark"]
+  -  --salt-palette-neutral-weaker: var(--salt-color-gray-700);
+  -  --salt-palette-neutral-weakest: var(--salt-color-gray-800);
+  +  --salt-palette-neutral-weaker: var(--salt-color-gray-800);
+  +  --salt-palette-neutral-weakest: var(--salt-color-gray-900);
+  }
+  ```
+
 ## 1.34.0
 
 ### Minor Changes
