@@ -1212,7 +1212,12 @@ export const Horizontal = () => {
         }}
       >
         <FlexItem>{header}</FlexItem>
-        <FlexItem grow={1} style={{ overflowY: "hidden" }}>
+        <FlexItem
+          grow={1}
+          style={{
+            overflowY: "hidden",
+          }}
+        >
           {content}
         </FlexItem>
       </StackLayout>
@@ -1343,14 +1348,14 @@ export const Vertical = () => {
   return (
     <>
       <StackLayout
-        gap={0}
+        gap={3}
         style={{
           width: 850,
-          height: 588,
         }}
+        padding={3}
       >
         {header}
-        <GridLayout columns={3} gap={0}>
+        <GridLayout columns={3} gap={3} style={{ height: 424 }}>
           <GridItem>
             <Stepper orientation="vertical">
               {allSteps.map((step, index) => (
@@ -1363,7 +1368,9 @@ export const Vertical = () => {
               ))}
             </Stepper>
           </GridItem>
-          <GridItem colSpan={2}>{content}</GridItem>
+          <GridItem colSpan={2} padding={1} style={{ overflowY: "hidden" }}>
+            {content}
+          </GridItem>
         </GridLayout>
       </StackLayout>
       <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
