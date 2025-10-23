@@ -26,12 +26,7 @@ import {
 } from "@salt-ds/core";
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import {
-  type ChangeEvent,
-  type ChangeEventHandler,
-  type ElementType,
-  useState,
-} from "react";
+import { type ChangeEventHandler, type ElementType, useState } from "react";
 export default {
   title: "Patterns/Wizard",
 } as Meta;
@@ -69,6 +64,7 @@ interface AccountFormData {
 interface ConfirmationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
 }
 
 interface FormProps {
@@ -92,7 +88,6 @@ interface FormContentProps {
   };
   style?: React.CSSProperties;
   handleSelectChange?: (value: string, name: string) => void;
-  handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const stepFieldRules: Record<
@@ -130,6 +125,22 @@ const stepFieldRules: Record<
         : {},
   },
   [ContentTypeEnum.Review]: {},
+};
+
+const initialFormData: AccountFormData = {
+  fullName: "Jane Doe",
+  phoneNumber: "+1 (212) 555-0100",
+  emailAddress: "jane.doe@gmail.com",
+  address1: "25 Bank Street",
+  address2: "",
+  postalCode: "E14 5JP",
+  city: "London",
+  country: "United Kingdom",
+  accountType: "",
+  initialDeposit: "",
+  beneficiaryName: "",
+  sourceOfFunds: "",
+  paperlessStatements: "",
 };
 
 const validateStep = (
@@ -171,6 +182,7 @@ const deriveStepStatus = (
 const CancelWarningDialog = ({
   open,
   onOpenChange,
+  onConfirm,
 }: ConfirmationDialogProps) => {
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -192,7 +204,7 @@ const CancelWarningDialog = ({
   );
 
   const yes = (
-    <Button sentiment="accented" onClick={handleClose}>
+    <Button sentiment="accented" onClick={onConfirm}>
       Yes
     </Button>
   );
@@ -228,12 +240,13 @@ const CancelWarningDialog = ({
 const AccountCreatedSuccessDialog = ({
   open,
   onOpenChange,
+  onConfirm,
 }: ConfirmationDialogProps) => (
   <Dialog open={open} onOpenChange={onOpenChange} size="small" status="success">
     <DialogHeader header="Account created" />
     <DialogContent>You can now start using this new account.</DialogContent>
     <DialogActions>
-      <Button sentiment="accented" onClick={() => onOpenChange(false)}>
+      <Button sentiment="accented" onClick={onConfirm}>
         Done
       </Button>
     </DialogActions>
@@ -426,14 +439,14 @@ const AccountTypeContent = ({
   handleInputBlur,
   formData,
   fieldValidation,
-  handleRadioChange,
+  handleInputChange,
 }: FormContentProps) => {
   return (
     <FormField validationStatus={fieldValidation.accountType?.status}>
       <FormFieldLabel>Select Account Type</FormFieldLabel>
       <RadioButtonGroup
         direction="vertical"
-        onChange={handleRadioChange}
+        onChange={handleInputChange}
         onBlur={(e) =>
           handleInputBlur(e as unknown as React.FocusEvent<HTMLInputElement>)
         }
@@ -541,7 +554,7 @@ const AccountTypeForm = ({
     setFieldValidation(fv);
   };
 
-  const handleRadioChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     // update and validate on change
     const { value } = event.target;
     setFormData((prev) => ({ ...prev, accountType: value }));
@@ -582,7 +595,7 @@ const AccountTypeForm = ({
           formData={formData}
           handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
-          handleRadioChange={handleRadioChange}
+          handleInputChange={handleInputChange}
         />
       </FlexItem>
       <FlexLayout gap={1} justify="end">
@@ -1076,24 +1089,7 @@ const ReviewAccountForm = ({
 );
 
 export const Horizontal = () => {
-  const [formData, setFormData] = useState<AccountFormData>({
-    // account details
-    fullName: "Jane Doe",
-    phoneNumber: "+1 (212) 555-0100",
-    emailAddress: "jane.doe@gmail.com",
-    address1: "25 Bank Street",
-    address2: "",
-    postalCode: "E14 5JP",
-    city: "London",
-    country: "United Kingdom",
-    // account type
-    accountType: "",
-    // additional info fields
-    initialDeposit: "",
-    beneficiaryName: "",
-    sourceOfFunds: "",
-    paperlessStatements: "",
-  });
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
   const [stepValidation, setStepValidation] = useState<{
     [stepId: string]: { status?: "error" | "warning" };
   }>({});
@@ -1101,11 +1097,18 @@ export const Horizontal = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
+  const resetWizard = () => {
+    setFormData(initialFormData);
+    setStepValidation({});
+    setActiveStep(0);
+    setSuccessOpen(false);
+    setCancelOpen(false);
+  };
+
   const handleNextStep = () =>
-    activeStep < allSteps.length - 1 &&
-    setActiveStep((prevStep) => prevStep + 1);
+    setActiveStep((prevStep) => Math.min(prevStep + 1, allSteps.length - 1));
   const handlePreviousStep = () =>
-    activeStep > 0 && setActiveStep((prevStep) => prevStep - 1);
+    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
 
   const handleCancel = () => {
     setCancelOpen(true);
@@ -1114,18 +1117,23 @@ export const Horizontal = () => {
     setSuccessOpen(true);
   };
 
+  const commonProps = {
+    formData,
+    setFormData,
+    handleCancel,
+    handleNext: handleNextStep,
+    handlePrevious: handlePreviousStep,
+    setStepValidation,
+  };
+
   const allSteps = [
     {
       id: ContentTypeEnum.AccountDetails,
       label: "Account details",
       content: (
         <CreateAccountForm
+          {...commonProps}
           stepId={ContentTypeEnum.AccountDetails}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
-          handleNext={handleNextStep}
-          setStepValidation={setStepValidation}
         />
       ),
     },
@@ -1134,13 +1142,8 @@ export const Horizontal = () => {
       label: "Account type",
       content: (
         <AccountTypeForm
+          {...commonProps}
           stepId={ContentTypeEnum.AccountType}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
-          handleNext={handleNextStep}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
         />
       ),
     },
@@ -1149,13 +1152,8 @@ export const Horizontal = () => {
       label: "Additional info",
       content: (
         <AdditionalInfoForm
+          {...commonProps}
           stepId={ContentTypeEnum.AdditionalInfo}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
-          handleNext={handleNextStep}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
           style={{ width: "50%" }}
         />
       ),
@@ -1165,19 +1163,13 @@ export const Horizontal = () => {
       label: "Review and create",
       content: (
         <ReviewAccountForm
-          stepId={ContentTypeEnum.Review}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
+          {...commonProps}
           handleNext={handleSuccess}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
+          stepId={ContentTypeEnum.Review}
         />
       ),
     },
   ];
-
-  const content = allSteps[activeStep].content;
 
   const header = (
     <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
@@ -1218,37 +1210,25 @@ export const Horizontal = () => {
             overflowY: "hidden",
           }}
         >
-          {content}
+          {allSteps[activeStep].content}
         </FlexItem>
       </StackLayout>
-      <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
+      <CancelWarningDialog
+        open={cancelOpen}
+        onOpenChange={setCancelOpen}
+        onConfirm={resetWizard}
+      />
       <AccountCreatedSuccessDialog
         open={successOpen}
         onOpenChange={setSuccessOpen}
+        onConfirm={resetWizard}
       />
     </>
   );
 };
 
 export const Vertical = () => {
-  const [formData, setFormData] = useState<AccountFormData>({
-    // account details
-    fullName: "Jane Doe",
-    phoneNumber: "+1 (212) 555-0100",
-    emailAddress: "jane.doe@gmail.com",
-    address1: "25 Bank Street",
-    address2: "",
-    postalCode: "E14 5JP",
-    city: "London",
-    country: "United Kingdom",
-    // account type
-    accountType: "",
-    // additional info fields
-    initialDeposit: "",
-    beneficiaryName: "",
-    sourceOfFunds: "",
-    paperlessStatements: "",
-  });
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
   const [stepValidation, setStepValidation] = useState<{
     [stepId: string]: { status?: "error" | "warning" };
   }>({});
@@ -1256,11 +1236,18 @@ export const Vertical = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
+  const resetWizard = () => {
+    setFormData(initialFormData);
+    setStepValidation({});
+    setActiveStep(0);
+    setCancelOpen(false);
+    setSuccessOpen(false);
+  };
+
   const handleNextStep = () =>
-    activeStep < allSteps.length - 1 &&
-    setActiveStep((prevStep) => prevStep + 1);
+    setActiveStep((prevStep) => Math.min(prevStep + 1, allSteps.length - 1));
   const handlePreviousStep = () =>
-    activeStep > 0 && setActiveStep((prevStep) => prevStep - 1);
+    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
 
   const handleCancel = () => {
     setCancelOpen(true);
@@ -1270,19 +1257,23 @@ export const Vertical = () => {
     setSuccessOpen(true);
   };
 
+  const commonProps = {
+    formData,
+    setFormData,
+    handleCancel,
+    handleNext: handleNextStep,
+    handlePrevious: handlePreviousStep,
+    setStepValidation,
+  };
+
   const allSteps = [
     {
       id: ContentTypeEnum.AccountDetails,
       label: "Account details",
       content: (
         <CreateAccountForm
+          {...commonProps}
           stepId={ContentTypeEnum.AccountDetails}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
-          handleNext={handleNextStep}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
         />
       ),
     },
@@ -1291,13 +1282,8 @@ export const Vertical = () => {
       label: "Account type",
       content: (
         <AccountTypeForm
+          {...commonProps}
           stepId={ContentTypeEnum.AccountType}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
-          handleNext={handleNextStep}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
         />
       ),
     },
@@ -1306,13 +1292,8 @@ export const Vertical = () => {
       label: "Additional info",
       content: (
         <AdditionalInfoForm
+          {...commonProps}
           stepId={ContentTypeEnum.AdditionalInfo}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
-          handleNext={handleNextStep}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
           style={{ width: "50%" }}
         />
       ),
@@ -1322,19 +1303,13 @@ export const Vertical = () => {
       label: "Review and create",
       content: (
         <ReviewAccountForm
-          stepId={ContentTypeEnum.Review}
-          formData={formData}
-          setFormData={setFormData}
-          handleCancel={handleCancel}
+          {...commonProps}
           handleNext={handleSuccess}
-          handlePrevious={handlePreviousStep}
-          setStepValidation={setStepValidation}
+          stepId={ContentTypeEnum.Review}
         />
       ),
     },
   ];
-
-  const content = allSteps[activeStep].content;
 
   const header = (
     <StackLayout gap={0}>
@@ -1369,14 +1344,19 @@ export const Vertical = () => {
             </Stepper>
           </GridItem>
           <GridItem colSpan={2} padding={1} style={{ overflowY: "hidden" }}>
-            {content}
+            {allSteps[activeStep].content}
           </GridItem>
         </GridLayout>
       </StackLayout>
-      <CancelWarningDialog open={cancelOpen} onOpenChange={setCancelOpen} />
+      <CancelWarningDialog
+        open={cancelOpen}
+        onOpenChange={setCancelOpen}
+        onConfirm={resetWizard}
+      />
       <AccountCreatedSuccessDialog
         open={successOpen}
         onOpenChange={setSuccessOpen}
+        onConfirm={resetWizard}
       />
     </>
   );
@@ -1387,24 +1367,7 @@ export const Modal = () => {
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData] = useState<AccountFormData>({
-    // account details
-    fullName: "Jane Doe",
-    phoneNumber: "+1 (212) 555-0100",
-    emailAddress: "jane.doe@gmail.com",
-    address1: "25 Bank Street",
-    address2: "",
-    postalCode: "E14 5JP",
-    city: "London",
-    country: "United Kingdom",
-    // account type
-    accountType: "",
-    // additional info fields
-    initialDeposit: "",
-    beneficiaryName: "",
-    sourceOfFunds: "",
-    paperlessStatements: "",
-  });
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
   const [stepValidation, setStepValidation] = useState<{
     [stepId: string]: { status?: "error" | "warning" };
   }>({});
@@ -1412,7 +1375,15 @@ export const Modal = () => {
     [field: string]: { status?: ValidationStatus; message?: string };
   }>({});
 
-  const handleRequestOpen = () => {
+  const resetAll = () => {
+    setActiveStep(0);
+    setFormData(initialFormData);
+    setStepValidation({});
+    setWizardState("form");
+  };
+
+  const handleWizardOpen = () => {
+    resetAll();
     setOpen(true);
   };
 
@@ -1422,21 +1393,14 @@ export const Modal = () => {
 
   const handleCancel = () => {
     setOpen(false);
-    setActiveStep(0);
     setTimeout(() => {
-      setWizardState("form");
+      resetAll();
     }, 300);
   };
 
-  const createAccount = () => {
-    setWizardState("success");
-  };
-  const cancelWarning = () => {
-    setWizardState("cancel-warning");
-  };
-  const backToForm = () => {
-    setWizardState("form");
-  };
+  const createAccount = () => setWizardState("success");
+  const cancelWarning = () => setWizardState("cancel-warning");
+  const backToForm = () => setWizardState("form");
 
   const validateCurrentStep = (): boolean => {
     const currentStepId = allSteps[activeStep].id as ContentType;
@@ -1453,10 +1417,8 @@ export const Modal = () => {
   };
 
   const goNext = () => {
-    if (activeStep < allSteps.length - 1) {
-      setActiveStep((s) => s + 1);
-      setFieldValidation({});
-    }
+    setActiveStep((prevStep) => Math.min(prevStep + 1, allSteps.length - 1));
+    setFieldValidation({});
   };
 
   const handleNextClick = () => {
@@ -1491,6 +1453,18 @@ export const Modal = () => {
     }
   };
 
+  const handleSelectChange = (value: string, name: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    const currentStepId = allSteps[activeStep].id as ContentType;
+    if (stepFieldRules[currentStepId][name]) {
+      const { fieldValidation: fv } = validateStep(currentStepId, {
+        ...formData,
+        [name]: value,
+      });
+      setFieldValidation(fv);
+    }
+  };
+
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     if (stepFieldRules[stepId][name]) {
@@ -1502,42 +1476,30 @@ export const Modal = () => {
     }
   };
 
+  const commonProps = {
+    formData,
+    handleInputChange,
+    handleInputBlur,
+    handleSelectChange,
+    fieldValidation,
+  };
+
   const allSteps = [
     {
       id: ContentTypeEnum.AccountDetails,
       label: "Account details",
-      content: (
-        <CreateAccountContent
-          formData={formData}
-          handleInputChange={handleInputChange}
-          handleInputBlur={handleInputBlur}
-          fieldValidation={fieldValidation}
-        />
-      ),
+      content: <CreateAccountContent {...commonProps} />,
     },
     {
       id: ContentTypeEnum.AccountType,
       label: "Account type",
-      content: (
-        <AccountTypeContent
-          formData={formData}
-          handleInputBlur={handleInputBlur}
-          fieldValidation={fieldValidation}
-          handleRadioChange={handleInputChange}
-        />
-      ),
+      content: <AccountTypeContent {...commonProps} />,
     },
     {
       id: ContentTypeEnum.AdditionalInfo,
       label: "Additional info",
       content: (
-        <AdditionalInfoContent
-          formData={formData}
-          handleInputBlur={handleInputBlur}
-          fieldValidation={fieldValidation}
-          style={{ width: "50%" }}
-          handleInputChange={handleInputChange}
-        />
+        <AdditionalInfoContent {...commonProps} style={{ width: "50%" }} />
       ),
     },
     {
@@ -1585,7 +1547,7 @@ export const Modal = () => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+      <Button data-testid="dialog-button" onClick={handleWizardOpen}>
         Open wizard
       </Button>
       <Dialog
@@ -1605,15 +1567,15 @@ export const Modal = () => {
             case "cancel-warning":
               return (
                 <>
-                  <DialogContent
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                  >
-                    <CancelWarningContent />
+                  <DialogContent>
+                    <GridLayout rows={1} columns={1} style={{ height: "100%" }}>
+                      <GridItem
+                        horizontalAlignment="center"
+                        verticalAlignment="center"
+                      >
+                        <CancelWarningContent />
+                      </GridItem>
+                    </GridLayout>
                   </DialogContent>
                   <DialogActions>
                     {direction === "column" ? (
@@ -1649,15 +1611,15 @@ export const Modal = () => {
             case "success":
               return (
                 <>
-                  <DialogContent
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                  >
-                    <AccountCreatedContent />
+                  <DialogContent>
+                    <GridLayout rows={1} columns={1} style={{ height: "100%" }}>
+                      <GridItem
+                        horizontalAlignment="center"
+                        verticalAlignment="center"
+                      >
+                        <AccountCreatedContent />
+                      </GridItem>
+                    </GridLayout>
                   </DialogContent>
                   <DialogActions>
                     <Button sentiment="accented" onClick={handleCancel}>
