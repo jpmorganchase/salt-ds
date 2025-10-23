@@ -90,6 +90,13 @@ interface FormContentProps {
   handleSelectChange?: (value: string, name: string) => void;
 }
 
+const WIZARD_STEPS = [
+  { id: ContentTypeEnum.AccountDetails, label: "Account details" },
+  { id: ContentTypeEnum.AccountType, label: "Account type" },
+  { id: ContentTypeEnum.AdditionalInfo, label: "Additional info" },
+  { id: ContentTypeEnum.Review, label: "Review and create" },
+] as const;
+
 const stepFieldRules: Record<
   ContentType,
   Record<string, (value: string, data: AccountFormData) => FieldValidation>
@@ -1106,7 +1113,9 @@ export const Horizontal = () => {
   };
 
   const handleNextStep = () =>
-    setActiveStep((prevStep) => Math.min(prevStep + 1, allSteps.length - 1));
+    setActiveStep((prevStep) =>
+      Math.min(prevStep + 1, WIZARD_STEPS.length - 1),
+    );
   const handlePreviousStep = () =>
     setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
 
@@ -1126,62 +1135,45 @@ export const Horizontal = () => {
     setStepValidation,
   };
 
-  const allSteps = [
-    {
-      id: ContentTypeEnum.AccountDetails,
-      label: "Account details",
-      content: (
-        <CreateAccountForm
-          {...commonProps}
-          stepId={ContentTypeEnum.AccountDetails}
-        />
-      ),
-    },
-    {
-      id: ContentTypeEnum.AccountType,
-      label: "Account type",
-      content: (
-        <AccountTypeForm
-          {...commonProps}
-          stepId={ContentTypeEnum.AccountType}
-        />
-      ),
-    },
-    {
-      id: ContentTypeEnum.AdditionalInfo,
-      label: "Additional info",
-      content: (
-        <AdditionalInfoForm
-          {...commonProps}
-          stepId={ContentTypeEnum.AdditionalInfo}
-          style={{ width: "50%" }}
-        />
-      ),
-    },
-    {
-      id: ContentTypeEnum.Review,
-      label: "Review and create",
-      content: (
-        <ReviewAccountForm
-          {...commonProps}
-          handleNext={handleSuccess}
-          stepId={ContentTypeEnum.Review}
-        />
-      ),
-    },
-  ];
+  const renderActiveContent = () => {
+    const id = WIZARD_STEPS[activeStep].id;
+    switch (id) {
+      case ContentTypeEnum.AccountDetails:
+        return <CreateAccountForm stepId={id} {...commonProps} />;
+      case ContentTypeEnum.AccountType:
+        return <AccountTypeForm stepId={id} {...commonProps} />;
+      case ContentTypeEnum.AdditionalInfo:
+        return (
+          <AdditionalInfoForm
+            stepId={id}
+            {...commonProps}
+            style={{ width: "50%" }}
+          />
+        );
+      case ContentTypeEnum.Review:
+        return (
+          <ReviewAccountForm
+            stepId={id}
+            {...commonProps}
+            handleNext={handleSuccess}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   const header = (
     <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
       <Text>
         Create a new account
         <Text color="primary" styleAs="h2">
-          {allSteps[activeStep].label}
+          {WIZARD_STEPS[activeStep].label}
         </Text>
       </Text>
 
       <Stepper orientation="horizontal" style={{ width: 340 }}>
-        {allSteps.map((step, index) => (
+        {WIZARD_STEPS.map((step, index) => (
           <Step
             key={step.id}
             label={step.label}
@@ -1210,7 +1202,7 @@ export const Horizontal = () => {
             overflowY: "hidden",
           }}
         >
-          {allSteps[activeStep].content}
+          {renderActiveContent()}
         </FlexItem>
       </StackLayout>
       <CancelWarningDialog
@@ -1245,7 +1237,9 @@ export const Vertical = () => {
   };
 
   const handleNextStep = () =>
-    setActiveStep((prevStep) => Math.min(prevStep + 1, allSteps.length - 1));
+    setActiveStep((prevStep) =>
+      Math.min(prevStep + 1, WIZARD_STEPS.length - 1),
+    );
   const handlePreviousStep = () =>
     setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
 
@@ -1266,56 +1260,39 @@ export const Vertical = () => {
     setStepValidation,
   };
 
-  const allSteps = [
-    {
-      id: ContentTypeEnum.AccountDetails,
-      label: "Account details",
-      content: (
-        <CreateAccountForm
-          {...commonProps}
-          stepId={ContentTypeEnum.AccountDetails}
-        />
-      ),
-    },
-    {
-      id: ContentTypeEnum.AccountType,
-      label: "Account type",
-      content: (
-        <AccountTypeForm
-          {...commonProps}
-          stepId={ContentTypeEnum.AccountType}
-        />
-      ),
-    },
-    {
-      id: ContentTypeEnum.AdditionalInfo,
-      label: "Additional info",
-      content: (
-        <AdditionalInfoForm
-          {...commonProps}
-          stepId={ContentTypeEnum.AdditionalInfo}
-          style={{ width: "50%" }}
-        />
-      ),
-    },
-    {
-      id: ContentTypeEnum.Review,
-      label: "Review and create",
-      content: (
-        <ReviewAccountForm
-          {...commonProps}
-          handleNext={handleSuccess}
-          stepId={ContentTypeEnum.Review}
-        />
-      ),
-    },
-  ];
+  const renderActiveContent = () => {
+    const id = WIZARD_STEPS[activeStep].id;
+    switch (id) {
+      case ContentTypeEnum.AccountDetails:
+        return <CreateAccountForm stepId={id} {...commonProps} />;
+      case ContentTypeEnum.AccountType:
+        return <AccountTypeForm stepId={id} {...commonProps} />;
+      case ContentTypeEnum.AdditionalInfo:
+        return (
+          <AdditionalInfoForm
+            stepId={id}
+            {...commonProps}
+            style={{ width: "50%" }}
+          />
+        );
+      case ContentTypeEnum.Review:
+        return (
+          <ReviewAccountForm
+            stepId={id}
+            {...commonProps}
+            handleNext={handleSuccess}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   const header = (
     <StackLayout gap={0}>
       <Text>Create a new account</Text>
       <Text color="primary" styleAs="h2">
-        {allSteps[activeStep].label}
+        {WIZARD_STEPS[activeStep].label}
       </Text>
     </StackLayout>
   );
@@ -1333,7 +1310,7 @@ export const Vertical = () => {
         <GridLayout columns={3} gap={3} style={{ height: 424 }}>
           <GridItem>
             <Stepper orientation="vertical">
-              {allSteps.map((step, index) => (
+              {WIZARD_STEPS.map((step, index) => (
                 <Step
                   key={step.id}
                   label={step.label}
@@ -1344,7 +1321,7 @@ export const Vertical = () => {
             </Stepper>
           </GridItem>
           <GridItem colSpan={2} padding={1} style={{ overflowY: "hidden" }}>
-            {allSteps[activeStep].content}
+            {renderActiveContent()}
           </GridItem>
         </GridLayout>
       </StackLayout>
@@ -1403,7 +1380,7 @@ export const Modal = () => {
   const backToForm = () => setWizardState("form");
 
   const validateCurrentStep = (): boolean => {
-    const currentStepId = allSteps[activeStep].id as ContentType;
+    const currentStepId = WIZARD_STEPS[activeStep].id as ContentType;
     const { fieldValidation: fv, stepStatus } = validateStep(
       currentStepId,
       formData,
@@ -1417,12 +1394,14 @@ export const Modal = () => {
   };
 
   const goNext = () => {
-    setActiveStep((prevStep) => Math.min(prevStep + 1, allSteps.length - 1));
+    setActiveStep((prevStep) =>
+      Math.min(prevStep + 1, WIZARD_STEPS.length - 1),
+    );
     setFieldValidation({});
   };
 
   const handleNextClick = () => {
-    const isLast = activeStep === allSteps.length - 1;
+    const isLast = activeStep === WIZARD_STEPS.length - 1;
     if (!validateCurrentStep()) return;
     if (isLast) {
       createAccount();
@@ -1435,7 +1414,7 @@ export const Modal = () => {
     if (activeStep === 0) return;
     const prev = activeStep - 1;
     setActiveStep(prev);
-    const prevStepId = allSteps[prev].id as ContentType;
+    const prevStepId = WIZARD_STEPS[prev].id as ContentType;
     const { fieldValidation: fv } = validateStep(prevStepId, formData);
     setFieldValidation(fv);
   };
@@ -1443,7 +1422,7 @@ export const Modal = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    const currentStepId = allSteps[activeStep].id as ContentType;
+    const currentStepId = WIZARD_STEPS[activeStep].id as ContentType;
     if (stepFieldRules[currentStepId][name]) {
       const { fieldValidation: fv } = validateStep(currentStepId, {
         ...formData,
@@ -1455,7 +1434,7 @@ export const Modal = () => {
 
   const handleSelectChange = (value: string, name: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    const currentStepId = allSteps[activeStep].id as ContentType;
+    const currentStepId = WIZARD_STEPS[activeStep].id as ContentType;
     if (stepFieldRules[currentStepId][name]) {
       const { fieldValidation: fv } = validateStep(currentStepId, {
         ...formData,
@@ -1484,32 +1463,25 @@ export const Modal = () => {
     fieldValidation,
   };
 
-  const allSteps = [
-    {
-      id: ContentTypeEnum.AccountDetails,
-      label: "Account details",
-      content: <CreateAccountContent {...commonProps} />,
-    },
-    {
-      id: ContentTypeEnum.AccountType,
-      label: "Account type",
-      content: <AccountTypeContent {...commonProps} />,
-    },
-    {
-      id: ContentTypeEnum.AdditionalInfo,
-      label: "Additional info",
-      content: (
-        <AdditionalInfoContent {...commonProps} style={{ width: "50%" }} />
-      ),
-    },
-    {
-      id: ContentTypeEnum.Review,
-      label: "Review and create",
-      content: <ReviewAccountContent formData={formData} />,
-    },
-  ];
-  const content = allSteps[activeStep].content;
-  const stepId = allSteps[activeStep].id;
+  const renderActiveContent = () => {
+    const id = WIZARD_STEPS[activeStep].id;
+    switch (id) {
+      case ContentTypeEnum.AccountDetails:
+        return <CreateAccountContent {...commonProps} />;
+      case ContentTypeEnum.AccountType:
+        return <AccountTypeContent {...commonProps} />;
+      case ContentTypeEnum.AdditionalInfo:
+        return (
+          <AdditionalInfoContent {...commonProps} style={{ width: "50%" }} />
+        );
+      case ContentTypeEnum.Review:
+        return <ReviewAccountContent formData={formData} />;
+      default:
+        return null;
+    }
+  };
+
+  const stepId = WIZARD_STEPS[activeStep].id;
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -1532,7 +1504,7 @@ export const Modal = () => {
 
   const nextBtn = (
     <Button sentiment="accented" onClick={handleNextClick}>
-      {activeStep === allSteps.length - 1 ? "Create" : "Next"}
+      {activeStep === WIZARD_STEPS.length - 1 ? "Create" : "Next"}
     </Button>
   );
   const prevBtn = activeStep > 0 && (
@@ -1632,11 +1604,11 @@ export const Modal = () => {
               return (
                 <>
                   <DialogHeader
-                    header={allSteps[activeStep].label}
+                    header={WIZARD_STEPS[activeStep].label}
                     preheader="Create a new account"
                     actions={
                       <Stepper orientation="horizontal" style={{ width: 300 }}>
-                        {allSteps.map((step, index) => (
+                        {WIZARD_STEPS.map((step, index) => (
                           <Step
                             key={step.id}
                             label={step.label}
@@ -1655,7 +1627,7 @@ export const Modal = () => {
                         handleNextClick();
                       }}
                     >
-                      {content}
+                      {renderActiveContent()}
                     </FlowLayout>
                   </DialogContent>
                   <DialogActions>
