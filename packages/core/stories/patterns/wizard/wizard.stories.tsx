@@ -86,7 +86,6 @@ interface FormContentProps {
   fieldValidation: {
     [field: string]: { status?: ValidationStatus; message?: string };
   };
-  style?: React.CSSProperties;
   handleSelectChange?: (value: string, name: string) => void;
 }
 
@@ -290,14 +289,13 @@ const CancelWarningContent = () => (
 
 const AdditionalInfoContent = ({
   formData,
-  style,
   handleInputChange,
   handleInputBlur,
   handleSelectChange,
   fieldValidation,
 }: FormContentProps) => {
   return (
-    <FlowLayout style={style}>
+    <FlowLayout>
       <FormField
         necessity="optional"
         validationStatus={fieldValidation.initialDeposit?.status}
@@ -366,8 +364,7 @@ const AdditionalInfoForm = ({
   setFormData,
   formData,
   setStepValidation,
-  style,
-}: FormProps & { style?: React.CSSProperties }) => {
+}: FormProps) => {
   const [fieldValidation, setFieldValidation] = useState<
     Record<string, FieldValidation>
   >({});
@@ -407,14 +404,13 @@ const AdditionalInfoForm = ({
       onSubmit={handleFormSubmit}
       style={{ height: "100%" }}
     >
-      <FlexItem grow={1}>
+      <FlexItem grow={1} style={{ width: "50%" }}>
         <AdditionalInfoContent
           formData={formData}
           handleInputChange={handleInputChange}
           handleInputBlur={handleInputBlur}
           handleSelectChange={handleSelectChange}
           fieldValidation={fieldValidation}
-          style={style}
         />
       </FlexItem>
       <FlexLayout gap={1} justify="end">
@@ -454,9 +450,6 @@ const AccountTypeContent = ({
       <RadioButtonGroup
         direction="vertical"
         onChange={handleInputChange}
-        onBlur={(e) =>
-          handleInputBlur(e as unknown as React.FocusEvent<HTMLInputElement>)
-        }
         value={formData.accountType}
       >
         <RadioButton
@@ -470,6 +463,7 @@ const AccountTypeContent = ({
           }
           name="accountType"
           value="checking"
+          onBlur={handleInputBlur}
         />
         <RadioButton
           label={
@@ -482,6 +476,7 @@ const AccountTypeContent = ({
           }
           name="accountType"
           value="savings"
+          onBlur={handleInputBlur}
         />
         <RadioButton
           label={
@@ -494,6 +489,7 @@ const AccountTypeContent = ({
           }
           name="accountType"
           value="moneyMarket"
+          onBlur={handleInputBlur}
         />
         <RadioButton
           label={
@@ -506,6 +502,7 @@ const AccountTypeContent = ({
           }
           name="accountType"
           value="cd"
+          onBlur={handleInputBlur}
         />
         <RadioButton
           label={
@@ -518,6 +515,7 @@ const AccountTypeContent = ({
           }
           name="accountType"
           value="business"
+          onBlur={handleInputBlur}
         />
         <RadioButton
           label={
@@ -530,6 +528,7 @@ const AccountTypeContent = ({
           }
           name="accountType"
           value="trust"
+          onBlur={handleInputBlur}
         />
       </RadioButtonGroup>
       {fieldValidation.accountType?.status && (
@@ -1143,13 +1142,7 @@ export const Horizontal = () => {
       case ContentTypeEnum.AccountType:
         return <AccountTypeForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoForm
-            stepId={id}
-            {...commonProps}
-            style={{ width: "50%" }}
-          />
-        );
+        return <AdditionalInfoForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.Review:
         return (
           <ReviewAccountForm
@@ -1212,7 +1205,10 @@ export const Horizontal = () => {
       />
       <AccountCreatedSuccessDialog
         open={successOpen}
-        onOpenChange={setSuccessOpen}
+        onOpenChange={(open) => {
+          setSuccessOpen(open);
+          if (!open) resetWizard();
+        }}
         onConfirm={resetWizard}
       />
     </>
@@ -1268,13 +1264,7 @@ export const Vertical = () => {
       case ContentTypeEnum.AccountType:
         return <AccountTypeForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoForm
-            stepId={id}
-            {...commonProps}
-            style={{ width: "50%" }}
-          />
-        );
+        return <AdditionalInfoForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.Review:
         return (
           <ReviewAccountForm
@@ -1332,7 +1322,10 @@ export const Vertical = () => {
       />
       <AccountCreatedSuccessDialog
         open={successOpen}
-        onOpenChange={setSuccessOpen}
+        onOpenChange={(open) => {
+          setSuccessOpen(open);
+          if (!open) resetWizard();
+        }}
         onConfirm={resetWizard}
       />
     </>
@@ -1471,9 +1464,7 @@ export const Modal = () => {
       case ContentTypeEnum.AccountType:
         return <AccountTypeContent {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoContent {...commonProps} style={{ width: "50%" }} />
-        );
+        return <AdditionalInfoContent {...commonProps} />;
       case ContentTypeEnum.Review:
         return <ReviewAccountContent formData={formData} />;
       default:
