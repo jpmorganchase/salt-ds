@@ -96,6 +96,43 @@ const WIZARD_STEPS = [
   { id: ContentTypeEnum.Review, label: "Review and create" },
 ] as const;
 
+const ACCOUNT_TYPE_OPTIONS: {
+  value: string;
+  title: string;
+  subtitle: string;
+}[] = [
+  {
+    value: "checking",
+    title: "Checking Account",
+    subtitle: "Everyday banking needs",
+  },
+  {
+    value: "savings",
+    title: "Savings Account",
+    subtitle: "Save and earn interest",
+  },
+  {
+    value: "moneyMarket",
+    title: "Money Market Account",
+    subtitle: "Higher interest, flexible access",
+  },
+  {
+    value: "cd",
+    title: "Certificate of Deposit (CD)",
+    subtitle: "Fixed term, higher rates",
+  },
+  {
+    value: "business",
+    title: "Business Account",
+    subtitle: "For business transactions",
+  },
+  {
+    value: "trust",
+    title: "Trust Account",
+    subtitle: "Estate and trust management",
+  },
+];
+
 const stepFieldRules: Record<
   ContentType,
   Record<string, (value: string, data: AccountFormData) => FieldValidation>
@@ -377,18 +414,12 @@ const AdditionalInfoForm = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const handleInputBlur = () => {
-    const { fieldValidation: fv } = validateStep(
-      stepId,
-      formData as AccountFormData,
-    );
+    const { fieldValidation: fv } = validateStep(stepId, formData);
     setFieldValidation(fv);
   };
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const { fieldValidation: fv, stepStatus } = validateStep(
-      stepId,
-      formData as AccountFormData,
-    );
+    const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
     setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
@@ -452,84 +483,22 @@ const AccountTypeContent = ({
         onChange={handleInputChange}
         value={formData.accountType}
       >
-        <RadioButton
-          label={
-            <StackLayout align="start" gap={0.5}>
-              <Text>Checking Account</Text>
-              <Text color="secondary" styleAs="label">
-                Everyday banking needs
-              </Text>
-            </StackLayout>
-          }
-          name="accountType"
-          value="checking"
-          onBlur={handleInputBlur}
-        />
-        <RadioButton
-          label={
-            <StackLayout align="start" gap={0.5}>
-              <Text>Savings Account</Text>
-              <Text color="secondary" styleAs="label">
-                Save and earn interest
-              </Text>
-            </StackLayout>
-          }
-          name="accountType"
-          value="savings"
-          onBlur={handleInputBlur}
-        />
-        <RadioButton
-          label={
-            <StackLayout align="start" gap={0.5}>
-              <Text>Money Market Account</Text>
-              <Text color="secondary" styleAs="label">
-                Higher interest, flexible access
-              </Text>
-            </StackLayout>
-          }
-          name="accountType"
-          value="moneyMarket"
-          onBlur={handleInputBlur}
-        />
-        <RadioButton
-          label={
-            <StackLayout align="start" gap={0.5}>
-              <Text>Certificate of Deposit (CD)</Text>
-              <Text color="secondary" styleAs="label">
-                Fixed term, higher rates
-              </Text>
-            </StackLayout>
-          }
-          name="accountType"
-          value="cd"
-          onBlur={handleInputBlur}
-        />
-        <RadioButton
-          label={
-            <StackLayout align="start" gap={0.5}>
-              <Text>Business Account</Text>
-              <Text color="secondary" styleAs="label">
-                For business transactions
-              </Text>
-            </StackLayout>
-          }
-          name="accountType"
-          value="business"
-          onBlur={handleInputBlur}
-        />
-        <RadioButton
-          label={
-            <StackLayout align="start" gap={0.5}>
-              <Text>Trust Account</Text>
-              <Text color="secondary" styleAs="label">
-                Estate and trust management
-              </Text>
-            </StackLayout>
-          }
-          name="accountType"
-          value="trust"
-          onBlur={handleInputBlur}
-        />
+        {ACCOUNT_TYPE_OPTIONS.map(({ value, title, subtitle }) => (
+          <RadioButton
+            key={value}
+            label={
+              <StackLayout align="start" gap={0.5}>
+                <Text>{title}</Text>
+                <Text color="secondary" styleAs="label">
+                  {subtitle}
+                </Text>
+              </StackLayout>
+            }
+            name="accountType"
+            value={value}
+            onBlur={handleInputBlur}
+          />
+        ))}
       </RadioButtonGroup>
       {fieldValidation.accountType?.status && (
         <FormFieldHelperText>
@@ -553,10 +522,7 @@ const AccountTypeForm = ({
   >({});
 
   const handleInputBlur = () => {
-    const { fieldValidation: fv } = validateStep(
-      stepId,
-      formData as AccountFormData,
-    );
+    const { fieldValidation: fv } = validateStep(stepId, formData);
     setFieldValidation(fv);
   };
 
@@ -567,7 +533,7 @@ const AccountTypeForm = ({
     const { fieldValidation: fv, stepStatus } = validateStep(stepId, {
       ...formData,
       accountType: value,
-    } as AccountFormData);
+    });
     setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
@@ -577,10 +543,7 @@ const AccountTypeForm = ({
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const { fieldValidation: fv, stepStatus } = validateStep(
-      stepId,
-      formData as AccountFormData,
-    );
+    const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
     setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
@@ -629,7 +592,7 @@ const AccountTypeForm = ({
   );
 };
 
-const CreateAccountContent = ({
+const AccountDetailsContent = ({
   formData,
   fieldValidation,
   handleInputChange,
@@ -759,7 +722,7 @@ const CreateAccountContent = ({
     </GridLayout>
   );
 };
-const CreateAccountForm = ({
+const AccountDetailsForm = ({
   stepId,
   handleCancel,
   handleNext,
@@ -778,10 +741,7 @@ const CreateAccountForm = ({
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     if (stepFieldRules[stepId][name]) {
-      const { fieldValidation: fv } = validateStep(
-        stepId,
-        formData as AccountFormData,
-      );
+      const { fieldValidation: fv } = validateStep(stepId, formData);
       setFieldValidation(fv);
     }
   };
@@ -791,10 +751,7 @@ const CreateAccountForm = ({
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const { fieldValidation: fv, stepStatus } = validateStep(
-      stepId,
-      formData as AccountFormData,
-    );
+    const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
     setFieldValidation(fv);
     setStepValidation((prev) => ({
       ...prev,
@@ -812,7 +769,7 @@ const CreateAccountForm = ({
       onSubmit={handleFormSubmit}
     >
       <FlexItem grow={1}>
-        <CreateAccountContent
+        <AccountDetailsContent
           formData={formData}
           handleInputBlur={handleInputBlur}
           fieldValidation={fieldValidation}
@@ -876,7 +833,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
             readOnly
           />
         </FormField>
-        <FormField necessity="optional">
+        <FormField>
           <FormFieldLabel>Address 2</FormFieldLabel>
           <Input
             inputProps={{
@@ -934,7 +891,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
             value={formData.accountType}
             readOnly
           >
-            <RadioButton
+            {/* <RadioButton
               label={
                 <StackLayout align="start" gap={0.5}>
                   <Text>Checking Account</Text>
@@ -945,67 +902,23 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
               }
               name="accountType"
               value="checking"
-            />
-            <RadioButton
-              label={
-                <StackLayout align="start" gap={0.5}>
-                  <Text>Savings Account</Text>
-                  <Text color="secondary" styleAs="label">
-                    Save and earn interest
-                  </Text>
-                </StackLayout>
-              }
-              name="accountType"
-              value="savings"
-            />
-            <RadioButton
-              label={
-                <StackLayout align="start" gap={0.5}>
-                  <Text>Money Market Account</Text>
-                  <Text color="secondary" styleAs="label">
-                    Higher interest, flexible access
-                  </Text>
-                </StackLayout>
-              }
-              name="accountType"
-              value="moneyMarket"
-            />
-            <RadioButton
-              label={
-                <StackLayout align="start" gap={0.5}>
-                  <Text>Certificate of Deposit (CD)</Text>
-                  <Text color="secondary" styleAs="label">
-                    Fixed term, higher rates
-                  </Text>
-                </StackLayout>
-              }
-              name="accountType"
-              value="cd"
-            />
-            <RadioButton
-              label={
-                <StackLayout align="start" gap={0.5}>
-                  <Text>Business Account</Text>
-                  <Text color="secondary" styleAs="label">
-                    For business transactions
-                  </Text>
-                </StackLayout>
-              }
-              name="accountType"
-              value="business"
-            />
-            <RadioButton
-              label={
-                <StackLayout align="start" gap={0.5}>
-                  <Text>Trust Account</Text>
-                  <Text color="secondary" styleAs="label">
-                    Estate and trust management
-                  </Text>
-                </StackLayout>
-              }
-              name="accountType"
-              value="trust"
-            />
+            /> */}
+
+            {ACCOUNT_TYPE_OPTIONS.map(({ value, title, subtitle }) => (
+              <RadioButton
+                key={value}
+                label={
+                  <StackLayout align="start" gap={0.5}>
+                    <Text>{title}</Text>
+                    <Text color="secondary" styleAs="label">
+                      {subtitle}
+                    </Text>
+                  </StackLayout>
+                }
+                name="accountType"
+                value={value}
+              />
+            ))}
           </RadioButtonGroup>
         </FormField>
 
@@ -1013,6 +926,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
           <FormField necessity="optional">
             <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
             <Input
+              inputMode="decimal"
               placeholder="0.00"
               startAdornment={<Text>$</Text>}
               inputProps={{
@@ -1138,7 +1052,7 @@ export const Horizontal = () => {
     const id = WIZARD_STEPS[activeStep].id;
     switch (id) {
       case ContentTypeEnum.AccountDetails:
-        return <CreateAccountForm stepId={id} {...commonProps} />;
+        return <AccountDetailsForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.AccountType:
         return <AccountTypeForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
@@ -1260,7 +1174,7 @@ export const Vertical = () => {
     const id = WIZARD_STEPS[activeStep].id;
     switch (id) {
       case ContentTypeEnum.AccountDetails:
-        return <CreateAccountForm stepId={id} {...commonProps} />;
+        return <AccountDetailsForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.AccountType:
         return <AccountTypeForm stepId={id} {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
@@ -1371,9 +1285,10 @@ export const Modal = () => {
   const createAccount = () => setWizardState("success");
   const cancelWarning = () => setWizardState("cancel-warning");
   const backToForm = () => setWizardState("form");
+  const stepId = WIZARD_STEPS[activeStep].id;
 
   const validateCurrentStep = (): boolean => {
-    const currentStepId = WIZARD_STEPS[activeStep].id as ContentType;
+    const currentStepId = WIZARD_STEPS[activeStep].id;
     const { fieldValidation: fv, stepStatus } = validateStep(
       currentStepId,
       formData,
@@ -1407,7 +1322,7 @@ export const Modal = () => {
     if (activeStep === 0) return;
     const prev = activeStep - 1;
     setActiveStep(prev);
-    const prevStepId = WIZARD_STEPS[prev].id as ContentType;
+    const prevStepId = WIZARD_STEPS[prev].id;
     const { fieldValidation: fv } = validateStep(prevStepId, formData);
     setFieldValidation(fv);
   };
@@ -1415,7 +1330,7 @@ export const Modal = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    const currentStepId = WIZARD_STEPS[activeStep].id as ContentType;
+    const currentStepId = WIZARD_STEPS[activeStep].id;
     if (stepFieldRules[currentStepId][name]) {
       const { fieldValidation: fv } = validateStep(currentStepId, {
         ...formData,
@@ -1427,7 +1342,7 @@ export const Modal = () => {
 
   const handleSelectChange = (value: string, name: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    const currentStepId = WIZARD_STEPS[activeStep].id as ContentType;
+    const currentStepId = WIZARD_STEPS[activeStep].id;
     if (stepFieldRules[currentStepId][name]) {
       const { fieldValidation: fv } = validateStep(currentStepId, {
         ...formData,
@@ -1440,10 +1355,7 @@ export const Modal = () => {
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     if (stepFieldRules[stepId][name]) {
-      const { fieldValidation: fv } = validateStep(
-        stepId,
-        formData as AccountFormData,
-      );
+      const { fieldValidation: fv } = validateStep(stepId, formData);
       setFieldValidation(fv);
     }
   };
@@ -1460,7 +1372,7 @@ export const Modal = () => {
     const id = WIZARD_STEPS[activeStep].id;
     switch (id) {
       case ContentTypeEnum.AccountDetails:
-        return <CreateAccountContent {...commonProps} />;
+        return <AccountDetailsContent {...commonProps} />;
       case ContentTypeEnum.AccountType:
         return <AccountTypeContent {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
@@ -1471,8 +1383,6 @@ export const Modal = () => {
         return null;
     }
   };
-
-  const stepId = WIZARD_STEPS[activeStep].id;
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
