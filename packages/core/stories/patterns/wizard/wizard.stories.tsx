@@ -527,7 +527,6 @@ const AccountTypeForm = ({
   };
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    // update and validate on change
     const { value } = event.target;
     setFormData((prev) => ({ ...prev, accountType: value }));
     const { fieldValidation: fv, stepStatus } = validateStep(stepId, {
@@ -891,19 +890,6 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
             value={formData.accountType}
             readOnly
           >
-            {/* <RadioButton
-              label={
-                <StackLayout align="start" gap={0.5}>
-                  <Text>Checking Account</Text>
-                  <Text color="secondary" styleAs="label">
-                    Everyday banking needs
-                  </Text>
-                </StackLayout>
-              }
-              name="accountType"
-              value="checking"
-            /> */}
-
             {ACCOUNT_TYPE_OPTIONS.map(({ value, title, subtitle }) => (
               <RadioButton
                 key={value}
