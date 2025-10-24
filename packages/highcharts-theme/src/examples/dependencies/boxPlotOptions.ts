@@ -36,11 +36,6 @@ export const boxPlotOptions: Options = {
       '<span class="label">Minimum: </span><span class="value">$' +
       "{point.low}K</span>",
   },
-  plotOptions: {
-    boxplot: {
-      pointWidth: 40,
-    },
-  },
   series: [
     {
       name: "North America",

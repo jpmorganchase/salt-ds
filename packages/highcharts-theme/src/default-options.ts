@@ -77,6 +77,9 @@ export const getDefaultOptions = (
           radius: 4,
         },
       },
+      boxplot: {
+        pointWidth: 40,
+      },
     },
   };
 
