@@ -281,7 +281,6 @@
 }
 
 .highcharts-theme-salt .highcharts-point .highcharts-boxplot-box {
-  /* is there a token? */
   stroke-width: 2px;
 }
 
