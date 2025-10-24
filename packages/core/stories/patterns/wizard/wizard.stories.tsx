@@ -1373,7 +1373,11 @@ export const Modal = () => {
       case ContentTypeEnum.AccountType:
         return <AccountTypeContent {...commonProps} />;
       case ContentTypeEnum.AdditionalInfo:
-        return <AdditionalInfoContent {...commonProps} />;
+        return (
+          <div style={{ width: "50%" }}>
+            <AdditionalInfoContent {...commonProps} />
+          </div>
+        );
       case ContentTypeEnum.Review:
         return <ReviewAccountContent formData={formData} />;
       default:
