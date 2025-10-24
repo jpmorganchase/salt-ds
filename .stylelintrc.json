@@ -65,6 +65,17 @@
           }
         ]
       }
+    },
+    {
+      "files": ["**/highcharts-theme/css/**/*.css"],
+      "rules": {
+        "salt/correct-theme-token-usage": [
+          false,
+          {
+            "severity": "warning"
+          }
+        ]
+      }
     }
   ]
 }
