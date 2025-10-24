@@ -965,39 +965,50 @@ const ReviewAccountForm = ({
   handlePrevious,
   handleNext,
   formData,
-}: FormProps) => (
-  <StackLayout gap={3} style={{ height: "100%" }}>
-    <FlexItem grow={1} style={{ overflowY: "auto" }}>
-      <ReviewAccountContent formData={formData} />
-    </FlexItem>
-    <FlexLayout gap={1} justify="end">
-      <Button
-        sentiment="accented"
-        appearance="transparent"
-        onClick={handleCancel}
-      >
-        Cancel
-      </Button>
+}: FormProps) => {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleNext?.();
+  };
+  return (
+    <StackLayout
+      gap={3}
+      style={{ height: "100%" }}
+      as="form"
+      onSubmit={handleSubmit}
+    >
+      <FlexItem grow={1} style={{ overflowY: "auto" }}>
+        <ReviewAccountContent formData={formData} />
+      </FlexItem>
+      <FlexLayout gap={1} justify="end">
+        <Button
+          sentiment="accented"
+          appearance="transparent"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
 
-      <Button
-        sentiment="accented"
-        appearance="bordered"
-        onClick={handlePrevious}
-      >
-        Previous
-      </Button>
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
 
-      <Button sentiment="accented" onClick={handleNext}>
-        Create
-      </Button>
-    </FlexLayout>
-  </StackLayout>
-);
+        <Button sentiment="accented" type="submit">
+          Create
+        </Button>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
 
 export const Horizontal = () => {
   const [formData, setFormData] = useState<AccountFormData>(initialFormData);
   const [stepValidation, setStepValidation] = useState<{
-    [stepId: string]: { status?: "error" | "warning" };
+    [stepId: string]: { status?: ValidationStatus };
   }>({});
   const [activeStep, setActiveStep] = useState(0);
   const [cancelOpen, setCancelOpen] = useState(false);
