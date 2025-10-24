@@ -81,13 +81,13 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
 
+      if (menuOpen) return;
+
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
         Home: getFirst,
         End: getLast,
-        ArrowUp: menuOpen ? getPrevious : undefined,
-        ArrowDown: menuOpen ? getNext : undefined,
       };
 
       const action = actionMap[event.key as keyof typeof actionMap];
@@ -98,10 +98,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.parentElement?.scrollIntoView({
-            block: "nearest",
-            inline: "nearest",
-          });
+          // Scrolling is handled by TabTrigger.
           nextItem.element?.focus({ preventScroll: true });
         }
       }
@@ -135,7 +132,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         <TabOverflowList
           isMeasuring={isMeasuring}
           buttonRef={overflowButtonRef}
-          tabstripRef={tabstripRef}
           open={menuOpen}
           setOpen={setMenuOpen}
         >
