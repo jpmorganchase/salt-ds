@@ -17,7 +17,6 @@
 
   --salt-palette-interact-cta-background: var(--salt-color-blue-600);
   --salt-palette-interact-cta-background-active: var(--salt-color-blue-700);
-  --salt-palette-interact-cta-background-disabled: var(--salt-color-blue-600-40a);
   --salt-palette-interact-cta-background-hover: var(--salt-color-blue-500);
   --salt-palette-interact-cta-foreground: var(--salt-color-white);
   --salt-palette-interact-cta-foreground-disabled: var(--salt-color-white-40a);
@@ -25,7 +24,6 @@
   --salt-palette-interact-cta-border-active: var(--salt-color-blue-700);
   --salt-palette-interact-primary-background: var(--salt-color-gray-60);
   --salt-palette-interact-primary-background-active: var(--salt-color-gray-200);
-  --salt-palette-interact-primary-background-disabled: var(--salt-color-gray-60-40a);
   --salt-palette-interact-primary-background-hover: var(--salt-color-gray-40);
   --salt-palette-interact-primary-foreground: var(--salt-color-gray-900);
   --salt-palette-interact-primary-foreground-active: var(--salt-color-white);
@@ -58,7 +56,6 @@
 
   --salt-palette-interact-cta-background: var(--salt-color-blue-600);
   --salt-palette-interact-cta-background-active: var(--salt-color-blue-700);
-  --salt-palette-interact-cta-background-disabled: var(--salt-color-blue-600-40a);
   --salt-palette-interact-cta-background-hover: var(--salt-color-blue-500);
   --salt-palette-interact-cta-foreground: var(--salt-color-white);
   --salt-palette-interact-cta-foreground-disabled: var(--salt-color-white-40a);
@@ -66,7 +63,6 @@
   --salt-palette-interact-cta-border-active: var(--salt-color-blue-700);
   --salt-palette-interact-primary-background: var(--salt-color-gray-300);
   --salt-palette-interact-primary-background-active: var(--salt-color-gray-70);
-  --salt-palette-interact-primary-background-disabled: var(--salt-color-gray-300-40a);
   --salt-palette-interact-primary-background-hover: var(--salt-color-gray-200);
   --salt-palette-interact-primary-foreground: var(--salt-color-white);
   --salt-palette-interact-primary-foreground-active: var(--salt-color-gray-900);

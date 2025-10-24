@@ -20,7 +20,7 @@
   outline: none;
 }
 
-.carouselSlide:focus-visible::after {
+.carouselSlide.numberedSlide:focus-visible::after {
   content: "";
   position: absolute;
   top: 0;

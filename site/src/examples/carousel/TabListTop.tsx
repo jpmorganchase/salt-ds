@@ -7,6 +7,7 @@ import {
   CarouselSlides,
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
@@ -33,7 +34,7 @@ export const TabListTop = (): ReactElement => {
               aria-labelledby={`${tabId}-title`}
               role={"tabpanel"}
               aria-roledescription="slide"
-              className={styles.carouselSlide}
+              className={clsx(styles.carouselSlide, styles.numberedSlide)}
               key={tabId}
             >
               <Display1

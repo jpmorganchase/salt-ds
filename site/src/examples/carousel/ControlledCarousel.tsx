@@ -1,12 +1,4 @@
-import {
-  Button,
-  FlexLayout,
-  H2,
-  H3,
-  StackLayout,
-  Text,
-  useId,
-} from "@salt-ds/core";
+import { Button, FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -47,10 +39,10 @@ export const ControlledCarousel = (): ReactElement => {
   }, [emblaApi]);
 
   return (
-    <StackLayout>
-      <FlexLayout justify="center" align="center" direction="row">
-        <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
-      </FlexLayout>
+    <>
+      <Button style={{ width: "150px" }} onClick={() => emblaApi?.scrollTo(2)}>
+        Scroll to slide 3
+      </Button>
       <Carousel
         aria-label="Controlled carousel example"
         className={styles.carousel}
@@ -89,6 +81,6 @@ export const ControlledCarousel = (): ReactElement => {
           <CarouselProgressLabel />
         </FlexLayout>
       </Carousel>
-    </StackLayout>
+    </>
   );
 };
