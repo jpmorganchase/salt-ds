@@ -277,9 +277,14 @@
 
 .highcharts-theme-salt .highcharts-boxplot-box {
   fill: inherit;
-  fill-opacity: 0.1;
+  fill-opacity: 0.75;
 }
 
 .highcharts-theme-salt .highcharts-point .highcharts-boxplot-box {
-  stroke-width: var(--salt-size-border-strong);
+  /* is there a token? */
+  stroke-width: 2px;
+}
+
+.highcharts-theme-salt .highcharts-boxplot-median {
+  stroke: var(--salt-content-primary-foreground);
 }

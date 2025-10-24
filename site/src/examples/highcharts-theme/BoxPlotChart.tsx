@@ -17,14 +17,14 @@ const boxPlotChartOptions: Options = {
     type: "boxplot",
   },
   title: {
-    text: "Quarterly Sales Distribution",
+    text: "Quarterly sales distribution by region",
   },
   accessibility: {
     description:
-      "Box plot chart showing quarterly sales distribution. Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.",
+      "Box plot chart showing quarterly sales distribution across four regions. Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.",
   },
   xAxis: {
-    categories: ["Q1", "Q2", "Q3", "Q4"],
+    categories: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
     title: {
       text: "Quarter",
     },
@@ -35,7 +35,7 @@ const boxPlotChartOptions: Options = {
     },
   },
   tooltip: {
-    headerFormat: '<span class="title">{point.key}</span><br/>',
+    headerFormat: '<span class="title">{series.name} - {point.key}</span><br/>',
     pointFormat:
       '<span class="label">Maximum: </span><span class="value">$' +
       "{point.high}K</span><br/>" +
@@ -55,13 +55,51 @@ const boxPlotChartOptions: Options = {
   },
   series: [
     {
-      name: "Sales",
+      name: "North America",
       type: "boxplot",
       data: [
         [45, 62, 75, 88, 105], // Q1: [min, Q1, median, Q3, max]
         [52, 68, 82, 95, 112], // Q2
         [48, 71, 85, 98, 118], // Q3
         [58, 78, 92, 108, 125], // Q4
+        [62, 82, 98, 115, 135], // Q5
+        [55, 75, 90, 105, 128], // Q6
+      ],
+    },
+    {
+      name: "Europe",
+      type: "boxplot",
+      data: [
+        [38, 55, 68, 82, 98], // Q1
+        [42, 60, 75, 88, 105], // Q2
+        [45, 65, 80, 95, 112], // Q3
+        [50, 70, 85, 100, 120], // Q4
+        [55, 75, 92, 108, 130], // Q5
+        [48, 68, 85, 102, 125], // Q6
+      ],
+    },
+    {
+      name: "Asia Pacific",
+      type: "boxplot",
+      data: [
+        [35, 50, 62, 75, 92], // Q1
+        [40, 58, 72, 85, 102], // Q2
+        [48, 68, 85, 100, 120], // Q3
+        [55, 75, 92, 110, 132], // Q4
+        [60, 82, 100, 118, 145], // Q5
+        [58, 78, 95, 112, 138], // Q6
+      ],
+    },
+    {
+      name: "Latin America",
+      type: "boxplot",
+      data: [
+        [28, 42, 55, 68, 85], // Q1
+        [32, 48, 62, 75, 92], // Q2
+        [35, 52, 68, 82, 100], // Q3
+        [40, 58, 75, 90, 110], // Q4
+        [45, 65, 82, 98, 120], // Q5
+        [42, 60, 78, 95, 115], // Q6
       ],
     },
   ],
