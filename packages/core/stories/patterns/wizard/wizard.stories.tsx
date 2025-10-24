@@ -27,39 +27,19 @@ import {
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import { type ChangeEventHandler, type ElementType, useState } from "react";
+import {
+  type AccountFormData,
+  type ContentType,
+  ContentTypeEnum,
+  type FieldValidation,
+  stepFieldRules,
+  useWizard,
+  validateStep,
+  type ValidationStatus,
+} from "./useWizard";
 export default {
   title: "Patterns/Wizard",
 } as Meta;
-
-enum ContentTypeEnum {
-  AccountDetails = "account-details",
-  AccountType = "account-type",
-  AdditionalInfo = "additional-info",
-  Review = "review",
-}
-type ContentType = (typeof ContentTypeEnum)[keyof typeof ContentTypeEnum];
-type ValidationStatus = "error" | "warning" | undefined;
-
-interface FieldValidation {
-  status?: ValidationStatus;
-  message?: string;
-}
-
-interface AccountFormData {
-  fullName: string;
-  phoneNumber: string;
-  emailAddress: string;
-  address1: string;
-  address2: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  accountType: string;
-  initialDeposit: string;
-  beneficiaryName: string;
-  sourceOfFunds: string;
-  paperlessStatements: string;
-}
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -74,7 +54,7 @@ interface FormProps {
   handleCancel: () => void;
   handleNext?: () => void;
   handlePrevious?: () => void;
-  setStepValidation: React.Dispatch<
+  setStepValidation?: React.Dispatch<
     React.SetStateAction<{ [stepId: string]: { status?: "error" | "warning" } }>
   >;
 }
@@ -133,93 +113,10 @@ const ACCOUNT_TYPE_OPTIONS: {
   },
 ];
 
-const stepFieldRules: Record<
-  ContentType,
-  Record<string, (value: string, data: AccountFormData) => FieldValidation>
-> = {
-  [ContentTypeEnum.AccountDetails]: {
-    fullName: (v) =>
-      !v.trim() ? { status: "error", message: "Full name is required." } : {},
-    phoneNumber: (v) =>
-      !v.trim()
-        ? { status: "error", message: "Phone number is required." }
-        : {},
-    emailAddress: (v) =>
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-        ? { status: "warning", message: "Email format looks incorrect." }
-        : {},
-    address1: (v) =>
-      !v.trim() ? { status: "error", message: "Address is required." } : {},
-  },
-  [ContentTypeEnum.AccountType]: {
-    accountType: (v) =>
-      !v.trim()
-        ? { status: "error", message: "Account type is required." }
-        : {},
-  },
-  [ContentTypeEnum.AdditionalInfo]: {
-    initialDeposit: (v) =>
-      v && Number(v) < 100
-        ? {
-            status: "warning",
-            message:
-              "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
-          }
-        : {},
-  },
-  [ContentTypeEnum.Review]: {},
-};
-
-const initialFormData: AccountFormData = {
-  fullName: "Jane Doe",
-  phoneNumber: "+1 (212) 555-0100",
-  emailAddress: "jane.doe@gmail.com",
-  address1: "25 Bank Street",
-  address2: "",
-  postalCode: "E14 5JP",
-  city: "London",
-  country: "United Kingdom",
-  accountType: "",
-  initialDeposit: "",
-  beneficiaryName: "",
-  sourceOfFunds: "",
-  paperlessStatements: "",
-};
-
-const validateStep = (
-  stepId: ContentType,
-  data: AccountFormData,
-): {
-  fieldValidation: Record<string, FieldValidation>;
-  stepStatus: ValidationStatus;
-} => {
-  const rules = stepFieldRules[stepId];
-  const fieldValidation: Record<string, FieldValidation> = {};
-  Object.keys(rules).forEach((field) => {
-    fieldValidation[field] = rules[field](
-      data[field as keyof AccountFormData] || "",
-      data,
-    );
-  });
-  const stepStatus = deriveStepStatus(
-    fieldValidation as Record<string, { status?: ValidationStatus }>,
-  );
-  return { fieldValidation, stepStatus };
-};
-
 const getStepStatus = (index: number, activeStep: number) => {
   if (index === activeStep) return "active";
   if (index < activeStep) return "completed";
   return "pending";
-};
-
-const deriveStepStatus = (
-  fields: Record<string, { status?: ValidationStatus }>,
-): ValidationStatus => {
-  if (Object.values(fields).some((f) => f.status === "error")) return "error";
-  if (Object.values(fields).some((f) => f.status === "warning"))
-    return "warning";
-  return undefined;
 };
 
 const CancelWarningDialog = ({
@@ -421,7 +318,7 @@ const AdditionalInfoForm = ({
     event.preventDefault();
     const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
     setFieldValidation(fv);
-    setStepValidation((prev) => ({
+    setStepValidation?.((prev) => ({
       ...prev,
       [stepId]: { status: stepStatus },
     }));
@@ -534,7 +431,7 @@ const AccountTypeForm = ({
       accountType: value,
     });
     setFieldValidation(fv);
-    setStepValidation((prev) => ({
+    setStepValidation?.((prev) => ({
       ...prev,
       [stepId]: { status: stepStatus },
     }));
@@ -544,7 +441,7 @@ const AccountTypeForm = ({
     event.preventDefault();
     const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
     setFieldValidation(fv);
-    setStepValidation((prev) => ({
+    setStepValidation?.((prev) => ({
       ...prev,
       [stepId]: { status: stepStatus },
     }));
@@ -752,7 +649,7 @@ const AccountDetailsForm = ({
     event.preventDefault();
     const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
     setFieldValidation(fv);
-    setStepValidation((prev) => ({
+    setStepValidation?.((prev) => ({
       ...prev,
       [stepId]: { status: stepStatus },
     }));
@@ -1006,43 +903,27 @@ const ReviewAccountForm = ({
 };
 
 export const Horizontal = () => {
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-  const [stepValidation, setStepValidation] = useState<{
-    [stepId: string]: { status?: ValidationStatus };
-  }>({});
-  const [activeStep, setActiveStep] = useState(0);
+  const {
+    activeStep,
+    formData,
+    setFormData,
+    stepValidation,
+    next,
+    previous,
+    reset,
+  } = useWizard(WIZARD_STEPS);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const resetWizard = () => {
-    setFormData(initialFormData);
-    setStepValidation({});
-    setActiveStep(0);
-    setSuccessOpen(false);
-    setCancelOpen(false);
-  };
-
-  const handleNextStep = () =>
-    setActiveStep((prevStep) =>
-      Math.min(prevStep + 1, WIZARD_STEPS.length - 1),
-    );
-  const handlePreviousStep = () =>
-    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
-
-  const handleCancel = () => {
-    setCancelOpen(true);
-  };
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
+  const handleCancel = () => setCancelOpen(true);
+  const handleSuccess = () => setSuccessOpen(true);
 
   const commonProps = {
     formData,
     setFormData,
     handleCancel,
-    handleNext: handleNextStep,
-    handlePrevious: handlePreviousStep,
-    setStepValidation,
+    handleNext: next,
+    handlePrevious: previous,
   };
 
   const renderActiveContent = () => {
@@ -1112,59 +993,51 @@ export const Horizontal = () => {
       <CancelWarningDialog
         open={cancelOpen}
         onOpenChange={setCancelOpen}
-        onConfirm={resetWizard}
+        onConfirm={() => {
+          reset();
+          setCancelOpen(false);
+        }}
       />
       <AccountCreatedSuccessDialog
         open={successOpen}
         onOpenChange={(open) => {
           setSuccessOpen(open);
-          if (!open) resetWizard();
+          if (!open) {
+            reset();
+            setSuccessOpen(false);
+          }
         }}
-        onConfirm={resetWizard}
+        onConfirm={() => {
+          reset();
+          setSuccessOpen(false);
+        }}
       />
     </>
   );
 };
 
 export const Vertical = () => {
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-  const [stepValidation, setStepValidation] = useState<{
-    [stepId: string]: { status?: "error" | "warning" };
-  }>({});
-  const [activeStep, setActiveStep] = useState(0);
+  const {
+    activeStep,
+    formData,
+    setFormData,
+    stepValidation,
+    next,
+    previous,
+    reset,
+  } = useWizard(WIZARD_STEPS);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const resetWizard = () => {
-    setFormData(initialFormData);
-    setStepValidation({});
-    setActiveStep(0);
-    setCancelOpen(false);
-    setSuccessOpen(false);
-  };
-
-  const handleNextStep = () =>
-    setActiveStep((prevStep) =>
-      Math.min(prevStep + 1, WIZARD_STEPS.length - 1),
-    );
-  const handlePreviousStep = () =>
-    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
-
-  const handleCancel = () => {
-    setCancelOpen(true);
-  };
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
+  const handleCancel = () => setCancelOpen(true);
+  const handleSuccess = () => setSuccessOpen(true);
 
   const commonProps = {
     formData,
     setFormData,
     handleCancel,
-    handleNext: handleNextStep,
-    handlePrevious: handlePreviousStep,
-    setStepValidation,
+    handleNext: next,
+    handlePrevious: previous,
   };
 
   const renderActiveContent = () => {
@@ -1229,15 +1102,24 @@ export const Vertical = () => {
       <CancelWarningDialog
         open={cancelOpen}
         onOpenChange={setCancelOpen}
-        onConfirm={resetWizard}
+        onConfirm={() => {
+          reset();
+          setCancelOpen(false);
+        }}
       />
       <AccountCreatedSuccessDialog
         open={successOpen}
         onOpenChange={(open) => {
           setSuccessOpen(open);
-          if (!open) resetWizard();
+          if (!open) {
+            reset();
+            setSuccessOpen(false);
+          }
         }}
-        onConfirm={resetWizard}
+        onConfirm={() => {
+          reset();
+          setSuccessOpen(false);
+        }}
       />
     </>
   );
@@ -1247,35 +1129,32 @@ export const Modal = () => {
   type WizardState = "form" | "cancel-warning" | "success";
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-  const [stepValidation, setStepValidation] = useState<{
-    [stepId: string]: { status?: "error" | "warning" };
-  }>({});
-  const [fieldValidation, setFieldValidation] = useState<{
-    [field: string]: { status?: ValidationStatus; message?: string };
-  }>({});
-
-  const resetAll = () => {
-    setActiveStep(0);
-    setFormData(initialFormData);
-    setStepValidation({});
-    setWizardState("form");
-  };
+  const {
+    activeStep,
+    formData,
+    setFormData,
+    stepValidation,
+    fieldValidation,
+    setFieldValidation,
+    validateCurrentStep,
+    next,
+    previous,
+    reset,
+  } = useWizard(WIZARD_STEPS);
 
   const handleWizardOpen = () => {
-    resetAll();
+    reset();
+    setWizardState("form");
     setOpen(true);
   };
 
-  const onOpenChange = (value: boolean) => {
-    setOpen(value);
-  };
+  const onOpenChange = (value: boolean) => setOpen(value);
 
   const handleCancel = () => {
     setOpen(false);
     setTimeout(() => {
-      resetAll();
+      reset();
+      setWizardState("form");
     }, 300);
   };
 
@@ -1284,52 +1163,28 @@ export const Modal = () => {
   const backToForm = () => setWizardState("form");
   const stepId = WIZARD_STEPS[activeStep].id;
 
-  const validateCurrentStep = (): boolean => {
-    const currentStepId = WIZARD_STEPS[activeStep].id;
-    const { fieldValidation: fv, stepStatus } = validateStep(
-      currentStepId,
-      formData,
-    );
-    setFieldValidation(fv);
-    setStepValidation((prev) => ({
-      ...prev,
-      [currentStepId]: { status: stepStatus },
-    }));
-    return stepStatus !== "error";
-  };
-
-  const goNext = () => {
-    setActiveStep((prevStep) =>
-      Math.min(prevStep + 1, WIZARD_STEPS.length - 1),
-    );
-    setFieldValidation({});
-  };
-
   const handleNextClick = () => {
     const isLast = activeStep === WIZARD_STEPS.length - 1;
     if (!validateCurrentStep()) return;
-    if (isLast) {
-      createAccount();
-    } else {
-      goNext();
-    }
+    if (isLast) createAccount();
+    else next();
   };
 
   const handlePreviousClick = () => {
     if (activeStep === 0) return;
-    const prev = activeStep - 1;
-    setActiveStep(prev);
-    const prevStepId = WIZARD_STEPS[prev].id;
-    const { fieldValidation: fv } = validateStep(prevStepId, formData);
-    setFieldValidation(fv);
+    previous();
+    const prevStepId = WIZARD_STEPS[activeStep - 1]?.id;
+    if (prevStepId) {
+      const { fieldValidation: fv } = validateStep(prevStepId, formData);
+      setFieldValidation(fv);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    const currentStepId = WIZARD_STEPS[activeStep].id;
-    if (stepFieldRules[currentStepId][name]) {
-      const { fieldValidation: fv } = validateStep(currentStepId, {
+    if (stepFieldRules[stepId][name]) {
+      const { fieldValidation: fv } = validateStep(stepId, {
         ...formData,
         [name]: value,
       });
@@ -1339,9 +1194,8 @@ export const Modal = () => {
 
   const handleSelectChange = (value: string, name: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    const currentStepId = WIZARD_STEPS[activeStep].id;
-    if (stepFieldRules[currentStepId][name]) {
-      const { fieldValidation: fv } = validateStep(currentStepId, {
+    if (stepFieldRules[stepId][name]) {
+      const { fieldValidation: fv } = validateStep(stepId, {
         ...formData,
         [name]: value,
       });
