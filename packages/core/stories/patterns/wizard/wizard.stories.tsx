@@ -34,8 +34,8 @@ import {
   type FieldValidation,
   stepFieldRules,
   useWizard,
-  validateStep,
   type ValidationStatus,
+  validateStep,
 } from "./useWizard";
 export default {
   title: "Patterns/Wizard",
