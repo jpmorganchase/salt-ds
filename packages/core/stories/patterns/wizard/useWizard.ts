@@ -116,12 +116,12 @@ export const useWizard = (
 ) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-  const [stepValidation, setStepValidation] = useState<{
-    [stepId: string]: { status?: ValidationStatus };
+  const [validationByStep, setValidationByStep] = useState<{
+    [stepId: string]: {
+      fields: Record<string, FieldValidation>;
+      status?: ValidationStatus;
+    };
   }>({});
-  const [fieldValidation, setFieldValidation] = useState<
-    Record<string, FieldValidation>
-  >({});
 
   const currentStepId = steps[activeStep].id;
 
@@ -130,17 +130,15 @@ export const useWizard = (
       currentStepId,
       formData,
     );
-    setFieldValidation(fv);
-    setStepValidation((prev) => ({
+    setValidationByStep((prev) => ({
       ...prev,
-      [currentStepId]: { status: stepStatus },
+      [currentStepId]: { fields: fv, status: stepStatus },
     }));
     return stepStatus !== "error";
   }, [currentStepId, formData]);
 
   const next = useCallback(() => {
     setActiveStep((s) => Math.min(s + 1, steps.length - 1));
-    setFieldValidation({});
   }, [steps.length]);
 
   const previous = useCallback(() => {
@@ -150,9 +148,16 @@ export const useWizard = (
   const reset = useCallback(() => {
     setActiveStep(0);
     setFormData(initialFormData);
-    setStepValidation({});
-    setFieldValidation({});
+    setValidationByStep({});
   }, []);
+
+  const fieldValidation = validationByStep[currentStepId]?.fields || {};
+  const stepValidation = Object.fromEntries(
+    Object.entries(validationByStep).map(([id, v]) => [
+      id,
+      { status: v.status },
+    ]),
+  );
 
   return {
     activeStep,
@@ -160,12 +165,11 @@ export const useWizard = (
     formData,
     setFormData,
     stepValidation,
-    setStepValidation,
     fieldValidation,
-    setFieldValidation,
     validateCurrentStep,
     next,
     previous,
     reset,
+    setValidationByStep,
   };
 };

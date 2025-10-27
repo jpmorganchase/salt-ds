@@ -54,9 +54,8 @@ interface FormProps {
   handleCancel: () => void;
   handleNext?: () => void;
   handlePrevious?: () => void;
-  setStepValidation?: React.Dispatch<
-    React.SetStateAction<{ [stepId: string]: { status?: "error" | "warning" } }>
-  >;
+  fieldValidation: Record<string, FieldValidation>;
+  persistValidation: (data: AccountFormData, stepId: ContentType) => void;
 }
 
 interface FormContentProps {
@@ -297,34 +296,36 @@ const AdditionalInfoForm = ({
   handleNext,
   setFormData,
   formData,
-  setStepValidation,
+  fieldValidation,
+  persistValidation,
 }: FormProps) => {
-  const [fieldValidation, setFieldValidation] = useState<
-    Record<string, FieldValidation>
-  >({});
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepFieldRules[stepId][name]) {
+      persistValidation(nextData, stepId);
+    }
   };
   const handleSelectChange = (value: string, name: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepFieldRules[stepId][name]) {
+      persistValidation(nextData, stepId);
+    }
   };
-  const handleInputBlur = () => {
-    const { fieldValidation: fv } = validateStep(stepId, formData);
-    setFieldValidation(fv);
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    if (stepFieldRules[stepId][name]) {
+      persistValidation(formData, stepId);
+    }
   };
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
-    setFieldValidation(fv);
-    setStepValidation?.((prev) => ({
-      ...prev,
-      [stepId]: { status: stepStatus },
-    }));
-    if (stepStatus === "error") return;
-    handleNext?.();
+    if (!handleNext) return;
+    handleNext();
   };
+
   return (
     <StackLayout
       gap={3}
@@ -412,41 +413,22 @@ const AccountTypeForm = ({
   handleNext,
   setFormData,
   formData,
-  setStepValidation,
+  fieldValidation,
+  persistValidation,
 }: FormProps) => {
-  const [fieldValidation, setFieldValidation] = useState<
-    Record<string, FieldValidation>
-  >({});
-
-  const handleInputBlur = () => {
-    const { fieldValidation: fv } = validateStep(stepId, formData);
-    setFieldValidation(fv);
-  };
-
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
-    setFormData((prev) => ({ ...prev, accountType: value }));
-    const { fieldValidation: fv, stepStatus } = validateStep(stepId, {
-      ...formData,
-      accountType: value,
-    });
-    setFieldValidation(fv);
-    setStepValidation?.((prev) => ({
-      ...prev,
-      [stepId]: { status: stepStatus },
-    }));
+    const nextData = { ...formData, accountType: value };
+    setFormData(nextData);
+    persistValidation(nextData, stepId);
   };
-
+  const handleInputBlur = () => {
+    persistValidation(formData, stepId);
+  };
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
-    setFieldValidation(fv);
-    setStepValidation?.((prev) => ({
-      ...prev,
-      [stepId]: { status: stepStatus },
-    }));
-    if (stepStatus === "error") return;
-    handleNext?.();
+    if (!handleNext) return;
+    handleNext();
   };
   return (
     <StackLayout
@@ -496,7 +478,7 @@ const AccountDetailsContent = ({
   handleSelectChange,
 }: FormContentProps) => {
   return (
-    <GridLayout columns={2} gap={3}>
+    <GridLayout columns={2} gap={3} style={{ width: "100%" }}>
       <GridItem>
         <StackLayout gap={3}>
           <FormField validationStatus={fieldValidation.fullName?.status}>
@@ -624,12 +606,9 @@ const AccountDetailsForm = ({
   handleNext,
   setFormData,
   formData,
-  setStepValidation,
+  fieldValidation,
+  persistValidation,
 }: FormProps) => {
-  const [fieldValidation, setFieldValidation] = useState<{
-    [field: string]: { status?: ValidationStatus; message?: string };
-  }>({});
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -637,24 +616,21 @@ const AccountDetailsForm = ({
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     if (stepFieldRules[stepId][name]) {
-      const { fieldValidation: fv } = validateStep(stepId, formData);
-      setFieldValidation(fv);
+      persistValidation(formData, stepId);
     }
   };
   const handleSelectChange = (value: string, name: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepFieldRules[stepId][name]) {
+      persistValidation(nextData, stepId);
+    }
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const { fieldValidation: fv, stepStatus } = validateStep(stepId, formData);
-    setFieldValidation(fv);
-    setStepValidation?.((prev) => ({
-      ...prev,
-      [stepId]: { status: stepStatus },
-    }));
-    if (stepStatus === "error") return;
-    handleNext?.();
+    if (!handleNext) return;
+    handleNext();
   };
 
   return (
@@ -911,20 +887,37 @@ export const Horizontal = () => {
     next,
     previous,
     reset,
+    setValidationByStep,
+    fieldValidation,
+    validateCurrentStep,
   } = useWizard(WIZARD_STEPS);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const handleCancel = () => setCancelOpen(true);
-  const handleSuccess = () => setSuccessOpen(true);
+  const persistValidation = (data: AccountFormData, stepId: ContentType) => {
+    const { fieldValidation: fv, stepStatus } = validateStep(stepId, data);
+    setValidationByStep((prev) => ({
+      ...prev,
+      [stepId]: { fields: fv, status: stepStatus },
+    }));
+  };
+
+  const handleNext = () => {
+    if (!validateCurrentStep()) return;
+    next();
+  };
 
   const commonProps = {
     formData,
     setFormData,
-    handleCancel,
-    handleNext: next,
+    handleCancel: () => setCancelOpen(true),
+    handleNext,
     handlePrevious: previous,
+    fieldValidation,
+    persistValidation,
   };
+
+  const handleSuccess = () => setSuccessOpen(true);
 
   const renderActiveContent = () => {
     const id = WIZARD_STEPS[activeStep].id;
@@ -1025,19 +1018,36 @@ export const Vertical = () => {
     next,
     previous,
     reset,
+    setValidationByStep,
+    validateCurrentStep,
+    fieldValidation,
   } = useWizard(WIZARD_STEPS);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const handleCancel = () => setCancelOpen(true);
   const handleSuccess = () => setSuccessOpen(true);
+
+  const persistValidation = (data: AccountFormData, stepId: ContentType) => {
+    const { fieldValidation: fv, stepStatus } = validateStep(stepId, data);
+    setValidationByStep((prev) => ({
+      ...prev,
+      [stepId]: { fields: fv, status: stepStatus },
+    }));
+  };
+
+  const handleNext = () => {
+    if (!validateCurrentStep()) return;
+    next();
+  };
 
   const commonProps = {
     formData,
     setFormData,
-    handleCancel,
-    handleNext: next,
+    handleCancel: () => setCancelOpen(true),
+    handleNext,
     handlePrevious: previous,
+    fieldValidation,
+    persistValidation,
   };
 
   const renderActiveContent = () => {
@@ -1135,11 +1145,11 @@ export const Modal = () => {
     setFormData,
     stepValidation,
     fieldValidation,
-    setFieldValidation,
     validateCurrentStep,
     next,
     previous,
     reset,
+    setValidationByStep,
   } = useWizard(WIZARD_STEPS);
 
   const handleWizardOpen = () => {
@@ -1163,6 +1173,14 @@ export const Modal = () => {
   const backToForm = () => setWizardState("form");
   const stepId = WIZARD_STEPS[activeStep].id;
 
+  const persistValidation = (data: AccountFormData, id: ContentType) => {
+    const { fieldValidation: fv, stepStatus } = validateStep(id, data);
+    setValidationByStep((prev) => ({
+      ...prev,
+      [id]: { fields: fv, status: stepStatus },
+    }));
+  };
+
   const handleNextClick = () => {
     const isLast = activeStep === WIZARD_STEPS.length - 1;
     if (!validateCurrentStep()) return;
@@ -1173,41 +1191,29 @@ export const Modal = () => {
   const handlePreviousClick = () => {
     if (activeStep === 0) return;
     previous();
-    const prevStepId = WIZARD_STEPS[activeStep - 1]?.id;
-    if (prevStepId) {
-      const { fieldValidation: fv } = validateStep(prevStepId, formData);
-      setFieldValidation(fv);
-    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
     if (stepFieldRules[stepId][name]) {
-      const { fieldValidation: fv } = validateStep(stepId, {
-        ...formData,
-        [name]: value,
-      });
-      setFieldValidation(fv);
+      persistValidation(nextData, stepId);
     }
   };
 
   const handleSelectChange = (value: string, name: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
     if (stepFieldRules[stepId][name]) {
-      const { fieldValidation: fv } = validateStep(stepId, {
-        ...formData,
-        [name]: value,
-      });
-      setFieldValidation(fv);
+      persistValidation(nextData, stepId);
     }
   };
 
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     if (stepFieldRules[stepId][name]) {
-      const { fieldValidation: fv } = validateStep(stepId, formData);
-      setFieldValidation(fv);
+      persistValidation(formData, stepId);
     }
   };
 
