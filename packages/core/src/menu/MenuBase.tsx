@@ -121,15 +121,10 @@ export function MenuBase(props: MenuBaseProps) {
     }
   }, [getVirtualElement, refs]);
 
-  const isTriggerDisabled = () => {
-    const triggerElement = refs.reference.current as HTMLDivElement | null;
-    return triggerElement?.getAttribute("aria-disabled") === "true";
-  };
-
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
       useHover(context, {
-        enabled: isNested && !focusInside && !isTriggerDisabled(),
+        enabled: isNested && !focusInside,
         handleClose: safePolygon({ blockPointerEvents: true }),
       }),
       useClick(context, {
