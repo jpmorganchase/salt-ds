@@ -181,7 +181,13 @@ const AccountCreatedSuccessDialog = ({
   onOpenChange,
   onConfirm,
 }: ConfirmationDialogProps) => (
-  <Dialog open={open} onOpenChange={onOpenChange} size="small" status="success">
+  <Dialog
+    open={open}
+    onOpenChange={onOpenChange}
+    size="small"
+    status="success"
+    initialFocus={0}
+  >
     <DialogHeader header="Account created" />
     <DialogContent>You can now start using this new account.</DialogContent>
     <DialogActions>
@@ -1356,7 +1362,11 @@ export const Modal = () => {
                     </GridLayout>
                   </DialogContent>
                   <DialogActions>
-                    <Button sentiment="accented" onClick={handleCancel}>
+                    <Button
+                      sentiment="accented"
+                      onClick={handleCancel}
+                      autoFocus
+                    >
                       Done
                     </Button>
                   </DialogActions>
