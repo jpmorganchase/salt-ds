@@ -7,23 +7,6 @@ sidebar:
 
 Charts rely heavily on visuals to help users understand complex data, so it’s important to ensure that your charts meet all accessibility requirements. Use color appropriately, include visual cues, provide text for assistive technologies, and ensure any interactions are accessible.
 
-## Highcharts Accessibility module
-
-Since Salt charts only supports the styling of Highcharts, Highcharts entirely handles interactivity and certain accessible features including the target area size for mouse or touch devices ([WCAG 2.2](https://www.w3.org/TR/WCAG22/)), keyboard and screen-reader interactivity. Highcharts provides the ability to add a text alternative for your charts, which is essential for accessibility.
-
-For more information on how Highcharts’s addresses accessibility, please review the [Highcharts Accessibility module documentation](https://www.highcharts.com/docs/accessibility/accessibility-module).
-
-### Highcharts tooltip
-
-The tooltip used in the Highcharts theme package isn’t the Salt Tooltip component. The Highcharts tooltip is styled with a Salt categorical color specific to the data series selected.
-
-For more information about the Highcharts tooltip, please refer to [Highcharts tooltip documentation](https://www.highcharts.com/docs/chart-concepts/tooltip).
-
-<Image
-  src="/img/foundations/dataviz-tooltip.png"
-  alt="Diagram of Highcharts tooltip and Salt tooltip."
-/>
-
 ## Categorical colors
 
 ### Color contrast
@@ -34,6 +17,7 @@ If you use custom colors or Hex codes, they may not meet non-text contrast requi
 
 <Image
   src="/img/foundations/dataviz-hex.png"
+  srcDark="/img/patterns/search/dataviz-hex-dark.png"
   alt="Diagram of best practices using categorical color versus color picking."
 />
 
@@ -43,6 +27,7 @@ Apply the categorical colors in the recommended order. All categorical colors ha
 
 <Image
   src="/img/foundations/dataviz-color-order.png"
+  srcDark="/img/patterns/search/dataviz-color-order-dark.png"
   alt="Diagram of the categorical color palette."
 />
 
@@ -50,6 +35,7 @@ A well-defined, distinct color palette ensures that everyone can easily interpre
 
 <Image
   src="/img/foundations/dataviz-monochromatic.png"
+  srcDark="/img/patterns/search/dataviz-monochromatic-dark.png"
   alt="Diagram of best practices using categorical palette versus monochromatic palette."
 />
 
@@ -69,6 +55,7 @@ Some chart types including area, bubble and scatter have data series that overla
 
 <Image
   src="/img/foundations/dataviz-overlapping-data.png"
+  srcDark="/img/patterns/search/dataviz-overlapping-data-dark.png"
   alt="Diagram of bubble chart to show colors overlapping."
 />
 
@@ -78,6 +65,7 @@ Color shouldn’t be the only visual cue. Include other visual cues such as text
 
 <Image
   src="/img/foundations/dataviz-line-patterns2.png"
+  srcDark="/img/patterns/search/dataviz-line-patterns2-dark.png"
   alt="Diagram of line chart using line patterns."
 />
 
@@ -87,6 +75,7 @@ Consider using line patterns for multiple line series or pattern fills for 2-dim
 
 <Image
   src="/img/foundations/dataviz-pattern-fills2.png"
+  srcDark="/img/patterns/search/dataviz-pattern-fills2-dark.png"
   alt="Diagram of donut chart using pattern fills."
 />
 
@@ -94,7 +83,7 @@ Consider using line patterns for multiple line series or pattern fills for 2-dim
 
 In addition to line patterns and pattern fills, you can add shape or icon markers to make data points more distinctive. Varied marker symbols help differentiate lines. Marker symbols have a white border in both light and dark mode for accessibility.
 
-By default, Highcharts uses predefined symbols in the following order:
+By default, Salt uses predefined symbols in the following order:
 
 - Circle
 - Diamond
@@ -104,6 +93,7 @@ By default, Highcharts uses predefined symbols in the following order:
 
 <Image
   src="/img/foundations/dataviz-markers.png"
+  srcDark="/img/patterns/search/dataviz-markers-dark.png"
   alt="Diagram of line chart using marker symbols."
 />
 
