@@ -47,6 +47,7 @@
     "@biomejs/wasm-nodejs": "^2.2.0",
     "@changesets/cli": "^2.29.6",
     "@cypress/code-coverage": "^3.13.6",
+    "@e965/xlsx": "^0.20.3",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
     "@fontsource/pt-mono": "^5.0.12",
@@ -92,7 +93,7 @@
     "vite": "^7.1.5",
     "vite-plugin-istanbul": "6.0.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4",
+    "vitest": "^4.0.0",
     "yup": "^1.0.2"
   },
   "resolutions": {

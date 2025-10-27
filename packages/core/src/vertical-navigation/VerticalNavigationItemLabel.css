@@ -1,3 +1,7 @@
 .saltVerticalNavigationItemLabel {
   flex: 1;
 }
+
+.saltVerticalNavigationItemLabel + .saltVerticalNavigationItemExpansionIcon {
+  padding: 0 var(--salt-spacing-100);
+}

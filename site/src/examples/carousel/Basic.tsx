@@ -6,6 +6,7 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
@@ -30,7 +31,7 @@ export const Basic = (): ReactElement => {
               aria-labelledby={`${slideId}-title`}
               role="group"
               aria-roledescription="slide"
-              className={styles.carouselSlide}
+              className={clsx(styles.carouselSlide, styles.numberedSlide)}
               key={slideId}
             >
               <Display1

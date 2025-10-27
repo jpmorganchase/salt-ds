@@ -11,6 +11,7 @@ data:
 ## Default
 
 The `NumberInput` has a default increment step of 1, which is adjustable via the `step` prop for precise value changes. For larger adjustments, users can hold the Shift key while using the arrow keys to apply a `stepMultiplier`, a prop that defaults to 2.
+The parsed numeric value can be accessed through the `onNumberChange` event handler.
 
 <LivePreview componentName="number-input" exampleName="Default" />
 
@@ -28,6 +29,37 @@ By default, the `NumberInput` is transparent. You can add borders using the `bor
 
 <LivePreview componentName="number-input" exampleName="Bordered" />
 
+## Disabled
+
+The `NumberInput` can be disabled to prevent any user interaction or input.
+
+<LivePreview componentName="number-input" exampleName="Disabled" />
+
+## Read-only
+
+The `NumberInput` can be set to a read-only state using the `readOnly` prop, allowing users to highlight and copy the value without editing it.
+
+By default, a dash ('-') serves as the empty marker. You can customize this marker by using the `emptyReadOnlyMarker` prop if your application needs a different symbol.
+
+**Note:** To address browser and screen reader limitations in conveying a read-only state, the `NumberInput`'s role is changed to `textbox` when set to read-only.
+
+### Best practices
+
+Use the read-only state when users need to view the value for their workflow or current task but are not permitted to edit it, such as due to user permissions.
+
+<LivePreview componentName="number-input" exampleName="Readonly" />
+
+## Text alignment
+
+To maintain a cohesive visual flow, numeric values are left-aligned by default, positioned directly beneath the label and other form field elements. If your specific use case or layout requires a different alignment, you can adjust the `NumberInput` to be right or center aligned using the `textAlign` prop.
+
+### Best practices
+
+- Right alignment is often used for numeric values to facilitate easier comparison. However, if number fields are mixed with text fields or do not relate to each other, left alignment may enhance the overall visual flow.
+- Center alignment can be used to emphasize a particular value, but it should be applied sparingly and only in exceptional cases to avoid disrupting the visual consistency.
+
+<LivePreview componentName="number-input" exampleName="TextAlignment" />
+
 ## Min and max value
 
 To limit the range of accepted values, you can specify a minimum, maximum, or both using the `min` and `max` props.
@@ -38,12 +70,14 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 - Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
 - Use the `clamp` prop to enforce the value to be within range.
 
-<LivePreview componentName="number-input" exampleName="Limits" />
+<LivePreview componentName="number-input" exampleName="MinMax" />
 
 ## Clamp behavior
 
 By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clamp` to true, the
 input will automatically adjust to the nearest minimum or maximum value when the input field loses focus.
+
+**Note:** When using the `clamp` prop, ensure that the screen reader is updated to announce the clamped value, providing an accessible experience for users relying on assistive technologies.
 
 <LivePreview componentName="number-input" exampleName="ClampBehavior" />
 
@@ -53,35 +87,73 @@ The `NumberInput` can display validation states, `error`, `warning`, and `succes
 
 ### Best practices
 
-- **Error state**: Utilize the error state to notify users of a critical issue related to the input. This issue may hinder task completion and typically requires user intervention to resolve.
-- **Warning state** Use the warning state to caution users about a potential issue. While this issue won't stop users from proceeding with the task, it may lead to errors if not addressed.
+- **Error state**: Use the error state to notify users of a critical issue related to the input. This issue may hinder task completion and typically requires user intervention to resolve.
+- **Warning state**: Use the warning state to caution users about a potential issue. While this issue won't stop users from proceeding with the task, it may lead to errors if not addressed.
 
 <LivePreview componentName="number-input" exampleName="Validation" />
 
 ## Decimal scale
 
-By default, the decimal scale is derived from the highest number of decimal places found in the `step` prop, or if not defined, in either the `defaultValue` or `value` prop.
-However, you can set it to any value of your choice using the `decimalScale` prop and that will have priority.
+The `decimalScale` prop allows you to define the number of decimal places displayed in the `NumberInput`. By default, the decimal scale is determined by the greater number of decimal places between the `step` value and the `value` or `defaultValue` provided.
 
 ### Best practices
 
-When configuring the number of decimal places, ensure it aligns with the specific use case. For example, when dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
+When dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
 
 <LivePreview componentName="number-input" exampleName="Decimals" />
 
+To provide a fixed scale, provide a custom format function.
+
+<LivePreview componentName="number-input" exampleName="FixedDecimalScale" />
+
 ## Formatting
 
-You can format the value of the `NumberInput` using the `format` callback prop. It typically works alongside a `parse` callback for complex formatting.
-
-Users will be able to see the formatted value in the input, e.g. "5K". When the input gains focus, the value will be parsed into its numerical form, so "5K" becomes "5000". This allows users to edit the values with precision. When the input loses focus, the value will be formatted again.
+The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which can be used to determine the valid input format and extract the numerical value of the formatted input.
 
 ### Best practices
 
-The `format` callback has been designed to work with most formatting libraries, e.g. Intl.NumberFormat. However, it is highly recommended to provide a `parse` callback alongside `format` to determine the correct numerical value so the precision of the value can be maintained.
+The `format` callback is designed to work seamlessly with most formatting libraries, such as Intl.NumberFormat. It is strongly recommended to provide a `parse` callback alongside `format` to ensure that valid input is entered and its correct numerical value is derived, maintaining precision and consistency.
 
-**Note**: If a `format` callback is provided, it will override the `decimalScale`, enabling you to handle decimal place rules directly within your formatting function.
+**Note**: If a `format` callback is provided, it will override the `decimalScale` prop, allowing you to define custom rules for decimal places directly within your formatting logic.
 
-<LivePreview componentName="number-input" exampleName="Formatting" />
+### Thousands separator
+
+To make large numbers easier to read, you can use a combination of `format` and `parse` callbacks to insert commas and separate thousands.
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingThousandsSeparator"
+/>
+
+### Compact notation
+
+You can use `format` to convert the numerical value into its compact notation and `parse` to convert compact notation back to its numerical value. This is useful when used with charts or other forms of data visualization. The example below supports the following compact notations:
+The example below supports the following conversion:
+
+- Thousands to K
+- Millions to M
+- Billions to B
+- Trillions to T
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingCompactNotation"
+/>
+
+### With suffix or prefix
+
+You can add a suffix or prefix with a custom `format` function.
+
+<LivePreview
+  componentName="number-input"
+  exampleName="FormattingSuffixPrefix"
+/>
+
+### Custom input pattern
+
+You can support custom input patterns, such as "10x", using a combination of `pattern`, `format` and `parse` callbacks.
+
+<LivePreview componentName="number-input" exampleName="CustomInputPattern" />
 
 ## Custom steps
 
@@ -112,34 +184,3 @@ Synchronize the `NumberInput` with a live value from a constantly changing sourc
 Customize the positioning and appearance of `NumberInput`'s arrow buttons to align with specific product requirements or constraints.
 
 <LivePreview componentName="number-input" exampleName="ButtonAdornments" />
-
-## Disabled
-
-The `NumberInput` can be disabled to prevent any user interaction or input.
-
-<LivePreview componentName="number-input" exampleName="Disabled" />
-
-## Read-only
-
-The `NumberInput` can be set to a read-only state using the `readOnly` prop, allowing users to highlight and copy the value without editing it.
-
-By default, a dash ('-') serves as the empty marker. You can customize this marker by using the `emptyReadOnlyMarker` prop if your application needs a different symbol.
-
-**Note:** To address browser and screen reader limitations in conveying a read-only state, the `NumberInput`'s role is changed to `textbox` when set to read-only.
-
-### Best practices
-
-Utilize the read-only state when users need to view the value for their workflow or current task but are not permitted to edit it, such as due to user permissions.
-
-<LivePreview componentName="number-input" exampleName="Readonly" />
-
-## Text alignment
-
-To maintain a cohesive visual flow, numeric values are left-aligned by default, positioned directly beneath the label and other form field elements. If your specific use case or layout requires a different alignment, you can adjust the `NumberInput` to be right or center aligned using the `textAlign` prop.
-
-### Best practices
-
-- Right alignment is often used for numeric values to facilitate easier comparison. However, if number fields are mixed with text fields or do not relate to each other, left alignment may enhance the overall visual flow.
-- Center alignment can be used to emphasize a particular value, but it should be applied sparingly and only in exceptional cases to avoid disrupting the visual consistency.
-
-<LivePreview componentName="number-input" exampleName="TextAlignment" />

@@ -20,7 +20,19 @@
   outline: none;
 }
 
-.saltCarouselCard:focus-visible::after {
+.saltCarouselCard:not(.saltCarouselCard-bordered):focus-visible::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--carousel-slide-spacing);
+  right: 0;
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
+  cursor: var(--salt-cursor-hover);
+}
+
+.saltCarouselCard-bordered:focus-visible::after {
   content: "";
   position: absolute;
   top: 0;
@@ -57,7 +69,7 @@
   margin: 0;
 }
 
-.saltCarouselCard-bordered {
+.saltCarouselCard-bordered-content {
   background: var(--salt-container-primary-background);
   border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   border-radius: var(--salt-palette-corner, 0);
