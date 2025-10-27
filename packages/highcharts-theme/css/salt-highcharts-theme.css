@@ -274,3 +274,33 @@
 .highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
   stroke-width: 1;
 }
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point {
+  fill: var(--salt-sentiment-positive-foreground-decorative);
+  stroke: var(--salt-sentiment-positive-foreground-decorative);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-negative {
+  fill: var(--salt-sentiment-negative-foreground-decorative);
+  stroke: var(--salt-sentiment-negative-foreground-decorative);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-sum {
+  fill: var(--salt-category-15-bold-background);
+  stroke: var(--salt-category-15-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-intermediate-sum {
+  fill: var(--salt-category-15-bold-background);
+  stroke: var(--salt-category-15-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-graph {
+  stroke: var(--salt-content-primary-foreground);
+  stroke-width: 1px;
+  stroke-dasharray: 2, 2;
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text {
+  fill: var(--salt-content-bold-foreground);
+}
