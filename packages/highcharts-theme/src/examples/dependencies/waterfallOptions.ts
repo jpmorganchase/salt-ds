@@ -34,16 +34,29 @@ export const waterfallOptions: Options = {
     pointFormat:
       '<span>{series.name}: </span><span class="value">${point.y}M</span>',
   },
+  legend: {
+    enabled: false,
+  },
+  plotOptions: {
+    waterfall: {
+      dataLabels: {
+        enabled: true,
+        formatter: function () {
+          return `$${this.y}M`;
+        },
+      },
+    },
+  },
   series: [
     {
       name: "Revenue",
       type: "waterfall",
       data: [
-        { y: 50, isSum: false },
-        { y: 25, isSum: false },
-        { y: 15, isSum: false },
-        { y: -20, isSum: false },
-        { y: -10, isSum: false },
+        { y: 50 },
+        { y: 25 },
+        { y: 15 },
+        { y: -20 },
+        { y: -10 },
         { isSum: true },
       ],
     },
