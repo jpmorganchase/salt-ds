@@ -44,7 +44,7 @@ export const initialFormData: AccountFormData = {
   sourceOfFunds: "",
   paperlessStatements: "",
 };
-export const stepFieldRules: Record<
+export const stepValidationRules: Record<
   ContentType,
   Record<string, (value: string, data: AccountFormData) => FieldValidation>
 > = {
@@ -81,28 +81,28 @@ export const stepFieldRules: Record<
   [ContentTypeEnum.Review]: {},
 };
 
-export const validateStep = (
+export const validateStepData = (
   stepId: ContentType,
   data: AccountFormData,
 ): {
-  fieldValidation: Record<string, FieldValidation>;
+  stepFieldValidation: Record<string, FieldValidation>;
   stepStatus: ValidationStatus;
 } => {
-  const rules = stepFieldRules[stepId];
-  const fieldValidation: Record<string, FieldValidation> = {};
+  const rules = stepValidationRules[stepId];
+  const stepFieldValidation: Record<string, FieldValidation> = {};
   Object.keys(rules).forEach((field) => {
-    fieldValidation[field] = rules[field](
+    stepFieldValidation[field] = rules[field](
       data[field as keyof AccountFormData] || "",
       data,
     );
   });
-  const stepStatus = deriveStepStatus(
-    fieldValidation as Record<string, { status?: ValidationStatus }>,
+  const stepStatus = deriveStepValidationStatus(
+    stepFieldValidation as Record<string, { status?: ValidationStatus }>,
   );
-  return { fieldValidation, stepStatus };
+  return { stepFieldValidation, stepStatus };
 };
 
-export const deriveStepStatus = (
+export const deriveStepValidationStatus = (
   fields: Record<string, { status?: ValidationStatus }>,
 ): ValidationStatus => {
   if (Object.values(fields).some((f) => f.status === "error")) return "error";
@@ -114,25 +114,25 @@ export const deriveStepStatus = (
 export const useWizard = (
   steps: readonly { id: ContentType; label: string }[],
 ) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStepIndex, setActiveStep] = useState(0);
   const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-  const [validationByStep, setValidationByStep] = useState<{
+  const [validationsByStep, setStepValidations] = useState<{
     [stepId: string]: {
       fields: Record<string, FieldValidation>;
       status?: ValidationStatus;
     };
   }>({});
 
-  const currentStepId = steps[activeStep].id;
+  const currentStepId = steps[activeStepIndex].id;
 
   const validateCurrentStep = useCallback(() => {
-    const { fieldValidation: fv, stepStatus } = validateStep(
+    const { stepFieldValidation, stepStatus } = validateStepData(
       currentStepId,
       formData,
     );
-    setValidationByStep((prev) => ({
+    setStepValidations((prev) => ({
       ...prev,
-      [currentStepId]: { fields: fv, status: stepStatus },
+      [currentStepId]: { fields: stepFieldValidation, status: stepStatus },
     }));
     return stepStatus !== "error";
   }, [currentStepId, formData]);
@@ -148,28 +148,28 @@ export const useWizard = (
   const reset = useCallback(() => {
     setActiveStep(0);
     setFormData(initialFormData);
-    setValidationByStep({});
+    setStepValidations({});
   }, []);
 
-  const fieldValidation = validationByStep[currentStepId]?.fields || {};
-  const stepValidation = Object.fromEntries(
-    Object.entries(validationByStep).map(([id, v]) => [
+  const stepFieldValidation = validationsByStep[currentStepId]?.fields || {};
+  const stepsStatusMap = Object.fromEntries(
+    Object.entries(validationsByStep).map(([id, v]) => [
       id,
       { status: v.status },
     ]),
   );
 
   return {
-    activeStep,
+    activeStepIndex,
     currentStepId,
     formData,
     setFormData,
-    stepValidation,
-    fieldValidation,
+    stepsStatusMap,
+    stepFieldValidation,
     validateCurrentStep,
     next,
     previous,
     reset,
-    setValidationByStep,
+    setStepValidations,
   };
 };
