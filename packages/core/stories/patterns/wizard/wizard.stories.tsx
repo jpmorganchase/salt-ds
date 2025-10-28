@@ -972,19 +972,21 @@ export const Horizontal = () => {
   return (
     <>
       <StackLayout
-        gap={3}
-        padding={3}
         style={{
           width: 730,
           height: 588,
         }}
+        gap={0}
       >
-        <FlexItem>{header}</FlexItem>
+        <FlexItem padding={3} style={{ paddingBottom: 0 }}>
+          {header}
+        </FlexItem>
         <FlexItem
           grow={1}
           style={{
             overflowY: "hidden",
           }}
+          padding={3}
         >
           {renderActiveContent()}
         </FlexItem>
