@@ -30,6 +30,7 @@ Preheader
 Selectability
 Stackable
 Stickersheet
+Stickersheets
 Substep
 Substeps
 Subvalue
