@@ -333,12 +333,7 @@ const AdditionalInfoForm = ({
   };
 
   return (
-    <StackLayout
-      gap={3}
-      as="form"
-      onSubmit={onSubmitForm}
-      style={{ height: "100%" }}
-    >
+    <StackLayout gap={3} style={{ height: "100%" }}>
       <FlexItem grow={1} style={{ width: "50%" }}>
         <AdditionalInfoContent
           formData={formData}
@@ -365,7 +360,7 @@ const AdditionalInfoForm = ({
           Previous
         </Button>
 
-        <Button sentiment="accented" type="submit">
+        <Button sentiment="accented" onClick={onSubmitForm}>
           Next
         </Button>
       </FlexLayout>
@@ -437,12 +432,7 @@ const AccountTypeForm = ({
     handleNext();
   };
   return (
-    <StackLayout
-      gap={3}
-      as="form"
-      onSubmit={onSubmitForm}
-      style={{ height: "100%" }}
-    >
+    <StackLayout gap={3} style={{ height: "100%" }}>
       <FlexItem grow={1}>
         <AccountTypeContent
           formData={formData}
@@ -468,7 +458,7 @@ const AccountTypeForm = ({
           Previous
         </Button>
 
-        <Button sentiment="accented" type="submit">
+        <Button sentiment="accented" onClick={onSubmitForm}>
           Next
         </Button>
       </FlexLayout>
@@ -640,12 +630,7 @@ const AccountDetailsForm = ({
   };
 
   return (
-    <StackLayout
-      gap={3}
-      style={{ height: "100%" }}
-      as="form"
-      onSubmit={onSubmitForm}
-    >
+    <StackLayout gap={3} style={{ height: "100%" }}>
       <FlexItem grow={1}>
         <AccountDetailsContent
           formData={formData}
@@ -663,7 +648,7 @@ const AccountDetailsForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit" sentiment="accented">
+        <Button sentiment="accented" onClick={onSubmitForm}>
           Next
         </Button>
       </FlexLayout>
@@ -850,12 +835,7 @@ const ReviewAccountForm = ({
     handleNext?.();
   };
   return (
-    <StackLayout
-      gap={3}
-      style={{ height: "100%" }}
-      as="form"
-      onSubmit={handleSubmit}
-    >
+    <StackLayout gap={3} style={{ height: "100%" }}>
       <FlexItem grow={1} style={{ overflowY: "auto" }}>
         <ReviewAccountContent formData={formData} />
       </FlexItem>
@@ -876,7 +856,7 @@ const ReviewAccountForm = ({
           Previous
         </Button>
 
-        <Button sentiment="accented" type="submit">
+        <Button sentiment="accented" onClick={handleSubmit}>
           Create
         </Button>
       </FlexLayout>
@@ -1411,15 +1391,7 @@ export const Modal = () => {
                     }
                   />
                   <DialogContent>
-                    <FlowLayout
-                      as="form"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleNextClick();
-                      }}
-                    >
-                      {renderActiveContent()}
-                    </FlowLayout>
+                    <FlowLayout>{renderActiveContent()}</FlowLayout>
                   </DialogContent>
                   <DialogActions>
                     {direction === "column" ? (
