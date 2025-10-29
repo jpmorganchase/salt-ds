@@ -1,4 +1,6 @@
 import {
+  Banner,
+  BannerContent,
   Button,
   Dialog,
   DialogActions,
@@ -235,10 +237,7 @@ const AdditionalInfoContent = ({
 }: FormContentProps) => {
   return (
     <FlowLayout>
-      <FormField
-        necessity="optional"
-        validationStatus={stepFieldValidation.initialDeposit?.status}
-      >
+      <FormField validationStatus={stepFieldValidation.initialDeposit?.status}>
         <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
         <Input
           placeholder="0.00"
@@ -256,7 +255,7 @@ const AdditionalInfoContent = ({
           </FormFieldHelperText>
         )}
       </FormField>
-      <FormField necessity="optional">
+      <FormField>
         <FormFieldLabel>Beneficiary Name</FormFieldLabel>
         <Input
           inputProps={{
@@ -267,7 +266,7 @@ const AdditionalInfoContent = ({
           }}
         />
       </FormField>
-      <FormField necessity="optional">
+      <FormField>
         <FormFieldLabel>Source of Funds</FormFieldLabel>
         <Input
           inputProps={{
@@ -278,7 +277,7 @@ const AdditionalInfoContent = ({
           }}
         />
       </FormField>
-      <FormField necessity="optional">
+      <FormField>
         <FormFieldLabel>Paperless Statements</FormFieldLabel>
         <Dropdown
           name="paperlessStatements"
@@ -877,6 +876,147 @@ export const Horizontal = () => {
     stepFieldValidation,
     validateCurrentStep,
   } = useWizard(wizardSteps);
+  const [successOpen, setSuccessOpen] = useState(false);
+
+  const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
+    const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
+    setStepValidations((prev) => ({
+      ...prev,
+      [stepId]: { fields: stepFieldValidation, status: stepStatus },
+    }));
+  };
+
+  const handleNext = () => {
+    if (!validateCurrentStep()) return;
+    next();
+  };
+
+  const sharedFormProps = {
+    formData,
+    setFormData,
+    handleCancel: reset,
+    handleNext,
+    handlePrevious: previous,
+    stepFieldValidation,
+    updateStepValidation,
+    stepsStatusMap,
+  };
+
+  const renderActiveContent = () => {
+    const currentStepId = wizardSteps[activeStepIndex].id;
+    switch (currentStepId) {
+      case ContentTypeEnum.AccountDetails:
+        return (
+          <AccountDetailsForm stepId={currentStepId} {...sharedFormProps} />
+        );
+      case ContentTypeEnum.AccountType:
+        return <AccountTypeForm stepId={currentStepId} {...sharedFormProps} />;
+      case ContentTypeEnum.AdditionalInfo:
+        return (
+          <AdditionalInfoForm stepId={currentStepId} {...sharedFormProps} />
+        );
+      case ContentTypeEnum.Review:
+        return (
+          <ReviewAccountForm stepId={currentStepId} {...sharedFormProps} />
+        );
+      default:
+        return null;
+    }
+  };
+
+  const header = (
+    <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
+      <Text>
+        Create a new account
+        <Text color="primary" styleAs="h2">
+          {wizardSteps[activeStepIndex].label}
+        </Text>
+        {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
+          <Text
+            style={{
+              color: "var(--salt-content-secondary-foreground)",
+              marginTop: "var(--salt-spacing-fixed-400)",
+            }}
+          >
+            All fields are optional
+          </Text>
+        )}
+      </Text>
+
+      <Stepper orientation="horizontal" style={{ width: 340 }}>
+        {wizardSteps.map((step, index) => (
+          <Step
+            key={step.id}
+            label={step.label}
+            status={stepsStatusMap[step.id]?.status}
+            stage={getStepStage(index, activeStepIndex)}
+          />
+        ))}
+      </Stepper>
+    </FlexLayout>
+  );
+
+  return (
+    <>
+      <StackLayout
+        style={{
+          width: 730,
+          height: 588,
+        }}
+        gap={0}
+      >
+        <FlexItem padding={3} style={{ paddingBottom: 0 }}>
+          {header}
+        </FlexItem>
+        <FlexItem
+          grow={1}
+          style={{
+            overflowY: "hidden",
+          }}
+          padding={3}
+        >
+          {renderActiveContent()}
+        </FlexItem>
+      </StackLayout>
+      <AccountCreatedSuccessDialog
+        open={successOpen}
+        onOpenChange={(open) => {
+          setSuccessOpen(open);
+          if (!open) {
+            reset();
+            setSuccessOpen(false);
+          }
+        }}
+        onConfirm={() => {
+          reset();
+          setSuccessOpen(false);
+        }}
+      />
+
+      <Banner
+        status="warning"
+        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
+      >
+        <BannerContent>
+          Wizard has not been optimized for mobile or smaller screens
+        </BannerContent>
+      </Banner>
+    </>
+  );
+};
+export const HorizontalWithCancelConfirmation = () => {
+  const {
+    activeStepIndex,
+    formData,
+    setFormData,
+    stepsStatusMap,
+    next,
+    previous,
+    reset,
+    setStepValidations,
+    stepFieldValidation,
+    validateCurrentStep,
+  } = useWizard(wizardSteps);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
@@ -939,6 +1079,16 @@ export const Horizontal = () => {
         <Text color="primary" styleAs="h2">
           {wizardSteps[activeStepIndex].label}
         </Text>
+        {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
+          <Text
+            style={{
+              color: "var(--salt-content-secondary-foreground)",
+              marginTop: "var(--salt-spacing-fixed-400)",
+            }}
+          >
+            All fields are optional
+          </Text>
+        )}
       </Text>
 
       <Stepper orientation="horizontal" style={{ width: 340 }}>
@@ -998,11 +1148,20 @@ export const Horizontal = () => {
           setSuccessOpen(false);
         }}
       />
+
+      <Banner
+        status="warning"
+        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
+      >
+        <BannerContent>
+          Wizard has not been optimized for mobile or smaller screens
+        </BannerContent>
+      </Banner>
     </>
   );
 };
 
-export const Vertical = () => {
+export const VerticalWithCancelConfirmation = () => {
   const {
     activeStepIndex,
     formData,
@@ -1076,6 +1235,16 @@ export const Vertical = () => {
       <Text color="primary" styleAs="h2">
         {wizardSteps[activeStepIndex].label}
       </Text>
+      {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
+        <Text
+          style={{
+            color: "var(--salt-content-secondary-foreground)",
+            marginTop: "var(--salt-spacing-fixed-400)",
+          }}
+        >
+          All fields are optional
+        </Text>
+      )}
     </StackLayout>
   );
 
@@ -1129,11 +1298,209 @@ export const Vertical = () => {
           setSuccessOpen(false);
         }}
       />
+      <Banner
+        status="warning"
+        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
+      >
+        <BannerContent>
+          Wizard has not been optimized for mobile or smaller screens
+        </BannerContent>
+      </Banner>
     </>
   );
 };
 
 export const Modal = () => {
+  const [open, setOpen] = useState(false);
+  const {
+    activeStepIndex,
+    formData,
+    setFormData,
+    stepsStatusMap,
+    stepFieldValidation,
+    validateCurrentStep,
+    next,
+    previous,
+    reset,
+    setStepValidations,
+  } = useWizard(wizardSteps);
+
+  const openWizard = () => {
+    reset();
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => setOpen(value);
+
+  const closeWizardAndReset = () => {
+    setOpen(false);
+    setTimeout(() => {
+      reset();
+    }, 300);
+  };
+
+  const stepId = wizardSteps[activeStepIndex].id;
+
+  const updateStepValidation = (data: AccountFormData, id: ContentType) => {
+    const { stepFieldValidation, stepStatus } = validateStepData(id, data);
+    setStepValidations((prev) => ({
+      ...prev,
+      [id]: { fields: stepFieldValidation, status: stepStatus },
+    }));
+  };
+
+  const handleNextClick = () => {
+    const isLast = activeStepIndex === wizardSteps.length - 1;
+    if (!validateCurrentStep()) return;
+    if (isLast) closeWizardAndReset();
+    else next();
+  };
+
+  const handlePreviousClick = () => {
+    if (activeStepIndex === 0) return;
+    previous();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+
+  const handleSelectChange = (value: string, name: string) => {
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(formData, stepId);
+    }
+  };
+
+  const sharedFormProps = {
+    formData,
+    handleInputChange,
+    handleInputBlur,
+    handleSelectChange,
+    stepFieldValidation,
+  };
+
+  const renderActiveContent = () => {
+    const currentStepId = wizardSteps[activeStepIndex].id;
+    switch (currentStepId) {
+      case ContentTypeEnum.AccountDetails:
+        return <AccountDetailsContent {...sharedFormProps} />;
+      case ContentTypeEnum.AccountType:
+        return <AccountTypeContent {...sharedFormProps} />;
+      case ContentTypeEnum.AdditionalInfo:
+        return (
+          <div style={{ width: "50%" }}>
+            <AdditionalInfoContent {...sharedFormProps} />
+          </div>
+        );
+      case ContentTypeEnum.Review:
+        return <ReviewAccountContent formData={formData} />;
+      default:
+        return null;
+    }
+  };
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={closeWizardAndReset}
+    >
+      Cancel
+    </Button>
+  );
+
+  const nextBtn = (
+    <Button sentiment="accented" onClick={handleNextClick}>
+      {activeStepIndex === wizardSteps.length - 1 ? "Create" : "Next"}
+    </Button>
+  );
+  const prevBtn = activeStepIndex > 0 && (
+    <Button
+      sentiment="accented"
+      appearance="bordered"
+      onClick={handlePreviousClick}
+    >
+      Previous
+    </Button>
+  );
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={openWizard}>
+        Open wizard
+      </Button>
+      <Banner
+        status="warning"
+        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
+      >
+        <BannerContent>
+          Wizard has not been optimized for mobile or smaller screens
+        </BannerContent>
+      </Banner>
+      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+        <DialogHeader
+          header={wizardSteps[activeStepIndex].label}
+          preheader="Create a new account"
+          actions={
+            <Stepper orientation="horizontal" style={{ width: 300 }}>
+              {wizardSteps.map((step, index) => (
+                <Step
+                  key={step.id}
+                  label={step.label}
+                  status={stepsStatusMap[step.id]?.status}
+                  stage={getStepStage(index, activeStepIndex)}
+                />
+              ))}
+            </Stepper>
+          }
+        />
+
+        <DialogContent>
+          <FlowLayout>{renderActiveContent()}</FlowLayout>
+        </DialogContent>
+        <DialogActions>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {nextBtn}
+              {prevBtn}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {prevBtn}
+              {nextBtn}
+            </FlexLayout>
+          )}
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+export const ModalWithConfirmations = () => {
   type WizardState = "form" | "cancel-warning" | "success";
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
@@ -1289,6 +1656,14 @@ export const Modal = () => {
       <Button data-testid="dialog-button" onClick={openWizard}>
         Open wizard
       </Button>
+      <Banner
+        status="warning"
+        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
+      >
+        <BannerContent>
+          Wizard has not been optimized for mobile or smaller screens
+        </BannerContent>
+      </Banner>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
@@ -1390,6 +1765,7 @@ export const Modal = () => {
                       </Stepper>
                     }
                   />
+
                   <DialogContent>
                     <FlowLayout>{renderActiveContent()}</FlowLayout>
                   </DialogContent>
