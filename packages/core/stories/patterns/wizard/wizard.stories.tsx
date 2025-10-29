@@ -56,7 +56,6 @@ interface FormProps {
   handlePrevious?: () => void;
   stepFieldValidation: Record<string, FieldValidation>;
   updateStepValidation: (data: AccountFormData, stepId: ContentType) => void;
-  stepsStatusMap: Record<string, { status?: ValidationStatus }>;
 }
 
 interface FormContentProps {
@@ -305,7 +304,6 @@ const AdditionalInfoForm = ({
   formData,
   stepFieldValidation,
   updateStepValidation,
-  stepsStatusMap,
 }: FormProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -333,7 +331,6 @@ const AdditionalInfoForm = ({
     if (!handleNext) return;
     handleNext();
   };
-  const stepHasErrors = stepsStatusMap[stepId]?.status === "error";
 
   return (
     <StackLayout
@@ -368,7 +365,7 @@ const AdditionalInfoForm = ({
           Previous
         </Button>
 
-        <Button sentiment="accented" type="submit" disabled={stepHasErrors}>
+        <Button sentiment="accented" type="submit">
           Next
         </Button>
       </FlexLayout>
@@ -424,7 +421,6 @@ const AccountTypeForm = ({
   formData,
   stepFieldValidation,
   updateStepValidation,
-  stepsStatusMap,
 }: FormProps) => {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
@@ -440,7 +436,6 @@ const AccountTypeForm = ({
     if (!handleNext) return;
     handleNext();
   };
-  const stepHasErrors = stepsStatusMap[stepId]?.status === "error";
   return (
     <StackLayout
       gap={3}
@@ -473,7 +468,7 @@ const AccountTypeForm = ({
           Previous
         </Button>
 
-        <Button sentiment="accented" type="submit" disabled={stepHasErrors}>
+        <Button sentiment="accented" type="submit">
           Next
         </Button>
       </FlexLayout>
@@ -619,7 +614,6 @@ const AccountDetailsForm = ({
   formData,
   stepFieldValidation,
   updateStepValidation,
-  stepsStatusMap,
 }: FormProps) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -645,8 +639,6 @@ const AccountDetailsForm = ({
     handleNext();
   };
 
-  const stepHasErrors = stepsStatusMap[stepId]?.status === "error";
-
   return (
     <StackLayout
       gap={3}
@@ -671,7 +663,7 @@ const AccountDetailsForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit" sentiment="accented" disabled={stepHasErrors}>
+        <Button type="submit" sentiment="accented">
           Next
         </Button>
       </FlexLayout>
@@ -1290,17 +1282,8 @@ export const Modal = () => {
     </Button>
   );
 
-  const getIsNextDisabled = () => {
-    const stepId = wizardSteps[activeStepIndex].id;
-    return stepsStatusMap[stepId]?.status === "error";
-  };
-
   const nextBtn = (
-    <Button
-      sentiment="accented"
-      onClick={handleNextClick}
-      disabled={getIsNextDisabled()}
-    >
+    <Button sentiment="accented" onClick={handleNextClick}>
       {activeStepIndex === wizardSteps.length - 1 ? "Create" : "Next"}
     </Button>
   );
@@ -1314,6 +1297,13 @@ export const Modal = () => {
     </Button>
   );
 
+  const wizardStatus =
+    wizardState === "cancel-warning"
+      ? "warning"
+      : wizardState === "success"
+        ? "success"
+        : undefined;
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={openWizard}>
@@ -1322,13 +1312,7 @@ export const Modal = () => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        status={
-          wizardState === "cancel-warning"
-            ? "warning"
-            : wizardState === "success"
-              ? "success"
-              : undefined
-        }
+        status={wizardStatus}
         style={{ height: 588 }}
       >
         {(() => {
