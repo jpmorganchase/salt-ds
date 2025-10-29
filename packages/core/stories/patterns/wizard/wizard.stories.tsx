@@ -1500,6 +1500,7 @@ export const Modal = () => {
     </>
   );
 };
+
 export const ModalWithConfirmations = () => {
   type WizardState = "form" | "cancel-warning" | "success";
   const [wizardState, setWizardState] = useState<WizardState>("form");
@@ -1523,8 +1524,6 @@ export const ModalWithConfirmations = () => {
     setOpen(true);
   };
 
-  const onOpenChange = (value: boolean) => setOpen(value);
-
   const closeWizardAndReset = () => {
     setOpen(false);
     setTimeout(() => {
@@ -1537,6 +1536,15 @@ export const ModalWithConfirmations = () => {
   const showCancelWarning = () => setWizardState("cancel-warning");
   const backToForm = () => setWizardState("form");
   const stepId = wizardSteps[activeStepIndex].id;
+  const isLast = activeStepIndex === wizardSteps.length - 1;
+
+  const onOpenChange = (value: boolean) => {
+    if (!value && !isLast) {
+      showCancelWarning();
+      return;
+    }
+    setOpen(value);
+  };
 
   const updateStepValidation = (data: AccountFormData, id: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(id, data);
@@ -1547,7 +1555,6 @@ export const ModalWithConfirmations = () => {
   };
 
   const handleNextClick = () => {
-    const isLast = activeStepIndex === wizardSteps.length - 1;
     if (!validateCurrentStep()) return;
     if (isLast) createAccount();
     else next();
