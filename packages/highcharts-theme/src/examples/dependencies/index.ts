@@ -2,6 +2,7 @@ export { areaOptions } from "./areaOptions";
 export { barOptions } from "./barOptions";
 export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
+export { candlestickOptions } from "./candlestickOptions";
 export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
 export { lineOptions } from "./lineOptions";
