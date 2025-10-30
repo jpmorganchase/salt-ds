@@ -5,10 +5,7 @@
   max-height: inherit;
   flex: 1;
   box-sizing: border-box;
-}
-
-.overflowContent-overflow {
-  padding-right: var(--salt-spacing-100);
+  padding: 0 var(--salt-spacing-300);
 }
 
 .overflowContent-scrollTop.overflowContent-inner {

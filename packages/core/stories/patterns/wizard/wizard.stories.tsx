@@ -54,10 +54,10 @@ export default {
   title: "Patterns/Wizard",
   decorators: [
     (story) => (
-      <div>
+      <>
         <div className="mobileBanner">{mobileWarningBanner}</div>
         {story()}
-      </div>
+      </>
     ),
   ],
 } as Meta;
@@ -103,6 +103,7 @@ const ContentOverflow = ({
 
   const withBaseName = (name = "") =>
     `overflowContent${name ? `-${name}` : ""}`;
+
   return (
     <div className={clsx(withBaseName)}>
       <div
@@ -110,7 +111,6 @@ const ContentOverflow = ({
         onScrollCapture={handleScroll}
         ref={divRef}
         className={clsx(withBaseName("inner"), {
-          [withBaseName("overflow")]: isOverflowing,
           [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
           [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
         })}
@@ -704,7 +704,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
               defaultSelected={[formData.paperlessStatements]}
               readOnly
             >
-              <Option value="Please select" />
+              <Option value="">Please select</Option>
               <Option value="Yes" />
               <Option value="No" />
             </Dropdown>
@@ -738,12 +738,7 @@ export const Horizontal = () => {
     }));
   };
 
-  const handleNext = () => {
-    if (!validateCurrentStep()) return;
-    next();
-  };
-
-  const stepId = wizardSteps[activeStepIndex].id;
+  const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
@@ -751,29 +746,31 @@ export const Horizontal = () => {
     const { name, value } = e.target;
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(formData, currentStepId);
     }
   };
   const handleSelectChange = (value: string, name: string) => {
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
-  const handleSuccess = () => setSuccessOpen(true);
 
-  const onSubmitForm = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!handleNext) return;
-    handleNext();
+  const onSubmitForm = () => {
+    if (isLastStep) {
+      setSuccessOpen(true);
+      return;
+    }
+    if (!validateCurrentStep()) return;
+    next();
   };
 
   const sharedFormProps = {
@@ -784,65 +781,55 @@ export const Horizontal = () => {
     handleSelectChange,
   };
 
-  const renderActiveContent = () => {
-    const currentStepId = wizardSteps[activeStepIndex].id;
-    switch (currentStepId) {
-      case ContentTypeEnum.AccountDetails:
-        return <AccountDetailsContent {...sharedFormProps} />;
-      case ContentTypeEnum.AccountType:
-        return <AccountTypeContent {...sharedFormProps} />;
-      case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoContent
-            {...sharedFormProps}
-            style={{ width: "50%" }}
-          />
-        );
-      case ContentTypeEnum.Review:
-        return <ReviewAccountContent {...sharedFormProps} />;
-      default:
-        return null;
-    }
+  const contentByStep = {
+    [ContentTypeEnum.AccountDetails]: (
+      <AccountDetailsContent {...sharedFormProps} />
+    ),
+    [ContentTypeEnum.AccountType]: <AccountTypeContent {...sharedFormProps} />,
+    [ContentTypeEnum.AdditionalInfo]: (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    [ContentTypeEnum.Review]: <ReviewAccountContent formData={formData} />,
   };
 
   const header = (
-    <FlexLayout
-      justify="space-between"
-      align="start"
-      style={{ width: "100%", minHeight: "6rem" }}
-    >
-      <Text>
-        Create a new account
-        <Text color="primary" styleAs="h2">
-          {wizardSteps[activeStepIndex].label}
-        </Text>
-        {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
-          <Text
-            color="secondary"
-            style={{
-              marginTop: "var(--salt-spacing-fixed-400)",
-            }}
-          >
-            All fields are optional
+    <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
+      <FlexItem style={{ flex: 1 }}>
+        <Text>
+          Create a new account
+          <Text color="primary" styleAs="h2">
+            {wizardSteps[activeStepIndex].label}
           </Text>
-        )}
-      </Text>
-
-      <Stepper orientation="horizontal" style={{ maxWidth: 340 }}>
-        {wizardSteps.map((step, index) => (
-          <Step
-            key={step.id}
-            label={step.label}
-            status={stepsStatusMap[step.id]?.status}
-            stage={getStepStage(index, activeStepIndex)}
-          />
-        ))}
-      </Stepper>
+          {wizardSteps[activeStepIndex].id ===
+            ContentTypeEnum.AdditionalInfo && (
+            <Text
+              color="secondary"
+              style={{
+                marginTop: "var(--salt-spacing-fixed-400)",
+              }}
+            >
+              All fields are optional
+            </Text>
+          )}
+        </Text>
+      </FlexItem>
+      <FlexItem style={{ flex: 1 }}>
+        <Stepper orientation="horizontal">
+          {wizardSteps.map((step, index) => (
+            <Step
+              key={step.id}
+              label={step.label}
+              status={stepsStatusMap[step.id]?.status}
+              stage={getStepStage(index, activeStepIndex)}
+            />
+          ))}
+        </Stepper>
+      </FlexItem>
     </FlexLayout>
   );
 
   const footer = (
-    <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
+    <FlexLayout gap={1} justify="end" padding={3}>
       <Button sentiment="accented" appearance="transparent" onClick={reset}>
         Cancel
       </Button>
@@ -851,10 +838,7 @@ export const Horizontal = () => {
           Previous
         </Button>
       )}
-      <Button
-        sentiment="accented"
-        onClick={isLastStep ? handleSuccess : onSubmitForm}
-      >
+      <Button sentiment="accented" onClick={onSubmitForm}>
         Next
       </Button>
     </FlexLayout>
@@ -868,12 +852,10 @@ export const Horizontal = () => {
         }}
         gap={0}
       >
-        <FlexItem padding={3} style={{ paddingBottom: 0 }}>
-          {header}
-        </FlexItem>
-        <FlexItem grow={1} padding={3}>
+        <FlexItem padding={3}>{header}</FlexItem>
+        <FlexItem grow={1}>
           <ContentOverflow style={{ height: 396 }}>
-            {renderActiveContent()}
+            {contentByStep[currentStepId]}
           </ContentOverflow>
         </FlexItem>
         {footer}
@@ -920,12 +902,7 @@ export const HorizontalWithCancelConfirmation = () => {
     }));
   };
 
-  const handleNext = () => {
-    if (!validateCurrentStep()) return;
-    next();
-  };
-
-  const stepId = wizardSteps[activeStepIndex].id;
+  const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
@@ -933,28 +910,31 @@ export const HorizontalWithCancelConfirmation = () => {
     const { name, value } = e.target;
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(formData, currentStepId);
     }
   };
   const handleSelectChange = (value: string, name: string) => {
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
 
-  const onSubmitForm = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!handleNext) return;
-    handleNext();
+  const onSubmitForm = () => {
+    if (isLastStep) {
+      setSuccessOpen(true);
+      return;
+    }
+    if (!validateCurrentStep()) return;
+    next();
   };
 
   const sharedFormProps = {
@@ -965,68 +945,57 @@ export const HorizontalWithCancelConfirmation = () => {
     handleSelectChange,
   };
 
-  const handleSuccess = () => setSuccessOpen(true);
   const openCancelDialog = () => setCancelOpen(true);
 
-  const renderActiveContent = () => {
-    const currentStepId = wizardSteps[activeStepIndex].id;
-    switch (currentStepId) {
-      case ContentTypeEnum.AccountDetails:
-        return <AccountDetailsContent {...sharedFormProps} />;
-      case ContentTypeEnum.AccountType:
-        return <AccountTypeContent {...sharedFormProps} />;
-      case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoContent
-            {...sharedFormProps}
-            style={{ width: "50%" }}
-          />
-        );
-      case ContentTypeEnum.Review:
-        return <ReviewAccountContent {...sharedFormProps} />;
-      default:
-        return null;
-    }
+  const contentByStep = {
+    [ContentTypeEnum.AccountDetails]: (
+      <AccountDetailsContent {...sharedFormProps} />
+    ),
+    [ContentTypeEnum.AccountType]: <AccountTypeContent {...sharedFormProps} />,
+    [ContentTypeEnum.AdditionalInfo]: (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    [ContentTypeEnum.Review]: <ReviewAccountContent formData={formData} />,
   };
 
   const header = (
-    <FlexLayout
-      justify="space-between"
-      align="start"
-      style={{ width: "100%", minHeight: "6rem" }}
-    >
-      <Text>
-        Create a new account
-        <Text color="primary" styleAs="h2">
-          {wizardSteps[activeStepIndex].label}
-        </Text>
-        {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
-          <Text
-            color="secondary"
-            style={{
-              marginTop: "var(--salt-spacing-fixed-400)",
-            }}
-          >
-            All fields are optional
+    <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
+      <FlexItem style={{ flex: 1 }}>
+        <Text>
+          Create a new account
+          <Text color="primary" styleAs="h2">
+            {wizardSteps[activeStepIndex].label}
           </Text>
-        )}
-      </Text>
-
-      <Stepper orientation="horizontal" style={{ width: 340 }}>
-        {wizardSteps.map((step, index) => (
-          <Step
-            key={step.id}
-            label={step.label}
-            status={stepsStatusMap[step.id]?.status}
-            stage={getStepStage(index, activeStepIndex)}
-          />
-        ))}
-      </Stepper>
+          {wizardSteps[activeStepIndex].id ===
+            ContentTypeEnum.AdditionalInfo && (
+            <Text
+              color="secondary"
+              style={{
+                marginTop: "var(--salt-spacing-fixed-400)",
+              }}
+            >
+              All fields are optional
+            </Text>
+          )}
+        </Text>
+      </FlexItem>
+      <FlexItem style={{ flex: 1 }}>
+        <Stepper orientation="horizontal">
+          {wizardSteps.map((step, index) => (
+            <Step
+              key={step.id}
+              label={step.label}
+              status={stepsStatusMap[step.id]?.status}
+              stage={getStepStage(index, activeStepIndex)}
+            />
+          ))}
+        </Stepper>
+      </FlexItem>
     </FlexLayout>
   );
 
   const footer = (
-    <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
+    <FlexLayout gap={1} justify="end" padding={3}>
       <Button
         sentiment="accented"
         appearance="transparent"
@@ -1041,10 +1010,7 @@ export const HorizontalWithCancelConfirmation = () => {
         </Button>
       )}
 
-      <Button
-        sentiment="accented"
-        onClick={isLastStep ? handleSuccess : onSubmitForm}
-      >
+      <Button sentiment="accented" onClick={onSubmitForm}>
         Next
       </Button>
     </FlexLayout>
@@ -1059,12 +1025,10 @@ export const HorizontalWithCancelConfirmation = () => {
         }}
         gap={0}
       >
-        <FlexItem padding={3} style={{ paddingBottom: 0 }}>
-          {header}
-        </FlexItem>
-        <FlexItem grow={1} padding={3}>
+        <FlexItem padding={3}>{header}</FlexItem>
+        <FlexItem grow={1}>
           <ContentOverflow style={{ height: 396 }}>
-            {renderActiveContent()}
+            {contentByStep[currentStepId]}
           </ContentOverflow>
         </FlexItem>
         {footer}
@@ -1111,8 +1075,6 @@ export const VerticalWithCancelConfirmation = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const handleSuccess = () => setSuccessOpen(true);
-
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -1121,12 +1083,7 @@ export const VerticalWithCancelConfirmation = () => {
     }));
   };
 
-  const handleNext = () => {
-    if (!validateCurrentStep()) return;
-    next();
-  };
-
-  const stepId = wizardSteps[activeStepIndex].id;
+  const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
@@ -1134,28 +1091,31 @@ export const VerticalWithCancelConfirmation = () => {
     const { name, value } = e.target;
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(formData, currentStepId);
     }
   };
   const handleSelectChange = (value: string, name: string) => {
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
 
-  const onSubmitForm = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!handleNext) return;
-    handleNext();
+  const onSubmitForm = () => {
+    if (isLastStep) {
+      setSuccessOpen(true);
+      return;
+    }
+    if (!validateCurrentStep()) return;
+    next();
   };
 
   const openCancelDialog = () => setCancelOpen(true);
@@ -1168,25 +1128,15 @@ export const VerticalWithCancelConfirmation = () => {
     handleSelectChange,
   };
 
-  const renderActiveContent = () => {
-    const currentStepId = wizardSteps[activeStepIndex].id;
-    switch (currentStepId) {
-      case ContentTypeEnum.AccountDetails:
-        return <AccountDetailsContent {...sharedFormProps} />;
-      case ContentTypeEnum.AccountType:
-        return <AccountTypeContent {...sharedFormProps} />;
-      case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoContent
-            {...sharedFormProps}
-            style={{ width: "50%" }}
-          />
-        );
-      case ContentTypeEnum.Review:
-        return <ReviewAccountContent {...sharedFormProps} />;
-      default:
-        return null;
-    }
+  const contentByStep = {
+    [ContentTypeEnum.AccountDetails]: (
+      <AccountDetailsContent {...sharedFormProps} />
+    ),
+    [ContentTypeEnum.AccountType]: <AccountTypeContent {...sharedFormProps} />,
+    [ContentTypeEnum.AdditionalInfo]: (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    [ContentTypeEnum.Review]: <ReviewAccountContent formData={formData} />,
   };
 
   const header = (
@@ -1224,10 +1174,7 @@ export const VerticalWithCancelConfirmation = () => {
         </Button>
       )}
 
-      <Button
-        sentiment="accented"
-        onClick={isLastStep ? handleSuccess : onSubmitForm}
-      >
+      <Button sentiment="accented" onClick={onSubmitForm}>
         Next
       </Button>
     </FlexLayout>
@@ -1259,7 +1206,7 @@ export const VerticalWithCancelConfirmation = () => {
                 </Stepper>
               </GridItem>
               <GridItem colSpan={2} padding={1}>
-                {renderActiveContent()}
+                {contentByStep[currentStepId]}
               </GridItem>
             </GridLayout>
           </StackLayout>
@@ -1321,7 +1268,7 @@ export const Modal = () => {
     }, 300);
   };
 
-  const stepId = wizardSteps[activeStepIndex].id;
+  const currentStepId = wizardSteps[activeStepIndex].id;
 
   const updateStepValidation = (data: AccountFormData, id: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(id, data);
@@ -1347,23 +1294,23 @@ export const Modal = () => {
     const { name, value } = e.target;
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
 
   const handleSelectChange = (value: string, name: string) => {
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
 
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(formData, currentStepId);
     }
   };
 
@@ -1375,25 +1322,15 @@ export const Modal = () => {
     stepFieldValidation,
   };
 
-  const renderActiveContent = () => {
-    const currentStepId = wizardSteps[activeStepIndex].id;
-    switch (currentStepId) {
-      case ContentTypeEnum.AccountDetails:
-        return <AccountDetailsContent {...sharedFormProps} />;
-      case ContentTypeEnum.AccountType:
-        return <AccountTypeContent {...sharedFormProps} />;
-      case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoContent
-            {...sharedFormProps}
-            style={{ width: "50%" }}
-          />
-        );
-      case ContentTypeEnum.Review:
-        return <ReviewAccountContent formData={formData} />;
-      default:
-        return null;
-    }
+  const contentByStep = {
+    [ContentTypeEnum.AccountDetails]: (
+      <AccountDetailsContent {...sharedFormProps} />
+    ),
+    [ContentTypeEnum.AccountType]: <AccountTypeContent {...sharedFormProps} />,
+    [ContentTypeEnum.AdditionalInfo]: (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    [ContentTypeEnum.Review]: <ReviewAccountContent formData={formData} />,
   };
 
   const direction: StackLayoutProps<ElementType>["direction"] =
@@ -1458,7 +1395,7 @@ export const Modal = () => {
         />
 
         <DialogContent>
-          <FlowLayout>{renderActiveContent()}</FlowLayout>
+          <FlowLayout>{contentByStep[currentStepId]}</FlowLayout>
         </DialogContent>
         <DialogActions>
           {direction === "column" ? (
@@ -1514,7 +1451,7 @@ export const ModalWithConfirmations = () => {
   const createAccount = () => setWizardState("success");
   const showCancelWarning = () => setWizardState("cancel-warning");
   const backToForm = () => setWizardState("form");
-  const stepId = wizardSteps[activeStepIndex].id;
+  const currentStepId = wizardSteps[activeStepIndex].id;
   const isLast = activeStepIndex === wizardSteps.length - 1;
 
   const onOpenChange = (value: boolean) => {
@@ -1548,23 +1485,23 @@ export const ModalWithConfirmations = () => {
     const { name, value } = e.target;
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
 
   const handleSelectChange = (value: string, name: string) => {
     const nextData = { ...formData, [name]: value };
     setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(nextData, currentStepId);
     }
   };
 
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
+    if (stepValidationRules[currentStepId][name]) {
+      updateStepValidation(formData, currentStepId);
     }
   };
 
@@ -1593,6 +1530,7 @@ export const ModalWithConfirmations = () => {
       case ContentTypeEnum.Review:
         return <ReviewAccountContent formData={formData} />;
       default:
+        return null;
     }
   };
 
