@@ -1,18 +1,3 @@
-.overflowContent {
-  color: var(--salt-content-primary-foreground);
-  min-height: var(--salt-text-lineHeight);
-  background: var(--salt-container-primary-background);
-
-  margin-left: var(--salt-spacing-200);
-  margin-right: var(--salt-spacing-300);
-  padding-left: var(--salt-spacing-100);
-  /* auto is needed for support on Safari, due to webkit bugs with flex */
-  flex: 1 1 auto;
-  position: relative;
-  display: flex;
-  box-sizing: border-box;
-}
-
 .overflowContent-inner {
   overflow-y: auto;
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
@@ -32,12 +17,6 @@
 
 .overflowContent-scrollBottom.overflowContent-inner {
   border-bottom-color: var(--salt-separable-tertiary-borderColor);
-}
-
-@supports selector(:has(*)) {
-  .overflowContent:has(.overflowContent-overflow) {
-    min-height: calc(var(--salt-text-lineHeight) * 4);
-  }
 }
 
 @media (min-width: 768px) {

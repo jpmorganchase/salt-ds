@@ -806,7 +806,11 @@ export const Horizontal = () => {
   };
 
   const header = (
-    <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
+    <FlexLayout
+      justify="space-between"
+      align="start"
+      style={{ width: "100%", minHeight: "6rem" }}
+    >
       <Text>
         Create a new account
         <Text color="primary" styleAs="h2">
@@ -814,8 +818,8 @@ export const Horizontal = () => {
         </Text>
         {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
           <Text
+            color="secondary"
             style={{
-              color: "var(--salt-content-secondary-foreground)",
               marginTop: "var(--salt-spacing-fixed-400)",
             }}
           >
@@ -824,7 +828,7 @@ export const Horizontal = () => {
         )}
       </Text>
 
-      <Stepper orientation="horizontal" style={{ width: 340 }}>
+      <Stepper orientation="horizontal" style={{ maxWidth: 340 }}>
         {wizardSteps.map((step, index) => (
           <Step
             key={step.id}
@@ -891,6 +895,7 @@ export const Horizontal = () => {
     </>
   );
 };
+
 export const HorizontalWithCancelConfirmation = () => {
   const {
     activeStepIndex,
@@ -922,6 +927,7 @@ export const HorizontalWithCancelConfirmation = () => {
 
   const stepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -960,6 +966,7 @@ export const HorizontalWithCancelConfirmation = () => {
   };
 
   const handleSuccess = () => setSuccessOpen(true);
+  const openCancelDialog = () => setCancelOpen(true);
 
   const renderActiveContent = () => {
     const currentStepId = wizardSteps[activeStepIndex].id;
@@ -983,7 +990,11 @@ export const HorizontalWithCancelConfirmation = () => {
   };
 
   const header = (
-    <FlexLayout justify="space-between" align="start" style={{ width: "100%" }}>
+    <FlexLayout
+      justify="space-between"
+      align="start"
+      style={{ width: "100%", minHeight: "6rem" }}
+    >
       <Text>
         Create a new account
         <Text color="primary" styleAs="h2">
@@ -991,8 +1002,8 @@ export const HorizontalWithCancelConfirmation = () => {
         </Text>
         {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
           <Text
+            color="secondary"
             style={{
-              color: "var(--salt-content-secondary-foreground)",
               marginTop: "var(--salt-spacing-fixed-400)",
             }}
           >
@@ -1016,13 +1027,19 @@ export const HorizontalWithCancelConfirmation = () => {
 
   const footer = (
     <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
-      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={openCancelDialog}
+      >
         Cancel
       </Button>
 
-      <Button sentiment="accented" appearance="bordered" onClick={previous}>
-        Previous
-      </Button>
+      {!isFirstStep && (
+        <Button sentiment="accented" appearance="bordered" onClick={previous}>
+          Previous
+        </Button>
+      )}
 
       <Button
         sentiment="accented"
@@ -1111,6 +1128,7 @@ export const VerticalWithCancelConfirmation = () => {
 
   const stepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -1139,6 +1157,8 @@ export const VerticalWithCancelConfirmation = () => {
     if (!handleNext) return;
     handleNext();
   };
+
+  const openCancelDialog = () => setCancelOpen(true);
 
   const sharedFormProps = {
     formData,
@@ -1170,15 +1190,15 @@ export const VerticalWithCancelConfirmation = () => {
   };
 
   const header = (
-    <StackLayout gap={0}>
+    <StackLayout gap={0} style={{ minHeight: "5rem" }}>
       <Text>Create a new account</Text>
       <Text color="primary" styleAs="h2">
         {wizardSteps[activeStepIndex].label}
       </Text>
       {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
         <Text
+          color="secondary"
           style={{
-            color: "var(--salt-content-secondary-foreground)",
             marginTop: "var(--salt-spacing-fixed-400)",
           }}
         >
@@ -1190,13 +1210,19 @@ export const VerticalWithCancelConfirmation = () => {
 
   const footer = (
     <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
-      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={openCancelDialog}
+      >
         Cancel
       </Button>
 
-      <Button sentiment="accented" appearance="bordered" onClick={previous}>
-        Previous
-      </Button>
+      {!isFirstStep && (
+        <Button sentiment="accented" appearance="bordered" onClick={previous}>
+          Previous
+        </Button>
+      )}
 
       <Button
         sentiment="accented"
@@ -1217,28 +1243,26 @@ export const VerticalWithCancelConfirmation = () => {
         padding={3}
       >
         <ContentOverflow style={{ height: 512 }}>
-          {header}
-          <GridLayout
-            columns={3}
-            gap={3}
-            // style={{ height: 424 }}
-          >
-            <GridItem>
-              <Stepper orientation="vertical">
-                {wizardSteps.map((step, index) => (
-                  <Step
-                    key={step.id}
-                    label={step.label}
-                    status={stepsStatusMap[step.id]?.status}
-                    stage={getStepStage(index, activeStepIndex)}
-                  />
-                ))}
-              </Stepper>
-            </GridItem>
-            <GridItem colSpan={2} padding={1}>
-              {renderActiveContent()}
-            </GridItem>
-          </GridLayout>
+          <StackLayout gap={3}>
+            {header}
+            <GridLayout columns={3} gap={3}>
+              <GridItem>
+                <Stepper orientation="vertical">
+                  {wizardSteps.map((step, index) => (
+                    <Step
+                      key={step.id}
+                      label={step.label}
+                      status={stepsStatusMap[step.id]?.status}
+                      stage={getStepStage(index, activeStepIndex)}
+                    />
+                  ))}
+                </Stepper>
+              </GridItem>
+              <GridItem colSpan={2} padding={1}>
+                {renderActiveContent()}
+              </GridItem>
+            </GridLayout>
+          </StackLayout>
         </ContentOverflow>
         {footer}
       </StackLayout>
@@ -1414,9 +1438,13 @@ export const Modal = () => {
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         <DialogHeader
           header={wizardSteps[activeStepIndex].label}
+          description={
+            wizardSteps[activeStepIndex].id ===
+              ContentTypeEnum.AdditionalInfo && "All fields are optional"
+          }
           preheader="Create a new account"
           actions={
-            <Stepper orientation="horizontal" style={{ width: 300 }}>
+            <Stepper orientation="horizontal" style={{ maxWidth: 300 }}>
               {wizardSteps.map((step, index) => (
                 <Step
                   key={step.id}
@@ -1702,8 +1730,16 @@ export const ModalWithConfirmations = () => {
                   <DialogHeader
                     header={wizardSteps[activeStepIndex].label}
                     preheader="Create a new account"
+                    description={
+                      wizardSteps[activeStepIndex].id ===
+                        ContentTypeEnum.AdditionalInfo &&
+                      "All fields are optional"
+                    }
                     actions={
-                      <Stepper orientation="horizontal" style={{ width: 300 }}>
+                      <Stepper
+                        orientation="horizontal"
+                        style={{ maxWidth: 300 }}
+                      >
                         {wizardSteps.map((step, index) => (
                           <Step
                             key={step.id}
