@@ -24,11 +24,13 @@ import {
   Step,
   Stepper,
   Text,
+  useIsomorphicLayoutEffect,
+  useResizeObserver,
   useResponsiveProp,
 } from "@salt-ds/core";
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import { type ChangeEventHandler, type ElementType, useState } from "react";
+import React, { type ElementType, useCallback, useRef, useState } from "react";
 import {
   type AccountFormData,
   type ContentType,
@@ -39,9 +41,85 @@ import {
   type ValidationStatus,
   validateStepData,
 } from "./useWizard";
+
+const mobileWarningBanner = (
+  <Banner status="warning">
+    <BannerContent>
+      Wizard is not optimized for mobile or smaller screens
+    </BannerContent>
+  </Banner>
+);
+
 export default {
   title: "Patterns/Wizard",
+  decorators: [
+    (story) => (
+      <div>
+        <div className="mobileBanner">{mobileWarningBanner}</div>
+        {story()}
+      </div>
+    ),
+  ],
 } as Meta;
+import "./wizard.stories.css";
+import clsx from "clsx";
+
+const ContentOverflow = ({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) => {
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(true);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    const targetWindow = window;
+    targetWindow?.requestAnimationFrame(() => {
+      const container = divRef.current;
+      if (!container) return;
+      setCanScrollUp(container.scrollTop > 0);
+      setCanScrollDown(
+        container.scrollHeight - container.scrollTop - container.clientHeight >
+          1,
+      );
+    });
+  };
+
+  const checkOverflow = useCallback(() => {
+    if (!divRef.current) return;
+    setIsOverflowing(divRef.current.scrollHeight > divRef.current.offsetHeight);
+  }, []);
+
+  useResizeObserver({ ref: divRef, onResize: checkOverflow });
+
+  useIsomorphicLayoutEffect(() => {
+    checkOverflow();
+  }, [checkOverflow]);
+
+  const withBaseName = (name = "") =>
+    `overflowContent${name ? `-${name}` : ""}`;
+  return (
+    <div className={clsx(withBaseName)}>
+      <div
+        style={style}
+        onScrollCapture={handleScroll}
+        ref={divRef}
+        className={clsx(withBaseName("inner"), {
+          [withBaseName("overflow")]: isOverflowing,
+          [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
+          [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
+        })}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -68,6 +146,7 @@ interface FormContentProps {
     [field: string]: { status?: ValidationStatus; message?: string };
   };
   handleSelectChange?: (value: string, name: string) => void;
+  style?: React.CSSProperties;
 }
 
 const wizardSteps = [
@@ -234,9 +313,10 @@ const AdditionalInfoContent = ({
   handleInputBlur,
   handleSelectChange,
   stepFieldValidation,
+  style,
 }: FormContentProps) => {
   return (
-    <FlowLayout>
+    <FlowLayout style={style}>
       <FormField validationStatus={stepFieldValidation.initialDeposit?.status}>
         <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
         <Input
@@ -294,78 +374,6 @@ const AdditionalInfoContent = ({
     </FlowLayout>
   );
 };
-const AdditionalInfoForm = ({
-  stepId,
-  handleCancel,
-  handlePrevious,
-  handleNext,
-  setFormData,
-  formData,
-  stepFieldValidation,
-  updateStepValidation,
-}: FormProps) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const nextData = { ...formData, [name]: value };
-    setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
-    }
-  };
-  const handleSelectChange = (value: string, name: string) => {
-    const nextData = { ...formData, [name]: value };
-    setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
-    }
-  };
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
-    }
-  };
-  const onSubmitForm = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!handleNext) return;
-    handleNext();
-  };
-
-  return (
-    <StackLayout gap={3} style={{ height: "100%" }}>
-      <FlexItem grow={1} style={{ width: "50%" }}>
-        <AdditionalInfoContent
-          formData={formData}
-          handleInputChange={handleInputChange}
-          handleInputBlur={handleInputBlur}
-          handleSelectChange={handleSelectChange}
-          stepFieldValidation={stepFieldValidation}
-        />
-      </FlexItem>
-      <FlexLayout gap={1} justify="end">
-        <Button
-          sentiment="accented"
-          appearance="transparent"
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={handlePrevious}
-        >
-          Previous
-        </Button>
-
-        <Button sentiment="accented" onClick={onSubmitForm}>
-          Next
-        </Button>
-      </FlexLayout>
-    </StackLayout>
-  );
-};
 
 const AccountTypeContent = ({
   handleInputBlur,
@@ -404,64 +412,6 @@ const AccountTypeContent = ({
         </FormFieldHelperText>
       )}
     </FormField>
-  );
-};
-const AccountTypeForm = ({
-  stepId,
-  handleCancel,
-  handlePrevious,
-  handleNext,
-  setFormData,
-  formData,
-  stepFieldValidation,
-  updateStepValidation,
-}: FormProps) => {
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target;
-    const nextData = { ...formData, accountType: value };
-    setFormData(nextData);
-    updateStepValidation(nextData, stepId);
-  };
-  const handleInputBlur = () => {
-    updateStepValidation(formData, stepId);
-  };
-  const onSubmitForm = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!handleNext) return;
-    handleNext();
-  };
-  return (
-    <StackLayout gap={3} style={{ height: "100%" }}>
-      <FlexItem grow={1}>
-        <AccountTypeContent
-          formData={formData}
-          handleInputBlur={handleInputBlur}
-          stepFieldValidation={stepFieldValidation}
-          handleInputChange={handleInputChange}
-        />
-      </FlexItem>
-      <FlexLayout gap={1} justify="end">
-        <Button
-          sentiment="accented"
-          appearance="transparent"
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={handlePrevious}
-        >
-          Previous
-        </Button>
-
-        <Button sentiment="accented" onClick={onSubmitForm}>
-          Next
-        </Button>
-      </FlexLayout>
-    </StackLayout>
   );
 };
 
@@ -593,65 +543,6 @@ const AccountDetailsContent = ({
         </StackLayout>
       </GridItem>
     </GridLayout>
-  );
-};
-const AccountDetailsForm = ({
-  stepId,
-  handleCancel,
-  handleNext,
-  setFormData,
-  formData,
-  stepFieldValidation,
-  updateStepValidation,
-}: FormProps) => {
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(formData, stepId);
-    }
-  };
-  const handleSelectChange = (value: string, name: string) => {
-    const nextData = { ...formData, [name]: value };
-    setFormData(nextData);
-    if (stepValidationRules[stepId][name]) {
-      updateStepValidation(nextData, stepId);
-    }
-  };
-
-  const onSubmitForm = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!handleNext) return;
-    handleNext();
-  };
-
-  return (
-    <StackLayout gap={3} style={{ height: "100%" }}>
-      <FlexItem grow={1}>
-        <AccountDetailsContent
-          formData={formData}
-          handleInputBlur={handleInputBlur}
-          stepFieldValidation={stepFieldValidation}
-          handleInputChange={handleInputChange}
-          handleSelectChange={handleSelectChange}
-        />
-      </FlexItem>
-      <FlexLayout gap={1} justify="end">
-        <Button
-          sentiment="accented"
-          appearance="transparent"
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-        <Button sentiment="accented" onClick={onSubmitForm}>
-          Next
-        </Button>
-      </FlexLayout>
-    </StackLayout>
   );
 };
 
@@ -823,45 +714,6 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
     </GridItem>
   </GridLayout>
 );
-const ReviewAccountForm = ({
-  handleCancel,
-  handlePrevious,
-  handleNext,
-  formData,
-}: FormProps) => {
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    handleNext?.();
-  };
-  return (
-    <StackLayout gap={3} style={{ height: "100%" }}>
-      <FlexItem grow={1} style={{ overflowY: "auto" }}>
-        <ReviewAccountContent formData={formData} />
-      </FlexItem>
-      <FlexLayout gap={1} justify="end">
-        <Button
-          sentiment="accented"
-          appearance="transparent"
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={handlePrevious}
-        >
-          Previous
-        </Button>
-
-        <Button sentiment="accented" onClick={handleSubmit}>
-          Create
-        </Button>
-      </FlexLayout>
-    </StackLayout>
-  );
-};
 
 export const Horizontal = () => {
   const {
@@ -891,34 +743,63 @@ export const Horizontal = () => {
     next();
   };
 
+  const stepId = wizardSteps[activeStepIndex].id;
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(formData, stepId);
+    }
+  };
+  const handleSelectChange = (value: string, name: string) => {
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+  const handleSuccess = () => setSuccessOpen(true);
+
+  const onSubmitForm = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!handleNext) return;
+    handleNext();
+  };
+
   const sharedFormProps = {
     formData,
-    setFormData,
-    handleCancel: reset,
-    handleNext,
-    handlePrevious: previous,
     stepFieldValidation,
-    updateStepValidation,
-    stepsStatusMap,
+    handleInputChange,
+    handleInputBlur,
+    handleSelectChange,
   };
 
   const renderActiveContent = () => {
     const currentStepId = wizardSteps[activeStepIndex].id;
     switch (currentStepId) {
       case ContentTypeEnum.AccountDetails:
-        return (
-          <AccountDetailsForm stepId={currentStepId} {...sharedFormProps} />
-        );
+        return <AccountDetailsContent {...sharedFormProps} />;
       case ContentTypeEnum.AccountType:
-        return <AccountTypeForm stepId={currentStepId} {...sharedFormProps} />;
+        return <AccountTypeContent {...sharedFormProps} />;
       case ContentTypeEnum.AdditionalInfo:
         return (
-          <AdditionalInfoForm stepId={currentStepId} {...sharedFormProps} />
+          <AdditionalInfoContent
+            {...sharedFormProps}
+            style={{ width: "50%" }}
+          />
         );
       case ContentTypeEnum.Review:
-        return (
-          <ReviewAccountForm stepId={currentStepId} {...sharedFormProps} />
-        );
+        return <ReviewAccountContent {...sharedFormProps} />;
       default:
         return null;
     }
@@ -956,27 +837,42 @@ export const Horizontal = () => {
     </FlexLayout>
   );
 
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
+      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+        Cancel
+      </Button>
+      {!isFirstStep && (
+        <Button sentiment="accented" appearance="bordered" onClick={previous}>
+          Previous
+        </Button>
+      )}
+      <Button
+        sentiment="accented"
+        onClick={isLastStep ? handleSuccess : onSubmitForm}
+      >
+        Next
+      </Button>
+    </FlexLayout>
+  );
+
   return (
     <>
       <StackLayout
         style={{
           width: 730,
-          height: 588,
         }}
         gap={0}
       >
         <FlexItem padding={3} style={{ paddingBottom: 0 }}>
           {header}
         </FlexItem>
-        <FlexItem
-          grow={1}
-          style={{
-            overflowY: "hidden",
-          }}
-          padding={3}
-        >
-          {renderActiveContent()}
+        <FlexItem grow={1} padding={3}>
+          <ContentOverflow style={{ height: 396 }}>
+            {renderActiveContent()}
+          </ContentOverflow>
         </FlexItem>
+        {footer}
       </StackLayout>
       <AccountCreatedSuccessDialog
         open={successOpen}
@@ -992,15 +888,6 @@ export const Horizontal = () => {
           setSuccessOpen(false);
         }}
       />
-
-      <Banner
-        status="warning"
-        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
-      >
-        <BannerContent>
-          Wizard has not been optimized for mobile or smaller screens
-        </BannerContent>
-      </Banner>
     </>
   );
 };
@@ -1033,15 +920,43 @@ export const HorizontalWithCancelConfirmation = () => {
     next();
   };
 
+  const stepId = wizardSteps[activeStepIndex].id;
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(formData, stepId);
+    }
+  };
+  const handleSelectChange = (value: string, name: string) => {
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+
+  const onSubmitForm = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!handleNext) return;
+    handleNext();
+  };
+
   const sharedFormProps = {
     formData,
-    setFormData,
-    handleCancel: () => setCancelOpen(true),
-    handleNext,
-    handlePrevious: previous,
     stepFieldValidation,
-    updateStepValidation,
-    stepsStatusMap,
+    handleInputChange,
+    handleInputBlur,
+    handleSelectChange,
   };
 
   const handleSuccess = () => setSuccessOpen(true);
@@ -1050,23 +965,18 @@ export const HorizontalWithCancelConfirmation = () => {
     const currentStepId = wizardSteps[activeStepIndex].id;
     switch (currentStepId) {
       case ContentTypeEnum.AccountDetails:
-        return (
-          <AccountDetailsForm stepId={currentStepId} {...sharedFormProps} />
-        );
+        return <AccountDetailsContent {...sharedFormProps} />;
       case ContentTypeEnum.AccountType:
-        return <AccountTypeForm stepId={currentStepId} {...sharedFormProps} />;
+        return <AccountTypeContent {...sharedFormProps} />;
       case ContentTypeEnum.AdditionalInfo:
         return (
-          <AdditionalInfoForm stepId={currentStepId} {...sharedFormProps} />
-        );
-      case ContentTypeEnum.Review:
-        return (
-          <ReviewAccountForm
-            stepId={currentStepId}
+          <AdditionalInfoContent
             {...sharedFormProps}
-            handleNext={handleSuccess}
+            style={{ width: "50%" }}
           />
         );
+      case ContentTypeEnum.Review:
+        return <ReviewAccountContent {...sharedFormProps} />;
       default:
         return null;
     }
@@ -1104,6 +1014,25 @@ export const HorizontalWithCancelConfirmation = () => {
     </FlexLayout>
   );
 
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
+      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+        Cancel
+      </Button>
+
+      <Button sentiment="accented" appearance="bordered" onClick={previous}>
+        Previous
+      </Button>
+
+      <Button
+        sentiment="accented"
+        onClick={isLastStep ? handleSuccess : onSubmitForm}
+      >
+        Next
+      </Button>
+    </FlexLayout>
+  );
+
   return (
     <>
       <StackLayout
@@ -1116,15 +1045,12 @@ export const HorizontalWithCancelConfirmation = () => {
         <FlexItem padding={3} style={{ paddingBottom: 0 }}>
           {header}
         </FlexItem>
-        <FlexItem
-          grow={1}
-          style={{
-            overflowY: "hidden",
-          }}
-          padding={3}
-        >
-          {renderActiveContent()}
+        <FlexItem grow={1} padding={3}>
+          <ContentOverflow style={{ height: 396 }}>
+            {renderActiveContent()}
+          </ContentOverflow>
         </FlexItem>
+        {footer}
       </StackLayout>
       <CancelWarningDialog
         open={cancelOpen}
@@ -1148,15 +1074,6 @@ export const HorizontalWithCancelConfirmation = () => {
           setSuccessOpen(false);
         }}
       />
-
-      <Banner
-        status="warning"
-        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
-      >
-        <BannerContent>
-          Wizard has not been optimized for mobile or smaller screens
-        </BannerContent>
-      </Banner>
     </>
   );
 };
@@ -1192,38 +1109,61 @@ export const VerticalWithCancelConfirmation = () => {
     next();
   };
 
+  const stepId = wizardSteps[activeStepIndex].id;
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(formData, stepId);
+    }
+  };
+  const handleSelectChange = (value: string, name: string) => {
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+    if (stepValidationRules[stepId][name]) {
+      updateStepValidation(nextData, stepId);
+    }
+  };
+
+  const onSubmitForm = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!handleNext) return;
+    handleNext();
+  };
+
   const sharedFormProps = {
     formData,
-    setFormData,
-    handleCancel: () => setCancelOpen(true),
-    handleNext,
-    handlePrevious: previous,
     stepFieldValidation,
-    updateStepValidation,
-    stepsStatusMap,
+    handleInputChange,
+    handleInputBlur,
+    handleSelectChange,
   };
 
   const renderActiveContent = () => {
     const currentStepId = wizardSteps[activeStepIndex].id;
     switch (currentStepId) {
       case ContentTypeEnum.AccountDetails:
-        return (
-          <AccountDetailsForm stepId={currentStepId} {...sharedFormProps} />
-        );
+        return <AccountDetailsContent {...sharedFormProps} />;
       case ContentTypeEnum.AccountType:
-        return <AccountTypeForm stepId={currentStepId} {...sharedFormProps} />;
+        return <AccountTypeContent {...sharedFormProps} />;
       case ContentTypeEnum.AdditionalInfo:
         return (
-          <AdditionalInfoForm stepId={currentStepId} {...sharedFormProps} />
-        );
-      case ContentTypeEnum.Review:
-        return (
-          <ReviewAccountForm
-            stepId={currentStepId}
+          <AdditionalInfoContent
             {...sharedFormProps}
-            handleNext={handleSuccess}
+            style={{ width: "50%" }}
           />
         );
+      case ContentTypeEnum.Review:
+        return <ReviewAccountContent {...sharedFormProps} />;
       default:
         return null;
     }
@@ -1248,6 +1188,25 @@ export const VerticalWithCancelConfirmation = () => {
     </StackLayout>
   );
 
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
+      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+        Cancel
+      </Button>
+
+      <Button sentiment="accented" appearance="bordered" onClick={previous}>
+        Previous
+      </Button>
+
+      <Button
+        sentiment="accented"
+        onClick={isLastStep ? handleSuccess : onSubmitForm}
+      >
+        Next
+      </Button>
+    </FlexLayout>
+  );
+
   return (
     <>
       <StackLayout
@@ -1257,24 +1216,31 @@ export const VerticalWithCancelConfirmation = () => {
         }}
         padding={3}
       >
-        {header}
-        <GridLayout columns={3} gap={3} style={{ height: 424 }}>
-          <GridItem>
-            <Stepper orientation="vertical">
-              {wizardSteps.map((step, index) => (
-                <Step
-                  key={step.id}
-                  label={step.label}
-                  status={stepsStatusMap[step.id]?.status}
-                  stage={getStepStage(index, activeStepIndex)}
-                />
-              ))}
-            </Stepper>
-          </GridItem>
-          <GridItem colSpan={2} padding={1} style={{ overflowY: "hidden" }}>
-            {renderActiveContent()}
-          </GridItem>
-        </GridLayout>
+        <ContentOverflow style={{ height: 512 }}>
+          {header}
+          <GridLayout
+            columns={3}
+            gap={3}
+            // style={{ height: 424 }}
+          >
+            <GridItem>
+              <Stepper orientation="vertical">
+                {wizardSteps.map((step, index) => (
+                  <Step
+                    key={step.id}
+                    label={step.label}
+                    status={stepsStatusMap[step.id]?.status}
+                    stage={getStepStage(index, activeStepIndex)}
+                  />
+                ))}
+              </Stepper>
+            </GridItem>
+            <GridItem colSpan={2} padding={1}>
+              {renderActiveContent()}
+            </GridItem>
+          </GridLayout>
+        </ContentOverflow>
+        {footer}
       </StackLayout>
       <CancelWarningDialog
         open={cancelOpen}
@@ -1298,14 +1264,6 @@ export const VerticalWithCancelConfirmation = () => {
           setSuccessOpen(false);
         }}
       />
-      <Banner
-        status="warning"
-        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
-      >
-        <BannerContent>
-          Wizard has not been optimized for mobile or smaller screens
-        </BannerContent>
-      </Banner>
     </>
   );
 };
@@ -1402,9 +1360,10 @@ export const Modal = () => {
         return <AccountTypeContent {...sharedFormProps} />;
       case ContentTypeEnum.AdditionalInfo:
         return (
-          <div style={{ width: "50%" }}>
-            <AdditionalInfoContent {...sharedFormProps} />
-          </div>
+          <AdditionalInfoContent
+            {...sharedFormProps}
+            style={{ width: "50%" }}
+          />
         );
       case ContentTypeEnum.Review:
         return <ReviewAccountContent formData={formData} />;
@@ -1452,14 +1411,6 @@ export const Modal = () => {
       <Button data-testid="dialog-button" onClick={openWizard}>
         Open wizard
       </Button>
-      <Banner
-        status="warning"
-        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
-      >
-        <BannerContent>
-          Wizard has not been optimized for mobile or smaller screens
-        </BannerContent>
-      </Banner>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         <DialogHeader
           header={wizardSteps[activeStepIndex].label}
@@ -1606,14 +1557,14 @@ export const ModalWithConfirmations = () => {
         return <AccountTypeContent {...sharedFormProps} />;
       case ContentTypeEnum.AdditionalInfo:
         return (
-          <div style={{ width: "50%" }}>
-            <AdditionalInfoContent {...sharedFormProps} />
-          </div>
+          <AdditionalInfoContent
+            {...sharedFormProps}
+            style={{ width: "50%" }}
+          />
         );
       case ContentTypeEnum.Review:
         return <ReviewAccountContent formData={formData} />;
       default:
-        return null;
     }
   };
 
@@ -1663,14 +1614,6 @@ export const ModalWithConfirmations = () => {
       <Button data-testid="dialog-button" onClick={openWizard}>
         Open wizard
       </Button>
-      <Banner
-        status="warning"
-        style={{ marginTop: "var(--salt-spacing-fixed-900)" }}
-      >
-        <BannerContent>
-          Wizard has not been optimized for mobile or smaller screens
-        </BannerContent>
-      </Banner>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
