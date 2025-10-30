@@ -3,6 +3,7 @@ export { barOptions } from "./barOptions";
 export { boxPlotOptions } from "./boxPlotOptions";
 export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
+export { candlestickOptions } from "./candlestickOptions";
 export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
 export { lineOptions } from "./lineOptions";
