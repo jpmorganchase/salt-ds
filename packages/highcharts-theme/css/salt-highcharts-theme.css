@@ -173,6 +173,12 @@
 .highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
 .highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
   fill: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text,
+.highcharts-theme-salt .highcharts-waterfall-series text.highcharts-data-label {
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
