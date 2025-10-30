@@ -78,6 +78,22 @@ Use a bullet chart to show performance against a target across categories. Each 
 
 <LivePreview componentName="highcharts-theme" exampleName="BulletChart" />
 
+## Box plot chart
+
+Use a box plot chart to show the distribution of data across different categories, displaying minimum, first quartile, median, third quartile, and maximum values. To ensure the presentation is accessible, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
+
+### Best practices
+
+- A `pointWidth` value of `40px` is recommended for a good default visual balance.
+
+<Callout title="Note">
+  To use the box plot chart, ensure you import the Highcharts `highcharts-more`
+  module and use it to wrap the `Highcharts` object as shown in the example
+  below.
+</Callout>
+
+<LivePreview componentName="highcharts-theme" exampleName="BoxPlotChart" />
+
 ## Area chart
 
 Use an area chart to show trends over time and the contribution of categories to a total. To ensure the presentation is accessible, fill patterns can be applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills) for details).
