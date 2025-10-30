@@ -130,7 +130,7 @@
   },
   "devDependencies": {
     "@date-fns/tz": "^1.2.0",
-    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "browserslist-to-esbuild": "^2.1.1",
