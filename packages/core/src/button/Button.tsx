@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useInjectedClassName,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -15,21 +18,35 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
-export const ButtonAppearanceValues = [
+export type ButtonVariant = (typeof ButtonVariantValues)[number];
+
+export interface ButtonAppearances {
+  solid: string;
+  bordered: string;
+  transparent: string;
+}
+export type ButtonAppearance = keyof ButtonAppearances;
+export const ButtonAppearanceValues: ButtonAppearance[] = [
   "solid",
   "bordered",
   "transparent",
-] as const;
-export const ButtonSentimentValues = [
+];
+
+export interface ButtonSentiments {
+  accented: string;
+  neutral: string;
+  positive: string;
+  negative: string;
+  caution: string;
+}
+export type ButtonSentiment = keyof ButtonSentiments;
+export const ButtonSentimentValues: ButtonSentiment[] = [
   "accented",
   "neutral",
   "positive",
   "negative",
   "caution",
-] as const;
-export type ButtonVariant = (typeof ButtonVariantValues)[number];
-export type ButtonAppearance = (typeof ButtonAppearanceValues)[number];
-export type ButtonSentiment = (typeof ButtonSentimentValues)[number];
+];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
@@ -96,11 +113,20 @@ function variantToAppearanceAndColor(
   }
 }
 
+declare module "@salt-ds/core" {
+  interface ComponentPropMap {
+    Button: ButtonProps;
+  }
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(
-    {
+  function Button(props, ref?): ReactElement<ButtonProps> {
+    const { className, props: finalProps } = useInjectedClassName(
+      "saltButton",
+      props,
+    );
+    const {
       children,
-      className,
       disabled,
       focusableWhenDisabled,
       onKeyUp,
@@ -114,9 +140,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type: typeProp = "button",
       variant = "primary",
       ...restProps
-    },
-    ref?,
-  ): ReactElement<ButtonProps> {
+    } = finalProps;
+
     const { active, buttonProps } = useButton({
       loading,
       disabled,
