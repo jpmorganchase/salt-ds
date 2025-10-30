@@ -55,6 +55,9 @@ const candlestickChartOptions: Options = {
       '<span>Low: </span><span class="value">&#36;{point.low}</span><br/>' +
       '<span>Close: </span><span class="value">&#36;{point.close}</span>',
   },
+  legend: {
+    enabled: false,
+  },
   series: [
     {
       name: "Stock Price",

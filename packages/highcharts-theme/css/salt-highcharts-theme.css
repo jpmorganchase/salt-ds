@@ -221,7 +221,8 @@
 }
 
 /* Override default stroke for chart series segment borders */
-.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point {
+.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point,
+.highcharts-theme-salt .highcharts-candlestick-series.highcharts-legend-item .highcharts-point {
   stroke: none;
 }
 
@@ -273,4 +274,14 @@
 .highcharts-theme-salt.axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
 .highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
   stroke-width: 1;
+}
+
+.highcharts-theme-salt .highcharts-candlestick-series .highcharts-point-up {
+  stroke: var(--salt-sentiment-positive-foreground-decorative);
+  fill: none;
+}
+
+.highcharts-theme-salt .highcharts-candlestick-series .highcharts-point-down {
+  stroke: var(--salt-sentiment-negative-foreground-decorative);
+  fill: var(--salt-sentiment-negative-foreground-decorative);
 }
