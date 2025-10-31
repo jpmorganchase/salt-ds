@@ -257,8 +257,8 @@ const fillPatterns = [
   },
 ];
 
-export const saltPatternDef = fillPatterns.reduce<Record<string, object>>(
-  (prev, curr, index) => {
+export const saltPatternDef = {
+  ...fillPatterns.reduce<Record<string, object>>((prev, curr, index) => {
     prev[curr.id] = {
       ...curr,
       tagName: "pattern",
@@ -276,6 +276,56 @@ export const saltPatternDef = fillPatterns.reduce<Record<string, object>>(
       ],
     };
     return prev;
+  }, {}),
+  "positive-sentiment": {
+    ...fillPatterns[0],
+    id: "positive-sentiment",
+    tagName: "pattern",
+    patternUnits: "userSpaceOnUse",
+    width: 10,
+    height: 10,
+    children: [
+      {
+        tagName: "rect",
+        width: 10,
+        height: 10,
+        style: { fill: "var(--salt-sentiment-positive-foreground-decorative)" },
+      },
+      ...fillPatterns[0].children,
+    ],
   },
-  {},
-);
+  "negative-sentiment": {
+    ...fillPatterns[1],
+    id: "negative-sentiment",
+    tagName: "pattern",
+    patternUnits: "userSpaceOnUse",
+    width: 10,
+    height: 10,
+    children: [
+      {
+        tagName: "rect",
+        width: 10,
+        height: 10,
+        style: { fill: "var(--salt-sentiment-negative-foreground-decorative)" },
+      },
+      ...fillPatterns[1].children,
+    ],
+  },
+  "neutral-sentiment": {
+    ...fillPatterns[2],
+    id: "neutral-sentiment",
+    tagName: "pattern",
+    patternUnits: "userSpaceOnUse",
+    width: 10,
+    height: 10,
+    children: [
+      {
+        tagName: "rect",
+        width: 10,
+        height: 10,
+        style: { fill: "var(--salt-category-15-bold-background)" },
+      },
+      ...fillPatterns[2].children,
+    ],
+  },
+};

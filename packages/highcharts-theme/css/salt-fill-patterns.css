@@ -78,3 +78,15 @@
 .highcharts-theme-salt.salt-fill-patterns .highcharts-color-19:not(.highcharts-data-label-connector) {
   fill: url(#squares);
 }
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point {
+  fill: url(#positive-sentiment);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point.highcharts-negative {
+  fill: url(#negative-sentiment);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point.highcharts-sum {
+  fill: url(#neutral-sentiment);
+}
