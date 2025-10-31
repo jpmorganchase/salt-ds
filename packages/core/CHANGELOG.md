@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.52.1
+
+### Patch Changes
+
+- b898c9d: Fixed disabled Button's having active style when `focusableWhenDisabled` is true.
+- fdbe053: Fixed Button's active styling when triggered with the space or enter key.
+
 ## 1.52.0
 
 ### Minor Changes
