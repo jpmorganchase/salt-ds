@@ -11,9 +11,7 @@ Charts rely heavily on visuals to help users understand complex data, so it’s 
 
 ### Color contrast
 
-Users with visual impairments should be able to fully comprehend data sets that are represented by different colors. To cater for a broad spectrum of visual impairments, you must use the categorical colors which are WCAG 4.5:1 compliant.
-
-If you use custom colors or Hex codes, they may not meet non-text contrast requirements so you will be responsible to ensure that the resulting contrast is compliant. By using Salt tokens correctly, you will achieve at least 3:1 contrast between the background and other non-text chart elements such as bars, lines, segments and icons.
+Users with visual impairments should be able to fully comprehend data sets that are represented by different colors. If you use custom colors or Hex codes, they may not meet non-text contrast requirements so you will be responsible to ensure that the resulting contrast is compliant. By using Salt tokens correctly, you will achieve at least 3:1 contrast between the background and other non-text chart elements such as bars, lines, segments and icons.
 
 <Image
   src="/img/foundations/dataviz-hex.png"
@@ -23,7 +21,7 @@ If you use custom colors or Hex codes, they may not meet non-text contrast requi
 
 ### Color order
 
-Apply the categorical colors in the recommended order. All categorical colors have similar contrast levels, as they use the 500 series swatch from their respective color ramps.
+Apply the categorical colors in the recommended order, from 1 through 20. 
 
 <Image
   src="/img/foundations/dataviz-color-order.png"
@@ -43,7 +41,7 @@ You can enhance your chart’s accessibility by adopting additional visual strat
 
 - Pattern overlays for different categories
 - Direct labelling where possible
-- Adding a border with at least a 3:1 contrast ratio to distinguish between segments
+- Adding a border with at least a 3:1 contrast ratio against the background to distinguish between segments
 
 You can show chart data in a table or list nearby, in an overlay, or on another screen as a last resort to support screen readers. If essential information is on a separate screen, then it could disrupt the cohesive flow of information. Screen reader users would need to navigate back and forth between the two parts of the text alternative for the complex image, which could disrupt the flow of information.
 
@@ -51,7 +49,7 @@ For more information about text alternatives, read the [JPMC UX Accessibility Re
 
 ### Overlapping data series
 
-Some chart types including area, bubble and scatter have data series that overlap in certain use cases. Having too many data series in your chart can add complexity and make it harder for users to extract important information. In cases with multiple overlapping areas, always maintain at least a 3:1 color contrast between any 2 overlapping areas.
+Some chart types including area, bubble and scatter, have data series that overlap in certain use cases. Having too many data series in your chart can add complexity and make it harder for users to extract important information. In cases with multiple overlapping areas, always maintain at least a 3:1 color contrast between any 2 overlapping areas.
 
 <Image
   src="/img/foundations/dataviz-overlapping-data.png"
@@ -61,7 +59,7 @@ Some chart types including area, bubble and scatter have data series that overla
 
 ## Line patterns
 
-Color shouldn’t be the only visual cue. Include other visual cues such as text, patterns, or symbols to help the user differentiate between different data sets. Patterns improve readability, especially for those with color vision requirements.
+Color shouldn’t be the only visual cue. Include other visual cues such as text, patterns, or symbols to help the user differentiate between different data sets. Consider using line patterns for multiple line series. Patterns improve readability, especially for those with color vision requirements.
 
 <Image
   src="/img/foundations/dataviz-line-patterns2.png"
@@ -71,7 +69,7 @@ Color shouldn’t be the only visual cue. Include other visual cues such as text
 
 ## Pattern fills
 
-Consider using line patterns for multiple line series or pattern fills for 2-dimensional shapes, such as bars and slices. Pattern fills are always black and applied to solid categorical colors for charts. They’re beneficial in scenarios in which there is only one visual distinction between data points.
+Use pattern fills for 2-dimensional shapes, such as bars and slices. Pattern fills are always black and applied to solid categorical colors for charts. They’re beneficial in scenarios in which there is only one visual distinction between data points.
 
 <Image
   src="/img/foundations/dataviz-pattern-fills2.png"
