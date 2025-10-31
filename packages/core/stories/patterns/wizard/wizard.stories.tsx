@@ -64,63 +64,6 @@ export default {
 import "./wizard.stories.css";
 import clsx from "clsx";
 
-const ContentOverflow = ({
-  children,
-  style,
-}: {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
-}) => {
-  const [canScrollUp, setCanScrollUp] = useState(false);
-  const [canScrollDown, setCanScrollDown] = useState(true);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-
-  const divRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    const targetWindow = window;
-    targetWindow?.requestAnimationFrame(() => {
-      const container = divRef.current;
-      if (!container) return;
-      setCanScrollUp(container.scrollTop > 0);
-      setCanScrollDown(
-        container.scrollHeight - container.scrollTop - container.clientHeight >
-          1,
-      );
-    });
-  };
-
-  const checkOverflow = useCallback(() => {
-    if (!divRef.current) return;
-    setIsOverflowing(divRef.current.scrollHeight > divRef.current.offsetHeight);
-  }, []);
-
-  useResizeObserver({ ref: divRef, onResize: checkOverflow });
-
-  useIsomorphicLayoutEffect(() => {
-    checkOverflow();
-  }, [checkOverflow]);
-
-  const withBaseName = (name = "") =>
-    `overflowContent${name ? `-${name}` : ""}`;
-
-  return (
-    <div className={clsx(withBaseName)}>
-      <div
-        style={style}
-        onScrollCapture={handleScroll}
-        ref={divRef}
-        className={clsx(withBaseName("inner"), {
-          [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
-          [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
-        })}
-      >
-        {children}
-      </div>
-    </div>
-  );
-};
-
 interface ConfirmationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -130,7 +73,7 @@ interface ConfirmationDialogProps {
 interface FormProps {
   stepId: ContentType;
   formData: AccountFormData;
-  setFormData: React.Dispatch<React.SetStateAction<AccountFormData>>;
+  setFormData: () => void;
   handleCancel: () => void;
   handleNext?: () => void;
   handlePrevious?: () => void;
@@ -197,6 +140,65 @@ const getStepStage = (index: number, activeStepIndex: number) => {
   if (index === activeStepIndex) return "active";
   if (index < activeStepIndex) return "completed";
   return "pending";
+};
+
+const ContentOverflow = ({
+  children,
+  style,
+  className,
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+}) => {
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(true);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    const targetWindow = window;
+    targetWindow?.requestAnimationFrame(() => {
+      const container = divRef.current;
+      if (!container) return;
+      setCanScrollUp(container.scrollTop > 0);
+      setCanScrollDown(
+        container.scrollHeight - container.scrollTop - container.clientHeight >
+          1,
+      );
+    });
+  };
+
+  const checkOverflow = useCallback(() => {
+    if (!divRef.current) return;
+    setIsOverflowing(divRef.current.scrollHeight > divRef.current.offsetHeight);
+  }, []);
+
+  useResizeObserver({ ref: divRef, onResize: checkOverflow });
+
+  useIsomorphicLayoutEffect(() => {
+    checkOverflow();
+  }, [checkOverflow]);
+
+  const withBaseName = (name = "") =>
+    `overflowContent${name ? `-${name}` : ""}`;
+
+  return (
+    <div className={clsx(withBaseName, className)}>
+      <div
+        style={style}
+        onScrollCapture={handleScroll}
+        ref={divRef}
+        className={clsx(withBaseName("inner"), {
+          [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
+          [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
+        })}
+      >
+        {children}
+      </div>
+    </div>
+  );
 };
 
 const CancelWarningDialog = ({
@@ -327,7 +329,9 @@ const AdditionalInfoContent = ({
             value: formData.initialDeposit,
             onChange: handleInputChange,
             onBlur: handleInputBlur,
+            type: "number",
           }}
+          inputMode="decimal"
         />
         {stepFieldValidation.initialDeposit?.status && (
           <FormFieldHelperText>
@@ -672,6 +676,7 @@ const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
               inputProps={{
                 name: "initialDeposit",
                 value: formData.initialDeposit,
+                type: "number",
               }}
               readOnly
             />
@@ -1513,25 +1518,15 @@ export const ModalWithConfirmations = () => {
     stepFieldValidation,
   };
 
-  const renderActiveContent = () => {
-    const currentStepId = wizardSteps[activeStepIndex].id;
-    switch (currentStepId) {
-      case ContentTypeEnum.AccountDetails:
-        return <AccountDetailsContent {...sharedFormProps} />;
-      case ContentTypeEnum.AccountType:
-        return <AccountTypeContent {...sharedFormProps} />;
-      case ContentTypeEnum.AdditionalInfo:
-        return (
-          <AdditionalInfoContent
-            {...sharedFormProps}
-            style={{ width: "50%" }}
-          />
-        );
-      case ContentTypeEnum.Review:
-        return <ReviewAccountContent formData={formData} />;
-      default:
-        return null;
-    }
+  const contentByStep = {
+    [ContentTypeEnum.AccountDetails]: (
+      <AccountDetailsContent {...sharedFormProps} />
+    ),
+    [ContentTypeEnum.AccountType]: <AccountTypeContent {...sharedFormProps} />,
+    [ContentTypeEnum.AdditionalInfo]: (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    [ContentTypeEnum.Review]: <ReviewAccountContent formData={formData} />,
   };
 
   const direction: StackLayoutProps<ElementType>["direction"] =
@@ -1691,7 +1686,7 @@ export const ModalWithConfirmations = () => {
                   />
 
                   <DialogContent>
-                    <FlowLayout>{renderActiveContent()}</FlowLayout>
+                    <FlowLayout>{contentByStep[currentStepId]}</FlowLayout>
                   </DialogContent>
                   <DialogActions>
                     {direction === "column" ? (
