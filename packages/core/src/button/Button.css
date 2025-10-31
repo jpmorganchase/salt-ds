@@ -74,11 +74,11 @@
 
 /* Pseudo-class applied to the root element if disabled={true} */
 .saltButton:disabled,
-.saltButton-disabled,
-.saltButton-disabled:active,
-.saltButton-disabled:focus-visible,
-.saltButton-disabled:focus-visible:active,
-.saltButton-disabled:hover {
+.saltButton.saltButton-disabled,
+.saltButton.saltButton-disabled:active,
+.saltButton.saltButton-disabled:focus-visible,
+.saltButton.saltButton-disabled:focus-visible:active,
+.saltButton.saltButton-disabled:hover {
   background: var(--saltButton-background-disabled, var(--button-background));
   color: var(--saltButton-text-color-disabled, var(--button-text-color));
   cursor: var(--saltButton-cursor-disabled, var(--salt-cursor-disabled));
