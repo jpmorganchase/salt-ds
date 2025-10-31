@@ -316,7 +316,7 @@
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-graph {
   stroke: var(--salt-content-primary-foreground);
-  stroke-width: 1px;
+  stroke-width: var(--salt-size-fixed-100);
   stroke-dasharray: 2, 2;
 }
 
