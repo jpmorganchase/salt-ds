@@ -8,9 +8,11 @@ import {
   forwardRef,
   type KeyboardEvent,
   type MouseEvent,
+  useEffect,
 } from "react";
 import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer, useForkRef } from "../utils";
+import { useMenuContext } from "./MenuContext";
 import menuItemCss from "./MenuItem.css";
 import { useMenuPanelContext } from "./MenuPanelContext";
 import { useIsMenuTrigger } from "./MenuTriggerContext";
@@ -36,6 +38,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     } = props;
 
     const { triggersSubmenu, blurActive } = useIsMenuTrigger();
+    const { setTriggerDisabled } = useMenuContext();
     const { ExpandGroupIcon } = useIcon();
     const { activeIndex, getItemProps, setFocusInside } = useMenuPanelContext();
     const item = useListItem();
@@ -48,6 +51,17 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       window: targetWindow,
     });
     const handleRef = useForkRef<HTMLDivElement>(ref, item.ref);
+
+    useEffect(() => {
+      if (!triggersSubmenu) return;
+      setTriggerDisabled(!!disabled);
+      return () => {
+        if (triggersSubmenu && disabled) {
+          setTriggerDisabled(false);
+        }
+      };
+    }, [triggersSubmenu, disabled, setTriggerDisabled]);
+
     return (
       <div
         className={clsx(

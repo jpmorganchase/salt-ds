@@ -22,6 +22,8 @@ export interface MenuContextValue
   focusInside: boolean;
   setFocusInside: Dispatch<SetStateAction<boolean>>;
   isNested: boolean;
+  triggerDisabled: boolean;
+  setTriggerDisabled: (disabled: boolean) => void;
 }
 
 export const MenuContext = createContext<MenuContextValue>("MenuContext", {
@@ -35,6 +37,8 @@ export const MenuContext = createContext<MenuContextValue>("MenuContext", {
   focusInside: false,
   setFocusInside: () => undefined,
   isNested: false,
+  triggerDisabled: false,
+  setTriggerDisabled: () => undefined,
 });
 
 export function useMenuContext() {

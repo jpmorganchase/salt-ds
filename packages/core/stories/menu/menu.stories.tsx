@@ -428,3 +428,53 @@ export const WithTooltip: StoryFn<typeof Menu> = (args) => {
     </Menu>
   );
 };
+
+export const WithDisabledItems: StoryFn<typeof Menu> = (args) => {
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem
+          onClick={() => {
+            alert("Copy");
+          }}
+        >
+          Copy
+        </MenuItem>
+        <Menu>
+          <MenuTrigger>
+            <MenuItem disabled>Edit styling</MenuItem>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuItem
+              onClick={() => {
+                alert("Column");
+              }}
+            >
+              Column
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                alert("Cell");
+              }}
+            >
+              Cell
+            </MenuItem>
+          </MenuPanel>
+        </Menu>
+        <MenuItem
+          disabled
+          onClick={() => {
+            alert("Export");
+          }}
+        >
+          Export
+        </MenuItem>
+      </MenuPanel>
+    </Menu>
+  );
+};
