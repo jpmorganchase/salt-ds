@@ -18,6 +18,7 @@ import {
   Link,
   ListBox,
   MultilineInput,
+  NumberInput,
   Option,
   RadioButton,
   RadioButtonGroup,
@@ -86,7 +87,6 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "../../src/date-picker/";
-import { NumberInput } from "../../src/number-input";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";

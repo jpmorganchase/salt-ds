@@ -4,16 +4,18 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  NumberInput,
+  type NumberInputProps,
   StackLayout,
   useAriaAnnouncer,
 } from "@salt-ds/core";
+
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
-import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 
 export default {
-  title: "Lab/Number Input",
+  title: "Core/Number Input",
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
@@ -218,7 +220,7 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
         announce("Maximum value reached", 1000);
       }
     }
-  }, [value, focused]);
+  }, [announce, value, focused]);
 
   return (
     <StackLayout>
@@ -351,7 +353,7 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
             tabIndex={-1}
             onClick={() => {
               const newValue = Number.parseFloat(value);
-              if (!isNaN(newValue)) {
+              if (!Number.isNaN(newValue)) {
                 const validValue = Math.max(
                   Number.MIN_SAFE_INTEGER,
                   Math.min(Number.MAX_SAFE_INTEGER, newValue - 1),
@@ -369,7 +371,7 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
             tabIndex={-1}
             onClick={() => {
               const newValue = Number.parseFloat(value);
-              if (!isNaN(newValue)) {
+              if (!Number.isNaN(newValue)) {
                 const validValue = Math.max(
                   Number.MIN_SAFE_INTEGER,
                   Math.min(Number.MAX_SAFE_INTEGER, newValue + 1),
@@ -452,7 +454,7 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
         <Button
           onClick={() => {
             const newValue = parse(value);
-            if (newValue !== null && !isNaN(newValue)) {
+            if (newValue !== null && !Number.isNaN(newValue)) {
               const validValue = Math.max(
                 Number.MIN_SAFE_INTEGER,
                 Math.min(Number.MAX_SAFE_INTEGER, newValue + 100),

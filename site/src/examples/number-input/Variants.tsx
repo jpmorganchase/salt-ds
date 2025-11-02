@@ -1,5 +1,4 @@
-import { StackLayout } from "@salt-ds/core";
-import { NumberInput } from "@salt-ds/lab";
+import { NumberInput, StackLayout } from "@salt-ds/core";
 
 export const Variants = () => (
   <StackLayout style={{ width: "256px" }}>
