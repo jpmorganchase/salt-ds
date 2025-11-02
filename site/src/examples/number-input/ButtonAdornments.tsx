@@ -3,11 +3,11 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  NumberInput,
   StackLayout,
   useAriaAnnouncer,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon, SyncIcon } from "@salt-ds/icons";
-import { NumberInput } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 
 const ResetAdornment = () => {

@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { NumberInput } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, NumberInput } from "@salt-ds/core";
 
 export const CustomInputPattern = () => (
   <FormField style={{ width: "256px" }}>

@@ -1,15 +1,3 @@
-import {
-  Button,
-  capitalize,
-  makePrefixer,
-  StatusAdornment,
-  useControlled,
-  useForkRef,
-  useFormFieldProps,
-  useIcon,
-  useId,
-  type ValidationStatus,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -28,6 +16,18 @@ import {
   useRef,
   useState,
 } from "react";
+import {
+  Button,
+  capitalize,
+  StatusAdornment,
+  useControlled,
+  useForkRef,
+  useFormFieldProps,
+  useIcon,
+  useId,
+  type ValidationStatus,
+} from "../index";
+import { makePrefixer } from "../utils";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import numberInputCss from "./NumberInput.css";
 
@@ -553,6 +553,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             {startAdornment}
           </div>
         )}
+        {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role is determined by variable, aria-valuemax is only used when the role is appropriate. */}
         <input
           aria-describedby={
             clsx(formFieldDescribedBy, inputDescribedBy) || undefined
