@@ -1,7 +1,6 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
+import { FormField, FormFieldLabel, NumberInput } from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
-import { NumberInput } from "packages/lab/src/number-input";
 import { type SyntheticEvent, useState } from "react";
 
 const composedStories = composeStories(numberInputStories);
