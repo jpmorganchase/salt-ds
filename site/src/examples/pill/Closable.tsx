@@ -8,6 +8,6 @@ const handleClose = () => {
 
 export const Closable = (): ReactElement => (
   <Pill onClick={handleClose}>
-    Closable Pill <CloseIcon style={{ marginLeft: "auto" }} />
+    Closable Pill <CloseIcon aria-hidden="true" style={{ marginLeft: "auto" }} />
   </Pill>
 );
