@@ -12,6 +12,7 @@ import {
 
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 
 export default {
@@ -24,10 +25,11 @@ const Template: StoryFn = ({ ...args }) => {
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput
-        onNumberChange={(_event, newValue) =>
-          console.log(`Number changed to ${newValue}`)
-        }
         {...args}
+        onNumberChange={(event, newValue) => {
+          console.log(`Number changed to ${newValue}`);
+          args?.onNumberChange?.(event, newValue);
+        }}
       />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
@@ -551,5 +553,78 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput defaultValue={10.236} decimalScale={2} step={0.1} />
       </FormField>
     </StackLayout>
+  );
+};
+
+export const Scientific: StoryFn<NumberInputProps> = (args) => {
+  const isScientificFormat = (inputValue: string) => {
+    // Allow empty string
+    if (inputValue === "") return true;
+    // Regex breakdown:
+    // ^-?                : optional leading minus
+    // (\d*)              : any number of digits (mantissa)
+    // (\.?)              : optional decimal point
+    // (\d*)              : any number of digits after decimal
+    // (e[+-]?)?          : optional 'e', optional '+' or '-' for exponent
+    // (\d*)              : any number of digits for exponent
+    // $                  : end of string
+    return /^-?(\d*)?(\.?)?(\d*)?(e([+-]?)?)?(\d*)?$/.test(inputValue);
+  };
+  const increment = (value: string, step: number, stepMultiplier = 1) => {
+    // Use Decimal for safe arithmetic
+    const decimalValue = new Decimal(value || "0");
+    const incrementStep = new Decimal(step).mul(stepMultiplier);
+    const result = decimalValue.add(incrementStep);
+    return result.toString();
+  };
+
+  const decrement = (value: string, step: number, stepMultiplier = 1) => {
+    // Use Decimal for safe arithmetic
+    const decimalValue = new Decimal(value || "0");
+    const decrementStep = new Decimal(step).mul(stepMultiplier);
+    const result = decimalValue.sub(decrementStep);
+    return result.toString();
+  };
+
+  return (
+    <FormField>
+      <FormFieldLabel>Scientific</FormFieldLabel>
+
+      <NumberInput
+        {...args}
+        defaultValue={1.01e-4}
+        increment={increment}
+        decrement={decrement}
+        pattern={isScientificFormat}
+        format={(value) => {
+          if (!value.length) {
+            return value;
+          }
+          try {
+            // Parse and format as scientific notation with 2 decimal places
+            const decimalValue = new Decimal(value);
+            // Format: 2 significant digits in scientific notation
+            return decimalValue.toExponential(2); // e.g., "1.01e-4"
+          } catch (_e) {
+            return value; // fallback to raw input if invalid
+          }
+        }}
+        parse={(value) => {
+          if (!value.length) {
+            return null;
+          }
+          const sanitized = value.replace(/,/g, "");
+          try {
+            const decimalValue = new Decimal(sanitized);
+            return decimalValue.toNumber();
+          } catch (_e) {
+            return null;
+          }
+        }}
+        onNumberChange={(_event, newValue) => {
+          console.log(`Number changed to ${newValue}`);
+        }}
+      />
+    </FormField>
   );
 };
