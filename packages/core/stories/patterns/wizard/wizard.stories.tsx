@@ -30,7 +30,13 @@ import {
 } from "@salt-ds/core";
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import React, { type ElementType, useCallback, useRef, useState } from "react";
+import React, {
+  type ElementType,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   type AccountFormData,
   type ContentType,
@@ -411,7 +417,7 @@ const AccountTypeContent = ({
         ))}
       </RadioButtonGroup>
       {stepFieldValidation.accountType?.status && (
-        <FormFieldHelperText>
+        <FormFieldHelperText role="alert">
           {stepFieldValidation.accountType.message}
         </FormFieldHelperText>
       )}
@@ -735,6 +741,11 @@ export const Horizontal = () => {
   } = useWizard(wizardSteps);
   const [successOpen, setSuccessOpen] = useState(false);
 
+  // Accessibility refs & navigation intent tracking
+  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const contentRegionRef = useRef<HTMLDivElement>(null);
+  const navigatedRef = useRef(false);
+
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -746,6 +757,30 @@ export const Horizontal = () => {
   const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
+
+  // Focus management effect
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+
+    // Collect invalid fields in current step (status not success ? adjust if you have explicit status enum)
+    const invalidFieldName = Object.entries(stepFieldValidation).find(
+      ([, v]) => v.status === "error",
+    )?.[0];
+
+    if (invalidFieldName) {
+      const el = contentRegionRef.current?.querySelector<
+        HTMLInputElement | HTMLElement
+      >(`[name="${invalidFieldName}"]`);
+      if (el) {
+        el.focus();
+        return;
+      }
+    }
+
+    // Fallback: focus heading
+    stepHeadingRef.current?.focus();
+  }, [stepFieldValidation]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -769,14 +804,29 @@ export const Horizontal = () => {
     }
   };
 
-  const onSubmitForm = () => {
+  const goNext = () => {
     if (isLastStep) {
       setSuccessOpen(true);
       return;
     }
     if (!validateCurrentStep()) return;
+    navigatedRef.current = true;
     next();
   };
+  const goPrevious = () => {
+    if (isFirstStep) return;
+    navigatedRef.current = true;
+    previous();
+  };
+
+  // const onSubmitForm = () => {
+  //   if (isLastStep) {
+  //     setSuccessOpen(true);
+  //     return;
+  //   }
+  //   if (!validateCurrentStep()) return;
+  //   next();
+  // };
 
   const sharedFormProps = {
     formData,
@@ -802,7 +852,13 @@ export const Horizontal = () => {
       <FlexItem style={{ flex: 1 }}>
         <Text>
           Create a new account
-          <Text color="primary" styleAs="h2">
+          <Text
+            id={`step-${currentStepId}-heading`}
+            color="primary"
+            styleAs="h2"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+          >
             {wizardSteps[activeStepIndex].label}
           </Text>
           {wizardSteps[activeStepIndex].id ===
@@ -839,11 +895,11 @@ export const Horizontal = () => {
         Cancel
       </Button>
       {!isFirstStep && (
-        <Button sentiment="accented" appearance="bordered" onClick={previous}>
+        <Button sentiment="accented" appearance="bordered" onClick={goPrevious}>
           Previous
         </Button>
       )}
-      <Button sentiment="accented" onClick={onSubmitForm}>
+      <Button sentiment="accented" onClick={goNext}>
         Next
       </Button>
     </FlexLayout>
@@ -856,11 +912,14 @@ export const Horizontal = () => {
           width: 730,
         }}
         gap={0}
+        aria-labelledby={`step-${currentStepId}-heading`}
       >
         <FlexItem padding={3}>{header}</FlexItem>
         <FlexItem grow={1}>
           <ContentOverflow style={{ height: 396 }}>
-            {contentByStep[currentStepId]}
+            <section ref={contentRegionRef}>
+              {contentByStep[currentStepId]}
+            </section>
           </ContentOverflow>
         </FlexItem>
         {footer}
