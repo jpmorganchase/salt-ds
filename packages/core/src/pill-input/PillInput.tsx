@@ -315,7 +315,7 @@ export const PillInput = forwardRef(function PillInput(
                 }
               >
                 {pill}
-                {!hidePillClose && <CloseIcon aria-hidden="true" />}
+                {!hidePillClose && <CloseIcon aria-hidden />}
               </Pill>
             </div>
           ))}
