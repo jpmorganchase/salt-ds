@@ -272,5 +272,18 @@
 .highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-axis-line,
 .highcharts-theme-salt.axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
 .highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
-  stroke-width: 1;
+  stroke-width: var(--salt-size-fixed-100);
+}
+
+.highcharts-theme-salt .highcharts-boxplot-box {
+  fill: inherit;
+  fill-opacity: 0.75;
+}
+
+.highcharts-theme-salt .highcharts-point .highcharts-boxplot-box {
+  stroke-width: var(--salt-size-fixed-200);
+}
+
+.highcharts-theme-salt .highcharts-boxplot-median {
+  stroke: var(--salt-content-primary-foreground);
 }
