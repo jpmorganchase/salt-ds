@@ -297,6 +297,7 @@ export const PillInput = forwardRef(function PillInput(
               <Pill
                 data-index={index}
                 disabled={disabled}
+                aria-label={hidePillClose ? pill : `${pill} Click to remove`}
                 ref={(element) => {
                   if (element) {
                     pillElementsRef.current[index] = element;
@@ -314,7 +315,7 @@ export const PillInput = forwardRef(function PillInput(
                 }
               >
                 {pill}
-                {!hidePillClose && <CloseIcon aria-label="click to close" />}
+                {!hidePillClose && <CloseIcon aria-hidden="true" />}
               </Pill>
             </div>
           ))}
