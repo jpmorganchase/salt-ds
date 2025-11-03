@@ -297,7 +297,7 @@ export const PillInput = forwardRef(function PillInput(
               <Pill
                 data-index={index}
                 disabled={disabled}
-                aria-label={hidePillClose ? pill : `${pill} Click to remove`}
+                aria-label={hidePillClose ? pill : `Remove ${pill}`}
                 ref={(element) => {
                   if (element) {
                     pillElementsRef.current[index] = element;
