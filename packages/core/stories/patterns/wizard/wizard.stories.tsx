@@ -242,6 +242,7 @@ const CancelWarningDialog = ({
       onOpenChange={onOpenChange}
       status="warning"
       size="small"
+      title="Are you sure you want to cancel"
     >
       <DialogHeader header="Are you sure you want to cancel" />
       <DialogContent>
@@ -276,6 +277,7 @@ const AccountCreatedSuccessDialog = ({
     size="small"
     status="success"
     initialFocus={0}
+    title="Account created"
   >
     <DialogHeader header="Account created" />
     <DialogContent>You can now start using this new account.</DialogContent>
@@ -417,7 +419,7 @@ const AccountTypeContent = ({
         ))}
       </RadioButtonGroup>
       {stepFieldValidation.accountType?.status && (
-        <FormFieldHelperText role="alert">
+        <FormFieldHelperText>
           {stepFieldValidation.accountType.message}
         </FormFieldHelperText>
       )}
@@ -741,9 +743,7 @@ export const Horizontal = () => {
   } = useWizard(wizardSteps);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  // Accessibility refs & navigation intent tracking
   const stepHeadingRef = useRef<HTMLDivElement>(null);
-  const contentRegionRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
@@ -758,29 +758,11 @@ export const Horizontal = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  // Focus management effect
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
-
-    // Collect invalid fields in current step (status not success ? adjust if you have explicit status enum)
-    const invalidFieldName = Object.entries(stepFieldValidation).find(
-      ([, v]) => v.status === "error",
-    )?.[0];
-
-    if (invalidFieldName) {
-      const el = contentRegionRef.current?.querySelector<
-        HTMLInputElement | HTMLElement
-      >(`[name="${invalidFieldName}"]`);
-      if (el) {
-        el.focus();
-        return;
-      }
-    }
-
-    // Fallback: focus heading
     stepHeadingRef.current?.focus();
-  }, [stepFieldValidation]);
+  }, [currentStepId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -814,19 +796,9 @@ export const Horizontal = () => {
     next();
   };
   const goPrevious = () => {
-    if (isFirstStep) return;
     navigatedRef.current = true;
     previous();
   };
-
-  // const onSubmitForm = () => {
-  //   if (isLastStep) {
-  //     setSuccessOpen(true);
-  //     return;
-  //   }
-  //   if (!validateCurrentStep()) return;
-  //   next();
-  // };
 
   const sharedFormProps = {
     formData,
@@ -854,10 +826,10 @@ export const Horizontal = () => {
           Create a new account
           <Text
             id={`step-${currentStepId}-heading`}
-            color="primary"
-            styleAs="h2"
+            as="h2"
             ref={stepHeadingRef}
             tabIndex={-1}
+            style={{ margin: 0 }}
           >
             {wizardSteps[activeStepIndex].label}
           </Text>
@@ -917,9 +889,7 @@ export const Horizontal = () => {
         <FlexItem padding={3}>{header}</FlexItem>
         <FlexItem grow={1}>
           <ContentOverflow style={{ height: 396 }}>
-            <section ref={contentRegionRef}>
-              {contentByStep[currentStepId]}
-            </section>
+            {contentByStep[currentStepId]}
           </ContentOverflow>
         </FlexItem>
         {footer}
@@ -958,6 +928,9 @@ export const HorizontalWithCancelConfirmation = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
+  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const navigatedRef = useRef(false);
+
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -969,6 +942,12 @@ export const HorizontalWithCancelConfirmation = () => {
   const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
+
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [currentStepId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -992,13 +971,18 @@ export const HorizontalWithCancelConfirmation = () => {
     }
   };
 
-  const onSubmitForm = () => {
+  const goNext = () => {
     if (isLastStep) {
       setSuccessOpen(true);
       return;
     }
     if (!validateCurrentStep()) return;
+    navigatedRef.current = true;
     next();
+  };
+  const goPrevious = () => {
+    navigatedRef.current = true;
+    previous();
   };
 
   const sharedFormProps = {
@@ -1027,7 +1011,13 @@ export const HorizontalWithCancelConfirmation = () => {
       <FlexItem style={{ flex: 1 }}>
         <Text>
           Create a new account
-          <Text color="primary" styleAs="h2">
+          <Text
+            id={`step-${currentStepId}-heading`}
+            as="h2"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            style={{ margin: 0 }}
+          >
             {wizardSteps[activeStepIndex].label}
           </Text>
           {wizardSteps[activeStepIndex].id ===
@@ -1069,12 +1059,12 @@ export const HorizontalWithCancelConfirmation = () => {
       </Button>
 
       {!isFirstStep && (
-        <Button sentiment="accented" appearance="bordered" onClick={previous}>
+        <Button sentiment="accented" appearance="bordered" onClick={goPrevious}>
           Previous
         </Button>
       )}
 
-      <Button sentiment="accented" onClick={onSubmitForm}>
+      <Button sentiment="accented" onClick={goNext}>
         Next
       </Button>
     </FlexLayout>
@@ -1088,6 +1078,7 @@ export const HorizontalWithCancelConfirmation = () => {
           height: 588,
         }}
         gap={0}
+        aria-labelledby={`step-${currentStepId}-heading`}
       >
         <FlexItem padding={3}>{header}</FlexItem>
         <FlexItem grow={1}>
@@ -1139,6 +1130,9 @@ export const VerticalWithCancelConfirmation = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
+  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const navigatedRef = useRef(false);
+
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -1150,6 +1144,12 @@ export const VerticalWithCancelConfirmation = () => {
   const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
+
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [currentStepId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -1173,13 +1173,18 @@ export const VerticalWithCancelConfirmation = () => {
     }
   };
 
-  const onSubmitForm = () => {
+  const goNext = () => {
     if (isLastStep) {
       setSuccessOpen(true);
       return;
     }
     if (!validateCurrentStep()) return;
+    navigatedRef.current = true;
     next();
+  };
+  const goPrevious = () => {
+    navigatedRef.current = true;
+    previous();
   };
 
   const openCancelDialog = () => setCancelOpen(true);
@@ -1204,9 +1209,15 @@ export const VerticalWithCancelConfirmation = () => {
   };
 
   const header = (
-    <StackLayout gap={0} style={{ minHeight: "5rem" }}>
+    <StackLayout gap={0} style={{ minHeight: "5rem" }} align="start">
       <Text>Create a new account</Text>
-      <Text color="primary" styleAs="h2">
+      <Text
+        id={`step-${currentStepId}-heading`}
+        as="h2"
+        ref={stepHeadingRef}
+        tabIndex={-1}
+        style={{ margin: 0 }}
+      >
         {wizardSteps[activeStepIndex].label}
       </Text>
       {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
@@ -1233,12 +1244,12 @@ export const VerticalWithCancelConfirmation = () => {
       </Button>
 
       {!isFirstStep && (
-        <Button sentiment="accented" appearance="bordered" onClick={previous}>
+        <Button sentiment="accented" appearance="bordered" onClick={goPrevious}>
           Previous
         </Button>
       )}
 
-      <Button sentiment="accented" onClick={onSubmitForm}>
+      <Button sentiment="accented" onClick={goNext}>
         Next
       </Button>
     </FlexLayout>
@@ -1252,6 +1263,7 @@ export const VerticalWithCancelConfirmation = () => {
           width: 850,
         }}
         padding={3}
+        aria-labelledby={`step-${currentStepId}-heading`}
       >
         <ContentOverflow style={{ height: 512 }}>
           <StackLayout gap={3}>
@@ -1318,6 +1330,15 @@ export const Modal = () => {
     setStepValidations,
   } = useWizard(wizardSteps);
 
+  const headerRef = useRef<HTMLDivElement>(null);
+  const navigatedRef = useRef(false);
+
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    // navigatedRef.current = false;
+    headerRef.current?.focus();
+  }, [activeStepIndex]);
+
   const openWizard = () => {
     reset();
     setOpen(true);
@@ -1346,11 +1367,15 @@ export const Modal = () => {
     const isLast = activeStepIndex === wizardSteps.length - 1;
     if (!validateCurrentStep()) return;
     if (isLast) closeWizardAndReset();
-    else next();
+    else {
+      navigatedRef.current = true;
+      next();
+    }
   };
 
   const handlePreviousClick = () => {
     if (activeStepIndex === 0) return;
+    navigatedRef.current = true;
     previous();
   };
 
@@ -1438,6 +1463,8 @@ export const Modal = () => {
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         <DialogHeader
+          ref={headerRef}
+          tabIndex={-1}
           header={wizardSteps[activeStepIndex].label}
           description={
             wizardSteps[activeStepIndex].id ===
@@ -1445,7 +1472,11 @@ export const Modal = () => {
           }
           preheader="Create a new account"
           actions={
-            <Stepper orientation="horizontal" style={{ maxWidth: 300 }}>
+            <Stepper
+              orientation="horizontal"
+              style={{ maxWidth: 300 }}
+              aria-hidden
+            >
               {wizardSteps.map((step, index) => (
                 <Step
                   key={step.id}
@@ -1457,7 +1488,6 @@ export const Modal = () => {
             </Stepper>
           }
         />
-
         <DialogContent>
           <FlowLayout>{contentByStep[currentStepId]}</FlowLayout>
         </DialogContent>
@@ -1639,6 +1669,13 @@ export const ModalWithConfirmations = () => {
         onOpenChange={onOpenChange}
         status={wizardStatus}
         style={{ height: 588 }}
+        // title={
+        //   wizardState === "cancel-warning"
+        //     ? "Are you sure you want to cancel?"
+        //     : wizardState === "success"
+        //       ? "Successfully created account"
+        //       : "Create a new account"
+        // }
       >
         {(() => {
           switch (wizardState) {
@@ -1706,11 +1743,7 @@ export const ModalWithConfirmations = () => {
                     </GridLayout>
                   </DialogContent>
                   <DialogActions>
-                    <Button
-                      sentiment="accented"
-                      onClick={closeWizardAndReset}
-                      autoFocus
-                    >
+                    <Button sentiment="accented" onClick={closeWizardAndReset}>
                       Done
                     </Button>
                   </DialogActions>
@@ -1731,6 +1764,7 @@ export const ModalWithConfirmations = () => {
                       <Stepper
                         orientation="horizontal"
                         style={{ maxWidth: 300 }}
+                        aria-hidden
                       >
                         {wizardSteps.map((step, index) => (
                           <Step

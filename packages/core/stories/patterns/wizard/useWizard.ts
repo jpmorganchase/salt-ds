@@ -32,7 +32,7 @@ export interface FieldValidation {
 export const initialFormData: AccountFormData = {
   fullName: "Jane Doe",
   phoneNumber: "+1 (212) 555-0100",
-  emailAddress: "jane.doe@gmail.com",
+  emailAddress: "jane.doe@email.com",
   address1: "25 Bank Street",
   address2: "",
   postalCode: "E14 5JP",
