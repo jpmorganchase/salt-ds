@@ -8,6 +8,6 @@ const handleClick = () => {
 
 export const Icon = (): ReactElement => (
   <Pill onClick={handleClick}>
-    <FavoriteIcon aria-hidden/> Pill with Icon
+    <FavoriteIcon aria-hidden /> Pill with Icon
   </Pill>
 );
