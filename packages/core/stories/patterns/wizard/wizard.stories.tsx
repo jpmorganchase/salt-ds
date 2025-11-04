@@ -282,7 +282,7 @@ const AccountCreatedSuccessDialog = ({
     <DialogHeader header="Account created" />
     <DialogContent>You can now start using this new account.</DialogContent>
     <DialogActions>
-      <Button sentiment="accented" onClick={onConfirm} autoFocus>
+      <Button sentiment="accented" onClick={onConfirm}>
         Done
       </Button>
     </DialogActions>
