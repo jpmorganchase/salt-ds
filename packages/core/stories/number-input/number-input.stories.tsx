@@ -570,17 +570,17 @@ export const Scientific: StoryFn<NumberInputProps> = (args) => {
     // $                  : end of string
     return /^-?(\d*)?(\.?)?(\d*)?(e([+-]?)?)?(\d*)?$/.test(inputValue);
   };
-  const increment = (value: string, step: number, stepMultiplier = 1) => {
+  const increment = (value: string, step: number, stepMultiplier: number) => {
     // Use Decimal for safe arithmetic
-    const decimalValue = new Decimal(value || "0");
+    const decimalValue = new Decimal(value);
     const incrementStep = new Decimal(step).mul(stepMultiplier);
     const result = decimalValue.add(incrementStep);
     return result.toString();
   };
 
-  const decrement = (value: string, step: number, stepMultiplier = 1) => {
+  const decrement = (value: string, step: number, stepMultiplier: number) => {
     // Use Decimal for safe arithmetic
-    const decimalValue = new Decimal(value || "0");
+    const decimalValue = new Decimal(value);
     const decrementStep = new Decimal(step).mul(stepMultiplier);
     const result = decimalValue.sub(decrementStep);
     return result.toString();

@@ -5,17 +5,17 @@ export const DecimalJS = () => {
   const isInternationalFormat = (inputValue: string): boolean =>
     /^[+-]?(\d{1,3}(,\d{0,3})*|\d*)(\.?\d*)?$/.test(inputValue);
 
-  const customIncrement = (value: string, step: number, stepMultiplier = 1) => {
+  const customIncrement = (value: string, step: number, stepMultiplier:number) => {
     // Use decimal.js/Decimal for safe arithmetic
-    const decimalValue = new Decimal(value || "0");
+    const decimalValue = new Decimal(value);
     const incrementStep = new Decimal(step).mul(stepMultiplier);
     const result = decimalValue.add(incrementStep);
     return result.toString();
   };
 
-  const customDecrement = (value: string, step: number, stepMultiplier = 1) => {
+  const customDecrement = (value: string, step: number, stepMultiplier: number) => {
     // Use decimal.js/Decimal for safe arithmetic
-    const decimalValue = new Decimal(value || "0");
+    const decimalValue = new Decimal(value);
     const decrementStep = new Decimal(step).mul(stepMultiplier);
     const result = decimalValue.sub(decrementStep);
     return result.toString();

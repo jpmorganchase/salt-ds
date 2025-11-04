@@ -272,14 +272,14 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     {
       "aria-valuetext": ariaValueTextProp,
       bordered,
-      className: classNameProp,
+      className,
       clamp,
       step = 1,
       stepMultiplier = 2,
       value: valueProp,
-      defaultValue: defaultValueProp,
+      defaultValue,
       decimalScale = Math.max(
-        getNumberPrecision(valueProp ?? defaultValueProp ?? 0),
+        getNumberPrecision(valueProp ?? defaultValue ?? 0),
         getNumberPrecision(step),
       ),
       disabled,
@@ -287,19 +287,19 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       endAdornment,
       format = (v: string) => defaultFormat(v, decimalScale),
       hideButtons,
-      id: idProp,
+      id,
       pattern = defaultPattern,
-      inputProps: inputPropsProp = {},
+      inputProps = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
       onBlur,
       onChange,
       onMouseUp,
-      onNumberChange: onNumberChangeProp,
+      onNumberChange,
       parse = (v: string) => defaultParse(v, decimalScale),
       placeholder,
-      readOnly: readOnlyProp,
+      readOnly,
       startAdornment,
       decrement = (v, s, m) => defaultDecrement(v, s, m, parse),
       increment = (v, s, m) => defaultIncrement(v, s, m, parse),
@@ -329,9 +329,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useFormFieldProps();
 
     const isDisabled = disabled || formFieldDisabled;
-    const isReadOnly = readOnlyProp || formFieldReadOnly;
+    const isReadOnly = readOnly || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-    const validationStatusId = useId(idProp);
+    const validationStatusId = useId(id);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef(inputRefProp, inputRef);
 
@@ -344,7 +344,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       required: inputRequired,
       onKeyDown: inputOnKeyDown,
       ...restInputProps
-    } = inputPropsProp;
+    } = inputProps;
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -356,7 +356,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const [value, setValue] = useControlled({
       controlled: valueProp !== undefined ? String(valueProp) : undefined,
-      default: String(defaultValueProp ?? ""),
+      default: String(defaultValue ?? ""),
       name: "NumberInput",
       state: "value",
     });
@@ -388,7 +388,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         onChange?.(event, commitValue);
       }
       if (lastCommitValue.current !== commitValue) {
-        onNumberChangeProp?.(event, safeNumber);
+        onNumberChange?.(event, safeNumber);
         lastCommitValue.current = commitValue;
       }
     };
@@ -581,7 +581,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             [withBaseName(validationStatus || "")]: validationStatus,
             [withBaseName("bordered")]: bordered,
           },
-          classNameProp,
+          className,
         )}
         onBlur={handleBlur}
         onMouseUp={handleContainerMouseUp}
