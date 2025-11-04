@@ -282,7 +282,7 @@ const AccountCreatedSuccessDialog = ({
     <DialogHeader header="Account created" />
     <DialogContent>You can now start using this new account.</DialogContent>
     <DialogActions>
-      <Button sentiment="accented" onClick={onConfirm}>
+      <Button sentiment="accented" onClick={onConfirm} autoFocus>
         Done
       </Button>
     </DialogActions>
@@ -746,6 +746,12 @@ export const Horizontal = () => {
   const stepHeadingRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -757,12 +763,6 @@ export const Horizontal = () => {
   const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
-
-  useEffect(() => {
-    if (!navigatedRef.current) return;
-    navigatedRef.current = false;
-    stepHeadingRef.current?.focus();
-  }, [currentStepId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -931,6 +931,12 @@ export const HorizontalWithCancelConfirmation = () => {
   const stepHeadingRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -942,12 +948,6 @@ export const HorizontalWithCancelConfirmation = () => {
   const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
-
-  useEffect(() => {
-    if (!navigatedRef.current) return;
-    navigatedRef.current = false;
-    stepHeadingRef.current?.focus();
-  }, [currentStepId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -1133,6 +1133,12 @@ export const VerticalWithCancelConfirmation = () => {
   const stepHeadingRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
   const updateStepValidation = (data: AccountFormData, stepId: ContentType) => {
     const { stepFieldValidation, stepStatus } = validateStepData(stepId, data);
     setStepValidations((prev) => ({
@@ -1144,12 +1150,6 @@ export const VerticalWithCancelConfirmation = () => {
   const currentStepId = wizardSteps[activeStepIndex].id;
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
-
-  useEffect(() => {
-    if (!navigatedRef.current) return;
-    navigatedRef.current = false;
-    stepHeadingRef.current?.focus();
-  }, [currentStepId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -1330,14 +1330,18 @@ export const Modal = () => {
     setStepValidations,
   } = useWizard(wizardSteps);
 
-  const headerRef = useRef<HTMLDivElement>(null);
-  const navigatedRef = useRef(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!navigatedRef.current) return;
-    // navigatedRef.current = false;
-    headerRef.current?.focus();
-  }, [activeStepIndex]);
+    if (!open) return;
+
+    const container = contentRef.current;
+    if (!container) return;
+    const firstFocusable = container.querySelector<HTMLElement>(
+      'input:not([type="hidden"]):not([disabled]), select:not([disabled]), [role="radio"], [tabindex]:not([tabindex="-1"])',
+    );
+    firstFocusable?.focus();
+  }, [activeStepIndex, open]);
 
   const openWizard = () => {
     reset();
@@ -1367,15 +1371,11 @@ export const Modal = () => {
     const isLast = activeStepIndex === wizardSteps.length - 1;
     if (!validateCurrentStep()) return;
     if (isLast) closeWizardAndReset();
-    else {
-      navigatedRef.current = true;
-      next();
-    }
+    else next();
   };
 
   const handlePreviousClick = () => {
     if (activeStepIndex === 0) return;
-    navigatedRef.current = true;
     previous();
   };
 
@@ -1463,8 +1463,6 @@ export const Modal = () => {
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         <DialogHeader
-          ref={headerRef}
-          tabIndex={-1}
           header={wizardSteps[activeStepIndex].label}
           description={
             wizardSteps[activeStepIndex].id ===
@@ -1488,8 +1486,8 @@ export const Modal = () => {
             </Stepper>
           }
         />
-        <DialogContent>
-          <FlowLayout>{contentByStep[currentStepId]}</FlowLayout>
+        <DialogContent ref={contentRef}>
+          {contentByStep[currentStepId]}
         </DialogContent>
         <DialogActions>
           {direction === "column" ? (
@@ -1527,6 +1525,19 @@ export const ModalWithConfirmations = () => {
     reset,
     setStepValidations,
   } = useWizard(wizardSteps);
+
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const container = contentRef.current;
+    if (!container) return;
+    const firstFocusable = container.querySelector<HTMLElement>(
+      'input:not([type="hidden"]):not([disabled]), select:not([disabled]), [role="radio"], [tabindex]:not([tabindex="-1"])',
+    );
+    firstFocusable?.focus();
+  }, [activeStepIndex, open]);
 
   const openWizard = () => {
     reset();
@@ -1669,13 +1680,6 @@ export const ModalWithConfirmations = () => {
         onOpenChange={onOpenChange}
         status={wizardStatus}
         style={{ height: 588 }}
-        // title={
-        //   wizardState === "cancel-warning"
-        //     ? "Are you sure you want to cancel?"
-        //     : wizardState === "success"
-        //       ? "Successfully created account"
-        //       : "Create a new account"
-        // }
       >
         {(() => {
           switch (wizardState) {
@@ -1743,7 +1747,11 @@ export const ModalWithConfirmations = () => {
                     </GridLayout>
                   </DialogContent>
                   <DialogActions>
-                    <Button sentiment="accented" onClick={closeWizardAndReset}>
+                    <Button
+                      sentiment="accented"
+                      onClick={closeWizardAndReset}
+                      autoFocus
+                    >
                       Done
                     </Button>
                   </DialogActions>
@@ -1778,8 +1786,8 @@ export const ModalWithConfirmations = () => {
                     }
                   />
 
-                  <DialogContent>
-                    <FlowLayout>{contentByStep[currentStepId]}</FlowLayout>
+                  <DialogContent ref={contentRef}>
+                    {contentByStep[currentStepId]}
                   </DialogContent>
                   <DialogActions>
                     {direction === "column" ? (
