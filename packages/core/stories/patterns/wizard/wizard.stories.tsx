@@ -1,6 +1,4 @@
 import {
-  Banner,
-  BannerContent,
   Button,
   Dialog,
   DialogActions,
@@ -48,24 +46,8 @@ import {
   validateStepData,
 } from "./useWizard";
 
-const mobileWarningBanner = (
-  <Banner status="warning">
-    <BannerContent>
-      Wizard is not optimized for mobile or smaller screens
-    </BannerContent>
-  </Banner>
-);
-
 export default {
   title: "Patterns/Wizard",
-  decorators: [
-    (story) => (
-      <>
-        <div className="mobileBanner">{mobileWarningBanner}</div>
-        {story()}
-      </>
-    ),
-  ],
 } as Meta;
 import "./wizard.stories.css";
 import clsx from "clsx";
