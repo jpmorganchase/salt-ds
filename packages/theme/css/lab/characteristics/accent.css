@@ -1,0 +1,7 @@
+.salt-theme.salt-theme-lab {
+  --salt-accent-background: var(--lab-palette-background-brand);
+  --salt-accent-background-disabled: var(--lab-palette-background-brand-disabled);
+  --salt-accent-borderColor: var(--lab-palette-border-brand);
+  --salt-accent-borderColor-disabled: var(--lab-palette-border-brand-disabled);
+  --salt-accent-foreground: var(--lab-palette-text-regular-inverse);
+}

@@ -1,0 +1,40 @@
+.salt-theme.salt-theme-lab[data-mode="light"] {
+  --lab-palette-icon-error: var(--lab-color-plum-600);
+
+  --lab-palette-icon-info: var(--lab-color-quartz-900);
+
+  --lab-palette-icon-input: var(--lab-color-silver-500);
+  --lab-palette-icon-input-disabled: var(--lab-color-silver-500-40a);
+
+  --lab-palette-icon-gain: var(--lab-color-green-600);
+
+  --lab-palette-icon-loss: var(--lab-color-red-600);
+
+  --lab-palette-icon-regular: var(--lab-color-silver-600);
+  --lab-palette-icon-regular-hover: var(--lab-color-silver-700);
+  --lab-palette-icon-regular-pressed: var(--lab-color-silver-800);
+
+  --lab-palette-icon-success: var(--lab-color-teal-600);
+
+  --lab-palette-icon-warning: var(--lab-color-gold-800);
+}
+.salt-theme.salt-theme-lab[data-mode="dark"] {
+  --lab-palette-icon-error: var(--lab-color-plum-300);
+
+  --lab-palette-icon-info: var(--lab-color-quartz-100);
+
+  --lab-palette-icon-input: var(--lab-color-ultramarine-500);
+  --lab-palette-icon-input-disabled: var(--lab-color-ultramarine-500-40a);
+
+  --lab-palette-icon-gain: var(--lab-color-green-400);
+
+  --lab-palette-icon-loss: var(--lab-color-red-400);
+
+  --lab-palette-icon-regular: var(--lab-color-ultramarine-400);
+  --lab-palette-icon-regular-hover: var(--lab-color-ultramarine-200);
+  --lab-palette-icon-regular-pressed: var(--lab-color-ultramarine-300);
+
+  --lab-palette-icon-success: var(--lab-color-teal-300);
+
+  --lab-palette-icon-warning: var(--lab-color-gold-800);
+}

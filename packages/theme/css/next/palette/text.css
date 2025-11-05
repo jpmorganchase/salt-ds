@@ -1,5 +1,7 @@
 .salt-theme-next.salt-theme[data-heading-font="Open Sans"] {
+  --salt-palette-text-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
+  --salt-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
 
   --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
@@ -19,11 +21,13 @@
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
+  --salt-palette-text-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-amplitude);
+  --salt-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
 
   --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
-  --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   --salt-palette-text-heading-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-palette-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
@@ -42,9 +46,13 @@
   --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-openSans);
 
   --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-palette-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-palette-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 .salt-theme-next.salt-theme[data-action-font="Amplitude"] {
   --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-amplitude);
 
   --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-medium);
+  --salt-palette-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-palette-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }

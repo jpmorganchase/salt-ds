@@ -1,0 +1,81 @@
+.salt-theme.salt-theme-lab[data-mode="light"] {
+  --lab-palette-text-brand: var(--lab-color-blue-600);
+  --lab-palette-text-brand-interactive: var(--lab-color-blue-600);
+  --lab-palette-text-brand-interactive-disabled: var(--lab-color-blue-600-40a);
+  --lab-palette-text-brand-interactive-hover: var(--lab-color-blue-700);
+  --lab-palette-text-brand-interactive-pressed: var(--lab-color-blue-500);
+
+  --lab-palette-text-error: var(--lab-color-plum-700);
+
+  --lab-palette-text-gain: var(--lab-color-green-700);
+
+  --lab-palette-text-info: var(--lab-color-quartz-900);
+
+  --lab-palette-text-loss: var(--lab-color-red-700);
+
+  --lab-palette-text-regular: var(--lab-color-silver-900);
+  --lab-palette-text-regular-disabled: var(--lab-color-silver-900-40a);
+  --lab-palette-text-regular-inverse: var(--salt-color-white);
+  --lab-palette-text-regular-inverse-disabled: var(--salt-color-white-40a);
+
+  --lab-palette-text-subdued: var(--lab-color-silver-600);
+  --lab-palette-text-subdued-disabled: var(--lab-color-silver-600-40a);
+
+  --lab-palette-text-success: var(--lab-color-teal-700);
+
+  --lab-palette-text-warning: var(--lab-color-gold-700);
+}
+.salt-theme.salt-theme-lab[data-mode="dark"] {
+  --lab-palette-text-brand: var(--lab-color-blue-300);
+  --lab-palette-text-brand-interactive: var(--lab-color-blue-300);
+  --lab-palette-text-brand-interactive-disabled: var(--lab-color-blue-300-40a);
+  --lab-palette-text-brand-interactive-hover: var(--lab-color-blue-200);
+  --lab-palette-text-brand-interactive-pressed: var(--lab-color-blue-400);
+
+  --lab-palette-text-error: var(--lab-color-plum-300);
+
+  --lab-palette-text-gain: var(--lab-color-green-500);
+
+  --lab-palette-text-info: var(--lab-color-quartz-50);
+
+  --lab-palette-text-loss: var(--lab-color-red-300);
+
+  --lab-palette-text-regular: var(--lab-color-silver-50);
+  --lab-palette-text-regular-disabled: var(--lab-color-silver-50-40a);
+  --lab-palette-text-regular-inverse: var(--salt-color-white);
+  --lab-palette-text-regular-inverse-disabled: var(--salt-color-white-40a);
+
+  --lab-palette-text-subdued: var(--lab-color-ultramarine-300);
+  --lab-palette-text-subdued-disabled: var(--lab-color-ultramarine-300-40a);
+
+  --lab-palette-text-success: var(--lab-color-teal-300);
+
+  --lab-palette-text-warning: var(--lab-color-gold-300);
+}
+
+.salt-theme-lab.salt-theme {
+  --lab-palette-text-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --lab-palette-text-fontFamily-action: var(--salt-typography-fontFamily-openSans);
+  --lab-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
+  --lab-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
+
+  --lab-palette-text-display-fontWeight: var(--salt-typography-fontWeight-regular);
+  --lab-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-light);
+  --lab-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+
+  --lab-palette-text-heading-fontWeight: var(--salt-typography-fontWeight-regular);
+  --lab-palette-text-heading-fontWeight-small: var(--salt-typography-fontWeight-light);
+  --lab-palette-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+
+  --lab-palette-text-body-fontWeight: var(--salt-typography-fontWeight-regular);
+  --lab-palette-text-body-fontWeight-small: var(--salt-typography-fontWeight-light);
+  --lab-palette-text-body-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+
+  --lab-palette-text-notation-fontWeight: var(--salt-typography-fontWeight-regular);
+  --lab-palette-text-notation-fontWeight-small: var(--salt-typography-fontWeight-light);
+  --lab-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+
+  --lab-palette-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --lab-palette-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --lab-palette-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+}

@@ -10,6 +10,7 @@ import { LayoutProvider } from "../layouts/LayoutProvider";
 import { ThemeProvider } from "../ThemeProvider";
 import type { MyAppProps } from "../types/mosaic";
 
+import "@salt-ds/theme/css/theme-lab.css";
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
 

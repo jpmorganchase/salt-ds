@@ -1,0 +1,19 @@
+.salt-theme.salt-theme-lab {
+  --salt-container-primary-background: var(--lab-palette-background-primary);
+  --salt-container-primary-background-disabled: var(--lab-palette-background-primary-disabled);
+  --salt-container-primary-borderColor: var(--lab-palette-border-decorative);
+  --salt-container-primary-borderColor-disabled: var(--lab-palette-border-decorative-disabled);
+
+  --salt-container-secondary-background: var(--lab-palette-background-secondary);
+  --salt-container-secondary-background-disabled: var(--lab-palette-background-secondary-disabled);
+  --salt-container-secondary-borderColor: var(--lab-palette-border-decorative);
+  --salt-container-secondary-borderColor-disabled: var(--lab-palette-border-decorative-disabled);
+
+  --salt-container-tertiary-background: var(--lab-palette-background-tertiary);
+  --salt-container-tertiary-background-disabled: var(--lab-palette-background-tertiary-disabled);
+  --salt-container-tertiary-borderColor: var(--lab-palette-border-decorative);
+  --salt-container-tertiary-borderColor-disabled: var(--lab-palette-border-decorative-disabled);
+
+  --salt-container-ghost-background: var(--salt-palette-alpha-medium);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-medium);
+}

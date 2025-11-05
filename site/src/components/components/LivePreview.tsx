@@ -75,7 +75,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
                 {/* Blank theme is needed here to prevent the site theme being inherited */}
                 <ChosenSaltProvider
                   applyClassesTo="scope"
-                  theme=""
+                  theme={theme === "lab" ? "salt-theme-lab" : ""}
                   density={density}
                   mode={mode}
                 >

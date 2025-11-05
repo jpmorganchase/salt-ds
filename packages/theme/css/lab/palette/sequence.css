@@ -1,0 +1,163 @@
+.salt-theme.salt-theme-lab[data-mode="light"] {
+  --lab-palette-sequence-1-strong: var(--lab-color-blue-700);
+  --lab-palette-sequence-1: var(--lab-color-blue-600);
+  --lab-palette-sequence-1-weakest: var(--lab-color-blue-50);
+
+  --lab-palette-sequence-2-strong: var(--lab-color-quartz-700);
+  --lab-palette-sequence-2: var(--lab-color-quartz-600);
+  --lab-palette-sequence-2-weakest: var(--lab-color-quartz-50);
+
+  --lab-palette-sequence-3-strong: var(--lab-color-orange-600);
+  --lab-palette-sequence-3: var(--lab-color-orange-600);
+  --lab-palette-sequence-3-weakest: var(--lab-color-orange-50);
+
+  --lab-palette-sequence-4-strong: var(--lab-color-topaz-700);
+  --lab-palette-sequence-4: var(--lab-color-topaz-600);
+  --lab-palette-sequence-4-weakest: var(--lab-color-topaz-50);
+
+  --lab-palette-sequence-5-strong: var(--lab-color-gold-800);
+  --lab-palette-sequence-5: var(--lab-color-gold-700);
+  --lab-palette-sequence-5-weakest: var(--lab-color-gold-50);
+
+  --lab-palette-sequence-6-strong: var(--lab-color-teal-800);
+  --lab-palette-sequence-6: var(--lab-color-teal-700);
+  --lab-palette-sequence-6-weakest: var(--lab-color-teal-50);
+
+  --lab-palette-sequence-7-strong: var(--lab-color-plum-700);
+  --lab-palette-sequence-7: var(--lab-color-plum-600);
+  --lab-palette-sequence-7-weakest: var(--lab-color-plum-50);
+
+  --lab-palette-sequence-8-strong: var(--lab-color-silver-700);
+  --lab-palette-sequence-8: var(--lab-color-silver-600);
+  --lab-palette-sequence-8-weakest: var(--lab-color-silver-100);
+
+  --lab-palette-sequence-9-strong: var(--lab-color-green-800);
+  --lab-palette-sequence-9: var(--lab-color-green-700);
+  --lab-palette-sequence-9-weakest: var(--lab-color-green-50);
+
+  --lab-palette-sequence-10-strong: var(--lab-color-red-700);
+  --lab-palette-sequence-10: var(--lab-color-red-600);
+  --lab-palette-sequence-10-weakest: var(--lab-color-red-50);
+
+  --lab-palette-sequence-11-strong: var(--lab-color-blue-700);
+  --lab-palette-sequence-11: var(--lab-color-blue-600);
+  --lab-palette-sequence-11-weakest: var(--lab-color-blue-50);
+
+  --lab-palette-sequence-12-strong: var(--lab-color-quartz-700);
+  --lab-palette-sequence-12: var(--lab-color-quartz-600);
+  --lab-palette-sequence-12-weakest: var(--lab-color-quartz-50);
+
+  --lab-palette-sequence-13-strong: var(--lab-color-orange-600);
+  --lab-palette-sequence-13: var(--lab-color-orange-600);
+  --lab-palette-sequence-13-weakest: var(--lab-color-orange-50);
+
+  --lab-palette-sequence-14-strong: var(--lab-color-topaz-700);
+  --lab-palette-sequence-14: var(--lab-color-topaz-600);
+  --lab-palette-sequence-14-weakest: var(--lab-color-topaz-50);
+
+  --lab-palette-sequence-15-strong: var(--lab-color-gold-800);
+  --lab-palette-sequence-15: var(--lab-color-gold-700);
+  --lab-palette-sequence-15-weakest: var(--lab-color-gold-50);
+
+  --lab-palette-sequence-16-strong: var(--lab-color-teal-800);
+  --lab-palette-sequence-16: var(--lab-color-teal-700);
+  --lab-palette-sequence-16-weakest: var(--lab-color-teal-50);
+
+  --lab-palette-sequence-17-strong: var(--lab-color-plum-700);
+  --lab-palette-sequence-17: var(--lab-color-plum-600);
+  --lab-palette-sequence-17-weakest: var(--lab-color-plum-50);
+
+  --lab-palette-sequence-18-strong: var(--lab-color-silver-700);
+  --lab-palette-sequence-18: var(--lab-color-silver-600);
+  --lab-palette-sequence-18-weakest: var(--lab-color-silver-100);
+
+  --lab-palette-sequence-19-strong: var(--lab-color-green-800);
+  --lab-palette-sequence-19: var(--lab-color-green-700);
+  --lab-palette-sequence-19-weakest: var(--lab-color-green-50);
+
+  --lab-palette-sequence-20-strong: var(--lab-color-red-700);
+  --lab-palette-sequence-20: var(--lab-color-red-600);
+  --lab-palette-sequence-20-weakest: var(--lab-color-red-50);
+}
+
+.salt-theme.salt-theme-lab[data-mode="dark"] {
+  --lab-palette-sequence-1-strong: var(--lab-color-blue-300);
+  --lab-palette-sequence-1: var(--lab-color-blue-600);
+  --lab-palette-sequence-1-weakest: var(--lab-color-blue-800);
+
+  --lab-palette-sequence-2-strong: var(--lab-color-quartz-300);
+  --lab-palette-sequence-2: var(--lab-color-quartz-600);
+  --lab-palette-sequence-2-weakest: var(--lab-color-quartz-900);
+
+  --lab-palette-sequence-3-strong: var(--lab-color-orange-300);
+  --lab-palette-sequence-3: var(--lab-color-orange-600);
+  --lab-palette-sequence-3-weakest: var(--lab-color-orange-800);
+
+  --lab-palette-sequence-4-strong: var(--lab-color-topaz-300);
+  --lab-palette-sequence-4: var(--lab-color-topaz-600);
+  --lab-palette-sequence-4-weakest: var(--lab-color-topaz-900);
+
+  --lab-palette-sequence-5-strong: var(--lab-color-gold-300);
+  --lab-palette-sequence-5: var(--lab-color-gold-700);
+  --lab-palette-sequence-5-weakest: var(--lab-color-gold-900);
+
+  --lab-palette-sequence-6-strong: var(--lab-color-teal-300);
+  --lab-palette-sequence-6: var(--lab-color-teal-600);
+  --lab-palette-sequence-6-weakest: var(--lab-color-teal-900);
+
+  --lab-palette-sequence-7-strong: var(--lab-color-plum-300);
+  --lab-palette-sequence-7: var(--lab-color-plum-600);
+  --lab-palette-sequence-7-weakest: var(--lab-color-plum-800);
+
+  --lab-palette-sequence-8-strong: var(--lab-color-silver-300);
+  --lab-palette-sequence-8: var(--lab-color-silver-600);
+  --lab-palette-sequence-8-weakest: var(--lab-color-silver-800);
+
+  --lab-palette-sequence-9-strong: var(--lab-color-green-300);
+  --lab-palette-sequence-9: var(--lab-color-green-700);
+  --lab-palette-sequence-9-weakest: var(--lab-color-green-800);
+
+  --lab-palette-sequence-10-strong: var(--lab-color-red-300);
+  --lab-palette-sequence-10: var(--lab-color-red-600);
+  --lab-palette-sequence-10-weakest: var(--lab-color-red-800);
+
+  --lab-palette-sequence-11-strong: var(--lab-color-blue-300);
+  --lab-palette-sequence-11: var(--lab-color-blue-600);
+  --lab-palette-sequence-11-weakest: var(--lab-color-blue-800);
+
+  --lab-palette-sequence-12-strong: var(--lab-color-quartz-300);
+  --lab-palette-sequence-12: var(--lab-color-quartz-600);
+  --lab-palette-sequence-12-weakest: var(--lab-color-quartz-800);
+
+  --lab-palette-sequence-13-strong: var(--lab-color-orange-300);
+  --lab-palette-sequence-13: var(--lab-color-orange-600);
+  --lab-palette-sequence-13-weakest: var(--lab-color-orange-800);
+
+  --lab-palette-sequence-14-strong: var(--lab-color-topaz-300);
+  --lab-palette-sequence-14: var(--lab-color-topaz-600);
+  --lab-palette-sequence-14-weakest: var(--lab-color-topaz-900);
+
+  --lab-palette-sequence-15-strong: var(--lab-color-gold-300);
+  --lab-palette-sequence-15: var(--lab-color-gold-700);
+  --lab-palette-sequence-15-weakest: var(--lab-color-gold-900);
+
+  --lab-palette-sequence-16-strong: var(--lab-color-teal-300);
+  --lab-palette-sequence-16: var(--lab-color-teal-600);
+  --lab-palette-sequence-16-weakest: var(--lab-color-teal-900);
+
+  --lab-palette-sequence-17-strong: var(--lab-color-plum-300);
+  --lab-palette-sequence-17: var(--lab-color-plum-600);
+  --lab-palette-sequence-17-weakest: var(--lab-color-plum-800);
+
+  --lab-palette-sequence-18-strong: var(--lab-color-silver-300);
+  --lab-palette-sequence-18: var(--lab-color-silver-600);
+  --lab-palette-sequence-18-weakest: var(--lab-color-silver-800);
+
+  --lab-palette-sequence-19-strong: var(--lab-color-green-300);
+  --lab-palette-sequence-19: var(--lab-color-green-700);
+  --lab-palette-sequence-19-weakest: var(--lab-color-green-800);
+
+  --lab-palette-sequence-20-strong: var(--lab-color-red-300);
+  --lab-palette-sequence-20: var(--lab-color-red-600);
+  --lab-palette-sequence-20-weakest: var(--lab-color-red-800);
+}

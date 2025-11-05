@@ -1,0 +1,7 @@
+.salt-theme.salt-theme-lab {
+  --salt-navigable-indicator-hover: var(--lab-palette-border-decorative);
+  --salt-navigable-accent-indicator-active: var(--lab-palette-border-brand-interactive-inverse);
+
+  --salt-navigable-accent-background-active: var(--lab-palette-background-brand-interactive-secondary);
+  --salt-navigable-accent-borderColor-active: var(--lab-palette-border-brand-interactive-pressed);
+}
