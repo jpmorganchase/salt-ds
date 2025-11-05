@@ -825,7 +825,6 @@ export const Horizontal = () => {
         <Text>
           Create a new account
           <Text
-            id={`step-${currentStepId}-heading`}
             as="h2"
             ref={stepHeadingRef}
             tabIndex={-1}
@@ -884,7 +883,6 @@ export const Horizontal = () => {
           width: 730,
         }}
         gap={0}
-        aria-labelledby={`step-${currentStepId}-heading`}
       >
         <FlexItem padding={3}>{header}</FlexItem>
         <FlexItem grow={1}>
@@ -1012,7 +1010,6 @@ export const HorizontalWithCancelConfirmation = () => {
         <Text>
           Create a new account
           <Text
-            id={`step-${currentStepId}-heading`}
             as="h2"
             ref={stepHeadingRef}
             tabIndex={-1}
@@ -1078,7 +1075,6 @@ export const HorizontalWithCancelConfirmation = () => {
           height: 588,
         }}
         gap={0}
-        aria-labelledby={`step-${currentStepId}-heading`}
       >
         <FlexItem padding={3}>{header}</FlexItem>
         <FlexItem grow={1}>
@@ -1211,13 +1207,7 @@ export const VerticalWithCancelConfirmation = () => {
   const header = (
     <StackLayout gap={0} style={{ minHeight: "5rem" }} align="start">
       <Text>Create a new account</Text>
-      <Text
-        id={`step-${currentStepId}-heading`}
-        as="h2"
-        ref={stepHeadingRef}
-        tabIndex={-1}
-        style={{ margin: 0 }}
-      >
+      <Text as="h2" ref={stepHeadingRef} tabIndex={-1} style={{ margin: 0 }}>
         {wizardSteps[activeStepIndex].label}
       </Text>
       {wizardSteps[activeStepIndex].id === ContentTypeEnum.AdditionalInfo && (
@@ -1263,7 +1253,6 @@ export const VerticalWithCancelConfirmation = () => {
           width: 850,
         }}
         padding={3}
-        aria-labelledby={`step-${currentStepId}-heading`}
       >
         <ContentOverflow style={{ height: 512 }}>
           <StackLayout gap={3}>
@@ -1330,18 +1319,14 @@ export const Modal = () => {
     setStepValidations,
   } = useWizard(wizardSteps);
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const navigatedRef = useRef(false);
 
   useEffect(() => {
-    if (!open) return;
-
-    const container = contentRef.current;
-    if (!container) return;
-    const firstFocusable = container.querySelector<HTMLElement>(
-      'input:not([type="hidden"]):not([disabled]), select:not([disabled]), [role="radio"], [tabindex]:not([tabindex="-1"])',
-    );
-    firstFocusable?.focus();
-  }, [activeStepIndex, open]);
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
 
   const openWizard = () => {
     reset();
@@ -1463,7 +1448,11 @@ export const Modal = () => {
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         <DialogHeader
-          header={wizardSteps[activeStepIndex].label}
+          header={
+            <span tabIndex={-1} ref={stepHeadingRef}>
+              {wizardSteps[activeStepIndex].label}
+            </span>
+          }
           description={
             wizardSteps[activeStepIndex].id ===
               ContentTypeEnum.AdditionalInfo && "All fields are optional"
@@ -1486,9 +1475,7 @@ export const Modal = () => {
             </Stepper>
           }
         />
-        <DialogContent ref={contentRef}>
-          {contentByStep[currentStepId]}
-        </DialogContent>
+        <DialogContent>{contentByStep[currentStepId]}</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
@@ -1526,18 +1513,14 @@ export const ModalWithConfirmations = () => {
     setStepValidations,
   } = useWizard(wizardSteps);
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const navigatedRef = useRef(false);
 
   useEffect(() => {
-    if (!open) return;
-
-    const container = contentRef.current;
-    if (!container) return;
-    const firstFocusable = container.querySelector<HTMLElement>(
-      'input:not([type="hidden"]):not([disabled]), select:not([disabled]), [role="radio"], [tabindex]:not([tabindex="-1"])',
-    );
-    firstFocusable?.focus();
-  }, [activeStepIndex, open]);
+    if (!navigatedRef.current && wizardState !== "form") return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
 
   const openWizard = () => {
     reset();
@@ -1578,11 +1561,15 @@ export const ModalWithConfirmations = () => {
   const handleNextClick = () => {
     if (!validateCurrentStep()) return;
     if (isLast) createAccount();
-    else next();
+    else {
+      navigatedRef.current = true;
+      next();
+    }
   };
 
   const handlePreviousClick = () => {
     if (activeStepIndex === 0) return;
+    navigatedRef.current = true;
     previous();
   };
 
@@ -1761,7 +1748,11 @@ export const ModalWithConfirmations = () => {
               return (
                 <>
                   <DialogHeader
-                    header={wizardSteps[activeStepIndex].label}
+                    header={
+                      <span tabIndex={-1} ref={stepHeadingRef}>
+                        {wizardSteps[activeStepIndex].label}
+                      </span>
+                    }
                     preheader="Create a new account"
                     description={
                       wizardSteps[activeStepIndex].id ===
@@ -1786,9 +1777,7 @@ export const ModalWithConfirmations = () => {
                     }
                   />
 
-                  <DialogContent ref={contentRef}>
-                    {contentByStep[currentStepId]}
-                  </DialogContent>
+                  <DialogContent>{contentByStep[currentStepId]}</DialogContent>
                   <DialogActions>
                     {direction === "column" ? (
                       <StackLayout gap={1} style={{ width: "100%" }}>
