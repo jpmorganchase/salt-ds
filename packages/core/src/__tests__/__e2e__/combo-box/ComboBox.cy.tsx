@@ -481,7 +481,7 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
+    cy.findByRole("button", { name: "Alabama" }).should("be.visible");
   });
 
   it("by default multiselect should not allow to select on tab key press", () => {
@@ -504,11 +504,11 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
+    cy.findByRole("button", { name: "Alabama" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.realType("Alabama");
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
+    cy.findByRole("button", { name: "Alabama" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
   });
