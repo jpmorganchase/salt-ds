@@ -101,9 +101,13 @@ interface FormContentProps {
 const wizardSteps = [
   { id: ContentTypeEnum.AccountDetails, label: "Account details" },
   { id: ContentTypeEnum.AccountType, label: "Account type" },
-  { id: ContentTypeEnum.AdditionalInfo, label: "Additional info" },
+  {
+    id: ContentTypeEnum.AdditionalInfo,
+    label: "Additional info",
+    description: "(Optional)",
+  },
   { id: ContentTypeEnum.Review, label: "Review and create" },
-] as const;
+];
 
 const accountTypeOptions: {
   value: string;
@@ -853,6 +857,7 @@ export const Horizontal = () => {
               label={step.label}
               status={stepsStatusMap[step.id]?.status}
               stage={getStepStage(index, activeStepIndex)}
+              description={step.description}
             />
           ))}
         </Stepper>
@@ -1038,6 +1043,7 @@ export const HorizontalWithCancelConfirmation = () => {
               label={step.label}
               status={stepsStatusMap[step.id]?.status}
               stage={getStepStage(index, activeStepIndex)}
+              description={step.description}
             />
           ))}
         </Stepper>
@@ -1266,6 +1272,7 @@ export const VerticalWithCancelConfirmation = () => {
                       label={step.label}
                       status={stepsStatusMap[step.id]?.status}
                       stage={getStepStage(index, activeStepIndex)}
+                      description={step.description}
                     />
                   ))}
                 </Stepper>
@@ -1319,7 +1326,7 @@ export const Modal = () => {
     setStepValidations,
   } = useWizard(wizardSteps);
 
-  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLSpanElement>(null);
   const navigatedRef = useRef(false);
 
   useEffect(() => {
@@ -1356,11 +1363,15 @@ export const Modal = () => {
     const isLast = activeStepIndex === wizardSteps.length - 1;
     if (!validateCurrentStep()) return;
     if (isLast) closeWizardAndReset();
-    else next();
+    else {
+      navigatedRef.current = true;
+      next();
+    }
   };
 
   const handlePreviousClick = () => {
     if (activeStepIndex === 0) return;
+    navigatedRef.current = true;
     previous();
   };
 
@@ -1470,6 +1481,7 @@ export const Modal = () => {
                   label={step.label}
                   status={stepsStatusMap[step.id]?.status}
                   stage={getStepStage(index, activeStepIndex)}
+                  description={step.description}
                 />
               ))}
             </Stepper>
@@ -1513,14 +1525,14 @@ export const ModalWithConfirmations = () => {
     setStepValidations,
   } = useWizard(wizardSteps);
 
-  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLSpanElement>(null);
   const navigatedRef = useRef(false);
 
   useEffect(() => {
     if (!navigatedRef.current && wizardState !== "form") return;
     navigatedRef.current = false;
     stepHeadingRef.current?.focus();
-  }, [activeStepIndex]);
+  }, [activeStepIndex, wizardState]);
 
   const openWizard = () => {
     reset();
@@ -1771,6 +1783,7 @@ export const ModalWithConfirmations = () => {
                             label={step.label}
                             status={stepsStatusMap[step.id]?.status}
                             stage={getStepStage(index, activeStepIndex)}
+                            description={step.description}
                           />
                         ))}
                       </Stepper>
