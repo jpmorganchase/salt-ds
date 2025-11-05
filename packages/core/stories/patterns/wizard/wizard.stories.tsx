@@ -1470,11 +1470,7 @@ export const Modal = () => {
           }
           preheader="Create a new account"
           actions={
-            <Stepper
-              orientation="horizontal"
-              style={{ maxWidth: 300 }}
-              aria-hidden
-            >
+            <Stepper orientation="horizontal" style={{ maxWidth: 300 }}>
               {wizardSteps.map((step, index) => (
                 <Step
                   key={step.id}
@@ -1775,7 +1771,6 @@ export const ModalWithConfirmations = () => {
                       <Stepper
                         orientation="horizontal"
                         style={{ maxWidth: 300 }}
-                        aria-hidden
                       >
                         {wizardSteps.map((step, index) => (
                           <Step
