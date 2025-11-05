@@ -14,6 +14,10 @@ Check and test any focusable elements included in the banner content.
 
 When using a banner to alert the user, apply `role="alert"`. When using a banner to notify the user, apply `role="status"`.
 
+* **Note:**  There are known screen reader announcement issues when dynamically inserting content with `role="status"`. 
+During your testing, if you find that adding `role="status"` to the banner does not properly announce conent using a screen reader, 
+we recommend preloading a container with `role="status"` that will house the banner. That will ensure the content is properly announced via screen reader.
+
 ## Keyboard interactions
 
 <KeyboardControls>
