@@ -5,13 +5,13 @@ sidebar:
   priority: 5
 ---
 
-Charts rely heavily on visuals to help users understand complex data, so it’s important to ensure that your charts meet all accessibility requirements. Use color appropriately, include visual cues, provide text for assistive technologies, and ensure any interactions are accessible.
+Charts rely on visual elements to make complex data easier to understand, so it’s essential to ensure they are accessible to all users. Use color appropriately, include visual cues, provide text for assistive technologies, and ensure any interactions are accessible.
 
 ## Categorical colors
 
 ### Color contrast
 
-Users with visual impairments should be able to fully comprehend data sets that are represented by different colors. If you use custom colors or Hex codes, they may not meet non-text contrast requirements so you will be responsible to ensure that the resulting contrast is compliant. By using Salt tokens correctly, you will achieve at least 3:1 contrast between the background and other non-text chart elements such as bars, lines, segments and icons.
+Users with visual impairments should be able to fully understand data that is represented using different colors. If you use custom colors or Hex codes, be aware that they may not meet non-text contrast requirements, so it is your responsibility to ensure the resulting contrast is compliant. By using Salt tokens correctly, you can achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
 
 <Image
   src="/img/foundations/dataviz-hex.png"
@@ -21,7 +21,7 @@ Users with visual impairments should be able to fully comprehend data sets that 
 
 ### Color order
 
-Apply the categorical colors in the recommended order, from 1 through 20. 
+Salt's categorical colors are intended to be used in numerical order, from 1 through 20.
 
 <Image
   src="/img/foundations/dataviz-color-order.png"
@@ -43,13 +43,13 @@ You can enhance your chart’s accessibility by adopting additional visual strat
 - Direct labelling where possible
 - Adding a border with at least a 3:1 contrast ratio against the background to distinguish between segments
 
-You can show chart data in a table or list nearby, in an overlay, or on another screen as a last resort to support screen readers. If essential information is on a separate screen, then it could disrupt the cohesive flow of information. Screen reader users would need to navigate back and forth between the two parts of the text alternative for the complex image, which could disrupt the flow of information.
+You can present chart data in a nearby table or list, in an overlay, or -if necessary- as a last resort on a separate screen to support screen readers. However, placing essential information on a separate screen can disrupt the flow of information. Screen reader users may need to navigate back and forth between different sections to access the full text alternative for a complex image, which can make understanding the data more difficult.
 
 For more information about text alternatives, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
 
 ## Line patterns
 
-Color shouldn’t be the only visual cue. Include other visual cues such as text, patterns, or symbols to help the user differentiate between different data sets. Consider using line patterns for multiple line series. Patterns improve readability, especially for those with color vision requirements.
+Color shouldn't be the only visual cue used in charts. Always include additional cues such as text, patterns, or symbols to help users distinguish between different data sets. For example, use line patterns to differentiate multiple line series. Patterns and other visual indicators improve readability, especially for users with color vision requirements.
 
 <Image
   src="/img/foundations/dataviz-line-patterns2.png"
@@ -59,7 +59,7 @@ Color shouldn’t be the only visual cue. Include other visual cues such as text
 
 ## Pattern fills
 
-Use pattern fills for 2-dimensional shapes, such as bars and slices. Pattern fills are always black and applied to solid categorical colors for charts. They’re beneficial in scenarios in which there is only one visual distinction between data points.
+Use pattern fills for two-dimensional shapes, such as bars and slices. Pattern fills should always be black and applied over solid categorical colors in charts. They are especially helpful when there is only one visual distinction between data points, ensuring that all users can easily differentiate between chart elements.
 
 <Image
   src="/img/foundations/dataviz-pattern-fills2.png"
@@ -69,14 +69,14 @@ Use pattern fills for 2-dimensional shapes, such as bars and slices. Pattern fil
 
 ## Marker symbols
 
-In addition to line patterns and pattern fills, you can add shape or icon markers to make data points more distinctive. Varied marker symbols help differentiate lines. Marker symbols have a white border in both light and dark modes for accessibility.
+In addition to line patterns and pattern fills, you can add marker symbols to make data points more distinctive and help differentiate lines. Marker symbols have a white border in both light and dark modes for accessibility. If you have more than five data series, the additional series will simply use the first symbol again. The symbols cycle through the available options, so for a sixth series, it would revert back to the first symbol in the defined set.
 
-By default, Salt uses predefined symbols in the following order:
+Salt uses predefined symbols in the following order:
 
 - Circle
 - Diamond
 - Square
-- Triangle
+- Triangle (up)
 - Triangle-down
 
 <Image
