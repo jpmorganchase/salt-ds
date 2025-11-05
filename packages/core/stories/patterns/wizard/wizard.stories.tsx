@@ -421,9 +421,9 @@ const AccountDetailsContent = ({
   handleSelectChange,
 }: FormContentProps) => {
   return (
-    <GridLayout columns={2} gap={3} style={{ width: "100%" }}>
+    <GridLayout columns={2} style={{ width: "100%" }}>
       <GridItem>
-        <StackLayout gap={3}>
+        <StackLayout>
           <FormField validationStatus={stepFieldValidation.fullName?.status}>
             <FormFieldLabel>Full name</FormFieldLabel>
             <Input
@@ -466,7 +466,7 @@ const AccountDetailsContent = ({
       </GridItem>
 
       <GridItem>
-        <StackLayout gap={3}>
+        <StackLayout>
           <FormField validationStatus={stepFieldValidation.address1?.status}>
             <FormFieldLabel>Address 1</FormFieldLabel>
             <Input
@@ -547,168 +547,181 @@ const AccountDetailsContent = ({
 const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
   <GridLayout columns={2}>
     <GridItem>
-      <StackLayout gap={3}>
-        <FormField>
-          <FormFieldLabel>Full name</FormFieldLabel>
-          <Input
-            inputProps={{
-              value: formData.fullName,
-            }}
-            readOnly
-          />
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Phone Number</FormFieldLabel>
-          <Input
-            inputProps={{
-              value: formData.phoneNumber,
-            }}
-            readOnly
-          />
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Email Address</FormFieldLabel>
-          <Input
-            inputProps={{
-              value: formData.emailAddress,
-            }}
-            readOnly
-          />
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Address 1</FormFieldLabel>
-          <Input
-            inputProps={{
-              value: formData.address1,
-            }}
-            readOnly
-          />
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Address 2</FormFieldLabel>
-          <Input
-            inputProps={{
-              value: formData.address2,
-            }}
-            readOnly
-          />
-          <FormFieldHelperText>
-            Flat, Apt, Suite, Floor, Building etc.
-          </FormFieldHelperText>
-        </FormField>
-
-        <FlexLayout>
+      <StackLayout>
+        <Text styleAs="h3">Account details</Text>
+        <StackLayout>
           <FormField>
-            <FormFieldLabel>Postal code/PLZ</FormFieldLabel>
+            <FormFieldLabel>Full name</FormFieldLabel>
             <Input
               inputProps={{
-                value: formData.postalCode,
+                value: formData.fullName,
               }}
               readOnly
             />
           </FormField>
           <FormField>
-            <FormFieldLabel>Town/City</FormFieldLabel>
+            <FormFieldLabel>Phone Number</FormFieldLabel>
             <Input
               inputProps={{
-                value: formData.city,
+                value: formData.phoneNumber,
               }}
               readOnly
             />
-            <FormFieldHelperText>Locality, Settlement etc.</FormFieldHelperText>
           </FormField>
-        </FlexLayout>
+          <FormField>
+            <FormFieldLabel>Email Address</FormFieldLabel>
+            <Input
+              inputProps={{
+                value: formData.emailAddress,
+              }}
+              readOnly
+            />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Address 1</FormFieldLabel>
+            <Input
+              inputProps={{
+                value: formData.address1,
+              }}
+              readOnly
+            />
+          </FormField>
+          <FormField necessity="optional">
+            <FormFieldLabel>Address 2</FormFieldLabel>
+            <Input
+              inputProps={{
+                value: formData.address2,
+              }}
+              readOnly
+            />
+            <FormFieldHelperText>
+              Flat, Apt, Suite, Floor, Building etc.
+            </FormFieldHelperText>
+          </FormField>
 
-        <FormField>
-          <FormFieldLabel>Country</FormFieldLabel>
-          <Dropdown
-            value={formData.country}
-            defaultSelected={[formData.country]}
-            readOnly
-          >
-            <Option value="United Kingdom">United Kingdom</Option>
-            <Option value="United States">United States</Option>
-          </Dropdown>
-        </FormField>
+          <FlexLayout>
+            <FormField>
+              <FormFieldLabel>Postal code/PLZ</FormFieldLabel>
+              <Input
+                inputProps={{
+                  value: formData.postalCode,
+                }}
+                readOnly
+              />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Town/City</FormFieldLabel>
+              <Input
+                inputProps={{
+                  value: formData.city,
+                }}
+                readOnly
+              />
+              <FormFieldHelperText>
+                Locality, Settlement etc.
+              </FormFieldHelperText>
+            </FormField>
+          </FlexLayout>
+
+          <FormField>
+            <FormFieldLabel>Country</FormFieldLabel>
+            <Dropdown
+              value={formData.country}
+              defaultSelected={[formData.country]}
+              readOnly
+            >
+              <Option value="United Kingdom">United Kingdom</Option>
+              <Option value="United States">United States</Option>
+            </Dropdown>
+          </FormField>
+        </StackLayout>
       </StackLayout>
     </GridItem>
 
     <GridItem>
-      <StackLayout gap={3}>
-        <FormField>
-          <FormFieldLabel>Select Account Type</FormFieldLabel>
-          <RadioButtonGroup
-            direction="vertical"
-            value={formData.accountType}
-            readOnly
-          >
-            {accountTypeOptions.map(({ value, title, subtitle }) => (
-              <RadioButton
-                key={value}
-                label={
-                  <StackLayout align="start" gap={0.5}>
-                    <Text>{title}</Text>
-                    <Text color="secondary" styleAs="label">
-                      {subtitle}
-                    </Text>
-                  </StackLayout>
-                }
-                name="accountType"
-                value={value}
-              />
-            ))}
-          </RadioButtonGroup>
-        </FormField>
+      <StackLayout gap={5}>
+        <StackLayout>
+          <Text styleAs="h3">Account type</Text>
+          <StackLayout>
+            <FormField>
+              <FormFieldLabel>Select Account Type</FormFieldLabel>
+              <RadioButtonGroup
+                direction="vertical"
+                value={formData.accountType}
+                readOnly
+              >
+                {accountTypeOptions.map(({ value, title, subtitle }) => (
+                  <RadioButton
+                    key={value}
+                    label={
+                      <StackLayout align="start" gap={0.5}>
+                        <Text>{title}</Text>
+                        <Text color="secondary" styleAs="label">
+                          {subtitle}
+                        </Text>
+                      </StackLayout>
+                    }
+                    name="accountType"
+                    value={value}
+                  />
+                ))}
+              </RadioButtonGroup>
+            </FormField>
+          </StackLayout>
+        </StackLayout>
 
-        <FlowLayout>
-          <FormField necessity="optional">
-            <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
-            <Input
-              inputMode="decimal"
-              placeholder="0.00"
-              startAdornment={<Text>$</Text>}
-              inputProps={{
-                name: "initialDeposit",
-                value: formData.initialDeposit,
-                type: "number",
-              }}
-              readOnly
-            />
-          </FormField>
-          <FormField necessity="optional">
-            <FormFieldLabel>Beneficiary Name</FormFieldLabel>
-            <Input
-              inputProps={{
-                name: "beneficiaryName",
-                value: formData.beneficiaryName,
-              }}
-              readOnly
-            />
-          </FormField>
-          <FormField necessity="optional">
-            <FormFieldLabel>Source of Funds</FormFieldLabel>
-            <Input
-              inputProps={{
-                name: "sourceOfFunds",
-                value: formData.sourceOfFunds,
-              }}
-              readOnly
-            />
-          </FormField>
-          <FormField necessity="optional">
-            <FormFieldLabel>Paperless Statements</FormFieldLabel>
-            <Dropdown
-              name="paperlessStatements"
-              value={formData.paperlessStatements}
-              defaultSelected={[formData.paperlessStatements]}
-              readOnly
-            >
-              <Option value="">Please select</Option>
-              <Option value="Yes" />
-              <Option value="No" />
-            </Dropdown>
-          </FormField>
-        </FlowLayout>
+        <StackLayout>
+          <Text styleAs="h3">Additional info</Text>
+          <StackLayout>
+            <FormField necessity="optional">
+              <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
+              <Input
+                inputMode="decimal"
+                placeholder="0.00"
+                startAdornment={<Text>$</Text>}
+                inputProps={{
+                  name: "initialDeposit",
+                  value: formData.initialDeposit,
+                  type: "number",
+                }}
+                readOnly
+              />
+            </FormField>
+            <FormField necessity="optional">
+              <FormFieldLabel>Beneficiary Name</FormFieldLabel>
+              <Input
+                inputProps={{
+                  name: "beneficiaryName",
+                  value: formData.beneficiaryName,
+                }}
+                readOnly
+              />
+            </FormField>
+            <FormField necessity="optional">
+              <FormFieldLabel>Source of Funds</FormFieldLabel>
+              <Input
+                inputProps={{
+                  name: "sourceOfFunds",
+                  value: formData.sourceOfFunds,
+                }}
+                readOnly
+              />
+            </FormField>
+            <FormField necessity="optional">
+              <FormFieldLabel>Paperless Statements</FormFieldLabel>
+              <Dropdown
+                name="paperlessStatements"
+                value={formData.paperlessStatements}
+                defaultSelected={[formData.paperlessStatements]}
+                readOnly
+              >
+                <Option value="">Please select</Option>
+                <Option value="Yes" />
+                <Option value="No" />
+              </Dropdown>
+            </FormField>
+          </StackLayout>
+        </StackLayout>
       </StackLayout>
     </GridItem>
   </GridLayout>
@@ -732,6 +745,7 @@ export const Horizontal = () => {
   const stepHeadingRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
@@ -858,7 +872,7 @@ export const Horizontal = () => {
         </Button>
       )}
       <Button sentiment="accented" onClick={goNext}>
-        Next
+        {isLastStep ? "Create" : "Next"}
       </Button>
     </FlexLayout>
   );
@@ -916,6 +930,7 @@ export const HorizontalWithCancelConfirmation = () => {
   const stepHeadingRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
@@ -1050,7 +1065,7 @@ export const HorizontalWithCancelConfirmation = () => {
       )}
 
       <Button sentiment="accented" onClick={goNext}>
-        Next
+        {isLastStep ? "Create" : "Next"}
       </Button>
     </FlexLayout>
   );
@@ -1117,6 +1132,7 @@ export const VerticalWithCancelConfirmation = () => {
   const stepHeadingRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
@@ -1228,7 +1244,7 @@ export const VerticalWithCancelConfirmation = () => {
       )}
 
       <Button sentiment="accented" onClick={goNext}>
-        Next
+        {isLastStep ? "Create" : "Next"}
       </Button>
     </FlexLayout>
   );
@@ -1236,16 +1252,15 @@ export const VerticalWithCancelConfirmation = () => {
   return (
     <>
       <StackLayout
-        gap={3}
         style={{
           width: 850,
         }}
         padding={3}
       >
         <ContentOverflow style={{ height: 512 }}>
-          <StackLayout gap={3}>
+          <StackLayout>
             {header}
-            <GridLayout columns={3} gap={3}>
+            <GridLayout columns={3}>
               <GridItem>
                 <Stepper orientation="vertical">
                   {wizardSteps.map((step, index) => (
@@ -1310,7 +1325,9 @@ export const Modal = () => {
 
   const stepHeadingRef = useRef<HTMLSpanElement>(null);
   const navigatedRef = useRef(false);
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
@@ -1342,9 +1359,8 @@ export const Modal = () => {
   };
 
   const handleNextClick = () => {
-    const isLast = activeStepIndex === wizardSteps.length - 1;
     if (!validateCurrentStep()) return;
-    if (isLast) closeWizardAndReset();
+    if (isLastStep) closeWizardAndReset();
     else {
       navigatedRef.current = true;
       next();
@@ -1421,7 +1437,7 @@ export const Modal = () => {
 
   const nextBtn = (
     <Button sentiment="accented" onClick={handleNextClick}>
-      {activeStepIndex === wizardSteps.length - 1 ? "Create" : "Next"}
+      {isLastStep ? "Create" : "Next"}
     </Button>
   );
   const prevBtn = activeStepIndex > 0 && (
@@ -1506,6 +1522,7 @@ export const ModalWithConfirmations = () => {
   const stepHeadingRef = useRef<HTMLSpanElement>(null);
   const navigatedRef = useRef(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
   useEffect(() => {
     if (!navigatedRef.current && wizardState !== "form") return;
     navigatedRef.current = false;
