@@ -24,12 +24,12 @@ export enum ContentTypeEnum {
 export type ContentType =
   (typeof ContentTypeEnum)[keyof typeof ContentTypeEnum];
 export type ValidationStatus = "error" | "warning" | undefined;
-export interface FieldValidation {
+interface FieldValidation {
   status?: ValidationStatus;
   message?: string;
 }
 
-export const initialFormData: AccountFormData = {
+const initialFormData: AccountFormData = {
   fullName: "Jane Doe",
   phoneNumber: "+1 (212) 555-0100",
   emailAddress: "jane.doe@email.com",
@@ -81,15 +81,16 @@ export const stepValidationRules: Record<
   [ContentTypeEnum.Review]: {},
 };
 
+type FieldValidationMap = Record<string, FieldValidation>;
 export const validateStepData = (
   stepId: ContentType,
   data: AccountFormData,
 ): {
-  stepFieldValidation: Record<string, FieldValidation>;
+  stepFieldValidation: FieldValidationMap;
   stepStatus: ValidationStatus;
 } => {
   const rules = stepValidationRules[stepId];
-  const stepFieldValidation: Record<string, FieldValidation> = {};
+  const stepFieldValidation: FieldValidationMap = {};
   Object.keys(rules).forEach((field) => {
     stepFieldValidation[field] = rules[field](
       data[field as keyof AccountFormData] || "",

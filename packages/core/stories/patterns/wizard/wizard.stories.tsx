@@ -7,7 +7,6 @@ import {
   Dropdown,
   FlexItem,
   FlexLayout,
-  FlowLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
@@ -39,7 +38,6 @@ import {
   type AccountFormData,
   type ContentType,
   ContentTypeEnum,
-  type FieldValidation,
   stepValidationRules,
   useWizard,
   type ValidationStatus,
@@ -56,17 +54,6 @@ interface ConfirmationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
-}
-
-interface FormProps {
-  stepId: ContentType;
-  formData: AccountFormData;
-  setFormData: () => void;
-  handleCancel: () => void;
-  handleNext?: () => void;
-  handlePrevious?: () => void;
-  stepFieldValidation: Record<string, FieldValidation>;
-  updateStepValidation: (data: AccountFormData, stepId: ContentType) => void;
 }
 
 interface FormContentProps {
@@ -228,7 +215,6 @@ const CancelWarningDialog = ({
       onOpenChange={onOpenChange}
       status="warning"
       size="small"
-      title="Are you sure you want to cancel"
     >
       <DialogHeader header="Are you sure you want to cancel" />
       <DialogContent>
@@ -263,7 +249,6 @@ const AccountCreatedSuccessDialog = ({
     size="small"
     status="success"
     initialFocus={0}
-    title="Account created"
   >
     <DialogHeader header="Account created" />
     <DialogContent>You can now start using this new account.</DialogContent>
@@ -312,7 +297,7 @@ const AdditionalInfoContent = ({
   style,
 }: FormContentProps) => {
   return (
-    <FlowLayout style={style}>
+    <StackLayout style={style}>
       <FormField validationStatus={stepFieldValidation.initialDeposit?.status}>
         <FormFieldLabel>Initial Deposit Amount</FormFieldLabel>
         <Input
@@ -369,7 +354,7 @@ const AdditionalInfoContent = ({
           <Option value="No" />
         </Dropdown>
       </FormField>
-    </FlowLayout>
+    </StackLayout>
   );
 };
 
@@ -544,7 +529,7 @@ const AccountDetailsContent = ({
   );
 };
 
-const ReviewAccountContent = ({ formData }: Pick<FormProps, "formData">) => (
+const ReviewAccountContent = ({ formData }: { formData: AccountFormData }) => (
   <GridLayout columns={2}>
     <GridItem>
       <StackLayout>
@@ -742,7 +727,7 @@ export const Horizontal = () => {
   } = useWizard(wizardSteps);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
@@ -927,7 +912,7 @@ export const HorizontalWithCancelConfirmation = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
@@ -1129,7 +1114,7 @@ export const VerticalWithCancelConfirmation = () => {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const stepHeadingRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change

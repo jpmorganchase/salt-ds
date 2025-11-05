@@ -15,10 +15,3 @@
 .overflowContent-scrollBottom.overflowContent-inner {
   border-bottom-color: var(--salt-separable-tertiary-borderColor);
 }
-
-@media (min-width: 768px) {
-  .mobileBanner {
-    display: none;
-    margin-bottom: var(--salt-spacing-fixed-900);
-  }
-}
