@@ -417,7 +417,7 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
@@ -429,8 +429,8 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
-    cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
+    cy.findByRole("button", { name: "Remove Alaska" }).should("be.visible");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.value", "");
   });
@@ -451,7 +451,7 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
     cy.realPress("ArrowDown");
     cy.realPress("Enter");
     cy.get("@selectionChange").should(
@@ -464,8 +464,8 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
-    cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.visible");
+    cy.findByRole("button", { name: "Remove Alaska" }).should("be.visible");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.value", "");
   });
@@ -481,7 +481,7 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: "Alabama" }).should("be.visible");
   });
 
   it("by default multiselect should not allow to select on tab key press", () => {
@@ -504,11 +504,11 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: "Alabama" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.realType("Alabama");
     cy.realPress("Tab");
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: "Alabama" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
   });
@@ -659,7 +659,7 @@ describe("Given a ComboBox", () => {
   it("should focus the pills first and on tab focus the input", () => {
     cy.mount(<MultiplePills />);
     cy.realPress("Tab");
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.focused");
     cy.realPress("Tab");
     cy.findByRole("combobox").should("be.focused");
   });
@@ -667,20 +667,20 @@ describe("Given a ComboBox", () => {
   it("should support arrow key navigation between pills and input", () => {
     cy.mount(<MultiplePills />);
     cy.realPress("Tab");
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.focused");
     cy.realPress("ArrowRight");
-    cy.findByRole("button", { name: /^Alaska/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Alaska" }).should("be.focused");
     cy.realPress("ArrowRight");
-    cy.findByRole("button", { name: /^Arizona/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Arizona" }).should("be.focused");
     cy.realPress("ArrowRight");
     cy.findByRole("combobox").should("be.focused");
 
     cy.realPress("ArrowLeft");
-    cy.findByRole("button", { name: /^Arizona/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Arizona" }).should("be.focused");
     cy.realPress("ArrowLeft");
-    cy.findByRole("button", { name: /^Alaska/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Alaska" }).should("be.focused");
     cy.realPress("ArrowLeft");
-    cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
+    cy.findByRole("button", { name: "Remove Alabama" }).should("be.focused");
   });
 
   it("should be able to delete a pill when its option is not visible on screen", () => {
