@@ -49,9 +49,18 @@ export interface NumberInputProps
    */
   clamp?: boolean;
   /**
-   * The number of decimal places allowed. Defaults to the decimal scale of either the initial value provided or the step, whichever is greater.
+   * Number of decimal places allowed (only used by default parser/formatter).
+   * Defaults to the decimal scale of either the initial value provided or the step, whichever is greater.
+   * For high precision of larger numbers, consider a custom parser/formatter from a third-party library.
    */
   decimalScale?: number;
+  /**
+   * Custom decrement function to override the default increment behavior, use when higher precision or large numbers are required
+   * value: current value
+   * step: step value
+   * stepMultiplier: step multiplier value, when using shift key navigation
+   */
+  decrement?: (value: string, step: number, stepMultiplier: number) => string;
   /**
    * The default value. Use when the component is uncontrolled.
    */
@@ -71,8 +80,8 @@ export interface NumberInputProps
    */
   endAdornment?: ReactNode;
   /**
-   * A callback to format the value of the `NumberInput`.
-   * value : string
+   * Callback to format the NumberInput value.
+   * For high precision or large numbers, consider creating a custom parser/format using a third-party library.
    */
   format?: (value: string) => string;
   /**
@@ -80,6 +89,13 @@ export interface NumberInputProps
    * @default false
    */
   hideButtons?: boolean;
+  /**
+   * Custom increment function to override the default increment behavior, use when higher precision or large numbers are required
+   * value: current value
+   * step: step value
+   * stepMultiplier: step multiplier value, when using shift key navigation
+   */
+  increment?: (value: string, step: number, stepMultiplier: number) => string;
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
@@ -118,9 +134,8 @@ export interface NumberInputProps
    */
   onNumberChange?: (event: SyntheticEvent | null, value: number | null) => void;
   /**
-   *
-   * A callback to parse the value of the `NumberInput`. To be used alongside the `format` callback.
-   * Return null if you want the NumberInput to be empty.
+   * Callback to parse the NumberInput value, used with the `format` callback.
+   * For high precision or large numbers, consider creating a custom parser/format using a third-party library.   * Return null for empty input.
    */
   parse?: (value: string) => number | null;
   /**
@@ -202,40 +217,95 @@ function getNumberPrecision(num: number | string) {
 const defaultPattern: NumberInputProps["pattern"] = (inputValue) =>
   /^[+-]?(\d+(\.\d*)?|\.\d*)?$/.test(inputValue);
 
+const defaultDecrement = (
+  value: string,
+  step: number,
+  stepMultiplier: number,
+  parse: (v: string) => number | null,
+) => {
+  const parsedValue = parse(value) ?? 0;
+  const decrementStep = step * stepMultiplier;
+  return String(parsedValue - decrementStep);
+};
+
+const defaultIncrement = (
+  value: string,
+  step: number,
+  stepMultiplier: number,
+  parse: (v: string) => number | null,
+) => {
+  const parsedValue = parse(value) ?? 0;
+  const incrementStep = step * stepMultiplier;
+  return String(parsedValue + incrementStep);
+};
+
+const defaultFormat = (value: string, decimalScale: number): string => {
+  const sanitized = value.trim();
+  if (!sanitized.length) {
+    return "";
+  }
+  const floatValue = Number.parseFloat(sanitized);
+  const updatedValue = Number.isNaN(floatValue)
+    ? sanitized
+    : floatValue.toFixed(decimalScale);
+  return String(updatedValue);
+};
+
+const defaultParse = (value: string, decimalScale: number): number | null => {
+  const sanitizedValue = value.trim();
+  if (!sanitizedValue.length) {
+    return null;
+  }
+  if (
+    sanitizedValue === "." ||
+    sanitizedValue === "+" ||
+    sanitizedValue === "-"
+  ) {
+    return 0;
+  }
+  const floatString = Number.parseFloat(value).toFixed(decimalScale);
+  return Number.parseFloat(floatString);
+};
+
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
       "aria-valuetext": ariaValueTextProp,
       bordered,
-      className: classNameProp,
+      className,
       clamp,
-      decimalScale: decimalScaleProp,
+      step = 1,
+      stepMultiplier = 2,
+      value: valueProp,
+      defaultValue,
+      decimalScale = Math.max(
+        getNumberPrecision(valueProp ?? defaultValue ?? 0),
+        getNumberPrecision(step),
+      ),
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      format: formatProp,
+      format = (v: string) => defaultFormat(v, decimalScale),
       hideButtons,
-      id: idProp,
+      id,
       pattern = defaultPattern,
-      inputProps: inputPropsProp = {},
+      inputProps = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
       onBlur,
       onChange,
       onMouseUp,
-      onNumberChange: onNumberChangeProp,
-      parse: parseProp,
+      onNumberChange,
+      parse = (v: string) => defaultParse(v, decimalScale),
       placeholder,
-      readOnly: readOnlyProp,
+      readOnly,
       startAdornment,
-      step = 1,
-      stepMultiplier = 2,
+      decrement = (v, s, m) => defaultDecrement(v, s, m, parse),
+      increment = (v, s, m) => defaultIncrement(v, s, m, parse),
       textAlign = "left",
       validationStatus: validationStatusProp,
-      value: valueProp,
       variant = "primary",
-      defaultValue: defaultValueProp,
       ...restProps
     },
     ref,
@@ -259,9 +329,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useFormFieldProps();
 
     const isDisabled = disabled || formFieldDisabled;
-    const isReadOnly = readOnlyProp || formFieldReadOnly;
+    const isReadOnly = readOnly || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-    const validationStatusId = useId(idProp);
+    const validationStatusId = useId(id);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef(inputRefProp, inputRef);
 
@@ -274,7 +344,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       required: inputRequired,
       onKeyDown: inputOnKeyDown,
       ...restInputProps
-    } = inputPropsProp;
+    } = inputProps;
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -286,45 +356,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const [value, setValue] = useControlled({
       controlled: valueProp !== undefined ? String(valueProp) : undefined,
-      default: String(defaultValueProp ?? ""),
+      default: String(defaultValue ?? ""),
       name: "NumberInput",
       state: "value",
     });
-
-    const decimalScale =
-      decimalScaleProp ||
-      Math.max(getNumberPrecision(value), getNumberPrecision(step));
-
-    const defaultFormat = (value: string): string => {
-      const sanitized = value.trim();
-      if (!sanitized.length) {
-        return "";
-      }
-      const floatValue = Number.parseFloat(sanitized);
-      const updatedValue = Number.isNaN(floatValue)
-        ? sanitized
-        : floatValue.toFixed(decimalScale);
-      return String(updatedValue);
-    };
-
-    const defaultParse = (value: string) => {
-      const sanitizedValue = value.trim();
-      if (!sanitizedValue.length) {
-        return null;
-      }
-      if (
-        sanitizedValue === "." ||
-        sanitizedValue === "+" ||
-        sanitizedValue === "-"
-      ) {
-        return 0;
-      }
-      const floatString = Number.parseFloat(value).toFixed(decimalScale);
-      return Number.parseFloat(floatString);
-    };
-
-    const format = formatProp ?? defaultFormat;
-    const parse = parseProp ?? defaultParse;
 
     // Committed values are complete numbers, created through blur or increment/decrement, not partial entries such as "0." created by input/onChange.
     const lastCommitValue = useRef<string>(value);
@@ -342,21 +377,20 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         if (clamp) {
           safeNumber = Math.max(min, Math.min(max, safeNumber));
         }
+      } else {
+        // If not a valid number, treat as null
+        safeNumber = null;
       }
       const commitValue =
-        safeNumber !== null && !Number.isNaN(safeNumber)
-          ? safeNumber.toFixed(decimalScale)
-          : newInputValue;
-
+        safeNumber !== null ? format(String(safeNumber)) : newInputValue;
       if (commitValue !== value) {
         setValue(commitValue);
-      }
-
-      if (lastCommitValue.current !== commitValue) {
         onChange?.(event, commitValue);
-        onNumberChangeProp?.(event, safeNumber);
       }
-      lastCommitValue.current = commitValue;
+      if (lastCommitValue.current !== commitValue) {
+        onNumberChange?.(event, safeNumber);
+        lastCommitValue.current = commitValue;
+      }
     };
 
     const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
@@ -395,16 +429,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
     };
 
-    const decrementValue = (event?: SyntheticEvent, block?: boolean) => {
-      const decrementStep = (block ? stepMultiplier : 1) * step;
-      let adjustedValue = parse(value) ?? 0;
-      if (Number.isNaN(adjustedValue)) {
-        return;
-      }
-      adjustedValue -= decrementStep;
-      commit(event ?? null, adjustedValue, String(adjustedValue));
-    };
-
     let floatValue = parse(value) ?? 0;
     floatValue = Math.max(
       Number.MIN_SAFE_INTEGER,
@@ -414,31 +438,49 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       floatValue = Math.max(min, Math.min(max, floatValue));
     }
 
+    const decrementValue = (event?: SyntheticEvent, block?: boolean) => {
+      const validValue = parse(value) ?? 0;
+      if (Number.isNaN(validValue)) {
+        return;
+      }
+      const newValue = decrement(
+        String(validValue),
+        step,
+        block ? stepMultiplier : 1,
+      );
+      const parsedValue = parse(newValue);
+      commit(event ?? null, parsedValue, newValue);
+    };
+
     const { activate: activateDecrement } = useActivateWhileMouseDown(
       decrementValue,
       floatValue <= min,
     );
 
     const incrementValue = (event?: SyntheticEvent, block?: boolean) => {
-      const incrementStep = (block ? stepMultiplier : 1) * step;
-      let adjustedValue = parse(value) ?? 0;
-      if (Number.isNaN(adjustedValue)) {
+      const validValue = parse(value) ?? 0;
+      if (Number.isNaN(validValue)) {
         return;
       }
-      adjustedValue += incrementStep;
-      commit(event ?? null, adjustedValue, String(adjustedValue));
+      const newValue = increment(
+        String(validValue),
+        step,
+        block ? stepMultiplier : 1,
+      );
+      const parsedValue = parse(newValue);
+      commit(event ?? null, parsedValue, newValue);
     };
+
+    const { activate: activateIncrement } = useActivateWhileMouseDown(
+      incrementValue,
+      floatValue >= max,
+    );
 
     useEffect(() => {
       if (isFocused) {
         inputRef.current?.focus();
       }
     }, [isFocused]);
-
-    const { activate: activateIncrement } = useActivateWhileMouseDown(
-      incrementValue,
-      floatValue >= max,
-    );
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       switch (event.key) {
@@ -457,14 +499,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         case "Home": {
           event.preventDefault();
           const newValue = String(min);
-          setValue(newValue);
           commit(event, min, newValue);
           break;
         }
         case "End": {
           event.preventDefault();
           const newValue = String(max);
-          setValue(newValue);
           commit(event, max, newValue);
           break;
         }
@@ -541,7 +581,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             [withBaseName(validationStatus || "")]: validationStatus,
             [withBaseName("bordered")]: bordered,
           },
-          classNameProp,
+          className,
         )}
         onBlur={handleBlur}
         onMouseUp={handleContainerMouseUp}
@@ -553,6 +593,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             {startAdornment}
           </div>
         )}
+        {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role is determined by variable, aria-valuemax is only used when the role is appropriate. */}
         <input
           aria-describedby={
             clsx(formFieldDescribedBy, inputDescribedBy) || undefined

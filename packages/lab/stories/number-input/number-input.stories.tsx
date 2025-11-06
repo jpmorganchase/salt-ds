@@ -10,6 +10,7 @@ import {
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 
 export default {
@@ -22,10 +23,11 @@ const Template: StoryFn = ({ ...args }) => {
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput
-        onNumberChange={(_event, newValue) =>
-          console.log(`Number changed to ${newValue}`)
-        }
         {...args}
+        onNumberChange={(event, newValue) => {
+          console.log(`Number changed to ${newValue}`);
+          args?.onNumberChange?.(event, newValue);
+        }}
       />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
@@ -99,6 +101,7 @@ export const DecimalPlaces = Template.bind({});
 DecimalPlaces.args = {
   defaultValue: 0,
   decimalScale: 2,
+  step: 0.1,
 };
 
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
@@ -218,7 +221,7 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
         announce("Maximum value reached", 1000);
       }
     }
-  }, [value, focused]);
+  }, [announce, value, focused]);
 
   return (
     <StackLayout>
@@ -351,7 +354,7 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
             tabIndex={-1}
             onClick={() => {
               const newValue = Number.parseFloat(value);
-              if (!isNaN(newValue)) {
+              if (!Number.isNaN(newValue)) {
                 const validValue = Math.max(
                   Number.MIN_SAFE_INTEGER,
                   Math.min(Number.MAX_SAFE_INTEGER, newValue - 1),
@@ -369,7 +372,7 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
             tabIndex={-1}
             onClick={() => {
               const newValue = Number.parseFloat(value);
-              if (!isNaN(newValue)) {
+              if (!Number.isNaN(newValue)) {
                 const validValue = Math.max(
                   Number.MIN_SAFE_INTEGER,
                   Math.min(Number.MAX_SAFE_INTEGER, newValue + 1),
@@ -452,7 +455,7 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
         <Button
           onClick={() => {
             const newValue = parse(value);
-            if (newValue !== null && !isNaN(newValue)) {
+            if (newValue !== null && !Number.isNaN(newValue)) {
               const validValue = Math.max(
                 Number.MIN_SAFE_INTEGER,
                 Math.min(Number.MAX_SAFE_INTEGER, newValue + 100),
@@ -549,5 +552,78 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput defaultValue={10.236} decimalScale={2} step={0.1} />
       </FormField>
     </StackLayout>
+  );
+};
+
+export const Scientific: StoryFn<NumberInputProps> = (args) => {
+  const isScientificFormat = (inputValue: string) => {
+    // Allow empty string
+    if (inputValue === "") return true;
+    // Regex breakdown:
+    // ^-?                : optional leading minus
+    // (\d*)              : any number of digits (mantissa)
+    // (\.?)              : optional decimal point
+    // (\d*)              : any number of digits after decimal
+    // (e[+-]?)?          : optional 'e', optional '+' or '-' for exponent
+    // (\d*)              : any number of digits for exponent
+    // $                  : end of string
+    return /^-?(\d*)?(\.?)?(\d*)?(e([+-]?)?)?(\d*)?$/.test(inputValue);
+  };
+  const increment = (value: string, step: number, stepMultiplier: number) => {
+    // Use Decimal for safe arithmetic
+    const decimalValue = new Decimal(value);
+    const incrementStep = new Decimal(step).mul(stepMultiplier);
+    const result = decimalValue.add(incrementStep);
+    return result.toString();
+  };
+
+  const decrement = (value: string, step: number, stepMultiplier: number) => {
+    // Use Decimal for safe arithmetic
+    const decimalValue = new Decimal(value);
+    const decrementStep = new Decimal(step).mul(stepMultiplier);
+    const result = decimalValue.sub(decrementStep);
+    return result.toString();
+  };
+
+  return (
+    <FormField>
+      <FormFieldLabel>Scientific</FormFieldLabel>
+
+      <NumberInput
+        {...args}
+        defaultValue={1.01e-4}
+        increment={increment}
+        decrement={decrement}
+        pattern={isScientificFormat}
+        format={(value) => {
+          if (!value.length) {
+            return value;
+          }
+          try {
+            // Parse and format as scientific notation with 2 decimal places
+            const decimalValue = new Decimal(value);
+            // Format: 2 significant digits in scientific notation
+            return decimalValue.toExponential(4);
+          } catch (_e) {
+            return value; // fallback to raw input if invalid
+          }
+        }}
+        parse={(value) => {
+          if (!value.length) {
+            return null;
+          }
+          const sanitized = value.replace(/,/g, "");
+          try {
+            const decimalValue = new Decimal(sanitized);
+            return decimalValue.toNumber();
+          } catch (_e) {
+            return null;
+          }
+        }}
+        onNumberChange={(_event, newValue) => {
+          console.log(`Number changed to ${newValue}`);
+        }}
+      />
+    </FormField>
   );
 };
