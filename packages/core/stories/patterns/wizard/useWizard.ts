@@ -57,10 +57,16 @@ export const stepValidationRules: Record<
         : {},
     emailAddress: (v) =>
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-        ? { status: "warning", message: "Email format looks incorrect." }
+        ? { status: "error", message: "Email format looks incorrect." }
         : {},
     address1: (v) =>
       !v.trim() ? { status: "error", message: "Address is required." } : {},
+    postalCode: (v) =>
+      !v.trim() ? { status: "error", message: "Postal code is required." } : {},
+    city: (v) =>
+      !v.trim() ? { status: "error", message: "City is required." } : {},
+    country: (v) =>
+      !v.trim() ? { status: "error", message: "Country is required." } : {},
   },
   [ContentTypeEnum.AccountType]: {
     accountType: (v) =>

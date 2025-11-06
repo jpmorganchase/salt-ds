@@ -425,7 +425,7 @@ const AccountDetailsContent = ({
               </FormFieldHelperText>
             )}
           </FormField>
-          <FormField>
+          <FormField validationStatus={stepFieldValidation.phoneNumber?.status}>
             <FormFieldLabel>Phone Number</FormFieldLabel>
             <Input
               inputProps={{
@@ -435,8 +435,15 @@ const AccountDetailsContent = ({
                 value: formData.phoneNumber,
               }}
             />
+            {stepFieldValidation.phoneNumber?.status && (
+              <FormFieldHelperText>
+                {stepFieldValidation.phoneNumber.message}
+              </FormFieldHelperText>
+            )}
           </FormField>
-          <FormField>
+          <FormField
+            validationStatus={stepFieldValidation.emailAddress?.status}
+          >
             <FormFieldLabel>Email Address</FormFieldLabel>
             <Input
               inputProps={{
@@ -446,6 +453,11 @@ const AccountDetailsContent = ({
                 value: formData.emailAddress,
               }}
             />
+            {stepFieldValidation.emailAddress?.status && (
+              <FormFieldHelperText>
+                {stepFieldValidation.emailAddress.message}
+              </FormFieldHelperText>
+            )}
           </FormField>
         </StackLayout>
       </GridItem>
@@ -483,7 +495,9 @@ const AccountDetailsContent = ({
           </FormField>
 
           <FlexLayout>
-            <FormField>
+            <FormField
+              validationStatus={stepFieldValidation.postalCode?.status}
+            >
               <FormFieldLabel>Postal code/PLZ</FormFieldLabel>
               <Input
                 inputProps={{
@@ -493,8 +507,13 @@ const AccountDetailsContent = ({
                   value: formData.postalCode,
                 }}
               />
+              {stepFieldValidation.postalCode?.status && (
+                <FormFieldHelperText>
+                  {stepFieldValidation.postalCode.message}
+                </FormFieldHelperText>
+              )}
             </FormField>
-            <FormField>
+            <FormField validationStatus={stepFieldValidation.city?.status}>
               <FormFieldLabel>Town/City</FormFieldLabel>
               <Input
                 inputProps={{
@@ -504,13 +523,19 @@ const AccountDetailsContent = ({
                   value: formData.city,
                 }}
               />
-              <FormFieldHelperText>
-                Locality, Settlement etc.
-              </FormFieldHelperText>
+              {stepFieldValidation.city?.status ? (
+                <FormFieldHelperText>
+                  {stepFieldValidation.city.message}
+                </FormFieldHelperText>
+              ) : (
+                <FormFieldHelperText>
+                  Locality, Settlement etc.
+                </FormFieldHelperText>
+              )}
             </FormField>
           </FlexLayout>
 
-          <FormField>
+          <FormField validationStatus={stepFieldValidation.country?.status}>
             <FormFieldLabel>Country</FormFieldLabel>
             <Dropdown
               name="country"
@@ -522,6 +547,11 @@ const AccountDetailsContent = ({
               <Option value="United Kingdom">United Kingdom</Option>
               <Option value="United States">United States</Option>
             </Dropdown>
+            {stepFieldValidation.country?.status && (
+              <FormFieldHelperText>
+                {stepFieldValidation.country.message}
+              </FormFieldHelperText>
+            )}
           </FormField>
         </StackLayout>
       </GridItem>
