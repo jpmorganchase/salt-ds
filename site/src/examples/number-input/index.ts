@@ -3,7 +3,6 @@ export * from "./ButtonAdornments";
 export * from "./ClampBehavior";
 export * from "./CustomInputPattern";
 export * from "./DecimalJS";
-
 export * from "./Decimals";
 export * from "./Default";
 export * from "./Disabled";
