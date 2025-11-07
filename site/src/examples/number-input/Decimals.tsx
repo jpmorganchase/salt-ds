@@ -9,11 +9,13 @@ export const Decimals = () => {
         defaultValue={1.10025}
         decimalScale={5}
         onNumberChange={(_event, newValue) => {
-          const formatted = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 5,
-          }).format(newValue as number);
-          console.log(`Number changed to ${formatted}`);
+          if (newValue != null) {
+            const formatted = new Intl.NumberFormat("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 5,
+            }).format(newValue);
+            console.log(`Number changed to ${formatted}`);
+          }
         }}
       />
     </FormField>

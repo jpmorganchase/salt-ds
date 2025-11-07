@@ -44,7 +44,7 @@ describe("Number Input", () => {
     cy.mount(<Default increment={increment} />);
 
     cy.get(".saltNumberInput-increment").realClick();
-    cy.get("incrementSpy").should("have.been.called");
+    cy.get("@incrementSpy").should("have.been.called");
     cy.findByRole("spinbutton").should("have.value", "42");
   });
 
