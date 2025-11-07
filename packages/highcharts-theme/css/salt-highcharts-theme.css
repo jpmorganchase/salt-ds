@@ -173,6 +173,12 @@
 .highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
 .highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
   fill: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text,
+.highcharts-theme-salt .highcharts-waterfall-series text.highcharts-data-label {
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
@@ -286,4 +292,34 @@
 
 .highcharts-theme-salt .highcharts-boxplot-median {
   stroke: var(--salt-content-primary-foreground);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point {
+  fill: var(--salt-sentiment-positive-foreground-decorative);
+  stroke: var(--salt-sentiment-positive-foreground-decorative);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-negative {
+  fill: var(--salt-sentiment-negative-foreground-decorative);
+  stroke: var(--salt-sentiment-negative-foreground-decorative);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-sum {
+  fill: var(--salt-category-15-bold-background);
+  stroke: var(--salt-category-15-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-intermediate-sum {
+  fill: var(--salt-category-15-bold-background);
+  stroke: var(--salt-category-15-subtle-borderColor);
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-graph {
+  stroke: var(--salt-content-primary-foreground);
+  stroke-width: var(--salt-size-fixed-100);
+  stroke-dasharray: 2, 2;
+}
+
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text {
+  fill: var(--salt-content-bold-foreground);
 }
