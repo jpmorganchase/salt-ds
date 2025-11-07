@@ -34,14 +34,17 @@ describe("Number Input", () => {
   });
 
   it("calls custom increment and returns test value", () => {
-    const increment = cy.stub().callsFake(() => {
-      return "42";
-    });
+    const increment = cy
+      .stub()
+      .as("incrementSpy")
+      .callsFake(() => {
+        return "42";
+      });
 
     cy.mount(<Default increment={increment} />);
 
     cy.get(".saltNumberInput-increment").realClick();
-    cy.wrap(increment).should("have.been.called");
+    cy.get("incrementSpy").should("have.been.called");
     cy.findByRole("spinbutton").should("have.value", "42");
   });
 
@@ -54,14 +57,17 @@ describe("Number Input", () => {
   });
 
   it("calls custom decrement and returns test value", () => {
-    const decrement = cy.stub().callsFake(() => {
-      return "24";
-    });
+    const decrement = cy
+      .stub()
+      .as("decrementSpy")
+      .callsFake(() => {
+        return "24";
+      });
 
     cy.mount(<Default decrement={decrement} />);
 
     cy.get(".saltNumberInput-decrement").realClick();
-    cy.wrap(decrement).should("have.been.called");
+    cy.get("@decrementSpy").should("have.been.called");
     cy.findByRole("spinbutton").should("have.value", "24");
   });
 
@@ -90,7 +96,7 @@ describe("Number Input", () => {
   it("increments to `1` from a minus symbol on button click", () => {
     cy.mount(<Default />);
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.findByRole("spinbutton").clear();
     cy.realType("-");
     cy.findByRole("spinbutton").should("have.value", "-");
@@ -102,7 +108,7 @@ describe("Number Input", () => {
   it("decrements to `-1` from a minus symbol on button click", () => {
     cy.mount(<Default />);
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.findByRole("spinbutton").clear();
     cy.realType("-");
     cy.findByRole("spinbutton").should("have.value", "-");
@@ -135,12 +141,14 @@ describe("Number Input", () => {
       <Default defaultValue={10} step={10} stepMultiplier={10} max={2000} />,
     );
 
-    cy.findByRole("spinbutton").focus().realPress("ArrowUp");
-    cy.findByRole("spinbutton").should("have.value", "20").realPress("PageUp");
-    cy.findByRole("spinbutton")
-      .should("have.value", "120")
-      .realPress(["Shift", "ArrowUp"]);
-    cy.findByRole("spinbutton").should("have.value", "220").realPress("End");
+    cy.findByRole("spinbutton").realClick();
+    cy.realPress("ArrowUp");
+    cy.findByRole("spinbutton").should("have.value", "20");
+    cy.realPress("PageUp");
+    cy.findByRole("spinbutton").should("have.value", "120");
+    cy.realPress(["Shift", "ArrowUp"]);
+    cy.findByRole("spinbutton").should("have.value", "220");
+    cy.realPress("End");
     cy.findByRole("spinbutton").should("have.value", "2000");
   });
 
@@ -163,13 +171,14 @@ describe("Number Input", () => {
       <Default defaultValue={10} step={10} stepMultiplier={10} min={-2000} />,
     );
 
-    cy.findByRole("spinbutton").focus().realPress("ArrowDown");
+    cy.findByRole("spinbutton").realClick();
+    cy.realPress("ArrowDown");
     cy.findByRole("spinbutton").should("have.value", "0");
-    cy.findByRole("spinbutton").realPress("PageDown");
+    cy.realPress("PageDown");
     cy.findByRole("spinbutton").should("have.value", "-100");
-    cy.findByRole("spinbutton").realPress(["Shift", "ArrowDown"]);
+    cy.realPress(["Shift", "ArrowDown"]);
     cy.findByRole("spinbutton").should("have.value", "-200");
-    cy.findByRole("spinbutton").realPress(["Home"]);
+    cy.realPress("Home");
     cy.findByRole("spinbutton").should("have.value", "-2000");
   });
 
@@ -177,10 +186,6 @@ describe("Number Input", () => {
     cy.mount(<Default defaultValue={9} max={10} />);
 
     cy.get(".saltNumberInput-increment").realClick();
-    cy.get(".saltNumberInput-increment").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-increment").should("be.disabled");
   });
 
@@ -188,10 +193,6 @@ describe("Number Input", () => {
     cy.mount(<Default defaultValue={1} min={0} />);
 
     cy.get(".saltNumberInput-decrement").realClick();
-    cy.get(".saltNumberInput-decrement").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-decrement").should("be.disabled");
   });
 
@@ -257,7 +258,7 @@ describe("Number Input", () => {
       />,
     );
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.realType("abc");
 
     cy.get("@numberChangeSpy").should("not.have.been.called");
@@ -343,10 +344,6 @@ describe("Number Input", () => {
 
     cy.get(".saltNumberInput-increment").realClick();
 
-    cy.get(".saltNumberInput-increment").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-increment").should("be.disabled");
     cy.get("@numberChangeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
@@ -366,10 +363,6 @@ describe("Number Input", () => {
     );
 
     cy.get(".saltNumberInput-decrement").realClick();
-    cy.get(".saltNumberInput-decrement").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-decrement").should("be.disabled");
     cy.get("@numberChangeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
@@ -409,7 +402,7 @@ describe("Number Input", () => {
     const numberChangeSpy = cy.stub().as("numberChangeSpy");
     cy.mount(<Default onChange={changeSpy} onNumberChange={numberChangeSpy} />);
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.realPress("ArrowUp");
 
     cy.get("@changeSpy").should(
@@ -430,7 +423,7 @@ describe("Number Input", () => {
     const numberChangeSpy = cy.stub().as("numberChangeSpy");
     cy.mount(<Default onChange={changeSpy} onNumberChange={numberChangeSpy} />);
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.realPress("ArrowDown");
 
     cy.get("@changeSpy").should(
@@ -449,14 +442,8 @@ describe("Number Input", () => {
   it("is disabled when the `disabled` prop is true", () => {
     cy.mount(<Default disabled />);
 
-    cy.get(".saltNumberInput-increment").should(
-      "have.class",
-      "saltButton-disabled",
-    );
-    cy.get(".saltNumberInput-decrement").should(
-      "have.class",
-      "saltButton-disabled",
-    );
+    cy.get(".saltNumberInput-increment").should("be.disabled");
+    cy.get(".saltNumberInput-decrement").should("be.disabled");
     cy.findByRole("spinbutton").should("be.disabled");
   });
 
@@ -471,7 +458,7 @@ describe("Number Input", () => {
     cy.get(".saltNumberInput-decrement").realClick();
     cy.findByRole("spinbutton").should("have.value", "5");
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.findByRole("spinbutton").clear();
     cy.realType("2");
     cy.findByRole("spinbutton").should("have.value", "5");
@@ -480,7 +467,8 @@ describe("Number Input", () => {
   it("sanitizes input to only allow numbers, decimal points, and plus/minus symbols", () => {
     cy.mount(<Default />);
 
-    cy.findByRole("spinbutton").focus().realType("abc-12.3.+-def");
+    cy.findByRole("spinbutton").realClick();
+    cy.realType("abc-12.3.+-def");
     cy.findByRole("spinbutton").should("have.value", "-12.3");
   });
 
@@ -502,7 +490,8 @@ describe("Number Input", () => {
   it("resets to default value in ResetAdornment example", () => {
     cy.mount(<ButtonAdornment />);
 
-    cy.findByRole("spinbutton").focus().realPress("ArrowUp");
+    cy.findByRole("spinbutton").realClick();
+    cy.realPress("ArrowUp");
     cy.findByRole("spinbutton").should("have.value", "11");
     cy.findByRole("button", {
       name: "Reset Number input with adornment",
@@ -512,15 +501,11 @@ describe("Number Input", () => {
 
   it("allows out of range input when clamp is false", () => {
     cy.mount(<MinAndMaxValue />);
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.realType("2");
     cy.realPress("Tab");
 
     cy.findByRole("spinbutton").should("have.value", "22");
-    cy.get(".saltNumberInput-increment").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-increment").should("be.disabled");
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
@@ -544,7 +529,7 @@ describe("Number Input", () => {
       />,
     );
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.realType("10000000");
     cy.get("@changeSpy").should(
       "have.been.calledWith",
@@ -569,25 +554,18 @@ describe("Number Input", () => {
   it("increments and decrements from the correct value when value gets clamped", () => {
     cy.mount(<Default max={100} min={10} clamp />);
 
-    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").realClick();
     cy.realType("10000000");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "100");
-    cy.get(".saltNumberInput-increment").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-increment").should("be.disabled");
     cy.get(".saltNumberInput-decrement").realClick();
     cy.findByRole("spinbutton").should("have.value", "99");
-    cy.findByRole("spinbutton").focus().clear();
+    cy.findByRole("spinbutton").realClick();
+    cy.findByRole("spinbutton").clear();
     cy.realType("1");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "10");
-    cy.get(".saltNumberInput-decrement").should(
-      "have.class",
-      "saltButton-disabled",
-    );
     cy.get(".saltNumberInput-decrement").should("be.disabled");
     cy.get(".saltNumberInput-increment").realClick();
     cy.findByRole("spinbutton").should("have.value", "11");
@@ -596,7 +574,8 @@ describe("Number Input", () => {
   it("should increment or decrement from correct value before clamp is applied", () => {
     cy.mount(<Default max={100} min={10} clamp />);
 
-    cy.findByRole("spinbutton").focus().realType("1000000");
+    cy.findByRole("spinbutton").realClick();
+    cy.realType("1000000");
     cy.realPress("ArrowDown");
     cy.findByRole("spinbutton").should("have.value", 100);
     cy.realPress("ArrowDown");
@@ -619,7 +598,8 @@ describe("Number Input", () => {
     it("should not allow invalid input values", () => {
       cy.mount(<ControlledFormatting />);
 
-      cy.findByRole("spinbutton").focus().realType("ABC");
+      cy.findByRole("spinbutton").realClick();
+      cy.realType("ABC");
       cy.findByRole("spinbutton").should("have.value", "100K");
     });
 
@@ -632,7 +612,7 @@ describe("Number Input", () => {
     it("should increment and decrement formatted values using keyboard", () => {
       cy.mount(<ControlledFormatting />);
 
-      cy.findByRole("spinbutton").focus();
+      cy.findByRole("spinbutton").realClick();
       cy.realPress("ArrowUp");
       cy.findByRole("spinbutton").should("have.value", "101K");
       cy.realPress("ArrowDown");
@@ -714,7 +694,8 @@ describe("Number Input", () => {
 
       cy.mount(<ControlledNumberInput />);
       cy.findByRole("spinbutton").should("have.value", "15%");
-      cy.findByRole("spinbutton").focus().realPress("ArrowUp");
+      cy.findByRole("spinbutton").realClick();
+      cy.realPress("ArrowUp");
       cy.get("@changeSpy").should("have.callCount", 1);
       cy.get("@changeSpy").should(
         "have.been.calledWith",
@@ -805,8 +786,8 @@ describe("Number Input", () => {
       cy.mount(
         <Default
           defaultValue={12}
-          format={(value: string) => `${value}%`}
-          parse={(value: string) => {
+          format={(value) => `${value}%`}
+          parse={(value) => {
             if (!value.length) {
               return null;
             }
@@ -889,7 +870,7 @@ describe("Number Input", () => {
     it("rounds up to correct number of decimal places when decimal scale is set", () => {
       cy.mount(<Default defaultValue={3.145} decimalScale={2} />);
 
-      cy.findByRole("spinbutton").focus();
+      cy.findByRole("spinbutton").realClick();
       cy.realPress("Tab");
       cy.findByRole("spinbutton").should("have.value", "3.15");
     });
@@ -897,7 +878,7 @@ describe("Number Input", () => {
     it("rounds down to correct number of decimal places when decimal scale is set", () => {
       cy.mount(<Default decimalScale={3} defaultValue={-12.3324} />);
 
-      cy.findByRole("spinbutton").focus();
+      cy.findByRole("spinbutton").realClick();
       cy.realPress("Tab");
       cy.findByRole("spinbutton").should("have.value", "-12.332");
     });
@@ -905,7 +886,7 @@ describe("Number Input", () => {
     it("displays value with correct number of decimal places when decimal scale is set", () => {
       cy.mount(<Default decimalScale={2} />);
 
-      cy.findByRole("spinbutton").focus();
+      cy.findByRole("spinbutton").realClick();
       cy.realType("-12.1234");
       cy.realPress("Tab");
       cy.findByRole("spinbutton").should("have.value", "-12.12");
@@ -914,7 +895,7 @@ describe("Number Input", () => {
     it("pads with zeros to correct number of decimal places", () => {
       cy.mount(<Default decimalScale={3} defaultValue={-5.8} />);
 
-      cy.findByRole("spinbutton").focus();
+      cy.findByRole("spinbutton").realClick();
       cy.realPress("Tab");
       cy.findByRole("spinbutton").should("have.value", "-5.800");
     });
@@ -923,7 +904,8 @@ describe("Number Input", () => {
       cy.mount(<Default defaultValue={12.1111} decimalScale={2} />);
 
       cy.findByRole("spinbutton").should("have.value", "12.11");
-      cy.findByRole("spinbutton").focus().blur();
+      cy.findByRole("spinbutton").realClick();
+      cy.realPress("Tab");
       cy.findByRole("spinbutton").should("have.value", "12.11");
     });
 
@@ -935,12 +917,14 @@ describe("Number Input", () => {
     it("correctly formats a number starting with decimal point when decimal scale is set", () => {
       cy.mount(<Default decimalScale={1} />);
 
-      cy.findByRole("spinbutton").focus().realType(".1");
+      cy.findByRole("spinbutton").realClick();
+      cy.realType(".1");
       cy.realPress("Tab");
 
       cy.findByRole("spinbutton").should("have.value", 0.1);
 
-      cy.findByRole("spinbutton").focus().clear();
+      cy.findByRole("spinbutton").realClick();
+      cy.findByRole("spinbutton").clear();
       cy.realType("1.");
       cy.realPress("Tab");
 
@@ -954,7 +938,8 @@ describe("Number Input", () => {
       cy.mount(
         <Default onChange={changeSpy} onNumberChange={numberChangeSpy} />,
       );
-      cy.findByRole("spinbutton").focus().realType(".");
+      cy.findByRole("spinbutton").realClick();
+      cy.realType(".");
       cy.get("@changeSpy").should("have.callCount", 1);
       cy.get("@changeSpy").should(
         "have.been.calledWith",
@@ -976,7 +961,8 @@ describe("Number Input", () => {
         0,
       );
       cy.findByRole("spinbutton").should("have.value", "0");
-      cy.findByRole("spinbutton").clear().focus().realType("-");
+      cy.findByRole("spinbutton").clear().focus();
+      cy.realType("-");
       cy.get("@changeSpy").should("have.callCount", 4);
       cy.get("@changeSpy").should(
         "have.been.calledWith",

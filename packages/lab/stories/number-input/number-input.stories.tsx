@@ -18,7 +18,7 @@ export default {
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
-const Template: StoryFn = ({ ...args }) => {
+const Template: StoryFn<typeof NumberInput> = ({ ...args }) => {
   return (
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
