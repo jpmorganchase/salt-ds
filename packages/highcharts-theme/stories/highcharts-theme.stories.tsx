@@ -13,6 +13,7 @@ import {
   PieChart as PieChartComponent,
   ScatterChart as ScatterChartComponent,
   StackedBarChart as StackedBarChartComponent,
+  WaterfallChart as WaterfallChartComponent,
 } from "../src/examples";
 import {
   areaOptions,
@@ -26,6 +27,7 @@ import {
   pieOptions,
   scatterOptions,
   stackedBarOptions,
+  waterfallOptions,
 } from "../src/examples/dependencies";
 
 accessibility(Highcharts);
@@ -141,5 +143,13 @@ export const ScatterChart = {
   args: {
     patterns: false,
     options: scatterOptions,
+  },
+};
+
+export const WaterfallChart = {
+  render: (args: ChartStoryArgs) => <WaterfallChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: waterfallOptions,
   },
 };
