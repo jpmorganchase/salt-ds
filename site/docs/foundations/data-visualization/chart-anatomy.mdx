@@ -5,7 +5,7 @@ sidebar:
   priority: 4
 ---
 
-Understanding the principles of chart anatomy is important to learning how the different parts of Salt charts work.
+Understanding the principles of chart anatomy is important to learning how the different parts of Salt charts work. For example, axis title, axis label, legends and grid lines.
 
 <Image
   src="/img/foundations/dataviz-anatomy.png"
@@ -21,12 +21,6 @@ The chart’s title should summarize the data on display. If revealing key findi
 
 Horizontal (x) and vertical (y) axes display two variables and include their range, scale and units of measurement. Axes are used in two-dimensional charts, with each axis representing a measure of data.
 
-<Image
-  src="/img/foundations/dataviz-labels.png"
-  srcDark="/img/foundations/dataviz-labels-dark.png"
-  alt="Diagram of labels on a bar chart."
-/>
-
 ### Axes title
 
 The axis title should summarize the variables shown. Consider including the unit of measurement in the title to avoid repeating it on the axis labels, e.g., M for millions, or for percentages.
@@ -39,7 +33,7 @@ Label each axis clearly and concisely to reduce visual clutter. Simplify axis la
 
 Grid lines are vertical or horizontal lines that divide a chart, helping users read data values and make visual comparisons.
 
-When possible, keep the number of grid lines to a minimum to prevent your chart becoming cluttered. Some charts require both horizontal and vertical grid lines, i.e. bubble and scatter chart. This is built into the Salt chart package and doesn’t require manual adjustment.
+When possible, keep the number of grid lines to a minimum to avoid cluttering your chart. Some chart types, such as bubble and scatter charts, may require both horizontal and vertical grid lines to support accurate data interpretation.
 
 <Image
   src="/img/foundations/dataviz-grid.png"
@@ -49,9 +43,7 @@ When possible, keep the number of grid lines to a minimum to prevent your chart 
 
 ## Legends
 
-### Usage
-
-The legend uses symbols and labels to identify each data series and its corresponding segment within the chart. In Salt, the legend is an opt-in feature.
+Legends are optional elements in a chart that use symbols and labels to identify each data series and its corresponding segment within the chart.
 
 Certain chart types, such as scatter and bubble charts, use legend symbols that visually match the representation of the data points within the chart. This is a design choice that enhances clarity and makes the chart easier to interpret.
 
@@ -61,9 +53,9 @@ Certain chart types, such as scatter and bubble charts, use legend symbols that 
   alt="Diagram of different legend types."
 />
 
-### Legend layouts
+### Legend position
 
-Position your legend where it’s most appropriate in your layout, considering the number of legend items. In Salt, chart legends are preset to be vertical and right-aligned. Use a vertical layout when displaying many legend items, if space allows.
+Position your legend to the right or below the chart where it’s most appropriate in your layout, considering the number of legend items. Use a vertical postion when displaying many legend items, if space allows.
 
 <Image
   src="/img/foundations/dataviz-legend-layouts.png"
@@ -71,13 +63,9 @@ Position your legend where it’s most appropriate in your layout, considering t
   alt="Diagram of different legend orientations."
 />
 
-### Pagination
-
-When you have more legend items than available to fit in the height of the chart, default pagination will be used. This is should not be confused with the Salt Pagination component.
-
 ## User interactions
 
-Salt charts include interactions that help users focus on or reveal additional information about your chart data, for example:
+Charts benefit from interactions to help users focus on or reveal additional information about the chart's data, for example:
 
 - Tooltips that appear on hover
 - Individual data series or points that users can show, hide or highlight
@@ -105,5 +93,11 @@ When a user hovers over a data series, that series is highlighted. Simultaneousl
 ### Tooltip
 
 Tooltips are a flexible way to communicate details within a chart, such as highlighting specific calculations or data points. Visually, the tooltip’s border color matches the color of the selected data series, helping users quickly associate the information with the relevant chart element.
+
+<Image
+  src="/img/foundations/dataviz-tooltip.png"
+  srcDark="/img/foundations/dataviz-tooltip-dark.png"
+  alt="Image of a stacked bar chart with tooltip interaction."
+/>
 
 :fragment{src="../fragments/feedback.mdx"}
