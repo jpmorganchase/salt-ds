@@ -17,7 +17,7 @@ data:
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-example.png"
   srcDark="/img/patterns/wizard/wizard-pattern-example-dark.png"
-  alt="Wizard pattern example"
+  alt="Example of a multi-step wizard workflow with stepper navigation"
   border
   background="secondary"
 />
@@ -40,7 +40,7 @@ Wizard contains:
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-anatomy.png"
   srcDark="/img/patterns/wizard/wizard-pattern-anatomy-dark.png"
-  alt="Wizard pattern anatomy"
+  alt="Anatomy of a wizard pattern showing workflow title, step title, stepper, content area, and button bar"
   border
   background="secondary"
 />
@@ -62,9 +62,9 @@ A wizard can be displayed inside different containers such as dialogs, pages, or
 ### Wizard with a horizontal stepper
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-layout.png"
-  srcDark="/img/patterns/wizard/wizard-pattern-layout-dark.png"
-  alt="Wizard pattern spacing layout"
+  src="/img/patterns/wizard/wizard-pattern-layout-horizontal.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-layout-horizontal-dark.png"
+  alt="Horizontal wizard layout with stepper and content area spacing"
   border
   background="secondary"
 />
@@ -74,7 +74,7 @@ A wizard can be displayed inside different containers such as dialogs, pages, or
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-layout-vertical.png"
   srcDark="/img/patterns/wizard/wizard-pattern-layout-vertical-dark.png"
-  alt="Wizard pattern vertical spacing layout"
+  alt="Vertical wizard layout with stepper and content area arrangement"
   border
   background="secondary"
 />
@@ -94,7 +94,7 @@ For simpler flows, a horizontal stepper with fewer steps is usually sufficient. 
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-number-steps.png"
   srcDark="/img/patterns/wizard/wizard-pattern-number-steps-dark.png"
-  alt="Wizard pattern vertical spacing layout"
+  alt="Diagram showing recommended number of steps and vertical spacing in wizard flows"
   border
   background="secondary"
 />
@@ -110,8 +110,9 @@ To be able to see more content from the screen (vertically), the main content ar
 Workflows using a horizontal stepper typically involve fewer fields and simpler layouts. In most cases, scrolling should not be required. If additional content does exceed the available space, only the central content region should scroll—keeping the stepper and button bar visible at all times.
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-content-scroll.png"
-  alt="Wizard pattern content scroll with horizontal stepper"
+  src="/img/patterns/wizard/wizard-pattern-content-area-horizontal.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-content-area-horizontal-dark.png"
+  alt="Content area scrolling in a wizard with horizontal stepper, showing fixed stepper and button bar"
   border
   background="secondary"
 />
@@ -121,14 +122,15 @@ Workflows using a horizontal stepper typically involve fewer fields and simpler 
 Vertical steppers are used for longer or more complex workflows that may include multiple steps and substeps. In these cases, allow the main content area to scroll vertically to accommodate more content on the screen. The bottom button bar remains fixed so users can always access key actions without needing to scroll back down.
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-content-scroll-vertical.png"
-  alt="Wizard pattern content scroll with vertical stepper"
+  src="/img/patterns/wizard/wizard-pattern-content-area-vertical.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-content-area-vertical-dark.png"
+  alt="Content area scrolling in a wizard with vertical stepper, showing fixed button bar"
   border
   background="secondary"
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  For guidance on displaying form fields across multiple columns within a wizard, refer to [forms](/salt/patterns/forms#multiple-columns) pattern. It provides recommendations for multi-column layouts, including when to use them—such as for experienced users, routine tasks, or when vertical space is limited and scrolling should be minimized.
+  For guidance on displaying form fields across multiple columns within a wizard, refer to [forms pattern](/salt/patterns/forms#multiple-columns). It provides recommendations for multi-column layouts, including when to use them—such as for experienced users, routine tasks, or when vertical space is limited and scrolling should be minimized.
 </GuidanceCallout>
 
 ## Modal wizard
@@ -139,7 +141,8 @@ For shorter tasks that temporarily become the user’s main focus, a modal exper
 
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-modal.png"
-  alt="Wizard pattern modal"
+  srcDark="/img/patterns/wizard/wizard-pattern-modal-dark.png"
+  alt="Modal wizard example with stepper and dialog container"
   border
   background="secondary"
 />
@@ -155,8 +158,9 @@ When a step is entirely optional and contains no required fields, you can indica
 We also recommend to use the “All fields are optional” text in the description under the step title.
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-optional-description.png"
-  alt="Wizard pattern with header description for optional fields"
+  src="/img/patterns/wizard/wizard-pattern-optional-step.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-optional-step-dark.png"
+  alt="Wizard step with header description indicating all fields are optional"
   border
   background="secondary"
   caption="“All fields are optional” text in the description under the step title"
@@ -165,6 +169,10 @@ We also recommend to use the “All fields are optional” text in the descripti
 <GuidanceCallout type="positive" customPillText="Best practices">
   Indicate the minority: When a step contains both required and optional fields, label only the few optional or required fields as needed.
 </GuidanceCallout>
+
+## Focus management
+
+To ensure users have enough context when moving between steps, we can provide clear visual and interactive cues. For example, this may include focusing on the header or the first interactive element, announcing the current step and the number of steps remaining, and highlighting progress within the stepper.
 
 ## Validation state
 
@@ -184,8 +192,9 @@ If a step contains a warning after validation:
 - Users can go back to review or adjust information as needed.
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-validation-warning.png"
-  alt="Wizard pattern with warning validation"
+  src="/img/patterns/wizard/wizard-validation-warning.png"
+  srcDark="/img/patterns/wizard/wizard-validation-warning-dark.png"
+  alt="Wizard stepper displaying a warning validation state after step validation"
   border
   background="secondary"
   caption="The step in the stepper displays a warning state."
@@ -205,8 +214,9 @@ When a step contains an error after validation:
 - If the validation passes, the flow proceeds to the next step or confirmation screen.
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-submission-error.png"
-  alt="Wizard pattern with submission error"
+  src="/img/patterns/wizard/wizard-validation-error.png"
+  srcDark="/img/patterns/wizard/wizard-validation-error-dark.png"
+  alt="Wizard stepper displaying an error validation state"
   border
   background="secondary"
   caption="The step in the stepper displays an error state"
@@ -227,21 +237,23 @@ When the user clicks the cancel button, display a warning message if there’s a
 #### Wizard with the warning dialog
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-cancel-warning-dialog.png"
-  alt="Wizard pattern with warning dialog on cancel"
+  src="/img/patterns/wizard/wizard-confirmation-embedded-warning.png"
+  srcDark="/img/patterns/wizard/wizard-confirmation-embedded-warning-dark.png"
+  alt="Embedded warning dialog in wizard confirming cancel action and risk of losing progress"
   border
   background="secondary"
-  caption="The warning dialog shows up to confirm"
+  caption="The warning message shows up to confirm if cancelling."
 />
 
 #### Modal wizard with the warning message
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-cancel-content-warning.png"
-  alt="Wizard pattern in modal with cancel warning"
+  src="/img/patterns/wizard/wizard-confirmation-modal-warning.png"
+  srcDark="/img/patterns/wizard/wizard-confirmation-modal-warning-dark.png"
+  alt="Modal wizard displaying warning message to confirm cancel action"
   border
   background="secondary"
-  caption="The warning message shows up to confirm"
+  caption="The warning message shows up to confirm if cancelling."
 />
 
 ## Completion message
@@ -251,19 +263,21 @@ Use a completion message to confirm that the wizard task has been successfully c
 ### Wizard with the success dialog
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-modal-success.png"
-  alt="Wizard pattern with success dialog"
+  src="/img/patterns/wizard/wizard-confirmation-embedded-success.png"
+  srcDark="/img/patterns/wizard/wizard-confirmation-embedded-success-dark.png"
+  alt="Embedded success dialog in wizard confirming completion of the flow"
   border
   background="secondary"
-  caption="The success dialog with message shows up to confirm"
+  caption="The success dialog with message shows up to confirm the flow is completed."
 />
 
 ### Modal wizard with the success message
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-dialog-content-success.png"
-  alt="Wizard pattern in modal success"
+  src="/img/patterns/wizard/wizard-confirmation-modal-success.png"
+  srcDark="/img/patterns/wizard/wizard-confirmation-modal-success-dark.png"
+  alt="Modal wizard displaying success message after flow completion"
   border
   background="secondary"
-  caption="Modal content updated to the success message"
+  caption="The success message shows up to confirm the flow is completed."
 />
