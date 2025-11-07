@@ -7,6 +7,7 @@ import {
   BoxPlotChart as BoxPlotChartComponent,
   BubbleChart as BubbleChartComponent,
   BulletChart as BulletChartComponent,
+  CandlestickChart as CandlestickChartComponent,
   ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
@@ -21,6 +22,7 @@ import {
   boxPlotOptions,
   bubbleOptions,
   bulletOptions,
+  candlestickOptions,
   columnOptions,
   donutOptions,
   lineOptions,
@@ -95,6 +97,14 @@ export const BubbleChart = {
   args: {
     patterns: false,
     options: bubbleOptions,
+  },
+};
+
+export const CandlestickChart = {
+  render: (args: ChartStoryArgs) => <CandlestickChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: candlestickOptions,
   },
 };
 

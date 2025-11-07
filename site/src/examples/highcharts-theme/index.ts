@@ -3,6 +3,7 @@ export * from "./BarChart";
 export * from "./BoxPlotChart";
 export * from "./BubbleChart";
 export * from "./BulletChart";
+export * from "./CandlestickChart";
 export * from "./ColumnChart";
 export * from "./DonutChart";
 export * from "./LineChart";
