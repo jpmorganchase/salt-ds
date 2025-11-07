@@ -9,3 +9,4 @@ export * from "./LineChart";
 export * from "./PieChart";
 export * from "./ScatterChart";
 export * from "./StackedBarChart";
+export * from "./WaterfallChart";
