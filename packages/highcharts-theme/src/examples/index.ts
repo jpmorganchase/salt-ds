@@ -9,3 +9,4 @@ export { default as LineChart } from "./LineChart";
 export { default as PieChart } from "./PieChart";
 export { default as ScatterChart } from "./ScatterChart";
 export { default as StackedBarChart } from "./StackedBarChart";
+export { default as WaterfallChart } from "./WaterfallChart";
