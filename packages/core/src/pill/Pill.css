@@ -67,11 +67,3 @@
   --pill-borderColor: var(--salt-actionable-bold-borderColor-disabled);
   cursor: var(--salt-cursor-disabled);
 }
-
-.saltPill-input {
-  cursor: inherit;
-  opacity: 0;
-  padding: 0;
-  position: absolute;
-  z-index: var(--salt-zIndex-default);
-}
