@@ -5,20 +5,16 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { useButton } from "../button";
 import { makePrefixer } from "../utils";
 import pillCss from "./Pill.css";
-import { SelectablePill } from "./selectable/SelectablePill";
 
 const withBaseName = makePrefixer("saltPill");
 
-export interface PillProps extends ComponentPropsWithoutRef<"button"> {
-  selectable?: boolean;
-}
+export interface PillProps extends ComponentPropsWithoutRef<"button"> {}
 
 export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   {
     children,
     className,
     disabled,
-    selectable = false,
     onKeyUp,
     onKeyDown,
     onClick,
@@ -43,9 +39,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
   const { tabIndex: _tabIndex, ...restButtonProps } = buttonProps;
-
-  if (selectable) return <SelectablePill>{children}</SelectablePill>;
-
   return (
     <button
       data-testid="pill"
