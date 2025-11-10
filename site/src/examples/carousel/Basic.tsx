@@ -1,44 +1,49 @@
-import { FlexLayout, Text, useId } from "@salt-ds/core";
+import { Display1, FlexLayout, H2, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselAnnouncement,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const Basic = (): ReactElement => {
-  const slideId = useId();
+  const carouselId = useId();
   const slides = Array.from(Array(4).keys());
   return (
-    <Carousel
-      aria-label="default carousel example"
-      className={styles.carousel}
-      emblaPlugins={[CarouselAnnouncement()]}
-    >
-      <FlexLayout justify={"start"} direction={"row"} gap={1}>
+    <Carousel aria-label="default carousel example" className={styles.carousel}>
+      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
+        Carousel example with title
+      </H2>
+      <FlexLayout gap={1} wrap={true} align={"center"}>
         <CarouselPreviousButton />
         <CarouselNextButton />
         <CarouselProgressLabel />
       </FlexLayout>
       <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            role="tabpanel"
-            aria-roledescription="slide"
-            aria-label={`Example slide ${index + 1}`}
-            className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
-          >
-            <Text styleAs={"display1"} className={styles.carouselNumber}>
-              {index + 1}
-            </Text>
-          </div>
-        ))}
+        {slides.map((index) => {
+          const slideId = `${carouselId}-slide${index}`;
+          return (
+            <div
+              aria-labelledby={`${slideId}-title`}
+              role="group"
+              aria-roledescription="slide"
+              className={clsx(styles.carouselSlide, styles.numberedSlide)}
+              key={slideId}
+            >
+              <Display1
+                id={`${slideId}-title`}
+                className={styles.carouselNumber}
+                aria-label={"Placeholder slide"}
+              >
+                {index + 1}
+              </Display1>
+            </div>
+          );
+        })}
       </CarouselSlides>
     </Carousel>
   );

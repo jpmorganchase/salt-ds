@@ -21,7 +21,7 @@ jobs:
           repository: ${{ github.event.workflow_run.head_repository.full_name }}
           ref: ${{ github.event.workflow_run.head_branch }}
       - name: "Download run metadata"
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: metadata
           path: ./METADATA
@@ -56,14 +56,14 @@ jobs:
           git checkout ${{ github.event.workflow_run.head_branch }}
           git clean -ffdx && git reset --hard HEAD
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
       - name: "Download build artifact"
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: storybook-build
           path: ./storybook-static
@@ -99,7 +99,7 @@ jobs:
                 issue_number: ${{ steps.run_metadata.outputs.issueNumber }},
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                name: ["chromatic"]
+                name: "chromatic"
               });
             } catch (error) {
               console.log(error);

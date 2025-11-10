@@ -16,6 +16,23 @@
   padding-left: var(--carousel-slide-spacing);
 }
 
+.carouselSlide:focus-visible {
+  outline: none;
+}
+
+.carouselSlide.numberedSlide:focus-visible::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--carousel-slide-spacing);
+  right: 0;
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
+  cursor: var(--salt-cursor-hover);
+  border-radius: var(--salt-palette-corner, 0);
+}
+
 .carouselHeading {
   margin: 0;
 }

@@ -1,5 +1,126 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.79
+
+### Patch Changes
+
+- 16aef1c: Updated the `NumberInput` API:
+
+  1. Simplified `format`, previously took `string` or `number` value, now receives value as a `string` and returns a `string`.
+     Used to render the final value before render.
+
+  ```diff
+  - format?: (value: number | string) => string | number;
+  + format?: (value: string) => string;
+  ```
+
+  2. Added `pattern`, a callback that matches as you type and determines whether the value can be ignored. By default, signed numeric decimal numbers can be entered.
+  3. Simplified `onChange`, reverted back to native `onChange`. Called for any text change to the input by the user.
+
+  ```diff
+  - onChange?: (event: SyntheticEvent | undefined, value: number | string) => void;
+  + onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  ```
+
+  5. Added `onNumberChange`, a callback called when the number value changes, due to increment/decrement or `onBlur`.
+
+  ```
+    onNumberChange?: (value: number | null) => void;
+  ```
+
+  6. Simplified `parse`, is now parsed a string form of the current value and returns either a `number`, `NaN` or `null` if empty.
+
+  ```diff
+  - parse?: (value: number | string) => string | number;
+  + parse?: (value: string) => number | null;
+  ```
+
+  Example
+
+  ```diff
+  <NumberInput
+     defaultValue={12}
+     pattern={(inputValue) =>
+       /^\$?(\d+(\.\d*)?|\.\d+)?%?$/.test(inputValue)
+     }
+     format={(value) => `£${value.replace(/\$/g, "")}`}
+     parse={(value) => {
+       if (!value.length) {
+         return null;
+       }
+       const parsedValue = value.replace(/\$/g, "");
+       return Number.parseFloat(parsedValue);
+     }}
+     onNumberChange={(newValue) => {
+       console.log(`Number changed to ${newValue}`);
+     }}
+  />
+  ```
+
+- b3d399b: - Fix `dayjs` adapter, where it showed dates as out of range.
+  - Fix a regression in disabled dates styles for dates outside of min/max.
+- Updated dependencies [d6dc07b]
+- Updated dependencies [d6dc07b]
+- Updated dependencies [d6dc07b]
+- Updated dependencies [b3d399b]
+- Updated dependencies [61c2bad]
+- Updated dependencies [fef411f]
+  - @salt-ds/icons@1.15.0
+  - @salt-ds/date-adapters@0.1.0-alpha.6
+  - @salt-ds/core@1.51.0
+
+## 1.0.0-alpha.78
+
+### Patch Changes
+
+- 630f412: Fixed TabsNext having double focus rings.
+- Updated dependencies [3b02e9e]
+- Updated dependencies [31e992a]
+- Updated dependencies [9e27ba2]
+- Updated dependencies [3ad2fc4]
+  - @salt-ds/core@1.50.0
+
+## 1.0.0-alpha.77
+
+### Minor Changes
+
+- 848272a: Added a `textAlign` prop to `TH` and `TD`. This allows for easy text alignment when using numerical data.
+- a2e614d: - Fixed multiple design inconsistencies in `Table`. For example, the alignment of wrapped text, column header separator height etc.
+
+  - Updated the `zebra` implementation in `Table`. Previously `zebra` supported `primary`, `secondary` and `tertiary` values. This has been simplified to `true` and `false`.
+
+  The color of the alternating rows is determined by the `variant` prop:
+
+  - `primary` variant uses the secondary background for alternating rows.
+  - `secondary` variant uses the primary background for alternating rows.
+  - `tertiary` variant uses the primary background for alternating rows.
+
+  ```diff
+  - <Table zebra="primary" />
+  - <Table zebra="secondary" />
+  - <Table zebra="tertiary" />
+  + <Table zebra={true} />
+  ```
+
+### Patch Changes
+
+- 77ce501: fix date input selection
+
+  empty dates should return null, rather than an invalid date
+
+  resolves: 5499
+
+- 5d4898c: - Fixed visual design issues with `Calendar`, `CalendarMonth`, `CalendarWeekHeader`, `CalendarDay`, `DatePicker` and `DatePickerActions` components.
+  - Fixed text being truncated in `Calendar`'s year dropdown when zooming out.
+- Updated dependencies [378fc01]
+- Updated dependencies [1f53f12]
+- Updated dependencies [22fed0d]
+- Updated dependencies [770bc9c]
+- Updated dependencies [54e4b19]
+- Updated dependencies [bbb7dba]
+- Updated dependencies [c3df8d8]
+  - @salt-ds/core@1.49.0
+
 ## 1.0.0-alpha.76
 
 ### Minor Changes

@@ -41,7 +41,6 @@ export const ColorBlock = ({
         className={clsx(
           styles.root,
           {
-            [styles.withBorder]: withBorder,
             [styles.transparent]: transparent,
           },
           className,

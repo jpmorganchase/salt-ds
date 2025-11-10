@@ -1,15 +1,23 @@
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
 
-export const Decimals = () => (
-  <StackLayout>
+export const Decimals = () => {
+  return (
     <FormField style={{ width: "256px" }}>
-      <FormFieldLabel>Number input with derived decimal scale</FormFieldLabel>
-      <NumberInput defaultValue={100} step={0.01} endAdornment="USD" />
+      <FormFieldLabel>Number input with default format/parser</FormFieldLabel>
+      <NumberInput
+        defaultValue={1.10025}
+        decimalScale={5}
+        onNumberChange={(_event, newValue) => {
+          if (newValue != null) {
+            const formatted = new Intl.NumberFormat("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 5,
+            }).format(newValue);
+            console.log(`Number changed to ${formatted}`);
+          }
+        }}
+      />
     </FormField>
-    <FormField style={{ width: "256px" }}>
-      <FormFieldLabel>Number input with set decimal scale</FormFieldLabel>
-      <NumberInput defaultValue={100} decimalScale={2} endAdornment="USD" />
-    </FormField>
-  </StackLayout>
-);
+  );
+};

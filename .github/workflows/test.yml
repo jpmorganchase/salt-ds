@@ -13,9 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -31,6 +31,8 @@ jobs:
             echo "Should not import from src in any typescript file"
             exit 1;
           fi
+      - name: Spellcheck
+        run: yarn workspace @salt-ds/site spellcheck
 
   dependency-check:
     runs-on: ubuntu-latest
@@ -38,9 +40,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -65,28 +67,18 @@ jobs:
               exit 1;
           fi
   type-checks:
-    strategy:
-      fail-fast: false
-      matrix:
-        ts: [4.6.4, 5]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Setup TypeScript
-        run: yarn up typescript@${{ matrix.ts }}
-      - name: Run typecheck for TypeScript 4.6.4
-        if: ${{ matrix.ts == '4.6.4' }}
-        run: yarn run typecheck:v4
-      - name: Run typecheck for TypeScript 5
-        if: ${{ matrix.ts == '5' }}
+      - name: Run typecheck
         run: yarn run typecheck
   jest-tests:
     runs-on: ubuntu-latest
@@ -94,9 +86,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -114,9 +106,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -130,7 +122,7 @@ jobs:
           install: false
           component: true
           browser: chrome
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.react }}

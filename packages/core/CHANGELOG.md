@@ -1,5 +1,62 @@
 # @salt-ds/core
 
+## 1.52.0
+
+### Minor Changes
+
+- e77729f: Buttons throughout the system have received a visual uplift in response to consumer feedback. The improvements focus on the hover and active states of buttons, as well as the selected states in toggle buttons, utilizing more vibrant colors to help differentiate between sentiments. Additionally, the handling of disabled states has been simplified for greater consistency across all buttons.
+
+### Patch Changes
+
+- 4458f8a: Fixed button hover styles sticking on mobile and other touch devices.
+
+## 1.51.0
+
+### Minor Changes
+
+- fef411f: Replaced `SuccessTickIcon` usage with `SuccessCircleSolidIcon`.
+
+### Patch Changes
+
+- 61c2bad: - Fixed VerticalNavigation's indicator not growing when the item grows in height.
+  - Fixed the alignment of VerticalNavigation's expansion indicator.
+- Updated dependencies [d6dc07b]
+- Updated dependencies [d6dc07b]
+- Updated dependencies [d6dc07b]
+  - @salt-ds/icons@1.15.0
+
+## 1.50.0
+
+### Minor Changes
+
+- 3ad2fc4: Added `OverlayProps` prop to `ComboBox` and `Dropdown`. This can be used to provide a max height to their overlays.
+
+### Patch Changes
+
+- 3b02e9e: Fixed VerticalNavigation having double focus rings
+- 31e992a: Fixed Accordions with `status="success"` showing an incorrect focus ring.
+- 9e27ba2: Reverted a fix to `DialogContent` that caused issues.
+
+## 1.49.0
+
+### Minor Changes
+
+- 378fc01: Improved the experience of using `FileDropZoneTrigger`.
+- 1f53f12: Enhanced `FlexLayout`, `StackLayout` and `SplitLayout` components by extending `LayoutDirection` to support both `column-reverse` and `row-reverse` directions, providing more flexible layout options.
+
+  ```tsx
+  direction = {{ xs: "column-reverse", sm: "row-reverse" }}
+  ```
+
+### Patch Changes
+
+- 22fed0d: Fixed `CollapsiblePanel` not supporting passing a ref.
+- 770bc9c: Improved Avatar image loading logic. This should improve image flickering and make image loading more consistent.
+- 54e4b19: Fixed FileDropZone's `status` prop type.
+- bbb7dba: Fixed Dialog having a scrollbar when its content has uses `height: 100%`.
+- c3df8d8: - Fixed `Checkbox`, `RadioButton` and `Switch`'s clickable areas taking full width of containers.
+  - Reduced the width of `FormFieldLabel` when `labelPlacement="top"` this prevents its whitespace triggering focus of the associated form control.
+
 ## 1.48.0
 
 ### Minor Changes

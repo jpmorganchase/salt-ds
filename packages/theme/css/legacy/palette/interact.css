@@ -1,0 +1,77 @@
+.salt-theme[data-mode="light"] {
+  --salt-palette-interact-background-hover: var(--salt-color-blue-10);
+  --salt-palette-interact-background-active: var(--salt-color-blue-30);
+  --salt-palette-interact-background-activeDisabled: var(--salt-color-blue-30-40a);
+  --salt-palette-interact-border: var(--salt-color-gray-200);
+  --salt-palette-interact-border-active: var(--salt-color-blue-600);
+  --salt-palette-interact-border-activeDisabled: var(--salt-color-blue-600-40a);
+  --salt-palette-interact-border-disabled: var(--salt-color-gray-200-40a);
+  --salt-palette-interact-border-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-border-readonly: var(--salt-color-gray-200-15a);
+  --salt-palette-interact-foreground: var(--salt-color-gray-200);
+  --salt-palette-interact-foreground-active: var(--salt-color-blue-600);
+  --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-600-40a);
+  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-40a);
+  --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-outline: var(--salt-color-blue-600);
+
+  --salt-palette-interact-cta-background: var(--salt-color-blue-600);
+  --salt-palette-interact-cta-background-active: var(--salt-color-blue-700);
+  --salt-palette-interact-cta-background-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-cta-foreground: var(--salt-color-white);
+  --salt-palette-interact-cta-foreground-disabled: var(--salt-color-white-40a);
+  --salt-palette-interact-cta-border-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-cta-border-active: var(--salt-color-blue-700);
+  --salt-palette-interact-primary-background: var(--salt-color-gray-60);
+  --salt-palette-interact-primary-background-active: var(--salt-color-gray-200);
+  --salt-palette-interact-primary-background-hover: var(--salt-color-gray-40);
+  --salt-palette-interact-primary-foreground: var(--salt-color-gray-900);
+  --salt-palette-interact-primary-foreground-active: var(--salt-color-white);
+  --salt-palette-interact-primary-foreground-disabled: var(--salt-color-gray-900-40a);
+  --salt-palette-interact-primary-foreground-hover: var(--salt-color-gray-900);
+  --salt-palette-interact-secondary-background-active: var(--salt-color-gray-200);
+  --salt-palette-interact-secondary-background-hover: var(--salt-color-gray-40);
+  --salt-palette-interact-secondary-foreground: var(--salt-color-gray-900);
+  --salt-palette-interact-secondary-foreground-active: var(--salt-color-white);
+  --salt-palette-interact-secondary-foreground-disabled: var(--salt-color-gray-900-40a);
+  --salt-palette-interact-secondary-foreground-hover: var(--salt-color-gray-900);
+}
+
+.salt-theme[data-mode="dark"] {
+  --salt-palette-interact-background-active: var(--salt-color-blue-700);
+  --salt-palette-interact-background-hover: var(--salt-color-blue-800);
+  --salt-palette-interact-background-activeDisabled: var(--salt-color-blue-700-40a);
+  --salt-palette-interact-border: var(--salt-color-gray-90);
+  --salt-palette-interact-border-active: var(--salt-color-blue-100);
+  --salt-palette-interact-border-activeDisabled: var(--salt-color-blue-100-40a);
+  --salt-palette-interact-border-disabled: var(--salt-color-gray-90-40a);
+  --salt-palette-interact-border-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-border-readonly: var(--salt-color-gray-90-15a);
+  --salt-palette-interact-foreground: var(--salt-color-gray-90);
+  --salt-palette-interact-foreground-active: var(--salt-color-blue-100);
+  --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-100-40a);
+  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-40a);
+  --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-outline: var(--salt-color-blue-100);
+
+  --salt-palette-interact-cta-background: var(--salt-color-blue-600);
+  --salt-palette-interact-cta-background-active: var(--salt-color-blue-700);
+  --salt-palette-interact-cta-background-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-cta-foreground: var(--salt-color-white);
+  --salt-palette-interact-cta-foreground-disabled: var(--salt-color-white-40a);
+  --salt-palette-interact-cta-border-hover: var(--salt-color-blue-500);
+  --salt-palette-interact-cta-border-active: var(--salt-color-blue-700);
+  --salt-palette-interact-primary-background: var(--salt-color-gray-300);
+  --salt-palette-interact-primary-background-active: var(--salt-color-gray-70);
+  --salt-palette-interact-primary-background-hover: var(--salt-color-gray-200);
+  --salt-palette-interact-primary-foreground: var(--salt-color-white);
+  --salt-palette-interact-primary-foreground-active: var(--salt-color-gray-900);
+  --salt-palette-interact-primary-foreground-disabled: var(--salt-color-white-40a);
+  --salt-palette-interact-primary-foreground-hover: var(--salt-color-white);
+  --salt-palette-interact-secondary-background-active: var(--salt-color-gray-70);
+  --salt-palette-interact-secondary-background-hover: var(--salt-color-gray-200);
+  --salt-palette-interact-secondary-foreground: var(--salt-color-white);
+  --salt-palette-interact-secondary-foreground-active: var(--salt-color-gray-900);
+  --salt-palette-interact-secondary-foreground-disabled: var(--salt-color-white-40a);
+  --salt-palette-interact-secondary-foreground-hover: var(--salt-color-white);
+}

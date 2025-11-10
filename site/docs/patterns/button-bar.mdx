@@ -48,8 +48,8 @@ A button bar typically contains:
 ### Layout
 
 * Use [`Button`](/salt/components/button) to display actions in a button bar.
-* Use [`StackLayout`](/salt/components/stack-layout) to group your buttons together.
-* Use [`SplitLayout`](/salt/components/split-layout) to separate the button groups.
+* Use [`StackLayout`](/salt/components/layouts/stack-layout) to group your buttons together.
+* Use [`SplitLayout`](/salt/components/layouts/split-layout) to separate the button groups.
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-layout-1.png"
@@ -115,11 +115,11 @@ Remember to use a hierarchy when making your button choices, much like following
 
 Optionally, use colored [sentiment buttons](/salt/components/button/examples#other-sentiments) within a button bar depending on the sentiment of the action - i.e. positive, caution and negative. We recommend combining a sentiment with the button appearance (solid, bordered or transparent) that best represents the importance of the action.
 
-In the example below, the ‘Delete now’ button is styled using a solid appearance and negative sentiment to emphasise the risk of permanently deleting items as an action.
+In the example below, the ‘Delete now’ button is styled using a solid appearance and negative sentiment to emphasize the risk of permanently deleting items as an action.
 
 <Diagram
   src="/img/patterns/button-bar/negative-sentiment-button.png"
-  alt="Example showing a solid button with negative sentiment to emphasise the risk of permanently deleting items as an action."
+  alt="Example showing a solid button with negative sentiment to emphasize the risk of permanently deleting items as an action."
   border
 />
 
@@ -137,7 +137,7 @@ The container and the type of scenario determine the position of actions (solid,
     border
   />
     
-### Multistep form
+### Multi-step form
     - Groups core actions on the right.
     - Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps.
 

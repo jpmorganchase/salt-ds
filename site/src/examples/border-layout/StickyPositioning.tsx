@@ -19,18 +19,16 @@ export const StickyPositioning = (): ReactElement => (
     >
       <p>Center</p>
       <p>
-        Center Dolor ea veniam velit esse ex nulla non anim officia commodo.
-        Exercitation elit exercitation reprehenderit exercitation quis cillum
-        fugiat id ad eu laboris. Amet sint sit elit elit id in do. Do nostrud
-        non excepteur esse. Dolor velit sunt mollit tempor ex Lorem quis amet
-        sit reprehenderit. Ut tempor cupidatat est velit excepteur. Officia
-        voluptate ipsum eiusmod elit. Velit do ipsum officia pariatur cupidatat
-        sint laborum nostrud sit officia tempor nostrud. Aliquip incididunt id
-        ex pariatur. Culpa nisi proident et est tempor incididunt ipsum.
-        Reprehenderit do dolore enim non fugiat culpa quis nisi tempor in.
-        Exercitation adipisicing cupidatat qui officia pariatur magna. Duis et
-        ut ut magna magna sit aute cupidatat. Irure sint excepteur elit eu
-        pariatur ut aliqua sint sunt.
+        Sample text is provided here to illustrate how a paragraph will appear
+        in this component. Placeholder sentences are used to help visualize
+        layout, spacing, and formatting within the design. This generic content
+        does not convey specific information or advice, but serves as a useful
+        example for reviewing presentation. Adjustments can be made to fit
+        particular needs or preferences. Using example text like this allows for
+        easy testing and refinement of user interface elements. The wording is
+        intentionally broad and non-specific, supporting a wide range of
+        demonstration scenarios. Feel free to modify or replace this text as
+        required for your project or application.
       </p>
     </BorderItem>
   </BorderLayout>

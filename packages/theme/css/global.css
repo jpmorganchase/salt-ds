@@ -18,6 +18,11 @@
   color-scheme: dark;
 }
 
+/* This uses the :where selector so it doesn't add any specificity */
+:where(.salt-theme) :focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
 .salt-visuallyHidden {
   position: absolute;
   height: 1px;
@@ -28,4 +33,16 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+.saltFocusVisible:after,
+.focused:focus:after,
+.focused:focus-visible:after {
+  content: "";
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  position: absolute;
 }

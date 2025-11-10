@@ -9,26 +9,26 @@ sidebar:
 
 A responsive layout grid is made up of a set of consistently proportioned columns, separated by gutters, and flanked by margins. Basic layout grids are included in the design system to provide a starting point for designing any user interface.
 
-The number of columns and their widths vary depending on the density and breakpoint set. Learn more information about Salt densities in the [density foundation](/salt/foundations/density).
+The number of columns and their widths vary depending on the density and breakpoint set. Learn more about Salt densities in the [density foundation](/salt/foundations/density).
 
 <Image
   src="/img/foundations/responsiveness-gutters.png"
   alt="Illustration of columns, gutters and margins."
 />
 
-| Spacing type | Definition                                                                                                                    |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| Columns      | The space that divides the content of the page into numbers depending on the content width for that breakpoint                |
-| Gutters      | The equally distributed space between columns that defines the width of UI elements                                           |
-| Margins      | The left and right spacing on the edge of the screen that defines the distance between UI elements and their container bounda |
+| Spacing type | Definition                                                                                                                         |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Columns      | The space that divides the content of the page into numbers depending on the content width for that breakpoint.                    |
+| Gutters      | The equally distributed space between columns that defines the width of UI elements.                                               |
+| Margins      | The left and right spacing on the edge of the screen that defines the distance between UI elements and their container's boundary. |
 
 ## Types of grid
 
-**Fixed grid**: As you shrink from desktop to tablet, the layout remains unchanged, resulting in larger side margins. Text doesn’t wrap, images retain their dimensions, and components have a set width, not adapting to the viewport size. Fixed grid is recommended for web design.
+**Fluid grid**: As the application window's width decreases, the size and position of its content (regions, components, text, etc.) adjusts dynamically to remain readable and accessible. This is a common layout practice used for [dashboard](https://www.saltdesignsystem.com/salt/patterns/analytical-dashboard) design and layout.
 
-**Fluid grid**: As you shrink the window size, the layout adjusts dynamically, with text wrapping and elements narrowing. Components have a percentage width to adjust to the user’s screen resolution. Fluid grid is best suited for dashboard design.
+**Fixed grid**: The grid grows with the application window as its width increases, until the grid meets its maximum width. Past this point, the grid remains centered in the window, with margins to either side, and its content remains the same. A max width for the grid of 1280px can improve the reading experience of text heavy applications.
 
-Learn how to adjust your Salt grid in [this video tutorial](https://go/salt-ds-internal/content/insights/tutorials/20250109-saltds-figma-layout-grids) created by our design team. (Internal users only)
+Learn how to adjust your Salt grid in [this video tutorial](https://go/salt-ds-internal/content/insights/tutorials/20250109-saltds-figma-layout-grids) created by our design team (Internal users only).
 
 <Image
   src="/img/foundations/responsiveness-grids.png"
@@ -41,11 +41,11 @@ You can customize your grid to best suit your needs.
 
 Salt offers a range of layout grids in the components section:
 
-- [Border layout](/salt/components/border-layout)
-- [Flex layout](/salt/components/flex-layout)
-- [Grid layout](/salt/components/grid-layout)
-- [Parent-child layout](/salt/components/parent-child-layout)
-- [Split layout](/salt/components/split-layout)
-- [Stack layout](/salt/components/stack-layout)
+- [Border layout](/salt/components/layouts/border-layout)
+- [Flex layout](/salt/components/layouts/flex-layout)
+- [Grid layout](/salt/components/layouts/grid-layout)
+- [Parent-child layout](/salt/components/layouts/parent-child-layout)
+- [Split layout](/salt/components/layouts/split-layout)
+- [Stack layout](/salt/components/layouts/stack-layout)
 
 :fragment{src="../fragments/feedback.mdx"}

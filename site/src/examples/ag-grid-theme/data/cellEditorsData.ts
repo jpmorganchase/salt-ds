@@ -6,17 +6,17 @@ export const languages = [
   "(other)",
 ] as const;
 export const sentences = [
-  "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.",
-  "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-  "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
-  "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-  "Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem.",
-  "In porttitor. Donec laoreet nonummy augue.",
-  "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc.",
-  "Mauris eget neque at sem venenatis eleifend. Ut nonummy. Fusce aliquet pede non pede.",
-  "Suspendisse dapibus lorem pellentesque magna. Integer nulla.",
-  "Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien.",
-  "Donec ut est in lectus consequat consequat. Etiam eget dui. Aliquam erat volutpat.",
+  "This is an example sentence used to demonstrate text formatting in a component.",
+  "Sample content can help visualize how information will appear in the user interface.",
+  "Generic sentences like this are useful for testing layout and spacing.",
+  "Placeholder text provides a way to review design elements without using real data.",
+  "Adjust these sentences as needed to fit your specific requirements or style.",
+  "Using neutral examples ensures clarity during development and review.",
+  "These lines are intended for demonstration and do not convey actual information.",
+  "Feel free to modify or replace this text to suit your application needs.",
+  "Example sentences are commonly used to test presentation and alignment.",
+  "This content is intentionally broad and non-specific for flexible use cases.",
+  "Reviewing with sample text helps ensure a consistent and polished appearance.",
 ];
 export const shortColorData = [
   "Baby blue",

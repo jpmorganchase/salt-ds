@@ -1,0 +1,61 @@
+.salt-theme.salt-theme-next {
+  --salt-navigable-indicator-active: var(--salt-palette-accent);
+
+  --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);
+
+  --salt-status-static-foreground: var(--salt-palette-foreground-secondary); /* Use --salt-content-secondary-foreground */
+
+  --salt-status-negative-foreground: var(--salt-palette-negative); /* Use ---salt-sentiment-negative-foreground-decorative */
+  --salt-status-positive-foreground: var(--salt-palette-positive); /* Use ---salt-sentiment-positive-foreground-decorative */
+
+  --salt-track-borderColor: var(--salt-palette-alpha-contrast-high); /* Use --salt-sentiment-neutral-track */
+  --salt-track-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-sentiment-neutral-track-disabled */
+
+  --salt-actionable-accented-bold-background-disabled: var(--salt-palette-accent-disabled);
+  --salt-actionable-accented-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-accented-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-borderColor-disabled: var(--salt-palette-accent-disabled);
+  --salt-actionable-accented-foreground-disabled: var(--salt-palette-accent-strong-disabled);
+  --salt-actionable-accented-subtle-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-subtle-foreground-disabled: var(--salt-palette-accent-strong-disabled);
+  --salt-actionable-bold-background-disabled: var(--salt-palette-neutral-disabled);
+  --salt-actionable-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-borderColor-disabled: var(--salt-palette-neutral-disabled);
+  --salt-actionable-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
+  --salt-actionable-subtle-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-subtle-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
+  --salt-actionable-negative-bold-background-disabled: var(--salt-palette-negative-disabled);
+  --salt-actionable-negative-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-negative-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-borderColor-disabled: var(--salt-palette-negative-disabled);
+  --salt-actionable-negative-foreground-disabled: var(--salt-palette-negative-strong-disabled);
+  --salt-actionable-negative-subtle-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-subtle-foreground-disabled: var(--salt-palette-negative-strong-disabled);
+  --salt-actionable-positive-bold-background-disabled: var(--salt-palette-positive-disabled);
+  --salt-actionable-positive-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-positive-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-borderColor-disabled: var(--salt-palette-positive-disabled);
+  --salt-actionable-positive-foreground-disabled: var(--salt-palette-positive-strong-disabled);
+  --salt-actionable-positive-subtle-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-subtle-foreground-disabled: var(--salt-palette-positive-strong-disabled);
+  --salt-actionable-caution-bold-background-disabled: var(--salt-palette-warning-disabled);
+  --salt-actionable-caution-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-caution-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-borderColor-disabled: var(--salt-palette-warning-disabled);
+  --salt-actionable-caution-foreground-disabled: var(--salt-palette-warning-strong-disabled);
+  --salt-actionable-caution-subtle-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-subtle-foreground-disabled: var(--salt-palette-warning-strong-disabled);
+}

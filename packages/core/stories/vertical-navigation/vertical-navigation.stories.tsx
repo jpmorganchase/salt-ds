@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuPanel,
   MenuTrigger,
+  Tooltip,
   useId,
   VerticalNavigation,
   VerticalNavigationItem,
@@ -18,7 +19,12 @@ import {
   VerticalNavigationSubMenu,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import { type ComponentPropsWithoutRef, type ReactNode, useState } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type ReactNode,
+  useState,
+} from "react";
 import { Link, MemoryRouter, useLocation } from "react-router";
 import "./vertical-navigation.stories.css";
 import {
@@ -74,11 +80,42 @@ const simple: NavItem[] = [
   },
 ];
 
-function MockedTrigger(props: ComponentPropsWithoutRef<typeof Link>) {
+const simpleWithLongLabels: NavItem[] = [
+  {
+    title: "This is a very long Home title to showcase wrapping and truncation",
+    href: "/",
+  },
+  {
+    title: "Products",
+    href: "/products",
+  },
+  {
+    title: "About Us",
+    href: "/about",
+  },
+  {
+    title: "Blog",
+    href: "/blog",
+  },
+  {
+    title: "Careers",
+    href: "/careers",
+  },
+];
+
+const MockedTrigger = forwardRef<
+  HTMLAnchorElement,
+  ComponentPropsWithoutRef<typeof Link>
+>(function MockedTrigger(props, ref) {
   const { to, ...rest } = props;
 
-  return <VerticalNavigationItemTrigger render={<Link to={to} />} {...rest} />;
-}
+  return (
+    <VerticalNavigationItemTrigger
+      render={<Link to={to} ref={ref} />}
+      {...rest}
+    />
+  );
+});
 
 export const Basic: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
@@ -462,6 +499,71 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
     <VerticalNavigation {...args}>
       {nested.map((item) => (
         <NestedItem key={item.title} item={item} icon />
+      ))}
+    </VerticalNavigation>
+  );
+};
+
+export const WithWrapping: StoryFn<typeof VerticalNavigation> = (args) => {
+  const location = useLocation();
+
+  return (
+    <VerticalNavigation style={{ width: "8ch" }} {...args}>
+      {simpleWithLongLabels.map((item) => (
+        <VerticalNavigationItem
+          key={item.title}
+          active={location.pathname === item.href}
+        >
+          <VerticalNavigationItemContent>
+            <MockedTrigger to={item.href}>
+              <VerticalNavigationItemLabel>
+                {item.title}
+              </VerticalNavigationItemLabel>
+            </MockedTrigger>
+          </VerticalNavigationItemContent>
+        </VerticalNavigationItem>
+      ))}
+    </VerticalNavigation>
+  );
+};
+
+function ItemWithTruncation(props: { item: NavItem }) {
+  const { item } = props;
+
+  const location = useLocation();
+  const [truncated, setTruncated] = useState(false);
+
+  return (
+    <VerticalNavigationItem active={location.pathname === item.href}>
+      <VerticalNavigationItemContent>
+        <Tooltip content={item.title} disabled={!truncated} placement="right">
+          <MockedTrigger to={item.href}>
+            <VerticalNavigationItemLabel
+              style={{
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}
+              ref={(element) => {
+                if (element) {
+                  setTruncated(element.scrollWidth > element.clientWidth);
+                }
+              }}
+            >
+              {item.title}
+            </VerticalNavigationItemLabel>
+          </MockedTrigger>
+        </Tooltip>
+      </VerticalNavigationItemContent>
+    </VerticalNavigationItem>
+  );
+}
+
+export const WithTruncation: StoryFn<typeof VerticalNavigation> = (args) => {
+  return (
+    <VerticalNavigation style={{ width: "8ch" }} {...args}>
+      {simpleWithLongLabels.map((item) => (
+        <ItemWithTruncation item={item} key={item.title} />
       ))}
     </VerticalNavigation>
   );

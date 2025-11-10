@@ -1,5 +1,56 @@
 # @salt-ds/embla-carousel
 
+## 1.0.0
+
+### Major Changes
+
+- da42e9a: Carousel is now a stable API.
+
+  Features include:
+
+  - Composable Salt controls for navigation and progress.
+  - Composable with custom content within slides.
+  - Built on the popular `embla-carousel` library, with Salt-specific accessibility and theming enhancements.
+
+  Refer to [example](https://saltdesignsystem.com/salt/components/carousel/usage#sequential-with-slide-group) for basic usage.
+
+### Patch Changes
+
+- Updated dependencies [61c2bad]
+- Updated dependencies [fef411f]
+  - @salt-ds/core@1.51.0
+
+## 0.1.6
+
+### Patch Changes
+
+- 30fc785: Accessibility updates for Carousel
+
+  - Carousel now passes WCAG 2.1 AA requirements, if implemented as per documentation.
+  - Removed next/prev buttons from focus order, when displaying a tablist.
+  - Slides and actions within slides are now focusable.
+
+  Removed embla plugin `CarouselAnnouncementPlugin.ts` as it is no longer needed.
+
+  ```diff
+  - import { CarouselAnnouncementPlugin } from "./CarouselAnnouncementPlugin";
+    <Carousel
+      aria-label="Account overview"
+      getEmblaApi={setEmblaApi}
+   -  emblaPlugins={[CarouselAnnouncementPlugin()]}
+    >
+    </Carousel>
+  ```
+
+- Updated dependencies [378fc01]
+- Updated dependencies [1f53f12]
+- Updated dependencies [22fed0d]
+- Updated dependencies [770bc9c]
+- Updated dependencies [54e4b19]
+- Updated dependencies [bbb7dba]
+- Updated dependencies [c3df8d8]
+  - @salt-ds/core@1.49.0
+
 ## 0.1.5
 
 ### Patch Changes
