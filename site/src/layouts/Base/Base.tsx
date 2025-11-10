@@ -1,4 +1,4 @@
-import { useMeta, useRoute } from "@jpmorganchase/mosaic-store";
+import { useRoute, useStore } from "@jpmorganchase/mosaic-store";
 import { type DrawerProps, SkipLink, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
@@ -32,9 +32,10 @@ export function Base({
   RightSidebar?: ReactNode;
   Heading?: ComponentType<PageHeadingProps>;
 }) {
-  const {
-    meta: { title, description },
-  } = useMeta();
+  const { description, title } = useStore((state) => ({
+    description: state.description,
+    title: state.title,
+  }));
 
   const isMobileOrTablet = useIsMobileView();
   const [drawerOpen, setDrawerOpen] = useState(false);
