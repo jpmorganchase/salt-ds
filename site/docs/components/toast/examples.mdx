@@ -44,18 +44,31 @@ Use the `icon` prop to customize the icon shown in the toast, the custom icon wi
 
 <LivePreview componentName="toast" exampleName="CustomIcon" />
 
-## 🚧 Toast group positioned top-right
+## Positioning
 
-`ToastGroup` is a wrapper container for multiple toasts.
+To control where a toast appears on the screen, wrap your Toast component(s) with your own container element and use CSS to position it as needed. 
 
-Use `ToastGroup` to position stacked toasts.
+For example, to position a toast in the bottom right corner:
 
-<LivePreview componentName="toast" exampleName="ToastGroupTop" />
+```css
+.toast-container {
+  position: fixed;
+  z-index: var(--salt-zIndex-flyover);
+  bottom: 24px;
+  right: 0px;
+  max-width: 300px;
+  /* other styles */
+}
+```
 
-## 🚧 Toast group positioned bottom-right
+Example usage:
 
-`ToastGroup` is a wrapper container for multiple Toasts.
+```jsx
+<div className="toast-container">
+  <Toast>{...}</Toast>
+  <Toast>{...}</Toast>
+</div>
+```
 
-Use `ToastGroup` to position stacked toasts.
+You can adjust the positioning and styles to fit your needs.
 
-<LivePreview componentName="toast" exampleName="ToastGroupBottom" />
