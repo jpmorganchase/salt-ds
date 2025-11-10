@@ -10,6 +10,7 @@ export * from "./FreeText";
 export * from "./Grouped";
 export * from "./Multiselect";
 export * from "./ObjectValues";
+export * from "./OverlayProps";
 export * from "./Placeholder";
 export * from "./Readonly";
 export * from "./SelectOnTab";

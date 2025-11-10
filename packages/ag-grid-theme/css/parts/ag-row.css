@@ -1,0 +1,36 @@
+.ag-theme-salt-variant-secondary.ag-theme-salt-variant-secondary {
+  --ag-header-background-color: var(--salt-container-secondary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+  --ag-background-color: var(--salt-container-secondary-background);
+}
+
+.ag-theme-salt-variant-zebra.ag-theme-salt-variant-zebra {
+  --ag-background-color: var(--salt-container-secondary-background);
+  --ag-odd-row-background-color: var(--salt-container-primary-background);
+  --ag-header-background-color: var(--salt-container-primary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.error-row {
+  --ag-background-color: var(--salt-status-error-background);
+  --ag-selected-row-background-color: var(--salt-status-error-background-selected);
+  --ag-selected-row-border-color: var(--salt-status-error-borderColor);
+  --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}
+
+.warning-row {
+  --ag-background-color: var(--salt-status-warning-background);
+  --ag-selected-row-background-color: var(--salt-status-warning-background-selected);
+  --ag-selected-row-border-color: var(--salt-status-warning-borderColor);
+  --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}
+
+.success-row {
+  --ag-background-color: var(--salt-status-success-background);
+  --ag-selected-row-background-color: var(--salt-status-success-background-selected);
+  --ag-selected-row-border-color: var(--salt-status-success-borderColor);
+  --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}

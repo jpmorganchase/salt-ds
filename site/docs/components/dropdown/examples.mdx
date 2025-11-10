@@ -102,7 +102,7 @@ _Note_: The `valueToString` prop is needed here because the `value` prop is diff
 
 ### Best practices
 
-- Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
+- Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide avatars alongside the option text.
 - Place any visual support such as icons, country symbols or avatars to the left of the option text.
 
 <LivePreview componentName="dropdown" exampleName="ComplexOptions" />
@@ -151,3 +151,9 @@ To style `Dropdown` with a full border, set `bordered={true}`.
 We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
 
 <LivePreview componentName="dropdown" exampleName="Bordered" />
+
+## OverlayProps
+
+Use `OverlayProps` to pass props to the overlay that is rendered when the dropdown is open. For example, you can set a maximum height for the overlay.
+
+<LivePreview componentName="dropdown" exampleName="OverlayProps" />

@@ -41,7 +41,7 @@ Users will be able to select rows via checkboxes.
 
 ## Cell editors
 
-Salt provides styling for a few ag grid [built in cell editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors/) types to best match Salt theme. This is only enabled when `editable-cell` is applied in `cellClass` together with corresponding `ag*CellEditor` specificed in `cellEditor` of `ColDef`, so this won't affect your own custom cell editors.
+Salt provides styling for a few ag grid [built in cell editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors/) types to best match Salt theme. This is only enabled when `editable-cell` is applied in `cellClass` together with corresponding `ag*CellEditor` specified in `cellEditor` of `ColDef`, so this won't affect your own custom cell editors.
 
 Note that [Rich Select Cell Editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors-rich-select/) requires [enterprise license](https://www.ag-grid.com/react-data-grid/licensing/) which offers more functionality than [Select Cell Editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors-select/).
 
@@ -93,7 +93,7 @@ The filter remains visible as the user scrolls.
 
 ## HD Compact
 
-You can use the HD Compact theme by applying the `ag-grid-salt-high-compact-*` class name.
+You can use the HD Compact theme by applying the `ag-theme-salt-compact-*` class name.
 
 <LivePreview componentName="ag-grid-theme" exampleName="HDCompact" />
 
@@ -163,5 +163,17 @@ The section below the table displays a status bar. [Status Bar](https://www.ag-g
 Text in header cells can be wrapped when space is limited.
 
 <LivePreview componentName="ag-grid-theme" exampleName="WrappedHeader" />
+
+## Cell validation
+
+[Editable cells](#cell-editors) can show validation states (warning, success and error) using the class names `.warning-cell`, `.success-cell` and `.error-cell`.
+
+<LivePreview componentName="ag-grid-theme" exampleName="CellValidation" />
+
+## Row validation
+
+Rows can show validation states (warning, success and error) using the class names `.warning-row`, `.success-row` and `.error-row`.
+
+<LivePreview componentName="ag-grid-theme" exampleName="RowValidation" />
 
 </AGThemeProvider>

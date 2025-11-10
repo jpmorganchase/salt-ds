@@ -67,10 +67,12 @@
 /* Style applied to Pill when disabled */
 .saltPill:disabled,
 .saltPill:disabled:hover {
-  --pill-color: var(--salt-actionable-bold-foreground-disabled);
-  --pill-background: var(--salt-actionable-bold-background-disabled);
-  --pill-borderColor: var(--salt-actionable-bold-borderColor-disabled);
+  --pill-color: var(--salt-actionable-bold-foreground);
+  --pill-background: var(--salt-actionable-bold-background);
+  --pill-borderColor: var(--salt-actionable-bold-borderColor);
   cursor: var(--salt-cursor-disabled);
+
+  opacity: 0.4;
 }
 
 .saltPill-input {

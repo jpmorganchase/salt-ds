@@ -14,7 +14,7 @@ describe("GIVEN a Banner", () => {
     cy.mount(<StatusesPrimary />);
 
     cy.findByTestId("InfoSolidIcon").should("exist");
-    cy.findByTestId("SuccessTickIcon").should("exist");
+    cy.findByTestId("SuccessCircleSolidIcon").should("exist");
     cy.findByTestId("WarningSolidIcon").should("exist");
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });

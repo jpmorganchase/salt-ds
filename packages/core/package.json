@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.48.0",
+  "version": "1.52.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -17,7 +17,8 @@
     "@salt-ds/icons": "workspace:^",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
-    "clsx": "^2.0.0"
+    "clsx": "^2.0.0",
+    "use-sync-external-store": "^1.5.0"
   },
   "peerDependencies": {
     "@types/react": ">=16.14.0",

@@ -22,6 +22,7 @@ export default {
 };
 
 export {
+  CellValidation,
   CheckboxSelection,
   Coloration,
   ColumnGroup,
@@ -44,6 +45,7 @@ export {
   RangeSelection,
   RowGrouping,
   RowGroupPanel,
+  RowValidation,
   SortAndFilter,
   StatusBar,
   SuppressMenuHide,

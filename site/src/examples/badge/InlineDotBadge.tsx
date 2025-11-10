@@ -17,7 +17,7 @@ export const InlineDotBadge = (): ReactElement => {
             <TabNextTrigger>Home</TabNextTrigger>
           </TabNext>
           <TabNext value="Transactions">
-            <TabNextTrigger aria-label="Transations - New">
+            <TabNextTrigger aria-label="Transactions - New">
               Transactions
               <Badge />
             </TabNextTrigger>

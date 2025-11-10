@@ -1,0 +1,80 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+By default, `StackLayout` displays items in a single column aligned to the start of the layout.
+
+The items contained within the layout determine its height and width.
+
+<LivePreview componentName="stack-layout" exampleName="Default" />
+
+## Layout direction
+
+The `direction` prop defines the main axis along which items are displayed. By default, `direction` is set to `column`, arranging items vertically. Setting `direction` to `row` arranges items horizontally.
+
+The values `row-reverse` or `column-reverse` can be used to reverse the order of items along the main axis, displaying them in the opposite direction.
+
+<LivePreview componentName="stack-layout" exampleName="LayoutDirection" />
+
+## Layout separators
+
+The component allows for `separators` between items. By default, the separators have a centered alignment when `separators={true}` but you can customize them to sit on the left or right of items.
+
+The separator will span across the layout component if the `direction` is `column` or span the height if the `direction` is `row`. The Stack Layout `gap` applies to both sides of the separator.
+
+<LivePreview componentName="stack-layout" exampleName="LayoutSeparators" />
+
+## Responsive layout
+
+`StackLayout` supports responsive props, so you can define different behaviors based on viewport size (e.g., switching `direction` of a card stack with separators across screen size). You can use the default [Salt breakpoints](/salt/foundations/responsiveness/breakpoints) or pass in your own using [`SaltProvider`](/salt/components/salt-provider/).
+
+### Responsive props
+
+A responsive prop takes either multiple values (one value per breakpoint) or a single value that would take effect across all different screen sizes. For example, this is a layout that will responsively change direction from row to column at specific breakpoints or viewport sizes:
+
+```js
+direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
+```
+
+<LivePreview componentName="stack-layout" exampleName="ResponsiveLayout" />
+
+## Layout alignment
+
+Control the position of `StackLayout` and its items using the `align` prop.
+
+If there's additional space available around the layout (i.e., above or below the row or beside the column), use the `align` prop to define the position of items within that space.
+
+<LivePreview componentName="stack-layout" exampleName="LayoutAlignment" />
+
+## `FlexItem` position
+
+Use the `FlexItem` `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
+
+<LivePreview componentName="stack-layout" exampleName="FlexItemPosition" />
+
+## `FlexItem` size
+
+The `FlexItem` `grow` prop enables specific items in the layout to grow and fill any remaining space in the layout:
+
+- By default, `grow` is set to `0`, and items will be in their "normal" size.
+- If you set an item to `1`, it will fill the available space.
+- If you set an item to `2`, it will fill twice as much space as other items where `grow` is `1`.
+
+In contrast to the `grow` prop, the `shrink` prop makes a specific item as small as possible within the layout. By default, `shrink` is `1`. If you set an item to `2`, that item would attempt to take half as much space.
+
+<LivePreview componentName="stack-layout" exampleName="FlexItemSize" />
+
+## Spacing
+
+Stack layout displays items with a gap between items that is a multiple of the [Salt base unit](/salt/foundations/spacing) controlled by the `gap` property and is by default set to 3.
+The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing also as multiples of the Salt base unit.
+
+<LivePreview componentName="stack-layout" exampleName="Spacing" />

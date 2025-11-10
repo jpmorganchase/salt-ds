@@ -12,7 +12,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   LocalizationProvider,
 } from "@salt-ds/lab";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
@@ -108,7 +107,6 @@ export const Locale = (): ReactElement => {
       </FormField>
       <Calendar selectionVariant="single">
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
     </LocalizationProvider>

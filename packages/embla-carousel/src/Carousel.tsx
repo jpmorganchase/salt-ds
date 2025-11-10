@@ -1,13 +1,22 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { type ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import carouselCss from "./Carousel.css";
-import { CarouselContext } from "./CarouselContext";
+import {
+  type CarouselAnnouncementTrigger,
+  type CarouselAriaVariant,
+  CarouselContext,
+} from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
 
@@ -34,8 +43,14 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"section"> {
    * These options are passed directly to the Embla Carousel instance.
    */
   emblaPlugins?: CarouselPlugin;
-  /** Get embla API instance, use this to manage the state of the Carousel */
+  /**
+   * Get embla API instance, use this to manage the state of the Carousel
+   **/
   getEmblaApi?: (embla: CarouselEmblaApiType) => void;
+  /**
+   * Disable screenreader announcing slide updates, defaults to false.
+   */
+  disableSlideAnnouncements?: boolean;
 }
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
@@ -43,9 +58,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     {
       children,
       className,
+      disableSlideAnnouncements,
       emblaOptions = {},
       emblaPlugins = [],
       getEmblaApi,
+      id,
       ...rest
     },
     ref,
@@ -61,6 +78,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       ...emblaPlugins,
     ]);
 
+    const carouselId = useId(id);
+
     useEffect(() => {
       if (emblaApi) {
         getEmblaApi?.(emblaApi);
@@ -68,9 +87,27 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       return undefined;
     }, [emblaApi]);
 
+    const [ariaVariant, setAriaVariant] =
+      useState<CarouselAriaVariant>("group");
+    const [announcementState, setAnnouncementState] = useState<
+      CarouselAnnouncementTrigger | undefined
+    >(undefined);
+
     return (
-      <CarouselContext.Provider value={{ emblaApi, emblaRef }}>
+      <CarouselContext.Provider
+        value={{
+          ariaVariant,
+          disableSlideAnnouncements,
+          emblaApi,
+          emblaRef,
+          setAriaVariant,
+          announcementState,
+          setAnnouncementState,
+          carouselId,
+        }}
+      >
         <section
+          key={`carousel-${ariaVariant}}`}
           aria-roledescription="carousel"
           role="region"
           className={clsx(withBaseName(), className)}

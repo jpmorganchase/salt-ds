@@ -56,18 +56,33 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
   if (!startDate) {
     details.startDate = details.startDate || {};
     details.startDate.errors = details.startDate.errors || [];
-    details.startDate.errors.push({
-      type: DateDetailError.UNSET,
-      message: "no start date defined",
-    });
+    const unsetStartDateError = details.startDate.errors.find(
+      (err) => err.type === DateDetailError.UNSET,
+    );
+    if (unsetStartDateError) {
+      unsetStartDateError.message = "no start date defined";
+    } else {
+      details.startDate.errors.push({
+        type: DateDetailError.UNSET,
+        message: "no start date defined",
+      });
+    }
   }
+
   if (!endDate) {
     details.endDate = details.endDate || {};
     details.endDate.errors = details.endDate.errors || [];
-    details.endDate.errors.push({
-      type: DateDetailError.UNSET,
-      message: "no end date defined",
-    });
+    const unsetEndDateError = details.endDate.errors.find(
+      (err) => err.type === DateDetailError.UNSET,
+    );
+    if (unsetEndDateError) {
+      unsetEndDateError.message = "no end date defined";
+    } else {
+      details.endDate.errors.push({
+        type: DateDetailError.UNSET,
+        message: "no end date defined",
+      });
+    }
   }
 
   // If startDate is after endDate

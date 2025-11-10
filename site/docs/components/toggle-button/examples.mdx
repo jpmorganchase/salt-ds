@@ -8,77 +8,14 @@ data:
   $ref: ./#/data
 ---
 
-## Toggle button
+## Toggle button group
 
-The standalone `ToggleButton` enables users to seamlessly switch between two distinct states, such as on/off or active/inactive.
-
-Include both icons and text within toggle buttons to visually reinforce the intent of the options or when additional context can aid decision-making, such as selecting a document type or a text style.
+A `ToggleButtonGroup` allows users to make a single selection from a set of related commands, with only one option selected at a time.
 
 ### Best practices
 
 - To reduce visual noise and mitigate alignment issues, use icons in toggle button labels consistently across all options in a toggle button group.
-- Icons should only be placed to the left of the text in order to further describe the action, placing to the right would suggest an onward direction or movement.
-
-<LivePreview componentName="toggle-button" exampleName="ToggleButtonDefault" />
-
-## Icon only
-
-You can use toggle buttons with icons only. Use an icon-only button when screen space is limited, and the icon is easily understandable.
-
-### Best practices
-
-- **Self-explanatory icons**: An icon-only toggle button should be intuitive, ideally using well-known recognisable symbols. If the purpose of the button isn’t clear from the icon alone, add a label.
-- **Icon switching**: Consider switching icons based on the selection state of the toggle button, for instance by switching between outline and solid icon variants or active/inactive icons, such as locked and unlocked.
-- **Accessibility**: Provide an accessible label for each toggle button.
-- **Tooltips**: Use [`Tooltip`](../tooltip) to provide additional context for each toggle button.
-
-<LivePreview componentName="toggle-button" exampleName="IconOnly" />
-
-## Text only
-
-You can configure toggle buttons to only display text if you can’t identify a suitable or intuitive icon.
-
-### Best practices
-
-- **Label switching**: Consider changing the text on the toggle button to complement its selected state. If the label does change based on the selected state, ensure any changes to the button's width do not adversely affect alignment.
-
-<LivePreview componentName="toggle-button" exampleName="TextOnly" />
-
-## Sentiment
-
-In addition to `neutral`, toggle button has four other sentiments available — `accented`, `positive`, `caution` and `negative`. You can set this using the `sentiment` prop. Sentiments are based on the following recommendations:
-
-- **Accented**: Allows greater visual emphasis to be placed on actions.
-- **Positive**: Indicates actions that result in positive outcomes.
-- **Caution**: Alerts users to potential consequences that may arise from taking an action.
-- **Negative**: Indicates actions that lead to negative outcomes.
-
-<LivePreview componentName="toggle-button" exampleName="Sentiment" />
-
-## Selected appearance
-
-There are two different appearances that can be applied to the selected state of a toggle button: `solid` and `bordered`. By default, toggle buttons are set to `solid`. You can change the appearance to `bordered` using the `appearance` prop.
-
-### Best practices
-
-- **Visual hierarchy**: Changing the appearance to bordered can reduce the prominence of the toggle button when in a selected state.
-
-<LivePreview componentName="toggle-button" exampleName="Appearance" />
-
-## Disabled
-
-You can disable toggle buttons if required by context or user permissions using the `disabled` prop. Disabling a toggle button will prevent the user from interacting with it and suppresses all functionality.
-
-<LivePreview componentName="toggle-button" exampleName="Disabled" />
-
-## Toggle button group
-
-A `ToggleButtonGroup` allows users to make a single selection from a set of related commands—with only one option selected at a time.
-
-### Best practices
-
-- **Number of options**: A toggle button group should always contain two or more options related by function or context. Examples include text alignment (left, center, right, justified) or risk level (high, medium, low).
-- **Text and icon**: Use text description in addition to or instead of an icon if the options in the toggle button group are high priority. Users will be less likely to overlook the options.
+- A toggle button group should always contain two or more options related by function or context. For example, text alignment (left, center, right, justified) or risk level (high, medium, low).
 
 <LivePreview
   componentName="toggle-button"
@@ -87,7 +24,7 @@ A `ToggleButtonGroup` allows users to make a single selection from a set of rel
 
 ## Group orientation
 
-By default, a toggle button group has horizontal alignment. To present the options in a stacked layout, orientate the group vertically using the `orientation=”vertical”` prop.
+By default, a toggle button group has horizontal alignment. To present the options in a stacked layout, orientate the group vertically using the `orientation=”vertical”` prop.
 
 When oriented vertically, the group will resize to fit the longest toggle button, with all other buttons in the group extending to fill the same width.
 
@@ -98,7 +35,7 @@ When oriented vertically, the group will resize to fit the longest toggle button
 
 ## Read-only group
 
-Setting the toggle button group as read-only using the `readOnly` prop will render the toggle button group in a non-interactive state and with read-only styles. This is useful for scenarios where users need to view the current selection, but may not have the right permissions to change it.
+Setting the toggle button group as read-only using the `readOnly` prop will render the toggle button group in a non-interactive state and with read-only styles. This is useful for scenarios where users need to view the current selection, but may not have the right permissions to change it.
 
 If a toggle button is in a selected state within a read-only toggle button group, it will retain its visual style to indicate selection and remain focusable via keyboard navigation, ensuring that users can perceive the selection through assistive technologies.
 
@@ -111,9 +48,7 @@ If a toggle button is in a selected state within a read-only toggle button group
 
 Disabling a toggle button group using the `disabled` prop will suppress functionality for all buttons within it.
 
-### Best practices
-
-- **Disable or Read-Only**: Disable the group when it is not relevant or permitted in the current user flow; in this state, it will not be focusable for screen readers. Set the group to read-only when it is important for the user to know which option is currently selected. When set to read-only, the selected button will still be focusable for screen readers but will be indicated as non-interactive.
+**Disable or Read-Only**: Disable the group when it isn't relevant or permitted in the current user flow. In this state, it won't be focusable for screen readers. Set the group to read-only when it's important for the user to know which option is currently selected. When set to read-only, the selected button will still be focusable for screen readers but will be indicated as non-interactive.
 
 <LivePreview
   componentName="toggle-button"
@@ -124,20 +59,20 @@ Disabling a toggle button group using the `disabled` prop will suppress function
 
 Sentiment can be set on a toggle button group or individual buttons within a group. Setting sentiment on individual buttons allows for a mixed group.
 
-Set sentiment by using the `sentiment` prop, either on the group as a whole or on individual toggle buttons within the group.
+Set sentiment by using the `sentiment` prop, either on the group or on individual toggle buttons within the group.
 
 <LivePreview
   componentName="toggle-button"
   exampleName="ToggleButtonGroupSentiment"
 />
 
-## Group selected appearance
+## Appearance
 
-The `appearance` prop allows you to define the selected appearance for all buttons in the toggle button group as either `solid` or `bordered`.
+The `appearance` prop allows you to define the appearance for all buttons in the toggle button group.
 
 ### Best practices
 
-- **Set Appearance on the Group**: Although it is possible to mix sentiment within a group, it is not recommended to do the same with appearance as it can lead to visual inconsistency and diminish clarity for the user.
+- **Set Appearance on the Group**: Although it's possible to mix sentiment within a group, it isn't recommended to do the same with appearance as it can lead to visual inconsistency and diminish clarity for the user.
 
 <LivePreview
   componentName="toggle-button"
@@ -146,9 +81,26 @@ The `appearance` prop allows you to define the selected appearance for all butto
 
 ## Controlled group
 
-You can manage the state of the your toggle button group externally using the `value` and `onChange` props. This approach provides greater control over the component's behavior and enables synchronization with other parts of your application.
+You can manage the state of the toggle button group externally using the `value` and `onChange` props. This approach provides greater control over the component's behavior and enables synchronization with other parts of your application.
 
 <LivePreview
   componentName="toggle-button"
   exampleName="ToggleButtonGroupControlled"
 />
+
+## Standalone toggle button
+
+Standalone toggle buttons should be used sparingly, as other selection controls are often preferred. They are best for switching between two distinct states (i.e, yes/no, on/off, show/hid). Consider alternative controls to enhance user experience based on the context.
+
+### Alternative controls
+
+- [`Switch`](/salt/components/switch): Provides a clear visual indication of the current state and is commonly used to turn features on or off.
+- [`RadioButtonGroup`](/salt/components/radio-button): Preferred for boolean selections in forms or data input, especially when additional choices like "yes", "no" or "not applicable" are needed.
+- [`Dropdown`](/salt/components/dropdown): Ideal for boolean options when space is limited, favoring clear text labels over a simple switch.
+
+### Best practices
+
+- Switching icon variants or entire icons based on the selection state of the toggle button can help communicate the current state of the button.
+- Follow [`Button`](/salt/components/button)'s best practices for accessibility and interaction.
+
+<LivePreview componentName="toggle-button" exampleName="ToggleButtonDefault" />
