@@ -76,13 +76,6 @@ Position your legend to the right or below the chart where it’s most appropria
   alt="Diagram of different legend orientations."
 />
 
-## User interactions
-
-Charts benefit from interactions to help users focus on or reveal additional information about the chart's data, for example:
-
-- Tooltips that appear on hover
-- Individual data series or points that users can show, hide or highlight
-
 ### Selected state
 
 Users can select or click on a legend item to show or hide the related data series, isolating data points that are important to them.
@@ -93,19 +86,9 @@ Users can select or click on a legend item to show or hide the related data seri
   alt="Diagram of a bar chart in a selected state."
 />
 
-### Hover state
+## Tooltip
 
-When a user hovers over a data series, that series is highlighted. Simultaneously, other data series are dimmed in opacity. De-emphasizing the other series helps reduce visual noise, particularly in dense charts, and further highlights the data points in the hovered state.
-
-<Image
-  src="/img/foundations/dataviz-hover.png"
-  srcDark="/img/foundations/dataviz-hover-dark.png"
-  alt="Diagram of a pie chart in a hover state."
-/>
-
-### Tooltip
-
-Tooltips are a flexible way to communicate details within a chart, such as highlighting specific calculations or data points. Visually, the tooltip’s border color matches the color of the selected data series, helping users quickly associate the information with the relevant chart element.
+When a user hovers over a data series, that series is highlighted with a tooltip. Simultaneously, other data series are dimmed in opacity. Tooltips are a flexible way to communicate details within a chart, such as highlighting specific calculations or data points. Visually, the tooltip’s border color matches the color of the selected data series, helping users quickly associate the information with the relevant chart element.
 
 <Image
   src="/img/foundations/dataviz-tooltip.png"
