@@ -5,7 +5,7 @@ sidebar:
   priority: 5
 ---
 
-Charts rely on visual elements to make complex data easier to understand, so it’s essential to ensure they are accessible to all users. Use color appropriately, include visual cues, provide text for assistive technologies, and ensure any interactions are accessible.
+Charts rely on visual elements to make complex data easier to understand, so it’s essential to ensure they are accessible to all users. According to [WCAG guidelines](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html), color shouldn’t be the only distinguishing factor to convey information about your data. To improve accessibility for users with different needs, always include additional visual cues, such as line patterns and pattern fills. 
 
 ## Categorical colors
 
@@ -17,24 +17,6 @@ Users with visual impairments should be able to fully understand data that is re
   src="/img/foundations/dataviz-hex.png"
   srcDark="/img/foundations/dataviz-hex-dark.png"
   alt="Diagram of best practices using categorical color versus color picking."
-/>
-
-### Color order
-
-Salt's categorical colors are intended to be used in numerical order, from 1 through 20.
-
-<Image
-  src="/img/foundations/dataviz-color-order.png"
-  srcDark="/img/foundations/dataviz-color-order-dark.png"
-  alt="Diagram of the categorical color palette."
-/>
-
-A well-defined, distinct color palette ensures that everyone can easily interpret the data. Using the set categorical palette colors minimizes the risk of misinterpretation and ensures a visual order. Don’t apply similar categorical color colors to the same chart.
-
-<Image
-  src="/img/foundations/dataviz-monochromatic.png"
-  srcDark="/img/foundations/dataviz-monochromatic-dark.png"
-  alt="Diagram of best practices using categorical palette versus monochromatic palette."
 />
 
 You can enhance your chart’s accessibility by adopting additional visual strategies other than color such as:
@@ -49,7 +31,9 @@ For more information about text alternatives, read the [JPMC UX Accessibility Re
 
 ## Line patterns
 
-Color shouldn't be the only visual cue used in charts. Always include additional cues such as text, patterns, or symbols to help users distinguish between different data sets. For example, use line patterns to differentiate multiple line series. Patterns and other visual indicators improve readability, especially for users with color vision requirements.
+Use line patterns to differentiate multiple line series. 
+
+Learn more about the available line patterns in the [Color and pattern page.](/salt/foundations/data-visualization/color-and-pattern)
 
 <Image
   src="/img/foundations/dataviz-line-patterns2.png"
@@ -59,7 +43,9 @@ Color shouldn't be the only visual cue used in charts. Always include additional
 
 ## Pattern fills
 
-Use pattern fills for two-dimensional shapes, such as bars and slices. Pattern fills should always be black and applied over solid categorical colors in charts. They are especially helpful when there is only one visual distinction between data points, ensuring that all users can easily differentiate between chart elements.
+Use pattern fills for two-dimensional shapes, such as bars and slices. Pattern fills should always be black as they are applied over solid categorical colors in charts. They are especially helpful when there is only one visual distinction between data points, ensuring that all users can easily differentiate between chart elements.
+
+Learn more about the available pattern fills in the [Color and pattern page.](/salt/foundations/data-visualization/color-and-pattern)
 
 <Image
   src="/img/foundations/dataviz-pattern-fills2.png"
@@ -69,7 +55,7 @@ Use pattern fills for two-dimensional shapes, such as bars and slices. Pattern f
 
 ## Marker symbols
 
-In addition to line patterns and pattern fills, you can add marker symbols to make data points more distinctive and help differentiate lines. Marker symbols have a white border in both light and dark modes for accessibility. If you have more than five data series, the additional series will simply use the first symbol again. The symbols cycle through the available options, so for a sixth series, it would revert back to the first symbol in the defined set.
+Use marker symbols to make data points more distinctive and help differentiate lines. Marker symbols have a white border in both light and dark modes for accessibility. If you have more than five data series, the additional series will simply use the first symbol again. The symbols cycle through the available options, so for a sixth series, it would revert back to the first symbol in the defined set.
 
 Salt uses predefined symbols in the following order:
 
