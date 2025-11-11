@@ -32,9 +32,9 @@ Use wizard to guide users through a series of steps or tasks in a specific, line
 
 Wizard contains:
 1. **Workflow title**: use a standardized, actionable title that clearly reflects the intent of the wizard (e.g., “Create a new account”). The title should remain consistent across all steps to maintain context.
-2. **Step title**: to reflect the current step which vary per step. Step titles should be concise, descriptive, and clearly reflect the purpose of each step. Use plain language that is easy for users to understand. 
+2. **Step title**: to reflect the current step which vary per step. Step titles should be concise, descriptive, and clearly reflect the purpose of each step. Use plain language that is easy for users to understand.
 3. **Stepper**: to reflect status and progress through steps. 
-4. **Content area**: displays the relevant application content for the current step, guiding the user’s attention to a specific task or piece of information. Ensure the content is focused, uncluttered, and directly supports the user’s progress through the wizard.
+4. **Content area**: displays the relevant application content for the current step, guiding the user’s attention to a specific task or piece of information.
 5. **Button bar**: possible actions for users to take. The button bar should behave the same across contexts, ensuring users have predictable access to navigation and primary/secondary actions.
 
 <Diagram
@@ -47,10 +47,10 @@ Wizard contains:
 
 ## Container
 
-A wizard can be displayed inside different containers such as dialogs, pages, or panels. Regardless of container, the arrangement of internal components and interactions remains consistent.
+The wizard pattern can be used in different containers depending on your use case, primarily the main region of an application or in a dialog breaking out from the user's current flow.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Only display one wizard at a time, and avoid linking from one wizard to another.
+  A wizard should focus on a specific set of tasks, collecting information for a clear purpose. If you need to collect different types of information from a user, providing multiple wizards, each accessed separately at an appropriate time. Avoid linking from one to another directly, ensuring users can complete one flow before starting another.
 </GuidanceCallout>
 
 ## Layout
@@ -89,7 +89,7 @@ We recommend using a horizontal stepper for shorter and simpler tasks. For more 
 
 ### The number of steps
 
-For simpler flows, a horizontal stepper with fewer steps is usually sufficient. If your process involves a large amount of content, consider using a vertical stepper and a wide, shallow structure. This means breaking the process into more steps with fewer fields per step, and using substeps to group closely related sections. This approach, supported by Miller’s Law (7 ± 2), helps reduce cognitive load and improves usability compared to having fewer steps with many fields.
+For simpler flows, a horizontal stepper with fewer steps is usually sufficient. If your process involves a large amount of content, we recommend a vertical stepper and a wide, shallow structure. This means breaking the process into more steps with fewer fields per step (use Miller's Law of 7 ± 2 items as a guide) which are easier for users to complete and recollect. Additionally, use substeps to further group closely related fields. This approach can reduce cognitive load and improves usability compared to having fewer steps with many fields.
 
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-number-steps.png"
@@ -102,8 +102,6 @@ For simpler flows, a horizontal stepper with fewer steps is usually sufficient. 
 ## Content area scrolling
 
 Fix the button bar at the bottom of the wizard—refer to the fixed approach in Button bar position—so users can always access actions. Allow the main content area to scroll as needed, but avoid duplicate scrollbars in different orientations (for example, both in the browser and within the wizard). This keeps the interface clean and ensures actions remain accessible at all times.
-
-To be able to see more content from the screen (vertically), the main content area within the wizard should scroll, while the bottom button bar stays fixed for consistent access to actions.
 
 ###  With horizontal stepper
 
@@ -119,7 +117,7 @@ Workflows using a horizontal stepper typically involve fewer fields and simpler 
 
 ### With vertical stepper
 
-Vertical steppers are used for longer or more complex workflows that may include multiple steps and substeps. In these cases, allow the main content area to scroll vertically to accommodate more content on the screen. The bottom button bar remains fixed so users can always access key actions without needing to scroll back down.
+Vertical steppers are used for longer or more complex workflows that may include multiple steps and substeps. In these cases, allow the main content area (i.e., everything above the button bar) to scroll vertically to accommodate more content on the screen. The bottom button bar remains fixed so users can always access key actions without needing to scroll back down.
 
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-content-area-vertical.png"
@@ -130,7 +128,7 @@ Vertical steppers are used for longer or more complex workflows that may include
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  For guidance on displaying form fields across multiple columns within a wizard, refer to [forms pattern](/salt/patterns/forms#multiple-columns). It provides recommendations for multi-column layouts, including when to use them—such as for experienced users, routine tasks, or when vertical space is limited and scrolling should be minimized.
+  For guidance on displaying form fields across multiple columns within a wizard, refer to [forms pattern](/salt/patterns/forms#multiple-columns). It provides recommendations for accessible layout of multi-column forms, including when to use them—such as for experienced users, routine tasks, or when vertical space is limited and scrolling should be minimized.
 </GuidanceCallout>
 
 ## Modal wizard
@@ -148,14 +146,14 @@ For shorter tasks that temporarily become the user’s main focus, a modal exper
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Do not include a close button, as it can be ambiguous whether the progress or the entered information will be saved or lost. Use a cancel button instead to clearly indicate the user’s intent to exit the flow, ensuring a conscious, deliberate action to stop the process.
+Do not include a close button, as it can be ambiguous whether the progress or the entered information will be saved or lost. Use a cancel button instead to clearly indicate the user’s intent to exit the flow, ensuring a conscious, deliberate action to stop the process.
 </GuidanceCallout>
 
 ## Optional step
 
-When a step is entirely optional and contains no required fields, you can indicate this beneath the step title (in stepper) and allow users to skip it by clicking the next button.
+When a step is entirely optional and contains no required fields, you can indicate this beneath the step title (in stepper). We also recommend to use the “All fields are optional” text in the description under the step title.
 
-We also recommend to use the “All fields are optional” text in the description under the step title.
+For optional steps, keep the next button enabled so users can easily skip the step if they wish.
 
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-optional-step.png"
@@ -170,18 +168,19 @@ We also recommend to use the “All fields are optional” text in the descripti
   Indicate the minority: When a step contains both required and optional fields, label only the few optional or required fields as needed.
 </GuidanceCallout>
 
-## Focus management
-
-To ensure users have enough context when moving between steps, we can provide clear visual and interactive cues. For example, this may include focusing on the header or the first interactive element, announcing the current step and the number of steps remaining, and highlighting progress within the stepper.
-
 ## Validation state
 
-Wizard is capable of showing validation feedback. Feedback can occur either in real time (dynamically) as the user interacts with the form, click the next action, or after submission (when clicking the final action button, e.g., Submit), depending on the validation approach implemented.
+Wizard can show validation feedback. Feedback can occur either in real time (dynamically) as the user interacts with the form or after submission (when clicking the final action button, e.g., Submit), depending on the validation approach implemented.
 
 When validation feedback is triggered:
-- The stepper and buttons update to reflect the validation state.
-- You can give the users options to resolve the issue before they can proceed forward. 
+- The stepper updates to reflect the validation state.
+- All action buttons remain enabled throughout the flow for accessibility and discoverability.
+- You should give the user options to resolve issues before they proceed. 
 - Users can still go back or cancel the flow if needed.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  When navigating back through previous steps, the current step is always updated to show ‘Active’ and the steps ahead of the users current step should always be shown as ‘Pending’ (this includes any steps which were showing validation errors, since these may be corrected, or become unnecessary as the user progresses through the wizard).
+</GuidanceCallout>
 
 ### Warning
 
@@ -199,10 +198,6 @@ If a step contains a warning after validation:
   background="secondary"
   caption="The step in the stepper displays a warning state."
 />
-
-<GuidanceCallout type="positive" customPillText="Best practices">
-  Before proceeding with the next action, if the current step contains warnings, we recommend offering users options to resolve them.
-</GuidanceCallout>
 
 ### Error
 
@@ -227,12 +222,12 @@ When a step contains an error after validation:
 In certain use cases, you may want to provide additional feedback to users after an action is triggered. This includes showing warning, success, or other confirmation messages that help users stay informed and confident in their next steps.
 
 Confirmation messages can appear:
-- as a dialog, or
+- as a dialog over the app’s main content area, or
 - as part of the wizard flow within a modal wizard.
 
 ### Warning message
 
-When the user clicks the cancel button, display a warning message if there’s a risk of losing progress. This is especially useful in lengthy or critical flows where saving is not supported.
+When the user clicks the cancel button, display a warning message if there’s a risk of losing progress. This is especially useful in lengthy or critical flows where saving is not supported. After confirming the cancel action, it should restore the state to how it was before the wizard began.
 
 #### Wizard with the warning dialog
 
