@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.52.1
+
+### Patch Changes
+
+- b898c9d: Fixed disabled Button's having active style when `focusableWhenDisabled` is true.
+- d8d34a1: Removed the hardcoded aria-live="polite" from Banner to address accessibility concerns.
+- fdbe053: Fixed Button's active styling when triggered with the space or enter key.
+- 3449625: Updated the accessible labelling for pills in multi-select ComboBoxes.
+
 ## 1.52.0
 
 ### Minor Changes

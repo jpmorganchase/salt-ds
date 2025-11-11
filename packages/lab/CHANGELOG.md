@@ -1,5 +1,20 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.80
+
+### Patch Changes
+
+- b25650f: Number input improvements
+
+  - added optional, `increment` and `decrement` props to support decimal.js example.
+  - fixed issue with clamping, where a clamped value could not be incremented following text change.
+
+- Updated dependencies [b898c9d]
+- Updated dependencies [d8d34a1]
+- Updated dependencies [fdbe053]
+- Updated dependencies [3449625]
+  - @salt-ds/core@1.52.1
+
 ## 1.0.0-alpha.79
 
 ### Patch Changes
