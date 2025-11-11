@@ -19,13 +19,21 @@ Users with visual impairments should be able to fully understand data that is re
   alt="Diagram of best practices using categorical color versus color picking."
 />
 
+## Visual affordances
+
+Assistive technology users typically navigate charts using screen readers or keyboards—and may be unable to detect visual elements in the chart. Adding text alternatives within your application’s code may aid their comprehension of the data. There are three types of text alternatives you can add: a chart name, summary and/or data table.
+
 You can enhance your chart’s accessibility by adopting additional visual strategies other than color such as:
 
 - Pattern overlays for different categories
 - Direct labelling where possible
-- Adding a border with at least a 3:1 contrast ratio against the background to distinguish between segments
+- A border with at least a 3:1 contrast ratio against the background to distinguish between segments
 
-You can present chart data in a nearby table or list, in an overlay, or -if necessary- as a last resort on a separate screen to support screen readers. However, placing essential information on a separate screen can disrupt the flow of information. Screen reader users may need to navigate back and forth between different sections to access the full text alternative for a complex image, which can make understanding the data more difficult.
+### Text alternatives in code
+
+Consider if the complexity, format and accessibility of your chart warrants text alternatives. A simple pie or donut chart with a small number of data points and no trends, for example, won’t require text alternatives if keyboard and screen reader users can navigate to and focus on the all data points.
+
+You can present chart data in a nearby table or list, in an overlay, or if necessary as a last resort on a separate screen to support screen readers. However, placing essential information on a separate screen can disrupt the flow of information. Screen reader users may need to navigate back and forth between different sections to access the full text alternative for a complex image, which can make understanding the data more difficult.
 
 For more information about text alternatives, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
 
