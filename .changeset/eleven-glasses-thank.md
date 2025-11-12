@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix Dialog flickering when content is scrollable
+Fixed Dialog flickering when its content is short but scrollable. This mostly affected small screens.
