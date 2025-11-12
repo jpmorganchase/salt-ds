@@ -204,6 +204,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     focusedState,
     setFocusedState,
     listRef,
+    setListRef,
   } = listControl;
 
   const selectedValue = selectedState
@@ -433,7 +434,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const listId = useId();
 
-  const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
+  const handleListRef = useForkRef<HTMLDivElement>(setListRef, floating);
 
   return (
     <ListControlContext.Provider value={listControl}>
