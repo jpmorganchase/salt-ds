@@ -16,18 +16,18 @@ import {
   useRef,
   useState,
 } from "react";
+import { Button } from "../button";
+import { useFormFieldProps } from "../form-field-context";
+import { useIcon } from "../semantic-icon-provider";
+import { StatusAdornment } from "../status-adornment";
+import type { ValidationStatus } from "../status-indicator";
 import {
-  Button,
   capitalize,
-  StatusAdornment,
+  makePrefixer,
   useControlled,
   useForkRef,
-  useFormFieldProps,
-  useIcon,
   useId,
-  type ValidationStatus,
-} from "../index";
-import { makePrefixer } from "../utils";
+} from "../utils";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import numberInputCss from "./NumberInput.css";
 
