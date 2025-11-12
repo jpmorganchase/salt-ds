@@ -1,9 +1,9 @@
-import { NumberInput } from "@salt-ds/lab";
+import { NumberInput } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Number Input/Number Input QA",
+  title: "Core/Number Input/Number Input QA",
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 

@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { NumberInput } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, NumberInput } from "@salt-ds/core";
 import Decimal from "decimal.js";
 
 export const DecimalJS = () => {
@@ -55,7 +54,7 @@ export const DecimalJS = () => {
           const sanitized = value.replace(/,/g, "");
           try {
             const decimalValue = new Decimal(sanitized);
-            return decimalValue.toNumber();
+            return decimalValue.toDecimalPlaces(5).toNumber();
           } catch (_e) {
             // If parsing fails (invalid input), return null
             return null;
