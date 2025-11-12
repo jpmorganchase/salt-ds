@@ -1,0 +1,10 @@
+.salt-theme-lab.salt-theme {
+  --salt-sentiment-negative-foreground-informative: var(--lab-palette-text-loss);
+  --salt-sentiment-positive-foreground-informative: var(--lab-palette-text-gain);
+
+  --salt-sentiment-negative-foreground-decorative: var(--lab-palette-icon-loss);
+  --salt-sentiment-positive-foreground-decorative: var(--lab-palette-icon-gain);
+
+  --salt-sentiment-neutral-track: var(--lab-palette-border-track);
+  --salt-sentiment-neutral-track-disabled: var(--lab-palette-border-track-disabled);
+}

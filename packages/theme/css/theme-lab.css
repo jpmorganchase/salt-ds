@@ -1,0 +1,30 @@
+/* Foundations (base values) */
+@import url(foundations/index.css);
+
+@import url(lab/foundations/alpha.css);
+@import url(lab/foundations/color.css);
+
+/* Intermediate palette (refined colors) */
+@import url(lab/palette/background.css);
+@import url(lab/palette/border.css);
+@import url(lab/palette/corner.css);
+@import url(lab/palette/icon.css);
+@import url(lab/palette/sequence.css);
+@import url(lab/palette/text.css);
+
+/* Each characteristic file references values from above foundations */
+@import url(lab/characteristics/accent.css);
+@import url(lab/characteristics/actionable.css);
+@import url(lab/characteristics/category.css);
+@import url(lab/characteristics/container.css);
+@import url(lab/characteristics/content.css);
+@import url(lab/characteristics/editable.css);
+@import url(lab/characteristics/focused.css);
+@import url(lab/characteristics/navigable.css);
+@import url(lab/characteristics/overlayable.css);
+@import url(lab/characteristics/selectable.css);
+@import url(lab/characteristics/sentiment.css);
+@import url(lab/characteristics/separable.css);
+@import url(lab/characteristics/status.css);
+@import url(lab/characteristics/target.css);
+@import url(lab/characteristics/text.css);

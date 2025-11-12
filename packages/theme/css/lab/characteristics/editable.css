@@ -1,0 +1,19 @@
+.salt-theme.salt-theme-lab {
+  --salt-editable-borderColor: var(--lab-palette-border-input);
+  --salt-editable-borderColor-active: var(--lab-palette-border-input-active);
+  --salt-editable-borderColor-disabled: var(--lab-palette-border-input-disabled);
+  --salt-editable-borderColor-hover: var(--lab-palette-border-input);
+  --salt-editable-borderColor-readonly: var(--lab-palette-border-input-readonly);
+
+  --salt-editable-primary-background: var(--lab-palette-background-primary);
+  --salt-editable-primary-background-active: var(--lab-palette-background-primary);
+  --salt-editable-primary-background-disabled: var(--lab-palette-background-primary-disabled);
+  --salt-editable-primary-background-hover: var(--lab-palette-background-primary);
+  --salt-editable-primary-background-readonly: var(--salt-palette-alpha-none);
+
+  --salt-editable-secondary-background: var(--lab-palette-background-secondary);
+  --salt-editable-secondary-background-active: var(--lab-palette-background-secondary);
+  --salt-editable-secondary-background-disabled: var(--lab-palette-background-secondary-disabled);
+  --salt-editable-secondary-background-hover: var(--lab-palette-background-secondary);
+  --salt-editable-secondary-background-readonly: var(--salt-palette-alpha-none);
+}

@@ -1,0 +1,226 @@
+.salt-theme.salt-theme-lab {
+  /* Misc */
+  --salt-text-letterSpacing: 0;
+  --salt-text-textAlign: left;
+  --salt-text-textAlign-embedded: center;
+
+  /* Action */
+  --salt-text-action-fontFamily: var(--lab-palette-text-fontFamily-action);
+  --salt-text-action-letterSpacing: 0px;
+  --salt-text-action-textTransform: none;
+  --salt-text-action-textAlign: center;
+  --salt-text-action-fontWeight: var(--lab-palette-text-action-fontWeight);
+  --salt-text-action-fontWeight-small: var(--lab-palette-text-action-fontWeight-small);
+  --salt-text-action-fontWeight-strong: var(--lab-palette-text-action-fontWeight-strong);
+
+  /* Body text (should be used as default) */
+  --salt-text-fontFamily: var(--lab-palette-text-fontFamily);
+  --salt-text-fontWeight: var(--lab-palette-text-body-fontWeight);
+  --salt-text-fontWeight-small: var(--lab-palette-text-body-fontWeight-small);
+  --salt-text-fontWeight-strong: var(--lab-palette-text-body-fontWeight-strong);
+
+  /* Notation */
+  --salt-text-notation-fontFamily: var(--lab-palette-text-fontFamily);
+  --salt-text-notation-fontWeight: var(--lab-palette-text-notation-fontWeight);
+  --salt-text-notation-fontWeight-small: var(--lab-palette-text-notation-fontWeight-small);
+  --salt-text-notation-fontWeight-strong: var(--lab-palette-text-notation-fontWeight-strong);
+
+  /* H1 */
+  --salt-text-h1-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-h1-fontWeight: var(--lab-palette-text-heading-fontWeight);
+  --salt-text-h1-fontWeight-small: var(--lab-palette-text-heading-fontWeight-small);
+  --salt-text-h1-fontWeight-strong: var(--lab-palette-text-heading-fontWeight-strong);
+
+  /* H2 */
+  --salt-text-h2-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-h2-fontWeight: var(--lab-palette-text-heading-fontWeight);
+  --salt-text-h2-fontWeight-small: var(--lab-palette-text-heading-fontWeight-small);
+  --salt-text-h2-fontWeight-strong: var(--lab-palette-text-heading-fontWeight-strong);
+
+  /* H3 */
+  --salt-text-h3-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-h3-fontWeight: var(--lab-palette-text-heading-fontWeight);
+  --salt-text-h3-fontWeight-small: var(--lab-palette-text-heading-fontWeight-small);
+  --salt-text-h3-fontWeight-strong: var(--lab-palette-text-heading-fontWeight-strong);
+
+  /* H4 */
+  --salt-text-h4-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-h4-fontWeight: var(--lab-palette-text-heading-fontWeight);
+  --salt-text-h4-fontWeight-small: var(--lab-palette-text-heading-fontWeight-small);
+  --salt-text-h4-fontWeight-strong: var(--lab-palette-text-heading-fontWeight-strong);
+
+  /* Label */
+  --salt-text-label-fontFamily: var(--lab-palette-text-fontFamily);
+  --salt-text-label-fontWeight: var(--lab-palette-text-body-fontWeight);
+  --salt-text-label-fontWeight-small: var(--lab-palette-text-body-fontWeight-small);
+  --salt-text-label-fontWeight-strong: var(--lab-palette-text-body-fontWeight-strong);
+
+  /* Display text */
+  --salt-text-display1-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-display1-fontWeight: var(--lab-palette-text-display-fontWeight);
+  --salt-text-display1-fontWeight-strong: var(--lab-palette-text-display-fontWeight-strong);
+  --salt-text-display1-fontWeight-small: var(--lab-palette-text-display-fontWeight-small);
+
+  --salt-text-display2-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-display2-fontWeight: var(--lab-palette-text-display-fontWeight);
+  --salt-text-display2-fontWeight-strong: var(--lab-palette-text-display-fontWeight-strong);
+  --salt-text-display2-fontWeight-small: var(--lab-palette-text-display-fontWeight-small);
+
+  --salt-text-display3-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-display3-fontWeight: var(--lab-palette-text-display-fontWeight);
+  --salt-text-display3-fontWeight-strong: var(--lab-palette-text-display-fontWeight-strong);
+  --salt-text-display3-fontWeight-small: var(--lab-palette-text-display-fontWeight-small);
+
+  --salt-text-display4-fontFamily: var(--lab-palette-text-fontFamily-heading);
+  --salt-text-display4-fontWeight: var(--lab-palette-text-display-fontWeight);
+  --salt-text-display4-fontWeight-strong: var(--lab-palette-text-display-fontWeight-strong);
+  --salt-text-display4-fontWeight-small: var(--lab-palette-text-display-fontWeight-small);
+
+  /* Code */
+  --salt-text-code-fontFamily: var(--lab-palette-text-fontFamily-code);
+}
+
+/* Sizes by density */
+.salt-theme-lab.salt-density-touch {
+  --salt-text-h1-fontSize: 42px;
+  --salt-text-h1-lineHeight: 54px;
+
+  --salt-text-h2-fontSize: 32px;
+  --salt-text-h2-lineHeight: 42px;
+
+  --salt-text-h3-fontSize: 24px;
+  --salt-text-h3-lineHeight: 32px;
+
+  --salt-text-h4-fontSize: 16px;
+  --salt-text-h4-lineHeight: 20px;
+
+  --salt-text-label-fontSize: 14px;
+  --salt-text-label-lineHeight: 18px;
+
+  --salt-text-fontSize: 16px;
+  --salt-text-lineHeight: 20px;
+  --salt-text-minHeight: 20px;
+
+  --salt-text-display1-fontSize: 102px;
+  --salt-text-display1-lineHeight: 133px;
+
+  --salt-text-display2-fontSize: 84px;
+  --salt-text-display2-lineHeight: 109px;
+
+  --salt-text-display3-fontSize: 68px;
+  --salt-text-display3-lineHeight: 88px;
+
+  --salt-text-display4-fontSize: 54px;
+  --salt-text-display4-lineHeight: 70px;
+
+  --salt-text-notation-fontSize: 14px;
+  --salt-text-notation-lineHeight: 18px;
+}
+
+.salt-theme-lab.salt-density-low {
+  --salt-text-h1-fontSize: 32px;
+  --salt-text-h1-lineHeight: 42px;
+
+  --salt-text-h2-fontSize: 24px;
+  --salt-text-h2-lineHeight: 32px;
+
+  --salt-text-h3-fontSize: 18px;
+  --salt-text-h3-lineHeight: 24px;
+
+  --salt-text-h4-fontSize: 14px;
+  --salt-text-h4-lineHeight: 18px;
+
+  --salt-text-label-fontSize: 12px;
+  --salt-text-label-lineHeight: 16px;
+
+  --salt-text-fontSize: 14px;
+  --salt-text-lineHeight: 18px;
+  --salt-text-minHeight: 18px;
+
+  --salt-text-display1-fontSize: 84px;
+  --salt-text-display1-lineHeight: 109px;
+
+  --salt-text-display2-fontSize: 68px;
+  --salt-text-display2-lineHeight: 88px;
+
+  --salt-text-display3-fontSize: 54px;
+  --salt-text-display3-lineHeight: 70px;
+
+  --salt-text-display4-fontSize: 42px;
+  --salt-text-display4-lineHeight: 55px;
+
+  --salt-text-notation-fontSize: 12px;
+  --salt-text-notation-lineHeight: 16px;
+}
+
+.salt-theme-lab.salt-density-medium {
+  --salt-text-h1-fontSize: 24px;
+  --salt-text-h1-lineHeight: 32px;
+
+  --salt-text-h2-fontSize: 18px;
+  --salt-text-h2-lineHeight: 24px;
+
+  --salt-text-h3-fontSize: 14px;
+  --salt-text-h3-lineHeight: 18px;
+
+  --salt-text-h4-fontSize: 12px;
+  --salt-text-h4-lineHeight: 16px;
+
+  --salt-text-label-fontSize: 11px;
+  --salt-text-label-lineHeight: 14px;
+
+  --salt-text-fontSize: 12px;
+  --salt-text-lineHeight: 16px;
+  --salt-text-minHeight: 16px;
+
+  --salt-text-display1-fontSize: 68px;
+  --salt-text-display1-lineHeight: 88px;
+
+  --salt-text-display2-fontSize: 54px;
+  --salt-text-display2-lineHeight: 70px;
+
+  --salt-text-display3-fontSize: 42px;
+  --salt-text-display3-lineHeight: 55px;
+
+  --salt-text-display4-fontSize: 32px;
+  --salt-text-display4-lineHeight: 42px;
+
+  --salt-text-notation-fontSize: 10px;
+  --salt-text-notation-lineHeight: 13px;
+}
+
+.salt-theme-lab.salt-density-high {
+  --salt-text-h1-fontSize: 18px;
+  --salt-text-h1-lineHeight: 24px;
+
+  --salt-text-h2-fontSize: 14px;
+  --salt-text-h2-lineHeight: 18px;
+
+  --salt-text-h3-fontSize: 12px;
+  --salt-text-h3-lineHeight: 16px;
+
+  --salt-text-h4-fontSize: 11px;
+  --salt-text-h4-lineHeight: 14px;
+
+  --salt-text-label-fontSize: 10px;
+  --salt-text-label-lineHeight: 13px;
+
+  --salt-text-fontSize: 11px;
+  --salt-text-lineHeight: 14px;
+  --salt-text-minHeight: 14px;
+
+  --salt-text-display1-fontSize: 54px;
+  --salt-text-display1-lineHeight: 70px;
+
+  --salt-text-display2-fontSize: 42px;
+  --salt-text-display2-lineHeight: 55px;
+
+  --salt-text-display3-fontSize: 32px;
+  --salt-text-display3-lineHeight: 42px;
+
+  --salt-text-display4-fontSize: 24px;
+  --salt-text-display4-lineHeight: 32px;
+
+  --salt-text-notation-fontSize: 8px;
+  --salt-text-notation-lineHeight: 10px;
+}

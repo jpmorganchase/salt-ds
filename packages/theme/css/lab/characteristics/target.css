@@ -1,0 +1,4 @@
+.salt-theme.salt-theme-lab {
+  --salt-target-background-hover: var(--lab-palette-background-brand-interactive-secondary);
+  --salt-target-borderColor-hover: var(--lab-palette-border-brand-interactive-hover);
+}

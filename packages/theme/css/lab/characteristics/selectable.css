@@ -1,0 +1,19 @@
+.salt-theme.salt-theme-lab {
+  --salt-selectable-borderColor: var(--lab-palette-border-input);
+  --salt-selectable-borderColor-hover: var(--lab-palette-border-input);
+  --salt-selectable-borderColor-selected: var(--lab-palette-border-brand-interactive);
+  --salt-selectable-borderColor-selectedDisabled: var(--lab-palette-border-brand-interactive-disabled);
+  --salt-selectable-borderColor-disabled: var(--lab-palette-border-input-disabled);
+  --salt-selectable-borderColor-readonly: var(--lab-palette-border-input);
+
+  --salt-selectable-foreground: var(--lab-palette-icon-input);
+  --salt-selectable-foreground-disabled: var(--lab-palette-icon-input-disabled);
+  --salt-selectable-foreground-hover: var(--lab-palette-icon-input);
+  --salt-selectable-foreground-selected: var(--lab-palette-text-brand-interactive);
+  --salt-selectable-foreground-selectedDisabled: var(--lab-palette-text-brand-interactive-disabled);
+  --salt-selectable-background: var(--salt-palette-alpha-none);
+  --salt-selectable-background-hover: var(--lab-palette-background-subdued-interactive-secondary-hover);
+  --salt-selectable-background-selected: var(--lab-palette-background-brand-interactive-secondary);
+  --salt-selectable-background-disabled: var(--salt-palette-alpha-none);
+  --salt-selectable-background-selectedDisabled: var(--lab-palette-background-brand-interactive-secondary);
+}

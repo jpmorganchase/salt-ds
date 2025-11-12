@@ -1,0 +1,16 @@
+.salt-theme.salt-theme-lab {
+  --salt-content-primary-foreground: var(--lab-palette-text-regular);
+  --salt-content-primary-foreground-disabled: var(--lab-palette-text-regular-disabled);
+  --salt-content-secondary-foreground: var(--lab-palette-text-subdued);
+  --salt-content-secondary-foreground-disabled: var(--lab-palette-text-subdued-disabled);
+  --salt-content-accent-foreground: var(--lab-palette-text-brand);
+  --salt-content-attention-foreground: var(--lab-palette-text-info);
+
+  --salt-content-bold-foreground: var(--lab-palette-text-regular-inverse);
+  --salt-content-bold-foreground-disabled: var(--lab-palette-text-regular-inverse-disabled);
+
+  --salt-content-foreground-hover: var(--lab-palette-text-brand-interactive-hover);
+  --salt-content-foreground-active: var(--lab-palette-text-brand-interactive);
+  --salt-content-foreground-visited: var(--lab-palette-text-brand);
+  --salt-content-foreground-highlight: var(--lab-palette-background-brand-interactive-secondary);
+}

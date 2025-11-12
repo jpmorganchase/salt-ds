@@ -1,0 +1,85 @@
+.salt-theme.salt-theme-lab[data-mode="light"] {
+  --lab-palette-background-acquisition-interactive: var(--lab-color-jewel-600);
+  --lab-palette-background-acquisition-interactive-hover: var(--lab-color-jewel-700);
+  --lab-palette-background-acquisition-interactive-pressed: var(--lab-color-jewel-500);
+
+  --lab-palette-background-brand: var(--lab-color-blue-600);
+  --lab-palette-background-brand-disabled: var(--lab-color-blue-600-40a);
+  --lab-palette-background-brand-interactive: var(--lab-color-blue-600);
+  --lab-palette-background-brand-interactive-hover: var(--lab-color-blue-700);
+  --lab-palette-background-brand-interactive-pressed: var(--lab-color-blue-500);
+  --lab-palette-background-brand-interactive-secondary: var(--lab-color-blue-600-8a);
+
+  --lab-palette-background-error: var(--lab-color-plum-600);
+  --lab-palette-background-error-secondary: var(--lab-color-plum-50);
+  --lab-palette-background-error-secondary-pressed: var(--lab-color-plum-100);
+
+  --lab-palette-background-info: var(--lab-color-ultramarine-700);
+  --lab-palette-background-info-secondary: var(--lab-color-ultramarine-50);
+
+  --lab-palette-background-primary: var(--salt-color-white);
+  --lab-palette-background-primary-disabled: var(--salt-color-white-40a);
+
+  --lab-palette-background-scrim: var(--salt-color-black-40a);
+
+  --lab-palette-background-secondary: var(--lab-color-gray-50);
+  --lab-palette-background-secondary-disabled: var(--lab-color-gray-50-40a);
+
+  --lab-palette-background-subdued-interactive: var(--lab-color-silver-600);
+  --lab-palette-background-subdued-interactive-hover: var(--lab-color-silver-700);
+  --lab-palette-background-subdued-interactive-pressed: var(--lab-color-silver-800);
+  --lab-palette-background-subdued-interactive-secondary-hover: var(--lab-color-silver-700-4a);
+  --lab-palette-background-subdued-interactive-secondary-pressed: var(--lab-color-silver-800-8a);
+
+  --lab-palette-background-success: var(--lab-color-teal-700);
+  --lab-palette-background-success-secondary: var(--lab-color-teal-50);
+  --lab-palette-background-success-secondary-pressed: var(--lab-color-teal-100);
+
+  --lab-palette-background-tertiary: var(--lab-color-silver-100);
+  --lab-palette-background-tertiary-disabled: var(--lab-color-silver-100-40a);
+
+  --lab-palette-background-warning: var(--lab-color-gold-700);
+  --lab-palette-background-warning-secondary: var(--lab-color-gold-50);
+  --lab-palette-background-warning-secondary-pressed: var(--lab-color-gold-100);
+}
+.salt-theme.salt-theme-lab[data-mode="dark"] {
+  --lab-palette-background-acquisition-interactive: var(--lab-color-jewel-600);
+  --lab-palette-background-acquisition-interactive-hover: var(--lab-color-jewel-500);
+  --lab-palette-background-acquisition-interactive-pressed: var(--lab-color-jewel-700);
+
+  --lab-palette-background-brand: var(--lab-color-blue-700);
+  --lab-palette-background-brand-disabled: var(--lab-color-blue-700-40a);
+  --lab-palette-background-brand-interactive: var(--lab-color-blue-600);
+  --lab-palette-background-brand-interactive-hover: var(--lab-color-blue-500);
+  --lab-palette-background-brand-interactive-pressed: var(--lab-color-blue-700);
+  --lab-palette-background-brand-interactive-secondary: var(--lab-color-blue-500-24a);
+
+  --lab-palette-background-error: var(--lab-color-plum-700);
+  --lab-palette-background-error-secondary: var(--lab-color-plum-900);
+  --lab-palette-background-error-secondary-pressed: var(--lab-color-plum-800);
+
+  --lab-palette-background-primary: var(--lab-color-ultramarine-950);
+  --lab-palette-background-primary-disabled: var(--lab-color-ultramarine-950-40a);
+
+  --lab-palette-background-scrim: var(--salt-color-black-40a);
+
+  --lab-palette-background-secondary: var(--lab-color-ultramarine-900);
+  --lab-palette-background-secondary-disabled: var(--lab-color-ultramarine-900-40a);
+
+  --lab-palette-background-subdued-interactive: var(--lab-color-silver-600);
+  --lab-palette-background-subdued-interactive-hover: var(--lab-color-silver-500);
+  --lab-palette-background-subdued-interactive-pressed: var(--lab-color-silver-700);
+  --lab-palette-background-subdued-interactive-secondary-hover: var(--lab-color-ultramarine-600-24a);
+  --lab-palette-background-subdued-interactive-secondary-pressed: var(--lab-color-ultramarine-600-24a);
+
+  --lab-palette-background-success: var(--lab-color-teal-700);
+  --lab-palette-background-success-secondary: var(--lab-color-teal-900);
+  --lab-palette-background-success-secondary-pressed: var(--lab-color-teal-800);
+
+  --lab-palette-background-tertiary: var(--lab-color-ultramarine-800);
+  --lab-palette-background-tertiary-disabled: var(--lab-color-ultramarine-800-40a);
+
+  --lab-palette-background-warning: var(--lab-color-gold-700);
+  --lab-palette-background-warning-secondary: var(--lab-color-gold-900);
+  --lab-palette-background-warning-secondary-pressed: var(--lab-color-gold-800);
+}

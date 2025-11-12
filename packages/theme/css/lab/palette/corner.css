@@ -1,0 +1,8 @@
+.salt-theme.salt-theme-lab {
+  --salt-palette-corner-weaker: var(--salt-curve-0);
+  --salt-palette-corner-weak: var(--salt-curve-50);
+  --salt-palette-corner: var(--salt-curve-100);
+  --salt-palette-corner-strong: var(--salt-curve-150);
+  --salt-palette-corner-stronger: var(--salt-curve-200);
+  --salt-palette-corner-strongest: var(--salt-curve-999);
+}

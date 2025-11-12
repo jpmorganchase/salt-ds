@@ -7,6 +7,6 @@
   --salt-separable-foreground-hover: var(--salt-palette-foreground-primary);
   --salt-separable-foreground-active: var(--salt-palette-foreground-primary-alt);
   --salt-separable-background: var(--salt-palette-alpha-none);
-  --salt-separable-background-hover: var(--salt-palette-alpha-weak);
+  --salt-separable-background-hover: var(--salt-palette-alpha-contrast-lower);
   --salt-separable-background-active: var(--salt-palette-accent);
 }

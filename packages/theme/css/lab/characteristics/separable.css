@@ -1,0 +1,12 @@
+.salt-theme.salt-theme-lab {
+  --salt-separable-primary-borderColor: var(--lab-palette-border-regular);
+  --salt-separable-secondary-borderColor: var(--lab-palette-border-subdued);
+  --salt-separable-tertiary-borderColor: var(--lab-palette-border-decorative);
+
+  --salt-separable-foreground: var(--lab-palette-text-regular);
+  --salt-separable-foreground-hover: var(--lab-palette-text-regular);
+  --salt-separable-foreground-active: var(--lab-palette-text-regular-inverse);
+  --salt-separable-background: var(--salt-palette-alpha-none);
+  --salt-separable-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-separable-background-active: var(--lab-palette-background-brand-interactive-secondary);
+}
