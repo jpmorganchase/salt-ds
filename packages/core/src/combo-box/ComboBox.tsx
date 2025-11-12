@@ -21,6 +21,7 @@ import {
   type Ref,
   type SyntheticEvent,
   useEffect,
+  useLayoutEffect,
   useRef,
 } from "react";
 import { Button } from "../button";
@@ -107,6 +108,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
   const inputRef = useRef<HTMLInputElement>(null);
   const handleInputRef = useForkRef(inputRef, inputRefProp);
+  const shouldAutoSelectRef = useRef(false);
 
   const listControl = useComboBox<Item>({
     open,
@@ -129,7 +131,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     openState,
     setOpen,
     openKey,
-    getIndexOfOption,
     getOptionsMatching,
     getFirstOption,
     getLastOption,
@@ -234,21 +235,21 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       }
     }
 
-    const activeOption = activeState ?? getFirstOption()?.data;
-
-    if (activeOption === undefined) {
-      return;
-    }
+    const activeOption = activeState;
 
     let newActive:
       | { data: OptionValue<Item>; element: HTMLElement }
       | undefined;
     switch (event.key) {
       case "ArrowDown":
-        newActive = getOptionAfter(activeOption) ?? getLastOption();
+        newActive = activeOption
+          ? getOptionAfter(activeOption)
+          : getFirstOption();
         break;
       case "ArrowUp":
-        newActive = getOptionBefore(activeOption) ?? getFirstOption();
+        newActive = activeOption
+          ? getOptionBefore(activeOption)
+          : getLastOption();
         break;
       case "Home":
         newActive = getFirstOption();
@@ -257,10 +258,24 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         newActive = getLastOption();
         break;
       case "PageUp":
-        newActive = getOptionPageAbove(activeOption);
+        if (activeOption) {
+          newActive = getOptionPageAbove(activeOption);
+        } else {
+          const lastOption = getLastOption();
+          if (lastOption) {
+            newActive = getOptionPageAbove(lastOption?.data);
+          }
+        }
         break;
       case "PageDown":
-        newActive = getOptionPageBelow(activeOption);
+        if (activeOption) {
+          newActive = getOptionPageBelow(activeOption);
+        } else {
+          const firstOption = getFirstOption();
+          if (firstOption) {
+            newActive = getOptionPageBelow(firstOption.data);
+          }
+        }
         break;
       case "Enter":
         if (openState && activeState?.disabled) {
@@ -334,6 +349,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     // Clean active item if no text is present.
     if (value === "") {
       setActive(undefined);
+    } else {
+      shouldAutoSelectRef.current = true;
     }
 
     onChange?.(event);
@@ -357,22 +374,32 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
+  useLayoutEffect(() => {
+    if (value !== "") {
+      shouldAutoSelectRef.current = true;
+    }
+  }, [value]);
+
   useEffect(() => {
     if (openState && value !== "") {
       queueMicrotask(() => {
         const newOption = getFirstOption();
-        if (newOption && activeState?.id !== newOption.data.id) {
+        if (newOption && shouldAutoSelectRef.current) {
           setActive(newOption.data);
         }
+        shouldAutoSelectRef.current = false;
       });
     }
-  }, [value, setActive, openState, getFirstOption, activeState]);
+  }, [value, setActive, openState, getFirstOption]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
     let newActive: ReturnType<typeof getFirstOption>;
 
-    if (!openState) return;
+    if (!openState) {
+      setActive(undefined);
+      return;
+    }
 
     // If we have selected an item, we should make that the active item
     if (selectedState.length > 0) {
@@ -393,7 +420,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
 
     if (newActive) {
-      console.log({ newActive });
       setActive(newActive?.data);
     }
   }, [openState]);
