@@ -145,6 +145,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     focusedState,
     setFocusedState,
     listRef,
+    setListRef,
     valueState,
     setValueState,
     removePill,
@@ -302,7 +303,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    setFocusedState(true);
+    if (event.currentTarget === inputRef.current) {
+      setFocusedState(true);
+    } else {
+      setActive(undefined);
+    }
     onFocus?.(event);
   };
 
@@ -326,17 +331,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     setValueState(value);
 
-    // Wait for the filter to happen
-    queueMicrotask(() => {
-      if (value !== "") {
-        const newOption = getFirstOption();
-        if (newOption) {
-          setActive(newOption.data);
-        }
-      } else {
-        setActive(undefined);
-      }
-    });
+    // Clean active item if no text is present.
+    if (value === "") {
+      setActive(undefined);
+    }
 
     onChange?.(event);
   };
@@ -359,22 +357,22 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
+  useEffect(() => {
+    if (openState && value !== "") {
+      queueMicrotask(() => {
+        const newOption = getFirstOption();
+        if (newOption && activeState?.id !== newOption.data.id) {
+          setActive(newOption.data);
+        }
+      });
+    }
+  }, [value, setActive, openState, getFirstOption, activeState]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
-    // If the list is closed we should clear the active item
-    if (!openState) {
-      setActive(undefined);
-      return;
-    }
-
-    // We check the active index because the active item may have been removed
-    const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
     let newActive: ReturnType<typeof getFirstOption>;
 
-    // If the active item is still in the list, we don't need to do anything
-    if (activeIndex > -1) {
-      return;
-    }
+    if (!openState) return;
 
     // If we have selected an item, we should make that the active item
     if (selectedState.length > 0) {
@@ -394,18 +392,16 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       }
     }
 
-    // If we still don't have an active item, we should just select the first item
-    if (!newActive) {
-      newActive = getFirstOption();
+    if (newActive) {
+      console.log({ newActive });
+      setActive(newActive?.data);
     }
-
-    setActive(newActive?.data);
-  }, [openState, children]);
+  }, [openState]);
 
   const buttonId = useId();
   const listId = useId();
 
-  const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
+  const handleListRef = useForkRef<HTMLDivElement>(setListRef, floating);
 
   const showOptionsButton = (
     <Button

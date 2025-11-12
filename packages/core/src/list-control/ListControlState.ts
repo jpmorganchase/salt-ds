@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useControlled } from "../utils";
+import { useControlled, useForkRef } from "../utils";
 import type { OptionValue } from "./ListControlContext";
 
 export type OpenChangeReason = "input" | "manual";
@@ -53,58 +53,6 @@ export type ListControlProps<Item> = {
   valueToString?: (item: Item) => string;
 };
 
-function findElementPosition(
-  elements: { element: HTMLElement }[],
-  element: HTMLElement,
-) {
-  if (elements.length === 0) {
-    return [0, false] as const;
-  }
-
-  if (
-    element.compareDocumentPosition(elements[elements.length - 1].element) &
-    Node.DOCUMENT_POSITION_PRECEDING
-  ) {
-    return [-1, false] as const;
-  }
-
-  if (
-    element.compareDocumentPosition(elements[0].element) &
-    Node.DOCUMENT_POSITION_FOLLOWING
-  ) {
-    return [0, false] as const;
-  }
-
-  let left = 0;
-  let right = elements.length;
-  let leftLast = 0;
-  let rightLast = right;
-
-  let exists = false;
-
-  while (left < right) {
-    const inPos = Math.floor((right + left) / 2);
-    const compared = element.compareDocumentPosition(elements[inPos].element);
-    if (compared & Node.DOCUMENT_POSITION_PRECEDING) {
-      left = inPos;
-    } else if (compared & Node.DOCUMENT_POSITION_FOLLOWING) {
-      right = inPos;
-    } else {
-      right = inPos;
-      left = inPos;
-      exists = true;
-    }
-    // nothing has changed, must have found limits. insert between.
-    if (leftLast === left && rightLast === right) {
-      break;
-    }
-    leftLast = left;
-    rightLast = right;
-  }
-
-  return [right, exists] as const;
-}
-
 export function defaultValueToString<Item>(item: Item): string {
   return String(item);
 }
@@ -122,6 +70,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     readOnly,
     valueToString = defaultValueToString,
   } = props;
+
+  const listRef = useRef<HTMLDivElement>(null);
+  const [listElement, setListElement] = useState<HTMLDivElement | null>(null);
+  const setListRef = useForkRef<HTMLDivElement>(listRef, setListElement);
 
   const [focusedState, setFocusedState] = useState(false);
   const [focusVisibleState, setFocusVisibleState] = useState(false);
@@ -216,15 +168,8 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   const register = useCallback(
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const { id } = optionValue;
-      const [index, exists] = findElementPosition(optionsRef.current, element);
 
-      if (!exists) {
-        if (index === -1) {
-          optionsRef.current.push({ data: optionValue, element });
-        } else {
-          optionsRef.current.splice(index, 0, { data: optionValue, element });
-        }
-      }
+      optionsRef.current.push({ data: optionValue, element });
 
       return () => {
         optionsRef.current = optionsRef.current.filter(
@@ -235,6 +180,44 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     [],
   );
 
+  useEffect(() => {
+    const sortOptions = () => {
+      optionsRef.current = optionsRef.current
+        .filter((a) => a.element.isConnected)
+        .sort(({ element: a }, { element: b }) => {
+          if (a === b) return 0;
+          const pos = a.compareDocumentPosition(b);
+          if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+          if (pos & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+          // Disconnected / impl-specific — keep input order (stable) or add your own rule
+          return 0;
+        });
+    };
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      const optionsChanged = mutations.some((mutation) =>
+        Array.from(mutation.addedNodes).some(
+          (node) =>
+            node instanceof HTMLElement && node.matches?.('[role="option"]'),
+        ),
+      );
+
+      if (optionsChanged) {
+        sortOptions();
+      }
+    });
+
+    if (!listElement) return;
+    mutationObserver.observe(listElement, {
+      childList: true,
+      subtree: true,
+    });
+
+    sortOptions();
+
+    return () => mutationObserver.disconnect();
+  }, [listElement]);
+
   const getOptionAtIndex = (
     index: number,
   ): { data: OptionValue<Item>; element: HTMLElement } | undefined => {
@@ -242,7 +225,9 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   };
 
   const getIndexOfOption = (option: OptionValue<Item>) => {
-    return optionsRef.current.findIndex((item) => item.data.id === option.id);
+    return optionsRef.current.findIndex(
+      (item) => item.data.value === option.value,
+    );
   };
 
   const getOptionsMatching = (
@@ -307,8 +292,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     const index = getIndexOfOption(option);
     return getOptionAtIndex(index + 1);
   };
-
-  const listRef = useRef<HTMLDivElement>(null);
 
   const getOptionPageAbove = (start: OptionValue<Item>) => {
     const list = listRef.current;
@@ -394,6 +377,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     setFocusVisibleState,
     focusedState,
     setFocusedState,
+    setListRef,
     listRef,
     options: optionsRef.current.map((option) => option.element),
     register,

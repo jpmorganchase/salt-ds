@@ -73,7 +73,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     const disabled = disabledProp || listDisabled;
 
     const selected = selectedState.includes(value);
-    const active = activeState?.id === id;
+    const active = activeState?.value === value;
 
     const optionValue: OptionValue<unknown> = useMemo(
       () => ({
