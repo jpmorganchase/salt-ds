@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.36.0
+
+### Minor Changes
+
+- 54a18b5: Deprecated `--salt-separable-background` which is not used anywhere in the system. There is no replacement token.
+
 ## 1.35.0
 
 ### Minor Changes
