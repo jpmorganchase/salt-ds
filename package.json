@@ -102,7 +102,7 @@
     "next": "^14.0.0",
     "whatwg-url": "^15.0.0",
     "cookie": "^1.0.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.27.0",
     "ag-grid-community": "32.2.1",
     "ag-grid-enterprise": "32.2.1",
     "ag-grid-react": "32.2.1",
