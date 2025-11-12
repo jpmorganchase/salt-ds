@@ -224,6 +224,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
+    if (!event.repeat) {
+      shouldAutoSelectRef.current = false;
+    }
+
     if (readOnly) {
       return;
     }
@@ -330,6 +334,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     event.persist();
     if (!listRef.current || !listRef.current.contains(event.relatedTarget)) {
       onBlur?.(event);
+      shouldAutoSelectRef.current = false;
     }
   };
 
@@ -375,19 +380,18 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   useLayoutEffect(() => {
-    if (value !== "") {
+    if (value) {
       shouldAutoSelectRef.current = true;
     }
   }, [value]);
 
   useEffect(() => {
-    if (openState && value !== "") {
+    if (openState && value) {
       queueMicrotask(() => {
         const newOption = getFirstOption();
         if (newOption && shouldAutoSelectRef.current) {
           setActive(newOption.data);
         }
-        shouldAutoSelectRef.current = false;
       });
     }
   }, [value, setActive, openState, getFirstOption]);
