@@ -4,17 +4,19 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  NumberInput,
+  type NumberInputProps,
   StackLayout,
   useAriaAnnouncer,
 } from "@salt-ds/core";
+
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
-import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 
 export default {
-  title: "Lab/Number Input",
+  title: "Core/Number Input",
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
