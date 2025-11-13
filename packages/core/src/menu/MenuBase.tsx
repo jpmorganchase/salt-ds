@@ -139,6 +139,7 @@ export function MenuBase(props: MenuBaseProps) {
         activeIndex,
         nested: isNested,
         onNavigate: setActiveIndex,
+        focusItemOnHover: false,
       }),
     ],
   );
