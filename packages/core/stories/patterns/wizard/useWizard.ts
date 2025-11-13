@@ -8,20 +8,30 @@ interface FieldValidation {
 }
 
 function mapYupErrors(err: any): Record<string, FieldValidation> {
-  return (err.inner ?? []).reduce(
-    (acc: Record<string, FieldValidation>, e: any) => {
-      acc[e.path] = {
-        status: e.message.toLowerCase().includes("required")
-          ? "error"
-          : e.message.toLowerCase().includes("recommended")
-            ? "warning"
-            : undefined,
-        message: e.message,
+  const out: Record<string, FieldValidation> = {};
+  for (const e of err.inner ?? []) {
+    // Accept explicit severity param; default all others to error
+    const raw = e.params?.severity as ValidationStatus | undefined;
+    const severity: ValidationStatus = raw === "warning" ? "warning" : "error";
+    // Preserve an existing error if multiple validations hit same field
+    const existing = out[e.path];
+    if (existing) {
+      out[e.path] = {
+        status:
+          existing.status === "error" || severity === "error"
+            ? "error"
+            : "warning",
+        // Keep first error message if error already present; otherwise overwrite
+        message:
+          existing.status === "error" && severity === "warning"
+            ? existing.message
+            : e.message,
       };
-      return acc;
-    },
-    {},
-  );
+    } else {
+      out[e.path] = { status: severity, message: e.message };
+    }
+  }
+  return out;
 }
 
 function deriveStepValidationStatus(
@@ -66,15 +76,20 @@ export const useWizard = <
         return true;
       } catch (err: any) {
         const fieldValidation = mapYupErrors(err);
+        const hasErrors = Object.values(fieldValidation).some(
+          (f) => f.status === "error",
+        );
         const stepStatus = deriveStepValidationStatus(fieldValidation);
         setValidationsByStep((prev) => ({
           ...prev,
+          // keep warnings/errors visible
           [currentStepId]: { fields: fieldValidation, status: stepStatus },
         }));
-        return false;
+        // Only block when there is at least one error
+        return !hasErrors;
       }
     },
-    [currentStepId, formData],
+    [currentStepId, formData, schema],
   );
 
   const next = useCallback(() => {
@@ -89,7 +104,7 @@ export const useWizard = <
     setActiveStep(0);
     setFormData(initialData);
     setValidationsByStep({});
-  }, []);
+  }, [initialData]);
 
   const stepFieldValidation = validationsByStep[currentStepId]?.fields || {};
   const stepsStatusMap = Object.fromEntries(

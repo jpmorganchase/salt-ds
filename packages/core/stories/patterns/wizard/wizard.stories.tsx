@@ -27,6 +27,7 @@ import {
 } from "@salt-ds/core";
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
+import clsx from "clsx";
 import React, {
   type ElementType,
   useCallback,
@@ -36,12 +37,11 @@ import React, {
 } from "react";
 import * as Yup from "yup";
 import { useWizard, type ValidationStatus } from "./useWizard";
+import "./wizard.stories.css";
 
 export default {
   title: "Patterns/Wizard",
 } as Meta;
-import "./wizard.stories.css";
-import clsx from "clsx";
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -164,11 +164,20 @@ const stepValidationSchemas: Record<ContentType, Yup.ObjectSchema<any>> = {
     accountType: Yup.string().required("Account type is required."),
   }),
   "additional-info": Yup.object({
-    initialDeposit: Yup.string().test(
-      "min-deposit",
-      "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
-      (value) => !value || Number(value) >= 100,
-    ),
+    initialDeposit: Yup.string().test({
+      name: "min-deposit-warning",
+      message:
+        "Recommended minimum deposit is $100. You may proceed, but some features may be unavailable.",
+      test(value, ctx) {
+        if (!value) return true;
+        if (Number(value) < 100) {
+          return ctx.createError({
+            params: { severity: "warning" },
+          });
+        }
+        return true;
+      },
+    }),
   }),
   review: Yup.object({}), // No validation
 };
@@ -854,7 +863,7 @@ export const Horizontal = () => {
     const { name, value } = e.target;
     const newFormData = { ...formData, [name]: value };
     setFormData(newFormData);
-    const isValid = await validateCurrentStep(newFormData);
+    await validateCurrentStep(newFormData);
   };
 
   const handleInputBlur = async () => {
