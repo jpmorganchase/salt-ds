@@ -98,7 +98,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
     select,
     setFocusVisibleState,
     setFocusedState,
-    listRef,
+    setListRef,
   } = listControl;
 
   const typeaheadString = useRef("");
@@ -246,7 +246,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
     setActive(undefined);
   };
 
-  const handleRef = useForkRef(listRef, ref);
+  const handleRef = useForkRef(setListRef, ref);
 
   return (
     <ListControlContext.Provider value={listControl}>

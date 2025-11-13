@@ -92,20 +92,6 @@ The `NumberInput` can display validation states, `error`, `warning`, and `succes
 
 <LivePreview componentName="number-input" exampleName="Validation" />
 
-## Decimal scale
-
-The `decimalScale` prop allows you to define the number of decimal places displayed in the `NumberInput`. By default, the decimal scale is determined by the greater number of decimal places between the `step` value and the `value` or `defaultValue` provided.
-
-### Best practices
-
-When dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
-
-<LivePreview componentName="number-input" exampleName="Decimals" />
-
-To provide a fixed scale, provide a custom format function.
-
-<LivePreview componentName="number-input" exampleName="FixedDecimalScale" />
-
 ## Formatting
 
 The `NumberInput` component offers the ability to format its value using the `format` callback prop. This feature is typically used in conjunction with a `parse` callback, which can be used to determine the valid input format and extract the numerical value of the formatted input.
@@ -154,6 +140,20 @@ You can add a suffix or prefix with a custom `format` function.
 You can support custom input patterns, such as "10x", using a combination of `pattern`, `format` and `parse` callbacks.
 
 <LivePreview componentName="number-input" exampleName="CustomInputPattern" />
+
+## Decimal scale
+
+Decimals in JavaScript are subject to precision issues. The default `format` and `parse` functions use standard JavaScript number handling and may be affected by these limitations. For high-precision decimal support, we recommend providing custom `format` and `parse` functions using a library like [decimal.js](https://mikemcl.github.io/decimal.js/).
+
+### Best practices
+
+- When dealing with currencies such as pounds sterling or U.S. dollars in a retail context, limit the decimal places to two, as these currencies typically require only two decimal places for accuracy. Avoid using three decimal places in such scenarios to maintain consistency and relevance.
+
+<LivePreview componentName="number-input" exampleName="DecimalJS" />
+
+When using the default parser and formatter, always use the `onNumberChange` event to obtain the parsed numeric value and handle precision appropriately in your application logic.
+
+<LivePreview componentName="number-input" exampleName="Decimals" />
 
 ## Custom steps
 

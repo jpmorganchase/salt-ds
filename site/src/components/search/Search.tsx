@@ -159,10 +159,13 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
             No results found for &quot;{query}&quot;
           </div>
         ) : (
-          Object.entries(results).map(([category, results], index) => (
-            <OptionGroup label={category} key={index}>
-              {results.slice(0, 5).map((result, index) => (
-                <SearchResult result={result} key={index} />
+          Object.entries(results).map(([category, results]) => (
+            <OptionGroup label={category} key={category}>
+              {results.slice(0, 5).map((result) => (
+                <SearchResult
+                  result={result}
+                  key={result.title + result.route}
+                />
               ))}
             </OptionGroup>
           ))
