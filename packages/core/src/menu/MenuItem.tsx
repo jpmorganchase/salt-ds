@@ -54,7 +54,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     useEffect(() => {
       setTriggerDisabled(!!disabled);
-    }, [triggersSubmenu, disabled, setTriggerDisabled]);
+    }, [disabled, setTriggerDisabled]);
 
     return (
       <div
