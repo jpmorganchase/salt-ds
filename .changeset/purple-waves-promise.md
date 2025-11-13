@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix disabled `MenuItem` trigger opening content on hover
+Fixed disabled `MenuItem`s opening submenus on hover.
