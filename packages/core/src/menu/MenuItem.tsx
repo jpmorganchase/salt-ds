@@ -53,13 +53,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     const handleRef = useForkRef<HTMLDivElement>(ref, item.ref);
 
     useEffect(() => {
-      if (!triggersSubmenu) return;
       setTriggerDisabled(!!disabled);
-      return () => {
-        if (triggersSubmenu && disabled) {
-          setTriggerDisabled(false);
-        }
-      };
     }, [triggersSubmenu, disabled, setTriggerDisabled]);
 
     return (
