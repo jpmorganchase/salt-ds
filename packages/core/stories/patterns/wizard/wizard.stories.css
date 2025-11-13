@@ -1,0 +1,17 @@
+.overflowContent-inner {
+  overflow-y: auto;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  max-height: inherit;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 0 var(--salt-spacing-300);
+}
+
+.overflowContent-scrollTop.overflowContent-inner {
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.overflowContent-scrollBottom.overflowContent-inner {
+  border-bottom-color: var(--salt-separable-tertiary-borderColor);
+}

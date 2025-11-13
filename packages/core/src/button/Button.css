@@ -43,15 +43,6 @@
   border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
 }
 
-/* Pseudo-class applied to the root element on focus when Button is active */
-.saltButton.saltButton-active:focus-visible,
-.saltButton:focus-visible:active {
-  background: var(--saltButton-background-active-hover, var(--button-background));
-  color: var(--saltButton-text-color-active-hover, var(--button-text-color));
-  border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
-  cursor: var(--salt-cursor-active);
-}
-
 @media (hover: hover) {
   /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
   .saltButton:hover {
@@ -63,6 +54,8 @@
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
+.saltButton.saltButton-active:focus-visible,
+.saltButton:focus-visible:active,
 .saltButton:active,
 .saltButton.saltButton-active {
   background: var(--saltButton-background-active, var(--button-background-active));
@@ -81,11 +74,11 @@
 
 /* Pseudo-class applied to the root element if disabled={true} */
 .saltButton:disabled,
-.saltButton-disabled,
-.saltButton-disabled:active,
-.saltButton-disabled:focus-visible,
-.saltButton-disabled:focus-visible:active,
-.saltButton-disabled:hover {
+.saltButton.saltButton-disabled,
+.saltButton.saltButton-disabled:active,
+.saltButton.saltButton-disabled:focus-visible,
+.saltButton.saltButton-disabled:focus-visible:active,
+.saltButton.saltButton-disabled:hover {
   background: var(--saltButton-background-disabled, var(--button-background));
   color: var(--saltButton-text-color-disabled, var(--button-text-color));
   cursor: var(--saltButton-cursor-disabled, var(--salt-cursor-disabled));

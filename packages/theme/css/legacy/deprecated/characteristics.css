@@ -221,4 +221,7 @@
   --salt-actionable-caution-subtle-background-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-caution-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-caution-subtle-foreground-disabled: var(--salt-palette-warning-foreground-informative-disabled);
+
+  /* Separable */
+  --salt-separable-background: var(--salt-palette-alpha-none);
 }

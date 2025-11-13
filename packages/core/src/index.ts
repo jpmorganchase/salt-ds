@@ -36,6 +36,7 @@ export * from "./list-control";
 export * from "./menu";
 export * from "./multiline-input";
 export * from "./navigation-item";
+export * from "./number-input";
 export * from "./option";
 export * from "./overlay";
 export * from "./pagination";

@@ -1,5 +1,9 @@
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
-import { NumberInput } from "@salt-ds/lab";
+import {
+  FormField,
+  FormFieldLabel,
+  NumberInput,
+  StackLayout,
+} from "@salt-ds/core";
 
 export const TextAlignment = () => (
   <StackLayout style={{ width: "256px" }}>

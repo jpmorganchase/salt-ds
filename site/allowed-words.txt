@@ -30,6 +30,7 @@ Preheader
 Selectability
 Stackable
 Stickersheet
+Stickersheets
 Substep
 Substeps
 Subvalue
@@ -39,5 +40,6 @@ Tabstrips
 Taurean
 Tickbox
 UITK
+frontmatter
 kmbt
 affordances
