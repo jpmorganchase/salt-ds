@@ -1,5 +1,14 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.82
+
+### Patch Changes
+
+- e31acee: Removed `useLayoutEffect` usage to fix warnings being logged during SSR.
+- Updated dependencies [10ffed9]
+- Updated dependencies [e31acee]
+  - @salt-ds/core@1.53.1
+
 ## 1.0.0-alpha.81
 
 ### Minor Changes
