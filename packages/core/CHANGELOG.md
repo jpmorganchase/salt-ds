@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.53.1
+
+### Patch Changes
+
+- 10ffed9: Fixed disabled `MenuItem`s opening submenus on hover.
+- e31acee: Removed `useLayoutEffect` usage to fix warnings being logged during SSR.
+
 ## 1.53.0
 
 ### Minor Changes
