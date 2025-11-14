@@ -16,7 +16,7 @@
   visibility: hidden;
   padding-left: var(--salt-spacing-50);
   text-decoration: underline;
-  color: var(--salt-content-foreground-hover);
+  color: var(--salt-content-accent-foreground);
 }
 
 .root:first-child :is(h2, h3, h4) {
