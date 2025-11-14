@@ -83,4 +83,8 @@
   --salt-category-20-bold-foreground: var(--salt-palette-foreground-primary-alt);
 
   --salt-accent-foreground: var(--salt-palette-foreground-primary-alt);
+
+  --salt-content-foreground-highlight: var(--salt-palette-accent-weaker);
+  --salt-content-foreground-active: var(--salt-palette-accent-stronger);
+  --salt-content-foreground-hover: var(--salt-palette-accent-strong);
 }
