@@ -279,7 +279,7 @@ describe("Given a SaltProvider", () => {
 
     cy.get("@consoleSpy").should(
       "have.been.calledWith",
-      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
+      "Multiple providers targeting the same window. There can be only one level root level SaltProvider per window.",
     );
   });
 
@@ -301,7 +301,7 @@ describe("Given a SaltProvider", () => {
     );
   }
 
-  it.skip("should not warn when two providers are set to apply to root but are in different windows", () => {
+  it("should not warn when two providers are set to apply to root but are in different windows", () => {
     cy.spy(console, "warn").as("consoleSpy");
 
     mount(
@@ -315,6 +315,29 @@ describe("Given a SaltProvider", () => {
     );
 
     cy.get("@consoleSpy").should("not.have.been.called");
+  });
+
+  it("should warn when two deeply providers are set to apply to root", () => {
+    cy.spy(console, "warn").as("consoleSpy");
+
+    mount(
+      <SaltProvider applyClassesTo={"root"}>
+        <FakeWindow>
+          <SaltProvider applyClassesTo={"root"}>
+            <WindowProvider window={window}>
+              <SaltProvider applyClassesTo={"root"}>
+                <TestComponent />
+              </SaltProvider>
+            </WindowProvider>
+          </SaltProvider>
+        </FakeWindow>
+      </SaltProvider>,
+    );
+
+    cy.get("@consoleSpy").should(
+      "have.been.calledWith",
+      "Multiple providers targeting the same window. There can be only one level root level SaltProvider per window.",
+    );
   });
 });
 
