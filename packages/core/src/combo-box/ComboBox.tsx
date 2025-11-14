@@ -21,7 +21,6 @@ import {
   type Ref,
   type SyntheticEvent,
   useEffect,
-  useLayoutEffect,
   useRef,
 } from "react";
 import { Button } from "../button";
@@ -41,6 +40,7 @@ import {
   useFloatingUI,
   useForkRef,
   useId,
+  useIsomorphicLayoutEffect,
 } from "../utils";
 import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
@@ -379,7 +379,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (value) {
       shouldAutoSelectRef.current = true;
     }
