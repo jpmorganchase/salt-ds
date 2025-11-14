@@ -10,14 +10,18 @@ import {
   type Ref,
   type TextareaHTMLAttributes,
   useCallback,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
-import { makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 
 import multilineInputCss from "./MultilineInput.css";
 
@@ -187,7 +191,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     };
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: We want to run this effect when value changes in a controlled component.
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       changeHeight();
     }, [value, changeHeight]);
 
