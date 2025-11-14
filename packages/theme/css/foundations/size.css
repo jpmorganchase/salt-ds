@@ -28,6 +28,7 @@
   --salt-size-bar-strong: 12px;
 }
 
+.salt-density-mobile,
 .salt-density-touch {
   --salt-size-adornment: 12px;
   --salt-size-bar: 8px;
@@ -41,7 +42,8 @@
 .salt-density-touch,
 .salt-density-low,
 .salt-density-medium,
-.salt-density-high {
+.salt-density-high,
+.salt-density-mobile {
   --salt-size-fixed-100: 1px;
   --salt-size-fixed-200: 2px;
   --salt-size-fixed-300: 3px;
