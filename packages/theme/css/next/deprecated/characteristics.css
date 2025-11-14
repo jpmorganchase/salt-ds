@@ -61,4 +61,8 @@
 
   /* Separable */
   --salt-separable-background: var(--salt-palette-alpha-none);
+
+  --salt-content-foreground-highlight: var(--salt-palette-accent-weaker);
+  --salt-content-foreground-active: var(--salt-palette-accent-stronger);
+  --salt-content-foreground-hover: var(--salt-palette-accent-strong);
 }

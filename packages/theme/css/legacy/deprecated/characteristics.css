@@ -224,4 +224,8 @@
 
   /* Separable */
   --salt-separable-background: var(--salt-palette-alpha-none);
+
+  --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
+  --salt-content-foreground-active: var(--salt-palette-accent-foreground-informative);
+  --salt-content-foreground-hover: var(--salt-palette-accent-foreground-informative);
 }
