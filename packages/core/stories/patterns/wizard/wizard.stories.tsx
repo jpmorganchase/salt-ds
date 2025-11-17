@@ -41,8 +41,9 @@ import {
   type StepValidationResult,
   useWizard,
   type ValidationStatus,
-} from "./useWizard";
+} from "./hooks/useWizard";
 import "./wizard.stories.css";
+import { useAccountForm } from "./hooks/useAccountForm";
 
 export default {
   title: "Patterns/Wizard",
@@ -220,7 +221,7 @@ interface ConfirmationDialogProps {
   onConfirm: () => void;
 }
 
-interface AccountFormData {
+export interface AccountFormData {
   fullName: string;
   phoneNumber: string;
   emailAddress: string;
@@ -1034,7 +1035,17 @@ export const Horizontal = () => {
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
 
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+  const {
+    formData,
+    runValidationAndStore,
+    sharedFormProps: baseFormProps,
+  } = useAccountForm({
+    initialData: initialFormData,
+    currentStepId,
+    validateStep,
+    setCurrentStepValidation,
+  });
+
   const [successOpen, setSuccessOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
@@ -1048,17 +1059,6 @@ export const Horizontal = () => {
     navigatedRef.current = false;
     stepHeadingRef.current?.focus();
   }, [activeStepIndex]);
-
-  const runValidationAndStore = useCallback(
-    async (overrideData?: AccountFormData) => {
-      const dataToUse = overrideData ?? formData;
-      const fields = await validateStep(currentStepId, dataToUse);
-      setCurrentStepValidation(fields);
-      const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
-    },
-    [currentStepId, formData, setCurrentStepValidation],
-  );
 
   const handleNext = async () => {
     const valid = await runValidationAndStore();
@@ -1076,48 +1076,21 @@ export const Horizontal = () => {
     previous();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      // Re-validate eagerly with updated value
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    runValidationAndStore({ ...formData, [name]: value });
-  };
-
-  const handleSelectChange = async (value: string, name: string) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const sharedFormProps = {
-    formData,
+  const sharedFormPropsWithValidation = {
+    ...baseFormProps,
     stepFieldValidation: currentStepValidation,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
   };
 
   const contentByStep = {
-    "account-details": <AccountDetailsContent {...sharedFormProps} />,
-    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "account-details": (
+      <AccountDetailsContent {...sharedFormPropsWithValidation} />
+    ),
+    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
     "additional-info": (
-      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+      <AdditionalInfoContent
+        {...sharedFormPropsWithValidation}
+        style={{ width: "50%" }}
+      />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1229,8 +1202,6 @@ export const HorizontalWithCancelConfirmation = () => {
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
 
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-
   const [successOpen, setSuccessOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -1246,16 +1217,16 @@ export const HorizontalWithCancelConfirmation = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  const runValidationAndStore = useCallback(
-    async (overrideData?: AccountFormData) => {
-      const dataToUse = overrideData ?? formData;
-      const fields = await validateStep(currentStepId, dataToUse);
-      setCurrentStepValidation(fields);
-      const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
-    },
-    [currentStepId, formData, setCurrentStepValidation],
-  );
+  const {
+    formData,
+    runValidationAndStore,
+    sharedFormProps: baseFormProps,
+  } = useAccountForm({
+    initialData: initialFormData,
+    currentStepId,
+    validateStep,
+    setCurrentStepValidation,
+  });
 
   const handleNext = async () => {
     const valid = await runValidationAndStore();
@@ -1273,50 +1244,23 @@ export const HorizontalWithCancelConfirmation = () => {
     previous();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      // Re-validate eagerly with updated value
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    runValidationAndStore({ ...formData, [name]: value });
-  };
-
-  const handleSelectChange = async (value: string, name: string) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const sharedFormProps = {
-    formData,
+  const sharedFormPropsWithValidation = {
+    ...baseFormProps,
     stepFieldValidation: currentStepValidation,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
   };
 
   const openCancelDialog = () => setCancelOpen(true);
 
   const contentByStep = {
-    "account-details": <AccountDetailsContent {...sharedFormProps} />,
-    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "account-details": (
+      <AccountDetailsContent {...sharedFormPropsWithValidation} />
+    ),
+    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
     "additional-info": (
-      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+      <AdditionalInfoContent
+        {...sharedFormPropsWithValidation}
+        style={{ width: "50%" }}
+      />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1442,7 +1386,6 @@ export const VerticalWithCancelConfirmation = () => {
     stepsStatusMap,
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
   const [successOpen, setSuccessOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -1458,16 +1401,16 @@ export const VerticalWithCancelConfirmation = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  const runValidationAndStore = useCallback(
-    async (overrideData?: AccountFormData) => {
-      const dataToUse = overrideData ?? formData;
-      const fields = await validateStep(currentStepId, dataToUse);
-      setCurrentStepValidation(fields);
-      const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
-    },
-    [currentStepId, formData, setCurrentStepValidation],
-  );
+  const {
+    formData,
+    runValidationAndStore,
+    sharedFormProps: baseFormProps,
+  } = useAccountForm({
+    initialData: initialFormData,
+    currentStepId,
+    validateStep,
+    setCurrentStepValidation,
+  });
 
   const handleNext = async () => {
     const valid = await runValidationAndStore();
@@ -1485,48 +1428,21 @@ export const VerticalWithCancelConfirmation = () => {
     previous();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      // Re-validate eagerly with updated value
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    runValidationAndStore({ ...formData, [name]: value });
-  };
-
-  const handleSelectChange = async (value: string, name: string) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const sharedFormProps = {
-    formData,
+  const sharedFormPropsWithValidation = {
+    ...baseFormProps,
     stepFieldValidation: currentStepValidation,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
   };
 
   const contentByStep = {
-    "account-details": <AccountDetailsContent {...sharedFormProps} />,
-    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "account-details": (
+      <AccountDetailsContent {...sharedFormPropsWithValidation} />
+    ),
+    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
     "additional-info": (
-      <AdditionalInfoContent {...sharedFormProps} style={{ width: "60%" }} />
+      <AdditionalInfoContent
+        {...sharedFormPropsWithValidation}
+        style={{ width: "60%" }}
+      />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1650,7 +1566,16 @@ export const Modal = () => {
   } = useWizard({ steps: stepIds });
   const [open, setOpen] = useState(false);
 
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+  const {
+    formData,
+    runValidationAndStore,
+    sharedFormProps: baseFormProps,
+  } = useAccountForm({
+    initialData: initialFormData,
+    currentStepId,
+    validateStep,
+    setCurrentStepValidation,
+  });
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -1678,17 +1603,6 @@ export const Modal = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  const runValidationAndStore = useCallback(
-    async (overrideData?: AccountFormData) => {
-      const dataToUse = overrideData ?? formData;
-      const fields = await validateStep(currentStepId, dataToUse);
-      setCurrentStepValidation(fields);
-      const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
-    },
-    [currentStepId, formData, setCurrentStepValidation],
-  );
-
   const handleNext = async () => {
     const valid = await runValidationAndStore();
     if (!valid) return;
@@ -1705,47 +1619,20 @@ export const Modal = () => {
     previous();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      // Re-validate eagerly with updated value
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    runValidationAndStore({ ...formData, [name]: value });
-  };
-
-  const handleSelectChange = async (value: string, name: string) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const sharedFormProps = {
-    formData,
+  const sharedFormPropsWithValidation = {
+    ...baseFormProps,
     stepFieldValidation: currentStepValidation,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
   };
   const contentByStep = {
-    "account-details": <AccountDetailsContent {...sharedFormProps} />,
-    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "account-details": (
+      <AccountDetailsContent {...sharedFormPropsWithValidation} />
+    ),
+    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
     "additional-info": (
-      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+      <AdditionalInfoContent
+        {...sharedFormPropsWithValidation}
+        style={{ width: "50%" }}
+      />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1847,7 +1734,16 @@ export const ModalWithConfirmations = () => {
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
 
-  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+  const {
+    formData,
+    runValidationAndStore,
+    sharedFormProps: baseFormProps,
+  } = useAccountForm({
+    initialData: initialFormData,
+    currentStepId,
+    validateStep,
+    setCurrentStepValidation,
+  });
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -1887,17 +1783,6 @@ export const ModalWithConfirmations = () => {
     setOpen(value);
   };
 
-  const runValidationAndStore = useCallback(
-    async (overrideData?: AccountFormData) => {
-      const dataToUse = overrideData ?? formData;
-      const fields = await validateStep(currentStepId, dataToUse);
-      setCurrentStepValidation(fields);
-      const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
-    },
-    [currentStepId, formData, setCurrentStepValidation],
-  );
-
   const handleNext = async () => {
     const valid = await runValidationAndStore();
     if (!valid) return;
@@ -1914,48 +1799,21 @@ export const ModalWithConfirmations = () => {
     previous();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      // Re-validate eagerly with updated value
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    runValidationAndStore({ ...formData, [name]: value });
-  };
-
-  const handleSelectChange = async (value: string, name: string) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [name]: value };
-      runValidationAndStore(updated);
-      return updated;
-    });
-  };
-
-  const sharedFormProps = {
-    formData,
+  const sharedFormPropsWithValidation = {
+    ...baseFormProps,
     stepFieldValidation: currentStepValidation,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
   };
 
   const contentByStep = {
-    "account-details": <AccountDetailsContent {...sharedFormProps} />,
-    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "account-details": (
+      <AccountDetailsContent {...sharedFormPropsWithValidation} />
+    ),
+    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
     "additional-info": (
-      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+      <AdditionalInfoContent
+        {...sharedFormPropsWithValidation}
+        style={{ width: "50%" }}
+      />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
