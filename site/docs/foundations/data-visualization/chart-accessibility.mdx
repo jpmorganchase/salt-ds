@@ -1,0 +1,88 @@
+---
+title: Chart accessibility
+layout: DetailTechnical
+sidebar:
+  priority: 5
+---
+
+Charts rely on visual elements to make complex data easier to understand, so it’s essential to ensure they are accessible to all users. According to [WCAG guidelines](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html), color shouldn’t be the only distinguishing factor to convey information about your data. To improve accessibility for users with different needs, always include additional visual cues, such as line patterns and pattern fills.
+
+## Categorical colors
+
+### Color contrast
+
+Users with visual impairments should be able to fully understand data that is represented using different colors. The use of custom colors or hex codes is discouraged, as they may not meet non-text contrast requirements and can compromise accessibility. Salt tokens should be used to ensure compliance, as they are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
+
+<Image
+  src="/img/foundations/dataviz-hex.png"
+  srcDark="/img/foundations/dataviz-hex-dark.png"
+  alt="Diagram of best practices using categorical color versus color picking."
+/>
+
+## Visual affordances
+
+Assistive technology users typically navigate charts using screen readers or keyboards—and may be unable to detect visual elements in the chart. Adding text alternatives within your application’s code may aid their comprehension of the data. There are three types of text alternatives you can add: a chart name, summary and/or data table.
+
+You can enhance your chart’s accessibility by adopting additional visual strategies other than color such as:
+
+- Pattern overlays for different categories
+- Direct labelling where possible
+- A border with at least a 3:1 contrast ratio against the background to distinguish between segments
+
+### Text alternatives in code
+
+Consider if the complexity, format and accessibility of your chart warrants text alternatives. A simple pie or donut chart with a small number of data points and no trends, for example, won’t require text alternatives if keyboard and screen reader users can navigate to and focus on the all data points.
+
+You can present chart data in a nearby table or list, in an overlay, or if necessary, as a last resort, on a separate screen to support screen readers. However, placing essential information on a separate screen will disrupt the flow of information, requiring screen reader users to context switch by navigating back and forth between sections to access the full text alternative. This added navigation can make understanding the data more difficult for users relying on screen readers.
+
+For more information about text alternatives, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
+
+<Image
+  src="/img/foundations/dataviz-affordance.png"
+  srcDark="/img/foundations/dataviz-affordance-dark.png"
+  alt="Diagram of a column chart depicting fruit sales per unit next to a table with the fruit sales listed in numbers."
+/>
+
+## Line patterns
+
+Use line patterns to differentiate multiple line series.
+
+Learn more about the available line patterns in the [Color and pattern page.](/salt/foundations/data-visualization/color-and-pattern)
+
+<Image
+  src="/img/foundations/dataviz-line-patterns2.png"
+  srcDark="/img/foundations/dataviz-line-patterns2-dark.png"
+  alt="Diagram of line chart using line patterns."
+/>
+
+## Pattern fills
+
+Use pattern fills for two-dimensional shapes, such as bars and slices. Pattern fills should always be black as they are applied over solid categorical colors in charts. They are especially helpful when there is only one visual distinction between data points, ensuring that all users can easily differentiate between chart elements.
+
+Learn more about the available pattern fills in the [Color and pattern page.](/salt/foundations/data-visualization/color-and-pattern)
+
+<Image
+  src="/img/foundations/dataviz-pattern-fills2.png"
+  srcDark="/img/foundations/dataviz-pattern-fills2-dark.png"
+  alt="Diagram of donut chart using pattern fills."
+/>
+
+## Marker symbols
+
+Use marker symbols to make data points more distinctive and help differentiate lines. Marker symbols have a white border in both light and dark modes for accessibility. If you have more than five data series, the additional series will simply use the first symbol again. The symbols cycle through the available options, so for a sixth series, it would revert back to the first symbol in the defined set.
+
+Salt uses predefined symbols in the following order:
+
+- Circle
+- Diamond
+- Square
+- Triangle (up)
+- Triangle-down
+
+<Image
+  src="/img/foundations/dataviz-markers.png"
+  srcDark="/img/foundations/dataviz-markers-dark.png"
+  alt="Diagram of line chart using marker symbols."
+/>
+
+:fragment{src="../fragments/feedback.mdx"}

@@ -7,8 +7,6 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -42,8 +40,8 @@ import {
   useFloatingUI,
   useForkRef,
   useId,
+  useIsomorphicLayoutEffect,
 } from "../utils";
-import comboBoxCss from "./ComboBox.css";
 import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
 export type ComboBoxProps<Item = string> = {
@@ -99,12 +97,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     ...rest
   } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-combo-box",
-    css: comboBoxCss,
-    window: targetWindow,
-  });
   const { CollapseIcon, ExpandIcon } = useIcon();
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
@@ -116,6 +108,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
   const inputRef = useRef<HTMLInputElement>(null);
   const handleInputRef = useForkRef(inputRef, inputRefProp);
+  const shouldAutoSelectRef = useRef(false);
 
   const listControl = useComboBox<Item>({
     open,
@@ -138,7 +131,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     openState,
     setOpen,
     openKey,
-    getIndexOfOption,
     getOptionsMatching,
     getFirstOption,
     getLastOption,
@@ -154,6 +146,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     focusedState,
     setFocusedState,
     listRef,
+    setListRef,
     valueState,
     setValueState,
     removePill,
@@ -231,6 +224,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
+    if (!event.repeat) {
+      shouldAutoSelectRef.current = false;
+    }
+
     if (readOnly) {
       return;
     }
@@ -242,21 +239,21 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       }
     }
 
-    const activeOption = activeState ?? getFirstOption()?.data;
-
-    if (activeOption === undefined) {
-      return;
-    }
+    const activeOption = activeState;
 
     let newActive:
       | { data: OptionValue<Item>; element: HTMLElement }
       | undefined;
     switch (event.key) {
       case "ArrowDown":
-        newActive = getOptionAfter(activeOption) ?? getLastOption();
+        newActive = activeOption
+          ? getOptionAfter(activeOption)
+          : getFirstOption();
         break;
       case "ArrowUp":
-        newActive = getOptionBefore(activeOption) ?? getFirstOption();
+        newActive = activeOption
+          ? getOptionBefore(activeOption)
+          : getLastOption();
         break;
       case "Home":
         newActive = getFirstOption();
@@ -265,10 +262,24 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         newActive = getLastOption();
         break;
       case "PageUp":
-        newActive = getOptionPageAbove(activeOption);
+        if (activeOption) {
+          newActive = getOptionPageAbove(activeOption);
+        } else {
+          const lastOption = getLastOption();
+          if (lastOption) {
+            newActive = getOptionPageAbove(lastOption?.data);
+          }
+        }
         break;
       case "PageDown":
-        newActive = getOptionPageBelow(activeOption);
+        if (activeOption) {
+          newActive = getOptionPageBelow(activeOption);
+        } else {
+          const firstOption = getFirstOption();
+          if (firstOption) {
+            newActive = getOptionPageBelow(firstOption.data);
+          }
+        }
         break;
       case "Enter":
         if (openState && activeState?.disabled) {
@@ -311,7 +322,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    setFocusedState(true);
+    if (event.currentTarget === inputRef.current) {
+      setFocusedState(true);
+    } else {
+      setActive(undefined);
+    }
     onFocus?.(event);
   };
 
@@ -319,6 +334,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     event.persist();
     if (!listRef.current || !listRef.current.contains(event.relatedTarget)) {
       onBlur?.(event);
+      shouldAutoSelectRef.current = false;
     }
   };
 
@@ -335,17 +351,12 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     setValueState(value);
 
-    // Wait for the filter to happen
-    queueMicrotask(() => {
-      if (value !== "") {
-        const newOption = getFirstOption();
-        if (newOption) {
-          setActive(newOption.data);
-        }
-      } else {
-        setActive(undefined);
-      }
-    });
+    // Clean active item if no text is present.
+    if (value === "") {
+      setActive(undefined);
+    } else {
+      shouldAutoSelectRef.current = true;
+    }
 
     onChange?.(event);
   };
@@ -368,20 +379,29 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
+  useIsomorphicLayoutEffect(() => {
+    if (value) {
+      shouldAutoSelectRef.current = true;
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (openState && value) {
+      queueMicrotask(() => {
+        const newOption = getFirstOption();
+        if (newOption && shouldAutoSelectRef.current) {
+          setActive(newOption.data);
+        }
+      });
+    }
+  }, [value, setActive, openState, getFirstOption]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
-    // If the list is closed we should clear the active item
-    if (!openState) {
-      setActive(undefined);
-      return;
-    }
-
-    // We check the active index because the active item may have been removed
-    const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
     let newActive: ReturnType<typeof getFirstOption>;
 
-    // If the active item is still in the list, we don't need to do anything
-    if (activeIndex > -1) {
+    if (!openState) {
+      setActive(undefined);
       return;
     }
 
@@ -403,18 +423,15 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       }
     }
 
-    // If we still don't have an active item, we should just select the first item
-    if (!newActive) {
-      newActive = getFirstOption();
+    if (newActive) {
+      setActive(newActive?.data);
     }
-
-    setActive(newActive?.data);
-  }, [openState, children]);
+  }, [openState]);
 
   const buttonId = useId();
   const listId = useId();
 
-  const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
+  const handleListRef = useForkRef<HTMLDivElement>(setListRef, floating);
 
   const showOptionsButton = (
     <Button

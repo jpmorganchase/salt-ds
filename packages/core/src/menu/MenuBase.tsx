@@ -87,6 +87,7 @@ export function MenuBase(props: MenuBaseProps) {
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [focusInside, setFocusInside] = useState(false);
+  const [triggerDisabled, setTriggerDisabled] = useState(false);
 
   const isNested = parentId != null;
 
@@ -124,7 +125,7 @@ export function MenuBase(props: MenuBaseProps) {
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
       useHover(context, {
-        enabled: isNested && !focusInside,
+        enabled: isNested && !focusInside && !triggerDisabled,
         handleClose: safePolygon({ blockPointerEvents: true }),
       }),
       useClick(context, {
@@ -181,6 +182,8 @@ export function MenuBase(props: MenuBaseProps) {
           focusInside,
           setFocusInside,
           isNested,
+          triggerDisabled,
+          setTriggerDisabled,
         }}
       >
         {children}

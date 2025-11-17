@@ -1,5 +1,20 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.81
+
+### Minor Changes
+
+- d86bccf: Removed `NumberInput` from labs and promoted to core.
+
+### Patch Changes
+
+- Updated dependencies [7d0dc56]
+- Updated dependencies [7d0dc56]
+- Updated dependencies [01e4bde]
+- Updated dependencies [d86bccf]
+- Updated dependencies [7d0dc56]
+  - @salt-ds/core@1.53.0
+
 ## 1.0.0-alpha.80
 
 ### Patch Changes

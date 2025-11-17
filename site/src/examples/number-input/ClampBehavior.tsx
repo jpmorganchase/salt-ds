@@ -2,9 +2,9 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  NumberInput,
   useAriaAnnouncer,
 } from "@salt-ds/core";
-import { NumberInput } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 
 export const ClampBehavior = () => {

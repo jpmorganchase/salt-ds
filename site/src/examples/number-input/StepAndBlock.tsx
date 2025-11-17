@@ -1,5 +1,9 @@
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import { NumberInput } from "@salt-ds/lab";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  NumberInput,
+} from "@salt-ds/core";
 
 export const StepAndBlock = () => (
   <FormField style={{ width: "256px" }}>

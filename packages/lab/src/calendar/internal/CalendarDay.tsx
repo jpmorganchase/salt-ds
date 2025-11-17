@@ -5,12 +5,13 @@ import {
   Tooltip,
   type TooltipProps,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithRef, forwardRef, useLayoutEffect } from "react";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
@@ -85,7 +86,7 @@ export const CalendarDay = forwardRef<
     status;
   const buttonRef = useForkRef(ref, focusedDateRef);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (focused) {
       focusedDateRef?.current?.focus({ preventScroll: true });
     }

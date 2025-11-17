@@ -1,15 +1,3 @@
-import {
-  Button,
-  capitalize,
-  makePrefixer,
-  StatusAdornment,
-  useControlled,
-  useForkRef,
-  useFormFieldProps,
-  useIcon,
-  useId,
-  type ValidationStatus,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -28,6 +16,18 @@ import {
   useRef,
   useState,
 } from "react";
+import { Button } from "../button";
+import { useFormFieldProps } from "../form-field-context";
+import { useIcon } from "../semantic-icon-provider";
+import { StatusAdornment } from "../status-adornment";
+import type { ValidationStatus } from "../status-indicator";
+import {
+  capitalize,
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useId,
+} from "../utils";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import numberInputCss from "./NumberInput.css";
 

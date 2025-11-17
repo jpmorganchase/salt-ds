@@ -107,13 +107,13 @@ describe("Given a ComboBox", () => {
     cy.get("@selectionChange").should("not.have.been.called");
   });
 
-  it("should be able to filter and select quick-select an option with Enter", () => {
+  it("should be able to filter and quick-select an option with Enter", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
     cy.mount(<Default onSelectionChange={selectionChangeSpy} />);
 
     cy.findByRole("combobox").realClick();
 
-    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.findAllByRole("option").should("not.be.activeDescendant");
     cy.realType("C");
     cy.findByRole("option", { name: "California" }).should(
       "be.activeDescendant",
@@ -135,7 +135,7 @@ describe("Given a ComboBox", () => {
 
     cy.findByRole("combobox").realClick();
 
-    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.findAllByRole("option").should("not.be.activeDescendant");
     cy.realType("C");
     cy.findByRole("option", { name: "California" }).should(
       "be.activeDescendant",
@@ -246,22 +246,22 @@ describe("Given a ComboBox", () => {
 
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("exist");
+    cy.findAllByRole("option").should("not.be.activeDescendant");
+
+    cy.realPress(["ArrowDown"]);
     cy.findAllByRole("option").eq(0).should("be.activeDescendant");
 
     // should not wrap
     cy.realPress(["ArrowUp"]);
     cy.findAllByRole("option").eq(0).should("be.activeDescendant");
 
-    cy.realPress(["ArrowDown"]);
-    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
-
     // should try to go down by the number of visible items in list
     cy.realPress(["PageDown"]);
-    cy.findAllByRole("option").eq(11).should("be.activeDescendant");
+    cy.findAllByRole("option").eq(10).should("be.activeDescendant");
 
     // should try to go up by the number of visible items in list
     cy.realPress(["PageUp"]);
-    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
+    cy.findAllByRole("option").eq(0).should("be.activeDescendant");
 
     // should go to the last item
     cy.realPress(["End"]);
@@ -634,7 +634,7 @@ describe("Given a ComboBox", () => {
   it("should clear the list of active items when the input is cleared", () => {
     cy.mount(<Default />);
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.findAllByRole("option").should("not.be.activeDescendant");
     cy.realType("C");
     cy.findByRole("option", { name: "California" }).should(
       "be.activeDescendant",
@@ -761,7 +761,7 @@ describe("Given a ComboBox", () => {
   it("should remove aria-activedescendant when closed", () => {
     cy.mount(<Default />);
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.findAllByRole("option").should("not.be.activeDescendant");
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
     cy.findByRole("combobox").realClick();

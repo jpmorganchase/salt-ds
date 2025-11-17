@@ -1,5 +1,30 @@
 # @salt-ds/core
 
+## 1.53.0
+
+### Minor Changes
+
+- d86bccf: Added `NumberInput`.
+
+  `NumberInput` displays a default numeric value that users can increase or decrease using the controls or by keyboard actions. Users can also manually enter a specific value.
+
+  ```tsx
+  <NumberInput
+    defaultValue={0}
+    onNumberChange={(_event, newValue) =>
+      console.log(`Number changed to ${newValue}`)
+    }
+  />
+  ```
+
+### Patch Changes
+
+- 7d0dc56: Fixed an issue with ComboBox where the first option was not always correctly auto-selected.
+- 7d0dc56: Improved the keyboard navigation of ComboBox so that it is more consistent with other implementations.
+- 01e4bde: Fixed Dialog flickering when its content is short but scrollable. This mostly affected small screens.
+- 7d0dc56: - Improved affordance for focused pills inside multiselect `ComboBox`.
+  - Fixed two focus rings appearing when an interactive adornment is focused.
+
 ## 1.52.1
 
 ### Patch Changes

@@ -8,6 +8,7 @@ import {
   StackLayout,
   useControlled,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import type {
   DateFrameworkType,
@@ -22,7 +23,6 @@ import {
   forwardRef,
   type SyntheticEvent,
   useCallback,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -448,7 +448,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus/min/max date changes
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!focused) {
       setFocusedDate(null);
       return;
