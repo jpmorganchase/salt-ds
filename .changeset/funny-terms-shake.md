@@ -4,6 +4,8 @@
 
 Deprecated unused content tokens.
 
-- `--salt-content-foreground-highlight` can be replaced with `--salt-selectable-background-selected`
-- `--salt-content-foreground-active` can be replaced with `--salt-content-accent-foreground`
-- `--salt-content-foreground-hover` can be replaced with `--salt-content-accent-foreground`
+| Deprecated token                      | Replacement token                       |
+| ------------------------------------- | --------------------------------------- |
+| `--salt-content-foreground-highlight` | `--salt-selectable-background-selected` |
+| `--salt-content-foreground-active`    | `--salt-content-accent-foreground`      |
+| `--salt-content-foreground-hover`     | `--salt-content-accent-foreground`      |
