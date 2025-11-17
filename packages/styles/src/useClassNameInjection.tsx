@@ -39,13 +39,16 @@ type PropsWithClassName = { className?: string } & Record<string, any>;
 
 export function useInjectedClassName<Props extends PropsWithClassName>(
   component: string,
-  props: Props
+  props: Props,
 ): { className: string; props: Omit<Props, "className"> } {
   const { className: classNameProp, ...restProps } = props;
   const registry = useContext(InjectionContext);
 
   if (!registry) {
-    return { className: classNameProp || "", props: restProps as Omit<Props, "className"> };
+    return {
+      className: classNameProp || "",
+      props: restProps as Omit<Props, "className">,
+    };
   }
 
   const entries = registry[component] ?? [];
