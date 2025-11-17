@@ -34,7 +34,7 @@ export function useAccountForm<StepId extends string>({
   );
 
   const updateField = useCallback(
-    (name: keyof AccountFormData, value: string, revalidate = false) => {
+    (name: string, value: string, revalidate = false) => {
       setFormData((prev) => {
         const updated = { ...prev, [name]: value };
         if (revalidate) {
@@ -47,15 +47,15 @@ export function useAccountForm<StepId extends string>({
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateField(e.target.name as keyof AccountFormData, e.target.value);
+    updateField(e.target.name, e.target.value);
   };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateField(e.target.name as keyof AccountFormData, e.target.value, true);
+    updateField(e.target.name, e.target.value, true);
   };
 
   const handleSelectChange = (value: string, name: string) => {
-    updateField(name as keyof AccountFormData, value, true);
+    updateField(name, value, true);
   };
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -63,14 +63,6 @@ export function useAccountForm<StepId extends string>({
       ...formData,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const sharedFormProps = {
-    formData,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
   };
 
   return {
@@ -81,6 +73,5 @@ export function useAccountForm<StepId extends string>({
     handleRadioChange,
     handleSelectChange,
     onBlur,
-    sharedFormProps,
   };
 }

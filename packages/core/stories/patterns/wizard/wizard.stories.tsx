@@ -1038,7 +1038,10 @@ export const Horizontal = () => {
   const {
     formData,
     runValidationAndStore,
-    sharedFormProps: baseFormProps,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
   } = useAccountForm({
     initialData: initialFormData,
     currentStepId,
@@ -1076,21 +1079,20 @@ export const Horizontal = () => {
     previous();
   };
 
-  const sharedFormPropsWithValidation = {
-    ...baseFormProps,
+  const sharedFormProps = {
+    formData,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
     stepFieldValidation: currentStepValidation,
   };
 
   const contentByStep = {
-    "account-details": (
-      <AccountDetailsContent {...sharedFormPropsWithValidation} />
-    ),
-    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
-      <AdditionalInfoContent
-        {...sharedFormPropsWithValidation}
-        style={{ width: "50%" }}
-      />
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1220,7 +1222,10 @@ export const HorizontalWithCancelConfirmation = () => {
   const {
     formData,
     runValidationAndStore,
-    sharedFormProps: baseFormProps,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
   } = useAccountForm({
     initialData: initialFormData,
     currentStepId,
@@ -1244,23 +1249,22 @@ export const HorizontalWithCancelConfirmation = () => {
     previous();
   };
 
-  const sharedFormPropsWithValidation = {
-    ...baseFormProps,
+  const sharedFormProps = {
+    formData,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
     stepFieldValidation: currentStepValidation,
   };
 
   const openCancelDialog = () => setCancelOpen(true);
 
   const contentByStep = {
-    "account-details": (
-      <AccountDetailsContent {...sharedFormPropsWithValidation} />
-    ),
-    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
-      <AdditionalInfoContent
-        {...sharedFormPropsWithValidation}
-        style={{ width: "50%" }}
-      />
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1404,7 +1408,10 @@ export const VerticalWithCancelConfirmation = () => {
   const {
     formData,
     runValidationAndStore,
-    sharedFormProps: baseFormProps,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
   } = useAccountForm({
     initialData: initialFormData,
     currentStepId,
@@ -1428,21 +1435,20 @@ export const VerticalWithCancelConfirmation = () => {
     previous();
   };
 
-  const sharedFormPropsWithValidation = {
-    ...baseFormProps,
+  const sharedFormProps = {
+    formData,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
     stepFieldValidation: currentStepValidation,
   };
 
   const contentByStep = {
-    "account-details": (
-      <AccountDetailsContent {...sharedFormPropsWithValidation} />
-    ),
-    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
-      <AdditionalInfoContent
-        {...sharedFormPropsWithValidation}
-        style={{ width: "60%" }}
-      />
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "60%" }} />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1569,7 +1575,10 @@ export const Modal = () => {
   const {
     formData,
     runValidationAndStore,
-    sharedFormProps: baseFormProps,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
   } = useAccountForm({
     initialData: initialFormData,
     currentStepId,
@@ -1619,20 +1628,19 @@ export const Modal = () => {
     previous();
   };
 
-  const sharedFormPropsWithValidation = {
-    ...baseFormProps,
+  const sharedFormProps = {
+    formData,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
     stepFieldValidation: currentStepValidation,
   };
   const contentByStep = {
-    "account-details": (
-      <AccountDetailsContent {...sharedFormPropsWithValidation} />
-    ),
-    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
-      <AdditionalInfoContent
-        {...sharedFormPropsWithValidation}
-        style={{ width: "50%" }}
-      />
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
@@ -1737,7 +1745,10 @@ export const ModalWithConfirmations = () => {
   const {
     formData,
     runValidationAndStore,
-    sharedFormProps: baseFormProps,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
   } = useAccountForm({
     initialData: initialFormData,
     currentStepId,
@@ -1799,21 +1810,20 @@ export const ModalWithConfirmations = () => {
     previous();
   };
 
-  const sharedFormPropsWithValidation = {
-    ...baseFormProps,
+  const sharedFormProps = {
+    formData,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
     stepFieldValidation: currentStepValidation,
   };
 
   const contentByStep = {
-    "account-details": (
-      <AccountDetailsContent {...sharedFormPropsWithValidation} />
-    ),
-    "account-type": <AccountTypeContent {...sharedFormPropsWithValidation} />,
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
-      <AdditionalInfoContent
-        {...sharedFormPropsWithValidation}
-        style={{ width: "50%" }}
-      />
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
     ),
     review: <ReviewAccountContent formData={formData} />,
   };
