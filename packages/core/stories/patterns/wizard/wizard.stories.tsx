@@ -17,31 +17,196 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-  type StackLayoutProps,
   Step,
   Stepper,
   Text,
   useIsomorphicLayoutEffect,
   useResizeObserver,
-  useResponsiveProp,
 } from "@salt-ds/core";
-import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import clsx from "clsx";
-import React, {
-  type ElementType,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
-import { useWizard, type ValidationStatus } from "./useWizard";
+import {
+  type FieldValidation,
+  type StepValidationResult,
+  useWizard,
+  type ValidationStatus,
+} from "./useWizard";
 import "./wizard.stories.css";
 
 export default {
   title: "Patterns/Wizard",
 } as Meta;
+
+export const Basic = () => {
+  const steps = ["Step One", "Step Two", "Step Three"];
+
+  const {
+    activeStepIndex,
+    currentStepId,
+    next,
+    previous,
+    stepValidation,
+    stepsStatusMap,
+    setCurrentStepValidation,
+    reset,
+    clearCurrentStepValidation,
+  } = useWizard({ steps });
+
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
+  useEffect(() => {
+    if (!navigatedRef.current) {
+      return;
+    }
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const isFirstStep = activeStepIndex === 0;
+  const isLastStep = activeStepIndex === steps.length - 1;
+
+  const handleNext = () => {
+    const ok = next();
+    if (!ok) return;
+    navigatedRef.current = true;
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const header = (
+    <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
+      <FlexItem style={{ flex: 1 }}>
+        <Text>
+          Workflow title
+          <Text
+            as="h2"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            style={{ margin: 0 }}
+          >
+            {currentStepId}
+          </Text>
+        </Text>
+      </FlexItem>
+      <FlexItem style={{ flex: 1 }}>
+        <Stepper orientation="horizontal">
+          {steps.map((label, i) => (
+            <Step
+              key={label}
+              label={label}
+              status={stepsStatusMap[label]?.status}
+              stage={
+                i === activeStepIndex
+                  ? "active"
+                  : i < activeStepIndex
+                    ? "completed"
+                    : "pending"
+              }
+            />
+          ))}
+        </Stepper>
+      </FlexItem>
+    </FlexLayout>
+  );
+
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3}>
+      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+        Cancel
+      </Button>
+      {!isFirstStep && (
+        <Button
+          appearance="bordered"
+          sentiment="accented"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
+      )}
+      <Button sentiment="accented" onClick={handleNext}>
+        {isLastStep ? "Finish" : "Next"}
+      </Button>
+    </FlexLayout>
+  );
+
+  return (
+    <StackLayout gap={3} style={{ width: 560 }}>
+      {header}
+      <StackLayout
+        style={{
+          minHeight: 200,
+          backgroundColor: "var(--salt-container-secondary-background)",
+        }}
+        gap={1}
+        padding={3}
+      >
+        <Text styleAs="h3">Current step: {currentStepId}</Text>
+        <FlexLayout gap={1}>
+          <Button
+            appearance="bordered"
+            sentiment="accented"
+            onClick={() =>
+              setCurrentStepValidation({
+                fieldName: {
+                  status: "warning",
+                  message: "Warning: navigation allowed",
+                },
+              })
+            }
+          >
+            Warning
+          </Button>
+          <Button
+            appearance="bordered"
+            sentiment="accented"
+            onClick={() =>
+              setCurrentStepValidation({
+                fieldName: {
+                  status: "error",
+                  message: "Error: navigation blocked",
+                },
+              })
+            }
+          >
+            Error
+          </Button>
+          <Button
+            appearance="transparent"
+            sentiment="accented"
+            onClick={clearCurrentStepValidation}
+          >
+            Clear Status
+          </Button>
+        </FlexLayout>
+        {stepValidation.fieldName?.message && (
+          <FormField validationStatus={stepValidation.fieldName.status}>
+            <FormFieldHelperText>
+              {stepValidation.fieldName.message}
+            </FormFieldHelperText>
+          </FormField>
+        )}
+        {stepValidation.fieldName?.status === "error" && (
+          <Text style={{ color: "var(--salt-status-error-foreground)" }}>
+            Error blocks navigation.
+          </Text>
+        )}
+        {stepValidation.fieldName?.status === "warning" && (
+          <Text style={{ color: "var(--salt-status-warning-foreground)" }}>
+            Warning does not block navigation.
+          </Text>
+        )}
+      </StackLayout>
+      {footer}
+    </StackLayout>
+  );
+};
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -49,34 +214,48 @@ interface ConfirmationDialogProps {
   onConfirm: () => void;
 }
 
+interface AccountFormData {
+  fullName: string;
+  phoneNumber: string;
+  emailAddress: string;
+  address1: string;
+  address2: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  accountType: string;
+  initialDeposit: string;
+  beneficiaryName: string;
+  sourceOfFunds: string;
+  paperlessStatements: string;
+}
+
 interface FormContentProps {
   formData: AccountFormData;
   handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleInputBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   stepFieldValidation: {
-    [field: string]: { status?: ValidationStatus; message?: string };
+    [field: string]: FieldValidation;
   };
   handleSelectChange?: (value: string, name: string) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  handleRadioChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   style?: React.CSSProperties;
 }
 
-const wizardSteps: { id: ContentType; label: string; description?: string }[] =
-  [
-    { id: "account-details", label: "Account details" },
-    { id: "account-type", label: "Account type" },
-    {
-      id: "additional-info",
-      label: "Additional info",
-      description: "(Optional)",
-    },
-    { id: "review", label: "Review and create" },
-  ];
+const wizardSteps = [
+  { id: "account-details", label: "Account details" },
+  { id: "account-type", label: "Account type" },
+  {
+    id: "additional-info",
+    label: "Additional info",
+    description: "(Optional)",
+  },
+  { id: "review", label: "Review and create" },
+] as const;
 
-const accountTypeOptions: {
-  value: string;
-  title: string;
-  subtitle: string;
-}[] = [
+type ContentType = (typeof wizardSteps)[number]["id"];
+
+const accountTypeOptions = [
   {
     value: "checking",
     title: "Checking Account",
@@ -109,22 +288,6 @@ const accountTypeOptions: {
   },
 ];
 
-interface AccountFormData {
-  fullName: string;
-  phoneNumber: string;
-  emailAddress: string;
-  address1: string;
-  address2: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  accountType: string;
-  initialDeposit: string;
-  beneficiaryName: string;
-  sourceOfFunds: string;
-  paperlessStatements: string;
-}
-
 const initialFormData: AccountFormData = {
   fullName: "Jane Doe",
   phoneNumber: "+1 (212) 555-0100",
@@ -141,14 +304,9 @@ const initialFormData: AccountFormData = {
   paperlessStatements: "",
 };
 
-export type ContentType =
-  | "account-details"
-  | "account-type"
-  | "additional-info"
-  | "review";
-
-// Account validation schema
-const stepValidationSchemas: Record<ContentType, Yup.ObjectSchema<any>> = {
+// Account validation schema (field-level + warning via params.severity)
+type StepSchema = Yup.ObjectSchema<Record<string, unknown>>;
+const stepValidationSchemas: Record<ContentType, StepSchema> = {
   "account-details": Yup.object({
     fullName: Yup.string().required("Full name is required."),
     phoneNumber: Yup.string().required("Phone number is required."),
@@ -181,6 +339,51 @@ const stepValidationSchemas: Record<ContentType, Yup.ObjectSchema<any>> = {
   }),
   review: Yup.object({}), // No validation
 };
+
+// Map Yup validation errors (including custom warning severity) to FieldValidation shape
+interface YupValidationErrorLike {
+  inner?: Array<{
+    path: string;
+    message: string;
+    params?: Record<string, unknown>;
+  }>;
+  path?: string;
+  message?: string;
+}
+function mapYupErrors(
+  err: YupValidationErrorLike,
+): StepValidationResult["fields"] {
+  const out: StepValidationResult["fields"] = {};
+  const list = err.inner ?? [];
+  for (const e of list) {
+    const rawSeverity = e.params?.severity as ValidationStatus | undefined;
+    const status: ValidationStatus =
+      rawSeverity === "warning" ? "warning" : "error";
+    // Last message wins for a field; overwrite for clarity
+    out[e.path] = { status, message: e.message };
+  }
+  // Fallback single error (when abortEarly true or inner empty)
+  if (!list.length && err.path) {
+    out[err.path] = { status: "error", message: err.message };
+  }
+  return out;
+}
+
+// Validate a single wizard step given current form data; returns fields map
+async function validateStep(
+  stepId: ContentType,
+  data: AccountFormData,
+): Promise<Record<string, FieldValidation>> {
+  const schema = stepValidationSchemas[stepId];
+  if (!schema) return {};
+  try {
+    await schema.validate(data, { abortEarly: false });
+    return {}; // valid
+  } catch (err) {
+    console.log("Validation error", err);
+    return mapYupErrors(err as YupValidationErrorLike);
+  }
+}
 
 const getStepStage = (index: number, activeStepIndex: number) => {
   if (index === activeStepIndex) return "active";
@@ -246,7 +449,7 @@ const ContentOverflow = ({
   );
 };
 
-const CancelWarningDialog = ({
+/* const CancelWarningDialog = ({
   open,
   onOpenChange,
   onConfirm,
@@ -302,7 +505,7 @@ const CancelWarningDialog = ({
       </DialogActions>
     </Dialog>
   );
-};
+}; */
 
 const AccountCreatedSuccessDialog = ({
   open,
@@ -326,7 +529,7 @@ const AccountCreatedSuccessDialog = ({
   </Dialog>
 );
 
-const AccountCreatedContent = () => (
+/* const AccountCreatedContent = () => (
   <StackLayout align="center">
     <SuccessCircleSolidIcon
       size={2}
@@ -337,9 +540,9 @@ const AccountCreatedContent = () => (
     <Text styleAs="h2">Account created</Text>
     <Text>You can now start using this new account.</Text>
   </StackLayout>
-);
+); */
 
-const CancelWarningContent = () => (
+/* const CancelWarningContent = () => (
   <StackLayout align="center">
     <WarningSolidIcon
       size={2}
@@ -352,13 +555,13 @@ const CancelWarningContent = () => (
       Any updates you've made so far will be lost after you confirm cancelling.
     </Text>
   </StackLayout>
-);
+); */
 
 const AdditionalInfoContent = ({
   formData,
   handleInputChange,
-  handleInputBlur,
   handleSelectChange,
+  onBlur,
   stepFieldValidation,
   style,
 }: FormContentProps) => {
@@ -373,7 +576,7 @@ const AdditionalInfoContent = ({
             name: "initialDeposit",
             value: formData.initialDeposit,
             onChange: handleInputChange,
-            onBlur: handleInputBlur,
+            onBlur,
             type: "number",
           }}
           inputMode="decimal"
@@ -391,7 +594,7 @@ const AdditionalInfoContent = ({
             name: "beneficiaryName",
             value: formData.beneficiaryName,
             onChange: handleInputChange,
-            onBlur: handleInputBlur,
+            onBlur,
           }}
         />
       </FormField>
@@ -402,7 +605,7 @@ const AdditionalInfoContent = ({
             name: "sourceOfFunds",
             value: formData.sourceOfFunds,
             onChange: handleInputChange,
-            onBlur: handleInputBlur,
+            onBlur,
           }}
         />
       </FormField>
@@ -425,17 +628,16 @@ const AdditionalInfoContent = ({
 };
 
 const AccountTypeContent = ({
-  handleInputBlur,
   formData,
   stepFieldValidation,
-  handleInputChange,
+  handleRadioChange,
 }: FormContentProps) => {
   return (
     <FormField validationStatus={stepFieldValidation.accountType?.status}>
       <FormFieldLabel>Select Account Type</FormFieldLabel>
       <RadioButtonGroup
         direction="vertical"
-        onChange={handleInputChange}
+        onChange={handleRadioChange}
         value={formData.accountType}
       >
         {accountTypeOptions.map(({ value, title, subtitle }) => (
@@ -451,7 +653,6 @@ const AccountTypeContent = ({
             }
             name="accountType"
             value={value}
-            onBlur={handleInputBlur}
           />
         ))}
       </RadioButtonGroup>
@@ -468,8 +669,8 @@ const AccountDetailsContent = ({
   formData,
   stepFieldValidation,
   handleInputChange,
-  handleInputBlur,
   handleSelectChange,
+  onBlur,
 }: FormContentProps) => {
   return (
     <GridLayout columns={2} style={{ width: "100%" }}>
@@ -481,7 +682,8 @@ const AccountDetailsContent = ({
               inputProps={{
                 name: "fullName",
                 onChange: handleInputChange,
-                onBlur: handleInputBlur,
+                onBlur,
+
                 value: formData.fullName,
               }}
             />
@@ -497,7 +699,8 @@ const AccountDetailsContent = ({
               inputProps={{
                 name: "phoneNumber",
                 onChange: handleInputChange,
-                onBlur: handleInputBlur,
+                onBlur,
+
                 value: formData.phoneNumber,
               }}
             />
@@ -515,7 +718,8 @@ const AccountDetailsContent = ({
               inputProps={{
                 name: "emailAddress",
                 onChange: handleInputChange,
-                onBlur: handleInputBlur,
+                onBlur,
+
                 value: formData.emailAddress,
               }}
             />
@@ -536,7 +740,8 @@ const AccountDetailsContent = ({
               inputProps={{
                 name: "address1",
                 onChange: handleInputChange,
-                onBlur: handleInputBlur,
+                onBlur,
+
                 value: formData.address1,
               }}
             />
@@ -552,6 +757,7 @@ const AccountDetailsContent = ({
               inputProps={{
                 name: "address2",
                 onChange: handleInputChange,
+                onBlur,
                 value: formData.address2,
               }}
             />
@@ -569,7 +775,8 @@ const AccountDetailsContent = ({
                 inputProps={{
                   name: "postalCode",
                   onChange: handleInputChange,
-                  onBlur: handleInputBlur,
+                  onBlur,
+
                   value: formData.postalCode,
                 }}
               />
@@ -585,7 +792,8 @@ const AccountDetailsContent = ({
                 inputProps={{
                   name: "city",
                   onChange: handleInputChange,
-                  onBlur: handleInputBlur,
+                  onBlur,
+
                   value: formData.city,
                 }}
               />
@@ -808,32 +1016,34 @@ const ReviewAccountContent = ({ formData }: { formData: AccountFormData }) => (
   </GridLayout>
 );
 
+const stepIds: readonly ContentType[] = [
+  "account-details",
+  "account-type",
+  "additional-info",
+  "review",
+];
+
 export const Horizontal = () => {
   const {
     activeStepIndex,
     currentStepId,
-    formData,
-    setFormData,
-    stepsStatusMap,
     next,
     previous,
     reset,
-    stepFieldValidation,
-    validateCurrentStep,
-  } = useWizard({
-    steps: wizardSteps,
-    initialData: initialFormData,
-    schema: stepValidationSchemas,
-  });
+    stepValidation: currentStepValidation,
+    stepsStatusMap,
+    setCurrentStepValidation,
+  } = useWizard({ steps: stepIds });
+
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
 
   const [successOpen, setSuccessOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
   useEffect(() => {
-    if (!navigatedRef.current) {
-      return;
-    }
+    if (!navigatedRef.current) return;
     navigatedRef.current = false;
     stepHeadingRef.current?.focus();
   }, [activeStepIndex]);
@@ -841,11 +1051,20 @@ export const Horizontal = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
+  const runValidationAndStore = useCallback(
+    async (overrideData?: AccountFormData) => {
+      const dataToUse = overrideData ?? formData;
+      const fields = await validateStep(currentStepId, dataToUse);
+      setCurrentStepValidation(fields);
+      const hasErrors = Object.values(fields).some((f) => f.status === "error");
+      return !hasErrors;
+    },
+    [currentStepId, formData, setCurrentStepValidation],
+  );
+
   const handleNext = async () => {
-    const isValid = await validateCurrentStep();
-    if (!isValid) {
-      return;
-    }
+    const valid = await runValidationAndStore();
+    if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
       return;
@@ -859,28 +1078,41 @@ export const Horizontal = () => {
     previous();
   };
 
-  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const newFormData = { ...formData, [name]: value };
-    setFormData(newFormData);
-    await validateCurrentStep(newFormData);
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleInputBlur = async () => {
-    await validateCurrentStep();
+  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      // Re-validate eagerly with updated value
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    runValidationAndStore({ ...formData, [name]: value });
   };
 
   const handleSelectChange = async (value: string, name: string) => {
-    setFormData({ ...formData, [name]: value });
-    await validateCurrentStep();
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      runValidationAndStore(updated);
+      return updated;
+    });
   };
 
   const sharedFormProps = {
     formData,
-    stepFieldValidation,
+    stepFieldValidation: currentStepValidation,
     handleInputChange,
-    handleInputBlur,
     handleSelectChange,
+    onBlur,
+    handleRadioChange,
   };
 
   const contentByStep = {
@@ -925,7 +1157,7 @@ export const Horizontal = () => {
               label={step.label}
               status={stepsStatusMap[step.id]?.status}
               stage={getStepStage(index, activeStepIndex)}
-              description={step.description}
+              description={"description" in step ? step.description : undefined}
             />
           ))}
         </Stepper>
