@@ -32,96 +32,96 @@
 
 .saltAvatar-accent {
   --avatar-background: var(--salt-accent-background);
-  --avatar-foreground: var(--salt-accent-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-1 {
   --avatar-background: var(--salt-category-1-bold-background);
-  --avatar-foreground: var(--salt-category-1-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-2 {
   --avatar-background: var(--salt-category-2-bold-background);
-  --avatar-foreground: var(--salt-category-2-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-3 {
   --avatar-background: var(--salt-category-3-bold-background);
-  --avatar-foreground: var(--salt-category-3-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-4 {
   --avatar-background: var(--salt-category-4-bold-background);
-  --avatar-foreground: var(--salt-category-4-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-5 {
   --avatar-background: var(--salt-category-5-bold-background);
-  --avatar-foreground: var(--salt-category-5-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-6 {
   --avatar-background: var(--salt-category-6-bold-background);
-  --avatar-foreground: var(--salt-category-6-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-7 {
   --avatar-background: var(--salt-category-7-bold-background);
-  --avatar-foreground: var(--salt-category-7-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-8 {
   --avatar-background: var(--salt-category-8-bold-background);
-  --avatar-foreground: var(--salt-category-8-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-9 {
   --avatar-background: var(--salt-category-9-bold-background);
-  --avatar-foreground: var(--salt-category-9-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar-category-10 {
   --avatar-background: var(--salt-category-10-bold-background);
-  --avatar-foreground: var(--salt-category-10-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-11 {
   --avatar-background: var(--salt-category-11-bold-background);
-  --avatar-foreground: var(--salt-category-11-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-12 {
   --avatar-background: var(--salt-category-12-bold-background);
-  --avatar-foreground: var(--salt-category-12-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-13 {
   --avatar-background: var(--salt-category-13-bold-background);
-  --avatar-foreground: var(--salt-category-13-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-14 {
   --avatar-background: var(--salt-category-14-bold-background);
-  --avatar-foreground: var(--salt-category-14-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-15 {
   --avatar-background: var(--salt-category-15-bold-background);
-  --avatar-foreground: var(--salt-category-15-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-16 {
   --avatar-background: var(--salt-category-16-bold-background);
-  --avatar-foreground: var(--salt-category-16-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-17 {
   --avatar-background: var(--salt-category-17-bold-background);
-  --avatar-foreground: var(--salt-category-17-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-18 {
   --avatar-background: var(--salt-category-18-bold-background);
-  --avatar-foreground: var(--salt-category-18-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-19 {
   --avatar-background: var(--salt-category-19-bold-background);
-  --avatar-foreground: var(--salt-category-19-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 .saltAvatar-category-20 {
   --avatar-background: var(--salt-category-20-bold-background);
-  --avatar-foreground: var(--salt-category-20-bold-foreground);
+  --avatar-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltAvatar:has(img),
