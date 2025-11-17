@@ -35,25 +35,30 @@ export function ClassNameInjectionProvider({
   );
 }
 
-export function useInjectedClassName<
-  // biome-ignore lint/suspicious/noExplicitAny: props are passed through to the callback as-is
-  Props extends Record<string, any>,
->(component: string, props: Props): { className: string; props: Props } {
+type PropsWithClassName = { className?: string } & Record<string, any>;
+
+export function useInjectedClassName<Props extends PropsWithClassName>(
+  component: string,
+  props: Props
+): { className: string; props: Omit<Props, "className"> } {
+  const { className: classNameProp, ...restProps } = props;
   const registry = useContext(InjectionContext);
+
   if (!registry) {
-    return { className: props?.className || "", props };
+    return { className: classNameProp || "", props: restProps as Omit<Props, "className"> };
   }
+
   const entries = registry[component] ?? [];
-  const injected = entries.map((e) => e.fn(props)).filter(Boolean);
-  const className = clsx(props?.className, injected);
+  const injected = entries.map((e) => e.fn(restProps)).filter(Boolean);
+  const className = clsx(classNameProp, injected);
 
-  const cleanProps: Props = { ...props };
-
+  const cleanProps = { ...restProps } as Omit<Props, "className">;
   for (const entry of entries) {
     for (const key of entry.keys) {
-      delete cleanProps[key as string];
+      delete (cleanProps as any)[key];
     }
   }
+
   return { className, props: cleanProps };
 }
 
