@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useInjectedClassName,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -267,12 +270,21 @@ const defaultParse = (value: string, decimalScale: number): number | null => {
   return Number.parseFloat(floatString);
 };
 
+declare module "@salt-ds/core" {
+  interface ComponentPropMap {
+    NumberInput: NumberInputProps;
+  }
+}
+
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
-  function NumberInput(
-    {
+  function NumberInput(props, ref) {
+    const { className, props: finalProps } = useInjectedClassName(
+      "saltNumberInput",
+      props,
+    );
+    const {
       "aria-valuetext": ariaValueTextProp,
       bordered,
-      className,
       clamp,
       step = 1,
       stepMultiplier = 2,
@@ -307,9 +319,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       validationStatus: validationStatusProp,
       variant = "primary",
       ...restProps
-    },
-    ref,
-  ) {
+    } = finalProps;
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-number-input",
