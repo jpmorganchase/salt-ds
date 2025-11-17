@@ -4,6 +4,6 @@
 
 Deprecated unused content tokens.
 
-- `--salt-content-foreground-highlight`
-- `--salt-content-foreground-active`
-- `--salt-content-foreground-hover`
+- `--salt-content-foreground-highlight` can be replaced with `--salt-selectable-background-selected`
+- `--salt-content-foreground-active` can be replaced with `--salt-content-accent-foreground`
+- `--salt-content-foreground-hover` can be replaced with `--salt-content-accent-foreground`
