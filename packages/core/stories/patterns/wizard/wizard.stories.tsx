@@ -17,15 +17,24 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
+  type StackLayoutProps,
   Step,
   Stepper,
   Text,
   useIsomorphicLayoutEffect,
   useResizeObserver,
+  useResponsiveProp,
 } from "@salt-ds/core";
+import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import clsx from "clsx";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  type ElementType,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as Yup from "yup";
 import {
   type FieldValidation,
@@ -37,6 +46,9 @@ import "./wizard.stories.css";
 
 export default {
   title: "Patterns/Wizard",
+  parameters: {
+    layout: "padded",
+  },
 } as Meta;
 
 export const Basic = () => {
@@ -97,18 +109,12 @@ export const Basic = () => {
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
         <Stepper orientation="horizontal">
-          {steps.map((label, i) => (
+          {steps.map((label, index) => (
             <Step
               key={label}
               label={label}
               status={stepsStatusMap[label]?.status}
-              stage={
-                i === activeStepIndex
-                  ? "active"
-                  : i < activeStepIndex
-                    ? "completed"
-                    : "pending"
-              }
+              stage={getStepStage(index, activeStepIndex)}
             />
           ))}
         </Stepper>
@@ -137,7 +143,7 @@ export const Basic = () => {
   );
 
   return (
-    <StackLayout gap={3} style={{ width: 560 }}>
+    <StackLayout gap={3} style={{ maxWidth: 730 }}>
       {header}
       <StackLayout
         style={{
@@ -252,6 +258,7 @@ const wizardSteps = [
   },
   { id: "review", label: "Review and create" },
 ] as const;
+const stepIds = wizardSteps.map((s) => s.id);
 
 type ContentType = (typeof wizardSteps)[number]["id"];
 
@@ -355,6 +362,7 @@ function mapYupErrors(
 ): StepValidationResult["fields"] {
   const out: StepValidationResult["fields"] = {};
   const list = err.inner ?? [];
+
   for (const e of list) {
     const rawSeverity = e.params?.severity as ValidationStatus | undefined;
     const status: ValidationStatus =
@@ -380,7 +388,6 @@ async function validateStep(
     await schema.validate(data, { abortEarly: false });
     return {}; // valid
   } catch (err) {
-    console.log("Validation error", err);
     return mapYupErrors(err as YupValidationErrorLike);
   }
 }
@@ -449,7 +456,7 @@ const ContentOverflow = ({
   );
 };
 
-/* const CancelWarningDialog = ({
+const CancelWarningDialog = ({
   open,
   onOpenChange,
   onConfirm,
@@ -505,7 +512,7 @@ const ContentOverflow = ({
       </DialogActions>
     </Dialog>
   );
-}; */
+};
 
 const AccountCreatedSuccessDialog = ({
   open,
@@ -529,7 +536,7 @@ const AccountCreatedSuccessDialog = ({
   </Dialog>
 );
 
-/* const AccountCreatedContent = () => (
+const AccountCreatedContent = () => (
   <StackLayout align="center">
     <SuccessCircleSolidIcon
       size={2}
@@ -540,9 +547,9 @@ const AccountCreatedSuccessDialog = ({
     <Text styleAs="h2">Account created</Text>
     <Text>You can now start using this new account.</Text>
   </StackLayout>
-); */
+);
 
-/* const CancelWarningContent = () => (
+const CancelWarningContent = () => (
   <StackLayout align="center">
     <WarningSolidIcon
       size={2}
@@ -555,7 +562,7 @@ const AccountCreatedSuccessDialog = ({
       Any updates you've made so far will be lost after you confirm cancelling.
     </Text>
   </StackLayout>
-); */
+);
 
 const AdditionalInfoContent = ({
   formData,
@@ -683,7 +690,6 @@ const AccountDetailsContent = ({
                 name: "fullName",
                 onChange: handleInputChange,
                 onBlur,
-
                 value: formData.fullName,
               }}
             />
@@ -1016,13 +1022,6 @@ const ReviewAccountContent = ({ formData }: { formData: AccountFormData }) => (
   </GridLayout>
 );
 
-const stepIds: readonly ContentType[] = [
-  "account-details",
-  "account-type",
-  "additional-info",
-  "review",
-];
-
 export const Horizontal = () => {
   const {
     activeStepIndex,
@@ -1036,10 +1035,12 @@ export const Horizontal = () => {
   } = useWizard({ steps: stepIds });
 
   const [formData, setFormData] = useState<AccountFormData>(initialFormData);
-
   const [successOpen, setSuccessOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
   useEffect(() => {
@@ -1047,9 +1048,6 @@ export const Horizontal = () => {
     navigatedRef.current = false;
     stepHeadingRef.current?.focus();
   }, [activeStepIndex]);
-
-  const isLastStep = activeStepIndex === wizardSteps.length - 1;
-  const isFirstStep = activeStepIndex === 0;
 
   const runValidationAndStore = useCallback(
     async (overrideData?: AccountFormData) => {
@@ -1189,7 +1187,7 @@ export const Horizontal = () => {
     <>
       <StackLayout
         style={{
-          width: 730,
+          maxWidth: 730,
         }}
         gap={0}
       >
@@ -1215,6 +1213,932 @@ export const Horizontal = () => {
           setSuccessOpen(false);
         }}
       />
+    </>
+  );
+};
+
+export const HorizontalWithCancelConfirmation = () => {
+  const {
+    activeStepIndex,
+    currentStepId,
+    next,
+    previous,
+    reset,
+    stepValidation: currentStepValidation,
+    stepsStatusMap,
+    setCurrentStepValidation,
+  } = useWizard({ steps: stepIds });
+
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [cancelOpen, setCancelOpen] = useState(false);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  const runValidationAndStore = useCallback(
+    async (overrideData?: AccountFormData) => {
+      const dataToUse = overrideData ?? formData;
+      const fields = await validateStep(currentStepId, dataToUse);
+      setCurrentStepValidation(fields);
+      const hasErrors = Object.values(fields).some((f) => f.status === "error");
+      return !hasErrors;
+    },
+    [currentStepId, formData, setCurrentStepValidation],
+  );
+
+  const handleNext = async () => {
+    const valid = await runValidationAndStore();
+    if (!valid) return;
+    if (isLastStep) {
+      setSuccessOpen(true);
+      return;
+    }
+    navigatedRef.current = true;
+    next();
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      // Re-validate eagerly with updated value
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    runValidationAndStore({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = async (value: string, name: string) => {
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const sharedFormProps = {
+    formData,
+    stepFieldValidation: currentStepValidation,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
+  };
+
+  const openCancelDialog = () => setCancelOpen(true);
+
+  const contentByStep = {
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "additional-info": (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    review: <ReviewAccountContent formData={formData} />,
+  };
+
+  const header = (
+    <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
+      <FlexItem style={{ flex: 1 }}>
+        <Text>
+          Create a new account
+          <Text
+            as="h2"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            style={{ margin: 0 }}
+          >
+            {wizardSteps[activeStepIndex].label}
+          </Text>
+          {wizardSteps[activeStepIndex].id === "additional-info" && (
+            <Text
+              color="secondary"
+              style={{
+                marginTop: "var(--salt-spacing-fixed-400)",
+              }}
+            >
+              All fields are optional
+            </Text>
+          )}
+        </Text>
+      </FlexItem>
+      <FlexItem style={{ flex: 1 }}>
+        <Stepper orientation="horizontal">
+          {wizardSteps.map((step, index) => (
+            <Step
+              key={step.id}
+              label={step.label}
+              status={stepsStatusMap[step.id]?.status}
+              stage={getStepStage(index, activeStepIndex)}
+              description={"description" in step ? step.description : undefined}
+            />
+          ))}
+        </Stepper>
+      </FlexItem>
+    </FlexLayout>
+  );
+
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3}>
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={openCancelDialog}
+      >
+        Cancel
+      </Button>
+
+      {!isFirstStep && (
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
+      )}
+
+      <Button sentiment="accented" onClick={handleNext}>
+        {isLastStep ? "Create" : "Next"}
+      </Button>
+    </FlexLayout>
+  );
+
+  return (
+    <>
+      <StackLayout
+        style={{
+          maxWidth: 730,
+          height: 588,
+        }}
+        gap={0}
+      >
+        <FlexItem padding={3}>{header}</FlexItem>
+        <FlexItem grow={1}>
+          <ContentOverflow style={{ height: 396 }}>
+            {contentByStep[currentStepId]}
+          </ContentOverflow>
+        </FlexItem>
+        {footer}
+      </StackLayout>
+      <CancelWarningDialog
+        open={cancelOpen}
+        onOpenChange={setCancelOpen}
+        onConfirm={() => {
+          reset();
+          setCancelOpen(false);
+        }}
+      />
+      <AccountCreatedSuccessDialog
+        open={successOpen}
+        onOpenChange={(open) => {
+          setSuccessOpen(open);
+          if (!open) {
+            reset();
+            setSuccessOpen(false);
+          }
+        }}
+        onConfirm={() => {
+          reset();
+          setSuccessOpen(false);
+        }}
+      />
+    </>
+  );
+};
+
+export const VerticalWithCancelConfirmation = () => {
+  const {
+    activeStepIndex,
+    currentStepId,
+    next,
+    previous,
+    reset,
+    stepValidation: currentStepValidation,
+    stepsStatusMap,
+    setCurrentStepValidation,
+  } = useWizard({ steps: stepIds });
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [cancelOpen, setCancelOpen] = useState(false);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  const runValidationAndStore = useCallback(
+    async (overrideData?: AccountFormData) => {
+      const dataToUse = overrideData ?? formData;
+      const fields = await validateStep(currentStepId, dataToUse);
+      setCurrentStepValidation(fields);
+      const hasErrors = Object.values(fields).some((f) => f.status === "error");
+      return !hasErrors;
+    },
+    [currentStepId, formData, setCurrentStepValidation],
+  );
+
+  const handleNext = async () => {
+    const valid = await runValidationAndStore();
+    if (!valid) return;
+    if (isLastStep) {
+      setSuccessOpen(true);
+      return;
+    }
+    navigatedRef.current = true;
+    next();
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      // Re-validate eagerly with updated value
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    runValidationAndStore({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = async (value: string, name: string) => {
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const sharedFormProps = {
+    formData,
+    stepFieldValidation: currentStepValidation,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
+  };
+
+  const contentByStep = {
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "additional-info": (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "60%" }} />
+    ),
+    review: <ReviewAccountContent formData={formData} />,
+  };
+
+  const header = (
+    <StackLayout gap={0} style={{ minHeight: "5rem" }} align="start">
+      <Text>Create a new account</Text>
+      <Text as="h2" ref={stepHeadingRef} tabIndex={-1} style={{ margin: 0 }}>
+        {wizardSteps[activeStepIndex].label}
+      </Text>
+      {wizardSteps[activeStepIndex].id === "additional-info" && (
+        <Text
+          color="secondary"
+          style={{
+            marginTop: "var(--salt-spacing-fixed-400)",
+          }}
+        >
+          All fields are optional
+        </Text>
+      )}
+    </StackLayout>
+  );
+
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3} style={{ paddingTop: 0 }}>
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={() => setCancelOpen(true)}
+      >
+        Cancel
+      </Button>
+
+      {!isFirstStep && (
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
+      )}
+
+      <Button sentiment="accented" onClick={handleNext}>
+        {isLastStep ? "Create" : "Next"}
+      </Button>
+    </FlexLayout>
+  );
+
+  return (
+    <>
+      <StackLayout
+        style={{
+          maxWidth: 850,
+        }}
+        padding={3}
+      >
+        <ContentOverflow style={{ height: 512 }}>
+          <StackLayout>
+            {header}
+            <GridLayout columns={3}>
+              <GridItem>
+                <Stepper orientation="vertical">
+                  {wizardSteps.map((step, index) => (
+                    <Step
+                      key={step.id}
+                      label={step.label}
+                      status={stepsStatusMap[step.id]?.status}
+                      stage={getStepStage(index, activeStepIndex)}
+                      description={
+                        "description" in step ? step.description : undefined
+                      }
+                    />
+                  ))}
+                </Stepper>
+              </GridItem>
+              <GridItem colSpan={2} padding={1}>
+                {contentByStep[currentStepId]}
+              </GridItem>
+            </GridLayout>
+          </StackLayout>
+        </ContentOverflow>
+        {footer}
+      </StackLayout>
+      <CancelWarningDialog
+        open={cancelOpen}
+        onOpenChange={setCancelOpen}
+        onConfirm={() => {
+          reset();
+          setCancelOpen(false);
+        }}
+      />
+      <AccountCreatedSuccessDialog
+        open={successOpen}
+        onOpenChange={(open) => {
+          setSuccessOpen(open);
+          if (!open) {
+            reset();
+            setSuccessOpen(false);
+          }
+        }}
+        onConfirm={() => {
+          reset();
+          setSuccessOpen(false);
+        }}
+      />
+    </>
+  );
+};
+
+export const Modal = () => {
+  const {
+    activeStepIndex,
+    currentStepId,
+    next,
+    previous,
+    reset,
+    stepValidation: currentStepValidation,
+    stepsStatusMap,
+    setCurrentStepValidation,
+  } = useWizard({ steps: stepIds });
+  const [open, setOpen] = useState(false);
+
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  const openWizard = () => {
+    reset();
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => setOpen(value);
+
+  const closeWizardAndReset = () => {
+    setOpen(false);
+    setTimeout(() => {
+      reset();
+    }, 300);
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  const runValidationAndStore = useCallback(
+    async (overrideData?: AccountFormData) => {
+      const dataToUse = overrideData ?? formData;
+      const fields = await validateStep(currentStepId, dataToUse);
+      setCurrentStepValidation(fields);
+      const hasErrors = Object.values(fields).some((f) => f.status === "error");
+      return !hasErrors;
+    },
+    [currentStepId, formData, setCurrentStepValidation],
+  );
+
+  const handleNext = async () => {
+    const valid = await runValidationAndStore();
+    if (!valid) return;
+    if (isLastStep) {
+      closeWizardAndReset();
+      return;
+    }
+    navigatedRef.current = true;
+    next();
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      // Re-validate eagerly with updated value
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    runValidationAndStore({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = async (value: string, name: string) => {
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const sharedFormProps = {
+    formData,
+    stepFieldValidation: currentStepValidation,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
+  };
+  const contentByStep = {
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "additional-info": (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    review: <ReviewAccountContent formData={formData} />,
+  };
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={closeWizardAndReset}
+    >
+      Cancel
+    </Button>
+  );
+
+  const nextBtn = (
+    <Button sentiment="accented" onClick={handleNext}>
+      {isLastStep ? "Create" : "Next"}
+    </Button>
+  );
+  const prevBtn = !isFirstStep && (
+    <Button sentiment="accented" appearance="bordered" onClick={handlePrevious}>
+      Previous
+    </Button>
+  );
+
+  return (
+    <>
+      <Button onClick={openWizard}>Open wizard</Button>
+      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+        <DialogHeader
+          header={
+            <span tabIndex={-1} ref={stepHeadingRef}>
+              {wizardSteps[activeStepIndex].label}
+            </span>
+          }
+          description={
+            wizardSteps[activeStepIndex].id === "additional-info" &&
+            "All fields are optional"
+          }
+          preheader="Create a new account"
+          actions={
+            <Stepper orientation="horizontal" style={{ maxWidth: 300 }}>
+              {wizardSteps.map((step, index) => (
+                <Step
+                  key={step.id}
+                  label={step.label}
+                  status={stepsStatusMap[step.id]?.status}
+                  stage={getStepStage(index, activeStepIndex)}
+                  description={
+                    "description" in step ? step.description : undefined
+                  }
+                />
+              ))}
+            </Stepper>
+          }
+        />
+        <DialogContent>{contentByStep[currentStepId]}</DialogContent>
+        <DialogActions>
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {nextBtn}
+              {prevBtn}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1}>
+              {cancel}
+              {prevBtn}
+              {nextBtn}
+            </FlexLayout>
+          )}
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const ModalWithConfirmations = () => {
+  type WizardState = "form" | "cancel-warning" | "success";
+  const [wizardState, setWizardState] = useState<WizardState>("form");
+  const [open, setOpen] = useState(false);
+  const {
+    activeStepIndex,
+    currentStepId,
+    next,
+    previous,
+    reset,
+    stepValidation: currentStepValidation,
+    stepsStatusMap,
+    setCurrentStepValidation,
+  } = useWizard({ steps: stepIds });
+
+  const [formData, setFormData] = useState<AccountFormData>(initialFormData);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const openWizard = () => {
+    reset();
+    setWizardState("form");
+    setOpen(true);
+  };
+
+  const closeWizardAndReset = () => {
+    setOpen(false);
+    setTimeout(() => {
+      reset();
+      setWizardState("form");
+    }, 300);
+  };
+
+  const createAccount = () => setWizardState("success");
+  const showCancelWarning = () => setWizardState("cancel-warning");
+  const backToForm = () => setWizardState("form");
+
+  const onOpenChange = (value: boolean) => {
+    if (!value && !isLastStep) {
+      showCancelWarning();
+      return;
+    }
+    setOpen(value);
+  };
+
+  const runValidationAndStore = useCallback(
+    async (overrideData?: AccountFormData) => {
+      const dataToUse = overrideData ?? formData;
+      const fields = await validateStep(currentStepId, dataToUse);
+      setCurrentStepValidation(fields);
+      const hasErrors = Object.values(fields).some((f) => f.status === "error");
+      return !hasErrors;
+    },
+    [currentStepId, formData, setCurrentStepValidation],
+  );
+
+  const handleNext = async () => {
+    const valid = await runValidationAndStore();
+    if (!valid) return;
+    if (isLastStep) {
+      createAccount();
+      return;
+    }
+    navigatedRef.current = true;
+    next();
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRadioChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      // Re-validate eagerly with updated value
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    runValidationAndStore({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = async (value: string, name: string) => {
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      runValidationAndStore(updated);
+      return updated;
+    });
+  };
+
+  const sharedFormProps = {
+    formData,
+    stepFieldValidation: currentStepValidation,
+    handleInputChange,
+    handleSelectChange,
+    onBlur,
+    handleRadioChange,
+  };
+
+  const contentByStep = {
+    "account-details": <AccountDetailsContent {...sharedFormProps} />,
+    "account-type": <AccountTypeContent {...sharedFormProps} />,
+    "additional-info": (
+      <AdditionalInfoContent {...sharedFormProps} style={{ width: "50%" }} />
+    ),
+    review: <ReviewAccountContent formData={formData} />,
+  };
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={showCancelWarning}
+    >
+      Cancel
+    </Button>
+  );
+
+  const nextBtn = (
+    <Button sentiment="accented" onClick={handleNext}>
+      {isLastStep ? "Create" : "Next"}
+    </Button>
+  );
+  const prevBtn = !isFirstStep && (
+    <Button sentiment="accented" appearance="bordered" onClick={handlePrevious}>
+      Previous
+    </Button>
+  );
+
+  const wizardStatus =
+    wizardState === "cancel-warning"
+      ? "warning"
+      : wizardState === "success"
+        ? "success"
+        : undefined;
+
+  return (
+    <>
+      <Button onClick={openWizard}>Open wizard</Button>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        status={wizardStatus}
+        style={{ height: 588 }}
+      >
+        {(() => {
+          switch (wizardState) {
+            case "cancel-warning":
+              return (
+                <>
+                  <DialogContent>
+                    <GridLayout rows={1} columns={1} style={{ height: "100%" }}>
+                      <GridItem
+                        horizontalAlignment="center"
+                        verticalAlignment="center"
+                      >
+                        <CancelWarningContent />
+                      </GridItem>
+                    </GridLayout>
+                  </DialogContent>
+                  <DialogActions>
+                    {direction === "column" ? (
+                      <StackLayout gap={1} style={{ width: "100%" }}>
+                        <Button
+                          sentiment="accented"
+                          onClick={closeWizardAndReset}
+                        >
+                          Yes
+                        </Button>
+                        <Button
+                          appearance="bordered"
+                          sentiment="accented"
+                          onClick={backToForm}
+                        >
+                          No
+                        </Button>
+                      </StackLayout>
+                    ) : (
+                      <FlexLayout gap={1}>
+                        <Button
+                          appearance="bordered"
+                          sentiment="accented"
+                          onClick={backToForm}
+                        >
+                          No
+                        </Button>
+                        <Button
+                          sentiment="accented"
+                          onClick={closeWizardAndReset}
+                        >
+                          Yes
+                        </Button>
+                      </FlexLayout>
+                    )}
+                  </DialogActions>
+                </>
+              );
+            case "success":
+              return (
+                <>
+                  <DialogContent>
+                    <GridLayout rows={1} columns={1} style={{ height: "100%" }}>
+                      <GridItem
+                        horizontalAlignment="center"
+                        verticalAlignment="center"
+                      >
+                        <AccountCreatedContent />
+                      </GridItem>
+                    </GridLayout>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      sentiment="accented"
+                      onClick={closeWizardAndReset}
+                      autoFocus
+                    >
+                      Done
+                    </Button>
+                  </DialogActions>
+                </>
+              );
+            default:
+              return (
+                <>
+                  <DialogHeader
+                    header={
+                      <span tabIndex={-1} ref={stepHeadingRef}>
+                        {wizardSteps[activeStepIndex].label}
+                      </span>
+                    }
+                    preheader="Create a new account"
+                    description={
+                      wizardSteps[activeStepIndex].id === "additional-info" &&
+                      "All fields are optional"
+                    }
+                    actions={
+                      <Stepper
+                        orientation="horizontal"
+                        style={{ maxWidth: 300 }}
+                      >
+                        {wizardSteps.map((step, index) => (
+                          <Step
+                            key={step.id}
+                            label={step.label}
+                            status={stepsStatusMap[step.id]?.status}
+                            stage={getStepStage(index, activeStepIndex)}
+                            description={
+                              "description" in step
+                                ? step.description
+                                : undefined
+                            }
+                          />
+                        ))}
+                      </Stepper>
+                    }
+                  />
+
+                  <DialogContent>{contentByStep[currentStepId]}</DialogContent>
+                  <DialogActions>
+                    {direction === "column" ? (
+                      <StackLayout gap={1} style={{ width: "100%" }}>
+                        {nextBtn}
+                        {prevBtn}
+                        {cancel}
+                      </StackLayout>
+                    ) : (
+                      <FlexLayout gap={1}>
+                        {cancel}
+                        {prevBtn}
+                        {nextBtn}
+                      </FlexLayout>
+                    )}
+                  </DialogActions>
+                </>
+              );
+          }
+        })()}
+      </Dialog>
     </>
   );
 };
