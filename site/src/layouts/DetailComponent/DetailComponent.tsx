@@ -1,4 +1,4 @@
-import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
 import {
   type SiteState,
   useRoute,
