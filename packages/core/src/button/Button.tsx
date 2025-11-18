@@ -125,9 +125,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       "saltButton",
       props,
     );
-    console.log('props', props);
-    console.log('className', className);
-    console.log('finalProps', finalProps);
 
     const {
       children,
