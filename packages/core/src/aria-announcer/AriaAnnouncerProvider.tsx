@@ -2,139 +2,110 @@ import {
   type ComponentPropsWithRef,
   forwardRef,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-
+import { useForkRef } from "../utils/index";
 import {
   type AnnounceFnOptions,
   AriaAnnouncerContext,
 } from "./AriaAnnouncerContext";
 
-export const ARIA_ANNOUNCE_DELAY = 150; // time between DOM updates
-export const DEFAULT_ANNOUNCEMENT_DURATION = 500; // time between announcements
+export const ANNOUNCEMENT_TIME_IN_DOM = 250; // time between DOM updates
 
 export interface AriaAnnouncerProviderProps
   extends ComponentPropsWithRef<"div"> {}
 
-interface AnnouncementItem extends AnnounceFnOptions {
-  /**
-   * concise announcement message.
-   */
-  announcement: string;
-}
+const AnnouncementRegion = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithRef<"div">
+>(function AnnouncementRegion(props, ref) {
+  return <div role="log" aria-relevant="additions" ref={ref} {...props} />;
+});
+
+type AnnouncementMessage = {
+  id: number;
+  message: string;
+};
 
 export const AriaAnnouncerProvider = forwardRef<
   HTMLDivElement,
   AriaAnnouncerProviderProps
 >(function AriaAnnouncerProvider({ children, style, ...rest }, ref) {
-  const [currentAnnouncement, setCurrentAnnouncement] = useState("");
-  const [ariaLive, setAriaLive] = useState<AnnounceFnOptions["ariaLive"]>();
+  const [politeAnnouncements, setPoliteAnnouncements] = useState<
+    AnnouncementMessage[]
+  >([]);
+  const [assertiveAnnouncements, setAssertiveAnnouncements] = useState<
+    AnnouncementMessage[]
+  >([]);
 
-  const announcementsRef = useRef<AnnouncementItem[]>([]);
-  const isAnnouncingRef = useRef(false);
   const mountedRef = useRef(true);
 
-  const clearAnnouncement = useCallback(() => {
-    setCurrentAnnouncement("");
-  }, []);
-
   const makeAnnouncement = useCallback(
-    (announcement: string, ariaLive: AnnounceFnOptions["ariaLive"]) => {
-      setAriaLive(ariaLive);
-      setCurrentAnnouncement(announcement);
+    (message: string, assertiveness: "polite" | "assertive" = "polite") => {
+      const id = Date.now();
+      if (assertiveness === "polite") {
+        setPoliteAnnouncements((previous) => {
+          return previous.concat({ id, message });
+        });
+
+        setTimeout(() => {
+          setPoliteAnnouncements((previous) =>
+            previous.filter((announcement) => announcement.id !== id),
+          );
+        }, ANNOUNCEMENT_TIME_IN_DOM);
+      } else {
+        setAssertiveAnnouncements((previous) => {
+          return previous.concat({ id, message });
+        });
+
+        setTimeout(() => {
+          setAssertiveAnnouncements((previous) =>
+            previous.filter((announcement) => announcement.id !== id),
+          );
+        }, ANNOUNCEMENT_TIME_IN_DOM);
+      }
     },
     [],
   );
 
-  /** Each announcement has a minimum duration */
-  // biome-ignore lint/correctness/useExhaustiveDependencies: clearAnnouncement will not change
-  const processNextAnnouncement = useCallback(() => {
-    if (!mountedRef.current || !announcementsRef.current.length) {
-      isAnnouncingRef.current = false;
-      return;
-    }
-    const {
-      announcement,
-      duration = DEFAULT_ANNOUNCEMENT_DURATION,
-      ariaLive = "assertive",
-    } = announcementsRef.current.shift() as AnnouncementItem;
-    makeAnnouncement(announcement, ariaLive);
-    setTimeout(() => {
-      clearAnnouncement();
-      setTimeout(announceAll, ARIA_ANNOUNCE_DELAY);
-    }, duration);
-  }, []);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: processNextAnnouncement will not change
-  const announceAll = useCallback(() => {
-    isAnnouncingRef.current = true;
-    requestAnimationFrame(processNextAnnouncement);
-  }, []);
-
-  /** TODO Legacy code would delay before announcement, remove as a breaking change */
-  const announceAllLegacy = useCallback(() => {
-    isAnnouncingRef.current = true;
-    if (mountedRef.current) {
-      setCurrentAnnouncement("");
-      requestAnimationFrame(() => {
-        if (mountedRef.current && announcementsRef.current.length) {
-          const { announcement } =
-            announcementsRef.current.shift() as AnnouncementItem;
-          setCurrentAnnouncement(announcement);
-          setTimeout(announceAllLegacy, ARIA_ANNOUNCE_DELAY);
-        } else {
-          isAnnouncingRef.current = false;
-        }
-      });
-    }
-  }, []);
-
-  /** TODO default to `assertive` until a breaking change, when we should switch to `polite` */
   const announce = useCallback(
     (
       announcement: string,
       legacyDelayOrOptions: number | AnnounceFnOptions | undefined = {},
     ) => {
-      let options: AnnounceFnOptions = {};
-      let isLegacy = false;
-      if (typeof legacyDelayOrOptions === "number") {
-        isLegacy = true;
+      const delay =
+        typeof legacyDelayOrOptions === "number" ? legacyDelayOrOptions : null;
+
+      const assertiveness =
+        typeof legacyDelayOrOptions === "object"
+          ? legacyDelayOrOptions.ariaLive
+          : undefined;
+
+      if (delay) {
+        setTimeout(() => {
+          makeAnnouncement(announcement, assertiveness);
+        }, delay);
       } else {
-        options = legacyDelayOrOptions;
-      }
-      announcementsRef.current.push({ announcement, ...options });
-      if (isAnnouncingRef.current) {
-        return;
-      }
-      if (isLegacy) {
-        isAnnouncingRef.current = true;
-        announceAllLegacy();
-      } else {
-        announceAll();
+        makeAnnouncement(announcement, assertiveness);
       }
     },
-    [announceAll, announceAllLegacy],
+    [makeAnnouncement],
   );
 
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
+  const value = useMemo(() => ({ announce }), [announce]);
+
+  const handleMounted = useCallback((node: HTMLDivElement | null) => {
+    mountedRef.current = node !== null;
   }, []);
 
-  const value = useMemo(() => ({ announce }), [announce]);
+  const handleRef = useForkRef(ref, handleMounted);
 
   return (
     <AriaAnnouncerContext.Provider value={value}>
       {children}
       <div
-        aria-atomic="true"
-        aria-live={ariaLive ?? "assertive"}
-        ref={ref}
         // hidden styling based on https://tailwindcss.com/docs/screen-readers
         style={{
           position: "absolute",
@@ -149,8 +120,18 @@ export const AriaAnnouncerProvider = forwardRef<
           ...style,
         }}
         {...rest}
+        ref={handleRef}
       >
-        {currentAnnouncement}
+        <AnnouncementRegion aria-live="polite">
+          {politeAnnouncements.map((announcement) => (
+            <div key={announcement.id}>{announcement.message}</div>
+          ))}
+        </AnnouncementRegion>
+        <AnnouncementRegion aria-live="assertive">
+          {assertiveAnnouncements.map((announcement) => (
+            <div key={announcement.id}>{announcement.message}</div>
+          ))}
+        </AnnouncementRegion>
       </div>
     </AriaAnnouncerContext.Provider>
   );

@@ -1,8 +1,7 @@
-import { createContext } from "react";
+import { type AriaAttributes, createContext } from "react";
 
 export type AnnounceFnOptions = {
-  duration?: number;
-  ariaLive?: Exclude<React.AriaAttributes["aria-live"], "off">;
+  ariaLive?: Exclude<AriaAttributes["aria-live"], "off">;
 };
 
 export type AriaAnnouncer = {
