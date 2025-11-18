@@ -5,10 +5,7 @@ import {
 import { useWindow, type WindowContextType } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  cloneElement,
   createContext,
-  type HTMLAttributes,
-  isValidElement,
   type ReactElement,
   type ReactNode,
   useContext,
@@ -30,9 +27,10 @@ import type {
   Mode,
   ThemeName,
 } from "../theme";
-import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import { ViewportProvider } from "../viewport";
+import { ProviderContext } from "./ProviderContext";
 import saltProviderCss from "./SaltProvider.css";
+import { ThemeApplicator, type ThemeApplicatorProps } from "./ThemeApplicator";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -83,120 +81,16 @@ export const ThemeContext = createContext<ThemeContextProps>({
 export const BreakpointContext =
   createContext<Breakpoints>(DEFAULT_BREAKPOINTS);
 
-/**
- * We're relying `DEFAULT_THEME_NAME` to determine whether the provider is a root.
- */
-const getThemeNames = (
-  themeName: ThemeName,
-  themeNext?: boolean,
-): ThemeName => {
-  if (themeNext) {
-    return themeName === DEFAULT_THEME_NAME
-      ? clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT)
-      : clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT, themeName);
-  }
-  return themeName === DEFAULT_THEME_NAME
-    ? themeName
-    : clsx(DEFAULT_THEME_NAME, themeName);
-};
+type ThemeNextOnlyAttributes =
+  | "accent"
+  | "corner"
+  | "actionFont"
+  | "headingFont";
 
-interface ThemeNextProps {
-  themeNext?: boolean;
-}
-
-const createThemedChildren = ({
-  children,
-  themeName,
-  density,
-  mode,
-  applyClassesTo,
-  themeNext,
-  corner,
-  headingFont,
-  accent,
-  actionFont,
-}: {
-  children: ReactNode;
-  themeName: ThemeName;
-  density: Density;
-  mode: Mode;
-  applyClassesTo?: TargetElement;
-} & ThemeNextProps &
-  SaltProviderNextAdditionalProps) => {
-  const themeNamesString = getThemeNames(themeName, themeNext);
-  const themeNextProps = {
-    "data-corner": corner,
-    "data-heading-font": headingFont,
-    "data-accent": accent,
-    "data-action-font": actionFont,
-  };
-  if (applyClassesTo === "root") {
-    return children;
-  }
-  if (applyClassesTo === "child") {
-    if (isValidElement<HTMLAttributes<HTMLElement>>(children)) {
-      return cloneElement(children, {
-        className: clsx(
-          children.props?.className,
-          themeNamesString,
-          `salt-density-${density}`,
-        ),
-        // @ts-expect-error
-        "data-mode": mode,
-        ...(themeNext ? themeNextProps : {}),
-      });
-    }
-    console.warn(
-      `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
-        Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        div element will wrap your child elements`,
-    );
-    return children;
-  }
-  return (
-    <div
-      className={clsx(
-        "salt-provider",
-        themeNamesString,
-        `salt-density-${density}`,
-      )}
-      data-mode={mode}
-      {...(themeNext ? themeNextProps : {})}
-    >
-      {children}
-    </div>
-  );
-};
-
-type TargetElement = "root" | "scope" | "child";
-
-interface SaltProviderBaseProps {
-  /**
-   * Either "root", "scope" or "child".
-   * Specifies the location of salt theme class and attributes should be applied to.
-   *
-   * Defaults to "root" for a root provider, otherwise "scope".
-   */
-  applyClassesTo?: TargetElement;
-  /**
-   * Either "high", "medium", "low" or "touch".
-   * Determines the amount of content that can fit on a screen based on the size and spacing of components.
-   * Refer to [density](https://www.saltdesignsystem.com/salt/foundations/density) doc for more detail.
-   *
-   * @default "medium"
-   */
-  density?: Density;
-  /**
-   * A string. Specifies custom theme name(s) you want to apply, similar to `className`.
-   */
-  theme?: ThemeName;
-  /**
-   * Either "light" or "dark". Enable the color palette to change from light to dark.
-   * Refer to [modes](https://www.saltdesignsystem.com/salt/foundations/modes) doc for more detail.
-   *
-   * @default "light"
-   */
-  mode?: Mode;
+interface SaltProviderBaseProps
+  extends Partial<
+    Omit<ThemeApplicatorProps, "children" | ThemeNextOnlyAttributes>
+  > {
   /**
    * Shape of `{ xs: number; sm: number; md: number; lg: number; xl: number; }`.
    * Determines breakpoints used in responsive calculation for layout components.
@@ -244,29 +138,31 @@ function InternalSaltProvider({
   accent: accentProp,
   actionFont: actionFontProp,
 }: Omit<
-  SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
+  SaltProviderProps & {
+    themeNext?: boolean;
+  } & SaltProviderNextProps,
   "enableStyleInjection"
 >) {
+  const prevProvider = useContext(ProviderContext);
   const inheritedDensity = useContext(DensityContext);
   const {
     theme: inheritedTheme,
     mode: inheritedMode,
-    window: inheritedWindow,
     corner: inheritedCorner,
     headingFont: inheritedHeadingFont,
     accent: inheritedAccent,
     actionFont: inheritedActionFont,
   } = useContext(ThemeContext);
 
-  const targetWindow = useWindow();
+  const isRootProvider = prevProvider === null;
 
-  const isRootProvider =
-    inheritedWindow === undefined || inheritedWindow !== targetWindow;
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
-  const themeName =
-    themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
+  const inheritedThemeName =
+    inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme;
+  const themeName = themeProp ?? inheritedThemeName;
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
+
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
   const headingFont =
     headingFontProp ?? inheritedHeadingFont ?? DEFAULT_HEADING_FONT;
@@ -274,8 +170,7 @@ function InternalSaltProvider({
   const actionFont =
     actionFontProp ?? inheritedActionFont ?? DEFAULT_ACTION_FONT;
 
-  const applyClassesTo =
-    applyClassesToProp ?? (isRootProvider ? "root" : "scope");
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-provider",
     css: saltProviderCss,
@@ -310,90 +205,39 @@ function InternalSaltProvider({
     ],
   );
 
-  const themedChildren = createThemedChildren({
-    children,
-    themeName,
-    density,
-    mode,
-    applyClassesTo,
-    themeNext,
-    corner: corner,
-    headingFont,
-    accent,
-    actionFont,
-  });
-
-  useIsomorphicLayoutEffect(() => {
-    const themeNamesString = getThemeNames(themeName, themeNext);
-    const themeNames = themeNamesString.split(" ");
-
-    if (applyClassesTo === "root" && targetWindow) {
-      if (inheritedWindow !== targetWindow) {
-        // add the styles we want to apply
-        targetWindow.document.documentElement.classList.add(
-          ...themeNames,
-          `salt-density-${density}`,
-        );
-        targetWindow.document.documentElement.dataset.mode = mode;
-        if (themeNext) {
-          targetWindow.document.documentElement.dataset.corner = corner;
-          targetWindow.document.documentElement.dataset.headingFont =
-            headingFont;
-          targetWindow.document.documentElement.dataset.accent = accent;
-          targetWindow.document.documentElement.dataset.actionFont = actionFont;
-        }
-      } else {
-        console.warn(
-          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
-        );
-      }
-    }
-    return () => {
-      if (
-        applyClassesTo === "root" &&
-        targetWindow &&
-        (inheritedWindow === undefined || inheritedWindow !== targetWindow)
-      ) {
-        // When unmounting/remounting, remove the applied styles from the root
-        targetWindow.document.documentElement.classList.remove(
-          ...themeNames,
-          `salt-density-${density}`,
-        );
-        targetWindow.document.documentElement.dataset.mode = undefined;
-        if (themeNext) {
-          delete targetWindow.document.documentElement.dataset.corner;
-          delete targetWindow.document.documentElement.dataset.headingFont;
-          delete targetWindow.document.documentElement.dataset.accent;
-          delete targetWindow.document.documentElement.dataset.actionFont;
-        }
-      }
-    };
-  }, [
-    applyClassesTo,
-    density,
-    mode,
-    themeName,
-    targetWindow,
-    inheritedWindow,
-    themeNext,
-    corner,
-    headingFont,
-    accent,
-    actionFont,
-  ]);
-
   const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
 
   const saltProvider = (
-    <DensityContext.Provider value={density}>
-      <ThemeContext.Provider value={themeContextValue}>
-        <BreakpointProvider matchedBreakpoints={matchedBreakpoints}>
-          <BreakpointContext.Provider value={breakpoints}>
-            <ViewportProvider>{themedChildren}</ViewportProvider>
-          </BreakpointContext.Provider>
-        </BreakpointProvider>
-      </ThemeContext.Provider>
-    </DensityContext.Provider>
+    <ProviderContext.Provider value={{ targetWindow }}>
+      <DensityContext.Provider value={density}>
+        <ThemeContext.Provider value={themeContextValue}>
+          <BreakpointProvider matchedBreakpoints={matchedBreakpoints}>
+            <BreakpointContext.Provider value={breakpoints}>
+              <ViewportProvider>
+                <ThemeApplicator
+                  applyClassesTo={
+                    applyClassesToProp ?? (isRootProvider ? "root" : "scope")
+                  }
+                  density={density}
+                  theme={clsx(
+                    DEFAULT_THEME_NAME,
+                    { [DEFAULT_THEME_NAME_NEXT]: themeNext },
+                    themeProp,
+                  )}
+                  mode={mode}
+                  accent={themeNext ? accent : undefined}
+                  actionFont={themeNext ? actionFont : undefined}
+                  headingFont={themeNext ? headingFont : undefined}
+                  corner={themeNext ? corner : undefined}
+                >
+                  {children}
+                </ThemeApplicator>
+              </ViewportProvider>
+            </BreakpointContext.Provider>
+          </BreakpointProvider>
+        </ThemeContext.Provider>
+      </DensityContext.Provider>
+    </ProviderContext.Provider>
   );
 
   if (isRootProvider) {
@@ -413,38 +257,8 @@ export function SaltProvider({
   );
 }
 
-interface SaltProviderNextAdditionalProps {
-  /**
-   * Either "sharp" or "rounded".
-   * Determines selected components corner radius.
-   * @default "sharp"
-   */
-  corner?: Corner;
-  /**
-   * Either "Open Sans" or "Amplitude".
-   * Determines font family of display and heading text.
-   * @default "Open Sans"
-   */
-  headingFont?: HeadingFont;
-  /**
-   * Either "blue" or "teal".
-   * Determines accent color used across components, e.g. Accent Button, List, Calendar.
-   * @default "blue"
-   */
-  accent?: Accent;
-  /**
-   * Either "Open Sans" or "Amplitude".
-   * Determines font family of action components, mostly Buttons.
-   * @default "Open Sans"
-   */
-  actionFont?: ActionFont;
-}
-
 export type SaltProviderNextProps = SaltProviderProps &
-  SaltProviderNextAdditionalProps;
-/** @deprecated use `SaltProviderNextProps` */
-export type UNSTABLE_SaltProviderNextProps = SaltProviderNextProps;
-
+  Pick<ThemeApplicatorProps, ThemeNextOnlyAttributes>;
 export function SaltProviderNext({
   enableStyleInjection,
   ...restProps
@@ -456,6 +270,10 @@ export function SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
+
+/** @deprecated use `SaltProviderNextProps` */
+export type UNSTABLE_SaltProviderNextProps = SaltProviderNextProps;
+
 /** @deprecated use `SaltProviderNext` */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
