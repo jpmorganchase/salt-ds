@@ -16,7 +16,7 @@ import type {
   Mode,
   ThemeName,
 } from "../theme/index";
-import { useIsomorphicLayoutEffect } from "../utils/index";
+import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 
 export interface ThemeApplicatorProps {
   /**
@@ -101,7 +101,7 @@ export function ThemeApplicator({
     }
 
     if (providerId !== targetDocument[providerSymbol]) {
-      console.error(
+      console.warn(
         "Multiple providers targeting the same window. There can be only one level root level SaltProvider per window.",
       );
       return;
@@ -117,10 +117,12 @@ export function ThemeApplicator({
     targetDocument.documentElement.dataset.mode = mode;
 
     // Theme Next
-    targetDocument.documentElement.dataset.corner = corner;
-    targetDocument.documentElement.dataset.headingFont = headingFont;
-    targetDocument.documentElement.dataset.accent = accent;
-    targetDocument.documentElement.dataset.actionFont = actionFont;
+    if (corner) targetDocument.documentElement.dataset.corner = corner;
+    if (headingFont)
+      targetDocument.documentElement.dataset.headingFont = headingFont;
+    if (accent) targetDocument.documentElement.dataset.accent = accent;
+    if (actionFont)
+      targetDocument.documentElement.dataset.actionFont = actionFont;
 
     return () => {
       // Delete lock

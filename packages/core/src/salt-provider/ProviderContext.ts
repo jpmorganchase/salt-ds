@@ -1,5 +1,5 @@
 import type { WindowContextType } from "@salt-ds/window";
-import { createContext } from "../utils/index";
+import { createContext } from "../utils/createContext";
 
 export interface ProviderContext {
   targetWindow: WindowContextType;
