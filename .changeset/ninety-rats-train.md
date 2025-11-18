@@ -25,3 +25,5 @@ Deprecated unused white foreground tokens:
 - `--salt-category-19-bold-foreground`
 - `--salt-category-20-bold-foreground`
 - `--salt-accent-foreground`
+
+All of these tokens can be replaced with `--salt-content-bold-foreground`.

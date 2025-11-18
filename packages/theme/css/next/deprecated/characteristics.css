@@ -59,7 +59,6 @@
   --salt-actionable-caution-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-caution-subtle-foreground-disabled: var(--salt-palette-warning-strong-disabled);
 
-  /* Separable */
   --salt-separable-background: var(--salt-palette-alpha-none);
 
   --salt-category-1-bold-foreground: var(--salt-palette-foreground-primary-alt);

@@ -25,7 +25,7 @@
 }
 .saltTag-secondary {
   background: var(--tag-secondary-background, var(--salt-category-1-bold-background));
-  color: var(--tag-secondary-foreground, var(--salt-content-bold-foreground));
+  color: var(--salt-content-bold-foreground);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
 }
 
@@ -34,14 +34,12 @@
   --tag-primary-foreground: var(--salt-category-1-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-1-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-1-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-2 {
   --tag-primary-background: var(--salt-category-2-subtle-background);
   --tag-primary-foreground: var(--salt-category-2-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-2-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-2-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-3 {
@@ -49,7 +47,6 @@
   --tag-primary-foreground: var(--salt-category-3-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-3-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-3-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-4 {
@@ -57,7 +54,6 @@
   --tag-primary-foreground: var(--salt-category-4-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-4-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-4-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-5 {
@@ -65,7 +61,6 @@
   --tag-primary-foreground: var(--salt-category-5-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-5-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-5-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-6 {
@@ -73,7 +68,6 @@
   --tag-primary-foreground: var(--salt-category-6-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-6-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-6-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-7 {
@@ -81,7 +75,6 @@
   --tag-primary-foreground: var(--salt-category-7-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-7-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-7-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-8 {
@@ -89,7 +82,6 @@
   --tag-primary-foreground: var(--salt-category-8-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-8-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-8-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-9 {
@@ -97,7 +89,6 @@
   --tag-primary-foreground: var(--salt-category-9-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-9-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-9-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 
 .saltTag-category-10 {
@@ -105,75 +96,64 @@
   --tag-primary-foreground: var(--salt-category-10-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-10-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-10-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-11 {
   --tag-primary-background: var(--salt-category-11-subtle-background);
   --tag-primary-foreground: var(--salt-category-11-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-11-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-11-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-12 {
   --tag-primary-background: var(--salt-category-12-subtle-background);
   --tag-primary-foreground: var(--salt-category-12-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-12-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-12-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-13 {
   --tag-primary-background: var(--salt-category-13-subtle-background);
   --tag-primary-foreground: var(--salt-category-13-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-13-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-13-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-14 {
   --tag-primary-background: var(--salt-category-14-subtle-background);
   --tag-primary-foreground: var(--salt-category-14-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-14-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-14-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-15 {
   --tag-primary-background: var(--salt-category-15-subtle-background);
   --tag-primary-foreground: var(--salt-category-15-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-15-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-15-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-16 {
   --tag-primary-background: var(--salt-category-16-subtle-background);
   --tag-primary-foreground: var(--salt-category-16-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-16-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-16-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-17 {
   --tag-primary-background: var(--salt-category-17-subtle-background);
   --tag-primary-foreground: var(--salt-category-17-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-17-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-17-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-18 {
   --tag-primary-background: var(--salt-category-18-subtle-background);
   --tag-primary-foreground: var(--salt-category-18-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-18-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-18-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-19 {
   --tag-primary-background: var(--salt-category-19-subtle-background);
   --tag-primary-foreground: var(--salt-category-19-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-19-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-19-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
 .saltTag-category-20 {
   --tag-primary-background: var(--salt-category-20-subtle-background);
   --tag-primary-foreground: var(--salt-category-20-subtle-foreground);
   --tag-primary-borderColor: var(--salt-category-20-subtle-borderColor);
   --tag-secondary-background: var(--salt-category-20-bold-background);
-  --tag-secondary-foreground: var(--salt-content-bold-foreground);
 }
