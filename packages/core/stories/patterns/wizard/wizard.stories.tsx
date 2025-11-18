@@ -349,7 +349,7 @@ const stepValidationSchemas: Record<ContentType, StepSchema> = {
 };
 
 // Map Yup validation errors (including custom warning severity) to FieldValidation shape
-interface YupValidationErrorLike {
+interface YupValidationErrorShape {
   inner?: Array<{
     path: string;
     message: string;
@@ -359,7 +359,7 @@ interface YupValidationErrorLike {
   message?: string;
 }
 function mapYupErrors(
-  err: YupValidationErrorLike,
+  err: YupValidationErrorShape,
 ): StepValidationResult["fields"] {
   const out: StepValidationResult["fields"] = {};
   const list = err.inner ?? [];
@@ -375,6 +375,7 @@ function mapYupErrors(
   if (!list.length && err.path) {
     out[err.path] = { status: "error", message: err.message };
   }
+
   return out;
 }
 
@@ -389,7 +390,7 @@ async function validateStep(
     await schema.validate(data, { abortEarly: false });
     return {}; // valid
   } catch (err) {
-    return mapYupErrors(err as YupValidationErrorLike);
+    return mapYupErrors(err as YupValidationErrorShape);
   }
 }
 
