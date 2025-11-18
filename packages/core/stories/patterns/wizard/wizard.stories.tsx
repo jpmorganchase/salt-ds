@@ -155,10 +155,8 @@ export const Basic = () => {
         padding={3}
       >
         <Text styleAs="h3">Current step: {currentStepId}</Text>
-        <FlexLayout gap={1}>
+        <FlexLayout gap={1} wrap>
           <Button
-            appearance="bordered"
-            sentiment="accented"
             onClick={() =>
               setCurrentStepValidation({
                 fieldName: {
@@ -168,11 +166,9 @@ export const Basic = () => {
               })
             }
           >
-            Warning
+            Simulate Warning
           </Button>
           <Button
-            appearance="bordered"
-            sentiment="accented"
             onClick={() =>
               setCurrentStepValidation({
                 fieldName: {
@@ -182,13 +178,9 @@ export const Basic = () => {
               })
             }
           >
-            Error
+            Simulate Error
           </Button>
-          <Button
-            appearance="transparent"
-            sentiment="accented"
-            onClick={clearCurrentStepValidation}
-          >
+          <Button appearance="transparent" onClick={clearCurrentStepValidation}>
             Clear Status
           </Button>
         </FlexLayout>
@@ -198,16 +190,6 @@ export const Basic = () => {
               {stepValidation.fieldName.message}
             </FormFieldHelperText>
           </FormField>
-        )}
-        {stepValidation.fieldName?.status === "error" && (
-          <Text style={{ color: "var(--salt-status-error-foreground)" }}>
-            Error blocks navigation.
-          </Text>
-        )}
-        {stepValidation.fieldName?.status === "warning" && (
-          <Text style={{ color: "var(--salt-status-warning-foreground)" }}>
-            Warning does not block navigation.
-          </Text>
         )}
       </StackLayout>
       {footer}
