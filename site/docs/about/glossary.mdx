@@ -5,42 +5,88 @@ sidebar:
   priority: 1
 ---
 
-## Characteristic
-
-A Salt characteristic refers to a [design token](#design-token) that aligns with a holistic semantic used throughout the design language.
-
-For a full list of characteristics, refer to the [characteristic documentation](/salt/themes/characteristics).
-
-## Component
-
-Salt components serve as foundational building blocks as well as representing design primitives. Users of Salt can design and implement their own [patterns](#pattern) within their own scope.
-
-For a full list of foundational components, refer to the [component documentation](/salt/components/index).
-
-## Design token
-
-A design token is a visual attribute that represents a specific aspect of a design system. It is an abstract representation of a design property, such as colors, typography, spacing, or breakpoints, that can be used consistently across a product or design system. Design tokens provide a centralized and reusable way to define and manage design-related values, making it easier to maintain consistency and make global design changes. They act as a bridge between designers and developers, enabling a shared language and ensuring design consistency throughout the product or system. In Salt design tokens are represented as Figma variables and in code, they take the form of CSS variables.
-
-## Pattern
-
-Salt [components](#component) are designed and developed with composability in mind. The component foundations serve as building blocks that can be combined to support specific use-cases, whether it's through design or development. Instead of publishing every use-case as a separate component or variant, we aim to keep the component foundation focused and avoid unnecessary complexity. Patterns are published as designs which can be re-implemented within your own code by composing together the foundational components.
-
-For a full list of foundational patterns, refer to the [pattern documentation](/salt/patterns/index).
+#About
 
 ## Salt
 
-Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessible components as well as comprehensive design templates, style libraries and assets.
+Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. We offer well-documented, accessible components, as well as comprehensive design templates, style libraries and assets. Learn more about [Salt](/salt/about/index).
 
-## Theming
+#Foundations
 
-Salt is under active development. At this stage, we don't recommend theming unless absolutely necessary.
+## Foundation
 
-For an overview of theming, refer to our [theming documentation](/salt/themes/index).
+A Salt foundation is one of the fundamental principles that guide the creation of our cohesive design language, enabling products that are easy to use and visually appealing. From density and duration to spacing and typography, foundations cover the basics of our aesthetic. Discover all our [foundations](salt/foundations/index).
+
+# Themes
+
+## Theme
+
+A theme is a collection of design tokens that define the overall look and feel of an interface. Themes allow you to quickly switch the visual style of components to match different brands or user preferences, ensuring consistency across your application. A theme is made up of tokens for colors, typography, shadows and corner radius. Refer to our [themes documentation](/salt/themes/index).
+
+## JPM Brand theme
+
+JPM Brand theme is Salt’s long-term visual style, designed to match the JPMorgan brand across CIB digital applications. Developed with Corporate Brand and CIB Marketing, it uses approved styles for consistent visuals on desktop and web. See all the characteristics for [JPM Brand theme](/salt/themes/design-tokens/brand).
+
+## Legacy (UITK) theme
+
+Legacy (UITK) theme emulates Salt's predecessor, UI Toolkit, and supports migration from the older design system. See all the characteristics for [Legacy theme](/salt/themes/design-tokens/brand).
+
+## Token
+
+A design token is a name and value pairing that captures small, repeatable design choices—such as colors, fonts, and spacing—and is essential for storing key style attributes in Salt. Tokens help maintain consistency across platforms and applications, streamlining updates and maintaining a cohesive look across products. Learn more about [tokens](/salt/themes/design-tokens/index).
+
+## Foundation token
+
+A foundation token is the base-level token that reference the raw values at the core of the design system. Learn more about [token structure](/salt/themes/design-tokens/index#how-tokens-are-structured).
+
+## Palette token
+
+A palette token is a collection of commonly used foundation tokens and is referenced by semantic characteristic tokens. A palette token can point to different foundation tokens, allowing components to switch between light and dark modes. Read more about switching between light and dark modes with [palette tokens](/salt/themes/design-tokens/index#how-tokens-are-structured).
+
+## Characteristic token
+
+A semantic characteristic is a group of [tokens](#tokens) that serves a specific purpose or intent, such as styling error, warning, info and success states. This type of tokens defines design elements by their meaning or use, making it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed. Understand the nuances of reading [semantic tokens](/salt/themes/design-tokens/how-to-read-tokens).
+
+## Figma variable
+
+A Figma variable is a reusable value that can be applied to design properties like colors, text and spacing, or be used in prototypes to create dynamic interactions. In Salt Figma libraries, variables are used to represent tokens in code. Find out more on [design tokens in Figma](/salt/themes/design-tokens/index#design-tokens-in-figma).
+
+#Components 
+
+## Component
+
+A Salt component is a reusable building block underpinning the Salt Design System. User interface components encapsulate specific functionality and visual style, enabling designers and developers to create consistent, accessible and efficient digital experiences. Salt components can be combined and customized to support a wide range of use cases across applications. Users of Salt can design and implement their own [patterns](#pattern) within their own scope. For a full list of components, refer to our [component documentation](/salt/components/index).
+
+## Layout
+
+Salt layouts are a special category of components designed to manage the overall structure and arrangement of user interface elements, rather than providing visual widgets themselves. Layouts are responsible for organizing how other components are positioned and flow within an application or page. Read the overview for details on types of [layouts](/salt/components/layouts/index).
+
+## External dependency
+
+An external dependency indicates a user interface element that is sourced from a 3rd party library or vendor, rather than developed in-house as a core part of Salt Design System. Such components are integrated into Salt applications to provide advanced functionality, robust features and specialized interactions that would be resource-intensive to build from scratch. To ensure visual consistency and seamless user experience, Salt applies its own styles to these components using dedicated packages. Examples include: the Data Grid component leveraging the AG Grid library to deliver a highly interactive table; Chart component on top of the Highcharts library providing a wide range of chart types; and Splitter component using the React Resizable Panels library to enable users to adjust the boundaries between panels. 
+
+## Stable
+
+Released version of Salt elements reliable for general use after the completion of extensive testing. Stable software is safe for production environments and everyday users, with extensive documentation and support available. You can find stable components in the @salt-ds/core package.
+
+## Beta
+
+The pre-release version of Salt elements in testing may contain bugs, incomplete features or performance problems. The "beta" tag denotes components that are under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find beta components in the @salt-ds/lab package.
+
+## OOTB
+
+OOTB refers to design system components, features and styles that are ready to use [out of the box](#OOTB) immediately upon installation or implementation, without requiring significant customization or additional development.
 
 ## Disabled state
 
-A component in a disabled state is completely non-interactive as it isn’t considered relevant to the user’s workflow at that time. As the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning, or success) for disabled components, as these imply required user action.
+A component in a disabled state is completely non-interactive, as it isn’t considered relevant to the user’s workflow at that moment. Since the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning or success) for disabled components, as these imply required user action. 
 
 ## Read-only state
 
-A component in a read-only state is considered relevant to the user’s workflow, allowing users to view and interact with the content without modifying it. It must meet accessibility requirements, including minimum contrast. The system supports validation states (error, warning, or success) for read-only components, except for radio buttons and checkboxes. While disabled states are usually not detected by screen readers, read-only elements are accessible by screen readers.
+A component in a read-only state is considered relevant to the user’s workflow, allowing users to view and interact with the content without modifying it. It must meet accessibility requirements, including minimum contrast. The system supports validation states (error, warning and success) for read-only components, except for radio buttons and checkboxes. Although disabled states are usually not detected by screen readers, read-only elements are.
+
+#Patterns
+
+## Pattern
+
+Salt is a pattern-driven system. This means we provide a set of simple, high-quality, context-agnostic [components](#component) and show you how to put them together in different ways, as “patterns,” to solve a specific business problem. We recognize the need for UI solutions that are tailored to line of business, product or persona. Salt patterns provide you with solutions that you can use “out of the box” or easily modify to cater for nuances in your product experience. Each pattern has examples showing how you can put Salt components together following the Salt foundations. We also offer comprehensive supporting documentation to explain how to use the pattern, how to drive the pattern with business logic, and how to adjust it to suit your business case. Learn more in our [pattern documentation](/salt/patterns/index).
