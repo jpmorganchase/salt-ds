@@ -1,14 +1,7 @@
-import {
-  Button,
-  Code,
-  FlexLayout,
-  StackLayout,
-  Switch,
-  Text,
-} from "@salt-ds/core";
-import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
+import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
+import { Button, Code, FlexLayout, StackLayout, Switch, Text } from "../../src";
 
 type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
   THeadProps: ComponentProps<typeof THead>;

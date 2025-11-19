@@ -7,12 +7,12 @@ import {
   TH,
   THead,
   TR,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "docs/story.css";
-import { StackLayout } from "@salt-ds/core";
+import { StackLayout } from "../../src";
 
 const NUM_COLS = 2;
 const NUM_ROWS = 3;
