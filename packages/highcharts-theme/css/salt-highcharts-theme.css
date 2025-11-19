@@ -323,3 +323,19 @@
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text {
   fill: var(--salt-content-bold-foreground);
 }
+
+.highcharts-theme-salt .highcharts-heatmap-series .highcharts-data-label text {
+  fill: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+.highcharts-theme-salt .highcharts-heatmap-series .highcharts-point {
+  stroke: var(--salt-container-primary-background);
+  stroke-width: 1;
+}
+
+/* note: requires setting className in options */
+.highcharts-theme-salt .salt-heatmap .highcharts-axis-line,
+.highcharts-theme-salt .salt-heatmap .highcharts-grid-line {
+  stroke: none;
+}

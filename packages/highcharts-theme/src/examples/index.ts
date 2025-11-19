@@ -5,6 +5,7 @@ export { default as BubbleChart } from "./BubbleChart";
 export { default as BulletChart } from "./BulletChart";
 export { default as ColumnChart } from "./ColumnChart";
 export { default as DonutChart } from "./DonutChart";
+export { default as HeatmapChart } from "./HeatmapChart";
 export { default as LineChart } from "./LineChart";
 export { default as PieChart } from "./PieChart";
 export { default as ScatterChart } from "./ScatterChart";

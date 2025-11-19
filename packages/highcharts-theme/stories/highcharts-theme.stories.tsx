@@ -9,6 +9,7 @@ import {
   BulletChart as BulletChartComponent,
   ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
+  HeatmapChart as HeatmapChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
   ScatterChart as ScatterChartComponent,
@@ -23,6 +24,7 @@ import {
   bulletOptions,
   columnOptions,
   donutOptions,
+  heatmapOptions,
   lineOptions,
   pieOptions,
   scatterOptions,
@@ -79,6 +81,14 @@ export const DonutChart = {
   args: {
     patterns: false,
     options: donutOptions,
+  },
+};
+
+export const HeatmapChart = {
+  render: (args: ChartStoryArgs) => <HeatmapChartComponent {...args} />,
+  args: {
+    patterns: false,
+    options: heatmapOptions,
   },
 };
 

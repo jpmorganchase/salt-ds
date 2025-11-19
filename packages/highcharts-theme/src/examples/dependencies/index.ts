@@ -5,6 +5,7 @@ export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
 export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
+export { heatmapOptions } from "./heatmapOptions";
 export { lineOptions } from "./lineOptions";
 export { pieOptions } from "./pieOptions";
 export { scatterOptions } from "./scatterOptions";
