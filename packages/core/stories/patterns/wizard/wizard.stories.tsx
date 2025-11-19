@@ -29,7 +29,11 @@ import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import clsx from "clsx";
 import {
+  type ChangeEvent,
+  type CSSProperties,
   type ElementType,
+  type FocusEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -70,7 +74,7 @@ export const Basic = () => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: focus management on step change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus management: active step heading receives focus after navigation.
   useEffect(() => {
     if (!navigatedRef.current) {
       return;
@@ -221,14 +225,14 @@ export interface AccountFormData {
 
 interface FormContentProps {
   formData: AccountFormData;
-  handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   stepFieldValidation: {
     [field: string]: FieldValidation;
   };
   handleSelectChange?: (value: string, name: string) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  handleRadioChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  style?: React.CSSProperties;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  style?: CSSProperties;
 }
 
 const wizardSteps = [
@@ -387,8 +391,8 @@ const ContentOverflow = ({
   style,
   className,
 }: {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
+  children: ReactNode;
+  style?: CSSProperties;
   className?: string;
 }) => {
   const [canScrollUp, setCanScrollUp] = useState(false);
@@ -398,7 +402,7 @@ const ContentOverflow = ({
   const divRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
-    window?.requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
       const container = divRef.current;
       if (!container) return;
       setCanScrollUp(container.scrollTop > 0);

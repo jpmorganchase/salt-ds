@@ -1,4 +1,9 @@
-import { useCallback, useState } from "react";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  useCallback,
+  useState,
+} from "react";
 import type { AccountFormData } from "../wizard.stories";
 import type { StepValidationResult } from "./useWizard";
 
@@ -46,22 +51,22 @@ export function useAccountForm<StepId extends string>({
     [runValidationAndStore],
   );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateField(e.target.name, e.target.value);
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    updateField(event.target.name, event.target.value);
   };
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateField(e.target.name, e.target.value, true);
+  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    updateField(event.target.name, event.target.value, true);
   };
 
   const handleSelectChange = (value: string, name: string) => {
     updateField(name, value, true);
   };
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const onBlur = (event: FocusEvent<HTMLInputElement>) => {
     runValidationAndStore({
       ...formData,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 

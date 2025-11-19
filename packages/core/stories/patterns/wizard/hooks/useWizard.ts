@@ -32,7 +32,7 @@ export function useWizard<StepId extends string>({
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [validationsByStep, setValidationsByStep] = useState<
     Partial<Record<StepId, StepValidationResult>>
-  >(() => ({}));
+  >({});
 
   const currentStepId = steps[activeStepIndex];
 
