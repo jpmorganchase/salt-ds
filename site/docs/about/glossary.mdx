@@ -63,11 +63,11 @@ Salt layouts are a special category of components designed to manage the overall
 
 ## External dependency
 
-An external dependency indicates a user interface element that is sourced from a 3rd party library or vendor, rather than developed in-house as a core part of Salt Design System. Such components are integrated into Salt applications to provide advanced functionality, robust features and specialized interactions that would be resource-intensive to build from scratch. To ensure visual consistency and seamless user experience, Salt applies its own styles to these components using dedicated packages. Examples include: the Data Grid component leveraging the AG Grid library to deliver a highly interactive table; Chart component on top of the Highcharts library providing a wide range of chart types; and Splitter component using the React Resizable Panels library to enable users to adjust the boundaries between panels. 
+An external dependency refers to a user interface component sourced from a widely adopted third-party library or vendor, rather than developed in-house as part of the Salt Design System. We choose these best-in-class solutions that reflect standard choices within the development community. Salt integrates these components into applications to deliver advanced functionality and specialized interactions. To maintain visual consistency and a seamless user experience, we apply Salt's brand-aligned styles using dedicated theme/component packages. This approach ensures third-party dependencies are treated as peer dependencies, allowing consumers to update them independently and avoid issues related to version lock-in. Examples include: Data grid, built on AG Grid for highly interactive tables; Chart, built on Highcharts for a wide range of chart types; and [Splitter](/salt/components/splitter), built on React Resizable Panels to enable adjustable panel boundaries.
 
 ## Stable
 
-Released version of Salt elements reliable for general use after the completion of extensive testing. Stable software is safe for production environments and everyday users, with extensive documentation and support available. You can find stable components in the @salt-ds/core package.
+A stable component in the Salt Design System is one that has undergone thorough testing and review. It is available for use in production environments after: achieving a known level of [accessibility](#accessibility); aligning with Salt’s brand guidelines; and confirming adherence to established business requirements. Such components are well-documented, supported and available in the @salt-ds/core package. Once marked as stable, they follow [semantic versioning](#versioning), meaning any breaking changes will be communicated in advance.
 
 ## Beta
 
