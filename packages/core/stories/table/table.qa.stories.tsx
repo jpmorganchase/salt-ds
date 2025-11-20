@@ -1,4 +1,5 @@
 import {
+  StackLayout,
   Table,
   type TableProps,
   TBody,
@@ -12,7 +13,6 @@ import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "docs/story.css";
-import { StackLayout } from "../../src";
 
 const NUM_COLS = 2;
 const NUM_ROWS = 3;
