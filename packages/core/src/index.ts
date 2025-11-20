@@ -47,7 +47,6 @@ export * from "./radio-button";
 export * from "./salt-provider";
 export * from "./scrim";
 export * from "./segmented-button-group";
-export * from "./selectable-pill-list";
 export * from "./semantic-icon-provider";
 export * from "./skip-link";
 export * from "./slider";
