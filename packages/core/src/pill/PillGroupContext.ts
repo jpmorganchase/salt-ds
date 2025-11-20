@@ -1,8 +1,7 @@
 import { type SyntheticEvent, useContext } from "react";
-import { createContext } from "../utils/createContext";
+import { createContext } from "../utils";
 
-interface PillGroupContextValue {
-  // focus management
+export interface PillGroupContextValue {
   focusInside: boolean;
   selected: string[];
   select: (e: SyntheticEvent, value: string) => void;
@@ -14,6 +13,6 @@ export const PillGroupContext = createContext<PillGroupContextValue | null>(
   null,
 );
 
-export const usePillGroup = () => {
+export function usePillGroup() {
   return useContext(PillGroupContext);
-};
+}

@@ -1,0 +1,5 @@
+.saltPillGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
+}

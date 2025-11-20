@@ -10,9 +10,9 @@ import {
   useState,
 } from "react";
 import { useButton } from "../button";
-import { usePillGroup } from "../selectable-pill-list/PillGroupContext";
 import { makePrefixer } from "../utils";
 import pillCss from "./Pill.css";
+import { usePillGroup } from "./PillGroupContext";
 
 const withBaseName = makePrefixer("saltPill");
 
