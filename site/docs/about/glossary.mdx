@@ -69,15 +69,15 @@ An external dependency refers to a user interface component sourced from a widel
 
 A stable component in Salt is one that has undergone thorough testing and review. It is available for use in production environments after: achieving a known level of [accessibility](#accessibility); aligning with Salt’s brand guidelines; and confirming adherence to established business requirements. Such components are well-documented, supported and available in the @salt-ds/core package. Once marked as stable, they follow [semantic versioning](#versioning), meaning any breaking changes will be communicated in advance.
 
-### Beta
+### Release Candidate (RC)
 
-The pre-release version of Salt elements in testing may contain bugs, incomplete features or performance problems. The "beta" tag denotes components that are under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find beta components in the @salt-ds/lab package.
+The pre-release version of Salt components in testing may contain bugs, incomplete features or performance problems. The "RC" tag denotes components that are release candidates under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find release candidates in the @salt-ds/lab package.
 
 ### OOTB
 
 OOTB refers to design system components, features and styles that are ready to use [out of the box](#OOTB) immediately upon installation or implementation, without requiring significant customization or additional development.
 
-## Disabled state
+### Disabled state
 
 A component in a disabled state is completely non-interactive, as it isn’t considered relevant to the user’s workflow at that moment. Since the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning or success) for disabled components, as these imply required user action. 
 
