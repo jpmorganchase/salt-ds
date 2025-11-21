@@ -5,7 +5,7 @@ sidebar:
   priority: 1
 ---
 
-# About
+## About
 
 ### Salt
 
@@ -61,7 +61,7 @@ A component is a reusable, self-contained building block in the Salt design syst
 
 Salt layouts are a special category of components designed to manage the overall structure and arrangement of user interface elements, rather than providing visual widgets themselves. Layouts are responsible for organizing how other components are positioned and flow within an application or page. Read the overview for details on types of [layouts](/salt/components/layouts/index).
 
-## External dependency
+### External dependency
 
 An external dependency refers to a user interface component sourced from a widely adopted third-party library or vendor, rather than developed in-house as part of Salt. We choose these best-in-class solutions that reflect standard choices within the development community. Salt integrates these components into applications to deliver advanced functionality and specialized interactions. To maintain visual consistency and a seamless user experience, we apply Salt's brand-aligned styles using dedicated theme/component packages. This approach ensures third-party dependencies are treated as peer dependencies, allowing consumers to update them independently and avoid issues related to version lock-in. Examples include: Data grid, built on AG Grid for highly interactive tables; Chart, built on Highcharts for a wide range of chart types; and [Splitter](/salt/components/splitter), built on React Resizable Panels to enable adjustable panel boundaries.
 
@@ -73,7 +73,7 @@ A stable component in Salt is one that has undergone thorough testing and review
 
 The pre-release version of Salt elements in testing may contain bugs, incomplete features or performance problems. The "beta" tag denotes components that are under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find beta components in the @salt-ds/lab package.
 
-## OOTB
+### OOTB
 
 OOTB refers to design system components, features and styles that are ready to use [out of the box](#OOTB) immediately upon installation or implementation, without requiring significant customization or additional development.
 
@@ -81,12 +81,12 @@ OOTB refers to design system components, features and styles that are ready to 
 
 A component in a disabled state is completely non-interactive, as it isn’t considered relevant to the user’s workflow at that moment. Since the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning or success) for disabled components, as these imply required user action. 
 
-## Read-only state
+### Read-only state
 
 A component in a read-only state is considered relevant to the user’s workflow, allowing users to view and interact with the content without modifying it. It must meet accessibility requirements, including minimum contrast. The system supports validation states (error, warning and success) for read-only components, except for radio buttons and checkboxes. Although disabled states are usually not detected by screen readers, read-only elements are.
 
-# Patterns
+## Patterns
 
-## Pattern
+### Pattern
 
 Salt is a pattern-driven system. This means we provide a set of simple, high-quality, context-agnostic [components](#component) and show you how to put them together in different ways, as “patterns,” to solve a specific business problem. We recognize the need for UI solutions that are tailored to line of business, product or persona. Salt patterns provide you with solutions that you can use “out of the box” or easily modify to cater for nuances in your product experience. Each pattern has examples showing how you can put Salt components together following the Salt foundations. We also offer comprehensive supporting documentation to explain how to use the pattern, how to drive the pattern with business logic, and how to adjust it to suit your business case. Learn more in our [pattern documentation](/salt/patterns/index).
