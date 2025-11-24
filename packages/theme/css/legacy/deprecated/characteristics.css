@@ -118,6 +118,7 @@
 
   /* Accent */
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
+  --salt-accent-foreground: var(--salt-palette-accent-foreground);
 
   --salt-track-background: var(--salt-palette-track-background);
   --salt-track-background-disabled: var(--salt-palette-track-background-disabled);
@@ -224,4 +225,25 @@
 
   /* Separable */
   --salt-separable-background: var(--salt-palette-alpha-none);
+
+  --salt-category-1-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-2-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-3-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-4-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-5-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-6-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-7-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-8-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-9-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-10-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-11-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-12-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-13-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-14-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-15-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-16-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-17-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-18-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-19-bold-foreground: var(--salt-palette-accent-foreground);
+  --salt-category-20-bold-foreground: var(--salt-palette-accent-foreground);
 }

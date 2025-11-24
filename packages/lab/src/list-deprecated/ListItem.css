@@ -3,7 +3,7 @@
   --list-item-text-color: var(--salt-selectable-foreground);
   --list-item-background: var(--salt-selectable-background);
   --list-item-background-hover: var(--salt-selectable-background-hover);
-  --list-item-selected-focus-outlineColor: var(--salt-accent-foreground); /* TODO: Check token with design */
+  --list-item-selected-focus-outlineColor: var(--salt-content-bold-foreground);
 
   --list-item-text-color-active: var(--salt-selectable-foreground-selected);
   --list-item-background-active: var(--salt-selectable-background-selected);

@@ -11,7 +11,7 @@
   height: 65%;
   border-radius: 50%;
   background-color: var(--salt-category-2-bold-background);
-  color: var(--salt-category-2-bold-foreground);
+  color: var(--salt-content-bold-foreground);
   margin-bottom: var(--salt-size-indicator);
 }
 
