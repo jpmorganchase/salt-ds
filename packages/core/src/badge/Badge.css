@@ -29,7 +29,7 @@
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-notation-lineHeight);
   background: var(--salt-accent-background);
-  color: var(--salt-accent-foreground);
+  color: var(--salt-content-bold-foreground);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

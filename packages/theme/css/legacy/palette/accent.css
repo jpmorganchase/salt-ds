@@ -1,13 +1,11 @@
 .salt-theme[data-mode="light"] {
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
-  --salt-palette-accent-foreground: var(--salt-color-white);
   --salt-palette-accent-foreground-informative: var(--salt-color-blue-600);
 }
 
 .salt-theme[data-mode="dark"] {
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
-  --salt-palette-accent-foreground: var(--salt-color-white);
   --salt-palette-accent-foreground-informative: var(--salt-color-blue-200);
 }
