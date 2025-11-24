@@ -45,6 +45,7 @@ export const PillCheckIcon = ({
         {
           [withBaseName("checked")]: checked,
           [withBaseName("disabled")]: disabled,
+          [withBaseName("active")]: active,
         },
         className,
       )}

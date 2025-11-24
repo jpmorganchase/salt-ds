@@ -5,7 +5,7 @@ import {
   Pill,
   PillGroup,
 } from "@salt-ds/core";
-
+import { FavoriteIcon, UserBadgeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -33,6 +33,21 @@ export const WithWrap = () => {
           Pill {index + 1}
         </Pill>
       ))}
+    </PillGroup>
+  );
+};
+
+export const WithIcon = () => {
+  return (
+    <PillGroup>
+      <Pill value="one">
+        <UserBadgeIcon />
+        Pill 1
+      </Pill>
+      <Pill value="two">
+        <FavoriteIcon />
+        Pill 2
+      </Pill>
     </PillGroup>
   );
 };
