@@ -102,6 +102,7 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
           [],
       );
 
+      // biome-ignore lint/complexity/useIndexOf: Already using preferred findIndex
       const activeIndex = pills.findIndex(
         (pill) => pill === document.activeElement,
       );
