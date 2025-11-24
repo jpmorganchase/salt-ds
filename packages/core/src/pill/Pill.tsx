@@ -1,4 +1,3 @@
-import { CheckmarkIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -12,6 +11,7 @@ import {
 import { useButton } from "../button";
 import { makePrefixer } from "../utils";
 import pillCss from "./Pill.css";
+import { PillCheckIcon } from "./PillCheckIcon";
 import { usePillGroup } from "./PillGroupContext";
 
 const withBaseName = makePrefixer("saltPill");
@@ -24,7 +24,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   {
     children,
     className,
-    disabled,
+    disabled: disabledProp,
     onKeyUp,
     onKeyDown,
     onClick,
@@ -60,7 +60,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   };
 
   const { buttonProps, active } = useButton<HTMLButtonElement>({
-    disabled,
+    disabled: disabledProp,
     onKeyUp,
     onKeyDown,
     onClick: handleClick,
@@ -68,11 +68,16 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   });
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
-  const { tabIndex: _tabIndex, ...restButtonProps } = buttonProps;
+  const {
+    tabIndex: _tabIndex,
+    disabled: buttonDisabled,
+    ...restButtonProps
+  } = buttonProps;
 
   const [focused, setFocused] = useState(false);
 
-  const selected = value && pillGroupContext?.selected.includes(value);
+  const selected = !!value && pillGroupContext?.selected.includes(value);
+  const disabled = pillGroupContext?.disabled || disabledProp || buttonDisabled;
 
   let tabIndex: undefined | number;
 
@@ -96,7 +101,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
         { [withBaseName("active")]: active },
         className,
       )}
-      type="button"
+      type={pillGroupContext ? undefined : "button"}
       aria-checked={
         pillGroupContext && value
           ? pillGroupContext.selected.includes(value)
@@ -104,11 +109,12 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
       }
       tabIndex={tabIndex}
       role={pillGroupContext ? "option" : undefined}
-      {...restButtonProps}
       onFocus={handleFocus}
+      disabled={disabled}
+      {...restButtonProps}
       {...rest}
     >
-      {selected && <CheckmarkIcon aria-hidden />}
+      {pillGroupContext && <PillCheckIcon checked={selected} />}
       {children}
     </button>
   );

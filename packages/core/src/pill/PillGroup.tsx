@@ -14,13 +14,6 @@ import { makePrefixer, useControlled, useForkRef } from "../utils";
 import pillGroupCss from "./PillGroup.css";
 import { PillGroupContext } from "./PillGroupContext";
 
-// add form field support
-// add test
-// update styling
-// rename from SelectablePillGroup to PillGroup/PillList - check with Karl and Jake
-// a11y form field?
-// aria-checked / aria-selected?
-
 export interface PillGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The currently selected values.
@@ -50,6 +43,8 @@ const withBaseName = makePrefixer("saltPillGroup");
 export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
   function PillGroup(props, ref) {
     const {
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
       disabled: disabledProp,
       children,
       selected: selectedProp,
@@ -68,7 +63,8 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       window: targetWindow,
     });
 
-    const { a11yProps, disabled: formFieldDisabled } = useFormFieldProps();
+    const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
+      useFormFieldProps();
 
     const pillGroupRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(ref, pillGroupRef);
@@ -111,21 +107,23 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       );
 
       switch (event.key) {
+        case "ArrowDown":
         case "ArrowRight":
+          event.preventDefault();
           pills[Math.min(activeIndex + 1, pills.length - 1)]?.focus();
-          event.preventDefault();
           break;
+        case "ArrowUp":
         case "ArrowLeft":
-          pills[Math.max(activeIndex - 1, 0)]?.focus();
           event.preventDefault();
+          pills[Math.max(activeIndex - 1, 0)]?.focus();
           break;
         case "Home":
-          pills[0]?.focus();
           event.preventDefault();
+          pills[0]?.focus();
           break;
         case "End":
-          pills[pills.length - 1]?.focus();
           event.preventDefault();
+          pills[pills.length - 1]?.focus();
           break;
       }
     };
@@ -140,6 +138,14 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
         }}
       >
         <div
+          aria-labelledby={
+            clsx(formFieldA11yProps?.["aria-labelledby"], ariaLabelledBy) ||
+            undefined
+          }
+          aria-describedby={
+            clsx(formFieldA11yProps?.["aria-describedby"], ariaDescribedBy) ||
+            undefined
+          }
           className={clsx(withBaseName(), className)}
           role="listbox"
           aria-multiselectable

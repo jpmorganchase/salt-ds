@@ -1,4 +1,4 @@
-import { Button, FlowLayout, Pill, PillGroup } from "@salt-ds/core";
+import { Button, FlowLayout, Pill } from "@salt-ds/core";
 import { CloseIcon, FavoriteIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
@@ -61,19 +61,5 @@ export const Icon: StoryFn<typeof Pill> = () => {
     <Pill onClick={() => console.log("Clicked.")}>
       <FavoriteIcon /> Pill with Icon
     </Pill>
-  );
-};
-
-export const Selectable = () => {
-  return (
-    <PillGroup
-      onSelectionChange={(_e, selected) => {
-        console.log("Selected values: ", selected);
-      }}
-    >
-      <Pill value="one">Pill 1</Pill>
-      <Pill value="two">Pill 2</Pill>
-      <Pill value="three">Pill 3</Pill>
-    </PillGroup>
   );
 };
