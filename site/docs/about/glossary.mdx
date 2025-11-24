@@ -61,17 +61,25 @@ A component is a reusable, self-contained building block in the Salt design syst
 
 Salt layouts are a special category of components designed to manage the overall structure and arrangement of user interface elements, rather than providing visual widgets themselves. Layouts are responsible for organizing how other components are positioned and flow within an application or page. Read the overview for details on types of [layouts](/salt/components/layouts/index).
 
-## External dependency
+## Alpha
 
-An external dependency refers to a user interface component sourced from a widely adopted third-party library or vendor, rather than developed in-house as part of Salt. We choose these best-in-class solutions that reflect standard choices within the development community. Salt integrates these components into applications to deliver advanced functionality and specialized interactions. To maintain visual consistency and a seamless user experience, we apply Salt's brand-aligned styles using dedicated theme/component packages. This approach ensures third-party dependencies are treated as peer dependencies, allowing consumers to update them independently and avoid issues related to version lock-in. Examples include: Data grid, built on AG Grid for highly interactive tables; Chart, built on Highcharts for a wide range of chart types; and [Splitter](/salt/components/splitter), built on React Resizable Panels to enable adjustable panel boundaries.
-
-## Stable
-
-A stable component in Salt is one that has undergone thorough testing and review. It is available for use in production environments after: achieving a known level of [accessibility](#accessibility); aligning with Salt’s brand guidelines; and confirming adherence to established business requirements. Such components are well-documented, supported and available in the @salt-ds/core package. Once marked as stable, they follow [semantic versioning](#versioning), meaning any breaking changes will be communicated in advance.
+An alpha component in Salt has undergone thorough testing and review. It is available for use in production environments after: achieving a known level of [accessibility](#accessibility); aligning with Salt’s brand guidelines; and confirming adherence to established business requirements. Such components are well-documented, supported and available in the @salt-ds/core package. Once marked as stable, they follow [semantic versioning](#versioning), meaning any breaking changes will be communicated in advance.
 
 ## Release Candidate (RC)
 
 The pre-release version of Salt components in testing may contain bugs, incomplete features or performance problems. The "RC" tag denotes components that are release candidates under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find release candidates in the @salt-ds/lab package.
+
+## Core package
+
+Core refers to the @salt-ds/core package of stable alpha components that do not feature any accompanying symbol in their navigation link titles, unlike the Release candidate (RC) components that are under active development within the @salt-ds/lab package.
+
+## Lab package
+
+Lab refers to the @salt-ds/lab package of unstable Release candidate (RC) components that are under active development, unlike the stable, alpha components within the @salt-ds/core package. 
+
+## External dependency
+
+An external dependency refers to a user interface component sourced from a widely adopted third-party library or vendor, rather than developed in-house as part of Salt. We choose these best-in-class solutions that reflect standard choices within the development community. Salt integrates these components into applications to deliver advanced functionality and specialized interactions. To maintain visual consistency and a seamless user experience, we apply Salt's brand-aligned styles using dedicated theme/component packages. This approach ensures third-party dependencies are treated as peer dependencies, allowing consumers to update them independently and avoid issues related to version lock-in. Examples include: Data grid, built on AG Grid for highly interactive tables; Chart, built on Highcharts for a wide range of chart types; and [Splitter](/salt/components/splitter), built on React Resizable Panels to enable adjustable panel boundaries.
 
 ## Out of the box (OOTB)
 
