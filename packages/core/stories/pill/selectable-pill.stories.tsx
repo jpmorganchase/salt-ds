@@ -28,6 +28,7 @@ export const WithWrap = () => {
   return (
     <PillGroup style={{ maxWidth: 250 }}>
       {Array.from({ length: 20 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: Mock data
         <Pill key={index} value={`pill-${index}`}>
           Pill {index + 1}
         </Pill>
