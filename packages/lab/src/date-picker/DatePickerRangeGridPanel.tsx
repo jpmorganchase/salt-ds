@@ -9,6 +9,7 @@ import {
   StackLayout,
   useBreakpoint,
   useControlled,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -18,7 +19,6 @@ import {
   forwardRef,
   type SyntheticEvent,
   useCallback,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -299,7 +299,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus/min/max date changes
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
       if (focused && !calendarGridFocused.current) {
         setFocusedDate((prevFocusedDate) => {

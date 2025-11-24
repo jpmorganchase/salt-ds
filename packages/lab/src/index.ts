@@ -48,7 +48,6 @@ export * from "./localization-provider";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
-export * from "./number-input";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";

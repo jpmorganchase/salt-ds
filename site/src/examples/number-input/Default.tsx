@@ -1,4 +1,4 @@
-import { NumberInput } from "@salt-ds/lab";
+import { NumberInput } from "@salt-ds/core";
 
 export const Default = () => (
   <NumberInput

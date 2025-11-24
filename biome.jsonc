@@ -232,6 +232,27 @@
           }
         }
       }
+    },
+    {
+      "includes": ["**/packages/*/src/**", "!**/useIsomorphicLayoutEffect.ts"],
+      "linter": {
+        "rules": {
+          "nursery": {},
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "react": {
+                    "importNames": ["useLayoutEffect"],
+                    "message": "useIsomorphicLayoutEffect should be used instead to avoid warnings during SSR"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
