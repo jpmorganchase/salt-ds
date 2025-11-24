@@ -16,7 +16,7 @@ export default {
 
 export const Default: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup {...args}>
+    <PillGroup aria-label="Group label" {...args}>
       <Pill value="one">Pill 1</Pill>
       <Pill value="two">Pill 2</Pill>
       <Pill value="three">Pill 3</Pill>
@@ -26,7 +26,7 @@ export const Default: StoryFn<typeof PillGroup> = (args) => {
 
 export const WithWrap = () => {
   return (
-    <PillGroup style={{ maxWidth: 250 }}>
+    <PillGroup aria-label="Group label" style={{ maxWidth: 250 }}>
       {Array.from({ length: 20 }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: Mock data
         <Pill key={index} value={`pill-${index}`}>
@@ -39,7 +39,7 @@ export const WithWrap = () => {
 
 export const WithIcon = () => {
   return (
-    <PillGroup>
+    <PillGroup aria-label="Group label">
       <Pill value="one">
         <UserBadgeIcon />
         Pill 1
@@ -72,7 +72,7 @@ export const WithFormField = () => {
 
 export const Disabled = () => {
   return (
-    <PillGroup disabled>
+    <PillGroup aria-label="Group label" disabled>
       <Pill value="one">Pill 1</Pill>
       <Pill value="two">Pill 2</Pill>
       <Pill value="three">Pill 3</Pill>
@@ -99,6 +99,7 @@ export const ControlledGroup: StoryFn<typeof PillGroup> = (args) => {
   return (
     <PillGroup
       {...args}
+      aria-label="Group label"
       selected={selected}
       onSelectionChange={(_e, newSelected) => setSelected(newSelected)}
     >
@@ -111,7 +112,7 @@ export const ControlledGroup: StoryFn<typeof PillGroup> = (args) => {
 
 export const UncontrolledGroup: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup {...args}>
+    <PillGroup {...args} aria-label="Group label">
       <Pill value="one">Pill 1</Pill>
       <Pill value="two">Pill 2</Pill>
       <Pill value="three">Pill 3</Pill>
@@ -121,7 +122,7 @@ export const UncontrolledGroup: StoryFn<typeof PillGroup> = (args) => {
 
 export const WithDisabledPill: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup {...args}>
+    <PillGroup {...args} aria-label="Group label">
       <Pill value="one" disabled>
         Pill 1
       </Pill>
