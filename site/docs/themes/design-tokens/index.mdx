@@ -44,15 +44,15 @@ Salt uses a tiered token structure to provide flexibility with mode, theme, and 
 
 ### Foundations
 
-Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. For more information about each foundation, see the [Foundations](/salt/foundations/index) section.
+Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the [Foundations](/salt/foundations/index) section.
 
 ### Palettes
 
-Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. A palette token can point to different foundation tokens, allowing components to switch between light and dark modes.
+Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. A palette token can point to different foundation tokens, allowing components to switch between light and dark modes.
 
-### Semantic characteristics
+### Characteristics
 
-Semantic characteristics are groups of tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens define design elements by their meaning or use, making it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about [how to read semantic tokens](/salt/themes/design-tokens/how-to-read-tokens).
+Characteristics are groups of semantic tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens are always referenced in components and patterns, defining design elements by their meaning or use. This makes it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about [how to read semantic tokens](/salt/themes/design-tokens/how-to-read-tokens).
 
 ## Design tokens in Figma
 
