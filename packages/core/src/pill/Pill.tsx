@@ -114,7 +114,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
       {...restButtonProps}
       {...rest}
     >
-      {pillGroupContext && <PillCheckIcon checked={selected} />}
+      {pillGroupContext && <PillCheckIcon checked={selected} active={active} />}
       {children}
     </button>
   );
