@@ -25,8 +25,7 @@
   color: var(--salt-content-primary-foreground);
 }
 
-.saltPillCheckIcon-disabled,
-.saltPillCheckIcon:hover {
+.saltPillCheckIcon-disabled {
   border-color: var(--salt-content-bold-foreground);
 }
 

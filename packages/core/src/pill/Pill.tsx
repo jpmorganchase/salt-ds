@@ -5,7 +5,9 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
+  type KeyboardEvent,
   type MouseEvent,
+  useEffect,
   useState,
 } from "react";
 import { useButton } from "../button";
@@ -35,6 +37,8 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   },
   ref,
 ) {
+  const [pressActive, setPressActive] = useState(false);
+
   const pillGroupContext = usePillGroup();
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -59,10 +63,39 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     setFocused(false);
   };
 
+  const handleKeyDownInternal = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      setPressActive(true);
+    }
+    onKeyDown?.(event);
+  };
+
+  const handleKeyUpInternal = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      setPressActive(false);
+    }
+    onKeyUp?.(event);
+  };
+
+  const handlePointerDown = () => {
+    if (disabledProp) return;
+    setPressActive(true);
+  };
+
+  useEffect(() => {
+    const clear = () => setPressActive(false);
+    window.addEventListener("pointerup", clear);
+    window.addEventListener("pointercancel", clear);
+    return () => {
+      window.removeEventListener("pointerup", clear);
+      window.removeEventListener("pointercancel", clear);
+    };
+  }, []);
+
   const { buttonProps, active } = useButton<HTMLButtonElement>({
     disabled: disabledProp,
-    onKeyUp,
-    onKeyDown,
+    onKeyUp: handleKeyUpInternal,
+    onKeyDown: handleKeyDownInternal,
     onClick: handleClick,
     onBlur: handleBlur,
   });
@@ -90,6 +123,8 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     }
   }
 
+  const combinedActive = pressActive || active;
+
   return (
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Option role applied when aria-checked
     <button
@@ -98,7 +133,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
       className={clsx(
         withBaseName(),
         withBaseName("clickable"),
-        { [withBaseName("active")]: active },
+        { [withBaseName("active")]: combinedActive },
         className,
       )}
       type={pillGroupContext ? undefined : "button"}
@@ -110,11 +145,14 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
       tabIndex={tabIndex}
       role={pillGroupContext ? "option" : undefined}
       onFocus={handleFocus}
+      onPointerDown={handlePointerDown}
       disabled={disabled}
       {...restButtonProps}
       {...rest}
     >
-      {pillGroupContext && <PillCheckIcon checked={selected} active={active} />}
+      {pillGroupContext && (
+        <PillCheckIcon checked={selected} active={combinedActive} />
+      )}
       {children}
     </button>
   );

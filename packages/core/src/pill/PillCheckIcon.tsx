@@ -27,16 +27,6 @@ export const PillCheckIcon = ({
     window: targetWindow,
   });
 
-  const icon = () => {
-    if (checked) {
-      if (active) {
-        return <CheckmarkIcon className={withBaseName("solid-icon")} />;
-      }
-      return <CheckmarkSolidIcon className={withBaseName("icon")} />;
-    }
-    return null;
-  };
-
   return (
     <div
       aria-hidden="true"
@@ -50,7 +40,12 @@ export const PillCheckIcon = ({
         className,
       )}
     >
-      {icon()}
+      {checked &&
+        (active ? (
+          <CheckmarkIcon className={withBaseName("icon")} />
+        ) : (
+          <CheckmarkSolidIcon className={withBaseName("solidIcon")} />
+        ))}
     </div>
   );
 };
