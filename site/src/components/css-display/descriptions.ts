@@ -6,7 +6,7 @@ export default {
   category:
     "Category offers a set of distinct colors for grouping and differentiating content, with meaning assigned locally.",
   container:
-    "Container sets the background and structure of interface elements, using variants and optional borders or shadows to group content and create visual hierarchy.",
+    "Container sets the background and structure of interface elements, using variants and optional borders to group content and create visual hierarchy.",
   content:
     "Content defines the standard foreground colors for text and icons, supporting clarity, consistency, and accessibility.",
   editable:
