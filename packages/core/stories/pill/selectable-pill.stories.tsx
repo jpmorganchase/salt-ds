@@ -24,6 +24,18 @@ export const Default: StoryFn<typeof PillGroup> = (args) => {
   );
 };
 
+export const WithWrap = () => {
+  return (
+    <PillGroup style={{ maxWidth: 250 }}>
+      {Array.from({ length: 20 }).map((_, index) => (
+        <Pill key={index} value={`pill-${index}`}>
+          Pill {index + 1}
+        </Pill>
+      ))}
+    </PillGroup>
+  );
+};
+
 export const WithFormField = () => {
   return (
     <FormField>

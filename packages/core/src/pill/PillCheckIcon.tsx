@@ -27,8 +27,6 @@ export const PillCheckIcon = ({
     window: targetWindow,
   });
 
-  console.log("checked:", checked, "active:", active);
-
   const icon = () => {
     if (checked) {
       if (active) {
