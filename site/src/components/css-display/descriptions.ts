@@ -1,6 +1,6 @@
 export default {
   accent:
-    "Accent highlights key elements by applying a themes dominant color, helping important components—like active tabs or headings—stand out and draw attention.",
+    "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.",
   actionable:
     "Actionable defines the colors and styles for components that enable onward actions, such as triggering events or processes, making interactive elements clearly identifiable and intuitive for users.",
   category:
