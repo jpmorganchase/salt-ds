@@ -139,6 +139,7 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
         }}
       >
         <div
+          aria-disabled={disabled || undefined}
           aria-labelledby={
             clsx(formFieldA11yProps?.["aria-labelledby"], ariaLabelledBy) ||
             undefined

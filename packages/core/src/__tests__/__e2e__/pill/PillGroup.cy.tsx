@@ -8,6 +8,7 @@ const {
   WithDisabledPill,
   UncontrolledGroup,
   WithDisabledFormField,
+  Disabled,
 } = composeStories(selectablePillStories);
 
 describe("GIVEN a PillGroup", () => {
@@ -56,6 +57,14 @@ describe("GIVEN a PillGroup", () => {
     cy.findByRole("option", { name: "Pill 1" })
       .should("be.disabled")
       .and("have.attr", "aria-checked", "false");
+  });
+
+  it("SHOULD render a disabled PillGroup", () => {
+    cy.mount(<Disabled />);
+    cy.findAllByRole("option").each((pill) => {
+      cy.wrap(pill).should("be.disabled");
+    });
+    cy.findByRole("listbox").should("have.attr", "aria-disabled", "true");
   });
 
   describe("GIVEN a PillGroup with selectable Pills", () => {
