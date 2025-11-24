@@ -14,11 +14,13 @@
   box-sizing: border-box;
 }
 
-.saltPillCheckIcon:active {
+.saltPillCheckIcon:active,
+.saltPillCheckIcon-active {
   border-color: var(--salt-content-primary-foreground);
 }
 
-.saltPillCheckIcon-checked.saltPillCheckIcon:active {
+.saltPillCheckIcon-checked.saltPillCheckIcon:active,
+.saltPillCheckIcon-checked.saltPillCheckIcon-active {
   border-color: var(--salt-content-primary-foreground);
   color: var(--salt-content-primary-foreground);
 }
