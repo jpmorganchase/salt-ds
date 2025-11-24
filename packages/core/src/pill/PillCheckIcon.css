@@ -4,10 +4,8 @@
   min-width: var(--checkbox-size);
   height: var(--checkbox-size);
   min-height: var(--checkbox-size);
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-content-bold-foreground);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid);
   border-radius: var(--salt-palette-corner-weaker, 0);
-  color: var(--salt-selectable-foreground);
-  /* background: var(--salt-container-primary-background); */
   position: relative;
   --saltIcon-size: 100%;
   display: flex;
@@ -16,30 +14,22 @@
   box-sizing: border-box;
 }
 
-.saltPillCheckIcon-checked,
-.saltCheckbox:hover .saltPillCheckIcon-checked {
-  border-color: var(--salt-selectable-borderColor-selected);
-  color: var(--salt-selectable-foreground-selected);
+.saltPillCheckIcon:active {
+  border-color: var(--salt-content-primary-foreground);
 }
 
-.saltCheckbox:hover .saltPillCheckIcon {
-  border-color: var(--salt-selectable-borderColor-hover);
-  color: var(--salt-selectable-foreground-hover);
+.saltPillCheckIcon-checked.saltPillCheckIcon:active {
+  border-color: var(--salt-content-primary-foreground);
+  color: var(--salt-content-primary-foreground);
 }
 
 .saltPillCheckIcon-disabled,
-.saltCheckbox:hover .saltPillCheckIcon-disabled,
-.saltPillCheckIcon-disabled.saltPillCheckIcon-indeterminate,
-.saltCheckbox:hover .saltPillCheckIcon-disabled.saltPillCheckIcon-indeterminate {
-  border-color: var(--salt-selectable-borderColor-disabled);
-  background: var(--salt-container-primary-background-disabled);
-  color: var(--salt-selectable-foreground-disabled);
+.saltPillCheckIcon:hover {
+  border-color: var(--salt-content-bold-foreground);
 }
 
-.saltPillCheckIcon-checked.saltPillCheckIcon-disabled,
-.saltCheckbox:hover .saltPillCheckIcon-checked.saltPillCheckIcon-disabled {
-  border-color: var(--salt-selectable-borderColor-selectedDisabled);
-  color: var(--salt-selectable-foreground-selectedDisabled);
+.saltPillCheckIcon-checked.saltPillCheckIcon-disabled {
+  background: var(--salt-content-bold-foreground);
 }
 
 .saltPillCheckIcon > svg {

@@ -9,14 +9,16 @@ export interface PillCheckIconProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
+  active?: boolean;
 }
 
 const withBaseName = makePrefixer("saltPillCheckIcon");
 
 export const PillCheckIcon = ({
-  checked = false,
   className,
-  disabled,
+  checked = false,
+  disabled = false,
+  active = false,
 }: PillCheckIconProps): JSX.Element => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -24,6 +26,18 @@ export const PillCheckIcon = ({
     css: pillCheckIcon,
     window: targetWindow,
   });
+
+  console.log("checked:", checked, "active:", active);
+
+  const icon = () => {
+    if (checked) {
+      if (active) {
+        return <CheckmarkIcon className={withBaseName("solid-icon")} />;
+      }
+      return <CheckmarkSolidIcon className={withBaseName("icon")} />;
+    }
+    return null;
+  };
 
   return (
     <div
@@ -37,10 +51,7 @@ export const PillCheckIcon = ({
         className,
       )}
     >
-      {/* {checked && !indeterminate && !readOnly && (
-        <CheckmarkSolidIcon className={withBaseName("icon")} />
-      )} */}
-      {checked && <CheckmarkIcon className={withBaseName("icon")} />}
+      {icon()}
     </div>
   );
 };
