@@ -5,7 +5,6 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
-  type KeyboardEvent,
   type MouseEvent,
   useEffect,
   useState,
@@ -38,6 +37,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   ref,
 ) {
   const [pressActive, setPressActive] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   const pillGroupContext = usePillGroup();
   const targetWindow = useWindow();
@@ -64,20 +64,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     onBlur?.(event);
   };
 
-  const handleKeyDownInternal = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
-      setPressActive(true);
-    }
-    onKeyDown?.(event);
-  };
-
-  const handleKeyUpInternal = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
-      setPressActive(false);
-    }
-    onKeyUp?.(event);
-  };
-
   const handlePointerDown = () => {
     if (disabledProp) return;
     setPressActive(true);
@@ -95,8 +81,8 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
 
   const { buttonProps, active } = useButton<HTMLButtonElement>({
     disabled: disabledProp,
-    onKeyUp: handleKeyUpInternal,
-    onKeyDown: handleKeyDownInternal,
+    onKeyUp,
+    onKeyDown,
     onClick: handleClick,
     onBlur: handleBlur,
   });
@@ -107,8 +93,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     disabled: buttonDisabled,
     ...restButtonProps
   } = buttonProps;
-
-  const [focused, setFocused] = useState(false);
 
   const selected = !!value && pillGroupContext?.selected.includes(value);
   const disabled = pillGroupContext?.disabled || disabledProp || buttonDisabled;
@@ -137,7 +121,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
         { [withBaseName("active")]: combinedActive },
         className,
       )}
-      type={pillGroupContext ? undefined : "button"}
+      type="button"
       aria-checked={
         pillGroupContext && value
           ? pillGroupContext.selected.includes(value)
