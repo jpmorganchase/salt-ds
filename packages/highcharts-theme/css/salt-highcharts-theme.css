@@ -223,7 +223,7 @@
 /* Override default stroke for line chart data series hover point circle */
 .highcharts-theme-salt .highcharts-line-series .highcharts-point,
 .highcharts-theme-salt .highcharts-area-series .highcharts-point {
-  stroke: var(--salt-color-white);
+  stroke: var(--salt-content-bold-foreground);
 }
 
 /* Override default stroke for chart series segment borders */
