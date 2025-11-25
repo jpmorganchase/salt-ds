@@ -11,6 +11,14 @@ sidebar:
 
 Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. We offer well-documented, accessible components, as well as comprehensive design templates, style libraries and assets. Learn more [about Salt](/salt/about/index).
 
+#Open Source
+
+Our open source software supports the firm’s initiatives to engage with communities and improve the quality of our code. It's a contribution model that encourages others to contribute, not just the Salt team, and is based on the React framework. Salt is product/business agnostic and contains no proprietary information. By open sourcing Salt, we enable other J.P. Morgan products to be open-sourced and foster innovation across the bank.
+
+## Web Content Accessibility Guidelines (WCAG)
+
+Salt Design System provides the building blocks for creating accessible digital experiences. We follow Web Content Accessibility Guidelines (WCAG) 2.1, and we strive to meet Level A and AA standards. Salt components are developed with accessibility as a core requirement, not an afterthought. We believe in digital inclusion and are committed to ensuring our components support the diverse needs of all users. 
+
 # Foundations
 
 ## Foundation
@@ -77,13 +85,17 @@ Core refers to the @salt-ds/core package of stable alpha components that do no
 
 Lab refers to the @salt-ds/lab package of unstable Release candidate (RC) components that are under active development, unlike the stable, alpha components within the @salt-ds/core package. 
 
+## Semantic Versioning
+
+Salt follows an industry standard called Semantic Versioning, often shortened to SemVer, to display the unique number indicating the evolution of our code. To get most value from the design system, you should understand what SemVer means, how it impacts your delivery and what you need to do to adopt it. Salt’s version number consists of 3 numbers, in the format of xx.yy.zz (e.g., 1.10.25), where "xx" is major version number, "yy" is minor version number, and "zz" is patch version number.
+
 ## External dependency
 
 An external dependency refers to a user interface component sourced from a widely adopted third-party library or vendor, rather than developed in-house as part of Salt. We choose these best-in-class solutions that reflect standard choices within the development community. Salt integrates these components into applications to deliver advanced functionality and specialized interactions. To maintain visual consistency and a seamless user experience, we apply Salt's brand-aligned styles using dedicated theme/component packages. This approach ensures third-party dependencies are treated as peer dependencies, allowing consumers to update them independently and avoid issues related to version lock-in. Examples include: Data grid, built on AG Grid for highly interactive tables; Chart, built on Highcharts for a wide range of chart types; and [Splitter](/salt/components/splitter), built on React Resizable Panels to enable adjustable panel boundaries.
 
 ## Out of the box (OOTB)
 
-OOTB refers to components, features and styles that are ready to use [out of the box](#OOTB) immediately upon installation or implementation, without requiring significant customization or additional development.
+OOTB refers to components, features and styles that are ready to use out of the box, immediately upon installation or implementation, without requiring significant customization or additional development.
 
 ## Disabled state
 
@@ -93,8 +105,20 @@ A component in a disabled state is completely non-interactive, as it isn’t con
 
 A component in a read-only state is considered relevant to the user’s workflow, allowing users to view and interact with the content without modifying it. It must meet accessibility requirements, including minimum contrast. The system supports validation states (error, warning and success) for read-only components, except for radio buttons and checkboxes. Although disabled states are usually not detected by screen readers, read-only elements are.
 
+## Figma component
+
+Most Salt components are distributed on Figma in Salt DS Components & Patterns Library and are configurable with props. These components shouldn't be detached. Some examples include Avatar, Banner and Button.
+
+## Figma template
+
+Figma templates are Salt components and patterns distributed on Figma in the Salt DS Components & Patterns Library. These are initially configurable with props and actually should be detached to customize the composition (e.g., add or remove elements). Examples include Checkbox group template and Data grid template.
+
+## Figma sticker
+
+Figma stickers are patterns built by Salt (or contributors) available in Salt DS Pattern Stickersheets as example frames. They can be copied into files but aren't distributed as components. Examples include Forms and International Address Form.
+
 # Patterns
 
 ## Pattern
 
-Salt is a pattern-driven system. This means we provide a set of simple, high-quality, context-agnostic [components](#component) and show you how to put them together in different ways, as “patterns,” to solve a specific business problem. We recognize the need for UI solutions that are tailored to line of business, product or persona. Salt patterns provide you with solutions that you can use “out of the box” or easily modify to cater for nuances in your product experience. Each pattern has examples showing how you can put Salt components together following the Salt foundations. We also offer comprehensive supporting documentation to explain how to use the pattern, how to drive the pattern with business logic, and how to adjust it to suit your business case. Learn more in our [pattern documentation](/salt/patterns/index).
+Salt is a pattern-driven system, meaning that we provide a set of simple, high-quality, context-agnostic [components](#component) and show you how to put them together in different ways, as patterns, to solve specific business problems. We recognize the need for UI solutions that are tailored to line of business, product or persona. Salt patterns provide you with solutions that you can use [out of the box](#OOTB) or easily modify to cater for nuances in your product experience. Each pattern has examples showing how you can put Salt components together following the Salt foundations. We also offer comprehensive supporting documentation to explain how to use the pattern, how to drive the pattern with business logic, and how to adjust it to suit your business case. Learn more in our [pattern documentation](/salt/patterns/index).
