@@ -3,26 +3,9 @@ import {
   type PointerEvent,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
-
-// Interval hook in TypeScript
-function useInterval(callback: () => void, delay: number | null) {
-  const savedCallback = useRef<() => void>();
-
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    if (delay === null) return;
-    const id = setInterval(() => {
-      if (savedCallback.current) savedCallback.current();
-    }, delay);
-    return () => clearInterval(id);
-  }, [delay]);
-}
+import { useInterval } from './useInterval';
 
 const INITIAL_DELAY = 500;
 const INTERVAL_DELAY = 100;
