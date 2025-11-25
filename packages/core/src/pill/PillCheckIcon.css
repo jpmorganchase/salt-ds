@@ -14,25 +14,6 @@
   box-sizing: border-box;
 }
 
-.saltPillCheckIcon:active,
-.saltPillCheckIcon-active {
-  border-color: var(--salt-content-primary-foreground);
-}
-
-.saltPillCheckIcon-checked.saltPillCheckIcon:active,
-.saltPillCheckIcon-checked.saltPillCheckIcon-active {
-  border-color: var(--salt-content-primary-foreground);
-  color: var(--salt-content-primary-foreground);
-}
-
-.saltPillCheckIcon-disabled {
-  border-color: var(--salt-content-bold-foreground);
-}
-
-.saltPillCheckIcon-checked.saltPillCheckIcon-disabled {
-  background: var(--salt-content-bold-foreground);
-}
-
 .saltPillCheckIcon > svg {
   position: absolute;
   /* Ensure a gap doesn't appear when device scaling is used */
