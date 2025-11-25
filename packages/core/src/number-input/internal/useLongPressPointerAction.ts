@@ -1,11 +1,6 @@
 import { useWindow } from "@salt-ds/window";
-import {
-  type PointerEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { useInterval } from './useInterval';
+import { type PointerEvent, useCallback, useEffect, useState } from "react";
+import { useInterval } from "./useInterval";
 
 const INITIAL_DELAY = 500;
 const INTERVAL_DELAY = 100;
