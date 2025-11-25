@@ -27,7 +27,7 @@ import {
 } from "@salt-ds/core";
 import { SuccessCircleSolidIcon, WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type CSSProperties,
