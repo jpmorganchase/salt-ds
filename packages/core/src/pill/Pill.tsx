@@ -46,21 +46,22 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     css: pillCss,
     window: targetWindow,
   });
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onClick?.(event);
     if (pillGroupContext && value) {
       pillGroupContext.select(event, value);
     }
+    onClick?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-    onFocus?.(event);
     setFocused(true);
+    onFocus?.(event);
   };
 
   const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
-    onBlur?.(event);
     setFocused(false);
+    onBlur?.(event);
   };
 
   const handleKeyDownInternal = (event: KeyboardEvent<HTMLButtonElement>) => {

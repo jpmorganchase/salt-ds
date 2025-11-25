@@ -3,6 +3,7 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
@@ -52,6 +53,8 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       onSelectionChange,
       onKeyDown,
       className,
+      onFocus,
+      onBlur,
       ...rest
     } = props;
     const [focusInside, setFocusInside] = useState(false);
@@ -129,6 +132,16 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       }
     };
 
+    const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+      setFocusInside(true);
+      onFocus?.(event);
+    };
+
+    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+      setFocusInside(false);
+      onBlur?.(event);
+    };
+
     return (
       <PillGroupContext.Provider
         value={{
@@ -152,8 +165,8 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
           role="listbox"
           aria-multiselectable
           aria-orientation="horizontal"
-          onFocus={() => setFocusInside(true)}
-          onBlur={() => setFocusInside(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           ref={handleRef}
           {...rest}
