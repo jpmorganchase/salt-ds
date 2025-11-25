@@ -9,7 +9,7 @@
 import type { Density } from "@salt-ds/core";
 import { getCSSTokensFromElement } from "./compute-css-tokens";
 
-type TokenMap = {
+export type TokenMap = {
   "--salt-spacing-150": number;
   "--salt-spacing-200": number;
   "--salt-spacing-300": number;
@@ -21,10 +21,10 @@ const DEFAULTS_BY_DENSITY: Record<
   Density | "default",
   { spacing100: number; sizeIcon: number; cornerWeaker: number }
 > = {
-  high: { spacing100: 4, sizeIcon: 10, cornerWeaker: 3 },
-  medium: { spacing100: 8, sizeIcon: 12, cornerWeaker: 4 },
-  low: { spacing100: 12, sizeIcon: 14, cornerWeaker: 5 },
-  touch: { spacing100: 16, sizeIcon: 16, cornerWeaker: 5 },
+  high: { spacing100: 4, sizeIcon: 10, cornerWeaker: 1 },
+  medium: { spacing100: 8, sizeIcon: 12, cornerWeaker: 2 },
+  low: { spacing100: 12, sizeIcon: 14, cornerWeaker: 3 },
+  touch: { spacing100: 16, sizeIcon: 16, cornerWeaker: 4 },
   default: { spacing100: 8, sizeIcon: 12, cornerWeaker: 4 },
 };
 
