@@ -24,9 +24,9 @@ export const Default: StoryFn<typeof PillGroup> = (args) => {
   );
 };
 
-export const WithWrap = () => {
+export const WithWrap: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup aria-label="Group label" style={{ maxWidth: 250 }}>
+    <PillGroup {...args} aria-label="Group label" style={{ maxWidth: 250 }}>
       {Array.from({ length: 20 }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: Mock data
         <Pill key={index} value={`pill-${index}`}>
@@ -37,26 +37,27 @@ export const WithWrap = () => {
   );
 };
 
-export const WithIcon = () => {
+export const WithIcon: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup aria-label="Group label">
+    <PillGroup {...args} aria-label="Group label">
       <Pill value="one">
-        <UserBadgeIcon />
+        <UserBadgeIcon aria-hidden />
         Pill 1
       </Pill>
       <Pill value="two">
-        <FavoriteIcon />
+        <FavoriteIcon aria-hidden />
         Pill 2
       </Pill>
     </PillGroup>
   );
 };
 
-export const WithFormField = () => {
+export const WithFormField: StoryFn<typeof PillGroup> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
       <PillGroup
+        {...args}
         onSelectionChange={(_e, selected) => {
           console.log("Selected values: ", selected);
         }}
@@ -70,9 +71,9 @@ export const WithFormField = () => {
   );
 };
 
-export const Disabled = () => {
+export const Disabled: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup aria-label="Group label" disabled>
+    <PillGroup {...args} aria-label="Group label" disabled selected={["two"]}>
       <Pill value="one">Pill 1</Pill>
       <Pill value="two">Pill 2</Pill>
       <Pill value="three">Pill 3</Pill>
@@ -80,11 +81,11 @@ export const Disabled = () => {
   );
 };
 
-export const WithDisabledFormField = () => {
+export const WithDisabledFormField: StoryFn<typeof PillGroup> = (args) => {
   return (
     <FormField disabled>
       <FormFieldLabel>Field label</FormFieldLabel>
-      <PillGroup>
+      <PillGroup {...args}>
         <Pill value="one">Pill 1</Pill>
         <Pill value="two">Pill 2</Pill>
         <Pill value="three">Pill 3</Pill>
