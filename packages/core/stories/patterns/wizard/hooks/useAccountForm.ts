@@ -7,19 +7,19 @@ import {
 import type { AccountFormData } from "../wizard.stories";
 import type { StepValidationResult } from "./useWizard";
 
-export type ValidateStepFn<StepId extends string> = (
+export type ValidateStepFn<StepId> = (
   stepId: StepId,
   data: AccountFormData,
 ) => Promise<StepValidationResult["fields"]>;
 
-interface UseAccountFormArgs<StepId extends string> {
+interface UseAccountFormArgs<StepId> {
   initialData: AccountFormData;
   currentStepId: StepId;
   validateStep: ValidateStepFn<StepId>;
   setCurrentStepValidation: (fields: StepValidationResult["fields"]) => void;
 }
 
-export function useAccountForm<StepId extends string>({
+export function useAccountForm<StepId>({
   initialData,
   currentStepId,
   validateStep,

@@ -11,7 +11,7 @@ export interface StepValidationResult {
   status?: ValidationStatus;
 }
 
-interface UseWizardOptions<StepId extends string> {
+interface UseWizardOptions<StepId> {
   steps: readonly StepId[];
 }
 
