@@ -227,7 +227,8 @@
 }
 
 /* Override default stroke for chart series segment borders */
-.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point {
+.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point,
+.highcharts-theme-salt .highcharts-candlestick-series.highcharts-legend-item .highcharts-point {
   stroke: none;
 }
 
@@ -322,4 +323,25 @@
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text {
   fill: var(--salt-content-bold-foreground);
+}
+
+.highcharts-theme-salt .highcharts-candlestick-series .highcharts-point-up {
+  stroke: var(--salt-sentiment-positive-foreground-decorative);
+  fill: var(--salt-sentiment-positive-foreground-decorative);
+}
+
+.highcharts-theme-salt .highcharts-candlestick-series .highcharts-point-down,
+.highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-down {
+  stroke: var(--salt-sentiment-negative-foreground-decorative);
+  fill: var(--salt-sentiment-negative-foreground-decorative);
+}
+
+.highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-up {
+  stroke: var(--salt-sentiment-positive-foreground-decorative);
+  fill: transparent;
+}
+
+.highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-down-bearish-up {
+  stroke: var(--salt-sentiment-positive-foreground-decorative);
+  fill: var(--salt-sentiment-positive-foreground-decorative);
 }

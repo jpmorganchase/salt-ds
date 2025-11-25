@@ -79,11 +79,16 @@
   fill: url(#squares);
 }
 
-.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point {
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point,
+.highcharts-theme-salt.salt-fill-patterns .highcharts-candlestick-series .highcharts-point {
   fill: url(#positive-sentiment);
 }
 
 .highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point.highcharts-negative {
+  fill: url(#negative-sentiment);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-candlestick-series .highcharts-point-down {
   fill: url(#negative-sentiment);
 }
 
