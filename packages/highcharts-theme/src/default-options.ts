@@ -1,14 +1,16 @@
 import type { Density } from "@salt-ds/core";
 import type { Options } from "highcharts";
-import { getDensityTokenMap } from "./density-token-map";
+import { getDensityTokenMap, type TokenMap } from "./density-token-map";
 import { saltPatternDef } from "./patterns";
 import type { HighchartsOptionsCompat } from "./types";
 
 export const getDefaultOptions = (
   density: Density,
   hostElement?: Element | null,
+  tokenMap?: TokenMap,
 ): Options => {
-  const tokens = getDensityTokenMap(density, hostElement ?? undefined);
+  const tokens =
+    tokenMap ?? getDensityTokenMap(density, hostElement ?? undefined);
 
   const defaultOptions: HighchartsOptionsCompat = {
     chart: {
