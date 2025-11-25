@@ -1,3 +1,7 @@
+/* ========================================
+   SERIES COLORS
+   ======================================== */
+
 .highcharts-theme-salt .highcharts-color-0 {
   fill: var(--salt-category-1-bold-background);
   stroke: var(--salt-category-1-subtle-borderColor);
@@ -98,13 +102,21 @@
   stroke: var(--salt-category-20-subtle-borderColor);
 }
 
+/* ========================================
+   BASE / CONTAINER
+   ======================================== */
+
 .highcharts-theme-salt .highcharts-container {
   font-family: var(--salt-text-fontFamily);
 }
 
-.highcharts-theme-salt .highcharts-grid-line {
-  stroke: var(--salt-separable-tertiary-borderColor);
+.highcharts-theme-salt .highcharts-background {
+  fill: var(--salt-container-primary-background);
 }
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
 
 .highcharts-theme-salt .highcharts-title {
   fill: var(--salt-content-primary-foreground);
@@ -113,6 +125,7 @@
   line-height: var(--salt-text-h4-lineHeight);
   font-family: var(--salt-text-h4-fontFamily);
 }
+
 .highcharts-theme-salt .highcharts-subtitle,
 .highcharts-theme-salt .highcharts-axis-title,
 .highcharts-theme-salt .highcharts-axis-labels {
@@ -120,41 +133,6 @@
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   font-family: var(--salt-text-label-fontFamily);
-}
-
-/* Hidden legend state: reduce opacity for icon, points, and labels.
-   Note: .highcharts-graph is line-chart specific and represents the series line icon. */
-.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph,
-.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point,
-.highcharts-theme-salt .highcharts-legend-item-hidden > text,
-.highcharts-theme-salt .highcharts-legend-item-hidden span {
-  opacity: 0.2;
-}
-
-.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-focus-border {
-  stroke: inherit !important;
-}
-
-/* Prevents the added stroke on hidden legends for charts that have a 'square' symbols, which bubble + scatter does not have */
-.highcharts-theme-salt .highcharts-legend-item-hidden:not(.highcharts-bubble-series, .highcharts-scatter-series) .highcharts-point {
-  stroke: none !important;
-  fill: inherit !important;
-}
-
-/* Remove line across bubble series legend symbol */
-.highcharts-theme-salt .highcharts-bubble-series .highcharts-graph {
-  stroke-width: 0;
-}
-
-/* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
-.highcharts-theme-salt .highcharts-line-series.highcharts-legend-item-hidden path {
-  stroke: revert !important;
-}
-
-/* Maintain full opacity on legend items during hover. Only reduce opacity when item is hidden */
-.highcharts-theme-salt .highcharts-legend-series-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) *,
-.highcharts-theme-salt .highcharts-legend-point-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) * {
-  opacity: 1;
 }
 
 .highcharts-theme-salt .highcharts-legend-item > text,
@@ -169,16 +147,36 @@
   font-family: var(--salt-text-label-fontFamily);
 }
 
-/* Bubble chart data labels use primary foreground for better visibility */
-.highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
-.highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
-  fill: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+/* ========================================
+   AXES & GRID
+   ======================================== */
+
+.highcharts-theme-salt .highcharts-axis-line {
+  stroke: var(--salt-separable-primary-borderColor);
 }
 
-.highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text,
-.highcharts-theme-salt .highcharts-waterfall-series text.highcharts-data-label {
-  font-weight: var(--salt-text-label-fontWeight-strong);
+.highcharts-theme-salt .highcharts-grid-line {
+  stroke: var(--salt-separable-tertiary-borderColor);
+}
+
+/* Show the y-axis line and grid lines when chart type has the additional .axes-grid-lines */
+.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-axis-line,
+.highcharts-theme-salt.axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
+.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
+  stroke-width: var(--salt-size-fixed-100);
+}
+
+/* ========================================
+   LEGEND
+   ======================================== */
+
+/* Hidden legend state: reduce opacity for icon, points, and labels.
+   Note: .highcharts-graph is line-chart specific and represents the series line icon. */
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-graph,
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-point,
+.highcharts-theme-salt .highcharts-legend-item-hidden > text,
+.highcharts-theme-salt .highcharts-legend-item-hidden span {
+  opacity: 0.2;
 }
 
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
@@ -188,23 +186,25 @@
   stroke: var(--salt-content-secondary-foreground) !important;
 }
 
-.highcharts-theme-salt .highcharts-axis-line {
-  stroke: var(--salt-separable-primary-borderColor);
+.highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-focus-border {
+  stroke: inherit !important;
 }
 
-.highcharts-theme-salt .highcharts-tooltip-box,
-.highcharts-theme-salt .highcharts-background {
-  fill: var(--salt-container-primary-background);
+/* Prevents the added stroke on hidden legends for charts that have a 'square' symbols, which bubble + scatter does not have */
+.highcharts-theme-salt .highcharts-legend-item-hidden:not(.highcharts-bubble-series, .highcharts-scatter-series) .highcharts-point {
+  stroke: none !important;
+  fill: inherit !important;
 }
 
-.highcharts-theme-salt .highcharts-tooltip text,
-.highcharts-theme-salt .highcharts-tooltip foreignObject span {
-  fill: var(--salt-content-primary-foreground);
+/* Unset stroke for the path in a line series legend - specific to line chart and isolated as it adds incorrect stroke to pie chart legend */
+.highcharts-theme-salt .highcharts-line-series.highcharts-legend-item-hidden path {
+  stroke: revert !important;
 }
 
-/* stickOnContact: true conflicts with default styles  */
-.highcharts-theme-salt .highcharts-tooltip .highcharts-tracker {
-  opacity: 0;
+/* Maintain full opacity on legend items during hover. Only reduce opacity when item is hidden */
+.highcharts-theme-salt .highcharts-legend-series-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) *,
+.highcharts-theme-salt .highcharts-legend-point-active .highcharts-legend-item:not(.highcharts-legend-item-hidden) * {
+  opacity: 1;
 }
 
 .highcharts-theme-salt path.highcharts-legend-nav-active {
@@ -220,15 +220,42 @@
   fill: transparent;
 }
 
+/* Remove stroke from legend item points for series types */
+/* Note: this might still be safer than setting stroke to none globally and then re-setting */
+.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point,
+.highcharts-theme-salt .highcharts-bar-series.highcharts-legend-item .highcharts-point,
+.highcharts-theme-salt .highcharts-column-series.highcharts-legend-item .highcharts-point,
+.highcharts-theme-salt .highcharts-boxplot-series.highcharts-legend-item .highcharts-point,
+.highcharts-theme-salt .highcharts-bullet-series.highcharts-legend-item .highcharts-point {
+  stroke: none;
+}
+
+/* ========================================
+   TOOLTIP
+   ======================================== */
+
+.highcharts-theme-salt .highcharts-tooltip-box {
+  fill: var(--salt-container-primary-background);
+}
+
+.highcharts-theme-salt .highcharts-tooltip text,
+.highcharts-theme-salt .highcharts-tooltip foreignObject span {
+  fill: var(--salt-content-primary-foreground);
+}
+
+/* stickOnContact: true conflicts with default styles */
+.highcharts-theme-salt .highcharts-tooltip .highcharts-tracker {
+  opacity: 0;
+}
+
+/* ========================================
+   SERIES: LINE & AREA
+   ======================================== */
+
 /* Override default stroke for line chart data series hover point circle */
 .highcharts-theme-salt .highcharts-line-series .highcharts-point,
 .highcharts-theme-salt .highcharts-area-series .highcharts-point {
   stroke: var(--salt-color-white);
-}
-
-/* Override default stroke for chart series segment borders */
-.highcharts-theme-salt .highcharts-area-series.highcharts-legend-item .highcharts-point {
-  stroke: none;
 }
 
 /* Override default stroke for chart segments borders */
@@ -238,10 +265,19 @@
   stroke: var(--salt-container-primary-background);
 }
 
-/* Override default stroke for bullet chart segment border */
-.highcharts-theme-salt .highcharts-bullet-series .highcharts-point {
-  stroke: none;
+/* ========================================
+   SERIES: COLUMN
+   ======================================== */
+
+/* Remove fill-opacity and transition on column chart hover */
+.highcharts-theme-salt .highcharts-column-series .highcharts-point-hover {
+  fill-opacity: 1;
+  transition: none;
 }
+
+/* ========================================
+   SERIES: PIE & DONUT
+   ======================================== */
 
 /* Data connector line for Donut/Pie chart */
 .highcharts-theme-salt .highcharts-data-label-connector {
@@ -258,15 +294,18 @@
   opacity: 0.2;
 }
 
-/* Remove fill-opacity and transition on column chart hover */
-.highcharts-theme-salt .highcharts-column-series .highcharts-point-hover {
-  fill-opacity: 1;
-  transition: none;
-}
+/* ========================================
+   SERIES: SCATTER & BUBBLE
+   ======================================== */
 
 .highcharts-theme-salt .highcharts-scatter-series .highcharts-point,
 .highcharts-theme-salt .highcharts-bubble-series .highcharts-point {
   fill-opacity: 0.75;
+}
+
+/* Remove line across bubble series legend symbol */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-graph {
+  stroke-width: 0;
 }
 
 /* Remove line from scatter legend symbols */
@@ -274,12 +313,16 @@
   stroke-width: 0;
 }
 
-/* Show the y-axis line and grid lines when chart type has the additional .axes-grid-lines*/
-.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-axis-line,
-.highcharts-theme-salt.axes-grid-lines .highcharts-xaxis-grid .highcharts-grid-line,
-.highcharts-theme-salt.axes-grid-lines .highcharts-yaxis .highcharts-yaxis-grid .highcharts-grid-line {
-  stroke-width: var(--salt-size-fixed-100);
+/* Bubble chart data labels use primary foreground for better visibility */
+.highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
+.highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
+  fill: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
+
+/* ========================================
+   SERIES: BOXPLOT
+   ======================================== */
 
 .highcharts-theme-salt .highcharts-boxplot-box {
   fill: inherit;
@@ -294,6 +337,10 @@
   stroke: var(--salt-content-primary-foreground);
 }
 
+/* ========================================
+   SERIES: WATERFALL
+   ======================================== */
+
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point {
   fill: var(--salt-sentiment-positive-foreground-decorative);
   stroke: var(--salt-sentiment-positive-foreground-decorative);
@@ -304,11 +351,7 @@
   stroke: var(--salt-sentiment-negative-foreground-decorative);
 }
 
-.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-sum {
-  fill: var(--salt-category-15-bold-background);
-  stroke: var(--salt-category-15-subtle-borderColor);
-}
-
+.highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-sum,
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-intermediate-sum {
   fill: var(--salt-category-15-bold-background);
   stroke: var(--salt-category-15-subtle-borderColor);
@@ -322,4 +365,5 @@
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text {
   fill: var(--salt-content-bold-foreground);
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
