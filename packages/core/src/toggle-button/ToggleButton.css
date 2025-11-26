@@ -70,6 +70,7 @@
 }
 
 .saltToggleButton[aria-pressed="true"]:hover {
+  background: var(--toggleButton-background-selectedHover);
   border-color: var(--toggleButton-borderColor-selectedHover);
 }
 
@@ -121,6 +122,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-bold-background-hover);
 }
 
 .saltToggleButton-accented.saltToggleButton-solid {
@@ -137,6 +139,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-accented-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-accented-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-accented-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-accented-bold-background-hover);
 }
 
 .saltToggleButton-positive.saltToggleButton-solid {
@@ -153,6 +156,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-positive-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-positive-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-positive-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-accented-bold-background-hover);
 }
 
 .saltToggleButton-negative.saltToggleButton-solid {
@@ -169,6 +173,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-negative-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-negative-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-negative-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-negative-bold-background-hover);
 }
 
 .saltToggleButton-caution.saltToggleButton-solid {
@@ -185,6 +190,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-caution-subtle-borderColor-active);
   --toggleButton-borderColor-selected: var(--salt-actionable-caution-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-caution-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-caution-bold-background-hover);
 }
 
 .saltToggleButton-neutral.saltToggleButton-bordered {
@@ -201,6 +207,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-bold-background-hover);
 }
 
 .saltToggleButton-accented.saltToggleButton-bordered {
@@ -217,6 +224,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-accented-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-accented-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-accented-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-accented-bold-background-hover);
 }
 
 .saltToggleButton-positive.saltToggleButton-bordered {
@@ -233,6 +241,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-positive-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-positive-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-positive-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-positive-bold-background-hover);
 }
 
 .saltToggleButton-negative.saltToggleButton-bordered {
@@ -249,6 +258,7 @@
   --toggleButton-borderColor-active: var(--salt-actionable-negative-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-negative-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-negative-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-negative-bold-background-hover);
 }
 
 .saltToggleButton-caution.saltToggleButton-bordered {
@@ -265,4 +275,5 @@
   --toggleButton-borderColor-active: var(--salt-actionable-caution-borderColor);
   --toggleButton-borderColor-selected: var(--salt-actionable-caution-borderColor-selected);
   --toggleButton-borderColor-selectedHover: var(--salt-actionable-caution-bold-borderColor-hover);
+  --toggleButton-background-selectedHover: var(--salt-actionable-caution-bold-background-hover);
 }
