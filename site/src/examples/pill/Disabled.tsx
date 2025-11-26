@@ -20,7 +20,7 @@ export const Disabled = (): ReactElement => (
       <UserBadgeIcon aria-hidden /> jane.smith@jpmchase.com
       <CloseIcon aria-hidden />
     </Pill>
-    <PillGroup disabled>
+    <PillGroup disabled aria-label="Select user roles">
       <Pill value="admin">
         <UserAdminIcon aria-hidden /> Admin
       </Pill>
