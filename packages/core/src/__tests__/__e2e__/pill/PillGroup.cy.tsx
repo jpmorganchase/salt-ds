@@ -19,17 +19,17 @@ describe("GIVEN a PillGroup", () => {
     cy.findAllByRole("option").should("have.length", 3);
     cy.findByRole("option", { name: "Pill 1" }).should(
       "have.attr",
-      "aria-checked",
+      "aria-selected",
       "false",
     );
     cy.findByRole("option", { name: "Pill 2" }).should(
       "have.attr",
-      "aria-checked",
+      "aria-selected",
       "false",
     );
     cy.findByRole("option", { name: "Pill 3" }).should(
       "have.attr",
-      "aria-checked",
+      "aria-selected",
       "false",
     );
   });
@@ -42,7 +42,7 @@ describe("GIVEN a PillGroup", () => {
     cy.realPress("Space");
     cy.findByRole("option", { name: "Pill 1" }).should(
       "have.attr",
-      "aria-checked",
+      "aria-selected",
       "true",
     );
     cy.get("@selectionSpy").should(
@@ -55,7 +55,7 @@ describe("GIVEN a PillGroup", () => {
     cy.realPress("Enter");
     cy.findByRole("option", { name: "Pill 1" }).should(
       "have.attr",
-      "aria-checked",
+      "aria-selected",
       "true",
     );
     cy.get("@selectionSpy").should("have.callCount", 1);
@@ -65,7 +65,7 @@ describe("GIVEN a PillGroup", () => {
     cy.mount(<WithDisabledPill />);
     cy.findByRole("option", { name: "Pill 1" })
       .should("be.disabled")
-      .and("have.attr", "aria-checked", "false");
+      .and("have.attr", "aria-selected", "false");
   });
 
   it("SHOULD render a disabled PillGroup", () => {
@@ -220,17 +220,17 @@ describe("GIVEN a PillGroup", () => {
       cy.mount(<UncontrolledGroup defaultSelected={["one"]} />);
       cy.findByRole("option", { name: "Pill 1" }).should(
         "have.attr",
-        "aria-checked",
+        "aria-selected",
         "true",
       );
       cy.findByRole("option", { name: "Pill 2" }).should(
         "have.attr",
-        "aria-checked",
+        "aria-selected",
         "false",
       );
       cy.findByRole("option", { name: "Pill 3" }).should(
         "have.attr",
-        "aria-checked",
+        "aria-selected",
         "false",
       );
     });
@@ -241,31 +241,31 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 3" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
 
         cy.findByRole("option", { name: "Pill 1" }).click();
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
 
         cy.findByRole("option", { name: "Pill 1" }).click();
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
 
@@ -274,17 +274,17 @@ describe("GIVEN a PillGroup", () => {
         cy.findByRole("option", { name: "Pill 3" }).click();
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 3" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
       });
@@ -307,17 +307,17 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 3" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
 
@@ -326,21 +326,21 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.realPress("Space");
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
 
         cy.realPress("Space");
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
 
@@ -352,17 +352,17 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 3" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
       });
@@ -384,14 +384,14 @@ describe("GIVEN a PillGroup", () => {
         cy.mount(<UncontrolledGroup />);
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.realPress("Tab");
         cy.realPress("Enter");
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
       });
@@ -403,17 +403,17 @@ describe("GIVEN a PillGroup", () => {
       cy.mount(<ControlledGroup />);
       cy.findByRole("option", { name: "Pill 1" }).should(
         "have.attr",
-        "aria-checked",
+        "aria-selected",
         "true",
       );
       cy.findByRole("option", { name: "Pill 2" }).should(
         "have.attr",
-        "aria-checked",
+        "aria-selected",
         "false",
       );
       cy.findByRole("option", { name: "Pill 3" }).should(
         "have.attr",
-        "aria-checked",
+        "aria-selected",
         "true",
       );
     });
@@ -424,25 +424,25 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 1" }).click();
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
 
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 2" }).click();
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
       });
@@ -454,17 +454,17 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 3" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
 
@@ -473,21 +473,21 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.realPress("Space");
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
 
         cy.realPress("Space");
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
 
@@ -499,17 +499,17 @@ describe("GIVEN a PillGroup", () => {
 
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
         cy.findByRole("option", { name: "Pill 2" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.findByRole("option", { name: "Pill 3" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "false",
         );
       });
@@ -518,14 +518,14 @@ describe("GIVEN a PillGroup", () => {
         cy.mount(<ControlledGroup />);
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
         cy.realPress("Tab");
         cy.realPress("Enter");
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
-          "aria-checked",
+          "aria-selected",
           "true",
         );
       });
