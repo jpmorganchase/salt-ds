@@ -1,12 +1,11 @@
 import { FormField, FormFieldLabel, Pill, PillGroup } from "@salt-ds/core";
-import { type ReactElement, useId } from "react";
+import type { ReactElement } from "react";
 
 export const SelectableWrapping = (): ReactElement => {
-  const groupLabelId = useId();
   return (
     <FormField style={{ maxWidth: "40ch" }}>
       <FormFieldLabel>Extras</FormFieldLabel>
-      <PillGroup aria-labelledby={`${groupLabelId}-title`}>
+      <PillGroup>
         <Pill value="ketchup">Ketchup</Pill>
         <Pill value="mustard">Mustard</Pill>
         <Pill value="relish">Relish</Pill>

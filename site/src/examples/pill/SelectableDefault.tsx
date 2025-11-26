@@ -11,7 +11,6 @@ export const SelectableDefault = (): ReactElement => (
   <FormField style={{ width: "max-content" }}>
     <FormFieldLabel>Select skills</FormFieldLabel>
     <PillGroup
-      aria-label="Select Outdoor Activities"
       onSelectionChange={(_e, selected) => {
         console.log("Selected values: ", selected);
       }}

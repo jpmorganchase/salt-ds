@@ -136,13 +136,13 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
     };
 
     const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
-      onFocus?.(event);
       setFocusInside(true);
+      onFocus?.(event);
     };
 
     const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-      onBlur?.(event);
       setFocusInside(false);
+      onBlur?.(event);
     };
 
     const context = useMemo(

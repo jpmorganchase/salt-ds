@@ -51,8 +51,8 @@ describe("GIVEN a PillGroup", () => {
       ["one"],
     );
 
-    // Space should not trigger selection changes
-    cy.realPress(" ");
+    // Enter should not trigger selection changes
+    cy.realPress("Enter");
     cy.findByRole("option", { name: "Pill 1" }).should(
       "have.attr",
       "aria-checked",
@@ -380,7 +380,7 @@ describe("GIVEN a PillGroup", () => {
         );
       });
 
-      it("SHOULD toggle pills using the Enter key", () => {
+      it("should NOT toggle pills using the Enter key", () => {
         cy.mount(<UncontrolledGroup />);
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
@@ -392,7 +392,7 @@ describe("GIVEN a PillGroup", () => {
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
           "aria-checked",
-          "true",
+          "false",
         );
       });
     });
@@ -514,7 +514,7 @@ describe("GIVEN a PillGroup", () => {
         );
       });
 
-      it("SHOULD toggle pills using the Enter key", () => {
+      it("should NOT toggle pills using the Enter key", () => {
         cy.mount(<ControlledGroup />);
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
@@ -526,7 +526,7 @@ describe("GIVEN a PillGroup", () => {
         cy.findByRole("option", { name: "Pill 1" }).should(
           "have.attr",
           "aria-checked",
-          "false",
+          "true",
         );
       });
     });

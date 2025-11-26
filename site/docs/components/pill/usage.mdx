@@ -10,32 +10,40 @@ data:
 
 ## Using the component
 
-Use title or sentence case when labelling pills. This maintains a visual distinction between `Pill` and `Button`, which always has uppercase labels.
-
-Position any pill you’re using to tag content below or on the right of the related content, so that it’s not the primary focus.
-
-Never apply red/amber/green status colors to pills to differentiate between categories. Use [icons](/salt/components/icon) or text instead.
-
 ### When to use
 
-- To organize interactive content mapped to more than one category, providing users with a way of distinguishing different content types and categories.
-- To trigger an immediate action—such as changing the view of currently displayed content or going to a new page contextually related to the pill.
+- To organize selections that don’t necessarily belong to the same category or need to be arranged in a certain way.
+- To trigger an immediate action—such as filtering a view of content by a specific property or going to a new page contextually related to the pill.
 - To enable an action that could change depending on the context. In a messaging application, you could use pills to display predefined replies that change depending on the received message.
 
 ### When not to use
 
-- For non-fixed actions that may change depending on the context. Instead, use [`Button`](/salt/components/button).
-- To display counts, notifications or if you need a small, compact piece of information to be displayed inline, for example ‘New’. Instead, use [`Badge`](/salt/components/badge).
-- When interaction is not supported, use [`Tag`](/salt/components/tag). Tags and Pills both categorize content in an app, but while Pills are interactive and allow users to filter or sort content, Tags are read-only and simply display metadata.
+- To organize selections belonging to the same category in a clear hierarchical way. Instead, use [Checkbox](/salt/components/checkbox).
+- To switch between views (e.g., Grid view vs. Card view). Instead, use [ToggleButton](/salt/components/toggle-button).
+- For binary actions that take effect immediately. Instead, use [Switch](/salt/components/switch).
+- For actions that do not dynamically change with the context. Instead, use [Button](/salt/components/button).
+- For labeling. Instead, use [Tag](/salt/components/tag).
+
+## Content
+
+- Content should be succinct, often one or a couple of words. Avoid using sentences.
+- Keep pill labels as simple as possible, given the limited space
+- Use title or sentence case when labeling pills. This maintains a visual distinction between Pill and Button, which always has uppercase labels.
 
 ## Import
 
-To import `Pill` from the core Salt package, use:
+To import `Pill` and related components from the core Salt package, use:
 
 ```js
-import { Pill } from “@salt-ds/core”;
+import { Pill, PillGroup } from “@salt-ds/core”;
 ```
 
 ## Props
 
+### `Pill`
+
 <PropsTable componentName="Pill" packageName="core" />
+
+### `PillGroup`
+
+<PropsTable componentName="PillGroup" packageName="core" />
