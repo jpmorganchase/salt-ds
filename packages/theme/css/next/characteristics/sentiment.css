@@ -7,4 +7,9 @@
 
   --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
   --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
+
+  --salt-sentiment-caution-dataviz: var(--salt-palette-warning);
+  --salt-sentiment-negative-dataviz: var(--salt-palette-negative);
+  --salt-sentiment-positive-dataviz: var(--salt-palette-positive);
+  --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral);
 }
