@@ -88,6 +88,13 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     }
   };
 
+  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyUp?.(event);
+    if (insideGroup && event.key === " ") {
+      setSpaceActive(false);
+    }
+  };
+
   useEffect(() => {
     if (!targetWindow) return;
 
@@ -102,12 +109,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
 
   const { buttonProps, active } = useButton<HTMLButtonElement>({
     disabled: disabledProp,
-    onKeyUp: (event) => {
-      onKeyUp?.(event);
-      if (insideGroup && event.key === " ") {
-        setSpaceActive(false);
-      }
-    },
+    onKeyUp: handleKeyUp,
     onKeyDown: handleKeyDown,
     onClick: handleClick,
     onBlur: handleBlur,
