@@ -17,7 +17,7 @@ Our open source software supports the firm’s initiatives to engage with commun
 
 ### WCAG standards
 
-Salt Design System provides the building blocks for creating accessible digital experiences. We follow Web Content Accessibility Guidelines (WCAG) 2.1, and we strive to meet Level A and AA standards. Salt components are developed with accessibility as a core requirement, not an afterthought. We believe in digital inclusion and are committed to ensuring our components support the diverse needs of all users. 
+Salt Design System provides the building blocks for creating accessible digital experiences. We follow Web Content Accessibility Guidelines (WCAG) 2.1, and we strive to meet Level A and AA standards. Salt components are developed with accessibility as a core requirement, not an afterthought. We believe in digital inclusion and are committed to ensuring our components support the diverse needs of all users.
 
 ## Foundations
 
@@ -29,11 +29,11 @@ A Salt foundation is one of the fundamental principles that guide the creation o
 
 ### Theme
 
-A theme is a collection of design tokens that define the overall look and feel of an interface. Themes allow you to quickly switch the visual style of components to match different brands or user preferences, ensuring consistency across your application. A theme is made up of tokens for colors, typography, shadows and corner radius. Refer to our [themes documentation](/salt/themes/index).
+A theme is a collection of design tokens that define the overall look and feel of an interface. Themes allow you to quickly switch the visual style of components to match different brands or user preferences, ensuring consistency across your application. A theme is made up of tokens for colors, typography, shadows and corner radius. Refer to our [themes documentation](/salt/themes/index).
 
 ### JPM Brand theme
 
-JPM Brand theme is Salt’s long-term visual style, designed to match the JPMorgan brand across CIB digital applications. Developed with Corporate Brand and CIB Marketing, it uses approved styles for consistent visuals on desktop and web. See all the characteristics for [JPM Brand theme](/salt/themes/design-tokens/brand).
+JPM Brand theme is Salt’s long-term visual style, designed to match the JPMorgan brand across CIB digital applications. Developed with Corporate Brand and CIB Marketing, it uses approved styles for consistent visuals on desktop and web. See all the characteristics for [JPM Brand theme](/salt/themes/design-tokens/brand).
 
 ### Legacy (UITK) theme
 
@@ -59,7 +59,7 @@ A semantic characteristic is a group of [tokens](#tokens) that serves a specific
 
 A Figma variable is a reusable value that can be applied to design properties like colors, text and spacing, or be used in prototypes to create dynamic interactions. In Salt Figma libraries, variables are used to represent tokens in code. Find out more on [design tokens in Figma](/salt/themes/design-tokens/index#design-tokens-in-figma).
 
-## Components 
+## Components
 
 ### Component
 
@@ -71,19 +71,19 @@ Salt layouts are a special category of components designed to manage the overall
 
 ### Alpha
 
-An alpha component in Salt has undergone thorough testing and review. It is available for use in production environments after: achieving a known level of [accessibility](#accessibility); aligning with Salt’s brand guidelines; and confirming adherence to established business requirements. Such components are well-documented, supported and available in the @salt-ds/core package. Once marked as stable, they follow [semantic versioning](#versioning), meaning any breaking changes will be communicated in advance.
+An alpha component in Salt has undergone thorough testing and review. It is available for use in production environments after: achieving a known level of [accessibility](#accessibility); aligning with Salt’s brand guidelines; and confirming adherence to established business requirements. Such components are well-documented, supported and available in the `@salt-ds/core` package. Once marked as stable, they follow [semantic versioning](#versioning), meaning any breaking changes will be communicated in advance.
 
 ### Release candidate (RC)
 
-The pre-release version of Salt components in testing may contain bugs, incomplete features or performance problems. The "RC" tag denotes components that are release candidates under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find release candidates in the @salt-ds/lab package.
+The pre-release version of Salt components in testing may contain bugs, incomplete features or performance problems. The "RC" tag denotes components that are release candidates under active development that may not function as expected. Feedback from the beta version helps identify any concerns before the "stable" release, so you should exercise caution. You can find release candidates in the `@salt-ds/lab` package.
 
 ### Core package
 
-Core refers to the @salt-ds/core package of stable alpha components that do not feature any accompanying symbol in their navigation link titles, unlike the Release candidate (RC) components that are under active development within the @salt-ds/lab package.
+Core refers to the `@salt-ds/core` package of stable alpha components that do not feature any accompanying symbol in their navigation link titles, unlike the Release candidate (RC) components that are under active development within the `@salt-ds/lab` package.
 
 ### Lab package
 
-Lab refers to the @salt-ds/lab package of unstable Release candidate (RC) components that are under active development, unlike the stable, alpha components within the @salt-ds/core package. 
+Lab refers to the `@salt-ds/lab` package of unstable Release candidate (RC) components that are under active development, unlike the stable, alpha components within the `@salt-ds/core` package.
 
 ### Semantic Versioning
 
@@ -95,11 +95,11 @@ An external dependency refers to a user interface component sourced from a widel
 
 ### Out of the box (OOTB)
 
-OOTB refers to components, features and styles that are ready to use out of the box, immediately upon installation or implementation, without requiring significant customization or additional development.
+OOTB refers to components, features and styles that are ready to use out of the box, immediately upon installation or implementation, without requiring significant customization or additional development.
 
 ### Disabled state
 
-A component in a disabled state is completely non-interactive, as it isn’t considered relevant to the user’s workflow at that moment. Since the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning or success) for disabled components, as these imply required user action. 
+A component in a disabled state is completely non-interactive, as it isn’t considered relevant to the user’s workflow at that moment. Since the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning or success) for disabled components, as these imply required user action.
 
 ### Read-only state
 
