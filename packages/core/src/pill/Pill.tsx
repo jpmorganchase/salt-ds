@@ -5,7 +5,9 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
+  type KeyboardEvent,
   type MouseEvent,
+  type PointerEvent,
   useEffect,
   useState,
 } from "react";
@@ -31,6 +33,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     onClick,
     onFocus,
     onBlur,
+    onPointerDown,
     value,
     ...rest
   },
@@ -64,25 +67,36 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     onBlur?.(event);
   };
 
-  const handlePointerDown = () => {
+  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    onPointerDown?.(event);
     if (disabledProp) return;
     setPressActive(true);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown?.(event);
+    if (event.key === "Enter") {
+      // Prevent selection on enter key.
+      event.preventDefault();
+    }
+  };
+
   useEffect(() => {
+    if (!targetWindow) return;
+
     const clear = () => setPressActive(false);
-    window.addEventListener("pointerup", clear);
-    window.addEventListener("pointercancel", clear);
+    targetWindow.addEventListener("pointerup", clear);
+    targetWindow.addEventListener("pointercancel", clear);
     return () => {
-      window.removeEventListener("pointerup", clear);
-      window.removeEventListener("pointercancel", clear);
+      targetWindow.removeEventListener("pointerup", clear);
+      targetWindow.removeEventListener("pointercancel", clear);
     };
-  }, []);
+  }, [targetWindow]);
 
   const { buttonProps, active } = useButton<HTMLButtonElement>({
     disabled: disabledProp,
     onKeyUp,
-    onKeyDown,
+    onKeyDown: handleKeyDown,
     onClick: handleClick,
     onBlur: handleBlur,
   });
@@ -94,24 +108,34 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     ...restButtonProps
   } = buttonProps;
 
+  const insideGroup = !!pillGroupContext;
+
   const selected = !!value && pillGroupContext?.selected.includes(value);
-  const disabled = pillGroupContext?.disabled || disabledProp || buttonDisabled;
+  const disabled = pillGroupContext?.disabled || buttonDisabled;
 
   let tabIndex: undefined | number;
 
   if (pillGroupContext) {
-    if (pillGroupContext.focusInside) {
-      tabIndex = focused ? undefined : -1;
-    } else {
-      tabIndex =
-        pillGroupContext.selected.length > 0 && !selected ? -1 : undefined;
-    }
+    const { focusInside: groupHasFocus, selected: selectedPills } =
+      pillGroupContext;
+
+    const nonTabbable =
+      (groupHasFocus && !focused) || (selectedPills.length > 0 && !selected);
+
+    tabIndex = nonTabbable ? -1 : undefined;
   }
 
   const combinedActive = pressActive || active;
 
+  const groupProps: ComponentPropsWithoutRef<"button"> = insideGroup
+    ? {
+        "aria-selected": selected,
+        "aria-checked": selected,
+        role: "option",
+      }
+    : {};
+
   return (
-    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Option role applied when aria-checked
     <button
       data-testid="pill"
       ref={ref}
@@ -122,20 +146,15 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
         className,
       )}
       type="button"
-      aria-checked={
-        pillGroupContext && value
-          ? pillGroupContext.selected.includes(value)
-          : undefined
-      }
       tabIndex={tabIndex}
-      role={pillGroupContext ? "option" : undefined}
       onFocus={handleFocus}
       onPointerDown={handlePointerDown}
       disabled={disabled}
       {...restButtonProps}
+      {...groupProps}
       {...rest}
     >
-      {pillGroupContext && (
+      {insideGroup && (
         <PillCheckIcon checked={selected} active={combinedActive} />
       )}
       {children}

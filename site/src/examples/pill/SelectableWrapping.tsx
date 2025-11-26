@@ -1,13 +1,11 @@
-import { Pill, PillGroup, StackLayout, Text } from "@salt-ds/core";
+import { FormField, FormFieldLabel, Pill, PillGroup } from "@salt-ds/core";
 import { type ReactElement, useId } from "react";
 
 export const SelectableWrapping = (): ReactElement => {
   const groupLabelId = useId();
   return (
-    <StackLayout style={{ maxWidth: "40ch" }}>
-      <Text styleAs="h3" id={`${groupLabelId}-title`}>
-        Extras
-      </Text>
+    <FormField style={{ maxWidth: "40ch" }}>
+      <FormFieldLabel>Extras</FormFieldLabel>
       <PillGroup aria-labelledby={`${groupLabelId}-title`}>
         <Pill value="ketchup">Ketchup</Pill>
         <Pill value="mustard">Mustard</Pill>
@@ -15,6 +13,6 @@ export const SelectableWrapping = (): ReactElement => {
         <Pill value="pickles">Pickles</Pill>
         <Pill value="vinegar">Vinegar</Pill>
       </PillGroup>
-    </StackLayout>
+    </FormField>
   );
 };

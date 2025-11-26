@@ -10,37 +10,42 @@ data:
 
 ## Default pill (clickable)
 
-Default pills are often used for quick actions such as an auto-generated response to a message. Default pills usually appear in groups of two or more.
+Pills are often used for quick actions such as choosing an auto-generated response to a message or reserving a seat in a room.
 
 <LivePreview componentName="pill" exampleName="Default" />
 
 ## Closable pill
 
-The closeable pill represents a value selected via another mechanism, and which the user can remove. It can appear on its own, such as alongside a complex filter panel, or within an input control such as ComboBox. Closeable pills can show as one or in multiples as more selections are made.
+A pill can be indicated as closable by adding a close icon on the right side of the pill. This type of pill is often used to represent a value that the user (or system) has selected, and which the user is able to remove from the selection. It can appear on its own, such as alongside a complex filter panel, or within an input control such as [`ComboBox`](/salt/components/combo-box).
 
 <LivePreview componentName="pill" exampleName="Closable" />
 
 ## Selectable pill group
 
-Selectable pills are used in groups of two or more, never as a standalone pill component. They function as a more compact and visually appealing alternative to traditional checkboxes.  A checkbox is a part of the component and cannot be removed without customization.
+When placed inside a `PillGroup`, pills can be made selectable. Selectable pills can be toggled on or off to represent a choice or selection. A visible checkbox provides the user with a clear visual cue that the accompanying pill is selectable.
+
+Selectable pills are used in groups of two or more, never as a standalone pill component.
+
+### Best practices
+
+- Selectable pill groups should be wrapped in a [`FormField`](/salt/components/form-field) component to provide a visible label and optionally help text. 
+- When selectable pill groups don't have a visible label, ensure the group has an accessible name by using `aria-label` or `aria-labelledby`.
 
 <LivePreview componentName="pill" exampleName="SelectableDefault" />
 
 ### Wrapping
 
-A group of selectable pills can wrap for smaller screens or to reserve space when there are many items.
+A group of selectable pills can wrap for smaller screens or to save space when there are many items.
 
 <LivePreview componentName="pill" exampleName="SelectableWrapping" />
 
-### Form field compatibility
-
-You can also wrap selectable pill groups in a form field when it’s displayed within a form.This provides functionality built into FormField for increased accessibility.
-
-<LivePreview componentName="pill" exampleName="SelectableFormField" />
-
 ## With icons
 
-Visually reinforce the theme or action of the pill by using left or right icons. The default pill has both left and right icons, while closeable pill and selectable pill only contain left icons. For more information, refer to icons.
+Visually reinforce the theme or action of the pill by using left or right icons.
+
+### Best practices
+
+- If the pill is closable or selectable, avoid using an icon on the right side.
 
 <LivePreview componentName="pill" exampleName="Icon" />
 
