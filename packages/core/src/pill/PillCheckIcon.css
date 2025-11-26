@@ -9,12 +9,14 @@
   position: relative;
   --saltIcon-size: 100%;
   display: flex;
+  pointer-events: none;
   /* Using overflow:hidden here causes a thin white line */
   clip-path: border-box;
   box-sizing: border-box;
 }
 
 .saltPillCheckIcon > svg {
+  pointer-events: none;
   position: absolute;
   /* Ensure a gap doesn't appear when device scaling is used */
   transform: scale(1.01);

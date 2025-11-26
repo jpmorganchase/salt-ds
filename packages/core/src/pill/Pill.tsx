@@ -50,6 +50,8 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     window: targetWindow,
   });
 
+  const insideGroup = !!pillGroupContext;
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (pillGroupContext && value) {
       pillGroupContext.select(event, value);
@@ -75,8 +77,8 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
-    if (event.key === "Enter") {
-      // Prevent selection on enter key.
+    if (event.key === "Enter" && insideGroup) {
+      // Prevent selection on enter key for selectable pill.
       event.preventDefault();
     }
   };
@@ -107,8 +109,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     disabled: buttonDisabled,
     ...restButtonProps
   } = buttonProps;
-
-  const insideGroup = !!pillGroupContext;
 
   const selected = !!value && pillGroupContext?.selected.includes(value);
   const disabled = pillGroupContext?.disabled || buttonDisabled;
