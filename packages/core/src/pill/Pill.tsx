@@ -41,6 +41,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
 ) {
   const [pressActive, setPressActive] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [spaceActive, setSpaceActive] = useState(false);
 
   const pillGroupContext = usePillGroup();
   const targetWindow = useWindow();
@@ -80,6 +81,10 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     if (event.key === "Enter" && insideGroup) {
       // Prevent selection on enter key for selectable pill.
       event.preventDefault();
+      return;
+    }
+    if (event.key === " " && insideGroup) {
+      setSpaceActive(true);
     }
   };
 
@@ -97,7 +102,12 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
 
   const { buttonProps, active } = useButton<HTMLButtonElement>({
     disabled: disabledProp,
-    onKeyUp,
+    onKeyUp: (event) => {
+      onKeyUp?.(event);
+      if (insideGroup && event.key === " ") {
+        setSpaceActive(false);
+      }
+    },
     onKeyDown: handleKeyDown,
     onClick: handleClick,
     onBlur: handleBlur,
@@ -125,7 +135,10 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     tabIndex = nonTabbable ? -1 : undefined;
   }
 
-  const combinedActive = pressActive || active;
+  // Prevents selectable pill being active on Enter key press
+  const combinedActive = insideGroup
+    ? pressActive || spaceActive
+    : pressActive || active;
 
   const groupProps: ComponentPropsWithoutRef<"button"> = insideGroup
     ? {
