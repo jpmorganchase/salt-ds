@@ -31,11 +31,13 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type CSSProperties,
+  type Dispatch,
   type ElementType,
   type FocusEvent,
   type ReactNode,
   useCallback,
   useEffect,
+  useReducer,
   useRef,
   useState,
 } from "react";
@@ -45,9 +47,64 @@ import {
   type StepValidationResult,
   useWizard,
   type ValidationStatus,
-} from "./hooks/useWizard";
+} from "./useWizard";
 import "./wizard.stories.css";
-import { useAccountForm } from "./hooks/useAccountForm";
+
+type FormAction =
+  | { type: "update"; name: string; value: string }
+  | { type: "reset" };
+
+const formReducer = (state: AccountFormData, action: FormAction) => {
+  switch (action.type) {
+    case "update":
+      return { ...state, [action.name]: action.value };
+    case "reset":
+      return { ...initialFormData };
+    default:
+      return state;
+  }
+};
+
+const handleInputChangeHandler =
+  (dispatch: Dispatch<FormAction>) =>
+  (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    dispatch({ type: "update", name, value });
+  };
+
+const handleSelectChangeHandler =
+  (dispatch: Dispatch<FormAction>) => (value: string, name: string) => {
+    dispatch({ type: "update", name, value });
+  };
+
+const handleRadioChangeHandler =
+  (
+    dispatch: Dispatch<FormAction>,
+    getCurrentStepId: () => ContentType,
+    getFormData: () => AccountFormData,
+    setCurrentStepValidation: (fields: Record<string, FieldValidation>) => void,
+  ) =>
+  (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    dispatch({ type: "update", name, value });
+    const updated = { ...getFormData(), [name]: value };
+    runValidationAndStoreHelper(
+      getCurrentStepId(),
+      updated,
+      setCurrentStepValidation,
+    );
+  };
+
+const runValidationAndStoreHelper = async (
+  stepId: ContentType,
+  data: AccountFormData,
+  setCurrentStepValidation: (fields: Record<string, FieldValidation>) => void,
+) => {
+  const fields = await validateStep(stepId, data);
+  setCurrentStepValidation(fields);
+  const hasError = Object.values(fields).some((f) => f.status === "error");
+  return !hasError;
+};
 
 export default {
   title: "Patterns/Wizard",
@@ -1021,20 +1078,28 @@ export const Horizontal = () => {
     stepsStatusMap,
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
-
-  const {
-    formData,
-    runValidationAndStore,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
-  } = useAccountForm({
-    initialData: initialFormData,
-    currentStepId,
-    validateStep,
+  const [formData, dispatch] = useReducer(formReducer, initialFormData);
+  const handleInputChange = handleInputChangeHandler(dispatch);
+  const handleSelectChange = handleSelectChangeHandler(dispatch);
+  const handleRadioChange = handleRadioChangeHandler(
+    dispatch,
+    () => currentStepId,
+    () => formData,
     setCurrentStepValidation,
-  });
+  );
+  const onBlur = (_event: FocusEvent<HTMLInputElement>) => {
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
+  };
+  const runValidationAndStore = () =>
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
 
   const [successOpen, setSuccessOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -1127,7 +1192,14 @@ export const Horizontal = () => {
 
   const footer = (
     <FlexLayout gap={1} justify="end" padding={3}>
-      <Button sentiment="accented" appearance="transparent" onClick={reset}>
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={() => {
+          reset();
+          dispatch({ type: "reset" });
+        }}
+      >
         Cancel
       </Button>
       {!isFirstStep && (
@@ -1168,11 +1240,13 @@ export const Horizontal = () => {
           if (!open) {
             reset();
             setSuccessOpen(false);
+            dispatch({ type: "reset" });
           }
         }}
         onConfirm={() => {
           reset();
           setSuccessOpen(false);
+          dispatch({ type: "reset" });
         }}
       />
     </>
@@ -1206,19 +1280,28 @@ export const HorizontalWithCancelConfirmation = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  const {
-    formData,
-    runValidationAndStore,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
-  } = useAccountForm({
-    initialData: initialFormData,
-    currentStepId,
-    validateStep,
+  const [formData, dispatch] = useReducer(formReducer, initialFormData);
+  const handleInputChange = handleInputChangeHandler(dispatch);
+  const handleSelectChange = handleSelectChangeHandler(dispatch);
+  const handleRadioChange = handleRadioChangeHandler(
+    dispatch,
+    () => currentStepId,
+    () => formData,
     setCurrentStepValidation,
-  });
+  );
+  const onBlur = (_event: FocusEvent<HTMLInputElement>) => {
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
+  };
+  const runValidationAndStore = () =>
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
 
   const handleNext = async () => {
     const valid = await runValidationAndStore();
@@ -1346,6 +1429,7 @@ export const HorizontalWithCancelConfirmation = () => {
         onConfirm={() => {
           reset();
           setCancelOpen(false);
+          dispatch({ type: "reset" });
         }}
       />
       <AccountCreatedSuccessDialog
@@ -1355,11 +1439,13 @@ export const HorizontalWithCancelConfirmation = () => {
           if (!open) {
             reset();
             setSuccessOpen(false);
+            dispatch({ type: "reset" });
           }
         }}
         onConfirm={() => {
           reset();
           setSuccessOpen(false);
+          dispatch({ type: "reset" });
         }}
       />
     </>
@@ -1392,19 +1478,28 @@ export const VerticalWithCancelConfirmation = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  const {
-    formData,
-    runValidationAndStore,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
-  } = useAccountForm({
-    initialData: initialFormData,
-    currentStepId,
-    validateStep,
+  const [formData, dispatch] = useReducer(formReducer, initialFormData);
+  const handleInputChange = handleInputChangeHandler(dispatch);
+  const handleSelectChange = handleSelectChangeHandler(dispatch);
+  const handleRadioChange = handleRadioChangeHandler(
+    dispatch,
+    () => currentStepId,
+    () => formData,
     setCurrentStepValidation,
-  });
+  );
+  const onBlur = (_event: FocusEvent<HTMLInputElement>) => {
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
+  };
+  const runValidationAndStore = () =>
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
 
   const handleNext = async () => {
     const valid = await runValidationAndStore();
@@ -1526,6 +1621,7 @@ export const VerticalWithCancelConfirmation = () => {
         onConfirm={() => {
           reset();
           setCancelOpen(false);
+          dispatch({ type: "reset" });
         }}
       />
       <AccountCreatedSuccessDialog
@@ -1558,20 +1654,28 @@ export const Modal = () => {
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
   const [open, setOpen] = useState(false);
-
-  const {
-    formData,
-    runValidationAndStore,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
-  } = useAccountForm({
-    initialData: initialFormData,
-    currentStepId,
-    validateStep,
+  const [formData, dispatch] = useReducer(formReducer, initialFormData);
+  const handleInputChange = handleInputChangeHandler(dispatch);
+  const handleSelectChange = handleSelectChangeHandler(dispatch);
+  const handleRadioChange = handleRadioChangeHandler(
+    dispatch,
+    () => currentStepId,
+    () => formData,
     setCurrentStepValidation,
-  });
+  );
+  const onBlur = (_event: FocusEvent<HTMLInputElement>) => {
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
+  };
+  const runValidationAndStore = () =>
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -1586,6 +1690,7 @@ export const Modal = () => {
     setOpen(false);
     setTimeout(() => {
       reset();
+      dispatch({ type: "reset" });
     }, 300);
   };
 
@@ -1728,20 +1833,28 @@ export const ModalWithConfirmations = () => {
     stepsStatusMap,
     setCurrentStepValidation,
   } = useWizard({ steps: stepIds });
-
-  const {
-    formData,
-    runValidationAndStore,
-    handleInputChange,
-    handleSelectChange,
-    onBlur,
-    handleRadioChange,
-  } = useAccountForm({
-    initialData: initialFormData,
-    currentStepId,
-    validateStep,
+  const [formData, dispatch] = useReducer(formReducer, initialFormData);
+  const handleInputChange = handleInputChangeHandler(dispatch);
+  const handleSelectChange = handleSelectChangeHandler(dispatch);
+  const handleRadioChange = handleRadioChangeHandler(
+    dispatch,
+    () => currentStepId,
+    () => formData,
     setCurrentStepValidation,
-  });
+  );
+  const onBlur = (_event: FocusEvent<HTMLInputElement>) => {
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
+  };
+  const runValidationAndStore = () =>
+    runValidationAndStoreHelper(
+      currentStepId,
+      formData,
+      setCurrentStepValidation,
+    );
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -1766,6 +1879,7 @@ export const ModalWithConfirmations = () => {
     setTimeout(() => {
       reset();
       setWizardState("form");
+      dispatch({ type: "reset" });
     }, 300);
   };
 
