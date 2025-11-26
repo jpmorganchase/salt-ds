@@ -143,7 +143,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   const groupProps: ComponentPropsWithoutRef<"button"> = insideGroup
     ? {
         "aria-selected": selected,
-        "aria-checked": selected,
         role: "option",
       }
     : {};
