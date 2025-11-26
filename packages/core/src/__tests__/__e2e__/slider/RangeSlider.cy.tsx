@@ -714,4 +714,102 @@ describe("Given a Range Slider", () => {
       );
     });
   });
+
+  it("should update value while dragging second thumb with left mouse and stop after pointerup", () => {
+    cy.mount(<Default min={0} max={10} defaultValue={[0, 1]} />);
+    cy.findAllByTestId("sliderThumb")
+      .eq(1)
+      .trigger("pointerdown", { pointerType: "mouse", button: 0 });
+    cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
+      pointerType: "mouse",
+      button: 0,
+      clientX: 750,
+      clientY: 50,
+    });
+    cy.wait(100);
+    cy.findAllByTestId("sliderThumb")
+      .eq(1)
+      .trigger("pointerup", { pointerType: "mouse", button: 0 });
+    cy.findAllByRole("slider")
+      .eq(1)
+      .invoke("val")
+      .then((valAfterDrag) => {
+        cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
+          pointerType: "mouse",
+          button: 0,
+          clientX: 800,
+          clientY: 50,
+        });
+        cy.wait(100);
+        cy.findAllByRole("slider")
+          .eq(1)
+          .invoke("val")
+          .should("eq", valAfterDrag);
+        expect(Number(valAfterDrag)).to.be.greaterThan(1);
+      });
+  });
+
+  it("should update value while dragging second thumb with touch and stop after pointerup", () => {
+    cy.mount(<Default min={0} max={10} defaultValue={[0, 1]} />);
+    cy.findAllByTestId("sliderThumb")
+      .eq(1)
+      .trigger("pointerdown", { pointerType: "touch" });
+    cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
+      pointerType: "touch",
+      clientX: 750,
+      clientY: 50,
+    });
+    cy.wait(100);
+    cy.findAllByTestId("sliderThumb")
+      .eq(1)
+      .trigger("pointerup", { pointerType: "touch" });
+    cy.findAllByRole("slider")
+      .eq(1)
+      .invoke("val")
+      .then((valAfterDrag) => {
+        cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
+          pointerType: "touch",
+          clientX: 800,
+          clientY: 50,
+        });
+        cy.wait(100);
+        cy.findAllByRole("slider")
+          .eq(1)
+          .invoke("val")
+          .should("eq", valAfterDrag);
+        expect(Number(valAfterDrag)).to.be.greaterThan(1);
+      });
+  });
+
+  it("should stop updating value after pointerup for second thumb", () => {
+    cy.mount(<Default min={0} max={10} defaultValue={[0, 1]} />);
+    cy.findAllByTestId("sliderThumb")
+      .eq(1)
+      .trigger("pointerdown", { pointerType: "mouse", button: 0 });
+    cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
+      pointerType: "mouse",
+      button: 0,
+      clientX: 750,
+      clientY: 50,
+    });
+    cy.findAllByTestId("sliderThumb")
+      .eq(1)
+      .trigger("pointerup", { pointerType: "mouse", button: 0 });
+    cy.findAllByRole("slider")
+      .eq(1)
+      .invoke("val")
+      .then((valAfterDrag) => {
+        cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
+          pointerType: "mouse",
+          button: 0,
+          clientX: 800,
+          clientY: 50,
+        });
+        cy.wait(100);
+        cy.findAllByRole("slider")
+          .eq(1)
+          .invoke("val")
+          .should("eq", valAfterDrag);
+      });
+  });
 });
