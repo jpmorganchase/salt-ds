@@ -80,7 +80,7 @@ const handleSelectChangeHandler =
 const handleRadioChangeHandler =
   (
     dispatch: Dispatch<FormAction>,
-    getCurrentStepId: () => ContentType,
+    getCurrentStepId: () => string,
     getFormData: () => AccountFormData,
     setCurrentStepValidation: (fields: Record<string, FieldValidation>) => void,
   ) =>
@@ -96,7 +96,7 @@ const handleRadioChangeHandler =
   };
 
 const runValidationAndStoreHelper = async (
-  stepId: ContentType,
+  stepId: string,
   data: AccountFormData,
   setCurrentStepValidation: (fields: Record<string, FieldValidation>) => void,
 ) => {
@@ -302,9 +302,8 @@ const wizardSteps = [
   },
   { id: "review", label: "Review and create" },
 ] as const;
-const stepIds = wizardSteps.map((s) => s.id);
 
-type ContentType = (typeof wizardSteps)[number]["id"];
+const stepIds = wizardSteps.map((s) => s.id);
 
 const accountTypeOptions = [
   {
@@ -357,7 +356,7 @@ const initialFormData: AccountFormData = {
 
 // Account validation schema (field-level + warning via params.severity)
 type StepSchema = Yup.ObjectSchema<Record<string, unknown>>;
-const stepValidationSchemas: Record<ContentType, StepSchema> = {
+const stepValidationSchemas: Record<string, StepSchema> = {
   "account-details": Yup.object({
     fullName: Yup.string().required("Full name is required."),
     phoneNumber: Yup.string().required("Phone number is required."),
@@ -424,7 +423,7 @@ function mapYupErrors(
 
 // Validate a single wizard step given current form data; returns fields map
 async function validateStep(
-  stepId: ContentType,
+  stepId: string,
   data: AccountFormData,
 ): Promise<Record<string, FieldValidation>> {
   const schema = stepValidationSchemas[stepId];
@@ -1140,7 +1139,7 @@ export const Horizontal = () => {
     stepFieldValidation: currentStepValidation,
   };
 
-  const contentByStep = {
+  const contentByStep: Record<string, ReactNode> = {
     "account-details": <AccountDetailsContent {...sharedFormProps} />,
     "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
@@ -1330,7 +1329,7 @@ export const HorizontalWithCancelConfirmation = () => {
 
   const openCancelDialog = () => setCancelOpen(true);
 
-  const contentByStep = {
+  const contentByStep: Record<string, ReactNode> = {
     "account-details": <AccountDetailsContent {...sharedFormProps} />,
     "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
@@ -1526,7 +1525,7 @@ export const VerticalWithCancelConfirmation = () => {
     stepFieldValidation: currentStepValidation,
   };
 
-  const contentByStep = {
+  const contentByStep: Record<string, ReactNode> = {
     "account-details": <AccountDetailsContent {...sharedFormProps} />,
     "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
@@ -1728,7 +1727,7 @@ export const Modal = () => {
     handleRadioChange,
     stepFieldValidation: currentStepValidation,
   };
-  const contentByStep = {
+  const contentByStep: Record<string, ReactNode> = {
     "account-details": <AccountDetailsContent {...sharedFormProps} />,
     "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (
@@ -1920,7 +1919,7 @@ export const ModalWithConfirmations = () => {
     stepFieldValidation: currentStepValidation,
   };
 
-  const contentByStep = {
+  const contentByStep: Record<string, ReactNode> = {
     "account-details": <AccountDetailsContent {...sharedFormProps} />,
     "account-type": <AccountTypeContent {...sharedFormProps} />,
     "additional-info": (

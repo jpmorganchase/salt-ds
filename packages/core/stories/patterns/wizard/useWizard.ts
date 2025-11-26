@@ -11,8 +11,8 @@ export interface StepValidationResult {
   status?: ValidationStatus;
 }
 
-interface UseWizardOptions<StepId> {
-  steps: readonly StepId[];
+interface UseWizardOptions {
+  steps: string[];
 }
 
 const deriveStatus = (
@@ -26,18 +26,16 @@ const deriveStatus = (
   return hasWarning ? "warning" : undefined;
 };
 
-export function useWizard<StepId extends string>({
-  steps,
-}: UseWizardOptions<StepId>) {
+export function useWizard({ steps }: UseWizardOptions) {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [validationsByStep, setValidationsByStep] = useState<
-    Partial<Record<StepId, StepValidationResult>>
+    Partial<Record<string, StepValidationResult>>
   >({});
 
   const currentStepId = steps[activeStepIndex];
 
   const setStepValidation = useCallback(
-    (stepId: StepId, fields: Record<string, FieldValidation>) => {
+    (stepId: string, fields: Record<string, FieldValidation>) => {
       setValidationsByStep((prev) => ({
         ...prev,
         [stepId]: { fields, status: deriveStatus(fields) },
@@ -72,7 +70,7 @@ export function useWizard<StepId extends string>({
     [currentStepId],
   );
 
-  const clearStepValidation = useCallback((stepId: StepId) => {
+  const clearStepValidation = useCallback((stepId: string) => {
     setValidationsByStep((prev) => ({
       ...prev,
       [stepId]: { fields: {}, status: undefined },
@@ -117,7 +115,7 @@ export function useWizard<StepId extends string>({
     stepStatus: currentStatus,
     isCurrentStepValid,
     stepsStatusMap: steps.reduce<
-      Partial<Record<StepId, { status?: ValidationStatus }>>
+      Partial<Record<string, { status?: ValidationStatus }>>
     >((acc, id) => {
       acc[id] = { status: validationsByStep[id]?.status };
       return acc;
