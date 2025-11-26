@@ -7,6 +7,8 @@ import {
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
+  useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -33,10 +35,7 @@ export interface PillGroupProps extends ComponentPropsWithoutRef<"div"> {
    * @param event
    * @param newSelected The new selected values.
    */
-  onSelectionChange?: (
-    event: SyntheticEvent<Element, Event>,
-    newSelected: string[],
-  ) => void;
+  onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
 }
 
 const withBaseName = makePrefixer("saltPillGroup");
@@ -81,34 +80,38 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       state: "selected",
     });
 
-    const select = (event: SyntheticEvent, newValue: string) => {
-      if (disabled) {
-        return;
-      }
+    const select = useCallback(
+      (event: SyntheticEvent, newValue: string) => {
+        if (disabled) {
+          return;
+        }
 
-      let newSelected = [];
-      if (selected.includes(newValue)) {
-        newSelected = selected.filter((item) => item !== newValue);
-      } else {
-        newSelected = [...selected, newValue];
-      }
+        let newSelected = [];
+        if (selected.includes(newValue)) {
+          newSelected = selected.filter((item) => item !== newValue);
+        } else {
+          newSelected = [...selected, newValue];
+        }
 
-      setSelected(newSelected);
-      onSelectionChange?.(event, newSelected);
-    };
+        setSelected(newSelected);
+        onSelectionChange?.(event, newSelected);
+      },
+      [disabled, selected, onSelectionChange],
+    );
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
+
       if (!pillGroupRef.current) return;
       const pills = Array.from(
         pillGroupRef.current.querySelectorAll<HTMLElement>('[role="option"]') ??
           [],
       );
 
-      // biome-ignore lint/complexity/useIndexOf: Already using preferred findIndex
-      const activeIndex = pills.findIndex(
-        (pill) => pill === document.activeElement,
-      );
+      const activeIndex =
+        targetWindow?.document.activeElement instanceof HTMLElement
+          ? pills.indexOf(targetWindow.document.activeElement)
+          : -1;
 
       switch (event.key) {
         case "ArrowDown":
@@ -133,24 +136,27 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
     };
 
     const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
-      setFocusInside(true);
       onFocus?.(event);
+      setFocusInside(true);
     };
 
     const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-      setFocusInside(false);
       onBlur?.(event);
+      setFocusInside(false);
     };
 
+    const context = useMemo(
+      () => ({
+        disabled,
+        focusInside,
+        select,
+        selected,
+      }),
+      [disabled, focusInside, select, selected],
+    );
+
     return (
-      <PillGroupContext.Provider
-        value={{
-          disabled,
-          focusInside,
-          select,
-          selected,
-        }}
-      >
+      <PillGroupContext.Provider value={context}>
         <div
           aria-disabled={disabled || undefined}
           aria-labelledby={

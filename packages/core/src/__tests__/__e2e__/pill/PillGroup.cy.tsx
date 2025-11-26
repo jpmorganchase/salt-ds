@@ -1,4 +1,4 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import * as selectablePillStories from "@stories/pill/selectable-pill.stories";
 import { composeStories } from "@storybook/react-vite";
 
@@ -50,6 +50,15 @@ describe("GIVEN a PillGroup", () => {
       Cypress.sinon.match.any,
       ["one"],
     );
+
+    // Space should not trigger selection changes
+    cy.realPress(" ");
+    cy.findByRole("option", { name: "Pill 1" }).should(
+      "have.attr",
+      "aria-checked",
+      "true",
+    );
+    cy.get("@selectionSpy").should("have.callCount", 1);
   });
 
   it("SHOULD render a disabled pill", () => {
@@ -61,13 +70,11 @@ describe("GIVEN a PillGroup", () => {
 
   it("SHOULD render a disabled PillGroup", () => {
     cy.mount(<Disabled />);
-    cy.findAllByRole("option").each((pill) => {
-      cy.wrap(pill).should("be.disabled");
-    });
+    cy.findAllByRole("option").should("be.disabled");
     cy.findByRole("listbox").should("have.attr", "aria-disabled", "true");
   });
 
-  describe("GIVEN a PillGroup with selectable Pills", () => {
+  describe("GIVEN a PillGroup with selectable pills", () => {
     it("THEN should allow selecting and deselecting Pills", () => {
       const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
       cy.mount(<Default onSelectionChange={selectionChangeSpy} />);
@@ -538,10 +545,15 @@ describe("GIVEN a PillGroup", () => {
         <FormField>
           <FormFieldLabel>Label</FormFieldLabel>
           <Default selected={["one"]} />
+          <FormFieldHelperText>Description</FormFieldHelperText>
         </FormField>,
       );
 
-      cy.findAllByRole("option").eq(0).should("have.accessibleName", "Pill 1");
+      cy.findByRole("listbox").should("have.accessibleName", "Label");
+      cy.findByRole("listbox").should(
+        "have.accessibleDescription",
+        "Description",
+      );
     });
   });
 });
