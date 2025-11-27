@@ -9,6 +9,7 @@ import {
   type InputHTMLAttributes,
   type KeyboardEvent,
   type MouseEventHandler,
+  type PointerEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
@@ -28,7 +29,7 @@ import {
   useForkRef,
   useId,
 } from "../utils";
-import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
+import { useLongPressPointerAction } from "./internal/useLongPressPointerAction";
 import numberInputCss from "./NumberInput.css";
 
 const withBaseName = makePrefixer("saltNumberInput");
@@ -452,7 +453,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       commit(event ?? null, parsedValue, newValue);
     };
 
-    const { activate: activateDecrement } = useActivateWhileMouseDown(
+    const activateDecrement = useLongPressPointerAction(
       decrementValue,
       floatValue <= min,
     );
@@ -471,7 +472,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       commit(event ?? null, parsedValue, newValue);
     };
 
-    const { activate: activateIncrement } = useActivateWhileMouseDown(
+    const activateIncrement = useLongPressPointerAction(
       incrementValue,
       floatValue >= max,
     );
@@ -522,8 +523,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       inputOnKeyDown?.(event);
     };
 
-    const handleIncrementMouseDown = (
-      event: SyntheticEvent,
+    const handleIncrementPointerDown = (
+      event: PointerEvent,
       disableIncrement: boolean,
     ) => {
       event.preventDefault();
@@ -535,8 +536,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
     };
 
-    const handleDecrementMouseDown = (
-      event: SyntheticEvent,
+    const handleDecrementPointerDown = (
+      event: PointerEvent,
       disableDecrement: boolean,
     ) => {
       event.preventDefault();
@@ -659,8 +660,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               tabIndex={-1}
               disabled={disableIncrement}
               className={withBaseName("increment")}
-              onMouseDown={(event) =>
-                handleIncrementMouseDown(event, disableIncrement)
+              onPointerDown={(event) =>
+                handleIncrementPointerDown(event, disableIncrement)
               }
             >
               <IncreaseIcon aria-hidden />
@@ -671,8 +672,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
               tabIndex={-1}
               disabled={disableDecrement}
               className={withBaseName("decrement")}
-              onMouseDown={(event) =>
-                handleDecrementMouseDown(event, disableDecrement)
+              onPointerDown={(event) =>
+                handleDecrementPointerDown(event, disableDecrement)
               }
             >
               <DecreaseIcon aria-hidden />

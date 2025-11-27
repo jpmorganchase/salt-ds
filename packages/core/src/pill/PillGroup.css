@@ -1,4 +1,7 @@
 .saltPillGroup {
+  border: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-wrap: wrap;
   gap: var(--salt-spacing-50);

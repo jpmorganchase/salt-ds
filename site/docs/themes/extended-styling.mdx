@@ -1,0 +1,21 @@
+---
+title: Extended styling
+layout: DetailTechnical
+---
+
+Salt provides you with options which enable you to customize your UI for specific use cases, whilst keeping everything consistent and maintainable. You can adjust densities, switch themes, and choose between light and dark modes. Most components offer props that help to establish clear hierarchy or alter prominence, with predefined variants and appearances to fit different situations. There are also semantic color options for sentiment, status, and categories—giving you plenty of flexibility without needing to override.
+
+## Custom themes are not recommended
+
+A custom theme is technically possible in Salt by overriding design tokens, but Salt strongly recommends against this approach. Creating a custom theme introduces significant risks, including:
+
+- **Lack of brand alignment**: Custom themes may not reflect JPMorgan Chase’s brand standards, leading to inconsistent user experiences.
+- **System misalignments**: Customization can result in misalignments and inconsistencies across products and platforms, undermining the integrity of the design system.
+- **Accessibility risk**: You are responsible for ensuring your custom theme meets accessibility standards, which requires thorough testing and expertise.
+- **Ongoing maintenance cost**: Maintaining a custom theme demands continuous effort to keep styles updated in both code and Figma, and to support future changes in Salt.
+
+For these reasons, Salt’s visual design strategy centers on the JPM Brand theme for long-term use and the Legacy (UITK) theme to support migration from the previous design system. Custom themes are not recommended.
+
+## White-labeling isn't supported
+
+White labeling is the process of customizing a design system so another company can use it with their own visual style and branding, while keeping the core code and features the same. This allows organizations to adapt the system to match their identity without building everything from scratch. However, white labeling requires significant changes and ongoing maintenance, as each component must be wrapped and new design libraries managed. Because of these complexities, Salt doesn't support white labeling and instead focuses on maintaining a consistent, cohesive design system.

@@ -3,7 +3,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type MouseEvent,
@@ -40,7 +39,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   ref,
 ) {
   const [pressActive, setPressActive] = useState(false);
-  const [focused, setFocused] = useState(false);
   const [spaceActive, setSpaceActive] = useState(false);
 
   const pillGroupContext = usePillGroup();
@@ -51,23 +49,14 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     window: targetWindow,
   });
 
-  const insideGroup = !!pillGroupContext;
+  const insideSelectableGroup =
+    pillGroupContext.selectionVariant === "multiple";
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (pillGroupContext && value) {
+    if (insideSelectableGroup && value) {
       pillGroupContext.select(event, value);
     }
     onClick?.(event);
-  };
-
-  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-    setFocused(true);
-    onFocus?.(event);
-  };
-
-  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
-    setFocused(false);
-    onBlur?.(event);
   };
 
   const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
@@ -78,19 +67,19 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
-    if (event.key === "Enter" && insideGroup) {
+    if (event.key === "Enter" && insideSelectableGroup) {
       // Prevent selection on enter key for selectable pill.
       event.preventDefault();
       return;
     }
-    if (event.key === " " && insideGroup) {
+    if (event.key === " " && insideSelectableGroup) {
       setSpaceActive(true);
     }
   };
 
   const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyUp?.(event);
-    if (insideGroup && event.key === " ") {
+    if (insideSelectableGroup && event.key === " ") {
       setSpaceActive(false);
     }
   };
@@ -112,7 +101,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     onKeyUp: handleKeyUp,
     onKeyDown: handleKeyDown,
     onClick: handleClick,
-    onBlur: handleBlur,
+    onBlur,
   });
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
@@ -122,30 +111,21 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     ...restButtonProps
   } = buttonProps;
 
-  const selected = !!value && pillGroupContext?.selected.includes(value);
-  const disabled = pillGroupContext?.disabled || buttonDisabled;
-
-  let tabIndex: undefined | number;
-
-  if (pillGroupContext) {
-    const { focusInside: groupHasFocus, selected: selectedPills } =
-      pillGroupContext;
-
-    const nonTabbable =
-      (groupHasFocus && !focused) || (selectedPills.length > 0 && !selected);
-
-    tabIndex = nonTabbable ? -1 : undefined;
-  }
+  const selected =
+    !!value &&
+    insideSelectableGroup &&
+    pillGroupContext.selected.includes(value);
+  const disabled = pillGroupContext.disabled || buttonDisabled;
 
   // Prevents selectable pill being active on Enter key press
-  const combinedActive = insideGroup
+  const combinedActive = insideSelectableGroup
     ? pressActive || spaceActive
     : pressActive || active;
 
-  const groupProps: ComponentPropsWithoutRef<"button"> = insideGroup
+  const groupProps: ComponentPropsWithoutRef<"button"> = insideSelectableGroup
     ? {
-        "aria-selected": selected,
-        role: "option",
+        "aria-checked": selected,
+        role: "checkbox",
       }
     : {};
 
@@ -160,15 +140,13 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
         className,
       )}
       type="button"
-      tabIndex={tabIndex}
-      onFocus={handleFocus}
       onPointerDown={handlePointerDown}
       disabled={disabled}
       {...restButtonProps}
       {...groupProps}
       {...rest}
     >
-      {insideGroup && (
+      {insideSelectableGroup && (
         <PillCheckIcon checked={selected} active={combinedActive} />
       )}
       {children}

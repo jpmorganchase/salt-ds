@@ -2,15 +2,19 @@ import { type SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 
 export interface PillGroupContextValue {
-  focusInside: boolean;
   selected: string[];
   select: (e: SyntheticEvent, value: string) => void;
   disabled?: boolean;
+  selectionVariant: "none" | "multiple";
 }
 
-export const PillGroupContext = createContext<PillGroupContextValue | null>(
+export const PillGroupContext = createContext<PillGroupContextValue>(
   "PillGroupContext",
-  null,
+  {
+    selected: [],
+    select: () => {},
+    selectionVariant: "none",
+  },
 );
 
 export function usePillGroup() {

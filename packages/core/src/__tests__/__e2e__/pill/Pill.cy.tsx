@@ -58,13 +58,13 @@ describe("GIVEN a Pill", () => {
   describe("GIVEN a selectable Pill in a PillGroup", () => {
     it("THEN should render a selectable Pill", () => {
       cy.mount(
-        <PillGroup>
+        <PillGroup selectionVariant="multiple">
           <Pill value="pill1">Pill 1</Pill>
           <Pill value="pill2">Pill 2</Pill>
         </PillGroup>,
       );
-      cy.findByRole("option", { name: "Pill 1" });
-      cy.findByRole("option", { name: "Pill 2" });
+      cy.findByRole("checkbox", { name: "Pill 1" });
+      cy.findByRole("checkbox", { name: "Pill 2" });
     });
   });
 });

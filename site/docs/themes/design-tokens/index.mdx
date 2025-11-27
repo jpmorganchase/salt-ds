@@ -1,0 +1,77 @@
+---
+title: Design tokens
+layout: DetailTechnical
+sidebar:
+  label: Overview
+  groupLabel: Design tokens
+  priority: 4
+---
+
+Salt styles its components and patterns using design tokens. Design tokens are name and value pairings that capture small, repeatable design choices—such as colors, fonts, and spacing—and are essential for storing key style attributes in a design system. They help maintain consistency across platforms and applications, making it easier to update and maintain a cohesive look throughout your products.
+
+<Image
+  src="/img/theming/name-value-pairing-light.png"
+  srcDark="/img/theming/name-value-pairing-dark.png"
+  alt=""
+/>
+
+## Why we use tokens
+
+There are several benefits to using design tokens instead of static values:
+
+- Consistency: Ensures visual harmony across products, boosting recognition and trust.
+- Efficiency: Accelerates design changes across platforms, saving time and effort.
+- Flexibility: Allows modifications without extensive code changes.
+- Scalability: Centralizes property definitions, streamlining the design system.
+
+Design tokens are adaptable building blocks that capture design decisions as name-value pairs. Their names and usage stay the same even if the values change—for example, when switching from light to dark mode or applying a different theme—making it easier for designers and developers to work together and maintain consistency.
+
+<Image
+  src="/img/theming/token-themes-light.png"
+  srcDark="/img/theming/token-themes-dark.png"
+  alt=""
+/>
+
+## How tokens are structured
+
+Salt uses a tiered token structure to provide flexibility with mode, theme, and density options. The token tiers—Foundations, Palettes, and Characteristics—make it easy to adjust styles and settings across components, ensuring consistency and adaptability throughout your application.
+
+<Image
+  src="/img/theming/token-tiers-light.png"
+  srcDark="/img/theming/token-tiers-dark.png"
+  alt=""
+/>
+
+### Foundations
+
+Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the [Foundations](/salt/foundations/index) section.
+
+### Palettes
+
+Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.
+
+### Characteristics
+
+Characteristics are groups of semantic tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens are always referenced in components and patterns, defining design elements by their meaning or use. This makes it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about [how to read semantic tokens](/salt/themes/design-tokens/how-to-read-tokens).
+
+## Design tokens in Figma
+
+In Figma, design tokens are shown as variables that closely align with the tokens used in code. Although their format as variables is different from code, you read and use them in the same way.
+
+<Image
+  src="/img/theming/figma-variables-light.png"
+  srcDark="/img/theming/figma-variables-dark.png"
+  alt=""
+/>
+
+The Dev Mode experience in Figma displays code syntax for each variable, making it easy for developers to see the exact code snippet and corresponding design token when inspecting a design.
+
+<Image
+  src="/img/theming/figma-devmode-light.png"
+  srcDark="/img/theming/figma-devmode-dark.png"
+  alt=""
+/>
+
+## Extent of design tokens
+
+To keep the number of design tokens manageable, Salt doesn't create tokens for every attribute of every component and state. Instead, Salt provides tokens that capture the system’s overall design intent. This approach helps maintain a cohesive, systematic design and supports high-quality interaction patterns and accessibility.

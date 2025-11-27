@@ -69,8 +69,8 @@ export const useSliderThumb = ({
     [decimalPlaces, marks, max, min, onChange, setValue, restrictToMarks, step],
   );
 
-  const handlePointerUp = useCallback(
-    (event: PointerEvent) => {
+  const handleDragEnd = useCallback(
+    (event: Event) => {
       setIsDragging(false);
       setIsFocusVisible(false);
       onChangeEnd?.(event, lastValueRef.current);
@@ -81,22 +81,30 @@ export const useSliderThumb = ({
   useEffect(() => {
     if (isDragging) {
       targetWindow?.addEventListener("pointermove", handlePointerMove);
-      targetWindow?.addEventListener("pointerup", handlePointerUp);
+      targetWindow?.addEventListener("pointerup", handleDragEnd);
+      targetWindow?.addEventListener("pointercancel", handleDragEnd);
+      targetWindow?.addEventListener("blur", handleDragEnd);
+      targetWindow?.addEventListener("contextmenu", handleDragEnd);
     } else {
       targetWindow?.removeEventListener("pointermove", handlePointerMove);
-      targetWindow?.removeEventListener("pointerup", handlePointerUp);
+      targetWindow?.removeEventListener("pointerup", handleDragEnd);
+      targetWindow?.removeEventListener("pointercancel", handleDragEnd);
+      targetWindow?.removeEventListener("blur", handleDragEnd);
+      targetWindow?.removeEventListener("contextmenu", handleDragEnd);
     }
+
     return () => {
       targetWindow?.removeEventListener("pointermove", handlePointerMove);
-      targetWindow?.removeEventListener("pointerup", handlePointerUp);
+      targetWindow?.removeEventListener("pointerup", handleDragEnd);
+      targetWindow?.removeEventListener("pointercancel", handleDragEnd);
+      targetWindow?.removeEventListener("blur", handleDragEnd);
+      targetWindow?.removeEventListener("contextmenu", handleDragEnd);
     };
-  }, [handlePointerMove, handlePointerUp, isDragging, targetWindow]);
+  }, [isDragging, targetWindow, handlePointerMove, handleDragEnd]);
 
   const handlePointerDownOnThumb = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       event.preventDefault();
-      // To prevent the pointerdown event from bubbling up to the slider track
-      //  and triggering its pointerdown event
       event.stopPropagation();
       if (inputRef.current) inputRef.current.focus();
       setIsDragging(true);
@@ -175,7 +183,6 @@ export const useSliderThumb = ({
   );
 
   const handleFocus = () => setIsFocusVisible(true);
-
   const handleBlur = () => setIsFocusVisible(false);
 
   return {
