@@ -1,13 +1,30 @@
-import { Pill } from "@salt-ds/core";
-import { FavoriteIcon } from "@salt-ds/icons";
+import { Pill, PillGroup, StackLayout } from "@salt-ds/core";
+import {
+  CloseIcon,
+  GuideClosedIcon,
+  UserAdminIcon,
+  UserBadgeIcon,
+} from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
-const handleClick = () => {
-  console.log("clicked");
-};
-
 export const Icon = (): ReactElement => (
-  <Pill onClick={handleClick}>
-    <FavoriteIcon aria-hidden /> Pill with Icon
-  </Pill>
+  <StackLayout align="center">
+    <Pill>
+      <UserBadgeIcon aria-hidden />
+      Call client
+    </Pill>
+    <Pill aria-label="Remove jane.smith@jpmchase.com">
+      <UserBadgeIcon aria-hidden /> jane.smith@jpmchase.com
+      <CloseIcon aria-hidden />
+    </Pill>
+    <PillGroup aria-label="Select user roles">
+      <Pill value="admin">
+        <UserAdminIcon aria-hidden /> Admin
+      </Pill>
+      <Pill value="readOnly">
+        <GuideClosedIcon aria-hidden />
+        Read-only
+      </Pill>
+    </PillGroup>
+  </StackLayout>
 );
