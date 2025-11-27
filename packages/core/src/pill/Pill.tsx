@@ -125,7 +125,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     ? {
         "aria-checked": selected,
         role: "checkbox",
-        value
+        value,
       }
     : {};
 
