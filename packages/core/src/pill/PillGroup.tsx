@@ -3,21 +3,30 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
   forwardRef,
-  type KeyboardEvent,
   type SyntheticEvent,
   useCallback,
   useMemo,
-  useRef,
-  useState,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled, useForkRef } from "../utils";
+import { makePrefixer, useControlled } from "../utils";
 import pillGroupCss from "./PillGroup.css";
 import { PillGroupContext } from "./PillGroupContext";
 
-export interface PillGroupProps extends ComponentPropsWithoutRef<"div"> {
+interface CommonPillGroupProps extends ComponentPropsWithoutRef<"fieldset"> {
+  /**
+   * If `true`, the Pill group will be disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Selection variant of the Pill group. If "none", the Pills will not be selectable. If "multiple", pills inside behave like checkboxes.
+   */
+  selectionVariant?: "none" | "multiple";
+}
+
+interface SelectablePillGroupProps extends CommonPillGroupProps {
+  selectionVariant: "multiple";
   /**
    * The currently selected values.
    */
@@ -27,10 +36,6 @@ export interface PillGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   defaultSelected?: string[];
   /**
-   * If `true`, the Pill group will be disabled.
-   */
-  disabled?: boolean;
-  /**
    * Callback fired when the selection changes.
    * @param event
    * @param newSelected The new selected values.
@@ -38,9 +43,17 @@ export interface PillGroupProps extends ComponentPropsWithoutRef<"div"> {
   onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
 }
 
+interface NonSelectablePillGroupProps extends CommonPillGroupProps {
+  selectionVariant?: "none";
+}
+
+export type PillGroupProps =
+  | SelectablePillGroupProps
+  | NonSelectablePillGroupProps;
+
 const withBaseName = makePrefixer("saltPillGroup");
 
-export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
+export const PillGroup = forwardRef<HTMLFieldSetElement, PillGroupProps>(
   function PillGroup(props, ref) {
     const {
       "aria-labelledby": ariaLabelledBy,
@@ -50,13 +63,10 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       selected: selectedProp,
       defaultSelected,
       onSelectionChange,
-      onKeyDown,
       className,
-      onFocus,
-      onBlur,
+      selectionVariant = "none",
       ...rest
-    } = props;
-    const [focusInside, setFocusInside] = useState(false);
+    } = props as SelectablePillGroupProps;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -67,9 +77,6 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
 
     const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
       useFormFieldProps();
-
-    const pillGroupRef = useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef(ref, pillGroupRef);
 
     const disabled = formFieldDisabled || disabledProp;
 
@@ -86,12 +93,9 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
           return;
         }
 
-        let newSelected = [];
-        if (selected.includes(newValue)) {
-          newSelected = selected.filter((item) => item !== newValue);
-        } else {
-          newSelected = [...selected, newValue];
-        }
+        const newSelected = selected.includes(newValue)
+          ? selected.filter((item) => item !== newValue)
+          : selected.concat(newValue);
 
         setSelected(newSelected);
         onSelectionChange?.(event, newSelected);
@@ -99,66 +103,20 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
       [disabled, selected, onSelectionChange],
     );
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDown?.(event);
-
-      if (!pillGroupRef.current) return;
-      const pills = Array.from(
-        pillGroupRef.current.querySelectorAll<HTMLElement>('[role="option"]') ??
-          [],
-      );
-
-      const activeIndex =
-        targetWindow?.document.activeElement instanceof HTMLElement
-          ? pills.indexOf(targetWindow.document.activeElement)
-          : -1;
-
-      switch (event.key) {
-        case "ArrowDown":
-        case "ArrowRight":
-          event.preventDefault();
-          pills[Math.min(activeIndex + 1, pills.length - 1)]?.focus();
-          break;
-        case "ArrowUp":
-        case "ArrowLeft":
-          event.preventDefault();
-          pills[Math.max(activeIndex - 1, 0)]?.focus();
-          break;
-        case "Home":
-          event.preventDefault();
-          pills[0]?.focus();
-          break;
-        case "End":
-          event.preventDefault();
-          pills[pills.length - 1]?.focus();
-          break;
-      }
-    };
-
-    const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
-      setFocusInside(true);
-      onFocus?.(event);
-    };
-
-    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-      setFocusInside(false);
-      onBlur?.(event);
-    };
-
     const context = useMemo(
-      () => ({
-        disabled,
-        focusInside,
-        select,
-        selected,
-      }),
-      [disabled, focusInside, select, selected],
+      () =>
+        ({
+          disabled,
+          select,
+          selected,
+          selectionVariant,
+        }) as const,
+      [disabled, select, selected, selectionVariant],
     );
 
     return (
       <PillGroupContext.Provider value={context}>
-        <div
-          aria-disabled={disabled || undefined}
+        <fieldset
           aria-labelledby={
             clsx(formFieldA11yProps?.["aria-labelledby"], ariaLabelledBy) ||
             undefined
@@ -168,17 +126,11 @@ export const PillGroup = forwardRef<HTMLDivElement, PillGroupProps>(
             undefined
           }
           className={clsx(withBaseName(), className)}
-          role="listbox"
-          aria-multiselectable
-          aria-orientation="horizontal"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-          ref={handleRef}
+          ref={ref}
           {...rest}
         >
           {children}
-        </div>
+        </fieldset>
       </PillGroupContext.Provider>
     );
   },

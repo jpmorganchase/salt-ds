@@ -11,6 +11,7 @@ export const SelectableDefault = (): ReactElement => (
   <FormField style={{ width: "max-content" }}>
     <FormFieldLabel>Select skills</FormFieldLabel>
     <PillGroup
+      selectionVariant="multiple"
       onSelectionChange={(_e, selected) => {
         console.log("Selected values: ", selected);
       }}

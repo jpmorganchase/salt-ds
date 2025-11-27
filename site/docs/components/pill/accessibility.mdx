@@ -30,32 +30,12 @@ data:
 
 <KeyboardControls>
   <KeyboardControl keyOrCombos="Space">
-    Space changes the state of the checkbox, select or deselect.
+    If the pill is in a selectable group, Space changes the state of the pill, select or deselect.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Tab">
-    If focus is above the pill group, Tab moves focus to one of the following
-    options depending on previous user interaction:
-
-    - The last selected option
-    - The first option in the list
-
+    If focus is above the pill group, Tab moves focus to one of the first pill in the group.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Shift + Tab">
-    If focus is after the pill group, this action moves focus to one of the following options depending on previous user interaction:
-    
-    - The last selected option
-    - The last option in the list
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Left arrow / Up arrow">
-    Left arrow or Up arrow moves focus to the previous pill in the group. Focus doesn't wrap
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Right arrow / Down arrow">
-    Right arrow or Down arrow moves focus to the next pill in the group. Focus doesn't wrap.
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Home">
-    When focus is within the group, Home moves focus to the first option.
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="End">
-    When focus is within the group, End moves focus to the last option.
+    If focus is above the pill group, Tab moves focus to one of the last pill in the group.
   </KeyboardControl>
 </KeyboardControls>

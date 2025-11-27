@@ -10,7 +10,7 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {
-  title: "Core/Pill/Selectable",
+  title: "Core/Pill/Pill Group",
   component: Pill,
 } as Meta<typeof Pill>;
 
@@ -24,13 +24,16 @@ export const Default: StoryFn<typeof PillGroup> = (args) => {
   );
 };
 
+const lotsOfPills = Array.from({ length: 20 }).map(
+  (_, index) => `Pill ${index + 1}`,
+);
+
 export const WithWrap: StoryFn<typeof PillGroup> = (args) => {
   return (
     <PillGroup {...args} aria-label="Group label" style={{ maxWidth: 250 }}>
-      {Array.from({ length: 20 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: Mock data
-        <Pill key={index} value={`pill-${index}`}>
-          Pill {index + 1}
+      {lotsOfPills.map((pill) => (
+        <Pill key={pill} value={pill}>
+          {pill}
         </Pill>
       ))}
     </PillGroup>
@@ -56,12 +59,7 @@ export const WithFormField: StoryFn<typeof PillGroup> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
-      <PillGroup
-        {...args}
-        onSelectionChange={(_e, selected) => {
-          console.log("Selected values: ", selected);
-        }}
-      >
+      <PillGroup {...args}>
         <Pill value="one">Pill 1</Pill>
         <Pill value="two">Pill 2</Pill>
         <Pill value="three">Pill 3</Pill>
@@ -73,7 +71,7 @@ export const WithFormField: StoryFn<typeof PillGroup> = (args) => {
 
 export const Disabled: StoryFn<typeof PillGroup> = (args) => {
   return (
-    <PillGroup {...args} aria-label="Group label" disabled selected={["two"]}>
+    <PillGroup {...args} aria-label="Group label" disabled>
       <Pill value="one">Pill 1</Pill>
       <Pill value="two">Pill 2</Pill>
       <Pill value="three">Pill 3</Pill>
@@ -95,12 +93,38 @@ export const WithDisabledFormField: StoryFn<typeof PillGroup> = (args) => {
   );
 };
 
-export const ControlledGroup: StoryFn<typeof PillGroup> = (args) => {
+export const SelectableGroup: StoryFn<typeof PillGroup> = (args) => {
+  return (
+    <PillGroup aria-label="Group label" {...args} selectionVariant="multiple">
+      <Pill value="one">Pill 1</Pill>
+      <Pill value="two">Pill 2</Pill>
+      <Pill value="three">Pill 3</Pill>
+    </PillGroup>
+  );
+};
+
+export const DisabledSelectableGroup: StoryFn<typeof PillGroup> = (args) => {
+  return (
+    <PillGroup
+      disabled
+      aria-label="Group label"
+      {...args}
+      selectionVariant="multiple"
+    >
+      <Pill value="one">Pill 1</Pill>
+      <Pill value="two">Pill 2</Pill>
+      <Pill value="three">Pill 3</Pill>
+    </PillGroup>
+  );
+};
+
+export const ControlledSelectableGroup: StoryFn<typeof PillGroup> = (args) => {
   const [selected, setSelected] = useState<string[]>(["one", "three"]);
   return (
     <PillGroup
       {...args}
       aria-label="Group label"
+      selectionVariant="multiple"
       selected={selected}
       onSelectionChange={(_e, newSelected) => setSelected(newSelected)}
     >
@@ -111,19 +135,11 @@ export const ControlledGroup: StoryFn<typeof PillGroup> = (args) => {
   );
 };
 
-export const UncontrolledGroup: StoryFn<typeof PillGroup> = (args) => {
+export const SelectableGroupWithDisabledPill: StoryFn<typeof PillGroup> = (
+  args,
+) => {
   return (
-    <PillGroup {...args} aria-label="Group label">
-      <Pill value="one">Pill 1</Pill>
-      <Pill value="two">Pill 2</Pill>
-      <Pill value="three">Pill 3</Pill>
-    </PillGroup>
-  );
-};
-
-export const WithDisabledPill: StoryFn<typeof PillGroup> = (args) => {
-  return (
-    <PillGroup {...args} aria-label="Group label">
+    <PillGroup {...args} selectionVariant="multiple" aria-label="Group label">
       <Pill value="one" disabled>
         Pill 1
       </Pill>

@@ -5,7 +5,7 @@ export const SelectableWrapping = (): ReactElement => {
   return (
     <FormField style={{ maxWidth: "40ch" }}>
       <FormFieldLabel>Extras</FormFieldLabel>
-      <PillGroup>
+      <PillGroup selectionVariant="multiple">
         <Pill value="ketchup">Ketchup</Pill>
         <Pill value="mustard">Mustard</Pill>
         <Pill value="relish">Relish</Pill>

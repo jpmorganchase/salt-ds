@@ -1,6 +1,5 @@
 import { Pill, PillGroup, StackLayout } from "@salt-ds/core";
 import {
-  CallIcon,
   CloseIcon,
   GuideClosedIcon,
   UserAdminIcon,
@@ -13,7 +12,6 @@ export const Icon = (): ReactElement => (
     <Pill>
       <UserBadgeIcon aria-hidden />
       Call client
-      <CallIcon aria-hidden />
     </Pill>
     <Pill aria-label="Remove jane.smith@jpmchase.com">
       <UserBadgeIcon aria-hidden /> jane.smith@jpmchase.com
