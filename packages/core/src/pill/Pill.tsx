@@ -30,7 +30,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     onKeyUp,
     onKeyDown,
     onClick,
-    onFocus,
     onBlur,
     onPointerDown,
     value,
