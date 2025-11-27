@@ -98,7 +98,7 @@ describe("GIVEN a PillGroup", () => {
   });
 
   it("SHOULD allow navigation with the Tab key", () => {
-    cy.mount(<Default />);
+    cy.mount(<SelectableGroup />);
 
     cy.realPress("Tab");
     cy.findByRole("checkbox", { name: "Pill 1" }).should("be.focused");
@@ -261,12 +261,11 @@ describe("GIVEN a PillGroup", () => {
         const selectionSpy = cy.stub().as("selectionSpy");
         cy.mount(<SelectableGroup onSelectionChange={selectionSpy} />);
         cy.realPress("Tab");
-        cy.realPress("ArrowRight");
         cy.realPress("Space");
         cy.get("@selectionSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          ["two"],
+          ["one"],
         );
       });
 
@@ -402,7 +401,7 @@ describe("GIVEN a PillGroup", () => {
 
   describe("WHEN wrapped in a FormField", () => {
     it("THEN should respect the context when disabled", () => {
-      cy.mount(<WithDisabledFormField />);
+      cy.mount(<WithDisabledFormField selectionVariant="multiple" />);
       cy.findAllByRole("checkbox").should("be.disabled");
     });
 

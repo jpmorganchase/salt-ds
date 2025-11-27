@@ -10,6 +10,8 @@ data:
 
 ## Keyboard interactions
 
+### Pill
+
 <KeyboardControls>
   <KeyboardControl keyOrCombos="Enter / Space">
     When focus is on the pill, this action activates it.
@@ -30,12 +32,15 @@ data:
 
 <KeyboardControls>
   <KeyboardControl keyOrCombos="Space">
-    If the pill is in a selectable group, Space changes the state of the pill, select or deselect.
+    When focus is on the pill within a selectable group, this action toggles its
+    selection state (selects or deselects the pill).
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Tab">
-    If focus is above the pill group, Tab moves focus to one of the first pill in the group.
+    When focus is before the pill group, this action moves focus to the first
+    pill in the group.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Shift + Tab">
-    If focus is above the pill group, Tab moves focus to one of the last pill in the group.
+    When focus is after the pill group, this action will shift focus to the last
+    pill in the group.
   </KeyboardControl>
 </KeyboardControls>
