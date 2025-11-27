@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
 Introduced a PillGroup component.
@@ -7,7 +7,7 @@ This enhancement allows for multi-selection functionality, making it easier to c
 
 Usage example:
 
-```
+```tsx
 <PillGroup>
  <Pill value="one">Pill 1</Pill>
  <Pill value="two">Pill 2</Pill>
