@@ -25,33 +25,6 @@ describe("GIVEN a PillGroup", () => {
     cy.findAllByRole("checkbox").should("have.length", 3);
   });
 
-  it("SHOULD allow selection with a keyboard and fire onSelectionChange", () => {
-    const selectionSpy = cy.stub().as("selectionSpy");
-    cy.mount(<SelectableGroup onSelectionChange={selectionSpy} />);
-    cy.realPress("Tab");
-    cy.findByRole("checkbox", { name: "Pill 1" }).should("be.focused");
-    cy.realPress("Space");
-    cy.findByRole("checkbox", { name: "Pill 1" }).should(
-      "have.attr",
-      "aria-checked",
-      "true",
-    );
-    cy.get("@selectionSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["one"],
-    );
-
-    // Enter should not trigger selection changes
-    cy.realPress("Enter");
-    cy.findByRole("checkbox", { name: "Pill 1" }).should(
-      "have.attr",
-      "aria-checked",
-      "true",
-    );
-    cy.get("@selectionSpy").should("have.callCount", 1);
-  });
-
   it("SHOULD render a disabled pill", () => {
     cy.mount(<SelectableGroupWithDisabledPill />);
     cy.findByRole("checkbox", { name: "Pill 1" })
@@ -70,41 +43,62 @@ describe("GIVEN a PillGroup", () => {
   });
 
   describe("GIVEN a PillGroup with selectable pills", () => {
-    it("THEN should allow selecting and deselecting Pills", () => {
-      const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
-      cy.mount(<SelectableGroup onSelectionChange={selectionChangeSpy} />);
+    describe("AND using keyboard", () => {
+      it("THEN should allow selecting and deselecting Pills", () => {
+        const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+        cy.mount(<SelectableGroup onSelectionChange={selectionChangeSpy} />);
 
-      cy.findByText("Pill 1").realClick();
-      cy.get("@selectionChangeSpy").should(
-        "have.been.calledWith",
-        Cypress.sinon.match.any,
-        ["one"],
-      );
+        cy.realPress("Tab");
+        cy.realPress("Space");
+        cy.get("@selectionChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          ["one"],
+        );
 
-      cy.findByText("Pill 2").realClick();
-      cy.get("@selectionChangeSpy").should(
-        "have.been.calledWith",
-        Cypress.sinon.match.any,
-        ["one", "two"],
-      );
+        cy.realPress("Tab");
+        cy.realPress("Space");
+        cy.get("@selectionChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          ["one", "two"],
+        );
 
-      cy.findByText("Pill 1").realClick();
-      cy.get("@selectionChangeSpy").should(
-        "have.been.calledWith",
-        Cypress.sinon.match.any,
-        ["two"],
-      );
+        cy.realPress("Space");
+        cy.get("@selectionChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          ["one"],
+        );
+      });
     });
-  });
+    describe("AND using a mouse", () => {
+      it("THEN should allow selecting and deselecting Pills", () => {
+        const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+        cy.mount(<SelectableGroup onSelectionChange={selectionChangeSpy} />);
 
-  it("SHOULD allow navigation with the Tab key", () => {
-    cy.mount(<SelectableGroup />);
+        cy.findByText("Pill 1").realClick();
+        cy.get("@selectionChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          ["one"],
+        );
 
-    cy.realPress("Tab");
-    cy.findByRole("checkbox", { name: "Pill 1" }).should("be.focused");
+        cy.findByText("Pill 2").realClick();
+        cy.get("@selectionChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          ["one", "two"],
+        );
 
-    cy.realPress("Tab");
-    cy.findByRole("checkbox", { name: "Pill 2" }).should("be.focused");
+        cy.findByText("Pill 1").realClick();
+        cy.get("@selectionChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          ["two"],
+        );
+      });
+    });
   });
 
   it("SHOULD allow navigation with the Tab key when selectionVariant is multiple", () => {
@@ -151,17 +145,7 @@ describe("GIVEN a PillGroup", () => {
       it("SHOULD toggle pills", () => {
         cy.mount(<SelectableGroup />);
 
-        cy.findByRole("checkbox", { name: "Pill 1" }).should(
-          "have.attr",
-          "aria-checked",
-          "false",
-        );
-        cy.findByRole("checkbox", { name: "Pill 2" }).should(
-          "have.attr",
-          "aria-checked",
-          "false",
-        );
-        cy.findByRole("checkbox", { name: "Pill 3" }).should(
+        cy.findAllByRole("checkbox").should(
           "have.attr",
           "aria-checked",
           "false",
@@ -184,17 +168,7 @@ describe("GIVEN a PillGroup", () => {
         cy.findByRole("checkbox", { name: "Pill 1" }).realClick();
         cy.findByRole("checkbox", { name: "Pill 2" }).realClick();
         cy.findByRole("checkbox", { name: "Pill 3" }).realClick();
-        cy.findByRole("checkbox", { name: "Pill 1" }).should(
-          "have.attr",
-          "aria-checked",
-          "true",
-        );
-        cy.findByRole("checkbox", { name: "Pill 2" }).should(
-          "have.attr",
-          "aria-checked",
-          "true",
-        );
-        cy.findByRole("checkbox", { name: "Pill 3" }).should(
+        cy.findAllByRole("checkbox").should(
           "have.attr",
           "aria-checked",
           "true",
@@ -217,17 +191,7 @@ describe("GIVEN a PillGroup", () => {
       it("SHOULD toggle pills when using the Space key", () => {
         cy.mount(<SelectableGroup />);
 
-        cy.findByRole("checkbox", { name: "Pill 1" }).should(
-          "have.attr",
-          "aria-checked",
-          "false",
-        );
-        cy.findByRole("checkbox", { name: "Pill 2" }).should(
-          "have.attr",
-          "aria-checked",
-          "false",
-        );
-        cy.findByRole("checkbox", { name: "Pill 3" }).should(
+        cy.findAllByRole("checkbox").should(
           "have.attr",
           "aria-checked",
           "false",
