@@ -40,6 +40,7 @@ import {
   useWizardForm,
   type ValidationStatus,
 } from "./useWizardForm";
+import "./ContentOverflow.css";
 
 export default {
   title: "Patterns/Wizard",

@@ -7,7 +7,6 @@ import {
   useRef,
   useState,
 } from "react";
-import "./ContentOverflow.css";
 
 export const ContentOverflow = ({
   children,
