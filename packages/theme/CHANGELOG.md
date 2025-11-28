@@ -1,5 +1,61 @@
 # @salt-ds/theme
 
+## 1.37.0
+
+### Minor Changes
+
+- aae8a1b: Deprecated unused content tokens.
+
+  | Deprecated token                      | Replacement token                       |
+  | ------------------------------------- | --------------------------------------- |
+  | `--salt-content-foreground-highlight` | `--salt-selectable-background-selected` |
+  | `--salt-content-foreground-active`    | `--salt-content-accent-foreground`      |
+  | `--salt-content-foreground-hover`     | `--salt-content-accent-foreground`      |
+
+- 89779b5: Deprecated unused white foreground tokens:
+
+  - `--salt-category-1-bold-foreground`
+  - `--salt-category-2-bold-foreground`
+  - `--salt-category-3-bold-foreground`
+  - `--salt-category-4-bold-foreground`
+  - `--salt-category-5-bold-foreground`
+  - `--salt-category-6-bold-foreground`
+  - `--salt-category-7-bold-foreground`
+  - `--salt-category-8-bold-foreground`
+  - `--salt-category-9-bold-foreground`
+  - `--salt-category-10-bold-foreground`
+  - `--salt-category-11-bold-foreground`
+  - `--salt-category-12-bold-foreground`
+  - `--salt-category-13-bold-foreground`
+  - `--salt-category-14-bold-foreground`
+  - `--salt-category-15-bold-foreground`
+  - `--salt-category-16-bold-foreground`
+  - `--salt-category-17-bold-foreground`
+  - `--salt-category-18-bold-foreground`
+  - `--salt-category-19-bold-foreground`
+  - `--salt-category-20-bold-foreground`
+  - `--salt-accent-foreground`
+
+  All of these tokens can be replaced with `--salt-content-bold-foreground`.
+
+- 448b1d8: Added the alpha dark ramp to the alpha palette in the next theme.
+
+  - `--salt-palette-alpha-dark-highest`
+  - `--salt-palette-alpha-dark-higher`
+  - `--salt-palette-alpha-dark-high`
+  - `--salt-palette-alpha-dark-mediumHigh`
+  - `--salt-palette-alpha-dark-medium`
+  - `--salt-palette-alpha-dark-mediumLow`
+  - `--salt-palette-alpha-dark-low`
+  - `--salt-palette-alpha-dark-lower`
+  - `--salt-palette-alpha-dark-lowest`
+
+- 448b1d8: - Updated actionable subtle hover border and actionable subtle active border tokens in all sentiments to be `--salt-palette-alpha-none`.
+  - Updated actionable subtle background hover tokens in all sentiments to be `--salt-palette-alpha-lower`.
+  - Updated actionable subtle background active tokens in all sentiments to be `--salt-palette-alpha-low`.
+  - Updated actionable bold background hover tokens in all sentiments to be the default sentiment palette token with an alpha of `--salt-palette-alpha-dark-low` overlaid.
+  - Updated actionable bold border hover tokens in all sentiments to be `--salt-palette-alpha-contrast-medium`.
+
 ## 1.36.0
 
 ### Minor Changes
