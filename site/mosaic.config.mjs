@@ -1,8 +1,12 @@
-const deepmerge = require("deepmerge");
-const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.config.js");
-const dotenvLoad = require("dotenv-load");
-const { pathToFileURL } = require("node:url");
+import { createRequire } from "node:module";
+import { pathToFileURL } from "node:url";
+import fsConfig from "@jpmorganchase/mosaic-cli/fs.config.js";
+import deepmerge from "deepmerge";
+import dotenvLoad from "dotenv-load";
+
 dotenvLoad();
+
+const require = createRequire(import.meta.url);
 
 /** Enhance/modify your Mosaic core fs
  * pageExtensions: supported file extensions which can be stored in the Virtual File System (VFS) created by Core FS
@@ -13,9 +17,9 @@ dotenvLoad();
  */
 
 const saltConfig = {
-  ...mosaicConfig,
+  ...fsConfig,
   plugins: [
-    ...mosaicConfig.plugins,
+    ...fsConfig.plugins,
     {
       modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
       priority: 2,
@@ -61,7 +65,7 @@ const saltConfig = {
   ],
 };
 
-module.exports = deepmerge(saltConfig, {
+export default deepmerge(saltConfig, {
   deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
