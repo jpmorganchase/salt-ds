@@ -1,101 +1,101 @@
 .highcharts-theme-salt .highcharts-color-0 {
-  fill: var(--salt-category-1-bold-background);
-  stroke: var(--salt-category-1-subtle-borderColor);
+  fill: var(--salt-category-1-dataviz);
+  stroke: var(--salt-category-1-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-1 {
-  fill: var(--salt-category-2-bold-background);
-  stroke: var(--salt-category-2-subtle-borderColor);
+  fill: var(--salt-category-2-dataviz);
+  stroke: var(--salt-category-2-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-2 {
-  fill: var(--salt-category-3-bold-background);
-  stroke: var(--salt-category-3-subtle-borderColor);
+  fill: var(--salt-category-3-dataviz);
+  stroke: var(--salt-category-3-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-3 {
-  fill: var(--salt-category-4-bold-background);
-  stroke: var(--salt-category-4-subtle-borderColor);
+  fill: var(--salt-category-4-dataviz);
+  stroke: var(--salt-category-4-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-4 {
-  fill: var(--salt-category-5-bold-background);
-  stroke: var(--salt-category-5-subtle-borderColor);
+  fill: var(--salt-category-5-dataviz);
+  stroke: var(--salt-category-5-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-5 {
-  fill: var(--salt-category-6-bold-background);
-  stroke: var(--salt-category-6-subtle-borderColor);
+  fill: var(--salt-category-6-dataviz);
+  stroke: var(--salt-category-6-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-6 {
-  fill: var(--salt-category-7-bold-background);
-  stroke: var(--salt-category-7-subtle-borderColor);
+  fill: var(--salt-category-7-dataviz);
+  stroke: var(--salt-category-7-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-7 {
-  fill: var(--salt-category-8-bold-background);
-  stroke: var(--salt-category-8-subtle-borderColor);
+  fill: var(--salt-category-8-dataviz);
+  stroke: var(--salt-category-8-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-8 {
-  fill: var(--salt-category-9-bold-background);
-  stroke: var(--salt-category-9-subtle-borderColor);
+  fill: var(--salt-category-9-dataviz);
+  stroke: var(--salt-category-9-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-9 {
-  fill: var(--salt-category-10-bold-background);
-  stroke: var(--salt-category-10-subtle-borderColor);
+  fill: var(--salt-category-10-dataviz);
+  stroke: var(--salt-category-10-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-10 {
-  fill: var(--salt-category-11-bold-background);
-  stroke: var(--salt-category-11-subtle-borderColor);
+  fill: var(--salt-category-11-dataviz);
+  stroke: var(--salt-category-11-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-11 {
-  fill: var(--salt-category-12-bold-background);
-  stroke: var(--salt-category-12-subtle-borderColor);
+  fill: var(--salt-category-12-dataviz);
+  stroke: var(--salt-category-12-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-12 {
-  fill: var(--salt-category-13-bold-background);
-  stroke: var(--salt-category-13-subtle-borderColor);
+  fill: var(--salt-category-13-dataviz);
+  stroke: var(--salt-category-13-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-13 {
-  fill: var(--salt-category-14-bold-background);
-  stroke: var(--salt-category-14-subtle-borderColor);
+  fill: var(--salt-category-14-dataviz);
+  stroke: var(--salt-category-14-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-14 {
-  fill: var(--salt-category-15-bold-background);
-  stroke: var(--salt-category-15-subtle-borderColor);
+  fill: var(--salt-category-15-dataviz);
+  stroke: var(--salt-category-15-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-15 {
-  fill: var(--salt-category-16-bold-background);
-  stroke: var(--salt-category-16-subtle-borderColor);
+  fill: var(--salt-category-16-dataviz);
+  stroke: var(--salt-category-16-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-16 {
-  fill: var(--salt-category-17-bold-background);
-  stroke: var(--salt-category-17-subtle-borderColor);
+  fill: var(--salt-category-17-dataviz);
+  stroke: var(--salt-category-17-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-17 {
-  fill: var(--salt-category-18-bold-background);
-  stroke: var(--salt-category-18-subtle-borderColor);
+  fill: var(--salt-category-18-dataviz);
+  stroke: var(--salt-category-18-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-18 {
-  fill: var(--salt-category-19-bold-background);
-  stroke: var(--salt-category-19-subtle-borderColor);
+  fill: var(--salt-category-19-dataviz);
+  stroke: var(--salt-category-19-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-color-19 {
-  fill: var(--salt-category-20-bold-background);
-  stroke: var(--salt-category-20-subtle-borderColor);
+  fill: var(--salt-category-20-dataviz);
+  stroke: var(--salt-category-20-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-container {
@@ -296,23 +296,23 @@
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point {
-  fill: var(--salt-sentiment-positive-foreground-decorative);
-  stroke: var(--salt-sentiment-positive-foreground-decorative);
+  fill: var(--salt-sentiment-positive-dataviz);
+  stroke: var(--salt-sentiment-positive-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-negative {
-  fill: var(--salt-sentiment-negative-foreground-decorative);
-  stroke: var(--salt-sentiment-negative-foreground-decorative);
+  fill: var(--salt-sentiment-negative-dataviz);
+  stroke: var(--salt-sentiment-negative-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-sum {
-  fill: var(--salt-category-15-bold-background);
-  stroke: var(--salt-category-15-subtle-borderColor);
+  fill: var(--salt-sentiment-positive-dataviz);
+  stroke: var(--salt-sentiment-positive-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-intermediate-sum {
-  fill: var(--salt-category-15-bold-background);
-  stroke: var(--salt-category-15-subtle-borderColor);
+  fill: var(--salt-sentiment-positive-dataviz);
+  stroke: var(--salt-sentiment-positive-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-graph {
@@ -326,22 +326,22 @@
 }
 
 .highcharts-theme-salt .highcharts-candlestick-series .highcharts-point-up {
-  stroke: var(--salt-sentiment-positive-foreground-decorative);
-  fill: var(--salt-sentiment-positive-foreground-decorative);
+  stroke: var(--salt-sentiment-positive-dataviz);
+  fill: var(--salt-sentiment-positive-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-candlestick-series .highcharts-point-down,
 .highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-down {
-  stroke: var(--salt-sentiment-negative-foreground-decorative);
-  fill: var(--salt-sentiment-negative-foreground-decorative);
+  stroke: var(--salt-sentiment-negative-dataviz);
+  fill: var(--salt-sentiment-negative-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-up {
-  stroke: var(--salt-sentiment-positive-foreground-decorative);
+  stroke: var(--salt-sentiment-positive-dataviz);
   fill: transparent;
 }
 
 .highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-down-bearish-up {
-  stroke: var(--salt-sentiment-positive-foreground-decorative);
-  fill: var(--salt-sentiment-positive-foreground-decorative);
+  stroke: var(--salt-sentiment-positive-dataviz);
+  fill: var(--salt-sentiment-positive-dataviz);
 }
