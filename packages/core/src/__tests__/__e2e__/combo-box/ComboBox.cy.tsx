@@ -841,4 +841,17 @@ describe("Given a ComboBox", () => {
       .should("exist")
       .and("have.attr", "role", "listbox");
   });
+
+  it("should allow the list to be scrolled when it's open with a value", () => {
+    cy.mount(<Default value="a" />);
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox").should("exist");
+
+    cy.findByRole("option", { name: "Arkansas" }).realHover();
+    cy.findByRole("option", { name: "Arkansas" }).realMouseWheel({
+      deltaY: 1000,
+    });
+
+    cy.findByRole("option", { name: "Georgia" }).should("be.visible");
+  });
 });
