@@ -1,3 +1,4 @@
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
 import {
   type SiteState,
   useRoute,
@@ -13,7 +14,7 @@ import {
 } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { type ReactNode, type SyntheticEvent, useEffect } from "react";
+import { type SyntheticEvent, useEffect } from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
@@ -87,7 +88,7 @@ function getRelatedComponentLinks(
 
 const ComponentPageHeading = dynamic(() => import("./ComponentPageHeading"));
 
-export const DetailComponent = ({ children }: { children: ReactNode }) => {
+export const DetailComponent = ({ children }: LayoutProps) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
 
