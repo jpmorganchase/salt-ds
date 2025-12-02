@@ -306,13 +306,13 @@
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-sum {
-  fill: var(--salt-sentiment-positive-dataviz);
-  stroke: var(--salt-sentiment-positive-dataviz);
+  fill: var(--salt-sentiment-neutral-dataviz);
+  stroke: var(--salt-sentiment-neutral-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-point.highcharts-intermediate-sum {
-  fill: var(--salt-sentiment-positive-dataviz);
-  stroke: var(--salt-sentiment-positive-dataviz);
+  fill: var(--salt-sentiment-neutral-dataviz);
+  stroke: var(--salt-sentiment-neutral-dataviz);
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-graph {
