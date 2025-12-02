@@ -15,7 +15,6 @@
 }
 
 .headingActions {
-  margin-top: var(--salt-spacing-200);
   display: flex;
   flex-direction: row;
   gap: var(--salt-spacing-100);

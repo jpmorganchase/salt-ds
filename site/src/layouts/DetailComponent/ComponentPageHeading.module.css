@@ -8,16 +8,13 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--salt-spacing-100);
+  gap: var(--salt-spacing-200);
   max-width: var(--site-content-max-width);
   width: 100%;
 }
 
-.title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--salt-spacing-100);
+.externalDepLink {
+  text-decoration-color: var(--salt-category-2-subtle-foreground, var(--salt-category-1-subtle-foreground));
 }
 
 .root h1 {
@@ -26,6 +23,11 @@
 
 .tagLink {
   text-decoration: none;
+}
+
+.packageContainter {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
 }
 
 @media screen and (min-width: 960px) {
