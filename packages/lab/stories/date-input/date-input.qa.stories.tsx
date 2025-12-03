@@ -66,7 +66,7 @@ const renderFormFieldExamples = () => {
     >
       <FormField>
         <FormFieldLabel>Select a date</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered/>
+        <DateInputSingle defaultDate={startDate} bordered />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
       <FormField validationStatus="error">
