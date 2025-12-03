@@ -261,6 +261,12 @@ describe("Given a Menu", () => {
     cy.mount(<WithTooltip />);
     cy.findByRole("menu").should("not.exist");
 
+    cy.realPress("Tab");
+    cy.findByRole("tooltip").should("be.visible");
+
+    cy.realPress("Tab");
+    cy.findByRole("tooltip").should("not.exist");
+
     cy.findByRole("button").realHover();
     cy.findByRole("tooltip").should("be.visible");
 
