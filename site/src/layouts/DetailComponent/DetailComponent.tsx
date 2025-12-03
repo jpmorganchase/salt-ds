@@ -49,7 +49,7 @@ interface ComponentNpmInfo {
 }
 
 interface ExternalDependency {
-  name: string;
+  name?: string;
   compatibleVersions?: string;
   licenseRequired?: boolean;
   url?: string;

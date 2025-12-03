@@ -143,6 +143,8 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
                 appearance="bordered"
                 sentiment="neutral"
                 href={sourceCodeUrl}
+                target="_blank"
+                rel="noopener"
               >
                 <GithubIcon aria-hidden /> View source code
               </CTALink>
@@ -152,6 +154,8 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
                 appearance="bordered"
                 sentiment="neutral"
                 href={figmaUrl}
+                target="_blank"
+                rel="noopener"
               >
                 <IconFigmaIcon aria-hidden /> View figma file
               </CTALink>
