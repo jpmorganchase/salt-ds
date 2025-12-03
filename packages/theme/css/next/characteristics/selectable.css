@@ -8,7 +8,7 @@
 
   --salt-selectable-foreground: var(--salt-palette-neutral-strong);
   --salt-selectable-foreground-disabled: var(--salt-palette-neutral-strong-disabled);
-  --salt-selectable-foreground-hover: var(--salt-palette-accent);
+  --salt-selectable-foreground-hover: linear-gradient(var(--salt-palette-alpha-dark-low), var(--salt-palette-alpha-dark-low)) var(--salt-palette-accent);
   --salt-selectable-foreground-selected: var(--salt-palette-accent);
   --salt-selectable-foreground-selectedDisabled: var(--salt-palette-accent-disabled);
   --salt-selectable-background: var(--salt-palette-alpha-none);
