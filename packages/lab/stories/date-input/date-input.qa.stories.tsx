@@ -1,5 +1,5 @@
 import { withDateMock } from ".storybook/decorators/withDateMock";
-import {FormField,FormFieldLabel, FormFieldHelperText } from "@salt-ds/core"
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
@@ -56,7 +56,7 @@ const renderFormFieldExamples = () => {
 
   return (
     <QAContainer
-     cols={4}
+      cols={4}
       itemPadding={1}
       height={3410}
       width={1050}
@@ -100,14 +100,13 @@ const renderFormFieldExamples = () => {
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
 
-
       <FormField>
         <FormFieldLabel>Select a date range</FormFieldLabel>
         <DateInputRange
-            defaultDate={{
-          startDate,
-          endDate,
-        }}
+          defaultDate={{
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -115,9 +114,9 @@ const renderFormFieldExamples = () => {
         <FormFieldLabel>Select a date range</FormFieldLabel>
         <DateInputRange
           defaultDate={{
-          startDate,
-          endDate,
-        }}
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -125,9 +124,9 @@ const renderFormFieldExamples = () => {
         <FormFieldLabel>Select a date range</FormFieldLabel>
         <DateInputRange
           defaultDate={{
-          startDate,
-          endDate,
-        }}
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -135,9 +134,9 @@ const renderFormFieldExamples = () => {
         <FormFieldLabel>Select a date range</FormFieldLabel>
         <DateInputRange
           defaultDate={{
-          startDate,
-          endDate,
-        }}
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -145,9 +144,9 @@ const renderFormFieldExamples = () => {
         <FormFieldLabel>Select a date range (read-only)</FormFieldLabel>
         <DateInputRange
           defaultDate={{
-          startDate,
-          endDate,
-        }}
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -155,9 +154,9 @@ const renderFormFieldExamples = () => {
         <FormFieldLabel>Select a date range (read-only)</FormFieldLabel>
         <DateInputRange
           defaultDate={{
-          startDate,
-          endDate,
-        }}
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -165,15 +164,15 @@ const renderFormFieldExamples = () => {
         <FormFieldLabel>Select a date range (read-only)</FormFieldLabel>
         <DateInputRange
           defaultDate={{
-          startDate,
-          endDate,
-        }}
+            startDate,
+            endDate,
+          }}
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
-</QAContainer>
+    </QAContainer>
   );
-}
+};
 
 export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () =>
   renderQAContainer();
