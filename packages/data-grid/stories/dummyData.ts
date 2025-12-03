@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { factory, primaryKey } from "@mswjs/data";
+import { Collection } from "@msw/data";
+import * as Yup from "yup";
 import type { RowKeyGetter } from "../src";
 
 faker.seed(5417);
@@ -49,33 +50,38 @@ const cohorts = [
   ["Potential Leads", "Top VCs"],
 ];
 
-export const db = factory({
-  investor: {
-    id: primaryKey(() => faker.string.uuid()),
-    name: () =>
-      `${faker.helpers.arrayElement(fruits)} ${faker.helpers.arrayElement(
-        types,
-      )} ${faker.helpers.arrayElement(suffixes)}`,
-    location: () => faker.helpers.arrayElement(allLocations),
-    cohort: () => faker.helpers.arrayElement(cohorts),
-    strategy: () => faker.helpers.arrayElement(strategies),
-    amount: () => faker.finance.amount(100, 300, 4),
-    score: () => "",
-    date: () =>
-      faker.date
-        .between({ from: "2000-01-01", to: "2020-12-31" })
-        .toISOString()
-        .substring(0, 10),
-  },
+export const investors = new Collection({
+  schema: Yup.object({
+    id: Yup.string(),
+    name: Yup.string(),
+    location: Yup.string(),
+    cohort: Yup.array(Yup.string()),
+    strategy: Yup.array(Yup.string()),
+    amount: Yup.string(),
+    score: Yup.string(),
+    date: Yup.string().datetime(),
+  }),
 });
 
 // Create 2000 investors
-for (let i = 0; i < 2000; i++) {
-  db.investor.create();
-}
+await investors.createMany(2000, () => ({
+  id: faker.string.uuid(),
+  name: `${faker.helpers.arrayElement(fruits)} ${faker.helpers.arrayElement(
+    types,
+  )} ${faker.helpers.arrayElement(suffixes)}`,
+  location: faker.helpers.arrayElement(allLocations),
+  cohort: faker.helpers.arrayElement(cohorts),
+  strategy: faker.helpers.arrayElement(strategies),
+  amount: faker.finance.amount(100, 300, 4),
+  date: faker.date
+    .between({ from: "2000-01-01", to: "2020-12-31" })
+    .toISOString(),
+}));
 
 export const createDummyInvestors = ({ limit }: { limit?: number } = {}) => {
-  return db.investor.findMany({ take: limit ?? 50 }) as unknown as Investor[];
+  return investors.findMany(undefined, {
+    take: limit ?? 50,
+  }) as unknown as Investor[];
 };
 
 export interface DummyRow {
