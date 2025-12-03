@@ -148,6 +148,7 @@ export * from "./Favorite";
 export * from "./FavoriteSolid";
 export * from "./Feedback";
 export * from "./FeedbackSolid";
+export * from "./Figma";
 export * from "./Filter";
 export * from "./FilterClear";
 export * from "./FilterClearSolid";
