@@ -1912,18 +1912,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^8.0.0":
-  version: 8.0.2
-  resolution: "@cypress/react@npm:8.0.2"
+"@cypress/react@npm:^9.0.0":
+  version: 9.0.1
+  resolution: "@cypress/react@npm:9.0.1"
   peerDependencies:
-    "@types/react": ^16.9.16 || ^17.0.0
+    "@types/react": ^18 || ^19
+    "@types/react-dom": ^18 || ^19
     cypress: "*"
-    react: ^=16.x || ^=17.x
-    react-dom: ^=16.x || ^=17.x
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/2ad349c6857b3db1d538db0f8ed2d73d5e3f9f3ac1ec2331de61d6ed93957e6ab73e034b8848707588a71113b49601738bfbc3a792dc48500e4feb5e6c00f889
+  checksum: 10/9c8232d6a4cb82ccbf277752a20bb843d2dd347d3fb6a8ff68bf2e4736703bf60623ccb6f4dc80d59a43b56b70acdc4c3906bc1b8c28bb762c324a50f25f26df
   languageName: node
   linkType: hard
 
@@ -3906,7 +3907,7 @@ __metadata:
     "@biomejs/wasm-nodejs": "npm:^2.2.0"
     "@changesets/cli": "npm:^2.29.6"
     "@cypress/code-coverage": "npm:^3.13.6"
-    "@cypress/react": "npm:^8.0.0"
+    "@cypress/react": "npm:^9.0.0"
     "@date-fns/tz": "npm:^1.2.0"
     "@e965/xlsx": "npm:^0.20.3"
     "@faker-js/faker": "npm:^8.0.0"
