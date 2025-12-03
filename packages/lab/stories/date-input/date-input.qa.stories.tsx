@@ -66,7 +66,7 @@ const renderFormFieldExamples = () => {
     >
       <FormField>
         <FormFieldLabel>Select a date</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} />
+        <DateInputSingle defaultDate={startDate} bordered/>
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
       <FormField validationStatus="error">
@@ -107,6 +107,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -117,6 +118,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -127,6 +129,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -137,6 +140,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -147,6 +151,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -157,6 +162,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
@@ -167,6 +173,7 @@ const renderFormFieldExamples = () => {
             startDate,
             endDate,
           }}
+          bordered
         />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
