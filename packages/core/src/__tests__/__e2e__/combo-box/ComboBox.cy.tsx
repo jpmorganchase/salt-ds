@@ -842,7 +842,7 @@ describe("Given a ComboBox", () => {
       .and("have.attr", "role", "listbox");
   });
 
-  it.only("should allow the list to be scrolled when it's open with a value", () => {
+  it("should allow the list to be scrolled when it's open with a value", () => {
     cy.mount(<LongList />);
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("exist");
