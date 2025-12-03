@@ -71,6 +71,7 @@ async function getViteConfig(config: UserConfig) {
           "@salt-ds/data-grid",
           "@salt-ds/lab",
           "@salt-ds/icons",
+          "@salt-ds/window",
         ],
       },
     } as UserConfig);
