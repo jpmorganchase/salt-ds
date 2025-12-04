@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.54.1
+
+### Patch Changes
+
+- 9f9be9d: Fixed `Menu`, `Collapsible` and `Overlay` triggers not forwarding props.
+- 0d3fc12: Fixed `SaltProvider`'s incorrectly being marked as root when an empty theme name is passed in.
+- Updated dependencies [0c664ed]
+  - @salt-ds/icons@1.16.0
+
 ## 1.54.0
 
 ### Minor Changes

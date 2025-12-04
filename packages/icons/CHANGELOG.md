@@ -1,5 +1,12 @@
 # @salt-ds/icons
 
+## 1.16.0
+
+### Minor Changes
+
+- 0c664ed: - Added `FigmaIcon`.
+  - Deprecated `IconFigmaIcon`. `FigmaIcon` should be used instead.
+
 ## 1.15.0
 
 ### Minor Changes
