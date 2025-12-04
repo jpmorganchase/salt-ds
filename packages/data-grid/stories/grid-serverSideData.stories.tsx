@@ -8,7 +8,7 @@ import {
 import { http } from "msw";
 import { useCallback } from "react";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
-import { db, type Investor, investorKeyGetter } from "./dummyData";
+import { type Investor, investorKeyGetter, investors } from "./dummyData";
 import "./grid.stories.css";
 
 export default {
@@ -24,7 +24,7 @@ export default {
           const start = startParam ? Number(startParam) : 0;
           const limit = limitParam ? Number(limitParam) : 50;
 
-          const response = db.investor.findMany({
+          const response = investors.findMany(undefined, {
             skip: start,
             take: limit,
           });
