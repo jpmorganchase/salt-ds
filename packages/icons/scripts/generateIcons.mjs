@@ -137,6 +137,7 @@ const DEPRECATED_ICONS = [
   ["StepSuccess", "SuccessCircle"],
   ["SuccessSmall", "Checkmark"],
   ["SuccessSmallSolid", "CheckmarkSolid"],
+  ["IconFigma", "Figma"],
 ];
 const deprecatedIconMap = new Map(DEPRECATED_ICONS);
 

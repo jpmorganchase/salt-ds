@@ -4,15 +4,14 @@ import { forwardRef } from "react";
 
 import { Icon, type IconProps } from "../icon";
 
-export type IconFigmaIconProps = IconProps;
+export type FigmaIconProps = IconProps;
 
-/** @deprecated - Use `FigmaIcon` instead. */
-export const IconFigmaIcon = forwardRef<SVGSVGElement, IconFigmaIconProps>(
-  function IconFigmaIcon(props: IconFigmaIconProps, ref) {
+export const FigmaIcon = forwardRef<SVGSVGElement, FigmaIconProps>(
+  function FigmaIcon(props: FigmaIconProps, ref) {
     return (
       <Icon
-        data-testid="IconFigmaIcon"
-        aria-label="icon figma"
+        data-testid="FigmaIcon"
+        aria-label="figma"
         viewBox="0 0 12 12"
         ref={ref}
         {...props}
