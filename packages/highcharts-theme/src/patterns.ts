@@ -270,7 +270,7 @@ export const saltPatternDef = {
           tagName: "rect",
           width: 10,
           height: 10,
-          style: { fill: `var(--salt-category-${index + 1}-dataviz` },
+          style: { fill: `var(--salt-category-${index + 1}-dataviz)` },
         },
         ...curr.children,
       ],
