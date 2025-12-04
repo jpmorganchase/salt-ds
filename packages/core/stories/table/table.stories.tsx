@@ -4,9 +4,15 @@ import {
   FlexLayout,
   StackLayout,
   Switch,
+  Table,
+  TBody,
+  TD,
   Text,
+  TFoot,
+  TH,
+  THead,
+  TR,
 } from "@salt-ds/core";
-import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
 
