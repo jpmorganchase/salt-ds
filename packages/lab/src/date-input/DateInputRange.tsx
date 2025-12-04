@@ -601,7 +601,7 @@ export const DateInputRange = forwardRef<
           required={endInputIsRequired}
         />
         <div className={withBaseName("endAdornmentContainer")}>
-          {!isDisabled && !isReadOnly && validationStatus && (
+          {!isDisabled && validationStatus && (
             <StatusAdornment status={validationStatus} />
           )}
           {endAdornment}
