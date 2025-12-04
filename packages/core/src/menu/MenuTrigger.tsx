@@ -19,7 +19,7 @@ export interface MenuTriggerProps {
 
 export const MenuTrigger = forwardRef<HTMLElement, MenuTriggerProps>(
   function MenuTrigger(props, ref) {
-    const { children } = props;
+    const { children, ...rest } = props;
 
     const { getReferenceProps, refs, setFocusInside, focusInside, openState } =
       useMenuContext();
@@ -47,6 +47,7 @@ export const MenuTrigger = forwardRef<HTMLElement, MenuTriggerProps>(
                 setFocusInsideParent(true);
                 setFocusInside(false);
               },
+              ...rest,
             }),
             children.props,
           ),

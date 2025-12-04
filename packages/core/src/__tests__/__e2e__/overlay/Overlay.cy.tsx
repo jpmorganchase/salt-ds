@@ -142,6 +142,12 @@ describe("GIVEN an Overlay", () => {
     cy.mount(<WithTooltip />);
     cy.findByRole("dialog").should("not.exist");
 
+    cy.realPress("Tab");
+    cy.findByRole("tooltip").should("be.visible");
+
+    cy.realPress("Tab");
+    cy.findByRole("tooltip").should("not.exist");
+
     cy.findByRole("button").realHover();
     cy.findByRole("tooltip").should("be.visible");
 

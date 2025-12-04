@@ -22,7 +22,7 @@ export const CollapsibleTrigger = forwardRef<
   HTMLButtonElement,
   CollapsibleTriggerProps
 >(function CollapsibleTrigger(props, ref) {
-  const { children, className, onClick } = props;
+  const { children, className, onClick, ...rest } = props;
 
   const { open, setOpen, panelId } = useCollapsibleContext();
 
@@ -43,6 +43,7 @@ export const CollapsibleTrigger = forwardRef<
         "aria-expanded": open,
         "aria-controls": panelId,
         onClick: handleClick,
+        ...rest,
       },
       children.props,
     ),

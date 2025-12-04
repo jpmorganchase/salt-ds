@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: GridColumns need static ids */
+
 import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
 import type { Decorator } from "@storybook/react-vite";
@@ -12,16 +13,11 @@ import { http } from "msw";
 import { type CSSProperties, useEffect, useState } from "react";
 import {
   createDummyInvestors,
-  db,
   type Investor,
   investorKeyGetter,
+  investors,
 } from "./dummyData";
 import "./grid.stories.css";
-import type { OrderBy } from "@mswjs/data/lib/query/queryTypes";
-
-function isDefined<T>(value: T | null | undefined): value is NonNullable<T> {
-  return value !== null && value !== undefined;
-}
 
 export default {
   title: "Lab/Data Grid",
@@ -33,21 +29,23 @@ export default {
           const url = new URL(request.url);
           const sortBy = url.searchParams.get("sort_by");
 
-          const orderBy =
-            sortBy
-              ?.split(",")
-              .map((s) => {
-                const [sortColumn, sortOrder] = s.split(".");
-                if (sortOrder && sortColumn) {
-                  return {
-                    [sortColumn]: sortOrder,
-                  } as unknown as OrderBy<Investor>;
-                }
-                return null;
-              })
-              .filter(isDefined) ?? [];
+          const orderBy = sortBy?.split(",").reduce(
+            (acc, s) => {
+              const [sortColumn, sortDirection] = s.split(".");
 
-          const response = db.investor.findMany({
+              if (
+                sortColumn &&
+                (sortDirection === "asc" || sortDirection === "desc")
+              ) {
+                acc[sortColumn] = sortDirection;
+              }
+
+              return acc;
+            },
+            {} as Record<string, "asc" | "desc">,
+          );
+
+          const response = investors.findMany(undefined, {
             orderBy,
             take: 50,
           });
