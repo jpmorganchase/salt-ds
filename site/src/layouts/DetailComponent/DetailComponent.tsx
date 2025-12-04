@@ -50,6 +50,7 @@ interface ComponentNpmInfo {
 
 interface ExternalDependency {
   name?: string;
+  description?: string;
   compatibleVersions?: string;
   licenseRequired?: boolean;
   url?: string;
