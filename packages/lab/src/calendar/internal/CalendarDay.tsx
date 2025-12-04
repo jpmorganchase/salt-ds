@@ -102,7 +102,7 @@ export const CalendarDay = forwardRef<
     children: (
       <>
         {highlighted ? <div className={withBaseName("highlighted")} /> : null}
-        <span className={withBaseName("content")}>
+        <span aria-hidden={true} className={withBaseName("content")}>
           {dateAdapter.format(date, format)}
         </span>
       </>

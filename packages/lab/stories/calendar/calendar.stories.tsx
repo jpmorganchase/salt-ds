@@ -16,7 +16,6 @@ import type {
 import {
   Calendar,
   CalendarGrid,
-  useAriaCalendarAnnouncer,
   type CalendarMultiselectOffsetProps,
   type CalendarMultiselectRangeProps,
   type CalendarMultiselectSingleProps,
@@ -45,7 +44,6 @@ import "dayjs/locale/es"; // Import the Spanish locale
 import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
-import { rangeSelectionAnnouncements } from "../../src/calendar/internal/rangeSelectionAnnouncements";
 
 export default {
   title: "Lab/Calendar",
@@ -935,22 +933,10 @@ export const TwinCalendars: StoryFn<
       setFocusedDate(newFocusedDate);
     };
 
-  useAriaCalendarAnnouncer({
-    announcement: rangeSelectionAnnouncements,
-    state: {
-      selectionVariant: "range",
-      multiselect: false,
-      startVisibleMonth: startVisibleMonth,
-      endVisibleMonth: endVisibleMonth,
-      selectedDate: selectedDate ?? {},
-    },
-    dateAdapter,
-  });
   return (
     <div role="region" aria-label="Twin Calendar example" style={{ display: "flex", gap: 16 }}>
       <Calendar
         selectionVariant="range"
-        disableAnnouncer={true}
         focusedDate={
           focusedDate && endVisibleMonth && dateAdapter.compare(
             focusedDate,
@@ -986,7 +972,6 @@ export const TwinCalendars: StoryFn<
       </Calendar>
       <Calendar
         selectionVariant="range"
-        disableAnnouncer={true}
         focusedDate={
           focusedDate && endVisibleMonth && dateAdapter.compare(
             focusedDate,

@@ -21,7 +21,10 @@ import {
   type DateInputRangeValue,
 } from "../date-input";
 import { useLocalization } from "../localization-provider";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  type RangeDatePickerState,
+  useDatePickerContext
+} from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
@@ -185,7 +188,9 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       timezone,
     },
     helpers: { select },
-  } = useDatePickerContext<TDate>({ selectionVariant: "range" });
+  } = useDatePickerContext<TDate>({
+    selectionVariant: "range",
+  }) as RangeDatePickerState<TDate>;
   const {
     state: { open },
     helpers: { setOpen },

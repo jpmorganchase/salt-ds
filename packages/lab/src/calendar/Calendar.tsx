@@ -29,10 +29,6 @@ import type { DateRangeSelection } from "./useCalendarSelection";
  */
 export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Disable the internal announcer for live changes
-   */
-  disableAnnouncer?: boolean;
-  /**
    * The content to be rendered inside the Calendar.
    */
   children: ReactNode;
@@ -207,9 +203,9 @@ export const Calendar = forwardRef<
       window: targetWindow,
     });
     const {
+      createAnnouncement,
       children,
       className,
-      disableAnnouncer,
       selectedDate,
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
@@ -284,9 +280,9 @@ export const Calendar = forwardRef<
 
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useCalendarProps: any = {
+      createAnnouncement,
       selectedDate,
       defaultSelectedDate,
-      disableAnnouncer,
       visibleMonth: visibleMonthProp,
       defaultVisibleMonth,
       onSelectionChange,

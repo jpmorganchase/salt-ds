@@ -21,9 +21,11 @@ import {
   SingleDateSelection,
 } from "./useCalendarSelection";
 import { generateDatesForMonth } from "./internal/utils";
-import { useAriaCalendarAnnouncer } from "./useAriaCalendarAnnouncer";
-import { singleSelectionAnnouncements } from "./internal/singleSelectionAnnouncements";
-import { rangeSelectionAnnouncements } from "./internal/rangeSelectionAnnouncements";
+import { useDateSelectionAnnouncer, CreateAnnouncement } from "./useDateSelectionAnnouncer";
+import {
+  createSingleSelectionAnnouncement,
+  createRangeSelectionAnnouncement,
+} from "./internal/createAnnouncement";
 
 /**
  * Base properties for the UseCalendar hook.
@@ -31,9 +33,9 @@ import { rangeSelectionAnnouncements } from "./internal/rangeSelectionAnnounceme
  */
 interface UseCalendarBaseProps<TDate> {
   /**
-   * Disable the internal announcer for live changes
+   * Factory method for date selection live announcements or null to silence announcements
    */
-  disableAnnouncer?: boolean;
+  createAnnouncement?: CreateAnnouncement<TDate> | null;
   /**
    * The default visible month.
    */
@@ -223,7 +225,7 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      *  Focusable dates based on current state
      */
-    focusableDates: TDate[];
+    focusableDate: TDate | null;
 
     /**
      * Ref to attach to the focused element,enabling focus to be controlled.
@@ -450,10 +452,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
   } = useLocalization<TDate>();
   const {
+    createAnnouncement,
     timezone,
     defaultSelectedDate,
     defaultVisibleMonth = dateAdapter.today(timezone),
-    disableAnnouncer,
     hideOutOfRangeDates,
     hoveredDate: hoveredDateProp,
     focusedDate: focusedDateProp,
@@ -708,7 +710,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     state: "focusedDate",
   });
 
-  const focusableDates = useMemo(() => {
+  const focusableDate = useMemo(() => {
     const dates: TDate[] = [];
 
     if (Array.isArray(selectedDate)) {
@@ -741,7 +743,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       dateAdapter.isSame(focusedDate, visibleMonth, "month")
     ) {
       dates.push(focusedDate);
-      return [dates[0]];
+      return dates[0];
     }
 
     // Defaults
@@ -762,7 +764,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       }
     }
 
-    return [ dates[0]];
+    return dates.length ? dates[0] : null;
   }, [
     dateAdapter,
     focusedDate,
@@ -861,29 +863,14 @@ export function useCalendar<TDate extends DateFrameworkType>(
     [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
   );
 
-  const endVisibleMonth = useMemo(
-    () =>
-      dateAdapter.add(visibleMonth, {
-        months: responsiveNumberOfVisibleMonths - 1,
-      }),
-    [dateAdapter, responsiveNumberOfVisibleMonths, visibleMonth],
+  const defaultCreateAnnouncement =
+    selectionVariant === "single"
+      ? createSingleSelectionAnnouncement
+      : createRangeSelectionAnnouncement;
+  const { announce } = useDateSelectionAnnouncer<TDate>(
+    createAnnouncement === undefined ? defaultCreateAnnouncement : createAnnouncement,
+    dateAdapter
   );
-
-  const { announce } = useAriaCalendarAnnouncer<TDate>({
-    disabled: disableAnnouncer,
-    state: {
-      selectionVariant,
-      multiselect: multiselect ?? false,
-      startVisibleMonth: visibleMonth,
-      endVisibleMonth,
-      selectedDate: selectedDate ?? null,
-    },
-    announcement:
-      selectionVariant === "single"
-        ? singleSelectionAnnouncements
-        : rangeSelectionAnnouncements,
-    dateAdapter,
-  });
 
   const setFocusedDate = useCallback(
     (event: SyntheticEvent | null, date: TDate | null) => {
@@ -935,51 +922,58 @@ export function useCalendar<TDate extends DateFrameworkType>(
   const setVisibleMonth = useCallback(
     (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
       setVisibleMonthState(newVisibleMonth);
+      announce("visibleMonthChanged", {
+        startVisibleMonth: newVisibleMonth,
+        endVisibleMonth: dateAdapter.add(newVisibleMonth, {
+          months: responsiveNumberOfVisibleMonths - 1,
+        }),
+      });
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
     [onVisibleMonthChange],
   );
 
   return useMemo(
-    () => ({
-      state: {
-        hoveredDate,
-        visibleMonth,
-        timezone,
-        multiselect,
-        minDate,
-        maxDate,
-        numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
-        selectionVariant,
-        hideOutOfRangeDates,
-        focusedDate,
-        focusableDates,
-        focusedDateRef,
-        selectedDate,
-      },
-      helpers: {
-        setVisibleMonth,
-        isDayUnselectable,
-        isDayHighlighted,
-        isDayVisible,
-        isHovered,
-        isHoveredStart,
-        isHoveredSpan,
-        isHoveredEnd,
-        isOutsideAllowedDates,
-        isOutsideAllowedMonths,
-        isOutsideAllowedYears,
-        setFocusedDate,
-        setHoveredDate,
-        isDaySelectable,
-        isSelected,
-        isSameDay,
-        setSelectedDate,
-        isSelectedStart,
-        isSelectedSpan,
-        isSelectedEnd,
-      },
-    }) as UseCalendarReturn<TDate>,
+    () =>
+      ({
+        state: {
+          hoveredDate,
+          visibleMonth,
+          timezone,
+          multiselect,
+          minDate,
+          maxDate,
+          numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
+          selectionVariant,
+          hideOutOfRangeDates,
+          focusedDate,
+          focusableDate,
+          focusedDateRef,
+          selectedDate,
+        },
+        helpers: {
+          setVisibleMonth,
+          isDayUnselectable,
+          isDayHighlighted,
+          isDayVisible,
+          isHovered,
+          isHoveredStart,
+          isHoveredSpan,
+          isHoveredEnd,
+          isOutsideAllowedDates,
+          isOutsideAllowedMonths,
+          isOutsideAllowedYears,
+          setFocusedDate,
+          setHoveredDate,
+          isDaySelectable,
+          isSelected,
+          isSameDay,
+          setSelectedDate,
+          isSelectedStart,
+          isSelectedSpan,
+          isSelectedEnd,
+        },
+      }) as UseCalendarReturn<TDate>,
     [
       hoveredDate,
       visibleMonth,
@@ -992,7 +986,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       hideOutOfRangeDates,
       focusedDate,
       focusedDateRef,
-      focusableDates,
+      focusableDate,
       selectedDate,
       setVisibleMonth,
       isDayUnselectable,
@@ -1014,6 +1008,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
       isSelectedStart,
       isSelectedSpan,
       isSelectedEnd,
-    ]
+    ],
   );
 }
