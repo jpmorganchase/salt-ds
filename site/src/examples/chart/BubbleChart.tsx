@@ -1,4 +1,4 @@
-import { Switch } from "@salt-ds/core";
+import { Switch, Tooltip } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
@@ -6,6 +6,7 @@ import highchartsMore from "highcharts/highcharts-more";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
+import { LinkBase } from "../../components/link/Link";
 import styles from "./index.module.css";
 
 highchartsMore(Highcharts);
@@ -106,11 +107,25 @@ export const BubbleChart = () => {
   return (
     <div className={styles.chartContainer}>
       <div className={styles.controlsRow}>
-        <Switch
-          label="Show patterns"
-          checked={patterns}
-          onChange={(e) => setPatterns(e.target.checked)}
-        />
+        <Tooltip
+          content={
+            <>
+              To ensure the presentation is accessible, fill patterns can be
+              applied to the chart (see{" "}
+              <LinkBase href="./usage#patterns-and-fills">
+                Patterns and Fills
+              </LinkBase>{" "}
+              for details).
+            </>
+          }
+          placement="left"
+        >
+          <Switch
+            label="Show patterns"
+            checked={patterns}
+            onChange={(e) => setPatterns(e.target.checked)}
+          />
+        </Tooltip>
       </div>
       <div
         className={clsx("highcharts-theme-salt", "axes-grid-lines", {
