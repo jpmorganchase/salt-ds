@@ -1,11 +1,10 @@
-import { Switch, Tooltip } from "@salt-ds/core";
+import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
-import { LinkBase } from "../../components/link/Link";
 import styles from "./index.module.css";
 
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
@@ -65,25 +64,11 @@ export const PieChart = () => {
   return (
     <div className={styles.chartContainer}>
       <div className={styles.controlsRow}>
-        <Tooltip
-          content={
-            <>
-              To ensure the presentation is accessible, fill patterns can be
-              applied to the chart (see{" "}
-              <LinkBase href="./usage#patterns-and-fills">
-                Patterns and Fills
-              </LinkBase>{" "}
-              for details).
-            </>
-          }
-          placement="left"
-        >
-          <Switch
-            label="Show patterns"
-            checked={patterns}
-            onChange={(e) => setPatterns(e.target.checked)}
-          />
-        </Tooltip>
+        <Switch
+          label="Show patterns"
+          checked={patterns}
+          onChange={(e) => setPatterns(e.target.checked)}
+        />
       </div>
       <div
         className={clsx("highcharts-theme-salt", {
