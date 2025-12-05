@@ -20,6 +20,10 @@ const barChartOptions: Options = {
   accessibility: {
     description:
       "A bar chart comparing revenue by product across regions. Each region shows side-by-side values for each product category.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
     categories: ["NA", "EMEA", "APAC", "LATAM"],
