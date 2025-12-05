@@ -14,7 +14,7 @@ import {
 } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { type FC, type SyntheticEvent, useEffect } from "react";
+import { type SyntheticEvent, useEffect } from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
@@ -48,16 +48,26 @@ interface ComponentNpmInfo {
   initialVersion?: string;
 }
 
+interface ExternalDependency {
+  name?: string;
+  description?: string;
+  compatibleVersions?: string;
+  licenseRequired?: boolean;
+  url?: string;
+}
+
 export interface Data {
   description?: string;
   alsoKnownAs?: string[];
   relatedComponents?: RelatedComponent[];
   relatedPatterns?: string[];
   sourceCodeUrl?: string;
+  figmaUrl?: string;
   package?: ComponentNpmInfo;
   bugReport?: string;
   featureRequest?: string;
   status?: string;
+  externalDependency?: ExternalDependency;
 }
 
 export type CustomSiteState = SiteState & { data?: Data };
@@ -79,7 +89,7 @@ function getRelatedComponentLinks(
 
 const ComponentPageHeading = dynamic(() => import("./ComponentPageHeading"));
 
-export const DetailComponent: FC<LayoutProps> = ({ children }) => {
+export const DetailComponent = ({ children }: LayoutProps) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
 
