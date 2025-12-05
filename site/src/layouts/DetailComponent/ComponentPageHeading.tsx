@@ -27,7 +27,7 @@ import headingStyles from "./ComponentPageHeading.module.css";
 import type { CustomSiteState } from "./DetailComponent";
 import styles from "./DetailComponent.module.css";
 
-const Markdown = dynamic(import("../../components/markdown/Markdown"));
+const Markdown = dynamic(() => import("../../components/markdown/Markdown"));
 
 export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
   const {
