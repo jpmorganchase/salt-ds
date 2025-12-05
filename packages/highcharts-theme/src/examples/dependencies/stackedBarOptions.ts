@@ -10,6 +10,10 @@ export const stackedBarOptions: Options = {
   accessibility: {
     description:
       "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
     categories: ["NA", "EMEA", "APAC", "LATAM"],
