@@ -10,6 +10,10 @@ export const scatterOptions: Options = {
   accessibility: {
     description:
       "A scatter plot showing the relationship between portfolio risk (x-axis) and return (y-axis) for sample portfolios.",
+    point: {
+      descriptionFormatter: (point) =>
+        `${point.series.name}, Risk: ${point.x}%, Return: ${point.y}%. Point ${point.index + 1} of ${point.series.points.length}.`,
+    },
   },
   xAxis: {
     title: {

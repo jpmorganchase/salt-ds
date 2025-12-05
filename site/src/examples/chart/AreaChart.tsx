@@ -18,6 +18,9 @@ const areaChartOptions: Options = {
   accessibility: {
     description:
       "Area chart comparing asset class balances since 1940. Government Bonds remain largest across the period, while Corporate Bonds and Municipal Bonds are lower. Values in US dollars.",
+    point: {
+      valuePrefix: "$",
+    },
   },
   yAxis: {
     title: {
