@@ -22,6 +22,10 @@ const waterfallChartOptions: Options = {
   accessibility: {
     description:
       "A waterfall chart showing the cumulative effect of sequential positive and negative values on revenue.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
     categories: [
