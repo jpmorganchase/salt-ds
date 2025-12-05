@@ -11,9 +11,16 @@ export const bulletOptions: Options = {
   },
   accessibility: {
     description: "A bullet chart showing revenue performance vs target for Q4",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
     categories: ["Q4"],
+    title: {
+      text: "Quarter",
+    },
   },
   yAxis: {
     title: {

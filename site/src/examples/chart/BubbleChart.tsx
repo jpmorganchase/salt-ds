@@ -22,6 +22,10 @@ const bubbleChartOptions: Options = {
   accessibility: {
     description:
       "A bubble chart showing the relationship between risk (x-axis) and expected return (y-axis). The bubble size represents market capitalization in trillions of dollars.",
+    point: {
+      descriptionFormatter: (point) =>
+        `${point.name}, Risk: ${point.x}, Return: ${point.y}%, Market cap: $${(point as unknown as { z: number }).z}T. Point ${point.index + 1} of ${point.series.points.length}.`,
+    },
   },
   xAxis: {
     title: { text: "Risk score" },

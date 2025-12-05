@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const donutChartOptions: Options = {
+const pieChartOptions: Options = {
   chart: {
     type: "pie",
   },
@@ -23,13 +23,15 @@ const donutChartOptions: Options = {
   },
   accessibility: {
     description:
-      "A donut chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+      "A pie chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+    point: {
+      valueSuffix: "%",
+    },
   },
   series: [
     {
       type: "pie",
       name: "Revenue by product line",
-      innerSize: "80%",
       data: [
         { name: "Checking Accounts", y: 5 },
         { name: "Savings Accounts", y: 5 },
@@ -56,11 +58,11 @@ const donutChartOptions: Options = {
   ],
 };
 
-export const DonutChart = () => {
+export const PieChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, donutChartOptions);
+  const chartOptions = useChart(chartRef, pieChartOptions);
 
   return (
     <div className={styles.chartContainer}>

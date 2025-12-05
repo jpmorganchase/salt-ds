@@ -22,6 +22,9 @@ const candlestickChartOptions: Options = {
   accessibility: {
     description:
       "A candlestick chart showing stock price movements over time. Each candlestick represents the open, high, low, and close prices for a trading period.",
+    point: {
+      valuePrefix: "$",
+    },
   },
   xAxis: {
     categories: [

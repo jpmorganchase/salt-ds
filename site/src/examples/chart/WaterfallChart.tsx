@@ -2,72 +2,88 @@ import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
+import highchartsMore from "highcharts/highcharts-more";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
+highchartsMore(Highcharts);
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const stackedBarChartOptions: Options = {
+const waterfallChartOptions: Options = {
   chart: {
-    type: "bar",
+    type: "waterfall",
   },
   title: {
     text: "Regional revenue by product",
   },
   accessibility: {
     description:
-      "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
+      "A waterfall chart showing the cumulative effect of sequential positive and negative values on revenue.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
-    categories: ["NA", "EMEA", "APAC", "LATAM"],
+    categories: [
+      "Start",
+      "Product Sales",
+      "Service Revenue",
+      "Operating Costs",
+      "Marketing",
+      "Total",
+    ],
     title: {
-      text: "Region",
+      text: "Category",
     },
   },
   yAxis: {
-    min: 0,
     title: {
       text: "Revenue ($ millions)",
-    },
-    reversedStacks: false,
-  },
-  plotOptions: {
-    series: {
-      stacking: "normal",
     },
   },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">{point.y}</span><br/><span>Total: </span><span class="value">{point.stackTotal}</span>',
+      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
+  },
+  legend: {
+    enabled: false,
+  },
+  plotOptions: {
+    waterfall: {
+      dataLabels: {
+        enabled: true,
+        formatter: function () {
+          return `$${this.y}M`;
+        },
+      },
+    },
   },
   series: [
     {
-      name: "Equities",
-      type: "bar",
-      data: [5, 3, 4, 7],
-    },
-    {
-      name: "Fixed Income",
-      type: "bar",
-      data: [2, 2, 3, 2],
-    },
-    {
-      name: "FX",
-      type: "bar",
-      data: [3, 4, 4, 2],
+      name: "Revenue",
+      type: "waterfall",
+      data: [
+        { y: 50 },
+        { y: 25 },
+        { y: 15 },
+        { y: -20 },
+        { y: -10 },
+        { isSum: true },
+      ],
     },
   ],
 };
 
-export const StackedBarChart = () => {
+export const WaterfallChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, stackedBarChartOptions);
+  const chartOptions = useChart(chartRef, waterfallChartOptions);
 
   return (
     <div className={styles.chartContainer}>

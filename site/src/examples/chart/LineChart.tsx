@@ -10,47 +10,83 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const barChartOptions: Options = {
+const lineChartOptions: Options = {
   chart: {
-    type: "bar",
-  },
-  title: {
-    text: "Regional revenue by product",
+    type: "line",
   },
   accessibility: {
     description:
-      "A bar chart comparing revenue by product across regions. Each region shows side-by-side values for each product category.",
+      "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
   },
-  xAxis: {
-    categories: ["NA", "EMEA", "APAC", "LATAM"],
-    title: {
-      text: "Region",
-    },
+  title: {
+    text: "Currency performance trends",
   },
   yAxis: {
     title: {
-      text: "Revenue ($ millions)",
+      text: "CCY strength indicator",
     },
   },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
+      '<span>{series.name}: </span><span class="value">{point.y}</span>',
+  },
+  xAxis: {
+    title: {
+      text: "Time from 2011 to 2020",
+    },
+    accessibility: {
+      description: "Time from 2011 to 2020",
+    },
+    categories: [
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+    ],
+    min: 0,
+    endOnTick: false,
+    startOnTick: false,
+    maxPadding: 0,
+  },
+  legend: {
+    symbolWidth: 32,
   },
   series: [
     {
-      name: "Equities",
-      type: "bar",
-      data: [45, 38, 42, 37],
+      name: "MXN",
+      data: [4, 5, 6, 6.5, 6.3, 7, 6, 5, 4, 3],
+      type: "line",
+    },
+    {
+      name: "KRW",
+      data: [5, 6, 5, 4, 5, 6, 5, 4, 5, 6],
+      type: "line",
+    },
+    {
+      name: "TRY",
+      data: [3, 5, 7, 5, 3, 5, 7, 5, 3, 5],
+      type: "line",
+    },
+    {
+      name: "PLN",
+      data: [4, 4.5, 5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5],
+      type: "line",
     },
   ],
 };
 
-export const BarChart = () => {
+export const LineChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, barChartOptions);
+  const chartOptions = useChart(chartRef, lineChartOptions);
 
   return (
     <div className={styles.chartContainer}>
@@ -63,7 +99,7 @@ export const BarChart = () => {
       </div>
       <div
         className={clsx("highcharts-theme-salt", {
-          "salt-fill-patterns": patterns,
+          "salt-line-patterns": patterns,
         })}
       >
         <HighchartsReact

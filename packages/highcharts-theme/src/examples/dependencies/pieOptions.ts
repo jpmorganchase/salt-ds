@@ -11,6 +11,9 @@ export const pieOptions: Options = {
   accessibility: {
     description:
       "A pie chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+    point: {
+      valueSuffix: "%",
+    },
   },
   tooltip: {
     enabled: false,

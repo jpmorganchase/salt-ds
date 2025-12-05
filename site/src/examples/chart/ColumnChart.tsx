@@ -3,57 +3,59 @@ import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
-import bullet from "highcharts/modules/bullet";
 import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
-bullet(Highcharts);
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const bulletChartOptions: Options = {
+const columnChartOptions: Options = {
   chart: {
-    type: "bullet",
-    inverted: true,
-    height: 180,
+    type: "column",
   },
   title: {
-    text: "Revenue Performance vs Target",
+    text: "Regional revenue by product",
   },
   accessibility: {
-    description: "A bullet chart showing revenue performance vs target for Q4",
+    description:
+      "A column chart comparing revenue across regions. Each category shows a single column representing the total value for that region.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
-    categories: ["Q4"],
+    categories: ["NA", "EMEA", "APAC", "LATAM"],
+    title: {
+      text: "Region",
+    },
   },
   yAxis: {
-    title: {
-      text: "Revenue ($M)",
-    },
     min: 0,
-    max: 100,
-    tickPositions: [0, 20, 40, 60, 80, 100],
+    title: {
+      text: "Revenue ($ millions)",
+    },
   },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span><br/><span>Target: </span><span class="value">${point.target}M</span>',
+      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
   },
   series: [
     {
-      name: "Current Revenue",
-      type: "bullet",
-      data: [{ y: 60, target: 80 }],
+      name: "Revenue",
+      type: "column",
+      data: [5, 3, 4, 7],
     },
   ],
 };
 
-export const BulletChart = () => {
+export const ColumnChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, bulletChartOptions);
+  const chartOptions = useChart(chartRef, columnChartOptions);
 
   return (
     <div className={styles.chartContainer}>
