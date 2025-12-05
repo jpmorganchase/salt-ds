@@ -8,13 +8,14 @@ import {
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
+  SplitLayout,
   type StackLayoutProps,
   Tag,
   Text,
   Tooltip,
   useResponsiveProp,
 } from "@salt-ds/core";
-import { GithubIcon, IconFigmaIcon, SettingsSolidIcon } from "@salt-ds/icons";
+import { FigmaIcon, GithubIcon, SettingsIcon } from "@salt-ds/icons";
 import { Table, TBody, TD, TH, TR } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import type { ElementType } from "react";
@@ -40,9 +41,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
   } = useStore((state: CustomSiteState) => state.data ?? {});
 
   const hidePackageInfo = !saltPackage && !externalDependency;
-  const isReleaseCandidate =
-    typeof status === "string" && status.toLowerCase() === "release candidate";
-  const hasExternalDependency = Boolean(externalDependency);
+  const isReleaseCandidate = status?.toLowerCase() === "release candidate";
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -56,26 +55,35 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
   return (
     <div id={id} className={headingStyles.root}>
       <div className={headingStyles.content}>
-        <FlexLayout align="center" gap={1} direction={direction}>
+        <FlexLayout
+          align={direction === "row" ? "center" : "start"}
+          gap={1}
+          direction={direction}
+        >
           <H1 styleAs="display4">{title}</H1>
-          {isReleaseCandidate && (
-            <Tag variant="secondary">Release candidate</Tag>
-          )}
-          {hasExternalDependency && (
-            <LinkBase
-              href="/salt/about/glossary#external-dependency"
-              className={headingStyles.externalDepLink}
-            >
-              <Tag bordered category={2}>
-                External dependency
+          <FlexLayout gap={1} wrap>
+            {isReleaseCandidate && (
+              <Tag bordered category={4}>
+                Release candidate
               </Tag>
-            </LinkBase>
-          )}
-          {externalDependency?.licenseRequired === true && (
-            <Tag bordered category={3}>
-              License required
-            </Tag>
-          )}
+            )}
+            {externalDependency && (
+              <Link
+                className={headingStyles.externalDepLink}
+                href="/salt/about/glossary#external-dependency"
+                render={
+                  <LinkBase href="/salt/about/glossary#external-dependency" />
+                }
+              >
+                <Tag bordered>External dependency</Tag>
+              </Link>
+            )}
+            {externalDependency?.licenseRequired === true && (
+              <Tag bordered category={2}>
+                License required
+              </Tag>
+            )}
+          </FlexLayout>
         </FlexLayout>
         {description && (
           <Text className={headingStyles.description}>
@@ -145,49 +153,55 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
         )}
 
         {(sourceCodeUrl || figmaUrl) && (
-          <div className={styles.headingActions}>
-            {sourceCodeUrl && (
-              <CTALink
-                appearance="bordered"
-                sentiment="neutral"
-                href={sourceCodeUrl}
-                target="_blank"
-                rel="noopener"
-              >
-                <GithubIcon aria-hidden /> Source code
-              </CTALink>
-            )}
-            {figmaUrl && (
-              <CTALink
-                appearance="bordered"
-                sentiment="neutral"
-                href={figmaUrl}
-                target="_blank"
-                rel="noopener"
-              >
-                <IconFigmaIcon aria-hidden /> Figma file
-              </CTALink>
-            )}
-
-            <Overlay>
-              <Tooltip aria-hidden="true" content="Theme controls">
-                <OverlayTrigger>
-                  <Button
-                    aria-label="Theme controls"
-                    sentiment="neutral"
+          <SplitLayout
+            gap={1}
+            startItem={
+              <FlexLayout gap={1}>
+                {sourceCodeUrl && (
+                  <CTALink
                     appearance="bordered"
+                    sentiment="neutral"
+                    href={sourceCodeUrl}
+                    target="_blank"
+                    rel="noopener"
                   >
-                    <SettingsSolidIcon aria-hidden />
-                  </Button>
-                </OverlayTrigger>
-              </Tooltip>
-              <OverlayPanel className={styles.overlay}>
-                <OverlayPanelContent>
-                  <ThemeControls />
-                </OverlayPanelContent>
-              </OverlayPanel>
-            </Overlay>
-          </div>
+                    <GithubIcon aria-hidden /> View code
+                  </CTALink>
+                )}
+                {figmaUrl && (
+                  <CTALink
+                    appearance="bordered"
+                    sentiment="neutral"
+                    href={figmaUrl}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <FigmaIcon aria-hidden /> View design
+                  </CTALink>
+                )}
+              </FlexLayout>
+            }
+            endItem={
+              <Overlay>
+                <Tooltip aria-hidden="true" content="Theme controls">
+                  <OverlayTrigger>
+                    <Button
+                      aria-label="Theme controls"
+                      sentiment="neutral"
+                      appearance="transparent"
+                    >
+                      <SettingsIcon aria-hidden />
+                    </Button>
+                  </OverlayTrigger>
+                </Tooltip>
+                <OverlayPanel className={styles.overlay}>
+                  <OverlayPanelContent>
+                    <ThemeControls />
+                  </OverlayPanelContent>
+                </OverlayPanel>
+              </Overlay>
+            }
+          />
         )}
       </div>
     </div>

@@ -14,12 +14,6 @@
   margin-top: var(--salt-spacing-200);
 }
 
-.headingActions {
-  display: flex;
-  flex-direction: row;
-  gap: var(--salt-spacing-100);
-}
-
 .overlay {
   max-width: 100vw;
 }

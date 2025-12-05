@@ -13,8 +13,9 @@
   width: 100%;
 }
 
-.externalDepLink {
-  text-decoration-color: var(--salt-category-2-subtle-foreground, var(--salt-category-1-subtle-foreground));
+.externalDepLink,
+.externalDepLink:visited {
+  text-decoration-color: var(--salt-category-1-subtle-foreground);
 }
 
 .root h1 {
