@@ -11,6 +11,6 @@
   padding: 0 var(--salt-spacing-50);
 }
 
-.saltKeyboardKey .saltText{
+.saltKeyboardKey .saltText {
   width: fit-content;
 }

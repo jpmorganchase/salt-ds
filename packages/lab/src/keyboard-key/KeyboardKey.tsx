@@ -1,7 +1,4 @@
-import {
-  makePrefixer,
-  Text
-} from "@salt-ds/core";
+import { makePrefixer, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,19 +7,13 @@ import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import keyboardKeyCss from "./KeyboardKey.css";
 
-export interface KeyboardKeyProps extends HTMLAttributes<HTMLElement> {
-
-}
+export interface KeyboardKeyProps extends HTMLAttributes<HTMLElement> {}
 
 const withBaseName = makePrefixer("saltKeyboardKey");
 
 export const KeyboardKey = forwardRef<HTMLDivElement, KeyboardKeyProps>(
   function KeyboardKey(props, ref) {
-    const {
-      children,
-      className,
-      ...rest
-    } = props;
+    const { children, className, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -32,9 +23,7 @@ export const KeyboardKey = forwardRef<HTMLDivElement, KeyboardKeyProps>(
     });
 
     return (
-      <kbd ref={ref}
-        className={clsx(withBaseName(), className, {
-        })}  {...props}>
+      <kbd ref={ref} className={clsx(withBaseName(), className, {})} {...props}>
         <Text>{children}</Text>
       </kbd>
     );
