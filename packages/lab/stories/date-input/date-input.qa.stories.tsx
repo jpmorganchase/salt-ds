@@ -1,5 +1,4 @@
 import { withDateMock } from ".storybook/decorators/withDateMock";
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
@@ -32,151 +31,99 @@ const renderQAContainer = () => {
     >
       <DateInputSingle defaultDate={startDate} />
       <DateInputSingle defaultDate={startDate} bordered />
-      <DateInputRange
-        defaultDate={{
-          startDate,
-          endDate,
-        }}
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="warning"
       />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="error"
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="success"
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="warning"
+        readOnly
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="error"
+        readOnly
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="success"
+        readOnly
+      />
+
       <DateInputRange
         defaultDate={{
           startDate,
           endDate,
         }}
+        readOnly
         bordered
       />
-    </QAContainer>
-  );
-};
-
-const renderFormFieldExamples = () => {
-  const { dateAdapter } = useLocalization();
-  const startDate = dateAdapter.today();
-  const endDate = dateAdapter.add(startDate, { months: 1, days: 1 });
-
-  return (
-    <QAContainer
-      cols={4}
-      itemPadding={1}
-      height={3410}
-      width={1050}
-      itemWidthAuto
-      transposeDensity
-      vertical
-    >
-      <FormField>
-        <FormFieldLabel>Select a date</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField validationStatus="error">
-        <FormFieldLabel>Select a date</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField validationStatus="warning">
-        <FormFieldLabel>Select a date</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField validationStatus="success">
-        <FormFieldLabel>Select a date</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField readOnly validationStatus="error">
-        <FormFieldLabel>Select a date (read-only)</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField readOnly validationStatus="warning">
-        <FormFieldLabel>Select a date (read-only)</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField readOnly validationStatus="success">
-        <FormFieldLabel>Select a date (read-only)</FormFieldLabel>
-        <DateInputSingle defaultDate={startDate} bordered />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-
-      <FormField>
-        <FormFieldLabel>Select a date range</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField validationStatus="error">
-        <FormFieldLabel>Select a date range</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField validationStatus="warning">
-        <FormFieldLabel>Select a date range</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField validationStatus="success">
-        <FormFieldLabel>Select a date range</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField readOnly validationStatus="error">
-        <FormFieldLabel>Select a date range (read-only)</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField readOnly validationStatus="warning">
-        <FormFieldLabel>Select a date range (read-only)</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-      <FormField readOnly validationStatus="success">
-        <FormFieldLabel>Select a date range (read-only)</FormFieldLabel>
-        <DateInputRange
-          defaultDate={{
-            startDate,
-            endDate,
-          }}
-          bordered
-        />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        validationStatus="warning"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        validationStatus="error"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        validationStatus="success"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        readOnly
+        validationStatus="warning"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        readOnly
+        validationStatus="error"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        readOnly
+        validationStatus="success"
+      />
     </QAContainer>
   );
 };
@@ -211,12 +158,4 @@ AllExamplesWithLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "luxon",
-};
-
-export const FormFieldExamples: StoryFn<QAContainerProps> = () =>
-  renderFormFieldExamples();
-FormFieldExamples.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "moment",
 };
