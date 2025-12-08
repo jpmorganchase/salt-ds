@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { makePrefixer } from "packages/core/src";
+import { makePrefixer, useIcon } from "packages/core/src";
 import { useComponentCssInjection } from "packages/styles/src";
 import { useWindow } from "packages/window/src";
 import {
@@ -11,7 +11,11 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { TreeNodeProvider, useTreeContext } from "./TreeContext";
+import {
+  TreeNodeProvider,
+  useTreeContext,
+  useTreeNodeContext,
+} from "./TreeContext";
 import treeNodeCss from "./TreeNode.css";
 
 interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
@@ -44,10 +48,13 @@ export const TreeNode = forwardRef<
 
   const nodeRef = useRef<HTMLLIElement>(null);
   const hasChildren = children != null;
+
   const expanded = true;
-  const level = 1;
 
   const { registerNode } = useTreeContext();
+
+  const parentContext = useTreeNodeContext();
+  const level = (parentContext?.level ?? 0) + 1;
 
   useEffect(() => {
     if (nodeRef.current) {
@@ -78,9 +85,22 @@ export const TreeNode = forwardRef<
         style={{ "--saltTreeNode-level": level } as CSSProperties}
       >
         <div className={withBaseName("content")}>
+          <span>{hasChildren && <ExpansionIcon expanded={expanded} />}</span>
           <span className={withBaseName("label")}>{label}</span>
         </div>
+
+        {hasChildren && expanded && (
+          <ul role="group" className={withBaseName("group")}>
+            {children}
+          </ul>
+        )}
       </li>
     </TreeNodeProvider>
   );
 });
+
+function ExpansionIcon({ expanded }: { expanded: boolean }) {
+  const { ExpandGroupIcon, CollapseGroupIcon } = useIcon();
+  const Icon = expanded ? CollapseGroupIcon : ExpandGroupIcon;
+  return <Icon aria-hidden className="saltTreeNode-expansionIcon" />;
+}
