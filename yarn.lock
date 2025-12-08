@@ -3892,6 +3892,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-docgen-typescript: "npm:2.4.0"
     react-dom: "npm:^18.3.1"
+    react-hotkeys-hook: "npm:^5.1.0"
     react-resizable-panels: "npm:^3.0.0"
     react-router: "npm:^7.10.1"
     rollup: "npm:^4.24.2"
@@ -13744,6 +13745,16 @@ __metadata:
   peerDependencies:
     react: ">=16.13.1"
   checksum: 10/3de587be3e72bd3e32b3bd7769d09354b27ed94be580f33a80a85ddc8c1d1ed1cad90199bc24b22a7911ef1ebacc0163c664b2c395f7c37ffd493f59e6e5c9f9
+  languageName: node
+  linkType: hard
+
+"react-hotkeys-hook@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "react-hotkeys-hook@npm:5.1.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10/e912c0178fbfb04b841007aa3fc50cb326082346f860d3b92a22ff71516dfd487c6f60c0474d9609b982ad15e6b4741c35ca2b38adfeb133789d43ff6b0029c6
   languageName: node
   linkType: hard
 

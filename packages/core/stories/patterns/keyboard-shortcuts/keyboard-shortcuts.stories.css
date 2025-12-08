@@ -1,0 +1,7 @@
+.keyboardShortcuts-description {
+  padding: var(--salt-spacing-25) 0;
+}
+
+.keyboardShortcuts-actions-title{
+  font-weight: var(--salt-text-heading-fontWeight);
+}
