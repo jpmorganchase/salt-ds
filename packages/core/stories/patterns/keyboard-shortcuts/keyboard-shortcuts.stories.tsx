@@ -32,50 +32,56 @@ type KeyboardShortcut = {
 const keyboardShortcuts: KeyboardShortcut[] = [
   {
     label: "Open command palette",
-    shortcut: ["ctrl", "option", "p"],
+    shortcut: ["meta", "option", "p"],
     connector: "+",
     action: () => alert("Open command palette triggered!"),
   },
   {
     label: "Next",
-    shortcut: ["ctrl", "shift", "e"],
+    shortcut: ["meta", "shift", "e"],
     connector: "+",
     action: () => alert("Next triggered!"),
   },
   {
     label: "Previous",
-    shortcut: ["ctrl", "e"],
+    shortcut: ["meta", "e"],
     connector: "+",
     action: () => alert("Previous triggered!"),
   },
   {
     label: "Duplicate ticket",
     description: "Make a copy of your ticket",
-    shortcut: ["ctrl", "d"],
+    shortcut: ["meta", "d"],
     connector: "+",
     action: () => alert("Duplicate ticket triggered!"),
   },
   {
     label: "Set direction to buy",
-    shortcut: ["ctrl", "b"],
+    shortcut: ["meta", "b"],
     connector: "+",
     action: () => alert("Set direction to buy triggered!"),
   },
   {
     label: "Set direction to sell",
-    shortcut: ["ctrl", "s"],
+    shortcut: ["meta", "s"],
     connector: "+",
     action: () => alert("Set direction to sell triggered!"),
   },
   {
     label: "Bottom of list",
-    shortcut: ["ctrl", "end"],
+    shortcut: ["meta", "end"],
     connector: "+",
     action: () => alert("Bottom of list triggered!"),
   },
   {
     label: "Top of list",
-    shortcut: ["ctrl", "home"],
+    shortcut: ["meta", "home"],
+    connector: "+",
+    action: () => alert("Top of list triggered!"),
+  },
+  {
+    label: "Test",
+    shortcut: ["meta", "k"],
     connector: "+",
     action: () => alert("Top of list triggered!"),
   },
@@ -137,6 +143,15 @@ const KeyboardShortcuts: React.FC = () => {
   const [shortcutsEnabled, setShortcutsEnabled] = useState(true);
   const [filter, setFilter] = useState("");
 
+  useHotkeys(
+    "meta+shift+k", // To open the keyboard shortcut key panel
+    (event) => {
+      event.preventDefault();
+      setOpen(true);
+    },
+    { enabled: shortcutsEnabled }
+  );
+
   const filteredShortcuts = keyboardShortcuts.filter((s) =>
     s.label.toLowerCase().includes(filter.trim().toLowerCase())
   );
@@ -157,9 +172,18 @@ const KeyboardShortcuts: React.FC = () => {
     <HotkeysProvider>
       {/* Register all shortcuts, only when enabled */}
       <RegisterShortcuts enabled={shortcutsEnabled} />
+      <StackLayout gap={1}>
       <Button data-testid="dialog-button" onClick={handleDialogOpen}>
-        Open Keyboard shortcuts panel
+        Keyboard shortcuts panel
       </Button>
+      <FlexLayout align="center" gap={1}>
+        <Text>hit </Text>
+        <FlexLayout align="center" gap={0}>
+          <KeyboardKey>meta</KeyboardKey>+<KeyboardKey>shift</KeyboardKey>+<KeyboardKey>K</KeyboardKey>
+        </FlexLayout>
+        <Text>to open the keyboard shortcuts panel </Text>
+      </FlexLayout>
+      </StackLayout>
       <Dialog
         open={open}
         onOpenChange={handleDialogChange}
@@ -222,4 +246,4 @@ const KeyboardShortcuts: React.FC = () => {
   );
 };
 
-export const AddShortcuts = KeyboardShortcuts.bind({});
+export const WithKeyboardShortcutExample = KeyboardShortcuts.bind({});
