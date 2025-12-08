@@ -16,8 +16,9 @@ type Story = StoryObj<typeof Tree>;
 export const Default: Story = {
   render: () => (
     <Tree aria-label="File browser" expanded={["documents"]}>
-      <TreeNode value="heyo" label="hello" />
-      <TreeNode value="everyone" label="yo" />
+      <TreeNode value="heyo" label="hello">
+        <TreeNode value="everyone" label="yo" />
+      </TreeNode>
     </Tree>
   ),
 };

@@ -32,3 +32,10 @@
   /* can we add this? */
   word-break: break-word;
 }
+
+.saltTreeNode-group {
+  /* might not need list-style set */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
