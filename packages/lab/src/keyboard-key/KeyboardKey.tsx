@@ -34,11 +34,6 @@ export const KeyboardKey = forwardRef<HTMLDivElement, KeyboardKeyProps>(
     return (
       <kbd ref={ref}
         className={clsx(withBaseName(), className, {
-          // [withBaseName("anchor")]: anchored,
-          // [withBaseName("fullScreen")]: fullScreen,
-          // [withBaseName(position)]: !fullScreen,
-          // [withBaseName("enter-animation")]: enterAnimation,
-          // [withBaseName("exit-animation")]: exitAnimation,
         })}  {...props}>
         <Text>{children}</Text>
       </kbd>
