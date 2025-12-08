@@ -1,5 +1,8 @@
+// import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
+import { Tree, TreeNode } from "@salt-ds/lab";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Tree } from "@salt-ds/lab";
+
+// import { useState } from "react";
 
 const meta: Meta<typeof Tree> = {
   title: "Lab/Tree",
@@ -11,13 +14,10 @@ export default meta;
 type Story = StoryObj<typeof Tree>;
 
 export const Default: Story = {
-  args: {
-    children: "Tree placeholder",
-    style: {
-      padding: 16,
-      border: "1px dashed currentColor",
-    },
-  },
+  render: () => (
+    <Tree aria-label="File browser" expanded={["documents"]}>
+      <TreeNode value="heyo" label="hello" />
+      <TreeNode value="everyone" label="yo" />
+    </Tree>
+  ),
 };
-
-
