@@ -1,0 +1,34 @@
+.saltTreeNode {
+  list-style: none;
+  outline: none;
+}
+
+.saltTreeNode-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  padding-left: calc(var(--salt-spacing-100) + ((var(--salt-size-selectable) + var(--salt-spacing-100)) * (var(--saltTreeNode-level, 1) - 1)));
+  background: var(--salt-selectable-background);
+  color: var(--salt-content-primary-foreground);
+  cursor: var(--salt-cursor-hover);
+  min-height: var(--salt-size-base);
+  box-sizing: border-box;
+}
+
+.saltTreeNode-content:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltTreeNode-label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  /* can we add this? */
+  word-break: break-word;
+}
