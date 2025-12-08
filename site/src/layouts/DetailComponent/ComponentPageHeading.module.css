@@ -15,20 +15,34 @@
 
 .externalDepLink,
 .externalDepLink:visited {
-  text-decoration-color: var(--salt-category-1-subtle-foreground);
+  color: inherit;
+  text-decoration: none;
+}
+
+.externalDepLink > * {
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+}
+
+.externalDepLink:hover > *,
+.externalDepLink:focus-visible > * {
+  text-decoration-line: none;
 }
 
 .root h1 {
   margin: 0;
 }
 
-.tagLink {
-  text-decoration: none;
-}
-
 .packageContainter {
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
+}
+.packageContainter th {
+  width: initial;
+}
+
+.description p {
+  margin: 0;
 }
 
 @media screen and (min-width: 960px) {
@@ -37,8 +51,8 @@
     padding-right: calc(250px + var(--salt-spacing-300));
     padding-block: var(--salt-spacing-300);
   }
-}
 
-.description p {
-  margin: 0;
+  .packageContainter th {
+    width: 25%;
+  }
 }

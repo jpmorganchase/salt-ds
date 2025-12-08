@@ -46,6 +46,7 @@ interface RelatedComponent {
 interface ComponentNpmInfo {
   name: string;
   initialVersion?: string;
+  url?: string;
 }
 
 interface ExternalDependency {

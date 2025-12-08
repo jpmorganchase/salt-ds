@@ -15,7 +15,12 @@ import {
   Tooltip,
   useResponsiveProp,
 } from "@salt-ds/core";
-import { FigmaIcon, GithubIcon, SettingsIcon } from "@salt-ds/icons";
+import {
+  ChevronDownIcon,
+  FigmaIcon,
+  GithubIcon,
+  SettingsIcon,
+} from "@salt-ds/icons";
 import { Table, TBody, TD, TH, TR } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import type { ElementType } from "react";
@@ -41,7 +46,76 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
   } = useStore((state: CustomSiteState) => state.data ?? {});
 
   const hidePackageInfo = !saltPackage && !externalDependency;
-  const isReleaseCandidate = status?.toLowerCase() === "release candidate";
+  const isReleaseCandidate =
+    status?.trim().toLowerCase() === "release candidate";
+
+  const tags: Array<{ text: string; category: number; link?: string }> = [];
+  if (isReleaseCandidate) {
+    tags.push({
+      text: "Release candidate",
+      category: 14,
+      link: "/salt/about/glossary#release-candidate-rc",
+    });
+  }
+  if (externalDependency) {
+    tags.push({
+      text: "External dependency",
+      category: 1,
+      link: "/salt/about/glossary#external-dependency",
+    });
+    if (externalDependency.licenseRequired === true) {
+      tags.push({
+        text: "License required",
+        category: 2,
+      });
+    }
+  }
+
+  const tableRows: Array<{ label: string; content: React.ReactNode }> = [];
+  if (saltPackage?.name) {
+    const nameContent = saltPackage.url ? (
+      <Link
+        render={
+          <LinkBase href={saltPackage.url} target="_blank" rel="noopener" />
+        }
+      >
+        {saltPackage.name}
+      </Link>
+    ) : (
+      saltPackage.name
+    );
+    tableRows.push({ label: "Salt package", content: nameContent });
+  }
+  if (saltPackage?.initialVersion) {
+    tableRows.push({
+      label: "Available since",
+      content: saltPackage.initialVersion,
+    });
+  }
+  if (externalDependency?.name) {
+    const nameContent = externalDependency.url ? (
+      <Link
+        render={
+          <LinkBase
+            href={externalDependency.url}
+            target="_blank"
+            rel="noopener"
+          />
+        }
+      >
+        {externalDependency.name}
+      </Link>
+    ) : (
+      externalDependency.name
+    );
+    tableRows.push({ label: "External dependency", content: nameContent });
+  }
+  if (externalDependency?.compatibleVersions) {
+    tableRows.push({
+      label: "Compatible versions",
+      content: externalDependency.compatibleVersions,
+    });
+  }
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -60,40 +134,38 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
           gap={1}
           direction={direction}
         >
-          <H1 styleAs="display4">{title}</H1>
-          <FlexLayout gap={1} wrap>
-            {isReleaseCandidate && (
-              <Tag bordered category={4}>
-                Release candidate
-              </Tag>
-            )}
-            {externalDependency && (
-              <Link
-                className={headingStyles.externalDepLink}
-                href="/salt/about/glossary#external-dependency"
-                render={
-                  <LinkBase href="/salt/about/glossary#external-dependency" />
-                }
-              >
-                <Tag bordered>External dependency</Tag>
-              </Link>
-            )}
-            {externalDependency?.licenseRequired === true && (
-              <Tag bordered category={2}>
-                License required
-              </Tag>
-            )}
+          <FlexLayout wrap gap={1} align="center">
+            <H1 styleAs="display4">{title}</H1>
+            <FlexLayout gap={1} wrap>
+              {tags.map((tag) =>
+                tag.link ? (
+                  <LinkBase
+                    key={tag.text}
+                    className={headingStyles.externalDepLink}
+                    href={tag.link}
+                  >
+                    <Tag bordered category={tag.category}>
+                      {tag.text}
+                    </Tag>
+                  </LinkBase>
+                ) : (
+                  <Tag key={tag.text} bordered category={tag.category}>
+                    {tag.text}
+                  </Tag>
+                ),
+              )}
+            </FlexLayout>
           </FlexLayout>
         </FlexLayout>
         {description && (
-          <Text className={headingStyles.description}>
-            <Markdown>{description}</Markdown>
-          </Text>
+          <Markdown className={headingStyles.description}>
+            {description}
+          </Markdown>
         )}
         {externalDependency?.description && (
-          <Text>
-            <Markdown>{externalDependency.description}</Markdown>
-          </Text>
+          <Markdown className={headingStyles.description}>
+            {externalDependency.description}
+          </Markdown>
         )}
         {alsoKnownAs.length > 0 && (
           <Text>
@@ -105,104 +177,77 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
           <Table
             variant="secondary"
             className={headingStyles.packageContainter}
+            aria-label="Component package and dependency details"
           >
             <TBody>
-              {saltPackage?.name && (
-                <TR>
-                  <TH scope="row">Package</TH>
-                  <TD>{saltPackage.name}</TD>
+              {tableRows.map(({ label, content }) => (
+                <TR key={label}>
+                  <TH scope="row">{label}</TH>
+                  <TD>{content}</TD>
                 </TR>
-              )}
-              {saltPackage?.initialVersion && (
-                <TR>
-                  <TH scope="row">Version</TH>
-                  <TD>{saltPackage.initialVersion}</TD>
-                </TR>
-              )}
-              {externalDependency && (
-                <TR>
-                  <TH scope="row">External dependency</TH>
-                  <TD>
-                    {externalDependency.name && externalDependency.url ? (
-                      <Link
-                        href={externalDependency.url}
-                        render={
-                          <LinkBase
-                            href={externalDependency.url}
-                            target="_blank"
-                            rel="noopener"
-                          />
-                        }
-                      >
-                        {externalDependency.name}
-                      </Link>
-                    ) : (
-                      externalDependency.name
-                    )}
-                  </TD>
-                </TR>
-              )}
-              {externalDependency?.compatibleVersions && (
-                <TR>
-                  <TH scope="row">Compatible versions</TH>
-                  <TD>{externalDependency?.compatibleVersions}</TD>
-                </TR>
-              )}
+              ))}
             </TBody>
           </Table>
         )}
 
-        {(sourceCodeUrl || figmaUrl) && (
-          <SplitLayout
-            gap={1}
-            startItem={
-              <FlexLayout gap={1}>
-                {sourceCodeUrl && (
-                  <CTALink
-                    appearance="bordered"
+        <SplitLayout
+          gap={1}
+          startItem={
+            <FlexLayout gap={1}>
+              {sourceCodeUrl && (
+                <CTALink
+                  appearance="bordered"
+                  sentiment="neutral"
+                  href={sourceCodeUrl}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="View source code on GitHub"
+                >
+                  <GithubIcon aria-hidden />
+                  <span hidden={direction === "column"}>Source code</span>
+                </CTALink>
+              )}
+              {figmaUrl && (
+                <CTALink
+                  appearance="bordered"
+                  sentiment="neutral"
+                  href={figmaUrl}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="View component design in Figma"
+                >
+                  <FigmaIcon aria-hidden />
+                  <span hidden={direction === "column"}>Figma component</span>
+                </CTALink>
+              )}
+            </FlexLayout>
+          }
+          endItem={
+            <Overlay>
+              <Tooltip aria-hidden="true" content="Theme controls">
+                <OverlayTrigger>
+                  <Button
+                    aria-label="Theme controls"
                     sentiment="neutral"
-                    href={sourceCodeUrl}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <GithubIcon aria-hidden /> View code
-                  </CTALink>
-                )}
-                {figmaUrl && (
-                  <CTALink
                     appearance="bordered"
-                    sentiment="neutral"
-                    href={figmaUrl}
-                    target="_blank"
-                    rel="noopener"
                   >
-                    <FigmaIcon aria-hidden /> View design
-                  </CTALink>
-                )}
-              </FlexLayout>
-            }
-            endItem={
-              <Overlay>
-                <Tooltip aria-hidden="true" content="Theme controls">
-                  <OverlayTrigger>
-                    <Button
-                      aria-label="Theme controls"
-                      sentiment="neutral"
-                      appearance="transparent"
-                    >
-                      <SettingsIcon aria-hidden />
-                    </Button>
-                  </OverlayTrigger>
-                </Tooltip>
-                <OverlayPanel className={styles.overlay}>
-                  <OverlayPanelContent>
-                    <ThemeControls />
-                  </OverlayPanelContent>
-                </OverlayPanel>
-              </Overlay>
-            }
-          />
-        )}
+                    <SettingsIcon aria-hidden />
+                    {direction === "column" ? (
+                      <ChevronDownIcon aria-hidden />
+                    ) : (
+                      <span>theme controls</span>
+                    )}
+                  </Button>
+                </OverlayTrigger>
+              </Tooltip>
+              <OverlayPanel className={styles.overlay}>
+                <OverlayPanelContent>
+                  <ThemeControls />
+                </OverlayPanelContent>
+              </OverlayPanel>
+            </Overlay>
+          }
+        />
       </div>
     </div>
   );
