@@ -253,6 +253,27 @@
           }
         }
       }
+    },
+    {
+      "includes": ["**/packages/*/src/**"],
+      "linter": {
+        "rules": {
+          "nursery": {},
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "react": {
+                    "importNames": ["useId"],
+                    "message": "useId should be imported from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
