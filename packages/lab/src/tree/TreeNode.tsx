@@ -9,15 +9,11 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  Children,
   type ComponentPropsWithoutRef,
   type CSSProperties,
-  cloneElement,
   type FocusEvent,
   forwardRef,
-  isValidElement,
   type MouseEvent,
-  type ReactElement,
   type ReactNode,
   useCallback,
   useEffect,
@@ -66,268 +62,241 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
   children?: ReactNode;
 }
 
-interface TreeNodeInternalProps {
-  /** Position in sibling set (1-indexed) for aria-posinset */
-  _posinset?: number;
-  /** Total siblings in set for aria-setsize */
-  _setsize?: number;
-}
-
 const withBaseName = makePrefixer("saltTreeNode");
 
-export const TreeNode = forwardRef<
-  HTMLLIElement,
-  TreeNodeProps & TreeNodeInternalProps
->(function TreeNode(props, ref) {
-  const {
-    value,
-    label,
-    icon,
-    disabled: disabledProp = false,
-    children,
-    className,
-    id: idProp,
-    _posinset,
-    _setsize,
-    ...rest
-  } = props;
-
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-tree-node",
-    css: treeNodeCss,
-    window: targetWindow,
-  });
-
-  const id = useId(idProp);
-  const labelId = `${id}-label`;
-  const nodeRef = useRef<HTMLLIElement>(null);
-
-  const {
-    expandedState,
-    toggleExpanded,
-    selectedState,
-    select,
-    checkbox,
-    registerNode,
-    activeNode,
-    setActiveNode,
-    disabled: treeDisabled,
-    disabledIdsSet,
-    indeterminateState,
-  } = useTreeContext();
-
-  const parentContext = useTreeNodeContext();
-  const level = (parentContext?.level ?? 0) + 1;
-  const parentValue = parentContext?.value;
-
-  const disabled = treeDisabled || disabledProp || disabledIdsSet.has(value);
-  const hasChildren = children != null;
-  const expanded = expandedState.has(value);
-  const selected = selectedState.includes(value);
-  const indeterminate = indeterminateState.has(value);
-  const isActive = activeNode === value;
-
-  const getLabelText = (): string => {
-    if (typeof label === "string") {
-      return label;
-    }
-    // if its a non string value, need to rely on aria-labelledby
-    return "";
-  };
-
-  const labelText = getLabelText();
-
-  const getAccessibleLabel = (): string | undefined => {
-    if (!labelText) return undefined;
-
-    let accessibleLabel = labelText;
-
-    if (hasChildren) {
-      accessibleLabel += expanded ? ", expanded" : ", collapsed";
-    }
-
-    return accessibleLabel;
-  };
-
-  const accessibleLabel = getAccessibleLabel();
-
-  const [expansionAnnouncement, setExpansionAnnouncement] =
-    useState<string>("");
-  const prevExpandedRef = useRef<boolean>(expanded);
-
-  // look into this, settimeout temporary
-  useEffect(() => {
-    if (hasChildren && prevExpandedRef.current !== expanded) {
-      if (isActive) {
-        const announcement = expanded
-          ? `${labelText} expanded`
-          : `${labelText} collapsed`;
-        setExpansionAnnouncement(announcement);
-
-        // give time for announcement to be read
-        const timer = setTimeout(() => {
-          setExpansionAnnouncement("");
-        }, 1000);
-
-        return () => clearTimeout(timer);
-      }
-    }
-    prevExpandedRef.current = expanded;
-  }, [expanded, hasChildren, isActive, labelText]);
-
-  const isTabbable =
-    isActive ||
-    (activeNode === undefined && _posinset === 1 && parentValue === undefined);
-
-  useEffect(() => {
-    if (nodeRef.current) {
-      return registerNode(value, nodeRef.current, parentValue, hasChildren);
-    }
-  }, [value, parentValue, hasChildren, registerNode]);
-
-  useEffect(() => {
-    if (isActive && nodeRef.current) {
-      nodeRef.current.focus();
-      nodeRef.current.scrollIntoView({ block: "nearest", inline: "nearest" });
-    }
-  }, [isActive]);
-
-  const handleContentClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      if (disabled) return;
-      setActiveNode(value);
-      select(event, value);
-    },
-    [disabled, setActiveNode, value, select],
-  );
-
-  const handleExpansionClick = useCallback(
-    (event: MouseEvent<HTMLSpanElement>) => {
-      event.stopPropagation();
-      if (disabled) return;
-      toggleExpanded(value);
-    },
-    [disabled, toggleExpanded, value],
-  );
-
-  const handleFocus = useCallback(
-    (event: FocusEvent<HTMLLIElement>) => {
-      if (!disabled && event.target === event.currentTarget) {
-        setActiveNode(value);
-      }
-    },
-    [disabled, setActiveNode, value],
-  );
-
-  const nodeContext = useMemo(
-    () => ({
+export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
+  function TreeNode(props, ref) {
+    const {
       value,
-      level,
-      hasChildren,
-      expanded,
-      disabled,
-    }),
-    [value, level, hasChildren, expanded, disabled],
-  );
+      label,
+      icon,
+      disabled: disabledProp = false,
+      children,
+      className,
+      id: idProp,
+      ...rest
+    } = props;
 
-  // need to do this to apply aria-setsize and aria-posinset (via _posinst and _setsize)
-  const childrenWithPosition = useMemo(() => {
-    const childArray = Children.toArray(children);
-    const validChildren = childArray.filter(isValidElement);
-    const setSize = validChildren.length;
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-tree-node",
+      css: treeNodeCss,
+      window: targetWindow,
+    });
 
-    return validChildren.map((child, index) =>
-      cloneElement(child as ReactElement<TreeNodeInternalProps>, {
-        // index starts at 1 here
-        _posinset: index + 1,
-        _setsize: setSize,
-      }),
+    const id = useId(idProp);
+    const labelId = `${id}-label`;
+    const nodeRef = useRef<HTMLLIElement>(null);
+
+    const {
+      expandedState,
+      toggleExpanded,
+      selectedState,
+      select,
+      checkbox,
+      registerNode,
+      activeNode,
+      setActiveNode,
+      disabled: treeDisabled,
+      disabledIdsSet,
+      indeterminateState,
+      getFirstVisibleNode,
+    } = useTreeContext();
+
+    const parentContext = useTreeNodeContext();
+    const level = (parentContext?.level ?? 0) + 1;
+    const parentValue = parentContext?.value;
+
+    const disabled = treeDisabled || disabledProp || disabledIdsSet.has(value);
+    const hasChildren = children != null;
+    const expanded = expandedState.has(value);
+    const selected = selectedState.includes(value);
+    const indeterminate = indeterminateState.has(value);
+    const isActive = activeNode === value;
+
+    const getLabelText = (): string => {
+      if (typeof label === "string") {
+        return label;
+      }
+      // if its a non string value, need to rely on aria-labelledby
+      return "";
+    };
+
+    const labelText = getLabelText();
+
+    const getAccessibleLabel = (): string | undefined => {
+      if (!labelText) return undefined;
+
+      let accessibleLabel = labelText;
+
+      if (hasChildren) {
+        accessibleLabel += expanded ? ", expanded" : ", collapsed";
+      }
+
+      return accessibleLabel;
+    };
+
+    const accessibleLabel = getAccessibleLabel();
+
+    const [expansionAnnouncement, setExpansionAnnouncement] =
+      useState<string>("");
+    const prevExpandedRef = useRef<boolean>(expanded);
+
+    // look into this, settimeout temporary
+    useEffect(() => {
+      if (hasChildren && prevExpandedRef.current !== expanded) {
+        if (isActive) {
+          const announcement = expanded
+            ? `${labelText} expanded`
+            : `${labelText} collapsed`;
+          setExpansionAnnouncement(announcement);
+
+          // give time for announcement to be read
+          const timer = setTimeout(() => {
+            setExpansionAnnouncement("");
+          }, 1000);
+
+          return () => clearTimeout(timer);
+        }
+      }
+      prevExpandedRef.current = expanded;
+    }, [expanded, hasChildren, isActive, labelText]);
+
+    const isTabbable =
+      isActive || (activeNode === undefined && getFirstVisibleNode() === value);
+
+    useEffect(() => {
+      if (nodeRef.current) {
+        return registerNode(value, nodeRef.current, parentValue, hasChildren);
+      }
+    }, [value, parentValue, hasChildren, registerNode]);
+
+    useEffect(() => {
+      if (isActive && nodeRef.current) {
+        nodeRef.current.focus();
+        nodeRef.current.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }, [isActive]);
+
+    const handleContentClick = useCallback(
+      (event: MouseEvent<HTMLDivElement>) => {
+        if (disabled) return;
+        setActiveNode(value);
+        select(event, value);
+      },
+      [disabled, setActiveNode, value, select],
     );
-  }, [children]);
 
-  const handleRef = useForkRef(nodeRef, ref);
+    const handleExpansionClick = useCallback(
+      (event: MouseEvent<HTMLSpanElement>) => {
+        event.stopPropagation();
+        if (disabled) return;
+        toggleExpanded(value);
+      },
+      [disabled, toggleExpanded, value],
+    );
 
-  return (
-    <TreeNodeProvider value={nodeContext}>
-      <li
-        ref={handleRef}
-        id={id}
-        role="treeitem"
-        aria-label={accessibleLabel}
-        aria-labelledby={accessibleLabel ? undefined : labelId}
-        aria-expanded={hasChildren ? expanded : undefined}
-        aria-selected={checkbox ? undefined : selected}
-        aria-checked={
-          checkbox ? (indeterminate ? "mixed" : selected) : undefined
+    const handleFocus = useCallback(
+      (event: FocusEvent<HTMLLIElement>) => {
+        if (!disabled && event.target === event.currentTarget) {
+          setActiveNode(value);
         }
-        aria-level={level}
-        aria-setsize={_setsize}
-        aria-posinset={_posinset}
-        aria-disabled={disabled || undefined}
-        tabIndex={isTabbable ? 0 : -1}
-        onFocus={handleFocus}
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("expanded")]: expanded,
-            [withBaseName("selected")]: selected,
-            [withBaseName("active")]: isActive,
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("hasChildren")]: hasChildren,
-          },
-          className,
-        )}
-        style={
-          {
-            "--saltTreeNode-level": level,
-          } as CSSProperties
-        }
-        {...rest}
-      >
-        {/* biome-ignore lint/a11y/useKeyWithClickEvents: keyboard handled at tree level */}
-        <div className={withBaseName("content")} onClick={handleContentClick}>
-          <span
-            className={withBaseName("expansion")}
-            onClick={handleExpansionClick}
-            aria-hidden="true"
-          >
-            {hasChildren && <ExpansionIcon expanded={expanded} />}
-          </span>
+      },
+      [disabled, setActiveNode, value],
+    );
 
-          {checkbox && (
-            <CheckboxIcon
-              checked={selected}
-              indeterminate={indeterminate}
-              disabled={disabled}
-              className={withBaseName("checkbox")}
-            />
+    const nodeContext = useMemo(
+      () => ({
+        value,
+        level,
+        hasChildren,
+        expanded,
+        disabled,
+      }),
+      [value, level, hasChildren, expanded, disabled],
+    );
+
+    const handleRef = useForkRef(nodeRef, ref);
+
+    return (
+      <TreeNodeProvider value={nodeContext}>
+        <li
+          ref={handleRef}
+          id={id}
+          role="treeitem"
+          aria-label={accessibleLabel}
+          aria-labelledby={accessibleLabel ? undefined : labelId}
+          aria-expanded={hasChildren ? expanded : undefined}
+          aria-selected={checkbox ? undefined : selected}
+          aria-checked={
+            checkbox ? (indeterminate ? "mixed" : selected) : undefined
+          }
+          aria-level={level}
+          aria-disabled={disabled || undefined}
+          tabIndex={isTabbable ? 0 : -1}
+          onFocus={handleFocus}
+          className={clsx(
+            withBaseName(),
+            {
+              [withBaseName("expanded")]: expanded,
+              [withBaseName("selected")]: selected,
+              [withBaseName("active")]: isActive,
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("hasChildren")]: hasChildren,
+            },
+            className,
+          )}
+          style={
+            {
+              "--saltTreeNode-level": level,
+            } as CSSProperties
+          }
+          {...rest}
+        >
+          {/* biome-ignore lint/a11y/useKeyWithClickEvents: keyboard handled at tree level */}
+          <div className={withBaseName("content")} onClick={handleContentClick}>
+            <span
+              className={withBaseName("expansion")}
+              onClick={handleExpansionClick}
+              aria-hidden="true"
+            >
+              {hasChildren && <ExpansionIcon expanded={expanded} />}
+            </span>
+
+            {checkbox && (
+              <CheckboxIcon
+                checked={selected}
+                indeterminate={indeterminate}
+                disabled={disabled}
+                className={withBaseName("checkbox")}
+              />
+            )}
+
+            {icon && <span className={withBaseName("icon")}>{icon}</span>}
+
+            <span id={labelId} className={withBaseName("label")}>
+              {label}
+            </span>
+          </div>
+
+          {hasChildren && expanded && (
+            <ul role="group" className={withBaseName("group")}>
+              {children}
+            </ul>
           )}
 
-          {icon && <span className={withBaseName("icon")}>{icon}</span>}
-
-          <span id={labelId} className={withBaseName("label")}>
-            {label}
-          </span>
-        </div>
-
-        {hasChildren && expanded && (
-          <ul role="group" className={withBaseName("group")}>
-            {childrenWithPosition}
-          </ul>
-        )}
-
-        {expansionAnnouncement && (
-          <span
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-            className={withBaseName("srOnly")}
-          >
-            {expansionAnnouncement}
-          </span>
-        )}
-      </li>
-    </TreeNodeProvider>
-  );
-});
+          {expansionAnnouncement && (
+            <span
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className={withBaseName("srOnly")}
+            >
+              {expansionAnnouncement}
+            </span>
+          )}
+        </li>
+      </TreeNodeProvider>
+    );
+  },
+);
