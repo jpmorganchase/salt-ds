@@ -68,6 +68,8 @@ export interface TreeContextValue {
   disabledIdsSet: Set<string>;
   /** Set of indeterminate (partially selected) node IDs */
   indeterminateState: Set<string>;
+  /** Whether the tree has mounted (for initial tabindex) */
+  mounted: boolean;
 }
 
 const TreeContext = createContext<TreeContextValue | undefined>(undefined);
