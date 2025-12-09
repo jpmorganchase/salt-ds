@@ -1,41 +1,118 @@
 .saltTreeNode {
   list-style: none;
   outline: none;
+  position: relative;
+}
+
+.saltTreeNode-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .saltTreeNode-content {
+  box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--salt-spacing-100);
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
+
+  /**
+   * Left padding based on depth level.
+   * Formula: base-padding + (icon-width + gap) * (level - 1)
+   */
   padding-left: calc(var(--salt-spacing-100) + ((var(--salt-size-selectable) + var(--salt-spacing-100)) * (var(--saltTreeNode-level, 1) - 1)));
   background: var(--salt-selectable-background);
   color: var(--salt-content-primary-foreground);
   cursor: var(--salt-cursor-hover);
   min-height: var(--salt-size-base);
-  box-sizing: border-box;
 }
 
 .saltTreeNode-content:hover {
   background: var(--salt-selectable-background-hover);
 }
 
-.saltTreeNode-label {
+.saltTreeNode:focus {
+  outline: none;
+}
+
+.saltTreeNode-selected > .saltTreeNode-content {
+  background: var(--salt-selectable-background-selected);
+  box-shadow:
+    0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected),
+    0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
+  position: relative;
+  z-index: var(--salt-zIndex-default);
+}
+
+.saltTreeNode:focus-visible > .saltTreeNode-content {
+  background: var(--salt-selectable-background-hover);
+  outline: var(--salt-focused-outline);
+}
+
+.saltTreeNode-selected:focus-visible > .saltTreeNode-content {
+  background: var(--salt-selectable-background-selected);
+  outline: var(--salt-focused-outline);
+}
+
+.saltTreeNode-disabled > .saltTreeNode-content {
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-cursor-disabled);
+  background: var(--salt-selectable-background-disabled);
+}
+
+.saltTreeNode-expansion,
+.saltTreeNode-icon {
   display: flex;
-  flex: 1;
   align-items: center;
+  justify-content: center;
+  width: var(--salt-size-selectable);
+  min-width: var(--salt-size-selectable);
+  height: var(--salt-size-selectable);
+  flex-shrink: 0;
+}
+
+.saltTreeNode-expansionIcon {
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltTreeNode-disabled .saltTreeNode-expansionIcon {
+  color: var(--salt-content-primary-foreground-disabled);
+}
+
+.saltTreeNode-checkbox {
+  flex-shrink: 0;
+}
+
+.saltTreeNode-icon > * {
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltTreeNode-disabled .saltTreeNode-icon > * {
+  color: var(--salt-content-primary-foreground-disabled);
+}
+
+.saltTreeNode-label {
+  flex: 1;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
-  /* can we add this? */
   word-break: break-word;
+  min-height: var(--salt-text-lineHeight);
+  display: flex;
+  align-items: center;
 }
 
-.saltTreeNode-group {
-  /* might not need list-style set */
-  list-style: none;
-  margin: 0;
+.saltTreeNode-srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
