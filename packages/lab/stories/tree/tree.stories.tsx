@@ -6,6 +6,26 @@ import { useState } from "react";
 const meta: Meta<typeof Tree> = {
   title: "Lab/Tree",
   component: Tree,
+  argTypes: {
+    checkbox: {
+      control: "boolean",
+    },
+    multiselect: {
+      control: "boolean",
+    },
+    disabled: {
+      control: "boolean",
+    },
+    propagateSelect: {
+      control: "boolean",
+    },
+    propagateSelectUpwards: {
+      control: "boolean",
+    },
+    togglableSelect: {
+      control: "boolean",
+    },
+  },
 };
 
 export default meta;
@@ -13,8 +33,16 @@ export default meta;
 type Story = StoryObj<typeof Tree>;
 
 export const Default: Story = {
-  render: () => (
-    <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+  args: {
+    checkbox: false,
+    multiselect: false,
+    disabled: false,
+    propagateSelect: false,
+    propagateSelectUpwards: false,
+    togglableSelect: false,
+  },
+  render: (args) => (
+    <Tree aria-label="File browser" defaultExpanded={["documents"]} {...args}>
       <TreeNode value="documents" label="Documents">
         <TreeNode value="reports" label="Reports">
           <TreeNode value="annual-report" label="Annual Report" />
