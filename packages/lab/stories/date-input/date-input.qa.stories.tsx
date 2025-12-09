@@ -71,6 +71,12 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
         bordered
       />
       <DateInputRange
@@ -78,12 +84,7 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
-      />
-      <DateInputRange
-        defaultDate={{
-          startDate,
-          endDate,
-        }}
+        bordered
         readOnly
       />
       <DateInputRange
@@ -91,6 +92,7 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
+        bordered
         validationStatus="warning"
       />
       <DateInputRange
@@ -98,6 +100,7 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
+        bordered
         validationStatus="error"
       />
       <DateInputRange
@@ -105,6 +108,7 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
+        bordered
         validationStatus="success"
       />
       <DateInputRange
@@ -112,24 +116,27 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
-        readOnly
+        bordered
         validationStatus="warning"
+        readOnly
       />
       <DateInputRange
         defaultDate={{
           startDate,
           endDate,
         }}
-        readOnly
+        bordered
         validationStatus="error"
+        readOnly
       />
       <DateInputRange
         defaultDate={{
           startDate,
           endDate,
         }}
-        readOnly
+        bordered
         validationStatus="success"
+        readOnly
       />
     </QAContainer>
   );
