@@ -22,4 +22,3 @@ export const Checkbox = (): ReactElement => (
     <TreeNode value="downloads" label="Downloads" />
   </Tree>
 );
-

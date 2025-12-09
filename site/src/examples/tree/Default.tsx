@@ -22,4 +22,3 @@ export const Default = (): ReactElement => (
     <TreeNode value="downloads" label="Downloads" />
   </Tree>
 );
-

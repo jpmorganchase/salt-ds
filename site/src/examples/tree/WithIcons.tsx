@@ -1,8 +1,4 @@
-import {
-  DocumentIcon,
-  FolderClosedIcon,
-  FolderOpenIcon,
-} from "@salt-ds/icons";
+import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
 import { Tree, TreeNode } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
@@ -43,4 +39,3 @@ export const WithIcons = (): ReactElement => (
     <TreeNode value="downloads" label="Downloads" icon={<FolderClosedIcon />} />
   </Tree>
 );
-

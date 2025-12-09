@@ -7,7 +7,9 @@ export const Multiselect = (): ReactElement => {
 
   return (
     <StackLayout>
-      <Text>Selected: {selected.length > 0 ? selected.join(", ") : "none"}</Text>
+      <Text>
+        Selected: {selected.length > 0 ? selected.join(", ") : "none"}
+      </Text>
       <Tree
         aria-label="File browser"
         multiselect
@@ -36,4 +38,3 @@ export const Multiselect = (): ReactElement => {
     </StackLayout>
   );
 };
-
