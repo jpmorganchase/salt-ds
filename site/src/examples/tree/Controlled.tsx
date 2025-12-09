@@ -8,8 +8,12 @@ export const Controlled = (): ReactElement => {
 
   return (
     <StackLayout>
-      <Text>Expanded: {expanded.length > 0 ? expanded.join(", ") : "none"}</Text>
-      <Text>Selected: {selected.length > 0 ? selected.join(", ") : "none"}</Text>
+      <Text>
+        Expanded: {expanded.length > 0 ? expanded.join(", ") : "none"}
+      </Text>
+      <Text>
+        Selected: {selected.length > 0 ? selected.join(", ") : "none"}
+      </Text>
       <Tree
         aria-label="File browser"
         expanded={expanded}
@@ -38,4 +42,3 @@ export const Controlled = (): ReactElement => {
     </StackLayout>
   );
 };
-
