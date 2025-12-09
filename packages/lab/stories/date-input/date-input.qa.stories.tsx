@@ -70,7 +70,6 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
-        readOnly
         bordered
       />
       <DateInputRange
