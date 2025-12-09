@@ -139,10 +139,13 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
     const {
       activeNode,
       setActiveNode,
+      expandedArray,
+      setExpandedArray,
       expandedState,
       toggleExpanded,
       select,
       selectedState,
+      setSelectedState,
       getVisibleNodes,
       getNode,
       getParent,
@@ -258,10 +261,17 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
                 ? getChildren(parent)
                 : visibleNodes.filter((v) => !getParent(v));
 
-              for (const sibling of siblings) {
+              const toExpand = siblings.filter((sibling) => {
                 const siblingNode = getNode(sibling);
-                if (siblingNode?.hasChildren && !expandedState.has(sibling)) {
-                  toggleExpanded(sibling);
+                return siblingNode?.hasChildren && !expandedState.has(sibling);
+              });
+
+              if (toExpand.length > 0) {
+                const newExpanded = [...expandedArray, ...toExpand];
+                setExpandedArray(newExpanded);
+                onExpandedChange?.(event, newExpanded);
+                for (const value of toExpand) {
+                  onExpand?.(event, value, true);
                 }
               }
             }
@@ -340,6 +350,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
           const newSelected = allSelected ? [] : allVisibleValues;
 
+          setSelectedState(newSelected);
           onSelectionChange?.(event, newSelected);
           return;
         }
@@ -381,17 +392,22 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         getVisibleNodes,
         activeNode,
         getNode,
+        expandedArray,
+        setExpandedArray,
         expandedState,
         toggleExpanded,
         getParent,
         getChildren,
         select,
         selectedState,
+        setSelectedState,
         checkbox,
         multiselect,
         setActiveNode,
         disabledIdsSet,
         onSelectionChange,
+        onExpandedChange,
+        onExpand,
       ],
     );
 
