@@ -1,0 +1,46 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To display hierarchical data with parent-child relationships, such as file systems, organizational structures or category taxonomies.
+- When users need to navigate through nested levels of content and optionally select items.
+- To allow users to expand and collapse sections to focus on relevant content.
+
+### When not to use
+
+- For navigation between pages or routes. Instead, use [`VerticalNavigation`](../vertical-navigation).
+- For flat, non-hierarchical lists. Instead, use [`ListBox`](../list-box).
+- When the hierarchy is only one level deep. Consider using [`Accordion`](../accordion) or a simple list.
+
+## Import
+
+To import `Tree` and `TreeNode` from the lab Salt package, use:
+
+```js
+import { Tree, TreeNode } from "@salt-ds/lab";
+```
+
+## Props
+
+### `Tree`
+
+<PropsTable packageName="lab" componentName="Tree" />
+
+### `TreeNode`
+
+<PropsTable packageName="lab" componentName="TreeNode" />
+
+## References
+
+- Tree View pattern, (https://www.w3.org/WAI/ARIA/apg/patterns/treeview/) W3C
+

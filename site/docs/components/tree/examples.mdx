@@ -1,0 +1,50 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+`Tree` displays hierarchical data as nested, expandable items. Each `TreeNode` can contain child nodes to create a multi-level structure.
+
+<LivePreview componentName="tree" exampleName="Default" />
+
+## With icons
+
+Use the `icon` prop on `TreeNode` to display an icon alongside the label. Icons help users quickly identify the type of content each node represents.
+
+### Best practices
+
+- Use consistent icons across similar node types (e.g., folder icons for parent nodes, document icons for leaf nodes).
+
+<LivePreview componentName="tree" exampleName="WithIcons" />
+
+## Checkbox
+
+Set `checkbox` on the tree to display checkboxes for each node. This variant is useful when users need to make multiple selections with clear visual indication of selection state.
+
+<LivePreview componentName="tree" exampleName="Checkbox" />
+
+## Multiselect
+
+Set `multiselect` to allow selection of multiple nodes without checkboxes. Users can select multiple items using click, or use keyboard shortcuts like Shift + Arrow keys and Ctrl/Cmd + A.
+
+<LivePreview componentName="tree" exampleName="Multiselect" />
+
+## Controlled
+
+Use the `expanded`, `onExpandedChange`, `selected`, and `onSelectionChange` props to control the tree's expansion and selection state externally.
+
+<LivePreview componentName="tree" exampleName="Controlled" />
+
+## Disabled
+
+Use the `disabled` prop on `Tree` to disable the entire tree, or on individual `TreeNode` components to disable specific nodes. Disabled nodes cannot be selected, expanded, or interacted with.
+
+<LivePreview componentName="tree" exampleName="Disabled" />
+
