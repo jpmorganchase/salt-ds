@@ -531,7 +531,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
 }) {
   const { dateAdapter } = useLocalization<TDate>();
   const {
-    state: { selectionVariant },
+    state: { selectionVariant, minDate, maxDate },
     helpers: {
       setSelectedDate,
       isSameDay,
@@ -595,6 +595,12 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
     ariaLabel = `Start new range: ${formattedDate}`;
   } else if (hoveredEnd) {
     ariaLabel = `Complete new range: ${formattedDate}`;
+  } else {
+    if (dateAdapter.isSame(minDate, date, "day")) {
+      ariaLabel = `${formattedDate}, minimum date`;
+    } else if (dateAdapter.isSame(maxDate, date, "day")) {
+      ariaLabel = `${formattedDate}, maximum date`;
+    }
   }
 
   return {

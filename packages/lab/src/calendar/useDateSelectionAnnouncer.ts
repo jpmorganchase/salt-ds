@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import type {DateFrameworkType, SaltDateAdapter} from "@salt-ds/date-adapters";
 import { useAriaAnnouncer } from "@salt-ds/core";
 import {
@@ -11,11 +12,16 @@ export type CreateAnnouncement<TDate extends DateFrameworkType> = (
   dateAdapter: SaltDateAdapter<TDate>,
 ) => string | undefined;
 
+const DEBOUNCE_MSECS = 2000;
+
 export function useDateSelectionAnnouncer<TDate extends DateFrameworkType>(
   createAnnouncement: CreateAnnouncement<TDate> | null | undefined,
   dateAdapter: SaltDateAdapter<TDate>,
 ) {
   const { announce: saltAnnouncer } = useAriaAnnouncer();
+
+  const latestAnnouncementRef = useRef<string | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   /**
    * Call this function with the announcement type and the state needed for that announcement.
@@ -31,12 +37,30 @@ export function useDateSelectionAnnouncer<TDate extends DateFrameworkType>(
       return;
     }
     const announcement = createAnnouncement(announcementType, state ?? {}, dateAdapter);
-    console.log('....', announcement);
 
     if (announcement) {
-      saltAnnouncer(announcement, { delay: 3000});
+      latestAnnouncementRef.current = announcement;
+
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+
+      timerRef.current = setTimeout(() => {
+        if (latestAnnouncementRef.current) {
+          saltAnnouncer(latestAnnouncementRef.current);
+          latestAnnouncementRef.current = null;
+        }
+      }, DEBOUNCE_MSECS);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+    }
+  };
+  }, []);
 
   return { announce };
 }

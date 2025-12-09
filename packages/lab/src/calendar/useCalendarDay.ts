@@ -120,8 +120,8 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const outOfRange = !dateAdapter.isSame(date, month, "month");
   const unselectable =
     Boolean(unselectableReason) ||
-    isOutsideAllowedMonths(date) ||
-    isOutsideAllowedDates(date);
+    !!isOutsideAllowedMonths(date) ||
+    !!isOutsideAllowedDates(date);
   const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates ? outOfRange : false;
 

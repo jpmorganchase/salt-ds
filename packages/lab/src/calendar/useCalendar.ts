@@ -884,7 +884,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
           exceededRangeLimit !== 0)
       ) {
         if (exceededRangeLimit !== 0) {
-          console.log("set error", exceededRangeLimit, focusedDate);
           announce(
             exceededRangeLimit < 0
               ? "minFocusableDateExceeded"

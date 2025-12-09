@@ -206,6 +206,7 @@ export const DatePickerSingleInput = forwardRef<
               sentiment="neutral"
               onClick={handleCalendarButton}
               disabled={disabled}
+              aria-haspopup="dialog"
               aria-label="Open Calendar"
               aria-expanded={open}
             >

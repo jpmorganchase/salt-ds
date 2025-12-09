@@ -12,7 +12,7 @@ import {
   AriaAnnouncerContext,
 } from "./AriaAnnouncerContext";
 
-export const ANNOUNCEMENT_TIME_IN_DOM = 3000; // time between DOM updates
+export const ANNOUNCEMENT_TIME_IN_DOM = 300; // time between DOM updates
 
 export interface AriaAnnouncerProviderProps
   extends ComponentPropsWithRef<"div"> {}
@@ -51,21 +51,21 @@ export const AriaAnnouncerProvider = forwardRef<
           return previous.concat({ id, message });
         });
 
-        setTimeout(() => {
-          setPoliteAnnouncements((previous) =>
-            previous.filter((announcement) => announcement.id !== id),
-          );
-        }, ANNOUNCEMENT_TIME_IN_DOM);
+          setTimeout(() => {
+            setPoliteAnnouncements((previous) =>
+              previous.filter((announcement) => announcement.id !== id),
+            );
+          }, ANNOUNCEMENT_TIME_IN_DOM);
       } else {
         setAssertiveAnnouncements((previous) => {
           return previous.concat({ id, message });
         });
 
-        setTimeout(() => {
-          setAssertiveAnnouncements((previous) =>
-            previous.filter((announcement) => announcement.id !== id),
-          );
-        }, ANNOUNCEMENT_TIME_IN_DOM);
+          setTimeout(() => {
+            setAssertiveAnnouncements((previous) =>
+              previous.filter((announcement) => announcement.id !== id),
+            );
+          }, ANNOUNCEMENT_TIME_IN_DOM);
       }
     },
     [],
@@ -77,7 +77,7 @@ export const AriaAnnouncerProvider = forwardRef<
       legacyDelayOrOptions: number | AnnounceFnOptions | undefined = {},
     ) => {
       const delay =
-        typeof legacyDelayOrOptions === "number" ? legacyDelayOrOptions : 15000;
+        typeof legacyDelayOrOptions === "number" ? legacyDelayOrOptions : null;
 
       const assertiveness =
         typeof legacyDelayOrOptions === "object"
@@ -85,9 +85,7 @@ export const AriaAnnouncerProvider = forwardRef<
           : undefined;
 
       if (delay) {
-        console.log('make announcement before delay', announcement, assertiveness, delay);
         setTimeout(() => {
-          console.log('make announcement after delay', announcement, assertiveness);
           makeAnnouncement(announcement, assertiveness);
         }, delay);
       } else {
@@ -127,12 +125,12 @@ export const AriaAnnouncerProvider = forwardRef<
       >
         <AnnouncementRegion aria-live="polite">
           {politeAnnouncements.map((announcement) => (
-            <div key={announcement.id}>{announcement.message}</div>
+            <div key={`polite-${announcement.id}`}>{announcement.message}</div>
           ))}
         </AnnouncementRegion>
         <AnnouncementRegion aria-live="assertive">
           {assertiveAnnouncements.map((announcement) => (
-            <div key={announcement.id}>{announcement.message}</div>
+            <div key={`assertive-${announcement.id}`}>{announcement.message}</div>
           ))}
         </AnnouncementRegion>
       </div>
