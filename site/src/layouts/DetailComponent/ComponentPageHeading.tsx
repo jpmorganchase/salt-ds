@@ -12,7 +12,6 @@ import {
   type StackLayoutProps,
   Tag,
   Text,
-  Tooltip,
   useResponsiveProp,
 } from "@salt-ds/core";
 import {
@@ -67,6 +66,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
       tags.push({
         text: "License required",
         category: 2,
+        link: "https://developer.test.aws.jpmchase.net/salt/resources/licenses",
       });
     }
   }
@@ -201,10 +201,9 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
                   href={sourceCodeUrl}
                   target="_blank"
                   rel="noopener"
-                  aria-label="View source code on GitHub"
                 >
                   <GithubIcon aria-hidden />
-                  <span hidden={direction === "column"}>Source code</span>
+                  Code
                 </CTALink>
               )}
               {figmaUrl && (
@@ -214,32 +213,25 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
                   href={figmaUrl}
                   target="_blank"
                   rel="noopener"
-                  aria-label="View component design in Figma"
                 >
                   <FigmaIcon aria-hidden />
-                  <span hidden={direction === "column"}>Figma component</span>
+                  Design
                 </CTALink>
               )}
             </FlexLayout>
           }
           endItem={
             <Overlay>
-              <Tooltip aria-hidden="true" content="Theme controls">
-                <OverlayTrigger>
-                  <Button
-                    aria-label="Theme controls"
-                    sentiment="neutral"
-                    appearance="bordered"
-                  >
-                    <SettingsIcon aria-hidden />
-                    {direction === "column" ? (
-                      <ChevronDownIcon aria-hidden />
-                    ) : (
-                      <span>theme controls</span>
-                    )}
-                  </Button>
-                </OverlayTrigger>
-              </Tooltip>
+              <OverlayTrigger>
+                <Button
+                  aria-label="Theme controls"
+                  sentiment="neutral"
+                  appearance="bordered"
+                >
+                  <SettingsIcon aria-hidden />
+                  <ChevronDownIcon aria-hidden />
+                </Button>
+              </OverlayTrigger>
               <OverlayPanel className={styles.overlay}>
                 <OverlayPanelContent>
                   <ThemeControls />
