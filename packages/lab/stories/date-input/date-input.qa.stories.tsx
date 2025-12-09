@@ -31,6 +31,7 @@ const renderQAContainer = () => {
     >
       <DateInputSingle defaultDate={startDate} />
       <DateInputSingle defaultDate={startDate} bordered />
+      <DateInputSingle defaultDate={startDate} bordered readOnly />
       <DateInputSingle
         defaultDate={startDate}
         bordered
@@ -77,6 +78,13 @@ const renderQAContainer = () => {
           startDate,
           endDate,
         }}
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        readOnly
       />
       <DateInputRange
         defaultDate={{
