@@ -33,11 +33,11 @@
   margin: 0;
 }
 
-.packageContainter {
+.packageContainer {
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
 }
-.packageContainter th {
+.packageContainer th {
   width: initial;
 }
 
@@ -52,7 +52,7 @@
     padding-block: var(--salt-spacing-300);
   }
 
-  .packageContainter th {
+  .packageContainer th {
     width: 25%;
   }
 }

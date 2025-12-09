@@ -177,7 +177,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
         {!hidePackageInfo && (
           <Table
             variant="secondary"
-            className={headingStyles.packageContainter}
+            className={headingStyles.packageContainer}
             aria-label="Component package and dependency details"
           >
             <TBody>
