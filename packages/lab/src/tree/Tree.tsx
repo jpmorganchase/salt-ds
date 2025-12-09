@@ -412,13 +412,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       [onBlur, setActiveNode],
     );
 
-    const contextValue = useMemo(
-      () => ({
-        ...treeState,
-      }),
-      [treeState],
-    );
-
     // need to do this to apply aria-setsize and aria-posinset (via _posinst and _setsize)
     const childrenWithPosition = useMemo(() => {
       const childArray = Children.toArray(children);
@@ -437,7 +430,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
     }, [children]);
 
     return (
-      <TreeProvider value={contextValue}>
+      <TreeProvider value={treeState}>
         <ul
           ref={ref}
           role="tree"
