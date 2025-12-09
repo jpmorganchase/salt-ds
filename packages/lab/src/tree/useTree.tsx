@@ -277,6 +277,13 @@ export function useTree(props: UseTreeProps) {
     [getParent, getChildren, disabledIdsSet],
   );
 
+  useEffect(() => {
+    if (checkbox && mounted) {
+      const newIndeterminate = calculateIndeterminateState(selectedState);
+      setIndeterminateState(newIndeterminate);
+    }
+  }, [checkbox, mounted, selectedState, calculateIndeterminateState]);
+
   const updateAncestors = useCallback(
     (currentSelected: string[], value: string) => {
       if (!propagateSelectUpwards) return currentSelected;
@@ -411,9 +418,12 @@ export function useTree(props: UseTreeProps) {
   }, [getVisibleNodes]);
 
   return {
+    expandedArray,
+    setExpandedArray,
     expandedState,
     toggleExpanded,
     selectedState,
+    setSelectedState,
     select,
     multiselect,
     checkbox,
