@@ -3,17 +3,12 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  Children,
   type ComponentPropsWithoutRef,
-  cloneElement,
   type FocusEvent,
   forwardRef,
-  isValidElement,
   type KeyboardEvent,
-  type ReactElement,
   type SyntheticEvent,
   useCallback,
-  useMemo,
   useRef,
 } from "react";
 import treeCss from "./Tree.css";
@@ -412,23 +407,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       [onBlur, setActiveNode],
     );
 
-    // need to do this to apply aria-setsize and aria-posinset (via _posinst and _setsize)
-    const childrenWithPosition = useMemo(() => {
-      const childArray = Children.toArray(children);
-      const validChildren = childArray.filter(isValidElement);
-      const setSize = validChildren.length;
-
-      return validChildren.map((child, index) =>
-        cloneElement(
-          child as ReactElement<{ _posinset?: number; _setsize?: number }>,
-          {
-            _posinset: index + 1,
-            _setsize: setSize,
-          },
-        ),
-      );
-    }, [children]);
-
     return (
       <TreeProvider value={treeState}>
         <ul
@@ -445,7 +423,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           onBlur={handleBlur}
           {...rest}
         >
-          {childrenWithPosition}
+          {children}
         </ul>
       </TreeProvider>
     );
