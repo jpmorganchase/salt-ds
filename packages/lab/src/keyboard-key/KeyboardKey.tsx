@@ -2,8 +2,7 @@ import { makePrefixer, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, useEffect, useState } from "react";
-import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { forwardRef, type HTMLAttributes,  } from "react";
 
 import keyboardKeyCss from "./KeyboardKey.css";
 
