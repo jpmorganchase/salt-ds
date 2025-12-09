@@ -66,7 +66,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
       tags.push({
         text: "License required",
         category: 2,
-        link: "https://developer.test.aws.jpmchase.net/salt/resources/licenses",
+        link: "https://go/saltds-license-resources",
       });
     }
   }
