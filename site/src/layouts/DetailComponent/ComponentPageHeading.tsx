@@ -12,6 +12,7 @@ import {
   type StackLayoutProps,
   Tag,
   Text,
+  Tooltip,
   useResponsiveProp,
 } from "@salt-ds/core";
 import {
@@ -222,16 +223,18 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
           }
           endItem={
             <Overlay>
-              <OverlayTrigger>
-                <Button
-                  aria-label="Theme controls"
-                  sentiment="neutral"
-                  appearance="bordered"
-                >
-                  <SettingsIcon aria-hidden />
-                  <ChevronDownIcon aria-hidden />
-                </Button>
-              </OverlayTrigger>
+              <Tooltip aria-hidden="true" content="Theme controls">
+                <OverlayTrigger>
+                  <Button
+                    aria-label="Theme controls"
+                    sentiment="neutral"
+                    appearance="bordered"
+                  >
+                    <SettingsIcon aria-hidden />
+                    <ChevronDownIcon aria-hidden />
+                  </Button>
+                </OverlayTrigger>
+              </Tooltip>
               <OverlayPanel className={styles.overlay}>
                 <OverlayPanelContent>
                   <ThemeControls />
