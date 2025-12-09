@@ -2,6 +2,7 @@ import { useControlled } from "@salt-ds/core";
 import {
   type SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -141,6 +142,12 @@ export function useTree(props: UseTreeProps) {
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
 
   const [focusVisible, setFocusVisible] = useState(false);
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const nodesRef = useRef<Map<string, NodeInfo>>(new Map());
 
@@ -428,5 +435,6 @@ export function useTree(props: UseTreeProps) {
     disabled,
     disabledIdsSet,
     indeterminateState,
+    mounted,
   };
 }

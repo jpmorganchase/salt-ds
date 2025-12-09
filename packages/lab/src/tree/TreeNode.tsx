@@ -101,6 +101,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       disabledIdsSet,
       indeterminateState,
       getFirstVisibleNode,
+      mounted,
     } = useTreeContext();
 
     const parentContext = useTreeNodeContext();
@@ -163,7 +164,8 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     }, [expanded, hasChildren, isActive, labelText]);
 
     const isTabbable =
-      isActive || (activeNode === undefined && getFirstVisibleNode() === value);
+      isActive ||
+      (activeNode === undefined && mounted && getFirstVisibleNode() === value);
 
     useEffect(() => {
       if (nodeRef.current) {
@@ -224,8 +226,8 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
           ref={handleRef}
           id={id}
           role="treeitem"
-          aria-label={accessibleLabel}
-          aria-labelledby={accessibleLabel ? undefined : labelId}
+          // aria-label={accessibleLabel}
+          aria-labelledby={labelId}
           aria-expanded={hasChildren ? expanded : undefined}
           aria-selected={checkbox ? undefined : selected}
           aria-checked={
