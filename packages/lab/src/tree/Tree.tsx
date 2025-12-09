@@ -4,7 +4,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
@@ -396,17 +395,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       ],
     );
 
-    // might need to double check return focus behaviour
-    const handleBlur = useCallback(
-      (event: FocusEvent<HTMLUListElement>) => {
-        onBlur?.(event);
-        if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-          setActiveNode(undefined);
-        }
-      },
-      [onBlur, setActiveNode],
-    );
-
     return (
       <TreeProvider value={treeState}>
         <ul
@@ -420,7 +408,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             className,
           )}
           onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
           {...rest}
         >
           {children}
