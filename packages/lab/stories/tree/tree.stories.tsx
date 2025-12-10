@@ -62,8 +62,8 @@ export const Default = DefaultStory.bind({});
 const FolderIcon = ({ expanded }: { expanded?: boolean }) =>
   expanded ? <FolderOpenIcon /> : <FolderClosedIcon />;
 
-export const WithIcons: StoryFn<typeof Tree> = () => (
-  <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+export const WithIcons: StoryFn<typeof Tree> = (args) => (
+  <Tree aria-label="File browser" defaultExpanded={["documents"]} {...args}>
     <TreeNode
       value="documents"
       label="Documents"
@@ -104,8 +104,13 @@ export const WithIcons: StoryFn<typeof Tree> = () => (
   </Tree>
 );
 
-export const Checkbox: StoryFn<typeof Tree> = () => (
-  <Tree aria-label="File browser" checkbox defaultExpanded={["documents"]}>
+export const Checkbox: StoryFn<typeof Tree> = (args) => (
+  <Tree
+    {...args}
+    aria-label="File browser"
+    checkbox
+    defaultExpanded={["documents"]}
+  >
     <TreeNode value="documents" label="Documents">
       <TreeNode value="reports" label="Reports">
         <TreeNode value="annual-report" label="Annual Report" />
@@ -126,8 +131,13 @@ export const Checkbox: StoryFn<typeof Tree> = () => (
   </Tree>
 );
 
-export const CheckboxWithIcons: StoryFn<typeof Tree> = () => (
-  <Tree aria-label="File browser" checkbox defaultExpanded={["documents"]}>
+export const CheckboxWithIcons: StoryFn<typeof Tree> = (args) => (
+  <Tree
+    aria-label="File browser"
+    checkbox
+    defaultExpanded={["documents"]}
+    {...args}
+  >
     <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
       <TreeNode value="reports" label="Reports" icon={<FolderClosedIcon />}>
         <TreeNode
@@ -204,7 +214,7 @@ export const Controlled: StoryFn<typeof Tree> = () => {
   );
 };
 
-export const MultiSelect: StoryFn<typeof Tree> = () => {
+export const MultiSelect: StoryFn<typeof Tree> = (args) => {
   const [selected, setSelected] = useState<string[]>([]);
 
   return (
@@ -218,6 +228,7 @@ export const MultiSelect: StoryFn<typeof Tree> = () => {
         defaultExpanded={["documents", "reports"]}
         selected={selected}
         onSelectionChange={(_, newSelected) => setSelected(newSelected)}
+        {...args}
       >
         <TreeNode value="documents" label="Documents">
           <TreeNode value="reports" label="Reports">
@@ -241,8 +252,13 @@ export const MultiSelect: StoryFn<typeof Tree> = () => {
   );
 };
 
-export const Disabled: StoryFn<typeof Tree> = () => (
-  <Tree aria-label="File browser" disabled defaultExpanded={["documents"]}>
+export const Disabled: StoryFn<typeof Tree> = (args) => (
+  <Tree
+    {...args}
+    aria-label="File browser"
+    disabled
+    defaultExpanded={["documents"]}
+  >
     <TreeNode value="documents" label="Documents">
       <TreeNode value="reports" label="Reports">
         <TreeNode value="annual-report" label="Annual Report" />
@@ -252,8 +268,8 @@ export const Disabled: StoryFn<typeof Tree> = () => (
   </Tree>
 );
 
-export const DisabledNodes: StoryFn<typeof Tree> = () => (
-  <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+export const DisabledNodes: StoryFn<typeof Tree> = (args) => (
+  <Tree aria-label="File browser" defaultExpanded={["documents"]} {...args}>
     <TreeNode value="documents" label="Documents">
       <TreeNode value="reports" label="Reports" disabled>
         <TreeNode value="annual-report" label="Annual Report" />
@@ -267,11 +283,12 @@ export const DisabledNodes: StoryFn<typeof Tree> = () => (
   </Tree>
 );
 
-export const LongLabels: StoryFn<typeof Tree> = () => (
+export const LongLabels: StoryFn<typeof Tree> = (args) => (
   <Tree
     aria-label="File browser"
     defaultExpanded={["documents"]}
     style={{ maxWidth: 300 }}
+    {...args}
   >
     <TreeNode
       value="documents"
