@@ -7,12 +7,10 @@ import {
   useDismiss,
   useInteractions,
   useListNavigation,
-  useRole,
 } from "@floating-ui/react";
 import {
   Button,
   makePrefixer,
-  ownerDocument,
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
@@ -30,7 +28,6 @@ import {
   type ReactNode,
   type Ref,
   type SetStateAction,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -92,7 +89,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     const { getFloatingProps, getReferenceProps } = useInteractions([
-      useRole(context, { role: "dialog" }),
       useClick(context),
       useDismiss(context),
     ]);
@@ -120,6 +116,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const overflowId = useId();
+    const overlayId = useId();
 
     const handleFocus = () => {
       if (overflowId) {
@@ -139,57 +136,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       }
     }, [overflowId, registerTab, childCount]);
 
-    const previousListNavigationRef = useRef(listNavigationRef.current);
-    useEffect(() => {
-      const listElement = elements.floating;
-
-      if (!open || !listElement) return;
-
-      const handleFocusIn = (event: FocusEvent) => {
-        if (
-          event.target instanceof HTMLButtonElement &&
-          listNavigationRef.current.includes(event.target)
-        ) {
-          previousListNavigationRef.current = Array.from(
-            listNavigationRef.current,
-          );
-        }
-      };
-
-      const handleFocusOut = (event: FocusEvent) => {
-        queueMicrotask(() => {
-          const doc = ownerDocument(listElement);
-
-          const listOpen = listElement.isConnected;
-          const tabWasRemoved =
-            doc.activeElement === doc.body &&
-            event.target instanceof HTMLElement &&
-            !event.target.isConnected;
-
-          if (listOpen && tabWasRemoved) {
-            const index = previousListNavigationRef.current
-              .filter(Boolean)
-              .findIndex((node) => node.id === activeTab.current?.id);
-
-            // Focus the tab that was after the removed tab, or the one before if it was the last tab.
-            if (listNavigationRef.current[index]) {
-              listNavigationRef.current[index].focus();
-            } else {
-              listNavigationRef.current[index - 1].focus();
-            }
-          }
-        });
-      };
-
-      listElement.addEventListener("focusout", handleFocusOut, true);
-      listElement.addEventListener("focusin", handleFocusIn);
-
-      return () => {
-        listElement.removeEventListener("focusout", handleFocusOut, true);
-        listElement.removeEventListener("focusin", handleFocusIn);
-      };
-    }, [open, elements.floating, activeTab]);
-
     if (childCount === 0 && !isMeasuring) return null;
 
     return (
@@ -204,6 +150,9 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             })}
             ref={handleRef}
             aria-label={`${childCount} tabs hidden`}
+            aria-haspopup
+            aria-expanded={open}
+            aria-controls={overlayId}
             role="tab"
             tabIndex={-1}
             {...rest}
@@ -214,7 +163,9 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             <FloatingComponent
               ref={handleListRef}
               {...getFloatingProps({
+                "aria-modal": true,
                 role: "dialog",
+                id: overlayId,
               })}
               aria-label="Overflow Menu"
               focusManagerProps={

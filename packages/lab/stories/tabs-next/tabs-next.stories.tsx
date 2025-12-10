@@ -504,7 +504,7 @@ function CloseConfirmationDialog({
 }
 
 export const CloseWithConfirmation = () => {
-  const [tabs, setTabs] = useState(lotsOfTabs);
+  const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
   const [valueToRemove, setValueToRemove] = useState<string | undefined>(
     undefined,
   );
