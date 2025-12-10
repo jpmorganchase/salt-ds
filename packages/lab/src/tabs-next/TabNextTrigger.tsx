@@ -121,6 +121,7 @@ export const TabNextTrigger = forwardRef<
       className={withBaseName()}
       id={id}
       ref={handleRef}
+      data-value={value}
       {...rest}
     >
       {children}

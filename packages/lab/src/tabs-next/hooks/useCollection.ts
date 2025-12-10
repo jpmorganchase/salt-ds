@@ -1,9 +1,11 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 
 export interface Item {
   id: string;
   element?: HTMLElement | null;
   value: string;
+  stale?: boolean;
+  staleIndex?: number;
 }
 
 function sortBasedOnDOMPosition(items: Item[]): Item[] {
@@ -42,33 +44,37 @@ interface UseCollectionProps {
 }
 
 export function useCollection({ wrap }: UseCollectionProps) {
-  const [items, setItems] = useState<Item[]>([]);
   const itemsRef = useRef<Item[]>([]);
   const itemMap = useRef<Map<string, Item>>(new Map());
 
+  const batchTimeout = useRef<number | null>(null);
+
   const registerItem = useCallback((item: Item) => {
-    setItems((old) => {
-      const newItems = old.slice();
-      const index = newItems.findIndex(({ id }) => id === item.id);
-      if (index !== -1) {
-        const newItem = { ...newItems[index], ...item };
-        newItems[index] = newItem;
-        itemMap.current.set(item.id, newItem);
-      } else {
-        newItems.push(item);
-        itemMap.current.set(item.id, item);
+    itemMap.current.set(item.id, item);
+
+    if (batchTimeout.current) {
+      window.clearTimeout(batchTimeout.current);
+    }
+
+    batchTimeout.current = window.setTimeout(() => {
+      for (const [id, item] of itemMap.current) {
+        if (item.stale) {
+          itemMap.current.delete(id);
+        }
       }
-      const value = sortBasedOnDOMPosition(newItems);
-      itemsRef.current = value;
-      return value;
-    });
+
+      const newItems = Array.from(itemMap.current.values());
+      itemsRef.current = sortBasedOnDOMPosition(newItems);
+      batchTimeout.current = null;
+    }, 166);
 
     return () => {
-      setItems((old) => {
-        itemMap.current.delete(item.id);
-        return old.filter(({ id }) => id !== item.id);
+      itemMap.current.set(item.id, {
+        ...item,
+        stale: true,
+        staleIndex: itemsRef.current.findIndex(({ id }) => id === item.id),
       });
-      return itemsRef;
+      itemsRef.current = itemsRef.current.filter(({ id }) => id !== item.id);
     };
   }, []);
 
@@ -78,7 +84,7 @@ export function useCollection({ wrap }: UseCollectionProps) {
       if (!id) return null;
       let item = itemMap.current.get(id);
       if (!item) {
-        item = items.find((item) => item.id === id);
+        item = itemsRef.current.find((item) => item.id === id);
         if (item) {
           itemMap.current.set(item.id, item);
         }
@@ -86,29 +92,34 @@ export function useCollection({ wrap }: UseCollectionProps) {
       return item ?? null;
     },
     getNext: (current: string): Item | null => {
-      const index = items.findIndex(({ id }) => id === current);
+      const index = itemsRef.current.findIndex(({ id }) => id === current);
 
       const newIndex = wrap
-        ? (index + 1) % items.length
-        : Math.min(index + 1, items.length - 1);
+        ? (index + 1) % itemsRef.current.length
+        : Math.min(index + 1, itemsRef.current.length - 1);
 
-      return items[newIndex] ?? null;
+      return itemsRef.current[newIndex] ?? null;
     },
     getPrevious: (current: string): Item | null => {
-      const index = items.findIndex(({ id }) => id === current);
+      const index = itemsRef.current.findIndex(({ id }) => id === current);
 
       const newIndex = wrap
-        ? (index - 1 + items.length) % items.length
+        ? (index - 1 + itemsRef.current.length) % itemsRef.current.length
         : Math.max(index - 1, 0);
 
-      return items[newIndex] ?? null;
+      return itemsRef.current[newIndex] ?? null;
     },
     getFirst: (): Item | null => {
-      return items[0] ?? null;
+      return itemsRef.current[0] ?? null;
     },
     getLast: (): Item | null => {
-      return items[items.length - 1] ?? null;
+      return itemsRef.current[itemsRef.current.length - 1] ?? null;
     },
-    items,
+    getIndex: (current: string): number => {
+      return itemsRef.current.findIndex(({ id }) => id === current);
+    },
+    itemAt: (index: number): Item | null => {
+      return itemsRef.current[index] ?? null;
+    },
   };
 }
