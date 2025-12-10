@@ -107,7 +107,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       defaultDisabledIds,
       disabledIds,
       onKeyDown,
-      onBlur,
       ...rest
     } = props;
 
@@ -243,18 +242,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           case " ": {
             handled = true;
             if (activeNode) {
-              const node = getNode(activeNode);
-              if (!node?.disabled) {
-                if (checkbox) {
-                  select(event, activeNode);
-                } else {
-                  if (node?.hasChildren) {
-                    toggleExpanded(activeNode);
-                  } else {
-                    select(event, activeNode);
-                  }
-                }
-              }
+              select(event, activeNode);
             }
             break;
           }
