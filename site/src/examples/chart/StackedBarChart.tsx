@@ -36,7 +36,6 @@ const stackedBarChartOptions: Options = {
     title: {
       text: "Revenue ($ millions)",
     },
-    reversedStacks: false,
   },
   plotOptions: {
     series: {
