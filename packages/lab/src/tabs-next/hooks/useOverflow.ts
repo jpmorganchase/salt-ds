@@ -12,16 +12,13 @@ import {
   type RefObject,
   useEffect,
   useMemo,
-  useRef,
 } from "react";
 import type { TabNextProps } from "../TabNext";
-import type { Item } from "./useCollection";
 
 interface UseOverflowProps {
   container: RefObject<HTMLElement>;
   selected?: string;
   children: ReactNode;
-  tabs: Item[];
   overflowButton: RefObject<HTMLButtonElement>;
 }
 
@@ -30,8 +27,9 @@ function getTabWidth(element: HTMLElement) {
   return Math.ceil(width);
 }
 
+let pinned: string | undefined;
+
 export function useOverflow({
-  tabs,
   container,
   overflowButton,
   children,
@@ -41,12 +39,13 @@ export function useOverflow({
    * `visibleCount` doesn't include newly selected tab from overflow menu, which is removed in `computeVisible`
    */
   const [{ visibleCount, isMeasuring }, setVisibleItems] = useValueEffect({
-    visibleCount: tabs.length,
+    visibleCount: Number.POSITIVE_INFINITY,
     isMeasuring: false,
   });
-  const targetWindow = useWindow();
-  const realSelectedIndex = useRef<number>(-1);
 
+  const pinnedValue = pinned ?? selected;
+
+  const targetWindow = useWindow();
   const updateOverflow = useEventCallback(() => {
     const computeVisible = (visibleCount: number) => {
       if (container.current && targetWindow) {
@@ -55,10 +54,10 @@ export function useOverflow({
             "[data-overflowitem]",
           ),
         );
-        const selectedTab = container.current.querySelector<HTMLElement>(
-          "[role=tab][aria-selected=true]",
-        )?.parentElement;
 
+        const pinnedTab = container.current.querySelector<HTMLElement>(
+          `[role=tab][data-value="${pinnedValue}"]`,
+        )?.parentElement;
         let maxWidth = container.current.clientWidth ?? 0;
 
         const containerStyles = targetWindow.getComputedStyle(
@@ -84,7 +83,7 @@ export function useOverflow({
         }
 
         if (newVisibleCount >= items.length) {
-          return newVisibleCount;
+          return { visibleCount: newVisibleCount, items };
         }
 
         const overflowButtonWidth = overflowButton.current
@@ -99,8 +98,8 @@ export function useOverflow({
           newVisibleCount--;
         }
 
-        if (selectedTab && !visible.includes(selectedTab)) {
-          const selectedTabWidth = getTabWidth(selectedTab) + gap;
+        if (pinnedTab && !visible.includes(pinnedTab)) {
+          const selectedTabWidth = getTabWidth(pinnedTab) + gap;
           while (currentWidth + selectedTabWidth > maxWidth) {
             const removed = visible.pop();
             if (!removed) break;
@@ -110,21 +109,23 @@ export function useOverflow({
         }
 
         // minimal count should be 0, if there is no space for any tab apart from selected tab from the overflow menu
-        return Math.max(0, newVisibleCount);
+        return { visibleCount: Math.max(0, newVisibleCount), items };
       }
-      return visibleCount;
+      return { visibleCount, items: [] };
     };
 
     setVisibleItems(function* () {
       // Show all
       yield {
-        visibleCount: tabs.length,
+        visibleCount: Number.POSITIVE_INFINITY,
         isMeasuring: true,
       };
 
       // Measure the visible count
-      const newVisibleCount = computeVisible(tabs.length);
-      const isMeasuring = newVisibleCount < tabs.length && newVisibleCount > 0;
+      const { visibleCount: newVisibleCount, items } = computeVisible(
+        Number.POSITIVE_INFINITY,
+      );
+      const isMeasuring = newVisibleCount < items.length && newVisibleCount > 0;
       yield {
         visibleCount: newVisibleCount,
         isMeasuring,
@@ -133,7 +134,7 @@ export function useOverflow({
       // ensure the visible count is correct
       if (isMeasuring) {
         yield {
-          visibleCount: computeVisible(newVisibleCount),
+          visibleCount: computeVisible(newVisibleCount).visibleCount,
           isMeasuring: false,
         };
       }
@@ -218,24 +219,23 @@ export function useOverflow({
       isValidElement<TabNextProps>(child) && child?.props?.value === selected,
   );
 
-  useIsomorphicLayoutEffect(() => {
-    if (visibleCount === childArray.length) {
-      realSelectedIndex.current = childArray.findIndex(
-        (child) =>
-          isValidElement<TabNextProps>(child) &&
-          child?.props?.value === selected,
-      );
-    }
-  }, [visibleCount, childArray, selected]);
+  if (hiddenSelectedIndex !== -1) {
+    pinned = selected;
+  }
 
-  if (selected && hiddenSelectedIndex !== -1) {
-    const removed = hidden.splice(hiddenSelectedIndex, 1);
+  const hiddenPinnedIndex = hidden.findIndex(
+    (child) =>
+      isValidElement<TabNextProps>(child) && child?.props?.value === pinned,
+  );
+
+  if (hiddenPinnedIndex !== -1) {
+    const removed = hidden.splice(hiddenPinnedIndex, 1);
     visible.push(removed[0]);
   }
 
   if (isMeasuring) {
-    return [childArray, [], isMeasuring, realSelectedIndex] as const;
+    return [childArray, [], isMeasuring] as const;
   }
 
-  return [visible, hidden, isMeasuring, realSelectedIndex] as const;
+  return [visible, hidden, isMeasuring] as const;
 }
