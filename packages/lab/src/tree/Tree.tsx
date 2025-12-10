@@ -191,7 +191,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             handled = true;
             if (activeNode) {
               const node = getNode(activeNode);
-              if (node?.hasChildren) {
+              if (!node?.disabled && node?.hasChildren) {
                 if (!expandedState.has(activeNode)) {
                   toggleExpanded(activeNode);
                 } else {
@@ -209,12 +209,15 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           case "ArrowLeft": {
             handled = true;
             if (activeNode) {
-              if (expandedState.has(activeNode)) {
-                toggleExpanded(activeNode);
-              } else {
-                const parent = getParent(activeNode);
-                if (parent) {
-                  newActiveNode = parent;
+              const node = getNode(activeNode);
+              if (!node?.disabled) {
+                if (expandedState.has(activeNode)) {
+                  toggleExpanded(activeNode);
+                } else {
+                  const parent = getParent(activeNode);
+                  if (parent) {
+                    newActiveNode = parent;
+                  }
                 }
               }
             }
@@ -240,14 +243,16 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           case " ": {
             handled = true;
             if (activeNode) {
-              if (checkbox) {
-                select(event, activeNode);
-              } else {
-                const node = getNode(activeNode);
-                if (node?.hasChildren) {
-                  toggleExpanded(activeNode);
-                } else {
+              const node = getNode(activeNode);
+              if (!node?.disabled) {
+                if (checkbox) {
                   select(event, activeNode);
+                } else {
+                  if (node?.hasChildren) {
+                    toggleExpanded(activeNode);
+                  } else {
+                    select(event, activeNode);
+                  }
                 }
               }
             }

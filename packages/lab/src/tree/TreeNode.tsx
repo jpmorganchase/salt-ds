@@ -164,14 +164,23 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     }, [expanded, hasChildren, isActive, labelText]);
 
     const isTabbable =
-      isActive ||
-      (activeNode === undefined && mounted && getFirstVisibleNode() === value);
+      !disabled &&
+      (isActive ||
+        (activeNode === undefined &&
+          mounted &&
+          getFirstVisibleNode() === value));
 
     useEffect(() => {
       if (nodeRef.current) {
-        return registerNode(value, nodeRef.current, parentValue, hasChildren);
+        return registerNode(
+          value,
+          nodeRef.current,
+          parentValue,
+          hasChildren,
+          disabled,
+        );
       }
-    }, [value, parentValue, hasChildren, registerNode]);
+    }, [value, parentValue, hasChildren, disabled, registerNode]);
 
     useEffect(() => {
       if (isActive && nodeRef.current) {

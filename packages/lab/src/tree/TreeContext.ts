@@ -37,11 +37,14 @@ export interface TreeContextValue {
     element: HTMLElement,
     parentValue?: string,
     hasChildren?: boolean,
+    disabled?: boolean,
   ) => () => void;
   /** Get node info from registry */
   getNode: (
     value: string,
-  ) => { element: HTMLElement; hasChildren?: boolean } | undefined;
+  ) =>
+    | { element: HTMLElement; hasChildren?: boolean; disabled?: boolean }
+    | undefined;
   /** Get parent of a node */
   getParent: (value: string) => string | undefined;
   /** Get children of a node */
