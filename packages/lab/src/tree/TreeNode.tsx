@@ -250,7 +250,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
             withBaseName(),
             {
               [withBaseName("expanded")]: expanded,
-              [withBaseName("selected")]: selected,
+              [withBaseName("selected")]: selected && !checkbox,
               [withBaseName("active")]: isActive,
               [withBaseName("disabled")]: disabled,
               [withBaseName("hasChildren")]: hasChildren,
