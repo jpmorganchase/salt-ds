@@ -886,7 +886,7 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should skip disabled nodes during keyboard navigation", () => {
+    it("should skip disabled nodes during keyboard navigation via disabledIDs", () => {
       cy.mount(
         <Tree aria-label="File browser" disabledIds={["node2"]}>
           <TreeNode value="node1" label="Node 1" />
@@ -897,8 +897,20 @@ describe("Given a Tree", () => {
       cy.realPress("Tab");
       cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       cy.realPress("ArrowDown");
-      // Disabled node is still navigable but not selectable
-      cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
+    });
+
+    it("should skip disabled nodes during keyboard navigation via disabled prop on node", () => {
+      cy.mount(
+        <Tree aria-label="File browser">
+          <TreeNode value="node1" label="Node 1" disabled />
+          <TreeNode value="node2" label="Node 2" />
+          <TreeNode value="node3" label="Node 3" />
+        </Tree>,
+      );
+      cy.realPress("Tab");
+      cy.realPress("ArrowDown");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
 
     it("should not include disabled nodes in Ctrl+A selection", () => {

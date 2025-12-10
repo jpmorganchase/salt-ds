@@ -85,6 +85,8 @@ interface NodeInfo {
   parentValue?: string;
   /** Whether this node has children */
   hasChildren?: boolean;
+  /** Whether this node is disabled */
+  disabled?: boolean;
 }
 
 export function useTree(props: UseTreeProps) {
@@ -157,8 +159,14 @@ export function useTree(props: UseTreeProps) {
       element: HTMLElement,
       parentValue?: string,
       hasChildren?: boolean,
+      disabled?: boolean,
     ) => {
-      nodesRef.current.set(value, { element, parentValue, hasChildren });
+      nodesRef.current.set(value, {
+        element,
+        parentValue,
+        hasChildren,
+        disabled,
+      });
 
       return () => {
         nodesRef.current.delete(value);
@@ -389,6 +397,12 @@ export function useTree(props: UseTreeProps) {
     const entries = Array.from(nodesRef.current.entries());
 
     const visibleNodes = entries.filter(([_value, info]) => {
+      // Skip disabled nodes - they should not be focusable per ARIA APG
+      // info.disabled already contains the computed disabled state from TreeNode
+      if (info.disabled) {
+        return false;
+      }
+
       let currentParent = info.parentValue;
       while (currentParent) {
         if (!expandedState.has(currentParent)) {
