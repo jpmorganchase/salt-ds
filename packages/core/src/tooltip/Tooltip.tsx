@@ -8,10 +8,7 @@ import {
   type Ref,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import {
-  VALIDATION_NAMED_STATUS,
-  type ValidationStatus,
-} from "../status-indicator";
+import type { ValidationStatus } from "../status-indicator";
 import {
   getRefFromChildren,
   makePrefixer,
@@ -94,12 +91,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = useFormFieldProps();
 
     const disabled = disabledProp || formFieldDisabled;
-    const status =
-      statusProp ??
-      (formFieldValidationStatus !== undefined &&
-      VALIDATION_NAMED_STATUS.includes(formFieldValidationStatus)
-        ? formFieldValidationStatus
-        : undefined);
+    const status = statusProp ?? formFieldValidationStatus ?? undefined;
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const hookProps: UseTooltipProps = {

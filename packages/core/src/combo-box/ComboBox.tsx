@@ -7,6 +7,7 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
+import { useInjectedClassName } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -63,13 +64,22 @@ export type ComboBoxProps<Item = string> = {
 
 const withBaseName = makePrefixer("saltComboBox");
 
+declare module "@salt-ds/core" {
+  interface ComponentPropMap {
+    ComboBox: ComboBoxProps;
+  }
+}
+
 export const ComboBox = forwardRef(function ComboBox<Item>(
   props: ComboBoxProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
+  const { className, props: finalProps } = useInjectedClassName(
+    "saltComboBox",
+    props,
+  );
   const {
     children,
-    className,
     disabled: disabledProp,
     endAdornment: endAdornmentProp,
     readOnly: readOnlyProp,
@@ -95,7 +105,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     bordered = false,
     OverlayProps,
     ...rest
-  } = props;
+  } = finalProps;
 
   const { CollapseIcon, ExpandIcon } = useIcon();
   const {
