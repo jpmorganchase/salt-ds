@@ -7,5 +7,5 @@
 }
 
 .saltTree-disabled {
-  pointer-events: none;
+  cursor: var(--salt-cursor-disabled);
 }
