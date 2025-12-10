@@ -4,10 +4,6 @@ import {
   FormField,
   FormFieldLabel,
   StackLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
-import {
   Table,
   type TableProps,
   TBody,
@@ -17,8 +13,10 @@ import {
   TH,
   THead,
   type THeadProps,
+  ToggleButton,
+  ToggleButtonGroup,
   TR,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Dividers = (): ReactElement => {
@@ -74,16 +72,33 @@ export const Dividers = (): ReactElement => {
         <THead divider={header}>
           <TR>
             {Array.from({ length: 3 }, (_arrItem, i) => {
-              return <TH key={`col-${i}`}>Column {i + 1}</TH>;
+              return (
+                <TH
+                  // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                  key={`col-${i}`}
+                >
+                  Column {i + 1}
+                </TH>
+              );
             })}
           </TR>
         </THead>
         <TBody>
           {Array.from({ length: 5 }, (_arrItem, x) => {
             return (
-              <TR key={`tr-${x}`}>
+              <TR
+                // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                key={`tr-${x}`}
+              >
                 {Array.from({ length: 3 }, (_nestedArrItem, i) => {
-                  return <TD key={`td-${i}`}>Row {x + 1}</TD>;
+                  return (
+                    <TD
+                      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                      key={`td-${i}`}
+                    >
+                      Row {x + 1}
+                    </TD>
+                  );
                 })}
               </TR>
             );
@@ -92,7 +107,14 @@ export const Dividers = (): ReactElement => {
         <TFoot divider={footer}>
           <TR>
             {Array.from({ length: 3 }, (_arrItem, i) => {
-              return <TD key={`footer-${i}`}>Footer {i + 1}</TD>;
+              return (
+                <TD
+                  // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                  key={`footer-${i}`}
+                >
+                  Footer {i + 1}
+                </TD>
+              );
             })}
           </TR>
         </TFoot>
