@@ -244,25 +244,26 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should toggle expansion with Space on parent node", () => {
+    it.only("should select focused node with Space", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
       cy.mount(
-        <Tree aria-label="File browser">
-          <TreeNode value="parent" label="Parent">
-            <TreeNode value="child" label="Child" />
-          </TreeNode>
+        <Tree aria-label="File browser" onSelectionChange={onSelectionChange}>
+          <TreeNode value="node1" label="Node 1" />
+          <TreeNode value="node2" label="Node 2" />
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: /Parent/ }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
+      cy.realPress("ArrowDown");
       cy.realPress("Space");
-      cy.findByRole("treeitem", { name: /Parent/ }).should(
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
         "have.attr",
-        "aria-expanded",
+        "aria-selected",
         "true",
+      );
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["node2"],
       );
     });
 
