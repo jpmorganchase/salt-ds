@@ -14,7 +14,6 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: var(--salt-spacing-100);
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
 
   /**
@@ -26,6 +25,13 @@
   color: var(--salt-content-primary-foreground);
   cursor: var(--salt-cursor-hover);
   min-height: var(--salt-size-base);
+}
+
+.saltTreeNode-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-100);
+  width: 100%;
 }
 
 .saltTreeNode-content:hover {
@@ -99,9 +105,6 @@
   line-height: var(--salt-text-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
   word-break: break-word;
-  min-height: var(--salt-text-lineHeight);
-  display: flex;
-  align-items: center;
 }
 
 .saltTreeNode-srOnly {
