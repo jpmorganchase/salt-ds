@@ -266,28 +266,30 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         >
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: keyboard handled at tree level */}
           <div className={withBaseName("content")} onClick={handleContentClick}>
-            <span
-              className={withBaseName("expansion")}
-              onClick={handleExpansionClick}
-              aria-hidden="true"
-            >
-              {hasChildren && <ExpansionIcon expanded={expanded} />}
-            </span>
+            <div className={withBaseName("row")}>
+              <span
+                className={withBaseName("expansion")}
+                onClick={handleExpansionClick}
+                aria-hidden="true"
+              >
+                {hasChildren && <ExpansionIcon expanded={expanded} />}
+              </span>
 
-            {checkbox && (
-              <CheckboxIcon
-                checked={selected}
-                indeterminate={indeterminate}
-                disabled={disabled}
-                className={withBaseName("checkbox")}
-              />
-            )}
+              {checkbox && (
+                <CheckboxIcon
+                  checked={selected}
+                  indeterminate={indeterminate}
+                  disabled={disabled}
+                  className={withBaseName("checkbox")}
+                />
+              )}
 
-            {icon && <span className={withBaseName("icon")}>{icon}</span>}
+              {icon && <span className={withBaseName("icon")}>{icon}</span>}
 
-            <span id={labelId} className={withBaseName("label")}>
-              {label}
-            </span>
+              <span id={labelId} className={withBaseName("label")}>
+                {label}
+              </span>
+            </div>
           </div>
 
           {hasChildren && expanded && (

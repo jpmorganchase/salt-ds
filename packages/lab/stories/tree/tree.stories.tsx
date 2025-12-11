@@ -223,12 +223,12 @@ export const MultiSelect: StoryFn<typeof Tree> = (args) => {
         <strong>Selected:</strong> {selected.join(", ") || "none"}
       </div>
       <Tree
+        {...args}
         aria-label="File browser"
         multiselect
         defaultExpanded={["documents", "reports"]}
         selected={selected}
         onSelectionChange={(_, newSelected) => setSelected(newSelected)}
-        {...args}
       >
         <TreeNode value="documents" label="Documents">
           <TreeNode value="reports" label="Reports">
