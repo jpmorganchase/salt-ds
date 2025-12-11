@@ -320,7 +320,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
       });
 
       it("SHOULD move to today's date if selected date is not within the visible month", () => {
-        const todayTestDate = adapter.today();
+        const todayTestDate: DateFrameworkType = adapter.today();
         cy.mount(
           <Calendar
             selectionVariant="offset"
@@ -351,7 +351,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
       });
 
       it("SHOULD move to today's date if there is no selected date", () => {
-        const todayTestDate = adapter.today();
+        const todayTestDate: DateFrameworkType = adapter.today();
         cy.mount(
           <Calendar
             selectionVariant="offset"
@@ -375,7 +375,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
       });
 
       it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-        const todayTestDate = adapter.today();
+        const todayTestDate: DateFrameworkType = adapter.today();
         const visibleMonth = adapter.add(todayTestDate, { months: 1 });
         cy.mount(
           <Calendar
@@ -399,7 +399,10 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         // Simulate pressing the Tab key
         cy.realPress("Tab");
         // Verify that the focus moves to the start of the month
-        let startOfMonth = adapter.startOf(todayTestDate, "month");
+        let startOfMonth: DateFrameworkType = adapter.startOf(
+          todayTestDate,
+          "month",
+        );
         startOfMonth = adapter.add(startOfMonth, { months: 2 });
         cy.findByRole("button", {
           name: `Start new range: ${adapter.format(startOfMonth, "dddd D MMMM YYYY")}`,
@@ -411,7 +414,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
       });
 
       it("SHOULD allow multiple dates to be selected and unselected", () => {
-        const testDate = adapter.today();
+        const testDate: DateFrameworkType = adapter.today();
 
         const selectStub = (
           previousSelectedDate: DateFrameworkType,
@@ -458,7 +461,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         }).realClick();
         cy.findByRole("button", {
           name: adapter.format(
-            adapter.startOf(testDate, "month"),
+            adapter.startOf(testDate, "month") as DateFrameworkType,
             "dddd D MMMM YYYY",
           ),
         }).realHover();
@@ -470,7 +473,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
         }).realClick();
         cy.findByRole("button", {
-          name: `Start new range: ${adapter.format(adapter.startOf(testDate, "month"), "dddd D MMMM YYYY")}`,
+          name: `Start new range: ${adapter.format(adapter.startOf(testDate, "month") as DateFrameworkType, "dddd D MMMM YYYY")}`,
         }).realHover();
 
         assertRangeUnselected(adapter, testDate);
