@@ -48,6 +48,7 @@
     0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected),
     0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
   position: relative;
+  z-index: var(--salt-zIndex-default);
 }
 
 .saltTreeNode:focus-visible > .saltTreeNode-content {
@@ -58,6 +59,7 @@
 .saltTreeNode-selected:focus-visible > .saltTreeNode-content {
   background: var(--salt-selectable-background-selected);
   outline: var(--salt-focused-outline);
+  z-index: var(--salt-zIndex-default);
 }
 
 .saltTreeNode-disabled > .saltTreeNode-content {
