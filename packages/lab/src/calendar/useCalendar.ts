@@ -8,6 +8,14 @@ import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { type SyntheticEvent, useCallback, useEffect, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import {
+  createRangeSelectionAnnouncement,
+  createSingleSelectionAnnouncement,
+} from "./internal/createAnnouncement";
+import { generateDatesForMonth } from "./internal/utils";
+import {
+  type DateRangeSelection,
+  isDateRangeSelection,
+  type SingleDateSelection,
   type UseCalendarSelectionMultiselectOffsetProps,
   type UseCalendarSelectionMultiselectRangeProps,
   type UseCalendarSelectionMultiselectSingleProps,
@@ -16,16 +24,11 @@ import {
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
   useCalendarSelection,
-  DateRangeSelection,
-  isDateRangeSelection,
-  SingleDateSelection,
 } from "./useCalendarSelection";
-import { generateDatesForMonth } from "./internal/utils";
-import { useDateSelectionAnnouncer, CreateAnnouncement } from "./useDateSelectionAnnouncer";
 import {
-  createSingleSelectionAnnouncement,
-  createRangeSelectionAnnouncement,
-} from "./internal/createAnnouncement";
+  type CreateAnnouncement,
+  useDateSelectionAnnouncer,
+} from "./useDateSelectionAnnouncer";
 
 /**
  * Base properties for the UseCalendar hook.
@@ -518,7 +521,8 @@ export function useCalendar<TDate extends DateFrameworkType>(
     (date: TDate): -1 | 0 | 1 => {
       if (dateAdapter.compare(date, minDate) < 0) {
         return -1;
-      } else if (dateAdapter.compare(date, maxDate) > 0) {
+      }
+      if (dateAdapter.compare(date, maxDate) > 0) {
         return 1;
       }
       return 0;
@@ -868,8 +872,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
       ? createSingleSelectionAnnouncement
       : createRangeSelectionAnnouncement;
   const { announce } = useDateSelectionAnnouncer<TDate>(
-    createAnnouncement === undefined ? defaultCreateAnnouncement : createAnnouncement,
-    dateAdapter
+    createAnnouncement === undefined
+      ? defaultCreateAnnouncement
+      : createAnnouncement,
+    dateAdapter,
   );
 
   const setFocusedDate = useCallback(

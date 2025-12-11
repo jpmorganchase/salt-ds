@@ -324,7 +324,7 @@ function selectDateRange<TDate extends DateFrameworkType>(
     dateAdapter.compare(newDate, previousSelectedDate?.startDate) >= 0 &&
     dateAdapter.compare(newDate, previousSelectedDate?.endDate) <= 0
   ) {
-    return { startDate: null, endDate: null};
+    return { startDate: null, endDate: null };
   }
   if (previousSelectedDate?.startDate && previousSelectedDate?.endDate) {
     return {
@@ -919,9 +919,10 @@ export const TwinCalendars: StoryFn<
     [dateAdapter, startVisibleMonth],
   );
 
-  const [selectedDate, setSelectedDate] = useState<
-    CalendarRangeProps<DateFrameworkType>["selectedDate"]
-  >(defaultSelectedDate);
+  const [selectedDate, setSelectedDate] =
+    useState<CalendarRangeProps<DateFrameworkType>["selectedDate"]>(
+      defaultSelectedDate,
+    );
   const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
@@ -934,11 +935,17 @@ export const TwinCalendars: StoryFn<
     };
 
   return (
-    <div role="region" aria-label="Twin Calendar example" style={{ display: "flex", gap: 16 }}>
+    <div
+      role="region"
+      aria-label="Twin Calendar example"
+      style={{ display: "flex", gap: 16 }}
+    >
       <Calendar
         selectionVariant="range"
         focusedDate={
-          focusedDate && endVisibleMonth && dateAdapter.compare(
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
             focusedDate,
             dateAdapter.startOf(endVisibleMonth, "month"),
           ) < 0
@@ -973,7 +980,9 @@ export const TwinCalendars: StoryFn<
       <Calendar
         selectionVariant="range"
         focusedDate={
-          focusedDate && endVisibleMonth && dateAdapter.compare(
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
             focusedDate,
             dateAdapter.startOf(endVisibleMonth, "month"),
           ) >= 0

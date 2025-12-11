@@ -544,11 +544,7 @@ export const DateInputRange = forwardRef<
             startInputPropsLabelledBy,
             startInputID,
           )}
-          aria-invalid={
-            !isReadOnly
-              ? validationStatus === "error"
-              : undefined
-          }
+          aria-invalid={!isReadOnly ? validationStatus === "error" : undefined}
           aria-label={clsx("Start date", ariaLabel)}
           id={startInputID}
           className={withBaseName("input")}
@@ -581,11 +577,7 @@ export const DateInputRange = forwardRef<
             endInputPropsLabelledBy,
             endInputID,
           )}
-          aria-invalid={
-            !isReadOnly
-              ? validationStatus === "error"
-              : undefined
-          }
+          aria-invalid={!isReadOnly ? validationStatus === "error" : undefined}
           aria-label={clsx("End date", ariaLabel)}
           id={endInputID}
           className={withBaseName("input")}

@@ -42,7 +42,7 @@ import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import {
   type RangeDatePickerState,
-  useDatePickerContext
+  useDatePickerContext,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 import datePickerPanelCss from "./DatePickerPanel.css";
@@ -255,7 +255,9 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
     helpers: { select, isDayHighlighted, isDayUnselectable },
-  } = useDatePickerContext<TDate>({ selectionVariant: "range" }) as RangeDatePickerState<TDate>;
+  } = useDatePickerContext<TDate>({
+    selectionVariant: "range",
+  }) as RangeDatePickerState<TDate>;
 
   const {
     state: { initialFocusRef, focused },

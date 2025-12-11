@@ -18,8 +18,8 @@ import "./DatePickerActions.css";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import datePickerActions from "./DatePickerActions.css";
 import { useLocalization } from "../localization-provider";
+import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");
 
@@ -157,7 +157,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
 
   let selectedLabel;
   if (selectedDate === null) {
-    selectedLabel = `no date selected`;
+    selectedLabel = "no date selected";
   } else if (selectionVariant == "single") {
     const date = selectedDate as
       | SingleDateSelection<TDate>[]
@@ -165,20 +165,20 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
     if (Array.isArray(date)) {
       selectedLabel =
         date?.length === 0
-          ? `no dates selected`
+          ? "no dates selected"
           : `${date.length} single dates`;
     } else {
-      selectedLabel = `Apply ${dateAdapter.format(date, `dddd D MMMM YYYY`)}`;
+      selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
     }
   } else if (selectionVariant == "range") {
     const dateRange = selectedDate as DateRangeSelection<TDate>;
     if (Array.isArray(dateRange)) {
       selectedLabel =
         dateRange?.length === 0
-          ? `no dates selected`
+          ? "no dates selected"
           : `${dateRange.length} range dates`;
     } else {
-      selectedLabel = `${dateAdapter.format(dateRange?.startDate, `dddd D MMMM YYYY`)} to ${dateAdapter.format(dateRange?.endDate, `dddd D MMMM YYYY`)}`;
+      selectedLabel = `${dateAdapter.format(dateRange?.startDate, "dddd D MMMM YYYY")} to ${dateAdapter.format(dateRange?.endDate, "dddd D MMMM YYYY")}`;
     }
   }
 

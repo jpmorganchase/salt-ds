@@ -82,14 +82,8 @@ export const CalendarDay = forwardRef<
     date,
     month,
   });
-  const {
-    focused,
-    today,
-    unselectable,
-    highlighted,
-    hidden,
-    outOfRange,
-  } = status;
+  const { focused, today, unselectable, highlighted, hidden, outOfRange } =
+    status;
   const buttonRef = useForkRef(ref, focusedDateRef);
 
   useIsomorphicLayoutEffect(() => {

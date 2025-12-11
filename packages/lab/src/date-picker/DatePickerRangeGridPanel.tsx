@@ -99,7 +99,7 @@ export const DatePickerRangeGridPanel = forwardRef(
 
     const stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as RangeDatePickerState<TDate>;;
+    }) as RangeDatePickerState<TDate>;
 
     const {
       state: { focused, initialFocusRef },

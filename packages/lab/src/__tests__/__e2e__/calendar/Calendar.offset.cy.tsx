@@ -418,7 +418,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           newDate: DateFrameworkType,
         ) => {
           let newSelection = previousSelectedDate.filter(
-            ({ startDate, endDate }:DateRangeSelection<DateFrameworkType>) => {
+            ({ startDate, endDate }: DateRangeSelection<DateFrameworkType>) => {
               // Check if newDate is not between startDate and endDate
               return !(
                 startDate &&

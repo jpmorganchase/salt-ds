@@ -21,7 +21,15 @@ const AnnouncementRegion = forwardRef<
   HTMLDivElement,
   ComponentPropsWithRef<"div">
 >(function AnnouncementRegion(props, ref) {
-  return <div role="log" aria-atomic={true} aria-relevant="additions" ref={ref} {...props} />;
+  return (
+    <div
+      role="log"
+      aria-atomic={true}
+      aria-relevant="additions"
+      ref={ref}
+      {...props}
+    />
+  );
 });
 
 type AnnouncementMessage = {
@@ -45,27 +53,27 @@ export const AriaAnnouncerProvider = forwardRef<
   const makeAnnouncement = useCallback(
     (message: string, assertiveness: "polite" | "assertive" = "polite") => {
       const id = Date.now();
-      console.log('....', message, assertiveness);
+      console.log("....", message, assertiveness);
       if (assertiveness === "polite") {
         setPoliteAnnouncements((previous) => {
           return previous.concat({ id, message });
         });
 
-          setTimeout(() => {
-            setPoliteAnnouncements((previous) =>
-              previous.filter((announcement) => announcement.id !== id),
-            );
-          }, ANNOUNCEMENT_TIME_IN_DOM);
+        setTimeout(() => {
+          setPoliteAnnouncements((previous) =>
+            previous.filter((announcement) => announcement.id !== id),
+          );
+        }, ANNOUNCEMENT_TIME_IN_DOM);
       } else {
         setAssertiveAnnouncements((previous) => {
           return previous.concat({ id, message });
         });
 
-          setTimeout(() => {
-            setAssertiveAnnouncements((previous) =>
-              previous.filter((announcement) => announcement.id !== id),
-            );
-          }, ANNOUNCEMENT_TIME_IN_DOM);
+        setTimeout(() => {
+          setAssertiveAnnouncements((previous) =>
+            previous.filter((announcement) => announcement.id !== id),
+          );
+        }, ANNOUNCEMENT_TIME_IN_DOM);
       }
     },
     [],
@@ -130,7 +138,9 @@ export const AriaAnnouncerProvider = forwardRef<
         </AnnouncementRegion>
         <AnnouncementRegion aria-live="assertive">
           {assertiveAnnouncements.map((announcement) => (
-            <div key={`assertive-${announcement.id}`}>{announcement.message}</div>
+            <div key={`assertive-${announcement.id}`}>
+              {announcement.message}
+            </div>
           ))}
         </AnnouncementRegion>
       </div>

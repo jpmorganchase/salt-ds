@@ -53,22 +53,21 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     });
 
     it("SHOULD show calendar overlay when click the calendar icon button", () => {
-      cy.mount(<Range />);
+      cy.mount(<RangeControlled />);
       cy.findByRole("button", { name: "Open Calendar" }).should(
         "have.attr",
         "aria-expanded",
-        "false"
+        "false",
       );
 
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true"
-      );
+      // cy.get used as we query elements which are non-visible when dialog is open
+      cy.get('button[aria-label="Open Calendar"]')
+        .should("exist")
+        .and("have.attr", "aria-expanded", "true");
     });
 
     it("SHOULD open calendar overlay when using down arrow", () => {
@@ -76,7 +75,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findByRole("button", { name: "Open Calendar" }).should(
         "have.attr",
         "aria-expanded",
-        "false"
+        "false",
       );
 
       cy.findAllByRole("textbox")
@@ -85,11 +84,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         .type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true"
-      );
+      // cy.get used as we query elements which are non-visible when dialog is open
+      cy.get('button[aria-label="Open Calendar"]')
+        .should("exist")
+        .and("have.attr", "aria-expanded", "true");
     });
 
     it("SHOULD be able to enable the overlay to open on click", () => {
@@ -330,10 +328,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.get("@selectionChangeSpy").should("not.have.been.called");
         // Simulate selecting a date within the min/max range
         cy.findByRole("button", {
-          name: "Tuesday 15 January 2030",
+          name: "Tuesday 15 January 2030, minimum date",
         }).realClick();
         cy.findByRole("button", {
-          name: "Wednesday 15 January 2031",
+          name: "Wednesday 15 January 2031, maximum date",
         }).realClick();
         // Verify that the calendar is closed and the selected dates are displayed
         cy.findByRole("application").should("not.exist");
@@ -674,7 +672,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             );
           });
           // Simulate clicking the "Cancel" button
-          cy.findByRole("button", { name: "Cancel" }).realClick();
+          cy.findByRole("button", {
+            name: "Cancel Wednesday 15 January 2025 to Thursday 16 January 2025",
+          }).realClick();
           // Verify that the calendar is closed and the initial selected dates are restored
           cy.findByRole("application").should("not.exist");
           cy.get("@appliedDateSpy").should("not.have.been.called");
@@ -728,7 +728,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           });
           cy.findAllByRole("application").should("have.length", 2);
           // Simulate clicking the "Apply" button
-          cy.findByRole("button", { name: "Apply" }).realClick();
+          cy.findByRole("button", {
+            name: "Apply Wednesday 15 January 2025 to Thursday 16 January 2025",
+          }).realClick();
           // Verify that the calendar is closed and the new date range is applied
           cy.findByRole("application").should("not.exist");
           // biome-ignore lint/suspicious/noExplicitAny: spy
@@ -938,9 +940,13 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
           while (currentDate <= endDate) {
             let formattedDate = adapter.format(currentDate, "dddd D MMMM YYYY");
-            if (adapter.isSame(currentDate, initialRangeDate.startDate, "day")) {
+            if (
+              adapter.isSame(currentDate, initialRangeDate.startDate, "day")
+            ) {
               formattedDate = `Start selected range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`;
-            } else if (adapter.isSame(currentDate, initialRangeDate.endDate, "day")) {
+            } else if (
+              adapter.isSame(currentDate, initialRangeDate.endDate, "day")
+            ) {
               formattedDate = `End selected range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`;
             }
             const dayOfWeek = adapter.getDayOfWeek(currentDate);

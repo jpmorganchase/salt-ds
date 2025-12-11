@@ -8,6 +8,14 @@ import {
   useState,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import {
+  type CreateAnnouncement,
+  useDateSelectionAnnouncer,
+} from "../calendar";
+import {
+  createRangeSelectionAnnouncement,
+  createSingleSelectionAnnouncement,
+} from "../calendar/internal/createAnnouncement";
 import type {
   DateInputRangeDetails,
   DateInputSingleDetails,
@@ -18,12 +26,6 @@ import type {
   SingleDatePickerState,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
-import {
-  createRangeSelectionAnnouncement,
-  createSingleSelectionAnnouncement,
-} from "../calendar/internal/createAnnouncement";
-import { useDateSelectionAnnouncer } from "../calendar";
-import { CreateAnnouncement } from "../calendar";
 
 interface UseDatePickerBaseProps<TDate> {
   /**

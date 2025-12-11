@@ -4,8 +4,13 @@ import type {
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
-import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
-import { useCallback, useMemo } from "react";
+import {
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+  type SyntheticEvent,
+  useCallback,
+  useMemo,
+} from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
 

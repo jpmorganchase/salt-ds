@@ -58,18 +58,17 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("button", { name: "Open Calendar" }).should(
         "have.attr",
         "aria-expanded",
-        "false"
+        "false",
       );
 
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true"
-      );
+      // cy.get used as we query elements which are non-visible when dialog is open
+      cy.get('button[aria-label="Open Calendar"]')
+        .should("exist")
+        .and("have.attr", "aria-expanded", "true");
     });
 
     it("SHOULD open calendar overlay when using down arrow", () => {
@@ -77,17 +76,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("button", { name: "Open Calendar" }).should(
         "have.attr",
         "aria-expanded",
-        "false"
+        "false",
       );
 
       cy.findByRole("textbox").click().type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true"
-      );
+      // cy.get used as we query elements which are non-visible when dialog is open
+      cy.get('button[aria-label="Open Calendar"]')
+        .should("exist")
+        .and("have.attr", "aria-expanded", "true");
     });
 
     it("SHOULD be able to enable the overlay to open on click", () => {
@@ -125,12 +123,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Simulate overlay closing when cancelled
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
-      cy.findByRole("button", { name: "Cancel" }).realClick();
+      cy.findByRole("button", { name: "Cancel no date selected" }).realClick();
       cy.findByRole("application").should("not.exist");
       // Simulate overlay closing when date applied
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
-      cy.findByRole("button", { name: "Apply" }).realClick();
+      cy.findByRole("button", { name: "Apply no date selected" }).realClick();
       // Verify that the calendar is closed and the new date is applied
       cy.findByRole("application").should("not.exist");
     });
@@ -551,7 +549,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             expect(details).to.be.undefined;
           });
           // Simulate clicking the "Cancel" button
-          cy.findByRole("button", { name: "Cancel" }).realClick();
+          cy.findByRole("button", {
+            name: "Cancel Monday 6 January 2025",
+          }).realClick();
           // Verify that the calendar is closed and the initial selected date is restored
           cy.findByRole("application").should("not.exist");
           cy.get("@appliedDateSpy").should("not.have.been.called");
@@ -598,7 +598,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             expect(details).to.be.undefined;
           });
           // Simulate clicking the "Apply" button
-          cy.findByRole("button", { name: "Apply" }).realClick();
+          cy.findByRole("button", {
+            name: "Apply Monday 6 January 2025",
+          }).realClick();
           // Verify that the calendar is closed and the new date is applied
           cy.findByRole("application").should("not.exist");
           // biome-ignore lint/suspicious/noExplicitAny: spy

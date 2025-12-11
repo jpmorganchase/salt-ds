@@ -8,7 +8,7 @@ import {
   ListBox,
   Option,
   StackLayout,
-  useId
+  useId,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
@@ -61,7 +61,7 @@ export const CustomDatePickerPanel = forwardRef<
     helpers: { select },
   } = stateAndHelpers;
 
-  const labelId= useId();
+  const labelId = useId();
   return (
     <StackLayout separators gap={0} ref={ref}>
       {helperText && (
@@ -72,7 +72,10 @@ export const CustomDatePickerPanel = forwardRef<
       <FlexLayout gap={0}>
         <StackLayout>
           <FormField style={{ marginTop: "var(--salt-spacing-200)" }}>
-            <FormFieldLabel id={labelId} style={{ marginLeft: "var(--salt-spacing-100)" }}>
+            <FormFieldLabel
+              id={labelId}
+              style={{ marginLeft: "var(--salt-spacing-100)" }}
+            >
               List header
             </FormFieldLabel>
             <ListBox

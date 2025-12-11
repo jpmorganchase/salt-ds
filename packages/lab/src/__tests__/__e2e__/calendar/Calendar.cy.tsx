@@ -479,7 +479,9 @@ describe("GIVEN a Calendar", () => {
           cy.mount(<TodayButton defaultVisibleMonth={testDate} />);
           const today = adapter.today();
           // Simulate clicking the "Today" button
-          cy.findByRole("button", { name: `Change Date, ${adapter.format(today, "dddd DD MMMM YYYY")}`}).click();
+          cy.findByRole("button", {
+            name: `Change Date, ${adapter.format(today, "dddd DD MMMM YYYY")}`,
+          }).click();
           // Verify that today's date button has `aria-current=date`
           cy.findByRole("button", {
             name: adapter.format(today, "dddd D MMMM YYYY"),
@@ -673,10 +675,7 @@ describe("GIVEN a Calendar", () => {
           );
 
           // Define the weekend dates in March 2024
-          const weekendDates = [
-            "Saturday 2 March 2024",
-            "Sunday 3 March 2024",
-          ];
+          const weekendDates = ["Saturday 2 March 2024", "Sunday 3 March 2024"];
 
           // Focus on the day before the first unselectable date
           cy.findByRole("button", { name: "Friday 1 March 2024" }).focus();

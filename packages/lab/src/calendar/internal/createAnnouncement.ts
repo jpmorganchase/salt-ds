@@ -36,16 +36,16 @@ export type DateSelectionAnnouncerState<TDate extends DateFrameworkType> =
   | AnnouncerVisibleMonthState<TDate>
   | AnnouncerMinMaxFocusState;
 
-
-export function createSingleSelectionAnnouncement<TDate extends DateFrameworkType>(
+export function createSingleSelectionAnnouncement<
+  TDate extends DateFrameworkType,
+>(
   announcementType: AnnouncementType,
   state:
     | AnnouncerSingleDateSelectedState<TDate>
     | AnnouncerVisibleMonthState<TDate>
     | AnnouncerMinMaxFocusState,
   dateAdapter: SaltDateAdapter<TDate>,
-  ): string | undefined {
-
+): string | undefined {
   switch (announcementType) {
     case "minFocusableDateExceeded":
       return "cannot focus before minimum date";
@@ -62,9 +62,10 @@ export function createSingleSelectionAnnouncement<TDate extends DateFrameworkTyp
       }
       if (multiselect && Array.isArray(selectedDate)) {
         const lastSelectedDate = selectedDate[selectedDate.length - 1];
-        return `${dateAdapter.format(lastSelectedDate, `dddd D MMMM YYYY`)}, selected, ${selectedDate.length} dates in selection`;
-      } else if (!multiselect && selectedDate) {
-        return `${dateAdapter.format(selectedDate as TDate, `dddd D MMMM YYYY`)}, selected`;
+        return `${dateAdapter.format(lastSelectedDate, "dddd D MMMM YYYY")}, selected, ${selectedDate.length} dates in selection`;
+      }
+      if (!multiselect && selectedDate) {
+        return `${dateAdapter.format(selectedDate as TDate, "dddd D MMMM YYYY")}, selected`;
       }
       break;
     }
@@ -77,16 +78,17 @@ export function createSingleSelectionAnnouncement<TDate extends DateFrameworkTyp
         "month",
       );
       if (isSingleMonth) {
-        return `Visible month starts from ${dateAdapter.format(startVisibleMonth, `dddd D MMMM YYYY`)}`;
-      } else {
-        const endOfMonth = dateAdapter.endOf(endVisibleMonth, "month");
-        return `Visible months are from ${dateAdapter.format(startVisibleMonth, `dddd D MMMM YYYY`)} to ${dateAdapter.format(endOfMonth, `dddd D MMMM YYYY`)}`;
+        return `Visible month starts from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")}`;
       }
+      const endOfMonth = dateAdapter.endOf(endVisibleMonth, "month");
+      return `Visible months are from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")} to ${dateAdapter.format(endOfMonth, "dddd D MMMM YYYY")}`;
     }
   }
 }
 
-export function createRangeSelectionAnnouncement<TDate extends DateFrameworkType>(
+export function createRangeSelectionAnnouncement<
+  TDate extends DateFrameworkType,
+>(
   announcementType: AnnouncementType,
   state:
     | AnnouncerRangeDateSelectedState<TDate>
@@ -94,7 +96,6 @@ export function createRangeSelectionAnnouncement<TDate extends DateFrameworkType
     | AnnouncerMinMaxFocusState,
   dateAdapter: SaltDateAdapter<TDate>,
 ): string | undefined {
-
   switch (announcementType) {
     case "minFocusableDateExceeded":
       return "cannot focus before minimum date";
@@ -124,15 +125,17 @@ export function createRangeSelectionAnnouncement<TDate extends DateFrameworkType
         endDate = (selectedDate as any).endDate;
       }
       if (startDate && !endDate) {
-        return `Selected start date ${dateAdapter.format(startDate, `dddd D MMMM YYYY`)}`;
-      } else if (!startDate && endDate) {
-        return `${dateAdapter.format(endDate, `dddd D MMMM YYYY`)}, selected as end date`;
-      } else if (startDate && endDate) {
+        return `Selected start date ${dateAdapter.format(startDate, "dddd D MMMM YYYY")}`;
+      }
+      if (!startDate && endDate) {
+        return `${dateAdapter.format(endDate, "dddd D MMMM YYYY")}, selected as end date`;
+      }
+      if (startDate && endDate) {
         const multiselectSuffix =
           multiselect && Array.isArray(selectedDate)
             ? `, ${selectedDate.length > 1 ? `${selectedDate.length} date ranges in selection` : ""}`
             : "";
-        return `Date range ${dateAdapter.format(startDate, `dddd D MMMM YYYY`)} to ${dateAdapter.format(endDate, `dddd D MMMM YYYY`)}, selected${multiselectSuffix}`;
+        return `Date range ${dateAdapter.format(startDate, "dddd D MMMM YYYY")} to ${dateAdapter.format(endDate, "dddd D MMMM YYYY")}, selected${multiselectSuffix}`;
       }
       break;
     }
@@ -145,11 +148,10 @@ export function createRangeSelectionAnnouncement<TDate extends DateFrameworkType
         "month",
       );
       if (isSingleMonth) {
-        return `Visible month starts from ${dateAdapter.format(startVisibleMonth, `dddd D MMMM YYYY`)}`;
-      } else {
-        const endOfMonth = dateAdapter.endOf(endVisibleMonth, "month");
-        return `Visible months are from ${dateAdapter.format(startVisibleMonth, `dddd D MMMM YYYY`)} to ${dateAdapter.format(endOfMonth, `dddd D MMMM YYYY`)}`;
+        return `Visible month starts from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")}`;
       }
+      const endOfMonth = dateAdapter.endOf(endVisibleMonth, "month");
+      return `Visible months are from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")} to ${dateAdapter.format(endOfMonth, "dddd D MMMM YYYY")}`;
     }
   }
 }

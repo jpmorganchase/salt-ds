@@ -117,7 +117,7 @@ const DatePickerSingleTemplate: StoryFn<
       onSelectionChange={handleSelectionChange}
     >
       <DatePickerTrigger>
-        <DatePickerSingleInput  />
+        <DatePickerSingleInput />
       </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSingleGridPanel />
@@ -178,7 +178,10 @@ const DatePickerRangeTemplate: StoryFn<
       onSelectionChange={handleSelectionChange}
     >
       <DatePickerTrigger>
-        <DatePickerRangeInput startInputProps={{"aria-label": "Start date"}} endInputProps={{"aria-label": "End date"}}/>
+        <DatePickerRangeInput
+          startInputProps={{ "aria-label": "Start date" }}
+          endInputProps={{ "aria-label": "End date" }}
+        />
       </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerRangePanel />
@@ -660,7 +663,7 @@ export const RangeGridPanel: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput  />
+          <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangeGridPanel
@@ -911,7 +914,10 @@ export const SingleWithInitialError: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput aria-labelledby={labelId} defaultValue="bad date" />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            defaultValue="bad date"
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -1844,7 +1850,10 @@ export const SingleWithCustomParser: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput aria-labelledby={labelId} parse={customParser} />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            parse={customParser}
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -2391,7 +2400,7 @@ export const CustomDayRendering: StoryFn<
       defaultSelectedDate={defaultSelectedDate}
     >
       <DatePickerTrigger>
-        <DatePickerSingleInput  />
+        <DatePickerSingleInput />
       </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSingleGridPanel CalendarGridProps={CalendarGridProps} />
@@ -2564,7 +2573,10 @@ export const SingleWithLocaleZhCN: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput aria-labelledby={labelId} format={"DD MMM YYYY"} />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            format={"DD MMM YYYY"}
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
@@ -3609,7 +3621,7 @@ export const UncontrolledSingleOpen: StoryFn<
         defaultSelectedDate={defaultSelectedDate}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput  />
+          <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel />
@@ -3643,7 +3655,7 @@ export const UncontrolledRangeOpen: StoryFn<
         defaultSelectedDate={defaultSelectedDate}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput  />
+          <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel />

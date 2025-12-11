@@ -369,11 +369,7 @@ export const DateInputSingle = forwardRef<
             dateInputLabelledBy,
             inputId,
           )}
-          aria-invalid={
-            !isReadOnly
-              ? validationStatus === "error"
-              : undefined
-          }
+          aria-invalid={!isReadOnly ? validationStatus === "error" : undefined}
           aria-label={clsx("Selected date", ariaLabel)}
           id={inputId}
           className={withBaseName("input")}

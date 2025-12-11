@@ -205,7 +205,6 @@ export interface UseDatePickerContextProps {
 
 // Overloads
 
-
 export function useDatePickerContext<TDate extends DateFrameworkType>({
   selectionVariant,
 }: UseDatePickerContextProps): DatePickerState<TDate> {

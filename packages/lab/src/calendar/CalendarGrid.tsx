@@ -97,7 +97,7 @@ export const CalendarGrid = forwardRef<
         Array.from({ length: numberOfVisibleMonths }, (_value, index) =>
           dateAdapter.add(visibleMonth, {
             months: index,
-          })
+          }),
         ),
       [dateAdapter, numberOfVisibleMonths, visibleMonth],
     );

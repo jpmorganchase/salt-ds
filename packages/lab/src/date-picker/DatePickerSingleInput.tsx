@@ -22,7 +22,7 @@ import {
 } from "../date-input";
 import { useLocalization } from "../localization-provider";
 import {
-  SingleDatePickerState,
+  type SingleDatePickerState,
   useDatePickerContext,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";

@@ -52,7 +52,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       function makeAnnouncement() {
         if (mountedRef.current) {
           if (isReactAnnouncerInstalled) {
-            console.log('announcement', announcement, options);
+            console.log("announcement", announcement, options);
             context.announce(announcement, isLegacy ? legacyDelay : options);
           }
         }
