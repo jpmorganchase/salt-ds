@@ -28,9 +28,15 @@ import {
 import treeNodeCss from "./TreeNode.css";
 
 function ExpansionIcon({ expanded }: { expanded: boolean }) {
-  const { ExpandGroupIcon, CollapseGroupIcon } = useIcon();
-  const Icon = expanded ? CollapseGroupIcon : ExpandGroupIcon;
-  return <Icon aria-hidden className="saltTreeNode-expansionIcon" />;
+  const { ExpandGroupIcon } = useIcon();
+  return (
+    <ExpandGroupIcon
+      aria-hidden
+      className={clsx("saltTreeNode-expansionIcon", {
+        "saltTreeNode-expansionIcon-expanded": expanded,
+      })}
+    />
+  );
 }
 
 export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
