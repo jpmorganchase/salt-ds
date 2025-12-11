@@ -83,6 +83,12 @@
 
 .saltTreeNode-expansionIcon {
   color: var(--salt-content-primary-foreground);
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
+  transform: rotate(0deg);
+}
+
+.saltTreeNode-expansionIcon-expanded {
+  transform: rotate(90deg);
 }
 
 .saltTreeNode-disabled .saltTreeNode-expansionIcon {
