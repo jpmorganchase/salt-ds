@@ -244,7 +244,7 @@ describe("Given a Tree", () => {
       );
     });
 
-    it.only("should select focused node with Space", () => {
+    it("should select focused node with Space", () => {
       const onSelectionChange = cy.stub().as("selectionChangeHandler");
       cy.mount(
         <Tree aria-label="File browser" onSelectionChange={onSelectionChange}>
