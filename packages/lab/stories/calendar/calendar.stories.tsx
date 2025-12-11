@@ -961,6 +961,7 @@ export const TwinCalendars: StoryFn<
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        // biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set
         role={undefined}
       >
         <CalendarNavigation
@@ -998,6 +999,7 @@ export const TwinCalendars: StoryFn<
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        // biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set
         role={undefined}
       >
         <CalendarNavigation

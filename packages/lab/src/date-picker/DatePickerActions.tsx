@@ -155,10 +155,10 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
     ApplyButtonProps?.onClick?.(event);
   };
 
-  let selectedLabel;
+  let selectedLabel = "";
   if (selectedDate === null) {
     selectedLabel = "no date selected";
-  } else if (selectionVariant == "single") {
+  } else if (selectionVariant === "single") {
     const date = selectedDate as
       | SingleDateSelection<TDate>[]
       | SingleDateSelection<TDate>;
@@ -170,7 +170,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
     } else {
       selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
     }
-  } else if (selectionVariant == "range") {
+  } else if (selectionVariant === "range") {
     const dateRange = selectedDate as DateRangeSelection<TDate>;
     if (Array.isArray(dateRange)) {
       selectedLabel =

@@ -13,7 +13,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import type { DateRangeSelection } from "../calendar";
 import {
   DateInputRange,
   type DateInputRangeDetails,
