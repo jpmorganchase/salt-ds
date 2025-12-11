@@ -7,7 +7,7 @@ export const Controlled = (): ReactElement => {
   const [selected, setSelected] = useState<string[]>(["annual-report"]);
 
   return (
-    <StackLayout>
+    <StackLayout style={{ width: "30ch" }}>
       <Text>
         Expanded: {expanded.length > 0 ? expanded.join(", ") : "none"}
       </Text>
