@@ -3,7 +3,11 @@ import { Tree, TreeNode } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithIcons = (): ReactElement => (
-  <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+  <Tree
+    aria-label="File browser"
+    defaultExpanded={["documents"]}
+    style={{ width: "30ch" }}
+  >
     <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
       <TreeNode value="reports" label="Reports" icon={<FolderClosedIcon />}>
         <TreeNode

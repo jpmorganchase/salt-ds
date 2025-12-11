@@ -6,7 +6,7 @@ export const Multiselect = (): ReactElement => {
   const [selected, setSelected] = useState<string[]>([]);
 
   return (
-    <StackLayout>
+    <StackLayout style={{ width: "30ch" }}>
       <Text>
         Selected: {selected.length > 0 ? selected.join(", ") : "none"}
       </Text>

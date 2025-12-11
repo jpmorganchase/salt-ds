@@ -2,7 +2,11 @@ import { Tree, TreeNode } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => (
-  <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+  <Tree
+    aria-label="File browser"
+    defaultExpanded={["documents"]}
+    style={{ width: "30ch" }}
+  >
     <TreeNode value="documents" label="Documents">
       <TreeNode value="reports" label="Reports">
         <TreeNode value="annual-report" label="Annual Report" />
