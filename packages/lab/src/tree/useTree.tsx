@@ -397,8 +397,6 @@ export function useTree(props: UseTreeProps) {
     const entries = Array.from(nodesRef.current.entries());
 
     const visibleNodes = entries.filter(([_value, info]) => {
-      // Skip disabled nodes - they should not be focusable per ARIA APG
-      // info.disabled already contains the computed disabled state from TreeNode
       if (info.disabled) {
         return false;
       }

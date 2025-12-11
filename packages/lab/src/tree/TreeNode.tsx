@@ -19,7 +19,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import {
   TreeNodeProvider,
@@ -115,54 +114,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const indeterminate = indeterminateState.has(value);
     const isActive = activeNode === value;
 
-    const getLabelText = (): string => {
-      if (typeof label === "string") {
-        return label;
-      }
-      // if its a non string value, need to rely on aria-labelledby
-      return "";
-    };
-
-    const labelText = getLabelText();
-
-    const getAccessibleLabel = (): string | undefined => {
-      if (!labelText) return undefined;
-
-      let accessibleLabel = labelText;
-
-      if (hasChildren) {
-        accessibleLabel += expanded ? ", expanded" : ", collapsed";
-      }
-
-      return accessibleLabel;
-    };
-
-    const accessibleLabel = getAccessibleLabel();
-
-    const [expansionAnnouncement, setExpansionAnnouncement] =
-      useState<string>("");
-    const prevExpandedRef = useRef<boolean>(expanded);
-
-    // look into this, settimeout temporary
-    useEffect(() => {
-      if (hasChildren && prevExpandedRef.current !== expanded) {
-        if (isActive) {
-          const announcement = expanded
-            ? `${labelText} expanded`
-            : `${labelText} collapsed`;
-          setExpansionAnnouncement(announcement);
-
-          // give time for announcement to be read
-          const timer = setTimeout(() => {
-            setExpansionAnnouncement("");
-          }, 1000);
-
-          return () => clearTimeout(timer);
-        }
-      }
-      prevExpandedRef.current = expanded;
-    }, [expanded, hasChildren, isActive, labelText]);
-
     const isTabbable =
       !disabled &&
       (isActive ||
@@ -235,7 +186,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
           ref={handleRef}
           id={id}
           role="treeitem"
-          // aria-label={accessibleLabel}
           aria-labelledby={labelId}
           aria-expanded={hasChildren ? expanded : undefined}
           aria-selected={checkbox ? undefined : selected}
@@ -296,17 +246,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
             <ul role="group" className={withBaseName("group")}>
               {children}
             </ul>
-          )}
-
-          {expansionAnnouncement && (
-            <span
-              role="status"
-              aria-live="polite"
-              aria-atomic="true"
-              className={withBaseName("srOnly")}
-            >
-              {expansionAnnouncement}
-            </span>
           )}
         </li>
       </TreeNodeProvider>
