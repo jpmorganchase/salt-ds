@@ -133,10 +133,10 @@ export const Checkbox: StoryFn<typeof Tree> = (args) => (
 
 export const CheckboxWithIcons: StoryFn<typeof Tree> = (args) => (
   <Tree
+    {...args}
     aria-label="File browser"
     checkbox
     defaultExpanded={["documents"]}
-    {...args}
   >
     <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
       <TreeNode value="reports" label="Reports" icon={<FolderClosedIcon />}>
@@ -174,7 +174,7 @@ export const CheckboxWithIcons: StoryFn<typeof Tree> = (args) => (
   </Tree>
 );
 
-export const Controlled: StoryFn<typeof Tree> = () => {
+export const Controlled: StoryFn<typeof Tree> = (args) => {
   const [expanded, setExpanded] = useState<string[]>(["documents"]);
   const [selected, setSelected] = useState<string[]>(["annual-report"]);
 
@@ -186,6 +186,7 @@ export const Controlled: StoryFn<typeof Tree> = () => {
         <strong>Selected:</strong> {selected.join(", ") || "none"}
       </div>
       <Tree
+        {...args}
         aria-label="File browser"
         expanded={expanded}
         onExpandedChange={(_, newExpanded) => setExpanded(newExpanded)}
@@ -269,7 +270,7 @@ export const Disabled: StoryFn<typeof Tree> = (args) => (
 );
 
 export const DisabledNodes: StoryFn<typeof Tree> = (args) => (
-  <Tree aria-label="File browser" defaultExpanded={["documents"]} {...args}>
+  <Tree {...args} aria-label="File browser" defaultExpanded={["documents"]}>
     <TreeNode value="documents" label="Documents">
       <TreeNode value="reports" label="Reports" disabled>
         <TreeNode value="annual-report" label="Annual Report" />
@@ -285,10 +286,10 @@ export const DisabledNodes: StoryFn<typeof Tree> = (args) => (
 
 export const LongLabels: StoryFn<typeof Tree> = (args) => (
   <Tree
+    {...args}
     aria-label="File browser"
     defaultExpanded={["documents"]}
     style={{ maxWidth: 300 }}
-    {...args}
   >
     <TreeNode
       value="documents"
