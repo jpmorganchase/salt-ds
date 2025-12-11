@@ -1,367 +1,427 @@
-import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type ForwardedRef,
+  type ComponentPropsWithoutRef,
   forwardRef,
-  isValidElement,
-  type MouseEvent,
-  type ReactElement,
+  type KeyboardEvent,
+  type SyntheticEvent,
   useCallback,
   useRef,
 } from "react";
-import {
-  type CollectionIndexer,
-  type CollectionItem,
-  calcPreferredHeight,
-  closestListItemIndex,
-  GROUP_SELECTION_NONE,
-  isSelected,
-  type SelectHandler,
-  type SelectionChangeHandler,
-  type SelectionStrategy,
-  type SingleSelectionStrategy,
-  useAutoSizer,
-  useCollectionItems,
-} from "../common-hooks";
 import treeCss from "./Tree.css";
-import { TreeNode } from "./TreeNode";
-import type { TreeProps } from "./treeTypes";
+import { TreeProvider } from "./TreeContext";
 import { useTree } from "./useTree";
+
+export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
+  /**
+   * Default expanded nodes (uncontrolled)
+   */
+  defaultExpanded?: string[];
+  /**
+   * Expanded nodes (controlled)
+   */
+  expanded?: string[];
+  /**
+   * Callback on expanded nodes change
+   */
+  onExpandedChange?: (event: SyntheticEvent | null, expanded: string[]) => void;
+  /**
+   * Callback on node expanded or collapsed
+   */
+  onExpand?: (
+    event: SyntheticEvent | null,
+    value: string,
+    expanded: boolean,
+  ) => void;
+  /**
+   * Default selected nodes (uncontrolled)
+   */
+  defaultSelected?: string[];
+  /**
+   * Selected nodes
+   */
+  selected?: string[];
+  /**
+   * Callback on selected nodes change
+   */
+  onSelectionChange?: (event: SyntheticEvent, selected: string[]) => void;
+  /**
+   * Sets multiselect mode and allows for mutliple node selection
+   */
+  multiselect?: boolean;
+  /**
+   * Sets checkbox variant used for node selection
+   */
+  checkbox?: boolean;
+  /**
+   * Sets if selecting a parent node should also select its descendants
+   * Only applies when multiselect or checkbox prop is enabled
+   */
+  propagateSelect?: boolean;
+  /**
+   * Sets if selecting all children should automatically select the parent
+   * Only applies when multiselect or checkbox is enabled
+   */
+  propagateSelectUpwards?: boolean;
+  /**
+   * When set to false (default), clicking a seleced node has no effect.
+   * When true, clicking a selected node will deselect it.
+   */
+  togglableSelect?: boolean;
+  /**
+   * Sets tree to disabled state, preventing all interaction
+   */
+  disabled?: boolean;
+  /**
+   * Default disabled node IDs (uncontrolled)
+   */
+  defaultDisabledIds?: string[];
+  /**
+   * Disabled node IDs (controlled).
+   */
+  disabledIds?: string[];
+}
 
 const withBaseName = makePrefixer("saltTree");
 
-const getSelectedItemsFromSource = (
-  source: any[],
-  selectionStrategy: SelectionStrategy,
-  result: any[] = [],
-) => {
-  const isSingleSelection =
-    selectionStrategy === "default" || selectionStrategy === "deselectable";
-  for (const item of source) {
-    if (item.selected === true) {
-      result.push(item);
-      if (isSingleSelection) {
-        break;
-      }
-    }
-    if (item.childNodes) {
-      getSelectedItemsFromSource(item.childNodes, selectionStrategy, result);
-      if (isSingleSelection && result.length === 1) {
-        break;
-      }
-    }
-  }
+export const Tree = forwardRef<HTMLUListElement, TreeProps>(
+  function Tree(props, ref) {
+    const {
+      children,
+      className,
+      defaultExpanded,
+      expanded,
+      onExpandedChange,
+      onExpand,
+      defaultSelected,
+      selected,
+      onSelectionChange,
+      multiselect = false,
+      checkbox = false,
+      propagateSelect = false,
+      propagateSelectUpwards = false,
+      togglableSelect = false,
+      disabled = false,
+      defaultDisabledIds,
+      disabledIds,
+      onKeyDown,
+      ...rest
+    } = props;
 
-  return isSingleSelection ? result[0] : result.length > 0 ? result : undefined;
-};
-
-export const Tree = forwardRef(function Tree<
-  Item,
-  Selection extends SelectionStrategy = "deselectable",
->(
-  {
-    className,
-    defaultSelected,
-    disabled,
-    groupSelection = GROUP_SELECTION_NONE,
-    height,
-    id: idProp,
-    onHighlight,
-    onToggle,
-    onSelect,
-    onSelectionChange,
-    revealSelected,
-    selected: selectedProp,
-    selectionStrategy,
-    source,
-    style: styleProp,
-    width,
-    ...htmlAttributes
-  }: TreeProps<Item, Selection>,
-  forwardedRef?: ForwardedRef<HTMLDivElement>,
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-tree",
-    css: treeCss,
-    window: targetWindow,
-  });
-
-  const id = useIdMemo(idProp);
-  const rootRef = useRef(null);
-  const contentRef = useRef(null);
-
-  const collectionHook = useCollectionItems<Item>({
-    id,
-    source,
-    options: {
-      noChildrenLabel: "No children available",
-      revealSelected: revealSelected
-        ? Boolean(selectedProp) || Boolean(defaultSelected) || false
-        : undefined,
-    },
-  });
-
-  //------------- from original List
-  const preferredHeight =
-    height ??
-    calcPreferredHeight({
-      displayedItemCount: 10,
-      itemCount: collectionHook.data.length,
-      itemHeight: 36,
-      // getItemHeight,
-      // itemGapSize,
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-tree",
+      css: treeCss,
+      window: targetWindow,
     });
 
-  const autoSize = useAutoSizer({
-    containerRef: rootRef,
-    responsive: width === undefined || height === undefined,
-    height: preferredHeight,
-    width,
-  });
-  //---------------
+    const treeState = useTree({
+      defaultExpanded,
+      expanded,
+      onExpandedChange,
+      onExpand,
+      defaultSelected,
+      selected,
+      onSelectionChange,
+      multiselect,
+      checkbox,
+      propagateSelect,
+      propagateSelectUpwards,
+      togglableSelect,
+      disabled,
+      defaultDisabledIds,
+      disabledIds,
+    });
 
-  const handleSelect = useCallback<SelectHandler<CollectionItem<Item>>>(
-    (evt, selectedItem) => {
-      if (onSelect) {
-        if (isValidElement(selectedItem.value)) {
-          onSelect(evt, selectedItem.label as any);
-        } else if (selectedItem.value !== null) {
-          onSelect(evt, selectedItem.value);
+    const {
+      activeNode,
+      setActiveNode,
+      expandedArray,
+      setExpandedArray,
+      expandedState,
+      toggleExpanded,
+      select,
+      selectedState,
+      setSelectedState,
+      getVisibleNodes,
+      getNode,
+      getParent,
+      getChildren,
+      disabledIdsSet,
+    } = treeState;
+
+    const lastKeypressRef = useRef<string>("");
+    const keypressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const handleKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLUListElement>) => {
+        onKeyDown?.(event);
+
+        if (disabled) return;
+
+        const visibleNodes = getVisibleNodes();
+        if (visibleNodes.length === 0) return;
+
+        const currentIndex = activeNode ? visibleNodes.indexOf(activeNode) : -1;
+
+        let newActiveNode: string | undefined;
+        let handled = false;
+
+        switch (event.key) {
+          case "ArrowDown": {
+            handled = true;
+            const nextIndex = currentIndex + 1;
+            if (nextIndex < visibleNodes.length) {
+              newActiveNode = visibleNodes[nextIndex];
+            }
+            break;
+          }
+          case "ArrowUp": {
+            handled = true;
+            const prevIndex = currentIndex - 1;
+            if (prevIndex >= 0) {
+              newActiveNode = visibleNodes[prevIndex];
+            }
+            break;
+          }
+          case "ArrowRight": {
+            handled = true;
+            if (activeNode) {
+              const node = getNode(activeNode);
+              if (!node?.disabled && node?.hasChildren) {
+                if (!expandedState.has(activeNode)) {
+                  toggleExpanded(activeNode);
+                } else {
+                  const firstChild = visibleNodes.find(
+                    (visibleNode) => getParent(visibleNode) === activeNode,
+                  );
+                  if (firstChild) {
+                    newActiveNode = firstChild;
+                  }
+                }
+              }
+            }
+            break;
+          }
+          case "ArrowLeft": {
+            handled = true;
+            if (activeNode) {
+              const node = getNode(activeNode);
+              if (!node?.disabled) {
+                if (expandedState.has(activeNode)) {
+                  toggleExpanded(activeNode);
+                } else {
+                  const parent = getParent(activeNode);
+                  if (parent) {
+                    newActiveNode = parent;
+                  }
+                }
+              }
+            }
+            break;
+          }
+          case "Home": {
+            handled = true;
+            newActiveNode = visibleNodes[0];
+            break;
+          }
+          case "End": {
+            handled = true;
+            newActiveNode = visibleNodes[visibleNodes.length - 1];
+            break;
+          }
+          case "Enter": {
+            handled = true;
+            if (activeNode) {
+              select(event, activeNode);
+            }
+            break;
+          }
+          case " ": {
+            handled = true;
+            if (activeNode) {
+              select(event, activeNode);
+            }
+            break;
+          }
+          case "*": {
+            handled = true;
+            if (activeNode) {
+              const parent = getParent(activeNode);
+              const siblings = parent
+                ? getChildren(parent)
+                : visibleNodes.filter((v) => !getParent(v));
+
+              const toExpand = siblings.filter((sibling) => {
+                const siblingNode = getNode(sibling);
+                return siblingNode?.hasChildren && !expandedState.has(sibling);
+              });
+
+              if (toExpand.length > 0) {
+                const newExpanded = [...expandedArray, ...toExpand];
+                setExpandedArray(newExpanded);
+                onExpandedChange?.(event, newExpanded);
+                for (const value of toExpand) {
+                  onExpand?.(event, value, true);
+                }
+              }
+            }
+            break;
+          }
+          default: {
+            if (
+              event.key.length === 1 &&
+              !event.ctrlKey &&
+              !event.metaKey &&
+              !event.altKey
+            ) {
+              handled = true;
+
+              if (keypressTimeoutRef.current) {
+                clearTimeout(keypressTimeoutRef.current);
+              }
+
+              lastKeypressRef.current += event.key.toLowerCase();
+              const searchString = lastKeypressRef.current;
+
+              keypressTimeoutRef.current = setTimeout(() => {
+                lastKeypressRef.current = "";
+              }, 500);
+
+              const currentIndex = activeNode
+                ? visibleNodes.indexOf(activeNode)
+                : -1;
+              let found = false;
+
+              for (let i = currentIndex + 1; i < visibleNodes.length; i++) {
+                const node = getNode(visibleNodes[i]);
+                if (
+                  node?.element?.textContent
+                    ?.toLowerCase()
+                    .startsWith(searchString)
+                ) {
+                  newActiveNode = visibleNodes[i];
+                  found = true;
+                  break;
+                }
+              }
+
+              if (!found) {
+                for (let i = 0; i <= currentIndex; i++) {
+                  const node = getNode(visibleNodes[i]);
+                  if (
+                    node?.element?.textContent
+                      ?.toLowerCase()
+                      .startsWith(searchString)
+                  ) {
+                    newActiveNode = visibleNodes[i];
+                    break;
+                  }
+                }
+              }
+            }
+            break;
+          }
         }
-      }
-    },
-    [onSelect],
-  );
 
-  const handleSelectionChange = useCallback<
-    SelectionChangeHandler<CollectionItem<Item>, Selection>
-  >(
-    (evt, selected) => {
-      type returnType = Selection extends SingleSelectionStrategy
-        ? Item | null
-        : Item[];
-      if (onSelectionChange) {
-        onSelectionChange(
-          evt,
-          Array.isArray(selected)
-            ? (selected.map((s) => s.value) as returnType)
-            : selected && (selected.value as returnType),
-        );
-      }
-    },
-    [onSelectionChange],
-  );
+        if (
+          (event.ctrlKey || event.metaKey) &&
+          event.key === "a" &&
+          (multiselect || checkbox)
+        ) {
+          handled = true;
+          event.preventDefault();
 
-  // const getSelected = (
-  //   sel: Item | null | Item[]
-  // ):
-  //   | undefined
-  //   | (Selection extends SingleSelectionStrategy
-  //       ? CollectionItem<Item> | null
-  //       : CollectionItem<Item>[]) => {
-  //   if (sel !== undefined) {
-  //     return collectionHook.itemToCollectionItem<Selection, typeof sel>(sel);
-  //   } else if (Array.isArray(source)) {
-  //     const selected = getSelectedItemsFromSource(
-  //       source,
-  //       selectionStrategy ?? "default"
-  //     );
-  //     return Array.isArray(selected)
-  //       ? collectionHook.itemToCollectionItem(selected)
-  //       : selected
-  //       ? collectionHook.toCollectionItem(selected)
-  //       : undefined;
-  //   }
-  // };
+          const allVisibleValues = visibleNodes.filter(
+            (visibleNode) => !disabledIdsSet.has(visibleNode),
+          );
+          const allSelected = allVisibleValues.every((visible) =>
+            selectedState.includes(visible),
+          );
 
-  const {
-    focusVisible,
-    highlightedIdx,
-    highlightItemAtIndex,
-    listHandlers,
-    listProps,
-    listItemHandlers,
-    selected,
-  } = useTree<Item, Selection>({
-    collectionHook,
-    containerRef: rootRef,
-    contentRef,
-    // Note this isn't enough for a Tree, because of nested structure
-    defaultSelected: collectionHook.itemToCollectionItem<
-      Selection,
-      typeof defaultSelected
-    >(defaultSelected),
-    disabled,
-    groupSelection,
-    onHighlight,
-    onSelect: handleSelect,
-    onSelectionChange: handleSelectionChange,
-    onToggle,
-    selected: collectionHook.itemToCollectionItem<
-      Selection,
-      typeof selectedProp
-    >(selectedProp),
-    selectionStrategy,
-  });
+          const newSelected = allSelected ? [] : allVisibleValues;
 
-  // TODO move into useTree (see useList)
-  const defaultItemHandlers = {
-    onMouseEnter: (evt: MouseEvent) => {
-      // if (!isScrolling.current) {
-      const idx = closestListItemIndex(evt.target as HTMLElement);
-      if (idx != null) {
-        highlightItemAtIndex(idx);
-      }
-      // onMouseEnterListItem && onMouseEnterListItem(evt, idx);
-      // }
-    },
-  };
+          setSelectedState(newSelected);
+          onSelectionChange?.(event, newSelected);
+          return;
+        }
 
-  const propsCommonToAllListItems = {
-    ...defaultItemHandlers,
-    ...listItemHandlers,
-    isLeaf: true,
-    role: "treeitem",
-  };
-  // const allowGroupSelect = groupSelectionEnabled(groupSelection);
-  const allowGroupSelect = false;
+        if (
+          event.shiftKey &&
+          (event.key === "ArrowUp" || event.key === "ArrowDown") &&
+          (multiselect || checkbox)
+        ) {
+          handled = true;
+          const isDown = event.key === "ArrowDown";
+          const currentIndex = activeNode
+            ? visibleNodes.indexOf(activeNode)
+            : -1;
+          const nextIndex = isDown ? currentIndex + 1 : currentIndex - 1;
 
-  /**
-   * Add a ListItem from source item
-   */
-  function addLeafNode(
-    list: ReactElement[],
-    item: CollectionItem<Item>,
-    idx: CollectionIndexer,
-  ) {
-    const itemProps = {
-      "aria-disabled": disabled || item.disabled,
-      "aria-level": item.level,
-      "data-idx": idx.value,
-      description: item.description,
-      id: item.id,
-      key: item.id,
-      highlighted: idx.value === highlightedIdx || undefined,
-      selected: isSelected<Item>(selected, item),
-      className: clsx({
-        focusVisible: focusVisible === idx.value,
-      }),
-    };
+          if (nextIndex >= 0 && nextIndex < visibleNodes.length) {
+            const nextValue = visibleNodes[nextIndex];
 
-    list.push(
-      <TreeNode
-        {...propsCommonToAllListItems}
-        {...itemProps}
-        label={item.label}
-      >
-        {/* {item.icon ? <span className={`${classBase}Node-icon`} /> : null} */}
-      </TreeNode>,
+            if (!disabledIdsSet.has(nextValue)) {
+              select(event, nextValue);
+              newActiveNode = nextValue;
+            }
+          }
+        }
+
+        if (handled) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        if (newActiveNode !== undefined) {
+          setActiveNode(newActiveNode);
+        }
+      },
+      [
+        onKeyDown,
+        disabled,
+        getVisibleNodes,
+        activeNode,
+        getNode,
+        expandedArray,
+        setExpandedArray,
+        expandedState,
+        toggleExpanded,
+        getParent,
+        getChildren,
+        select,
+        selectedState,
+        setSelectedState,
+        checkbox,
+        multiselect,
+        setActiveNode,
+        disabledIdsSet,
+        onSelectionChange,
+        onExpandedChange,
+        onExpand,
+      ],
     );
-    idx.value += 1;
-  }
 
-  function addGroupNode(
-    list: ReactElement[],
-    items: CollectionItem<Item>[],
-    idx: CollectionIndexer,
-    id: string,
-    title: string,
-  ) {
-    const { value: i } = idx;
-    const item = items[i];
-    idx.value += 1;
-    list.push(
-      <TreeNode
-        {...defaultItemHandlers}
-        {...listItemHandlers}
-        aria-disabled={disabled || item.disabled}
-        aria-expanded={item.expanded}
-        aria-level={item.level}
-        className={clsx({
-          focusVisible: focusVisible === i,
-          [withBaseName("toggle")]: !allowGroupSelect,
-        })}
-        // data-icon={child.icon}
-        data-idx={i}
-        data-selectable
-        description={item.description}
-        highlighted={i === highlightedIdx}
-        id={id}
-        key={`header-${i}`}
-        label={title}
-        selected={isSelected<Item>(selected, item)}
-      >
-        {item.expanded ? (
-          <ul className={withBaseName("child-nodes")} role="group">
-            {renderItems(items, idx, (item.level ?? 0) + 1)}
-          </ul>
-        ) : null}
-      </TreeNode>,
+    return (
+      <TreeProvider value={treeState}>
+        <ul
+          ref={ref}
+          role="tree"
+          aria-multiselectable={multiselect ? true : undefined}
+          aria-disabled={disabled || undefined}
+          className={clsx(
+            withBaseName(),
+            { [withBaseName("disabled")]: disabled },
+            className,
+          )}
+          onKeyDown={handleKeyDown}
+          {...rest}
+        >
+          {children}
+        </ul>
+      </TreeProvider>
     );
-  }
-
-  const renderItems = (
-    items: CollectionItem<Item>[],
-    idx: CollectionIndexer = { value: 0 },
-    level = 1,
-  ): ReactElement[] => {
-    const listItems: ReactElement[] = [];
-    while (idx.value < items.length) {
-      const item = items[idx.value];
-      if (item.level != null && item.level < level) {
-        break;
-      }
-      if (item.childNodes != null && item.id != null && item.label != null) {
-        addGroupNode(listItems, items, idx, item.id, item.label);
-      } else {
-        addLeafNode(listItems, item, idx);
-      }
-    }
-
-    return listItems;
-  };
-
-  function renderEmpty() {
-    // if (emptyMessage || showEmptyMessage) {
-    //   return (
-    //     <span className={withBaseName("empty-message")}>
-    //       {emptyMessage ?? defaultEmptyMessage}
-    //     </span>
-    //   );
-    // } else {
-    return null;
-    // }
-  }
-
-  const renderContent = () => {
-    if (collectionHook.data.length) {
-      return renderItems(collectionHook.data);
-    }
-    renderEmpty();
-  };
-
-  return (
-    <div
-      {...htmlAttributes}
-      {...listHandlers}
-      {...listProps}
-      className={clsx(withBaseName(), className)}
-      id={`Tree-${id}`}
-      ref={useForkRef(rootRef, forwardedRef)}
-      style={{ ...styleProp, ...autoSize }}
-      tabIndex={0}
-    >
-      <ul
-        className={withBaseName("scrollingContentContainer")}
-        ref={contentRef}
-        role="tree"
-        // style={{ height: contentHeight }}
-      >
-        {renderContent()}
-      </ul>
-    </div>
-  );
-});
+  },
+);

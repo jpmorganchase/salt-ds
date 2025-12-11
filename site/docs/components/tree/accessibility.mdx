@@ -1,0 +1,93 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Provide an accessible name for the tree using `aria-label` or `aria-labelledby`.
+- Ensure node labels are descriptive and convey the purpose of each item.
+- Avoid deeply nested structures that may be difficult to navigate.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Moves focus into the tree. Focus is set on the previously focused node, or the first node if no node was previously focused.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Down arrow">
+
+Moves focus to the next visible node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up arrow">
+
+Moves focus to the previous visible node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Right arrow">
+
+- If focus is on a collapsed parent node, expands the node.
+- If focus is on an expanded parent node, moves focus to the first child node.
+- If focus is on a leaf node, does nothing.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Left arrow">
+
+- If focus is on an expanded parent node, collapses the node.
+- If focus is on a child or collapsed node, moves focus to the parent node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+Moves focus to the first visible node in the tree.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+Moves focus to the last visible node in the tree.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+Selects the focused node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- In checkbox mode, toggles selection of the focused node.
+- Otherwise, if the focused node has children, toggles expansion. If no children, selects the node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="*">
+
+Expands all sibling nodes at the same level as the focused node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Ctrl / Cmd + A">
+
+In multiselect or checkbox mode, selects all visible nodes.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Up arrow / Down arrow">
+
+In multiselect or checkbox mode, extends selection to the previous/next node.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Type-ahead">
+
+Typing characters moves focus to the next node whose label starts with the typed string.
+
+</KeyboardControl>
+</KeyboardControls>
+
+## References
+
+- Tree View pattern, (https://www.w3.org/WAI/ARIA/apg/patterns/treeview/) W3C
