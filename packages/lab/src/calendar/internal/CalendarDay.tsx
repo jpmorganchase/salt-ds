@@ -93,11 +93,10 @@ export const CalendarDay = forwardRef<
   }, [focused]);
 
   const defaultButtonProps = {
-    "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
     children: (
       <>
         {highlighted ? <div className={withBaseName("highlighted")} /> : null}
-        <span className={withBaseName("content")}>
+        <span aria-hidden={true} className={withBaseName("content")}>
           {dateAdapter.format(date, format)}
         </span>
       </>
@@ -127,7 +126,7 @@ export const CalendarDay = forwardRef<
       date,
     })
   ) : (
-    <button type={"button"} {...defaultButtonProps} />
+    <button {...defaultButtonProps} />
   );
 
   const tooltipContent = unselectableReason || highlightedReason;

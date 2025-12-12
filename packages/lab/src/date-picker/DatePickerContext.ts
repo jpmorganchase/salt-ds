@@ -205,24 +205,6 @@ export interface UseDatePickerContextProps {
 
 // Overloads
 
-/**
- * Hook to use the date picker context for single date selection.
- * @param props - The props for the hook.
- * @returns The state of the single date picker.
- */
-export function useDatePickerContext<TDate extends DateFrameworkType>(props: {
-  selectionVariant: "single";
-}): SingleDatePickerState<TDate>;
-
-/**
- * Hook to use the date picker context for range date selection.
- * @param props - The props for the hook.
- * @returns The state of the range date picker.
- */
-export function useDatePickerContext<TDate extends DateFrameworkType>(props: {
-  selectionVariant: "range";
-}): RangeDatePickerState<TDate>;
-
 export function useDatePickerContext<TDate extends DateFrameworkType>({
   selectionVariant,
 }: UseDatePickerContextProps): DatePickerState<TDate> {

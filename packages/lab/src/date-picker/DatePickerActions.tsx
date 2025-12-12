@@ -18,6 +18,7 @@ import "./DatePickerActions.css";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useLocalization } from "../localization-provider";
 import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");
@@ -89,7 +90,7 @@ export type DatePickerActionsProps<
       ) => void;
     };
 
-export const DatePickerActions = forwardRef(function DatePickerRangeInput<
+export const DatePickerActions = forwardRef(function DatePickerActions<
   TDate extends DateFrameworkType,
 >(
   props: DatePickerActionsProps<TDate, "single" | "range">,
@@ -114,25 +115,15 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
     window: targetWindow,
   });
 
-  // biome-ignore lint/suspicious/noExplicitAny: state and helpers coerced based on selectionVariant
-  let stateAndHelpers: any;
-  if (selectionVariant === "range") {
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    stateAndHelpers = useDatePickerContext({
-      selectionVariant: "range",
-    }) as RangeDatePickerState<TDate>;
-  } else {
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    stateAndHelpers = useDatePickerContext({
-      selectionVariant: "single",
-    }) as SingleDatePickerState<TDate>;
-  }
+  const { dateAdapter } = useLocalization<TDate>();
+
+  const stateAndHelpers = useDatePickerContext<TDate>({
+    selectionVariant,
+  });
 
   const {
     state: { selectedDate },
-    helpers: { cancel, apply, setEnableApply },
+    helpers: { cancel, setEnableApply },
   } = stateAndHelpers;
 
   useEffect(() => {
@@ -140,21 +131,62 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
   }, [setEnableApply]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
-    cancel(event);
+    cancel(event.nativeEvent);
     CancelButtonProps?.onClick?.(event);
     onCancel?.(event);
   };
 
   const handleApply: MouseEventHandler<HTMLButtonElement> = (event) => {
-    apply(event, selectedDate);
-    onApply?.(event, selectedDate);
+    if (selectionVariant === "range") {
+      const {
+        helpers: { apply },
+        state: { selectedDate },
+      } = stateAndHelpers as RangeDatePickerState<TDate>;
+      apply(event, selectedDate);
+      onApply?.(event, selectedDate);
+    } else {
+      const {
+        helpers: { apply },
+        state: { selectedDate },
+      } = stateAndHelpers as SingleDatePickerState<TDate>;
+      apply(event, selectedDate);
+      onApply?.(event, selectedDate);
+    }
     ApplyButtonProps?.onClick?.(event);
   };
+
+  let selectedLabel = "";
+  if (selectedDate === null) {
+    selectedLabel = "no date selected";
+  } else if (selectionVariant === "single") {
+    const date = selectedDate as
+      | SingleDateSelection<TDate>[]
+      | SingleDateSelection<TDate>;
+    if (Array.isArray(date)) {
+      selectedLabel =
+        date?.length === 0
+          ? "no dates selected"
+          : `${date.length} single dates`;
+    } else {
+      selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
+    }
+  } else if (selectionVariant === "range") {
+    const dateRange = selectedDate as DateRangeSelection<TDate>;
+    if (Array.isArray(dateRange)) {
+      selectedLabel =
+        dateRange?.length === 0
+          ? "no dates selected"
+          : `${dateRange.length} range dates`;
+    } else {
+      selectedLabel = `${dateAdapter.format(dateRange?.startDate, "dddd D MMMM YYYY")} to ${dateAdapter.format(dateRange?.endDate, "dddd D MMMM YYYY")}`;
+    }
+  }
 
   return (
     <div className={clsx(className, withBaseName())} ref={ref} {...rest}>
       <div className={withBaseName("body")}>{children}</div>
       <Button
+        aria-label={`Cancel ${selectedLabel}`}
         appearance="bordered"
         sentiment="neutral"
         ref={cancelButtonRef}
@@ -165,6 +197,7 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
         Cancel
       </Button>
       <Button
+        aria-label={`Apply ${selectedLabel}`}
         appearance="solid"
         sentiment="accented"
         ref={applyButtonRef}

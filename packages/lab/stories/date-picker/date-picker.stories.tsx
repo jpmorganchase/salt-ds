@@ -14,6 +14,7 @@ import {
   StackLayout,
   Text,
   ToggleButton,
+  useId,
 } from "@salt-ds/core";
 import {
   DateDetailError,
@@ -177,7 +178,10 @@ const DatePickerRangeTemplate: StoryFn<
       onSelectionChange={handleSelectionChange}
     >
       <DatePickerTrigger>
-        <DatePickerRangeInput />
+        <DatePickerRangeInput
+          startInputProps={{ "aria-label": "Start date" }}
+          endInputProps={{ "aria-label": "End date" }}
+        />
       </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerRangePanel />
@@ -726,9 +730,12 @@ export const SingleWithMinMaxDate: StoryFn<
     dateAdapter.parse("15/01/2031", "DD/MM/YYYY").date ?? undefined;
   const defaultVisibleMonth =
     dateAdapter.parse("01/01/2030", "DD/MM/YYYY").date ?? undefined;
+
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
         minDate={minDate}
@@ -737,7 +744,7 @@ export const SingleWithMinMaxDate: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
@@ -824,9 +831,12 @@ export const RangeWithMinMaxDate: StoryFn<
     dateAdapter.parse("01/01/2030", "DD/MM/YYYY").date ?? undefined;
   const defaultEndVisibleMonth =
     dateAdapter.parse("01/01/2031", "DD/MM/YYYY").date ?? undefined;
+
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         minDate={minDate}
@@ -835,7 +845,7 @@ export const RangeWithMinMaxDate: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel
@@ -892,9 +902,11 @@ export const SingleWithInitialError: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
@@ -902,7 +914,10 @@ export const SingleWithInitialError: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput defaultValue="bad date" />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            defaultValue="bad date"
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -981,9 +996,12 @@ export const RangeWithInitialError: StoryFn<
 
   const defaultStartVisibleMonth =
     dateAdapter.parse("01/06/2024", "DD/MM/YYYY").date ?? dateAdapter.today();
+
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         defaultSelectedDate={{
@@ -995,6 +1013,7 @@ export const RangeWithInitialError: StoryFn<
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
+            aria-labelledby={labelId}
             defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
           />
         </DatePickerTrigger>
@@ -1060,16 +1079,18 @@ export const SingleWithFormField: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -1146,16 +1167,18 @@ export const RangeWithFormField: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
@@ -1208,16 +1231,18 @@ export const SingleWithCustomPanel: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
@@ -1297,16 +1322,18 @@ export const RangeWithCustomPanel: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
@@ -1383,16 +1410,18 @@ export const SingleWithTodayButton: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
@@ -1515,9 +1544,11 @@ export const SingleWithConfirmation: StoryFn<
     }
   }, [dateAdapter, selectedDate]);
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
@@ -1528,7 +1559,7 @@ export const SingleWithConfirmation: StoryFn<
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
@@ -1683,9 +1714,11 @@ export const RangeWithConfirmation: StoryFn<
     }
   }, [dateAdapter, selectedDate]);
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
@@ -1696,7 +1729,7 @@ export const RangeWithConfirmation: StoryFn<
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
@@ -1806,16 +1839,21 @@ export const SingleWithCustomParser: StoryFn<
     [dateAdapter, selectedDate],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput parse={customParser} />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            parse={customParser}
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -1947,9 +1985,11 @@ export const RangeWithCustomParser: StoryFn<
     [dateAdapter, selectedDate],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
@@ -1957,7 +1997,10 @@ export const RangeWithCustomParser: StoryFn<
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput parse={customParser} />
+          <DatePickerRangeInput
+            aria-labelledby={labelId}
+            parse={customParser}
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel />
@@ -2027,9 +2070,11 @@ export const SingleWithUnselectableDates: StoryFn<
     return isWeekend ? "Weekends are un-selectable" : false;
   };
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
@@ -2037,7 +2082,7 @@ export const SingleWithUnselectableDates: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -2123,9 +2168,11 @@ export const RangeWithUnselectableDates: StoryFn<
     return isWeekend ? "Weekends are un-selectable" : false;
   };
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
@@ -2133,7 +2180,7 @@ export const RangeWithUnselectableDates: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
@@ -2196,9 +2243,11 @@ export const SingleWithHighlightedDates: StoryFn<
     return isWeekend ? "Weekends are highlighted" : false;
   };
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
@@ -2206,7 +2255,7 @@ export const SingleWithHighlightedDates: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
@@ -2292,9 +2341,11 @@ export const RangeWithHighlightedDates: StoryFn<
     return isWeekend ? "Weekends are highlighted" : false;
   };
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
@@ -2302,7 +2353,7 @@ export const RangeWithHighlightedDates: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
@@ -2435,16 +2486,18 @@ export const RangeWithLocaleEsES: StoryFn<
     [args?.onSelectionChange, dateAdapter, defaultHelperText],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
@@ -2509,20 +2562,26 @@ export const SingleWithLocaleZhCN: StoryFn<
     [args?.onSelectionChange, dateAdapter, defaultHelperText],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput format={"DD MMM YYYY"} />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            format={"DD MMM YYYY"}
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
             helperText={helperText}
+            lang="zh"
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>
@@ -2653,6 +2712,8 @@ export const SingleWithTimezone: StoryFn<
     setDateString("");
   }, [selectedTimezone]);
 
+  const labelId = useId();
+
   return (
     <GridLayout gap={1}>
       <GridItem colSpan={12}>
@@ -2689,7 +2750,7 @@ export const SingleWithTimezone: StoryFn<
       </GridItem>
       <GridItem colSpan={6}>
         <FormField validationStatus={validationStatus}>
-          <FormLabel>Select a date</FormLabel>
+          <FormLabel id={labelId}>Select a date</FormLabel>
           <DatePicker
             selectionVariant="single"
             {...args}
@@ -2698,7 +2759,7 @@ export const SingleWithTimezone: StoryFn<
             key={selectedTimezone}
           >
             <DatePickerTrigger>
-              <DatePickerSingleInput />
+              <DatePickerSingleInput aria-labelledby={labelId} />
             </DatePickerTrigger>
             <DatePickerOverlay>
               <DatePickerSingleGridPanel helperText={helperText} />
@@ -2899,6 +2960,8 @@ export const RangeWithTimezone: StoryFn<
     setEndDateString("");
   }, [selectedTimezone]);
 
+  const labelId = useId();
+
   return (
     <GridLayout gap={1}>
       <GridItem colSpan={12}>
@@ -2959,7 +3022,7 @@ export const RangeWithTimezone: StoryFn<
       </GridItem>
       <GridItem colSpan={6}>
         <FormField validationStatus={validationStatus}>
-          <FormLabel>Select a date range</FormLabel>
+          <FormLabel id={labelId}>Select a date range</FormLabel>
           <DatePicker
             selectionVariant="range"
             {...args}
@@ -2968,7 +3031,7 @@ export const RangeWithTimezone: StoryFn<
             key={selectedTimezone}
           >
             <DatePickerTrigger>
-              <DatePickerRangeInput />
+              <DatePickerRangeInput aria-labelledby={labelId} />
             </DatePickerTrigger>
             <DatePickerOverlay>
               <DatePickerRangePanel helperText={helperText} />
@@ -3039,16 +3102,18 @@ export const SingleBordered: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput bordered />
+          <DatePickerSingleInput aria-labelledby={labelId} bordered />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
@@ -3130,16 +3195,18 @@ export const RangeBordered: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput bordered />
+          <DatePickerRangeInput aria-labelledby={labelId} bordered />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel
