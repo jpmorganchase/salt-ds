@@ -640,10 +640,6 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
         [withBaseName("hoveredEnd")]:
           selectionVariant !== "single" && hoveredEnd,
       }),
-      "aria-selected":
-        selected || selectedEnd || selectedStart || selectedSpan
-          ? "true"
-          : undefined,
       "aria-disabled":
         isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
       "aria-label": ariaLabel,
