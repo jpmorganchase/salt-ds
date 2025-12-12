@@ -97,7 +97,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
 
     it("SHOULD NOT be able to enable the overlay to open on click, if disabled", () => {
-      cy.mount(<Single openOnClick disabled/>);
+      cy.mount(<Single openOnClick disabled />);
       cy.findByRole("application").should("not.exist");
       // Simulate opening the calendar on click
       cy.document().find("input").realClick();
