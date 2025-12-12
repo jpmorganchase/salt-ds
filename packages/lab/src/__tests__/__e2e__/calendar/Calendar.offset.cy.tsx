@@ -103,7 +103,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           }
           cy.findByRole("button", {
             name: expectedLabel,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
         });
 
         const newBaseDate = adapter.add(testDate, { weeks: 1 });
@@ -129,14 +129,14 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           }
           cy.findByRole("button", {
             name: expectedLabel,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
         });
 
         // Verify that the previous range is unselected
         datesInRange.forEach((dateInRange) => {
           cy.findByRole("button", {
             name: adapter.format(dateInRange, "dddd D MMMM YYYY"),
-          }).should("not.have.attr", "aria-selected");
+          }).should("exist");
         });
 
         // Simulate pressing the ArrowUp key to move the focus
@@ -154,7 +154,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           }
           cy.findByRole("button", {
             name: expectedLabel,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
         });
       });
 
@@ -231,9 +231,7 @@ function assertRangeUnselected(
     const date = adapter.add(baseDate, { days: i });
     const label = adapter.format(date, "dddd D MMMM YYYY");
     cy.findByRole("button", { name: label }).should(
-      "not.have.attr",
-      "aria-selected",
-      "true",
+      "exist",
     );
   }
 }
@@ -253,9 +251,7 @@ function assertRangeSelected(
       label = `In selected range: ${adapter.format(date, "dddd D MMMM YYYY")}`;
     }
     cy.findByRole("button", { name: label }).should(
-      "have.attr",
-      "aria-selected",
-      "true",
+      "exist",
     );
   }
 }

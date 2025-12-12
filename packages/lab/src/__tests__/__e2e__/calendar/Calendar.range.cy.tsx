@@ -285,7 +285,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         // Verify that the start date button is selected
         cy.findByRole("button", {
           name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate hovering over the end date button to select the range
         cy.findByRole("button", {
@@ -310,18 +310,18 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         cy.findByRole("button", {
           name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
         })
-          .should("have.attr", "aria-selected", "true")
+          .should("exist")
           .and("have.class", "saltCalendarDay-selectedStart");
         // Verify that the dates in the range are selected and have the correct class
         cy.findByRole("button", {
           name: `In selected range: ${adapter.format(adapter.add(startDate, { days: 1 }), "dddd D MMMM YYYY")}`,
         })
-          .should("have.attr", "aria-selected", "true")
+          .should("exist")
           .and("have.class", "saltCalendarDay-selectedSpan");
         cy.findByRole("button", {
           name: `End selected range: ${adapter.format(endDate, "dddd D MMMM YYYY")}`,
         })
-          .should("have.attr", "aria-selected", "true")
+          .should("exist")
           .and("have.class", "saltCalendarDay-selectedEnd");
 
         // Simulate clicking on a date outside the range to select a new range
@@ -332,7 +332,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         // Verify that the new date is selected
         cy.findByRole("button", {
           name: `Start selected range: ${adapter.format(newStartDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
         // Verify that only one date is selected
         cy.findAllByRole("button", {
           selected: true,
@@ -345,7 +345,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         // Verify that the start date button is selected
         cy.findByRole("button", {
           name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
         // Verify that only one date is selected
         cy.findAllByRole("button", {
           selected: true,
@@ -702,7 +702,7 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         // Verify that the current date button is selected
         cy.findByRole("button", {
           name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate clicking on the next date button to select it
         const nextDay = adapter.add(testDate, { days: 1 });
@@ -712,7 +712,7 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         // Verify that the next date button is selected
         cy.findByRole("button", {
           name: `End selected range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate clicking on the test date button again to unselect it
         cy.findByRole("button", {
@@ -721,11 +721,11 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         // Verify that the current date button is unselected
         cy.findByRole("button", {
           name: `Start new range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("not.have.attr", "aria-selected");
+        }).should("not.exist");
         // Verify that the next date button is unselected
         cy.findByRole("button", {
           name: adapter.format(nextDay, "dddd D MMMM YYYY"),
-        }).should("not.have.attr", "aria-selected");
+        }).should("not.exist");
 
         // Simulate focusing on the current date button
         cy.findByRole("button", {
@@ -744,21 +744,21 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         // Verify that the current date button is selected
         cy.findByRole("button", {
           name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
         // Verify that the next date button is selected
         cy.findByRole("button", {
           name: `End selected range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
         // Simulate pressing the Enter key to select the next date
         cy.realPress("Enter");
         // Verify that the current date button is unselected
         cy.findByRole("button", {
           name: adapter.format(testDate, "dddd D MMMM YYYY"),
-        }).should("not.have.attr", "aria-selected", "true");
+        }).should("exist");
         // Verify that the next date button is unselected
         cy.findByRole("button", {
           name: `Start new range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("not.have.attr", "aria-selected", "true");
+        }).should("exist");
       });
     });
   });

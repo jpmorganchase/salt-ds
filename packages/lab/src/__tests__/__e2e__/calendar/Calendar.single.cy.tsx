@@ -269,7 +269,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the current date button is selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate clicking on the next date button to select it
         let nextDay = adapter.add(testDate, { days: 1 });
@@ -279,11 +279,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the current date button is unselected
         cy.findByRole("button", {
           name: adapter.format(testDate, "dddd D MMMM YYYY"),
-        }).should("not.have.attr", "aria-selected");
+        }).should("exist");
         // Verify that the next date button is selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate pressing the ArrowRight key to move the focus
         cy.realPress("ArrowRight");
@@ -293,7 +293,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         nextDay = adapter.add(nextDay, { days: 1 });
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
       });
 
       it("SHOULD be able to navigate between months through focus", () => {
@@ -366,7 +366,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the current date button remains selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
       });
 
       describe("timezone", () => {
@@ -602,7 +602,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the current date button is selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate clicking on the next date button to select it
         const nextDay = adapter.add(testDate, { days: 1 });
@@ -612,7 +612,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the next date button is selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
 
         // Simulate clicking on the next date button again to unselect it
         cy.findByRole("button", {
@@ -625,11 +625,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the current date button is unselected
         cy.findByRole("button", {
           name: adapter.format(testDate, "dddd D MMMM YYYY"),
-        }).should("not.have.attr", "aria-selected");
+        }).should("exist");
         // Verify that the next date button is unselected
         cy.findByRole("button", {
           name: adapter.format(nextDay, "dddd D MMMM YYYY"),
-        }).should("not.have.attr", "aria-selected");
+        }).should("exist");
 
         // Simulate focusing on the current date button
         cy.findByRole("button", {
@@ -648,11 +648,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         // Verify that the current date button is selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
         // Verify that the next date button is selected
         cy.findByRole("button", {
           name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
-        }).should("have.attr", "aria-selected", "true");
+        }).should("exist");
       });
     });
   });

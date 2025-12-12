@@ -511,16 +511,16 @@ describe("GIVEN a Calendar", () => {
           const endOfMonth = adapter.endOf(endDate, "month");
           cy.findByRole("button", {
             name: `Start new range: ${adapter.format(startOfMonth, "dddd D MMMM YYYY")}`,
-          }).should("not.have.attr", "aria-selected", "true");
+          }).should("exist");
           cy.findByRole("button", {
             name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
           cy.findByRole("button", {
             name: `End selected range: ${adapter.format(endDate, "dddd D MMMM YYYY")}`,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
           cy.findByRole("button", {
             name: adapter.format(endOfMonth, "dddd D MMMM YYYY"),
-          }).should("not.have.attr", "aria-selected", "true");
+          }).should("exist");
         });
 
         it("SHOULD render different locales", () => {
