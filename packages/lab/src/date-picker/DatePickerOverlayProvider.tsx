@@ -103,6 +103,10 @@ const DatePickerOverlayContext = createContext<
  */
 interface DatePickerOverlayProviderProps {
   /**
+   * If `true`, the overlay is disabled.
+   */
+  disabled?: boolean;
+  /**
    * If `true`, the overlay is open.
    */
   open?: boolean;
@@ -140,6 +144,7 @@ interface DatePickerOverlayProviderProps {
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
 > = ({
+  disabled,
   open: openProp,
   openOnClick,
   defaultOpen,
@@ -219,7 +224,7 @@ export const DatePickerOverlayProvider: React.FC<
       },
     }),
     useClick(floatingUIResult.context, {
-      enabled: !!openOnClick && !readOnly,
+      enabled: !disabled && !!openOnClick && !readOnly,
       toggle: false,
       keyboardHandlers: false,
     }),

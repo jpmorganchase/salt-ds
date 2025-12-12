@@ -160,6 +160,7 @@ export const DatePicker = forwardRef(function DatePicker<
 
   return (
     <DatePickerOverlayProvider
+      disabled={rest.disabled}
       defaultOpen={defaultOpen}
       open={open}
       openOnClick={openOnClick}

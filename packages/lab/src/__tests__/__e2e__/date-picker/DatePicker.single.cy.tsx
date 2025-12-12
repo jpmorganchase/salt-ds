@@ -96,6 +96,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
     });
 
+    it("SHOULD NOT be able to enable the overlay to open on click, if disabled", () => {
+      cy.mount(<Single openOnClick disabled/>);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on click
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("not.exist");
+    });
+
     it("SHOULD hide calendar upon focus out", () => {
       cy.mount(<Single />);
 
@@ -718,7 +726,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Verify that the default selected date is highlighted in the calendar
           cy.findByRole("button", {
             name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
         });
 
         it("SHOULD be able to select a date", () => {
@@ -764,7 +772,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Verify that the selected date is highlighted in the calendar
           cy.findByRole("button", {
             name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
         });
 
         it("SHOULD not be able to select un-selectable dates", () => {

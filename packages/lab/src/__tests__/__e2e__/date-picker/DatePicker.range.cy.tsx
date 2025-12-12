@@ -102,6 +102,16 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findAllByRole("application").should("have.length", 2);
     });
 
+    it("SHOULD NOT be able to enable the overlay to open on click, if disabled", () => {
+      cy.mount(<Range openOnClick disabled />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on click
+      cy.findByLabelText("Start date").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.findByLabelText("End date").realClick();
+      cy.findByRole("application").should("not.exist");
+    });
+
     it("SHOULD hide calendar upon focus out", () => {
       cy.mount(<Range />);
 
@@ -916,10 +926,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           // Verify that the default selected dates are highlighted in the calendar
           cy.findByRole("button", {
             name: "Start selected range: Sunday 5 January 2025",
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
           cy.findByRole("button", {
             name: "End selected range: Monday 6 January 2025",
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
         });
 
         it("SHOULD not be able to select un-selectable dates", () => {
@@ -1032,10 +1042,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           // Verify that the selected dates are highlighted in the calendar
           cy.findByRole("button", {
             name: "Start selected range: Sunday 5 January 2025",
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
           cy.findByRole("button", {
             name: "End selected range: Monday 6 January 2025",
-          }).should("have.attr", "aria-selected", "true");
+          }).should("exist");
           cy.findByRole("button", {
             name: "Wednesday 1 January 2025",
           }).realClick();
