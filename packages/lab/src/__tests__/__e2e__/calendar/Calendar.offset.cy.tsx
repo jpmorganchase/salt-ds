@@ -230,9 +230,7 @@ function assertRangeUnselected(
   for (let i = 0; i <= 3; i++) {
     const date = adapter.add(baseDate, { days: i });
     const label = adapter.format(date, "dddd D MMMM YYYY");
-    cy.findByRole("button", { name: label }).should(
-      "exist",
-    );
+    cy.findByRole("button", { name: label }).should("exist");
   }
 }
 
@@ -250,9 +248,7 @@ function assertRangeSelected(
     } else {
       label = `In selected range: ${adapter.format(date, "dddd D MMMM YYYY")}`;
     }
-    cy.findByRole("button", { name: label }).should(
-      "exist",
-    );
+    cy.findByRole("button", { name: label }).should("exist");
   }
 }
 
