@@ -7,4 +7,9 @@
 
   --salt-sentiment-neutral-track: var(--salt-palette-neutral-border);
   --salt-sentiment-neutral-track-disabled: var(--salt-palette-neutral-border-disabled);
+
+  --salt-sentiment-caution-dataviz: var(--salt-palette-warning-foreground-decorative);
+  --salt-sentiment-negative-dataviz: var(--salt-palette-error-foreground-decorative);
+  --salt-sentiment-positive-dataviz: var(--salt-palette-success-foreground-decorative);
+  --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral-secondary-foreground);
 }

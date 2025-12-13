@@ -1,0 +1,97 @@
+/* Pattern fills for pie/donut charts */
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-0:not(.highcharts-data-label-connector) {
+  fill: url(#diagonal-up);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-1:not(.highcharts-data-label-connector) {
+  fill: url(#dot);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-2:not(.highcharts-data-label-connector) {
+  fill: url(#zigzag);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-3:not(.highcharts-data-label-connector) {
+  fill: url(#vertical-lines);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-4:not(.highcharts-data-label-connector) {
+  fill: url(#diagonal-down);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-5:not(.highcharts-data-label-connector) {
+  fill: url(#upward-point);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-6:not(.highcharts-data-label-connector) {
+  fill: url(#horizontal-lines);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-7:not(.highcharts-data-label-connector) {
+  fill: url(#crosshatch);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-8:not(.highcharts-data-label-connector) {
+  fill: url(#net);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-9:not(.highcharts-data-label-connector) {
+  fill: url(#steps);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-10:not(.highcharts-data-label-connector) {
+  fill: url(#pavement);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-11:not(.highcharts-data-label-connector) {
+  fill: url(#scallop);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-12:not(.highcharts-data-label-connector) {
+  fill: url(#vertical-wave);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-13:not(.highcharts-data-label-connector) {
+  fill: url(#metal);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-14:not(.highcharts-data-label-connector) {
+  fill: url(#scales);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-15:not(.highcharts-data-label-connector) {
+  fill: url(#triangle);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-16:not(.highcharts-data-label-connector) {
+  fill: url(#horizontal-wave);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-17:not(.highcharts-data-label-connector) {
+  fill: url(#cage);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-18:not(.highcharts-data-label-connector) {
+  fill: url(#line-dot);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-color-19:not(.highcharts-data-label-connector) {
+  fill: url(#squares);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point,
+.highcharts-theme-salt.salt-fill-patterns .highcharts-candlestick-series .highcharts-point {
+  fill: url(#positive-sentiment);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point.highcharts-negative {
+  fill: url(#negative-sentiment);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-candlestick-series .highcharts-point-down {
+  fill: url(#negative-sentiment);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-waterfall-series .highcharts-point.highcharts-sum {
+  fill: url(#neutral-sentiment);
+}
