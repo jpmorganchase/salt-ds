@@ -10,16 +10,20 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const columnChartOptions: Options = {
+const stackedBarChartOptions: Options = {
   chart: {
-    type: "column",
+    type: "bar",
   },
   title: {
     text: "Regional revenue by product",
   },
   accessibility: {
     description:
-      "A column chart comparing revenue across regions. Each category shows a single column representing the total value for that region.",
+      "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
     categories: ["NA", "EMEA", "APAC", "LATAM"],
@@ -33,25 +37,40 @@ const columnChartOptions: Options = {
       text: "Revenue ($ millions)",
     },
   },
+  plotOptions: {
+    series: {
+      stacking: "normal",
+    },
+  },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
+      '<span>{series.name}: </span><span class="value">{point.y}</span><br/><span>Total: </span><span class="value">{point.stackTotal}</span>',
   },
   series: [
     {
-      name: "Revenue",
-      type: "column",
+      name: "Equities",
+      type: "bar",
       data: [5, 3, 4, 7],
+    },
+    {
+      name: "Fixed Income",
+      type: "bar",
+      data: [2, 2, 3, 2],
+    },
+    {
+      name: "FX",
+      type: "bar",
+      data: [3, 4, 4, 2],
     },
   ],
 };
 
-export const ColumnChart = () => {
+export const StackedBarChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, columnChartOptions);
+  const chartOptions = useChart(chartRef, stackedBarChartOptions);
 
   return (
     <div className={styles.chartContainer}>

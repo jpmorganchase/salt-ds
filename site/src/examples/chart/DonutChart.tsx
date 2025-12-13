@@ -2,84 +2,68 @@ import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
-import highchartsMore from "highcharts/highcharts-more";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
-highchartsMore(Highcharts);
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const waterfallChartOptions: Options = {
+const donutChartOptions: Options = {
   chart: {
-    type: "waterfall",
+    type: "pie",
   },
   title: {
-    text: "Regional revenue by product",
+    text: "Bank revenue mix",
+    align: "center",
+  },
+  tooltip: {
+    enabled: false,
   },
   accessibility: {
     description:
-      "A waterfall chart showing the cumulative effect of sequential positive and negative values on revenue.",
-  },
-  xAxis: {
-    categories: [
-      "Start",
-      "Product Sales",
-      "Service Revenue",
-      "Operating Costs",
-      "Marketing",
-      "Total",
-    ],
-    title: {
-      text: "Category",
-    },
-  },
-  yAxis: {
-    title: {
-      text: "Revenue ($ millions)",
-    },
-  },
-  tooltip: {
-    headerFormat: "<span>{point.key}</span><br/>",
-    pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
-  },
-  legend: {
-    enabled: false,
-  },
-  plotOptions: {
-    waterfall: {
-      dataLabels: {
-        enabled: true,
-        formatter: function () {
-          return `$${this.y}M`;
-        },
-      },
+      "A donut chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+    point: {
+      valueSuffix: "%",
     },
   },
   series: [
     {
-      name: "Revenue",
-      type: "waterfall",
+      type: "pie",
+      name: "Revenue by product line",
+      innerSize: "80%",
       data: [
-        { y: 50 },
-        { y: 25 },
-        { y: 15 },
-        { y: -20 },
-        { y: -10 },
-        { isSum: true },
+        { name: "Checking Accounts", y: 5 },
+        { name: "Savings Accounts", y: 5 },
+        { name: "Credit Cards", y: 5 },
+        { name: "Mortgages", y: 5 },
+        { name: "Auto Loans", y: 5 },
+        { name: "Personal Loans", y: 5 },
+        { name: "Student Loans", y: 5 },
+        { name: "Small Business Loans", y: 5 },
+        { name: "Wealth Management", y: 5 },
+        { name: "Robo-Advisory", y: 5 },
+        { name: "Brokerage", y: 5 },
+        { name: "Investment Banking", y: 5 },
+        { name: "Asset Management", y: 5 },
+        { name: "Private Banking", y: 5 },
+        { name: "Treasury Services", y: 5 },
+        { name: "Payments", y: 5 },
+        { name: "Foreign Exchange", y: 5 },
+        { name: "Custody Services", y: 5 },
+        { name: "Insurance", y: 5 },
+        { name: "Compliance & Risk Services", y: 5 },
       ],
     },
   ],
 };
 
-export const WaterfallChart = () => {
+export const DonutChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, waterfallChartOptions);
+  const chartOptions = useChart(chartRef, donutChartOptions);
 
   return (
     <div className={styles.chartContainer}>

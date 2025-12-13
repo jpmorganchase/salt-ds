@@ -10,56 +10,51 @@ import styles from "./index.module.css";
 // This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 accessibility(Highcharts);
 
-const pieChartOptions: Options = {
+const barChartOptions: Options = {
   chart: {
-    type: "pie",
+    type: "bar",
   },
   title: {
-    text: "Bank revenue mix",
-    align: "center",
-  },
-  tooltip: {
-    enabled: false,
+    text: "Regional revenue by product",
   },
   accessibility: {
     description:
-      "A pie chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+      "A bar chart comparing revenue by product across regions. Each region shows side-by-side values for each product category.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
+  },
+  xAxis: {
+    categories: ["NA", "EMEA", "APAC", "LATAM"],
+    title: {
+      text: "Region",
+    },
+  },
+  yAxis: {
+    title: {
+      text: "Revenue ($ millions)",
+    },
+  },
+  tooltip: {
+    headerFormat: "<span>{point.key}</span><br/>",
+    pointFormat:
+      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
   },
   series: [
     {
-      type: "pie",
-      name: "Revenue by product line",
-      data: [
-        { name: "Checking Accounts", y: 5 },
-        { name: "Savings Accounts", y: 5 },
-        { name: "Credit Cards", y: 5 },
-        { name: "Mortgages", y: 5 },
-        { name: "Auto Loans", y: 5 },
-        { name: "Personal Loans", y: 5 },
-        { name: "Student Loans", y: 5 },
-        { name: "Small Business Loans", y: 5 },
-        { name: "Wealth Management", y: 5 },
-        { name: "Robo-Advisory", y: 5 },
-        { name: "Brokerage", y: 5 },
-        { name: "Investment Banking", y: 5 },
-        { name: "Asset Management", y: 5 },
-        { name: "Private Banking", y: 5 },
-        { name: "Treasury Services", y: 5 },
-        { name: "Payments", y: 5 },
-        { name: "Foreign Exchange", y: 5 },
-        { name: "Custody Services", y: 5 },
-        { name: "Insurance", y: 5 },
-        { name: "Compliance & Risk Services", y: 5 },
-      ],
+      name: "Equities",
+      type: "bar",
+      data: [45, 38, 42, 37],
     },
   ],
 };
 
-export const PieChart = () => {
+export const BarChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, pieChartOptions);
+  const chartOptions = useChart(chartRef, barChartOptions);
 
   return (
     <div className={styles.chartContainer}>

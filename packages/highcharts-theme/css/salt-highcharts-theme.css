@@ -233,9 +233,9 @@
 }
 
 /* Override default stroke for chart segments borders */
-.highcharts-theme-salt .highcharts-bar-series .highcharts-point,
-.highcharts-theme-salt .highcharts-pie-series .highcharts-point,
-.highcharts-theme-salt .highcharts-column-series .highcharts-point {
+.highcharts-theme-salt .highcharts-series.highcharts-bar-series .highcharts-point,
+.highcharts-theme-salt .highcharts-series.highcharts-pie-series .highcharts-point,
+.highcharts-theme-salt .highcharts-series.highcharts-column-series .highcharts-point {
   stroke: var(--salt-container-primary-background);
 }
 
@@ -344,4 +344,8 @@
 .highcharts-theme-salt .highcharts-hollowcandlestick-series .highcharts-point-down-bearish-up {
   stroke: var(--salt-sentiment-positive-dataviz);
   fill: var(--salt-sentiment-positive-dataviz);
+}
+
+.highcharts-theme-salt .highcharts-legend rect.highcharts-point {
+  stroke: none;
 }

@@ -10,6 +10,10 @@ export const columnOptions: Options = {
   accessibility: {
     description:
       "A column chart comparing revenue across regions. Each category shows a single column representing the total value for that region.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "M",
+    },
   },
   xAxis: {
     categories: ["NA", "EMEA", "APAC", "LATAM"],

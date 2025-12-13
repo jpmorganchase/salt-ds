@@ -22,6 +22,10 @@ const boxPlotChartOptions: Options = {
   accessibility: {
     description:
       "Box plot chart showing quarterly sales distribution across four regions. Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.",
+    point: {
+      valuePrefix: "$",
+      valueSuffix: "K",
+    },
   },
   xAxis: {
     categories: ["Q1", "Q2", "Q3", "Q4"],
