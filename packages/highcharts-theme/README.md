@@ -41,7 +41,11 @@ export function MyChart({ chartOptions }) {
 
   return (
     <div className="highcharts-theme-salt">
-      <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />
+      <HighchartsReact
+        ref={chartRef}
+        highcharts={Highcharts}
+        options={options}
+      />
     </div>
   );
 }
