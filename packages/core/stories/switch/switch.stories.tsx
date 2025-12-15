@@ -30,6 +30,13 @@ Checked.args = {
   label: "Checked",
 };
 
+// export const Readonly = Template.bind({});
+
+// Readonly.args = {
+//   readOnly: true,
+//   label: "Readonly",
+// };
+
 export const Disabled = Template.bind({});
 
 Disabled.args = {
@@ -70,3 +77,10 @@ export const WithFormField: StoryFn<typeof Switch> = (args) => {
     </StackLayout>
   );
 };
+
+export const Readonly: StoryFn<typeof Switch> = (args) => (
+  <StackLayout gap={1}>
+    <Switch {...args} readOnly defaultChecked label="Read only and checked" />
+    <Switch {...args} readOnly label="Read only" />
+  </StackLayout>
+);
