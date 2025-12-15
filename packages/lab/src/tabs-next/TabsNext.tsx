@@ -53,6 +53,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       getLast,
       itemAt,
       getIndex,
+      sortItems,
     } = useCollection({ wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
@@ -136,6 +137,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         setMenuOpen,
         itemAt,
         getIndex,
+        sortItems,
       }),
       [
         registerPanel,
@@ -152,6 +154,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         menuOpen,
         itemAt,
         getIndex,
+        sortItems,
       ],
     );
 

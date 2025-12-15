@@ -12,6 +12,7 @@ import {
   type RefObject,
   useEffect,
   useMemo,
+  useState,
 } from "react";
 import type { TabNextProps } from "../TabNext";
 
@@ -27,8 +28,6 @@ function getTabWidth(element: HTMLElement) {
   return Math.ceil(width);
 }
 
-let pinned: string | undefined;
-
 export function useOverflow({
   container,
   overflowButton,
@@ -42,6 +41,7 @@ export function useOverflow({
     visibleCount: Number.POSITIVE_INFINITY,
     isMeasuring: false,
   });
+  const [pinned, setPinned] = useState(selected);
 
   const pinnedValue = pinned ?? selected;
 
@@ -214,13 +214,13 @@ export function useOverflow({
     [childArray, visibleCount],
   );
 
-  const hiddenSelectedIndex = hidden.findIndex(
+  const hiddenSelected = hidden.find(
     (child) =>
       isValidElement<TabNextProps>(child) && child?.props?.value === selected,
   );
 
-  if (hiddenSelectedIndex !== -1) {
-    pinned = selected;
+  if (hiddenSelected) {
+    setPinned(selected);
   }
 
   const hiddenPinnedIndex = hidden.findIndex(

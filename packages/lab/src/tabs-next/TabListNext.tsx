@@ -65,6 +65,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       activeTab,
       menuOpen,
       setMenuOpen,
+      sortItems,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
@@ -129,22 +130,32 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       if (!currentTab?.stale) return;
       const nextIndex = currentTab.staleIndex ?? -1;
 
-      queueMicrotask(() => {
-        const nextTab = itemAt(nextIndex) ?? getLast();
+      setTimeout(() => {
+        let nextTab = itemAt(nextIndex) ?? getLast();
+
+        if (nextTab?.element === overflowButtonRef.current) {
+          nextTab = itemAt(nextIndex - 1);
+        }
 
         if (nextTab) {
-          if (currentTabIsSelected) {
+          if (
+            currentTabIsSelected &&
+            !tabstripRef.current?.querySelector(
+              '[role="tab"][aria-selected="true"]',
+            )
+          ) {
             nextTab.element?.click();
             nextTab.element?.focus();
           } else {
             nextTab.element?.focus();
           }
         }
-      });
+      }, 166);
     });
 
     useEffect(() => {
       const handleFocus = () => {
+        if (!tabstripRef.current) return;
         handleTabRemoval();
       };
 
@@ -158,6 +169,20 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         );
       };
     }, [targetWindow, handleTabRemoval]);
+
+    useEffect(() => {
+      const observer = new MutationObserver(() => {
+        sortItems();
+      });
+
+      if (!tabstripRef.current) return;
+
+      observer.observe(tabstripRef.current, { childList: true });
+
+      return () => {
+        observer.disconnect();
+      };
+    }, [sortItems]);
 
     const warningId = useId();
 

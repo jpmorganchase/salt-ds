@@ -37,6 +37,7 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     item: () => null,
     getIndex: () => -1,
     itemAt: () => null,
+    sortItems: () => undefined,
     selected: undefined,
     registerTab: () => () => undefined,
     registerPanel: () => () => undefined,
