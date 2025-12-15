@@ -1,16 +1,18 @@
-.saltKeyboardKey {
+.saltKbd {
   display: flex;
+  box-sizing: border-box;
   --saltText-fontFamily: var(--salt-text-code-fontFamily);
   width: fit-content;
   border-radius: var(--salt-palette-corner-weaker);
   border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor);
   background: var(--salt-container-primary-background);
   box-shadow: 0 var(--salt-size-fixed-100) 0 0 var(--salt-container-primary-borderColor);
-  min-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   align-items: center;
   padding: 0 var(--salt-spacing-50);
+  text-transform: capitalize;
 }
 
-.saltKeyboardKey .saltText {
+.saltKbd .saltText {
   width: fit-content;
 }

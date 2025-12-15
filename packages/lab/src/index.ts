@@ -33,7 +33,7 @@ export {
   type InputLegacyProps as InputProps,
   StaticInputAdornment,
 } from "./input-legacy";
-export * from "./keyboard-key";
+export * from "./kbd";
 export * from "./layer-layout";
 export * from "./list";
 export type {
