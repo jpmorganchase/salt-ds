@@ -1,3 +1,4 @@
+import { Tooltip } from "@salt-ds/core";
 import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
 import { Tree, TreeNode } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -306,5 +307,54 @@ export const LongLabels: StoryFn<typeof Tree> = (args) => (
       </TreeNode>
     </TreeNode>
     <TreeNode value="pictures" label="Pictures" />
+  </Tree>
+);
+
+const tooltipLabelStyle = {
+  display: "block",
+  marginRight: "calc(-1 * var(--salt-spacing-100))",
+  paddingRight: "var(--salt-spacing-100)",
+};
+
+export const WithTooltip: StoryFn<typeof Tree> = (args) => (
+  <Tree {...args} aria-label="File browser" defaultExpanded={["documents"]}>
+    <TreeNode
+      value="documents"
+      label={
+        <Tooltip content="Contains all document files">
+          <span style={tooltipLabelStyle}>Documents</span>
+        </Tooltip>
+      }
+    >
+      <TreeNode
+        value="reports"
+        label={
+          <Tooltip content="Financial reports folder">
+            <span style={tooltipLabelStyle}>Reports</span>
+          </Tooltip>
+        }
+      >
+        <TreeNode value="annual-report" label="Annual Report" />
+        <TreeNode value="quarterly-report" label="Quarterly Report" />
+      </TreeNode>
+      <TreeNode value="invoices" label="Invoices">
+        <TreeNode value="invoice-001" label="Invoice 001" />
+        <TreeNode value="invoice-002" label="Invoice 002" />
+      </TreeNode>
+    </TreeNode>
+    <TreeNode
+      value="pictures"
+      label={
+        <Tooltip content="Image files and photos">
+          <span style={tooltipLabelStyle}>Pictures</span>
+        </Tooltip>
+      }
+    >
+      <TreeNode value="vacation" label="Vacation">
+        <TreeNode value="beach" label="Beach" />
+        <TreeNode value="mountains" label="Mountains" />
+      </TreeNode>
+    </TreeNode>
+    <TreeNode value="downloads" label="Downloads" />
   </Tree>
 );
