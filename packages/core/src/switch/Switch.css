@@ -111,7 +111,7 @@
 }
 
 .saltSwitch-readOnly {
-  cursor: var(--salt-cursor-disabled);
+  cursor: var(--salt-cursor-text);
 }
 
 .saltSwitch-readOnly .saltSwitch-track,
