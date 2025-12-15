@@ -3922,7 +3922,7 @@ __metadata:
     typescript: "npm:^5.8.3"
     vite: "npm:^7.1.5"
     vite-plugin-istanbul: "npm:6.0.0"
-    vite-tsconfig-paths: "npm:^5.1.4"
+    vite-tsconfig-paths: "npm:^6.0.0"
     vitest: "npm:^4.0.0"
     yup: "npm:^1.7.1"
   languageName: unknown
@@ -17528,9 +17528,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"vite-tsconfig-paths@npm:^5.1.4":
-  version: 5.1.4
-  resolution: "vite-tsconfig-paths@npm:5.1.4"
+"vite-tsconfig-paths@npm:^6.0.0":
+  version: 6.0.1
+  resolution: "vite-tsconfig-paths@npm:6.0.1"
   dependencies:
     debug: "npm:^4.1.1"
     globrex: "npm:^0.1.2"
@@ -17540,7 +17540,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 10/b409dbd17829f560021a71dba3e473b9c06dcf5fdc9d630b72c1f787145ec478b38caff1be04868971ac8bdcbf0f5af45eeece23dbc9c59c54b901f867740ae0
+  checksum: 10/7ac6d17efee21be805ed62857269d4e41d939774a8cc698e77145b4312edf996a9536e7a3b37e25486ae77d36fc5ae011378058ff290be39da16e52a47e87da7
   languageName: node
   linkType: hard
 
