@@ -60,7 +60,7 @@ export const useAriaAnnounce = (
       const tooltipContent = refs.floating.current?.innerText;
 
       if (tooltipContent) {
-        announce(tooltipContent);
+        announce(tooltipContent, { ariaLive: "assertive" });
       }
     }
 
