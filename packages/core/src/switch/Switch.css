@@ -147,6 +147,10 @@
   border: 0;
 }
 
+.salt-density-high .saltSwitch-readOnly .saltSwitch-thumb {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-dashed) var(--salt-selectable-borderColor-readonly);
+}
+
 /* Styles applied when switch is inside a form field with label left or right, ensuring alignment with base / input height */
 .saltFormField-labelRight .saltSwitch,
 .saltFormField-labelLeft .saltSwitch {
