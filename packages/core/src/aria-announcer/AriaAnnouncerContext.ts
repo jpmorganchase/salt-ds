@@ -1,9 +1,22 @@
-import { createContext } from "react";
+import { type AriaAttributes, createContext } from "react";
 
-export type AnnounceFn = (announcement: string, delay?: number) => void;
+export type AnnounceFnOptions = {
+  ariaLive?: Exclude<AriaAttributes["aria-live"], "off">;
+};
 
 export type AriaAnnouncer = {
-  announce: AnnounceFn;
+  /**
+   * TODO remove legacy `delay` arg (number) in favour of `options` (AnnounceFnOptions) as a breaking change
+   */
+  /**
+   * Announcer function
+   * @param announcement - announcement to queue for screenreader.
+   * @param legacyDelayOrOptions, deprecated `delay` or `options` for announcement
+   */
+  announce: (
+    announcement: string,
+    legacyDelayOrOptions?: number | AnnounceFnOptions,
+  ) => void;
 };
 
 export const AriaAnnouncerContext = createContext<AriaAnnouncer | undefined>(
