@@ -42,21 +42,17 @@ export interface UseTreeProps {
     expanded: boolean,
   ) => void;
   /**
-   * Sets multiselect mode and allows for mutliple node selection
+   * Sets multiselect mode with checkboxes and allows for multiple node selection
    */
   multiselect?: boolean;
   /**
-   * Sets checkbox variant used for node selection
-   */
-  checkbox?: boolean;
-  /**
    * Sets if selecting a parent node should also select its descendants
-   * Only applies when multiselect or checkbox prop is enabled
+   * Only applies when multiselect is enabled
    */
   propagateSelect?: boolean;
   /**
    * Sets if selecting all children should automatically select the parent
-   * Only applies when multiselect or checkbox is enabled
+   * Only applies when multiselect is enabled
    */
   propagateSelectUpwards?: boolean;
   /**
@@ -99,9 +95,8 @@ export function useTree(props: UseTreeProps) {
     selected: selectedProp,
     onSelectionChange,
     multiselect = false,
-    checkbox = false,
-    propagateSelect = false,
-    propagateSelectUpwards = false,
+    propagateSelect = true,
+    propagateSelectUpwards = true,
     togglableSelect = false,
     disabled = false,
     defaultDisabledIds = [],
@@ -152,6 +147,8 @@ export function useTree(props: UseTreeProps) {
   }, []);
 
   const nodesRef = useRef<Map<string, NodeInfo>>(new Map());
+  // Persistent parent map - needed to calculate indeterminate calculations for nodes that have children that are still in selection
+  const parentMapRef = useRef<Map<string, string>>(new Map());
 
   const registerNode = useCallback(
     (
@@ -167,9 +164,15 @@ export function useTree(props: UseTreeProps) {
         hasChildren,
         disabled,
       });
+      // Store parent relationship persistently (never cleared)
+      if (parentValue) {
+        parentMapRef.current.set(value, parentValue);
+      }
 
       return () => {
         nodesRef.current.delete(value);
+        // Note: we intentionally do NOT delete from parentMapRef
+        // to preserve relationships for indeterminate calculation
       };
     },
     [],
@@ -180,13 +183,27 @@ export function useTree(props: UseTreeProps) {
   }, []);
 
   const getParent = useCallback((value: string): string | undefined => {
-    return nodesRef.current.get(value)?.parentValue;
+    // Check mounted nodes first, then fall back to persistent parent map
+    return (
+      nodesRef.current.get(value)?.parentValue ??
+      parentMapRef.current.get(value)
+    );
   }, []);
 
   const getChildren = useCallback((parentValue: string): string[] => {
     const children: string[] = [];
+    const seen = new Set<string>();
+
+    // These two lookups are sub-optimal - double o(N) for indeterminate calculation.
+    // could use a reverse lookup map if need be
     for (const [value, info] of nodesRef.current) {
       if (info.parentValue === parentValue) {
+        children.push(value);
+        seen.add(value);
+      }
+    }
+    for (const [value, parent] of parentMapRef.current) {
+      if (parent === parentValue && !seen.has(value)) {
         children.push(value);
       }
     }
@@ -286,11 +303,11 @@ export function useTree(props: UseTreeProps) {
   );
 
   useEffect(() => {
-    if (checkbox && mounted) {
+    if (multiselect && mounted) {
       const newIndeterminate = calculateIndeterminateState(selectedState);
       setIndeterminateState(newIndeterminate);
     }
-  }, [checkbox, mounted, selectedState, calculateIndeterminateState]);
+  }, [multiselect, mounted, selectedState, calculateIndeterminateState]);
 
   const updateAncestors = useCallback(
     (currentSelected: string[], value: string) => {
@@ -362,7 +379,7 @@ export function useTree(props: UseTreeProps) {
 
       let newSelected: string[];
 
-      if (multiselect || checkbox) {
+      if (multiselect) {
         newSelected = getMultiSelectState(value);
       } else {
         const isCurrentlySelected = selectedState.includes(value);
@@ -374,7 +391,7 @@ export function useTree(props: UseTreeProps) {
       }
 
       setSelectedState(newSelected);
-      if (checkbox) {
+      if (multiselect) {
         const newIndeterminate = calculateIndeterminateState(newSelected);
         setIndeterminateState(newIndeterminate);
       }
@@ -384,7 +401,6 @@ export function useTree(props: UseTreeProps) {
       disabled,
       disabledIdsSet,
       multiselect,
-      checkbox,
       selectedState,
       togglableSelect,
       getMultiSelectState,
@@ -438,7 +454,6 @@ export function useTree(props: UseTreeProps) {
     setSelectedState,
     select,
     multiselect,
-    checkbox,
     propagateSelect,
     propagateSelectUpwards,
     togglableSelect,

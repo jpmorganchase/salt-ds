@@ -17,6 +17,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
 } from "react";
@@ -97,8 +98,10 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       expandedState,
       toggleExpanded,
       selectedState,
+      setSelectedState,
       select,
-      checkbox,
+      multiselect,
+      propagateSelect,
       registerNode,
       activeNode,
       setActiveNode,
@@ -145,6 +148,43 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         nodeRef.current.scrollIntoView({ block: "nearest", inline: "nearest" });
       }
     }, [isActive]);
+
+    // Sync selection with parent on mount when propagateSelect is enabled
+    // This handles the lazy rendering; children sync their state when they mount (only in multiselect mode)
+    const hasSyncedOnMountRef = useRef(false);
+    useLayoutEffect(() => {
+      if (
+        hasSyncedOnMountRef.current ||
+        !multiselect ||
+        !propagateSelect ||
+        !parentValue
+      )
+        return;
+      hasSyncedOnMountRef.current = true;
+
+      const parentSelected = selectedState.includes(parentValue);
+      const selfSelected = selectedState.includes(value);
+      const parentIndeterminate = indeterminateState.has(parentValue);
+
+      if (parentSelected && !selfSelected && !disabled) {
+        // Parent is selected, sync child to selected
+        setSelectedState((prev) => [...prev, value]);
+      } else if (!parentSelected && selfSelected && !parentIndeterminate) {
+        // Only deselect if parent is actually deselected (not indeterminate)
+        // If parent is indeterminate, its state is derived from children -  don't override
+        setSelectedState((prev) => prev.filter((v) => v !== value));
+      }
+    }, [
+      multiselect,
+      propagateSelect,
+      parentValue,
+      value,
+      disabled,
+      // selectedState & setSelectedState run on every selection change but return early via hasSyncedOnMountRef (not ideal but react optimizes it anyway)
+      selectedState,
+      setSelectedState,
+      indeterminateState,
+    ]);
 
     const handleContentClick = useCallback(
       (event: MouseEvent<HTMLDivElement>) => {
@@ -194,9 +234,9 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
           role="treeitem"
           aria-labelledby={labelId}
           aria-expanded={hasChildren ? expanded : undefined}
-          aria-selected={checkbox ? undefined : selected}
+          aria-selected={multiselect ? undefined : selected}
           aria-checked={
-            checkbox ? (indeterminate ? "mixed" : selected) : undefined
+            multiselect ? (indeterminate ? "mixed" : selected) : undefined
           }
           aria-level={level}
           aria-disabled={disabled || undefined}
@@ -206,7 +246,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
             withBaseName(),
             {
               [withBaseName("expanded")]: expanded,
-              [withBaseName("selected")]: selected && !checkbox,
+              [withBaseName("selected")]: selected && !multiselect,
               [withBaseName("active")]: isActive,
               [withBaseName("disabled")]: disabled,
               [withBaseName("hasChildren")]: hasChildren,
@@ -231,7 +271,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
                 {hasChildren && <ExpansionIcon expanded={expanded} />}
               </span>
 
-              {checkbox && (
+              {multiselect && (
                 <CheckboxIcon
                   checked={selected}
                   indeterminate={indeterminate}

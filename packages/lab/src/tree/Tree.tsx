@@ -48,21 +48,17 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   onSelectionChange?: (event: SyntheticEvent, selected: string[]) => void;
   /**
-   * Sets multiselect mode and allows for mutliple node selection
+   * Sets multiselect mode with checkboxes and allows for multiple node selection
    */
   multiselect?: boolean;
   /**
-   * Sets checkbox variant used for node selection
-   */
-  checkbox?: boolean;
-  /**
    * Sets if selecting a parent node should also select its descendants
-   * Only applies when multiselect or checkbox prop is enabled
+   * Only applies when multiselect is enabled
    */
   propagateSelect?: boolean;
   /**
    * Sets if selecting all children should automatically select the parent
-   * Only applies when multiselect or checkbox is enabled
+   * Only applies when multiselect is enabled
    */
   propagateSelectUpwards?: boolean;
   /**
@@ -99,9 +95,8 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       selected,
       onSelectionChange,
       multiselect = false,
-      checkbox = false,
-      propagateSelect = false,
-      propagateSelectUpwards = false,
+      propagateSelect = true,
+      propagateSelectUpwards = true,
       togglableSelect = false,
       disabled = false,
       defaultDisabledIds,
@@ -126,7 +121,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       selected,
       onSelectionChange,
       multiselect,
-      checkbox,
       propagateSelect,
       propagateSelectUpwards,
       togglableSelect,
@@ -329,7 +323,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         if (
           (event.ctrlKey || event.metaKey) &&
           event.key === "a" &&
-          (multiselect || checkbox)
+          multiselect
         ) {
           handled = true;
           event.preventDefault();
@@ -351,7 +345,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         if (
           event.shiftKey &&
           (event.key === "ArrowUp" || event.key === "ArrowDown") &&
-          (multiselect || checkbox)
+          multiselect
         ) {
           handled = true;
           const isDown = event.key === "ArrowDown";
@@ -394,7 +388,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         select,
         selectedState,
         setSelectedState,
-        checkbox,
         multiselect,
         setActiveNode,
         disabledIdsSet,

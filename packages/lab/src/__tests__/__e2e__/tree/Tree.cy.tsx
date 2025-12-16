@@ -456,6 +456,7 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.get(".saltTreeNode-expansion").realClick();
+      //null?
       cy.get("@expandHandler").should(
         "have.been.calledWith",
         null,
@@ -576,12 +577,12 @@ describe("Given a Tree", () => {
       cy.findByRole("treeitem", { name: "Node 3" }).realClick();
       cy.findByRole("treeitem", { name: "Node 1" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Node 3" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
     });
@@ -595,6 +596,32 @@ describe("Given a Tree", () => {
       cy.findByRole("tree").should("have.attr", "aria-multiselectable", "true");
     });
 
+    it("should render checkboxes", () => {
+      cy.mount(
+        <Tree aria-label="File browser" multiselect>
+          <TreeNode value="node1" label="Node 1" />
+        </Tree>,
+      );
+      cy.get(".saltTreeNode-checkbox").should("exist");
+    });
+
+    it("should use aria-checked instead of aria-selected", () => {
+      cy.mount(
+        <Tree aria-label="File browser" multiselect defaultSelected={["node1"]}>
+          <TreeNode value="node1" label="Node 1" />
+        </Tree>,
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "not.have.attr",
+        "aria-selected",
+      );
+    });
+
     it("should select range with Shift+Arrow", () => {
       cy.mount(
         <Tree aria-label="File browser" multiselect>
@@ -606,19 +633,14 @@ describe("Given a Tree", () => {
       cy.realPress("Tab");
       cy.realPress(["Shift", "ArrowDown"]);
       cy.realPress(["Shift", "ArrowDown"]);
-      // cy.findByRole("treeitem", { name: "Node 1" }).should(
-      //   "have.attr",
-      //   "aria-selected",
-      //   "true",
-      // );
       cy.findByRole("treeitem", { name: "Node 2" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Node 3" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
     });
@@ -635,17 +657,17 @@ describe("Given a Tree", () => {
       cy.realPress(["Control", "a"]);
       cy.findByRole("treeitem", { name: "Node 1" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Node 2" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Node 3" }).should(
         "have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
     });
@@ -666,46 +688,18 @@ describe("Given a Tree", () => {
       cy.realPress(["Control", "a"]);
       cy.findByRole("treeitem", { name: "Node 1" }).should(
         "not.have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Node 2" }).should(
         "not.have.attr",
-        "aria-selected",
+        "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Node 3" }).should(
         "not.have.attr",
-        "aria-selected",
-        "true",
-      );
-    });
-  });
-
-  describe("Selection - Checkbox Mode", () => {
-    it("should render checkboxes", () => {
-      cy.mount(
-        <Tree aria-label="File browser" checkbox>
-          <TreeNode value="node1" label="Node 1" />
-        </Tree>,
-      );
-      cy.get(".saltTreeNode-checkbox").should("exist");
-    });
-
-    it("should use aria-checked instead of aria-selected", () => {
-      cy.mount(
-        <Tree aria-label="File browser" checkbox defaultSelected={["node1"]}>
-          <TreeNode value="node1" label="Node 1" />
-        </Tree>,
-      );
-      cy.findByRole("treeitem", { name: "Node 1" }).should(
-        "have.attr",
         "aria-checked",
         "true",
-      );
-      cy.findByRole("treeitem", { name: "Node 1" }).should(
-        "not.have.attr",
-        "aria-selected",
       );
     });
 
@@ -713,7 +707,7 @@ describe("Given a Tree", () => {
       cy.mount(
         <Tree
           aria-label="File browser"
-          checkbox
+          multiselect
           defaultExpanded={["parent"]}
           defaultSelected={["child1"]}
         >
@@ -730,12 +724,12 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should select with Space in checkbox mode regardless of node type", () => {
+    it("should select with Space regardless of node type", () => {
       const onSelectionChange = cy.stub().as("selectionChangeHandler");
       cy.mount(
         <Tree
           aria-label="File browser"
-          checkbox
+          multiselect
           onSelectionChange={onSelectionChange}
         >
           <TreeNode value="parent" label="Parent">
@@ -757,7 +751,7 @@ describe("Given a Tree", () => {
       cy.mount(
         <Tree
           aria-label="File browser"
-          checkbox
+          multiselect
           propagateSelect
           defaultExpanded={["parent"]}
         >
@@ -792,7 +786,7 @@ describe("Given a Tree", () => {
       cy.mount(
         <Tree
           aria-label="File browser"
-          checkbox
+          multiselect
           propagateSelectUpwards
           defaultExpanded={["parent"]}
         >
@@ -811,6 +805,104 @@ describe("Given a Tree", () => {
       cy.findByRole("treeitem", { name: "Child 2" }).realClick();
       cy.findByRole("treeitem", { name: /Parent/ }).should(
         "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should propagate selection to collapsed children when expanded with propagateSelect", () => {
+      cy.mount(
+        <Tree aria-label="File browser" multiselect propagateSelect>
+          <TreeNode value="parent" label="Parent">
+            <TreeNode value="child1" label="Child 1" />
+            <TreeNode value="child2" label="Child 2" />
+          </TreeNode>
+        </Tree>,
+      );
+      // Select collapsed parent
+      cy.findByRole("treeitem", { name: /Parent/ })
+        .find(".saltTreeNode-content")
+        .first()
+        .realClick();
+      cy.findByRole("treeitem", { name: /Parent/ }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      // Children not yet visible
+      cy.findByRole("treeitem", { name: "Child 1" }).should("not.exist");
+
+      // Expand parent - children should sync to selected
+      cy.findByRole("treeitem", { name: /Parent/ })
+        .find(".saltTreeNode-expansion")
+        .realClick();
+      cy.findByRole("treeitem", { name: "Child 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Child 2" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should propagate deselection to collapsed children when expanded with propagateSelect", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          propagateSelect
+          defaultExpanded={["parent"]}
+          defaultSelected={["parent", "child1", "child2"]}
+        >
+          <TreeNode value="parent" label="Parent">
+            <TreeNode value="child1" label="Child 1" />
+            <TreeNode value="child2" label="Child 2" />
+          </TreeNode>
+        </Tree>,
+      );
+      // All selected initially
+      cy.findByRole("treeitem", { name: /Parent/ }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Child 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+
+      // Collapse parent
+      cy.findByRole("treeitem", { name: /Parent/ })
+        .find(".saltTreeNode-expansion")
+        .realClick();
+      cy.findByRole("treeitem", { name: "Child 1" }).should("not.exist");
+
+      // Deselect collapsed parent
+      cy.findByRole("treeitem", { name: /Parent/ })
+        .find(".saltTreeNode-content")
+        .first()
+        .realClick();
+      cy.findByRole("treeitem", { name: /Parent/ }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+
+      // Expand parent - children should sync to deselected
+      cy.findByRole("treeitem", { name: /Parent/ })
+        .find(".saltTreeNode-expansion")
+        .realClick();
+      cy.findByRole("treeitem", { name: "Child 1" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Child 2" }).should(
+        "not.have.attr",
         "aria-checked",
         "true",
       );

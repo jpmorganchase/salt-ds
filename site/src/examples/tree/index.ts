@@ -1,4 +1,3 @@
-export * from "./Checkbox";
 export * from "./Controlled";
 export * from "./Default";
 export * from "./Disabled";

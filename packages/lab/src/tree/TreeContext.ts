@@ -13,20 +13,20 @@ export interface TreeContextValue {
   toggleExpanded: (value: string) => void;
   /** Selected node values */
   selectedState: string[];
+  /** Set selected state directly */
+  setSelectedState: Dispatch<SetStateAction<string[]>>;
   /** Select node */
   select: (event: SyntheticEvent, value: string) => void;
-  /** Whether multiselect is enabled */
+  /** Whether multiselect mode with checkboxes is enabled */
   multiselect: boolean;
-  /** Whether checkbox variant is enabled */
-  checkbox: boolean;
   /**
    * Sets if selecting a parent node should also select its descendants
-   * Only applies when multiselect or checkbox prop is enabled
+   * Only applies when multiselect is enabled
    */
   propagateSelect: boolean;
   /**
    * Sets if selecting all children should automatically select the parent
-   * Only applies when multiselect or checkbox is enabled
+   * Only applies when multiselect is enabled
    */
   propagateSelectUpwards: boolean;
   /** Sets if selection can be toggled off in single-select mode */
