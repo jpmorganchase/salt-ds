@@ -2,7 +2,7 @@ import { makePrefixer, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef, type HTMLAttributes } from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import kbdCss from "./Kbd.css";
 
