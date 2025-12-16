@@ -25,7 +25,7 @@ function selectDateRange<TDate extends DateFrameworkType>(
     dateAdapter.compare(newDate, previousSelectedDate?.startDate) >= 0 &&
     dateAdapter.compare(newDate, previousSelectedDate?.endDate) <= 0
   ) {
-    return {};
+    return { startDate: null, endDate: null };
   }
   if (previousSelectedDate?.startDate && previousSelectedDate?.endDate) {
     return {
@@ -75,8 +75,8 @@ function selectMultiselectRange<TDate extends DateFrameworkType>(
   const newSelection = previousSelectedDate.filter((previousDateRange) => {
     return !(
       previousDateRange?.startDate &&
-      dateAdapter.compare(newDate, previousDateRange?.startDate) >= 0 &&
       previousDateRange?.endDate &&
+      dateAdapter.compare(newDate, previousDateRange?.startDate) >= 0 &&
       dateAdapter.compare(newDate, previousDateRange?.endDate) <= 0
     );
   });
