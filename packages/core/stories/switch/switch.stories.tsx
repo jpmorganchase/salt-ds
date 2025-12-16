@@ -72,8 +72,8 @@ export const WithFormField: StoryFn<typeof Switch> = (args) => {
 };
 
 export const Readonly: StoryFn<typeof Switch> = () => (
-  <StackLayout gap={1}>
-    <Switch readOnly checked label="Read only and checked" />
+  <StackLayout>
+    <Switch readOnly checked label="Read only + checked" />
     <Switch readOnly label="Read only" />
   </StackLayout>
 );

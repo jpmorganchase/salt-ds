@@ -48,6 +48,16 @@ Use a disabled checked state for switches that have permissions, dependencies or
 
 <LivePreview componentName="switch" exampleName="DisabledChecked" />
 
+## Read-only
+
+A read-only switch allows the user to select and copy its text, but does not allow them to change its state. You can set a switch as read-only via the prop `readOnly`.
+
+### Best practices
+
+Unlike disabled switches, read-only switches are focusable and shown in the tab order when using a keyboard, allowing users to interact with its text. Use a read-only Switch when its text contains information that is valuable to the user.
+
+<LivePreview componentName="switch" exampleName="Readonly" />
+
 ## Left aligned label
 
 Use a form field if you need a left aligned label, avoid also having a switch label.
