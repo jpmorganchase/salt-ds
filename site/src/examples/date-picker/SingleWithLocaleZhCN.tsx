@@ -74,7 +74,11 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   );
 
   return (
-    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
+    <FormField
+      style={{ width: "256px" }}
+      validationStatus={validationStatus}
+      lang="zh"
+    >
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}

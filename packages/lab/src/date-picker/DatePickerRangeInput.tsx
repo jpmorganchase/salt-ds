@@ -13,7 +13,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import type { DateRangeSelection } from "../calendar";
 import {
   DateInputRange,
   type DateInputRangeDetails,
@@ -21,7 +21,10 @@ import {
   type DateInputRangeValue,
 } from "../date-input";
 import { useLocalization } from "../localization-provider";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  type RangeDatePickerState,
+  useDatePickerContext,
+} from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
@@ -152,149 +155,157 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
   return details;
 }
 
-export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
-  TDate extends DateFrameworkType,
+export const DatePickerRangeInput = forwardRef<
+  HTMLDivElement,
+  DatePickerRangeInputProps<DateFrameworkType>
 >(
-  props: DatePickerRangeInputProps<SingleDateSelection<TDate>>,
-  ref: React.Ref<HTMLDivElement>,
-) {
-  const { dateAdapter } = useLocalization<TDate>();
-  const {
-    className,
-    endInputProps,
-    startInputProps,
-    defaultValue,
-    format = "DD MMM YYYY",
-    value: valueProp,
-    validate,
-    onChange,
-    onDateValueChange,
-    ...rest
-  } = props;
+  <TDate extends DateFrameworkType>(
+    props: DatePickerRangeInputProps<TDate>,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
+    const { dateAdapter } = useLocalization<TDate>();
+    const {
+      className,
+      endInputProps,
+      startInputProps,
+      defaultValue,
+      format = "DD MMM YYYY",
+      value: valueProp,
+      validate,
+      onChange,
+      onDateValueChange,
+      ...rest
+    } = props;
 
-  const { CalendarIcon } = useIcon();
+    const { CalendarIcon } = useIcon();
 
-  const {
-    state: {
-      selectedDate,
-      disabled,
-      readOnly,
-      cancelled,
-      minDate,
-      maxDate,
-      timezone,
-    },
-    helpers: { select },
-  } = useDatePickerContext<TDate>({ selectionVariant: "range" });
-  const {
-    state: { open },
-    helpers: { setOpen },
-  } = useDatePickerOverlay();
-
-  const previousValue = useRef<typeof valueProp>();
-
-  const [value, setValue] = useControlled({
-    controlled: valueProp,
-    default: defaultValue,
-    name: "DatePickerRangeInput",
-    state: "dateValue",
-  });
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: run when date changes to sync the value
-  useEffect(() => {
-    setValue({
-      startDate: !selectedDate?.startDate
-        ? ""
-        : selectedDate?.startDate && dateAdapter.isValid(selectedDate.startDate)
-          ? dateAdapter.format(selectedDate.startDate, format)
-          : value?.startDate,
-      endDate: !selectedDate?.endDate
-        ? ""
-        : selectedDate?.endDate && dateAdapter.isValid(selectedDate.endDate)
-          ? dateAdapter.format(selectedDate.endDate, format)
-          : value?.endDate,
-    });
-  }, [dateAdapter, format, selectedDate]);
-
-  const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
-    useCallback(
-      (event) => {
-        event.persist();
-        setOpen(!open, event.nativeEvent, "click");
-        event.stopPropagation();
+    const {
+      state: {
+        selectedDate,
+        disabled,
+        readOnly,
+        cancelled,
+        minDate,
+        maxDate,
+        timezone,
       },
-      [open, setOpen],
+      helpers: { select },
+    } = useDatePickerContext<TDate>({
+      selectionVariant: "range",
+    }) as RangeDatePickerState<TDate>;
+    const {
+      state: { open },
+      helpers: { setOpen },
+    } = useDatePickerOverlay();
+
+    const previousValue = useRef<typeof valueProp>();
+
+    const [value, setValue] = useControlled({
+      controlled: valueProp,
+      default: defaultValue,
+      name: "DatePickerRangeInput",
+      state: "dateValue",
+    });
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: run when date changes to sync the value
+    useEffect(() => {
+      setValue({
+        startDate: !selectedDate?.startDate
+          ? ""
+          : selectedDate?.startDate &&
+              dateAdapter.isValid(selectedDate.startDate)
+            ? dateAdapter.format(selectedDate.startDate, format)
+            : value?.startDate,
+        endDate: !selectedDate?.endDate
+          ? ""
+          : selectedDate?.endDate && dateAdapter.isValid(selectedDate.endDate)
+            ? dateAdapter.format(selectedDate.endDate, format)
+            : value?.endDate,
+      });
+    }, [dateAdapter, format, selectedDate]);
+
+    const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
+      useCallback(
+        (event) => {
+          event.persist();
+          setOpen(!open, event.nativeEvent, "click");
+          event.stopPropagation();
+        },
+        [open, setOpen],
+      );
+
+    const handleDateChange = useCallback(
+      (
+        event: SyntheticEvent,
+        date: DateRangeSelection<TDate> | null,
+        details: DateInputRangeDetails,
+      ) => {
+        const validatedDetails = validate
+          ? validate(date, details)
+          : defaultRangeValidator(dateAdapter, date, details, minDate, maxDate);
+        select(event, date, validatedDetails);
+      },
+      [dateAdapter, select, minDate, maxDate, validate],
     );
 
-  const handleDateChange = useCallback(
-    (
-      event: SyntheticEvent,
-      date: DateRangeSelection<TDate> | null,
-      details: DateInputRangeDetails,
-    ) => {
-      const validatedDetails = validate
-        ? validate(date, details)
-        : defaultRangeValidator(dateAdapter, date, details, minDate, maxDate);
-      select(event, date, validatedDetails);
-    },
-    [dateAdapter, select, minDate, maxDate, validate],
-  );
+    const handleDateValueChange = useCallback(
+      (event: SyntheticEvent | null, newDateValue: DateInputRangeValue) => {
+        setValue(newDateValue);
+        onDateValueChange?.(event, newDateValue);
+      },
+      [onDateValueChange],
+    );
 
-  const handleDateValueChange = useCallback(
-    (event: SyntheticEvent | null, newDateValue: DateInputRangeValue) => {
-      setValue(newDateValue);
-      onDateValueChange?.(event, newDateValue);
-    },
-    [onDateValueChange],
-  );
+    // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
+    useEffect(() => {
+      if (open) {
+        previousValue.current = value;
+      }
+    }, [open]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
-  useEffect(() => {
-    if (open) {
-      previousValue.current = value;
-    }
-  }, [open]);
+    useEffect(() => {
+      if (cancelled) {
+        setValue(previousValue.current);
+      }
+    }, [cancelled]);
 
-  useEffect(() => {
-    if (cancelled) {
-      setValue(previousValue.current);
-    }
-  }, [cancelled]);
-
-  return (
-    <DateInputRange
-      value={
-        value ?? {
-          startDate: "",
-          endDate: "",
+    return (
+      <DateInputRange
+        value={
+          value ?? {
+            startDate: "",
+            endDate: "",
+          }
         }
-      }
-      className={clsx(withBaseName(), className)}
-      date={selectedDate ?? null}
-      startInputProps={startInputProps}
-      endInputProps={endInputProps}
-      readOnly={readOnly}
-      disabled={disabled}
-      ref={ref}
-      onDateChange={handleDateChange}
-      onDateValueChange={handleDateValueChange}
-      onChange={onChange}
-      endAdornment={
-        !readOnly && (
-          <Button
-            appearance="transparent"
-            sentiment="neutral"
-            onClick={handleCalendarButton}
-            disabled={disabled}
-            aria-label="Open Calendar"
-          >
-            <CalendarIcon aria-hidden />
-          </Button>
-        )
-      }
-      format={format}
-      timezone={timezone}
-      {...rest}
-    />
-  );
-});
+        className={clsx(withBaseName(), className)}
+        date={selectedDate ?? null}
+        startInputProps={startInputProps}
+        endInputProps={endInputProps}
+        readOnly={readOnly}
+        disabled={disabled}
+        ref={ref}
+        onDateChange={handleDateChange}
+        onDateValueChange={handleDateValueChange}
+        onChange={onChange}
+        endAdornment={
+          !readOnly && (
+            <Button
+              appearance="transparent"
+              sentiment="neutral"
+              onClick={handleCalendarButton}
+              disabled={disabled}
+              aria-haspopup="dialog"
+              aria-label="Open Calendar"
+              aria-expanded={open}
+            >
+              <CalendarIcon aria-hidden />
+            </Button>
+          )
+        }
+        format={format}
+        timezone={timezone}
+        {...rest}
+      />
+    );
+  },
+);

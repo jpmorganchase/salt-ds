@@ -87,6 +87,7 @@ export const DatePickerMain = forwardRef<
     ref: React.Ref<HTMLDivElement>,
   ) => {
     const {
+      createAnnouncement,
       children,
       readOnly,
       disabled,
@@ -105,6 +106,7 @@ export const DatePickerMain = forwardRef<
     } = props;
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useDatePickerProps: any = {
+      createAnnouncement,
       readOnly,
       disabled,
       isDayHighlighted,
@@ -120,31 +122,29 @@ export const DatePickerMain = forwardRef<
       timezone,
     };
 
+    const stateAndHelpers = useDatePicker<TDate, "range">(
+      useDatePickerProps,
+      ref,
+    );
+
     if (props.selectionVariant === "range") {
-      // TODO
-      // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-      const stateAndHelpers = useDatePicker<TDate, "range">(
-        useDatePickerProps,
-        ref,
-      ) as RangeDatePickerState<TDate>;
+      const rangeStateAndHelpers =
+        stateAndHelpers as RangeDatePickerState<TDate>;
       return (
-        <DateRangeSelectionContext.Provider value={stateAndHelpers}>
-          <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
+        <DateRangeSelectionContext.Provider value={rangeStateAndHelpers}>
+          <div ref={rangeStateAndHelpers?.state?.containerRef} {...rest}>
             {children}
           </div>
         </DateRangeSelectionContext.Provider>
       );
     }
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    const stateAndHelpers = useDatePicker(
-      useDatePickerProps,
-      ref,
-    ) as SingleDatePickerState<TDate>;
+
+    const singleStateAndHelpers =
+      stateAndHelpers as SingleDatePickerState<TDate>;
 
     return (
-      <SingleDateSelectionContext.Provider value={stateAndHelpers}>
-        <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
+      <SingleDateSelectionContext.Provider value={singleStateAndHelpers}>
+        <div ref={singleStateAndHelpers?.state?.containerRef} {...rest}>
           {children}
         </div>
       </SingleDateSelectionContext.Provider>
@@ -160,6 +160,7 @@ export const DatePicker = forwardRef(function DatePicker<
 
   return (
     <DatePickerOverlayProvider
+      disabled={rest.disabled}
       defaultOpen={defaultOpen}
       open={open}
       openOnClick={openOnClick}

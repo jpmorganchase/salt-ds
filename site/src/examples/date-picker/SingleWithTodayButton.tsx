@@ -34,13 +34,15 @@ const TodayButton = () => {
     selectionVariant: "single",
   }) as SingleDatePickerState<DateFrameworkType>;
   const { dateAdapter } = useLocalization();
+  const today = dateAdapter.today();
   return (
     <div style={{ display: "flex" }}>
       <Button
-        style={{ flexGrow: 1 }}
+        aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
+        style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
         sentiment="accented"
         appearance="solid"
-        onClick={(event: SyntheticEvent) => select(event, dateAdapter.today())}
+        onClick={(event: SyntheticEvent) => select(event, today)}
       >
         Select Today
       </Button>

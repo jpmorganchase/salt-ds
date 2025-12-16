@@ -53,16 +53,30 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     });
 
     it("SHOULD show calendar overlay when click the calendar icon button", () => {
-      cy.mount(<Range />);
+      cy.mount(<RangeControlled />);
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
+      // cy.get used as we query elements which are non-visible when dialog is open
+      cy.get('button[aria-label="Open Calendar"]')
+        .should("exist")
+        .and("have.attr", "aria-expanded", "true");
     });
 
     it("SHOULD open calendar overlay when using down arrow", () => {
       cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       cy.findAllByRole("textbox")
         .eq(0)
@@ -70,6 +84,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         .type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
+      // cy.get used as we query elements which are non-visible when dialog is open
+      cy.get('button[aria-label="Open Calendar"]')
+        .should("exist")
+        .and("have.attr", "aria-expanded", "true");
     });
 
     it("SHOULD be able to enable the overlay to open on click", () => {
@@ -82,6 +100,16 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findByRole("application").should("not.exist");
       cy.findByLabelText("End date").realClick();
       cy.findAllByRole("application").should("have.length", 2);
+    });
+
+    it("SHOULD NOT be able to enable the overlay to open on click, if disabled", () => {
+      cy.mount(<Range openOnClick disabled />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on click
+      cy.findByLabelText("Start date").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.findByLabelText("End date").realClick();
+      cy.findByRole("application").should("not.exist");
     });
 
     it("SHOULD hide calendar upon focus out", () => {
@@ -200,7 +228,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByRole("application").should("have.length", 2);
         // Verify the first element focused in the first calendar is the start date
         cy.findByRole("button", {
-          name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+          name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
         }).should("be.focused");
         // Simulate tabbing to the next calendar
         cy.realPress("Tab");
@@ -220,7 +248,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           "month",
         );
         cy.findByRole("button", {
-          name: adapter.format(startOfEndCalendar, "DD MMMM YYYY"),
+          name: `Start new range: ${adapter.format(startOfEndCalendar, "dddd D MMMM YYYY")}`,
         }).should("be.focused");
         // Simulate tabbing back to the first calendar
         cy.realPress("Tab");
@@ -236,7 +264,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.realPress("Tab");
         // Verify focus returns to the first focused element in the first calendar
         cy.findByRole("button", {
-          name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+          name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
         }).should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
@@ -272,37 +300,37 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByRole("application").should("have.length", 2);
         // Verify that dates outside the min/max range are disabled
         cy.findByRole("button", {
-          name: "14 January 2030",
+          name: "Monday 14 January 2030",
         }).should("have.attr", "aria-disabled", "true");
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findAllByLabelText("Previous Month")
+        cy.findAllByLabelText("Past dates are out of range")
           .eq(0)
           .should("have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Next Month")
           .eq(0)
           .should("not.have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Previous Month")
-          .eq(1)
+          .eq(0)
           .should("not.have.attr", "aria-disabled", "true");
-        cy.findAllByLabelText("Next Month")
-          .eq(1)
+        cy.findAllByLabelText("Future dates are out of range")
+          .eq(0)
           .should("have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
-          name: "15 January 2030",
+          name: "Start new range: Tuesday 15 January 2030",
         }).should("be.focused");
         cy.findByRole("button", {
-          name: "15 January 2030",
+          name: "Start new range: Tuesday 15 January 2030",
         }).should("not.have.attr", "aria-disabled", "true");
         cy.findByRole("button", {
-          name: "15 January 2031",
+          name: "Start new range: Tuesday 15 January 2030",
         }).should("not.have.attr", "aria-disabled", "true");
         cy.findByRole("button", {
-          name: "16 January 2031",
+          name: "Thursday 16 January 2031",
         }).should("have.attr", "aria-disabled", "true");
         // Simulate selecting a date outside the min/max range
         cy.findByRole("button", {
-          name: "14 January 2030",
+          name: "Monday 14 January 2030",
         })
           .realHover()
           .realClick();
@@ -310,10 +338,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.get("@selectionChangeSpy").should("not.have.been.called");
         // Simulate selecting a date within the min/max range
         cy.findByRole("button", {
-          name: "15 January 2030",
+          name: "Tuesday 15 January 2030, minimum date",
         }).realClick();
         cy.findByRole("button", {
-          name: "15 January 2031",
+          name: "Wednesday 15 January 2031, maximum date",
         }).realClick();
         // Verify that the calendar is closed and the selected dates are displayed
         cy.findByRole("application").should("not.exist");
@@ -578,7 +606,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Verify that the calendar is displayed
         cy.findAllByRole("application").should("have.length", 2);
         // Simulate selecting a tenor option
-        cy.findByRole("option", {
+        cy.findByRole("button", {
           name: "15 years",
         })
           .realHover()
@@ -633,10 +661,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           // Simulate selecting an unconfirmed date
           cy.findByRole("button", {
-            name: "15 January 2025",
+            name: "Wednesday 15 January 2025",
           }).realClick();
           cy.findByRole("button", {
-            name: "16 January 2025",
+            name: "Thursday 16 January 2025",
           }).realClick();
           cy.findAllByRole("application").should("have.length", 2);
           cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
@@ -654,7 +682,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             );
           });
           // Simulate clicking the "Cancel" button
-          cy.findByRole("button", { name: "Cancel" }).realClick();
+          cy.findByRole("button", {
+            name: "Cancel Wednesday 15 January 2025 to Thursday 16 January 2025",
+          }).realClick();
           // Verify that the calendar is closed and the initial selected dates are restored
           cy.findByRole("application").should("not.exist");
           cy.get("@appliedDateSpy").should("not.have.been.called");
@@ -685,11 +715,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           // Simulate selecting a new date range
           cy.findByRole("button", {
-            name: "15 January 2025",
+            name: "Wednesday 15 January 2025",
           }).realClick();
           cy.findAllByRole("application").should("have.length", 2);
           cy.findByRole("button", {
-            name: "16 January 2025",
+            name: "Thursday 16 January 2025",
           }).realClick();
           // Verify that the new date range is displayed
           cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
@@ -708,7 +738,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           });
           cy.findAllByRole("application").should("have.length", 2);
           // Simulate clicking the "Apply" button
-          cy.findByRole("button", { name: "Apply" }).realClick();
+          cy.findByRole("button", {
+            name: "Apply Wednesday 15 January 2025 to Thursday 16 January 2025",
+          }).realClick();
           // Verify that the calendar is closed and the new date range is applied
           cy.findByRole("application").should("not.exist");
           // biome-ignore lint/suspicious/noExplicitAny: spy
@@ -889,15 +921,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
           cy.findByRole("button", {
-            name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+            name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
           }).should("be.focused");
           // Verify that the default selected dates are highlighted in the calendar
           cy.findByRole("button", {
-            name: "05 January 2025",
-          }).should("have.attr", "aria-pressed", "true");
+            name: "Start selected range: Sunday 5 January 2025",
+          }).should("exist");
           cy.findByRole("button", {
-            name: "06 January 2025",
-          }).should("have.attr", "aria-pressed", "true");
+            name: "End selected range: Monday 6 January 2025",
+          }).should("exist");
         });
 
         it("SHOULD not be able to select un-selectable dates", () => {
@@ -917,7 +949,16 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
 
           while (currentDate <= endDate) {
-            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
+            let formattedDate = adapter.format(currentDate, "dddd D MMMM YYYY");
+            if (
+              adapter.isSame(currentDate, initialRangeDate.startDate, "day")
+            ) {
+              formattedDate = `Start selected range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`;
+            } else if (
+              adapter.isSame(currentDate, initialRangeDate.endDate, "day")
+            ) {
+              formattedDate = `End selected range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`;
+            }
             const dayOfWeek = adapter.getDayOfWeek(currentDate);
             const isWeekend =
               (adapter.lib === "luxon" &&
@@ -953,19 +994,19 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           // Simulate selecting a new start date
           cy.findByRole("button", {
-            name: "15 January 2025",
+            name: "Wednesday 15 January 2025",
           }).should("exist");
           cy.findByRole("button", {
-            name: "15 January 2025",
+            name: "Wednesday 15 January 2025",
           }).realClick();
           // Verify that the new date range resets the end date, whilst the calendar is open
           cy.findByLabelText("End date").should("have.value", "");
           // Simulate selecting a new end date
           cy.findByRole("button", {
-            name: "16 January 2025",
+            name: "Thursday 16 January 2025",
           }).should("exist");
           cy.findByRole("button", {
-            name: "16 January 2025",
+            name: "Thursday 16 January 2025",
           }).realClick();
           // Verify that the calendar is closed and the new date range is displayed
           cy.findByRole("application").should("not.exist");
@@ -996,20 +1037,20 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
           cy.findByRole("button", {
-            name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+            name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
           }).should("be.focused");
           // Verify that the selected dates are highlighted in the calendar
           cy.findByRole("button", {
-            name: "05 January 2025",
-          }).should("have.attr", "aria-pressed", "true");
+            name: "Start selected range: Sunday 5 January 2025",
+          }).should("exist");
           cy.findByRole("button", {
-            name: "06 January 2025",
-          }).should("have.attr", "aria-pressed", "true");
+            name: "End selected range: Monday 6 January 2025",
+          }).should("exist");
           cy.findByRole("button", {
-            name: "01 January 2025",
+            name: "Wednesday 1 January 2025",
           }).realClick();
           cy.findByRole("button", {
-            name: "02 January 2025",
+            name: "Thursday 2 January 2025",
           }).realClick();
 
           // Reset/set programatically
@@ -1046,19 +1087,19 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           // Simulate selecting a new start date
           cy.findByRole("button", {
-            name: "15 January 2025",
+            name: "Wednesday 15 January 2025",
           }).should("exist");
           cy.findByRole("button", {
-            name: "15 January 2025",
+            name: "Wednesday 15 January 2025",
           }).realClick();
           // Verify that the new date range resets the end date, whilst the calendar is open
           cy.findByLabelText("End date").should("have.value", "");
           // Simulate selecting a new end date
           cy.findByRole("button", {
-            name: "16 January 2025",
+            name: "Thursday 16 January 2025",
           }).should("exist");
           cy.findByRole("button", {
-            name: "16 January 2025",
+            name: "Thursday 16 January 2025",
           }).realClick();
           // Verify that the calendar is closed and the new date range is displayed
           cy.findByRole("application").should("not.exist");

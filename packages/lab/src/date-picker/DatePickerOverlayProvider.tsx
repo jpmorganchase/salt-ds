@@ -103,6 +103,10 @@ const DatePickerOverlayContext = createContext<
  */
 interface DatePickerOverlayProviderProps {
   /**
+   * If `true`, the overlay is disabled.
+   */
+  disabled?: boolean;
+  /**
    * If `true`, the overlay is open.
    */
   open?: boolean;
@@ -140,6 +144,7 @@ interface DatePickerOverlayProviderProps {
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
 > = ({
+  disabled,
   open: openProp,
   openOnClick,
   defaultOpen,
@@ -210,33 +215,29 @@ export const DatePickerOverlayProvider: React.FC<
     }, 0);
   }, [floatingUIResult]);
 
+  const defaultInteractions = [
+    useDismiss(floatingUIResult.context, {}),
+    useKeyboard(floatingUIResult.context, {
+      enabled: !readOnly,
+      onArrowDown: (event) => {
+        handleOpenChange(true, event.nativeEvent, "reference-press");
+      },
+    }),
+    useClick(floatingUIResult.context, {
+      enabled: !disabled && !!openOnClick && !readOnly,
+      toggle: false,
+      keyboardHandlers: false,
+    }),
+    useFocusOut(floatingUIResult.context, {
+      enabled: !readOnly,
+    }),
+  ];
+
   const {
     getFloatingProps: getFloatingPropsCallback,
     getReferenceProps: getReferencePropsCallback,
   } = useInteractions(
-    interactions
-      ? interactions(floatingUIResult.context)
-      : [
-          // biome-ignore lint/correctness/useHookAtTopLevel: useDismiss is not a React hook
-          useDismiss(floatingUIResult.context, {}),
-          // biome-ignore lint/correctness/useHookAtTopLevel: useKeyboard is not a React hook
-          useKeyboard(floatingUIResult.context, {
-            enabled: !readOnly,
-            onArrowDown: (event) => {
-              handleOpenChange(true, event.nativeEvent, "reference-press");
-            },
-          }),
-          // biome-ignore lint/correctness/useHookAtTopLevel: useClick is not a React hook
-          useClick(floatingUIResult.context, {
-            enabled: !!openOnClick && !readOnly,
-            toggle: false,
-            keyboardHandlers: false,
-          }),
-          // biome-ignore lint/correctness/useHookAtTopLevel: useFocusOut is not a React hook
-          useFocusOut(floatingUIResult.context, {
-            enabled: !readOnly,
-          }),
-        ],
+    interactions ? interactions(floatingUIResult.context) : defaultInteractions,
   );
 
   const getFloatingProps = useCallback(
