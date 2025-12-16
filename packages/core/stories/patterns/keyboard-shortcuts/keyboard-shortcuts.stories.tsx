@@ -75,6 +75,20 @@ function displayKeyName(key: string): string {
   return key;
 }
 
+function highlightTextMatch(text: string, query: string): React.ReactNode {
+  if (!query) return text;
+  const regex = new RegExp(`(${query})`, "gi");
+  return text
+    .split(regex)
+    .map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <strong key={i}>{part}</strong>
+      ) : (
+        part
+      ),
+    );
+}
+
 const KeyboardShortcuts: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(true);
@@ -84,7 +98,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+option+p",
     (e) => {
       e.preventDefault();
-      alert("Open command palette triggered!");
+      alert("Open command palette triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -92,7 +106,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+shift+e",
     (e) => {
       e.preventDefault();
-      alert("Next triggered!");
+      alert("Next triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -100,7 +114,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+e",
     (e) => {
       e.preventDefault();
-      alert("Previous triggered!");
+      alert("Previous triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -108,14 +122,14 @@ const KeyboardShortcuts: FC = () => {
     "meta+d",
     (e) => {
       e.preventDefault();
-      alert("Duplicate ticket triggered!");
+      alert("Duplicate ticket triggered");
     },
     { enabled: shortcutsEnabled },
   );
   useHotkeys(
     "meta+b",
     (e) => {
-      shortcutsEnabled && alert("Set direction to buy triggered!");
+      shortcutsEnabled && alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
     [shortcutsEnabled],
@@ -124,7 +138,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+s",
     (e) => {
       e.preventDefault();
-      alert("Set direction to sell triggered!");
+      alert("Set direction to sell triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -132,7 +146,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+end",
     (e) => {
       e.preventDefault();
-      alert("Bottom of list triggered!");
+      alert("Bottom of list triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -140,7 +154,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+home",
     (e) => {
       e.preventDefault();
-      alert("Top of list triggered!");
+      alert("Top of list triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -148,7 +162,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+u",
     (e) => {
       e.preventDefault();
-      alert("Test shortcut triggered!");
+      alert("Test shortcut triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -156,7 +170,7 @@ const KeyboardShortcuts: FC = () => {
     "meta+y",
     (e) => {
       e.preventDefault();
-      alert("Test shortcut triggered!");
+      alert("Test shortcut triggered");
     },
     { enabled: shortcutsEnabled },
   );
@@ -232,6 +246,7 @@ const KeyboardShortcuts: FC = () => {
                     variant="secondary"
                     placeholder="Filter actions"
                     startAdornment={<FilterIcon color="secondary" />}
+                    aria-label="Filter actions"
                   />
                   {filteredShortcuts.length ? (
                     <StackLayout className="keyboardShortcuts-tableScroll">
@@ -250,7 +265,9 @@ const KeyboardShortcuts: FC = () => {
                                   gap={0.5}
                                   className="keyboardShortcuts-shortcuts"
                                 >
-                                  <Text>{shortcut.label}</Text>
+                                  <Text>
+                                    {highlightTextMatch(shortcut.label, filter)}
+                                  </Text>
                                   {shortcut.description && (
                                     <Text color="secondary">
                                       {shortcut.description}

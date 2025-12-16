@@ -2,11 +2,11 @@ import { makePrefixer, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes } from "react";
+import { ComponentPropsWithoutRef, forwardRef, type HTMLAttributes } from "react";
 
 import kbdCss from "./Kbd.css";
 
-export interface KbdProps extends HTMLAttributes<HTMLElement> {}
+export interface KbdProps extends ComponentPropsWithoutRef<"kbd"> {}
 
 const withBaseName = makePrefixer("saltKbd");
 

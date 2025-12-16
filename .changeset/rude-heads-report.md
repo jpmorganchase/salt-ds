@@ -2,4 +2,5 @@
 "@salt-ds/lab": minor
 ---
 
-KS pattern - Added KS pattern and KeyboardKey component.
+- Added Kbd component in Labs.
+- Added Keyboard shortcut pattern.
