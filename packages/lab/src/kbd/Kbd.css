@@ -1,5 +1,5 @@
 .saltKbd {
-  display: flex;
+  display: inline-flex;
   box-sizing: border-box;
   --saltText-fontFamily: var(--salt-text-code-fontFamily);
   width: fit-content;
