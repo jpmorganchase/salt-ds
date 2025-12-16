@@ -177,14 +177,14 @@ describe("GIVEN a Switch", () => {
   });
 
   describe("WHEN readOnly is true", () => {
-    it("THEN should not be toggle if clicked", () => {
+    it("THEN should not toggle if clicked", () => {
       cy.mount(<Switch readOnly />);
       cy.findByRole("switch").should("not.be.checked");
       cy.findByRole("switch").realClick();
       cy.findByRole("switch").should("not.be.checked");
     });
 
-    it("THEN should not be toggle when pressing the Space key", () => {
+    it("THEN should not toggle when pressing the Space key", () => {
       cy.mount(<Switch readOnly />);
       cy.findByRole("switch").should("not.be.checked");
       cy.realPress("Tab");
