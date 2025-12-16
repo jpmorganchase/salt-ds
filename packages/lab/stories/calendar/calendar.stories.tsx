@@ -103,6 +103,7 @@ export const Grid: StoryFn<React.FC<CalendarSingleProps<DateFrameworkType>>> = (
     <Calendar
       {...args}
       defaultSelectedDate={selectedDate}
+      hideOutOfRangeDates
       numberOfVisibleMonths={12}
       selectionVariant="single"
     >
@@ -323,7 +324,7 @@ function selectDateRange<TDate extends DateFrameworkType>(
     dateAdapter.compare(newDate, previousSelectedDate?.startDate) >= 0 &&
     dateAdapter.compare(newDate, previousSelectedDate?.endDate) <= 0
   ) {
-    return {};
+    return { startDate: null, endDate: null };
   }
   if (previousSelectedDate?.startDate && previousSelectedDate?.endDate) {
     return {
@@ -448,8 +449,8 @@ function selectMultiselectRange<TDate extends DateFrameworkType>(
   const newSelection = previousSelectedDate.filter((previousDateRange) => {
     return !(
       previousDateRange?.startDate &&
-      dateAdapter.compare(newDate, previousDateRange?.startDate) >= 0 &&
       previousDateRange?.endDate &&
+      dateAdapter.compare(newDate, previousDateRange?.startDate) >= 0 &&
       dateAdapter.compare(newDate, previousDateRange?.endDate) <= 0
     );
   });
@@ -525,11 +526,12 @@ function selectOffset<TDate extends DateFrameworkType>(
   endDateOffset: CalendarOffsetProps<TDate>["endDateOffset"],
 ) {
   if (
-    previousSelectedDate &&
+    previousSelectedDate?.startDate &&
+    previousSelectedDate?.endDate &&
     dateAdapter.compare(newDate, previousSelectedDate.startDate) >= 0 &&
     dateAdapter.compare(newDate, previousSelectedDate.endDate) <= 0
   ) {
-    return {};
+    return { startDate: null, endDate: null };
   }
   return {
     startDate: newDate,
@@ -778,6 +780,7 @@ export const TodayButton: StoryFn<
         <CalendarGrid />
         <Divider />
         <Button
+          aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
           style={{ margin: "var(--salt-spacing-50)" }}
           sentiment="accented"
           appearance="bordered"
@@ -873,6 +876,9 @@ export const TwinCalendars: StoryFn<
   const [endVisibleMonth, setEndVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
+  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+    dateAdapter.startOf(startVisibleMonth, "month"),
+  );
 
   const handleStartVisibleMonthChange = useCallback(
     (
@@ -917,41 +923,97 @@ export const TwinCalendars: StoryFn<
     useState<CalendarRangeProps<DateFrameworkType>["selectedDate"]>(
       defaultSelectedDate,
     );
-
   const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
       args?.onSelectionChange?.(event, newSelectedDate);
     };
 
+  const handleFocusedDateChange: CalendarProps<DateFrameworkType>["onFocusedDateChange"] =
+    (_event, newFocusedDate) => {
+      setFocusedDate(newFocusedDate);
+    };
+
   return (
-    <div style={{ display: "flex", gap: 16 }}>
+    <div
+      role="region"
+      aria-label="Twin Calendar example"
+      style={{ display: "flex", gap: 16 }}
+    >
+      {/* biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set */}
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) < 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month first calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month first calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month first calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year first calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
+      {/* biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set */}
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) >= 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
         visibleMonth={endVisibleMonth}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month second calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month second calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month second calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year second calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
     </div>
@@ -970,7 +1032,7 @@ export const WithLocale: StoryFn<
   return (
     <FormField style={{ width: "180px" }}>
       <FormFieldLabel>ES locale calendar</FormFieldLabel>
-      <Calendar {...args}>
+      <Calendar lang="es" {...args}>
         <CalendarNavigation />
         <CalendarGrid />
       </Calendar>

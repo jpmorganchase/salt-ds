@@ -8,7 +8,14 @@ import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { type SyntheticEvent, useCallback, useEffect, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import {
-  type UseCalendarSelectionBaseProps,
+  createRangeSelectionAnnouncement,
+  createSingleSelectionAnnouncement,
+} from "./internal/createAnnouncement";
+import { generateDatesForMonth } from "./internal/utils";
+import {
+  type DateRangeSelection,
+  isDateRangeSelection,
+  type SingleDateSelection,
   type UseCalendarSelectionMultiselectOffsetProps,
   type UseCalendarSelectionMultiselectRangeProps,
   type UseCalendarSelectionMultiselectSingleProps,
@@ -18,17 +25,60 @@ import {
   type UseCalendarSelectionSingleProps,
   useCalendarSelection,
 } from "./useCalendarSelection";
+import {
+  type CreateAnnouncement,
+  useDateSelectionAnnouncer,
+} from "./useDateSelectionAnnouncer";
 
 /**
  * Base properties for the UseCalendar hook.
  * @template TDate - The type of the date object.
  */
-interface UseCalendarBaseProps<TDate>
-  extends UseCalendarSelectionBaseProps<TDate> {
+interface UseCalendarBaseProps<TDate> {
+  /**
+   * Factory method for date selection live announcements or null to silence announcements
+   */
+  createAnnouncement?: CreateAnnouncement<TDate> | null;
   /**
    * The default visible month.
    */
   defaultVisibleMonth?: TDate;
+  /**
+   * The currently focused date in the calendar, or null if no date is focused.
+   */
+  focusedDate?: TDate | null;
+  /**
+   * The currently hovered date.
+   */
+  hoveredDate?: TDate | null;
+  /**
+   * Function to determine if a day is visible.
+   * @param date - The date to check.
+   * @returns `true` if the day is visible, otherwise `false`.
+   */
+  isDayVisible?: (date: TDate) => boolean;
+  /**
+   * Ref to attach to the focused element, enabling focus to be controlled.
+   */
+  focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
+  /**
+   * Callback fired when the focused date changes.
+   * @param event - The synthetic event, if user event triggered focus or null.
+   * @param date - The new focused date.
+   */
+  onFocusedDateChange?: (
+    event: SyntheticEvent | null,
+    date: TDate | null,
+  ) => void;
+  /**
+   * Callback fired when the hovered date changes.
+   * @param event - The synthetic event.
+   * @param hoveredDate - The new hovered date.
+   */
+  onHoveredDateChange?: (
+    event: SyntheticEvent,
+    hoveredDate: TDate | null,
+  ) => void;
   /**
    * Callback fired when the visible month changes.
    * @param event - The synthetic event or null if triggered by code.
@@ -69,9 +119,18 @@ interface UseCalendarBaseProps<TDate>
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
   /**
-   * If `true`, the calendar will be multiselect.
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
-  multiselect?: boolean;
+  timezone?: Timezone;
+  /**
+   * The currently visible month.
+   */
+  visibleMonth?: TDate;
 }
 
 /**
@@ -169,7 +228,12 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      *  Focusable dates based on current state
      */
-    focusableDates: TDate[];
+    focusableDate: TDate | null;
+
+    /**
+     * Ref to attach to the focused element,enabling focus to be controlled.
+     */
+    focusedDateRef?: React.MutableRefObject<HTMLButtonElement | null>;
 
     /**
      * The minimum selectable date in the calendar.
@@ -204,11 +268,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
      */
     timezone?: Timezone;
-    /**
-     * Additional state properties from selectionManager.state.
-     */
-    // biome-ignore lint/suspicious/noExplicitAny: user defined
-    [key: string]: any; // Use a more specific type if possible
   };
 
   /**
@@ -262,9 +321,9 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * Determines if a date is outside the allowed date range.
      *
      * @param date - The date to check.
-     * @returns `true` if the date is outside the allowed range, otherwise `false`.
+     * * @returns -1 if before the allowed range, 0 if inside, 1 if after.
      */
-    isOutsideAllowedDates: (date: TDate) => boolean;
+    isOutsideAllowedDates: (date: TDate) => -1 | 0 | 1;
 
     /**
      * Determines if a month is outside the allowed range.
@@ -396,11 +455,12 @@ export function useCalendar<TDate extends DateFrameworkType>(
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
   } = useLocalization<TDate>();
   const {
+    createAnnouncement,
     timezone,
     defaultSelectedDate,
     defaultVisibleMonth = dateAdapter.today(timezone),
     hideOutOfRangeDates,
-    hoveredDate,
+    hoveredDate: hoveredDateProp,
     focusedDate: focusedDateProp,
     focusedDateRef,
     isDayHighlighted = defaultIsDayHighlighted,
@@ -414,16 +474,31 @@ export function useCalendar<TDate extends DateFrameworkType>(
     onVisibleMonthChange,
     onFocusedDateChange,
     select,
-    selectedDate,
+    selectedDate: selectedDateProp,
     selectionVariant,
     visibleMonth: visibleMonthProp,
-    // startDateOffset,
-    // endDateOffset,
+    startDateOffset,
+    endDateOffset,
   } = props;
   const { matchedBreakpoints } = useBreakpoint();
 
   const responsiveNumberOfVisibleMonths =
     resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
+
+  const [hoveredDate, setHoveredDateState] = useControlled({
+    controlled: hoveredDateProp,
+    default: undefined,
+    name: "Calendar",
+    state: "hoveredDate",
+  });
+
+  const setHoveredDate = useCallback(
+    (event: SyntheticEvent, date: TDate | null) => {
+      setHoveredDateState(date);
+      onHoveredDateChange?.(event, date);
+    },
+    [onHoveredDateChange],
+  );
 
   const [visibleMonth, setVisibleMonthState] = useControlled({
     controlled: useMemo(
@@ -443,11 +518,14 @@ export function useCalendar<TDate extends DateFrameworkType>(
   });
 
   const isOutsideAllowedDates = useCallback(
-    (date: TDate) => {
-      return (
-        dateAdapter.compare(date, minDate) < 0 ||
-        dateAdapter.compare(date, maxDate) > 0
-      );
+    (date: TDate): -1 | 0 | 1 => {
+      if (dateAdapter.compare(date, minDate) < 0) {
+        return -1;
+      }
+      if (dateAdapter.compare(date, maxDate) > 0) {
+        return 1;
+      }
+      return 0;
     },
     [dateAdapter, maxDate, minDate],
   );
@@ -478,7 +556,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const isDaySelectable = useCallback(
     (date?: TDate) =>
-      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date))),
+      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date) !== 0)),
     [isDayUnselectable, isOutsideAllowedDates],
   );
 
@@ -488,7 +566,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
         return false;
       }
       const startInsideDays = dateAdapter.startOf(visibleMonth, "month");
-
       if (dateAdapter.compare(date, startInsideDays) < 0) return false;
 
       const endVisibleMonth = dateAdapter.add(visibleMonth, {
@@ -503,49 +580,359 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const selectionManager = useCalendarSelection<TDate>({
     defaultSelectedDate,
-    selectedDate,
-    onSelectionChange,
-    startDateOffset:
-      props.selectionVariant === "offset" ? props.startDateOffset : undefined,
-    endDateOffset:
-      props.selectionVariant === "offset" ? props.endDateOffset : undefined,
-    isOutsideAllowedDates,
+    selectedDate: selectedDateProp,
     isDaySelectable,
-    isDayVisible,
-    focusedDate: focusedDateProp,
-    focusedDateRef,
+    isOutsideAllowedDates,
     multiselect,
-    onFocusedDateChange,
+    onSelectionChange,
     select,
     selectionVariant,
-    onHoveredDateChange,
-    hoveredDate,
+    startDateOffset,
+    endDateOffset,
+  } as UseCalendarSelectionProps<TDate>);
+
+  const {
+    state: { selectedDate },
+    helpers: {
+      isSelected,
+      isSameDay,
+      setSelectedDate,
+      isSelectedStart,
+      isSelectedSpan,
+      isSelectedEnd,
+    },
+  } = selectionManager;
+
+  const isHovered = useCallback(
+    (date: TDate) => {
+      return !!hoveredDate && dateAdapter.isSame(date, hoveredDate, "day");
+    },
+    [dateAdapter, hoveredDate],
+  );
+
+  const isHoveredStart = useCallback(
+    (date: TDate) => {
+      if (
+        selectionVariant === "range" &&
+        hoveredDate &&
+        dateAdapter.isSame(date, hoveredDate, "day")
+      ) {
+        const dateRanges = (
+          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
+        ) as DateRangeSelection<TDate>[];
+        const allDatesPopulated = dateRanges.every(
+          (range) => range?.startDate && range?.endDate,
+        );
+        const startDateMatches = dateRanges.some(
+          (range) =>
+            range?.startDate &&
+            dateAdapter.isSame(date, range.startDate, "day"),
+        );
+        const firstIncompleteRange = dateRanges.find(
+          (range) => range?.startDate && !range?.endDate,
+        );
+        const newDateRangeRequired =
+          firstIncompleteRange?.startDate &&
+          dateAdapter.compare(date, firstIncompleteRange.startDate) < 0;
+        return allDatesPopulated || startDateMatches || newDateRangeRequired;
+      }
+      if (selectionVariant === "offset" && hoveredDate) {
+        const startDate = startDateOffset
+          ? startDateOffset(hoveredDate)
+          : hoveredDate;
+        return (
+          dateAdapter.isSame(date, startDate, "day") &&
+          (!isDaySelectable || isDaySelectable(date))
+        );
+      }
+      return false;
+    },
+    [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+  );
+
+  const getDefaultFocusedDate = () => {
+    if (
+      selectedDate &&
+      (selectionVariant === "range" || selectionVariant === "offset")
+    ) {
+      const getFocusableDate = (
+        result: TDate[],
+        selection: DateRangeSelection<TDate>,
+      ) => {
+        if (selection?.startDate && isDayVisible(selection.startDate)) {
+          return [...result, selection.startDate];
+        }
+        if (selection?.endDate && isDayVisible(selection.endDate)) {
+          return [...result, selection.endDate];
+        }
+        return result;
+      };
+      let focusableSelectedDates:
+        | DateRangeSelection<TDate>
+        | DateRangeSelection<TDate>[];
+      if (!multiselect) {
+        focusableSelectedDates = [selectedDate as DateRangeSelection<TDate>];
+      } else {
+        focusableSelectedDates = selectedDate as DateRangeSelection<TDate>[];
+      }
+      const selectionInMonth = focusableSelectedDates
+        .reduce(getFocusableDate, [])
+        .sort((a, b) => dateAdapter.compare(a, b));
+      if (selectionInMonth.length > 0) {
+        return selectionInMonth[0];
+      }
+    } else if (selectedDate && selectionVariant === "single") {
+      const focusableSelectedDate = multiselect
+        ? (selectedDate as SingleDateSelection<TDate>[])?.[0]
+        : (selectedDate as SingleDateSelection<TDate>);
+      if (focusableSelectedDate && isDayVisible(focusableSelectedDate)) {
+        return focusableSelectedDate;
+      }
+    }
+
+    // Defaults
+    if (
+      isDaySelectable?.(dateAdapter.today(timezone)) &&
+      isDayVisible(dateAdapter.today(timezone))
+    ) {
+      return dateAdapter.today(timezone);
+    }
+    const firstSelectableDate = generateDatesForMonth(
+      dateAdapter,
+      visibleMonth,
+    ).find((visibleDay) => visibleDay && isDaySelectable?.(visibleDay));
+    if (firstSelectableDate) {
+      return firstSelectableDate;
+    }
+    return null;
+  };
+
+  const [focusedDate, setFocusedDateState] = useControlled({
+    controlled: focusedDateProp,
+    default: useMemo(getDefaultFocusedDate, []),
+    name: "Calendar",
+    state: "focusedDate",
+  });
+
+  const focusableDate = useMemo(() => {
+    const dates: TDate[] = [];
+
+    if (Array.isArray(selectedDate)) {
+      for (const selection of selectedDate) {
+        if (isDateRangeSelection(selection)) {
+          if (selection.startDate && isDayVisible(selection.startDate)) {
+            dates.push(selection.startDate);
+          } else if (selection.endDate && isDayVisible(selection.endDate)) {
+            dates.push(selection.endDate);
+          }
+        } else if (isDayVisible(selection as TDate)) {
+          dates.push(selection as TDate);
+        }
+      }
+    } else if (selectedDate) {
+      if (isDateRangeSelection(selectedDate)) {
+        if (selectedDate.startDate && isDayVisible(selectedDate.startDate)) {
+          dates.push(selectedDate.startDate);
+        } else if (selectedDate.endDate && isDayVisible(selectedDate.endDate)) {
+          dates.push(selectedDate.endDate);
+        }
+      } else if (isDayVisible(selectedDate)) {
+        dates.push(selectedDate);
+      }
+    }
+
+    if (
+      focusedDate &&
+      visibleMonth &&
+      dateAdapter.isSame(focusedDate, visibleMonth, "month")
+    ) {
+      dates.push(focusedDate);
+      return dates[0];
+    }
+
+    // Defaults
+    if (
+      dates.length === 0 &&
+      isDaySelectable(dateAdapter.today(timezone)) &&
+      isDayVisible(dateAdapter.today(timezone))
+    ) {
+      dates.push(dateAdapter.today(timezone));
+    }
+    if (dates.length === 0 || !dates.some(isDayVisible)) {
+      const firstSelectableDate = generateDatesForMonth(
+        dateAdapter,
+        visibleMonth,
+      ).find((visibleDay) => visibleDay && isDaySelectable(visibleDay));
+      if (firstSelectableDate) {
+        dates.push(firstSelectableDate);
+      }
+    }
+
+    return dates.length ? dates[0] : null;
+  }, [
+    dateAdapter,
+    focusedDate,
+    isDaySelectable,
+    isDayVisible,
+    selectedDate,
     timezone,
     visibleMonth,
-  } as UseCalendarSelectionProps<TDate>);
+  ]);
+
+  const isHoveredSpan = useCallback(
+    (date: TDate) => {
+      if (selectionVariant === "range") {
+        const dateRanges = Array.isArray(selectedDate)
+          ? selectedDate
+          : [selectedDate];
+        return dateRanges.some((range) => {
+          if (
+            isDateRangeSelection(range) &&
+            dateAdapter.isValid(range.startDate) &&
+            !dateAdapter.isValid(range.endDate) &&
+            isOutsideAllowedDates(range.startDate) === 0 &&
+            hoveredDate
+          ) {
+            const isForwardRange =
+              dateAdapter.compare(hoveredDate, range.startDate) > 0 &&
+              dateAdapter.compare(date, range.startDate) > 0 &&
+              dateAdapter.compare(date, hoveredDate) < 0;
+
+            const isValidDayHovered =
+              !isDaySelectable || isDaySelectable(hoveredDate);
+            return isForwardRange && isValidDayHovered;
+          }
+          return false;
+        });
+      }
+      if (selectionVariant === "offset" && hoveredDate) {
+        const startDate = startDateOffset
+          ? startDateOffset(hoveredDate)
+          : hoveredDate;
+        const endDate = endDateOffset
+          ? endDateOffset(hoveredDate)
+          : hoveredDate;
+        return (
+          dateAdapter.compare(date, startDate) > 0 &&
+          dateAdapter.compare(date, endDate) < 0 &&
+          (!isDaySelectable || isDaySelectable(date))
+        );
+      }
+      return false;
+    },
+    [
+      dateAdapter,
+      isOutsideAllowedDates,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      isDaySelectable,
+    ],
+  );
+
+  const isHoveredEnd = useCallback(
+    (date: TDate) => {
+      if (
+        selectionVariant === "range" &&
+        hoveredDate &&
+        dateAdapter.isSame(date, hoveredDate, "day")
+      ) {
+        const dateRanges = (
+          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
+        ) as DateRangeSelection<TDate>[];
+        const isIncompleteRange = dateRanges.some(
+          (range) =>
+            range?.startDate &&
+            !range?.endDate &&
+            hoveredDate &&
+            dateAdapter.compare(hoveredDate, range.startDate) >= 0,
+        );
+        const endDateMatches = dateRanges.some(
+          (range) =>
+            range?.endDate && dateAdapter.isSame(range.endDate, date, "day"),
+        );
+        return endDateMatches || isIncompleteRange;
+      }
+      if (selectionVariant === "offset" && hoveredDate) {
+        const endDate = endDateOffset
+          ? endDateOffset(hoveredDate)
+          : hoveredDate;
+        return (
+          dateAdapter.isSame(date, endDate, "day") &&
+          (!isDaySelectable || isDaySelectable(date))
+        );
+      }
+      return false;
+    },
+    [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+  );
+
+  const defaultCreateAnnouncement =
+    selectionVariant === "single"
+      ? createSingleSelectionAnnouncement
+      : createRangeSelectionAnnouncement;
+  const { announce } = useDateSelectionAnnouncer<TDate>(
+    createAnnouncement === undefined
+      ? defaultCreateAnnouncement
+      : createAnnouncement,
+    dateAdapter,
+  );
+
+  const setFocusedDate = useCallback(
+    (event: SyntheticEvent | null, date: TDate | null) => {
+      if (focusedDateRef && event?.target instanceof HTMLElement) {
+        focusedDateRef.current = event.target;
+      }
+      const exceededRangeLimit = date ? isOutsideAllowedDates(date) : 0;
+      if (
+        date &&
+        ((focusedDate && dateAdapter.isSame(date, focusedDate, "day")) ||
+          exceededRangeLimit !== 0)
+      ) {
+        if (exceededRangeLimit !== 0) {
+          announce(
+            exceededRangeLimit < 0
+              ? "minFocusableDateExceeded"
+              : "maxFocusableDateExceeded",
+          );
+        }
+        return;
+      }
+      setFocusedDateState(date);
+      onFocusedDateChange?.(event, date);
+    },
+    [
+      announce,
+      dateAdapter,
+      focusedDate,
+      focusedDateRef,
+      isOutsideAllowedDates,
+      onFocusedDateChange,
+    ],
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: isDayVisible ignored (due to dependency on visibleMonth)
   useEffect(() => {
-    const focusedDate = selectionManager?.state?.focusedDate;
     const shouldTransition =
       focusedDate &&
       !focusedDateProp !== undefined &&
       !isDayVisible(focusedDate) &&
-      !isOutsideAllowedDates(focusedDate);
+      isOutsideAllowedDates(focusedDate) === 0;
 
     if (shouldTransition) {
       setVisibleMonth(null, dateAdapter.startOf(focusedDate, "month"));
     }
-  }, [
-    dateAdapter,
-    focusedDateProp,
-    isOutsideAllowedDates,
-    selectionManager?.state?.focusedDate,
-  ]);
+  }, [dateAdapter, focusedDateProp, isOutsideAllowedDates, focusedDate]);
 
   const setVisibleMonth = useCallback(
     (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
       setVisibleMonthState(newVisibleMonth);
+      announce("visibleMonthChanged", {
+        startVisibleMonth: newVisibleMonth,
+        endVisibleMonth: dateAdapter.add(newVisibleMonth, {
+          months: responsiveNumberOfVisibleMonths - 1,
+        }),
+      });
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
     [onVisibleMonthChange],
@@ -555,6 +942,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     () =>
       ({
         state: {
+          hoveredDate,
           visibleMonth,
           timezone,
           multiselect,
@@ -563,36 +951,68 @@ export function useCalendar<TDate extends DateFrameworkType>(
           numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
           selectionVariant,
           hideOutOfRangeDates,
-          ...selectionManager.state,
+          focusedDate,
+          focusableDate,
+          focusedDateRef,
+          selectedDate,
         },
         helpers: {
           setVisibleMonth,
           isDayUnselectable,
           isDayHighlighted,
           isDayVisible,
+          isHovered,
+          isHoveredStart,
+          isHoveredSpan,
+          isHoveredEnd,
           isOutsideAllowedDates,
           isOutsideAllowedMonths,
           isOutsideAllowedYears,
-          ...selectionManager.helpers,
+          setFocusedDate,
+          setHoveredDate,
+          isDaySelectable,
+          isSelected,
+          isSameDay,
+          setSelectedDate,
+          isSelectedStart,
+          isSelectedSpan,
+          isSelectedEnd,
         },
       }) as UseCalendarReturn<TDate>,
     [
+      hoveredDate,
       visibleMonth,
       timezone,
       multiselect,
       minDate,
       maxDate,
+      responsiveNumberOfVisibleMonths,
       selectionVariant,
       hideOutOfRangeDates,
+      focusedDate,
+      focusedDateRef,
+      focusableDate,
+      selectedDate,
       setVisibleMonth,
       isDayUnselectable,
       isDayHighlighted,
       isDayVisible,
+      isHovered,
+      isHoveredStart,
+      isHoveredSpan,
+      isHoveredEnd,
       isOutsideAllowedDates,
       isOutsideAllowedMonths,
       isOutsideAllowedYears,
-      responsiveNumberOfVisibleMonths,
-      selectionManager,
+      setFocusedDate,
+      setHoveredDate,
+      isDaySelectable,
+      isSelected,
+      isSameDay,
+      setSelectedDate,
+      isSelectedStart,
+      isSelectedSpan,
+      isSelectedEnd,
     ],
   );
 }
