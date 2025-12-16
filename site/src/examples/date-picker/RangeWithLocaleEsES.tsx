@@ -97,7 +97,11 @@ export const RangeWithLocaleEsES = (): ReactElement => {
   );
 
   return (
-    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
+    <FormField
+      style={{ width: "256px" }}
+      validationStatus={validationStatus}
+      lang="es"
+    >
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}

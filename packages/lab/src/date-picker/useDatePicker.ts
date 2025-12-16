@@ -8,6 +8,14 @@ import {
   useState,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import {
+  type CreateAnnouncement,
+  useDateSelectionAnnouncer,
+} from "../calendar";
+import {
+  createRangeSelectionAnnouncement,
+  createSingleSelectionAnnouncement,
+} from "../calendar/internal/createAnnouncement";
 import type {
   DateInputRangeDetails,
   DateInputSingleDetails,
@@ -20,7 +28,13 @@ import type {
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 interface UseDatePickerBaseProps<TDate> {
-  /** If `true`, the component is disabled. */
+  /**
+   * Factory method for date selection live announcements or null to silence announcements
+   */
+  createAnnouncement?: CreateAnnouncement<TDate> | null;
+  /**
+   * If `true`, the component is disabled.
+   */
   disabled?: boolean;
   /**
    * Function to determine if a day is highlighted.
@@ -170,6 +184,7 @@ export function useDatePicker<
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
   } = useLocalization<TDate>();
   const {
+    createAnnouncement,
     readOnly = false,
     disabled,
     selectionVariant,
@@ -188,6 +203,13 @@ export function useDatePicker<
   const previousSelectedDate = useRef<typeof selectedDateProp>();
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
+
+  const { announce } = useDateSelectionAnnouncer(
+    (createAnnouncement ?? selectionVariant === "single")
+      ? createSingleSelectionAnnouncement
+      : createRangeSelectionAnnouncement,
+    dateAdapter,
+  );
 
   const {
     state: { open },
@@ -231,6 +253,7 @@ export function useDatePicker<
     (event: SyntheticEvent, date: SingleDateSelection<TDate> | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
+      announce("dateSelected", { selectedDate: date });
       if (selectionVariant === "single") {
         onApply?.(event, date);
       }
@@ -292,6 +315,7 @@ export function useDatePicker<
     (event: SyntheticEvent, date: DateRangeSelection<TDate> | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
+      announce("dateSelected", { selectedDate: date });
       if (selectionVariant === "range") {
         onApply?.(event, date);
       }

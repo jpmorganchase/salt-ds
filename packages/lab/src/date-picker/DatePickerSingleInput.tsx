@@ -21,7 +21,10 @@ import {
   type DateInputSingleProps,
 } from "../date-input";
 import { useLocalization } from "../localization-provider";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  type SingleDatePickerState,
+  useDatePickerContext,
+} from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerSingleInput");
@@ -118,7 +121,9 @@ export const DatePickerSingleInput = forwardRef<
         timezone,
       },
       helpers: { select },
-    } = useDatePickerContext<TDate>({ selectionVariant: "single" });
+    } = useDatePickerContext<TDate>({
+      selectionVariant: "single",
+    }) as SingleDatePickerState<TDate>;
     const {
       state: { open },
       helpers: { setOpen },
@@ -201,7 +206,9 @@ export const DatePickerSingleInput = forwardRef<
               sentiment="neutral"
               onClick={handleCalendarButton}
               disabled={disabled}
+              aria-haspopup="dialog"
               aria-label="Open Calendar"
+              aria-expanded={open}
             >
               <CalendarIcon aria-hidden />
             </Button>
