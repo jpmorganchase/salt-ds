@@ -118,8 +118,14 @@ describe("GIVEN a DateInputSingle", () => {
       ).date;
 
       it("SHOULD render value, even when not a valid date", () => {
-        cy.mount(<DateInputSingle defaultValue={"date value"} />);
+        cy.mount(
+          <DateInputSingle
+            defaultValue={"date value"}
+            validationStatus={"error"}
+          />,
+        );
         cy.findByRole("textbox").should("have.value", "date value");
+        cy.findByRole("textbox").should("have.attr", "aria-invalid", "true");
       });
 
       it("SHOULD call onDateChange only if value changes", () => {
@@ -422,6 +428,11 @@ describe("GIVEN a DateInputSingle", () => {
           cy.findByRole("textbox").should(
             "have.value",
             updatedFormattedDateValue,
+          );
+          cy.findByRole("textbox").should(
+            "not.have.attr",
+            "aria-invalid",
+            "true",
           );
         });
 

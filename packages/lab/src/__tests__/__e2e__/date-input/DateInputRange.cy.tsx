@@ -176,13 +176,24 @@ describe("GIVEN a DateInputRange", () => {
               startDate: "start date value",
               endDate: "end date value",
             }}
+            validationStatus={"error"}
           />,
         );
         cy.findByLabelText("Start date").should(
           "have.value",
           "start date value",
         );
+        cy.findByLabelText("Start date").should(
+          "have.attr",
+          "aria-invalid",
+          "true",
+        );
         cy.findByLabelText("End date").should("have.value", "end date value");
+        cy.findByLabelText("End date").should(
+          "have.attr",
+          "aria-invalid",
+          "true",
+        );
       });
 
       it("SHOULD call onDateChange only if value changes", () => {
@@ -245,6 +256,7 @@ describe("GIVEN a DateInputRange", () => {
             adapter,
           ),
         );
+
         // Test clearing start date
         cy.findByLabelText("Start date").click().clear();
         cy.realPress("Tab");
@@ -647,6 +659,11 @@ describe("GIVEN a DateInputRange", () => {
             "have.value",
             initialDateValue.endDate,
           );
+          cy.findByLabelText("Start date").should(
+            "not.have.attr",
+            "aria-invalid",
+            "true",
+          );
 
           // Test update end date
           cy.findByLabelText("End date")
@@ -695,6 +712,11 @@ describe("GIVEN a DateInputRange", () => {
           cy.findByLabelText("End date").should(
             "have.value",
             updatedFormattedDateValue.endDate,
+          );
+          cy.findByLabelText("End date").should(
+            "not.have.attr",
+            "aria-invalid",
+            "true",
           );
         });
       });
