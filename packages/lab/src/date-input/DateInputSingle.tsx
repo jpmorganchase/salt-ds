@@ -54,10 +54,6 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * The aria-label for accessibility.
-   */
-  ariaLabel?: string;
-  /**
    * Styling variant with full border. Defaults to false.
    */
   bordered?: boolean;
@@ -375,6 +371,9 @@ export const DateInputSingle = forwardRef<
             dateInputLabelledBy,
             inputId,
           )}
+          aria-invalid={
+            (!isReadOnly && validationStatus === "error") || undefined
+          }
           aria-label={clsx("Selected date", ariaLabel)}
           id={inputId}
           className={withBaseName("input")}
