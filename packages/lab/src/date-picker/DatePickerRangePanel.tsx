@@ -40,7 +40,10 @@ import {
 } from "../calendar";
 import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  type RangeDatePickerState,
+  useDatePickerContext,
+} from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
@@ -252,7 +255,9 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
     helpers: { select, isDayHighlighted, isDayUnselectable },
-  } = useDatePickerContext<TDate>({ selectionVariant: "range" });
+  } = useDatePickerContext<TDate>({
+    selectionVariant: "range",
+  }) as RangeDatePickerState<TDate>;
 
   const {
     state: { initialFocusRef, focused },
@@ -589,22 +594,26 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation
-              disableNavigateNext={dateAdapter.isSame(
-                startVisibleMonth,
-                dateAdapter.subtract(maxDate, { months: 1 }),
-                "month",
-              )}
+              NextButtonProps={{
+                disabled: dateAdapter.isSame(
+                  startVisibleMonth,
+                  dateAdapter.subtract(maxDate, { months: 1 }),
+                  "month",
+                ),
+              }}
               {...StartCalendarNavigationProps}
             />
             <CalendarGrid {...StartCalendarGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation
-              disableNavigatePrevious={dateAdapter.isSame(
-                endVisibleMonth,
-                dateAdapter.add(minDate, { months: 1 }),
-                "month",
-              )}
+              NextButtonProps={{
+                disabled: dateAdapter.isSame(
+                  endVisibleMonth,
+                  dateAdapter.add(minDate, { months: 1 }),
+                  "month",
+                ),
+              }}
               {...EndCalendarNavigationProps}
             />
             <CalendarGrid {...EndCalendarGridProps} />

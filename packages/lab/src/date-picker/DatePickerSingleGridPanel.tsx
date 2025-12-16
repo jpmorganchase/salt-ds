@@ -160,9 +160,9 @@ export const DatePickerSingleGridPanel = forwardRef(
       window: targetWindow,
     });
 
-    const stateAndHelpers: SingleDatePickerState<TDate> = useDatePickerContext({
+    const stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    });
+    }) as SingleDatePickerState<TDate>;
 
     const {
       state: {
