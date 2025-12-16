@@ -17,6 +17,7 @@ import {
 export const TwinCalendars = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const today = dateAdapter.today();
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
     null,
   );
@@ -30,6 +31,9 @@ export const TwinCalendars = (): ReactElement => {
   const [endVisibleMonth, setEndVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
+  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+    dateAdapter.startOf(startVisibleMonth, "month"),
+  );
 
   const handleStartVisibleMonthChange = useCallback(
     (
@@ -78,32 +82,88 @@ export const TwinCalendars = (): ReactElement => {
       setSelectedDate(newSelectedDate);
     };
 
+  const handleFocusedDateChange: CalendarProps<DateFrameworkType>["onFocusedDateChange"] =
+    (_event, newFocusedDate) => {
+      setFocusedDate(newFocusedDate);
+    };
+
   return (
-    <div style={{ display: "flex", gap: 16 }}>
+    <div
+      role="region"
+      aria-label="Twin Calendar example"
+      style={{ display: "flex", gap: 16 }}
+    >
+      {/* biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set */}
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) < 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month first calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month first calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month first calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year first calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
+      {/* biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set */}
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) >= 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
         visibleMonth={endVisibleMonth}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month second calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month second calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month second calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year second calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
     </div>

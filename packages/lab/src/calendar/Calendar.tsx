@@ -55,10 +55,6 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;
-  /**
-   * If `true`, the calendar will be multiselect.
-   */
-  multiselect?: boolean;
 }
 
 /**
@@ -207,6 +203,7 @@ export const Calendar = forwardRef<
       window: targetWindow,
     });
     const {
+      createAnnouncement,
       children,
       className,
       selectedDate,
@@ -283,6 +280,7 @@ export const Calendar = forwardRef<
 
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useCalendarProps: any = {
+      createAnnouncement,
       selectedDate,
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,

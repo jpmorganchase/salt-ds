@@ -94,12 +94,11 @@ export const CalendarGrid = forwardRef<
 
     const visibleMonths = useMemo(
       () =>
-        Array.from({ length: numberOfVisibleMonths }, (_value, index) => {
-          const gridItemVisibleMonth: TDate = dateAdapter.add(visibleMonth, {
+        Array.from({ length: numberOfVisibleMonths }, (_value, index) =>
+          dateAdapter.add(visibleMonth, {
             months: index,
-          });
-          return gridItemVisibleMonth;
-        }),
+          }),
+        ),
       [dateAdapter, numberOfVisibleMonths, visibleMonth],
     );
 
