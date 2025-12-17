@@ -1,0 +1,71 @@
+---
+title: Keyboard Shortcuts
+description: "Keyboard shortcuts allow users to execute actions, using a keyboard, that are usually performed with a mouse or trackpad. They increase the efficiency and productivity of users who primarily rely on their keyboard when interacting with applications."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/keyboard-shortcuts
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-keyboard-shortcuts--with-dialog", label: "Examples" },
+    ]
+  components: ["Avatar", "Button", "Flow layout", "Icon", "Stack layout", "Text", "Tooltip"]
+---
+The keyboard shortcuts displays a comprehensive, searchable list of all available shortcuts, helping users quickly learn and reference key combinations to navigate and perform actions efficiently.
+
+ <Diagram
+    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts.png"
+    alt="Keyboard Shortcuts"
+  />
+
+## When to use
+
+Use this pattern to:
+- Increase task efficiency by enabling users to perform actions quickly.
+- Provide a true alternative to mouse or trackpad navigation, supporting users who prefer or require keyboard input.
+- Clearly communicate available shortcuts to help users discover and learn efficient workflows.
+- Allow users to search for and execute actions directly from the keyboard, improving accessibility and user experience.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+Provide keyboard shortcuts to cater for users with accessibility needs who may not have access to a mouse.
+</GuidanceCallout>
+
+## How to build
+
+### Anatomy
+
+1. **Keyboard shortcuts switch**: A switch that allows users to turn the keyboard shortcuts list on or off.
+2. **Filter**: This allows users to quickly search and locate specific shortcuts by typing keywords.
+3. **Action name**: ctions represent user-initiated commands—such as Save or Delete—that correspond to defined shortcuts. Each action should be clearly named to reflect the UI command executed by the shortcut.
+4. **Description**: For actions that are unique to your application or require additional context, a brief description can be provided to help users understand their purpose.
+3. **Key**: Each keyboard shortcut consists of two types of keys—modifier keys and character keys—which work together to trigger the action.
+
+<Diagram
+    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-anatomy.png"
+    alt="keyboard Shortcuts with component annotations"
+/>
+
+### Layout
+
+- Use Switch component to display keyboard shortcuts on/off switch.
+- Use Combo box to display search field.
+- Use Table to display keyboard shortcut list.
+
+ <Diagram
+    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-layout.png"
+    alt="keyboard Shortcuts with layout annotations"
+  />
+
+## How it works
+
+### Basic interaction
+
+1. The keyboard shortcuts initially displays all available shortcuts.
+
+ <Diagram
+    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-interaction-1.png"
+    alt="Contact Details using Icon Descriptors"
+    alt="Keyboard shortcuts with all available shortcuts."
+  />
