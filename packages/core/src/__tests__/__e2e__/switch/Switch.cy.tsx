@@ -192,7 +192,7 @@ describe("GIVEN a Switch", () => {
       cy.findByRole("switch").should("not.be.checked");
     });
 
-    it("should have aria-readonly attribute", () => {
+    it("THEN should have aria-readonly attribute", () => {
       cy.mount(<Switch readOnly />);
       cy.findByRole("switch").should("have.attr", "aria-readonly", "true");
     });
