@@ -11,8 +11,10 @@
   align-items: center;
   padding: 0 var(--salt-spacing-50);
   text-transform: capitalize;
-}
-
-.saltKbd .saltText {
-  width: fit-content;
+  color: var(--salt-content-primary-foreground);
+  font-family: var(--salt-text-code-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-style: normal;
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight); 
 }

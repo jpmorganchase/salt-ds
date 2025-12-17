@@ -91,7 +91,7 @@ function highlightTextMatch(text: string, query: string): React.ReactNode {
 
 const KeyboardShortcuts: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(true);
+  const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
 
   useHotkeys(
@@ -202,7 +202,7 @@ const KeyboardShortcuts: FC = () => {
     setFilter(event.target.value);
 
   return (
-    <HotkeysProvider>
+    <>
       <StackLayout gap={1}>
         <Button data-testid="dialog-button" onClick={handleDialogOpen}>
           Keyboard shortcuts panel
@@ -224,15 +224,12 @@ const KeyboardShortcuts: FC = () => {
       >
         <DialogContent>
           <StackLayout gap={3}>
-            <FlexLayout gap={1}>
-              <Switch
-                checked={shortcutsEnabled}
-                onChange={handleSwitchChange}
-              />
-              <FlexLayout className="keyboardShortcuts-description">
-                <Text>Turn on keyboard shortcuts</Text>
-              </FlexLayout>
-            </FlexLayout>
+            <Switch
+              checked={shortcutsEnabled}
+              onChange={handleSwitchChange}
+              label="Turn on keyboard shortcuts"
+            />
+
             {shortcutsEnabled && (
               <StackLayout gap={1}>
                 <Text className="keyboardShortcuts-actions-title" styleAs="h3">
@@ -245,8 +242,10 @@ const KeyboardShortcuts: FC = () => {
                     bordered
                     variant="secondary"
                     placeholder="Filter actions"
-                    startAdornment={<FilterIcon color="secondary" />}
-                    aria-label="Filter actions"
+                    startAdornment={
+                      <FilterIcon color="secondary" aria-hidden="true" />
+                    }
+                    inputProps={{ "aria-label": "Filter actions" }}
                   />
                   {filteredShortcuts.length ? (
                     <StackLayout className="keyboardShortcuts-tableScroll">
@@ -287,9 +286,7 @@ const KeyboardShortcuts: FC = () => {
                                     >
                                       {combo.split("+").map((key, idx, arr) => (
                                         <React.Fragment key={key + idx}>
-                                          <Kbd aria-label={displayKeyName(key)}>
-                                            {displayKeyName(key)}
-                                          </Kbd>
+                                          <Kbd>{displayKeyName(key)}</Kbd>
                                           {idx < arr.length - 1 && (
                                             <Text>+</Text>
                                           )}
@@ -318,8 +315,196 @@ const KeyboardShortcuts: FC = () => {
           </StackLayout>
         </DialogContent>
       </Dialog>
+    </>
+  );
+};
+
+const ShortcutPanel: FC = () => {
+  const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(false);
+  const [filter, setFilter] = useState<string>("");
+
+  useHotkeys(
+    "meta+option+p",
+    (e) => {
+      e.preventDefault();
+      alert("Open command palette triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+shift+e",
+    (e) => {
+      e.preventDefault();
+      alert("Next triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+e",
+    (e) => {
+      e.preventDefault();
+      alert("Previous triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+d",
+    (e) => {
+      e.preventDefault();
+      alert("Duplicate ticket triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+b",
+    (e) => {
+      shortcutsEnabled && alert("Set direction to buy triggered");
+    },
+    { enabled: shortcutsEnabled },
+    [shortcutsEnabled],
+  );
+  useHotkeys(
+    "meta+s",
+    (e) => {
+      e.preventDefault();
+      alert("Set direction to sell triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+end",
+    (e) => {
+      e.preventDefault();
+      alert("Bottom of list triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+home",
+    (e) => {
+      e.preventDefault();
+      alert("Top of list triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+u",
+    (e) => {
+      e.preventDefault();
+      alert("Test shortcut triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+  useHotkeys(
+    "meta+y",
+    (e) => {
+      e.preventDefault();
+      alert("Test shortcut triggered");
+    },
+    { enabled: shortcutsEnabled },
+  );
+
+  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) =>
+    s.label.toLowerCase().includes(filter.trim().toLowerCase()),
+  );
+
+  const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void =>
+    setShortcutsEnabled(event.target.checked);
+  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>): void =>
+    setFilter(event.target.value);
+
+  return (
+    <HotkeysProvider>
+      <StackLayout gap={3} className="keyboardShortcuts-panel">
+        <Switch
+          checked={shortcutsEnabled}
+          onChange={handleSwitchChange}
+          label="Turn on keyboard shortcuts"
+        />
+        {shortcutsEnabled && (
+          <StackLayout gap={1}>
+            <Text className="keyboardShortcuts-actions-title" styleAs="h3">
+              Actions
+            </Text>
+            <StackLayout gap={filteredShortcuts.length ? 3 : 0.75}>
+              <Input
+                onChange={handleFilterChange}
+                value={filter}
+                bordered
+                variant="secondary"
+                placeholder="Filter actions"
+                startAdornment={
+                  <FilterIcon color="secondary" aria-hidden="true" />
+                }
+                inputProps={{ "aria-label": "Filter actions" }}
+              />
+              {filteredShortcuts.length ? (
+                <StackLayout className="keyboardShortcuts-tableScroll">
+                  <Table>
+                    <THead>
+                      <TR>
+                        <TH>Action</TH>
+                        <TH>Key combination</TH>
+                      </TR>
+                    </THead>
+                    <TBody>
+                      {filteredShortcuts.map((shortcut, idx) => (
+                        <TR key={shortcut.label + idx}>
+                          <TD className="keyboardShortcuts-td">
+                            <StackLayout
+                              gap={0.5}
+                              className="keyboardShortcuts-shortcuts"
+                            >
+                              <Text>
+                                {highlightTextMatch(shortcut.label, filter)}
+                              </Text>
+                              {shortcut.description && (
+                                <Text color="secondary">
+                                  {shortcut.description}
+                                </Text>
+                              )}
+                            </StackLayout>
+                          </TD>
+                          <TD className="keyboardShortcuts-td">
+                            <FlexLayout gap={0.5} wrap>
+                              {shortcut.keys.map((combo, comboIdx) => (
+                                <FlexLayout
+                                  align="center"
+                                  gap={0.5}
+                                  key={combo + comboIdx}
+                                  className="keyboardShortcuts-kbd"
+                                  wrap
+                                >
+                                  {combo.split("+").map((key, idx, arr) => (
+                                    <React.Fragment key={key + idx}>
+                                      <Kbd>{displayKeyName(key)}</Kbd>
+                                      {idx < arr.length - 1 && <Text>+</Text>}
+                                    </React.Fragment>
+                                  ))}
+                                  {comboIdx < shortcut.keys.length - 1 && (
+                                    <Text>,</Text>
+                                  )}
+                                </FlexLayout>
+                              ))}
+                            </FlexLayout>
+                          </TD>
+                        </TR>
+                      ))}
+                    </TBody>
+                  </Table>
+                </StackLayout>
+              ) : (
+                <FormFieldHelperText color="secondary">
+                  No actions found
+                </FormFieldHelperText>
+              )}
+            </StackLayout>
+          </StackLayout>
+        )}
+      </StackLayout>
     </HotkeysProvider>
   );
 };
 
 export const WithDialog = KeyboardShortcuts.bind({});
+export const ShortcutsPanel = ShortcutPanel.bind({});

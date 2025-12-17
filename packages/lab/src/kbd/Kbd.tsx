@@ -1,4 +1,4 @@
-import { makePrefixer, Text } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -23,7 +23,7 @@ export const Kbd = forwardRef<HTMLDivElement, KbdProps>(
 
     return (
       <kbd ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-        <Text>{children}</Text>
+        {children}
       </kbd>
     );
   },
