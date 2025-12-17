@@ -191,5 +191,16 @@ describe("GIVEN a Switch", () => {
       cy.realPress("Space");
       cy.findByRole("switch").should("not.be.checked");
     });
+
+    it("should have aria-readonly attribute", () => {
+      cy.mount(<Switch readOnly />);
+      cy.findByRole("switch").should("have.attr", "aria-readonly", "true");
+    });
+
+    it("THEN should be focusable", () => {
+      cy.mount(<Switch readOnly />);
+      cy.realPress("Tab");
+      cy.findByRole("switch").should("be.focused");
+    });
   });
 });
