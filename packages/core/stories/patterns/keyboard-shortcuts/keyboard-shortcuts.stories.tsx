@@ -209,7 +209,7 @@ const KeyboardShortcuts: FC = () => {
         </Button>
         <FlexLayout align="center" gap={1}>
           <Text>hit </Text>
-          <FlexLayout align="center" gap={0}>
+          <FlexLayout align="center" gap={0.5}>
             <Kbd>meta</Kbd>+<Kbd>shift</Kbd>+<Kbd>K</Kbd>
           </FlexLayout>
           <Text>to open the keyboard shortcuts panel </Text>
@@ -285,12 +285,17 @@ const KeyboardShortcuts: FC = () => {
                                       wrap
                                     >
                                       {combo.split("+").map((key, idx, arr) => (
-                                        <React.Fragment key={key + idx}>
+                                        <FlexLayout
+                                          align="center"
+                                          wrap
+                                          gap={0.5}
+                                          key={key + idx}
+                                        >
                                           <Kbd>{displayKeyName(key)}</Kbd>
                                           {idx < arr.length - 1 && (
                                             <Text>+</Text>
                                           )}
-                                        </React.Fragment>
+                                        </FlexLayout>
                                       ))}
                                       {comboIdx < shortcut.keys.length - 1 && (
                                         <Text>,</Text>
@@ -476,10 +481,15 @@ const ShortcutPanel: FC = () => {
                                   wrap
                                 >
                                   {combo.split("+").map((key, idx, arr) => (
-                                    <React.Fragment key={key + idx}>
+                                    <FlexLayout
+                                      align="center"
+                                      wrap
+                                      gap={0.5}
+                                      key={key + idx}
+                                    >
                                       <Kbd>{displayKeyName(key)}</Kbd>
                                       {idx < arr.length - 1 && <Text>+</Text>}
-                                    </React.Fragment>
+                                    </FlexLayout>
                                   ))}
                                   {comboIdx < shortcut.keys.length - 1 && (
                                     <Text>,</Text>
