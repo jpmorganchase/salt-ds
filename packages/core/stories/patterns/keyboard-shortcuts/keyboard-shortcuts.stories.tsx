@@ -13,7 +13,7 @@ import { FilterIcon } from "@salt-ds/icons";
 import { Kbd, Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import React, { type ChangeEvent, type FC, useState } from "react";
-import { HotkeysProvider, useHotkeys } from "react-hotkeys-hook";
+import { useHotkeys } from "react-hotkeys-hook";
 import "./keyboard-shortcuts.stories.css";
 
 export default {
@@ -414,7 +414,7 @@ const ShortcutPanel: FC = () => {
     setFilter(event.target.value);
 
   return (
-    <HotkeysProvider>
+    <>
       <StackLayout gap={3} className="keyboardShortcuts-panel">
         <Switch
           checked={shortcutsEnabled}
@@ -502,7 +502,7 @@ const ShortcutPanel: FC = () => {
           </StackLayout>
         )}
       </StackLayout>
-    </HotkeysProvider>
+    </>
   );
 };
 
