@@ -49,30 +49,42 @@ export function useCollection({ wrap }: UseCollectionProps) {
 
   const batchTimeout = useRef<number | null>(null);
 
-  const registerItem = useCallback((item: Item) => {
-    itemMap.current.set(item.id, item);
-
-    if (batchTimeout.current) {
-      window.clearTimeout(batchTimeout.current);
-    }
-
-    batchTimeout.current = window.setTimeout(() => {
-      for (const [id, item] of itemMap.current) {
-        if (item.stale) {
-          itemMap.current.delete(id);
-        }
-      }
-    }, 44);
-
-    return () => {
-      itemMap.current.set(item.id, {
-        ...item,
-        stale: true,
-        staleIndex: itemsRef.current.findIndex(({ id }) => id === item.id),
-      });
-      itemsRef.current = itemsRef.current.filter(({ id }) => id !== item.id);
-    };
+  const sortItems = useCallback(() => {
+    const newItems = Array.from(
+      itemMap.current.values().filter((item) => !item.stale),
+    );
+    itemsRef.current = sortBasedOnDOMPosition(newItems);
   }, []);
+
+  const registerItem = useCallback(
+    (item: Item) => {
+      itemMap.current.set(item.id, item);
+
+      if (batchTimeout.current) {
+        window.clearTimeout(batchTimeout.current);
+      }
+
+      batchTimeout.current = window.setTimeout(() => {
+        for (const [id, item] of itemMap.current) {
+          if (item.stale) {
+            itemMap.current.delete(id);
+          }
+        }
+
+        sortItems();
+      }, 44);
+
+      return () => {
+        itemMap.current.set(item.id, {
+          ...item,
+          stale: true,
+          staleIndex: itemsRef.current.findIndex(({ id }) => id === item.id),
+        });
+        itemsRef.current = itemsRef.current.filter(({ id }) => id !== item.id);
+      };
+    },
+    [sortItems],
+  );
 
   return {
     registerItem,
@@ -123,11 +135,6 @@ export function useCollection({ wrap }: UseCollectionProps) {
     itemAt: useCallback((index: number): Item | null => {
       return itemsRef.current[index] ?? null;
     }, []),
-    sortItems: useCallback(() => {
-      const newItems = Array.from(
-        itemMap.current.values().filter((item) => !item.stale),
-      );
-      itemsRef.current = sortBasedOnDOMPosition(newItems);
-    }, []),
+    sortItems,
   };
 }
