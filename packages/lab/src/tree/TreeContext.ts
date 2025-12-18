@@ -6,45 +6,48 @@ import {
   useContext,
 } from "react";
 
+export interface TreeNodeMeta {
+  value: string;
+  parentValue: string | undefined;
+  hasChildren: boolean;
+  disabled: boolean;
+}
+
+export interface TreeModel {
+  nodes: Map<string, TreeNodeMeta>;
+  rootValues: string[];
+  childrenOf: Map<string, string[]>;
+}
+
 export interface TreeContextValue {
-  /** Set of expanded node values (Set for faster lookup) */
   expandedState: Set<string>;
   /** Toggle a node expansion state */
   toggleExpanded: (value: string) => void;
+
   /** Selected node values */
   selectedState: string[];
   /** Set selected state directly */
   setSelectedState: Dispatch<SetStateAction<string[]>>;
   /** Select node */
   select: (event: SyntheticEvent, value: string) => void;
+
   /** Whether multiselect mode with checkboxes is enabled */
   multiselect: boolean;
-  /**
-   * Sets if selecting a parent node should also select its descendants
-   * Only applies when multiselect is enabled
-   */
+  /** Sets if selecting a parent node should also select its descendants */
   propagateSelect: boolean;
-  /**
-   * Sets if selecting all children should automatically select the parent
-   * Only applies when multiselect is enabled
-   */
+  /** Sets if selecting all children should automatically select the parent */
   propagateSelectUpwards: boolean;
   /** Sets if selection can be toggled off in single-select mode */
   togglableSelect: boolean;
-  /** Register a node with the tree */
-  registerNode: (
-    value: string,
-    element: HTMLElement,
-    parentValue?: string,
-    hasChildren?: boolean,
-    disabled?: boolean,
-  ) => () => void;
-  /** Get node info from registry */
-  getNode: (
-    value: string,
-  ) =>
-    | { element: HTMLElement; hasChildren?: boolean; disabled?: boolean }
-    | undefined;
+  /** Disabled state of the tree */
+  disabled: boolean;
+  /** Set of disabled node IDs */
+  disabledIdsSet: Set<string>;
+
+  /** Tree model for traversal */
+  treeModel: TreeModel;
+  /** Get node metadata from tree model */
+  getNodeMeta: (value: string) => TreeNodeMeta | undefined;
   /** Get parent of a node */
   getParent: (value: string) => string | undefined;
   /** Get children of a node */
@@ -53,24 +56,22 @@ export interface TreeContextValue {
   getDescendants: (value: string) => string[];
   /** Get all ancestors of a node */
   getAncestors: (value: string) => string[];
-  /** Get all visible nodes in DOM order */
+  /** Get all visible (navigable) nodes in tree order */
   getVisibleNodes: () => string[];
-  /** Get the first visible node  */
+  /** Get the first visible node */
   getFirstVisibleNode: () => string | undefined;
-  /** Active node value  */
+  /** Register a DOM element for focus management */
+  registerElement: (value: string, element: HTMLElement) => () => void;
+  /** Get DOM element for a node (if mounted) */
+  getElement: (value: string) => HTMLElement | undefined;
+  /** Active node value */
   activeNode: string | undefined;
   /** Set the active node */
   setActiveNode: Dispatch<SetStateAction<string | undefined>>;
-  /** Whether focus is visible */
-  focusVisible: boolean;
-  /** Set focus visible state */
-  setFocusVisible: Dispatch<SetStateAction<boolean>>;
-  /** Disabled state of of tree */
-  disabled: boolean;
-  /** Set of disabled node IDs */
-  disabledIdsSet: Set<string>;
+
   /** Set of indeterminate (partially selected) node IDs */
   indeterminateState: Set<string>;
+
   /** Whether the tree has mounted (for initial tabindex) */
   mounted: boolean;
 }

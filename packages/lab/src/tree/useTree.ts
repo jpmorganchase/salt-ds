@@ -59,7 +59,7 @@ export interface UseTreeProps {
    */
   propagateSelectUpwards?: boolean;
   /**
-   * When set to false (default), clicking a seleced node has no effect.
+   * When set to false (default), clicking a selected node has no effect.
    * When true, clicking a selected node will deselect it.
    */
   togglableSelect?: boolean;
@@ -76,47 +76,126 @@ export interface UseTreeProps {
    */
   disabledIds?: string[];
   /**
-   * Tree children used to extract parent-child relationships for deriving the indeterminate state calculations
-   * on initial render
+   * Tree children used to build the tree model for traversal an state management
    */
   children?: ReactNode;
 }
 
-interface NodeInfo {
-  /** The DOM element reference for this node */
-  element: HTMLElement;
-  /** The parent node's value (undefined for root nodes) */
-  parentValue?: string;
-  /** Whether this node has children */
-  hasChildren?: boolean;
-  /** Whether this node is disabled */
-  disabled?: boolean;
+interface TreeNodeMeta {
+  value: string;
+  parentValue: string | undefined;
+  hasChildren: boolean;
+  disabled: boolean;
 }
 
-// We need to do this so we can do things like set defaults
-// note to self: maybe we can use this for more related node relationship cases
-function extractParentMap(
-  children: ReactNode,
-  parentValue?: string,
-): Map<string, string> {
-  const parentMap = new Map<string, string>();
+interface TreeModel {
+  /** All nodes indexed by value */
+  nodes: Map<string, TreeNodeMeta>;
+  /** Ordered list of root node values */
+  rootValues: string[];
+  /** Maps parent value to ordered list of child values */
+  childrenOf: Map<string, string[]>;
+}
 
-  Children.forEach(children, (child) => {
-    if (isValidElement(child) && child.props.value) {
-      const value = child.props.value as string;
-      if (parentValue) {
-        parentMap.set(value, parentValue);
-      }
-      if (child.props.children) {
-        const childMap = extractParentMap(child.props.children, value);
-        for (const [key, val] of childMap) {
-          parentMap.set(key, val);
+function buildTreeModel(children: ReactNode): TreeModel {
+  const nodes = new Map<string, TreeNodeMeta>();
+  const rootValues: string[] = [];
+  const childrenOf = new Map<string, string[]>();
+
+  function traverse(
+    reactChildren: ReactNode,
+    parentValue?: string,
+    parentDisabled = false,
+  ): void {
+    const siblingValues: string[] = [];
+
+    Children.forEach(reactChildren, (child) => {
+      if (isValidElement(child) && typeof child.props.value === "string") {
+        const value = child.props.value;
+        const nodeChildren = child.props.children;
+        const hasChildren = nodeChildren != null;
+        const disabled = parentDisabled || Boolean(child.props.disabled);
+
+        nodes.set(value, {
+          value,
+          parentValue,
+          hasChildren,
+          disabled,
+        });
+
+        siblingValues.push(value);
+
+        // Process children recursively and pass down disabled state
+        if (hasChildren) {
+          traverse(nodeChildren, value, disabled);
         }
       }
-    }
-  });
+    });
 
-  return parentMap;
+    // Ordered children of parent
+    if (parentValue !== undefined) {
+      childrenOf.set(parentValue, siblingValues);
+    } else {
+      // ...and the root nodes
+      rootValues.push(...siblingValues);
+    }
+  }
+
+  traverse(children);
+
+  return { nodes, rootValues, childrenOf };
+}
+
+function expandSelectionWithDescendants(
+  selection: string[],
+  model: TreeModel,
+  disabledIds: Set<string>,
+): string[] {
+  const expanded = new Set(selection);
+
+  function addDescendants(parentValue: string): void {
+    const children = model.childrenOf.get(parentValue) ?? [];
+    for (const child of children) {
+      if (!disabledIds.has(child)) {
+        expanded.add(child);
+        addDescendants(child);
+      }
+    }
+  }
+
+  for (const value of selection) {
+    addDescendants(value);
+  }
+
+  return Array.from(expanded);
+}
+
+function expandSelectionUpwards(
+  selection: string[],
+  model: TreeModel,
+  disabledIds: Set<string>,
+): string[] {
+  const selectedSet = new Set(selection);
+
+  for (const [value, meta] of model.nodes) {
+    if (
+      meta.hasChildren &&
+      !selectedSet.has(value) &&
+      !disabledIds.has(value)
+    ) {
+      const children = model.childrenOf.get(value) ?? [];
+      const enabledChildren = children.filter((c) => !disabledIds.has(c));
+
+      if (
+        enabledChildren.length > 0 &&
+        enabledChildren.every((c) => selectedSet.has(c))
+      ) {
+        selectedSet.add(value);
+      }
+    }
+  }
+
+  return Array.from(selectedSet);
 }
 
 export function useTree(props: UseTreeProps) {
@@ -138,22 +217,7 @@ export function useTree(props: UseTreeProps) {
     children,
   } = props;
 
-  const [expandedArray, setExpandedArray] = useControlled({
-    controlled: expandedProp,
-    default: defaultExpanded,
-    name: "Tree",
-    state: "expanded",
-  });
-
-  // Convert array to Set for more efficient lookups during rendering and nav
-  const expandedState = useMemo(() => new Set(expandedArray), [expandedArray]);
-
-  const [selectedState, setSelectedState] = useControlled({
-    controlled: selectedProp,
-    default: defaultSelected,
-    name: "Tree",
-    state: "selected",
-  });
+  const treeModel = useMemo(() => buildTreeModel(children), [children]);
 
   const [disabledIdsArray] = useControlled({
     controlled: disabledIdsProp,
@@ -167,13 +231,53 @@ export function useTree(props: UseTreeProps) {
     [disabledIdsArray],
   );
 
+  const [expandedArray, setExpandedArray] = useControlled({
+    controlled: expandedProp,
+    default: defaultExpanded,
+    name: "Tree",
+    state: "expanded",
+  });
+
+  // Convert array to Set for more efficient lookups during rendering and nav
+  const expandedState = useMemo(() => new Set(expandedArray), [expandedArray]);
+
+  const expandedDefaultSelected = useMemo(() => {
+    if (!multiselect || !propagateSelect || defaultSelected.length === 0) {
+      return defaultSelected;
+    }
+
+    let expanded = expandSelectionWithDescendants(
+      defaultSelected,
+      treeModel,
+      disabledIdsSet,
+    );
+
+    if (propagateSelectUpwards) {
+      expanded = expandSelectionUpwards(expanded, treeModel, disabledIdsSet);
+    }
+
+    return expanded;
+  }, [
+    defaultSelected,
+    treeModel,
+    disabledIdsSet,
+    multiselect,
+    propagateSelect,
+    propagateSelectUpwards,
+  ]);
+
+  const [selectedState, setSelectedState] = useControlled({
+    controlled: selectedProp,
+    default: expandedDefaultSelected,
+    name: "Tree",
+    state: "selected",
+  });
+
   const [indeterminateState, setIndeterminateState] = useState<Set<string>>(
     new Set(),
   );
 
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
-
-  const [focusVisible, setFocusVisible] = useState(false);
 
   const [mounted, setMounted] = useState(false);
 
@@ -181,113 +285,74 @@ export function useTree(props: UseTreeProps) {
     setMounted(true);
   }, []);
 
-  const nodesRef = useRef<Map<string, NodeInfo>>(new Map());
-  // Persistent parent map - needed to calculate indeterminate calculations for nodes that have children that are still in selection
-  const parentMapRef = useRef<Map<string, string>>(new Map());
+  const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
 
-  // Pre-populate parent map from JSX children structure on initial render
-  // This ensures indeterminate state works correctly even for unmounted nodes
-  const initialParentMap = useMemo(
-    () => extractParentMap(children),
-    [children],
-  );
-  // Merge initial parent map into persistent ref
-  for (const [key, value] of initialParentMap) {
-    if (!parentMapRef.current.has(key)) {
-      parentMapRef.current.set(key, value);
-    }
-  }
+  const registerElement = useCallback((value: string, element: HTMLElement) => {
+    elementsRef.current.set(value, element);
+    return () => {
+      elementsRef.current.delete(value);
+    };
+  }, []);
 
-  const registerNode = useCallback(
-    (
-      value: string,
-      element: HTMLElement,
-      parentValue?: string,
-      hasChildren?: boolean,
-      disabled?: boolean,
-    ) => {
-      nodesRef.current.set(value, {
-        element,
-        parentValue,
-        hasChildren,
-        disabled,
-      });
-      // Store parent relationship persistently (never cleared)
-      if (parentValue) {
-        parentMapRef.current.set(value, parentValue);
-      }
+  const getElement = useCallback((value: string): HTMLElement | undefined => {
+    return elementsRef.current.get(value);
+  }, []);
 
-      return () => {
-        nodesRef.current.delete(value);
-        // Note: we intentionally do NOT delete from parentMapRef
-        // to preserve relationships for indeterminate calculation
-      };
+  const getNodeMeta = useCallback(
+    (value: string): TreeNodeMeta | undefined => {
+      return treeModel.nodes.get(value);
     },
-    [],
+    [treeModel],
   );
 
-  const getNode = useCallback((value: string) => {
-    return nodesRef.current.get(value);
-  }, []);
+  const getParent = useCallback(
+    (value: string): string | undefined => {
+      return treeModel.nodes.get(value)?.parentValue;
+    },
+    [treeModel],
+  );
 
-  const getParent = useCallback((value: string): string | undefined => {
-    // Check mounted nodes first, then fall back to persistent parent map
-    return (
-      nodesRef.current.get(value)?.parentValue ??
-      parentMapRef.current.get(value)
-    );
-  }, []);
+  const getChildren = useCallback(
+    (parentValue: string): string[] => {
+      return treeModel.childrenOf.get(parentValue) ?? [];
+    },
+    [treeModel],
+  );
 
-  const getChildren = useCallback((parentValue: string): string[] => {
-    const children: string[] = [];
-    const seen = new Set<string>();
-
-    // These two lookups are sub-optimal - double o(N) for indeterminate calculation.
-    // could use a reverse lookup map if need be
-    for (const [value, info] of nodesRef.current) {
-      if (info.parentValue === parentValue) {
-        children.push(value);
-        seen.add(value);
-      }
-    }
-    for (const [value, parent] of parentMapRef.current) {
-      if (parent === parentValue && !seen.has(value)) {
-        children.push(value);
-      }
-    }
-    return children;
-  }, []);
-
+  // Depth-first search (with pre-order traversal)
   const getDescendants = useCallback(
     (value: string): string[] => {
       const descendants: string[] = [];
-      const children = getChildren(value);
 
-      for (const child of children) {
-        if (!disabledIdsSet.has(child)) {
-          descendants.push(child);
-          descendants.push(...getDescendants(child));
+      function traverse(parentValue: string): void {
+        const children = treeModel.childrenOf.get(parentValue) ?? [];
+        for (const child of children) {
+          if (!disabledIdsSet.has(child)) {
+            descendants.push(child);
+            traverse(child);
+          }
         }
       }
 
+      traverse(value);
       return descendants;
     },
-    [getChildren, disabledIdsSet],
+    [treeModel, disabledIdsSet],
   );
 
   const getAncestors = useCallback(
     (value: string): string[] => {
       const ancestors: string[] = [];
-      let current = getParent(value);
+      let current = treeModel.nodes.get(value)?.parentValue;
 
       while (current) {
         ancestors.push(current);
-        current = getParent(current);
+        current = treeModel.nodes.get(current)?.parentValue;
       }
 
       return ancestors;
     },
-    [getParent],
+    [treeModel],
   );
 
   const toggleExpanded = useCallback(
@@ -457,36 +522,39 @@ export function useTree(props: UseTreeProps) {
     ],
   );
 
+  const isNodeDisabled = useCallback(
+    (value: string): boolean => {
+      if (disabledIdsSet.has(value)) return true;
+      const nodeMeta = treeModel.nodes.get(value);
+      return nodeMeta?.disabled ?? false;
+    },
+    [treeModel, disabledIdsSet],
+  );
+
+  // Returns nodes in depth-first order matching visual tree order from set
   const getVisibleNodes = useCallback((): string[] => {
-    const entries = Array.from(nodesRef.current.entries());
+    const visible: string[] = [];
 
-    const visibleNodes = entries.filter(([_value, info]) => {
-      if (info.disabled) {
-        return false;
-      }
-
-      let currentParent = info.parentValue;
-      while (currentParent) {
-        if (!expandedState.has(currentParent)) {
-          return false;
+    function traverse(values: string[]): void {
+      for (const value of values) {
+        if (isNodeDisabled(value)) {
+          continue;
         }
-        currentParent = nodesRef.current.get(currentParent)?.parentValue;
+
+        visible.push(value);
+
+        // If node is expanded, traverse its children
+        const nodeMeta = treeModel.nodes.get(value);
+        if (nodeMeta?.hasChildren && expandedState.has(value)) {
+          const children = treeModel.childrenOf.get(value) ?? [];
+          traverse(children);
+        }
       }
-      return true;
-    });
+    }
 
-    // we need to do this because Map doesnt guarantee order
-    visibleNodes.sort((a, b) => {
-      const aEl = a[1].element;
-      const bEl = b[1].element;
-      const position = aEl.compareDocumentPosition(bEl);
-      if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
-      if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
-      return 0;
-    });
-
-    return visibleNodes.map(([value]) => value);
-  }, [expandedState]);
+    traverse(treeModel.rootValues);
+    return visible;
+  }, [treeModel, expandedState, isNodeDisabled]);
 
   const getFirstVisibleNode = useCallback((): string | undefined => {
     const visibleNodes = getVisibleNodes();
@@ -505,20 +573,20 @@ export function useTree(props: UseTreeProps) {
     propagateSelect,
     propagateSelectUpwards,
     togglableSelect,
-    registerNode,
-    getNode,
+    disabled,
+    disabledIdsSet,
+    treeModel,
+    getNodeMeta,
     getParent,
     getChildren,
     getDescendants,
     getAncestors,
     getVisibleNodes,
     getFirstVisibleNode,
+    registerElement,
+    getElement,
     activeNode,
     setActiveNode,
-    focusVisible,
-    setFocusVisible,
-    disabled,
-    disabledIdsSet,
     indeterminateState,
     mounted,
   };

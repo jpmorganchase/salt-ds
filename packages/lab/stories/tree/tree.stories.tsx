@@ -101,7 +101,7 @@ export const WithIcons: StoryFn<typeof Tree> = (args) => (
   </Tree>
 );
 
-export const MultiselectWithIcons: StoryFn<typeof Tree> = (args) => (
+export const MultiselectWithIcons: StoryFn<typeof Tree> = () => (
   <Tree
     aria-label="File browser"
     multiselect
@@ -330,3 +330,374 @@ export const WithTooltip: StoryFn<typeof Tree> = (args) => (
     <TreeNode value="downloads" label="Downloads" />
   </Tree>
 );
+
+export const DeepNesting: StoryFn<typeof Tree> = (args) => (
+  <Tree
+    {...args}
+    aria-label="Deep file hierarchy"
+    multiselect
+    defaultExpanded={["projects"]}
+  >
+    <TreeNode value="projects" label="Projects" icon={<FolderOpenIcon />}>
+      <TreeNode
+        value="project-alpha"
+        label="Project Alpha"
+        icon={<FolderClosedIcon />}
+      >
+        <TreeNode value="src" label="src" icon={<FolderClosedIcon />}>
+          <TreeNode
+            value="src-components"
+            label="components"
+            icon={<FolderClosedIcon />}
+          >
+            <TreeNode value="ui" label="ui" icon={<FolderClosedIcon />}>
+              <TreeNode
+                value="buttons"
+                label="buttons"
+                icon={<FolderClosedIcon />}
+              >
+                <TreeNode
+                  value="buttons-primary"
+                  label="primary"
+                  icon={<FolderClosedIcon />}
+                >
+                  <TreeNode
+                    value="buttons-primary-variants"
+                    label="variants"
+                    icon={<FolderClosedIcon />}
+                  >
+                    <TreeNode
+                      value="buttons-primary-variants-large"
+                      label="large"
+                      icon={<FolderClosedIcon />}
+                    >
+                      <TreeNode
+                        value="buttons-primary-variants-large-themes"
+                        label="themes"
+                        icon={<FolderClosedIcon />}
+                      >
+                        <TreeNode
+                          value="buttons-primary-variants-large-themes-light"
+                          label="light"
+                          icon={<FolderClosedIcon />}
+                        >
+                          <TreeNode
+                            value="buttons-primary-variants-large-themes-light-colors"
+                            label="colors"
+                            icon={<FolderClosedIcon />}
+                          >
+                            <TreeNode
+                              value="buttons-primary-variants-large-themes-light-colors-primary"
+                              label="primary"
+                              icon={<FolderClosedIcon />}
+                            >
+                              <TreeNode
+                                value="buttons-primary-variants-large-themes-light-colors-primary-shades"
+                                label="shades"
+                                icon={<FolderClosedIcon />}
+                              >
+                                <TreeNode
+                                  value="buttons-primary-variants-large-themes-light-colors-primary-shades-light"
+                                  label="light-shade"
+                                  icon={<FolderClosedIcon />}
+                                >
+                                  <TreeNode
+                                    value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints"
+                                    label="tints"
+                                    icon={<FolderClosedIcon />}
+                                  >
+                                    <TreeNode
+                                      value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-100"
+                                      label="tint-100"
+                                      icon={<DocumentIcon />}
+                                    />
+                                    <TreeNode
+                                      value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-200"
+                                      label="tint-200"
+                                      icon={<DocumentIcon />}
+                                    />
+                                    <TreeNode
+                                      value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-300"
+                                      label="tint-300"
+                                      icon={<DocumentIcon />}
+                                    />
+                                    <TreeNode
+                                      value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-400"
+                                      label="tint-400"
+                                      icon={<DocumentIcon />}
+                                    />
+                                  </TreeNode>
+                                </TreeNode>
+                                <TreeNode
+                                  value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium"
+                                  label="medium-shade"
+                                  icon={<FolderClosedIcon />}
+                                >
+                                  <TreeNode
+                                    value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium-tints"
+                                    label="tints"
+                                    icon={<FolderClosedIcon />}
+                                  >
+                                    <TreeNode
+                                      value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium-tints-100"
+                                      label="tint-100"
+                                      icon={<DocumentIcon />}
+                                    />
+                                    <TreeNode
+                                      value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium-tints-200"
+                                      label="tint-200"
+                                      icon={<DocumentIcon />}
+                                    />
+                                  </TreeNode>
+                                </TreeNode>
+                                <TreeNode
+                                  value="buttons-primary-variants-large-themes-light-colors-primary-shades-dark"
+                                  label="dark-shade"
+                                  icon={<DocumentIcon />}
+                                />
+                              </TreeNode>
+                            </TreeNode>
+                            <TreeNode
+                              value="buttons-primary-variants-large-themes-light-colors-secondary"
+                              label="secondary"
+                              icon={<FolderClosedIcon />}
+                            >
+                              <TreeNode
+                                value="buttons-primary-variants-large-themes-light-colors-secondary-blue"
+                                label="blue"
+                                icon={<DocumentIcon />}
+                              />
+                              <TreeNode
+                                value="buttons-primary-variants-large-themes-light-colors-secondary-green"
+                                label="green"
+                                icon={<DocumentIcon />}
+                              />
+                              <TreeNode
+                                value="buttons-primary-variants-large-themes-light-colors-secondary-red"
+                                label="red"
+                                icon={<DocumentIcon />}
+                              />
+                            </TreeNode>
+                          </TreeNode>
+                        </TreeNode>
+                        <TreeNode
+                          value="buttons-primary-variants-large-themes-dark"
+                          label="dark"
+                          icon={<FolderClosedIcon />}
+                        >
+                          <TreeNode
+                            value="buttons-primary-variants-large-themes-dark-colors"
+                            label="colors"
+                            icon={<FolderClosedIcon />}
+                          >
+                            <TreeNode
+                              value="buttons-primary-variants-large-themes-dark-colors-primary"
+                              label="primary"
+                              icon={<DocumentIcon />}
+                            />
+                            <TreeNode
+                              value="buttons-primary-variants-large-themes-dark-colors-secondary"
+                              label="secondary"
+                              icon={<DocumentIcon />}
+                            />
+                          </TreeNode>
+                        </TreeNode>
+                      </TreeNode>
+                    </TreeNode>
+                    <TreeNode
+                      value="buttons-primary-variants-medium"
+                      label="medium"
+                      icon={<FolderClosedIcon />}
+                    >
+                      <TreeNode
+                        value="buttons-primary-variants-medium-themes"
+                        label="themes"
+                        icon={<FolderClosedIcon />}
+                      >
+                        <TreeNode
+                          value="buttons-primary-variants-medium-themes-light"
+                          label="light"
+                          icon={<DocumentIcon />}
+                        />
+                        <TreeNode
+                          value="buttons-primary-variants-medium-themes-dark"
+                          label="dark"
+                          icon={<DocumentIcon />}
+                        />
+                      </TreeNode>
+                    </TreeNode>
+                    <TreeNode
+                      value="buttons-primary-variants-small"
+                      label="small"
+                      icon={<DocumentIcon />}
+                    />
+                  </TreeNode>
+                </TreeNode>
+                <TreeNode
+                  value="buttons-secondary"
+                  label="secondary"
+                  icon={<FolderClosedIcon />}
+                >
+                  <TreeNode
+                    value="buttons-secondary-variants"
+                    label="variants"
+                    icon={<FolderClosedIcon />}
+                  >
+                    <TreeNode
+                      value="buttons-secondary-variants-large"
+                      label="large"
+                      icon={<DocumentIcon />}
+                    />
+                    <TreeNode
+                      value="buttons-secondary-variants-medium"
+                      label="medium"
+                      icon={<DocumentIcon />}
+                    />
+                    <TreeNode
+                      value="buttons-secondary-variants-small"
+                      label="small"
+                      icon={<DocumentIcon />}
+                    />
+                  </TreeNode>
+                </TreeNode>
+              </TreeNode>
+              <TreeNode value="forms" label="forms" icon={<FolderClosedIcon />}>
+                <TreeNode
+                  value="forms-inputs"
+                  label="inputs"
+                  icon={<FolderClosedIcon />}
+                >
+                  <TreeNode
+                    value="forms-inputs-text"
+                    label="text"
+                    icon={<FolderClosedIcon />}
+                  >
+                    <TreeNode
+                      value="forms-inputs-text-validation"
+                      label="validation"
+                      icon={<FolderClosedIcon />}
+                    >
+                      <TreeNode
+                        value="forms-inputs-text-validation-rules"
+                        label="rules"
+                        icon={<FolderClosedIcon />}
+                      >
+                        <TreeNode
+                          value="forms-inputs-text-validation-rules-required"
+                          label="required"
+                          icon={<DocumentIcon />}
+                        />
+                        <TreeNode
+                          value="forms-inputs-text-validation-rules-pattern"
+                          label="pattern"
+                          icon={<DocumentIcon />}
+                        />
+                        <TreeNode
+                          value="forms-inputs-text-validation-rules-length"
+                          label="length"
+                          icon={<DocumentIcon />}
+                        />
+                      </TreeNode>
+                    </TreeNode>
+                  </TreeNode>
+                  <TreeNode
+                    value="forms-inputs-select"
+                    label="select"
+                    icon={<DocumentIcon />}
+                  />
+                  <TreeNode
+                    value="forms-inputs-checkbox"
+                    label="checkbox"
+                    icon={<DocumentIcon />}
+                  />
+                </TreeNode>
+              </TreeNode>
+            </TreeNode>
+            <TreeNode value="layout" label="layout" icon={<FolderClosedIcon />}>
+              <TreeNode value="grid" label="grid" icon={<DocumentIcon />} />
+              <TreeNode value="flex" label="flex" icon={<DocumentIcon />} />
+            </TreeNode>
+          </TreeNode>
+          <TreeNode value="utils" label="utils" icon={<FolderClosedIcon />}>
+            <TreeNode
+              value="helpers"
+              label="helpers"
+              icon={<FolderClosedIcon />}
+            >
+              <TreeNode value="string" label="string" icon={<DocumentIcon />} />
+              <TreeNode value="number" label="number" icon={<DocumentIcon />} />
+              <TreeNode value="array" label="array" icon={<DocumentIcon />} />
+            </TreeNode>
+          </TreeNode>
+        </TreeNode>
+        <TreeNode value="tests" label="tests" icon={<FolderClosedIcon />}>
+          <TreeNode value="unit" label="unit" icon={<FolderClosedIcon />}>
+            <TreeNode
+              value="unit-components"
+              label="components"
+              icon={<FolderClosedIcon />}
+            >
+              <TreeNode
+                value="button-test"
+                label="button.test"
+                icon={<DocumentIcon />}
+              />
+              <TreeNode
+                value="form-test"
+                label="form.test"
+                icon={<DocumentIcon />}
+              />
+            </TreeNode>
+          </TreeNode>
+          <TreeNode
+            value="integration"
+            label="integration"
+            icon={<DocumentIcon />}
+          />
+        </TreeNode>
+      </TreeNode>
+      <TreeNode
+        value="project-beta"
+        label="Project Beta"
+        icon={<FolderClosedIcon />}
+      >
+        <TreeNode value="api" label="api" icon={<FolderClosedIcon />}>
+          <TreeNode
+            value="endpoints"
+            label="endpoints"
+            icon={<FolderClosedIcon />}
+          >
+            <TreeNode value="users" label="users" icon={<DocumentIcon />} />
+            <TreeNode value="posts" label="posts" icon={<DocumentIcon />} />
+            <TreeNode
+              value="comments"
+              label="comments"
+              icon={<DocumentIcon />}
+            />
+          </TreeNode>
+        </TreeNode>
+      </TreeNode>
+      <TreeNode
+        value="project-gamma"
+        label="Project Gamma"
+        icon={<FolderClosedIcon />}
+      >
+        <TreeNode
+          value="documentation"
+          label="documentation"
+          icon={<FolderClosedIcon />}
+        >
+          <TreeNode value="readme" label="README.md" icon={<DocumentIcon />} />
+          <TreeNode
+            value="contributing"
+            label="CONTRIBUTING.md"
+            icon={<DocumentIcon />}
+          />
+        </TreeNode>
+      </TreeNode>
+    </TreeNode>
+  </Tree>
+);
+DeepNesting.args = {
+  multiselect: true,
+};

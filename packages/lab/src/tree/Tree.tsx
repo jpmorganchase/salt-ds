@@ -62,7 +62,7 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   propagateSelectUpwards?: boolean;
   /**
-   * When set to false (default), clicking a seleced node has no effect.
+   * When set to false (default), clicking a selected node has no effect.
    * When true, clicking a selected node will deselect it.
    */
   togglableSelect?: boolean;
@@ -141,9 +141,11 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       selectedState,
       setSelectedState,
       getVisibleNodes,
-      getNode,
+      getNodeMeta,
+      getElement,
       getParent,
       getChildren,
+      treeModel,
       disabledIdsSet,
     } = treeState;
 
@@ -184,8 +186,9 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           case "ArrowRight": {
             handled = true;
             if (activeNode) {
-              const node = getNode(activeNode);
-              if (!node?.disabled && node?.hasChildren) {
+              const nodeMeta = getNodeMeta(activeNode);
+              const isDisabled = disabledIdsSet.has(activeNode);
+              if (!isDisabled && nodeMeta?.hasChildren) {
                 if (!expandedState.has(activeNode)) {
                   toggleExpanded(activeNode);
                 } else {
@@ -203,8 +206,8 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           case "ArrowLeft": {
             handled = true;
             if (activeNode) {
-              const node = getNode(activeNode);
-              if (!node?.disabled) {
+              const isDisabled = disabledIdsSet.has(activeNode);
+              if (!isDisabled) {
                 if (expandedState.has(activeNode)) {
                   toggleExpanded(activeNode);
                 } else {
@@ -245,13 +248,14 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             handled = true;
             if (activeNode) {
               const parent = getParent(activeNode);
+              // Get siblings: either children of parent, or root nodes if no parent
               const siblings = parent
                 ? getChildren(parent)
-                : visibleNodes.filter((v) => !getParent(v));
+                : treeModel.rootValues;
 
               const toExpand = siblings.filter((sibling) => {
-                const siblingNode = getNode(sibling);
-                return siblingNode?.hasChildren && !expandedState.has(sibling);
+                const siblingMeta = getNodeMeta(sibling);
+                return siblingMeta?.hasChildren && !expandedState.has(sibling);
               });
 
               if (toExpand.length > 0) {
@@ -266,6 +270,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             break;
           }
           default: {
+            // Type-ahead
             if (
               event.key.length === 1 &&
               !event.ctrlKey &&
@@ -291,11 +296,9 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
               let found = false;
 
               for (let i = currentIndex + 1; i < visibleNodes.length; i++) {
-                const node = getNode(visibleNodes[i]);
+                const element = getElement(visibleNodes[i]);
                 if (
-                  node?.element?.textContent
-                    ?.toLowerCase()
-                    .startsWith(searchString)
+                  element?.textContent?.toLowerCase().startsWith(searchString)
                 ) {
                   newActiveNode = visibleNodes[i];
                   found = true;
@@ -305,11 +308,9 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
               if (!found) {
                 for (let i = 0; i <= currentIndex; i++) {
-                  const node = getNode(visibleNodes[i]);
+                  const element = getElement(visibleNodes[i]);
                   if (
-                    node?.element?.textContent
-                      ?.toLowerCase()
-                      .startsWith(searchString)
+                    element?.textContent?.toLowerCase().startsWith(searchString)
                   ) {
                     newActiveNode = visibleNodes[i];
                     break;
@@ -379,13 +380,15 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         disabled,
         getVisibleNodes,
         activeNode,
-        getNode,
+        getNodeMeta,
+        getElement,
         expandedArray,
         setExpandedArray,
         expandedState,
         toggleExpanded,
         getParent,
         getChildren,
+        treeModel,
         select,
         selectedState,
         setSelectedState,

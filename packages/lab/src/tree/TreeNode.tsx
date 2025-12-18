@@ -17,7 +17,6 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
 } from "react";
@@ -56,14 +55,11 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
   /**
    * Whether the node is disabled.
    * Disabled nodes cannot be selected, expanded, or interacted with.
-   * Inherits from parent nodes and tree-level disabled state.
-   */
-  /**
-   * Sets tree to disabled state, preventing all interaction
+   * Inherits disabled state from parent nodes and tree-level disabled prop.
    */
   disabled?: boolean;
   /**
-   * Child nodes, with nested tree ndoes creating a hierarchy.
+   * Child nodes. Nested TreeNodes create a hierarchy.
    */
   children?: ReactNode;
 }
@@ -98,11 +94,9 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       expandedState,
       toggleExpanded,
       selectedState,
-      setSelectedState,
       select,
       multiselect,
-      propagateSelect,
-      registerNode,
+      registerElement,
       activeNode,
       setActiveNode,
       disabled: treeDisabled,
@@ -114,7 +108,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const parentContext = useTreeNodeContext();
     const level = (parentContext?.level ?? 0) + 1;
-    const parentValue = parentContext?.value;
 
     const disabled = treeDisabled || disabledProp || disabledIdsSet.has(value);
     const hasChildren = children != null;
@@ -132,15 +125,9 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     useEffect(() => {
       if (nodeRef.current) {
-        return registerNode(
-          value,
-          nodeRef.current,
-          parentValue,
-          hasChildren,
-          disabled,
-        );
+        return registerElement(value, nodeRef.current);
       }
-    }, [value, parentValue, hasChildren, disabled, registerNode]);
+    }, [value, registerElement]);
 
     useEffect(() => {
       if (isActive && nodeRef.current) {
@@ -148,41 +135,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         nodeRef.current.scrollIntoView({ block: "nearest", inline: "nearest" });
       }
     }, [isActive]);
-
-    // Sync selection with parent on mount when propagateSelect is enabled
-    // This handles the lazy rendering; children sync their state when they mount (only in multiselect mode)
-    const hasSyncedOnMountRef = useRef(false);
-    useLayoutEffect(() => {
-      if (
-        hasSyncedOnMountRef.current ||
-        !multiselect ||
-        !propagateSelect ||
-        !parentValue
-      )
-        return;
-      hasSyncedOnMountRef.current = true;
-
-      const parentSelected = selectedState.includes(parentValue);
-      const selfSelected = selectedState.includes(value);
-
-      if (parentSelected && !selfSelected && !disabled) {
-        // Parent is selected, sync child to selected
-        setSelectedState((prev) => [...prev, value]);
-      }
-      // Note: We intentionally do NOT deselect nodes that are already selected on mount.
-      // If a node is in selectedState/defaultSelected when it first mounts, that represents
-      // an intentional initial selection that should be preserved. Deselection should only
-      // happen via explicit user action or parent deselection propagation, not on initial mount.
-    }, [
-      multiselect,
-      propagateSelect,
-      parentValue,
-      value,
-      disabled,
-      // selectedState & setSelectedState run on every selection change but return early via hasSyncedOnMountRef (not ideal but react optimizes it anyway)
-      selectedState,
-      setSelectedState,
-    ]);
 
     const handleContentClick = useCallback(
       (event: MouseEvent<HTMLDivElement>) => {
