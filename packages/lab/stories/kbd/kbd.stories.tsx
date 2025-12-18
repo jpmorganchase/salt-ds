@@ -1,7 +1,6 @@
 import { StackLayout } from "@salt-ds/core";
 import { Kbd, type KbdProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
-import React from "react";
 
 export default {
   title: "Lab/Kbd",
