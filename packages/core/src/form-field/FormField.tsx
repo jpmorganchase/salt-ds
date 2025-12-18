@@ -2,7 +2,11 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes, useRef } from "react";
-import { type A11yValueProps, FormFieldContext } from "../form-field-context";
+import {
+  type A11yValueProps,
+  FormFieldContext,
+  type FormFieldValidationStatus,
+} from "../form-field-context";
 import { capitalize, makePrefixer, useForkRef, useId } from "../utils";
 
 import formFieldCss from "./FormField.css";
@@ -40,7 +44,7 @@ export interface FormFieldProps
   /**
    * Validation status
    */
-  validationStatus?: "error" | "warning" | "success";
+  validationStatus?: FormFieldValidationStatus;
 }
 
 const withBaseName = makePrefixer("saltFormField");

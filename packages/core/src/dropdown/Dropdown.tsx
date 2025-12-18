@@ -7,7 +7,10 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useInjectedClassName,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -114,15 +117,24 @@ function ExpandIcon({ open }: { open: boolean }) {
   );
 }
 
+declare module "@salt-ds/core" {
+  interface ComponentPropMap {
+    Dropdown: DropdownProps;
+  }
+}
+
 export const Dropdown = forwardRef(function Dropdown<Item>(
   props: DropdownProps<Item>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
+  const { className, props: finalProps } = useInjectedClassName(
+    "saltDropdown",
+    props,
+  );
   const {
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     children,
-    className,
     disabled: disabledProp,
     emptyReadOnlyMarker = "—",
     readOnly: readOnlyProp,
@@ -146,7 +158,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     bordered = false,
     OverlayProps,
     ...rest
-  } = props;
+  } = finalProps;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
