@@ -27,7 +27,11 @@ export const WithBadge = (): ReactElement => {
                 {notifications[label] > 0 ? (
                   <Badge
                     value={notifications[label]}
-                    aria-label={`${notifications[label]} updates`}
+                    aria-label={
+                      notifications[label] > 1
+                        ? `${notifications[label]} updates`
+                        : `${notifications[label]} update`
+                    }
                   />
                 ) : undefined}
               </TabNextTrigger>

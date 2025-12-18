@@ -51,11 +51,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       getPrevious,
       getFirst,
       getLast,
-      items,
+      itemAt,
+      getIndex,
+      sortItems,
     } = useCollection({ wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
-    const removedActiveTabRef = useRef<string | undefined>(undefined);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -88,12 +89,6 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
           map.delete(item.value);
           return { map };
         });
-
-        if (activeTab.current?.value !== item.value) {
-          return;
-        }
-
-        removedActiveTabRef.current = item.value;
       };
     });
 
@@ -137,11 +132,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getPrevious,
         getFirst,
         getLast,
-        items,
         activeTab,
         menuOpen,
         setMenuOpen,
-        removedActiveTabRef,
+        itemAt,
+        getIndex,
+        sortItems,
       }),
       [
         registerPanel,
@@ -155,8 +151,10 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getPrevious,
         getFirst,
         getLast,
-        items,
         menuOpen,
+        itemAt,
+        getIndex,
+        sortItems,
       ],
     );
 
