@@ -110,6 +110,32 @@
   width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-fixed-100)) * 2);
 }
 
+.saltSwitch-readOnly {
+  cursor: var(--salt-cursor-text);
+}
+
+.saltSwitch-readOnly .saltSwitch-track,
+.saltSwitch-readOnly:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-readonly);
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltSwitch-readOnly:hover .saltSwitch-thumb {
+  border-color: var(--salt-selectable-borderColor-readonly);
+}
+
+.saltSwitch-readOnly .saltSwitch-thumb,
+.saltSwitch-readOnly.saltSwitch-checked .saltSwitch-thumb {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-dashed) var(--salt-selectable-borderColor-readonly);
+}
+
+.saltSwitch-readOnly .saltSwitch-input:focus-visible + .saltSwitch-track,
+.saltSwitch-readOnly .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb {
+  border-color: var(--salt-selectable-borderColor-readonly);
+  color: var(--salt-content-primary-foreground);
+}
+
 @media (prefers-reduced-motion) {
   .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
   .saltSwitch:hover .saltSwitch-thumb {
@@ -119,6 +145,10 @@
 
 .salt-density-high .saltSwitch-thumb {
   border: 0;
+}
+
+.salt-density-high .saltSwitch-readOnly .saltSwitch-thumb {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-dashed) var(--salt-selectable-borderColor-readonly);
 }
 
 /* Styles applied when switch is inside a form field with label left or right, ensuring alignment with base / input height */
