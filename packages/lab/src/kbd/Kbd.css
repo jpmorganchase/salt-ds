@@ -1,3 +1,15 @@
+.saltKbd-primary {
+  --kbd-background: var(--salt-container-primary-background);
+}
+
+.saltKbd-secondary {
+  --kbd-background: var(--salt-container-secondary-background);
+}
+
+.saltKbd-tertiary {
+  --kbd-background: var(--salt-container-tertiary-background);
+}
+
 .saltKbd {
   display: inline-flex;
   box-sizing: border-box;
@@ -5,7 +17,7 @@
   width: fit-content;
   border-radius: var(--salt-palette-corner-weaker);
   border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor);
-  background: var(--salt-container-primary-background);
+  background: var(--kbd-background);
   box-shadow: 0 var(--salt-size-fixed-100) 0 0 var(--salt-container-primary-borderColor);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   align-items: center;
