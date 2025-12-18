@@ -207,7 +207,7 @@ const KeyboardShortcuts: FC = () => {
         <Button data-testid="dialog-button" onClick={handleDialogOpen}>
           Keyboard shortcuts panel
         </Button>
-        <FlexLayout align="center" gap={1}>
+        <FlexLayout align="center" gap={1} wrap>
           <Text>hit </Text>
           <FlexLayout align="center" gap={0.5}>
             <Kbd>meta</Kbd>+<Kbd>shift</Kbd>+<Kbd>K</Kbd>
@@ -281,7 +281,6 @@ const KeyboardShortcuts: FC = () => {
                                       align="center"
                                       gap={0.5}
                                       key={combo + comboIdx}
-                                      className="keyboardShortcuts-kbd"
                                       wrap
                                     >
                                       {combo.split("+").map((key, idx, arr) => (
@@ -291,9 +290,15 @@ const KeyboardShortcuts: FC = () => {
                                           gap={0.5}
                                           key={key + idx}
                                         >
-                                          <Kbd>{displayKeyName(key)}</Kbd>
+                                          <div className="keyboardShortcuts-kbd">
+                                            {" "}
+                                            <Kbd>{displayKeyName(key)}</Kbd>
+                                          </div>
+
                                           {idx < arr.length - 1 && (
-                                            <Text>+</Text>
+                                            <Text className="keyboardShortcuts-kbd">
+                                              +
+                                            </Text>
                                           )}
                                         </FlexLayout>
                                       ))}
@@ -477,7 +482,6 @@ const ShortcutPanel: FC = () => {
                                   align="center"
                                   gap={0.5}
                                   key={combo + comboIdx}
-                                  className="keyboardShortcuts-kbd"
                                   wrap
                                 >
                                   {combo.split("+").map((key, idx, arr) => (
@@ -487,12 +491,19 @@ const ShortcutPanel: FC = () => {
                                       gap={0.5}
                                       key={key + idx}
                                     >
+                                      <div className="keyboardShortcuts-kbd" />
                                       <Kbd>{displayKeyName(key)}</Kbd>
-                                      {idx < arr.length - 1 && <Text>+</Text>}
+                                      {idx < arr.length - 1 && (
+                                        <Text className="keyboardShortcuts-kbd">
+                                          +
+                                        </Text>
+                                      )}
                                     </FlexLayout>
                                   ))}
                                   {comboIdx < shortcut.keys.length - 1 && (
-                                    <Text>,</Text>
+                                    <Text className="keyboardShortcuts-kbd">
+                                      ,
+                                    </Text>
                                   )}
                                 </FlexLayout>
                               ))}
@@ -516,5 +527,5 @@ const ShortcutPanel: FC = () => {
   );
 };
 
+export const Default = ShortcutPanel.bind({});
 export const WithDialog = KeyboardShortcuts.bind({});
-export const ShortcutsPanel = ShortcutPanel.bind({});

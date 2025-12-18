@@ -14,7 +14,8 @@ table.saltTable td.keyboardShortcuts-td {
   padding: var(--salt-spacing-75) 0;
 }
 .keyboardShortcuts-kbd {
-  padding: var(--salt-spacing-50) 0;
+  padding-top: var(--salt-spacing-50);
+  padding-bottom: var(--salt-spacing-50);
 }
 .keyboardShortcuts-dialog .saltDialogContent-inner {
   overflow-y: hidden;

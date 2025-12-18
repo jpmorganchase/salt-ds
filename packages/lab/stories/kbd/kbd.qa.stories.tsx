@@ -10,7 +10,9 @@ export default {
 
 export const AllExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} height={950} itemPadding={5}>
-    <Kbd>Key</Kbd>
+    <Kbd>Keyboard</Kbd>
+    <Kbd variant="secondary">Keyboard</Kbd>
+    <Kbd variant="tertiary">Keyboard</Kbd>
   </QAContainer>
 );
 
