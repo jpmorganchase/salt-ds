@@ -127,6 +127,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       disabled,
       defaultDisabledIds,
       disabledIds,
+      children,
     });
 
     const {

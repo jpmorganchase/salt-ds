@@ -1,5 +1,8 @@
 import { useControlled } from "@salt-ds/core";
 import {
+  Children,
+  isValidElement,
+  type ReactNode,
   type SyntheticEvent,
   useCallback,
   useEffect,
@@ -72,6 +75,11 @@ export interface UseTreeProps {
    * Disabled node IDs (controlled).
    */
   disabledIds?: string[];
+  /**
+   * Tree children used to extract parent-child relationships for deriving the indeterminate state calculations
+   * on initial render
+   */
+  children?: ReactNode;
 }
 
 interface NodeInfo {
@@ -83,6 +91,32 @@ interface NodeInfo {
   hasChildren?: boolean;
   /** Whether this node is disabled */
   disabled?: boolean;
+}
+
+// We need to do this so we can do things like set defaults
+// note to self: maybe we can use this for more related node relationship cases
+function extractParentMap(
+  children: ReactNode,
+  parentValue?: string,
+): Map<string, string> {
+  const parentMap = new Map<string, string>();
+
+  Children.forEach(children, (child) => {
+    if (isValidElement(child) && child.props.value) {
+      const value = child.props.value as string;
+      if (parentValue) {
+        parentMap.set(value, parentValue);
+      }
+      if (child.props.children) {
+        const childMap = extractParentMap(child.props.children, value);
+        for (const [key, val] of childMap) {
+          parentMap.set(key, val);
+        }
+      }
+    }
+  });
+
+  return parentMap;
 }
 
 export function useTree(props: UseTreeProps) {
@@ -101,6 +135,7 @@ export function useTree(props: UseTreeProps) {
     disabled = false,
     defaultDisabledIds = [],
     disabledIds: disabledIdsProp,
+    children,
   } = props;
 
   const [expandedArray, setExpandedArray] = useControlled({
@@ -149,6 +184,19 @@ export function useTree(props: UseTreeProps) {
   const nodesRef = useRef<Map<string, NodeInfo>>(new Map());
   // Persistent parent map - needed to calculate indeterminate calculations for nodes that have children that are still in selection
   const parentMapRef = useRef<Map<string, string>>(new Map());
+
+  // Pre-populate parent map from JSX children structure on initial render
+  // This ensures indeterminate state works correctly even for unmounted nodes
+  const initialParentMap = useMemo(
+    () => extractParentMap(children),
+    [children],
+  );
+  // Merge initial parent map into persistent ref
+  for (const [key, value] of initialParentMap) {
+    if (!parentMapRef.current.has(key)) {
+      parentMapRef.current.set(key, value);
+    }
+  }
 
   const registerNode = useCallback(
     (

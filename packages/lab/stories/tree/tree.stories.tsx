@@ -102,7 +102,12 @@ export const WithIcons: StoryFn<typeof Tree> = (args) => (
 );
 
 export const MultiselectWithIcons: StoryFn<typeof Tree> = (args) => (
-  <Tree {...args} aria-label="File browser">
+  <Tree
+    aria-label="File browser"
+    multiselect
+    defaultExpanded={["documents"]}
+    defaultSelected={["annual-report"]}
+  >
     <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
       <TreeNode value="reports" label="Reports" icon={<FolderClosedIcon />}>
         <TreeNode

@@ -164,16 +164,15 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
       const parentSelected = selectedState.includes(parentValue);
       const selfSelected = selectedState.includes(value);
-      const parentIndeterminate = indeterminateState.has(parentValue);
 
       if (parentSelected && !selfSelected && !disabled) {
         // Parent is selected, sync child to selected
         setSelectedState((prev) => [...prev, value]);
-      } else if (!parentSelected && selfSelected && !parentIndeterminate) {
-        // Only deselect if parent is actually deselected (not indeterminate)
-        // If parent is indeterminate, its state is derived from children -  don't override
-        setSelectedState((prev) => prev.filter((v) => v !== value));
       }
+      // Note: We intentionally do NOT deselect nodes that are already selected on mount.
+      // If a node is in selectedState/defaultSelected when it first mounts, that represents
+      // an intentional initial selection that should be preserved. Deselection should only
+      // happen via explicit user action or parent deselection propagation, not on initial mount.
     }, [
       multiselect,
       propagateSelect,
@@ -183,7 +182,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       // selectedState & setSelectedState run on every selection change but return early via hasSyncedOnMountRef (not ideal but react optimizes it anyway)
       selectedState,
       setSelectedState,
-      indeterminateState,
     ]);
 
     const handleContentClick = useCallback(

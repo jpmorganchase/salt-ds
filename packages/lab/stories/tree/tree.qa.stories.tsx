@@ -84,7 +84,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
 
     <Tree
       aria-label="Checkbox tree"
-      checkbox
+      multiselect
       defaultExpanded={["documents", "reports"]}
       defaultSelected={["annual-report"]}
     >
@@ -106,7 +106,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
 
     <Tree
       aria-label="Checkbox tree with icons"
-      checkbox
+      multiselect
       defaultExpanded={["documents", "reports"]}
       defaultSelected={["annual-report"]}
     >
