@@ -9,4 +9,4 @@
  */
 
 // biome-ignore lint/complexity/noBannedTypes: type augmented by configured adapters
-export type DateFrameworkTypeMap = {};
+export interface DateFrameworkTypeMap {};
