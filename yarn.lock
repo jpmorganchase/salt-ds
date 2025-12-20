@@ -7941,8 +7941,8 @@ __metadata:
   linkType: hard
 
 "cypress@npm:^15.7.1":
-  version: 15.8.1
-  resolution: "cypress@npm:15.8.1"
+  version: 15.7.1
+  resolution: "cypress@npm:15.7.1"
   dependencies:
     "@cypress/request": "npm:^3.0.9"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -7981,14 +7981,14 @@ __metadata:
     proxy-from-env: "npm:1.0.0"
     request-progress: "npm:^3.0.0"
     supports-color: "npm:^8.1.1"
-    systeminformation: "npm:^5.27.14"
+    systeminformation: "npm:5.27.7"
     tmp: "npm:~0.2.4"
     tree-kill: "npm:1.2.2"
     untildify: "npm:^4.0.0"
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/6dd348e22d9190722103964d83656f1cee2def170365392f4973f4ded8b3dbfb2ba775806eee97c8ca385b342b1bc34bfb765377c72e034c7a7b4b96e2275516
+  checksum: 10/bf78d8e0695a332b9b096b7c1102c7d14acd46da4d183b7599e267cac119967e7a47340cb487e0244b0bacf131b9e1731bc3549678d1b003401d1d38af1e9fbc
   languageName: node
   linkType: hard
 
@@ -16499,12 +16499,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.27.14":
-  version: 5.27.14
-  resolution: "systeminformation@npm:5.27.14"
+"systeminformation@npm:5.27.7":
+  version: 5.27.7
+  resolution: "systeminformation@npm:5.27.7"
   bin:
     systeminformation: lib/cli.js
-  checksum: 10/bf8194000e1a4af47acf16a9bc41b715dbd6bde15cb09dc52626f8c8d77ebc1c62b939343ae153b7cbc08486c5d841128019bfe4e5d71c42c14e1089a32c97a1
+  checksum: 10/8e9b2fc1836822bd09355933675fdaa40776b150b8afd3e8cedf2a2303f95f02aa592c0303eb46a68857f367bc2483159ba325b40d0b7deca776ec0615f743ad
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
