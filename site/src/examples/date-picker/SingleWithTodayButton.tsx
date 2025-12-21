@@ -32,7 +32,7 @@ const TodayButton = () => {
     helpers: { select },
   } = useDatePickerContext({
     selectionVariant: "single",
-  }) as SingleDatePickerState<DateFrameworkType>;
+  }) as SingleDatePickerState;
   const { dateAdapter } = useLocalization();
   const today = dateAdapter.today();
   return (

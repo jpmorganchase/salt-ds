@@ -1,23 +1,17 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { createContext, useContext } from "react";
 import type { UseCalendarReturn } from "../useCalendar";
 
-interface CalendarState<TDate extends DateFrameworkType>
-  extends UseCalendarReturn<TDate> {}
+export interface CalendarState extends UseCalendarReturn {}
 
-const CalendarContext = createContext<CalendarState<DateFrameworkType> | null>(
-  null,
-);
+const CalendarContext = createContext<CalendarState | null>(null);
 
 if (process.env.NODE_ENV !== "production") {
   CalendarContext.displayName = "CalendarContext";
 }
 
-function useCalendarContext<
-  TDate extends DateFrameworkType,
->(): CalendarState<TDate> {
+function useCalendarContext(): CalendarState {
   const context = useContext(
-    CalendarContext as React.Context<CalendarState<TDate> | null>,
+    CalendarContext as React.Context<CalendarState | null>,
   );
   if (!context) {
     throw new Error(

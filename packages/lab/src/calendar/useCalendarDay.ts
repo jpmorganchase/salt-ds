@@ -46,24 +46,22 @@ export interface DayStatus {
 
 /**
  * UseCalendar hook props to return a calendar day's status
- * @template TDate - The type of the date object.
  */
-export interface useCalendarDayProps<TDate> {
+export interface useCalendarDayProps {
   /**
    * The date of the calendar day.
    */
-  date: TDate;
+  date: DateFrameworkType;
   /**
    * The month of the calendar day.
    */
-  month: TDate;
+  month: DateFrameworkType;
 }
 
-export function useCalendarDay<TDate extends DateFrameworkType>(
-  props: useCalendarDayProps<TDate>,
-) {
+export function useCalendarDay(props: useCalendarDayProps) {
   const { date, month } = props;
-  const { dateAdapter } = useLocalization<TDate>();
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const state = useCalendarContext();
   const {
     state: {
       focusedDate,
@@ -79,9 +77,9 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       isOutsideAllowedMonths,
       isOutsideAllowedDates,
     },
-  } = useCalendarContext<TDate>();
-  const selectionManager = useCalendarSelectionDay<TDate>({ date });
-  const focusManager = useFocusManagement<TDate>({ date });
+  } = state;
+  const selectionManager = useCalendarSelectionDay({ date });
+  const focusManager = useFocusManagement({ date });
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     selectionManager.handleClick(event);

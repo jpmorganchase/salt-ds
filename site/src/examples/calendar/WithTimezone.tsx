@@ -21,8 +21,6 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import type { DateTime } from "luxon";
-import type { Moment } from "moment";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -65,7 +63,8 @@ const Single = ({
         : undefined;
 
     const formatDate = (date: DateFrameworkType) => {
-      const iso = date.toISOString();
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
       const locale = new Intl.DateTimeFormat(undefined, {
         timeZone: systemTimeZone,
         year: "numeric",
@@ -75,7 +74,7 @@ const Single = ({
         minute: "numeric",
         second: "numeric",
         hour12: true,
-      }).format(date);
+      }).format(jsDate);
       const formatted = new Intl.DateTimeFormat(undefined, {
         timeZone: ianaTimezone,
         year: "numeric",
@@ -85,23 +84,16 @@ const Single = ({
         minute: "numeric",
         second: "numeric",
         hour12: true,
-      }).format(date);
+      }).format(jsDate);
       return { iso, locale, formatted };
     };
 
-    const jsDate =
-      dateAdapter.lib === "luxon"
-        ? (selection as DateTime).toJSDate()
-        : dateAdapter.lib === "moment"
-          ? (selection as Moment).toDate()
-          : selection;
-    const formattedDate = formatDate(jsDate);
+    setCurrentTimezone(selection ? dateAdapter.getTimezone(selection) : "");
 
-    setCurrentTimezone(dateAdapter.getTimezone(selection));
-
-    setIso8601String(formattedDate.iso);
-    setLocaleDateString(formattedDate.locale);
-    setDateString(formattedDate.formatted);
+    const formattedDate = selection ? formatDate(selection) : null;
+    setIso8601String(formattedDate?.iso ?? "");
+    setLocaleDateString(formattedDate?.locale ?? "");
+    setDateString(formattedDate?.formatted ?? "");
   };
 
   return (

@@ -15,7 +15,7 @@ export function useFocusManagement<TDate extends DateFrameworkType>({
   const { dateAdapter } = useLocalization<TDate>();
   const {
     helpers: { setFocusedDate },
-  } = useCalendarContext<TDate>();
+  } = useCalendarContext();
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     setFocusedDate(event, date);
   };

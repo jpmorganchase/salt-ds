@@ -93,8 +93,7 @@ export const SingleGridPanel = () => {
               Number.parseInt(
                 numberOfVisibleMonths,
                 10,
-                // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
-              ) as DatePickerSingleGridPanelProps<any>["numberOfVisibleMonths"]
+              ) as DatePickerSingleGridPanelProps["numberOfVisibleMonths"]
             }
             CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
           />
