@@ -27,11 +27,11 @@ import type {
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
-interface UseDatePickerBaseProps<TDate> {
+interface UseDatePickerBaseProps {
   /**
    * Factory method for date selection live announcements or null to silence announcements
    */
-  createAnnouncement?: CreateAnnouncement<TDate> | null;
+  createAnnouncement?: CreateAnnouncement<DateFrameworkType> | null;
   /**
    * If `true`, the component is disabled.
    */
@@ -41,23 +41,23 @@ interface UseDatePickerBaseProps<TDate> {
    * @param date - The date to check.
    * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
    */
-  isDayHighlighted?: (date: TDate) => string | false | undefined;
+  isDayHighlighted?: (date: DateFrameworkType) => string | false | undefined;
   /**
    * Function to determine if a day is unselectable.
    * @param date - The date to check.
    * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
    */
-  isDayUnselectable?: (date: TDate) => string | false | undefined;
+  isDayUnselectable?: (date: DateFrameworkType) => string | false | undefined;
   /** If `true`, the component is read-only. */
   readOnly?: boolean;
   /**
    * The minimum date for the range, default is 1900.
    */
-  minDate?: TDate;
+  minDate?: DateFrameworkType;
   /**
    * The maximum date for the range, default is 2100.
    */
-  maxDate?: TDate;
+  maxDate?: DateFrameworkType;
   /**
    * Handler for when the date selection is cancelled.
    */
@@ -72,10 +72,8 @@ interface UseDatePickerBaseProps<TDate> {
 
 /**
  * Props for single date selection.
- * @template TDate - The type of the date object.
  */
-export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
-  extends UseDatePickerBaseProps<TDate> {
+export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
   /**
    * Single date selection.
    */
@@ -83,11 +81,11 @@ export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
   /**
    * The selected date. The selected date will be controlled when this prop is provided.
    */
-  selectedDate?: SingleDateSelection<TDate> | null;
+  selectedDate?: SingleDateSelection<DateFrameworkType> | null;
   /**
    * The initial selected date, when the selected date is uncontrolled.
    */
-  defaultSelectedDate?: SingleDateSelection<TDate> | null;
+  defaultSelectedDate?: SingleDateSelection<DateFrameworkType> | null;
   /**
    * Handler called when the selected date changes.
    * @param event - The synthetic event.
@@ -96,7 +94,7 @@ export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<TDate> | null,
+    date: SingleDateSelection<DateFrameworkType> | null,
     details?: DateInputSingleDetails,
   ) => void;
   /**
@@ -106,16 +104,14 @@ export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
    */
   onApply?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<TDate> | null,
+    date: SingleDateSelection<DateFrameworkType> | null,
   ) => void;
 }
 
 /**
  * Props for date range selection.
- * @template TDate - The type of the date object.
  */
-export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
-  extends UseDatePickerBaseProps<TDate> {
+export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
   /**
    * Date range selection.
    */
@@ -123,11 +119,11 @@ export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
   /**
    * The selected date range. The selected date will be controlled when this prop is provided.
    */
-  selectedDate?: DateRangeSelection<TDate> | null;
+  selectedDate?: DateRangeSelection<DateFrameworkType> | null;
   /**
    * The initial selected date range, when the selected date is uncontrolled.
    */
-  defaultSelectedDate?: DateRangeSelection<TDate> | null;
+  defaultSelectedDate?: DateRangeSelection<DateFrameworkType> | null;
   /**
    * Handler called when the selected date range changes.
    * @param event - The synthetic event.
@@ -136,7 +132,7 @@ export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    date: DateRangeSelection<TDate> | null,
+    date: DateRangeSelection<DateFrameworkType> | null,
     details?: DateInputRangeDetails,
   ) => void;
   /**
@@ -146,43 +142,32 @@ export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
    */
   onApply?: (
     event: SyntheticEvent,
-    date: DateRangeSelection<TDate> | null,
+    date: DateRangeSelection<DateFrameworkType> | null,
   ) => void;
 }
 
 /**
  * Props for the useDatePicker hook.
- * @template TDate - The type of the date object.
- * @template SelectionVariant - The selection variant, either "single" or "range".
  */
-export type UseDatePickerProps<
-  TDate extends DateFrameworkType,
-  SelectionVariant,
-> = SelectionVariant extends "single"
-  ? UseDatePickerSingleProps<TDate>
-  : SelectionVariant extends "range"
-    ? UseDatePickerRangeProps<TDate>
-    : never;
+export type UseDatePickerProps =
+  | UseDatePickerSingleProps
+  | UseDatePickerRangeProps;
 
 /**
  * Custom hook for managing date picker state.
- * @template TDate - The type of the date object.
  * @template SelectionVariant - The selection variant, either "single" or "range".
  * @param props - The props for the date picker.
  * @param ref - The ref for the date picker container.
  * @returns The date picker state and helpers.
  */
-export function useDatePicker<
-  TDate extends DateFrameworkType,
-  SelectionVariant extends "single" | "range",
->(
-  props: UseDatePickerProps<TDate, SelectionVariant>,
+export function useDatePicker(
+  props: UseDatePickerProps,
   ref: React.ForwardedRef<HTMLDivElement>,
-): SingleDatePickerState<TDate> | RangeDatePickerState<TDate> {
+): SingleDatePickerState | RangeDatePickerState {
   const {
     dateAdapter,
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
-  } = useLocalization<TDate>();
+  } = useLocalization<DateFrameworkType>();
   const {
     createAnnouncement,
     readOnly = false,
@@ -250,7 +235,10 @@ export function useDatePicker<
   const isDisabled = disabled || formFieldDisabled || false;
 
   const applySingle = useCallback(
-    (event: SyntheticEvent, date: SingleDateSelection<TDate> | null): void => {
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+    ): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
       announce("dateSelected", { selectedDate: date });
@@ -263,8 +251,10 @@ export function useDatePicker<
 
   const checkAndAddError = useCallback(
     (
-      date: TDate | null | undefined,
-      checkFunction: ((date: TDate) => string | false | undefined) | undefined,
+      date: DateFrameworkType | null | undefined,
+      checkFunction:
+        | ((date: DateFrameworkType) => string | false | undefined)
+        | undefined,
       errorType: string,
       details: {
         errors?: { type: string; message: string | false | undefined }[];
@@ -285,7 +275,7 @@ export function useDatePicker<
   const selectSingle = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<TDate> | null,
+      date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails,
     ) => {
       const canBeApplied =
@@ -312,7 +302,10 @@ export function useDatePicker<
   );
 
   const applyRange = useCallback(
-    (event: SyntheticEvent, date: DateRangeSelection<TDate> | null): void => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+    ): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
       announce("dateSelected", { selectedDate: date });
@@ -326,7 +319,7 @@ export function useDatePicker<
   const selectRange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<TDate> | null,
+      date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails,
     ) => {
       setSelectedDate(date);
@@ -405,7 +398,7 @@ export function useDatePicker<
         apply: applyRange,
         select: selectRange,
       },
-    } as RangeDatePickerState<TDate>;
+    } as RangeDatePickerState;
   }
   return {
     ...returnValue,
@@ -414,5 +407,5 @@ export function useDatePicker<
       apply: applySingle,
       select: selectSingle,
     },
-  } as SingleDatePickerState<TDate>;
+  } as SingleDatePickerState;
 }

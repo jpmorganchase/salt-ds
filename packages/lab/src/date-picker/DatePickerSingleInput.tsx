@@ -31,10 +31,8 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
 /**
  * Props for the DatePickerSingleInput component.
- * @template TDate - The type of the date object.
  */
-export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
-  extends DateInputSingleProps<TDate> {
+export interface DatePickerSingleInputProps extends DateInputSingleProps {
   /**
    * Function to validate the entered date
    * @param date - The selected date
@@ -42,17 +40,17 @@ export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
    * @returns updated DateInputSingleDetails details
    */
   validate?: (
-    date: SingleDateSelection<TDate>,
+    date: SingleDateSelection<DateFrameworkType> | null | undefined,
     details: DateInputSingleDetails,
   ) => DateInputSingleDetails;
 }
 
-function defaultSingleValidation<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  date: TDate,
+function defaultSingleValidation(
+  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  date: DateFrameworkType | null | undefined,
   details: DateInputSingleDetails,
-  minDate?: TDate,
-  maxDate?: TDate,
+  minDate?: DateFrameworkType,
+  maxDate?: DateFrameworkType,
 ): DateInputSingleDetails {
   if (!date) {
     details.errors = details.errors ?? [];
@@ -93,130 +91,126 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
 
 export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
-  DatePickerSingleInputProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: DatePickerSingleInputProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
-    const { dateAdapter } = useLocalization<TDate>();
+  DatePickerSingleInputProps
+>((props: DatePickerSingleInputProps, ref: React.Ref<HTMLDivElement>) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
 
-    const {
-      className,
-      value: valueProp,
-      validate,
-      defaultValue,
-      onDateValueChange,
-      ...rest
-    } = props;
+  const {
+    className,
+    value: valueProp,
+    validate,
+    defaultValue,
+    onDateValueChange,
+    ...rest
+  } = props;
 
-    const {
-      state: {
-        selectedDate,
-        disabled,
-        readOnly,
-        cancelled,
-        minDate,
-        maxDate,
-        timezone,
+  const {
+    state: {
+      selectedDate,
+      disabled,
+      readOnly,
+      cancelled,
+      minDate,
+      maxDate,
+      timezone,
+    },
+    helpers: { select },
+  } = useDatePickerContext({
+    selectionVariant: "single",
+  }) as SingleDatePickerState;
+  const {
+    state: { open },
+    helpers: { setOpen },
+  } = useDatePickerOverlay();
+
+  const previousValue = useRef<typeof valueProp>();
+
+  const [value, setValue] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    name: "DatePickerSingleInput",
+    state: "value",
+  });
+
+  const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
+    useCallback(
+      (event) => {
+        event.persist();
+        setOpen(!open, event.nativeEvent, "click");
+        event.stopPropagation();
       },
-      helpers: { select },
-    } = useDatePickerContext<TDate>({
-      selectionVariant: "single",
-    }) as SingleDatePickerState<TDate>;
-    const {
-      state: { open },
-      helpers: { setOpen },
-    } = useDatePickerOverlay();
+      [open, setOpen],
+    );
 
-    const previousValue = useRef<typeof valueProp>();
-
-    const [value, setValue] = useControlled({
-      controlled: valueProp,
-      default: defaultValue,
-      name: "DatePickerSingleInput",
-      state: "value",
-    });
-
-    const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
-      useCallback(
-        (event) => {
-          event.persist();
-          setOpen(!open, event.nativeEvent, "click");
-          event.stopPropagation();
-        },
-        [open, setOpen],
-      );
-
-    const handleDateChange = useCallback(
-      (
-        event: SyntheticEvent,
-        date: SingleDateSelection<TDate>,
-        details: DateInputSingleDetails,
-      ) => {
-        const validatedDetails = validate
+  const handleDateChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null | undefined,
+      details: DateInputSingleDetails,
+    ) => {
+      const validatedDetails =
+        validate && date
           ? validate(date, details)
-          : defaultSingleValidation<TDate>(
+          : defaultSingleValidation(
               dateAdapter,
               date,
               details,
               minDate,
               maxDate,
             );
-        select(event, date, validatedDetails);
-      },
-      [dateAdapter, minDate, maxDate, select, validate],
-    );
+      select(event, date ?? null, validatedDetails);
+    },
+    [dateAdapter, minDate, maxDate, select, validate],
+  );
 
-    const handleDateValueChange = useCallback(
-      (event: SyntheticEvent | null, newDateValue: string) => {
-        setValue(newDateValue);
-        onDateValueChange?.(event, newDateValue);
-      },
-      [onDateValueChange],
-    );
+  const handleDateValueChange = useCallback(
+    (event: SyntheticEvent | null, newDateValue: string) => {
+      setValue(newDateValue);
+      onDateValueChange?.(event, newDateValue);
+    },
+    [onDateValueChange],
+  );
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
-    useEffect(() => {
-      if (open) {
-        previousValue.current = value;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
+  useEffect(() => {
+    if (open) {
+      previousValue.current = value;
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (cancelled) {
+      setValue(previousValue?.current);
+    }
+  }, [cancelled]);
+
+  return (
+    <DateInputSingle
+      value={value ?? ""}
+      className={clsx(withBaseName(), className)}
+      date={selectedDate ?? null}
+      readOnly={readOnly}
+      disabled={disabled}
+      ref={ref}
+      onDateChange={handleDateChange}
+      onDateValueChange={handleDateValueChange}
+      endAdornment={
+        !readOnly && (
+          <Button
+            appearance="transparent"
+            sentiment="neutral"
+            onClick={handleCalendarButton}
+            disabled={disabled}
+            aria-haspopup="dialog"
+            aria-label="Open Calendar"
+            aria-expanded={open}
+          >
+            <CalendarIcon aria-hidden />
+          </Button>
+        )
       }
-    }, [open]);
-
-    useEffect(() => {
-      if (cancelled) {
-        setValue(previousValue?.current);
-      }
-    }, [cancelled]);
-
-    return (
-      <DateInputSingle
-        value={value ?? ""}
-        className={clsx(withBaseName(), className)}
-        date={selectedDate ?? null}
-        readOnly={readOnly}
-        disabled={disabled}
-        ref={ref}
-        onDateChange={handleDateChange}
-        onDateValueChange={handleDateValueChange}
-        endAdornment={
-          !readOnly && (
-            <Button
-              appearance="transparent"
-              sentiment="neutral"
-              onClick={handleCalendarButton}
-              disabled={disabled}
-              aria-haspopup="dialog"
-              aria-label="Open Calendar"
-              aria-expanded={open}
-            >
-              <CalendarIcon aria-hidden />
-            </Button>
-          )
-        }
-        timezone={timezone}
-        {...rest}
-      />
-    );
-  },
-);
+      timezone={timezone}
+      {...rest}
+    />
+  );
+});

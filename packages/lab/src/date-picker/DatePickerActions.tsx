@@ -56,7 +56,6 @@ export interface DatePickerActionsBaseProps
  * @template SelectionVariant - The selection variant, either "single" or "range".
  */
 export type DatePickerActionsProps<
-  TDate extends DateFrameworkType,
   SelectionVariant extends "single" | "range",
 > = SelectionVariant extends "single"
   ? DatePickerActionsBaseProps & {
@@ -71,7 +70,7 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: SingleDateSelection<TDate> | null,
+        date: SingleDateSelection<DateFrameworkType> | null,
       ) => void;
     }
   : DatePickerActionsBaseProps & {
@@ -86,14 +85,12 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: DateRangeSelection<TDate> | null,
+        date: DateRangeSelection<DateFrameworkType> | null,
       ) => void;
     };
 
-export const DatePickerActions = forwardRef(function DatePickerActions<
-  TDate extends DateFrameworkType,
->(
-  props: DatePickerActionsProps<TDate, "single" | "range">,
+export const DatePickerActions = forwardRef(function DatePickerActions(
+  props: DatePickerActionsProps<"single" | "range">,
   ref: React.Ref<HTMLDivElement>,
 ) {
   const {
@@ -115,9 +112,9 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
     window: targetWindow,
   });
 
-  const { dateAdapter } = useLocalization<TDate>();
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
 
-  const stateAndHelpers = useDatePickerContext<TDate>({
+  const stateAndHelpers = useDatePickerContext({
     selectionVariant,
   });
 
@@ -141,14 +138,14 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
       const {
         helpers: { apply },
         state: { selectedDate },
-      } = stateAndHelpers as RangeDatePickerState<TDate>;
+      } = stateAndHelpers as RangeDatePickerState;
       apply(event, selectedDate);
       onApply?.(event, selectedDate);
     } else {
       const {
         helpers: { apply },
         state: { selectedDate },
-      } = stateAndHelpers as SingleDatePickerState<TDate>;
+      } = stateAndHelpers as SingleDatePickerState;
       apply(event, selectedDate);
       onApply?.(event, selectedDate);
     }
@@ -160,8 +157,8 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
     selectedLabel = "no date selected";
   } else if (selectionVariant === "single") {
     const date = selectedDate as
-      | SingleDateSelection<TDate>[]
-      | SingleDateSelection<TDate>;
+      | SingleDateSelection<DateFrameworkType>[]
+      | SingleDateSelection<DateFrameworkType>;
     if (Array.isArray(date)) {
       selectedLabel =
         date?.length === 0
@@ -171,7 +168,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions<
       selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
     }
   } else if (selectionVariant === "range") {
-    const dateRange = selectedDate as DateRangeSelection<TDate>;
+    const dateRange = selectedDate as DateRangeSelection<DateFrameworkType>;
     if (Array.isArray(dateRange)) {
       selectedLabel =
         dateRange?.length === 0

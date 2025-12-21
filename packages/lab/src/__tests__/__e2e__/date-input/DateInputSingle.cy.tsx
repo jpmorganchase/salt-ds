@@ -93,7 +93,7 @@ function assertDateChange(
 }
 
 describe("GIVEN a DateInputSingle", () => {
-  adapters.forEach((adapter) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);
@@ -380,12 +380,12 @@ describe("GIVEN a DateInputSingle", () => {
 
           const handleDateChange = (
             event: SyntheticEvent,
-            newDate: DateFrameworkType | null,
+            newDate: DateFrameworkType | null | undefined,
           ) => {
             // React 16 backwards compatibility
             event.persist();
 
-            setDate(newDate);
+            setDate(newDate ?? null);
             dateChangeSpy(event, newDate);
           };
 

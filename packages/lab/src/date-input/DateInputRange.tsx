@@ -68,9 +68,8 @@ export enum DateParserField {
 
 /**
  * Props for the DateInputRange component.
- * @template TDate - The type of the date object.
  */
-export interface DateInputRangeProps<TDate extends DateFrameworkType>
+export interface DateInputRangeProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
   /**
@@ -130,7 +129,7 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
     value: string,
     field: DateParserField,
     format: string,
-  ) => ParserResult<TDate>;
+  ) => ParserResult<DateFrameworkType>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -142,11 +141,11 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
   /**
    * The date value. Use when the component is controlled.
    */
-  date?: DateRangeSelection<TDate> | null;
+  date?: DateRangeSelection<DateFrameworkType> | null;
   /**
    * The initial selected date value. Use when the component is uncontrolled.
    */
-  defaultDate?: DateRangeSelection<TDate> | null;
+  defaultDate?: DateRangeSelection<DateFrameworkType> | null;
   /**
    * Callback fired when the input value changes.
    * @param event - The change event.
@@ -161,7 +160,7 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: DateRangeSelection<TDate> | null,
+    date: DateRangeSelection<DateFrameworkType> | null,
     details: DateInputRangeDetails,
   ) => void;
   /**
@@ -184,15 +183,9 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
   timezone?: Timezone;
 }
 
-export const DateInputRange = forwardRef<
-  HTMLDivElement,
-  DateInputRangeProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: DateInputRangeProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
-    const { dateAdapter } = useLocalization<TDate>();
+export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
+  (props: DateInputRangeProps, ref: React.Ref<HTMLDivElement>) => {
+    const { dateAdapter } = useLocalization<DateFrameworkType>();
     const {
       "aria-label": ariaLabel,
       bordered = false,
@@ -223,7 +216,8 @@ export const DateInputRange = forwardRef<
       variant = "primary",
       timezone = dateProp?.startDate || defaultDate?.startDate
         ? dateAdapter.getTimezone(
-            (dateProp?.startDate ?? defaultDate?.startDate) as TDate,
+            (dateProp?.startDate ??
+              defaultDate?.startDate) as DateFrameworkType,
           )
         : "default",
       ...rest
@@ -249,7 +243,7 @@ export const DateInputRange = forwardRef<
     const parseDateValue = (
       dateValue: string | null | undefined,
       field: DateParserField,
-    ): ParserResult<TDate> | undefined =>
+    ): ParserResult<DateFrameworkType> | undefined =>
       parseProp
         ? parseProp(dateValue ?? "", field, format)
         : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format);
@@ -398,7 +392,7 @@ export const DateInputRange = forwardRef<
       const { date: endDate = undefined, ...endDateParseDetails } =
         parseDateValue(dateValue?.endDate, DateParserField.END) ?? {};
 
-      const updatedDateRange: DateRangeSelection<TDate> = {
+      const updatedDateRange: DateRangeSelection<DateFrameworkType> = {
         startDate: dateValue?.startDate?.length ? startDate : null,
         endDate: dateValue?.endDate?.length ? endDate : null,
       };

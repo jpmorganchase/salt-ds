@@ -14,6 +14,7 @@ import { enUS as dateFnsEnUs, es as dateFnsEs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import "dayjs/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 
 export default {
   title: "Lab/Date Picker/QA",
@@ -28,15 +29,15 @@ const QAContainerParameters = {
 const renderQAContainer = ({
   numberOfVisibleMonths,
   ...props
-}: Omit<DatePickerRangeProps<unknown>, "selectionVariant"> & {
-  numberOfVisibleMonths?: DatePickerRangeGridPanelProps<unknown>["numberOfVisibleMonths"];
+}: Omit<DatePickerRangeProps, "selectionVariant"> & {
+  numberOfVisibleMonths?: DatePickerRangeGridPanelProps["numberOfVisibleMonths"];
 }) => {
   const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { months: 4, weeks: 1 });
 
   const checkDayOfWeek = (
-    day: string | false,
+    day: DateFrameworkType,
     targetDayIndex: number,
     luxonOffset: number,
     message: string,
@@ -49,8 +50,6 @@ const renderQAContainer = ({
     return isTargetDay ? message : false;
   };
 
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  const isMonday = (day: any) => checkDayOfWeek(day, 0, 1, "is a Monday");
   // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   const isSaturday = (day: any) => checkDayOfWeek(day, 6, 5, "is a weekend");
   // biome-ignore lint/suspicious/noExplicitAny: date framework dependent

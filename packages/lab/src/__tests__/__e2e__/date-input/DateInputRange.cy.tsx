@@ -70,7 +70,7 @@ function assertDateChange(
     startDate: DateFrameworkType | null | undefined;
     endDate: DateFrameworkType | null | undefined;
   },
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter<any>,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
   const date = lastCallArgs[1];
@@ -385,7 +385,7 @@ describe("GIVEN a DateInputRange", () => {
           .callsFake(
             (
               inputDate: string,
-              field: DateParserField,
+              _field: DateParserField,
             ): ParserResult<DateFrameworkType> => {
               if (inputDate === "custom start date") {
                 return {
@@ -919,7 +919,7 @@ describe("GIVEN a DateInputRange", () => {
               },
               {
                 startDate: updatedDate.startDate,
-                endDate: updatedDateValue.endDate,
+                endDate: updatedDate.endDate,
               },
               adapter,
             ),

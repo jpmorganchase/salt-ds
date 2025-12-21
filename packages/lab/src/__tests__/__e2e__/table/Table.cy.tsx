@@ -8,7 +8,7 @@ const { StickyHeaderFooter } = composedStories;
 describe("GIVEN a Table", () => {
   checkAccessibility(composedStories);
 
-  it.only("THEN should render all rows and columns", () => {
+  it("THEN should render all rows and columns", () => {
     cy.mount(<StickyHeaderFooter />);
 
     cy.findAllByRole("rowgroup").eq(0).should("be.visible");

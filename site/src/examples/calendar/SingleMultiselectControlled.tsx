@@ -7,17 +7,17 @@ import type {
 import {
   Calendar,
   CalendarGrid,
+  type CalendarMultiselectSingleProps,
   CalendarNavigation,
-  type CalendarSingleProps,
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
-function selectMultiselectSingle<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: SingleDateSelection<TDate>[],
-  newDate: TDate,
+function selectMultiselectSingle(
+  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
+  newDate: DateFrameworkType,
 ) {
   const newSelection = previousSelectedDate.filter(
     (previousSingleDate) =>
@@ -73,18 +73,18 @@ export const SingleMultiselectControlled = (): ReactElement => {
   ].map((date) => dateAdapter.parse(date, "DD/MM/YYYY").date);
 
   const [visibleMonth, setVisibleMonth] =
-    useState<CalendarSingleProps<DateFrameworkType>["visibleMonth"][]>(
+    useState<CalendarMultiselectSingleProps["visibleMonth"]>(
       initialVisibleMonth,
     );
   const [selectedDate, setSelectedDate] =
-    useState<CalendarSingleProps<DateFrameworkType>["selectedDate"][]>(
+    useState<CalendarMultiselectSingleProps["selectedDate"]>(
       initialSelectedDate,
     );
-  const handleSelectionChange: CalendarSingleProps<DateFrameworkType>["onSelectionChange"] =
+  const handleSelectionChange: CalendarMultiselectSingleProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
-  const handleVisibleMonthChange: CalendarSingleProps<DateFrameworkType>["onVisibleMonthChange"] =
+  const handleVisibleMonthChange: CalendarMultiselectSingleProps["onVisibleMonthChange"] =
     (_event, newVisibleMonth) => {
       setVisibleMonth(newVisibleMonth);
     };

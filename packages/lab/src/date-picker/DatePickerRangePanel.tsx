@@ -49,9 +49,8 @@ import datePickerPanelCss from "./DatePickerPanel.css";
 
 /**
  * Props for the DatePickerRangePanel component.
- * @template TDate - The type of the date object.
  */
-export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
+export interface DatePickerRangePanelProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
    * Callback fired when a date range is selected.
@@ -60,7 +59,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    selectedDate?: DateRangeSelection<TDate> | null,
+    selectedDate?: DateRangeSelection<DateFrameworkType> | null,
   ) => void;
 
   /**
@@ -71,12 +70,12 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
   /**
    * The currently visible month for the start date.
    */
-  startVisibleMonth?: TDate;
+  startVisibleMonth?: DateFrameworkType;
 
   /**
    * The default visible month for the start date.
    */
-  defaultStartVisibleMonth?: TDate;
+  defaultStartVisibleMonth?: DateFrameworkType;
 
   /**
    * Callback fired when the visible month for the start date changes.
@@ -85,18 +84,18 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   onStartVisibleMonthChange?: (
     event: SyntheticEvent | null,
-    visibleMonth: TDate,
+    visibleMonth: DateFrameworkType,
   ) => void;
 
   /**
    * The currently visible month for the end date.
    */
-  endVisibleMonth?: TDate;
+  endVisibleMonth?: DateFrameworkType;
 
   /**
    * The default visible month for the end date.
    */
-  defaultEndVisibleMonth?: TDate;
+  defaultEndVisibleMonth?: DateFrameworkType;
 
   /**
    * Callback fired when the visible month for the end date changes.
@@ -105,7 +104,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   onEndVisibleMonthChange?: (
     event: SyntheticEvent | null,
-    visibleMonth: TDate,
+    visibleMonth: DateFrameworkType,
   ) => void;
 
   /**
@@ -115,7 +114,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   onFocusedDateChange?: (
     event: SyntheticEvent | null,
-    focusedDate?: TDate | null,
+    focusedDate?: DateFrameworkType | null,
   ) => void;
   /**
    * Callback fired when the hovered date changes.
@@ -124,20 +123,20 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   onHoveredDateChange?: (
     event: SyntheticEvent,
-    hoveredDate?: TDate | null,
+    hoveredDate?: DateFrameworkType | null,
   ) => void;
 
   /**
    * Props to be passed to the start date CalendarNavigation component.
    */
-  StartCalendarNavigationProps?: CalendarNavigationProps<TDate>;
+  StartCalendarNavigationProps?: CalendarNavigationProps;
 
   /**
    * Props to be passed to the start date calendar component.
    */
   StartCalendarProps?: Partial<
     Omit<
-      CalendarRangeProps<TDate> | CalendarOffsetProps<TDate>,
+      CalendarRangeProps | CalendarOffsetProps,
       | "selectedDate"
       | "defaultSelectedDate"
       | "multiselect"
@@ -150,14 +149,14 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
   /**
    * Props to be passed to the start date CalendarGrid component.
    */
-  StartCalendarGridProps?: CalendarGridProps<TDate>;
+  StartCalendarGridProps?: CalendarGridProps;
 
   /**
    * Props to be passed to the end date CalendarNavigation component.
    */
   EndCalendarProps?: Partial<
     Omit<
-      CalendarRangeProps<TDate>,
+      CalendarRangeProps,
       | "selectedDate"
       | "defaultSelectedDate"
       | "multiselect"
@@ -171,19 +170,19 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
   /**
    * Props to be passed to the end date CalendarNavigation component.
    */
-  EndCalendarNavigationProps?: CalendarNavigationProps<TDate>;
+  EndCalendarNavigationProps?: CalendarNavigationProps;
   /**
    * Props to be passed to the end date CalendarGrid component.
    */
-  EndCalendarGridProps?: CalendarGridProps<TDate>;
+  EndCalendarGridProps?: CalendarGridProps;
 }
 
-function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  selectedDate: DateRangeSelection<TDate> | null,
+function getFallbackVisibleMonths(
+  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  selectedDate: DateRangeSelection<DateFrameworkType> | null,
   timezone: Timezone = "default",
 ) {
-  function createConsecutiveRange(date: TDate) {
+  function createConsecutiveRange(date: DateFrameworkType) {
     const startDate = dateAdapter.startOf(date, "month");
     const endDate = dateAdapter.add(startDate, { months: 1 });
     return [startDate, endDate];
@@ -211,10 +210,11 @@ function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
-export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
-  TDate extends DateFrameworkType,
->(props: DatePickerRangePanelProps<TDate>, ref: React.Ref<HTMLDivElement>) {
-  const { dateAdapter } = useLocalization<TDate>();
+export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
+  props: DatePickerRangePanelProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
 
   const {
     className,
@@ -255,18 +255,20 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
     helpers: { select, isDayHighlighted, isDayUnselectable },
-  } = useDatePickerContext<TDate>({
+  } = useDatePickerContext({
     selectionVariant: "range",
-  }) as RangeDatePickerState<TDate>;
+  }) as RangeDatePickerState;
 
   const {
     state: { initialFocusRef, focused },
   } = useDatePickerOverlay();
 
-  const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
+  const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
+    null,
+  );
 
   const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
-    getFallbackVisibleMonths<TDate>(dateAdapter, selectedDate, timezone),
+    getFallbackVisibleMonths(dateAdapter, selectedDate, timezone),
   );
 
   const [startVisibleMonth, setStartVisibleMonth] = useControlled({
@@ -284,16 +286,19 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   });
 
   const handleSelectionChange = useCallback(
-    (event: SyntheticEvent, newDate: DateRangeSelection<TDate> | null) => {
+    (
+      event: SyntheticEvent,
+      newDate: DateRangeSelection<DateFrameworkType> | null,
+    ) => {
       select(event, newDate);
       onSelectionChange?.(event, newDate);
     },
     [select, onSelectionChange],
   );
 
-  const handleHoveredStartDateChange: CalendarProps<TDate>["onHoveredDateChange"] =
+  const handleHoveredStartDateChange: CalendarProps["onHoveredDateChange"] =
     useCallback(
-      (event: SyntheticEvent, newHoveredDate: TDate | null) => {
+      (event: SyntheticEvent, newHoveredDate: DateFrameworkType | null) => {
         setHoveredDate(newHoveredDate);
         onHoveredDateChange?.(event, newHoveredDate);
       },
@@ -301,7 +306,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     );
 
   const handleHoveredEndDateChange = useCallback(
-    (event: SyntheticEvent, newHoveredDate: TDate | null) => {
+    (event: SyntheticEvent, newHoveredDate: DateFrameworkType | null) => {
       setHoveredDate(newHoveredDate);
       onHoveredDateChange?.(event, newHoveredDate);
     },
@@ -309,7 +314,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleStartVisibleMonthChange = useCallback(
-    (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | null, newVisibleMonth: DateFrameworkType) => {
       setStartVisibleMonth(newVisibleMonth);
       if (dateAdapter.compare(newVisibleMonth, endVisibleMonth) >= 0) {
         setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
@@ -320,7 +325,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleEndVisibleMonthChange = useCallback(
-    (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | null, newVisibleMonth: DateFrameworkType) => {
       setEndVisibleMonth(newVisibleMonth);
       if (dateAdapter.compare(newVisibleMonth, startVisibleMonth) <= 0) {
         setStartVisibleMonth(
@@ -346,10 +351,12 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         : null,
   };
 
-  const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
+  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+    null,
+  );
 
   const handleStartCalendarFocusedDateChange = useCallback(
-    (event: SyntheticEvent | null, newFocusedDate: TDate) => {
+    (event: SyntheticEvent | null, newFocusedDate: DateFrameworkType) => {
       setFocusedDate(newFocusedDate);
       if (
         newFocusedDate &&
@@ -371,7 +378,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleEndCalendarFocusedDateChange = useCallback(
-    (event: SyntheticEvent | null, newFocusedDate: TDate) => {
+    (event: SyntheticEvent | null, newFocusedDate: DateFrameworkType) => {
       setFocusedDate(newFocusedDate);
       if (
         newFocusedDate &&
@@ -393,19 +400,23 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const getNextFocusedDate = (
-    nextStartVisibleMonth: TDate,
-    nextEndVisibleMonth: TDate,
+    nextStartVisibleMonth: DateFrameworkType,
+    nextEndVisibleMonth: DateFrameworkType,
   ) => {
-    const isOutsideAllowedDates = (date: TDate) => {
+    const isOutsideAllowedDates = (date: DateFrameworkType) => {
       return (
         dateAdapter.compare(date, minDate) < 0 ||
         dateAdapter.compare(date, maxDate) > 0
       );
     };
-    const isDaySelectable = (date: TDate) =>
-      !(date && (isDayUnselectable?.(date) || isOutsideAllowedDates(date)));
+    const isDaySelectable = (date: DateFrameworkType) =>
+      !(
+        date &&
+        (isDayUnselectable?.(date) ||
+          isOutsideAllowedDates(date as DateFrameworkType))
+      );
 
-    const getVisibleSelectedDate = (visibleMonth: TDate) => {
+    const getVisibleSelectedDate = (visibleMonth: DateFrameworkType) => {
       if (
         selectedDate?.startDate &&
         dateAdapter.isSame(visibleMonth, selectedDate.startDate, "month") &&
@@ -438,7 +449,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       return today;
     }
     // First selectable date in either calendar
-    const getFirstSelectableDate = (visibleMonth: TDate) => {
+    const getFirstSelectableDate = (visibleMonth: DateFrameworkType) => {
       const firstSelectableDate = generateDatesForMonth(
         dateAdapter,
         visibleMonth,
@@ -516,7 +527,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     }
 
     if (!focusedDate) {
-      setFocusedDate((prevFocusedDate) => {
+      setFocusedDate((prevFocusedDate: DateFrameworkType | null) => {
         if (!prevFocusedDate) {
           return getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth);
         }
@@ -549,7 +560,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     maxDate,
     timezone,
     ...StartCalendarPropsProp,
-  } as Partial<UseCalendarSelectionRangeProps<TDate>>;
+  } as Partial<UseCalendarSelectionRangeProps>;
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
@@ -574,7 +585,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     maxDate,
     timezone,
     ...EndCalendarPropsProp,
-  } as Partial<UseCalendarSelectionRangeProps<TDate>>;
+  } as Partial<UseCalendarSelectionRangeProps>;
 
   return (
     <StackLayout

@@ -1,4 +1,3 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { forwardRef } from "react";
 import {
   DatePickerSingleGridPanel,
@@ -9,10 +8,8 @@ import {
  * @deprecated DatePickerSinglePanel is deprecated. Use DatePickerSingleGridPanel instead.
  * This component will be deleted when we move DatePickerSingleGridPanel from labs to core.
  */
-export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
-  TDate,
->(
-  props: DatePickerSingleGridPanelProps<TDate>,
+export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel(
+  props: DatePickerSingleGridPanelProps,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
@@ -20,7 +17,7 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
       ref={ref}
       columns={1}
       numberOfVisibleMonths={1}
-      {...(props as DatePickerSingleGridPanelProps<DateFrameworkType>)}
+      {...props}
     />
   );
 });

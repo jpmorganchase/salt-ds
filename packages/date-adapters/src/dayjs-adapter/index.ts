@@ -623,4 +623,8 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   public clone(date: Dayjs): Dayjs {
     return date.clone();
   }
+
+  public toJSDate = (value: Dayjs) => {
+    return value.toDate();
+  };
 }

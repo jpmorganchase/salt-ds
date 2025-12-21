@@ -1,22 +1,21 @@
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   DateInputSingle,
-  type DateInputSingleDetails,
+  type DateInputSingleProps,
   LocalizationProvider,
   useLocalization,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
-import type { ReactElement, SyntheticEvent } from "react";
+import type { ReactElement } from "react";
 
 const Single = (): ReactElement => {
   const { dateAdapter } = useLocalization();
-  function handleDateChange<TDate extends DateFrameworkType>(
-    _event: SyntheticEvent,
-    date: TDate | null,
-    details: DateInputSingleDetails,
-  ) {
+  const handleDateChange: DateInputSingleProps["onDateChange"] = (
+    _event,
+    date,
+    details,
+  ) => {
     console.log(
       `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
     );
@@ -31,7 +30,7 @@ const Single = (): ReactElement => {
         console.log(`Original Value: ${value}`);
       }
     }
-  }
+  };
   return (
     <FormField style={{ width: "250px" }}>
       <FormFieldLabel>Enter ES locale date</FormFieldLabel>
