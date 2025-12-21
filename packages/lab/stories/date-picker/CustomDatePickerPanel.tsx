@@ -10,7 +10,6 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DatePickerRangePanel,
   DatePickerSingleGridPanel,
@@ -47,13 +46,13 @@ export const CustomDatePickerPanel = forwardRef<
     // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as RangeDatePickerState<DateFrameworkType>;
+    }) as RangeDatePickerState;
   } else {
     // TODO
     // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    }) as SingleDatePickerState<DateFrameworkType>;
+    }) as SingleDatePickerState;
   }
 
   const {

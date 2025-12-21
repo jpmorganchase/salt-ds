@@ -3,8 +3,7 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  type CalendarProps,
-  type UseCalendarSelectionRangeProps,
+  type CalendarRangeProps,
   useLocalization,
 } from "@salt-ds/lab";
 import {
@@ -17,28 +16,29 @@ import {
 export const TwinCalendars = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const today = dateAdapter.today();
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
     null,
   );
-  const handleHoveredDateChange: CalendarProps<DateFrameworkType>["onHoveredDateChange"] =
-    (_event, newHoveredDate) => {
-      setHoveredDate(newHoveredDate);
-    };
+  const handleHoveredDateChange: CalendarRangeProps["onHoveredDateChange"] = (
+    _event,
+    newHoveredDate,
+  ) => {
+    setHoveredDate(newHoveredDate);
+  };
   const [startVisibleMonth, setStartVisibleMonth] = useState<
-    CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
+    CalendarRangeProps["defaultVisibleMonth"]
   >(dateAdapter.startOf(today, "month"));
   const [endVisibleMonth, setEndVisibleMonth] = useState<
-    CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
+    CalendarRangeProps["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
   const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
-    dateAdapter.startOf(startVisibleMonth, "month"),
+    startVisibleMonth ? dateAdapter.startOf(startVisibleMonth, "month") : null,
   );
 
   const handleStartVisibleMonthChange = useCallback(
     (
       _event: SyntheticEvent | null,
-      newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
+      newVisibleMonth: CalendarRangeProps["defaultVisibleMonth"],
     ) => {
       setStartVisibleMonth(newVisibleMonth);
       if (
@@ -55,7 +55,7 @@ export const TwinCalendars = (): ReactElement => {
   const handleEndVisibleMonthChange = useCallback(
     (
       _event: SyntheticEvent | null,
-      newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
+      newVisibleMonth: CalendarRangeProps["defaultVisibleMonth"],
     ) => {
       setEndVisibleMonth(newVisibleMonth);
       if (
@@ -75,17 +75,22 @@ export const TwinCalendars = (): ReactElement => {
   );
 
   const [selectedDate, setSelectedDate] = useState<
-    UseCalendarSelectionRangeProps<DateFrameworkType>["selectedDate"]
+    CalendarRangeProps["selectedDate"]
   >({ startDate: undefined, endDate: undefined });
-  const handleSelectionChange: UseCalendarSelectionRangeProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, newSelectedDate) => {
-      setSelectedDate(newSelectedDate);
-    };
 
-  const handleFocusedDateChange: CalendarProps<DateFrameworkType>["onFocusedDateChange"] =
-    (_event, newFocusedDate) => {
-      setFocusedDate(newFocusedDate);
-    };
+  const handleSelectionChange: CalendarRangeProps["onSelectionChange"] = (
+    _event,
+    newSelectedDate,
+  ) => {
+    setSelectedDate(newSelectedDate);
+  };
+
+  const handleFocusedDateChange: CalendarRangeProps["onFocusedDateChange"] = (
+    _event,
+    newFocusedDate,
+  ) => {
+    setFocusedDate(newFocusedDate);
+  };
 
   return (
     <div
@@ -151,6 +156,7 @@ export const TwinCalendars = (): ReactElement => {
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
         <CalendarNavigation
           MonthDropdownProps={{

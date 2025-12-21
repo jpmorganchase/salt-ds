@@ -523,4 +523,8 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   public clone(date: DateTime): DateTime {
     return DateTime.fromMillis(date.toMillis());
   }
+
+  public toJSDate = (value: DateTime) => {
+    return value.toJSDate();
+  };
 }

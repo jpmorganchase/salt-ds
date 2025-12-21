@@ -1,8 +1,4 @@
-import {
-  DateDetailError,
-  type DateFrameworkType,
-  type SaltDateAdapter,
-} from "@salt-ds/date-adapters";
+import { DateDetailError, type SaltDateAdapter } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
@@ -191,7 +187,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     });
   });
 
-  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);

@@ -535,4 +535,8 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   public clone(date: Date): Date {
     return new Date(date.getTime());
   }
+
+  public toJSDate = (value: Date) => {
+    return value;
+  };
 }

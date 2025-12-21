@@ -1,7 +1,4 @@
-import type {
-  DateFrameworkType,
-  SaltDateAdapter,
-} from "@salt-ds/date-adapters";
+import type { SaltDateAdapter } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
@@ -40,7 +37,6 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 const {
   // Storybook wraps components in their own LocalizationProvider, so do not compose Stories
   CustomDayRendering,
-  DisabledDates,
   TodayButton,
   TwinCalendars,
   UnselectableDates,
@@ -49,7 +45,7 @@ const {
 } = calendarStories as any;
 
 describe("GIVEN a Calendar", () => {
-  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);
@@ -743,9 +739,6 @@ describe("GIVEN a Calendar", () => {
               onSelectionChange={selectionChangeSpy}
             />,
           );
-
-          // Define the weekend dates in March 2024
-          const weekendDates = ["Saturday 2 March 2024", "Sunday 3 March 2024"];
 
           // Focus on the day before the first unselectable date
           cy.findByRole("button", { name: "Friday 1 March 2024" }).focus();

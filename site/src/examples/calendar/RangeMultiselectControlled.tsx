@@ -13,17 +13,19 @@ import {
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
-function selectDateRange<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
+function selectDateRange(
+  dateAdapter: SaltDateAdapter<DateFrameworkType>,
   previousSelectedDate: DateRangeSelection<DateFrameworkType>,
   newDate: DateFrameworkType,
-): DateRangeSelection<TDate> {
+): DateRangeSelection<DateFrameworkType> {
   const isSelectedAlready =
     !!previousSelectedDate?.startDate && !!previousSelectedDate?.endDate;
   if (
     isSelectedAlready &&
-    dateAdapter.compare(newDate, previousSelectedDate?.startDate) >= 0 &&
-    dateAdapter.compare(newDate, previousSelectedDate?.endDate) <= 0
+    previousSelectedDate?.startDate &&
+    dateAdapter.compare(newDate, previousSelectedDate.startDate) >= 0 &&
+    previousSelectedDate?.endDate &&
+    dateAdapter.compare(newDate, previousSelectedDate.endDate) <= 0
   ) {
     return { startDate: null, endDate: null };
   }
@@ -46,11 +48,11 @@ function selectDateRange<TDate extends DateFrameworkType>(
   };
 }
 
-function selectMultiselectRange<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: DateRangeSelection<TDate>[],
-  newDate: TDate,
-): DateRangeSelection<TDate>[] {
+function selectMultiselectRange(
+  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+  newDate: DateFrameworkType,
+): DateRangeSelection<DateFrameworkType>[] {
   const lastRange = previousSelectedDate.length
     ? previousSelectedDate[previousSelectedDate.length - 1]
     : undefined;
@@ -69,7 +71,7 @@ function selectMultiselectRange<TDate extends DateFrameworkType>(
     return [
       ...previousSelectedDate.slice(0, -1),
       completeDateRange,
-    ] as DateRangeSelection<TDate>[];
+    ] as DateRangeSelection<DateFrameworkType>[];
   }
 
   const newSelection = previousSelectedDate.filter((previousDateRange) => {
@@ -89,14 +91,14 @@ function selectMultiselectRange<TDate extends DateFrameworkType>(
 export const RangeMultiselectControlled = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const [selectedDate, setSelectedDate] = useState<
-    CalendarMultiselectRangeProps<DateFrameworkType>["selectedDate"]
+    CalendarMultiselectRangeProps["selectedDate"]
   >([
     {
       startDate: dateAdapter.today(),
       endDate: dateAdapter.add(dateAdapter.today(), { days: 4 }),
     },
   ]);
-  const handleSelectionChange: CalendarMultiselectRangeProps<DateFrameworkType>["onSelectionChange"] =
+  const handleSelectionChange: CalendarMultiselectRangeProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
@@ -109,7 +111,7 @@ export const RangeMultiselectControlled = (): ReactElement => {
       onSelectionChange={handleSelectionChange}
       select={(
         previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
-        newDate: DateRangeSelection<DateFrameworkType>,
+        newDate: DateFrameworkType,
       ) => selectMultiselectRange(dateAdapter, previousSelectedDate, newDate)}
     >
       <StackLayout gap={0}>

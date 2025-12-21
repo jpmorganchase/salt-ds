@@ -36,7 +36,7 @@ function getAllDatesInRange(
 }
 
 describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
-  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);
@@ -51,10 +51,14 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
       const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
 
       it("SHOULD allow a defined range to be selected", () => {
-        const endDateOffset = (date: ReturnType<typeof adapter.date>) =>
-          adapter.add(date, { days: 4 });
+        const endDateOffset = (date: DateFrameworkType) =>
+          adapter.add(date as any, { days: 4 });
         const offsetDate = endDateOffset(testDate);
-        const datesInRange = getAllDatesInRange(adapter, testDate, offsetDate);
+        const datesInRange = getAllDatesInRange(
+          adapter as SaltDateAdapter<DateFrameworkType>,
+          testDate,
+          offsetDate,
+        );
 
         cy.mount(
           <Calendar
@@ -253,7 +257,7 @@ function assertRangeSelected(
 }
 
 describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', () => {
-  adapters.forEach((adapter) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);
@@ -280,7 +284,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
           <Calendar
             selectionVariant="offset"
             multiselect
-            defaultVisibleMonth={testDate.startDate}
+            defaultVisibleMonth={testDate.startDate as DateFrameworkType}
             defaultSelectedDate={[
               testDate,
               {
@@ -409,11 +413,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         const testDate: DateFrameworkType = adapter.today();
 
         const selectStub = (
-          previousSelectedDate: DateFrameworkType,
+          previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
           newDate: DateFrameworkType,
         ) => {
           let newSelection = previousSelectedDate.filter(
-            ({ startDate, endDate }: DateRangeSelection<DateFrameworkType>) => {
+            ({ startDate, endDate }) => {
               // Check if newDate is not between startDate and endDate
               return !(
                 startDate &&

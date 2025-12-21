@@ -63,103 +63,95 @@ const Range = ({
     setEndDateError(undefined);
   }, [selectedTimezone]);
 
-  const handleDateChange: DateInputRangeProps<DateFrameworkType>["onDateChange"] =
-    (_event, date, details) => {
-      const { startDate, endDate } =
-        date as DateRangeSelection<DateFrameworkType>;
-      const isStartDateUnset =
-        details.startDate?.errors?.length &&
-        details.startDate.errors[0].type === "unset";
-      const hasStartDateError = details.startDate?.errors?.length;
-      const isEndDateUnset =
-        details.endDate?.errors?.length &&
-        details.endDate.errors[0].type === "unset";
-      const hasEndDateError = details.endDate?.errors?.length;
+  const handleDateChange: DateInputRangeProps["onDateChange"] = (
+    _event,
+    date,
+    details,
+  ) => {
+    const { startDate, endDate } =
+      date as DateRangeSelection<DateFrameworkType>;
+    const isStartDateUnset =
+      details.startDate?.errors?.length &&
+      details.startDate.errors[0].type === "unset";
+    const hasStartDateError = details.startDate?.errors?.length;
+    const isEndDateUnset =
+      details.endDate?.errors?.length &&
+      details.endDate.errors[0].type === "unset";
+    const hasEndDateError = details.endDate?.errors?.length;
 
-      setStartDateError(
-        !isStartDateUnset && hasStartDateError
-          ? details.startDate?.errors?.[0].message
-          : undefined,
-      );
-      setEndDateError(
-        !isEndDateUnset && hasEndDateError
-          ? details.endDate?.errors?.[0].message
-          : undefined,
-      );
+    setStartDateError(
+      !isStartDateUnset && hasStartDateError
+        ? details.startDate?.errors?.[0].message
+        : undefined,
+    );
+    setEndDateError(
+      !isEndDateUnset && hasEndDateError
+        ? details.endDate?.errors?.[0].message
+        : undefined,
+    );
 
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const ianaTimezone =
+      selectedTimezone !== "system" && selectedTimezone !== "default"
+        ? selectedTimezone
+        : undefined;
 
-      const formatDate = (date: Date, hasError: boolean) => {
-        if (hasError) return { iso: "", locale: "", formatted: "" };
-        const iso = date.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        return { iso, locale, formatted };
-      };
-
-      if (!isStartDateUnset && !hasStartDateError) {
-        const startJSDate =
-          dateAdapter.lib === "luxon"
-            ? startDate.toJSDate()
-            : dateAdapter.lib === "moment"
-              ? startDate.toDate()
-              : startDate;
-        const start = formatDate(
-          startJSDate,
-          isStartDateUnset || (!isStartDateUnset && !!hasStartDateError),
-        );
-        setStartIso8601String(start.iso);
-        setStartLocaleDateString(start.locale);
-        setStartDateString(start.formatted);
-      } else {
-        setStartIso8601String("");
-        setStartLocaleDateString("");
-        setStartDateString("");
-      }
-      if (!isStartDateUnset && !hasEndDateError) {
-        const endJSDate =
-          dateAdapter.lib === "luxon"
-            ? endDate.toJSDate()
-            : dateAdapter.lib === "moment"
-              ? endDate.toDate()
-              : endDate;
-        const end = formatDate(
-          endJSDate,
-          isEndDateUnset || (!isEndDateUnset && !!hasEndDateError),
-        );
-        setEndIso8601String(end.iso);
-        setEndLocaleDateString(end.locale);
-        setEndDateString(end.formatted);
-      } else {
-        setEndIso8601String("");
-        setEndLocaleDateString("");
-        setEndDateString("");
-      }
-
-      setCurrentTimezone(dateAdapter.getTimezone(startDate));
+    const formatDate = (date: DateFrameworkType, hasError: boolean) => {
+      if (hasError) return { iso: "", locale: "", formatted: "" };
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
+      const locale = new Intl.DateTimeFormat(undefined, {
+        timeZone: systemTimeZone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      const formatted = new Intl.DateTimeFormat(undefined, {
+        timeZone: ianaTimezone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      return { iso, locale, formatted };
     };
+
+    if (!isStartDateUnset && !hasStartDateError && startDate) {
+      const start = formatDate(
+        startDate,
+        isStartDateUnset || (!isStartDateUnset && !!hasStartDateError),
+      );
+      setStartIso8601String(start.iso);
+      setStartLocaleDateString(start.locale);
+      setStartDateString(start.formatted);
+    } else {
+      setStartIso8601String("");
+      setStartLocaleDateString("");
+      setStartDateString("");
+    }
+    if (!isStartDateUnset && !hasEndDateError && endDate) {
+      const end = formatDate(
+        endDate,
+        isEndDateUnset || (!isEndDateUnset && !!hasEndDateError),
+      );
+      setEndIso8601String(end.iso);
+      setEndLocaleDateString(end.locale);
+      setEndDateString(end.formatted);
+    } else {
+      setEndIso8601String("");
+      setEndLocaleDateString("");
+      setEndDateString("");
+    }
+
+    setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
+  };
 
   const startDateHelperText = startDateError
     ? `Start Date ${startDateError}`

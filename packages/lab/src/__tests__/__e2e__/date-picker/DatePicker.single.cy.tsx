@@ -1,8 +1,4 @@
-import {
-  DateDetailError,
-  type DateFrameworkType,
-  type SaltDateAdapter,
-} from "@salt-ds/date-adapters";
+import { DateDetailError, type SaltDateAdapter } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
@@ -191,7 +187,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
   });
 
-  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);
@@ -440,14 +436,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("exist");
         // Verify the helper text is not visible on the page
         cy.get('[id^="helperText-"]')
-          .filter((index, element) => {
+          .filter((_index, element) => {
             return !Cypress.$(element).closest("[data-floating-ui-portal]")
               .length;
           })
           .should("not.be.visible");
         // Verify the helper text has moved to the dialog panel
         cy.get('[id^="helperText-"]')
-          .filter((index, element) => {
+          .filter((_index, element) => {
             return Cypress.$(element).closest('[role="dialog"]').length > 0;
           })
           .should("be.visible");

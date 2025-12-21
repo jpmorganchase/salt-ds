@@ -574,4 +574,8 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   public clone(date: Moment): Moment {
     return date.clone();
   }
+
+  public toJSDate = (value: Moment) => {
+    return value.toDate();
+  };
 }
