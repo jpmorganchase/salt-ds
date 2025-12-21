@@ -27,10 +27,8 @@ import { CalendarMonth } from "./internal/CalendarMonth";
 
 /**
  * Props for the CalendarGrid component.
- * @template TDate - The type of the date object.
  */
-export interface CalendarGridProps<TDate extends DateFrameworkType>
-  extends ComponentPropsWithoutRef<"div"> {
+export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Number of columns
    */
@@ -42,21 +40,15 @@ export interface CalendarGridProps<TDate extends DateFrameworkType>
   /**
    * Props for `CalendarMonthHeader`
    */
-  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps<TDate>>;
+  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps>;
   /**
    * Props for `CalendarDay`
    */
-  CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
+  CalendarDayProps?: Partial<CalendarDayProps>;
 }
 
-export const CalendarGrid = forwardRef<
-  HTMLDivElement,
-  CalendarGridProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: CalendarGridProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
+export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
+  (props: CalendarGridProps, ref: React.Ref<HTMLDivElement>) => {
     const {
       CalendarDayProps,
       CalendarWeekHeaderProps,
@@ -66,12 +58,12 @@ export const CalendarGrid = forwardRef<
       ...rest
     } = props;
 
-    const { dateAdapter } = useLocalization<TDate>();
+    const { dateAdapter } = useLocalization<DateFrameworkType>();
 
     const {
       helpers: { setFocusedDate, setHoveredDate },
       state: { visibleMonth, numberOfVisibleMonths = 1 },
-    } = useCalendarContext<TDate>();
+    } = useCalendarContext();
     const calendarGridRef = useRef<HTMLDivElement>(null);
     const containerRef = useForkRef(ref, calendarGridRef);
 

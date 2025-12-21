@@ -389,4 +389,6 @@ export interface SaltDateAdapter<
    * @param date
    */
   clone(date: TDate): TDate;
+
+  toJSDate:(value: TDate) => Date;
 }

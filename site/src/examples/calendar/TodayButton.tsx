@@ -13,9 +13,7 @@ export const TodayButton = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const today = dateAdapter.today();
   const [selectedDate, setSelectedDate] =
-    useState<
-      UseCalendarSelectionSingleProps<DateFrameworkType>["selectedDate"]
-    >(null);
+    useState<UseCalendarSelectionSingleProps["selectedDate"]>(null);
   return (
     <Calendar
       selectionVariant="single"

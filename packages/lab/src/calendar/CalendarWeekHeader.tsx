@@ -15,11 +15,12 @@ export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {};
 
 const withBaseName = makePrefixer("saltCalendarWeekHeader");
 
-export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader<
-  TDate extends DateFrameworkType,
->(props: CalendarWeekHeaderProps, ref: React.Ref<HTMLDivElement>) {
+export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader(
+  props: CalendarWeekHeaderProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
   const { className, ...rest } = props;
-  const { dateAdapter } = useLocalization<TDate>();
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
 
   const weekdaysShort = daysOfWeek(dateAdapter, "narrow");
   const weekdaysLong = daysOfWeek(dateAdapter, "long");

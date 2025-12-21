@@ -45,9 +45,8 @@ export type DateInputSingleDetails = DateDetail;
 
 /**
  * Props for the DateInputSingle component.
- * @template TDate - The type of the date object.
  */
-export interface DateInputSingleProps<TDate extends DateFrameworkType>
+export interface DateInputSingleProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
@@ -100,7 +99,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    * @param value - date string to parse
    * @param format - format required
    */
-  parse?: (value: string, format: string) => ParserResult<TDate>;
+  parse?: (value: string, format: string) => ParserResult<DateFrameworkType>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -112,11 +111,11 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   /**
    * The date value. Use when the component is controlled.
    */
-  date?: TDate | null;
+  date?: DateFrameworkType | null;
   /**
    * The initial selected date value. Use when the component is uncontrolled.
    */
-  defaultDate?: TDate | null;
+  defaultDate?: DateFrameworkType | null;
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
@@ -125,7 +124,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<TDate> | null | undefined,
+    date: SingleDateSelection<DateFrameworkType> | null | undefined,
     details: DateInputSingleDetails,
   ) => void;
   /**
@@ -145,15 +144,9 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   timezone?: Timezone;
 }
 
-export const DateInputSingle = forwardRef<
-  HTMLDivElement,
-  DateInputSingleProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: DateInputSingleProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
-    const { dateAdapter } = useLocalization<TDate>();
+export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
+  (props: DateInputSingleProps, ref: React.Ref<HTMLDivElement>) => {
+    const { dateAdapter } = useLocalization<DateFrameworkType>();
     const {
       bordered = false,
       className,
@@ -179,7 +172,9 @@ export const DateInputSingle = forwardRef<
       variant = "primary",
       onDateValueChange,
       timezone = dateProp || defaultDate
-        ? dateAdapter.getTimezone((dateProp ?? defaultDate) as TDate)
+        ? dateAdapter.getTimezone(
+            (dateProp ?? defaultDate) as DateFrameworkType,
+          )
         : "default",
       ...rest
     } = props;
@@ -210,7 +205,8 @@ export const DateInputSingle = forwardRef<
         if (!defaultValue) {
           return undefined;
         }
-        return dateAdapter.parse(defaultValue, format) as TDate;
+        return dateAdapter.parse(defaultValue, format)
+          .date as DateFrameworkType;
       }, []),
       name: "DateInputSingle",
       state: "date",
@@ -278,7 +274,7 @@ export const DateInputSingle = forwardRef<
     const apply = (event: SyntheticEvent) => {
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
       const parseResult = parse(dateValue ?? "", format);
-      let parsedDate: TDate | null;
+      let parsedDate: DateFrameworkType | null;
       let parseDetails: DateDetail;
       ({ date: parsedDate, ...parseDetails } = parseResult);
       parsedDate = dateValue ? parsedDate : null;

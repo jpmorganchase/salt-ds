@@ -108,8 +108,7 @@ export const RangeGridPanel = () => {
               Number.parseInt(
                 numberOfVisibleMonths,
                 10,
-                // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
-              ) as DatePickerRangeGridPanelProps<any>["numberOfVisibleMonths"]
+              ) as DatePickerRangeGridPanelProps["numberOfVisibleMonths"]
             }
             CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
           />
