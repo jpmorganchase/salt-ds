@@ -67,3 +67,4 @@ const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announc
 
 - `CalendarNavigation` now adds tooltips to out of range dates.
 - When a Calendar has a min/maxDate and the user navigates to a month outside of that range, the Calendar will now automatically navigate back to the closest valid month.
+- Simplify types, generics for usage of date adapters are no longer essentially required unless you are creating a custom date adapter.
