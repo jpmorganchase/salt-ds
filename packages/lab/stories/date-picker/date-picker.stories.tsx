@@ -71,6 +71,9 @@ import "dayjs/locale/zh-cn";
 import { es as dateFnsEs, zhCN as dateFnsZhCn } from "date-fns/locale";
 import "./date-picker.stories.css";
 import { withDateMock } from ".storybook/decorators/withDateMock";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment/moment";
 
 export default {
   title: "Lab/Date Picker",
@@ -2074,13 +2077,29 @@ export const SingleWithUnselectableDates: StoryFn<DatePickerSingleProps> = ({
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+  const isDayUnselectable = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
 
-    return isWeekend ? "Weekends are un-selectable" : false;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
+    const isWeekend =
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+    return isWeekend ? "weekends are un-selectable" : false;
   };
 
   const labelId = useId();
@@ -2173,13 +2192,29 @@ export const RangeWithUnselectableDates: StoryFn<DatePickerRangeProps> = ({
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+  const isDayUnselectable = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
 
-    return isWeekend ? "Weekends are un-selectable" : false;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
+    const isWeekend =
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+    return isWeekend ? "weekends are un-selectable" : false;
   };
 
   const labelId = useId();
@@ -2249,13 +2284,29 @@ export const SingleWithHighlightedDates: StoryFn<DatePickerSingleProps> = ({
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+  const isDayHighlighted = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
 
-    return isWeekend ? "Weekends are highlighted" : false;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
+    const isWeekend =
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+    return isWeekend ? "weekends are highlighted" : false;
   };
 
   const labelId = useId();
@@ -2348,13 +2399,29 @@ export const RangeWithHighlightedDates: StoryFn<DatePickerRangeProps> = ({
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+  const isDayHighlighted = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
 
-    return isWeekend ? "Weekends are highlighted" : false;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
+    const isWeekend =
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+    return isWeekend ? "weekends are highlighted" : false;
   };
 
   const labelId = useId();
