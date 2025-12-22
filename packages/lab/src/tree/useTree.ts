@@ -59,11 +59,6 @@ export interface UseTreeProps {
    */
   propagateSelectUpwards?: boolean;
   /**
-   * When set to false (default), clicking a selected node has no effect.
-   * When true, clicking a selected node will deselect it.
-   */
-  togglableSelect?: boolean;
-  /**
    * Sets tree to disabled state, preventing all interaction
    */
   disabled?: boolean;
@@ -210,7 +205,6 @@ export function useTree(props: UseTreeProps) {
     multiselect = false,
     propagateSelect = true,
     propagateSelectUpwards = true,
-    togglableSelect = false,
     disabled = false,
     defaultDisabledIds = [],
     disabledIds: disabledIdsProp,
@@ -496,11 +490,7 @@ export function useTree(props: UseTreeProps) {
         newSelected = getMultiSelectState(value);
       } else {
         const isCurrentlySelected = selectedState.includes(value);
-        if (togglableSelect) {
-          newSelected = isCurrentlySelected ? [] : [value];
-        } else {
-          newSelected = [value];
-        }
+        newSelected = isCurrentlySelected ? [] : [value];
       }
 
       setSelectedState(newSelected);
@@ -515,7 +505,6 @@ export function useTree(props: UseTreeProps) {
       disabledIdsSet,
       multiselect,
       selectedState,
-      togglableSelect,
       getMultiSelectState,
       calculateIndeterminateState,
       onSelectionChange,
@@ -572,7 +561,6 @@ export function useTree(props: UseTreeProps) {
     multiselect,
     propagateSelect,
     propagateSelectUpwards,
-    togglableSelect,
     disabled,
     disabledIdsSet,
     treeModel,

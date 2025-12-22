@@ -37,8 +37,6 @@ export interface TreeContextValue {
   propagateSelect: boolean;
   /** Sets if selecting all children should automatically select the parent */
   propagateSelectUpwards: boolean;
-  /** Sets if selection can be toggled off in single-select mode */
-  togglableSelect: boolean;
   /** Disabled state of the tree */
   disabled: boolean;
   /** Set of disabled node IDs */

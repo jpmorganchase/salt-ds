@@ -543,9 +543,9 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should support togglableSelect to deselect on re-click", () => {
+    it("should deselect on re-click in single-select mode", () => {
       cy.mount(
-        <Tree aria-label="File browser" togglableSelect>
+        <Tree aria-label="File browser">
           <TreeNode value="node1" label="Node 1" />
         </Tree>,
       );

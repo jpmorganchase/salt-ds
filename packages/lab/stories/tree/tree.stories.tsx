@@ -20,16 +20,12 @@ export default {
     propagateSelectUpwards: {
       control: { type: "boolean" },
     },
-    togglableSelect: {
-      control: { type: "boolean" },
-    },
   },
   args: {
     multiselect: false,
     disabled: false,
     propagateSelect: true,
     propagateSelectUpwards: true,
-    togglableSelect: false,
   },
 } as Meta<typeof Tree>;
 

@@ -62,11 +62,6 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   propagateSelectUpwards?: boolean;
   /**
-   * When set to false (default), clicking a selected node has no effect.
-   * When true, clicking a selected node will deselect it.
-   */
-  togglableSelect?: boolean;
-  /**
    * Sets tree to disabled state, preventing all interaction
    */
   disabled?: boolean;
@@ -97,7 +92,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       multiselect = false,
       propagateSelect = true,
       propagateSelectUpwards = true,
-      togglableSelect = false,
       disabled = false,
       defaultDisabledIds,
       disabledIds,
@@ -123,7 +117,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       multiselect,
       propagateSelect,
       propagateSelectUpwards,
-      togglableSelect,
       disabled,
       defaultDisabledIds,
       disabledIds,
