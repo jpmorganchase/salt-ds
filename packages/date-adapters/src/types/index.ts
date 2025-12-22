@@ -321,14 +321,6 @@ export interface SaltDateAdapter<
   now(timezone?: Timezone): TDate;
 
   /**
-   * Gets the day of the week for a date object.
-   *
-   * @param date - The date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  getDayOfWeek(date: TDate): number;
-
-  /**
    * Gets the day of the month for a date object.
    *
    * @param date - The date object.

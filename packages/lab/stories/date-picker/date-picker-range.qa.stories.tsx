@@ -15,6 +15,9 @@ import { QAContainer, type QAContainerProps } from "docs/components";
 import "dayjs/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment";
 
 export default {
   title: "Lab/Date Picker/QA",
@@ -42,7 +45,20 @@ const renderQAContainer = ({
     luxonOffset: number,
     message: string,
   ) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    let dayOfWeek: number;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
     const isTargetDay =
       (dateAdapter.lib === "luxon" && dayOfWeek === luxonOffset) ||
       (dateAdapter.lib !== "luxon" && dayOfWeek === targetDayIndex);
