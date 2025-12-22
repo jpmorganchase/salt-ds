@@ -70,5 +70,5 @@ export {
   th,
   thead,
   tr,
-  table
+  table,
 };
