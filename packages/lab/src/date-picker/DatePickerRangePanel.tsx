@@ -59,7 +59,7 @@ export interface DatePickerRangePanelProps
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    selectedDate?: DateRangeSelection<DateFrameworkType> | null,
+    selectedDate?: DateRangeSelection | null,
   ) => void;
 
   /**
@@ -178,8 +178,8 @@ export interface DatePickerRangePanelProps
 }
 
 function getFallbackVisibleMonths(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
-  selectedDate: DateRangeSelection<DateFrameworkType> | null,
+  dateAdapter: SaltDateAdapter,
+  selectedDate: DateRangeSelection | null,
   timezone: Timezone = "default",
 ) {
   function createConsecutiveRange(date: DateFrameworkType) {
@@ -214,7 +214,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
   props: DatePickerRangePanelProps,
   ref: React.Ref<HTMLDivElement>,
 ) {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const {
     className,
@@ -286,10 +286,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
   });
 
   const handleSelectionChange = useCallback(
-    (
-      event: SyntheticEvent,
-      newDate: DateRangeSelection<DateFrameworkType> | null,
-    ) => {
+    (event: SyntheticEvent, newDate: DateRangeSelection | null) => {
       select(event, newDate);
       onSelectionChange?.(event, newDate);
     },

@@ -40,13 +40,13 @@ export interface DatePickerSingleInputProps extends DateInputSingleProps {
    * @returns updated DateInputSingleDetails details
    */
   validate?: (
-    date: SingleDateSelection<DateFrameworkType> | null | undefined,
+    date: SingleDateSelection | null | undefined,
     details: DateInputSingleDetails,
   ) => DateInputSingleDetails;
 }
 
 function defaultSingleValidation(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  dateAdapter: SaltDateAdapter,
   date: DateFrameworkType | null | undefined,
   details: DateInputSingleDetails,
   minDate?: DateFrameworkType,
@@ -93,7 +93,7 @@ export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
   DatePickerSingleInputProps
 >((props: DatePickerSingleInputProps, ref: React.Ref<HTMLDivElement>) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const {
     className,
@@ -145,7 +145,7 @@ export const DatePickerSingleInput = forwardRef<
   const handleDateChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null | undefined,
+      date: SingleDateSelection | null | undefined,
       details: DateInputSingleDetails,
     ) => {
       const validatedDetails =

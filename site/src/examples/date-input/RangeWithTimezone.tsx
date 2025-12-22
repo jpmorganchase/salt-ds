@@ -33,7 +33,7 @@ const Range = ({
 }: {
   selectedTimezone: Timezone;
 }): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const [currentTimezone, setCurrentTimezone] = useState<string>("");
   const [startIso8601String, setStartIso8601String] = useState<string>("");
@@ -68,8 +68,7 @@ const Range = ({
     date,
     details,
   ) => {
-    const { startDate, endDate } =
-      date as DateRangeSelection<DateFrameworkType>;
+    const { startDate, endDate } = date as DateRangeSelection;
     const isStartDateUnset =
       details.startDate?.errors?.length &&
       details.startDate.errors[0].type === "unset";

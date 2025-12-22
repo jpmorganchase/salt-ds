@@ -37,7 +37,7 @@ interface UseCalendarBaseProps {
   /**
    * Factory method for date selection live announcements or null to silence announcements
    */
-  createAnnouncement?: CreateAnnouncement<DateFrameworkType> | null;
+  createAnnouncement?: CreateAnnouncement | null;
   /**
    * The default visible month.
    */
@@ -610,7 +610,7 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       ) {
         const dateRanges = (
           Array.isArray(selectedDate) ? selectedDate : [selectedDate]
-        ) as DateRangeSelection<DateFrameworkType>[];
+        ) as DateRangeSelection[];
         const allDatesPopulated = dateRanges.every(
           (range) => range?.startDate && range?.endDate,
         );
@@ -648,7 +648,7 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
     ) {
       const getFocusableDate = (
         result: DateFrameworkType[],
-        selection: DateRangeSelection<DateFrameworkType>,
+        selection: DateRangeSelection,
       ) => {
         if (selection?.startDate && isDayVisible(selection.startDate)) {
           return [...result, selection.startDate];
@@ -658,16 +658,11 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
         }
         return result;
       };
-      let focusableSelectedDates:
-        | DateRangeSelection<DateFrameworkType>
-        | DateRangeSelection<DateFrameworkType>[];
+      let focusableSelectedDates: DateRangeSelection | DateRangeSelection[];
       if (!multiselect) {
-        focusableSelectedDates = [
-          selectedDate as DateRangeSelection<DateFrameworkType>,
-        ];
+        focusableSelectedDates = [selectedDate as DateRangeSelection];
       } else {
-        focusableSelectedDates =
-          selectedDate as DateRangeSelection<DateFrameworkType>[];
+        focusableSelectedDates = selectedDate as DateRangeSelection[];
       }
       const selectionInMonth = focusableSelectedDates
         .reduce(getFocusableDate, [])
@@ -677,8 +672,8 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       }
     } else if (selectedDate && selectionVariant === "single") {
       const focusableSelectedDate = multiselect
-        ? (selectedDate as SingleDateSelection<DateFrameworkType>[])?.[0]
-        : (selectedDate as SingleDateSelection<DateFrameworkType>);
+        ? (selectedDate as SingleDateSelection[])?.[0]
+        : (selectedDate as SingleDateSelection);
       if (focusableSelectedDate && isDayVisible(focusableSelectedDate)) {
         return focusableSelectedDate;
       }
@@ -833,7 +828,7 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       ) {
         const dateRanges = (
           Array.isArray(selectedDate) ? selectedDate : [selectedDate]
-        ) as DateRangeSelection<DateFrameworkType>[];
+        ) as DateRangeSelection[];
         const isIncompleteRange = dateRanges.some(
           (range) =>
             range?.startDate &&
@@ -865,7 +860,7 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
     selectionVariant === "single"
       ? createSingleSelectionAnnouncement
       : createRangeSelectionAnnouncement;
-  const { announce } = useDateSelectionAnnouncer<DateFrameworkType>(
+  const { announce } = useDateSelectionAnnouncer(
     createAnnouncement === undefined
       ? defaultCreateAnnouncement
       : createAnnouncement,

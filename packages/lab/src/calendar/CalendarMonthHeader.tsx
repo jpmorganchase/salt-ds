@@ -29,7 +29,7 @@ export const CalendarMonthHeader = forwardRef<
   CalendarMonthHeaderProps
 >((props: CalendarMonthHeaderProps, ref: React.Ref<HTMLDivElement>) => {
   const { className, format: formatMonthProp = "MMMM", month, ...rest } = props;
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
