@@ -14,7 +14,7 @@ import {
 } from "react";
 
 export const TwinCalendars = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const today = dateAdapter.today();
   const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
     null,

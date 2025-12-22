@@ -91,7 +91,7 @@ const ConditionalTooltip: React.FC<TooltipProps> = ({
 };
 
 function generateYearsBetweenRange(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  dateAdapter: SaltDateAdapter,
   minYear: number,
   maxYear: number,
   timezone: Timezone = "default",
@@ -111,7 +111,7 @@ function useCalendarNavigation() {
     helpers: { setVisibleMonth, isDayVisible, isOutsideAllowedMonths },
   } = useCalendarContext();
 
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const disableNavigatePrevious = isDayVisible(minDate);
   const disableNavigateNext = isDayVisible(maxDate);
@@ -259,7 +259,7 @@ export const CalendarNavigation = forwardRef<
     ...rest
   } = props;
 
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const targetWindow = useWindow();
   useComponentCssInjection({

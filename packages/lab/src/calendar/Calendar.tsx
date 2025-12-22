@@ -164,17 +164,14 @@ function isMultiselect(
 }
 
 function getStartOrEndDate(
-  dateRange:
-    | DateRangeSelection<DateFrameworkType>
-    | DateRangeSelection<DateFrameworkType>[]
-    | undefined,
+  dateRange: DateRangeSelection | DateRangeSelection[] | undefined,
   isMultiselect: boolean,
 ): DateFrameworkType | null | undefined {
   if (isMultiselect) {
-    const rangeArray = dateRange as DateRangeSelection<DateFrameworkType>[];
+    const rangeArray = dateRange as DateRangeSelection[];
     return rangeArray?.[0]?.startDate ?? rangeArray?.[0]?.endDate;
   }
-  const range = dateRange as DateRangeSelection<DateFrameworkType>;
+  const range = dateRange as DateRangeSelection;
   return range?.startDate ?? range?.endDate;
 }
 
@@ -183,7 +180,7 @@ let warnedOnce = false;
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   (props: CalendarProps, ref: React.Ref<HTMLDivElement>) => {
     const targetWindow = useWindow();
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
     useComponentCssInjection({
       testId: "salt-calendar",
       css: calendarCss,

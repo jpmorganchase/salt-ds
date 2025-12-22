@@ -15,11 +15,11 @@ import {
 import { type ReactElement, useState } from "react";
 
 function selectMultiselectOffset(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
-  previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection[],
   newDate: DateFrameworkType,
   endDateOffset: CalendarOffsetProps["endDateOffset"],
-): DateRangeSelection<DateFrameworkType>[] {
+): DateRangeSelection[] {
   if (previousSelectedDate.length === 0) {
     return [{ startDate: newDate, endDate: endDateOffset?.(newDate) }];
   }
@@ -42,7 +42,7 @@ function selectMultiselectOffset(
 }
 
 export const OffsetMultiselectControlled = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
     dateAdapter.add(date, { days: 4 });
   const [selectedDate, setSelectedDate] = useState<
@@ -66,7 +66,7 @@ export const OffsetMultiselectControlled = (): ReactElement => {
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
       select={(
-        previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+        previousSelectedDate: DateRangeSelection[],
         newDate: DateFrameworkType,
       ) => {
         return selectMultiselectOffset(

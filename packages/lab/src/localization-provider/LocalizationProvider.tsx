@@ -7,7 +7,9 @@ import { createContext, useContext, useMemo } from "react";
 const MIN_DATE = "1900-01-01T00:00:00.000";
 const MAX_DATE = "2099-12-31T00:00:00.000";
 
-export interface LocalizationProviderValue<TDate extends DateFrameworkType> {
+export interface LocalizationProviderValue<
+  TDate extends DateFrameworkType = DateFrameworkType,
+> {
   defaultDates: {
     minDate: TDate;
     maxDate: TDate;
@@ -22,7 +24,7 @@ export interface LocalizationProviderValue<TDate extends DateFrameworkType> {
  * @template TLocale - The type of the locale, defaulting to string.
  */
 export interface LocalizationProviderProps<
-  TDate extends DateFrameworkType,
+  TDate extends DateFrameworkType = DateFrameworkType,
   TLocale = string,
 > {
   /**
@@ -63,7 +65,9 @@ export interface LocalizationProviderProps<
   maxDate?: TDate;
 }
 
-export type LocalizationProviderContext<TDate extends DateFrameworkType> = {
+export type LocalizationProviderContext<
+  TDate extends DateFrameworkType = DateFrameworkType,
+> = {
   [K in keyof LocalizationProviderValue<TDate>]:
     | LocalizationProviderValue<TDate>[K]
     | null;
@@ -78,8 +82,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export const LocalizationProvider = function LocalizationProvider<
-  TDate extends DateFrameworkType,
-  TLocale,
+  TDate extends DateFrameworkType = DateFrameworkType,
+  TLocale = undefined,
 >(props: LocalizationProviderProps<TDate, TLocale>) {
   const { children, DateAdapter, instance, locale, minDate, maxDate } = props;
 
@@ -127,7 +131,7 @@ export const LocalizationProvider = function LocalizationProvider<
  * @throws Will throw an error if the hook is used outside of a `LocalizationProviderContext.Provider`.
  */
 export const useLocalization = <
-  TDate extends DateFrameworkType,
+  TDate extends DateFrameworkType = DateFrameworkType,
 >(): LocalizationProviderValue<TDate> => {
   const localization = useContext(LocalizationProviderContext);
   if (!localization) {

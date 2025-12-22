@@ -55,7 +55,7 @@ const Single = ({
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      selection: SingleDateSelection<DateFrameworkType> | null,
+      selection: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
