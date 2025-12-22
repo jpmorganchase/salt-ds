@@ -76,14 +76,14 @@ export interface UseTreeProps {
   children?: ReactNode;
 }
 
-interface TreeNodeMeta {
+export interface TreeNodeMeta {
   value: string;
   parentValue: string | undefined;
   hasChildren: boolean;
   disabled: boolean;
 }
 
-interface TreeModel {
+export interface TreeModel {
   /** All nodes indexed by value */
   nodes: Map<string, TreeNodeMeta>;
   /** Ordered list of root node values */
@@ -532,7 +532,6 @@ export function useTree(props: UseTreeProps) {
 
         visible.push(value);
 
-        // If node is expanded, traverse its children
         const nodeMeta = treeModel.nodes.get(value);
         if (nodeMeta?.hasChildren && expandedState.has(value)) {
           const children = treeModel.childrenOf.get(value) ?? [];

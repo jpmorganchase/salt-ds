@@ -5,19 +5,7 @@ import {
   type SyntheticEvent,
   useContext,
 } from "react";
-
-export interface TreeNodeMeta {
-  value: string;
-  parentValue: string | undefined;
-  hasChildren: boolean;
-  disabled: boolean;
-}
-
-export interface TreeModel {
-  nodes: Map<string, TreeNodeMeta>;
-  rootValues: string[];
-  childrenOf: Map<string, string[]>;
-}
+import type { TreeModel, TreeNodeMeta } from "./useTree";
 
 export interface TreeContextValue {
   expandedState: Set<string>;

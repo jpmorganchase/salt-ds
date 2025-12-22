@@ -43,7 +43,7 @@ function ExpansionIcon({ expanded }: { expanded: boolean }) {
 
 export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
   /**
-   * Identifier of the node
+   * Unique value representing this node within the tree
    */
   value: string;
   /**
