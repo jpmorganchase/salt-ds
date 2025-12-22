@@ -68,13 +68,16 @@ const shortcutList: Shortcut[] = [
 ];
 
 function displayKeyName(key: string): string {
-  // todo, detect the OS for meta and display ctrl and command accordingly.
-  if (key === "meta") return "ctrl";
-  if (key === "option") return "option";
-  if (key === "shift") return "shift";
-  return key;
-}
+  const isMac = navigator.userAgent.toUpperCase().includes("MAC");
 
+  const keyMap: Record<string, string> = {
+    meta: isMac ? "⌘" : "ctrl",
+    option: isMac ? "⌥" : "alt",
+    shift: isMac ? "⇧" : "shift",
+  };
+
+  return keyMap[key] ?? key;
+}
 function highlightTextMatch(text: string, query: string): React.ReactNode {
   if (!query) return text;
   const regex = new RegExp(`(${query})`, "gi");
@@ -207,13 +210,16 @@ const KeyboardShortcuts: FC = () => {
         <Button data-testid="dialog-button" onClick={handleDialogOpen}>
           Keyboard shortcuts panel
         </Button>
-        <FlexLayout align="center" gap={1} wrap>
-          <Text>hit </Text>
-          <FlexLayout align="center" gap={0.5}>
-            <Kbd>meta</Kbd>+<Kbd>shift</Kbd>+<Kbd>K</Kbd>
+        {shortcutsEnabled && (
+          <FlexLayout align="center" gap={1} wrap>
+            <Text>Press </Text>
+            <FlexLayout align="center" gap={0.5}>
+              <Kbd>{displayKeyName("meta")}</Kbd>+
+              <Kbd>{displayKeyName("shift")}</Kbd>+<Kbd>K</Kbd>
+            </FlexLayout>
+            <Text>to open the keyboard shortcuts panel </Text>
           </FlexLayout>
-          <Text>to open the keyboard shortcuts panel </Text>
-        </FlexLayout>
+        )}
       </StackLayout>
       <Dialog
         open={open}
