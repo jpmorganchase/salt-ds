@@ -23,7 +23,7 @@ export interface UseTreeProps {
   /**
    * Callback on expanded nodes change
    */
-  onExpandedChange?: (event: SyntheticEvent | null, expanded: string[]) => void;
+  onExpandedChange?: (event: SyntheticEvent, expanded: string[]) => void;
   /**
    * Default selected nodes (uncontrolled)
    */
@@ -39,8 +39,8 @@ export interface UseTreeProps {
   /**
    * Callback on node expanded or collapsed
    */
-  onExpand?: (
-    event: SyntheticEvent | null,
+  onNodeExpandChange?: (
+    event: SyntheticEvent,
     value: string,
     expanded: boolean,
   ) => void;
@@ -198,7 +198,7 @@ export function useTree(props: UseTreeProps) {
     defaultExpanded = [],
     expanded: expandedProp,
     onExpandedChange,
-    onExpand,
+    onNodeExpandChange,
     defaultSelected = [],
     selected: selectedProp,
     onSelectionChange,
@@ -350,17 +350,17 @@ export function useTree(props: UseTreeProps) {
   );
 
   const toggleExpanded = useCallback(
-    (value: string) => {
+    (event: SyntheticEvent, value: string) => {
       const isExpanding = !expandedState.has(value);
       const newExpanded = isExpanding
         ? [...expandedArray, value]
         : expandedArray.filter((v) => v !== value);
 
       setExpandedArray(newExpanded);
-      onExpandedChange?.(null, newExpanded);
-      onExpand?.(null, value, isExpanding);
+      onExpandedChange?.(event, newExpanded);
+      onNodeExpandChange?.(event, value, isExpanding);
     },
-    [expandedArray, expandedState, onExpandedChange, onExpand],
+    [expandedArray, expandedState, onExpandedChange, onNodeExpandChange],
   );
 
   const calculateIndeterminateState = useCallback(

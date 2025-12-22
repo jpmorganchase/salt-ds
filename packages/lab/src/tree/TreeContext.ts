@@ -22,7 +22,7 @@ export interface TreeModel {
 export interface TreeContextValue {
   expandedState: Set<string>;
   /** Toggle a node expansion state */
-  toggleExpanded: (value: string) => void;
+  toggleExpanded: (event: SyntheticEvent, value: string) => void;
 
   /** Selected node values */
   selectedState: string[];

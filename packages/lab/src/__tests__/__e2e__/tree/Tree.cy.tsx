@@ -441,25 +441,26 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.get(".saltTreeNode-expansion").realClick();
-      cy.get("@expandedChangeHandler").should("have.been.calledWith", null, [
-        "parent",
-      ]);
+      cy.get("@expandedChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["parent"],
+      );
     });
 
-    it("should call onExpand when node is expanded", () => {
-      const onExpand = cy.stub().as("expandHandler");
+    it("should call onNodeExpandChange when node is expanded", () => {
+      const onNodeExpandChange = cy.stub().as("expandHandler");
       cy.mount(
-        <Tree aria-label="File browser" onExpand={onExpand}>
+        <Tree aria-label="File browser" onNodeExpandChange={onNodeExpandChange}>
           <TreeNode value="parent" label="Parent">
             <TreeNode value="child" label="Child" />
           </TreeNode>
         </Tree>,
       );
       cy.get(".saltTreeNode-expansion").realClick();
-      //null?
       cy.get("@expandHandler").should(
         "have.been.calledWith",
-        null,
+        Cypress.sinon.match.any,
         "parent",
         true,
       );

@@ -151,7 +151,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       (event: MouseEvent<HTMLSpanElement>) => {
         event.stopPropagation();
         if (disabled) return;
-        toggleExpanded(value);
+        toggleExpanded(event, value);
       },
       [disabled, toggleExpanded, value],
     );

@@ -26,12 +26,12 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
   /**
    * Callback on expanded nodes change
    */
-  onExpandedChange?: (event: SyntheticEvent | null, expanded: string[]) => void;
+  onExpandedChange?: (event: SyntheticEvent, expanded: string[]) => void;
   /**
    * Callback on node expanded or collapsed
    */
-  onExpand?: (
-    event: SyntheticEvent | null,
+  onNodeExpandChange?: (
+    event: SyntheticEvent,
     value: string,
     expanded: boolean,
   ) => void;
@@ -85,7 +85,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       defaultExpanded,
       expanded,
       onExpandedChange,
-      onExpand,
+      onNodeExpandChange,
       defaultSelected,
       selected,
       onSelectionChange,
@@ -110,7 +110,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       defaultExpanded,
       expanded,
       onExpandedChange,
-      onExpand,
+      onNodeExpandChange,
       defaultSelected,
       selected,
       onSelectionChange,
@@ -183,7 +183,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
               const isDisabled = disabledIdsSet.has(activeNode);
               if (!isDisabled && nodeMeta?.hasChildren) {
                 if (!expandedState.has(activeNode)) {
-                  toggleExpanded(activeNode);
+                  toggleExpanded(event, activeNode);
                 } else {
                   const firstChild = visibleNodes.find(
                     (visibleNode) => getParent(visibleNode) === activeNode,
@@ -202,7 +202,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
               const isDisabled = disabledIdsSet.has(activeNode);
               if (!isDisabled) {
                 if (expandedState.has(activeNode)) {
-                  toggleExpanded(activeNode);
+                  toggleExpanded(event, activeNode);
                 } else {
                   const parent = getParent(activeNode);
                   if (parent) {
@@ -256,7 +256,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
                 setExpandedArray(newExpanded);
                 onExpandedChange?.(event, newExpanded);
                 for (const value of toExpand) {
-                  onExpand?.(event, value, true);
+                  onNodeExpandChange?.(event, value, true);
                 }
               }
             }
@@ -390,7 +390,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         disabledIdsSet,
         onSelectionChange,
         onExpandedChange,
-        onExpand,
+        onNodeExpandChange,
       ],
     );
 
