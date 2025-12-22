@@ -56,50 +56,67 @@ const DefaultStory: StoryFn<typeof Tree> = (args) => (
 );
 export const Default = DefaultStory.bind({});
 
-const FolderIcon = ({ expanded }: { expanded?: boolean }) =>
-  expanded ? <FolderOpenIcon /> : <FolderClosedIcon />;
+export const WithIcons: StoryFn<typeof Tree> = (args) => {
+  const [expanded, setExpanded] = useState(["documents"]);
 
-export const WithIcons: StoryFn<typeof Tree> = (args) => (
-  <Tree aria-label="File browser" defaultExpanded={["documents"]} {...args}>
-    <TreeNode
-      value="documents"
-      label="Documents"
-      icon={<FolderIcon expanded />}
+  const folderIcon = (nodeValue: string) =>
+    expanded.includes(nodeValue) ? FolderOpenIcon : FolderClosedIcon;
+
+  return (
+    <Tree
+      {...args}
+      aria-label="File browser"
+      expanded={expanded}
+      onExpandedChange={(_, newExpanded) => setExpanded(newExpanded)}
     >
-      <TreeNode value="reports" label="Reports" icon={<FolderClosedIcon />}>
+      <TreeNode
+        value="documents"
+        label="Documents"
+        icon={folderIcon("documents")}
+      >
+        <TreeNode value="reports" label="Reports" icon={folderIcon("reports")}>
+          <TreeNode
+            value="annual-report"
+            label="Annual Report"
+            icon={DocumentIcon}
+          />
+          <TreeNode
+            value="quarterly-report"
+            label="Quarterly Report"
+            icon={DocumentIcon}
+          />
+        </TreeNode>
         <TreeNode
-          value="annual-report"
-          label="Annual Report"
-          icon={<DocumentIcon />}
-        />
-        <TreeNode
-          value="quarterly-report"
-          label="Quarterly Report"
-          icon={<DocumentIcon />}
-        />
+          value="invoices"
+          label="Invoices"
+          icon={folderIcon("invoices")}
+        >
+          <TreeNode
+            value="invoice-001"
+            label="Invoice 001"
+            icon={DocumentIcon}
+          />
+          <TreeNode
+            value="invoice-002"
+            label="Invoice 002"
+            icon={DocumentIcon}
+          />
+        </TreeNode>
       </TreeNode>
-      <TreeNode value="invoices" label="Invoices" icon={<FolderClosedIcon />}>
+      <TreeNode value="pictures" label="Pictures" icon={folderIcon("pictures")}>
         <TreeNode
-          value="invoice-001"
-          label="Invoice 001"
-          icon={<DocumentIcon />}
-        />
-        <TreeNode
-          value="invoice-002"
-          label="Invoice 002"
-          icon={<DocumentIcon />}
-        />
+          value="vacation"
+          label="Vacation"
+          icon={folderIcon("vacation")}
+        >
+          <TreeNode value="beach" label="Beach" icon={DocumentIcon} />
+          <TreeNode value="mountains" label="Mountains" icon={DocumentIcon} />
+        </TreeNode>
       </TreeNode>
-    </TreeNode>
-    <TreeNode value="pictures" label="Pictures" icon={<FolderClosedIcon />}>
-      <TreeNode value="vacation" label="Vacation" icon={<FolderClosedIcon />}>
-        <TreeNode value="beach" label="Beach" icon={<DocumentIcon />} />
-        <TreeNode value="mountains" label="Mountains" icon={<DocumentIcon />} />
-      </TreeNode>
-    </TreeNode>
-    <TreeNode value="downloads" label="Downloads" icon={<FolderClosedIcon />} />
-  </Tree>
-);
+      <TreeNode value="downloads" label="Downloads" icon={FolderClosedIcon} />
+    </Tree>
+  );
+};
 
 export const MultiselectWithIcons: StoryFn<typeof Tree> = () => (
   <Tree
@@ -108,39 +125,31 @@ export const MultiselectWithIcons: StoryFn<typeof Tree> = () => (
     defaultExpanded={["documents"]}
     defaultSelected={["annual-report"]}
   >
-    <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
-      <TreeNode value="reports" label="Reports" icon={<FolderClosedIcon />}>
+    <TreeNode value="documents" label="Documents" icon={FolderOpenIcon}>
+      <TreeNode value="reports" label="Reports" icon={FolderClosedIcon}>
         <TreeNode
           value="annual-report"
           label="Annual Report"
-          icon={<DocumentIcon />}
+          icon={DocumentIcon}
         />
         <TreeNode
           value="quarterly-report"
           label="Quarterly Report"
-          icon={<DocumentIcon />}
+          icon={DocumentIcon}
         />
       </TreeNode>
-      <TreeNode value="invoices" label="Invoices" icon={<FolderClosedIcon />}>
-        <TreeNode
-          value="invoice-001"
-          label="Invoice 001"
-          icon={<DocumentIcon />}
-        />
-        <TreeNode
-          value="invoice-002"
-          label="Invoice 002"
-          icon={<DocumentIcon />}
-        />
+      <TreeNode value="invoices" label="Invoices" icon={FolderClosedIcon}>
+        <TreeNode value="invoice-001" label="Invoice 001" icon={DocumentIcon} />
+        <TreeNode value="invoice-002" label="Invoice 002" icon={DocumentIcon} />
       </TreeNode>
     </TreeNode>
-    <TreeNode value="pictures" label="Pictures" icon={<FolderClosedIcon />}>
-      <TreeNode value="vacation" label="Vacation" icon={<FolderClosedIcon />}>
-        <TreeNode value="beach" label="Beach" icon={<DocumentIcon />} />
-        <TreeNode value="mountains" label="Mountains" icon={<DocumentIcon />} />
+    <TreeNode value="pictures" label="Pictures" icon={FolderClosedIcon}>
+      <TreeNode value="vacation" label="Vacation" icon={FolderClosedIcon}>
+        <TreeNode value="beach" label="Beach" icon={DocumentIcon} />
+        <TreeNode value="mountains" label="Mountains" icon={DocumentIcon} />
       </TreeNode>
     </TreeNode>
-    <TreeNode value="downloads" label="Downloads" icon={<FolderClosedIcon />} />
+    <TreeNode value="downloads" label="Downloads" icon={FolderClosedIcon} />
   </Tree>
 );
 MultiselectWithIcons.args = {
@@ -335,147 +344,142 @@ export const DeepNesting: StoryFn<typeof Tree> = (args) => (
   <Tree
     {...args}
     aria-label="Deep file hierarchy"
-    multiselect
     defaultExpanded={["projects"]}
   >
-    <TreeNode value="projects" label="Projects" icon={<FolderOpenIcon />}>
+    <TreeNode value="projects" label="Projects" icon={FolderOpenIcon}>
       <TreeNode
         value="project-alpha"
         label="Project Alpha"
-        icon={<FolderClosedIcon />}
+        icon={FolderClosedIcon}
       >
-        <TreeNode value="src" label="src" icon={<FolderClosedIcon />}>
+        <TreeNode value="src" label="src" icon={FolderClosedIcon}>
           <TreeNode
             value="src-components"
             label="components"
-            icon={<FolderClosedIcon />}
+            icon={FolderClosedIcon}
           >
-            <TreeNode value="ui" label="ui" icon={<FolderClosedIcon />}>
-              <TreeNode
-                value="buttons"
-                label="buttons"
-                icon={<FolderClosedIcon />}
-              >
+            <TreeNode value="ui" label="ui" icon={FolderClosedIcon}>
+              <TreeNode value="buttons" label="buttons" icon={FolderClosedIcon}>
                 <TreeNode
                   value="buttons-primary"
                   label="primary"
-                  icon={<FolderClosedIcon />}
+                  icon={FolderClosedIcon}
                 >
                   <TreeNode
                     value="buttons-primary-variants"
                     label="variants"
-                    icon={<FolderClosedIcon />}
+                    icon={FolderClosedIcon}
                   >
                     <TreeNode
                       value="buttons-primary-variants-large"
                       label="large"
-                      icon={<FolderClosedIcon />}
+                      icon={FolderClosedIcon}
                     >
                       <TreeNode
                         value="buttons-primary-variants-large-themes"
                         label="themes"
-                        icon={<FolderClosedIcon />}
+                        icon={FolderClosedIcon}
                       >
                         <TreeNode
                           value="buttons-primary-variants-large-themes-light"
                           label="light"
-                          icon={<FolderClosedIcon />}
+                          icon={FolderClosedIcon}
                         >
                           <TreeNode
                             value="buttons-primary-variants-large-themes-light-colors"
                             label="colors"
-                            icon={<FolderClosedIcon />}
+                            icon={FolderClosedIcon}
                           >
                             <TreeNode
                               value="buttons-primary-variants-large-themes-light-colors-primary"
                               label="primary"
-                              icon={<FolderClosedIcon />}
+                              icon={FolderClosedIcon}
                             >
                               <TreeNode
                                 value="buttons-primary-variants-large-themes-light-colors-primary-shades"
                                 label="shades"
-                                icon={<FolderClosedIcon />}
+                                icon={FolderClosedIcon}
                               >
                                 <TreeNode
                                   value="buttons-primary-variants-large-themes-light-colors-primary-shades-light"
                                   label="light-shade"
-                                  icon={<FolderClosedIcon />}
+                                  icon={FolderClosedIcon}
                                 >
                                   <TreeNode
                                     value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints"
                                     label="tints"
-                                    icon={<FolderClosedIcon />}
+                                    icon={FolderClosedIcon}
                                   >
                                     <TreeNode
                                       value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-100"
                                       label="tint-100"
-                                      icon={<DocumentIcon />}
+                                      icon={DocumentIcon}
                                     />
                                     <TreeNode
                                       value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-200"
                                       label="tint-200"
-                                      icon={<DocumentIcon />}
+                                      icon={DocumentIcon}
                                     />
                                     <TreeNode
                                       value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-300"
                                       label="tint-300"
-                                      icon={<DocumentIcon />}
+                                      icon={DocumentIcon}
                                     />
                                     <TreeNode
                                       value="buttons-primary-variants-large-themes-light-colors-primary-shades-light-tints-400"
                                       label="tint-400"
-                                      icon={<DocumentIcon />}
+                                      icon={DocumentIcon}
                                     />
                                   </TreeNode>
                                 </TreeNode>
                                 <TreeNode
                                   value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium"
                                   label="medium-shade"
-                                  icon={<FolderClosedIcon />}
+                                  icon={FolderClosedIcon}
                                 >
                                   <TreeNode
                                     value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium-tints"
                                     label="tints"
-                                    icon={<FolderClosedIcon />}
+                                    icon={FolderClosedIcon}
                                   >
                                     <TreeNode
                                       value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium-tints-100"
                                       label="tint-100"
-                                      icon={<DocumentIcon />}
+                                      icon={DocumentIcon}
                                     />
                                     <TreeNode
                                       value="buttons-primary-variants-large-themes-light-colors-primary-shades-medium-tints-200"
                                       label="tint-200"
-                                      icon={<DocumentIcon />}
+                                      icon={DocumentIcon}
                                     />
                                   </TreeNode>
                                 </TreeNode>
                                 <TreeNode
                                   value="buttons-primary-variants-large-themes-light-colors-primary-shades-dark"
                                   label="dark-shade"
-                                  icon={<DocumentIcon />}
+                                  icon={DocumentIcon}
                                 />
                               </TreeNode>
                             </TreeNode>
                             <TreeNode
                               value="buttons-primary-variants-large-themes-light-colors-secondary"
                               label="secondary"
-                              icon={<FolderClosedIcon />}
+                              icon={FolderClosedIcon}
                             >
                               <TreeNode
                                 value="buttons-primary-variants-large-themes-light-colors-secondary-blue"
                                 label="blue"
-                                icon={<DocumentIcon />}
+                                icon={DocumentIcon}
                               />
                               <TreeNode
                                 value="buttons-primary-variants-large-themes-light-colors-secondary-green"
                                 label="green"
-                                icon={<DocumentIcon />}
+                                icon={DocumentIcon}
                               />
                               <TreeNode
                                 value="buttons-primary-variants-large-themes-light-colors-secondary-red"
                                 label="red"
-                                icon={<DocumentIcon />}
+                                icon={DocumentIcon}
                               />
                             </TreeNode>
                           </TreeNode>
@@ -483,22 +487,22 @@ export const DeepNesting: StoryFn<typeof Tree> = (args) => (
                         <TreeNode
                           value="buttons-primary-variants-large-themes-dark"
                           label="dark"
-                          icon={<FolderClosedIcon />}
+                          icon={FolderClosedIcon}
                         >
                           <TreeNode
                             value="buttons-primary-variants-large-themes-dark-colors"
                             label="colors"
-                            icon={<FolderClosedIcon />}
+                            icon={FolderClosedIcon}
                           >
                             <TreeNode
                               value="buttons-primary-variants-large-themes-dark-colors-primary"
                               label="primary"
-                              icon={<DocumentIcon />}
+                              icon={DocumentIcon}
                             />
                             <TreeNode
                               value="buttons-primary-variants-large-themes-dark-colors-secondary"
                               label="secondary"
-                              icon={<DocumentIcon />}
+                              icon={DocumentIcon}
                             />
                           </TreeNode>
                         </TreeNode>
@@ -507,95 +511,95 @@ export const DeepNesting: StoryFn<typeof Tree> = (args) => (
                     <TreeNode
                       value="buttons-primary-variants-medium"
                       label="medium"
-                      icon={<FolderClosedIcon />}
+                      icon={FolderClosedIcon}
                     >
                       <TreeNode
                         value="buttons-primary-variants-medium-themes"
                         label="themes"
-                        icon={<FolderClosedIcon />}
+                        icon={FolderClosedIcon}
                       >
                         <TreeNode
                           value="buttons-primary-variants-medium-themes-light"
                           label="light"
-                          icon={<DocumentIcon />}
+                          icon={DocumentIcon}
                         />
                         <TreeNode
                           value="buttons-primary-variants-medium-themes-dark"
                           label="dark"
-                          icon={<DocumentIcon />}
+                          icon={DocumentIcon}
                         />
                       </TreeNode>
                     </TreeNode>
                     <TreeNode
                       value="buttons-primary-variants-small"
                       label="small"
-                      icon={<DocumentIcon />}
+                      icon={DocumentIcon}
                     />
                   </TreeNode>
                 </TreeNode>
                 <TreeNode
                   value="buttons-secondary"
                   label="secondary"
-                  icon={<FolderClosedIcon />}
+                  icon={FolderClosedIcon}
                 >
                   <TreeNode
                     value="buttons-secondary-variants"
                     label="variants"
-                    icon={<FolderClosedIcon />}
+                    icon={FolderClosedIcon}
                   >
                     <TreeNode
                       value="buttons-secondary-variants-large"
                       label="large"
-                      icon={<DocumentIcon />}
+                      icon={DocumentIcon}
                     />
                     <TreeNode
                       value="buttons-secondary-variants-medium"
                       label="medium"
-                      icon={<DocumentIcon />}
+                      icon={DocumentIcon}
                     />
                     <TreeNode
                       value="buttons-secondary-variants-small"
                       label="small"
-                      icon={<DocumentIcon />}
+                      icon={DocumentIcon}
                     />
                   </TreeNode>
                 </TreeNode>
               </TreeNode>
-              <TreeNode value="forms" label="forms" icon={<FolderClosedIcon />}>
+              <TreeNode value="forms" label="forms" icon={FolderClosedIcon}>
                 <TreeNode
                   value="forms-inputs"
                   label="inputs"
-                  icon={<FolderClosedIcon />}
+                  icon={FolderClosedIcon}
                 >
                   <TreeNode
                     value="forms-inputs-text"
                     label="text"
-                    icon={<FolderClosedIcon />}
+                    icon={FolderClosedIcon}
                   >
                     <TreeNode
                       value="forms-inputs-text-validation"
                       label="validation"
-                      icon={<FolderClosedIcon />}
+                      icon={FolderClosedIcon}
                     >
                       <TreeNode
                         value="forms-inputs-text-validation-rules"
                         label="rules"
-                        icon={<FolderClosedIcon />}
+                        icon={FolderClosedIcon}
                       >
                         <TreeNode
                           value="forms-inputs-text-validation-rules-required"
                           label="required"
-                          icon={<DocumentIcon />}
+                          icon={DocumentIcon}
                         />
                         <TreeNode
                           value="forms-inputs-text-validation-rules-pattern"
                           label="pattern"
-                          icon={<DocumentIcon />}
+                          icon={DocumentIcon}
                         />
                         <TreeNode
                           value="forms-inputs-text-validation-rules-length"
                           label="length"
-                          icon={<DocumentIcon />}
+                          icon={DocumentIcon}
                         />
                       </TreeNode>
                     </TreeNode>
@@ -603,95 +607,83 @@ export const DeepNesting: StoryFn<typeof Tree> = (args) => (
                   <TreeNode
                     value="forms-inputs-select"
                     label="select"
-                    icon={<DocumentIcon />}
+                    icon={DocumentIcon}
                   />
                   <TreeNode
                     value="forms-inputs-checkbox"
                     label="checkbox"
-                    icon={<DocumentIcon />}
+                    icon={DocumentIcon}
                   />
                 </TreeNode>
               </TreeNode>
             </TreeNode>
-            <TreeNode value="layout" label="layout" icon={<FolderClosedIcon />}>
-              <TreeNode value="grid" label="grid" icon={<DocumentIcon />} />
-              <TreeNode value="flex" label="flex" icon={<DocumentIcon />} />
+            <TreeNode value="layout" label="layout" icon={FolderClosedIcon}>
+              <TreeNode value="grid" label="grid" icon={DocumentIcon} />
+              <TreeNode value="flex" label="flex" icon={DocumentIcon} />
             </TreeNode>
           </TreeNode>
-          <TreeNode value="utils" label="utils" icon={<FolderClosedIcon />}>
-            <TreeNode
-              value="helpers"
-              label="helpers"
-              icon={<FolderClosedIcon />}
-            >
-              <TreeNode value="string" label="string" icon={<DocumentIcon />} />
-              <TreeNode value="number" label="number" icon={<DocumentIcon />} />
-              <TreeNode value="array" label="array" icon={<DocumentIcon />} />
+          <TreeNode value="utils" label="utils" icon={FolderClosedIcon}>
+            <TreeNode value="helpers" label="helpers" icon={FolderClosedIcon}>
+              <TreeNode value="string" label="string" icon={DocumentIcon} />
+              <TreeNode value="number" label="number" icon={DocumentIcon} />
+              <TreeNode value="array" label="array" icon={DocumentIcon} />
             </TreeNode>
           </TreeNode>
         </TreeNode>
-        <TreeNode value="tests" label="tests" icon={<FolderClosedIcon />}>
-          <TreeNode value="unit" label="unit" icon={<FolderClosedIcon />}>
+        <TreeNode value="tests" label="tests" icon={FolderClosedIcon}>
+          <TreeNode value="unit" label="unit" icon={FolderClosedIcon}>
             <TreeNode
               value="unit-components"
               label="components"
-              icon={<FolderClosedIcon />}
+              icon={FolderClosedIcon}
             >
               <TreeNode
                 value="button-test"
                 label="button.test"
-                icon={<DocumentIcon />}
+                icon={DocumentIcon}
               />
               <TreeNode
                 value="form-test"
                 label="form.test"
-                icon={<DocumentIcon />}
+                icon={DocumentIcon}
               />
             </TreeNode>
           </TreeNode>
           <TreeNode
             value="integration"
             label="integration"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
         </TreeNode>
       </TreeNode>
       <TreeNode
         value="project-beta"
         label="Project Beta"
-        icon={<FolderClosedIcon />}
+        icon={FolderClosedIcon}
       >
-        <TreeNode value="api" label="api" icon={<FolderClosedIcon />}>
-          <TreeNode
-            value="endpoints"
-            label="endpoints"
-            icon={<FolderClosedIcon />}
-          >
-            <TreeNode value="users" label="users" icon={<DocumentIcon />} />
-            <TreeNode value="posts" label="posts" icon={<DocumentIcon />} />
-            <TreeNode
-              value="comments"
-              label="comments"
-              icon={<DocumentIcon />}
-            />
+        <TreeNode value="api" label="api" icon={FolderClosedIcon}>
+          <TreeNode value="endpoints" label="endpoints" icon={FolderClosedIcon}>
+            <TreeNode value="users" label="users" icon={DocumentIcon} />
+            <TreeNode value="posts" label="posts" icon={DocumentIcon} />
+            <TreeNode value="comments" label="comments" icon={DocumentIcon} />
           </TreeNode>
         </TreeNode>
       </TreeNode>
       <TreeNode
         value="project-gamma"
         label="Project Gamma"
-        icon={<FolderClosedIcon />}
+        icon={FolderClosedIcon}
       >
         <TreeNode
           value="documentation"
           label="documentation"
-          icon={<FolderClosedIcon />}
+          icon={FolderClosedIcon}
         >
-          <TreeNode value="readme" label="README.md" icon={<DocumentIcon />} />
+          <TreeNode value="readme" label="README.md" icon={DocumentIcon} />
           <TreeNode
             value="contributing"
             label="CONTRIBUTING.md"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
         </TreeNode>
       </TreeNode>

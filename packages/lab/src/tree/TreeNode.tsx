@@ -5,11 +5,13 @@ import {
   useIcon,
   useId,
 } from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type ComponentType,
   type CSSProperties,
   type FocusEvent,
   forwardRef,
@@ -51,7 +53,7 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
   /**
    * Optional icon to display before the label
    */
-  icon?: ReactNode;
+  icon?: ComponentType<IconProps>;
   /**
    * Whether the node is disabled.
    * Disabled nodes cannot be selected, expanded, or interacted with.
@@ -71,7 +73,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const {
       value,
       label,
-      icon,
+      icon: Icon,
       disabled: disabledProp = false,
       children,
       className,
@@ -230,7 +232,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
                 />
               )}
 
-              {icon && <span className={withBaseName("icon")}>{icon}</span>}
+              {Icon ? <Icon className={withBaseName("icon")} /> : null}
 
               <span id={labelId} className={withBaseName("label")}>
                 {label}
