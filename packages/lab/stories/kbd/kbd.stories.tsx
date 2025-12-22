@@ -10,9 +10,9 @@ export default {
 export const Variants: StoryFn<KbdProps> = () => {
   return (
     <StackLayout style={{ width: "200px" }}>
-      <Kbd>Keyboard</Kbd>
-      <Kbd variant="secondary">Keyboard</Kbd>
-      <Kbd variant="tertiary">Keyboard</Kbd>
+      <Kbd>primary</Kbd>
+      <Kbd variant="secondary">secondary</Kbd>
+      <Kbd variant="tertiary">tertiary</Kbd>
     </StackLayout>
   );
 };
