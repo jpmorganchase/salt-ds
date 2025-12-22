@@ -33,30 +33,30 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       aria-label="Tree with icons"
       defaultExpanded={["documents", "reports"]}
     >
-      <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
-        <TreeNode value="reports" label="Reports" icon={<FolderOpenIcon />}>
+      <TreeNode value="documents" label="Documents" icon={FolderOpenIcon}>
+        <TreeNode value="reports" label="Reports" icon={FolderOpenIcon}>
           <TreeNode
             value="annual-report"
             label="Annual Report"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
           <TreeNode
             value="quarterly-report"
             label="Quarterly Report"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
         </TreeNode>
-        <TreeNode value="invoices" label="Invoices" icon={<FolderClosedIcon />}>
+        <TreeNode value="invoices" label="Invoices" icon={FolderClosedIcon}>
           <TreeNode
             value="invoice-001"
             label="Invoice 001"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
         </TreeNode>
       </TreeNode>
-      <TreeNode value="pictures" label="Pictures" icon={<FolderClosedIcon />}>
-        <TreeNode value="vacation" label="Vacation" icon={<FolderClosedIcon />}>
-          <TreeNode value="beach" label="Beach" icon={<DocumentIcon />} />
+      <TreeNode value="pictures" label="Pictures" icon={FolderClosedIcon}>
+        <TreeNode value="vacation" label="Vacation" icon={FolderClosedIcon}>
+          <TreeNode value="beach" label="Beach" icon={DocumentIcon} />
         </TreeNode>
       </TreeNode>
     </Tree>
@@ -110,30 +110,30 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       defaultExpanded={["documents", "reports"]}
       defaultSelected={["annual-report"]}
     >
-      <TreeNode value="documents" label="Documents" icon={<FolderOpenIcon />}>
-        <TreeNode value="reports" label="Reports" icon={<FolderOpenIcon />}>
+      <TreeNode value="documents" label="Documents" icon={FolderOpenIcon}>
+        <TreeNode value="reports" label="Reports" icon={FolderOpenIcon}>
           <TreeNode
             value="annual-report"
             label="Annual Report"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
           <TreeNode
             value="quarterly-report"
             label="Quarterly Report"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
         </TreeNode>
-        <TreeNode value="invoices" label="Invoices" icon={<FolderClosedIcon />}>
+        <TreeNode value="invoices" label="Invoices" icon={FolderClosedIcon}>
           <TreeNode
             value="invoice-001"
             label="Invoice 001"
-            icon={<DocumentIcon />}
+            icon={DocumentIcon}
           />
         </TreeNode>
       </TreeNode>
-      <TreeNode value="pictures" label="Pictures" icon={<FolderClosedIcon />}>
-        <TreeNode value="vacation" label="Vacation" icon={<FolderClosedIcon />}>
-          <TreeNode value="beach" label="Beach" icon={<DocumentIcon />} />
+      <TreeNode value="pictures" label="Pictures" icon={FolderClosedIcon}>
+        <TreeNode value="vacation" label="Vacation" icon={FolderClosedIcon}>
+          <TreeNode value="beach" label="Beach" icon={DocumentIcon} />
         </TreeNode>
       </TreeNode>
     </Tree>
