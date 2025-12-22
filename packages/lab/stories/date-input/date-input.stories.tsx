@@ -105,7 +105,11 @@ const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
   }
   return (
     <div style={{ width: "250px" }}>
-      <DateInputRange {...(args as any)} onDateChange={handleDateChange} />
+      <DateInputRange
+        // biome-ignore lint/suspicious/noExplicitAny: story args
+        {...(args as any)}
+        onDateChange={handleDateChange}
+      />
     </div>
   );
 };
@@ -123,7 +127,7 @@ Range.args = {
 export const SingleControlled: StoryFn<DateInputSingleProps> = (args) => {
   const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(args?.date ?? null);
 
   function handleDateChange(
@@ -180,13 +184,13 @@ export const RangeControlled: StoryFn<DateInputRangeProps> = ({
 }) => {
   const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    DateRangeSelection<DateFrameworkType> | null | undefined
+    DateRangeSelection | null | undefined
   >(date ?? null);
 
   const handleDateChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -395,7 +399,7 @@ EmptyReadOnlyMarker.args = {
 };
 
 export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const timezoneOptions =
     dateAdapter.lib !== "date-fns"
       ? [
@@ -562,7 +566,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
 };
 
 export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const timezoneOptions =
     dateAdapter.lib !== "date-fns"
       ? [
@@ -612,8 +616,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
     date,
     details,
   ) => {
-    const { startDate, endDate } =
-      date as DateRangeSelection<DateFrameworkType>;
+    const { startDate, endDate } = date as DateRangeSelection;
     const isStartDateUnset =
       details.startDate?.errors?.length &&
       details.startDate.errors[0].type === "unset";

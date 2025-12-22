@@ -33,7 +33,7 @@ const Single = ({
 }: {
   selectedTimezone: Timezone;
 }): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const [currentTimezone, setCurrentTimezone] = useState<string>("");
   const [iso8601String, setIso8601String] = useState<string>("");
@@ -50,7 +50,7 @@ const Single = ({
 
   const handleSelectionChange = (
     _event: SyntheticEvent,
-    selection: SingleDateSelection<DateFrameworkType> | null,
+    selection: SingleDateSelection | null,
   ) => {
     console.log(
       `Selected date: ${dateAdapter.isValid(selection) ? dateAdapter.format(selection, "DD MMM YYYY") : selection}`,

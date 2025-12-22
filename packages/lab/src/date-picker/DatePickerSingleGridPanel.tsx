@@ -131,7 +131,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     props: DatePickerSingleGridPanelProps,
     ref: React.Ref<HTMLDivElement>,
   ) {
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
 
     const {
       CalendarProps,
@@ -207,10 +207,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     const handleSelectionChange = useCallback(
       (
         event: SyntheticEvent,
-        newDate:
-          | SingleDateSelection<DateFrameworkType>
-          | DateRangeSelection<DateFrameworkType>
-          | null,
+        newDate: SingleDateSelection | DateRangeSelection | null,
       ) => {
         const singleDate = newDate as DateFrameworkType | null;
         select(event, singleDate);

@@ -1,5 +1,4 @@
 import { Divider, FlexItem, FlexLayout } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -23,7 +22,7 @@ import {
 export const ControlledOpen = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(null);
   const { dateAdapter } = useLocalization();
   const triggerRef = useRef<HTMLInputElement>(null);
@@ -34,7 +33,7 @@ export const ControlledOpen = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       _details: DateInputSingleDetails | undefined,
     ) => {
       setSelectedDate(date ?? null);
@@ -43,10 +42,7 @@ export const ControlledOpen = (): ReactElement => {
   );
 
   const handleApply = useCallback(
-    (
-      _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
-    ) => {
+    (_event: SyntheticEvent, date: SingleDateSelection | null) => {
       console.log(
         `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );

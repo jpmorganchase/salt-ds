@@ -1,4 +1,3 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -18,12 +17,13 @@ import {
 
 export const RangeControlled = (): ReactElement => {
   const { dateAdapter } = useLocalization();
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};

@@ -1,4 +1,3 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
@@ -8,7 +7,7 @@ import {
 import type { ReactElement } from "react";
 
 export const Range = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { days: 6 });
 

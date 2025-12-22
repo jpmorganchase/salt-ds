@@ -31,7 +31,7 @@ interface UseDatePickerBaseProps {
   /**
    * Factory method for date selection live announcements or null to silence announcements
    */
-  createAnnouncement?: CreateAnnouncement<DateFrameworkType> | null;
+  createAnnouncement?: CreateAnnouncement | null;
   /**
    * If `true`, the component is disabled.
    */
@@ -81,11 +81,11 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
   /**
    * The selected date. The selected date will be controlled when this prop is provided.
    */
-  selectedDate?: SingleDateSelection<DateFrameworkType> | null;
+  selectedDate?: SingleDateSelection | null;
   /**
    * The initial selected date, when the selected date is uncontrolled.
    */
-  defaultSelectedDate?: SingleDateSelection<DateFrameworkType> | null;
+  defaultSelectedDate?: SingleDateSelection | null;
   /**
    * Handler called when the selected date changes.
    * @param event - The synthetic event.
@@ -94,7 +94,7 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<DateFrameworkType> | null,
+    date: SingleDateSelection | null,
     details?: DateInputSingleDetails,
   ) => void;
   /**
@@ -102,10 +102,7 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
    * @param event - The synthetic event.
    * @param date - The selected date or null.
    */
-  onApply?: (
-    event: SyntheticEvent,
-    date: SingleDateSelection<DateFrameworkType> | null,
-  ) => void;
+  onApply?: (event: SyntheticEvent, date: SingleDateSelection | null) => void;
 }
 
 /**
@@ -119,11 +116,11 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
   /**
    * The selected date range. The selected date will be controlled when this prop is provided.
    */
-  selectedDate?: DateRangeSelection<DateFrameworkType> | null;
+  selectedDate?: DateRangeSelection | null;
   /**
    * The initial selected date range, when the selected date is uncontrolled.
    */
-  defaultSelectedDate?: DateRangeSelection<DateFrameworkType> | null;
+  defaultSelectedDate?: DateRangeSelection | null;
   /**
    * Handler called when the selected date range changes.
    * @param event - The synthetic event.
@@ -132,7 +129,7 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    date: DateRangeSelection<DateFrameworkType> | null,
+    date: DateRangeSelection | null,
     details?: DateInputRangeDetails,
   ) => void;
   /**
@@ -140,10 +137,7 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
    * @param event - The synthetic event.
    * @param date - The selected date range.
    */
-  onApply?: (
-    event: SyntheticEvent,
-    date: DateRangeSelection<DateFrameworkType> | null,
-  ) => void;
+  onApply?: (event: SyntheticEvent, date: DateRangeSelection | null) => void;
 }
 
 /**
@@ -235,10 +229,7 @@ export function useDatePicker(
   const isDisabled = disabled || formFieldDisabled || false;
 
   const applySingle = useCallback(
-    (
-      event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
-    ): void => {
+    (event: SyntheticEvent, date: SingleDateSelection | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
       announce("dateSelected", { selectedDate: date });
@@ -275,7 +266,7 @@ export function useDatePicker(
   const selectSingle = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails,
     ) => {
       const canBeApplied =
@@ -302,10 +293,7 @@ export function useDatePicker(
   );
 
   const applyRange = useCallback(
-    (
-      event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
-    ): void => {
+    (event: SyntheticEvent, date: DateRangeSelection | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
       announce("dateSelected", { selectedDate: date });
@@ -319,7 +307,7 @@ export function useDatePicker(
   const selectRange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails,
     ) => {
       setSelectedDate(date);

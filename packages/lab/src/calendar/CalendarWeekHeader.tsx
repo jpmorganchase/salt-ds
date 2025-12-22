@@ -1,5 +1,4 @@
 import { makePrefixer, Text } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -20,7 +19,7 @@ export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader(
   ref: React.Ref<HTMLDivElement>,
 ) {
   const { className, ...rest } = props;
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const weekdaysShort = daysOfWeek(dateAdapter, "narrow");
   const weekdaysLong = daysOfWeek(dateAdapter, "long");

@@ -4,7 +4,6 @@ import {
   type ResponsiveProp,
   useForkRef,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
@@ -58,7 +57,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
       ...rest
     } = props;
 
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
 
     const {
       helpers: { setFocusedDate, setHoveredDate },

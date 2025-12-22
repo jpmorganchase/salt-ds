@@ -12,39 +12,37 @@ export type AnnouncementType =
 // State types for each announcement
 export type AnnouncerMinMaxFocusState = {}; // No state needed
 
-export interface AnnouncerVisibleMonthState<TDate> {
-  startVisibleMonth: TDate;
-  endVisibleMonth: TDate;
+export interface AnnouncerVisibleMonthState {
+  startVisibleMonth: DateFrameworkType;
+  endVisibleMonth: DateFrameworkType;
 }
 
-export interface AnnouncerRangeDateSelectedState<TDate> {
+export interface AnnouncerRangeDateSelectedState {
   multiselect: boolean;
   selectedDate:
-    | Array<{ startDate?: TDate; endDate?: TDate }>
-    | { startDate?: TDate; endDate?: TDate }
+    | Array<{ startDate?: DateFrameworkType; endDate?: DateFrameworkType }>
+    | { startDate?: DateFrameworkType; endDate?: DateFrameworkType }
     | null;
 }
 
-export interface AnnouncerSingleDateSelectedState<TDate> {
+export interface AnnouncerSingleDateSelectedState {
   multiselect: boolean;
-  selectedDate: TDate | TDate[] | null;
+  selectedDate: DateFrameworkType | DateFrameworkType[] | null;
 }
 
-export type DateSelectionAnnouncerState<TDate extends DateFrameworkType> =
-  | AnnouncerSingleDateSelectedState<TDate>
-  | AnnouncerRangeDateSelectedState<TDate>
-  | AnnouncerVisibleMonthState<TDate>
+export type DateSelectionAnnouncerState =
+  | AnnouncerSingleDateSelectedState
+  | AnnouncerRangeDateSelectedState
+  | AnnouncerVisibleMonthState
   | AnnouncerMinMaxFocusState;
 
-export function createSingleSelectionAnnouncement<
-  TDate extends DateFrameworkType,
->(
+export function createSingleSelectionAnnouncement(
   announcementType: AnnouncementType,
   state:
-    | AnnouncerSingleDateSelectedState<TDate>
-    | AnnouncerVisibleMonthState<TDate>
+    | AnnouncerSingleDateSelectedState
+    | AnnouncerVisibleMonthState
     | AnnouncerMinMaxFocusState,
-  dateAdapter: SaltDateAdapter<TDate>,
+  dateAdapter: SaltDateAdapter,
 ): string | undefined {
   switch (announcementType) {
     case "minFocusableDateExceeded":
@@ -53,7 +51,7 @@ export function createSingleSelectionAnnouncement<
       return "cannot focus beyond maximum date";
     case "dateSelected": {
       const { multiselect, selectedDate } =
-        state as AnnouncerSingleDateSelectedState<TDate>;
+        state as AnnouncerSingleDateSelectedState;
       if (
         !selectedDate ||
         (multiselect && Array.isArray(selectedDate) && !selectedDate.length)
@@ -65,13 +63,13 @@ export function createSingleSelectionAnnouncement<
         return `${dateAdapter.format(lastSelectedDate, "dddd D MMMM YYYY")}, selected, ${selectedDate.length} dates in selection`;
       }
       if (!multiselect && selectedDate) {
-        return `${dateAdapter.format(selectedDate as TDate, "dddd D MMMM YYYY")}, selected`;
+        return `${dateAdapter.format(selectedDate as DateFrameworkType, "dddd D MMMM YYYY")}, selected`;
       }
       break;
     }
     case "visibleMonthChanged": {
       const { startVisibleMonth, endVisibleMonth } =
-        state as AnnouncerVisibleMonthState<TDate>;
+        state as AnnouncerVisibleMonthState;
       const isSingleMonth = dateAdapter.isSame(
         startVisibleMonth,
         endVisibleMonth,
@@ -86,15 +84,13 @@ export function createSingleSelectionAnnouncement<
   }
 }
 
-export function createRangeSelectionAnnouncement<
-  TDate extends DateFrameworkType,
->(
+export function createRangeSelectionAnnouncement(
   announcementType: AnnouncementType,
   state:
-    | AnnouncerRangeDateSelectedState<TDate>
-    | AnnouncerVisibleMonthState<TDate>
+    | AnnouncerRangeDateSelectedState
+    | AnnouncerVisibleMonthState
     | AnnouncerMinMaxFocusState,
-  dateAdapter: SaltDateAdapter<TDate>,
+  dateAdapter: SaltDateAdapter,
 ): string | undefined {
   switch (announcementType) {
     case "minFocusableDateExceeded":
@@ -103,15 +99,15 @@ export function createRangeSelectionAnnouncement<
       return "cannot focus beyond maximum date";
     case "dateSelected": {
       const { multiselect, selectedDate } =
-        state as AnnouncerRangeDateSelectedState<TDate>;
+        state as AnnouncerRangeDateSelectedState;
       if (
         !selectedDate ||
         (multiselect && Array.isArray(selectedDate) && !selectedDate.length)
       ) {
         return "cleared date selection";
       }
-      let startDate: TDate | undefined;
-      let endDate: TDate | undefined;
+      let startDate: DateFrameworkType | undefined;
+      let endDate: DateFrameworkType | undefined;
       if (multiselect && Array.isArray(selectedDate)) {
         const last = selectedDate[selectedDate.length - 1];
         startDate = last.startDate;
@@ -141,7 +137,7 @@ export function createRangeSelectionAnnouncement<
     }
     case "visibleMonthChanged": {
       const { startVisibleMonth, endVisibleMonth } =
-        state as AnnouncerVisibleMonthState<TDate>;
+        state as AnnouncerVisibleMonthState;
       const isSingleMonth = dateAdapter.isSame(
         startVisibleMonth,
         endVisibleMonth,

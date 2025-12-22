@@ -32,7 +32,7 @@ const Single = ({
 }: {
   selectedTimezone: Timezone;
 }): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const [currentTimezone, setCurrentTimezone] = useState<string>("");
   const [iso8601String, setIso8601String] = useState<string>("");

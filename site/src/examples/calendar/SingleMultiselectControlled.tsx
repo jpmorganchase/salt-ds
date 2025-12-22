@@ -15,8 +15,8 @@ import {
 import { type ReactElement, useState } from "react";
 
 function selectMultiselectSingle(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
-  previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: SingleDateSelection[],
   newDate: DateFrameworkType,
 ) {
   const newSelection = previousSelectedDate.filter(
@@ -30,7 +30,7 @@ function selectMultiselectSingle(
 }
 
 export const SingleMultiselectControlled = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const initialVisibleMonth = dateAdapter.parse(
     "01/01/2024",
     "DD/MM/YYYY",
@@ -99,8 +99,8 @@ export const SingleMultiselectControlled = (): ReactElement => {
       onVisibleMonthChange={handleVisibleMonthChange}
       hideOutOfRangeDates
       select={(
-        previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
-        newDate: SingleDateSelection<DateFrameworkType>,
+        previousSelectedDate: SingleDateSelection[],
+        newDate: SingleDateSelection,
       ) => selectMultiselectSingle(dateAdapter, previousSelectedDate, newDate)}
     >
       <StackLayout gap={0}>

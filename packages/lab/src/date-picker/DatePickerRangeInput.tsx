@@ -40,14 +40,14 @@ export interface DatePickerRangeInputProps extends DateInputRangeProps {
    * @returns updated DateInputRangeDetails details
    */
   validate?: (
-    date: DateRangeSelection<DateFrameworkType> | null,
+    date: DateRangeSelection | null,
     details: DateInputRangeDetails,
   ) => DateInputRangeDetails;
 }
 
 export function defaultRangeValidator(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
-  date: DateRangeSelection<DateFrameworkType> | null,
+  dateAdapter: SaltDateAdapter,
+  date: DateRangeSelection | null,
   details: DateInputRangeDetails,
   minDate?: DateFrameworkType,
   maxDate?: DateFrameworkType,
@@ -157,7 +157,7 @@ export const DatePickerRangeInput = forwardRef<
   HTMLDivElement,
   DatePickerRangeInputProps
 >((props: DatePickerRangeInputProps, ref: React.Ref<HTMLDivElement>) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const {
     className,
     endInputProps,
@@ -230,7 +230,7 @@ export const DatePickerRangeInput = forwardRef<
   const handleDateChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails,
     ) => {
       const validatedDetails = validate

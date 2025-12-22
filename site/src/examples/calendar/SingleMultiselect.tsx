@@ -1,4 +1,3 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
@@ -8,7 +7,7 @@ import {
 import type { ReactElement } from "react";
 
 export const SingleMultiselect = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const defaultSelectedDate = [
     "02/01/2024",
     "03/01/2024",

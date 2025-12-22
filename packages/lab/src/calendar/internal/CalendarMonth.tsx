@@ -43,7 +43,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
     ref: React.Ref<HTMLDivElement>,
   ) {
     const { className, date, onMouseLeave, CalendarDayProps, ...rest } = props;
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-calendar-month",

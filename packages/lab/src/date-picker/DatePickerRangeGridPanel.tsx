@@ -46,10 +46,10 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
  * Props for the DatePickerRangeGridPanel component.
  */
 export type DatePickerRangeGridPanelProps = DatePickerPanelBaseProps &
-  DateRangeSelection<DateFrameworkType> & {
+  DateRangeSelection & {
     onSelectionChange?: (
       event: SyntheticEvent,
-      selectedDate?: DateRangeSelection<DateFrameworkType> | null,
+      selectedDate?: DateRangeSelection | null,
     ) => void;
     CalendarProps?: Partial<
       Omit<
@@ -70,7 +70,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     props: DatePickerRangeGridPanelProps,
     ref: React.Ref<HTMLDivElement>,
   ) {
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
 
     const {
       CalendarProps,
@@ -235,13 +235,9 @@ export const DatePickerRangeGridPanel = forwardRef(
     const handleSelectionChange = useCallback(
       (
         event: SyntheticEvent,
-        newDate:
-          | SingleDateSelection<DateFrameworkType>
-          | DateRangeSelection<DateFrameworkType>
-          | null,
+        newDate: SingleDateSelection | DateRangeSelection | null,
       ) => {
-        const dateRange =
-          newDate as DateRangeSelection<DateFrameworkType> | null;
+        const dateRange = newDate as DateRangeSelection | null;
         select(event, dateRange);
         onSelectionChange?.(event, dateRange);
       },

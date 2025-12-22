@@ -42,10 +42,8 @@ const renderQAContainer = (
     return isTargetDay ? message : false;
   };
 
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   const isSaturday = (day: DateFrameworkType) =>
     checkDayOfWeek(day, 6, 5, "is a weekend");
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   const isFriday = (day: DateFrameworkType) =>
     checkDayOfWeek(day, 5, 4, "is a Friday");
 
@@ -58,7 +56,7 @@ const renderQAContainer = (
           isDayHighlighted={isFriday}
           isDayUnselectable={isSaturday}
           open
-          {...(props as any)}
+          {...props}
         >
           <DatePickerTrigger>
             <DatePickerSingleInput />

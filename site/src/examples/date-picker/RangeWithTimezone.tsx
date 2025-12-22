@@ -61,7 +61,7 @@ const Range = ({
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      selection: DateRangeSelection<DateFrameworkType> | null,
+      selection: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = selection ?? {};
