@@ -17,13 +17,17 @@ import { useCalendarContext } from "./internal/CalendarContext";
 /**
  * Type representing a single date selection.
  */
-export type SingleDateSelection<TDate extends DateFrameworkType> = TDate;
+export type SingleDateSelection<
+  TDate extends DateFrameworkType = DateFrameworkType,
+> = TDate;
 
 /**
  * Type representing a date range selection.
  * @template TDate - The type of the date object.
  */
-export type DateRangeSelection<TDate extends DateFrameworkType> = {
+export type DateRangeSelection<
+  TDate extends DateFrameworkType = DateFrameworkType,
+> = {
   /**
    * The start date of the range, or null if empty
    */
@@ -40,9 +44,9 @@ export type DateRangeSelection<TDate extends DateFrameworkType> = {
  * @param value - The value to check.
  * @returns `true` if the value is a date range selection, otherwise `false`.
  */
-export function isDateRangeSelection<TDate extends DateFrameworkType>(
-  value: unknown,
-): value is DateRangeSelection<TDate> {
+export function isDateRangeSelection<
+  TDate extends DateFrameworkType = DateFrameworkType,
+>(value: unknown): value is DateRangeSelection<TDate> {
   return (
     !!value &&
     !Array.isArray(value) &&
@@ -55,7 +59,6 @@ export type SelectionVariant = "single" | "range" | "offset";
 
 /**
  * Base properties for calendar UseCalendarSelection hook.
- * @template TDate - The type of the date object.
  */
 export interface UseCalendarSelectionBaseProps<Selection> {
   /**
@@ -178,7 +181,7 @@ function isMultiselect(
 }
 
 function selectDateRange(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  dateAdapter: SaltDateAdapter,
   previousSelectedDate: DateRangeSelection<DateFrameworkType>,
   newDate: DateFrameworkType,
 ) {
@@ -202,7 +205,7 @@ function selectDateRange(
 }
 
 function selectMultiselectDateRange(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
+  dateAdapter: SaltDateAdapter,
   previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
   newDate: DateFrameworkType,
 ): DateRangeSelection<DateFrameworkType>[] {

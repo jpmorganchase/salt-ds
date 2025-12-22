@@ -3,7 +3,6 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DateInputRange,
   type DateInputRangeProps,
@@ -20,8 +19,9 @@ export const RangeControlled = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   const handleDateChange: DateInputRangeProps["onDateChange"] = (
     _event,
     date,

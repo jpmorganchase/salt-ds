@@ -62,7 +62,7 @@ function assertDateChange(
   spy: any,
   expectedValue: string,
   expectedDate: DateFrameworkType | null | undefined,
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
   const date = lastCallArgs[1];
@@ -228,7 +228,7 @@ describe("GIVEN a DateInputSingle", () => {
         const customParserSpy = cy
           .stub()
           .as("customParserSpy")
-          .callsFake((inputDate: string): ParserResult<DateFrameworkType> => {
+          .callsFake((inputDate: string): ParserResult => {
             expect(inputDate).to.equal("custom value");
             return {
               date: initialDate,

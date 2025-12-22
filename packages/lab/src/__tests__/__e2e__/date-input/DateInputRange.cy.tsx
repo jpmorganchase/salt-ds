@@ -383,10 +383,7 @@ describe("GIVEN a DateInputRange", () => {
           .stub()
           .as("customParserSpy")
           .callsFake(
-            (
-              inputDate: string,
-              _field: DateParserField,
-            ): ParserResult<DateFrameworkType> => {
+            (inputDate: string, _field: DateParserField): ParserResult => {
               if (inputDate === "custom start date") {
                 return {
                   date: initialDate.startDate,
@@ -729,12 +726,12 @@ describe("GIVEN a DateInputRange", () => {
 
         function ControlledDateInput() {
           const [date, setDate] = useState<
-            DateRangeSelection<DateFrameworkType> | null | undefined
+            DateRangeSelection | null | undefined
           >(initialDate);
 
           const handleDateChange = (
             event: SyntheticEvent,
-            newDate: DateRangeSelection<DateFrameworkType> | null | undefined,
+            newDate: DateRangeSelection | null | undefined,
             details: DateInputRangeDetails,
           ) => {
             // React 16 backwards compatibility

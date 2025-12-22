@@ -3,7 +3,6 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DateInputSingle,
   type DateInputSingleProps,
@@ -14,8 +13,9 @@ import { type ReactElement, useState } from "react";
 
 export const SingleControlled = (): ReactElement => {
   const { dateAdapter } = useLocalization();
-  const [selectedDate, setSelectedDate] =
-    useState<SingleDateSelection<DateFrameworkType> | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);

@@ -1,25 +1,22 @@
 import { useAriaAnnouncer } from "@salt-ds/core";
-import type {
-  DateFrameworkType,
-  SaltDateAdapter,
-} from "@salt-ds/date-adapters";
+import type { SaltDateAdapter } from "@salt-ds/date-adapters";
 import { useEffect, useRef } from "react";
 import type {
   AnnouncementType,
   DateSelectionAnnouncerState,
 } from "./internal/createAnnouncement";
 
-export type CreateAnnouncement<TDate extends DateFrameworkType> = (
+export type CreateAnnouncement = (
   announcementType: AnnouncementType,
-  state: DateSelectionAnnouncerState<TDate>,
-  dateAdapter: SaltDateAdapter<TDate>,
+  state: DateSelectionAnnouncerState,
+  dateAdapter: SaltDateAdapter,
 ) => string | undefined;
 
 const DEBOUNCE_MSECS = 2000;
 
-export function useDateSelectionAnnouncer<TDate extends DateFrameworkType>(
-  createAnnouncement: CreateAnnouncement<TDate> | null | undefined,
-  dateAdapter: SaltDateAdapter<TDate>,
+export function useDateSelectionAnnouncer(
+  createAnnouncement: CreateAnnouncement | null | undefined,
+  dateAdapter: SaltDateAdapter,
 ) {
   const { announce: saltAnnouncer } = useAriaAnnouncer();
 
@@ -34,7 +31,7 @@ export function useDateSelectionAnnouncer<TDate extends DateFrameworkType>(
    */
   const announce = (
     announcementType: AnnouncementType,
-    state?: DateSelectionAnnouncerState<TDate> | undefined,
+    state?: DateSelectionAnnouncerState | undefined,
   ) => {
     if (!createAnnouncement) {
       return;

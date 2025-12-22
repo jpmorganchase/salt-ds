@@ -22,7 +22,7 @@ const adapterMoment = new AdapterMoment();
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 function getAllDatesInRange(
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter,
   startDate: DateFrameworkType,
   endDate: DateFrameworkType,
 ) {
@@ -55,7 +55,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
           adapter.add(date as any, { days: 4 });
         const offsetDate = endDateOffset(testDate);
         const datesInRange = getAllDatesInRange(
-          adapter as SaltDateAdapter<DateFrameworkType>,
+          adapter as SaltDateAdapter,
           testDate,
           offsetDate,
         );
@@ -228,7 +228,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
 });
 
 function assertRangeUnselected(
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter,
   baseDate: DateFrameworkType,
 ) {
   for (let i = 0; i <= 3; i++) {
@@ -239,7 +239,7 @@ function assertRangeUnselected(
 }
 
 function assertRangeSelected(
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter,
   baseDate: DateFrameworkType,
 ) {
   for (let i = 0; i <= 3; i++) {
@@ -272,7 +272,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
       const endDateOffset = (date: DateFrameworkType) =>
         adapter.add(date, { days: 3 });
       const testStartDate1 = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
-      const testDate: DateRangeSelection<DateFrameworkType> = {
+      const testDate: DateRangeSelection = {
         startDate: testStartDate1,
         endDate: endDateOffset(testStartDate1),
       };
@@ -413,7 +413,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         const testDate: DateFrameworkType = adapter.today();
 
         const selectStub = (
-          previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+          previousSelectedDate: DateRangeSelection[],
           newDate: DateFrameworkType,
         ) => {
           let newSelection = previousSelectedDate.filter(

@@ -570,7 +570,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
       it("SHOULD allow multiple dates to be selected and unselected", () => {
         const testDate = adapter.today();
         const selectStub = (
-          previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
+          previousSelectedDate: SingleDateSelection[],
           newDate: DateFrameworkType,
         ) => {
           let newSelection = previousSelectedDate.filter((previousDate) => {

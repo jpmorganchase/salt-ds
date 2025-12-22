@@ -15,7 +15,6 @@ import {
   useDatePickerContext,
 } from "./DatePickerContext";
 import "./DatePickerActions.css";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useLocalization } from "../localization-provider";
@@ -70,7 +69,7 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: SingleDateSelection<DateFrameworkType> | null,
+        date: SingleDateSelection | null,
       ) => void;
     }
   : DatePickerActionsBaseProps & {
@@ -85,7 +84,7 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: DateRangeSelection<DateFrameworkType> | null,
+        date: DateRangeSelection | null,
       ) => void;
     };
 
@@ -112,7 +111,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
     window: targetWindow,
   });
 
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const stateAndHelpers = useDatePickerContext({
     selectionVariant,
@@ -156,9 +155,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
   if (selectedDate === null) {
     selectedLabel = "no date selected";
   } else if (selectionVariant === "single") {
-    const date = selectedDate as
-      | SingleDateSelection<DateFrameworkType>[]
-      | SingleDateSelection<DateFrameworkType>;
+    const date = selectedDate as SingleDateSelection[] | SingleDateSelection;
     if (Array.isArray(date)) {
       selectedLabel =
         date?.length === 0
@@ -168,7 +165,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
       selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
     }
   } else if (selectionVariant === "range") {
-    const dateRange = selectedDate as DateRangeSelection<DateFrameworkType>;
+    const dateRange = selectedDate as DateRangeSelection;
     if (Array.isArray(dateRange)) {
       selectedLabel =
         dateRange?.length === 0

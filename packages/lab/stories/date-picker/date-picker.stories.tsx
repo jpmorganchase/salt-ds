@@ -86,7 +86,7 @@ const DatePickerSingleTemplate: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -132,7 +132,7 @@ const DatePickerRangeTemplate: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -211,13 +211,13 @@ export const SingleControlled: StoryFn<DatePickerSingleProps> = ({
   ...args
 }) => {
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(defaultSelectedDate ?? null);
   const { dateAdapter } = useLocalization();
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -283,14 +283,13 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
   ...args
 }) => {
   const { dateAdapter } = useLocalization();
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(
-      defaultSelectedDate ?? null,
-    );
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    defaultSelectedDate ?? null,
+  );
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -502,7 +501,7 @@ export const SingleGridPanel: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -592,7 +591,7 @@ export const RangeGridPanel: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -700,7 +699,7 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -777,7 +776,7 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -880,7 +879,7 @@ export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -950,7 +949,7 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -1059,7 +1058,7 @@ export const SingleWithFormField: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -1125,7 +1124,7 @@ export const RangeWithFormField: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -1213,7 +1212,7 @@ export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -1282,7 +1281,7 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -1394,7 +1393,7 @@ export const SingleWithTodayButton: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -1473,7 +1472,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
   );
 
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(defaultSelectedDate ?? null);
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
@@ -1487,7 +1486,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -1537,10 +1536,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
   }, [args?.onCancel]);
 
   const handleApply = useCallback(
-    (
-      event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
-    ) => {
+    (event: SyntheticEvent, date: SingleDateSelection | null) => {
       console.log(
         `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
@@ -1614,10 +1610,9 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
     "error" | undefined
   >();
   const savedValidationState = useRef<typeof validationStatus>();
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(
-      defaultSelectedDate ?? null,
-    );
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    defaultSelectedDate ?? null,
+  );
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
   const savedState = useRef<{
@@ -1630,7 +1625,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -1704,10 +1699,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
   }, [args?.onCancel]);
 
   const handleApply = useCallback(
-    (
-      event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
-    ) => {
+    (event: SyntheticEvent, date: DateRangeSelection | null) => {
       const { startDate, endDate } = date ?? {};
       console.log(
         `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
@@ -1793,12 +1785,12 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
     undefined,
   );
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(defaultSelectedDate ?? null);
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -1829,7 +1821,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
   );
 
   const customParser = useCallback(
-    (inputDate: string, format: string): ParserResult<DateFrameworkType> => {
+    (inputDate: string, format: string): ParserResult => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
         return {
@@ -1903,14 +1895,13 @@ export const RangeWithCustomParser: StoryFn<DatePickerRangeProps> = ({
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(
-      defaultSelectedDate ?? null,
-    );
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    defaultSelectedDate ?? null,
+  );
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -1972,7 +1963,7 @@ export const RangeWithCustomParser: StoryFn<DatePickerRangeProps> = ({
       inputDate: string,
       field: DateParserField,
       format: string,
-    ): ParserResult<DateFrameworkType> => {
+    ): ParserResult => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
         return {
@@ -2054,7 +2045,7 @@ export const SingleWithUnselectableDates: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -2130,7 +2121,7 @@ export const RangeWithUnselectableDates: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -2229,7 +2220,7 @@ export const SingleWithHighlightedDates: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -2305,7 +2296,7 @@ export const RangeWithHighlightedDates: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -2462,7 +2453,7 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -2562,7 +2553,7 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -2656,7 +2647,7 @@ export const SingleWithTimezone: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      selection: SingleDateSelection<DateFrameworkType> | null,
+      selection: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -2854,7 +2845,7 @@ export const RangeWithTimezone: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      selection: DateRangeSelection<DateFrameworkType> | null,
+      selection: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = selection ?? {};
@@ -3090,7 +3081,7 @@ export const SingleBordered: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -3161,7 +3152,7 @@ export const RangeBordered: StoryFn<DatePickerRangeProps> = ({
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -3252,7 +3243,7 @@ export const SingleCustomFormat: StoryFn<
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -3297,7 +3288,7 @@ export const RangeCustomFormat: StoryFn<
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -3439,17 +3430,13 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
     startTime: TimeFields | null;
     endTime: TimeFields | null;
   }>({ startTime: null, endTime: null });
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(
-      defaultSelectedDate ?? null,
-    );
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    defaultSelectedDate ?? null,
+  );
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
   const addTimeToDate = useCallback(
-    (
-      time: typeof selectedTime,
-      date: DateRangeSelection<DateFrameworkType>,
-    ) => {
+    (time: typeof selectedTime, date: DateRangeSelection) => {
       const { startTime, endTime } = time;
       if (dateAdapter.isValid(date?.startDate) && startTime) {
         date.startDate = dateAdapter.set(date.startDate, {
@@ -3469,13 +3456,13 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
       }
       return date;
     },
-    [selectedTime, dateAdapter],
+    [dateAdapter],
   );
 
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const updatedDate = date ? addTimeToDate(selectedTime, date) : date;
@@ -3545,10 +3532,7 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
   );
 
   const handleApply = useCallback(
-    (
-      event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
-    ) => {
+    (event: SyntheticEvent, date: DateRangeSelection | null) => {
       const { startDate, endDate } = date ?? {};
       console.log(
         `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY HH:mm:ss") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY  HH:mm:ss") : endDate}`,
@@ -3690,7 +3674,7 @@ export const ControlledOpen: StoryFn<DatePickerSingleProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(defaultSelectedDate ?? null);
   const { dateAdapter } = useLocalization();
   const triggerRef = useRef<HTMLInputElement>(null);
@@ -3701,7 +3685,7 @@ export const ControlledOpen: StoryFn<DatePickerSingleProps> = ({
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       _details: DateInputSingleDetails | undefined,
     ) => {
       setSelectedDate(date ?? null);
@@ -3710,10 +3694,7 @@ export const ControlledOpen: StoryFn<DatePickerSingleProps> = ({
   );
 
   const handleApply = useCallback(
-    (
-      event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
-    ) => {
+    (event: SyntheticEvent, date: SingleDateSelection | null) => {
       console.log(
         `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );

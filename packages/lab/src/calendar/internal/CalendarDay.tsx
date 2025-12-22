@@ -62,7 +62,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       format = "DD",
       ...rest
     } = props;
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-calendar-day",

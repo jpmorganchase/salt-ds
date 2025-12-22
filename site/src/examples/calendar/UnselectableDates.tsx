@@ -1,4 +1,3 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
@@ -8,7 +7,7 @@ import {
 import type { ReactElement } from "react";
 
 export const UnselectableDates = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
     const dayOfWeek = dateAdapter.getDayOfWeek(day);
     const isWeekend =

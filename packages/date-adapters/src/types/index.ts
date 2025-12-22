@@ -115,7 +115,7 @@ export type RecommendedFormats =
  */
 export type Timezone = "default" | "system" | "UTC" | string;
 
-export type ParserResult<TDate extends DateFrameworkType> = {
+export type ParserResult<TDate extends DateFrameworkType = DateFrameworkType> = {
   date: TDate;
 } & DateDetail;
 
@@ -126,7 +126,7 @@ export type ParserResult<TDate extends DateFrameworkType> = {
  * @template TLocale - The type of the locale, defaulting to any.
  */
 export interface SaltDateAdapter<
-  TDate extends DateFrameworkType,
+  TDate extends DateFrameworkType = DateFrameworkType,
   // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   TLocale = any,
 > {

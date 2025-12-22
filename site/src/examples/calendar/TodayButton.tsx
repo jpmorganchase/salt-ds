@@ -1,5 +1,4 @@
 import { Button, Divider, StackLayout } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
@@ -10,7 +9,7 @@ import {
 import { type ReactElement, useState } from "react";
 
 export const TodayButton = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const today = dateAdapter.today();
   const [selectedDate, setSelectedDate] =
     useState<UseCalendarSelectionSingleProps["selectedDate"]>(null);

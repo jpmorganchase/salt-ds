@@ -14,10 +14,10 @@ import {
 import { type ReactElement, useState } from "react";
 
 function selectDateRange(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
-  previousSelectedDate: DateRangeSelection<DateFrameworkType>,
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection,
   newDate: DateFrameworkType,
-): DateRangeSelection<DateFrameworkType> {
+): DateRangeSelection {
   const isSelectedAlready =
     !!previousSelectedDate?.startDate && !!previousSelectedDate?.endDate;
   if (
@@ -49,10 +49,10 @@ function selectDateRange(
 }
 
 function selectMultiselectRange(
-  dateAdapter: SaltDateAdapter<DateFrameworkType>,
-  previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection[],
   newDate: DateFrameworkType,
-): DateRangeSelection<DateFrameworkType>[] {
+): DateRangeSelection[] {
   const lastRange = previousSelectedDate.length
     ? previousSelectedDate[previousSelectedDate.length - 1]
     : undefined;
@@ -71,7 +71,7 @@ function selectMultiselectRange(
     return [
       ...previousSelectedDate.slice(0, -1),
       completeDateRange,
-    ] as DateRangeSelection<DateFrameworkType>[];
+    ] as DateRangeSelection[];
   }
 
   const newSelection = previousSelectedDate.filter((previousDateRange) => {
@@ -89,7 +89,7 @@ function selectMultiselectRange(
 }
 
 export const RangeMultiselectControlled = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
     CalendarMultiselectRangeProps["selectedDate"]
   >([
@@ -110,7 +110,7 @@ export const RangeMultiselectControlled = (): ReactElement => {
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
       select={(
-        previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+        previousSelectedDate: DateRangeSelection[],
         newDate: DateFrameworkType,
       ) => selectMultiselectRange(dateAdapter, previousSelectedDate, newDate)}
     >

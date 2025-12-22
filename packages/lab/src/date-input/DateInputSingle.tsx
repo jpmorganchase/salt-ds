@@ -99,7 +99,7 @@ export interface DateInputSingleProps
    * @param value - date string to parse
    * @param format - format required
    */
-  parse?: (value: string, format: string) => ParserResult<DateFrameworkType>;
+  parse?: (value: string, format: string) => ParserResult;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -124,7 +124,7 @@ export interface DateInputSingleProps
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<DateFrameworkType> | null | undefined,
+    date: SingleDateSelection | null | undefined,
     details: DateInputSingleDetails,
   ) => void;
   /**
@@ -146,7 +146,7 @@ export interface DateInputSingleProps
 
 export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
   (props: DateInputSingleProps, ref: React.Ref<HTMLDivElement>) => {
-    const { dateAdapter } = useLocalization<DateFrameworkType>();
+    const { dateAdapter } = useLocalization();
     const {
       bordered = false,
       className,
