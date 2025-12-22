@@ -1,4 +1,8 @@
-import { DateDetailError, type SaltDateAdapter } from "@salt-ds/date-adapters";
+import {
+  DateDetailError,
+  type DateFrameworkType,
+  type SaltDateAdapter,
+} from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
@@ -10,6 +14,9 @@ import {
   DatePickerSingleInput,
 } from "@salt-ds/lab";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment";
 
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
@@ -793,12 +800,33 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             )
               ? `Selected date: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`
               : adapter.format(currentDate, "dddd D MMMM YYYY");
-            const dayOfWeek = adapter.getDayOfWeek(currentDate);
-            const isWeekend =
-              (adapter.lib === "luxon" &&
-                (dayOfWeek === 7 || dayOfWeek === 6)) ||
-              (adapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
-            if (isWeekend) {
+
+            const isDayUnselectable = (day: DateFrameworkType) => {
+              let dayOfWeek: number;
+
+              if (adapter.lib === "luxon") {
+                // Luxon: 1 (Monday) to 7 (Sunday)
+                dayOfWeek = (day as DateTime).weekday;
+              } else if (adapter.lib === "moment") {
+                // Moment: 0 (Sunday) to 6 (Saturday)
+                dayOfWeek = (day as Moment).day();
+              } else if (adapter.lib === "dayjs") {
+                // Day.js: 0 (Sunday) to 6 (Saturday)
+                dayOfWeek = (day as Dayjs).day();
+              } else {
+                // date-fns: 0 (Sunday) to 6 (Saturday)
+                dayOfWeek = (day as Date).getDay();
+              }
+
+              const isWeekend =
+                adapter.lib === "luxon"
+                  ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+                  : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+              return isWeekend ? "weekends are un-selectable" : false;
+            };
+
+            if (isDayUnselectable(currentDate)) {
               // Verify weekend dates are disabled
               cy.findByRole("button", { name: formattedDate }).should(
                 "have.attr",

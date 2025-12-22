@@ -136,11 +136,6 @@ describe("GIVEN a AdapterLuxon", () => {
     expect(now.day).toBe(current.day);
   });
 
-  it("SHOULD get the day of the week", () => {
-    const date = DateTime.fromISO("2023-11-01"); // November 1, 2023 is a Wednesday
-    expect(adapter.getDayOfWeek(date)).toBe(3); // 1 = Monday, 3 = Wednesday
-  });
-
   it("SHOULD get the name of the day of the week", () => {
     const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
