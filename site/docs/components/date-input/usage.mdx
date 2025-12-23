@@ -21,42 +21,73 @@ To avoid misleading users, set the width of the input to correlate with the leng
 
 Avoid using the `DateInputSingle` component if your application requires users to select a range of dates, in which case the `DateInputRange` component would be more appropriate.
 
+## Import
+
+### DateInputSingle
+
+To import `DateInputSingle` from the Salt lab package, use:
+
+```js
+import { DateInputSingle } from "@salt-ds/lab";
+```
+
+### DateInputRange
+
+To import `DateInputRange` from the Salt lab package, use:
+
+```js
+import { DateInputRange } from "@salt-ds/lab";
+```
+
+### Setting the date
+
+Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+
+Date input accept dates in two formats:
+
+Pass a date string (compatible with `new Date()`) via the `defaultValue` or `value` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { LocalizationProvider, DateInputSingle, DateInputRange } from "@salt-ds/lab";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+  <DateInputSingle
+    defaultValue={"23 May 2025"}}
+  /> // un-controlled value
+  <DateInputRange
+    value={{ startDate: "23 May 2025", endDate: "24 May 2025"}}
+  /> // controlled value
+<LocalizationProvider>
+```
+
+Pass a date object from your configured date framework via the `defaultDate` or `date` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { LocalizationProvider, DateInputSingle, DateInputRange } from "@salt-ds/lab";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+  <DateInputSingle
+    defaultDate={new DateTime().now()}
+   /> // un-controlled date
+  <DateInputRange
+    value={{ startDate: new DateTime().now(), endDate: new DateTime().now()}}
+   /> // controlled date
+<LocalizationProvider>
+```
+
 ### Parsing
-
-By default, both `DateInputSingle` and `DateInputRange` accept a date string that can be passed to `new Date()`.
-
-If the date string is valid, it is converted to an ISO string and then parsed to a local date using `parseAbsoluteToLocal(date.toISOString())`. The resulting date is then returned as a `CalendarDate` object with the year, month, and day. This default behavior ensures consistent and reliable date parsing, but it can be overridden by providing a custom parse function through the `parse` prop.
-
-**Examples of valid date formats:**
-
-1. **ISO 8601 string:**
-   - YYYY-MM-DD
-   - YYYY-MM-DDTHH:MM:SSZ
-   - YYYY-MM-DDTHH:MM:SS+HH:MM
-   - Example: "2023-01-15", "2023-01-15T15:45:00Z"
-2. **RFC 2822 string:**
-   - DD MMM YYYY HH:MM:SS GMT
-   - Example: "15 Jan 2023 15:45:00 GMT"
-3. **Date and Time String:**
-   - Month DD, YYYY HH:MM:SS
-   - Example: "January 15, 2023 15:45:00"
-4. **Date only string:**
-   - Month DD, YYYY
-   - Example: "January 15, 2023"
-5. **Milliseconds since epoch:**
-   - Number of milliseconds since January 1, 1970, 00:00:00 UTC.
-   - Example: 1673793900000
 
 **Default parsing behavior:**
 
-- If the input date string is valid, it is converted to an ISO string using `date.toISOString()`.
-- The ISO string is then parsed to a local date using `parseAbsoluteToLocal(date.toISOString())`.
-- The resulting date is returned as a `CalendarDate` object with the year, month, and day.
-- If the date string is invalid, the function returns `undefined`.
+- For a single a `null` value represents an empty date to ensure controlled components work as expected.
+- For date ranges, the `startDate` and `endDate` can be `null` to represent empty dates.
+- Invalid dates are represents by the `Invalid Date` object from the configured date framework.
 
 This default behavior ensures consistent and reliable date parsing, but it can be customized by providing a custom parse function through the `parse` prop.
-
-Additionally, you can provide your own `parse` function to convert shorthand dates to valid date objects.
 
 ### Formatting
 
@@ -64,13 +95,13 @@ By default, both `DateInputSingle` and `DateInputRange` format dates to `DD MMM 
 
 Formatting of entered dates occurs once the value is applied, either by the input losing it's focus or if the 'ENTER' is pressed.
 
-Additionally, you can provide your own `formatDate` function to format `DateValue` to a `string`.
+Additionally, you can provide your own formatter through the `format` prop.
 
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".
 
-`DateInputSingle` and `DateInputRange` use the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../LocalizationProvider).
+`DateInputSingle` and `DateInputRange` use the locale of the configured date adapter provided by the nearest [LocalizationProvider](../LocalizationProvider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.
@@ -91,24 +122,6 @@ Valid values for `timezone` are date framework specific and can be one of the fo
 - "system" uses the timezone of the system running the code.
 - "UTC" uses the UTC timezone.
 - string uses a specific IANA timezone string, such as "America/New_York" or "Europe/London".
-
-## Import
-
-### DateInputSingle
-
-To import `DateInputSingle` from the Salt lab package, use:
-
-```js
-import { DateInputSingle } from "@salt-ds/lab";
-```
-
-### DateInputRange
-
-To import `DateInputRange` from the Salt lab package, use:
-
-```js
-import { DateInputRange } from "@salt-ds/lab";
-```
 
 ## Props
 

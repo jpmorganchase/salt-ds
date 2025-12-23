@@ -1,4 +1,5 @@
 import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -10,6 +11,9 @@ import {
   type DateRangeSelection,
   useLocalization,
 } from "@salt-ds/lab";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment";
 import type { ReactElement } from "react";
 import { type SyntheticEvent, useCallback, useState } from "react";
 
@@ -76,11 +80,27 @@ export const RangeWithHighlightedDates = (): ReactElement => {
     [dateAdapter],
   );
 
-  const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+  const isDayHighlighted = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
+
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
     const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
 
     return isWeekend ? "weekends are highlighted" : false;
   };

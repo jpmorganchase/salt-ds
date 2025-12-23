@@ -69,6 +69,28 @@ To import `CalendarGrid` from the Salt lab package, use:
 import { CalendarGrid } from "@salt-ds/lab";
 ```
 
+### Setting the date
+
+Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+
+Pass a date object from your configured date framework via the `defaultDate` or `date` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { LocalizationProvider, DateInputSingle, DateInputRange } from "@salt-ds/lab";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+    <Calendar
+      selectionVariant={"single"}
+      defaultSelectedDate={new DateTime().now()}
+    >
+      <CalendarNavigation />
+      <CalendarGrid />
+    </Calendar>
+<LocalizationProvider>
+```
+
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".

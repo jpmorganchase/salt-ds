@@ -24,71 +24,95 @@ data:
 
 - Inside an application that has no date controls.
 
-# Import
+# Usage
 
-To import `LocalizationProvider` from the core Salt package, use:
-
-```js
-import { LocalizationProvider } from "@salt-ds/lab";
-```
-
-To import your chosen adapter adapter use one of the following :
+Salt's date adapters and the date framework you require should be defined as a dependency in your `package.json`:
 
 ## luxon (recommended)
 
+```json
+"dependencies": {
+  "@salt-ds/date-adapters": "latest", // or your required version
+  "luxon": "^3.6.1",
+},
+```
+
+then import the `AdapterLuxon` and construct the adapter.
+
 ```js
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-```
-
-## dayjs
-
-```js
-import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
-```
-
-## date-fns (without timezone support)
-
-```js
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
-```
-
-## date-fns (with timezone support)
-
-```js
-import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
+const dateAdapter = new AdapterLuxon({ locale: "en-US" });
 ```
 
 ## moment (legacy)
 
+To import the date adapter package and use the moment adapter:
+
+```json
+"dependencies": {
+  "@salt-ds/date-adapters": "latest", // or your required version
+  "moment": "^2.30.1",
+  "moment-timezone": "^0.5.46",
+},
+```
+
+then import the `AdapterMoment` and construct the adapter.
+
 ```js
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
+import moment from "moment-timezone"; // moment with timezone support
+
+const momentAdapter = new AdapterMoment({ locale: "en" }, moment);
 ```
 
-# Usage
+## date-fns
+
+```json
+"dependencies": {
+  "@salt-ds/date-adapters": "latest", // or your required version
+  "date-fns": "^4.1.0",
+},
+```
+
+### date-fns (without timezone support)
+
+then import the `AdapterDateFns` and construct the adapter.
 
 ```js
-const dateAdapter = new AdapterDateFns(locale);
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { enUS } from "date-fns/locale";
+const dateFnsAdapter = new AdapterDateFns({ locale: enUS });
 ```
 
-Each adapter imports the date library defined by your peer dependency but for dayjs and luxon, you may need to provide a pre-configured instance.
+### date-fns (with timezone support)
 
-Passing `dayjs` to `AdapterDayjs` enables you to pre-configure defaults.
+then import the `AdapterDateFnsTZ` and construct the adapter.
+
+```js
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
+const dateFnsAdapter = new AdapterDateFnsTZ({ locale: enUS });
+```
+
+## dayjs
+
+To import the date adapter package and use the dayjs adapter:
+
+```json
+"dependencies": {
+  "@salt-ds/date-adapters": "latest", // or your required version
+  "dayjs": "^1.11.13",
+},
+```
+
+then import the `AdapterDayjs` and construct the adapter.
 
 ```js
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import dayjs from "dayjs";
+// Additional configuration can use the dayjs API
 dayjs.tz.setDefault("America/New_York");
 
-const dayjsAdapter = new AdapterDayjs(locale, dayjs);
-```
-
-Passing `moment-timezone` to `AdapterMoment` adapter enables timezone support.
-
-```js
-import { AdapterMoment } from "@salt-ds/date-adapters/moment";
-import moment from "moment-timezone";
-
-const momentAdapter = new AdapterMoment(locale, moment);
+const dayjsAdapter = new AdapterDayjs({ locale: "en" }, dayjs);
 ```
 
 # Props
@@ -347,6 +371,16 @@ Clones the date object.
 
 **Returns**: `TDate` - The cloned date object.
 
+## toJSDate
+
+Convert the date framework object to a JS Date.
+
+| Parameter | Type    | Description                        |
+| --------- | ------- | ---------------------------------- |
+| `date`    | `TDate` | The date framework date to convert |
+
+**Returns**: `TDate` - JS date
+
 ## Supported formats
 
 The following table lists the supported format types for date and time formatting.
@@ -392,7 +426,7 @@ adapter.format(date, "DD MMM YYYY"); // 25 Dec 2025
 
 # Providing your own adapter
 
-Not normally necessary, but in order to add a new adapter that is a valid `TDate`, you will need to augment `DateFrameworkTypeMap`.
+Not normally necessary, but in order to add a new date framework you need to augment `DateFrameworkTypeMap` with the framework's date object.
 
 ```js
 /**
