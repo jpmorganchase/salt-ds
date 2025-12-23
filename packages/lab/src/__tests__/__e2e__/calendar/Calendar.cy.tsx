@@ -725,7 +725,7 @@ describe("GIVEN a Calendar", () => {
               cy.get(`[id="${describedById}"]`)
                 .should("have.attr", "role", "tooltip")
                 .find(".saltTooltip-content")
-                .should("have.text", "Weekends are un-selectable");
+                .should("have.text", "weekends are un-selectable");
             });
           });
           cy.get("@selectionChangeSpy").should("not.have.been.called");
@@ -753,7 +753,7 @@ describe("GIVEN a Calendar", () => {
             cy.get(`[id="${describedById}"]`)
               .should("have.attr", "role", "tooltip")
               .find(".saltTooltip-content")
-              .should("have.text", "Weekends are un-selectable");
+              .should("have.text", "weekends are un-selectable");
           });
 
           // Arrow right again to the next unselectable date
