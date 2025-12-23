@@ -2,30 +2,32 @@ import { makePrefixer, useControlled } from "@salt-ds/core";
 import type {
   DateFrameworkType,
   SaltDateAdapter,
-  Timezone,
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
-import type {
-  KeyboardEventHandler,
-  MouseEventHandler,
-  SyntheticEvent,
+import {
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+  type SyntheticEvent,
+  useCallback,
+  useMemo,
 } from "react";
-import { useCallback, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
-import { generateDatesForMonth } from "./internal/utils";
 
 /**
  * Type representing a single date selection.
- * @template TDate - The type of the date object.
  */
-export type SingleDateSelection<TDate extends DateFrameworkType> = TDate;
+export type SingleDateSelection<
+  TDate extends DateFrameworkType = DateFrameworkType,
+> = TDate;
 
 /**
  * Type representing a date range selection.
  * @template TDate - The type of the date object.
  */
-export type DateRangeSelection<TDate extends DateFrameworkType> = {
+export type DateRangeSelection<
+  TDate extends DateFrameworkType = DateFrameworkType,
+> = {
   /**
    * The start date of the range, or null if empty
    */
@@ -42,120 +44,57 @@ export type DateRangeSelection<TDate extends DateFrameworkType> = {
  * @param value - The value to check.
  * @returns `true` if the value is a date range selection, otherwise `false`.
  */
-export function isDateRangeSelection<TDate extends DateFrameworkType>(
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  value: any,
-): value is DateRangeSelection<TDate> {
+export function isDateRangeSelection<
+  TDate extends DateFrameworkType = DateFrameworkType,
+>(value: unknown): value is DateRangeSelection<TDate> {
   return (
-    value &&
+    !!value &&
     !Array.isArray(value) &&
     typeof value === "object" &&
     ("startDate" in value || "endDate" in value)
   );
 }
 
+export type SelectionVariant = "single" | "range" | "offset";
+
 /**
  * Base properties for calendar UseCalendarSelection hook.
- * @template TDate - The type of the date object.
  */
-export interface UseCalendarSelectionBaseProps<
-  TDate extends DateFrameworkType,
-> {
-  /**
-   * The currently focused date in the calendar, or null if no date is focused.
-   */
-  focusedDate?: TDate | null;
-  /**
-   * The currently hovered date.
-   */
-  hoveredDate?: TDate | null;
+export interface UseCalendarSelectionBaseProps<Selection> {
   /**
    * Determines if a date is outside the allowed date range.
    * @param date - The date to check.
-   * @returns `true` if the date is outside the allowed range, otherwise `false`.
+   * @returns 0 if inside the date range, -1 if before the min date, 1 if after the max date.
    */
-  isOutsideAllowedDates?: (date: TDate) => boolean;
+  isOutsideAllowedDates?: (date: DateFrameworkType) => -1 | 0 | 1;
   /**
    * Function to determine if a day is selectable.
    * @param date - The date to check.
    * @returns `true` if the day is selectable, otherwise `false`.
    */
-  isDaySelectable?: (date: TDate) => boolean;
-  /**
-   * Function to determine if a day is visible.
-   * @param date - The date to check.
-   * @returns `true` if the day is visible, otherwise `false`.
-   */
-  isDayVisible?: (date: TDate) => boolean;
-  /**
-   * Ref to attach to the focused element, enabling focus to be controlled.
-   */
-  focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
-  /**
-   * Callback fired when the focused date changes.
-   * @param event - The synthetic event, if user event triggered focus or null.
-   * @param date - The new focused date.
-   */
-  onFocusedDateChange?: (
-    event: SyntheticEvent | null,
-    date: TDate | null,
-  ) => void;
-  /**
-   * Callback fired when the hovered date changes.
-   * @param event - The synthetic event.
-   * @param hoveredDate - The new hovered date.
-   */
-  onHoveredDateChange?: (
-    event: SyntheticEvent,
-    hoveredDate: TDate | null,
-  ) => void;
-  /**
-   * Specifies the timezone behavior:
-   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-   * - If set to "default", the default timezone of the date library will be used.
-   * - If set to "system", the local system's timezone will be applied.
-   * - If set to "UTC", the time will be returned in UTC.
-   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
-   */
-  timezone?: Timezone;
-  /**
-   * The currently visible month.
-   */
-  visibleMonth?: TDate;
+  isDaySelectable?: (date: DateFrameworkType) => boolean;
   /**
    * If `true`, the calendar will be multiselect.
    */
   multiselect?: boolean;
-}
-
-/**
- * Properties for the single date selection hook.
- * @template TDate - The type of the date object.
- */
-export interface UseCalendarSelectionSingleProps<
-  TDate extends DateFrameworkType,
-> extends UseCalendarSelectionBaseProps<TDate> {
   /**
    * The selection variant, set to "single".
    */
-  selectionVariant: "single";
+  selectionVariant: SelectionVariant;
   /**
    * The currently selected date.
    */
-  selectedDate?: SingleDateSelection<TDate> | null;
+  selectedDate?: Selection;
   /**
    * The default selected date.
    */
-  defaultSelectedDate?: SingleDateSelection<TDate> | null;
+  defaultSelectedDate?: Selection;
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
    * @param selectedDate - The new selected date.
    */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate: SingleDateSelection<TDate> | null,
-  ) => void;
+  onSelectionChange?: (event: SyntheticEvent, selectedDate: Selection) => void;
   /**
    * A pure function to manage the selected date for uncontrolled use-cases.
    * Return the selection based on the previous selection and the new date.
@@ -163,270 +102,86 @@ export interface UseCalendarSelectionSingleProps<
    * @param newDate
    */
   select?: (
-    previousSelectedDate: SingleDateSelection<TDate> | null,
-    newDate: SingleDateSelection<TDate> | null,
-  ) => SingleDateSelection<TDate> | null;
-}
-/**
- * Properties for the single date selection hook.
- * @template TDate - The type of the date object.
- */
-export interface UseCalendarSelectionMultiselectSingleProps<
-  TDate extends DateFrameworkType,
-> extends UseCalendarSelectionBaseProps<TDate> {
-  /**
-   * The selection variant, set to "single".
-   */
-  selectionVariant: "single";
-  /**
-   * Multiple selection
-   */
-  multiselect: true;
-  /**
-   * The currently selected date.
-   */
-  selectedDate?: Array<SingleDateSelection<TDate>>;
-  /**
-   * The default selected date.
-   */
-  defaultSelectedDate?: Array<SingleDateSelection<TDate>>;
-  /**
-   * Callback fired when the selected date changes.
-   * @param event - The synthetic event.
-   * @param selectedDate - The new selected date.
-   */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate: Array<SingleDateSelection<TDate>>,
-  ) => void;
-  /**
-   * A pure function to manage the selected date for uncontrolled use-cases.
-   * Return the selection based on the previous selection and the new date.
-   * @param previousSelectedDate
-   @param newDate
-   */
-  select?: (
-    previousSelectedDate: Array<SingleDateSelection<TDate>>,
-    newDate: TDate,
-  ) => Array<SingleDateSelection<TDate>>;
-}
-
-/**
- * UseCalendar hook props to return a calendar day's status for single date range selection.
- * @template TDate - The type of the date object.
- */
-export interface UseCalendarSelectionRangeProps<TDate extends DateFrameworkType>
-  extends UseCalendarSelectionBaseProps<TDate> {
-  /**
-   * The selection variant, set to "range".
-   */
-  selectionVariant: "range";
-  /**
-   * The currently selected date.
-   */
-  selectedDate?: DateRangeSelection<TDate>;
-  /**
-   * The default selected date.
-   */
-  defaultSelectedDate?: DateRangeSelection<TDate>;
-  /**
-   * Callback fired when the selected date changes.
-   * @param event - The synthetic event.
-   * @param selectedDate - The new selected date.
-   */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate: DateRangeSelection<TDate>,
-  ) => void;
-  /**
-   * A pure function to manage the selected date for uncontrolled use-cases.
-   * Return the selection based on the previous selection and the new date.
-   * @param previousSelectedDate
-   * @param newDate
-   */
-  select?: (
-    previousSelectedDate: DateRangeSelection<TDate>,
-    newDate: TDate,
-  ) => DateRangeSelection<TDate>;
-}
-
-/**
- * UseCalendar hook props to return a calendar day's status for multiselect date range selection.
- * @template TDate - The type of the date object.
- */
-export interface UseCalendarSelectionMultiselectRangeProps<
-  TDate extends DateFrameworkType,
-> extends UseCalendarSelectionBaseProps<TDate> {
-  /**
-   * The selection variant, set to "range".
-   */
-  selectionVariant: "range";
-  /**
-   * Multiple selection
-   */
-  multiselect: true;
-  /**
-   * The currently selected date.
-   */
-  selectedDate?: Array<DateRangeSelection<TDate>>;
-  /**
-   * The default selected date.
-   */
-  defaultSelectedDate?: Array<DateRangeSelection<TDate>>;
-  /**
-   * Callback fired when the selected date changes.
-   * @param event - The synthetic event.
-   * @param selectedDate - The new selected date.
-   */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate: Array<DateRangeSelection<TDate>>,
-  ) => void;
-  /**
-   * A pure function to manage the selected date for uncontrolled use-cases.
-   * Return the selection based on the previous selection and the new date.
-   * @param previousSelectedDate
-   * @param newDate
-   */
-  select?: (
-    previousSelectedDate: Array<DateRangeSelection<TDate>>,
-    newDate: TDate,
-  ) => Array<DateRangeSelection<TDate>>;
-}
-
-/**
- * UseCalendar hook props to return a calendar day's status for single offset selection.
- * @template TDate - The type of the date object.
- */
-export interface UseCalendarSelectionOffsetProps<
-  TDate extends DateFrameworkType,
-> extends UseCalendarSelectionBaseProps<TDate> {
-  /**
-   * The selection variant, set to "offset".
-   */
-  selectionVariant: "offset";
-  /**
-   * The currently selected date.
-   */
-  selectedDate?: DateRangeSelection<TDate>;
-  /**
-   * The default selected date.
-   */
-  defaultSelectedDate?: DateRangeSelection<TDate>;
-  /**
-   * Callback fired when the selected date changes.
-   * @param event - The synthetic event.
-   * @param selectedDate - The new selected date.
-   */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate: DateRangeSelection<TDate>,
-  ) => void;
-  /**
-   * A pure function to manage the selected date for uncontrolled use-cases.
-   * Return the selection based on the previous selection and the new date.
-   * @param previousSelectedDate
-   * @param newDate
-   */
-  select?: (
-    previousSelectedDate: DateRangeSelection<TDate>,
-    newDate: TDate,
-  ) => DateRangeSelection<TDate>;
+    previousSelectedDate: Selection,
+    newDate: DateFrameworkType,
+  ) => Selection;
   /**
    * Function to calculate the start date offset.
    * @param date - The date to offset.
    * @returns The offset start date.
    */
-  startDateOffset?: (date: TDate) => TDate;
+  startDateOffset?: (date: DateFrameworkType) => DateFrameworkType;
   /**
    * Function to calculate the end date offset.
    * @param date - The date to offset.
    * @returns The offset end date.
    */
-  endDateOffset?: (date: TDate) => TDate;
+  endDateOffset?: (date: DateFrameworkType) => DateFrameworkType;
 }
 
-/**
- * UseCalendar hook props to return a calendar day's status for multiselect offset selection.
- * @template TDate - The type of the date object.
- */
-export interface UseCalendarSelectionMultiselectOffsetProps<
-  TDate extends DateFrameworkType,
-> extends UseCalendarSelectionBaseProps<TDate> {
-  /**
-   * The selection variant, set to "offset".
-   */
+export type UseCalendarSelectionSingleProps =
+  UseCalendarSelectionBaseProps<SingleDateSelection<DateFrameworkType> | null> & {
+    selectionVariant: "single";
+    multiselect?: false;
+  };
+
+export type UseCalendarSelectionMultiselectSingleProps =
+  UseCalendarSelectionBaseProps<
+    Array<SingleDateSelection<DateFrameworkType>>
+  > & {
+    selectionVariant: "single";
+    multiselect: true;
+  };
+
+export type UseCalendarSelectionRangeProps = UseCalendarSelectionBaseProps<
+  DateRangeSelection<DateFrameworkType>
+> & {
+  selectionVariant: "range";
+  multiselect?: false;
+};
+
+export type UseCalendarSelectionMultiselectRangeProps =
+  UseCalendarSelectionBaseProps<
+    Array<DateRangeSelection<DateFrameworkType>>
+  > & {
+    selectionVariant: "range";
+    multiselect: true;
+  };
+
+export type UseCalendarSelectionOffsetProps = UseCalendarSelectionBaseProps<
+  DateRangeSelection<DateFrameworkType>
+> & {
   selectionVariant: "offset";
-  /**
-   * Multiple selection
-   */
-  multiselect: true;
-  /**
-   * The currently selected date.
-   */
-  selectedDate?: Array<DateRangeSelection<TDate>>;
-  /**
-   * The default selected date.
-   */
-  defaultSelectedDate?: Array<DateRangeSelection<TDate>>;
-  /**
-   * Callback fired when the selected date changes.
-   * @param event - The synthetic event.
-   * @param selectedDate - The new selected date.
-   */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate: Array<DateRangeSelection<TDate>>,
-  ) => void;
-  /**
-   * A pure function to manage the selected date for uncontrolled use-cases.
-   * Return the selection based on the previous selection and the new date.
-   * @param previousSelectedDat
-   * @param newDate
-   */
-  select?: (
-    previousSelectedDate: Array<DateRangeSelection<TDate>>,
-    newDate: TDate,
-  ) => Array<DateRangeSelection<TDate>>;
-  /**
-   * Function to calculate the start date offset.
-   * @param date - The date to offset.
-   * @returns The offset start date.
-   */
-  startDateOffset?: (date: TDate) => TDate;
-  /**
-   * Function to calculate the end date offset.
-   * @param date - The date to offset.
-   * @returns The offset end date.
-   */
-  endDateOffset?: (date: TDate) => TDate;
-}
+  multiselect?: false;
+};
 
-/**
- * UseCalendarSelection hook props, wth the selection variant determining the return type of the date selection
- * @template TDate - The type of the date object.
- */
-export type UseCalendarSelectionProps<TDate extends DateFrameworkType> =
-  | UseCalendarSelectionSingleProps<TDate>
-  | UseCalendarSelectionMultiselectSingleProps<TDate>
-  | UseCalendarSelectionRangeProps<TDate>
-  | UseCalendarSelectionMultiselectRangeProps<TDate>
-  | UseCalendarSelectionOffsetProps<TDate>
-  | UseCalendarSelectionMultiselectOffsetProps<TDate>;
+export type UseCalendarSelectionMultiselectOffsetProps =
+  UseCalendarSelectionBaseProps<
+    Array<DateRangeSelection<DateFrameworkType>>
+  > & {
+    selectionVariant: "offset";
+    multiselect: true;
+  };
 
-function isMultiselect<TDate>(
-  props: UseCalendarSelectionProps<TDate>,
+export type UseCalendarSelectionProps =
+  | UseCalendarSelectionSingleProps
+  | UseCalendarSelectionMultiselectSingleProps
+  | UseCalendarSelectionRangeProps
+  | UseCalendarSelectionMultiselectRangeProps
+  | UseCalendarSelectionOffsetProps
+  | UseCalendarSelectionMultiselectOffsetProps;
+
+function isMultiselect(
+  props: UseCalendarSelectionProps,
 ): props is
-  | UseCalendarSelectionMultiselectSingleProps<TDate>
-  | UseCalendarSelectionMultiselectRangeProps<TDate>
-  | UseCalendarSelectionMultiselectOffsetProps<TDate> {
+  | UseCalendarSelectionMultiselectSingleProps
+  | UseCalendarSelectionMultiselectRangeProps
+  | UseCalendarSelectionMultiselectOffsetProps {
   return props.multiselect === true;
 }
 
-const withBaseName = makePrefixer("saltCalendarDay");
-
-function selectDateRange<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
+function selectDateRange(
+  dateAdapter: SaltDateAdapter,
   previousSelectedDate: DateRangeSelection<DateFrameworkType>,
   newDate: DateFrameworkType,
 ) {
@@ -449,11 +204,11 @@ function selectDateRange<TDate extends DateFrameworkType>(
   };
 }
 
-function selectMultiselectDateRange<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: DateRangeSelection<TDate>[],
-  newDate: TDate,
-): DateRangeSelection<TDate>[] {
+function selectMultiselectDateRange(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+  newDate: DateFrameworkType,
+): DateRangeSelection<DateFrameworkType>[] {
   const lastRange = previousSelectedDate.length
     ? previousSelectedDate[previousSelectedDate.length - 1]
     : undefined;
@@ -474,30 +229,19 @@ function selectMultiselectDateRange<TDate extends DateFrameworkType>(
   return [...previousSelectedDate, { startDate: newDate }];
 }
 
-export function useCalendarSelection<TDate extends DateFrameworkType>(
-  props: UseCalendarSelectionProps<TDate>,
-) {
+export function useCalendarSelection(props: UseCalendarSelectionProps) {
   const {
-    multiselect,
-    focusedDate: focusedDateProp,
-    hoveredDate: hoveredDateProp,
     selectedDate: selectedDateProp,
     defaultSelectedDate,
     onSelectionChange,
-    onHoveredDateChange,
     isDaySelectable = () => true,
-    isDayVisible = () => true,
-    isOutsideAllowedDates = () => true,
-    focusedDateRef,
-    onFocusedDateChange,
+    isOutsideAllowedDates = () => 0,
     select: selectProp,
     selectionVariant,
-    timezone,
-    visibleMonth,
     // startDateOffset,
     // endDateOffset,
   } = props;
-  const { dateAdapter } = useLocalization<TDate>();
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
   const [selectedDate, setSelectedDateState] = useControlled({
     controlled: selectedDateProp,
     default: defaultSelectedDate,
@@ -505,40 +249,18 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     state: "selectedDate",
   });
 
-  const startDateOffset =
-    selectionVariant === "offset" ? props.startDateOffset : undefined;
-  const endDateOffset =
-    selectionVariant === "offset" ? props.endDateOffset : undefined;
-
-  const getStartDateOffset = useCallback(
-    (date: TDate) => {
-      if (selectionVariant === "offset" && startDateOffset) {
-        return startDateOffset(date);
-      }
-      return date;
-    },
-    [selectionVariant, startDateOffset],
-  );
-
-  const getEndDateOffset = useCallback(
-    (date: TDate) => {
-      if (selectionVariant === "offset" && endDateOffset) {
-        return endDateOffset(date);
-      }
-      return date;
-    },
-    [selectionVariant, endDateOffset],
-  );
-
   const setSelectedDate = useCallback(
-    (event: SyntheticEvent<HTMLButtonElement>, newSelectedDate: TDate) => {
+    (
+      event: SyntheticEvent<HTMLButtonElement>,
+      newSelectedDate: DateFrameworkType,
+    ) => {
       if (!isDaySelectable || isDaySelectable(newSelectedDate)) {
         const handleSelectionChange = <
           U extends
-            | (TDate | null)
-            | TDate[]
-            | (DateRangeSelection<TDate> | null)
-            | DateRangeSelection<TDate>[],
+            | (DateFrameworkType | null)
+            | DateFrameworkType[]
+            | (DateRangeSelection<DateFrameworkType> | null)
+            | DateRangeSelection<DateFrameworkType>[],
         >(
           updatedSelection: U,
           changeHandler:
@@ -553,28 +275,31 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           case "single": {
             if (isMultiselect(props)) {
               const multipleSingleSelectedDate = selectedDate as Array<
-                SingleDateSelection<TDate>
+                SingleDateSelection<DateFrameworkType>
               >;
               const select =
-                selectProp as UseCalendarSelectionMultiselectSingleProps<TDate>["select"];
-              const updatedSelection: Array<SingleDateSelection<TDate>> = select
+                selectProp as UseCalendarSelectionMultiselectSingleProps["select"];
+              const updatedSelection: Array<
+                SingleDateSelection<DateFrameworkType>
+              > = select
                 ? select(multipleSingleSelectedDate ?? [], newSelectedDate)
                 : [...(multipleSingleSelectedDate ?? []), newSelectedDate];
 
               const changeHandler =
-                onSelectionChange as UseCalendarSelectionMultiselectSingleProps<TDate>["onSelectionChange"];
+                onSelectionChange as UseCalendarSelectionMultiselectSingleProps["onSelectionChange"];
               handleSelectionChange(updatedSelection, changeHandler);
             } else {
               const singleSelectedDate =
-                selectedDate as SingleDateSelection<TDate> | null;
+                selectedDate as SingleDateSelection<DateFrameworkType> | null;
               const select =
-                selectProp as UseCalendarSelectionSingleProps<TDate>["select"];
-              const updatedSelection: SingleDateSelection<TDate> | null = select
-                ? select(singleSelectedDate, newSelectedDate)
-                : newSelectedDate;
+                selectProp as UseCalendarSelectionSingleProps["select"];
+              const updatedSelection: SingleDateSelection<DateFrameworkType> | null =
+                select
+                  ? select(singleSelectedDate, newSelectedDate)
+                  : newSelectedDate;
 
               const changeHandler =
-                onSelectionChange as UseCalendarSelectionSingleProps<TDate>["onSelectionChange"];
+                onSelectionChange as UseCalendarSelectionSingleProps["onSelectionChange"];
               handleSelectionChange(updatedSelection, changeHandler);
             }
             break;
@@ -582,74 +307,84 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           case "range": {
             if (isMultiselect(props)) {
               const multipleRangeSelectedDate = selectedDate as Array<
-                DateRangeSelection<TDate>
+                DateRangeSelection<DateFrameworkType>
               >;
               const select =
-                selectProp as UseCalendarSelectionMultiselectRangeProps<TDate>["select"];
-              const updatedSelection: DateRangeSelection<TDate>[] = select
-                ? select(multipleRangeSelectedDate ?? [], newSelectedDate)
-                : selectMultiselectDateRange(
-                    dateAdapter,
-                    multipleRangeSelectedDate ?? [],
-                    newSelectedDate,
-                  );
+                selectProp as UseCalendarSelectionMultiselectRangeProps["select"];
+              const updatedSelection: DateRangeSelection<DateFrameworkType>[] =
+                select
+                  ? select(multipleRangeSelectedDate ?? [], newSelectedDate)
+                  : selectMultiselectDateRange(
+                      dateAdapter,
+                      multipleRangeSelectedDate ?? [],
+                      newSelectedDate,
+                    );
 
               const changeHandler =
-                onSelectionChange as UseCalendarSelectionMultiselectRangeProps<TDate>["onSelectionChange"];
+                onSelectionChange as UseCalendarSelectionMultiselectRangeProps["onSelectionChange"];
               handleSelectionChange(updatedSelection, changeHandler);
             } else {
               const rangeSelectedDate =
-                selectedDate as DateRangeSelection<TDate>;
+                selectedDate as DateRangeSelection<DateFrameworkType>;
               const select =
-                selectProp as UseCalendarSelectionRangeProps<TDate>["select"];
-              const updatedSelection: DateRangeSelection<TDate> = select
-                ? select(rangeSelectedDate, newSelectedDate)
-                : selectDateRange(
-                    dateAdapter,
-                    rangeSelectedDate,
-                    newSelectedDate,
-                  );
+                selectProp as UseCalendarSelectionRangeProps["select"];
+              const updatedSelection: DateRangeSelection<DateFrameworkType> =
+                select
+                  ? select(rangeSelectedDate, newSelectedDate)
+                  : selectDateRange(
+                      dateAdapter,
+                      rangeSelectedDate,
+                      newSelectedDate,
+                    );
 
               const changeHandler =
-                onSelectionChange as UseCalendarSelectionRangeProps<TDate>["onSelectionChange"];
+                onSelectionChange as UseCalendarSelectionRangeProps["onSelectionChange"];
               handleSelectionChange(updatedSelection, changeHandler);
             }
             break;
           }
           case "offset": {
+            const { startDateOffset, endDateOffset } = props;
             if (isMultiselect(props)) {
               const multipleOffsetSelectedDate = selectedDate as Array<
-                DateRangeSelection<TDate>
+                DateRangeSelection<DateFrameworkType>
               >;
               const select =
-                selectProp as UseCalendarSelectionMultiselectOffsetProps<TDate>["select"];
-              const updatedSelection: DateRangeSelection<TDate>[] = select
-                ? select(multipleOffsetSelectedDate ?? [], newSelectedDate)
-                : [
-                    ...(multipleOffsetSelectedDate ?? []),
-                    {
-                      startDate: getStartDateOffset(newSelectedDate),
-                      endDate: getEndDateOffset(newSelectedDate),
-                    },
-                  ];
+                selectProp as UseCalendarSelectionMultiselectOffsetProps["select"];
+              const updatedSelection: DateRangeSelection<DateFrameworkType>[] =
+                select
+                  ? select(multipleOffsetSelectedDate ?? [], newSelectedDate)
+                  : [
+                      ...(multipleOffsetSelectedDate ?? []),
+                      {
+                        startDate: newSelectedDate,
+                        endDate: endDateOffset
+                          ? endDateOffset(newSelectedDate)
+                          : newSelectedDate,
+                      },
+                    ];
 
               const changeHandler =
-                onSelectionChange as UseCalendarSelectionMultiselectOffsetProps<TDate>["onSelectionChange"];
+                onSelectionChange as UseCalendarSelectionMultiselectOffsetProps["onSelectionChange"];
               handleSelectionChange(updatedSelection, changeHandler);
             } else {
               const offsetSelectedDate =
-                selectedDate as DateRangeSelection<TDate>;
+                selectedDate as DateRangeSelection<DateFrameworkType>;
               const select =
-                selectProp as UseCalendarSelectionOffsetProps<TDate>["select"];
-              const updatedSelection: DateRangeSelection<TDate> = select
-                ? select(offsetSelectedDate, newSelectedDate)
-                : {
-                    startDate: getStartDateOffset(newSelectedDate),
-                    endDate: getEndDateOffset(newSelectedDate),
-                  };
-
+                selectProp as UseCalendarSelectionOffsetProps["select"];
+              const updatedSelection: DateRangeSelection<DateFrameworkType> =
+                select
+                  ? select(offsetSelectedDate, newSelectedDate)
+                  : {
+                      startDate: startDateOffset
+                        ? startDateOffset(newSelectedDate)
+                        : newSelectedDate,
+                      endDate: endDateOffset
+                        ? endDateOffset(newSelectedDate)
+                        : newSelectedDate,
+                    };
               const changeHandler =
-                onSelectionChange as UseCalendarSelectionOffsetProps<TDate>["onSelectionChange"];
+                onSelectionChange as UseCalendarSelectionOffsetProps["onSelectionChange"];
               handleSelectionChange(updatedSelection, changeHandler);
             }
             break;
@@ -659,8 +394,6 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     },
     [
       dateAdapter,
-      getEndDateOffset,
-      getStartDateOffset,
       isDaySelectable,
       selectProp,
       selectedDate,
@@ -671,14 +404,14 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
   );
 
   const isSelected = useCallback(
-    (date: TDate) => {
+    (date: DateFrameworkType) => {
       if (!selectedDate) {
         return false;
       }
       if (selectionVariant === "single") {
         const singleDates = (
           Array.isArray(selectedDate) ? selectedDate : [selectedDate]
-        ) as TDate[];
+        ) as DateFrameworkType[];
         return singleDates.some((singleDate) =>
           dateAdapter.isSame(singleDate, date, "day"),
         );
@@ -688,320 +421,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     [dateAdapter, selectedDate, selectionVariant],
   );
 
-  const getDefaultFocusedDate = () => {
-    if (
-      selectedDate &&
-      (selectionVariant === "range" || selectionVariant === "offset")
-    ) {
-      const getFocusableDate = (
-        result: TDate[],
-        selection: DateRangeSelection<TDate>,
-      ) => {
-        if (selection?.startDate && isDayVisible(selection.startDate)) {
-          return [...result, selection.startDate];
-        }
-        if (selection?.endDate && isDayVisible(selection.endDate)) {
-          return [...result, selection.endDate];
-        }
-        return result;
-      };
-      let focusableSelectedDates:
-        | DateRangeSelection<TDate>
-        | DateRangeSelection<TDate>[];
-      if (!multiselect) {
-        focusableSelectedDates = [selectedDate as DateRangeSelection<TDate>];
-      } else {
-        focusableSelectedDates = selectedDate as DateRangeSelection<TDate>[];
-      }
-      const selectionInMonth = focusableSelectedDates
-        .reduce(getFocusableDate, [])
-        .sort((a, b) => dateAdapter.compare(a, b));
-      if (selectionInMonth.length > 0) {
-        return selectionInMonth[0];
-      }
-    } else if (selectedDate && selectionVariant === "single") {
-      const focusableSelectedDate = multiselect
-        ? (selectedDate as SingleDateSelection<TDate>[])?.[0]
-        : (selectedDate as SingleDateSelection<TDate>);
-      if (focusableSelectedDate && isDayVisible(focusableSelectedDate)) {
-        return focusableSelectedDate;
-      }
-    }
-
-    // Defaults
-    if (
-      isDaySelectable?.(dateAdapter.today(timezone)) &&
-      isDayVisible(dateAdapter.today(timezone))
-    ) {
-      return dateAdapter.today(timezone);
-    }
-    const firstSelectableDate = generateDatesForMonth(
-      dateAdapter,
-      visibleMonth,
-    ).find((visibleDay) => visibleDay && isDaySelectable?.(visibleDay));
-    if (firstSelectableDate) {
-      return firstSelectableDate;
-    }
-    return null;
-  };
-
-  const [focusedDate, setFocusedDateState] = useControlled({
-    controlled: focusedDateProp,
-    default: useMemo(getDefaultFocusedDate, []),
-    name: "Calendar",
-    state: "focusedDate",
-  });
-
-  const setFocusedDate = useCallback(
-    (event: SyntheticEvent | null, date: TDate | null) => {
-      if (focusedDateRef && event?.target instanceof HTMLElement) {
-        focusedDateRef.current = event.target;
-      }
-      if (
-        date &&
-        ((focusedDate && dateAdapter.isSame(date, focusedDate, "day")) ||
-          isOutsideAllowedDates(date))
-      ) {
-        return;
-      }
-      setFocusedDateState(date);
-      onFocusedDateChange?.(event, date);
-    },
-    [
-      dateAdapter,
-      focusedDate,
-      focusedDateRef,
-      isOutsideAllowedDates,
-      onFocusedDateChange,
-    ],
-  );
-
-  const [hoveredDate, setHoveredDateState] = useControlled({
-    controlled: hoveredDateProp,
-    default: undefined,
-    name: "Calendar",
-    state: "hoveredDate",
-  });
-
-  const setHoveredDate = useCallback(
-    (event: SyntheticEvent, date: TDate | null) => {
-      setHoveredDateState(date);
-      onHoveredDateChange?.(event, date);
-    },
-    [onHoveredDateChange],
-  );
-
-  const isHovered = useCallback(
-    (date: TDate) => {
-      return !!hoveredDate && dateAdapter.isSame(date, hoveredDate, "day");
-    },
-    [dateAdapter, hoveredDate],
-  );
-
-  const getFocusableDates = useCallback(() => {
-    const focusableDates: TDate[] = [];
-
-    if (Array.isArray(selectedDate)) {
-      // Handle array of selections
-      for (const selection of selectedDate) {
-        if (isDateRangeSelection(selection)) {
-          if (selection.startDate && isDayVisible(selection.startDate)) {
-            focusableDates.push(selection.startDate);
-          } else if (selection.endDate && isDayVisible(selection.endDate)) {
-            focusableDates.push(selection.endDate);
-          }
-        } else if (isDayVisible(selection as TDate)) {
-          focusableDates.push(selection as TDate);
-        }
-      }
-    } else if (selectedDate) {
-      // Handle single selection
-      if (isDateRangeSelection(selectedDate)) {
-        if (selectedDate.startDate && isDayVisible(selectedDate.startDate)) {
-          focusableDates.push(selectedDate.startDate);
-        } else if (selectedDate.endDate && isDayVisible(selectedDate.endDate)) {
-          focusableDates.push(selectedDate.endDate);
-        }
-      } else if (isDayVisible(selectedDate)) {
-        focusableDates.push(selectedDate);
-      }
-    }
-
-    if (
-      focusedDate &&
-      visibleMonth &&
-      dateAdapter.isSame(focusedDate, visibleMonth, "month")
-    ) {
-      focusableDates.push(focusedDate);
-      return focusableDates;
-    }
-
-    // Defaults
-    if (
-      focusableDates.length === 0 &&
-      isDaySelectable(dateAdapter.today(timezone)) &&
-      isDayVisible(dateAdapter.today(timezone))
-    ) {
-      focusableDates.push(dateAdapter.today(timezone));
-    }
-    if (focusableDates.length === 0 || !focusableDates.some(isDayVisible)) {
-      const firstSelectableDate = generateDatesForMonth(
-        dateAdapter,
-        visibleMonth,
-      ).find((visibleDay) => visibleDay && isDaySelectable(visibleDay));
-      if (firstSelectableDate) {
-        focusableDates.push(firstSelectableDate);
-      }
-    }
-
-    return focusableDates;
-  }, [
-    dateAdapter,
-    focusedDate,
-    isDaySelectable,
-    isDayVisible,
-    selectedDate,
-    timezone,
-    visibleMonth,
-  ]);
-
-  const isHoveredStart = useCallback(
-    (date: TDate) => {
-      if (
-        selectionVariant === "range" &&
-        hoveredDate &&
-        dateAdapter.isSame(date, hoveredDate, "day")
-      ) {
-        const dateRanges = (
-          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
-        ) as DateRangeSelection<TDate>[];
-        const allDatesPopulated = dateRanges.every(
-          (range) => range?.startDate && range?.endDate,
-        );
-        const startDateMatches = dateRanges.some(
-          (range) =>
-            range?.startDate &&
-            dateAdapter.isSame(date, range.startDate, "day"),
-        );
-        const firstIncompleteRange = dateRanges.find(
-          (range) => range?.startDate && !range?.endDate,
-        );
-        const newDateRangeRequired =
-          firstIncompleteRange?.startDate &&
-          dateAdapter.compare(date, firstIncompleteRange.startDate) < 0;
-        return allDatesPopulated || startDateMatches || newDateRangeRequired;
-      }
-      if (selectionVariant === "offset" && hoveredDate) {
-        const startDate = getStartDateOffset(hoveredDate);
-        return (
-          dateAdapter.isSame(date, startDate, "day") &&
-          (!isDaySelectable || isDaySelectable(date))
-        );
-      }
-      return false;
-    },
-    [
-      dateAdapter,
-      getStartDateOffset,
-      selectionVariant,
-      selectedDate,
-      hoveredDate,
-      isDaySelectable,
-    ],
-  );
-
-  const isHoveredSpan = useCallback(
-    (date: TDate) => {
-      if (selectionVariant === "range") {
-        const dateRanges = Array.isArray(selectedDate)
-          ? selectedDate
-          : [selectedDate];
-        return dateRanges.some((range) => {
-          if (
-            isDateRangeSelection(range) &&
-            dateAdapter.isValid(range.startDate) &&
-            !dateAdapter.isValid(range.endDate) &&
-            !isOutsideAllowedDates(range.startDate) &&
-            hoveredDate
-          ) {
-            const isForwardRange =
-              dateAdapter.compare(hoveredDate, range.startDate) > 0 &&
-              dateAdapter.compare(date, range.startDate) > 0 &&
-              dateAdapter.compare(date, hoveredDate) < 0;
-
-            const isValidDayHovered =
-              !isDaySelectable || isDaySelectable(hoveredDate);
-
-            return isForwardRange && isValidDayHovered;
-          }
-          return false;
-        });
-      }
-      if (selectionVariant === "offset" && hoveredDate) {
-        const startDate = getStartDateOffset(hoveredDate);
-        const endDate = getEndDateOffset(hoveredDate);
-        return (
-          dateAdapter.compare(date, startDate) > 0 &&
-          dateAdapter.compare(date, endDate) < 0 &&
-          (!isDaySelectable || isDaySelectable(date))
-        );
-      }
-      return false;
-    },
-    [
-      dateAdapter,
-      isOutsideAllowedDates,
-      selectionVariant,
-      selectedDate,
-      hoveredDate,
-      isDaySelectable,
-    ],
-  );
-
-  const isHoveredEnd = useCallback(
-    (date: TDate) => {
-      if (
-        selectionVariant === "range" &&
-        hoveredDate &&
-        dateAdapter.isSame(date, hoveredDate, "day")
-      ) {
-        const dateRanges = (
-          Array.isArray(selectedDate) ? selectedDate : [selectedDate]
-        ) as DateRangeSelection<TDate>[];
-        const isIncompleteRange = dateRanges.some(
-          (range) =>
-            range?.startDate &&
-            !range?.endDate &&
-            hoveredDate &&
-            dateAdapter.compare(hoveredDate, range.startDate) >= 0,
-        );
-        const endDateMatches = dateRanges.some(
-          (range) =>
-            range?.endDate && dateAdapter.isSame(range.endDate, date, "day"),
-        );
-        return endDateMatches || isIncompleteRange;
-      }
-      if (selectionVariant === "offset" && hoveredDate) {
-        const endDate = getEndDateOffset(hoveredDate);
-        return (
-          dateAdapter.isSame(date, endDate, "day") &&
-          (!isDaySelectable || isDaySelectable(date))
-        );
-      }
-      return false;
-    },
-    [
-      dateAdapter,
-      getEndDateOffset,
-      selectionVariant,
-      selectedDate,
-      hoveredDate,
-      isDaySelectable,
-    ],
-  );
-
   const isSameDay = useCallback(
-    (date: TDate) => {
+    (date: DateFrameworkType) => {
       const dateRanges = Array.isArray(selectedDate)
         ? selectedDate
         : [selectedDate];
@@ -1022,7 +443,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
   );
 
   const isSelectedStart = useCallback(
-    (date: TDate) => {
+    (date: DateFrameworkType) => {
       if (selectionVariant === "single") {
         return false;
       }
@@ -1034,7 +455,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           (selectionVariant === "range" || selectionVariant === "offset") &&
           isDateRangeSelection(range) &&
           dateAdapter.isValid(range.startDate) &&
-          !isOutsideAllowedDates(range.startDate)
+          isOutsideAllowedDates(range.startDate) === 0
         ) {
           return dateAdapter.isSame(range.startDate, date, "day");
         }
@@ -1045,7 +466,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
   );
 
   const isSelectedSpan = useCallback(
-    (date: TDate) => {
+    (date: DateFrameworkType) => {
       if (selectionVariant === "single") {
         return false;
       }
@@ -1058,8 +479,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           isDateRangeSelection(range) &&
           dateAdapter.isValid(range.startDate) &&
           dateAdapter.isValid(range.endDate) &&
-          !isOutsideAllowedDates(range.startDate) &&
-          !isOutsideAllowedDates(range.endDate)
+          isOutsideAllowedDates(range.startDate) === 0 &&
+          isOutsideAllowedDates(range.endDate) === 0
         ) {
           return (
             dateAdapter.compare(date, range.startDate) > 0 &&
@@ -1073,7 +494,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
   );
 
   const isSelectedEnd = useCallback(
-    (date: TDate) => {
+    (date: DateFrameworkType) => {
       if (selectionVariant === "single") {
         return false;
       }
@@ -1085,7 +506,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
           (selectionVariant === "range" || selectionVariant === "offset") &&
           isDateRangeSelection(range) &&
           dateAdapter.isValid(range.endDate) &&
-          !isOutsideAllowedDates(range.endDate)
+          isOutsideAllowedDates(range.endDate) === 0
         ) {
           return dateAdapter.isSame(range.endDate, date, "day");
         }
@@ -1098,57 +519,35 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
   return useMemo(
     () => ({
       state: {
-        focusedDate,
-        focusedDateRef,
-        hoveredDate,
         selectedDate,
-        focusableDates: getFocusableDates(),
       },
       helpers: {
-        isHovered,
         isSelected,
-        setHoveredDate,
         isSameDay,
         setSelectedDate,
         isSelectedStart,
         isSelectedSpan,
         isSelectedEnd,
-        isHoveredStart,
-        isHoveredSpan,
-        isHoveredEnd,
-        isDaySelectable,
-        setFocusedDate,
       },
     }),
     [
       selectedDate,
-      focusedDate,
-      focusedDateRef,
-      getFocusableDates,
-      hoveredDate,
       isSelected,
-      isHoveredStart,
-      isHoveredSpan,
-      isHoveredEnd,
       isSameDay,
       isSelectedStart,
       isSelectedSpan,
       isSelectedEnd,
-      isDaySelectable,
-      setFocusedDate,
-      setHoveredDate,
       setSelectedDate,
     ],
   );
 }
 
-export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
-  date,
-}: {
-  date: TDate;
-}) {
+const withBaseName = makePrefixer("saltCalendarDay");
+
+export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
   const {
-    state: { selectionVariant },
+    state: { selectionVariant, minDate, maxDate },
     helpers: {
       setSelectedDate,
       isSameDay,
@@ -1162,7 +561,7 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
       isHoveredEnd,
       isDaySelectable,
     },
-  } = useCalendarContext<TDate>();
+  } = useCalendarContext();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
@@ -1193,6 +592,32 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   const hoveredStart = isHoveredStart(date);
   const hoveredSpan = isHoveredSpan(date);
   const hoveredEnd = isHoveredEnd(date);
+
+  const formattedDate = dateAdapter.format(date, "dddd D MMMM YYYY");
+
+  // Determine aria-label based on selection state
+  let ariaLabel = formattedDate;
+  if (selectionVariant === "single") {
+    if (selected) {
+      ariaLabel = `Selected date: ${formattedDate}`;
+    }
+  } else if (selectedStart) {
+    ariaLabel = `Start selected range: ${formattedDate}`;
+  } else if (selectedEnd) {
+    ariaLabel = `End selected range: ${formattedDate}`;
+  } else if (selectedSpan) {
+    ariaLabel = `In selected range: ${formattedDate}`;
+  } else if (hoveredStart) {
+    ariaLabel = `Start new range: ${formattedDate}`;
+  } else if (hoveredEnd) {
+    ariaLabel = `Complete new range: ${formattedDate}`;
+  } else {
+    if (dateAdapter.isSame(minDate, date, "day")) {
+      ariaLabel = `${formattedDate}, minimum date`;
+    } else if (dateAdapter.isSame(maxDate, date, "day")) {
+      ariaLabel = `${formattedDate}, maximum date`;
+    }
+  }
 
   return {
     handleClick,
@@ -1226,12 +651,9 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
         [withBaseName("hoveredEnd")]:
           selectionVariant !== "single" && hoveredEnd,
       }),
-      "aria-pressed":
-        selected || selectedEnd || selectedStart || selectedSpan
-          ? "true"
-          : undefined,
       "aria-disabled":
         isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
+      "aria-label": ariaLabel,
     },
   };
 }

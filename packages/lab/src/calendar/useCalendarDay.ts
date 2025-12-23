@@ -46,31 +46,29 @@ export interface DayStatus {
 
 /**
  * UseCalendar hook props to return a calendar day's status
- * @template TDate - The type of the date object.
  */
-export interface useCalendarDayProps<TDate> {
+export interface useCalendarDayProps {
   /**
    * The date of the calendar day.
    */
-  date: TDate;
+  date: DateFrameworkType;
   /**
    * The month of the calendar day.
    */
-  month: TDate;
+  month: DateFrameworkType;
 }
 
-export function useCalendarDay<TDate extends DateFrameworkType>(
-  props: useCalendarDayProps<TDate>,
-) {
+export function useCalendarDay(props: useCalendarDayProps) {
   const { date, month } = props;
-  const { dateAdapter } = useLocalization<TDate>();
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const state = useCalendarContext();
   const {
     state: {
       focusedDate,
       focusedDateRef,
       hideOutOfRangeDates,
       timezone,
-      focusableDates,
+      focusableDate,
     },
     helpers: {
       setHoveredDate,
@@ -79,9 +77,9 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       isOutsideAllowedMonths,
       isOutsideAllowedDates,
     },
-  } = useCalendarContext<TDate>();
-  const selectionManager = useCalendarSelectionDay<TDate>({ date });
-  const focusManager = useFocusManagement<TDate>({ date });
+  } = state;
+  const selectionManager = useCalendarSelectionDay({ date });
+  const focusManager = useFocusManagement({ date });
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     selectionManager.handleClick(event);
@@ -110,11 +108,8 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   };
 
   const focused = focusedDate && dateAdapter.isSame(date, focusedDate, "day");
-  const tabIndex = focusableDates.find((tabbableDate) =>
-    dateAdapter.isSame(date, tabbableDate, "day"),
-  )
-    ? 0
-    : -1;
+  const tabIndex =
+    focusableDate && dateAdapter.isSame(date, focusableDate, "day") ? 0 : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
   const unselectableReason = isDayUnselectable(date);
@@ -123,8 +118,8 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const outOfRange = !dateAdapter.isSame(date, month, "month");
   const unselectable =
     Boolean(unselectableReason) ||
-    isOutsideAllowedMonths(date) ||
-    isOutsideAllowedDates(date);
+    !!isOutsideAllowedMonths(date) ||
+    !!isOutsideAllowedDates(date);
   const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates ? outOfRange : false;
 
