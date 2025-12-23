@@ -78,8 +78,8 @@ export const MinMax = (): ReactElement => {
     <LocalizationProvider
       DateAdapter={AdapterDateFns}
       locale={dateFnsEnUs}
-      minDate={selectedDate?.startDate ?? defaultMinDate}
-      maxDate={selectedDate?.endDate ?? defaultMaxDate}
+      minDate={(selectedDate?.startDate as Date) ?? defaultMinDate}
+      maxDate={(selectedDate?.endDate as Date) ?? defaultMaxDate}
     >
       <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
         <FormFieldLabel>Calendar's Min/Max Date Range</FormFieldLabel>

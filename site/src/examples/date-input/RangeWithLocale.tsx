@@ -1,16 +1,30 @@
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   DateInputRange,
   type DateInputRangeProps,
+  type DateRangeSelection,
   LocalizationProvider,
   useLocalization,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
-import type { ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 
 const Range = (): ReactElement => {
   const { dateAdapter } = useLocalization();
+  const defaultHelperText = "Aug will be invalid and ago will be valid";
+  const errorHelperText = "Please enter a valid ES date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   const handleDateChange: DateInputRangeProps["onDateChange"] = (
     _event,
     date,
@@ -46,20 +60,35 @@ const Range = (): ReactElement => {
         console.log(`EndDate Original Value: ${endDateOriginalValue}`);
       }
     }
+    setSelectedDate({
+      startDate: startDateOriginalValue?.trim().length === 0 ? null : startDate,
+      endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+    });
+    if (startDateErrors?.length && startDateOriginalValue) {
+      setValidationStatus("error");
+      setHelperText(
+        `${errorHelperText} - start date ${startDateErrors[0].message}`,
+      );
+    } else if (endDateErrors?.length && endDateOriginalValue) {
+      setValidationStatus("error");
+      setHelperText(
+        `${errorHelperText} - end date ${endDateErrors[0].message}`,
+      );
+    } else {
+      setValidationStatus(undefined);
+      setHelperText(defaultHelperText);
+    }
   };
 
   return (
-    <FormField style={{ width: "250px" }}>
-      <FormFieldLabel>Enter ES locale date range</FormFieldLabel>
+    <FormField style={{ width: "250px" }} validationStatus={validationStatus}>
+      <FormLabel>Enter ES locale date range</FormLabel>
       <DateInputRange
-        bordered
-        onDateChange={handleDateChange}
+        date={selectedDate}
         format={"DD MMM YYYY"}
-        defaultValue={{ startDate: "23 ago 2025", endDate: "24 ago 2025" }}
+        onDateChange={handleDateChange}
       />
-      <FormFieldHelperText>
-        Aug will be invalid and ago will be valid
-      </FormFieldHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormField>
   );
 };
