@@ -13,7 +13,6 @@
 .saltKbd {
   display: inline-flex;
   box-sizing: border-box;
-  --saltText-fontFamily: var(--salt-text-code-fontFamily);
   width: fit-content;
   border-radius: var(--salt-palette-corner-weaker);
   border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor);
