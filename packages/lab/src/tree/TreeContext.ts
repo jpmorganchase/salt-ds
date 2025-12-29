@@ -46,6 +46,8 @@ export interface TreeContextValue {
   getVisibleNodes: () => string[];
   /** Get the first visible node */
   getFirstVisibleNode: () => string | undefined;
+  /** Get the first selected visible node */
+  getFirstSelectedVisibleNode: () => string | undefined;
   /** Register a DOM element for focus management */
   registerElement: (value: string, element: HTMLElement) => () => void;
   /** Get DOM element for a node (if mounted) */

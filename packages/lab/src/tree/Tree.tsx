@@ -1,9 +1,10 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
@@ -144,6 +145,18 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
     const lastKeypressRef = useRef<string>("");
     const keypressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const treeRef = useRef<HTMLUListElement>(null);
+
+    const handleBlur = useCallback(
+      (event: FocusEvent<HTMLUListElement>) => {
+        // Reset activeNode when focus leaves tree so that when it returns, it'll be on the first node
+        const relatedTarget = event.relatedTarget as Node | null;
+        if (!treeRef.current?.contains(relatedTarget)) {
+          setActiveNode(undefined);
+        }
+      },
+      [setActiveNode],
+    );
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLUListElement>) => {
@@ -394,10 +407,12 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       ],
     );
 
+    const handleRef = useForkRef(treeRef, ref);
+
     return (
       <TreeProvider value={treeState}>
         <ul
-          ref={ref}
+          ref={handleRef}
           role="tree"
           aria-multiselectable={multiselect ? true : undefined}
           aria-disabled={disabled || undefined}
@@ -407,6 +422,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             className,
           )}
           onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
           {...rest}
         >
           {children}

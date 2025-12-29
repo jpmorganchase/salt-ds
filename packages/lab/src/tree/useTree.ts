@@ -549,6 +549,11 @@ export function useTree(props: UseTreeProps) {
     return visibleNodes[0];
   }, [getVisibleNodes]);
 
+  const getFirstSelectedVisibleNode = useCallback((): string | undefined => {
+    const visibleNodes = getVisibleNodes();
+    return visibleNodes.find((node) => selectedState.includes(node));
+  }, [getVisibleNodes, selectedState]);
+
   return {
     expandedArray,
     setExpandedArray,
@@ -570,6 +575,7 @@ export function useTree(props: UseTreeProps) {
     getAncestors,
     getVisibleNodes,
     getFirstVisibleNode,
+    getFirstSelectedVisibleNode,
     registerElement,
     getElement,
     activeNode,

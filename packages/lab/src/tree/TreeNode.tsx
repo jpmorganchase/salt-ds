@@ -105,6 +105,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       disabledIdsSet,
       indeterminateState,
       getFirstVisibleNode,
+      getFirstSelectedVisibleNode,
       mounted,
     } = useTreeContext();
 
@@ -118,11 +119,18 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const indeterminate = indeterminateState.has(value);
     const isActive = activeNode === value;
 
+    const firstSelectedVisible = getFirstSelectedVisibleNode();
     const isTabbable =
       !disabled &&
+      mounted &&
       (isActive ||
-        (activeNode === undefined &&
-          mounted &&
+        // If not active and there's a visible selected node, it's tabbable (for tabbing back in)
+        (!activeNode &&
+          firstSelectedVisible !== undefined &&
+          firstSelectedVisible === value) ||
+        // If not active and no selection, first visible node is tabbable (for initial tab in)
+        (!activeNode &&
+          firstSelectedVisible === undefined &&
           getFirstVisibleNode() === value));
 
     useEffect(() => {
