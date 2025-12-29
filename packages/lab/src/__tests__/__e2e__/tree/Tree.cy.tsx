@@ -1080,4 +1080,194 @@ describe("Given a Tree", () => {
       cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
   });
+
+  describe("Focus Selection Management (ARIA compliance tests)", () => {
+    describe("Single-select mode", () => {
+      it("should focus first node when tabbing into tree with no selection", () => {
+        cy.mount(
+          <Tree aria-label="File browser">
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>,
+        );
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+      });
+
+      it("should focus selected node when tabbing into tree with selection", () => {
+        cy.mount(
+          <Tree aria-label="File browser" defaultSelected={["node2"]}>
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>,
+        );
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+      });
+
+      it("should allow tabbing out from any focused node without refocusing selected node", () => {
+        cy.mount(
+          <>
+            <Tree aria-label="File browser" defaultSelected={["node2"]}>
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+            <button type="button">Next Element</button>
+          </>,
+        );
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+        cy.realPress("ArrowDown");
+        cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+      });
+
+      it("should return focus to selected node when tabbing back into tree", () => {
+        cy.mount(
+          <>
+            <button type="button">Previous Element</button>
+            <Tree aria-label="File browser" defaultSelected={["node2"]}>
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+            <button type="button">Next Element</button>
+          </>,
+        );
+        cy.findByRole("button", { name: "Previous Element" }).focus();
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+        cy.realPress("ArrowDown");
+        cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+      });
+
+      it("should focus first visible node when selected node is hidden by collapsed parent", () => {
+        cy.mount(
+          <Tree aria-label="File browser" defaultSelected={["child"]}>
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="parent" label="Parent">
+              <TreeNode value="child" label="Child" />
+            </TreeNode>
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>,
+        );
+        cy.findByRole("tree").should("exist");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("exist");
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+      });
+    });
+
+    describe("Multi-select mode", () => {
+      it("should focus first node when tabbing into tree with no selection", () => {
+        cy.mount(
+          <Tree aria-label="File browser" multiselect>
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>,
+        );
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+      });
+
+      it("should focus first selected node when tabbing into tree with selection", () => {
+        cy.mount(
+          <Tree
+            aria-label="File browser"
+            multiselect
+            defaultSelected={["node2", "node3"]}
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>,
+        );
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+      });
+
+      it("should allow tabbing out from any focused node without refocusing selected nodes", () => {
+        cy.mount(
+          <>
+            <Tree
+              aria-label="File browser"
+              multiselect
+              defaultSelected={["node1", "node2"]}
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+            <button type="button">Next Element</button>
+          </>,
+        );
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+        cy.realPress("ArrowDown");
+        cy.realPress("ArrowDown");
+        cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+      });
+
+      it("should return focus to first selected node when tabbing back into tree", () => {
+        cy.mount(
+          <>
+            <button type="button">Previous Element</button>
+            <Tree
+              aria-label="File browser"
+              multiselect
+              defaultSelected={["node2", "node3"]}
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+            <button type="button">Next Element</button>
+          </>,
+        );
+        cy.findByRole("button", { name: "Previous Element" }).focus();
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+        cy.realPress("ArrowUp");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
+      });
+
+      it("should focus first visible node when all selected nodes are hidden by collapsed parents", () => {
+        cy.mount(
+          <Tree
+            aria-label="File browser"
+            multiselect
+            propagateSelectUpwards={false}
+            defaultSelected={["child1", "child2"]}
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="parent1" label="Parent 1">
+              <TreeNode value="child1" label="Child 1" />
+            </TreeNode>
+            <TreeNode value="parent2" label="Parent 2">
+              <TreeNode value="child2" label="Child 2" />
+            </TreeNode>
+          </Tree>,
+        );
+        cy.findByRole("tree").should("exist");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("exist");
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+      });
+    });
+  });
 });
