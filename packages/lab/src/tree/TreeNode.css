@@ -1,188 +1,118 @@
 .saltTreeNode {
-  /* Color */
-  --tree-item-text-color: var(--salt-content-primary-foreground);
-  --tree-item-background: var(--salt-selectable-background);
-  --tree-item-background-hover: var(--salt-selectable-background-hover);
-
-  --tree-node-height: var(--saltTree-node-height, var(--salt-size-stackable));
-  --tree-node-icon-size: 12px;
-  --tree-node-icon-transform: none;
-  --tree-node-paddingLeft: 6px;
-
-  align-items: flex-start;
-  min-height: var(--tree-node-height, auto);
-  line-height: var(--salt-text-lineHeight);
   list-style: none;
+  outline: none;
   position: relative;
-  text-align: var(--list-item-textAlign);
 }
 
-.saltTreeNode-highlighted {
-  --tree-item-background: var(--salt-selectable-background-hover);
+.saltTreeNode-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.saltTreeNode-item[aria-selected="true"] {
-  background: var(--salt-selectable-background-selected);
-  color: var(--salt-content-primary-foreground);
-  --saltIcon-color: var(--salt-content-primary-foreground);
-}
-
-.saltTreeNode[aria-expanded="true"] {
-  --tree-node-icon-transform: rotate(45deg) translate(1px, 1px);
-}
-
-.saltTreeNode-item {
-  align-items: center;
-  background: var(--tree-item-background);
+.saltTreeNode-content {
+  box-sizing: border-box;
   display: flex;
-  height: var(--tree-node-height);
-  padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-node-indent));
-  position: relative;
+  align-items: center;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+
+  /**
+   * Left padding based on depth level.
+   * Formula: base-padding + (icon-width + gap) * (level - 1)
+   */
+  padding-left: calc(var(--salt-spacing-100) + ((var(--salt-size-selectable) + var(--salt-spacing-100)) * (var(--saltTreeNode-level, 1) - 1)));
+  background: var(--salt-selectable-background);
+  color: var(--salt-content-primary-foreground);
+  cursor: var(--salt-cursor-hover);
+  min-height: var(--salt-size-base);
 }
 
-.saltTreeNode-toggle {
-  display: inline-block;
-  flex: 0 0 18px;
-  height: var(--tree-node-icon-size);
-  transform: var(--tree-node-icon-transform);
-  transition: transform 0.1s ease;
+.saltTreeNode-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}
+
+.saltTreeNode-content:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltTreeNode:focus {
+  outline: none;
+}
+
+.saltTreeNode-selected > .saltTreeNode-content {
+  background: var(--salt-selectable-background-selected);
+  box-shadow:
+    0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected),
+    0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
+  position: relative;
+  z-index: var(--salt-zIndex-default);
+}
+
+.saltTreeNode:focus-visible > .saltTreeNode-content {
+  background: var(--salt-selectable-background-hover);
+  outline: var(--salt-focused-outline);
+  position: relative;
+  z-index: calc(var(--salt-zIndex-default) + 1);
+}
+
+.saltTreeNode-selected:focus-visible > .saltTreeNode-content {
+  background: var(--salt-selectable-background-selected);
+  outline: var(--salt-focused-outline);
+  z-index: calc(var(--salt-zIndex-default) + 1);
+}
+
+.saltTreeNode-disabled > .saltTreeNode-content {
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-cursor-disabled);
+  background: var(--salt-selectable-background-disabled);
+}
+
+.saltTreeNode-expansion,
+.saltTreeNode-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--salt-size-selectable);
+  min-width: var(--salt-size-selectable);
+  height: var(--salt-size-selectable);
+  flex-shrink: 0;
+}
+
+.saltTreeNode-expansionIcon {
+  color: var(--salt-content-primary-foreground);
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
+  transform: rotate(0deg);
+}
+
+.saltTreeNode-expansionIcon-expanded {
+  transform: rotate(90deg);
+}
+
+.saltTreeNode-disabled .saltTreeNode-expansionIcon {
+  color: var(--salt-content-primary-foreground-disabled);
+}
+
+.saltTreeNode-checkbox {
+  flex-shrink: 0;
+}
+
+.saltTreeNode-icon > * {
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltTreeNode-disabled .saltTreeNode-icon > * {
+  color: var(--salt-content-primary-foreground-disabled);
 }
 
 .saltTreeNode-label {
-  align-items: center;
-  display: inline-flex;
-  height: var(--tree-node-height);
-}
-.saltTreeNode-description {
-  align-items: center;
-  display: inline-flex;
-  height: var(--tree-node-height);
-  padding-left: var(--salt-size-unit);
-}
-
-/* Leaf node or the div child of a collapsible node */
-/* .saltTreeNode:not([aria-expanded="true"]), */
-.saltTreeNode[aria-expanded] > .saltTreeNode-label {
-  --checkbox-borderColor: black;
-  --checkbox-borderWidth: 1px;
-  --checkbox-tick: black;
-  /* --list-svg-toggle: var(--list-svg-chevron-down); */
-  --list-svg-toggle: var(--tree-node-collapse);
-
-  color: var(--list-item-text-color);
-  flex-wrap: nowrap;
-  line-height: var(--tree-node-height);
-  padding: var(--list-item-padding);
-  position: relative;
-  cursor: default;
-  margin: 0;
-  white-space: nowrap;
-}
-
-.saltTreeNode:not([aria-expanded]) {
-  padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
-}
-
-.saltTreeNode[aria-expanded] > .saltTreeNode-label {
-  padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
-}
-
-.saltTreeNode[aria-expanded] {
-  flex-direction: column;
-}
-
-.saltTreeNode[aria-expanded] {
-  flex-direction: column;
-  height: auto;
-}
-
-.saltTreeNode > *[role="group"] {
-  padding-left: 0px;
-}
-
-[aria-level="2"] {
-  --tree-node-indent: 24px;
-}
-[aria-level="3"] {
-  --tree-node-indent: 36px;
-}
-[aria-level="4"] {
-  --tree-node-indent: 48px;
-}
-
-.saltTreeNode:not(.focusVisible):not([aria-expanded])[data-highlighted],
-.saltTreeNode:not(.focusVisible)[aria-expanded][data-highlighted] > div:first-child {
-  background: var(--list-background-highlighted);
-}
-
-.saltTree-toggle {
-  cursor: pointer;
-}
-
-.saltTreeNode[aria-selected="true"] {
-  --list-item-header-twisty-color: var(--list-item-selected-color);
-}
-
-.saltTreeNode:not(.focusVisible):focus {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.saltTreeNode:not([aria-expanded]).focusVisible:before,
-.saltTreeNode[aria-expanded].focusVisible > div:first-child:before {
-  content: "";
-  position: absolute;
-  top: 0px;
-  left: var(--tree-offset-left-focusVisible, 0px);
-  right: 0;
-  bottom: 0px;
-  border: dotted rgb(141, 154, 179) 2px; /* FIXME: Needs checking */
-  background: var(--list-background-highlighted);
-}
-
-/* .saltTreeNode[aria-level='2'] {
-    --tree-offset-left-focusVisible: -13px;
-  }
-
-  .saltTreeNode[aria-level='3'] {
-    --tree-offset-left-focusVisible: -24px;
-  }
-
-  .saltTreeNode[aria-level='4'] {
-    --tree-offset-left-focusVisible: -36px;
-  } */
-
-.saltTreeNode[aria-expanded="false"] > *:first-child:after {
-  --list-svg-toggle: var(--tree-node-expand);
-}
-
-.saltTreeNode[aria-expanded="true"] > *:first-child:after {
-  transform: var(--tree-node-expanded-transform);
-}
-
-/* Selection */
-
-.saltTree:not(.checkbox-only) .saltTreeNode:not([aria-expanded])[aria-selected="true"],
-.saltTree:not(.checkbox-only) .saltTreeNode[aria-expanded][aria-selected="true"] > div:first-child {
-  --checkbox-borderColor: var(--list-item-selected-color);
-  --checkbox-tick: var(--list-item-selected-color);
-  --tree-borderColor-focusVisible: var(--list-item-selected-color);
-  background: var(--list-item-background-active);
-  color: var(--list-item-selected-color);
-}
-
-.with-checkbox .saltTreeNode {
-  padding-left: 28px;
-}
-
-.with-checkbox .saltTreeNode:before {
-  border-style: solid;
-  border-width: var(--checkbox-borderWidth);
-  border-color: var(--checkbox-borderColor);
-  content: "";
-  height: 12px;
-  left: 3px;
-  margin-top: -7px;
-  position: absolute;
-  top: 50%;
-  width: 12px;
+  flex: 1;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  word-break: break-word;
 }
