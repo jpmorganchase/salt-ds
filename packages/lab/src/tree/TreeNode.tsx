@@ -106,7 +106,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       indeterminateState,
       getFirstVisibleNode,
       getFirstSelectedVisibleNode,
-      mounted,
     } = useTreeContext();
 
     const parentContext = useTreeNodeContext();
@@ -122,7 +121,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const firstSelectedVisible = getFirstSelectedVisibleNode();
     const isTabbable =
       !disabled &&
-      mounted &&
       (isActive ||
         // If not active and there's a visible selected node, it's tabbable (for tabbing back in)
         (!activeNode &&

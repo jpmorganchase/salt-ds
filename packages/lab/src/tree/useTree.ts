@@ -273,12 +273,6 @@ export function useTree(props: UseTreeProps) {
 
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
 
   const registerElement = useCallback((value: string, element: HTMLElement) => {
@@ -410,11 +404,11 @@ export function useTree(props: UseTreeProps) {
   );
 
   useEffect(() => {
-    if (multiselect && mounted) {
+    if (multiselect) {
       const newIndeterminate = calculateIndeterminateState(selectedState);
       setIndeterminateState(newIndeterminate);
     }
-  }, [multiselect, mounted, selectedState, calculateIndeterminateState]);
+  }, [multiselect, selectedState, calculateIndeterminateState]);
 
   const updateAncestors = useCallback(
     (currentSelected: string[], value: string) => {
@@ -581,6 +575,5 @@ export function useTree(props: UseTreeProps) {
     activeNode,
     setActiveNode,
     indeterminateState,
-    mounted,
   };
 }

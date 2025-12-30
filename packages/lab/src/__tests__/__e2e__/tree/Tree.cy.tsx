@@ -1251,15 +1251,16 @@ describe("Given a Tree", () => {
           <Tree
             aria-label="File browser"
             multiselect
-            propagateSelectUpwards={false}
-            defaultSelected={["child1", "child2"]}
+            defaultSelected={["child1", "child3"]}
           >
             <TreeNode value="node1" label="Node 1" />
             <TreeNode value="parent1" label="Parent 1">
               <TreeNode value="child1" label="Child 1" />
+              <TreeNode value="child2" label="Child 2" />
             </TreeNode>
             <TreeNode value="parent2" label="Parent 2">
-              <TreeNode value="child2" label="Child 2" />
+              <TreeNode value="child3" label="Child 3" />
+              <TreeNode value="child4" label="Child 4" />
             </TreeNode>
           </Tree>,
         );
@@ -1267,6 +1268,98 @@ describe("Given a Tree", () => {
         cy.findByRole("treeitem", { name: "Node 1" }).should("exist");
         cy.realPress("Tab");
         cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+      });
+
+      it("should update focus target as nested selected nodes become visible through expansion", () => {
+        cy.mount(
+          <>
+            <button type="button">Previous Element</button>
+            <Tree
+              aria-label="File browser"
+              multiselect
+              defaultExpanded={["grandparent", "parent"]}
+              defaultSelected={["deepChild1"]}
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="grandparent" label="Grandparent">
+                <TreeNode value="parent" label="Parent">
+                  <TreeNode value="deepChild1" label="Deep Child 1" />
+                  <TreeNode value="deepChild2" label="Deep Child 2" />
+                  <TreeNode value="deepChild3" label="Deep Child 3" />
+                </TreeNode>
+                <TreeNode value="sibling" label="Sibling" />
+              </TreeNode>
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+            <button type="button">Next Element</button>
+          </>,
+        );
+
+        // Initially expanded - selected node is visible
+        cy.findByRole("tree").should("exist");
+        cy.findByRole("button", { name: "Previous Element" }).focus();
+        cy.realPress("Tab");
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should(
+          "be.focused",
+        );
+
+        // Collapse parent (second level) - selected node now hidden
+        cy.findByRole("treeitem", { name: /Parent/ })
+          .find(".saltTreeNode-expansion")
+          .realClick();
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should("not.exist");
+
+        // Tab out and back in - should focus first node since selected is hidden
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+
+        // Collapse grandparent (first level) - parent also hidden now
+        cy.findByRole("treeitem", { name: /Grandparent/ })
+          .find(".saltTreeNode-expansion")
+          .realClick();
+        cy.findByRole("treeitem", { name: /Parent/ }).should("not.exist");
+
+        // Tab out and back in - should still focus first node
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+
+        // Expand grandparent (first level) - parent visible but still indeterminate
+        cy.findByRole("treeitem", { name: /Grandparent/ })
+          .find(".saltTreeNode-expansion")
+          .realClick();
+        cy.findByRole("treeitem", { name: /Parent/ }).should("be.visible");
+        cy.findByRole("treeitem", { name: /Parent/ }).should(
+          "have.attr",
+          "aria-checked",
+          "mixed",
+        );
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should("not.exist");
+
+        // Tab out and back in - should still focus first node (selected still hidden)
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
+
+        // Expand parent (second level) - selected node now visible
+        cy.findByRole("treeitem", { name: /Parent/ })
+          .find(".saltTreeNode-expansion")
+          .realClick();
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should(
+          "be.visible",
+        );
+
+        // Tab out and back in - should now focus the selected node
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Next Element" }).should("be.focused");
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should(
+          "be.focused",
+        );
       });
     });
   });
