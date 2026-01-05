@@ -71,6 +71,9 @@ export const getDefaultOptions = (
       bullet: {
         borderRadius: 0,
       },
+      waterfall: {
+        borderRadius: 0,
+      },
       scatter: {
         marker: {
           // Agreed in design set value

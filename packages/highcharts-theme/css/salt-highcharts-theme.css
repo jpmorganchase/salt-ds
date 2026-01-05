@@ -129,6 +129,8 @@
 .highcharts-theme-salt .highcharts-legend-item-hidden > text,
 .highcharts-theme-salt .highcharts-legend-item-hidden span {
   opacity: 0.2;
+  /* v12 adds a strike-through line to hidden legend items */
+  text-decoration: none;
 }
 
 .highcharts-theme-salt .highcharts-legend-item-hidden .highcharts-focus-border {
