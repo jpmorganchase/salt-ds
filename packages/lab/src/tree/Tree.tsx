@@ -8,7 +8,6 @@ import {
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
-  useCallback,
   useRef,
 } from "react";
 import treeCss from "./Tree.css";
@@ -97,6 +96,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       defaultDisabledIds,
       disabledIds,
       onKeyDown,
+      onBlur,
       ...rest
     } = props;
 
@@ -147,265 +147,235 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
     const keypressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const treeRef = useRef<HTMLUListElement>(null);
 
-    const handleBlur = useCallback(
-      (event: FocusEvent<HTMLUListElement>) => {
-        // Reset activeNode when focus leaves tree so that when it returns, it'll be on the first node
-        const relatedTarget = event.relatedTarget as Node | null;
-        if (!treeRef.current?.contains(relatedTarget)) {
-          setActiveNode(undefined);
+    const handleBlur = (event: FocusEvent<HTMLUListElement>) => {
+      onBlur?.(event);
+      // Reset activeNode when focus leaves tree so that when it returns, it'll be on the first node
+      const relatedTarget = event.relatedTarget as Node | null;
+      if (!treeRef.current?.contains(relatedTarget)) {
+        setActiveNode(undefined);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+      onKeyDown?.(event);
+
+      if (disabled) return;
+
+      const visibleNodes = getVisibleNodes();
+      if (visibleNodes.length === 0) return;
+
+      const currentIndex = activeNode ? visibleNodes.indexOf(activeNode) : -1;
+
+      let newActiveNode: string | undefined;
+      let handled = false;
+
+      switch (event.key) {
+        case "ArrowDown": {
+          handled = true;
+          const nextIndex = currentIndex + 1;
+          if (nextIndex < visibleNodes.length) {
+            newActiveNode = visibleNodes[nextIndex];
+          }
+          break;
         }
-      },
-      [setActiveNode],
-    );
-
-    const handleKeyDown = useCallback(
-      (event: KeyboardEvent<HTMLUListElement>) => {
-        onKeyDown?.(event);
-
-        if (disabled) return;
-
-        const visibleNodes = getVisibleNodes();
-        if (visibleNodes.length === 0) return;
-
-        const currentIndex = activeNode ? visibleNodes.indexOf(activeNode) : -1;
-
-        let newActiveNode: string | undefined;
-        let handled = false;
-
-        switch (event.key) {
-          case "ArrowDown": {
-            handled = true;
-            const nextIndex = currentIndex + 1;
-            if (nextIndex < visibleNodes.length) {
-              newActiveNode = visibleNodes[nextIndex];
-            }
-            break;
+        case "ArrowUp": {
+          handled = true;
+          const prevIndex = currentIndex - 1;
+          if (prevIndex >= 0) {
+            newActiveNode = visibleNodes[prevIndex];
           }
-          case "ArrowUp": {
-            handled = true;
-            const prevIndex = currentIndex - 1;
-            if (prevIndex >= 0) {
-              newActiveNode = visibleNodes[prevIndex];
-            }
-            break;
-          }
-          case "ArrowRight": {
-            handled = true;
-            if (activeNode) {
-              const nodeMeta = getNodeMeta(activeNode);
-              const isDisabled = disabledIdsSet.has(activeNode);
-              if (!isDisabled && nodeMeta?.hasChildren) {
-                if (!expandedState.has(activeNode)) {
-                  toggleExpanded(event, activeNode);
-                } else {
-                  const firstChild = visibleNodes.find(
-                    (visibleNode) => getParent(visibleNode) === activeNode,
-                  );
-                  if (firstChild) {
-                    newActiveNode = firstChild;
-                  }
+          break;
+        }
+        case "ArrowRight": {
+          handled = true;
+          if (activeNode) {
+            const nodeMeta = getNodeMeta(activeNode);
+            const isDisabled = disabledIdsSet.has(activeNode);
+            if (!isDisabled && nodeMeta?.hasChildren) {
+              if (!expandedState.has(activeNode)) {
+                toggleExpanded(event, activeNode);
+              } else {
+                const firstChild = visibleNodes.find(
+                  (visibleNode) => getParent(visibleNode) === activeNode,
+                );
+                if (firstChild) {
+                  newActiveNode = firstChild;
                 }
               }
             }
-            break;
           }
-          case "ArrowLeft": {
-            handled = true;
-            if (activeNode) {
-              const isDisabled = disabledIdsSet.has(activeNode);
-              if (!isDisabled) {
-                if (expandedState.has(activeNode)) {
-                  toggleExpanded(event, activeNode);
-                } else {
-                  const parent = getParent(activeNode);
-                  if (parent) {
-                    newActiveNode = parent;
-                  }
+          break;
+        }
+        case "ArrowLeft": {
+          handled = true;
+          if (activeNode) {
+            const isDisabled = disabledIdsSet.has(activeNode);
+            if (!isDisabled) {
+              if (expandedState.has(activeNode)) {
+                toggleExpanded(event, activeNode);
+              } else {
+                const parent = getParent(activeNode);
+                if (parent) {
+                  newActiveNode = parent;
                 }
               }
             }
-            break;
           }
-          case "Home": {
-            handled = true;
-            newActiveNode = visibleNodes[0];
-            break;
+          break;
+        }
+        case "Home": {
+          handled = true;
+          newActiveNode = visibleNodes[0];
+          break;
+        }
+        case "End": {
+          handled = true;
+          newActiveNode = visibleNodes[visibleNodes.length - 1];
+          break;
+        }
+        case "Enter": {
+          handled = true;
+          if (activeNode) {
+            select(event, activeNode);
           }
-          case "End": {
-            handled = true;
-            newActiveNode = visibleNodes[visibleNodes.length - 1];
-            break;
+          break;
+        }
+        case " ": {
+          handled = true;
+          if (activeNode) {
+            select(event, activeNode);
           }
-          case "Enter": {
-            handled = true;
-            if (activeNode) {
-              select(event, activeNode);
-            }
-            break;
-          }
-          case " ": {
-            handled = true;
-            if (activeNode) {
-              select(event, activeNode);
-            }
-            break;
-          }
-          case "*": {
-            handled = true;
-            if (activeNode) {
-              const parent = getParent(activeNode);
-              // Get siblings: either children of parent, or root nodes if no parent
-              const siblings = parent
-                ? getChildren(parent)
-                : treeModel.rootValues;
+          break;
+        }
+        case "*": {
+          handled = true;
+          if (activeNode) {
+            const parent = getParent(activeNode);
+            // Get siblings: either children of parent, or root nodes if no parent
+            const siblings = parent
+              ? getChildren(parent)
+              : treeModel.rootValues;
 
-              const toExpand = siblings.filter((sibling) => {
-                const siblingMeta = getNodeMeta(sibling);
-                return siblingMeta?.hasChildren && !expandedState.has(sibling);
-              });
+            const toExpand = siblings.filter((sibling) => {
+              const siblingMeta = getNodeMeta(sibling);
+              return siblingMeta?.hasChildren && !expandedState.has(sibling);
+            });
 
-              if (toExpand.length > 0) {
-                const newExpanded = [...expandedArray, ...toExpand];
-                setExpandedArray(newExpanded);
-                onExpandedChange?.(event, newExpanded);
-                for (const value of toExpand) {
-                  onNodeExpandChange?.(event, value, true);
-                }
+            if (toExpand.length > 0) {
+              const newExpanded = [...expandedArray, ...toExpand];
+              setExpandedArray(newExpanded);
+              onExpandedChange?.(event, newExpanded);
+              for (const value of toExpand) {
+                onNodeExpandChange?.(event, value, true);
               }
             }
-            break;
           }
-          default: {
-            // Type-ahead
-            if (
-              event.key.length === 1 &&
-              !event.ctrlKey &&
-              !event.metaKey &&
-              !event.altKey
-            ) {
-              handled = true;
+          break;
+        }
+        default: {
+          // Type-ahead
+          if (
+            event.key.length === 1 &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey
+          ) {
+            handled = true;
 
-              if (keypressTimeoutRef.current) {
-                clearTimeout(keypressTimeoutRef.current);
+            if (keypressTimeoutRef.current) {
+              clearTimeout(keypressTimeoutRef.current);
+            }
+
+            lastKeypressRef.current += event.key.toLowerCase();
+            const searchString = lastKeypressRef.current;
+
+            keypressTimeoutRef.current = setTimeout(() => {
+              lastKeypressRef.current = "";
+            }, 500);
+
+            const currentIndex = activeNode
+              ? visibleNodes.indexOf(activeNode)
+              : -1;
+            let found = false;
+
+            for (let i = currentIndex + 1; i < visibleNodes.length; i++) {
+              const element = getElement(visibleNodes[i]);
+              if (
+                element?.textContent?.toLowerCase().startsWith(searchString)
+              ) {
+                newActiveNode = visibleNodes[i];
+                found = true;
+                break;
               }
+            }
 
-              lastKeypressRef.current += event.key.toLowerCase();
-              const searchString = lastKeypressRef.current;
-
-              keypressTimeoutRef.current = setTimeout(() => {
-                lastKeypressRef.current = "";
-              }, 500);
-
-              const currentIndex = activeNode
-                ? visibleNodes.indexOf(activeNode)
-                : -1;
-              let found = false;
-
-              for (let i = currentIndex + 1; i < visibleNodes.length; i++) {
+            if (!found) {
+              for (let i = 0; i <= currentIndex; i++) {
                 const element = getElement(visibleNodes[i]);
                 if (
                   element?.textContent?.toLowerCase().startsWith(searchString)
                 ) {
                   newActiveNode = visibleNodes[i];
-                  found = true;
                   break;
                 }
               }
-
-              if (!found) {
-                for (let i = 0; i <= currentIndex; i++) {
-                  const element = getElement(visibleNodes[i]);
-                  if (
-                    element?.textContent?.toLowerCase().startsWith(searchString)
-                  ) {
-                    newActiveNode = visibleNodes[i];
-                    break;
-                  }
-                }
-              }
-            }
-            break;
-          }
-        }
-
-        if (
-          (event.ctrlKey || event.metaKey) &&
-          event.key === "a" &&
-          multiselect
-        ) {
-          handled = true;
-          event.preventDefault();
-
-          const allVisibleValues = visibleNodes.filter(
-            (visibleNode) => !disabledIdsSet.has(visibleNode),
-          );
-          const allSelected = allVisibleValues.every((visible) =>
-            selectedState.includes(visible),
-          );
-
-          const newSelected = allSelected ? [] : allVisibleValues;
-
-          setSelectedState(newSelected);
-          onSelectionChange?.(event, newSelected);
-          return;
-        }
-
-        if (
-          event.shiftKey &&
-          (event.key === "ArrowUp" || event.key === "ArrowDown") &&
-          multiselect
-        ) {
-          handled = true;
-          const isDown = event.key === "ArrowDown";
-          const currentIndex = activeNode
-            ? visibleNodes.indexOf(activeNode)
-            : -1;
-          const nextIndex = isDown ? currentIndex + 1 : currentIndex - 1;
-
-          if (nextIndex >= 0 && nextIndex < visibleNodes.length) {
-            const nextValue = visibleNodes[nextIndex];
-
-            if (!disabledIdsSet.has(nextValue)) {
-              select(event, nextValue);
-              newActiveNode = nextValue;
             }
           }
+          break;
         }
+      }
 
-        if (handled) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.key === "a" &&
+        multiselect
+      ) {
+        handled = true;
+        event.preventDefault();
 
-        if (newActiveNode !== undefined) {
-          setActiveNode(newActiveNode);
+        const allVisibleValues = visibleNodes.filter(
+          (visibleNode) => !disabledIdsSet.has(visibleNode),
+        );
+        const allSelected = allVisibleValues.every((visible) =>
+          selectedState.includes(visible),
+        );
+
+        const newSelected = allSelected ? [] : allVisibleValues;
+
+        setSelectedState(newSelected);
+        onSelectionChange?.(event, newSelected);
+        return;
+      }
+
+      if (
+        event.shiftKey &&
+        (event.key === "ArrowUp" || event.key === "ArrowDown") &&
+        multiselect
+      ) {
+        handled = true;
+        const isDown = event.key === "ArrowDown";
+        const currentIndex = activeNode ? visibleNodes.indexOf(activeNode) : -1;
+        const nextIndex = isDown ? currentIndex + 1 : currentIndex - 1;
+
+        if (nextIndex >= 0 && nextIndex < visibleNodes.length) {
+          const nextValue = visibleNodes[nextIndex];
+
+          if (!disabledIdsSet.has(nextValue)) {
+            select(event, nextValue);
+            newActiveNode = nextValue;
+          }
         }
-      },
-      [
-        onKeyDown,
-        disabled,
-        getVisibleNodes,
-        activeNode,
-        getNodeMeta,
-        getElement,
-        expandedArray,
-        setExpandedArray,
-        expandedState,
-        toggleExpanded,
-        getParent,
-        getChildren,
-        treeModel,
-        select,
-        selectedState,
-        setSelectedState,
-        multiselect,
-        setActiveNode,
-        disabledIdsSet,
-        onSelectionChange,
-        onExpandedChange,
-        onNodeExpandChange,
-      ],
-    );
+      }
+
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      if (newActiveNode !== undefined) {
+        setActiveNode(newActiveNode);
+      }
+    };
 
     const handleRef = useForkRef(treeRef, ref);
 

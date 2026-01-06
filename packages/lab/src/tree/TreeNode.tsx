@@ -17,7 +17,6 @@ import {
   forwardRef,
   type MouseEvent,
   type ReactNode,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -78,6 +77,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       children,
       className,
       id: idProp,
+      onFocus,
       ...rest
     } = props;
 
@@ -144,32 +144,24 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       }
     }, [isActive]);
 
-    const handleContentClick = useCallback(
-      (event: MouseEvent<HTMLDivElement>) => {
-        if (disabled) return;
+    const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
+      if (disabled) return;
+      setActiveNode(value);
+      select(event, value);
+    };
+
+    const handleExpansionClick = (event: MouseEvent<HTMLSpanElement>) => {
+      event.stopPropagation();
+      if (disabled) return;
+      toggleExpanded(event, value);
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLLIElement>) => {
+      onFocus?.(event);
+      if (!disabled && event.target === event.currentTarget) {
         setActiveNode(value);
-        select(event, value);
-      },
-      [disabled, setActiveNode, value, select],
-    );
-
-    const handleExpansionClick = useCallback(
-      (event: MouseEvent<HTMLSpanElement>) => {
-        event.stopPropagation();
-        if (disabled) return;
-        toggleExpanded(event, value);
-      },
-      [disabled, toggleExpanded, value],
-    );
-
-    const handleFocus = useCallback(
-      (event: FocusEvent<HTMLLIElement>) => {
-        if (!disabled && event.target === event.currentTarget) {
-          setActiveNode(value);
-        }
-      },
-      [disabled, setActiveNode, value],
-    );
+      }
+    };
 
     const nodeContext = useMemo(
       () => ({
