@@ -5,13 +5,12 @@ sidebar:
   priority: 5
 ---
 
-Charts rely on visual elements to make complex data easier to understand, so it’s essential they are accessible to everyone. Ground your chart design and implementation in the [WCAG POUR principles](https://www.w3.org/WAI/fundamentals/accessibility-principles/): 
+Charts rely on visual elements to make complex data easier to understand, so it’s essential they are accessible to everyone. Ground your chart design and implementation in the [WCAG POUR principles](https://www.w3.org/WAI/fundamentals/accessibility-principles/):
 
 - **Perceivable**: text equivalents (caption, summary), accessible data table, sufficient contrast, labels/patterns/markers instead of colour alone.
 - **Operable**: full keyboard access, predictable focus order, non-hover-only interactions, pause/stop controls for animation, adequate target sizes.
 - **Understandable**: clear titles and legends, consistent scales/units, plain language, concise insight summaries, predictable behaviour.
 - **Robust**: semantic markup, ARIA roles and names, programmatic relationships, compatibility with screen readers, cross-browser testing and fallbacks.
-
 
 ## Color contrast
 
@@ -75,25 +74,22 @@ Salt uses predefined symbols in the following order:
   alt="A line chart using marker symbols."
 />
 
-
 ## Text formats
 
-Assistive technology users typically navigate charts using screen readers or keyboards—and may not always be unable to percieve visual elements in a complex chart or navigate the chart easily. Consider if the complexity of your chart warrants a text description or an equivalent format. 
- 
-There are several things you could add to aid the understanding of your chart: 
+Assistive technology users typically navigate charts using screen readers or keyboards—and may not always be unable to percieve visual elements in a complex chart or navigate the chart easily. Consider if the complexity of your chart warrants a text description or an equivalent format.
+
+There are several things you could add to aid the understanding of your chart:
 
 - A chart name
-- A chart summary 
+- A chart summary
 - A progressive disclosure or an overlay containing a further description
 - Data table or list in addition to the chart
 - A link to a nearby page
 
 A simple pie or donut chart with a small number of data points and no trends, for example, may not require a text equivalent, provided keyboard and screen reader users can percieve all the data points.
- 
+
 As a last resort, you can link to a nearby page via a link next to the chart. Try to keep these links adjacent to their respective chart, as placing essential information on a separate screen will disrupt the flow of information and increase unneccessary cognitive load.
 
 For more information about alternative formats, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
-
-
 
 :fragment{src="../fragments/feedback.mdx"}
