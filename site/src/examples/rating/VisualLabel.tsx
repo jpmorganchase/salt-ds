@@ -8,9 +8,6 @@ export const VisualLabel = (): ReactElement => (
       labelPosition="right"
       semanticLabels={["Poor", "Fair", "Good", "Very Good", "Excellent"]}
     />
-    <Rating
-      value={4}
-      semanticLabels={(value, max) => `${value}/${max}`}
-    />
+    <Rating value={4} semanticLabels={(value, max) => `${value}/${max}`} />
   </FlexLayout>
 );

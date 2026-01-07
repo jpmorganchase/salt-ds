@@ -1,12 +1,17 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
 
+import {
+  FlexLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+} from "@salt-ds/core";
+import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
 import { Rating } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
-import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
-import { FlexLayout, FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
 
 export default {
   title: "Lab/Rating",
@@ -17,11 +22,7 @@ export default {
 } as Meta<typeof Rating>;
 
 export const Basic: StoryFn<typeof Rating> = (args) => {
-  return (
-    <Rating
-      {...args} 
-    />
-  );
+  return <Rating {...args} />;
 };
 
 export const ClearSelection: StoryFn<typeof Rating> = (args) => {
@@ -29,11 +30,21 @@ export const ClearSelection: StoryFn<typeof Rating> = (args) => {
     <FlexLayout direction="column" gap={3}>
       <FormField labelPlacement="top">
         <FormFieldLabel>Click to clear selection</FormFieldLabel>
-        <Rating value={3} allowClear={true} onValueChange={(value) => console.log(value)} {...args}/>
+        <Rating
+          value={3}
+          allowClear={true}
+          onValueChange={(value) => console.log(value)}
+          {...args}
+        />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Prevent Clearing Selection</FormFieldLabel>
-        <Rating value={3} allowClear={false} onValueChange={(value) => console.log(value)} {...args}/>
+        <Rating
+          value={3}
+          allowClear={false}
+          onValueChange={(value) => console.log(value)}
+          {...args}
+        />
       </FormField>
     </FlexLayout>
   );
@@ -64,25 +75,38 @@ export const FormFieldSupport: StoryFn<typeof Rating> = (args) => {
         semanticLabels={["Poor", "Fair", "Good", "Very Good", "Excellent"]}
         {...args}
       />
-      <FormFieldHelperText>Please rate your overall experience with our service. Select the number of stars that best reflects your satisfaction.</FormFieldHelperText>
+      <FormFieldHelperText>
+        Please rate your overall experience with our service. Select the number
+        of stars that best reflects your satisfaction.
+      </FormFieldHelperText>
     </FormField>
   );
 };
 
 export const CustomIcons: StoryFn<typeof Rating> = ({
   onValueChange,
-  ...args}) => {
+  ...args
+}) => {
   const [value, setValue] = useState(3);
 
   return (
     <FlexLayout direction="column" gap={3}>
       <FormField labelPlacement="top">
         <FormFieldLabel>Decreased increments</FormFieldLabel>
-        <Rating max={3} onValueChange={(value) => console.log(value)} {...args}/>
+        <Rating
+          max={3}
+          onValueChange={(value) => console.log(value)}
+          {...args}
+        />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Increased increments</FormFieldLabel>
-        <Rating value={7} max={10} onValueChange={(value) => console.log(value)} {...args}/>
+        <Rating
+          value={7}
+          max={10}
+          onValueChange={(value) => console.log(value)}
+          {...args}
+        />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Custom icon</FormFieldLabel>
@@ -101,13 +125,9 @@ export const CustomIcons: StoryFn<typeof Rating> = ({
 };
 
 export const Disabled: StoryFn<typeof Rating> = (args) => {
-  return (
-    <Rating disabled value={3} {...args} />
-  );
+  return <Rating disabled value={3} {...args} />;
 };
 
 export const ReadOnly: StoryFn<typeof Rating> = (args) => {
-  return (
-    <Rating readOnly value={3} {...args} />
-  );
+  return <Rating readOnly value={3} {...args} />;
 };

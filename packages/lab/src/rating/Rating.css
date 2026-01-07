@@ -20,7 +20,8 @@
   text-overflow: ellipsis;
 }
 
-.saltRating-label.saltRating-label-top, .saltRating-label.saltRating-label-bottom {
+.saltRating-label.saltRating-label-top,
+.saltRating-label.saltRating-label-bottom {
   text-align: center;
 }
 
