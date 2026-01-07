@@ -50,6 +50,7 @@ export * from "./menu-button";
 export * from "./metric";
 export * from "./portal";
 export * from "./query-input";
+export * from "./rating";
 export * from "./responsive";
 export * from "./search-input";
 export * from "./static-list";

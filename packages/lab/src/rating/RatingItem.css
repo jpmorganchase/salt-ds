@@ -1,0 +1,54 @@
+.saltRatingItem {
+  height: 14px;
+  width: 14px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
+.saltRatingItem-icon {
+  --saltIcon-size: 14px;
+  position: relative;
+}
+
+.saltRatingItem:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+}
+
+.saltRatingItem-read-only {
+  cursor: default;
+}
+
+.saltRatingItem-disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.saltRatingItem .saltRatingItem-icon {
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.saltRatingItem-icon.saltRatingItem-icon-filled {
+  color: var(--salt-accent-background);
+}
+
+.saltRatingItem-icon.saltRatingItem-icon-empty {
+  color: var(--salt-content-secondary-foreground);
+}
+
+.saltRatingItem-icon.saltRatingItem-icon-hovered {
+  color: var(--salt-accent-background);
+}
+
+.saltRatingItem-icon:focus-visible {
+  border: 2px dashed var(--salt-focused-outline);
+}
+
+.saltRatingItem-icon-outlined {
+  color: var(--salt-accent-background);
+}

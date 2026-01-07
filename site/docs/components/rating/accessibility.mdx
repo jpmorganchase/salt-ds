@@ -1,0 +1,30 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Tab moves focus into the component and currently selected icon receives focus.
+- If the user hasn't selected rating, Tab moves focus to the first rating in the group.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- User can press enter or space to deselect/re-select the current rating.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
+
+- This action moves focus between the available rating, and simultaneously selects an option.
+
+</KeyboardControl>
+</KeyboardControls>

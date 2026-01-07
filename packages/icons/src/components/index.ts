@@ -163,6 +163,7 @@ export * from "./Exponentiation";
 export * from "./Export";
 export * from "./ExportSolid";
 export * from "./Favorite";
+export * from "./FavoriteOutline";
 export * from "./FavoriteSolid";
 export * from "./Feedback";
 export * from "./FeedbackSolid";
