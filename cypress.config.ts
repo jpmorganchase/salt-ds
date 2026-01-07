@@ -1,12 +1,10 @@
 import path from "node:path";
-import installCoverageTask from "@cypress/code-coverage/task.js";
 import react from "@vitejs/plugin-react";
 import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
 import { defineConfig } from "cypress";
 import { version as reactVersion } from "react";
 import type { UserConfig } from "vite";
-import IstanbulPlugin from "vite-plugin-istanbul";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const isReact16Or17 =
@@ -15,7 +13,7 @@ const isReact16Or17 =
 async function getViteConfig(config: UserConfig) {
   const { mergeConfig } = await import("vite");
   let viteConfig: UserConfig = {
-    plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
+    plugins: [react(), tsconfigPaths(), cssInline()],
     define: {
       "process.env": {},
     },
