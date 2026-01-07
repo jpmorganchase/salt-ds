@@ -75,7 +75,6 @@ export default defineConfig({
   video: false,
   component: {
     setupNodeEvents(on, config) {
-      installCoverageTask(on, config);
       //Setting up a log task to allow logging to the console during an axe test because console.log() does not work directly in a test
       on("task", {
         log(message: string) {
