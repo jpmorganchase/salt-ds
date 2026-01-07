@@ -32,6 +32,9 @@ async function getViteConfig(config: UserConfig) {
         "cypress/react": !isReact16Or17 ? "cypress/react" : "@cypress/react",
       },
     },
+    optimizeDeps: {
+      exclude: isReact16Or17 ? ["react-dom/client"] : undefined,
+    },
   };
 
   if (isCI) {
@@ -61,7 +64,6 @@ async function getViteConfig(config: UserConfig) {
           "@salt-ds/icons",
           "@salt-ds/window",
         ],
-        exclude: isReact16Or17 ? ["react-dom/client"] : undefined,
       },
     } as UserConfig);
   }
