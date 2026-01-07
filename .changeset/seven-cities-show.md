@@ -2,5 +2,6 @@
 "@salt-ds/icons": patch
 ---
 
-Added: 
+Added:
+
 - FavoriteOutlineIcon
