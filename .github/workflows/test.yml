@@ -113,7 +113,9 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Setup react
-        run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
+        run: |
+          yarn set resolution react@npm:^18.0.0 npm:^${{ matrix.react }}
+          yarn set resolution react-dom@npm:^18.0.0 npm:^${{ matrix.react }}
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
