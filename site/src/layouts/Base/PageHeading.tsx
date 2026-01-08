@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import styles from "./PageHeading.module.css";
 
-const Markdown = dynamic(() => import("../../components/markdown/Markdown"));
+const Markdown = dynamic(import("../../components/markdown/Markdown"));
 
 export interface PageHeadingProps {
   title?: string;

@@ -5,6 +5,7 @@ import {
   type HTMLAttributes,
   isValidElement,
   type ReactNode,
+  useId,
 } from "react";
 import type {
   Accent,
@@ -15,7 +16,6 @@ import type {
   Mode,
   ThemeName,
 } from "../theme/index";
-import { useId } from "../utils/useId";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 
 export interface ThemeApplicatorProps {

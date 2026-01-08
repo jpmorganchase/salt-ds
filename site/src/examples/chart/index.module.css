@@ -1,0 +1,16 @@
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  max-width: 700px;
+  width: 100%;
+}
+
+.controlsRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chart {
+  width: 100%;
+}

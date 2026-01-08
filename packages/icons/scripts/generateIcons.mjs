@@ -17,9 +17,6 @@ biome.applyConfiguration(project.projectKey, {
     enabled: true,
     indentStyle: "space",
   },
-  files: {
-    maxSize: 1000000000, // 1 GB
-  },
 });
 
 function biomeFormat(content, filePath) {
@@ -140,10 +137,6 @@ const DEPRECATED_ICONS = [
   ["StepSuccess", "SuccessCircle"],
   ["SuccessSmall", "Checkmark"],
   ["SuccessSmallSolid", "CheckmarkSolid"],
-  ["IconFigma", "Figma"],
-  ["BarChart", "ChartBar"],
-  ["PieChart", "ChartPie"],
-  ["LineChart", "ChartLine"],
 ];
 const deprecatedIconMap = new Map(DEPRECATED_ICONS);
 
