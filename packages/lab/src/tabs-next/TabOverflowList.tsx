@@ -149,7 +149,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
               onFocus: handleFocus,
             })}
             ref={handleRef}
-            aria-label={`${childCount} tabs hidden`}
+            aria-label="Overflow"
             aria-haspopup
             aria-expanded={open}
             aria-controls={overlayId}
