@@ -106,7 +106,7 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
     cy.realPress("ArrowLeft");
-    cy.findByRole("tab", { name: "13 tabs hidden" }).should("be.focused");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
 
     cy.realPress("Enter");
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
@@ -115,7 +115,7 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "With" }).should("be.focused");
 
     cy.realPress("Escape");
-    cy.findByRole("tab", { name: "13 tabs hidden" }).should("be.focused");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
   });
 
   it("should allow tabs to be disabled", () => {
@@ -139,7 +139,7 @@ describe("Given a Tabstrip", () => {
   it("should overflow into a menu when there is not enough space to show all tabs", () => {
     cy.mount(<Overflow />);
     cy.findAllByRole("tab").should("have.length", 5);
-    cy.findByRole("tab", { name: "13 tabs hidden" }).should("be.visible");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.visible");
   });
 
   it("should allow keyboard navigation in the menu", () => {
@@ -149,14 +149,14 @@ describe("Given a Tabstrip", () => {
         <button>end</button>
       </>,
     );
-    cy.findByRole("tab", { name: "13 tabs hidden" }).realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
     cy.realPress("ArrowDown");
     cy.findByRole("tab", { name: "With" }).should("be.focused");
     cy.realPress("End");
     cy.findByRole("tab", { name: "Screens" }).should("be.focused");
     cy.realPress("Escape");
-    cy.findByRole("tab", { name: "13 tabs hidden" }).should("be.focused");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
     cy.realPress("Tab");
     cy.findByRole("button", { name: "end" }).should("be.focused");
   });
@@ -164,7 +164,7 @@ describe("Given a Tabstrip", () => {
   it("should close the overflow menu when a click is detected outside", () => {
     cy.mount(<Overflow />);
 
-    cy.findByRole("tab", { name: "13 tabs hidden" }).realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
     cy.findAllByRole("tab").should("have.length", 13);
 
     cy.wait(500);
@@ -178,7 +178,7 @@ describe("Given a Tabstrip", () => {
 
     cy.findAllByRole("tab").should("have.length", 5);
 
-    cy.findByRole("tab", { name: "13 tabs hidden" }).realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
 
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
@@ -190,7 +190,7 @@ describe("Given a Tabstrip", () => {
 
     cy.wait(100);
 
-    cy.findByRole("tab", { name: "13 tabs hidden" }).realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
     cy.realPress("Enter");
@@ -207,7 +207,7 @@ describe("Given a Tabstrip", () => {
 
     cy.findAllByRole("tab").should("have.length", 2);
 
-    cy.findByRole("tab", { name: "16 tabs hidden" }).realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
     cy.findAllByRole("tab").should("have.length", 16); // overflow menu shown
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
     cy.findAllByRole("tab").should("have.length", 2); // overflow menu hidden
@@ -424,7 +424,7 @@ describe("Given a Tabstrip", () => {
       "true",
     );
 
-    cy.findByRole("tab", { name: "15 tabs hidden" }).realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
     cy.findByRole("tab", { name: "Loans" }).should("be.focused");
 
     cy.findByRole("tab", { name: "Lots" }).realClick();
@@ -452,7 +452,7 @@ describe("Given a Tabstrip", () => {
       cy.mount(<Overflow />);
       cy.findAllByRole("tab").should("have.length", 5);
 
-      cy.findByRole("tab", { name: "13 tabs hidden" }).realClick();
+      cy.findByRole("tab", { name: "Overflow" }).realClick();
       cy.wait(500);
 
       // no horizontal overflow, menu should flip in horizontally
