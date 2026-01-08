@@ -71,9 +71,9 @@ function displayKeyName(key: string): string {
   const isMac = navigator.userAgent.toUpperCase().includes("MAC");
 
   const keyMap: Record<string, string> = {
-    meta: isMac ? "⌘" : "ctrl",
-    option: isMac ? "⌥" : "alt",
-    shift: isMac ? "⇧" : "shift",
+    meta: isMac ? "cmd" : "ctrl",
+    option: isMac ? "option" : "alt",
+    shift:  "shift",
   };
 
   return keyMap[key] ?? key;
