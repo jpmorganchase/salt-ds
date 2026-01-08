@@ -234,6 +234,11 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
 
   const { announce } = useAriaAnnouncer();
 
+  const handleCloseTab = (value: string) => {
+    setTabs((old) => old.filter((tab) => tab !== value));
+    announce(`${value} tab has been closed`, 150);
+  };
+
   return (
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext {...args}>
@@ -241,12 +246,19 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
+                <TabNextTrigger
+                  onKeyDown={(event) => {
+                    if (event.key === "Delete") {
+                      handleCloseTab(label);
+                    }
+                  }}
+                >
+                  {label}
+                </TabNextTrigger>
                 {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
-                      setTabs((old) => old.filter((tab) => tab !== label));
-                      announce(`${label} tab has been closed`, 150);
+                      handleCloseTab(label);
                     }}
                     aria-label="Close tab"
                   >
@@ -526,6 +538,11 @@ export const CloseWithConfirmation = () => {
     setValueToRemove(undefined);
   };
 
+  const handleCloseTab = (value: string) => {
+    setOpen(true);
+    setValueToRemove(value);
+  };
+
   return (
     <div className="container">
       <CloseConfirmationDialog
@@ -540,12 +557,19 @@ export const CloseWithConfirmation = () => {
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
+                <TabNextTrigger
+                  onKeyDown={(event) => {
+                    if (event.key === "Delete") {
+                      handleCloseTab(label);
+                    }
+                  }}
+                >
+                  {label}
+                </TabNextTrigger>
                 {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
-                      setOpen(true);
-                      setValueToRemove(label);
+                      handleCloseTab(label);
                     }}
                     aria-label="Close tab"
                   >
@@ -678,17 +702,29 @@ export const Controlled: StoryFn = () => {
     setValue(value);
   };
 
+  const handleCloseTab = (value: string) => {
+    setTabs((old) => old.filter((tab) => tab !== value));
+  };
+
   return (
     <TabsNext value={value} onChange={handleChange}>
       <TabBar inset divider>
         <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
+              <TabNextTrigger
+                onKeyDown={(event) => {
+                  if (event.key === "Delete") {
+                    handleCloseTab(label);
+                  }
+                }}
+              >
+                {label}
+              </TabNextTrigger>
               {tabs.length > 1 ? (
                 <TabNextAction
                   onClick={() => {
-                    setTabs((old) => old.filter((tab) => tab !== label));
+                    handleCloseTab(label);
                   }}
                   aria-label="Close tab"
                 >
