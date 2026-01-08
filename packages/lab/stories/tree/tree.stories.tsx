@@ -74,7 +74,7 @@ export const WithIcons: StoryFn<typeof Tree> = (args) => {
           <TreeNode
             value="annual-report"
             label="Annual Report"
-            icon={DocumentIcon}
+            // icon={DocumentIcon}
           />
           <TreeNode
             value="quarterly-report"
@@ -689,29 +689,3 @@ export const DeepNesting: StoryFn<typeof Tree> = (args) => (
 DeepNesting.args = {
   multiselect: true,
 };
-
-export const MixedIcons: StoryFn<typeof Tree> = (args) => (
-  <Tree {...args} aria-label="File browser" defaultExpanded={["documents"]}>
-    <TreeNode value="documents" label="Documents" icon={FolderOpenIcon}>
-      <TreeNode value="reports" label="Reports">
-        <TreeNode
-          value="annual-report"
-          label="Annual Report"
-          icon={DocumentIcon}
-        />
-        <TreeNode value="quarterly-report" label="Quarterly Report" />
-      </TreeNode>
-      <TreeNode value="invoices" label="Invoices" icon={FolderClosedIcon}>
-        <TreeNode value="invoice-001" label="Invoice 001" icon={DocumentIcon} />
-        <TreeNode value="invoice-002" label="Invoice 002" />
-      </TreeNode>
-    </TreeNode>
-    <TreeNode value="pictures" label="Pictures">
-      <TreeNode value="vacation" label="Vacation" icon={FolderClosedIcon}>
-        <TreeNode value="beach" label="Beach" icon={DocumentIcon} />
-        <TreeNode value="mountains" label="Mountains" />
-      </TreeNode>
-    </TreeNode>
-    <TreeNode value="downloads" label="Downloads" icon={FolderClosedIcon} />
-  </Tree>
-);
