@@ -31,6 +31,41 @@ const renderQAContainer = () => {
     >
       <DateInputSingle defaultDate={startDate} />
       <DateInputSingle defaultDate={startDate} bordered />
+      <DateInputSingle defaultDate={startDate} bordered readOnly />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="warning"
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="error"
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="success"
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="warning"
+        readOnly
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="error"
+        readOnly
+      />
+      <DateInputSingle
+        defaultDate={startDate}
+        bordered
+        validationStatus="success"
+        readOnly
+      />
+
       <DateInputRange
         defaultDate={{
           startDate,
@@ -43,6 +78,65 @@ const renderQAContainer = () => {
           endDate,
         }}
         bordered
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        readOnly
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        validationStatus="warning"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        validationStatus="error"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        validationStatus="success"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        validationStatus="warning"
+        readOnly
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        validationStatus="error"
+        readOnly
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        validationStatus="success"
+        readOnly
       />
     </QAContainer>
   );

@@ -1,5 +1,20 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.83
+
+### Patch Changes
+
+- 1179903: Fixed `DateInputSingle` and `DateInputRange` status adornments not appearing when validation is active in read-only mode.
+- Updated dependencies [0c664ed]
+- Updated dependencies [f670363]
+- Updated dependencies [9f9be9d]
+- Updated dependencies [0d3fc12]
+- Updated dependencies [ee16c19]
+- Updated dependencies [f670363]
+- Updated dependencies [ee16c19]
+  - @salt-ds/icons@1.16.0
+  - @salt-ds/core@1.54.1
+
 ## 1.0.0-alpha.82
 
 ### Patch Changes

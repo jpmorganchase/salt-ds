@@ -30,6 +30,10 @@ const RW = forwardRef<SVGSVGElement, RWProps>(function RW(props: RWProps, ref) {
       <g mask={`url(#${uid}-RW-a)`}>
         <path fill="#005b33" d="M0 20v-5h20v5z" />
         <path fill="#0091da" d="M0 10V0h20v10z" />
+        <path
+          fill="#f1b434"
+          d="m17.222 6.389-1.021.505.544 1.04-1.11-.223-.14 1.178-.773-.866-.772.866-.141-1.178-1.11.223.545-1.04-1.022-.505 1.022-.505-.544-1.04 1.109.223.14-1.178.773.866.773-.866.14 1.178 1.11-.223-.544 1.04z"
+        />
         <path fill="#fbd381" d="M0 15v-5h20v5z" />
       </g>
     </CountrySymbol>

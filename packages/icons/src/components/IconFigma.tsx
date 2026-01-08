@@ -6,6 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type IconFigmaIconProps = IconProps;
 
+/** @deprecated - Use `FigmaIcon` instead. */
 export const IconFigmaIcon = forwardRef<SVGSVGElement, IconFigmaIconProps>(
   function IconFigmaIcon(props: IconFigmaIconProps, ref) {
     return (

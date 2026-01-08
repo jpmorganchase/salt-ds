@@ -75,8 +75,15 @@
     "category": "finance"
   },
   {
-    "iconName": "bar-chart",
-    "synonym": ["analytics", "data", "statistic", "bar chart"],
+    "iconName": "chart-column",
+    "synonym": [
+      "analytics",
+      "data",
+      "statistic",
+      "graph",
+      "data viz",
+      "bar chart"
+    ],
     "category": "data"
   },
   {
@@ -393,7 +400,11 @@
     "synonym": ["night", "moon", "theme", "mode"],
     "category": "actions"
   },
-  { "iconName": "dashboard", "synonym": ["car gauge"], "category": "data" },
+  {
+    "iconName": "dashboard",
+    "synonym": ["data viz", "graph", "chart", "car gauge"],
+    "category": "data"
+  },
   {
     "iconName": "database",
     "synonym": ["stack", "backend"],
@@ -653,7 +664,7 @@
     "category": "places"
   },
   {
-    "iconName": "icon-figma",
+    "iconName": "figma",
     "synonym": ["design", "logo", "application", "tool"],
     "category": "logos"
   },
@@ -758,8 +769,8 @@
     "category": "actions"
   },
   {
-    "iconName": "line-chart",
-    "synonym": ["data", "graph", "analytics", "statistic"],
+    "iconName": "chart-line",
+    "synonym": ["data", "graph", "analytics", "statistic", "data viz"],
     "category": "data"
   },
   {
@@ -1712,7 +1723,15 @@
   },
   {
     "iconName": "growth",
-    "synonym": ["increase", "arrow", "data", "graph", "rise"],
+    "synonym": [
+      "increase",
+      "arrow",
+      "data",
+      "graph",
+      "rise",
+      "data viz",
+      "chart"
+    ],
     "category": "data"
   },
   {
@@ -1785,8 +1804,15 @@
     "category": "organize"
   },
   {
-    "iconName": "pie-chart",
-    "synonym": ["breakdown", "graph", "segment", "analytics", "chart pie"],
+    "iconName": "chart-pie",
+    "synonym": [
+      "breakdown",
+      "graph",
+      "segment",
+      "analytics",
+      "data viz",
+      "chart pie"
+    ],
     "category": "data"
   },
   {
@@ -2059,7 +2085,7 @@
   {
     "iconName": "square-root",
     "synonym": ["calculate", "radical", "math", "root"],
-    "category": "organize"
+    "category": "data"
   },
   {
     "iconName": "stop",
@@ -2150,5 +2176,93 @@
     "iconName": "panel-open-top",
     "synonym": ["expand", "arrow", "navigation", "show"],
     "category": "organize"
+  },
+  {
+    "iconName": "chart-bar",
+    "synonym": ["analytics", "graph", "data viz", "horizontal", "column"],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-stacked-bar",
+    "synonym": [
+      "analytics",
+      "graph",
+      "data viz",
+      "stacked column",
+      "layered",
+      "cumulative"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-bubble",
+    "synonym": ["analytics", "graph", "data viz", "scatter", "size"],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-box-plot",
+    "synonym": ["analytics", "graph", "data viz", "boxplot", "box and whisker"],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-area",
+    "synonym": ["analytics", "graph", "data viz", "filled line"],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-donut",
+    "synonym": ["analytics", "graph", "data viz", "ring", "doughnut", "radial"],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-scatter",
+    "synonym": [
+      "analytics",
+      "graph",
+      "data viz",
+      "dot plot",
+      "xy plot",
+      "point map",
+      "size",
+      "bubble"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-candlestick",
+    "synonym": [
+      "analytics",
+      "graph",
+      "data viz",
+      "stock",
+      "range",
+      "performance",
+      "target"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-waterfall",
+    "synonym": [
+      "analytics",
+      "graph",
+      "data viz",
+      "bridge",
+      "cascading",
+      "stock"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "chart-bullet",
+    "synonym": [
+      "analytics",
+      "graph",
+      "data viz",
+      "bar",
+      "target",
+      "performance"
+    ],
+    "category": "data"
   }
 ]

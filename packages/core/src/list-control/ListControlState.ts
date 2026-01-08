@@ -90,13 +90,13 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     undefined,
   );
 
-  const setActive = (option?: OptionValue<Item>) => {
+  const setActive = useCallback((option?: OptionValue<Item>) => {
     if (option) {
       setActiveState(option);
     } else {
       setActiveState(undefined);
     }
-  };
+  }, []);
 
   const [openState, setOpenState] = useControlled({
     controlled: openProp,
@@ -218,132 +218,148 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     return () => mutationObserver.disconnect();
   }, [listElement]);
 
-  const getOptionAtIndex = (
-    index: number,
-  ): { data: OptionValue<Item>; element: HTMLElement } | undefined => {
-    return optionsRef.current[index];
-  };
+  const getOptionAtIndex = useCallback(
+    (
+      index: number,
+    ): { data: OptionValue<Item>; element: HTMLElement } | undefined => {
+      return optionsRef.current[index];
+    },
+    [],
+  );
 
-  const getIndexOfOption = (option: OptionValue<Item>) => {
+  const getIndexOfOption = useCallback((option: OptionValue<Item>) => {
     return optionsRef.current.findIndex(
       (item) => item.data.value === option.value,
     );
-  };
+  }, []);
 
-  const getOptionsMatching = (
-    predicate: (option: OptionValue<Item>) => boolean,
-  ) => {
-    return optionsRef.current.filter((item) => predicate(item.data));
-  };
+  const getOptionsMatching = useCallback(
+    (predicate: (option: OptionValue<Item>) => boolean) => {
+      return optionsRef.current.filter((item) => predicate(item.data));
+    },
+    [],
+  );
 
-  const getOptionFromSearch = (
-    search: string,
-    startFrom?: OptionValue<Item>,
-  ) => {
-    const collator = new Intl.Collator("en", {
-      usage: "search",
-      sensitivity: "base",
-    });
+  const getOptionFromSearch = useCallback(
+    (search: string, startFrom?: OptionValue<Item>) => {
+      const collator = new Intl.Collator("en", {
+        usage: "search",
+        sensitivity: "base",
+      });
 
-    const startIndex = startFrom ? getIndexOfOption(startFrom) + 1 : 0;
-    const searchList = optionsRef.current.map((item) => item.data);
+      const startIndex = startFrom ? getIndexOfOption(startFrom) + 1 : 0;
+      const searchList = optionsRef.current.map((item) => item.data);
 
-    let matches = searchList.filter(
-      (option) =>
-        collator.compare(
-          valueToString(option.value).substring(0, search.length),
-          search,
-        ) === 0,
-    );
+      let matches = searchList.filter(
+        (option) =>
+          collator.compare(
+            valueToString(option.value).substring(0, search.length),
+            search,
+          ) === 0,
+      );
 
-    if (matches.length === 0) {
-      const letters = search.split("");
-      const allSameLetter =
-        letters.length > 0 &&
-        letters.every((letter) => collator.compare(letter, letters[0]) === 0);
-      if (allSameLetter) {
-        matches = searchList.filter(
-          (option) =>
-            collator.compare(
-              valueToString(option.value)[0].toLowerCase(),
-              letters[0],
-            ) === 0,
-        );
+      if (matches.length === 0) {
+        const letters = search.split("");
+        const allSameLetter =
+          letters.length > 0 &&
+          letters.every((letter) => collator.compare(letter, letters[0]) === 0);
+        if (allSameLetter) {
+          matches = searchList.filter(
+            (option) =>
+              collator.compare(
+                valueToString(option.value)[0].toLowerCase(),
+                letters[0],
+              ) === 0,
+          );
+        }
       }
-    }
 
-    return matches.find((option) => getIndexOfOption(option) >= startIndex);
-  };
+      return matches.find((option) => getIndexOfOption(option) >= startIndex);
+    },
+    [getIndexOfOption, valueToString],
+  );
 
-  const getFirstOption = () => {
+  const getFirstOption = useCallback(() => {
     return getOptionAtIndex(0);
-  };
+  }, [getOptionAtIndex]);
 
-  const getLastOption = () => {
+  const getLastOption = useCallback(() => {
     return getOptionAtIndex(optionsRef.current.length - 1);
-  };
+  }, [getOptionAtIndex]);
 
-  const getOptionBefore = (option: OptionValue<Item>) => {
-    const index = getIndexOfOption(option);
-    return getOptionAtIndex(index - 1);
-  };
+  const getOptionBefore = useCallback(
+    (option: OptionValue<Item>) => {
+      const index = getIndexOfOption(option);
+      return getOptionAtIndex(index - 1);
+    },
+    [getIndexOfOption, getOptionAtIndex],
+  );
 
-  const getOptionAfter = (option: OptionValue<Item>) => {
-    const index = getIndexOfOption(option);
-    return getOptionAtIndex(index + 1);
-  };
+  const getOptionAfter = useCallback(
+    (option: OptionValue<Item>) => {
+      const index = getIndexOfOption(option);
+      return getOptionAtIndex(index + 1);
+    },
+    [getIndexOfOption, getOptionAtIndex],
+  );
 
-  const getOptionPageAbove = (start: OptionValue<Item>) => {
-    const list = listRef.current;
-    let option = optionsRef.current.find((option) => option.data === start);
+  const getOptionPageAbove = useCallback(
+    (start: OptionValue<Item>) => {
+      const list = listRef.current;
+      let option = optionsRef.current.find((option) => option.data === start);
 
-    if (!list || !option) {
-      return undefined;
-    }
+      if (!list || !option) {
+        return undefined;
+      }
 
-    const containerRect = list.getBoundingClientRect();
-    let optionRect: DOMRect | undefined =
-      option.element.getBoundingClientRect();
+      const containerRect = list.getBoundingClientRect();
+      let optionRect: DOMRect | undefined =
+        option.element.getBoundingClientRect();
 
-    const listY = containerRect.y - list.scrollTop;
-    const pageY = Math.max(
-      0,
-      optionRect.y - listY + optionRect.height - containerRect.height,
-    );
+      const listY = containerRect.y - list.scrollTop;
+      const pageY = Math.max(
+        0,
+        optionRect.y - listY + optionRect.height - containerRect.height,
+      );
 
-    while (option && optionRect && optionRect.y - listY > pageY) {
-      option = getOptionBefore(option.data);
-      optionRect = option?.element?.getBoundingClientRect();
-    }
+      while (option && optionRect && optionRect.y - listY > pageY) {
+        option = getOptionBefore(option.data);
+        optionRect = option?.element?.getBoundingClientRect();
+      }
 
-    return option ?? getFirstOption();
-  };
+      return option ?? getFirstOption();
+    },
+    [getFirstOption, getOptionBefore],
+  );
 
-  const getOptionPageBelow = (start: OptionValue<Item>) => {
-    const list = listRef.current;
-    let option = optionsRef.current.find((option) => option.data === start);
+  const getOptionPageBelow = useCallback(
+    (start: OptionValue<Item>) => {
+      const list = listRef.current;
+      let option = optionsRef.current.find((option) => option.data === start);
 
-    if (!list || !option) {
-      return undefined;
-    }
+      if (!list || !option) {
+        return undefined;
+      }
 
-    const containerRect = list.getBoundingClientRect();
-    let optionRect: DOMRect | undefined =
-      option.element.getBoundingClientRect();
+      const containerRect = list.getBoundingClientRect();
+      let optionRect: DOMRect | undefined =
+        option.element.getBoundingClientRect();
 
-    const listY = containerRect.y - list.scrollTop;
-    const pageY = Math.min(
-      list.scrollHeight,
-      optionRect.y - listY - optionRect.height + containerRect.height,
-    );
+      const listY = containerRect.y - list.scrollTop;
+      const pageY = Math.min(
+        list.scrollHeight,
+        optionRect.y - listY - optionRect.height + containerRect.height,
+      );
 
-    while (option && optionRect && optionRect.y - listY < pageY) {
-      option = getOptionAfter(option.data);
-      optionRect = option?.element.getBoundingClientRect();
-    }
+      while (option && optionRect && optionRect.y - listY < pageY) {
+        option = getOptionAfter(option.data);
+        optionRect = option?.element.getBoundingClientRect();
+      }
 
-    return option ?? getLastOption();
-  };
+      return option ?? getLastOption();
+    },
+    [getLastOption, getOptionAfter],
+  );
 
   useEffect(() => {
     if (listRef.current) {

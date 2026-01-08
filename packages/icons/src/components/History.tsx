@@ -16,8 +16,8 @@ export const HistoryIcon = forwardRef<SVGSVGElement, HistoryIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M7.293 10.83A5 5 0 1 0 1.668 3.5h2.33v1h-4v-4h1v2.183A6 6 0 0 1 2.256 1.31a6 6 0 1 1 5.296 10.486z" />
-        <path d="M6 3v3H3v1h4V3z" />
+        <path d="M7.294 10.831a5 5 0 1 0-5.624-7.33H4v1H0v-4h1v2.184A6 6 0 0 1 2.256 1.31a6 6 0 1 1 5.296 10.486z" />
+        <path d="M6.001 3.001v3h-3v1h4v-4z" />
       </Icon>
     );
   },

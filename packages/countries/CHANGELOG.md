@@ -1,5 +1,19 @@
 # @salt-ds/countries
 
+## 1.5.0
+
+### Minor Changes
+
+- 273016d: Updated country symbols for the following regions:
+
+  - Burundi
+  - European Union (EU)
+  - New Caledonia
+  - Rwanda
+  - Syria
+  - United States Minor Outlying Islands (the) (UM)
+  - United States (US)
+
 ## 1.4.21
 
 ### Patch Changes

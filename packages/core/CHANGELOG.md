@@ -1,5 +1,18 @@
 # @salt-ds/core
 
+## 1.54.1
+
+### Patch Changes
+
+- f670363: Fixed support for React 16 and 17.
+- 9f9be9d: Fixed `Menu`, `Collapsible` and `Overlay` triggers not forwarding props.
+- 0d3fc12: Fixed `SaltProvider`'s incorrectly being marked as root when an empty theme name is passed in.
+- f670363: Fixed `ComboBox` scrolling to the top when trying to scroll to the bottom of its list with a value in the input.
+- Updated dependencies [0c664ed]
+- Updated dependencies [ee16c19]
+- Updated dependencies [ee16c19]
+  - @salt-ds/icons@1.16.0
+
 ## 1.54.0
 
 ### Minor Changes
