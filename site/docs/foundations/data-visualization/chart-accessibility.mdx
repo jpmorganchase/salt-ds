@@ -7,14 +7,14 @@ sidebar:
 
 Charts rely on visual elements to make complex data easier to understand, so it’s essential they are accessible to everyone. Ground your chart design and implementation in the [WCAG POUR principles](https://www.w3.org/WAI/fundamentals/accessibility-principles/):
 
-- **Perceivable**: Text equivalents (caption, summary), accessible data table, sufficient contrast, labels/patterns/markers instead of colour alone.
+- **Perceivable**: Text equivalents (caption, summary), accessible data table, sufficient contrast, labels/patterns/markers instead of color alone.
 - **Operable**: Full keyboard access, predictable focus order, non-hover-only interactions, pause/stop controls for animation, adequate target sizes.
-- **Understandable**: Clear titles and legends, consistent scales/units, plain language, concise insight summaries, predictable behaviour.
+- **Understandable**: Clear titles and legends, consistent scales/units, plain language, concise insight summaries, predictable behavior.
 - **Robust**: Semantic markup, ARIA roles and names, programmatic relationships, compatibility with screen readers, cross-browser testing and fallbacks.
 
 ## Color contrast
 
-Color contrast is essential for the readibility of charts, especially for people with low vision or color deficiences. The use of custom colors or hex codes is discouraged, as they may not meet WCAG non-text contrast requirements. Salt tokens should be used to ensure compliance with WCAG, as they are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
+Color contrast is essential for the readability of charts, especially for people with low vision or color deficiencies. The use of custom colors or hex codes is discouraged, as they may not meet WCAG non-text contrast requirements. Salt tokens should be used to ensure compliance with WCAG, as they are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
 
 <Image
   src="/img/foundations/dataviz-hex.png"
@@ -76,7 +76,7 @@ Salt uses predefined symbols in the following order:
 
 ## Text formats
 
-Assistive technology users typically navigate charts using screen readers or keyboards—and may not always be unable to percieve visual elements in a complex chart or navigate the chart easily. Consider if the complexity of your chart warrants a text description or an equivalent format.
+Assistive technology users typically navigate charts using screen readers or keyboards—and may not always be unable to perceive visual elements in a complex chart or navigate the chart easily. Consider if the complexity of your chart warrants a text description or an equivalent format.
 
 There are several things you could add to aid the understanding of your chart:
 
@@ -86,9 +86,9 @@ There are several things you could add to aid the understanding of your chart:
 - Data table or list in addition to the chart
 - A link to a nearby page
 
-A simple pie or donut chart with a small number of data points and no trends, for example, may not require a text equivalent, provided keyboard and screen reader users can percieve all the data points.
+A simple pie or donut chart with a small number of data points and no trends, for example, may not require a text equivalent, provided keyboard and screen reader users can perceive all the data points.
 
-As a last resort, you can link to a nearby page via a link next to the chart. Try to keep these links adjacent to their respective chart, as placing essential information on a separate screen will disrupt the flow of information and increase unneccessary cognitive load.
+As a last resort, you can link to a nearby page via a link next to the chart. Try to keep these links adjacent to their respective chart, as placing essential information on a separate screen will disrupt the flow of information and increase unnecessary cognitive load.
 
 For more information about alternative formats, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
 
