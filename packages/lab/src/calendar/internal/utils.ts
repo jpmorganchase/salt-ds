@@ -4,8 +4,8 @@ import type {
   Timezone,
 } from "@salt-ds/date-adapters";
 
-export function daysOfWeek<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
+export function daysOfWeek(
+  dateAdapter: SaltDateAdapter,
   format: "long" | "short" | "narrow",
 ) {
   return Array.from({ length: 7 }, (_, day) =>
@@ -13,9 +13,9 @@ export function daysOfWeek<TDate extends DateFrameworkType>(
   );
 }
 
-export function generateMonthsForYear<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  currentYear: TDate,
+export function generateMonthsForYear(
+  dateAdapter: SaltDateAdapter,
+  currentYear: DateFrameworkType,
 ) {
   const startOfYear = dateAdapter.startOf(currentYear, "year");
   return Array.from({ length: 12 }, (_, month) =>
@@ -23,9 +23,9 @@ export function generateMonthsForYear<TDate extends DateFrameworkType>(
   );
 }
 
-export function generateVisibleDays<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  currentMonth: TDate,
+export function generateVisibleDays(
+  dateAdapter: SaltDateAdapter,
+  currentMonth: DateFrameworkType,
   timezone: Timezone,
 ) {
   const totalDays = 6 * 7;
@@ -40,10 +40,10 @@ export function generateVisibleDays<TDate extends DateFrameworkType>(
   });
 }
 
-export function monthDiff<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  a: TDate,
-  b: TDate,
+export function monthDiff(
+  dateAdapter: SaltDateAdapter,
+  a: DateFrameworkType,
+  b: DateFrameworkType,
 ) {
   const aMonth = dateAdapter.getMonth(a);
   const aYear = dateAdapter.getYear(a);
@@ -53,13 +53,13 @@ export function monthDiff<TDate extends DateFrameworkType>(
   return bMonth - aMonth + 12 * (bYear - aYear);
 }
 
-export function generateDatesForMonth<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  date: TDate,
-): TDate[] {
+export function generateDatesForMonth(
+  dateAdapter: SaltDateAdapter,
+  date: DateFrameworkType,
+): DateFrameworkType[] {
   const startDate = dateAdapter.startOf(date, "month");
   const endDate = dateAdapter.endOf(date, "month");
-  const dates: TDate[] = [];
+  const dates: DateFrameworkType[] = [];
   for (
     let currentDate = startDate;
     dateAdapter.compare(currentDate, endDate) <= 0;

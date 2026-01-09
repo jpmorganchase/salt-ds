@@ -26,8 +26,6 @@ import {
   LocalizationProvider,
   useLocalization,
 } from "@salt-ds/lab";
-import type { DateTime } from "luxon";
-import type { Moment } from "moment/moment";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -63,7 +61,7 @@ const Range = ({
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      selection: DateRangeSelection<DateFrameworkType> | null,
+      selection: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = selection ?? {};
@@ -118,7 +116,8 @@ const Range = ({
           : undefined;
 
       const formatDate = (date: DateFrameworkType) => {
-        const iso = date.toISOString();
+        const jsDate = dateAdapter.toJSDate(date);
+        const iso = jsDate.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
           year: "numeric",
@@ -128,7 +127,7 @@ const Range = ({
           minute: "numeric",
           second: "numeric",
           hour12: true,
-        }).format(date);
+        }).format(jsDate);
         const formatted = new Intl.DateTimeFormat(undefined, {
           timeZone: ianaTimezone,
           year: "numeric",
@@ -138,20 +137,14 @@ const Range = ({
           minute: "numeric",
           second: "numeric",
           hour12: true,
-        }).format(date);
+        }).format(jsDate);
         return { iso, locale, formatted };
       };
 
-      setCurrentTimezone(dateAdapter.getTimezone(startDate));
+      setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
 
       if (startDate && !startDateErrors?.length) {
-        const startJSDate =
-          dateAdapter.lib === "luxon"
-            ? (startDate as DateTime).toJSDate()
-            : dateAdapter.lib === "moment"
-              ? (startDate as Moment).toDate()
-              : startDate;
-        const start = formatDate(startJSDate);
+        const start = formatDate(startDate);
         setStartIso8601String(start.iso);
         setStartLocaleDateString(start.locale);
         setStartDateString(start.formatted);
@@ -161,13 +154,7 @@ const Range = ({
         setStartDateString("");
       }
       if (endDate && !endDateErrors?.length) {
-        const endJSDate =
-          dateAdapter.lib === "luxon"
-            ? (endDate as DateTime).toJSDate()
-            : dateAdapter.lib === "moment"
-              ? (endDate as Moment).toDate()
-              : endDate;
-        const end = formatDate(endJSDate);
+        const end = formatDate(endDate);
         setEndIso8601String(end.iso);
         setEndLocaleDateString(end.locale);
         setEndDateString(end.formatted);

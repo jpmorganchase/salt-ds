@@ -5,7 +5,6 @@ import {
   FormField,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -37,7 +36,7 @@ export const SingleWithConfirmation = (): ReactElement => {
   );
 
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(null);
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
@@ -51,7 +50,7 @@ export const SingleWithConfirmation = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -102,10 +101,7 @@ export const SingleWithConfirmation = (): ReactElement => {
   }, []);
 
   const handleApply = useCallback(
-    (
-      _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
-    ) => {
+    (_event: SyntheticEvent, date: SingleDateSelection | null) => {
       console.log(
         `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );

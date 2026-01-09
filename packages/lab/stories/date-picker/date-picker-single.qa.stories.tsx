@@ -12,6 +12,10 @@ import { enUS as dateFnsEnUs, es as dateFnsEs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import "dayjs/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment/moment";
 
 export default {
   title: "Lab/Date Picker/QA",
@@ -24,29 +28,39 @@ const QAContainerParameters = {
 };
 
 const renderQAContainer = (
-  props?: Omit<DatePickerSingleProps<unknown>, "selectionVariant">,
+  props?: Omit<DatePickerSingleProps, "selectionVariant">,
 ) => {
   const { dateAdapter } = useLocalization();
   const checkDayOfWeek = (
-    day: string | false,
+    day: DateFrameworkType,
     targetDayIndex: number,
     luxonOffset: number,
     message: string,
   ) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    let dayOfWeek: number;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
     const isTargetDay =
       (dateAdapter.lib === "luxon" && dayOfWeek === luxonOffset) ||
       (dateAdapter.lib !== "luxon" && dayOfWeek === targetDayIndex);
-
     return isTargetDay ? message : false;
   };
 
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  const isMonday = (day: any) => checkDayOfWeek(day, 0, 1, "is a Monday");
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  const isSaturday = (day: any) => checkDayOfWeek(day, 6, 5, "is a weekend");
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  const isFriday = (day: any) => checkDayOfWeek(day, 5, 4, "is a Friday");
+  const isSaturday = (day: DateFrameworkType) =>
+    checkDayOfWeek(day, 6, 5, "is a weekend");
+  const isFriday = (day: DateFrameworkType) =>
+    checkDayOfWeek(day, 5, 4, "is a Friday");
 
   return (
     <QAContainer itemPadding={10} width={1000}>

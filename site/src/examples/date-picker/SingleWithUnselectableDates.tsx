@@ -11,6 +11,9 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment/moment";
 import type { ReactElement } from "react";
 import { type SyntheticEvent, useCallback, useState } from "react";
 
@@ -26,7 +29,7 @@ export const SingleWithUnselectableDates = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -54,13 +57,29 @@ export const SingleWithUnselectableDates = (): ReactElement => {
     [dateAdapter],
   );
 
-  const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+  const isDayUnselectable = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
 
-    return isWeekend ? "Weekends are un-selectable" : false;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
+    const isWeekend =
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+    return isWeekend ? "weekends are un-selectable" : false;
   };
 
   return (
