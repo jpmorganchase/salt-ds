@@ -16,12 +16,12 @@
   box-sizing: border-box;
 }
 .saltTag-primary {
-  background: var(--tag-primary-background, var(--salt-category-1-subtle-background));
-  color: var(--tag-primary-foreground, var(--salt-category-1-subtle-foreground));
+  background: var(--tag-primary-background, var(--salt-category-1-background));
+  color: var(--tag-primary-foreground, var(--salt-category-1-foreground));
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
 }
 .saltTag-bordered {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--tag-primary-borderColor, var(--salt-category-1-subtle-borderColor));
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--tag-primary-borderColor, var(--salt-category-1-borderColor));
 }
 .saltTag-secondary {
   background: var(--tag-secondary-background, var(--salt-category-1-bold-background));
@@ -30,130 +30,130 @@
 }
 
 .saltTag-category-1 {
-  --tag-primary-background: var(--salt-category-1-subtle-background);
-  --tag-primary-foreground: var(--salt-category-1-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-1-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-1-background);
+  --tag-primary-foreground: var(--salt-category-1-foreground);
+  --tag-primary-borderColor: var(--salt-category-1-borderColor);
   --tag-secondary-background: var(--salt-category-1-bold-background);
 }
 .saltTag-category-2 {
-  --tag-primary-background: var(--salt-category-2-subtle-background);
-  --tag-primary-foreground: var(--salt-category-2-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-2-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-2-background);
+  --tag-primary-foreground: var(--salt-category-2-foreground);
+  --tag-primary-borderColor: var(--salt-category-2-borderColor);
   --tag-secondary-background: var(--salt-category-2-bold-background);
 }
 
 .saltTag-category-3 {
-  --tag-primary-background: var(--salt-category-3-subtle-background);
-  --tag-primary-foreground: var(--salt-category-3-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-3-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-3-background);
+  --tag-primary-foreground: var(--salt-category-3-foreground);
+  --tag-primary-borderColor: var(--salt-category-3-borderColor);
   --tag-secondary-background: var(--salt-category-3-bold-background);
 }
 
 .saltTag-category-4 {
-  --tag-primary-background: var(--salt-category-4-subtle-background);
-  --tag-primary-foreground: var(--salt-category-4-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-4-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-4-background);
+  --tag-primary-foreground: var(--salt-category-4-foreground);
+  --tag-primary-borderColor: var(--salt-category-4-borderColor);
   --tag-secondary-background: var(--salt-category-4-bold-background);
 }
 
 .saltTag-category-5 {
-  --tag-primary-background: var(--salt-category-5-subtle-background);
-  --tag-primary-foreground: var(--salt-category-5-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-5-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-5-background);
+  --tag-primary-foreground: var(--salt-category-5-foreground);
+  --tag-primary-borderColor: var(--salt-category-5-borderColor);
   --tag-secondary-background: var(--salt-category-5-bold-background);
 }
 
 .saltTag-category-6 {
-  --tag-primary-background: var(--salt-category-6-subtle-background);
-  --tag-primary-foreground: var(--salt-category-6-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-6-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-6-background);
+  --tag-primary-foreground: var(--salt-category-6-foreground);
+  --tag-primary-borderColor: var(--salt-category-6-borderColor);
   --tag-secondary-background: var(--salt-category-6-bold-background);
 }
 
 .saltTag-category-7 {
-  --tag-primary-background: var(--salt-category-7-subtle-background);
-  --tag-primary-foreground: var(--salt-category-7-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-7-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-7-background);
+  --tag-primary-foreground: var(--salt-category-7-foreground);
+  --tag-primary-borderColor: var(--salt-category-7-borderColor);
   --tag-secondary-background: var(--salt-category-7-bold-background);
 }
 
 .saltTag-category-8 {
-  --tag-primary-background: var(--salt-category-8-subtle-background);
-  --tag-primary-foreground: var(--salt-category-8-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-8-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-8-background);
+  --tag-primary-foreground: var(--salt-category-8-foreground);
+  --tag-primary-borderColor: var(--salt-category-8-borderColor);
   --tag-secondary-background: var(--salt-category-8-bold-background);
 }
 
 .saltTag-category-9 {
-  --tag-primary-background: var(--salt-category-9-subtle-background);
-  --tag-primary-foreground: var(--salt-category-9-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-9-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-9-background);
+  --tag-primary-foreground: var(--salt-category-9-foreground);
+  --tag-primary-borderColor: var(--salt-category-9-borderColor);
   --tag-secondary-background: var(--salt-category-9-bold-background);
 }
 
 .saltTag-category-10 {
-  --tag-primary-background: var(--salt-category-10-subtle-background);
-  --tag-primary-foreground: var(--salt-category-10-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-10-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-10-background);
+  --tag-primary-foreground: var(--salt-category-10-foreground);
+  --tag-primary-borderColor: var(--salt-category-10-borderColor);
   --tag-secondary-background: var(--salt-category-10-bold-background);
 }
 .saltTag-category-11 {
-  --tag-primary-background: var(--salt-category-11-subtle-background);
-  --tag-primary-foreground: var(--salt-category-11-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-11-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-11-background);
+  --tag-primary-foreground: var(--salt-category-11-foreground);
+  --tag-primary-borderColor: var(--salt-category-11-borderColor);
   --tag-secondary-background: var(--salt-category-11-bold-background);
 }
 .saltTag-category-12 {
-  --tag-primary-background: var(--salt-category-12-subtle-background);
-  --tag-primary-foreground: var(--salt-category-12-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-12-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-12-background);
+  --tag-primary-foreground: var(--salt-category-12-foreground);
+  --tag-primary-borderColor: var(--salt-category-12-borderColor);
   --tag-secondary-background: var(--salt-category-12-bold-background);
 }
 .saltTag-category-13 {
-  --tag-primary-background: var(--salt-category-13-subtle-background);
-  --tag-primary-foreground: var(--salt-category-13-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-13-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-13-background);
+  --tag-primary-foreground: var(--salt-category-13-foreground);
+  --tag-primary-borderColor: var(--salt-category-13-borderColor);
   --tag-secondary-background: var(--salt-category-13-bold-background);
 }
 .saltTag-category-14 {
-  --tag-primary-background: var(--salt-category-14-subtle-background);
-  --tag-primary-foreground: var(--salt-category-14-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-14-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-14-background);
+  --tag-primary-foreground: var(--salt-category-14-foreground);
+  --tag-primary-borderColor: var(--salt-category-14-borderColor);
   --tag-secondary-background: var(--salt-category-14-bold-background);
 }
 .saltTag-category-15 {
-  --tag-primary-background: var(--salt-category-15-subtle-background);
-  --tag-primary-foreground: var(--salt-category-15-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-15-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-15-background);
+  --tag-primary-foreground: var(--salt-category-15-foreground);
+  --tag-primary-borderColor: var(--salt-category-15-borderColor);
   --tag-secondary-background: var(--salt-category-15-bold-background);
 }
 .saltTag-category-16 {
-  --tag-primary-background: var(--salt-category-16-subtle-background);
-  --tag-primary-foreground: var(--salt-category-16-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-16-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-16-background);
+  --tag-primary-foreground: var(--salt-category-16-foreground);
+  --tag-primary-borderColor: var(--salt-category-16-borderColor);
   --tag-secondary-background: var(--salt-category-16-bold-background);
 }
 .saltTag-category-17 {
-  --tag-primary-background: var(--salt-category-17-subtle-background);
-  --tag-primary-foreground: var(--salt-category-17-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-17-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-17-background);
+  --tag-primary-foreground: var(--salt-category-17-foreground);
+  --tag-primary-borderColor: var(--salt-category-17-borderColor);
   --tag-secondary-background: var(--salt-category-17-bold-background);
 }
 .saltTag-category-18 {
-  --tag-primary-background: var(--salt-category-18-subtle-background);
-  --tag-primary-foreground: var(--salt-category-18-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-18-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-18-background);
+  --tag-primary-foreground: var(--salt-category-18-foreground);
+  --tag-primary-borderColor: var(--salt-category-18-borderColor);
   --tag-secondary-background: var(--salt-category-18-bold-background);
 }
 .saltTag-category-19 {
-  --tag-primary-background: var(--salt-category-19-subtle-background);
-  --tag-primary-foreground: var(--salt-category-19-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-19-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-19-background);
+  --tag-primary-foreground: var(--salt-category-19-foreground);
+  --tag-primary-borderColor: var(--salt-category-19-borderColor);
   --tag-secondary-background: var(--salt-category-19-bold-background);
 }
 .saltTag-category-20 {
-  --tag-primary-background: var(--salt-category-20-subtle-background);
-  --tag-primary-foreground: var(--salt-category-20-subtle-foreground);
-  --tag-primary-borderColor: var(--salt-category-20-subtle-borderColor);
+  --tag-primary-background: var(--salt-category-20-background);
+  --tag-primary-foreground: var(--salt-category-20-foreground);
+  --tag-primary-borderColor: var(--salt-category-20-borderColor);
   --tag-secondary-background: var(--salt-category-20-bold-background);
 }
