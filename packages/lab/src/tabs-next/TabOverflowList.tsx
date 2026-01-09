@@ -1,18 +1,22 @@
 import {
-  FloatingTree,
+  FloatingList,
   flip,
   offset,
   size,
+  useClick,
   useDismiss,
   useInteractions,
+  useListNavigation,
 } from "@floating-ui/react";
 import {
   Button,
   makePrefixer,
+  useFloatingComponent,
   useFloatingUI,
   useForkRef,
   useIcon,
   useId,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -23,17 +27,16 @@ import {
   forwardRef,
   type ReactNode,
   type Ref,
-  type RefObject,
   type SetStateAction,
-  useCallback,
   useRef,
+  useState,
 } from "react";
-import { useFocusOutside } from "./hooks/useFocusOutside";
+import { TabOverflowContext } from "./TabOverflowContext";
 import tabOverflowListCss from "./TabOverflowList.css";
+import { useTabsNext } from "./TabsNextContext";
 
 interface TabOverflowListProps extends ComponentPropsWithoutRef<"button"> {
   buttonRef?: Ref<HTMLButtonElement>;
-  tabstripRef: RefObject<HTMLDivElement>;
   children?: ReactNode;
   isMeasuring?: boolean;
   open: boolean;
@@ -44,15 +47,7 @@ const withBaseName = makePrefixer("saltTabOverflow");
 
 export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
   function TabOverflowList(props, ref) {
-    const {
-      buttonRef,
-      tabstripRef,
-      children,
-      isMeasuring,
-      open,
-      setOpen,
-      ...rest
-    } = props;
+    const { buttonRef, children, isMeasuring, open, setOpen, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -61,28 +56,20 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       window: targetWindow,
     });
 
-    const { OverflowIcon } = useIcon();
+    const listRef = useRef<HTMLDivElement>(null);
+    const overflowRef = useRef<HTMLButtonElement>(null);
 
-    const { refs, x, y, strategy, context } = useFloatingUI({
+    const { OverflowIcon } = useIcon();
+    const { registerTab, activeTab } = useTabsNext();
+
+    const { refs, x, y, strategy, context, elements } = useFloatingUI({
       open: open,
       onOpenChange(open, _, reason) {
-        if (reason === "escape-key") {
-          queueMicrotask(() => {
-            const allTabs =
-              tabstripRef.current?.querySelectorAll<HTMLElement>(
-                '[role="tab"]:not([aria-hidden])',
-              ) ?? [];
-            const numberOfTabsInOverflow =
-              listRef.current?.querySelectorAll<HTMLElement>('[role="tab"]')
-                .length ?? 0;
-
-            allTabs[allTabs.length - numberOfTabsInOverflow - 1]?.focus({
-              preventScroll: true,
-            });
-          });
-        }
-
         setOpen(open);
+
+        if (reason === "escape-key") {
+          overflowRef.current?.focus();
+        }
       },
       placement: "bottom-start",
       middleware: [
@@ -98,87 +85,117 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       ],
     });
 
-    const { getFloatingProps } = useInteractions([useDismiss(context)]);
+    const listNavigationRef = useRef<HTMLButtonElement[]>([]);
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-    const rootRef = useRef<HTMLDivElement>(null);
-    const handleRootRef = useForkRef(rootRef, ref);
-    const listRef = useRef<HTMLDivElement>(null);
+    const { getFloatingProps, getReferenceProps } = useInteractions([
+      useClick(context),
+      useDismiss(context),
+    ]);
+
+    const { getFloatingProps: getListFloatingProps, getItemProps } =
+      useInteractions([
+        useListNavigation(context, {
+          listRef: listNavigationRef,
+          activeIndex,
+          onNavigate: setActiveIndex,
+          loop: true,
+          scrollItemIntoView: { block: "nearest", inline: "nearest" },
+          focusItemOnOpen: true,
+        }),
+      ]);
+
     const handleListRef = useForkRef<HTMLDivElement>(listRef, refs.setFloating);
-
-    const handleFocusOutside = useCallback(() => {
-      setOpen(false);
-    }, [setOpen]);
-
-    useFocusOutside(
-      rootRef,
-      handleFocusOutside,
-      open,
-      "[data-floating-ui-portal]",
-    );
-
-    const handleClick = () => {
-      if (!open) {
-        listRef.current
-          ?.querySelectorAll<HTMLElement>('[role="tab"]')[0]
-          ?.focus({ preventScroll: true });
-      } else {
-        setOpen(false);
-      }
-    };
-
-    const handleFocus = () => {
-      setOpen(true);
-    };
 
     const handleButtonRef = useForkRef<HTMLButtonElement>(
       buttonRef,
       refs.setReference,
     );
+    const handleRef = useForkRef(handleButtonRef, overflowRef);
 
-    const listId = useId();
+    const { Component: FloatingComponent } = useFloatingComponent();
+
+    const overflowId = useId();
+    const overlayId = useId();
+
+    const handleFocus = () => {
+      if (overflowId) {
+        activeTab.current = { value: overflowId, id: overflowId };
+      }
+    };
 
     const childCount = Children.count(children);
+
+    useIsomorphicLayoutEffect(() => {
+      if (overflowId && overflowRef.current && childCount > 0) {
+        return registerTab({
+          id: overflowId,
+          value: overflowId,
+          element: overflowRef.current,
+        });
+      }
+    }, [overflowId, registerTab, childCount]);
+
     if (childCount === 0 && !isMeasuring) return null;
 
     return (
-      <div className={withBaseName()} ref={handleRootRef} data-overflow>
-        <Button
-          data-overflowbutton
-          tabIndex={-1}
-          appearance="transparent"
-          sentiment="neutral"
-          onClick={handleClick}
-          ref={handleButtonRef}
-          aria-label={`Overflow menu. ${childCount} tabs hidden`}
-          aria-expanded={open}
-          aria-controls={listId}
-          aria-hidden="true"
-          role="tab"
-          aria-haspopup
-          {...rest}
-        >
-          <OverflowIcon aria-hidden />
-        </Button>
-        <FloatingTree>
-          <div
-            ref={handleListRef}
-            {...getFloatingProps({
+      <TabOverflowContext.Provider value={{ activeIndex, getItemProps }}>
+        <div className={withBaseName()} ref={ref} data-overflow>
+          <Button
+            data-overflowbutton
+            appearance="transparent"
+            sentiment="neutral"
+            {...getReferenceProps({
               onFocus: handleFocus,
-              role: "presentation",
             })}
-            className={withBaseName("list")}
-            data-hidden={!open}
-            style={
-              open
-                ? { left: x ?? 0, top: y ?? 0, position: strategy }
-                : undefined
-            }
-            id={listId}
+            ref={handleRef}
+            aria-label="Overflow"
+            aria-haspopup
+            aria-expanded={open}
+            aria-controls={overlayId}
+            role="tab"
+            tabIndex={-1}
+            {...rest}
           >
-            <div className={withBaseName("listContainer")}>{children}</div>
-          </div>
-        </FloatingTree>
-      </div>
+            <OverflowIcon aria-hidden />
+          </Button>
+          <FloatingList elementsRef={listNavigationRef}>
+            <FloatingComponent
+              ref={handleListRef}
+              {...getFloatingProps({
+                "aria-modal": true,
+                role: "dialog",
+                id: overlayId,
+              })}
+              aria-label="Overflow Menu"
+              focusManagerProps={
+                context
+                  ? {
+                      context,
+                      returnFocus: false,
+                      modal: true,
+                    }
+                  : undefined
+              }
+              className={withBaseName("list")}
+              open={open}
+              left={x ?? 0}
+              top={y ?? 0}
+              position={strategy}
+              width={elements.floating?.offsetWidth}
+              height={elements.floating?.offsetHeight}
+            >
+              <div
+                role="tablist"
+                {...getListFloatingProps()}
+                className={withBaseName("listContainer")}
+              >
+                {children}
+              </div>
+            </FloatingComponent>
+          </FloatingList>
+        </div>
+      </TabOverflowContext.Provider>
     );
   },
 );
