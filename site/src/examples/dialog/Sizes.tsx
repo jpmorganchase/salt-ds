@@ -48,7 +48,7 @@ const SmallDialog = (): ReactElement => {
       <Button onClick={handleRequestOpen}>Open Small Dialog</Button>
       <Dialog open={open} onOpenChange={onOpenChange} size="small" id={id}>
         <DialogHeader header="Small dialog" />
-        <DialogContent style={{ height: "2lh" }}>Content area</DialogContent>
+        <DialogContent style={{ height: "100vh" }}>Content area</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
@@ -100,7 +100,7 @@ const MediumDialog = (): ReactElement => {
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} size="medium">
         <DialogHeader header="Medium dialog" />
-        <DialogContent style={{ height: "2lh" }}>Content area</DialogContent>
+        <DialogContent style={{ height: "100vh" }}>Content area</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
@@ -152,7 +152,7 @@ const LargeDialog = (): ReactElement => {
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} size="large">
         <DialogHeader header="Large dialog" />
-        <DialogContent style={{ height: "2lh" }}>Content area</DialogContent>
+        <DialogContent style={{ height: "100vh" }}>Content area</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
