@@ -1,13 +1,13 @@
 .spacingExampleGap:not(:last-child):after {
   content: "";
-  background: var(--salt-category-5-subtle-background);
+  background: var(--salt-category-5-background);
   height: 100%;
   position: absolute;
   top: 0;
   right: 0;
   width: calc(var(--flexLayout-gap) - 2px);
   transform: translate(calc(var(--flexLayout-gap) + 1px), -1px);
-  border: dotted 1px var(--salt-category-3-subtle-borderColor);
+  border: dotted 1px var(--salt-category-3-borderColor);
 }
 .container {
   width: 100%;
@@ -17,10 +17,10 @@
   background: var(--salt-container-primary-background);
 }
 .spacingExamplePadding {
-  border: dotted 1px var(--salt-category-3-subtle-borderColor);
-  background: var(--salt-category-3-subtle-background);
+  border: dotted 1px var(--salt-category-3-borderColor);
+  background: var(--salt-category-3-background);
 }
 .spacingExampleMargin {
-  border: dotted 1px var(--salt-category-4-subtle-borderColor);
-  background: var(--salt-category-4-subtle-background);
+  border: dotted 1px var(--salt-category-4-borderColor);
+  background: var(--salt-category-4-background);
 }
