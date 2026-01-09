@@ -5,14 +5,8 @@ import {
   DialogContent,
   DialogHeader,
   FlexLayout,
-  H2,
-  NavigationItem,
-  ParentChildLayout,
-  SplitLayout,
   StackLayout,
   type StackLayoutProps,
-  Step,
-  Stepper,
   useId,
   useResponsiveProp,
 } from "@salt-ds/core";
@@ -43,73 +37,31 @@ const SmallDialog = (): ReactElement => {
       "row",
     );
 
-  const cancel = (
-    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
-      Cancel
-    </Button>
-  );
-
-  const accept = (
+  const close = (
     <Button sentiment="accented" onClick={handleClose}>
-      Accept
+      Close
     </Button>
   );
 
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Small Dialog</Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        size="small"
-        status="warning"
-        id={id}
-      >
-        <DialogHeader disableAccent header="Reset grid settings?" />
-        <DialogContent>
-          Are you sure you want to reset all grid data? Any previous settings
-          will not be saved
-        </DialogContent>
+      <Dialog open={open} onOpenChange={onOpenChange} size="small" id={id}>
+        <DialogHeader header="Small dialog" />
+        <DialogContent style={{ height: "2lh" }}>Content area</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
-              {accept}
-              {cancel}
+              {close}
             </StackLayout>
           ) : (
-            <FlexLayout gap={1}>
-              {cancel}
-              {accept}
-            </FlexLayout>
+            <FlexLayout gap={1}>{close}</FlexLayout>
           )}
         </DialogActions>
       </Dialog>
     </>
   );
 };
-
-const AccountView = () => {
-  return "Account View";
-};
-
-const GeneralView = () => {
-  return "General View";
-};
-
-const GridView = () => {
-  return "Grid View";
-};
-
-const ExportView = () => {
-  return "Export View";
-};
-
-const items = [
-  { label: "Account", view: AccountView },
-  { label: "General", view: GeneralView },
-  { label: "Grid", view: GridView },
-  { label: "Export", view: ExportView },
-];
 
 const MediumDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -126,8 +78,6 @@ const MediumDialog = (): ReactElement => {
     setOpen(false);
   };
 
-  const [active, setActive] = useState(items[0]);
-
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
       {
@@ -137,58 +87,9 @@ const MediumDialog = (): ReactElement => {
       "row",
     );
 
-  const parent = (
-    <nav
-      style={{
-        borderRight:
-          "var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor) var(--salt-size-fixed-100)",
-      }}
-    >
-      <StackLayout
-        as="ul"
-        gap={1}
-        style={{
-          listStyle: "none",
-        }}
-      >
-        {items.map((item) => (
-          <li key={item.label}>
-            <NavigationItem
-              active={active === item}
-              href="#"
-              orientation="vertical"
-              onClick={(event) => {
-                event.preventDefault();
-                setActive(item);
-              }}
-            >
-              {item.label}
-            </NavigationItem>
-          </li>
-        ))}
-      </StackLayout>
-    </nav>
-  );
-
-  const child = (
-    <StackLayout
-      direction="column"
-      style={{ paddingLeft: "var(--salt-spacing-200)" }}
-    >
-      <H2>{active.label}</H2>
-      {active.view?.()}
-    </StackLayout>
-  );
-
-  const cancel = (
-    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
-      Cancel
-    </Button>
-  );
-
-  const save = (
+  const close = (
     <Button sentiment="accented" onClick={handleClose}>
-      Save
+      Close
     </Button>
   );
 
@@ -197,29 +98,16 @@ const MediumDialog = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open Medium Dialog
       </Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        size="medium"
-        aria-labelledby="preferences-dialog"
-      >
-        <DialogHeader header="Preferences" disableAccent />
-        <DialogContent>
-          <StackLayout direction="row">
-            <ParentChildLayout parent={parent} child={child} />
-          </StackLayout>
-        </DialogContent>
+      <Dialog open={open} onOpenChange={onOpenChange} size="medium">
+        <DialogHeader header="Medium dialog" />
+        <DialogContent style={{ height: "2lh" }}>Content area</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
-              {save}
-              {cancel}
+              {close}
             </StackLayout>
           ) : (
-            <FlexLayout gap={1}>
-              {cancel}
-              {save}
-            </FlexLayout>
+            <FlexLayout gap={1}>{close}</FlexLayout>
           )}
         </DialogActions>
       </Dialog>
@@ -251,15 +139,9 @@ const LargeDialog = (): ReactElement => {
       "row",
     );
 
-  const next = (
+  const close = (
     <Button sentiment="accented" onClick={handleClose}>
-      Next
-    </Button>
-  );
-
-  const cancel = (
-    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
-      Cancel
+      Close
     </Button>
   );
 
@@ -268,52 +150,16 @@ const LargeDialog = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open Large Dialog
       </Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        size="large"
-        aria-labelledby="wizard-dialog"
-      >
-        <SplitLayout
-          align="center"
-          startItem={
-            <DialogHeader
-              header="Add a Beneficiary"
-              preheader="Customize your Experience"
-            />
-          }
-          endItem={
-            <Stepper style={{ width: "400px" }}>
-              <Step label="Beneficiary" stage="active" />
-              <Step label="Amount" />
-              <Step label="Account" />
-              <Step label="Delivery" />
-            </Stepper>
-          }
-        />
-
-        <DialogContent
-          style={{
-            height: "548px",
-            border:
-              "var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor) var(--salt-size-fixed-100)",
-            padding: "var(--salt-spacing-100)",
-          }}
-        >
-          Wizard Content Area
-        </DialogContent>
+      <Dialog open={open} onOpenChange={onOpenChange} size="large">
+        <DialogHeader header="Large dialog" />
+        <DialogContent style={{ height: "2lh" }}>Content area</DialogContent>
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
-              {next}
-              {cancel}
+              {close}
             </StackLayout>
           ) : (
-            <SplitLayout
-              style={{ width: "100%" }}
-              startItem={cancel}
-              endItem={next}
-            />
+            <FlexLayout gap={1}>{close}</FlexLayout>
           )}
         </DialogActions>
       </Dialog>
