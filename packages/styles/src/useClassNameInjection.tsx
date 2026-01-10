@@ -22,8 +22,8 @@ interface ClassNameInjectorEntry {
   keys: string[];
 }
 
-export type ClassNameInjectionRegistry = Map<
-  SupportedComponent,
+export type ClassNameInjectionRegistry<ComponentName extends SupportedComponent = SupportedComponent> = Map<
+  ComponentName,
   ClassNameInjectorEntry[]
 >;
 
@@ -67,8 +67,11 @@ type PropsWithClassName = { className?: string } & Record<string, any>;
  * Return the className created by the registry and a props object with injector keys stripped.
  * Only components declared in ComponentPropsMap can call this at compile time.
  */
-export function useClassNameInjection<Props extends PropsWithClassName>(
-  component: SupportedComponent,
+export function useClassNameInjection<
+  Props extends PropsWithClassName,
+  ComponentName extends SupportedComponent = SupportedComponent
+>(
+  component: ComponentName,
   props: Props,
 ): { className: string | undefined; props: Omit<Props, "className"> } {
   const registry = useContext(InjectionContext);
@@ -125,9 +128,10 @@ export function useClassNameInjection<Props extends PropsWithClassName>(
 export function registerClassInjector<
   Props extends Record<string, any>,
   Keys extends Extract<keyof Props, string>,
+  ComponentName extends SupportedComponent = SupportedComponent
 >(
   registry: ClassNameInjectionRegistry,
-  component: SupportedComponent,
+  component: ComponentName,
   keys: Keys[],
   injector: ClassNameInjector<Props, Keys>,
 ) {

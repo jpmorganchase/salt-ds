@@ -3,6 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
+import type { FormFieldValidationStatus } from "../form-field-context";
 import { useIcon } from "../semantic-icon-provider";
 import type { ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
@@ -14,7 +15,7 @@ export interface StatusAdornmentProps extends IconProps {
   /**
    * Status adornment to be displayed.
    */
-  status: AdornmentValidationStatus;
+  status: FormFieldValidationStatus;
 }
 
 const withBaseName = makePrefixer("saltStatusAdornment");
