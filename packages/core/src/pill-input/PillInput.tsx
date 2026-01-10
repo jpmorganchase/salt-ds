@@ -16,7 +16,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  type FormFieldValidationStatus,
+  useFormFieldProps,
+} from "../form-field-context";
 import { Pill } from "../pill";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
@@ -70,7 +73,7 @@ export interface PillInputProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning" | "success";
+  validationStatus?: FormFieldValidationStatus;
   /**
    * Styling variant. Defaults to "primary".
    */
