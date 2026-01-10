@@ -1,8 +1,20 @@
-export const VALIDATION_NAMED_STATUS = [
+export interface ValidationStatuses {
+  error: string;
+  warning: string;
+  success: string;
+  info: string;
+}
+
+export type ValidationStatus = keyof ValidationStatuses;
+
+const ValidationStatusValues = [
   "error",
   "warning",
   "success",
   "info",
-] as const;
+] as const satisfies ReadonlyArray<ValidationStatus>;
 
-export type ValidationStatus = (typeof VALIDATION_NAMED_STATUS)[number];
+/**
+ * @deprecated use ValidationStatusValues
+ */
+export const VALIDATION_NAMED_STATUS = ValidationStatusValues;
