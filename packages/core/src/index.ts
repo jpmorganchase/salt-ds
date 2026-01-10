@@ -1,3 +1,5 @@
+export type {} from"./registerClassNameInjection";
+
 export * from "./accordion";
 export * from "./aria-announcer";
 export * from "./avatar";

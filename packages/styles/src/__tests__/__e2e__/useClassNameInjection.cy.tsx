@@ -74,7 +74,8 @@ describe("Given useClassNameInjection", () => {
         size?: "sm" | "md" | "lg";
         title?: string;
       },
-      "size"
+      "size",
+      "Widget"
     >(registry, "Widget", ["size"], ({ size }) =>
       size ? `size-${size}` : undefined,
     );
@@ -108,7 +109,8 @@ describe("Given useClassNameInjection", () => {
         variant?: "primary" | "secondary";
         title?: string;
       },
-      "size"
+      "size",
+      "Button"
     >(registry, "Button", ["size"], ({ size }) =>
       size ? `size-${size}` : undefined,
     );
@@ -120,7 +122,8 @@ describe("Given useClassNameInjection", () => {
         variant?: "primary" | "secondary";
         title?: string;
       },
-      "variant"
+      "variant",
+      "Button"
     >(registry, "Button", ["variant"], ({ variant }) =>
       variant ? `variant-${variant}` : undefined,
     );
@@ -152,7 +155,7 @@ describe("Given useClassNameInjection", () => {
 
   it("SHOULD not add a class; key is still deleted when the injector returns undefined", () => {
     const registry: ClassNameInjectionRegistry = new Map();
-    registerClassInjector<{ foo?: string }, "foo">(
+    registerClassInjector<{ foo?: string }, "foo", "Widget">(
       registry,
       "Widget",
       ["foo"],
