@@ -1,6 +1,6 @@
 import type { RefObject } from "react";
+import type { ValidationStatuses } from "../status-indicator";
 import { createContext } from "../utils";
-
 export interface A11yValueProps {
   /**
    * id for FormFieldHelperText
@@ -19,12 +19,17 @@ export interface a11yValueAriaProps {
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 
+export interface FormFieldValidationStatuses
+  extends Omit<ValidationStatuses, "info"> {}
+
+export type FormFieldValidationStatus = keyof FormFieldValidationStatuses;
+
 export interface FormFieldContextValue {
   a11yProps: a11yValueAriaProps;
   disabled: boolean;
   necessity: NecessityType | undefined;
   readOnly: boolean;
-  validationStatus: "error" | "warning" | "success" | undefined;
+  validationStatus: FormFieldValidationStatus | undefined;
   formFieldRef?: RefObject<HTMLDivElement>;
 }
 
