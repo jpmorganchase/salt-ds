@@ -7,6 +7,7 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
+import { useInjectedClassName } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -44,7 +45,9 @@ import {
 } from "../utils";
 import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
-export type ComboBoxProps<Item = string> = {
+export interface ComboBoxProps<Item = string>
+  extends UseComboBoxProps<Item>,
+    Omit<PillInputProps, "onPillRemove"> {
   /**
    * The options to display in the combo box.
    */
@@ -54,22 +57,30 @@ export type ComboBoxProps<Item = string> = {
    */
   selectOnTab?: boolean;
   /**
-   *  Props to pass to ComboBox's overlay.
+   * Props to pass to ComboBox's overlay.
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;
-} & UseComboBoxProps<Item> &
-  Omit<PillInputProps, "onPillRemove">;
+}
 
 const withBaseName = makePrefixer("saltComboBox");
+
+declare module "@salt-ds/core" {
+  interface ComponentPropMap {
+    ComboBox: ComboBoxProps;
+  }
+}
 
 export const ComboBox = forwardRef(function ComboBox<Item>(
   props: ComboBoxProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
+  const { className, props: finalProps } = useInjectedClassName(
+    "saltComboBox",
+    props,
+  );
   const {
     children,
-    className,
     disabled: disabledProp,
     endAdornment: endAdornmentProp,
     readOnly: readOnlyProp,
@@ -95,7 +106,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     bordered = false,
     OverlayProps,
     ...rest
-  } = props;
+  } = finalProps;
 
   const { CollapseIcon, ExpandIcon } = useIcon();
   const {
