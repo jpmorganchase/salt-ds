@@ -40,30 +40,30 @@
 .border-header,
 .grid-blog-featured,
 .grid-blog-image-five {
-  background-color: var(--salt-category-1-subtle-background);
+  background-color: var(--salt-category-1-background);
 }
 
 .border-left,
 .grid-blog-image-one,
 .flex-blog-image-one,
 .grid-blog-image-six {
-  background-color: var(--salt-category-2-subtle-background);
+  background-color: var(--salt-category-2-background);
 }
 .border-right,
 .grid-blog-image-two,
 .flex-blog-image-two {
-  background-color: var(--salt-category-3-subtle-background);
+  background-color: var(--salt-category-3-background);
 }
 
 .border-main,
 .grid-blog-image-three,
 .flex-blog-image-three {
-  background-color: var(--salt-category-4-subtle-background);
+  background-color: var(--salt-category-4-background);
 }
 
 .border-bottom,
 .grid-blog-image-four {
-  background-color: var(--salt-category-5-subtle-background);
+  background-color: var(--salt-category-5-background);
 }
 
 .grid-blog-featured {
@@ -135,12 +135,12 @@
 .spacing-example-gap.saltFlexItem:not(:last-child):after,
 .spacing-example-gap.saltGridItem:not(:last-child):after {
   content: "";
-  background: var(--salt-category-5-subtle-background);
+  background: var(--salt-category-5-background);
   height: 100%;
   position: absolute;
   top: 0;
   right: 0;
-  border: dotted 1px var(--salt-category-3-subtle-borderColor);
+  border: dotted 1px var(--salt-category-3-borderColor);
 }
 .spacing-example-gap {
   position: relative;
@@ -158,12 +158,12 @@
   background: var(--salt-container-primary-background);
 }
 .spacing-example-padding {
-  border: dotted 1px var(--salt-category-3-subtle-borderColor);
-  background: var(--salt-category-3-subtle-background);
+  border: dotted 1px var(--salt-category-3-borderColor);
+  background: var(--salt-category-3-background);
 }
 .spacing-example-margin {
-  border: dotted 1px var(--salt-category-4-subtle-borderColor);
-  background: var(--salt-category-4-subtle-background);
+  border: dotted 1px var(--salt-category-4-borderColor);
+  background: var(--salt-category-4-background);
 }
 
 @media (prefers-reduced-motion) {
