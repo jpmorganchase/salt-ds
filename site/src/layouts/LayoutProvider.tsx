@@ -1,4 +1,4 @@
-import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
 import { useLayout } from "@jpmorganchase/mosaic-store";
 import type React from "react";
 import type { FC, ReactNode } from "react";

@@ -7,7 +7,7 @@ const handleClose = () => {
 };
 
 export const Closable = (): ReactElement => (
-  <Pill onClick={handleClose}>
-    Closable Pill <CloseIcon aria-hidden style={{ marginLeft: "auto" }} />
+  <Pill aria-label="Remove Reports" onClick={handleClose}>
+    Reports <CloseIcon aria-hidden />
   </Pill>
 );

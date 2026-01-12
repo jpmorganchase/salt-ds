@@ -109,8 +109,8 @@ export const useRangeSliderThumb = ({
     ],
   );
 
-  const handlePointerUp = useCallback(
-    (event: PointerEvent) => {
+  const handleDragEnd = useCallback(
+    (event: Event) => {
       setIsDragging(false);
       setIsFocusVisible(false);
       onChangeEnd?.(event, lastValueRef.current);
@@ -121,16 +121,25 @@ export const useRangeSliderThumb = ({
   useEffect(() => {
     if (isDragging) {
       targetWindow?.addEventListener("pointermove", handlePointerMove);
-      targetWindow?.addEventListener("pointerup", handlePointerUp);
+      targetWindow?.addEventListener("pointerup", handleDragEnd);
+      targetWindow?.addEventListener("pointercancel", handleDragEnd);
+      targetWindow?.addEventListener("blur", handleDragEnd);
+      targetWindow?.addEventListener("contextmenu", handleDragEnd);
     } else {
       targetWindow?.removeEventListener("pointermove", handlePointerMove);
-      targetWindow?.removeEventListener("pointerup", handlePointerUp);
+      targetWindow?.removeEventListener("pointerup", handleDragEnd);
+      targetWindow?.removeEventListener("pointercancel", handleDragEnd);
+      targetWindow?.removeEventListener("blur", handleDragEnd);
+      targetWindow?.removeEventListener("contextmenu", handleDragEnd);
     }
     return () => {
       targetWindow?.removeEventListener("pointermove", handlePointerMove);
-      targetWindow?.removeEventListener("pointerup", handlePointerUp);
+      targetWindow?.removeEventListener("pointerup", handleDragEnd);
+      targetWindow?.removeEventListener("pointercancel", handleDragEnd);
+      targetWindow?.removeEventListener("blur", handleDragEnd);
+      targetWindow?.removeEventListener("contextmenu", handleDragEnd);
     };
-  }, [handlePointerMove, handlePointerUp, isDragging, targetWindow]);
+  }, [isDragging, targetWindow, handlePointerMove, handleDragEnd]);
 
   const handlePointerDownOnThumb = useCallback(
     (event: React.PointerEvent<HTMLDivElement>, thumbIndex: number) => {

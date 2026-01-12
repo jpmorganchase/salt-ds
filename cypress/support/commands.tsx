@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import "@testing-library/cypress/add-commands";
 import type { MountOptions, MountReturn } from "cypress/react";
-import { mount as cypressMount } from "cypress/react18";
+import { mount as cypressMount } from "cypress/react";
 import "cypress-axe";
 import { SaltProvider } from "@salt-ds/core";
 import type {
@@ -17,60 +17,6 @@ const SupportedThemeModeValues = ["light", "dark"] as const;
 type SupportedThemeMode = (typeof SupportedThemeModeValues)[number];
 const SupportedDensityValues = ["touch", "low", "medium", "high"];
 type SupportedDensity = (typeof SupportedDensityValues)[number];
-
-// Must be declared global to be detected by typescript (allows import/export)
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Set Theme Mode
-       * @example
-       * cy.setMode('light')
-       */
-      setMode(theme: SupportedThemeMode): Chainable<void>;
-
-      /**
-       * Set Density
-       *
-       * @example
-       * cy.setDensity('medium')
-       */
-      setDensity(theme: SupportedDensity): Chainable<void>;
-      /**
-       * Check a11y with Axe
-       *
-       * @example
-       * cy.checkAxeComponent()
-       */
-      checkAxeComponent(
-        options?: Options,
-        enableFailures?: boolean,
-      ): Chainable<void>;
-
-      /**
-       * Set the date adapter to be used by mounted tests
-       * @param adapter
-       */
-      setDateAdapter(
-        adapter: SaltDateAdapter<DateFrameworkType>,
-      ): Chainable<void>;
-
-      /**
-       * Set the date locale used by the date adapter
-       * @param {unknown} locale
-       */
-      setDateLocale(locale: unknown): Chainable<void>;
-      mountPerformance(
-        jsx: ReactNode,
-        options?: MountOptions,
-      ): Chainable<MountReturn>;
-      mount(jsx: ReactNode, options?: MountOptions): Chainable<MountReturn>;
-      getRenderCount(): Chainable<number>;
-      getRenderTime(): Chainable<number>;
-      paste(string: string): Chainable<void>;
-    }
-  }
-}
 
 Cypress.Commands.add("setMode", (mode: SupportedThemeMode) => {
   if (SupportedThemeModeValues.includes(mode)) {

@@ -1,18 +1,19 @@
 import path from "node:path";
-import installCoverageTask from "@cypress/code-coverage/task.js";
 import react from "@vitejs/plugin-react";
 import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
 import { defineConfig } from "cypress";
 import { version as reactVersion } from "react";
 import type { UserConfig } from "vite";
-import IstanbulPlugin from "vite-plugin-istanbul";
 import tsconfigPaths from "vite-tsconfig-paths";
+
+const isReact16Or17 =
+  reactVersion.startsWith("16") || reactVersion.startsWith("17");
 
 async function getViteConfig(config: UserConfig) {
   const { mergeConfig } = await import("vite");
   let viteConfig: UserConfig = {
-    plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
+    plugins: [react(), tsconfigPaths(), cssInline()],
     define: {
       "process.env": {},
     },
@@ -26,25 +27,13 @@ async function getViteConfig(config: UserConfig) {
     },
     resolve: {
       alias: {
-        "cypress/react18": !(
-          reactVersion.startsWith("16") || reactVersion.startsWith("17")
-        )
-          ? "cypress/react18"
-          : "cypress/react",
+        "cypress/react": !isReact16Or17 ? "cypress/react" : "@cypress/react",
       },
     },
+    optimizeDeps: {
+      exclude: isReact16Or17 ? ["react-dom/client"] : undefined,
+    },
   };
-
-  if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
-    viteConfig = mergeConfig(viteConfig, {
-      resolve: {
-        alias: {
-          "@storybook/react-dom-shim":
-            "@storybook/react-dom-shim/dist/react-16",
-        },
-      },
-    });
-  }
 
   if (isCI) {
     viteConfig = mergeConfig(viteConfig, {
@@ -71,6 +60,7 @@ async function getViteConfig(config: UserConfig) {
           "@salt-ds/data-grid",
           "@salt-ds/lab",
           "@salt-ds/icons",
+          "@salt-ds/window",
         ],
       },
     } as UserConfig);
@@ -85,7 +75,6 @@ export default defineConfig({
   video: false,
   component: {
     setupNodeEvents(on, config) {
-      installCoverageTask(on, config);
       //Setting up a log task to allow logging to the console during an axe test because console.log() does not work directly in a test
       on("task", {
         log(message: string) {

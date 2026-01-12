@@ -1,76 +1,31 @@
-export default [
-  {
-    key: "accent",
-    value:
-      "Components which can or should be emphasized against others in close proximity.",
-  },
-  {
-    key: "actionable",
-    value:
-      "Components with the ability to action something, action is performed immediately (the component doesn’t stay selected).    ",
-  },
-  {
-    key: "container",
-    value:
-      "Group of components used to contain and separate different types of content and allow hierarchical organization.    ",
-  },
-  {
-    key: "draggable",
-    value:
-      "Components that can be grabbed and moved to a target area (related to Target).    ",
-  },
-  {
-    key: "editable",
-    value: "Components that hold mutable data and allow for data entry.    ",
-  },
-  {
-    key: "focusable",
-    value:
-      "Components which can be focused using the mouse or keyboard.The following variables can be used on their own, but make up parts of the more commonly used borders and outlines below.",
-  },
-  {
-    key: "navigable",
-    value:
-      "Components that allow a user to navigate across UI sections or data sets and change view context.    ",
-  },
-  {
-    key: "overlayable",
-    value:
-      "Components that may form a hierarchy and stack upon or beneath other elements of the UI.    ",
-  },
-  {
-    key: "selectable",
-    value:
-      "Group of components that allow single or multiple selection, Selection can trigger actions.    ",
-  },
-  {
-    key: "separable",
-    value:
-      " Group of attributes to separate information/elements. Connected to Container. Level 1 - used when subtle division is needed/to divide similar items e.g. options within a list, individual comments. Level 2 - used to divide related areas e.g. heading and body text. Level 3 - used to separate areas of content that are not closely related e.g. app header from main content",
-  },
-  {
-    key: "status",
-    value:
-      " Components which have attributes that denote status and the severity of that status.    ",
-  },
-  {
-    key: "taggable",
-    value:
-      "Components allowing for individual items or data to be organized.    ",
-  },
-  {
-    key: "target",
-    value:
-      "Components which indicate a target area where a draggable item can be dropped (related to Draggable).    ",
-  },
-  {
-    key: "text",
-    value:
-      " All text examples are shown using the default fontWeight token.    ",
-  },
-  {
-    key: "track",
-    value:
-      "Components which have the ability to visually indicate progress, scale, or range along a defined track.    ",
-  },
-];
+export default {
+  accent:
+    "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.",
+  actionable:
+    "Actionable defines the colors and styles for components that enable onward actions, such as triggering events or processes, making interactive elements clearly identifiable and intuitive for users.",
+  category:
+    "Category offers a set of distinct colors for grouping and differentiating content, with meaning assigned locally.",
+  container:
+    "Container sets the background and structure of interface elements, using variants and optional borders to group content and create visual hierarchy.",
+  content:
+    "Content defines the standard foreground colors for text and icons, supporting clarity, consistency, and accessibility.",
+  editable:
+    "Editable defines the styles for input components that allow users to enter or modify data, such as text fields and input controls.",
+  focused:
+    "Focused defines the styles for components that can receive focus via mouse or keyboard interaction.",
+  navigable:
+    "Navigable defines the styles for components that enable users to move between sections, pages, or data sets, such as tabs and navigation menus.",
+  overlayable:
+    "Overlayable provides translucent styles for shadows, scrims, and neutral overlays, allowing highlights without obscuring underlying colors or states.",
+  selectable:
+    "Selectable defines the styles for components that allow users to make selections, such as radio buttons, checkboxes, switches, and selectable list items.",
+  sentiment:
+    "Sentiment offers visual cues that evoke feelings such as positivity, negativity, caution, or neutrality, helping to reinforce meaning and highlight important elements.",
+  separable:
+    "Separable defines visual dividers that organize and structure layouts, with primary, secondary, and tertiary variants providing different levels of emphasis to support clear hierarchy and readability.",
+  status:
+    "Status provides visual cues that communicate the condition of a system or process, using values like error, info, warning, and success to highlight issues and indicate when action may be needed.",
+  target:
+    "Target defines the styles for areas where draggable items, such as documents for attaching or uploading, can be dropped.",
+  text: "Text defines all typographic styles and variants, such as font weight, and is used alongside other characteristics to style all textual content.",
+};

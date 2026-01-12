@@ -1,5 +1,47 @@
 # @salt-ds/core
 
+## 1.54.1
+
+### Patch Changes
+
+- f670363: Fixed support for React 16 and 17.
+- 9f9be9d: Fixed `Menu`, `Collapsible` and `Overlay` triggers not forwarding props.
+- 0d3fc12: Fixed `SaltProvider`'s incorrectly being marked as root when an empty theme name is passed in.
+- f670363: Fixed `ComboBox` scrolling to the top when trying to scroll to the bottom of its list with a value in the input.
+- Updated dependencies [0c664ed]
+- Updated dependencies [ee16c19]
+- Updated dependencies [ee16c19]
+  - @salt-ds/icons@1.16.0
+
+## 1.54.0
+
+### Minor Changes
+
+- 64afd57: Introduced a PillGroup component.
+  This enhancement allows for multi-selection functionality, making it easier to capture user choices in grouped pill interfaces.
+
+  Usage example:
+
+  ```tsx
+  <PillGroup>
+    <Pill value="one">Pill 1</Pill>
+    <Pill value="two">Pill 2</Pill>
+    <Pill value="three">Pill 3</Pill>
+  </PillGroup>
+  ```
+
+- 1511c0d: Based on consumer feedback, we have enhanced our button's solid appearance hover state to include a fill color change along with the border, improving visual affordance. Additionally, for the transparent button appearance, the border is now removed in both hover and active states, and the fill uses a subtler style—applying a black alpha in light mode and a white alpha in dark mode.
+
+### Patch Changes
+
+- 89779b5: Updated foreground tokens used in Avatar, Badge and Tag.
+- 10ffed9: Fixed disabled `MenuItem`s opening submenus on hover.
+- 12ef4c9: Fixed right click behavior on `NumberInput` and `Slider`.
+
+  Previously, when users right-clicked on the increment/decrement buttons of the `NumberInput` or the thumb of the `Slider`, these components could remain stuck in a pressed state. The components have been updated to properly handle right-clicks and other pointer events by canceling the pressed state when such interactions occur.
+
+- e31acee: Removed `useLayoutEffect` usage to fix warnings being logged during SSR.
+
 ## 1.53.0
 
 ### Minor Changes

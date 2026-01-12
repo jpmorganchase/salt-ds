@@ -1,4 +1,9 @@
-import { FormField, FormFieldLabel, NumberInput } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldLabel,
+  NumberInput,
+  NumberInputProps,
+} from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type SyntheticEvent, useState } from "react";
@@ -30,6 +35,54 @@ describe("Number Input", () => {
     cy.get(".saltNumberInput-increment").realClick({ clickCount: 2 });
 
     cy.findByRole("spinbutton").should("have.value", "2");
+  });
+
+  it("increments repeatedly while holding down the increment button and stops after pointerup (mouse)", () => {
+    cy.mount(<Default />);
+    cy.findByRole("spinbutton").should("have.value", "");
+
+    cy.get(".saltNumberInput-increment").trigger("pointerdown", {
+      pointerType: "mouse",
+      button: 0,
+    });
+
+    cy.wait(700);
+
+    cy.get(".saltNumberInput-increment").trigger("pointerup", {
+      pointerType: "mouse",
+      button: 0,
+    });
+
+    cy.findByRole("spinbutton")
+      .invoke("val")
+      .then((valBeforeWait) => {
+        cy.wait(500);
+        cy.findByRole("spinbutton").invoke("val").should("eq", valBeforeWait);
+        expect(Number(valBeforeWait)).to.be.greaterThan(1);
+      });
+  });
+
+  it("increments repeatedly while holding down the increment button and stops after pointerup (touch)", () => {
+    cy.mount(<Default />);
+    cy.findByRole("spinbutton").should("have.value", "");
+
+    cy.get(".saltNumberInput-increment").trigger("pointerdown", {
+      pointerType: "touch",
+    });
+
+    cy.wait(700);
+
+    cy.get(".saltNumberInput-increment").trigger("pointerup", {
+      pointerType: "touch",
+    });
+
+    cy.findByRole("spinbutton")
+      .invoke("val")
+      .then((valBeforeWait) => {
+        cy.wait(500);
+        cy.findByRole("spinbutton").invoke("val").should("eq", valBeforeWait);
+        expect(Number(valBeforeWait)).to.be.greaterThan(1);
+      });
   });
 
   it("calls custom increment and returns test value", () => {
@@ -829,10 +882,18 @@ describe("Number Input", () => {
     it("should allow typing formatted values and call onChange with correct numerical values", () => {
       const numberChangeSpy = cy.stub().as("numberChangeSpy");
       const changeSpy = cy.stub().as("changeSpy");
+
+      const handleChange: NumberInputProps["onChange"] = (event, value) => {
+        // React 16 backwards compatibility
+        event?.persist();
+
+        changeSpy(event, value);
+      };
+
       cy.mount(
         <Default
           defaultValue={12}
-          onChange={changeSpy}
+          onChange={handleChange}
           onNumberChange={numberChangeSpy}
           pattern={(inputValue: string) =>
             /^[+-]?(\d+(\.\d*)?|\.\d+)%?$/.test(inputValue)

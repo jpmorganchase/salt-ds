@@ -1,4 +1,4 @@
-import { Pill } from "../../../pill";
+import { Pill, PillGroup } from "../../../pill";
 
 describe("GIVEN a Pill", () => {
   it("THEN should render a `standard` Pill", () => {
@@ -53,5 +53,18 @@ describe("GIVEN a Pill", () => {
     const clickSpy = cy.stub().as("clickSpy");
     cy.mount(<Pill onClick={clickSpy}>Pill</Pill>);
     cy.checkAxeComponent();
+  });
+
+  describe("GIVEN a selectable Pill in a PillGroup", () => {
+    it("THEN should render a selectable Pill", () => {
+      cy.mount(
+        <PillGroup selectionVariant="multiple">
+          <Pill value="pill1">Pill 1</Pill>
+          <Pill value="pill2">Pill 2</Pill>
+        </PillGroup>,
+      );
+      cy.findByRole("checkbox", { name: "Pill 1" });
+      cy.findByRole("checkbox", { name: "Pill 2" });
+    });
   });
 });

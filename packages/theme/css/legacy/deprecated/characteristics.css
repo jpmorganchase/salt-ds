@@ -246,4 +246,88 @@
   --salt-category-18-bold-foreground: var(--salt-palette-accent-foreground);
   --salt-category-19-bold-foreground: var(--salt-palette-accent-foreground);
   --salt-category-20-bold-foreground: var(--salt-palette-accent-foreground);
+
+  --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
+  --salt-content-foreground-active: var(--salt-palette-accent-foreground-informative);
+  --salt-content-foreground-hover: var(--salt-palette-accent-foreground-informative);
+
+  --salt-category-1-subtle-foreground: var(--salt-palette-categorical-1-strong);
+  --salt-category-1-subtle-background: var(--salt-palette-categorical-1-weakest);
+  --salt-category-1-subtle-borderColor: var(--salt-palette-categorical-1);
+
+  --salt-category-2-subtle-foreground: var(--salt-palette-categorical-2-strong);
+  --salt-category-2-subtle-background: var(--salt-palette-categorical-2-weakest);
+  --salt-category-2-subtle-borderColor: var(--salt-palette-categorical-2);
+
+  --salt-category-3-subtle-foreground: var(--salt-palette-categorical-3-strong);
+  --salt-category-3-subtle-background: var(--salt-palette-categorical-3-weakest);
+  --salt-category-3-subtle-borderColor: var(--salt-palette-categorical-3);
+
+  --salt-category-4-subtle-foreground: var(--salt-palette-categorical-4-strong);
+  --salt-category-4-subtle-background: var(--salt-palette-categorical-4-weakest);
+  --salt-category-4-subtle-borderColor: var(--salt-palette-categorical-4);
+
+  --salt-category-5-subtle-foreground: var(--salt-palette-categorical-5-strong);
+  --salt-category-5-subtle-background: var(--salt-palette-categorical-5-weakest);
+  --salt-category-5-subtle-borderColor: var(--salt-palette-categorical-5);
+
+  --salt-category-6-subtle-foreground: var(--salt-palette-categorical-6-strong);
+  --salt-category-6-subtle-background: var(--salt-palette-categorical-6-weakest);
+  --salt-category-6-subtle-borderColor: var(--salt-palette-categorical-6);
+
+  --salt-category-7-subtle-foreground: var(--salt-palette-categorical-7-strong);
+  --salt-category-7-subtle-background: var(--salt-palette-categorical-7-weakest);
+  --salt-category-7-subtle-borderColor: var(--salt-palette-categorical-7);
+
+  --salt-category-8-subtle-foreground: var(--salt-palette-categorical-8-strong);
+  --salt-category-8-subtle-background: var(--salt-palette-categorical-8-weakest);
+  --salt-category-8-subtle-borderColor: var(--salt-palette-categorical-8);
+
+  --salt-category-9-subtle-foreground: var(--salt-palette-categorical-9-strong);
+  --salt-category-9-subtle-background: var(--salt-palette-categorical-9-weakest);
+  --salt-category-9-subtle-borderColor: var(--salt-palette-categorical-9);
+
+  --salt-category-10-subtle-foreground: var(--salt-palette-categorical-10-strong);
+  --salt-category-10-subtle-background: var(--salt-palette-categorical-10-weakest);
+  --salt-category-10-subtle-borderColor: var(--salt-palette-categorical-10);
+
+  --salt-category-11-subtle-foreground: var(--salt-palette-categorical-11-strong);
+  --salt-category-11-subtle-background: var(--salt-palette-categorical-11-weakest);
+  --salt-category-11-subtle-borderColor: var(--salt-palette-categorical-11);
+
+  --salt-category-12-subtle-foreground: var(--salt-palette-categorical-12-strong);
+  --salt-category-12-subtle-background: var(--salt-palette-categorical-12-weakest);
+  --salt-category-12-subtle-borderColor: var(--salt-palette-categorical-12);
+
+  --salt-category-13-subtle-foreground: var(--salt-palette-categorical-13-strong);
+  --salt-category-13-subtle-background: var(--salt-palette-categorical-13-weakest);
+  --salt-category-13-subtle-borderColor: var(--salt-palette-categorical-13);
+
+  --salt-category-14-subtle-foreground: var(--salt-palette-categorical-14-strong);
+  --salt-category-14-subtle-background: var(--salt-palette-categorical-14-weakest);
+  --salt-category-14-subtle-borderColor: var(--salt-palette-categorical-14);
+
+  --salt-category-15-subtle-foreground: var(--salt-palette-categorical-15-strong);
+  --salt-category-15-subtle-background: var(--salt-palette-categorical-15-weakest);
+  --salt-category-15-subtle-borderColor: var(--salt-palette-categorical-15);
+
+  --salt-category-16-subtle-foreground: var(--salt-palette-categorical-16-strong);
+  --salt-category-16-subtle-background: var(--salt-palette-categorical-16-weakest);
+  --salt-category-16-subtle-borderColor: var(--salt-palette-categorical-16);
+
+  --salt-category-17-subtle-foreground: var(--salt-palette-categorical-17-strong);
+  --salt-category-17-subtle-background: var(--salt-palette-categorical-17-weakest);
+  --salt-category-17-subtle-borderColor: var(--salt-palette-categorical-17);
+
+  --salt-category-18-subtle-foreground: var(--salt-palette-categorical-18-strong);
+  --salt-category-18-subtle-background: var(--salt-palette-categorical-18-weakest);
+  --salt-category-18-subtle-borderColor: var(--salt-palette-categorical-18);
+
+  --salt-category-19-subtle-foreground: var(--salt-palette-categorical-19-strong);
+  --salt-category-19-subtle-background: var(--salt-palette-categorical-19-weakest);
+  --salt-category-19-subtle-borderColor: var(--salt-palette-categorical-19);
+
+  --salt-category-20-subtle-foreground: var(--salt-palette-categorical-20-strong);
+  --salt-category-20-subtle-background: var(--salt-palette-categorical-20-weakest);
+  --salt-category-20-subtle-borderColor: var(--salt-palette-categorical-20);
 }

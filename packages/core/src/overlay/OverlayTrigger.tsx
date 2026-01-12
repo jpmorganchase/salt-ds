@@ -14,7 +14,7 @@ export interface OverlayTriggerProps {
 
 export const OverlayTrigger = forwardRef<HTMLElement, OverlayTriggerProps>(
   function OverlayTrigger(props, ref) {
-    const { children } = props;
+    const { children, ...rest } = props;
 
     const { reference, getReferenceProps } = useOverlayContext();
 
@@ -31,7 +31,7 @@ export const OverlayTrigger = forwardRef<HTMLElement, OverlayTriggerProps>(
     return (
       <>
         {cloneElement(children, {
-          ...mergeProps(getReferenceProps(), children.props),
+          ...mergeProps(getReferenceProps(rest), children.props),
           ref: handleRef,
         })}
       </>

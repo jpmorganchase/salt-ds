@@ -4,7 +4,7 @@ import { type FC, useEffect, useState } from "react";
 import { Code } from "../mdx/code";
 import styles from "./PropsTable.module.css";
 
-const Markdown = dynamic(import("../markdown/Markdown"));
+const Markdown = dynamic(() => import("../markdown/Markdown"));
 
 type PropsTableType = {
   /**
@@ -15,17 +15,6 @@ type PropsTableType = {
    * Component name e.g. Button
    */
   componentName: string;
-};
-
-type Props = {
-  [key: string]: {
-    defaultValue?: { value: string };
-    description: string;
-    name: string;
-    type: {
-      name: string;
-    };
-  };
 };
 
 type JSONData = {
