@@ -152,6 +152,9 @@ describe("Given a Tabstrip", () => {
         <button>end</button>
       </>,
     );
+
+    cy.wait(200);
+
     cy.findByRole("tab", { name: "Overflow" }).realClick();
 
     cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
@@ -170,6 +173,8 @@ describe("Given a Tabstrip", () => {
   it("should close the overflow menu when a click is detected outside", () => {
     cy.mount(<Overflow />);
 
+    cy.wait(200);
+
     cy.findByRole("tab", { name: "Overflow" }).realClick();
 
     cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
@@ -184,6 +189,8 @@ describe("Given a Tabstrip", () => {
 
   it("should allow selection in the menu", () => {
     cy.mount(<Overflow />);
+
+    cy.wait(200);
 
     cy.findAllByRole("tab").should("have.length", 5);
 
@@ -225,6 +232,9 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Overflow" }).realClick();
 
     cy.findAllByRole("tab").should("have.length", 16); // overflow menu shown
+
+    cy.wait(100);
+
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
     cy.findAllByRole("tab").should("have.length", 2); // overflow menu hidden
