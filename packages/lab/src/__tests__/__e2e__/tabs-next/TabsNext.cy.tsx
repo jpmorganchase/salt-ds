@@ -109,6 +109,9 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
 
     cy.realPress("Enter");
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
 
     cy.realPress("ArrowDown");
@@ -150,6 +153,9 @@ describe("Given a Tabstrip", () => {
       </>,
     );
     cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
     cy.realPress("ArrowDown");
     cy.findByRole("tab", { name: "With" }).should("be.focused");
@@ -165,6 +171,9 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findAllByRole("tab").should("have.length", 13);
 
     cy.wait(500);
@@ -179,6 +188,9 @@ describe("Given a Tabstrip", () => {
     cy.findAllByRole("tab").should("have.length", 5);
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
 
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
@@ -191,6 +203,9 @@ describe("Given a Tabstrip", () => {
     cy.wait(100);
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
     cy.realPress("Enter");
@@ -208,8 +223,10 @@ describe("Given a Tabstrip", () => {
     cy.findAllByRole("tab").should("have.length", 2);
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
+
     cy.findAllByRole("tab").should("have.length", 16); // overflow menu shown
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
+
     cy.findAllByRole("tab").should("have.length", 2); // overflow menu hidden
 
     cy.findByRole("tab", { name: "Liquidity" })
@@ -425,6 +442,9 @@ describe("Given a Tabstrip", () => {
     );
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findByRole("tab", { name: "Loans" }).should("be.focused");
 
     cy.findByRole("tab", { name: "Lots" }).realClick();
@@ -453,6 +473,9 @@ describe("Given a Tabstrip", () => {
       cy.findAllByRole("tab").should("have.length", 5);
 
       cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+      cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
       cy.wait(500);
 
       // no horizontal overflow, menu should flip in horizontally
