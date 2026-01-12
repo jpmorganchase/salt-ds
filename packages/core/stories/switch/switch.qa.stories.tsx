@@ -32,7 +32,7 @@ export const AllExamplesGrid: StoryFn<
         className={className}
         checked
         readOnly
-        label="Checked + Readonly"
+        label="Checked + Read-only"
       />
       <Switch className={className} readOnly label="Readonly" />
     </QAContainer>
