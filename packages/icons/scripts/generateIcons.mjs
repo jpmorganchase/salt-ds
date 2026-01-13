@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Biome } from "@biomejs/js-api/nodejs";
-import glob from "glob";
+import { glob } from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
@@ -101,7 +101,9 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     .join(basePath, `./SVG/+(${fileArg})`)
     .replace(/\\/g, "/");
 
-  const fileNames = glob.sync(globPath, options);
+  const fileNames = glob
+    .sync(globPath, options)
+    .sort((a, b) => a.localeCompare(b, "en"));
 
   const iconCss = fileNames
     .map((fileName) => {
@@ -176,7 +178,9 @@ const generateIconComponents = async ({
     .join(basePath, `./SVG/+(${fileArg})`)
     .replace(/\\/g, "/");
 
-  const fileNames = glob.sync(globPath, options);
+  const fileNames = glob
+    .sync(globPath, options)
+    .sort((a, b) => a.localeCompare(b, "en"));
 
   return Promise.all(
     fileNames.map(async (fileName) => {
