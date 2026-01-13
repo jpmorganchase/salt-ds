@@ -18,6 +18,9 @@ import "./keyboard-shortcuts.stories.css";
 
 export default {
   title: "Patterns/Keyboard Shortcuts",
+  parameters: {
+    layout: "padded",
+  },
 } as Meta;
 
 type Shortcut = {
@@ -73,7 +76,7 @@ function displayKeyName(key: string): string {
   const keyMap: Record<string, string> = {
     meta: isMac ? "cmd" : "ctrl",
     option: isMac ? "option" : "alt",
-    shift:  "shift",
+    shift: "shift",
   };
 
   return keyMap[key] ?? key;
@@ -187,8 +190,11 @@ const KeyboardShortcuts: FC = () => {
     { enabled: shortcutsEnabled },
   );
 
-  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) =>
-    s.label.toLowerCase().includes(filter.trim().toLowerCase()),
+  const filteredShortcuts: Shortcut[] = shortcutList.filter(
+    (s) =>
+      s.label.toLowerCase().includes(filter.trim().toLowerCase()) ||
+      (s.description &&
+        s.description.toLowerCase().includes(filter.trim().toLowerCase())),
   );
 
   const handleDialogOpen = (): void => {
@@ -207,7 +213,11 @@ const KeyboardShortcuts: FC = () => {
   return (
     <>
       <StackLayout gap={1}>
-        <Button data-testid="dialog-button" onClick={handleDialogOpen}>
+        <Button
+          data-testid="dialog-button"
+          onClick={handleDialogOpen}
+          className="keyboardShortcuts-button"
+        >
           Keyboard shortcuts panel
         </Button>
         {shortcutsEnabled && (
@@ -420,8 +430,11 @@ const ShortcutPanel: FC = () => {
     { enabled: shortcutsEnabled },
   );
 
-  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) =>
-    s.label.toLowerCase().includes(filter.trim().toLowerCase()),
+  const filteredShortcuts: Shortcut[] = shortcutList.filter(
+    (s) =>
+      s.label.toLowerCase().includes(filter.trim().toLowerCase()) ||
+      (s.description &&
+        s.description.toLowerCase().includes(filter.trim().toLowerCase())),
   );
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void =>

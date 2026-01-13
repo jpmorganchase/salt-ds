@@ -1,11 +1,14 @@
 .keyboardShortcuts-description {
   padding: var(--salt-spacing-25) 0;
 }
+.keyboardShortcuts-button {
+  width: fit-content;
+}
 .keyboardShortcuts-actions-title {
   font-weight: var(--salt-text-heading-fontWeight);
 }
 table.saltTable td.keyboardShortcuts-td {
-  padding: calc(var(--salt-spacing-50)) var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
 }
 .keyboardShortcuts-dialog .saltTable {
   --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
