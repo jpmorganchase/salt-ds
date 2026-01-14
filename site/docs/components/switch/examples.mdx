@@ -52,11 +52,9 @@ Use a disabled checked state for switches that have permissions, dependencies or
 
 A read-only switch allows the user to select and copy its text, but doesn't allow them to change its state. You can set a switch as read-only via the prop `readOnly`.
 
-**Note:** We recommend avoiding read-only switches due to the lack of adequate `aria-readonly` support and conflicting user expectations. If you must use a read-only switch, you can add visual or non-visual labels to make its state clear.
-
-### Best practices
-
 Unlike disabled switches, read-only switches are focusable and shown in the tab order when using a keyboard, allowing users to interact with its text. Use a read-only switch when its text contains information that is valuable to the user.
+
+**Note:** We recommend avoiding read-only switches due to the lack of adequate `aria-readonly` support and conflicting user expectations. If you must use a read-only switch, you can add visual or non-visual labels to make its state clear.
 
 <LivePreview componentName="switch" exampleName="Readonly" />
 
