@@ -5,43 +5,32 @@ sidebar:
   priority: 5
 ---
 
-Charts rely on visual elements to make complex data easier to understand, so it’s essential to ensure they are accessible to all users. According to [WCAG guidelines](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html), color shouldn’t be the only distinguishing factor to convey information about your data. To improve accessibility for users with different needs, always include additional visual cues, such as line patterns and pattern fills.
+Charts rely on visual elements to make complex data easier to understand, so it’s essential they are accessible to everyone. Ground your chart design and implementation in the [WCAG POUR principles](https://www.w3.org/WAI/fundamentals/accessibility-principles/):
 
-## Categorical colors
+- **Perceivable**: Text equivalents (caption, summary), accessible data table, sufficient contrast, labels/patterns/markers instead of color alone.
+- **Operable**: Full keyboard access, predictable focus order, non-hover-only interactions, pause/stop controls for animation, adequate target sizes.
+- **Understandable**: Clear titles and legends, consistent scales/units, plain language, concise insight summaries, predictable behavior.
+- **Robust**: Semantic markup, ARIA roles and names, programmatic relationships, compatibility with screen readers, cross-browser testing and fallbacks.
 
-### Color contrast
+## Color contrast
 
-Users with visual impairments should be able to fully understand data that is represented using different colors. The use of custom colors or hex codes is discouraged, as they may not meet non-text contrast requirements and can compromise accessibility. Salt tokens should be used to ensure compliance, as they are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
+Color contrast is essential for the readability of charts, especially for people with low vision or color deficiencies. The use of custom colors or hex codes is discouraged, as they may not meet WCAG non-text contrast requirements. Salt tokens should be used to ensure compliance with WCAG, as they are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
 
 <Image
   src="/img/foundations/dataviz-hex.png"
   srcDark="/img/foundations/dataviz-hex-dark.png"
-  alt="Diagram of best practices using categorical color versus color picking."
+  alt="Two color purple swatches with white text, one darker than the other to illustrate contrast differences when using a Salt token."
 />
 
 ## Visual affordances
 
-Assistive technology users typically navigate charts using screen readers or keyboards—and may be unable to detect visual elements in the chart. Adding text alternatives within your application’s code may aid their comprehension of the data. There are three types of text alternatives you can add: a chart name, summary and/or data table.
+Using color alone to convey meaning makes charts difficult to understand to users with visual disabilities. You can enhance your chart’s accessibility by adopting additional visual strategies, such as:
 
-You can enhance your chart’s accessibility by adopting additional visual strategies other than color such as:
+- Line and Pattern fills to distinguish different categories
+- Marker symbols for distinctive data points
+- Direct labelling of segments
 
-- Pattern overlays for different categories
-- Direct labelling where possible
-- A border with at least a 3:1 contrast ratio against the background to distinguish between segments
-
-### Text alternatives in code
-
-Consider if the complexity, format and accessibility of your chart warrants text alternatives. A simple pie or donut chart with a small number of data points and no trends, for example, won’t require text alternatives if keyboard and screen reader users can navigate to and focus on the all data points.
-
-You can present chart data in a nearby table or list, in an overlay, or if necessary, as a last resort, on a separate screen to support screen readers. However, placing essential information on a separate screen will disrupt the flow of information, requiring screen reader users to context switch by navigating back and forth between sections to access the full text alternative. This added navigation can make understanding the data more difficult for users relying on screen readers.
-
-For more information about text alternatives, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
-
-<Image
-  src="/img/foundations/dataviz-affordance.png"
-  srcDark="/img/foundations/dataviz-affordance-dark.png"
-  alt="Diagram of a column chart depicting fruit sales per unit next to a table with the fruit sales listed in numbers."
-/>
+Try to also use borders with at least a 3:1 contrast ratio against the background to distinguish between segments to help distinguish them from each other.
 
 ## Line patterns
 
@@ -52,7 +41,7 @@ Learn more about the available line patterns in the [Color and pattern page.](/s
 <Image
   src="/img/foundations/dataviz-line-patterns2.png"
   srcDark="/img/foundations/dataviz-line-patterns2-dark.png"
-  alt="Diagram of line chart using line patterns."
+  alt="A line chart using line patterns."
 />
 
 ## Pattern fills
@@ -64,7 +53,7 @@ Learn more about the available pattern fills in the [Color and pattern page.](/s
 <Image
   src="/img/foundations/dataviz-pattern-fills2.png"
   srcDark="/img/foundations/dataviz-pattern-fills2-dark.png"
-  alt="Diagram of donut chart using pattern fills."
+  alt="A donut chart using pattern fills."
 />
 
 ## Marker symbols
@@ -82,7 +71,25 @@ Salt uses predefined symbols in the following order:
 <Image
   src="/img/foundations/dataviz-markers.png"
   srcDark="/img/foundations/dataviz-markers-dark.png"
-  alt="Diagram of line chart using marker symbols."
+  alt="A line chart using marker symbols."
 />
+
+## Text formats
+
+Assistive technology users typically navigate charts using screen readers or keyboards—and may not always be unable to perceive visual elements in a complex chart or navigate the chart easily. Consider if the complexity of your chart warrants a text description or an equivalent format.
+
+There are several things you could add to aid the understanding of your chart:
+
+- A chart name
+- A chart summary
+- A progressive disclosure or an overlay containing a further description
+- Data table or list in addition to the chart
+- A link to a nearby page
+
+A simple pie or donut chart with a small number of data points and no trends, for example, may not require a text equivalent, provided keyboard and screen reader users can perceive all the data points.
+
+As a last resort, you can link to a nearby page via a link next to the chart. Try to keep these links adjacent to their respective chart, as placing essential information on a separate screen will disrupt the flow of information and increase unnecessary cognitive load.
+
+For more information about alternative formats, read the [JPMC UX Accessibility Resources](https://go/text-alternatives#TextAlternatives-Compleximages) (Internal users only).
 
 :fragment{src="../fragments/feedback.mdx"}
