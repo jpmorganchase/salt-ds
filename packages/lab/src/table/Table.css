@@ -30,16 +30,20 @@
 }
 
 /* Zebra styling */
-table.saltTable-zebra-primary tbody tr:nth-of-type(odd) {
-  --table-background: var(--salt-container-primary-background);
+table.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
+  --table-background: var(--salt-container-tertiary-background);
 }
 
-table.saltTable-zebra-secondary tbody tr:nth-of-type(odd) {
+table.saltTable-primary.saltTable-zebra tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-secondary-background);
 }
 
-table.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
-  --table-background: var(--salt-container-tertiary-background);
+table.saltTable-secondary.saltTable-zebra tbody tr:nth-of-type(odd) {
+  --table-background: var(--salt-container-primary-background);
+}
+
+table.saltTable-tertiary.saltTable-zebra tbody tr:nth-of-type(odd) {
+  --table-background: var(--salt-container-primary-background);
 }
 
 table.saltTable {
@@ -52,6 +56,24 @@ table.saltTable {
   line-height: var(--salt-text-lineHeight);
   table-layout: fixed;
   width: 100%;
+}
+
+/* TR */
+table.saltTable tr {
+  background: var(--table-background);
+}
+
+table.saltTable tbody tr {
+  height: var(--table-row-height);
+  min-height: var(--table-row-height);
+}
+
+table.saltTable tbody tr:not(:last-child) {
+  border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
+}
+
+table.saltTable.saltTable-divider-none tbody tr {
+  --table-divider-color: transparent;
 }
 
 /* THead */
@@ -180,23 +202,14 @@ table.saltTable th + th::before {
   left: 0;
 }
 
-/* TR */
-table.saltTable tr {
-  background: var(--table-background);
-  height: var(--table-row-height);
-  min-height: var(--table-row-height);
-}
-
-table.saltTable tbody tr:not(:last-child) {
-  border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
-}
-
-table.saltTable-divider-none tbody tr {
-  --table-divider-color: transparent;
-}
-
 /* TD */
 table.saltTable td {
   height: 100%;
   padding: var(--salt-spacing-100);
+}
+
+.saltTable-tableContainer {
+  width: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
