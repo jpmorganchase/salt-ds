@@ -5,6 +5,7 @@ import {
   StackLayout,
   Switch,
   Table,
+  TableContainer,
   TBody,
   TD,
   Text,
@@ -15,6 +16,7 @@ import {
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
+import { planetData, planetDataColumns } from "./exampleData";
 
 type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
   THeadProps: ComponentProps<typeof THead>;
@@ -26,7 +28,7 @@ type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
 };
 
 export default {
-  title: "Lab/Table",
+  title: "Core/Table",
   component: Table,
   subcomponents: { TD, TH, Text, Code, TBody, THead, TR, TFoot },
   args: {
@@ -52,10 +54,7 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
   ...args
 }) => {
   return (
-    <StackLayout
-      style={{ width: "800px", height: "300px", overflow: "auto" }}
-      tabIndex={0}
-    >
+    <TableContainer style={{ width: "800px", height: "300px" }}>
       <Table {...args}>
         <THead {...THeadProps}>
           <TR {...TRProps}>
@@ -95,7 +94,7 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
           </TR>
         </TFoot>
       </Table>
-    </StackLayout>
+    </TableContainer>
   );
 };
 
@@ -132,41 +131,43 @@ FooterVariant.args = {
 export const CustomContent: StoryFn<TablePropsAndCustomArgs> = () => {
   return (
     <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
-      <Table>
-        <THead>
-          <TR>
-            <TH>Col 1</TH>
-            <TH>Col 2</TH>
-          </TR>
-        </THead>
-        <TBody>
-          <TR>
-            <TD>
-              <FlexLayout justify="space-between" align="center">
-                <Button>Click me</Button>
-                <Text>
-                  <strong>Date:</strong> {new Date().toDateString()}
-                </Text>
-              </FlexLayout>
-            </TD>
-            <TD>
-              <StackLayout gap={1}>
-                <Switch label="Click me" />
-                <Text>12345</Text>
-              </StackLayout>
-            </TD>
-          </TR>
-          <TR>
-            <TD>Some standard text</TD>
-            <TD>
-              <StackLayout gap={0}>
-                <strong>Data</strong>
-                <Text>12345</Text>
-              </StackLayout>
-            </TD>
-          </TR>
-        </TBody>
-      </Table>
+      <TableContainer>
+        <Table>
+          <THead>
+            <TR>
+              <TH>Col 1</TH>
+              <TH>Col 2</TH>
+            </TR>
+          </THead>
+          <TBody>
+            <TR>
+              <TD>
+                <FlexLayout justify="space-between" align="center">
+                  <Button>Click me</Button>
+                  <Text>
+                    <strong>Date:</strong> {new Date().toDateString()}
+                  </Text>
+                </FlexLayout>
+              </TD>
+              <TD>
+                <StackLayout gap={1}>
+                  <Switch label="Click me" />
+                  <Text>12345</Text>
+                </StackLayout>
+              </TD>
+            </TR>
+            <TR>
+              <TD>Some standard text</TD>
+              <TD>
+                <StackLayout gap={0}>
+                  <strong>Data</strong>
+                  <Text>12345</Text>
+                </StackLayout>
+              </TD>
+            </TR>
+          </TBody>
+        </Table>
+      </TableContainer>
     </StackLayout>
   );
 };
@@ -287,23 +288,91 @@ export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
   ...args
 }) => {
   return (
-    <Table {...args}>
-      <THead>
-        <TR>
-          <TH>City</TH>
-          <TH textAlign="right">Population</TH>
-        </TR>
-      </THead>
-      <TBody>
-        <TR>
-          <TD>London</TD>
-          <TD textAlign="right">9.8 million</TD>
-        </TR>
-        <TR>
-          <TD>New York</TD>
-          <TD textAlign="right">8.8 million</TD>
-        </TR>
-      </TBody>
-    </Table>
+    <TableContainer>
+      <Table {...args}>
+        <THead>
+          <TR>
+            <TH>City</TH>
+            <TH textAlign="right">Population</TH>
+          </TR>
+        </THead>
+        <TBody>
+          <TR>
+            <TD>London</TD>
+            <TD textAlign="right">9.8 million</TD>
+          </TR>
+          <TR>
+            <TD>New York</TD>
+            <TD textAlign="right">8.8 million</TD>
+          </TR>
+        </TBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export const Scrollable: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <StackLayout style={{ height: 300, width: 300 }}>
+      <TableContainer>
+        <Table {...args} aria-label="Planet data table">
+          <THead>
+            <TR>
+              {planetDataColumns.map(({ key, title, type }) => {
+                return (
+                  <TH
+                    key={key}
+                    textAlign={type === "number" ? "right" : "left"}
+                    style={{
+                      whiteSpace: "nowrap",
+                      width: 150,
+                    }}
+                  >
+                    {title}
+                  </TH>
+                );
+              })}
+            </TR>
+          </THead>
+          <TBody>
+            {planetData.map((data) => {
+              return (
+                <TR key={data.planet}>
+                  {Object.values(data).map((value) => {
+                    return (
+                      <TD
+                        key={value}
+                        textAlign={typeof value === "number" ? "right" : "left"}
+                        style={{
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {value}
+                      </TD>
+                    );
+                  })}
+                </TR>
+              );
+            })}
+          </TBody>
+        </Table>
+      </TableContainer>
+
+      <Text>
+        A data table relies on two-dimensional layout for understanding, but by
+        presenting the table in its own scrollable container it allows other
+        content which does not meet a two-dimensional layout exception to reflow
+        as its containing element adjusts. for example, due to browser resizing,
+        or zooming.
+      </Text>
+    </StackLayout>
   );
 };

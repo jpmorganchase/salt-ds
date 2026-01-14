@@ -3,7 +3,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { makePrefixer } from "../utils";
-
 import tableCss from "./Table.css";
 
 export interface TableProps extends ComponentPropsWithoutRef<"table"> {
