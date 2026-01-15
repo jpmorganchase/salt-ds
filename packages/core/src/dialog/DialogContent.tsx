@@ -16,6 +16,7 @@ import {
 } from "../utils";
 
 import dialogContentCss from "./DialogContent.css";
+import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
@@ -29,6 +30,9 @@ export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
     const { children, className, ...rest } = props;
+
+    const { id } = useDialogContext();
+
     const [canScrollUp, setCanScrollUp] = useState(false);
     const [canScrollDown, setCanScrollDown] = useState(true);
     const [isOverflowing, setIsOverflowing] = useState(false);
@@ -71,6 +75,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
+        {/** biome-ignore lint/a11y/useAriaPropsSupportedByRole: aria-labelledby is only applied when the region role is applied. */}
         <div
           onScrollCapture={handleScroll}
           ref={divRef}
@@ -79,6 +84,9 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
             [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
             [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
           })}
+          tabIndex={isOverflowing ? 0 : undefined}
+          role={isOverflowing ? "region" : undefined}
+          aria-labelledby={isOverflowing ? id : undefined}
         >
           {children}
         </div>
