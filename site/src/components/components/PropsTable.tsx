@@ -76,16 +76,16 @@ export const PropsTable: FC<PropsTableType> = ({
   }
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table className="propsTable">
+      <THead>
+        <TR>
+          <TH>Name</TH>
+          <TH>Type</TH>
+          <TH>Description</TH>
+          <TH>Default</TH>
+        </TR>
+      </THead>
+      <TBody>
         {props &&
           Object.values(props).map(
             ({ name, type, description, defaultValue }) => (
