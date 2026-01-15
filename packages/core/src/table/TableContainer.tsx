@@ -9,7 +9,10 @@ import tableCss from "./Table.css";
 export const TableContainer = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
->(function TableContainer({ children, className, ...rest }, ref) {
+>(function TableContainer(
+  { children, className, role, tabIndex, ...rest },
+  ref,
+) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-table-container",
@@ -28,9 +31,9 @@ export const TableContainer = forwardRef<
     <div
       ref={handleRef}
       className={clsx(withTableBaseName("tableContainer"), className)}
+      role={role ?? (isScrollable ? "region" : undefined)}
+      tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
       {...rest}
-      role={rest.role ?? (isScrollable ? "region" : undefined)}
-      tabIndex={rest.tabIndex ?? (isScrollable ? 0 : undefined)}
     >
       {children}
     </div>
