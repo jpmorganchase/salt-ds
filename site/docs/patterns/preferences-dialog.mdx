@@ -17,7 +17,8 @@ data:
 ---
  
   <Diagram
-    src="/img/patterns/preferences-dialog/blotter_grid_settings.png"
+    src="/img/patterns/preferences-dialog/preferences_dialog.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog-dark.png"
     alt="Preferences dialog example"
     border
   />
@@ -40,6 +41,7 @@ A preferences dialog comprises three key features:
   
   <Diagram
     src="/img/patterns/preferences-dialog/preferences_dialog_anatomy.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog_anatomy-dark.png"
     alt="Preferences Dialog navigation and content."
     border
   />
@@ -52,7 +54,8 @@ A preferences dialog comprises three key features:
 - Use a [parent-child layout](/salt/components/layouts/parent-child-layout) component to position the navigation and content within a preferences dialog. 
 
 <Diagram
-    src="/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_on.png"
+    src="/img/patterns/preferences-dialog/preferences_dialog_spacing.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog_spacing-dark.png"
     alt="Example showing a preferences dialog's layout construction."
     border
   />
@@ -72,7 +75,8 @@ We recommend that scrolling affordance should only take effect if content in the
 This is visually indicated by two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow. 
 
   <Diagram
-    src="/img/patterns/preferences-dialog/scrolling_content_area.png"
+    src="/img/patterns/preferences-dialog/preferences_dialog_scrolling.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog_scrolling-dark.png"
     alt="Example of content section scrolling."
     caption="A preferences dialog with scrolling content area."
     border
@@ -81,7 +85,8 @@ This is visually indicated by two separator lines above and below the parent-chi
 Display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
 
   <Diagram
-    src="/img/patterns/preferences-dialog/scrollable_navigation_and_content.png"
+    src="/img/patterns/preferences-dialog/preferences_dialog_scrolling_overflow.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog_scrolling_overflow-dark.png"
     alt="Example of scrolling affordance."
     caption="A preferences dialog with scrollable navigation and content area."
     border
@@ -101,7 +106,8 @@ Display either a button bar at the bottom of the dialog, or a close button in th
 - Change preferences that can't take immediate effect for any other reason.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/actions_manually_applied_preferences.png"
+  src="/img/patterns/preferences-dialog/preferences_dialog_button_bar.png"
+  srcDark="/img/patterns/preferences-dialog/preferences_dialog_button_bar-dark.png"
   alt="Applying preferences."
   caption="This preferences dialog has Cancel and Save actions for applying preferences."
   border
@@ -116,7 +122,8 @@ Display either a button bar at the bottom of the dialog, or a close button in th
 If your preferences dialog does not need a button bar, instead display a close button in the top-right corner of the dialog. This allows the user to close the dialog after editing any preferences. Changes should take effect as soon as the user changes a preference.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/live_updating_dialog.png"
+  src="/img/patterns/preferences-dialog/preferences_dialog_close_button.png"
+  srcDark="/img/patterns/preferences-dialog/preferences_dialog_close_button-dark.png"
   alt="Live updates."
   caption="Updating preferences automatically within a dialog negates the need for a button bar."
   border
@@ -128,6 +135,7 @@ We recommend configuring the button bar to display secondary actions to the left
 
 <Diagram
   src="/img/patterns/preferences-dialog/preferences_dialog_secondary_action.png"
+  srcDark="/img/patterns/preferences-dialog/preferences_dialog_secondary_action-dark.png"
   alt="Secondary actions displayed to the left."
   caption="A preferences dialog with secondary actions displayed to the left."
   border
@@ -148,6 +156,7 @@ When the navigation collapses, the preferences content spans the entire width of
 
   <Diagram
     src="/img/patterns/preferences-dialog/preferences_dialog_collapsed_navigation.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog_collapsed_navigation-dark.png"
     alt="Collapsed navigation."
     caption="A preferences dialog with a collapsed navigation."
     border
@@ -163,6 +172,7 @@ For smaller viewports (i.e. devices with limited screen sizes), it's preferable 
 
   <Diagram
     src="/img/patterns/preferences-dialog/preferences_dialog_stacked_button_bar.png"
+    srcDark="/img/patterns/preferences-dialog/preferences_dialog_stacked_button_bar-dark.png"
     alt="Stacked button bar."
     caption="A preferences dialog with a stacked button bar."
     border
