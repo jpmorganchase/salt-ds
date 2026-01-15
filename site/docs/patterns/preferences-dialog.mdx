@@ -60,13 +60,16 @@ A preferences dialog comprises three key features:
     border
   />
 
-<GuidanceCallout type="positive" customPillText="Best practices">
-  - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
-  - Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
 
-  To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
+<Callout
+  status="success"
+  title="Best practices"
+>
+ - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
+ - Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
 
-</GuidanceCallout>
+ To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
+</Callout>
 
 ## Content area scrolling
 
@@ -113,9 +116,12 @@ Display either a button bar at the bottom of the dialog, or a close button in th
   border
 />
 
-<GuidanceCallout type="positive" customPillText="Best practices">
+<Callout
+  status="success"
+  title="Best practices"
+>
   Display core actions to the right of a dialog. Refer to the [button bar pattern](./button-bar) for further guidance on how to display user actions within dialogs. 
-</GuidanceCallout>
+</Callout>
 
 ### Close button
 
@@ -166,9 +172,12 @@ When the navigation collapses, the preferences content spans the entire width of
 
 For smaller viewports (i.e. devices with limited screen sizes), it's preferable to configure buttons to stack horizontally at the [XS breakpoint](../foundations/responsiveness#breakpoints). This ensures longer button labels accommodate mobile devices that may not fit within the horizontal layout. They also remain an adequate size for touch interactions.
 
-<GuidanceCallout type="positive" customPillText="Best practices">
+<Callout
+  status="success"
+  title="Best practices"
+>
   View the [stacked button bar](./button-bar#stacked-button-bar-layout) guidance to understand how to order and build a stacked button bar. 
-</GuidanceCallout>
+</Callout>
 
   <Diagram
     src="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar.png"
