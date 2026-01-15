@@ -333,7 +333,6 @@ export const Scrollable: StoryFn<TablePropsAndCustomArgs> = ({
                     textAlign={type === "number" ? "right" : "left"}
                     style={{
                       whiteSpace: "nowrap",
-                      width: 150,
                     }}
                   >
                     {title}
@@ -343,25 +342,18 @@ export const Scrollable: StoryFn<TablePropsAndCustomArgs> = ({
             </TR>
           </THead>
           <TBody>
-            {planetData.map((data) => {
-              return (
-                <TR key={data.planet}>
-                  {Object.values(data).map((value) => {
-                    return (
-                      <TD
-                        key={value}
-                        textAlign={typeof value === "number" ? "right" : "left"}
-                        style={{
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {value}
-                      </TD>
-                    );
-                  })}
-                </TR>
-              );
-            })}
+            {planetData.map((row) => (
+              <TR key={row.planet}>
+                {planetDataColumns.map(({ key, type }) => (
+                  <TD
+                    key={`${row.planet}-${key}`}
+                    textAlign={type === "number" ? "right" : "left"}
+                  >
+                    {row[key]}
+                  </TD>
+                ))}
+              </TR>
+            ))}
           </TBody>
         </Table>
       </TableContainer>

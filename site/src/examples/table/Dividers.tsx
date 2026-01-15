@@ -5,6 +5,7 @@ import {
   FormFieldLabel,
   StackLayout,
   Table,
+  TableContainer,
   type TableProps,
   TBody,
   TD,
@@ -68,57 +69,59 @@ export const Dividers = (): ReactElement => {
           </FormField>
         </FlexItem>
       </FlexLayout>
-      <Table divider={body}>
-        <THead divider={header}>
-          <TR>
-            {Array.from({ length: 3 }, (_arrItem, i) => {
+      <TableContainer aria-label="Table with dividers">
+        <Table divider={body}>
+          <THead divider={header}>
+            <TR>
+              {Array.from({ length: 3 }, (_arrItem, i) => {
+                return (
+                  <TH
+                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                    key={`col-${i}`}
+                  >
+                    Column {i + 1}
+                  </TH>
+                );
+              })}
+            </TR>
+          </THead>
+          <TBody>
+            {Array.from({ length: 5 }, (_arrItem, x) => {
               return (
-                <TH
+                <TR
                   // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                  key={`col-${i}`}
+                  key={`tr-${x}`}
                 >
-                  Column {i + 1}
-                </TH>
+                  {Array.from({ length: 3 }, (_nestedArrItem, i) => {
+                    return (
+                      <TD
+                        // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                        key={`td-${i}`}
+                      >
+                        Row {x + 1}
+                      </TD>
+                    );
+                  })}
+                </TR>
               );
             })}
-          </TR>
-        </THead>
-        <TBody>
-          {Array.from({ length: 5 }, (_arrItem, x) => {
-            return (
-              <TR
-                // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                key={`tr-${x}`}
-              >
-                {Array.from({ length: 3 }, (_nestedArrItem, i) => {
-                  return (
-                    <TD
-                      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                      key={`td-${i}`}
-                    >
-                      Row {x + 1}
-                    </TD>
-                  );
-                })}
-              </TR>
-            );
-          })}
-        </TBody>
-        <TFoot divider={footer}>
-          <TR>
-            {Array.from({ length: 3 }, (_arrItem, i) => {
-              return (
-                <TD
-                  // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                  key={`footer-${i}`}
-                >
-                  Footer {i + 1}
-                </TD>
-              );
-            })}
-          </TR>
-        </TFoot>
-      </Table>
+          </TBody>
+          <TFoot divider={footer}>
+            <TR>
+              {Array.from({ length: 3 }, (_arrItem, i) => {
+                return (
+                  <TD
+                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                    key={`footer-${i}`}
+                  >
+                    Footer {i + 1}
+                  </TD>
+                );
+              })}
+            </TR>
+          </TFoot>
+        </Table>
+      </TableContainer>
     </StackLayout>
   );
 };
