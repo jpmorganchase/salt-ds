@@ -4,6 +4,7 @@ import {
   FormFieldLabel,
   StackLayout,
   Table,
+  TableContainer,
   type TableProps,
   TBody,
   TD,
@@ -47,57 +48,62 @@ export const Variants = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <Table variant={variant} divider={divider === "on" ? "tertiary" : "none"}>
-        <THead>
-          <TR>
-            {Array.from({ length: 3 }, (_arrItem, i) => {
+      <TableContainer aria-label="Table with variants">
+        <Table
+          variant={variant}
+          divider={divider === "on" ? "tertiary" : "none"}
+        >
+          <THead>
+            <TR>
+              {Array.from({ length: 3 }, (_arrItem, i) => {
+                return (
+                  <TH
+                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                    key={`col-${i}`}
+                  >
+                    Column {i + 1}
+                  </TH>
+                );
+              })}
+            </TR>
+          </THead>
+          <TBody>
+            {Array.from({ length: 5 }, (_arrItem, x) => {
               return (
-                <TH
+                <TR
                   // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                  key={`col-${i}`}
+                  key={`tr-${x}`}
                 >
-                  Column {i + 1}
-                </TH>
+                  {Array.from({ length: 3 }, (_nestedArrItem, i) => {
+                    return (
+                      <TD
+                        // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                        key={`td-${i}`}
+                      >
+                        Row {x + 1}
+                      </TD>
+                    );
+                  })}
+                </TR>
               );
             })}
-          </TR>
-        </THead>
-        <TBody>
-          {Array.from({ length: 5 }, (_arrItem, x) => {
-            return (
-              <TR
-                // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                key={`tr-${x}`}
-              >
-                {Array.from({ length: 3 }, (_nestedArrItem, i) => {
-                  return (
-                    <TD
-                      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                      key={`td-${i}`}
-                    >
-                      Row {x + 1}
-                    </TD>
-                  );
-                })}
-              </TR>
-            );
-          })}
-        </TBody>
-        <TFoot>
-          <TR>
-            {Array.from({ length: 3 }, (_arrItem, i) => {
-              return (
-                <TD
-                  // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-                  key={`footer-${i}`}
-                >
-                  Footer {i + 1}
-                </TD>
-              );
-            })}
-          </TR>
-        </TFoot>
-      </Table>
+          </TBody>
+          <TFoot>
+            <TR>
+              {Array.from({ length: 3 }, (_arrItem, i) => {
+                return (
+                  <TD
+                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                    key={`footer-${i}`}
+                  >
+                    Footer {i + 1}
+                  </TD>
+                );
+              })}
+            </TR>
+          </TFoot>
+        </Table>
+      </TableContainer>
     </StackLayout>
   );
 };

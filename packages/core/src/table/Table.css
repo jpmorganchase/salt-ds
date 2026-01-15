@@ -54,7 +54,7 @@ table.saltTable {
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
-  table-layout: fixed;
+  table-layout: auto;
   width: 100%;
 }
 
@@ -227,5 +227,4 @@ table.saltTable td.saltTable-td-align-right {
 .saltTable-tableContainer {
   width: 100%;
   overflow: auto;
-  overscroll-behavior: contain;
 }
