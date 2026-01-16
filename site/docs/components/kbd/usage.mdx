@@ -1,0 +1,37 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To display keyboard shortcuts: Use Kbd to visually highlight keyboard keys or combinations (e.g., Ctrl + S) in documentation.
+- Inline with instructions: When providing step-by-step instructions or help text that references keyboard actions.
+- In buttons or inputs: To show associated shortcuts for actions, such as “Save (Ctrl + S)” in a button or “Press Enter” in an input field.
+- To improve accessibility: When you want users to easily identify and understand available keyboard shortcuts.
+
+### When not to use
+
+- For non-keyboard actions: Do not use Kbd to represent mouse actions, gestures, or other non-keyboard interactions.
+- For decorative purposes: Avoid using Kbd purely for styling or emphasis unrelated to keyboard input.
+- For long text or sentences: Kbd is not suitable for wrapping entire sentences or paragraphs—use it only for individual keys or short key combinations.
+- When the shortcut is not relevant: If there is no keyboard shortcut or key involved, use other components or plain text.
+
+## Import
+
+To import `Kbd` from the labs Salt package, use:
+
+```js
+import { Kbd } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable componentName="Kbd" />
