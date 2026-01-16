@@ -54,7 +54,7 @@ A read-only switch allows the user to select and copy its text, but doesn't allo
 
 Unlike disabled switches, read-only switches are focusable and shown in the tab order when using a keyboard, allowing users to interact with its text. Use a read-only switch when its text contains information that is valuable to the user.
 
-**Note:** We recommend avoiding read-only switches due to the lack of adequate `aria-readonly` support and conflicting user expectations. If you must use a read-only switch, you can add visual or non-visual labels to make its state clear.
+**Note:** We recommend avoiding read-only switches due to the lack of adequate `aria-readonly` support and conflicting user expectations. If you must use a read-only switch, you should always add an accessible name via a visual label or an aria-label to make its name clear.
 
 <LivePreview componentName="switch" exampleName="Readonly" />
 
