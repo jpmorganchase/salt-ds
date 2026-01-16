@@ -4,7 +4,6 @@ import {
   type ResponsiveProp,
   useForkRef,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
@@ -27,10 +26,8 @@ import { CalendarMonth } from "./internal/CalendarMonth";
 
 /**
  * Props for the CalendarGrid component.
- * @template TDate - The type of the date object.
  */
-export interface CalendarGridProps<TDate extends DateFrameworkType>
-  extends ComponentPropsWithoutRef<"div"> {
+export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Number of columns
    */
@@ -42,21 +39,15 @@ export interface CalendarGridProps<TDate extends DateFrameworkType>
   /**
    * Props for `CalendarMonthHeader`
    */
-  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps<TDate>>;
+  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps>;
   /**
    * Props for `CalendarDay`
    */
-  CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
+  CalendarDayProps?: Partial<CalendarDayProps>;
 }
 
-export const CalendarGrid = forwardRef<
-  HTMLDivElement,
-  CalendarGridProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: CalendarGridProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
+export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
+  (props: CalendarGridProps, ref: React.Ref<HTMLDivElement>) => {
     const {
       CalendarDayProps,
       CalendarWeekHeaderProps,
@@ -66,12 +57,12 @@ export const CalendarGrid = forwardRef<
       ...rest
     } = props;
 
-    const { dateAdapter } = useLocalization<TDate>();
+    const { dateAdapter } = useLocalization();
 
     const {
       helpers: { setFocusedDate, setHoveredDate },
       state: { visibleMonth, numberOfVisibleMonths = 1 },
-    } = useCalendarContext<TDate>();
+    } = useCalendarContext();
     const calendarGridRef = useRef<HTMLDivElement>(null);
     const containerRef = useForkRef(ref, calendarGridRef);
 
@@ -94,12 +85,11 @@ export const CalendarGrid = forwardRef<
 
     const visibleMonths = useMemo(
       () =>
-        Array.from({ length: numberOfVisibleMonths }, (_value, index) => {
-          const gridItemVisibleMonth: TDate = dateAdapter.add(visibleMonth, {
+        Array.from({ length: numberOfVisibleMonths }, (_value, index) =>
+          dateAdapter.add(visibleMonth, {
             months: index,
-          });
-          return gridItemVisibleMonth;
-        }),
+          }),
+        ),
       [dateAdapter, numberOfVisibleMonths, visibleMonth],
     );
 

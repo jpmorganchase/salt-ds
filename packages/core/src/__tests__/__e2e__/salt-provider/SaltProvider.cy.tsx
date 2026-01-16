@@ -177,7 +177,7 @@ describe("Given a SaltProvider", () => {
         </SaltProvider>,
       );
 
-      cy.get("[aria-live]").should("have.length", 1);
+      cy.get("[aria-live]").should("have.length", 2);
     });
 
     it("should inherit values not passed as props", () => {

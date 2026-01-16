@@ -1,5 +1,4 @@
 import { makePrefixer, Text } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -15,11 +14,12 @@ export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {};
 
 const withBaseName = makePrefixer("saltCalendarWeekHeader");
 
-export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader<
-  TDate extends DateFrameworkType,
->(props: CalendarWeekHeaderProps, ref: React.Ref<HTMLDivElement>) {
+export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader(
+  props: CalendarWeekHeaderProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
   const { className, ...rest } = props;
-  const { dateAdapter } = useLocalization<TDate>();
+  const { dateAdapter } = useLocalization();
 
   const weekdaysShort = daysOfWeek(dateAdapter, "narrow");
   const weekdaysLong = daysOfWeek(dateAdapter, "long");
