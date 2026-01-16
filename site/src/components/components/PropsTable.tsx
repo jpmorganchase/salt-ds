@@ -1,7 +1,7 @@
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/core";
 import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
 import { Code } from "../mdx/code";
-import { Table } from "../mdx/table";
 import styles from "./PropsTable.module.css";
 
 const Markdown = dynamic(() => import("../markdown/Markdown"));
@@ -65,34 +65,34 @@ export const PropsTable: FC<PropsTableType> = ({
   }
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table className="propsTable">
+      <THead>
+        <TR>
+          <TH>Name</TH>
+          <TH>Type</TH>
+          <TH>Description</TH>
+          <TH>Default</TH>
+        </TR>
+      </THead>
+      <TBody>
         {props &&
           Object.values(props).map(
             ({ name, type, description, defaultValue }) => (
-              <tr key={name}>
-                <td className={styles.overflowWrap}>{name}</td>
-                <td>
+              <TR key={name}>
+                <TD className={styles.overflowWrap}>{name}</TD>
+                <TD>
                   <Code>{type.name}</Code>
-                </td>
-                <td>
+                </TD>
+                <TD>
                   <Markdown>{description}</Markdown>
-                </td>
-                <td>
+                </TD>
+                <TD>
                   <Code>{defaultValue ? defaultValue.value : "-"}</Code>
-                </td>
-              </tr>
+                </TD>
+              </TR>
             ),
           )}
-      </tbody>
+      </TBody>
     </Table>
   );
 };
