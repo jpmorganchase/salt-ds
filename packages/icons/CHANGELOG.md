@@ -1,5 +1,12 @@
 # @salt-ds/icons
 
+## 1.17.0
+
+### Minor Changes
+
+- fcc4021: - Added `NotAllowedIcon`
+  - Deprecated `ErrorExecuteIcon`. `NotAllowedIcon` should be used instead.
+
 ## 1.16.0
 
 ### Minor Changes
