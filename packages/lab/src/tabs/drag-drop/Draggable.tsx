@@ -26,7 +26,10 @@ export const Draggable = forwardRef<
   const callbackRef = useCallback(
     (el: HTMLDivElement) => {
       if (el) {
-        el.innerHTML = "";
+        // Clear children safely
+        while (el.firstChild) {
+          el.removeChild(el.firstChild);
+        }
         el.appendChild(element);
         if (scale !== 1) {
           el.style.transform = `scale(${scale},${scale})`;
