@@ -1,4 +1,11 @@
-import { capitalize, makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import {
+  capitalize,
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+  usePrevious,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -6,10 +13,11 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type KeyboardEvent,
+  useEffect,
   useRef,
 } from "react";
+import { useEventCallback } from "../utils/index";
 import { useOverflow } from "./hooks/useOverflow";
-import { useRestoreActiveTab } from "./hooks/useRestoreActiveTab";
 import tablistNextCss from "./TabListNext.css";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
@@ -52,42 +60,35 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       getPrevious,
       getFirst,
       getLast,
-      items,
+      item,
+      itemAt,
       activeTab,
       menuOpen,
       setMenuOpen,
-      removedActiveTabRef,
+      sortItems,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
 
-    const [visible, hidden, isMeasuring, realSelectedIndexRef] = useOverflow({
+    const [visible, hidden, isMeasuring] = useOverflow({
       container: tabstripRef,
-      tabs: items,
       children,
       selected,
       overflowButton: overflowButtonRef,
     });
 
-    useRestoreActiveTab({
-      container: tabstripRef,
-      tabs: items,
-      realSelectedIndex: realSelectedIndexRef,
-      removedActiveTabRef,
-    });
-
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
+
+      if (menuOpen) return;
 
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
         Home: getFirst,
         End: getLast,
-        ArrowUp: menuOpen ? getPrevious : undefined,
-        ArrowDown: menuOpen ? getNext : undefined,
       };
 
       const action = actionMap[event.key as keyof typeof actionMap];
@@ -98,14 +99,94 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.parentElement?.scrollIntoView({
-            block: "nearest",
-            inline: "nearest",
-          });
+          // Scrolling is handled by TabTrigger.
           nextItem.element?.focus({ preventScroll: true });
         }
       }
     };
+
+    const previousSelected = usePrevious(selected);
+
+    // Handle select from menu
+    useIsomorphicLayoutEffect(() => {
+      if (!menuOpen && selected !== previousSelected) {
+        queueMicrotask(() => {
+          const activeItem = item(activeTab.current?.id);
+
+          if (activeItem) {
+            activeItem.element?.focus();
+          }
+        });
+      }
+    }, [menuOpen, selected, previousSelected, item, activeTab]);
+
+    const handleTabRemoval = useEventCallback(() => {
+      if (targetWindow?.document.activeElement !== targetWindow?.document.body)
+        return;
+      if (!activeTab.current) return;
+
+      const currentTabIsSelected = activeTab.current?.value === selected;
+      const currentTab = item(activeTab.current.id);
+      if (!currentTab?.stale) return;
+      const nextIndex = currentTab.staleIndex ?? -1;
+
+      setTimeout(() => {
+        let nextTab = itemAt(nextIndex) ?? getLast();
+
+        if (nextTab?.element === overflowButtonRef.current) {
+          nextTab = itemAt(nextIndex - 1);
+        }
+
+        if (nextTab) {
+          if (
+            currentTabIsSelected &&
+            !tabstripRef.current?.querySelector(
+              '[role="tab"][aria-selected="true"]',
+            )
+          ) {
+            nextTab.element?.click();
+            nextTab.element?.focus();
+          } else {
+            nextTab.element?.focus();
+          }
+        }
+      }, 166);
+    });
+
+    useEffect(() => {
+      const handleFocus = () => {
+        if (!tabstripRef.current) return;
+
+        // Defer until after React's layout-effect cleanup.
+        setTimeout(() => {
+          handleTabRemoval();
+        }, 0);
+      };
+
+      targetWindow?.document.addEventListener("focusout", handleFocus, true);
+
+      return () => {
+        targetWindow?.document.removeEventListener(
+          "focusout",
+          handleFocus,
+          true,
+        );
+      };
+    }, [targetWindow, handleTabRemoval]);
+
+    useEffect(() => {
+      const observer = new MutationObserver(() => {
+        sortItems();
+      });
+
+      if (!tabstripRef.current) return;
+
+      observer.observe(tabstripRef.current, { childList: true });
+
+      return () => {
+        observer.disconnect();
+      };
+    }, [sortItems]);
 
     const warningId = useId();
 
@@ -135,7 +216,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         <TabOverflowList
           isMeasuring={isMeasuring}
           buttonRef={overflowButtonRef}
-          tabstripRef={tabstripRef}
           open={menuOpen}
           setOpen={setMenuOpen}
         >
