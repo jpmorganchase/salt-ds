@@ -7,7 +7,10 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useClassNameInjection,
+  useComponentCssInjection,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -22,7 +25,10 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  type FormFieldValidationStatus,
+  useFormFieldProps,
+} from "../form-field-context";
 import {
   ListControlContext,
   type OptionValue,
@@ -35,7 +41,6 @@ import {
 import { OptionList } from "../option/OptionList";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
-import type { ValidationStatus } from "../status-indicator";
 import type { DataAttributes } from "../types";
 import {
   makePrefixer,
@@ -46,7 +51,9 @@ import {
 } from "../utils";
 import dropdownCss from "./Dropdown.css";
 
-export type DropdownProps<Item = string> = {
+export interface DropdownProps<Item = string>
+  extends Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue">,
+    ListControlProps<Item> {
   /**
    * If `true`, the dropdown will be disabled.
    */
@@ -91,7 +98,7 @@ export type DropdownProps<Item = string> = {
   /**
    * Validation status, one of "error" | "warning" | "success".
    */
-  validationStatus?: Exclude<ValidationStatus, "info">;
+  validationStatus?: FormFieldValidationStatus;
   /** Styling variant with a full border. Defaults to false
    */
   bordered?: boolean;
@@ -100,8 +107,7 @@ export type DropdownProps<Item = string> = {
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;
-} & Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue"> &
-  ListControlProps<Item>;
+}
 
 const withBaseName = makePrefixer("saltDropdown");
 
@@ -118,11 +124,14 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   props: DropdownProps<Item>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
+  const { className, props: finalProps } = useClassNameInjection(
+    "saltDropdown",
+    props,
+  );
   const {
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     children,
-    className,
     disabled: disabledProp,
     emptyReadOnlyMarker = "—",
     readOnly: readOnlyProp,
@@ -146,7 +155,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     bordered = false,
     OverlayProps,
     ...rest
-  } = props;
+  } = finalProps;
 
   const targetWindow = useWindow();
   useComponentCssInjection({

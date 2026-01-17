@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useClassNameInjection,
+  useComponentCssInjection,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -45,17 +48,20 @@ export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * Value of the toggle button, to be used when in a controlled state.
    */
-  value: string | ReadonlyArray<string> | number | undefined;
+  value?: string | ReadonlyArray<string> | number;
 }
 
 const withBaseName = makePrefixer("saltToggleButton");
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   function ToggleButton(props, ref) {
+    const { className, props: finalProps } = useClassNameInjection(
+      "saltButton",
+      props,
+    );
     const {
       appearance: appearanceProp,
       children,
-      className,
       disabled: disabledProp,
       value,
       onClick,
@@ -66,7 +72,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       defaultSelected,
       sentiment: sentimenentProp,
       ...rest
-    } = props;
+    } = finalProps;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
