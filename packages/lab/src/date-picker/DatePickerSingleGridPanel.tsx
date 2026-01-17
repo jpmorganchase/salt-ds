@@ -359,6 +359,43 @@ export const DatePickerSingleGridPanel = forwardRef(
     useIsomorphicLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
       if (focused && !calendarGridFocused.current) {
+        // Check if visible month is completely outside the valid range and needs adjustment
+        // A month is valid if it contains any selectable dates (overlaps with min/max range)
+        const visibleMonthEnd = dateAdapter.endOf(visibleMonth, "month");
+        const isVisibleMonthValid =
+          dateAdapter.compare(visibleMonthEnd, minDate) >= 0 &&
+          dateAdapter.compare(visibleMonth, maxDate) <= 0;
+
+        // Only update visible month if it's currently outside the valid range
+        if (!isVisibleMonthValid) {
+          const isSelectedDateValid =
+            selectedDate &&
+            dateAdapter.isValid(selectedDate) &&
+            dateAdapter.compare(selectedDate, minDate) >= 0 &&
+            dateAdapter.compare(selectedDate, maxDate) <= 0;
+
+          if (
+            selectedDate &&
+            dateAdapter.isValid(selectedDate) &&
+            !isSelectedDateValid
+          ) {
+            // If selected date is before minDate, show minDate
+            if (dateAdapter.compare(selectedDate, minDate) < 0) {
+              handleVisibleMonthChange(
+                null,
+                dateAdapter.startOf(minDate, "month"),
+              );
+            }
+            // If selected date is after maxDate, show maxDate
+            else if (dateAdapter.compare(selectedDate, maxDate) > 0) {
+              handleVisibleMonthChange(
+                null,
+                dateAdapter.startOf(maxDate, "month"),
+              );
+            }
+          }
+        }
+
         setFocusedDate((prevFocusedDate) => {
           if (!prevFocusedDate) {
             return getNextFocusedDate();
