@@ -508,6 +508,84 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         dateAdapter.subtract(selectedDate.endDate, { months: 1 }),
         selectedDate.endDate,
       );
+    } else {
+      // Check if visible months are completely outside the valid range and need adjustment
+      // A month is valid if it contains any selectable dates (overlaps with min/max range)
+      const startVisibleMonthEnd = dateAdapter.endOf(
+        startVisibleMonth,
+        "month",
+      );
+      const endVisibleMonthEnd = dateAdapter.endOf(endVisibleMonth, "month");
+
+      // Start visible month is invalid if its end is before minDate or its start is after maxDate
+      const isStartVisibleMonthValid =
+        dateAdapter.compare(startVisibleMonthEnd, minDate) >= 0 &&
+        dateAdapter.compare(startVisibleMonth, maxDate) <= 0;
+      // End visible month is invalid if its end is before minDate or its start is after maxDate
+      const isEndVisibleMonthValid =
+        dateAdapter.compare(endVisibleMonthEnd, minDate) >= 0 &&
+        dateAdapter.compare(endVisibleMonth, maxDate) <= 0;
+
+      // Only update visible months if they are currently completely outside the valid range
+      if (!isStartVisibleMonthValid || !isEndVisibleMonthValid) {
+        if (
+          selectedDate?.startDate &&
+          dateAdapter.isValid(selectedDate.startDate) &&
+          dateAdapter.compare(selectedDate.startDate, minDate) < 0
+        ) {
+          // If start date is before minDate, show minDate
+          setVisibleMonths(minDate, dateAdapter.add(minDate, { months: 1 }));
+          setStartVisibleMonth(dateAdapter.startOf(minDate, "month"));
+          setEndVisibleMonth(
+            dateAdapter.startOf(
+              dateAdapter.add(minDate, { months: 1 }),
+              "month",
+            ),
+          );
+        } else if (
+          selectedDate?.endDate &&
+          dateAdapter.isValid(selectedDate.endDate) &&
+          dateAdapter.compare(selectedDate.endDate, minDate) < 0
+        ) {
+          // If end date is before minDate, show minDate
+          setVisibleMonths(minDate, dateAdapter.add(minDate, { months: 1 }));
+          setStartVisibleMonth(dateAdapter.startOf(minDate, "month"));
+          setEndVisibleMonth(
+            dateAdapter.startOf(
+              dateAdapter.add(minDate, { months: 1 }),
+              "month",
+            ),
+          );
+        } else if (
+          selectedDate?.startDate &&
+          dateAdapter.isValid(selectedDate.startDate) &&
+          dateAdapter.compare(selectedDate.startDate, maxDate) > 0
+        ) {
+          // If start date is after maxDate, show maxDate
+          const newStartVisibleMonth = dateAdapter.subtract(maxDate, {
+            months: 1,
+          });
+          setVisibleMonths(newStartVisibleMonth, maxDate);
+          setStartVisibleMonth(
+            dateAdapter.startOf(newStartVisibleMonth, "month"),
+          );
+          setEndVisibleMonth(dateAdapter.startOf(maxDate, "month"));
+        } else if (
+          selectedDate?.endDate &&
+          dateAdapter.isValid(selectedDate.endDate) &&
+          dateAdapter.compare(selectedDate.endDate, maxDate) > 0
+        ) {
+          // If end date is after maxDate, show maxDate
+          const newStartVisibleMonth = dateAdapter.subtract(maxDate, {
+            months: 1,
+          });
+          setVisibleMonths(newStartVisibleMonth, maxDate);
+          setStartVisibleMonth(
+            dateAdapter.startOf(newStartVisibleMonth, "month"),
+          );
+          setEndVisibleMonth(dateAdapter.startOf(maxDate, "month"));
+        }
+      }
     }
 
     if (!focusedDate) {
