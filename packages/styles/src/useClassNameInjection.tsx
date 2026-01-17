@@ -22,10 +22,9 @@ interface ClassNameInjectorEntry {
   keys: string[];
 }
 
-export type ClassNameInjectionRegistry<ComponentName extends SupportedComponent = SupportedComponent> = Map<
-  ComponentName,
-  ClassNameInjectorEntry[]
->;
+export type ClassNameInjectionRegistry<
+  ComponentName extends SupportedComponent = SupportedComponent,
+> = Map<ComponentName, ClassNameInjectorEntry[]>;
 
 const EMPTY_REGISTRY: ClassNameInjectionRegistry = new Map();
 const InjectionContext =
@@ -69,7 +68,7 @@ type PropsWithClassName = { className?: string } & Record<string, any>;
  */
 export function useClassNameInjection<
   Props extends PropsWithClassName,
-  ComponentName extends SupportedComponent = SupportedComponent
+  ComponentName extends SupportedComponent = SupportedComponent,
 >(
   component: ComponentName,
   props: Props,
@@ -128,7 +127,7 @@ export function useClassNameInjection<
 export function registerClassInjector<
   Props extends Record<string, any>,
   Keys extends Extract<keyof Props, string>,
-  ComponentName extends SupportedComponent = SupportedComponent
+  ComponentName extends SupportedComponent = SupportedComponent,
 >(
   registry: ClassNameInjectionRegistry,
   component: ComponentName,
