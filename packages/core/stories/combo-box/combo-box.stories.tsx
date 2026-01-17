@@ -991,7 +991,9 @@ const RenderOption = ({
 
 export const Virtualized: StoryFn<ComboBoxProps> = () => {
   // Importing dynamically to avoid issues if react-window is not installed
-  const [FixedSizeList, setFixedSizeList] = useState<typeof import("react-window").FixedSizeList | null>(null);
+  const [FixedSizeList, setFixedSizeList] = useState<
+    typeof import("react-window").FixedSizeList | null
+  >(null);
 
   useEffect(() => {
     import("react-window").then((mod) => {
