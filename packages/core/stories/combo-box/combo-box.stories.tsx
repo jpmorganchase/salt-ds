@@ -14,7 +14,13 @@ import { type CountryCode, countryMetaMap } from "@salt-ds/countries";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/countries/saltCountries.css";
-import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import {
+  type ChangeEvent,
+  type CSSProperties,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
@@ -963,6 +969,51 @@ export const PerformanceTest: StoryFn<ComboBoxProps> = (args) => {
           {item}
         </Option>
       ))}
+    </ComboBox>
+  );
+};
+
+const virtualizedItems = ["a", "b", "c", "d", "e", "f", "g"];
+
+const RenderOption = ({
+  index,
+  style,
+  data,
+}: {
+  index: number;
+  style: CSSProperties;
+  data: string[];
+}) => (
+  <Option key={data[index]} value={data[index]} style={style}>
+    {data[index]}
+  </Option>
+);
+
+export const Virtualized: StoryFn<ComboBoxProps> = () => {
+  // Importing dynamically to avoid issues if react-window is not installed
+  const [FixedSizeList, setFixedSizeList] = useState<typeof import("react-window").FixedSizeList | null>(null);
+
+  useEffect(() => {
+    import("react-window").then((mod) => {
+      setFixedSizeList(() => mod.FixedSizeList);
+    });
+  }, []);
+
+  if (!FixedSizeList) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <ComboBox<string>>
+      <FixedSizeList<string[]>
+        height={3 * 36}
+        width="100%"
+        itemCount={virtualizedItems.length}
+        itemSize={36}
+        itemData={virtualizedItems}
+      >
+        {RenderOption}
+      </FixedSizeList>
     </ComboBox>
   );
 };
