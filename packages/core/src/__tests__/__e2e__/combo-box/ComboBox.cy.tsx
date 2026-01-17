@@ -21,6 +21,7 @@ const {
   SelectOnTab,
   LongList,
   PerformanceTest,
+  Virtualized,
 } = composeStories(comboBoxStories);
 
 describe("Given a ComboBox", () => {
@@ -857,5 +858,42 @@ describe("Given a ComboBox", () => {
     cy.wait(100);
 
     cy.findByRole("option", { name: "Zimbabwe" }).should("be.visible");
+  });
+
+  it("should support keyboard navigation with virtualized options", () => {
+    cy.mount(<Virtualized />);
+
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox").should("exist");
+
+    // Navigate down through all options
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "a" }).should("be.activeDescendant");
+
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "b" }).should("be.activeDescendant");
+
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "c" }).should("be.activeDescendant");
+
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "d" }).should("be.activeDescendant");
+
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "e" }).should("be.activeDescendant");
+
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "f" }).should("be.activeDescendant");
+
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "g" }).should("be.activeDescendant");
+
+    // Should not wrap or jump to earlier items when at the end
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "g" }).should("be.activeDescendant");
+
+    // Navigate back up
+    cy.realPress("ArrowUp");
+    cy.findByRole("option", { name: "f" }).should("be.activeDescendant");
   });
 });
