@@ -6,7 +6,7 @@ New `Tree` and `TreeNode` components have been added for displaying hierarchical
 
 - Single and multi-select modes with optional checkbox variant
 - Controlled and uncontrolled expanded/selected states
-- Propagate selection to descendants and/or ancestors
+- Selection propagation to descendants and ancestors in multiselect mode
 - Keyboard navigation (arrows, Home, End, Enter, Space, type-ahead)
 - Disabled state at tree or individual node level
 - Custom icons per node

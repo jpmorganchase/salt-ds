@@ -748,12 +748,11 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should propagate selection to descendants with propagateSelect", () => {
+    it("should propagate selection to descendants", () => {
       cy.mount(
         <Tree
           aria-label="File browser"
           multiselect
-          propagateSelect
           defaultExpanded={["parent"]}
         >
           <TreeNode value="parent" label="Parent">
@@ -783,12 +782,11 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should auto-select parent when all children selected with propagateSelectUpwards", () => {
+    it("should auto-select parent when all children selected", () => {
       cy.mount(
         <Tree
           aria-label="File browser"
           multiselect
-          propagateSelectUpwards
           defaultExpanded={["parent"]}
         >
           <TreeNode value="parent" label="Parent">
@@ -811,9 +809,9 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should propagate selection to collapsed children when expanded with propagateSelect", () => {
+    it("should propagate selection to collapsed children when expanded", () => {
       cy.mount(
-        <Tree aria-label="File browser" multiselect propagateSelect>
+        <Tree aria-label="File browser" multiselect>
           <TreeNode value="parent" label="Parent">
             <TreeNode value="child1" label="Child 1" />
             <TreeNode value="child2" label="Child 2" />
@@ -849,12 +847,11 @@ describe("Given a Tree", () => {
       );
     });
 
-    it("should propagate deselection to collapsed children when expanded with propagateSelect", () => {
+    it("should propagate deselection to collapsed children when expanded", () => {
       cy.mount(
         <Tree
           aria-label="File browser"
           multiselect
-          propagateSelect
           defaultExpanded={["parent"]}
           defaultSelected={["parent", "child1", "child2"]}
         >

@@ -14,18 +14,10 @@ export default {
     disabled: {
       control: { type: "boolean" },
     },
-    propagateSelect: {
-      control: { type: "boolean" },
-    },
-    propagateSelectUpwards: {
-      control: { type: "boolean" },
-    },
   },
   args: {
     multiselect: false,
     disabled: false,
-    propagateSelect: true,
-    propagateSelectUpwards: true,
   },
 } as Meta<typeof Tree>;
 

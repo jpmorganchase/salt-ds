@@ -21,10 +21,6 @@ export interface TreeContextValue {
 
   /** Whether multiselect mode with checkboxes is enabled */
   multiselect: boolean;
-  /** Sets if selecting a parent node should also select its descendants */
-  propagateSelect: boolean;
-  /** Sets if selecting all children should automatically select the parent */
-  propagateSelectUpwards: boolean;
   /** Disabled state of the tree */
   disabled: boolean;
   /** Set of disabled node IDs */

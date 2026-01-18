@@ -52,16 +52,6 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   multiselect?: boolean;
   /**
-   * Sets if selecting a parent node should also select its descendants
-   * Only applies when multiselect is enabled
-   */
-  propagateSelect?: boolean;
-  /**
-   * Sets if selecting all children should automatically select the parent
-   * Only applies when multiselect is enabled
-   */
-  propagateSelectUpwards?: boolean;
-  /**
    * Sets tree to disabled state, preventing all interaction
    */
   disabled?: boolean;
@@ -90,8 +80,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       selected,
       onSelectionChange,
       multiselect = false,
-      propagateSelect = true,
-      propagateSelectUpwards = true,
       disabled = false,
       defaultDisabledIds,
       disabledIds,
@@ -116,8 +104,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       selected,
       onSelectionChange,
       multiselect,
-      propagateSelect,
-      propagateSelectUpwards,
       disabled,
       defaultDisabledIds,
       disabledIds,

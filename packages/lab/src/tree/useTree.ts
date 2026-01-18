@@ -49,16 +49,6 @@ export interface UseTreeProps {
    */
   multiselect?: boolean;
   /**
-   * Sets if selecting a parent node should also select its descendants
-   * Only applies when multiselect is enabled
-   */
-  propagateSelect?: boolean;
-  /**
-   * Sets if selecting all children should automatically select the parent
-   * Only applies when multiselect is enabled
-   */
-  propagateSelectUpwards?: boolean;
-  /**
    * Sets tree to disabled state, preventing all interaction
    */
   disabled?: boolean;
@@ -203,8 +193,6 @@ export function useTree(props: UseTreeProps) {
     selected: selectedProp,
     onSelectionChange,
     multiselect = false,
-    propagateSelect = true,
-    propagateSelectUpwards = true,
     disabled = false,
     defaultDisabledIds = [],
     disabledIds: disabledIdsProp,
@@ -236,7 +224,7 @@ export function useTree(props: UseTreeProps) {
   const expandedState = useMemo(() => new Set(expandedArray), [expandedArray]);
 
   const expandedDefaultSelected = useMemo(() => {
-    if (!multiselect || !propagateSelect || defaultSelected.length === 0) {
+    if (!multiselect || defaultSelected.length === 0) {
       return defaultSelected;
     }
 
@@ -246,19 +234,10 @@ export function useTree(props: UseTreeProps) {
       disabledIdsSet,
     );
 
-    if (propagateSelectUpwards) {
-      expanded = expandSelectionUpwards(expanded, treeModel, disabledIdsSet);
-    }
+    expanded = expandSelectionUpwards(expanded, treeModel, disabledIdsSet);
 
     return expanded;
-  }, [
-    defaultSelected,
-    treeModel,
-    disabledIdsSet,
-    multiselect,
-    propagateSelect,
-    propagateSelectUpwards,
-  ]);
+  }, [defaultSelected, treeModel, disabledIdsSet, multiselect]);
 
   const [selectedState, setSelectedState] = useControlled({
     controlled: selectedProp,
@@ -412,8 +391,6 @@ export function useTree(props: UseTreeProps) {
 
   const updateAncestors = useCallback(
     (currentSelected: string[], value: string) => {
-      if (!propagateSelectUpwards) return currentSelected;
-
       let nextSelected = [...currentSelected];
       const nextSelectedSet = new Set(nextSelected);
       const ancestors = getAncestors(value);
@@ -442,7 +419,7 @@ export function useTree(props: UseTreeProps) {
 
       return nextSelected;
     },
-    [getAncestors, getChildren, disabledIdsSet, propagateSelectUpwards],
+    [getAncestors, getChildren, disabledIdsSet],
   );
 
   const getMultiSelectState = useCallback(
@@ -453,25 +430,21 @@ export function useTree(props: UseTreeProps) {
       if (isCurrentlySelected) {
         newSelected = selectedState.filter((v) => v !== value);
 
-        if (propagateSelect) {
-          const descendants = getDescendants(value);
-          newSelected = newSelected.filter((v) => !descendants.includes(v));
-        }
+        const descendants = getDescendants(value);
+        newSelected = newSelected.filter((v) => !descendants.includes(v));
       } else {
         newSelected = [...selectedState, value];
 
-        if (propagateSelect) {
-          const descendants = getDescendants(value);
-          const newDescendants = descendants.filter(
-            (d) => !newSelected.includes(d),
-          );
-          newSelected = [...newSelected, ...newDescendants];
-        }
+        const descendants = getDescendants(value);
+        const newDescendants = descendants.filter(
+          (d) => !newSelected.includes(d),
+        );
+        newSelected = [...newSelected, ...newDescendants];
       }
 
       return updateAncestors(newSelected, value);
     },
-    [selectedState, propagateSelect, getDescendants, updateAncestors],
+    [selectedState, getDescendants, updateAncestors],
   );
 
   const select = useCallback(
@@ -557,8 +530,6 @@ export function useTree(props: UseTreeProps) {
     setSelectedState,
     select,
     multiselect,
-    propagateSelect,
-    propagateSelectUpwards,
     disabled,
     disabledIdsSet,
     treeModel,
