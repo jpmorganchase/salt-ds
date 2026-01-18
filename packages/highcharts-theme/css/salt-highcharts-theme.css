@@ -180,7 +180,9 @@
 
 .highcharts-theme-salt.salt-fill-patterns .highcharts-bubble-series .highcharts-data-label text,
 .highcharts-theme-salt.salt-fill-patterns .highcharts-bubble-series text.highcharts-data-label {
-  stroke: var(--salt-color-black);
+  /* sadly not supported */
+  stroke: color-mix(in srgb, var(--salt-color-black) 75%, var(--salt-color-white));
+  /* stroke: rgba(var(--salt-color-black-rgb), 0.75); */
   stroke-width: var(--salt-size-fixed-200);
   paint-order: stroke;
 }
