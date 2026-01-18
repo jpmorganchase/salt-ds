@@ -116,20 +116,3 @@
   letter-spacing: var(--salt-text-letterSpacing);
   word-break: break-word;
 }
-
-/* experiement: simulate a varient where chevron spacing isn't always provided */
-.saltTree--compactLeafs .saltTreeNode:not(.saltTreeNode-hasChildren) .saltTreeNode-expansion {
-  display: none;
-}
-
-/* experiment: align leaf labels when siblings have mixed icon usage */
-.saltTree--alignLeafLabels .saltTreeNode-group:has(> .saltTreeNode:not(.saltTreeNode-hasChildren) .saltTreeNode-icon)
-  > .saltTreeNode:not(.saltTreeNode-hasChildren):not(:has(.saltTreeNode-icon))
-  .saltTreeNode-label {
-  margin-left: calc(var(--salt-size-selectable) + var(--salt-spacing-100));
-}
-
-/* same for root-level nodes */
-.saltTree--alignLeafLabels:has(> .saltTreeNode:not(.saltTreeNode-hasChildren) .saltTreeNode-icon) > .saltTreeNode:not(.saltTreeNode-hasChildren):not(:has(.saltTreeNode-icon)) .saltTreeNode-label {
-  margin-left: calc(var(--salt-size-selectable) + var(--salt-spacing-100));
-}
