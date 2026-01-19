@@ -112,7 +112,7 @@ export const TabNextTrigger = forwardRef<
       aria-controls={panelId}
       {...ariaActionsProps}
       aria-description={getAriaDescription(actions.length)}
-      tabIndex={focused || selected || active ? undefined : -1}
+      tabIndex={focused || selected || active ? 0 : -1}
       role="tab"
       type="button"
       onClick={!disabled ? handleClick : undefined}
