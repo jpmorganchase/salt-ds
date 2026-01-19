@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 export const InlineWithText = (): ReactElement => (
   <FlexLayout gap={0.5} align="center" wrap>
-    <Text>Press</Text>
+    <Text>Hit</Text>
     <Kbd>Ctrl</Kbd>
     <Text>+</Text>
     <Kbd>Shift</Kbd>
