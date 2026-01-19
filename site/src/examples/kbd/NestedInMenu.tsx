@@ -129,7 +129,7 @@ export const NestedInMenu = (): ReactElement => (
           align="center"
           justify="space-between"
         >
-          Dupicate
+          Duplicate
           <FlexLayout gap={0.5} wrap align="center">
             <Kbd>Cmd</Kbd>
             <Kbd>Shift</Kbd>
