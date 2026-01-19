@@ -226,14 +226,14 @@
 }
 
 .salt-density-mobile {
-  --salt-text-h1-fontSize: 42px;
-  --salt-text-h1-lineHeight: 54px;
+  --salt-text-h1-fontSize: 24px;
+  --salt-text-h1-lineHeight: 32px;
 
-  --salt-text-h2-fontSize: 32px;
-  --salt-text-h2-lineHeight: 42px;
+  --salt-text-h2-fontSize: 22px;
+  --salt-text-h2-lineHeight: 28px;
 
-  --salt-text-h3-fontSize: 24px;
-  --salt-text-h3-lineHeight: 32px;
+  --salt-text-h3-fontSize: 20px;
+  --salt-text-h3-lineHeight: 26px;
 
   --salt-text-h4-fontSize: 16px;
   --salt-text-h4-lineHeight: 21px;
@@ -245,18 +245,18 @@
   --salt-text-lineHeight: 21px;
   --salt-text-minHeight: 21px;
 
-  --salt-text-display1-fontSize: 84px;
-  --salt-text-display1-lineHeight: 109px;
+  --salt-text-display1-fontSize: 40px;
+  --salt-text-display1-lineHeight: 52px;
 
-  --salt-text-display2-fontSize: 58px;
-  --salt-text-display2-lineHeight: 76px;
+  --salt-text-display2-fontSize: 36px;
+  --salt-text-display2-lineHeight: 47px;
 
-  --salt-text-display3-fontSize: 42px;
-  --salt-text-display3-lineHeight: 54px;
+  --salt-text-display3-fontSize: 32px;
+  --salt-text-display3-lineHeight: 42px;
 
-  --salt-text-display4-fontSize: 42px;
-  --salt-text-display4-lineHeight: 54px;
+  --salt-text-display4-fontSize: 28px;
+  --salt-text-display4-lineHeight: 36px;
 
-  --salt-text-notation-fontSize: 14px;
-  --salt-text-notation-lineHeight: 18px;
+  --salt-text-notation-fontSize: 12px;
+  --salt-text-notation-lineHeight: 16px;
 }
