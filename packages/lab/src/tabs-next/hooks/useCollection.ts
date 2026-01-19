@@ -1,10 +1,13 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 export interface Item {
   id: string;
   element?: HTMLElement | null;
   value: string;
   stale?: boolean;
+}
+
+interface StaleItem extends Item {
   staleIndex?: number;
 }
 
@@ -17,10 +20,10 @@ function sortBasedOnDOMPosition(items: Item[]): Item[] {
     if (itemAElement === itemBElement) return 0;
     if (!itemAElement || !itemBElement) return 0;
 
-    if (
-      itemAElement.compareDocumentPosition(itemBElement) &
-      Node.DOCUMENT_POSITION_FOLLOWING
-    ) {
+    const pos = itemAElement.compareDocumentPosition(itemBElement);
+    if (pos & Node.DOCUMENT_POSITION_DISCONNECTED) return 0;
+
+    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) {
       if (itemAIndex > itemBIndex) {
         orderChanged = true;
       }
@@ -46,45 +49,54 @@ interface UseCollectionProps {
 export function useCollection({ wrap }: UseCollectionProps) {
   const itemsRef = useRef<Item[]>([]);
   const itemMap = useRef<Map<string, Item>>(new Map());
-
-  const batchTimeout = useRef<number | null>(null);
+  const removedItems = useRef<Map<string, StaleItem>>(new Map());
 
   const sortItems = useCallback(() => {
-    const newItems = Array.from(
-      itemMap.current.values().filter((item) => !item.stale),
-    );
+    const newItems = Array.from(itemMap.current.values());
     itemsRef.current = sortBasedOnDOMPosition(newItems);
   }, []);
+
+  const getRemovedItems = useCallback(() => {
+    const items = new Map(removedItems.current);
+    removedItems.current.clear();
+
+    return items;
+  }, []);
+
+  const rafId = useRef<number | null>(null);
+
+  const scheduleSort = useCallback(() => {
+    if (rafId.current != null) cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => {
+      rafId.current = null;
+      sortItems();
+    });
+  }, [sortItems]);
 
   const registerItem = useCallback(
     (item: Item) => {
       itemMap.current.set(item.id, item);
-
-      if (batchTimeout.current) {
-        window.clearTimeout(batchTimeout.current);
-      }
-
-      batchTimeout.current = window.setTimeout(() => {
-        for (const [id, item] of itemMap.current) {
-          if (item.stale) {
-            itemMap.current.delete(id);
-          }
-        }
-
-        sortItems();
-      }, 44);
+      removedItems.current.delete(item.id);
+      scheduleSort();
 
       return () => {
-        itemMap.current.set(item.id, {
+        removedItems.current.set(item.id, {
           ...item,
-          stale: true,
           staleIndex: itemsRef.current.findIndex(({ id }) => id === item.id),
         });
+
         itemsRef.current = itemsRef.current.filter(({ id }) => id !== item.id);
+        itemMap.current.delete(item.id);
       };
     },
-    [sortItems],
+    [scheduleSort],
   );
+
+  useEffect(() => {
+    return () => {
+      if (rafId.current != null) cancelAnimationFrame(rafId.current);
+    };
+  }, []);
 
   return {
     registerItem,
@@ -101,25 +113,39 @@ export function useCollection({ wrap }: UseCollectionProps) {
     }, []),
     getNext: useCallback(
       (current: string): Item | null => {
-        const index = itemsRef.current.findIndex(({ id }) => id === current);
+        const items = itemsRef.current;
+        if (items.length === 0) return null;
+
+        const index = items.findIndex(({ id }) => id === current);
+
+        if (index === -1) {
+          return wrap ? items[0] : null;
+        }
 
         const newIndex = wrap
-          ? (index + 1) % itemsRef.current.length
-          : Math.min(index + 1, itemsRef.current.length - 1);
+          ? (index + 1) % items.length
+          : Math.min(index + 1, items.length - 1);
 
-        return itemsRef.current[newIndex] ?? null;
+        return items[newIndex] ?? null;
       },
       [wrap],
     ),
     getPrevious: useCallback(
       (current: string): Item | null => {
-        const index = itemsRef.current.findIndex(({ id }) => id === current);
+        const items = itemsRef.current;
+        if (items.length === 0) return null;
+
+        const index = items.findIndex(({ id }) => id === current);
+
+        if (index === -1) {
+          return wrap ? items[items.length - 1] : null;
+        }
 
         const newIndex = wrap
-          ? (index - 1 + itemsRef.current.length) % itemsRef.current.length
+          ? (index - 1 + items.length) % items.length
           : Math.max(index - 1, 0);
 
-        return itemsRef.current[newIndex] ?? null;
+        return items[newIndex] ?? null;
       },
       [wrap],
     ),
@@ -135,6 +161,7 @@ export function useCollection({ wrap }: UseCollectionProps) {
     itemAt: useCallback((index: number): Item | null => {
       return itemsRef.current[index] ?? null;
     }, []),
+    getRemovedItems,
     sortItems,
   };
 }

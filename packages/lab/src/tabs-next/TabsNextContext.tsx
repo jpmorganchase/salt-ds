@@ -47,6 +47,7 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     activeTab: { current: undefined },
     menuOpen: false,
     setMenuOpen: () => undefined,
+    getRemovedItems: () => new Map(),
   },
 );
 
