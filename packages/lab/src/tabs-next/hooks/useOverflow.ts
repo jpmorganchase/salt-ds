@@ -165,11 +165,8 @@ export function useOverflow({
     const win = ownerWindow(element);
 
     const resizeObserver = new win.ResizeObserver((entries) => {
-      requestAnimationFrame(() => {
-        if (entries.length === 0) return;
-
-        updateOverflow();
-      });
+      if (entries.length === 0) return;
+      requestAnimationFrame(updateOverflow);
     });
     resizeObserver.observe(element);
     if (element.parentElement) {
@@ -190,9 +187,7 @@ export function useOverflow({
     const win = ownerWindow(element);
 
     const mutationObserver = new win.MutationObserver(() => {
-      requestAnimationFrame(() => {
-        updateOverflow();
-      });
+      requestAnimationFrame(updateOverflow);
     });
 
     mutationObserver.observe(element, {

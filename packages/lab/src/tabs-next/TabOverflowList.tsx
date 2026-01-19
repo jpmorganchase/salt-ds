@@ -56,7 +56,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       window: targetWindow,
     });
 
-    const listRef = useRef<HTMLDivElement>(null);
     const overflowRef = useRef<HTMLButtonElement>(null);
 
     const { OverflowIcon } = useIcon();
@@ -105,7 +104,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
         }),
       ]);
 
-    const handleListRef = useForkRef<HTMLDivElement>(listRef, refs.setFloating);
+    const handleListRef = useForkRef<HTMLDivElement>(ref, refs.setFloating);
 
     const handleButtonRef = useForkRef<HTMLButtonElement>(
       buttonRef,
@@ -140,7 +139,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     return (
       <TabOverflowContext.Provider value={{ activeIndex, getItemProps }}>
-        <div className={withBaseName()} ref={ref} data-overflow>
+        <div className={withBaseName()} data-overflow>
           <Button
             data-overflowbutton
             appearance="transparent"
