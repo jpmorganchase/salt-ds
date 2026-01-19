@@ -14,6 +14,8 @@ export {
   Text,
 } from "@salt-ds/core";
 
+export { Kbd } from "@salt-ds/lab";
+
 export * from "./ag-grid-doc";
 export * from "./app-header";
 export * from "./article-card";
