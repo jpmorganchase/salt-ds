@@ -1,4 +1,4 @@
-import type { DateStringDataTypeDefinition } from "ag-grid-community/dist/types/core/entities/dataType";
+import type { DateStringDataTypeDefinition } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import agProvidedCellEditorsExampleColumns from "../dependencies/agProvidedCellEditorsExampleColumns";
 import { dataGridExampleDataCellEditors } from "../dependencies/dataGridExampleDataCellEditors";

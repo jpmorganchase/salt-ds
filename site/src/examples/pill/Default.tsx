@@ -6,5 +6,5 @@ const handleClick = () => {
 };
 
 export const Default = (): ReactElement => (
-  <Pill onClick={handleClick}>Clickable Pill</Pill>
+  <Pill onClick={handleClick}>Reserve seat</Pill>
 );

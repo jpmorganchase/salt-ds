@@ -1,4 +1,4 @@
-import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
 import { type ComboBoxProps, H1 } from "@salt-ds/core";
 import dynamic from "next/dynamic";
 import type { FC } from "react";

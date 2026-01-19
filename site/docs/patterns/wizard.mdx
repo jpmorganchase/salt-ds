@@ -7,6 +7,10 @@ tags:
 aliases:
   - /salt/patterns/wizard
 data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-wizard", label: "Examples"},
+    ]
   components: ["Button Bar", "Dialog", "Stepper"]
 ---
 
@@ -233,7 +237,7 @@ When the user clicks the cancel button, display a warning message if there’s a
   alt="Embedded warning dialog in wizard confirming cancel action and risk of losing progress"
   border
   background="secondary"
-  caption="The warning message shows up to confirm if cancelling."
+  caption="The warning dialog with message shows up to confirm if cancelling."
 />
 
 #### Modal wizard with the warning message
@@ -249,7 +253,7 @@ When the user clicks the cancel button, display a warning message if there’s a
 
 ## Completion message
 
-Use a completion message to confirm that the wizard task has been successfully completed. This helps users clearly understand that their action was successful and provides closure to the flow, especially when the task is critical. 
+Use a completion message to confirm that the wizard task has finished. This message should clearly indicate whether the action was successful or if an error occurred, providing the users with confirmation and closure.
 
 ### Wizard with the success dialog
 

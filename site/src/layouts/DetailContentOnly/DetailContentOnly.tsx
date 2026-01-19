@@ -1,4 +1,4 @@
-import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
 import type { FC } from "react";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { Base } from "../Base/index";

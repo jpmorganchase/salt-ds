@@ -1,4 +1,4 @@
-import type { DateStringDataTypeDefinition } from "ag-grid-community/dist/types/core/entities/dataType";
+import type { DateStringDataTypeDefinition } from "ag-grid-community";
 import type { dataGridExampleDataCellEditors } from "./cellEditorsData";
 
 // https://www.ag-grid.com/javascript-data-grid/cell-data-types/#date-as-string-data-type-definition

@@ -1,5 +1,33 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.83
+
+### Patch Changes
+
+- 1179903: Fixed `DateInputSingle` and `DateInputRange` status adornments not appearing when validation is active in read-only mode.
+- Updated dependencies [0c664ed]
+- Updated dependencies [f670363]
+- Updated dependencies [9f9be9d]
+- Updated dependencies [0d3fc12]
+- Updated dependencies [ee16c19]
+- Updated dependencies [f670363]
+- Updated dependencies [ee16c19]
+  - @salt-ds/icons@1.16.0
+  - @salt-ds/core@1.54.1
+
+## 1.0.0-alpha.82
+
+### Patch Changes
+
+- e31acee: Removed `useLayoutEffect` usage to fix warnings being logged during SSR.
+- Updated dependencies [64afd57]
+- Updated dependencies [89779b5]
+- Updated dependencies [10ffed9]
+- Updated dependencies [12ef4c9]
+- Updated dependencies [1511c0d]
+- Updated dependencies [e31acee]
+  - @salt-ds/core@1.54.0
+
 ## 1.0.0-alpha.81
 
 ### Minor Changes
