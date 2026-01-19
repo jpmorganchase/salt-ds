@@ -15,7 +15,7 @@ import {
   ToggleButtonGroup,
   TR,
 } from "@salt-ds/core";
-import { type ReactElement, type SyntheticEvent, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useId, useState } from "react";
 
 export const Zebra = (): ReactElement => {
   const [variant, setVariant] = useState<TableProps["variant"]>("primary");
@@ -28,6 +28,8 @@ export const Zebra = (): ReactElement => {
   const onChangeDivider = (event: SyntheticEvent<HTMLButtonElement>) => {
     setDivider(event.currentTarget.value as "on" | "off");
   };
+
+  const id = useId();
 
   return (
     <StackLayout style={{ width: "100%" }}>
@@ -48,12 +50,14 @@ export const Zebra = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <TableContainer aria-label="Zebra table with variants">
+      <TableContainer aria-labelledby={id}>
         <Table
           zebra
           variant={variant}
           divider={divider === "on" ? "tertiary" : "none"}
+          aria-labelledby={id}
         >
+          <caption id={id}>Zebra table with variants</caption>
           <THead>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {

@@ -15,7 +15,7 @@ import {
   ToggleButtonGroup,
   TR,
 } from "@salt-ds/core";
-import { type ReactElement, type SyntheticEvent, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useId, useState } from "react";
 
 export const TFootVariant = (): ReactElement => {
   const [variant, setVariant] = useState<TableProps["variant"]>("secondary");
@@ -28,6 +28,8 @@ export const TFootVariant = (): ReactElement => {
   const onChangeDivider = (event: SyntheticEvent<HTMLButtonElement>) => {
     setDivider(event.currentTarget.value as "on" | "off");
   };
+
+  const id = useId();
 
   return (
     <StackLayout style={{ width: "100%" }}>
@@ -48,8 +50,9 @@ export const TFootVariant = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <TableContainer aria-label="Table with TFoot variants">
-        <Table>
+      <TableContainer aria-labelledby={id}>
+        <Table aria-labelledby={id}>
+          <caption id={id}>Table with TFoot variants</caption>
           <THead>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {

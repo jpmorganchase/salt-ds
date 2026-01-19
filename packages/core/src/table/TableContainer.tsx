@@ -27,12 +27,18 @@ export const TableContainer = forwardRef<
     targetWindow,
   });
 
+  const ariaLabelledby = rest["aria-labelledby"];
+  const ariaLabel = rest["aria-label"];
   return (
     <div
       ref={handleRef}
       className={clsx(withTableBaseName("tableContainer"), className)}
       role={role ?? (isScrollable ? "region" : undefined)}
       tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
+      {...(ariaLabelledby && isScrollable
+        ? { "aria-labelledby": ariaLabelledby }
+        : {})}
+      {...(ariaLabel && isScrollable ? { "aria-label": ariaLabel } : {})}
       {...rest}
     >
       {children}

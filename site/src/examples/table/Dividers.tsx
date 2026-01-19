@@ -18,7 +18,7 @@ import {
   ToggleButtonGroup,
   TR,
 } from "@salt-ds/core";
-import { type ReactElement, type SyntheticEvent, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useId, useState } from "react";
 
 export const Dividers = (): ReactElement => {
   const [body, setBody] = useState<TableProps["divider"]>("tertiary");
@@ -36,6 +36,8 @@ export const Dividers = (): ReactElement => {
   const onChangeFooter = (event: SyntheticEvent<HTMLButtonElement>) => {
     setFooter(event.currentTarget.value as TFootProps["divider"]);
   };
+
+  const id = useId();
 
   return (
     <StackLayout style={{ width: "90%" }}>
@@ -69,8 +71,9 @@ export const Dividers = (): ReactElement => {
           </FormField>
         </FlexItem>
       </FlexLayout>
-      <TableContainer aria-label="Table with dividers">
-        <Table divider={body}>
+      <TableContainer aria-labelledby={id}>
+        <caption id={id}>Table with dividers</caption>
+        <Table aria-labelledby={id} divider={body}>
           <THead divider={header}>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {

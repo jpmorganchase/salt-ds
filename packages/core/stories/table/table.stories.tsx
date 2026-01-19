@@ -15,8 +15,50 @@ import {
   TR,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import type { ComponentProps } from "react";
-import { planetData, planetDataColumns } from "./exampleData";
+import { type ComponentProps, useId } from "react";
+
+const generateCustomRow = (label: string, colCount = 3) => {
+  const columns = Array.from({ length: colCount }, (_, index) => ({
+    id: `${label.toLowerCase()}-col-${index + 1}`,
+    position: index + 1,
+  }));
+
+  return (
+    <TR>
+      {columns.map(({ id, position }) => (
+        <TH key={id}>
+          {label} {position}
+        </TH>
+      ))}
+    </TR>
+  );
+};
+
+const generateRows = (rowCount = 20, colCount = 3) => {
+  const rows = Array.from({ length: rowCount }, (_, index) => ({
+    id: `row-${index + 1}`,
+    position: index + 1,
+  }));
+
+  const columns = Array.from({ length: colCount }, (_, index) => ({
+    id: `col-${index + 1}`,
+    position: index + 1,
+  }));
+
+  return (
+    <>
+      {rows.map(({ id: rowId, position: rowNumber }) => (
+        <TR key={rowId}>
+          {columns.map(({ id: colId, position: colNumber }) => (
+            <TD key={`${rowId}-${colId}`}>
+              Row {rowNumber} Col {colNumber}
+            </TD>
+          ))}
+        </TR>
+      ))}
+    </>
+  );
+};
 
 type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
   THeadProps: ComponentProps<typeof THead>;
@@ -41,9 +83,6 @@ export default {
   },
 } as Meta<TablePropsAndCustomArgs>;
 
-const NUM_COLS = 7;
-const NUM_ROWS = 10;
-
 const Template: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
@@ -56,43 +95,9 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
   return (
     <TableContainer style={{ width: "800px", height: "300px" }}>
       <Table {...args}>
-        <THead {...THeadProps}>
-          <TR {...TRProps}>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return (
-                <TH {...THProps} key={`col-${arrItem}`}>
-                  Column {i}
-                </TH>
-              );
-            })}
-          </TR>
-        </THead>
-        <TBody {...TBodyProps}>
-          {Array.from({ length: NUM_ROWS }, (arrItem, x) => {
-            return (
-              <TR {...TRProps} key={`tr-${arrItem}`}>
-                {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
-                  return (
-                    <TD {...TDProps} key={`td-${nestedArrItem}`}>
-                      Row {x}
-                    </TD>
-                  );
-                })}
-              </TR>
-            );
-          })}
-        </TBody>
-        <TFoot {...TFootProps}>
-          <TR {...TRProps}>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return (
-                <TD {...TDProps} key={`footer-${arrItem}`}>
-                  Footer {i}
-                </TD>
-              );
-            })}
-          </TR>
-        </TFoot>
+        <THead {...THeadProps}>{generateCustomRow("Header", 7)}</THead>
+        <TBody {...TBodyProps}>{generateRows(10, 7)}</TBody>
+        <TFoot {...TFootProps}>{generateCustomRow("Footer", 7)}</TFoot>
       </Table>
     </TableContainer>
   );
@@ -182,31 +187,9 @@ export const StickyHeaderFooter: StoryFn<TablePropsAndCustomArgs> = ({
       tabIndex={0}
     >
       <Table>
-        <THead {...THeadProps}>
-          <TR>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;
-            })}
-          </TR>
-        </THead>
-        <TBody>
-          {Array.from({ length: NUM_ROWS }, (arrItem, i) => {
-            return (
-              <TR key={`tr-${arrItem}`}>
-                {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
-                  return <TD key={`td-${nestedArrItem}`}>Row {i + 1}</TD>;
-                })}
-              </TR>
-            );
-          })}
-        </TBody>
-        <TFoot {...TFootProps}>
-          <TR>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;
-            })}
-          </TR>
-        </TFoot>
+        <THead {...THeadProps}>{generateCustomRow("Header", 7)}</THead>
+        <TBody>{generateRows(10, 7)}</TBody>
+        <TFoot {...TFootProps}>{generateCustomRow("Footer", 7)}</TFoot>
       </Table>
     </StackLayout>
   );
@@ -311,7 +294,7 @@ export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
   );
 };
 
-export const Scrollable: StoryFn<TablePropsAndCustomArgs> = ({
+export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
   TBodyProps: _TBodyProps,
   TFootProps: _TFootProps,
@@ -320,41 +303,14 @@ export const Scrollable: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
+  const id = useId();
   return (
-    <StackLayout style={{ height: 300, width: 300 }}>
-      <TableContainer>
-        <Table {...args} aria-label="Planet data table">
-          <THead>
-            <TR>
-              {planetDataColumns.map(({ key, title, type }) => {
-                return (
-                  <TH
-                    key={key}
-                    textAlign={type === "number" ? "right" : "left"}
-                    style={{
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {title}
-                  </TH>
-                );
-              })}
-            </TR>
-          </THead>
-          <TBody>
-            {planetData.map((row) => (
-              <TR key={row.planet}>
-                {planetDataColumns.map(({ key, type }) => (
-                  <TD
-                    key={`${row.planet}-${key}`}
-                    textAlign={type === "number" ? "right" : "left"}
-                  >
-                    {row[key]}
-                  </TD>
-                ))}
-              </TR>
-            ))}
-          </TBody>
+    <StackLayout style={{ width: 300 }}>
+      <TableContainer aria-labelledby={id}>
+        <Table {...args} aria-labelledby={id}>
+          <caption id={id}>Scrollable vertically</caption>
+          <THead>{generateCustomRow("Header", 10)}</THead>
+          <TBody>{generateRows(3, 10)}</TBody>
         </Table>
       </TableContainer>
 
@@ -366,5 +322,109 @@ export const Scrollable: StoryFn<TablePropsAndCustomArgs> = ({
         or zooming.
       </Text>
     </StackLayout>
+  );
+};
+
+export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  const id = useId();
+  return (
+    <TableContainer style={{ height: 120 }} aria-labelledby={id}>
+      <Table {...args} aria-labelledby={id}>
+        <caption id={id}>Caption Name</caption>
+        <THead>{generateCustomRow("Header", 3)}</THead>
+        <TBody>{generateRows()}</TBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => (
+  <TableContainer aria-label="Aria Label Name" style={{ height: 120 }}>
+    <Table aria-label="Aria Label Name" {...args}>
+      <THead>{generateCustomRow("Header", 3)}</THead>
+      <TBody>{generateRows()}</TBody>
+    </Table>
+  </TableContainer>
+);
+
+export const ScrollableAriaLabelledByTable: StoryFn<
+  TablePropsAndCustomArgs
+> = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  const id = useId();
+  return (
+    <>
+      <Text id={id}>Labelled Table Name</Text>
+      <TableContainer style={{ height: 120 }} aria-labelledby={id}>
+        <Table aria-labelledby={id} {...args}>
+          <THead>{generateCustomRow("Header", 3)}</THead>
+          <TBody>{generateRows()}</TBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export const NonScrollableTable: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps: _THeadProps,
+  TBodyProps: _TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps: _TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  const id = useId();
+  return (
+    <TableContainer
+      aria-labelledby={id}
+      data-testid="non-scrollable-container"
+      style={{ width: 400 }}
+    >
+      <Table aria-labelledby={id} {...args}>
+        <caption id={id}>Non-Scrollable Table</caption>
+        <THead>
+          <TR>
+            <TH>H1</TH>
+            <TH>H2</TH>
+          </TR>
+        </THead>
+        <TBody>
+          <TR>
+            <TD>Data</TD>
+            <TD>More Data</TD>
+          </TR>
+        </TBody>
+        <TFoot>
+          <TR>
+            <TD>Foot</TD>
+            <TD>Foot</TD>
+          </TR>
+        </TFoot>
+      </Table>
+    </TableContainer>
   );
 };
