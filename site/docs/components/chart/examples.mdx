@@ -1,0 +1,144 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<Callout title="Note">
+  <ul>
+    <li>
+      To ensure the presentation is accessible, line or fill patterns can be
+      applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills)
+      for details). Use the "Show patterns" switch to toggle patterns.
+    </li>
+    <li>
+      This package is a WIP. Please check the [current
+      issues](https://github.com/jpmorganchase/salt-ds/issues/5878) for known
+      issues/gaps.
+    </li>
+  </ul>
+</Callout>
+
+## Line chart
+
+Use a line chart to show changes in data over time.
+
+<LivePreview componentName="chart" exampleName="LineChart" />
+
+## Pie chart
+
+Use a pie chart to show proportions of a whole.
+
+<LivePreview componentName="chart" exampleName="PieChart" />
+
+## Donut chart
+
+Use a donut chart to show proportions of a whole, with space in the center to highlight key values or additional information.
+
+A donut chart is a variation of the pie chart, with the `plotOptions.pie.innerSize` set to less than `100%` within the `Options` object.
+
+### Best practices
+
+An `innerSize` value of `80%` is recommended for a good default visual balance.
+
+<LivePreview componentName="chart" exampleName="DonutChart" />
+
+## Column chart
+
+Use a column chart to compare values across categories. Each category is represented by a single vertical bar.
+
+<LivePreview componentName="chart" exampleName="ColumnChart" />
+
+## Bar chart
+
+Use a bar chart to compare values across categories. Bars are shown side-by-side for each series.
+
+<LivePreview componentName="chart" exampleName="BarChart" />
+
+## Stacked bar chart
+
+Use a stacked bar chart to compare part-to-whole relationships across categories. Each bar shows the total, with segments representing series values.
+
+A stacked bar chart is a variation of the bar chart, with the `plotOptions.series.stacking` set to `normal` within the `Options` object.
+
+<LivePreview componentName="chart" exampleName="StackedBarChart" />
+
+## Waterfall chart
+
+Use a waterfall chart to show the cumulative effect of sequential positive and negative values. This is ideal for visualizing financial data, showing how an initial value is affected by a series of changes.
+
+<Callout title="Note">
+  To use the waterfall chart, import the Highcharts `highcharts-more` module and
+  use it to wrap the `Highcharts` object as shown in the example.
+</Callout>
+
+<LivePreview componentName="chart" exampleName="WaterfallChart" />
+
+## Candlestick chart
+
+Use a candlestick chart to display price movements over time, showing open, high, low, and close values for each period. This chart type is commonly used for financial data visualization.
+
+<Callout title="Note">
+  To use the candlestick chart, import the Highcharts `stock` module and use it
+  to wrap the `Highcharts` object as shown in the example.
+</Callout>
+
+<LivePreview componentName="chart" exampleName="CandlestickChart" />
+
+## Bullet chart
+
+Use a bullet chart to show performance against a target across categories. Each category displays a single bar with a marker indicating the target value.
+
+<Callout title="Note">
+  To use the bullet chart, ensure you import the Highcharts `bullet` module and
+  use it to wrap the `Highcharts` object as shown in the example below.
+</Callout>
+
+<LivePreview componentName="chart" exampleName="BulletChart" />
+
+## Box plot chart
+
+Use a box plot chart to show the distribution of data across different categories, displaying minimum, first quartile, median, third quartile, and maximum values.
+
+### Best practices
+
+A `pointWidth` value of `40px` is recommended for a good default visual balance.
+
+<Callout title="Note">
+  To use the box plot chart, ensure you import the Highcharts `highcharts-more`
+  module and use it to wrap the `Highcharts` object as shown in the example
+  below.
+</Callout>
+
+<LivePreview componentName="chart" exampleName="BoxPlotChart" />
+
+## Area chart
+
+Use an area chart to show trends over time and the contribution of categories to a total.
+
+<LivePreview componentName="chart" exampleName="AreaChart" />
+
+## Scatter chart
+
+Use a scatter chart to show the relationship between two numerical variables.
+
+The `axes-grid-lines` class name applied to the container enables both vertical and horizontal grid lines.
+
+<LivePreview componentName="chart" exampleName="ScatterChart" />
+
+## Bubble chart
+
+Use a bubble chart to show the relationship between two variables, with a third variable represented by the size of each bubble.
+
+The `axes-grid-lines` class name applied to the container enables both vertical and horizontal grid lines.
+
+<Callout title="Note">
+  To use the bubble chart, import the Highcharts `highcharts-more` module and
+  use it to wrap the `Highcharts` object as shown in the example.
+</Callout>
+
+<LivePreview componentName="chart" exampleName="BubbleChart" />
