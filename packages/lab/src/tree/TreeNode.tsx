@@ -21,7 +21,6 @@ import {
   useTreeNodeContext,
 } from "./TreeContext";
 import treeNodeCss from "./TreeNode.css";
-import { TreeNodeExpansionIcon } from "./TreeNodeExpansionIcon";
 import { TreeNodeLabel } from "./TreeNodeLabel";
 import { TreeNodeTrigger } from "./TreeNodeTrigger";
 
@@ -52,6 +51,9 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
 
 const withBaseName = makePrefixer("saltTreeNode");
 
+// Need to take another look at this because its slightly brittle - alternative could be:
+// TreeNode having a 'content' prop that takes <TreeNodeTrigger> etc. and then `children` is reserved for other <TreeNode>'s
+// or a 'render' prop if we want to pass any state down. Simplifies it massively because then its clear children is for sub trees.
 function separateChildren(children: ReactNode): {
   contentChildren: ReactNode[];
   nodeChildren: ReactNode[];
@@ -114,16 +116,16 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const indeterminate = indeterminateState.has(value);
     const isActive = activeNode === value;
 
-    const isLegacyMode = label !== undefined;
+    const usesLabelProp = label !== undefined;
     const { contentChildren, nodeChildren } = useMemo(
       () =>
-        isLegacyMode
+        usesLabelProp
           ? { contentChildren: [], nodeChildren: [] }
           : separateChildren(children),
-      [children, isLegacyMode],
+      [children, usesLabelProp],
     );
 
-    const nestedChildren = isLegacyMode ? children : nodeChildren;
+    const nestedChildren = usesLabelProp ? children : nodeChildren;
     const hasChildren = Children.count(nestedChildren) > 0;
 
     useEffect(() => {
@@ -178,9 +180,8 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
           }
           {...rest}
         >
-          {isLegacyMode ? (
+          {usesLabelProp ? (
             <TreeNodeTrigger>
-              <TreeNodeExpansionIcon />
               {multiselect && (
                 <CheckboxIcon
                   checked={selected}
@@ -193,7 +194,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
               <TreeNodeLabel>{label}</TreeNodeLabel>
             </TreeNodeTrigger>
           ) : (
-            <>{contentChildren}</>
+            contentChildren
           )}
 
           {hasChildren && expanded && (
