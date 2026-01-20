@@ -98,7 +98,7 @@ function buildTreeModel(children: ReactNode): TreeModel {
       if (isValidElement(child) && typeof child.props.value === "string") {
         const value = child.props.value;
         const nodeChildren = child.props.children;
-        const hasChildren = nodeChildren != null;
+        const hasChildren = Children.count(nodeChildren) > 0;
         const disabled = parentDisabled || Boolean(child.props.disabled);
 
         nodes.set(value, {
