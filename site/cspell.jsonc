@@ -8,7 +8,6 @@
       "addWords": true
     }
   ],
-  "words": ["trackpad", "recognise"],
   "ignoreRegExpList": [
     "/[\\w-]+\\/[\\w-]+(\\.[\\w]+)?/", // Matches file paths like src/components/Button.js
     "https?://[^\\s]+", // Matches URLs
