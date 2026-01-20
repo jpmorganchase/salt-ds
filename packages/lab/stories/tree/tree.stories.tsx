@@ -1,12 +1,6 @@
 import { Tooltip } from "@salt-ds/core";
 import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
-import {
-  Tree,
-  TreeNode,
-  TreeNodeExpansionIcon,
-  TreeNodeLabel,
-  TreeNodeTrigger,
-} from "@salt-ds/lab";
+import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -317,14 +311,12 @@ export const WithTooltip: StoryFn<typeof Tree> = (args) => (
     <TreeNode value="documents">
       <Tooltip content="Contains all document files" placement="right">
         <TreeNodeTrigger>
-          <TreeNodeExpansionIcon />
           <TreeNodeLabel>Documents</TreeNodeLabel>
         </TreeNodeTrigger>
       </Tooltip>
       <TreeNode value="reports">
         <Tooltip content="Financial reports folder" placement="right">
           <TreeNodeTrigger>
-            <TreeNodeExpansionIcon />
             <TreeNodeLabel>Reports</TreeNodeLabel>
           </TreeNodeTrigger>
         </Tooltip>
@@ -339,7 +331,6 @@ export const WithTooltip: StoryFn<typeof Tree> = (args) => (
     <TreeNode value="pictures">
       <Tooltip content="Image files and photos" placement="right">
         <TreeNodeTrigger>
-          <TreeNodeExpansionIcon />
           <TreeNodeLabel>Pictures</TreeNodeLabel>
         </TreeNodeTrigger>
       </Tooltip>
