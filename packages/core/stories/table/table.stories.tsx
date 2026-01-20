@@ -10,9 +10,10 @@ import {
   TH,
   THead,
   TR,
+  useId,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import { type ComponentProps, useId } from "react";
+import type { ComponentProps } from "react";
 
 const generateCustomRow = (
   label: string,
