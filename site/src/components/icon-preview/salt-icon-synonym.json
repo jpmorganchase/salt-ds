@@ -522,6 +522,36 @@
       "bookmark",
       "save",
       "favourite",
+      "rate",
+      "rating",
+      "star outline"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "favorite-half",
+    "synonym": [
+      "like",
+      "star",
+      "bookmark",
+      "save",
+      "favourite",
+      "rate",
+      "rating",
+      "star outline"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "favorite-strong",
+    "synonym": [
+      "like",
+      "star",
+      "bookmark",
+      "save",
+      "favourite",
+      "rate",
+      "rating",
       "star outline"
     ],
     "category": "actions"
