@@ -483,24 +483,6 @@ describe("Given a Tree", () => {
         ["parent"],
       );
     });
-
-    it("should call onNodeExpandChange when node is expanded", () => {
-      const onNodeExpandChange = cy.stub().as("expandHandler");
-      cy.mount(
-        <Tree aria-label="File browser" onNodeExpandChange={onNodeExpandChange}>
-          <TreeNode value="parent" label="Parent">
-            <TreeNode value="child" label="Child" />
-          </TreeNode>
-        </Tree>,
-      );
-      cy.get(".saltTreeNodeExpansionIcon").realClick();
-      cy.get("@expandHandler").should(
-        "have.been.calledWith",
-        Cypress.sinon.match.any,
-        "parent",
-        true,
-      );
-    });
   });
 
   describe("Selection - Single Select (default)", () => {

@@ -29,14 +29,6 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   onExpandedChange?: (event: SyntheticEvent, expanded: string[]) => void;
   /**
-   * Callback on node expanded or collapsed
-   */
-  onNodeExpandChange?: (
-    event: SyntheticEvent,
-    value: string,
-    expanded: boolean,
-  ) => void;
-  /**
    * Default selected nodes (uncontrolled)
    */
   defaultSelected?: string[];
@@ -57,10 +49,6 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   disabled?: boolean;
   /**
-   * Default disabled node IDs (uncontrolled)
-   */
-  defaultDisabledIds?: string[];
-  /**
    * Disabled node IDs (controlled).
    */
   disabledIds?: string[];
@@ -76,13 +64,11 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       defaultExpanded,
       expanded,
       onExpandedChange,
-      onNodeExpandChange,
       defaultSelected,
       selected,
       onSelectionChange,
       multiselect = false,
       disabled = false,
-      defaultDisabledIds,
       disabledIds,
       onKeyDown,
       onBlur,
@@ -100,13 +86,11 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       defaultExpanded,
       expanded,
       onExpandedChange,
-      onNodeExpandChange,
       defaultSelected,
       selected,
       onSelectionChange,
       multiselect,
       disabled,
-      defaultDisabledIds,
       disabledIds,
       children,
     });
@@ -272,9 +256,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
               const newExpanded = [...expandedArray, ...toExpand];
               setExpandedArray(newExpanded);
               onExpandedChange?.(event, newExpanded);
-              for (const value of toExpand) {
-                onNodeExpandChange?.(event, value, true);
-              }
             }
           }
           break;

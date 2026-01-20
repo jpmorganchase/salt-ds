@@ -37,14 +37,6 @@ export interface UseTreeProps {
    */
   onSelectionChange?: (event: SyntheticEvent, selected: string[]) => void;
   /**
-   * Callback on node expanded or collapsed
-   */
-  onNodeExpandChange?: (
-    event: SyntheticEvent,
-    value: string,
-    expanded: boolean,
-  ) => void;
-  /**
    * Sets multiselect mode with checkboxes and allows for multiple node selection
    */
   multiselect?: boolean;
@@ -52,10 +44,6 @@ export interface UseTreeProps {
    * Sets tree to disabled state, preventing all interaction
    */
   disabled?: boolean;
-  /**
-   * Default disabled node IDs (uncontrolled)
-   */
-  defaultDisabledIds?: string[];
   /**
    * Disabled node IDs (controlled).
    */
@@ -188,13 +176,11 @@ export function useTree(props: UseTreeProps) {
     defaultExpanded = [],
     expanded: expandedProp,
     onExpandedChange,
-    onNodeExpandChange,
     defaultSelected = [],
     selected: selectedProp,
     onSelectionChange,
     multiselect = false,
     disabled = false,
-    defaultDisabledIds = [],
     disabledIds: disabledIdsProp,
     children,
   } = props;
@@ -203,7 +189,7 @@ export function useTree(props: UseTreeProps) {
 
   const [disabledIdsArray] = useControlled({
     controlled: disabledIdsProp,
-    default: defaultDisabledIds,
+    default: [],
     name: "Tree",
     state: "disabledIds",
   });
@@ -343,9 +329,8 @@ export function useTree(props: UseTreeProps) {
 
       setExpandedArray(newExpanded);
       onExpandedChange?.(event, newExpanded);
-      onNodeExpandChange?.(event, value, isExpanding);
     },
-    [expandedArray, expandedState, onExpandedChange, onNodeExpandChange],
+    [expandedArray, expandedState, onExpandedChange],
   );
 
   const calculateIndeterminateState = useCallback(
