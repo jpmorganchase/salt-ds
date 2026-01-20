@@ -301,6 +301,7 @@ export * from "./Music";
 export * from "./MusicDisabled";
 export * from "./MusicDisabledSolid";
 export * from "./MusicSolid";
+export * from "./NotAllowed";
 export * from "./Note";
 export * from "./NoteSolid";
 export * from "./Notification";
