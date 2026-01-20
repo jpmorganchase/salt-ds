@@ -9,16 +9,23 @@ import tableCss from "./Table.css";
 export const TableContainer = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
->(function TableContainer(
-  { children, className, role, tabIndex, ...rest },
-  ref,
-) {
+>(function TableContainer(props, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-table-container",
     css: tableCss,
     window: targetWindow,
   });
+
+  const {
+    children,
+    className,
+    role,
+    tabIndex,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledby,
+    ...rest
+  } = props;
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
@@ -27,8 +34,6 @@ export const TableContainer = forwardRef<
     targetWindow,
   });
 
-  const ariaLabelledby = rest["aria-labelledby"];
-  const ariaLabel = rest["aria-label"];
   return (
     <div
       ref={handleRef}

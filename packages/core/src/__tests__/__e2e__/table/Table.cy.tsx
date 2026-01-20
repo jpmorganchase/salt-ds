@@ -88,7 +88,8 @@ describe("GIVEN a Table inside a TableContainer", () => {
     cy.findAllByRole("region").should("have.length", 0);
     cy.findByTestId("non-scrollable-container")
       .should("not.have.attr", "tabindex")
-      .and("not.have.attr", "role");
+      .and("not.have.attr", "role")
+      .and("not.have.attr", "aria-labelledby");
 
     cy.realPress("Tab");
     cy.findByTestId("non-scrollable-container").should("not.have.focus");
