@@ -91,7 +91,7 @@ export const TreeNodeTrigger = forwardRef<
     }
     wasMouseDownRef.current = false;
     onFocus?.(event);
-    if (!disabled && event.target === event.currentTarget) {
+    if (!disabled) {
       setActiveNode(value);
     }
   };
@@ -122,7 +122,7 @@ export const TreeNodeTrigger = forwardRef<
         className,
       )}
       tabIndex={isTabbable ? 0 : -1}
-      disabled={disabledProp ?? (disabled || undefined)}
+      disabled={disabledProp ?? disabled}
       type={type ?? "button"}
       onClick={handleClick}
       onFocus={handleFocus}
