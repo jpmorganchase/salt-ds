@@ -491,7 +491,7 @@
     "synonym": ["alert", "stop", "failure", "crash", "mistake", "exclamation"],
     "category": "indicators"
   },
-  { "iconName": "error-execute", "synonym": [], "category": "indicators" },
+  { "iconName": "not-allowed", "synonym": [], "category": "indicators" },
   {
     "iconName": "expand",
     "synonym": [
