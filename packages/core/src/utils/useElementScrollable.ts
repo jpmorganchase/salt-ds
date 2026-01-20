@@ -25,7 +25,7 @@ export interface UseElementScrollableOptions {
   targetWindow?: Window | null;
 }
 
-export function useElementScrollable<T extends HTMLElement = HTMLDivElement>(
+export function useElementScrollable<T extends HTMLElement>(
   ref: ElementScrollableRef<T>,
   options?: UseElementScrollableOptions,
 ): ElementScrollable {

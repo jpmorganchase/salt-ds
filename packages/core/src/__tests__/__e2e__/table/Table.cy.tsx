@@ -29,7 +29,7 @@ describe("GIVEN a Table", () => {
 });
 
 describe("GIVEN a Table inside a TableContainer", () => {
-  it("THEN TableContainer should have region role, be focusable and have accessible name when scrollable", () => {
+  it("THEN should have region role, be focusable and have accessible name when scrollable", () => {
     cy.mount(<ScrollableVertically />);
 
     cy.findByRole("table", { name: "Scrollable vertically" }).should(
@@ -46,7 +46,7 @@ describe("GIVEN a Table inside a TableContainer", () => {
     );
   });
 
-  it("THEN TableContainer should have accessible name when scrollable and caption is used", () => {
+  it("THEN should have accessible name when scrollable and caption is used", () => {
     cy.mount(<ScrollableCaptionTable />);
 
     cy.findByRole("table", { name: "Caption Name" }).should("be.visible");
@@ -59,7 +59,7 @@ describe("GIVEN a Table inside a TableContainer", () => {
     cy.findByRole("region", { name: "Caption Name" }).should("have.focus");
   });
 
-  it("THEN TableContainer should have accessible name when scrollable and aria-label is used", () => {
+  it("THEN should have accessible name when scrollable and aria-label is used", () => {
     cy.mount(<ScrollableAriaLabelTable />);
 
     cy.findByRole("table", { name: "Aria Label Name" }).should("be.visible");
@@ -71,7 +71,7 @@ describe("GIVEN a Table inside a TableContainer", () => {
     cy.findByRole("region", { name: "Aria Label Name" }).should("have.focus");
   });
 
-  it("THEN TableContainer should have accessible name when scrollable and aria-labelledby is used", () => {
+  it("THEN should have accessible name when scrollable and aria-labelledby is used", () => {
     cy.mount(<ScrollableAriaLabelledByTable />);
 
     cy.findByRole("table", { name: "Labelled Table Name" }).should(
@@ -82,7 +82,7 @@ describe("GIVEN a Table inside a TableContainer", () => {
       .and("have.attr", "tabindex", "0");
   });
 
-  it("THEN TableContainer should not have region role or be focusable when not scrollable", () => {
+  it("THEN should not have region role or be focusable when not scrollable", () => {
     cy.mount(<NonScrollableTable />);
 
     cy.findAllByRole("region").should("have.length", 0);
