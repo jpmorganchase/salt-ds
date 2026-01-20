@@ -1,9 +1,4 @@
-import {
-  makePrefixer,
-  type RenderPropsType,
-  renderProps,
-  useForkRef,
-} from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -20,22 +15,8 @@ import { useTreeContext, useTreeNodeContext } from "./TreeContext";
 import { TreeNodeExpansionIcon } from "./TreeNodeExpansionIcon";
 import treeNodeTriggerCss from "./TreeNodeTrigger.css";
 
-const TriggerElement = forwardRef<
-  HTMLButtonElement,
-  // biome-ignore lint/suspicious/noExplicitAny: Polymorphic renderProps
-  ComponentPropsWithoutRef<any>
->(function TriggerElement(props, ref) {
-  return renderProps("button", { ...props, ref });
-});
-
 export interface TreeNodeTriggerProps
-  extends ComponentPropsWithoutRef<"button"> {
-  /**
-   * Custom render element for the trigger (e.g. a link component).
-   * Defaults to a native button.
-   */
-  render?: RenderPropsType["render"];
-}
+  extends ComponentPropsWithoutRef<"button"> {}
 
 const withBaseName = makePrefixer("saltTreeNodeTrigger");
 
@@ -46,7 +27,6 @@ export const TreeNodeTrigger = forwardRef<
   const {
     className,
     children,
-    render,
     onClick,
     onFocus,
     onBlur,
@@ -134,7 +114,7 @@ export const TreeNodeTrigger = forwardRef<
   const handleRef = useForkRef(triggerRef, ref);
 
   return (
-    <TriggerElement
+    <button
       ref={handleRef}
       className={clsx(
         withBaseName(),
@@ -144,7 +124,6 @@ export const TreeNodeTrigger = forwardRef<
       tabIndex={isTabbable ? 0 : -1}
       disabled={disabledProp ?? (disabled || undefined)}
       type={type ?? "button"}
-      render={render}
       onClick={handleClick}
       onFocus={handleFocus}
       onBlur={handleBlur}
@@ -153,6 +132,6 @@ export const TreeNodeTrigger = forwardRef<
     >
       <TreeNodeExpansionIcon />
       {children}
-    </TriggerElement>
+    </button>
   );
 });
