@@ -1,0 +1,23 @@
+.saltTreeNodeExpansionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--salt-size-selectable);
+  min-width: var(--salt-size-selectable);
+  height: var(--salt-size-selectable);
+  flex-shrink: 0;
+}
+
+.saltTreeNodeExpansionIcon-icon {
+  color: var(--salt-content-primary-foreground);
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
+  transform: rotate(0deg);
+}
+
+.saltTreeNodeExpansionIcon-icon-expanded {
+  transform: rotate(90deg);
+}
+
+.saltTreeNode-disabled .saltTreeNodeExpansionIcon-icon {
+  color: var(--salt-content-primary-foreground-disabled);
+}

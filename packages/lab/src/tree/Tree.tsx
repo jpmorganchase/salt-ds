@@ -8,6 +8,7 @@ import {
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
+  useEffect,
   useRef,
 } from "react";
 import treeCss from "./Tree.css";
@@ -123,6 +124,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       getVisibleNodes,
       getNodeMeta,
       getElement,
+      getTrigger,
       getParent,
       getChildren,
       treeModel,
@@ -133,9 +135,28 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
     const keypressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const treeRef = useRef<HTMLUListElement>(null);
 
+    useEffect(() => {
+      if (!activeNode) return;
+      const element = getTrigger(activeNode) ?? getElement(activeNode);
+      if (!element) return;
+
+      const activeEl = targetWindow?.document.activeElement;
+      if (activeEl !== element) {
+        element.focus();
+        element.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }, [activeNode, getElement, getTrigger, targetWindow]);
+
+    useEffect(() => {
+      return () => {
+        if (keypressTimeoutRef.current) {
+          clearTimeout(keypressTimeoutRef.current);
+        }
+      };
+    }, []);
+
     const handleBlur = (event: FocusEvent<HTMLUListElement>) => {
       onBlur?.(event);
-      // Reset activeNode when focus leaves tree so that when it returns, it'll be on the first node
       const relatedTarget = event.relatedTarget as Node | null;
       if (!treeRef.current?.contains(relatedTarget)) {
         setActiveNode(undefined);
@@ -285,7 +306,8 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             let found = false;
 
             for (let i = currentIndex + 1; i < visibleNodes.length; i++) {
-              const element = getElement(visibleNodes[i]);
+              const element =
+                getTrigger(visibleNodes[i]) ?? getElement(visibleNodes[i]);
               if (
                 element?.textContent?.toLowerCase().startsWith(searchString)
               ) {
@@ -297,7 +319,8 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
             if (!found) {
               for (let i = 0; i <= currentIndex; i++) {
-                const element = getElement(visibleNodes[i]);
+                const element =
+                  getTrigger(visibleNodes[i]) ?? getElement(visibleNodes[i]);
                 if (
                   element?.textContent?.toLowerCase().startsWith(searchString)
                 ) {

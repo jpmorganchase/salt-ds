@@ -1,21 +1,15 @@
-import {
-  CheckboxIcon,
-  makePrefixer,
-  useForkRef,
-  useIcon,
-  useId,
-} from "@salt-ds/core";
+import { CheckboxIcon, makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  Children,
   type ComponentPropsWithoutRef,
   type ComponentType,
   type CSSProperties,
-  type FocusEvent,
   forwardRef,
-  type MouseEvent,
+  isValidElement,
   type ReactNode,
   useEffect,
   useMemo,
@@ -27,18 +21,9 @@ import {
   useTreeNodeContext,
 } from "./TreeContext";
 import treeNodeCss from "./TreeNode.css";
-
-function ExpansionIcon({ expanded }: { expanded: boolean }) {
-  const { ExpandGroupIcon } = useIcon();
-  return (
-    <ExpandGroupIcon
-      aria-hidden
-      className={clsx("saltTreeNode-expansionIcon", {
-        "saltTreeNode-expansionIcon-expanded": expanded,
-      })}
-    />
-  );
-}
+import { TreeNodeExpansionIcon } from "./TreeNodeExpansionIcon";
+import { TreeNodeLabel } from "./TreeNodeLabel";
+import { TreeNodeTrigger } from "./TreeNodeTrigger";
 
 export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
   /**
@@ -46,9 +31,9 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
    */
   value: string;
   /**
-   * Label for the node
+   * Label for the node.
    */
-  label: ReactNode;
+  label?: ReactNode;
   /**
    * Optional icon to display before the label
    */
@@ -67,6 +52,24 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
 
 const withBaseName = makePrefixer("saltTreeNode");
 
+function separateChildren(children: ReactNode): {
+  contentChildren: ReactNode[];
+  nodeChildren: ReactNode[];
+} {
+  const contentChildren: ReactNode[] = [];
+  const nodeChildren: ReactNode[] = [];
+
+  Children.forEach(children, (child) => {
+    if (isValidElement(child) && typeof child.props.value === "string") {
+      nodeChildren.push(child);
+    } else if (child != null) {
+      contentChildren.push(child);
+    }
+  });
+
+  return { contentChildren, nodeChildren };
+}
+
 export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
   function TreeNode(props, ref) {
     const {
@@ -77,7 +80,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       children,
       className,
       id: idProp,
-      onFocus,
       ...rest
     } = props;
 
@@ -94,74 +96,41 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const {
       expandedState,
-      toggleExpanded,
       selectedState,
-      select,
       multiselect,
       registerElement,
       activeNode,
-      setActiveNode,
       disabled: treeDisabled,
       disabledIdsSet,
       indeterminateState,
-      getFirstVisibleNode,
-      getFirstSelectedVisibleNode,
     } = useTreeContext();
 
     const parentContext = useTreeNodeContext();
     const level = (parentContext?.level ?? 0) + 1;
 
     const disabled = treeDisabled || disabledProp || disabledIdsSet.has(value);
-    const hasChildren = children != null;
     const expanded = expandedState.has(value);
     const selected = selectedState.includes(value);
     const indeterminate = indeterminateState.has(value);
     const isActive = activeNode === value;
 
-    const firstSelectedVisible = getFirstSelectedVisibleNode();
-    const isTabbable =
-      !disabled &&
-      (isActive ||
-        // If not active and there's a visible selected node, it's tabbable (for tabbing back in)
-        (!activeNode &&
-          firstSelectedVisible !== undefined &&
-          firstSelectedVisible === value) ||
-        // If not active and no selection, first visible node is tabbable (for initial tab in)
-        (!activeNode &&
-          firstSelectedVisible === undefined &&
-          getFirstVisibleNode() === value));
+    const isLegacyMode = label !== undefined;
+    const { contentChildren, nodeChildren } = useMemo(
+      () =>
+        isLegacyMode
+          ? { contentChildren: [], nodeChildren: [] }
+          : separateChildren(children),
+      [children, isLegacyMode],
+    );
+
+    const nestedChildren = isLegacyMode ? children : nodeChildren;
+    const hasChildren = Children.count(nestedChildren) > 0;
 
     useEffect(() => {
       if (nodeRef.current) {
         return registerElement(value, nodeRef.current);
       }
     }, [value, registerElement]);
-
-    useEffect(() => {
-      if (isActive && nodeRef.current) {
-        nodeRef.current.focus();
-        nodeRef.current.scrollIntoView({ block: "nearest", inline: "nearest" });
-      }
-    }, [isActive]);
-
-    const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
-      if (disabled) return;
-      setActiveNode(value);
-      select(event, value);
-    };
-
-    const handleExpansionClick = (event: MouseEvent<HTMLSpanElement>) => {
-      event.stopPropagation();
-      if (disabled) return;
-      toggleExpanded(event, value);
-    };
-
-    const handleFocus = (event: FocusEvent<HTMLLIElement>) => {
-      onFocus?.(event);
-      if (!disabled && event.target === event.currentTarget) {
-        setActiveNode(value);
-      }
-    };
 
     const nodeContext = useMemo(
       () => ({
@@ -170,8 +139,9 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         hasChildren,
         expanded,
         disabled,
+        labelId,
       }),
-      [value, level, hasChildren, expanded, disabled],
+      [value, level, hasChildren, expanded, disabled, labelId],
     );
 
     const handleRef = useForkRef(nodeRef, ref);
@@ -190,8 +160,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
           }
           aria-level={level}
           aria-disabled={disabled || undefined}
-          tabIndex={isTabbable ? 0 : -1}
-          onFocus={handleFocus}
           className={clsx(
             withBaseName(),
             {
@@ -210,17 +178,9 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
           }
           {...rest}
         >
-          {/* biome-ignore lint/a11y/useKeyWithClickEvents: keyboard handled at tree level */}
-          <div className={withBaseName("content")} onClick={handleContentClick}>
-            <div className={withBaseName("row")}>
-              <span
-                className={withBaseName("expansion")}
-                onClick={handleExpansionClick}
-                aria-hidden="true"
-              >
-                {hasChildren && <ExpansionIcon expanded={expanded} />}
-              </span>
-
+          {isLegacyMode ? (
+            <TreeNodeTrigger>
+              <TreeNodeExpansionIcon />
               {multiselect && (
                 <CheckboxIcon
                   checked={selected}
@@ -229,18 +189,16 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
                   className={withBaseName("checkbox")}
                 />
               )}
-
               {Icon ? <Icon className={withBaseName("icon")} /> : null}
-
-              <span id={labelId} className={withBaseName("label")}>
-                {label}
-              </span>
-            </div>
-          </div>
+              <TreeNodeLabel>{label}</TreeNodeLabel>
+            </TreeNodeTrigger>
+          ) : (
+            <>{contentChildren}</>
+          )}
 
           {hasChildren && expanded && (
             <ul role="group" className={withBaseName("group")}>
-              {children}
+              {nestedChildren}
             </ul>
           )}
         </li>

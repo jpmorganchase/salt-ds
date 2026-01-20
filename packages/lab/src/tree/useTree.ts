@@ -253,6 +253,7 @@ export function useTree(props: UseTreeProps) {
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
 
   const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
+  const triggersRef = useRef<Map<string, HTMLElement>>(new Map());
 
   const registerElement = useCallback((value: string, element: HTMLElement) => {
     elementsRef.current.set(value, element);
@@ -263,6 +264,17 @@ export function useTree(props: UseTreeProps) {
 
   const getElement = useCallback((value: string): HTMLElement | undefined => {
     return elementsRef.current.get(value);
+  }, []);
+
+  const registerTrigger = useCallback((value: string, element: HTMLElement) => {
+    triggersRef.current.set(value, element);
+    return () => {
+      triggersRef.current.delete(value);
+    };
+  }, []);
+
+  const getTrigger = useCallback((value: string): HTMLElement | undefined => {
+    return triggersRef.current.get(value);
   }, []);
 
   const getNodeMeta = useCallback(
@@ -543,6 +555,8 @@ export function useTree(props: UseTreeProps) {
     getFirstSelectedVisibleNode,
     registerElement,
     getElement,
+    registerTrigger,
+    getTrigger,
     activeNode,
     setActiveNode,
     indeterminateState,

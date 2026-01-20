@@ -48,6 +48,10 @@ export interface TreeContextValue {
   registerElement: (value: string, element: HTMLElement) => () => void;
   /** Get DOM element for a node (if mounted) */
   getElement: (value: string) => HTMLElement | undefined;
+  /** Register a trigger element for focus management */
+  registerTrigger: (value: string, element: HTMLElement) => () => void;
+  /** Get trigger element for a node (if mounted) */
+  getTrigger: (value: string) => HTMLElement | undefined;
   /** Active node value */
   activeNode: string | undefined;
   /** Set the active node */
@@ -80,6 +84,8 @@ export interface TreeNodeContextValue {
   expanded: boolean;
   /** Whether node is disabled */
   disabled: boolean;
+  /** Label element id for aria-labelledby */
+  labelId: string;
 }
 
 const TreeNodeContext = createContext<TreeNodeContextValue | undefined>(
