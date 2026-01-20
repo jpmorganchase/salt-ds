@@ -17,6 +17,7 @@ import {
   useState,
 } from "react";
 import { useTreeContext, useTreeNodeContext } from "./TreeContext";
+import { TreeNodeExpansionIcon } from "./TreeNodeExpansionIcon";
 import treeNodeTriggerCss from "./TreeNodeTrigger.css";
 
 const TriggerElement = forwardRef<
@@ -150,6 +151,7 @@ export const TreeNodeTrigger = forwardRef<
       onMouseDown={handleMouseDown}
       {...rest}
     >
+      <TreeNodeExpansionIcon />
       {children}
     </TriggerElement>
   );
