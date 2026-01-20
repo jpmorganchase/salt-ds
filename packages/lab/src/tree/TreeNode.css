@@ -16,6 +16,7 @@
 
 .saltTreeNode-checkbox {
   flex-shrink: 0;
+  height: var(--salt-size-selectable);
 }
 
 .saltTreeNode-icon {
