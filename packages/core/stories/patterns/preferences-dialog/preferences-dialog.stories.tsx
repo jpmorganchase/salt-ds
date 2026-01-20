@@ -95,10 +95,10 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
     content = (
       <StackLayout gap={3}>
         <FormField>
-          <FormFieldLabel>Auto launch on start up</FormFieldLabel>
+          <FormFieldLabel>Auto-launch on startup</FormFieldLabel>
           <Switch checked />
           <FormFieldHelperText>
-            Auto-launch desktop when user logs in or starts.
+            Launch automatically at user login or system startup.
           </FormFieldHelperText>
         </FormField>
         <FormField>
