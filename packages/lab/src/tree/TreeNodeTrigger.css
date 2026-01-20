@@ -8,13 +8,13 @@
 
   box-sizing: border-box;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--salt-spacing-100);
   width: 100%;
   min-height: var(--salt-size-base);
 
-  padding-top: var(--salt-spacing-50);
-  padding-bottom: var(--salt-spacing-50);
+  padding-top: calc((var(--salt-size-base) - var(--salt-size-selectable)) / 2);
+  padding-bottom: calc((var(--salt-size-base) - var(--salt-size-selectable)) / 2);
   padding-right: var(--salt-spacing-100);
   padding-left: calc(var(--salt-spacing-100) + ((var(--salt-size-selectable) + var(--salt-spacing-100)) * (var(--saltTreeNode-level, 1) - 1)));
 
