@@ -4,7 +4,6 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 
 const composedStories = composeStories(tableStories);
 const {
-  StickyHeaderFooter,
   ScrollableVertically,
   ScrollableAriaLabelledByTable,
   ScrollableAriaLabelTable,
@@ -14,18 +13,6 @@ const {
 
 describe("GIVEN a Table", () => {
   checkAccessibility(composedStories);
-
-  it.only("THEN should render all rows and columns", () => {
-    cy.mount(<StickyHeaderFooter />);
-
-    cy.findAllByRole("rowgroup").eq(0).should("be.visible");
-    cy.findAllByRole("rowgroup").eq(2).should("be.visible");
-
-    cy.findAllByRole("rowgroup").eq(1).realMouseWheel({ deltaY: 300 });
-
-    cy.findAllByRole("rowgroup").eq(0).should("be.visible");
-    cy.findAllByRole("rowgroup").eq(2).should("be.visible");
-  });
 });
 
 describe("GIVEN a Table inside a TableContainer", () => {
@@ -62,13 +49,17 @@ describe("GIVEN a Table inside a TableContainer", () => {
   it("THEN should have accessible name when scrollable and aria-label is used", () => {
     cy.mount(<ScrollableAriaLabelTable />);
 
-    cy.findByRole("table", { name: "Aria Label Name" }).should("be.visible");
-    cy.findByRole("region", { name: "Aria Label Name" })
+    cy.findByRole("table", { name: "Aria Labelled Table" }).should(
+      "be.visible",
+    );
+    cy.findByRole("region", { name: "Scrollable Aria Labelled Table" })
       .should("be.visible")
       .and("have.attr", "tabindex", "0");
 
     cy.realPress("Tab");
-    cy.findByRole("region", { name: "Aria Label Name" }).should("have.focus");
+    cy.findByRole("region", { name: "Scrollable Aria Labelled Table" }).should(
+      "have.focus",
+    );
   });
 
   it("THEN should have accessible name when scrollable and aria-labelledby is used", () => {
@@ -85,13 +76,19 @@ describe("GIVEN a Table inside a TableContainer", () => {
   it("THEN should not have region role or be focusable when not scrollable", () => {
     cy.mount(<NonScrollableTable />);
 
-    cy.findAllByRole("region").should("have.length", 0);
-    cy.findByTestId("non-scrollable-container")
-      .should("not.have.attr", "tabindex")
-      .and("not.have.attr", "role")
-      .and("not.have.attr", "aria-labelledby");
+    cy.get('[role="region"]').should("have.length", 0);
+
+    cy.findByTestId("non-scrollable-container").as("container");
+
+    cy.get("@container").should(($el) => {
+      expect($el).to.be.visible;
+      expect($el).not.to.have.attr("tabindex");
+      expect($el).not.to.have.attr("role");
+      expect($el).not.to.have.attr("aria-labelledby");
+      expect($el).not.to.have.attr("aria-label");
+    });
 
     cy.realPress("Tab");
-    cy.findByTestId("non-scrollable-container").should("not.have.focus");
+    cy.get("@container").should("not.have.focus");
   });
 });

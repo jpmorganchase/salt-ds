@@ -54,7 +54,6 @@ export const Variants = (): ReactElement => {
         <Table
           variant={variant}
           divider={divider === "on" ? "tertiary" : "none"}
-          aria-labelledby={id}
         >
           <caption id={id}>Table with variants</caption>
           <THead>

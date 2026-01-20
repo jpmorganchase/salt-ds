@@ -55,7 +55,6 @@ export const Zebra = (): ReactElement => {
           zebra
           variant={variant}
           divider={divider === "on" ? "tertiary" : "none"}
-          aria-labelledby={id}
         >
           <caption id={id}>Zebra table with variants</caption>
           <THead>

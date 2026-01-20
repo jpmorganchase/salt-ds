@@ -6,7 +6,7 @@ export const TextAlignment = (): ReactElement => {
   const id = useId();
   return (
     <TableContainer aria-labelledby={id}>
-      <Table aria-labelledby={id}>
+      <Table>
         <caption id={id}>Planet Data</caption>
         <THead>
           <TR>

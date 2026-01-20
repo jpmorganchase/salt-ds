@@ -51,7 +51,7 @@ export const THeadVariant = (): ReactElement => {
         </FormField>
       </FlexLayout>
       <TableContainer aria-labelledby={id}>
-        <Table aria-labelledby={id}>
+        <Table>
           <caption id={id}>Table with THead variants</caption>
           <THead
             variant={variant}
