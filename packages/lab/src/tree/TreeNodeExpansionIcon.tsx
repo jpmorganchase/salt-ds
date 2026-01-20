@@ -56,7 +56,7 @@ export const TreeNodeExpansionIcon = forwardRef<
   }
 
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard handled at tree level
+    // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard handled at tree level, same as W3C
     <span
       ref={ref}
       className={clsx(withBaseName(), className)}
