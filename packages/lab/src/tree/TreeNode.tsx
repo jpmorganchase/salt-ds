@@ -190,7 +190,9 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
                   className={withBaseName("checkbox")}
                 />
               )}
-              {Icon ? <Icon className={withBaseName("icon")} /> : null}
+              {Icon ? (
+                <Icon aria-hidden className={withBaseName("icon")} />
+              ) : null}
               <TreeNodeLabel>{label}</TreeNodeLabel>
             </TreeNodeTrigger>
           ) : (
