@@ -98,7 +98,7 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
           <FormFieldLabel>Auto launch on start up</FormFieldLabel>
           <Switch checked />
           <FormFieldHelperText>
-            Auto-launch desktop when user logs in or starts
+            Auto-launch desktop when user logs in or starts.
           </FormFieldHelperText>
         </FormField>
         <FormField>
@@ -108,7 +108,7 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
             <RadioButton label="Vertical" value="vertical" />
           </RadioButtonGroup>
           <FormFieldHelperText>
-            Set the default orientation of the launcher when the user starts
+            Set the default orientation of the launcher when the user starts.
           </FormFieldHelperText>
         </FormField>
       </StackLayout>
