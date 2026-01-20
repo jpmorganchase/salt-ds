@@ -178,7 +178,7 @@ When defining your shortcuts, we recommend:
 - Clearly document shortcuts for each operating system.
 
 <Callout status="success" title='Best practices' >
-  If your application includes shortcuts bound to a single character, you must comply with the Web Content Accessibility Guidelines (WCAG) 2.1. This means providing a way for users to toggle these shortcuts on or off, remap them to different keys, or ensure they are only active when the relevant element is focused.
+  If your application includes shortcuts bound to a single character, you must comply with the Web Content Accessibility Guidelines (WCAG) 2.1. For further information, please refer to the Accessibility section below.
 </Callout>
 
 ### Global vs Contextual shortcuts
@@ -327,8 +327,15 @@ In our examples, we use the react-key-hooks library to demonstrate keyboard sh
 
 ## Accessibility
 
-Providing keyboard functionality is essential for accessibility. Users with visual or mobility impairments may rely entirely on the keyboard, and many power users prefer keyboard shortcuts for efficiency. By implementing the keyboard shortcuts pattern, you enhance the user experience for everyone.
+Providing keyboard functionality is essential for accessibility. 
+
+Users with visual or mobility impairments may rely entirely on the keyboard, and many power users prefer keyboard shortcuts for efficiency. By implementing the keyboard shortcuts pattern, you enhance the user experience for everyone.
+
 It’s important to note that adding keyboard shortcuts alone does not guarantee full keyboard accessibility. All interactive elements in your application should remain accessible through standard keyboard navigation, such as using Tab, Shift+Tab, Enter, and Space keys to move focus and activate controls.
+
+### WCAG 2.1 keyboard requirements
+
+If you have shortcuts that are bound to only a single character, you must meet a requirement in the 2.1 version of the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/character-key-shortcuts.html). Make sure you provide a mechanism to toggle the shortcuts on/off, remap them to different keys or (if they're related to a particular element) make them active only when that element has focus.
 
 ## Feedback
 
