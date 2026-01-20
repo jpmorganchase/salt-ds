@@ -223,7 +223,7 @@ const PreferencesDialogTemplate: StoryFn = () => {
   };
 
   return (
-    <Dialog open>
+    <Dialog style={{ minHeight: "60%" }} open>
       <DialogHeader header="Preferences" />
       <DialogContent>
         <ParentChildLayout
