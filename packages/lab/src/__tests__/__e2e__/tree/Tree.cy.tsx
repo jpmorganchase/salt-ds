@@ -1,4 +1,5 @@
-import { Tree, TreeNode } from "@salt-ds/lab";
+import { Tooltip } from "@salt-ds/core";
+import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
 import { useState } from "react";
 
 describe("Given a Tree", () => {
@@ -1426,6 +1427,120 @@ describe("Given a Tree", () => {
           .find("button")
           .should("be.focused");
       });
+    });
+  });
+
+  describe.only("Tooltip Integration", () => {
+    it("should show tooltip when hovering a node with tooltip", () => {
+      cy.mount(
+        <Tree aria-label="File browser">
+          <TreeNode value="documents">
+            <Tooltip content="Contains all document files" placement="right">
+              <TreeNodeTrigger>
+                <TreeNodeLabel>Documents</TreeNodeLabel>
+              </TreeNodeTrigger>
+            </Tooltip>
+          </TreeNode>
+          <TreeNode value="pictures" label="Pictures" />
+        </Tree>,
+      );
+      cy.findByRole("tooltip").should("not.exist");
+      cy.findByRole("treeitem", { name: "Documents" }).realHover();
+      cy.findByRole("tooltip").should("be.visible");
+      cy.findByRole("tooltip").should(
+        "have.text",
+        "Contains all document files",
+      );
+    });
+
+    it("should show tooltip when focusing a node with tooltip", () => {
+      cy.mount(
+        <Tree aria-label="File browser">
+          <TreeNode value="documents">
+            <Tooltip content="Contains all document files" placement="right">
+              <TreeNodeTrigger>
+                <TreeNodeLabel>Documents</TreeNodeLabel>
+              </TreeNodeTrigger>
+            </Tooltip>
+          </TreeNode>
+          <TreeNode value="pictures" label="Pictures" />
+        </Tree>,
+      );
+      cy.findByRole("tooltip").should("not.exist");
+      cy.realPress("Tab");
+      cy.findByRole("treeitem", { name: "Documents" })
+        .find("button")
+        .should("be.focused");
+      cy.findByRole("tooltip").should("be.visible");
+      cy.findByRole("tooltip").should(
+        "have.text",
+        "Contains all document files",
+      );
+    });
+
+    it("should hide tooltip when focus moves away from the node", () => {
+      cy.mount(
+        <Tree aria-label="File browser">
+          <TreeNode value="documents">
+            <Tooltip content="Documents tooltip" placement="right">
+              <TreeNodeTrigger>
+                <TreeNodeLabel>Documents</TreeNodeLabel>
+              </TreeNodeTrigger>
+            </Tooltip>
+          </TreeNode>
+          <TreeNode value="pictures" label="Pictures" />
+        </Tree>,
+      );
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("be.visible");
+      cy.realPress("ArrowDown");
+      cy.findByRole("treeitem", { name: "Pictures" })
+        .find("button")
+        .should("be.focused");
+      cy.findByRole("tooltip").should("not.exist");
+    });
+
+    it("should show tooltip on hover for parent node with children", () => {
+      cy.mount(
+        <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+          <TreeNode value="documents">
+            <Tooltip content="Main documents folder" placement="right">
+              <TreeNodeTrigger>
+                <TreeNodeLabel>Documents</TreeNodeLabel>
+              </TreeNodeTrigger>
+            </Tooltip>
+            <TreeNode value="reports" label="Reports" />
+            <TreeNode value="invoices" label="Invoices" />
+          </TreeNode>
+        </Tree>,
+      );
+      cy.findByRole("tooltip").should("not.exist");
+      cy.findByRole("button", { name: /Documents/ }).realHover();
+      cy.findByRole("tooltip").should("be.visible");
+      cy.findByRole("tooltip").should("have.text", "Main documents folder");
+    });
+
+    it("should show tooltip on focus for parent node with children", () => {
+      cy.mount(
+        <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+          <TreeNode value="documents">
+            <Tooltip content="Main documents folder" placement="right">
+              <TreeNodeTrigger>
+                <TreeNodeLabel>Documents</TreeNodeLabel>
+              </TreeNodeTrigger>
+            </Tooltip>
+            <TreeNode value="reports" label="Reports" />
+            <TreeNode value="invoices" label="Invoices" />
+          </TreeNode>
+        </Tree>,
+      );
+      cy.findByRole("tooltip").should("not.exist");
+      cy.realPress("Tab");
+      cy.findByRole("treeitem", { name: /Documents/ })
+        .find("button")
+        .should("be.focused");
+      cy.findByRole("tooltip").should("be.visible");
+      cy.findByRole("tooltip").should("have.text", "Main documents folder");
     });
   });
 });
