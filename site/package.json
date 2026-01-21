@@ -37,7 +37,7 @@
     "dayjs": "^1.11.13",
     "decimal.js": "^10.4.3",
     "embla-carousel-react": "^8.6.0",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "luxon": "^3.6.1",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.46",
