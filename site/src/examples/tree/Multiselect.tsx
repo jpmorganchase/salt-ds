@@ -1,7 +1,7 @@
 import { Tree, TreeNode } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const WithCheckboxes = (): ReactElement => (
+export const Multiselect = (): ReactElement => (
   <Tree
     aria-label="File browser"
     multiselect

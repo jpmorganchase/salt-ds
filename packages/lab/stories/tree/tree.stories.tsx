@@ -106,7 +106,7 @@ export const WithIcons: StoryFn<typeof Tree> = (args) => {
   );
 };
 
-export const WithCheckboxes: StoryFn<typeof Tree> = (args) => (
+export const Multiselect: StoryFn<typeof Tree> = (args) => (
   <Tree
     {...args}
     aria-label="File browser"
