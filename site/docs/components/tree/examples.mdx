@@ -27,7 +27,7 @@ Use the `icon` prop on `TreeNode` to display an icon alongside the label. Icons 
 
 <LivePreview componentName="tree" exampleName="WithIcons" />
 
-## With checkboxes
+## Multiselect
 
 Set `multiselect` to enable multiple node selection with checkboxes. This provides a clear visual indication of selection state and supports parent-child selection propagation.
 
@@ -36,10 +36,20 @@ Set `multiselect` to enable multiple node selection with checkboxes. This provid
 - Use checkbox selection when users need to select multiple items for a bulk action.
 - Selecting a parent node automatically selects all its children, and selecting all children automatically selects the parent.
 
-<LivePreview componentName="tree" exampleName="WithCheckboxes" />
+<LivePreview componentName="tree" exampleName="Multiselect" />
 
 ## Disabled nodes
 
 Use the `disabled` prop on individual `TreeNode` components to disable specific nodes. Disabled nodes cannot be selected, expanded, or interacted with.
 
 <LivePreview componentName="tree" exampleName="DisabledNodes" />
+
+## With tooltip
+
+Use the `TreeNodeTrigger` and `TreeNodeLabel` components to wrap tree node content with a tooltip. This allows you to provide additional context or descriptions for nodes on hover and focus.
+
+### Best practices
+
+- Use tooltips to provide supplementary information. See [Tooltip](/salt/components/tooltip) for more information on usage.
+
+<LivePreview componentName="tree" exampleName="WithTooltip" />

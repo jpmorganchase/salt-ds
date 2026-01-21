@@ -1,4 +1,5 @@
 export * from "./Default";
 export * from "./DisabledNodes";
-export * from "./WithCheckboxes";
+export * from "./Multiselect";
 export * from "./WithIcons";
+export * from "./WithTooltip";
