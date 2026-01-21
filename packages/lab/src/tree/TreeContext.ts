@@ -1,5 +1,5 @@
+import { createContext } from "@salt-ds/core";
 import {
-  createContext,
   type Dispatch,
   type SetStateAction,
   type SyntheticEvent,
@@ -61,7 +61,10 @@ export interface TreeContextValue {
   indeterminateState: Set<string>;
 }
 
-const TreeContext = createContext<TreeContextValue | undefined>(undefined);
+const TreeContext = createContext<TreeContextValue | undefined>(
+  "Tree Context",
+  undefined,
+);
 
 export const TreeProvider = TreeContext.Provider;
 
@@ -89,6 +92,7 @@ export interface TreeNodeContextValue {
 }
 
 const TreeNodeContext = createContext<TreeNodeContextValue | undefined>(
+  "TreeNodeContext",
   undefined,
 );
 
