@@ -21,3 +21,9 @@
 .saltTreeNode-disabled .saltTreeNodeExpansionIcon-icon {
   color: var(--salt-content-primary-foreground-disabled);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .saltTreeNodeExpansionIcon-icon {
+    transition: none;
+  }
+}
