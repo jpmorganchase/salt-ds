@@ -1,4 +1,4 @@
-import { FlexLayout, type FlexLayoutProps, makePrefixer } from "@salt-ds/core";
+import { FlexLayout, type FlexLayoutProps, makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,7 +7,6 @@ import {
   type MouseEvent,
   type ReactElement,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -107,7 +106,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   const [currentHoveredStarIndex, setCurrentHoveredStarIndex] = useState(0);
   const [selected, setSelectedItem] = useState<number>(value ? value : 0);
   const groupRef = useRef<HTMLDivElement>(null);
-  useImperativeHandle(ref, () => groupRef.current as HTMLDivElement);
+  const handleGroupRef = useForkRef(ref, groupRef);
 
   const getLabel = (value: number): string => {
     if (typeof semanticLabels === "function") {
@@ -229,7 +228,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       <FlexLayout
         role="radiogroup"
         gap={0.5}
-        ref={groupRef}
+        ref={handleGroupRef}
         onKeyDown={(event) => {
           handleKeyDown(event);
           restProps?.onKeyDown?.(event);

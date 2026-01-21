@@ -15,9 +15,6 @@
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
   width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .saltRating-label.saltRating-label-top,

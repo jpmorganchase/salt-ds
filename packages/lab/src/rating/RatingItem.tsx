@@ -97,7 +97,7 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
 }
 
 export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
-  function RatingItem(props, ref?): ReactElement<RatingItemProps> {
+  function RatingItem(props, ref?) {
     const {
       itemValue,
       currentRating,
