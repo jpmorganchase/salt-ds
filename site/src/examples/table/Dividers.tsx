@@ -17,8 +17,9 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   TR,
+  useId,
 } from "@salt-ds/core";
-import { type ReactElement, type SyntheticEvent, useId, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Dividers = (): ReactElement => {
   const [body, setBody] = useState<TableProps["divider"]>("tertiary");

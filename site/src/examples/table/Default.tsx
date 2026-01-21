@@ -1,5 +1,14 @@
-import { Table, TableContainer, TBody, TD, TH, THead, TR } from "@salt-ds/core";
-import { type ReactElement, useId } from "react";
+import {
+  Table,
+  TableContainer,
+  TBody,
+  TD,
+  TH,
+  THead,
+  TR,
+  useId,
+} from "@salt-ds/core";
+import type { ReactElement } from "react";
 import { planetData, planetDataColumns } from "./exampleData";
 
 const columns = planetDataColumns.filter(({ key }) =>
