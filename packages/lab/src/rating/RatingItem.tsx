@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import {
   FavoriteIcon,
-  FavoriteOutlineIcon,
+  FavoriteStrongIcon,
   FavoriteSolidIcon,
 } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -110,7 +110,7 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
       disabled = false,
       isActiveState,
       precision = 1,
-      outlinedIcon = props?.emptyIcon || <FavoriteOutlineIcon />,
+      outlinedIcon = props?.emptyIcon || <FavoriteStrongIcon />,
       filledIcon = <FavoriteSolidIcon />,
       emptyIcon = <FavoriteIcon />,
       character,
