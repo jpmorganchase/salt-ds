@@ -146,6 +146,7 @@ const DEPRECATED_ICONS = [
   ["BarChart", "ChartBar"],
   ["PieChart", "ChartPie"],
   ["LineChart", "ChartLine"],
+  ["ErrorExecute", "NotAllowed"],
 ];
 const deprecatedIconMap = new Map(DEPRECATED_ICONS);
 
