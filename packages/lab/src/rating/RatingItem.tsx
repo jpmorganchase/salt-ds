@@ -1,8 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
 import {
   FavoriteIcon,
-  FavoriteStrongIcon,
   FavoriteSolidIcon,
+  FavoriteStrongIcon,
 } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -10,9 +10,9 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
+  isValidElement,
   type MouseEvent,
   type ReactElement,
-  isValidElement
 } from "react";
 import ratingItemCss from "./RatingItem.css";
 

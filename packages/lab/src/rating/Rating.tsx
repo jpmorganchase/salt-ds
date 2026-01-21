@@ -25,7 +25,10 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
    */
-  onValueChange?: (event: React.MouseEvent<HTMLButtonElement>, itemValue: number) => void;
+  onValueChange?: (
+    event: React.MouseEvent<HTMLButtonElement>,
+    itemValue: number,
+  ) => void;
   /**
    * If true, the rating component will be in a read-only state.
    */
@@ -165,9 +168,9 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     if (event.type === "mouseenter") {
       setLabel(getLabel(value));
     } else if (event.type === "mouseleave") {
-        setReset(false);
-        setLabel(selected > 0 ? getLabel(selected) : "No rating selected"); // Reset label
-        setCurrentHoveredStarIndex(0); // Reset hovered star index
+      setReset(false);
+      setLabel(selected > 0 ? getLabel(selected) : "No rating selected"); // Reset label
+      setCurrentHoveredStarIndex(0); // Reset hovered star index
     }
     setCurrentHoveredStarIndex(value);
   };
@@ -229,11 +232,11 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         ref={groupRef}
         onKeyDown={(event) => {
           handleKeyDown(event);
-          restProps.onKeyDown?.(event);
+          restProps?.onKeyDown?.(event);
         }}
         onFocus={(event) => {
           handleFocus();
-          restProps.onFocus?.(event);
+          restProps?.onFocus?.(event);
         }}
         className={clsx(withBaseName(), className)}
         {...restProps}

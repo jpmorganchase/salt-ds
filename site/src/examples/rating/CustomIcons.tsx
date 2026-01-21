@@ -27,7 +27,7 @@ export const CustomIcons = (): ReactElement => {
           emptyIcon={<LikeIcon />}
           value={value}
           max={6}
-          onValueChange={setValue}
+          onValueChange={(event, value) => setValue(value)}
         />
       </FormField>
     </FlexLayout>
