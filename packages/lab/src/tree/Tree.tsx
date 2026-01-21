@@ -116,7 +116,9 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
     } = treeState;
 
     const lastKeypressRef = useRef<string>("");
-    const keypressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const keypressTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+      null,
+    );
     const treeRef = useRef<HTMLUListElement>(null);
 
     useEffect(() => {
