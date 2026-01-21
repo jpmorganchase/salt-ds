@@ -241,27 +241,27 @@ export function useTree(props: UseTreeProps) {
   const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
   const triggersRef = useRef<Map<string, HTMLElement>>(new Map());
 
-  const registerElement = useCallback((value: string, element: HTMLElement) => {
+  const registerElement = (value: string, element: HTMLElement) => {
     elementsRef.current.set(value, element);
     return () => {
       elementsRef.current.delete(value);
     };
-  }, []);
+  };
 
-  const getElement = useCallback((value: string): HTMLElement | undefined => {
+  const getElement = (value: string): HTMLElement | undefined => {
     return elementsRef.current.get(value);
-  }, []);
+  };
 
-  const registerTrigger = useCallback((value: string, element: HTMLElement) => {
+  const registerTrigger = (value: string, element: HTMLElement) => {
     triggersRef.current.set(value, element);
     return () => {
       triggersRef.current.delete(value);
     };
-  }, []);
+  };
 
-  const getTrigger = useCallback((value: string): HTMLElement | undefined => {
+  const getTrigger = (value: string): HTMLElement | undefined => {
     return triggersRef.current.get(value);
-  }, []);
+  };
 
   const getNodeMeta = useCallback(
     (value: string): TreeNodeMeta | undefined => {
@@ -333,6 +333,7 @@ export function useTree(props: UseTreeProps) {
     [expandedArray, expandedState, onExpandedChange],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: getParent/getChildren only depend on treeModel which is already in deps
   const calculateIndeterminateState = useCallback(
     (selected: string[]): Set<string> => {
       const indeterminate = new Set<string>();
@@ -376,7 +377,7 @@ export function useTree(props: UseTreeProps) {
 
       return indeterminate;
     },
-    [getParent, getChildren, disabledIdsSet],
+    [treeModel, disabledIdsSet],
   );
 
   useEffect(() => {
@@ -386,64 +387,59 @@ export function useTree(props: UseTreeProps) {
     }
   }, [multiselect, selectedState, calculateIndeterminateState]);
 
-  const updateAncestors = useCallback(
-    (currentSelected: string[], value: string) => {
-      let nextSelected = [...currentSelected];
-      const nextSelectedSet = new Set(nextSelected);
-      const ancestors = getAncestors(value);
+  const updateAncestors = (currentSelected: string[], value: string) => {
+    let nextSelected = [...currentSelected];
+    const nextSelectedSet = new Set(nextSelected);
+    const ancestors = getAncestors(value);
 
-      for (const ancestor of ancestors) {
-        const children = getChildren(ancestor);
-        const enabledChildren = children.filter(
-          (child) => !disabledIdsSet.has(child),
-        );
+    for (const ancestor of ancestors) {
+      const children = treeModel.childrenOf.get(ancestor) ?? [];
+      const enabledChildren = children.filter(
+        (child) => !disabledIdsSet.has(child),
+      );
 
-        if (enabledChildren.length === 0) continue;
+      if (enabledChildren.length === 0) continue;
 
-        const allSelected = enabledChildren.every((child) =>
-          nextSelectedSet.has(child),
-        );
-        const ancestorSelected = nextSelectedSet.has(ancestor);
+      const allSelected = enabledChildren.every((child) =>
+        nextSelectedSet.has(child),
+      );
+      const ancestorSelected = nextSelectedSet.has(ancestor);
 
-        if (allSelected && !ancestorSelected) {
-          nextSelected.push(ancestor);
-          nextSelectedSet.add(ancestor);
-        } else if (!allSelected && ancestorSelected) {
-          nextSelected = nextSelected.filter((v) => v !== ancestor);
-          nextSelectedSet.delete(ancestor);
-        }
+      if (allSelected && !ancestorSelected) {
+        nextSelected.push(ancestor);
+        nextSelectedSet.add(ancestor);
+      } else if (!allSelected && ancestorSelected) {
+        nextSelected = nextSelected.filter((v) => v !== ancestor);
+        nextSelectedSet.delete(ancestor);
       }
+    }
 
-      return nextSelected;
-    },
-    [getAncestors, getChildren, disabledIdsSet],
-  );
+    return nextSelected;
+  };
 
-  const getMultiSelectState = useCallback(
-    (value: string) => {
-      const isCurrentlySelected = selectedState.includes(value);
-      let newSelected: string[];
+  const getMultiSelectState = (value: string) => {
+    const isCurrentlySelected = selectedState.includes(value);
+    let newSelected: string[];
 
-      if (isCurrentlySelected) {
-        newSelected = selectedState.filter((v) => v !== value);
+    if (isCurrentlySelected) {
+      newSelected = selectedState.filter((v) => v !== value);
 
-        const descendants = getDescendants(value);
-        newSelected = newSelected.filter((v) => !descendants.includes(v));
-      } else {
-        newSelected = [...selectedState, value];
+      const descendants = getDescendants(value);
+      newSelected = newSelected.filter((v) => !descendants.includes(v));
+    } else {
+      newSelected = [...selectedState, value];
 
-        const descendants = getDescendants(value);
-        const newDescendants = descendants.filter(
-          (d) => !newSelected.includes(d),
-        );
-        newSelected = [...newSelected, ...newDescendants];
-      }
+      const descendants = getDescendants(value);
+      const newDescendants = descendants.filter(
+        (d) => !newSelected.includes(d),
+      );
+      newSelected = [...newSelected, ...newDescendants];
+    }
 
-      return updateAncestors(newSelected, value);
-    },
-    [selectedState, getDescendants, updateAncestors],
-  );
+    return updateAncestors(newSelected, value);
+  };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: getMultiSelectState/updateAncestors are intentionally not memoized - their captured values (selectedState, treeModel, etc.) are already in deps
   const select = useCallback(
     (event: SyntheticEvent, value: string) => {
       if (disabled || disabledIdsSet.has(value)) return;
@@ -469,19 +465,9 @@ export function useTree(props: UseTreeProps) {
       disabledIdsSet,
       multiselect,
       selectedState,
-      getMultiSelectState,
       calculateIndeterminateState,
       onSelectionChange,
     ],
-  );
-
-  const isNodeDisabled = useCallback(
-    (value: string): boolean => {
-      if (disabledIdsSet.has(value)) return true;
-      const nodeMeta = treeModel.nodes.get(value);
-      return nodeMeta?.disabled ?? false;
-    },
-    [treeModel, disabledIdsSet],
   );
 
   // Returns nodes in depth-first order matching visual tree order from set
@@ -490,7 +476,11 @@ export function useTree(props: UseTreeProps) {
 
     function traverse(values: string[]): void {
       for (const value of values) {
-        if (isNodeDisabled(value)) {
+        const isDisabled =
+          disabledIdsSet.has(value) ||
+          (treeModel.nodes.get(value)?.disabled ?? false);
+
+        if (isDisabled) {
           continue;
         }
 
@@ -506,7 +496,7 @@ export function useTree(props: UseTreeProps) {
 
     traverse(treeModel.rootValues);
     return visible;
-  }, [treeModel, expandedState, isNodeDisabled]);
+  }, [treeModel, expandedState, disabledIdsSet]);
 
   const getFirstVisibleNode = useCallback((): string | undefined => {
     const visibleNodes = getVisibleNodes();
