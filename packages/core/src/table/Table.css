@@ -223,7 +223,7 @@ table.saltTable td.saltTable-td-align-right {
   text-align: end;
 }
 
-.saltTable-tableContainer {
+.saltTable-container {
   width: 100%;
   overflow: auto;
 }

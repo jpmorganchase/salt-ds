@@ -37,7 +37,7 @@ export const TableContainer = forwardRef<
   return (
     <div
       ref={handleRef}
-      className={clsx(withTableBaseName("tableContainer"), className)}
+      className={clsx(withTableBaseName("container"), className)}
       role={role ?? (isScrollable ? "region" : undefined)}
       tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
       {...(ariaLabelledby && isScrollable

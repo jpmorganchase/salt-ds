@@ -73,8 +73,8 @@ export const Dividers = (): ReactElement => {
         </FlexItem>
       </FlexLayout>
       <TableContainer aria-labelledby={id}>
-        <caption id={id}>Table with dividers</caption>
         <Table divider={body}>
+          <caption id={id}>Table with dividers</caption>
           <THead divider={header}>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {
