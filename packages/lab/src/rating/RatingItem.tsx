@@ -7,11 +7,12 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import React, {
+import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
   type ReactElement,
+  isValidElement
 } from "react";
 import ratingItemCss from "./RatingItem.css";
 
@@ -151,7 +152,7 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
         return <div className={iconClass}>{character(props)}</div>;
       }
       // Render the custom character as a React node
-      if (React.isValidElement(character) || typeof character === "string") {
+      if (isValidElement(character) || typeof character === "string") {
         return <div className={iconClass}>{character}</div>;
       }
       // Determine the icon to render based on the state

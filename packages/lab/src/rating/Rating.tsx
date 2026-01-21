@@ -3,7 +3,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
   type ReactElement,
@@ -23,13 +22,10 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
    */
   value?: number;
   /**
-   * callback function for rating change.
+   * Callback function for rating change.
+   * The first parameter is the event, and the second is the selected rating value.
    */
-  onValueChange?: (itemValue: number) => void;
-  /**
-   * To pass additional props to button
-   */
-  ButtonProps?: ComponentPropsWithoutRef<"button">;
+  onValueChange?: (event: React.MouseEvent<HTMLButtonElement>, itemValue: number) => void;
   /**
    * If true, the rating component will be in a read-only state.
    */
@@ -46,10 +42,6 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
    * Total number of icons displayed.
    */
   max?: number;
-  /**
-   * Defines the minimum increment value change allowed.
-   */
-  precision?: number;
   /**
    * Custom labels for each rating value. Can be an array of strings or a function
    * that generates labels dynamically (e.g., numerical values like "1/5").
@@ -87,12 +79,10 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     value = 0,
     onValueChange,
     className,
-    ButtonProps,
     readOnly = false,
     disabled = false,
     allowClear = true,
     max = 5,
-    precision = 1,
     semanticLabels,
     showLabel = false,
     character,
@@ -169,14 +159,15 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   };
 
   const handleMouseHover = (
-    _event: MouseEvent<HTMLButtonElement>,
+    event: MouseEvent<HTMLButtonElement>,
     value: number,
   ) => {
-    if (_event.type === "mouseenter") {
+    if (event.type === "mouseenter") {
       setLabel(getLabel(value));
-    } else if (_event.type === "mouseleave") {
-      setReset(false);
-      setLabel(selected > 0 ? getLabel(selected) : "No rating selected"); // Reset label
+    } else if (event.type === "mouseleave") {
+        setReset(false);
+        setLabel(selected > 0 ? getLabel(selected) : "No rating selected"); // Reset label
+        setCurrentHoveredStarIndex(0); // Reset hovered star index
     }
     setCurrentHoveredStarIndex(value);
   };
@@ -189,7 +180,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   };
 
   const handleItemClick = (
-    _event: MouseEvent<HTMLButtonElement>,
+    event: MouseEvent<HTMLButtonElement>,
     value: number,
   ) => {
     if (selected === value) {
@@ -204,13 +195,10 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       setReset(false);
       setLabel(getLabel(value)); // Update label based on selected star
     }
-  };
-
-  useEffect(() => {
     if (onValueChange) {
-      onValueChange(selected);
+      onValueChange(event, value);
     }
-  }, [selected]);
+  };
 
   useEffect(() => {
     setSelectedItem(value);
@@ -239,8 +227,14 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         role="radiogroup"
         gap={0.5}
         ref={groupRef}
-        onKeyDown={handleKeyDown}
-        onFocus={handleFocus}
+        onKeyDown={(event) => {
+          handleKeyDown(event);
+          restProps.onKeyDown?.(event);
+        }}
+        onFocus={(event) => {
+          handleFocus();
+          restProps.onFocus?.(event);
+        }}
         className={clsx(withBaseName(), className)}
         {...restProps}
       >
@@ -262,10 +256,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
             onFeedbackItemClick={handleItemClick}
             itemValue={index + 1}
             key={index + 1}
-            {...ButtonProps}
             readOnly={readOnly}
             disabled={disabled}
-            precision={precision}
             character={character}
             outlinedIcon={outlinedIcon}
             filledIcon={filledIcon}

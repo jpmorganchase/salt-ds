@@ -1,13 +1,13 @@
 .saltRatingItem {
-  height: 14px;
-  width: 14px;
+  height: var(--salt-size-icon);
+  width: var(--salt-size-icon);
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: inherit;
   border: none;
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
 }
 .saltRatingItem-icon {
   --saltIcon-size: 14px;
@@ -21,11 +21,11 @@
 }
 
 .saltRatingItem-read-only {
-  cursor: default;
+  cursor: var(--salt-cursor-readonly);
 }
 
 .saltRatingItem-disabled {
-  cursor: not-allowed;
+  cursor: var(--salt-cursor-disabled);
   opacity: 0.4;
 }
 

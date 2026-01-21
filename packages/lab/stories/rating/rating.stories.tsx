@@ -104,7 +104,7 @@ export const CustomIcons: StoryFn<typeof Rating> = ({
         <Rating
           value={7}
           max={10}
-          onValueChange={(value) => console.log(value)}
+          onValueChange={(event, value) => console.log(event, value)}
           {...args}
         />
       </FormField>
@@ -116,7 +116,7 @@ export const CustomIcons: StoryFn<typeof Rating> = ({
           emptyIcon={<LikeIcon />}
           value={value}
           max={6}
-          onValueChange={setValue}
+          onValueChange={(event, value) => setValue(value)}
           {...args}
         />
       </FormField>
