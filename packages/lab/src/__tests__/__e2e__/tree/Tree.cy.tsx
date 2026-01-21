@@ -926,6 +926,589 @@ describe("Given a Tree", () => {
     });
   });
 
+  describe("Controlled Selection - Single Select", () => {
+    it("should render with controlled selected prop", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>(["node2"]);
+        return (
+          <Tree
+            aria-label="File browser"
+            selected={selected}
+            onSelectionChange={(_event, newSelected) =>
+              setSelected(newSelected)
+            }
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should update selection through external state change", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>([]);
+        return (
+          <>
+            <button
+              type="button"
+              onClick={() => setSelected(["node2"])}
+              data-testid="select-btn"
+            >
+              Select Node 2
+            </button>
+            <Tree
+              aria-label="File browser"
+              selected={selected}
+              onSelectionChange={(_event, newSelected) =>
+                setSelected(newSelected)
+              }
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+          </>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "not.have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.findByTestId("select-btn").realClick();
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should not change selection if parent doesn't update state", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+      const ControlledTree = () => {
+        // Intentionally not updating state - selection should remain fixed
+        const [selected] = useState<string[]>(["node1"]);
+        return (
+          <Tree
+            aria-label="File browser"
+            selected={selected}
+            onSelectionChange={onSelectionChange}
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      // Click on Node 2 - should fire callback but not change selection
+      cy.findByRole("treeitem", { name: "Node 2" }).realClick();
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["node2"],
+      );
+      // Selection should still be Node 1 since state wasn't updated
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "not.have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should call onSelectionChange with correct value on keyboard selection", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>([]);
+        return (
+          <Tree
+            aria-label="File browser"
+            selected={selected}
+            onSelectionChange={(event, newSelected) => {
+              onSelectionChange(event, newSelected);
+              setSelected(newSelected);
+            }}
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.realPress("Tab");
+      cy.realPress("ArrowDown");
+      cy.realPress("Enter");
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["node2"],
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should allow clearing selection externally", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>(["node1"]);
+        return (
+          <>
+            <button
+              type="button"
+              onClick={() => setSelected([])}
+              data-testid="clear-btn"
+            >
+              Clear Selection
+            </button>
+            <Tree
+              aria-label="File browser"
+              selected={selected}
+              onSelectionChange={(_event, newSelected) =>
+                setSelected(newSelected)
+              }
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+            </Tree>
+          </>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.findByTestId("clear-btn").realClick();
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "not.have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+  });
+
+  describe("Controlled Selection - Multi-Select", () => {
+    it("should render with controlled selected prop", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>(["node1", "node3"]);
+        return (
+          <Tree
+            aria-label="File browser"
+            multiselect
+            selected={selected}
+            onSelectionChange={(_event, newSelected) =>
+              setSelected(newSelected)
+            }
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 3" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should update selection through external state change", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>([]);
+        return (
+          <>
+            <button
+              type="button"
+              onClick={() => setSelected(["node1", "node2", "node3"])}
+              data-testid="select-all-btn"
+            >
+              Select All
+            </button>
+            <Tree
+              aria-label="File browser"
+              multiselect
+              selected={selected}
+              onSelectionChange={(_event, newSelected) =>
+                setSelected(newSelected)
+              }
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+          </>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByTestId("select-all-btn").realClick();
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 3" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should not change selection if parent doesn't update state", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+      const ControlledTree = () => {
+        // Intentionally not updating state - selection should remain fixed
+        const [selected] = useState<string[]>(["node1"]);
+        return (
+          <Tree
+            aria-label="File browser"
+            multiselect
+            selected={selected}
+            onSelectionChange={onSelectionChange}
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      // Click on Node 2 - should fire callback but not change selection
+      cy.findByRole("treeitem", { name: "Node 2" }).realClick();
+      cy.get("@selectionChangeHandler").should("have.been.called");
+      // Selection should still be only Node 1 since state wasn't updated
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should handle Ctrl+A with controlled selection", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>([]);
+        return (
+          <Tree
+            aria-label="File browser"
+            multiselect
+            selected={selected}
+            onSelectionChange={(event, newSelected) => {
+              onSelectionChange(event, newSelected);
+              setSelected(newSelected);
+            }}
+          >
+            <TreeNode value="node1" label="Node 1" />
+            <TreeNode value="node2" label="Node 2" />
+            <TreeNode value="node3" label="Node 3" />
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.realPress("Tab");
+      cy.realPress(["Control", "a"]);
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["node1", "node2", "node3"],
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 3" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should show indeterminate state with controlled selection", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>(["child1"]);
+        return (
+          <Tree
+            aria-label="File browser"
+            multiselect
+            defaultExpanded={["parent"]}
+            selected={selected}
+            onSelectionChange={(_event, newSelected) =>
+              setSelected(newSelected)
+            }
+          >
+            <TreeNode value="parent" label="Parent">
+              <TreeNode value="child1" label="Child 1" />
+              <TreeNode value="child2" label="Child 2" />
+            </TreeNode>
+          </Tree>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: /Parent/ }).should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+      cy.findByRole("treeitem", { name: "Child 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Child 2" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should allow clearing selection externally", () => {
+      const ControlledTree = () => {
+        const [selected, setSelected] = useState<string[]>([
+          "node1",
+          "node2",
+          "node3",
+        ]);
+        return (
+          <>
+            <button
+              type="button"
+              onClick={() => setSelected([])}
+              data-testid="clear-btn"
+            >
+              Clear Selection
+            </button>
+            <Tree
+              aria-label="File browser"
+              multiselect
+              selected={selected}
+              onSelectionChange={(_event, newSelected) =>
+                setSelected(newSelected)
+              }
+            >
+              <TreeNode value="node1" label="Node 1" />
+              <TreeNode value="node2" label="Node 2" />
+              <TreeNode value="node3" label="Node 3" />
+            </Tree>
+          </>
+        );
+      };
+      cy.mount(<ControlledTree />);
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByTestId("clear-btn").realClick();
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 3" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+  });
+
+  describe("Uncontrolled Selection", () => {
+    it("should work without onSelectionChange callback", () => {
+      cy.mount(
+        <Tree aria-label="File browser" defaultSelected={["node1"]}>
+          <TreeNode value="node1" label="Node 1" />
+          <TreeNode value="node2" label="Node 2" />
+        </Tree>,
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      // Should still allow interaction
+      cy.findByRole("treeitem", { name: "Node 2" }).realClick();
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "not.have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should call onSelectionChange when provided but manage state internally", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+      cy.mount(
+        <Tree aria-label="File browser" onSelectionChange={onSelectionChange}>
+          <TreeNode value="node1" label="Node 1" />
+          <TreeNode value="node2" label="Node 2" />
+        </Tree>,
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).realClick();
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["node1"],
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should respect defaultSelected on initial render", () => {
+      cy.mount(
+        <Tree aria-label="File browser" defaultSelected={["node2"]}>
+          <TreeNode value="node1" label="Node 1" />
+          <TreeNode value="node2" label="Node 2" />
+          <TreeNode value="node3" label="Node 3" />
+        </Tree>,
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "not.have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 3" }).should(
+        "not.have.attr",
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("should respect defaultSelected for multiselect on initial render", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultSelected={["node1", "node3"]}
+        >
+          <TreeNode value="node1" label="Node 1" />
+          <TreeNode value="node2" label="Node 2" />
+          <TreeNode value="node3" label="Node 3" />
+        </Tree>,
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 3" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should allow selection changes in uncontrolled multiselect mode", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          onSelectionChange={onSelectionChange}
+        >
+          <TreeNode value="node1" label="Node 1" />
+          <TreeNode value="node2" label="Node 2" />
+        </Tree>,
+      );
+      cy.findByRole("treeitem", { name: "Node 1" }).realClick();
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).realClick();
+      cy.findByRole("treeitem", { name: "Node 1" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Node 2" }).should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get("@selectionChangeHandler").should("have.been.calledTwice");
+    });
+  });
+
   describe("Disabled States", () => {
     it("should prevent all interaction when tree is disabled", () => {
       const onSelectionChange = cy.stub().as("selectionChangeHandler");
@@ -1430,7 +2013,7 @@ describe("Given a Tree", () => {
     });
   });
 
-  describe.only("Tooltip Integration", () => {
+  describe("Tooltip Integration", () => {
     it("should show tooltip when hovering a node with tooltip", () => {
       cy.mount(
         <Tree aria-label="File browser">
