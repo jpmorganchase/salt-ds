@@ -1,4 +1,9 @@
-import { FlexLayout, type FlexLayoutProps, makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  FlexLayout,
+  type FlexLayoutProps,
+  makePrefixer,
+  useForkRef,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -15,7 +20,7 @@ import { RatingItem, type RatingItemProps } from "./RatingItem";
 
 const withBaseName = makePrefixer("saltRating");
 
-export interface RatingProps extends FlexLayoutProps<"div"> {
+export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
   /**
    * current selected rating. If nothing is selected, 0 is assigned.
    */
@@ -24,7 +29,7 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
    */
-  onValueChange?: (
+  onChange?: (
     event: React.MouseEvent<HTMLButtonElement>,
     itemValue: number,
   ) => void;
@@ -38,10 +43,12 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
   disabled?: boolean;
   /**
    * Whether to allow clearing the rating when clicking the same rating again.
+   * @default true
    */
-  allowClear?: boolean;
+  enableDeselect?: boolean;
   /**
    * Total number of icons displayed.
+   * @default 5
    */
   max?: number;
   /**
@@ -60,6 +67,7 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
   /**
    * Position of the label relative to the rating component.
    * Can be "top", "right", "bottom", or "left".
+   * @default "right"
    */
   labelPosition?: "top" | "right" | "bottom" | "left";
   /**
@@ -79,11 +87,11 @@ export interface RatingProps extends FlexLayoutProps<"div"> {
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   {
     value = 0,
-    onValueChange,
+    onChange,
     className,
     readOnly = false,
     disabled = false,
-    allowClear = true,
+    enableDeselect = true,
     max = 5,
     semanticLabels,
     showLabel = false,
@@ -102,8 +110,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     css: ratingCss,
     window: targetWindow,
   });
-  const [reset, setReset] = useState(false);
-  const [currentHoveredStarIndex, setCurrentHoveredStarIndex] = useState(0);
+  const [currentHoveredIndex, setCurrentHoveredIndex] = useState(0);
   const [selected, setSelectedItem] = useState<number>(value ? value : 0);
   const groupRef = useRef<HTMLDivElement>(null);
   const handleGroupRef = useForkRef(ref, groupRef);
@@ -167,11 +174,10 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     if (event.type === "mouseenter") {
       setLabel(getLabel(value));
     } else if (event.type === "mouseleave") {
-      setReset(false);
       setLabel(selected > 0 ? getLabel(selected) : "No rating selected"); // Reset label
-      setCurrentHoveredStarIndex(0); // Reset hovered star index
+      setCurrentHoveredIndex(0); // Reset hovered star index
     }
-    setCurrentHoveredStarIndex(value);
+    setCurrentHoveredIndex(value);
   };
 
   const handleFocus = () => {
@@ -186,19 +192,17 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     value: number,
   ) => {
     if (selected === value) {
-      if (allowClear) {
-        // Clear the rating if `allowClear` is true
+      if (enableDeselect) {
+        // Clear the rating if `enableDeselect` is true
         setSelectedItem(0);
-        setReset(true);
         setLabel("No rating selected"); // Reset label when cleared
       }
     } else {
       setSelectedItem(value);
-      setReset(false);
       setLabel(getLabel(value)); // Update label based on selected star
     }
-    if (onValueChange) {
-      onValueChange(event, value);
+    if (onChange) {
+      onChange(event, value);
     }
   };
 
@@ -240,33 +244,35 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         className={clsx(withBaseName(), className)}
         {...restProps}
       >
-        {Array.from({ length: max }, (_, index) => (
-          <RatingItem
-            reset={reset}
-            currentRating={selected}
-            isCurrentStarHovered={
-              currentHoveredStarIndex > 0 &&
-              index + 1 <= currentHoveredStarIndex
-            }
-            isSelectedStyle={index + 1 > 0 && index + 1 <= selected}
-            isActiveState={
-              currentHoveredStarIndex > 0 && // A star is being hovered
-              index + 1 > currentHoveredStarIndex && // This star is beyond the hovered star
-              index + 1 <= selected
-            }
-            onFeedbackItemHover={handleMouseHover}
-            onFeedbackItemClick={handleItemClick}
-            itemValue={index + 1}
-            key={index + 1}
-            readOnly={readOnly}
-            disabled={disabled}
-            character={character}
-            outlinedIcon={outlinedIcon}
-            filledIcon={filledIcon}
-            emptyIcon={emptyIcon}
-            index={index}
-          />
-        ))}
+        {Array.from({ length: max }, (_, index) => {
+          const itemValue = index + 1;
+          const isHovered =
+            currentHoveredIndex > 0 && itemValue <= currentHoveredIndex;
+          const isSelected = itemValue > 0 && itemValue <= selected;
+          const isActive =
+            currentHoveredIndex > 0 &&
+            itemValue > currentHoveredIndex &&
+            itemValue <= selected;
+          return (
+            <RatingItem
+              currentRating={selected}
+              isHovered={isHovered}
+              isSelected={isSelected}
+              isActive={isActive}
+              onHover={handleMouseHover}
+              onItemClick={handleItemClick}
+              value={itemValue}
+              key={itemValue}
+              readOnly={readOnly}
+              disabled={disabled}
+              character={character}
+              outlinedIcon={outlinedIcon}
+              filledIcon={filledIcon}
+              emptyIcon={emptyIcon}
+              index={index}
+            />
+          );
+        })}
       </FlexLayout>
       {(showLabel || semanticLabels) &&
         (labelPosition === "bottom" || labelPosition === "right") && (

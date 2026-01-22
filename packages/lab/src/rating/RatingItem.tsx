@@ -12,7 +12,6 @@ import {
   forwardRef,
   isValidElement,
   type MouseEvent,
-  type ReactElement,
 } from "react";
 import ratingItemCss from "./RatingItem.css";
 
@@ -22,19 +21,15 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * specifies the value of the feedback item.
    */
-  itemValue: number;
+  value: number;
   /**
    * To define if the current star is being hovered.
    */
-  isCurrentStarHovered?: boolean;
+  isHovered?: boolean;
   /**
    * To specify if the item is selected.
    */
-  isSelectedStyle?: boolean;
-  /**
-   * resets the current selection.
-   */
-  reset?: boolean;
+  isSelected?: boolean;
   /**
    * defines the current selected rating.
    */
@@ -42,14 +37,11 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
   /**
    *  callback function when feedback item is hovered.
    */
-  onFeedbackItemHover: (
-    event: MouseEvent<HTMLButtonElement>,
-    itemValue: number,
-  ) => void;
+  onHover: (event: MouseEvent<HTMLButtonElement>, itemValue: number) => void;
   /**
    *  callback function when feedback item is clicked.
    */
-  onFeedbackItemClick: (
+  onItemClick: (
     event: MouseEvent<HTMLButtonElement>,
     itemValue: number,
   ) => void;
@@ -74,10 +66,6 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
    */
   emptyIcon?: React.ReactNode;
   /**
-   * Defines the minimum increment value change allowed.
-   */
-  precision?: number;
-  /**
    * Custom character for the rating icons.
    */
   character?: React.ReactNode | ((props: RatingItemProps) => React.ReactNode);
@@ -93,24 +81,22 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
    * or styled differently to indicate that it is part of the current selection
    * or interaction (e.g., hover or focus).
    */
-  isActiveState?: boolean;
+  isActive?: boolean;
 }
 
 export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
   function RatingItem(props, ref?) {
     const {
-      itemValue,
+      value,
       currentRating,
       className,
-      isSelectedStyle,
-      reset,
-      isCurrentStarHovered,
-      onFeedbackItemHover,
-      onFeedbackItemClick,
+      isSelected,
+      isHovered,
+      onHover,
+      onItemClick,
       readOnly = false,
       disabled = false,
-      isActiveState,
-      precision = 1,
+      isActive,
       outlinedIcon = props?.emptyIcon || <FavoriteStrongIcon />,
       filledIcon = <FavoriteSolidIcon />,
       emptyIcon = <FavoriteIcon />,
@@ -128,24 +114,23 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
 
     const handleMouseEnter = (event: MouseEvent<HTMLButtonElement>) => {
       if (readOnly || disabled) return; // Prevent hover interaction in read-only mode
-      onFeedbackItemHover(event, itemValue);
+      onHover(event, value);
     };
     const handleMouseLeave = (event: MouseEvent<HTMLButtonElement>) => {
       if (readOnly || disabled) return; // Prevent hover interaction in read-only mode
-      onFeedbackItemHover(event, 0);
+      onHover(event, 0);
     };
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
       if (readOnly || disabled) return; // Prevent click interaction in read-only mode
-      onFeedbackItemClick(event, itemValue);
+      onItemClick(event, value);
     };
 
     const renderIcon = () => {
       const iconClass = clsx(withBaseName("icon"), {
-        [withBaseName("icon-outlined")]: isActiveState,
-        [withBaseName("icon-hovered")]: isCurrentStarHovered,
-        [withBaseName("icon-filled")]: isSelectedStyle,
-        [withBaseName("icon-empty")]:
-          !isActiveState && !isCurrentStarHovered && !isSelectedStyle,
+        [withBaseName("icon-outlined")]: isActive,
+        [withBaseName("icon-hovered")]: isHovered,
+        [withBaseName("icon-filled")]: isSelected,
+        [withBaseName("icon-empty")]: !isActive && !isHovered && !isSelected,
       });
       // Render custom character if provided
       if (typeof character === "function") {
@@ -156,9 +141,9 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
         return <div className={iconClass}>{character}</div>;
       }
       // Determine the icon to render based on the state
-      const iconToRender = isActiveState
+      const iconToRender = isActive
         ? outlinedIcon
-        : isCurrentStarHovered || isSelectedStyle
+        : isHovered || isSelected
           ? filledIcon
           : emptyIcon;
       return <div className={iconClass}>{iconToRender}</div>;
@@ -166,16 +151,15 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
 
     return (
       <button
-        data-testid={`salt-${itemValue}`}
-        aria-checked={itemValue === currentRating}
-        aria-label={`Rating${itemValue}`}
+        aria-checked={value === currentRating}
+        aria-label={`Rating${value}`}
         role="radio"
         tabIndex={
           disabled
             ? -1
-            : (readOnly && itemValue === currentRating) ||
-                itemValue === currentRating ||
-                (itemValue === 1 && currentRating === 0)
+            : (readOnly && value === currentRating) ||
+                value === currentRating ||
+                (value === 1 && currentRating === 0)
               ? 0
               : -1
         }
@@ -185,7 +169,7 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
         className={clsx(withBaseName(), className, {
           [withBaseName("read-only")]: readOnly,
           [withBaseName("disabled")]: disabled,
-          [withBaseName("current")]: itemValue === currentRating,
+          [withBaseName("current")]: value === currentRating,
         })}
         ref={ref}
         disabled={disabled}

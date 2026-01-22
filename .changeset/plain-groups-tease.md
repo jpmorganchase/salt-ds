@@ -3,14 +3,20 @@
 ---
 
 New `Rating` and `RatingItem` components have been added to allow users to provide feedback relating to your product or experience.
-Added:
 
-- Examples
-  -> Basic
-  -> Clear Selection
-  -> Visual Label
-  -> Form Field Support
-  -> Custom Icons
-  -> Disabled
-  -> Read-only
-- Site documentation
+Basic usage:
+
+```jsx
+import { Rating } from "@salt-ds/lab";
+
+function App() {
+  const [value, setValue] = useState(0);
+
+  return (
+    <Rating
+      value={value}
+      onValueChange={(event, newValue) => setValue(newValue)}
+    />
+  );
+}
+```

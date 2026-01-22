@@ -1,6 +1,3 @@
-// TODO revisit when:
-//  - multiline is implemented for Input
-
 import {
   FlexLayout,
   FormField,
@@ -17,7 +14,7 @@ export default {
   title: "Lab/Rating",
   component: Rating,
   args: {
-    onValueChange: fn(),
+    onChange: fn(),
   },
 } as Meta<typeof Rating>;
 
@@ -32,8 +29,8 @@ export const ClearSelection: StoryFn<typeof Rating> = (args) => {
         <FormFieldLabel>Click to clear selection</FormFieldLabel>
         <Rating
           value={3}
-          allowClear={true}
-          onValueChange={(value) => console.log(value)}
+          enableDeselect={true}
+          onChange={(event, value) => console.log(event, value)}
           {...args}
         />
       </FormField>
@@ -41,8 +38,8 @@ export const ClearSelection: StoryFn<typeof Rating> = (args) => {
         <FormFieldLabel>Prevent Clearing Selection</FormFieldLabel>
         <Rating
           value={3}
-          allowClear={false}
-          onValueChange={(value) => console.log(value)}
+          enableDeselect={false}
+          onChange={(event, value) => console.log(event, value)}
           {...args}
         />
       </FormField>
@@ -83,10 +80,7 @@ export const FormFieldSupport: StoryFn<typeof Rating> = (args) => {
   );
 };
 
-export const CustomIcons: StoryFn<typeof Rating> = ({
-  onValueChange,
-  ...args
-}) => {
+export const CustomIcons: StoryFn<typeof Rating> = ({ onChange, ...args }) => {
   const [value, setValue] = useState(3);
 
   return (
@@ -95,7 +89,7 @@ export const CustomIcons: StoryFn<typeof Rating> = ({
         <FormFieldLabel>Decreased increments</FormFieldLabel>
         <Rating
           max={3}
-          onValueChange={(value) => console.log(value)}
+          onChange={(event, value) => console.log(event, value)}
           {...args}
         />
       </FormField>
@@ -104,7 +98,7 @@ export const CustomIcons: StoryFn<typeof Rating> = ({
         <Rating
           value={7}
           max={10}
-          onValueChange={(event, value) => console.log(event, value)}
+          onChange={(event, value) => console.log(event, value)}
           {...args}
         />
       </FormField>
@@ -116,7 +110,7 @@ export const CustomIcons: StoryFn<typeof Rating> = ({
           emptyIcon={<LikeIcon />}
           value={value}
           max={6}
-          onValueChange={(event, value) => setValue(value)}
+          onChange={(event, value) => setValue(value)}
           {...args}
         />
       </FormField>

@@ -10,7 +10,7 @@
   cursor: var(--salt-cursor-hover);
 }
 .saltRatingItem-icon {
-  --saltIcon-size: 14px;
+  --saltIcon-size: var(--salt-size-icon);
   position: relative;
 }
 
