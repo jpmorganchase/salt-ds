@@ -3,8 +3,13 @@
 }
 
 .saltRating-container {
+  gap: calc(var(--salt-spacing-100) * 0.5);
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
 .saltRating-label {

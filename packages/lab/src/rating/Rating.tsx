@@ -88,7 +88,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   {
     value = 0,
     onChange,
-    className,
     readOnly = false,
     disabled = false,
     enableDeselect = true,
@@ -100,6 +99,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     filledIcon,
     emptyIcon,
     labelPosition = "right",
+    onKeyDown,
+    onFocus,
     ...restProps
   },
   ref?,
@@ -229,19 +230,18 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
             {label}
           </div>
         )}
-      <FlexLayout
+      <div
         role="radiogroup"
-        gap={0.5}
         ref={handleGroupRef}
         onKeyDown={(event) => {
           handleKeyDown(event);
-          restProps?.onKeyDown?.(event);
+          onKeyDown?.(event);
         }}
         onFocus={(event) => {
           handleFocus();
-          restProps?.onFocus?.(event);
+          onFocus?.(event);
         }}
-        className={clsx(withBaseName(), className)}
+        className={clsx(withBaseName("container"))}
         {...restProps}
       >
         {Array.from({ length: max }, (_, index) => {
@@ -273,7 +273,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
             />
           );
         })}
-      </FlexLayout>
+      </div>
       {(showLabel || semanticLabels) &&
         (labelPosition === "bottom" || labelPosition === "right") && (
           <div
