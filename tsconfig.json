@@ -33,7 +33,12 @@
         "./packages/date-adapters/src/*-adapter/index.ts"
       ]
     },
-    "types": ["cypress", "@testing-library/cypress", "node"]
+    "types": [
+      "cypress",
+      "@testing-library/cypress",
+      "node",
+      "cypress-real-events"
+    ]
   },
   "include": [
     "packages",
@@ -42,6 +47,7 @@
     "docs",
     "tooling",
     "cypress",
+    "cypress/types.d.ts",
     "./declarations.d.ts"
   ]
 }
