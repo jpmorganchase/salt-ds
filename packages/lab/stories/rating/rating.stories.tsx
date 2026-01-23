@@ -23,23 +23,31 @@ export const Basic: StoryFn<typeof Rating> = (args) => {
 };
 
 export const ClearSelection: StoryFn<typeof Rating> = (args) => {
+  const [rating1, setRating1] = useState(3);
+  const [rating2, setRating2] = useState(3);
   return (
     <FlexLayout direction="column" gap={3}>
       <FormField labelPlacement="top">
         <FormFieldLabel>Click to clear selection</FormFieldLabel>
         <Rating
-          value={3}
-          enableDeselect={true}
-          onChange={(event, value) => console.log(event, value)}
+          defaultValue={rating1}
+          enableDeselect
+          onChange={(event, value) => {
+            console.log(event, value);
+            setRating1(value);
+          }}
           {...args}
         />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Prevent Clearing Selection</FormFieldLabel>
         <Rating
-          value={3}
+          defaultValue={rating2}
           enableDeselect={false}
-          onChange={(event, value) => console.log(event, value)}
+          onChange={(event, value) => {
+            console.log(event, value);
+            setRating2(value);
+          }}
           {...args}
         />
       </FormField>
@@ -56,7 +64,7 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
         {...args}
       />
       <Rating
-        value={4}
+        defaultValue={4}
         semanticLabels={(value, max) => `${value}/${max}`}
         {...args}
       />
@@ -80,7 +88,7 @@ export const FormFieldSupport: StoryFn<typeof Rating> = (args) => {
   );
 };
 
-export const CustomIcons: StoryFn<typeof Rating> = ({ onChange, ...args }) => {
+export const CustomIcons: StoryFn<typeof Rating> = () => {
   const [value, setValue] = useState(3);
 
   return (
@@ -88,18 +96,17 @@ export const CustomIcons: StoryFn<typeof Rating> = ({ onChange, ...args }) => {
       <FormField labelPlacement="top">
         <FormFieldLabel>Decreased increments</FormFieldLabel>
         <Rating
+          defaultValue={2}
           max={3}
           onChange={(event, value) => console.log(event, value)}
-          {...args}
         />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Increased increments</FormFieldLabel>
         <Rating
-          value={7}
+          defaultValue={7}
           max={10}
           onChange={(event, value) => console.log(event, value)}
-          {...args}
         />
       </FormField>
       <FormField labelPlacement="top">
@@ -111,7 +118,6 @@ export const CustomIcons: StoryFn<typeof Rating> = ({ onChange, ...args }) => {
           value={value}
           max={6}
           onChange={(event, value) => setValue(value)}
-          {...args}
         />
       </FormField>
     </FlexLayout>
@@ -119,9 +125,9 @@ export const CustomIcons: StoryFn<typeof Rating> = ({ onChange, ...args }) => {
 };
 
 export const Disabled: StoryFn<typeof Rating> = (args) => {
-  return <Rating disabled value={3} {...args} />;
+  return <Rating disabled defaultValue={3} {...args} />;
 };
 
 export const ReadOnly: StoryFn<typeof Rating> = (args) => {
-  return <Rating readOnly value={3} {...args} />;
+  return <Rating readOnly defaultValue={3} {...args} />;
 };

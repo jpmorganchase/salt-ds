@@ -1,7 +1,7 @@
 import {
-  FlexLayout,
   type FlexLayoutProps,
   makePrefixer,
+  useControlled,
   useForkRef,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -11,7 +11,6 @@ import {
   forwardRef,
   type MouseEvent,
   type ReactElement,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -22,9 +21,14 @@ const withBaseName = makePrefixer("saltRating");
 
 export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
   /**
-   * current selected rating. If nothing is selected, 0 is assigned.
+   * When provided, the component is controlled.
    */
   value?: number;
+  /**
+   * Default rating value for uncontrolled mode.
+   * @default 0
+   */
+  defaultValue?: number;
   /**
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
@@ -86,7 +90,8 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
 
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   {
-    value = 0,
+    value: valueProp,
+    defaultValue = 0,
     onChange,
     className,
     readOnly = false,
@@ -113,7 +118,12 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     window: targetWindow,
   });
   const [currentHoveredIndex, setCurrentHoveredIndex] = useState(0);
-  const [selected, setSelectedItem] = useState<number>(value ? value : 0);
+  const [selected, setSelected] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    name: "Rating",
+    state: "value",
+  });
   const wrapperRef = useRef<HTMLDivElement>(null);
   const handleWrapperRef = useForkRef(ref, wrapperRef);
 
@@ -125,7 +135,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   };
 
   const [label, setLabel] = useState(
-    value ? getLabel(value) : "No rating selected",
+    selected ? getLabel(selected) : "No rating selected",
   );
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -152,21 +162,35 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       case "ArrowRight":
         if (!isLastStar) {
           const nextIndex = currentIndex + 1;
+          const newValue = nextIndex + 1;
           elements[nextIndex]?.focus();
-          setSelectedItem(nextIndex + 1); // Save the selection as the rating
-          setLabel(getLabel(nextIndex + 1)); // Update the label
+          setSelected(newValue); // Save the selection as the rating
+          setLabel(getLabel(newValue)); // Update the label
+
+          // Trigger onChange for controlled mode
+          if (onChange) {
+            // Create a synthetic event since keyboard events don't have a button target
+            onChange(event as any, newValue);
+          }
         }
         break;
       case "ArrowUp":
       case "ArrowLeft":
         if (!isFirstStar) {
           const prevIndex = currentIndex - 1;
+          const newValue = prevIndex + 1;
           elements[prevIndex]?.focus();
-          setSelectedItem(prevIndex + 1); // Save the selection as the rating
-          setLabel(getLabel(prevIndex + 1)); // Update the label
+          setSelected(newValue); // Save the selection as the rating
+          setLabel(getLabel(newValue)); // Update the label
+          // Trigger onChange for controlled mode
+          if (onChange) {
+            onChange(event as any, newValue);
+          }
         }
         break;
     }
+
+    onKeyDown?.(event);
   };
 
   const handleMouseHover = (
@@ -182,35 +206,34 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     setCurrentHoveredIndex(value);
   };
 
-  const handleFocus = () => {
+  const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
     if (selected === 0) {
-      setSelectedItem(1); // Save the selection as the first star
-      setLabel(getLabel(1)); // Update the label
+      const newValue = 1;
+      setSelected(newValue);
+      setLabel(getLabel(newValue));
+      
+      // Trigger onChange for controlled mode
+      if (onChange) {
+        onChange(event as any, newValue);
+      }
     }
+    
+    onFocus?.(event);
   };
 
   const handleItemClick = (
     event: MouseEvent<HTMLButtonElement>,
     value: number,
   ) => {
-    if (selected === value) {
-      if (enableDeselect) {
-        // Clear the rating if `enableDeselect` is true
-        setSelectedItem(0);
-        setLabel("No rating selected"); // Reset label when cleared
-      }
-    } else {
-      setSelectedItem(value);
-      setLabel(getLabel(value)); // Update label based on selected star
-    }
+    const newValue = selected === value && enableDeselect ? 0 : value;
+    
+    setSelected(newValue);
+    setLabel(newValue > 0 ? getLabel(newValue) : "No rating selected");
+    
     if (onChange) {
-      onChange(event, value);
+      onChange(event, newValue);
     }
   };
-
-  useEffect(() => {
-    setSelectedItem(value);
-  }, [value]);
 
   return (
     <div
@@ -235,14 +258,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         )}
       <div
         role="radiogroup"
-        onKeyDown={(event) => {
-          handleKeyDown(event);
-          onKeyDown?.(event);
-        }}
-        onFocus={(event) => {
-          handleFocus();
-          onFocus?.(event);
-        }}
+        onKeyDown={handleKeyDown}
+        onFocus={handleFocus}
         className={clsx(withBaseName("container"))}
       >
         {Array.from({ length: max }, (_, index) => {
