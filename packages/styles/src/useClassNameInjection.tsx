@@ -66,11 +66,8 @@ type PropsWithClassName = { className?: string } & Record<string, any>;
  * Return the className created by the registry and a props object with injector keys stripped.
  * Only components declared in ComponentPropsMap can call this at compile time.
  */
-export function useClassNameInjection<
-  Props extends PropsWithClassName,
-  ComponentName extends SupportedComponent = SupportedComponent,
->(
-  component: ComponentName,
+export function useClassNameInjection<Props extends PropsWithClassName>(
+  component: SupportedComponent,
   props: Props,
 ): { className: string | undefined; props: Omit<Props, "className"> } {
   const registry = useContext(InjectionContext);
@@ -127,10 +124,9 @@ export function useClassNameInjection<
 export function registerClassInjector<
   Props extends Record<string, any>,
   Keys extends Extract<keyof Props, string>,
-  ComponentName extends SupportedComponent = SupportedComponent,
 >(
   registry: ClassNameInjectionRegistry,
-  component: ComponentName,
+  component: SupportedComponent,
   keys: Keys[],
   injector: ClassNameInjector<Props, Keys>,
 ) {
