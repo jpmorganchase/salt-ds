@@ -134,9 +134,11 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     return semanticLabels?.[value - 1] || "No rating selected";
   };
 
-  const [label, setLabel] = useState(
-    selected ? getLabel(selected) : "No rating selected",
-  );
+  const label = currentHoveredIndex > 0 
+  ? getLabel(currentHoveredIndex)
+  : selected > 0 
+    ? getLabel(selected) 
+    : "No rating selected";
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (readOnly) {
@@ -165,7 +167,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
           const newValue = nextIndex + 1;
           elements[nextIndex]?.focus();
           setSelected(newValue); // Save the selection as the rating
-          setLabel(getLabel(newValue)); // Update the label
 
           // Trigger onChange for controlled mode
           if (onChange) {
@@ -181,7 +182,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
           const newValue = prevIndex + 1;
           elements[prevIndex]?.focus();
           setSelected(newValue); // Save the selection as the rating
-          setLabel(getLabel(newValue)); // Update the label
           // Trigger onChange for controlled mode
           if (onChange) {
             onChange(event as any, newValue);
@@ -198,19 +198,16 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     value: number,
   ) => {
     if (event.type === "mouseenter") {
-      setLabel(getLabel(value));
+      setCurrentHoveredIndex(value);
     } else if (event.type === "mouseleave") {
-      setLabel(selected > 0 ? getLabel(selected) : "No rating selected"); // Reset label
-      setCurrentHoveredIndex(0); // Reset hovered star index
+      setCurrentHoveredIndex(0);
     }
-    setCurrentHoveredIndex(value);
   };
 
   const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
     if (selected === 0) {
       const newValue = 1;
       setSelected(newValue);
-      setLabel(getLabel(newValue));
       
       // Trigger onChange for controlled mode
       if (onChange) {
@@ -228,7 +225,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     const newValue = selected === value && enableDeselect ? 0 : value;
     
     setSelected(newValue);
-    setLabel(newValue > 0 ? getLabel(newValue) : "No rating selected");
     
     if (onChange) {
       onChange(event, newValue);
