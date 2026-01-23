@@ -88,6 +88,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   {
     value = 0,
     onChange,
+    className,
     readOnly = false,
     disabled = false,
     enableDeselect = true,
@@ -113,8 +114,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   });
   const [currentHoveredIndex, setCurrentHoveredIndex] = useState(0);
   const [selected, setSelectedItem] = useState<number>(value ? value : 0);
-  const groupRef = useRef<HTMLDivElement>(null);
-  const handleGroupRef = useForkRef(ref, groupRef);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const handleWrapperRef = useForkRef(ref, wrapperRef);
 
   const getLabel = (value: number): string => {
     if (typeof semanticLabels === "function") {
@@ -138,7 +139,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       return;
     }
     const elements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll("button:not([disabled])") ?? [],
+      wrapperRef.current?.querySelectorAll("button:not([disabled])") ?? [],
     );
     const currentIndex = elements.findIndex(
       (element) => element === document.activeElement,
@@ -212,12 +213,14 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   }, [value]);
 
   return (
-    <FlexLayout
-      gap={1}
-      align="center"
-      direction={
-        labelPosition === "left" || labelPosition === "right" ? "row" : "column"
-      }
+    <div
+      ref={handleWrapperRef}
+      className={clsx(
+        withBaseName("wrapper"),
+        withBaseName(`wrapper-${labelPosition}`),
+        className
+      )}
+      {...restProps}
     >
       {(showLabel || semanticLabels) &&
         (labelPosition === "top" || labelPosition === "left") && (
@@ -232,7 +235,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         )}
       <div
         role="radiogroup"
-        ref={handleGroupRef}
         onKeyDown={(event) => {
           handleKeyDown(event);
           onKeyDown?.(event);
@@ -242,7 +244,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
           onFocus?.(event);
         }}
         className={clsx(withBaseName("container"))}
-        {...restProps}
       >
         {Array.from({ length: max }, (_, index) => {
           const itemValue = index + 1;
@@ -285,6 +286,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
             {label}
           </div>
         )}
-    </FlexLayout>
+    </div>
   );
 });

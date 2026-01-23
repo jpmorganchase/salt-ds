@@ -2,6 +2,22 @@
   width: fit-content;
 }
 
+.saltRating-wrapper {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+}
+
+.saltRating-wrapper-top,
+.saltRating-wrapper-bottom {
+  flex-direction: column;
+}
+
+.saltRating-wrapper-left,
+.saltRating-wrapper-right {
+  flex-direction: row;
+}
+
 .saltRating-container {
   gap: calc(var(--salt-spacing-100) * 0.5);
   display: flex;

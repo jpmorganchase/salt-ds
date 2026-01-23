@@ -47,10 +47,6 @@
   color: var(--salt-accent-background);
 }
 
-.saltRatingItem-icon:focus-visible {
-  border: 2px dashed var(--salt-focused-outline);
-}
-
 .saltRatingItem-icon-outlined {
   color: var(--salt-accent-background);
 }
