@@ -1,11 +1,11 @@
-.saltRating {
-  width: fit-content;
-}
-
 .saltRating-wrapper {
   display: flex;
   gap: var(--salt-spacing-100);
   align-items: center;
+}
+
+.saltFormField .saltRating-wrapper {
+  min-height: var(--salt-size-base);
 }
 
 .saltRating-wrapper-top,
@@ -35,7 +35,6 @@
   font-style: normal;
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
-  width: 150px;
 }
 
 .saltRating-label.saltRating-label-top,
@@ -45,4 +44,10 @@
 
 .saltRating-label.saltRating-label-left {
   text-align: right;
+}
+
+.saltRating-label.saltRating-label-left,
+.saltRating-label.saltRating-label-right {
+  min-width: 120px;
+  flex-shrink: 0;
 }

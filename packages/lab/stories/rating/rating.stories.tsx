@@ -3,6 +3,7 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  SemanticIconProvider,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
 import { Rating } from "@salt-ds/lab";
@@ -56,16 +57,32 @@ export const ClearSelection: StoryFn<typeof Rating> = (args) => {
 };
 
 export const VisualLabel: StoryFn<typeof Rating> = (args) => {
+  const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
   return (
     <FlexLayout direction="column" gap={2}>
       <Rating
-        labelPosition="right"
-        semanticLabels={["Poor", "Fair", "Good", "Very Good", "Excellent"]}
+        labelPlacement="right"
+        getLabel={(value) => labels[value - 1] || "No rating"}
+        {...args}
+      />
+      <Rating
+        labelPlacement="top"
+        getLabel={(value) => labels[value - 1] || "No rating"}
+        {...args}
+      />
+      <Rating
+        labelPlacement="left"
+        getLabel={(value) => labels[value - 1] || "No rating"}
+        {...args}
+      />
+      <Rating
+        labelPlacement="bottom"
+        getLabel={(value) => labels[value - 1] || "No rating"}
         {...args}
       />
       <Rating
         defaultValue={4}
-        semanticLabels={(value, max) => `${value}/${max}`}
+        getLabel={(value, max) => `${value}/${max}`}
         {...args}
       />
     </FlexLayout>
@@ -73,11 +90,12 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
 };
 
 export const FormFieldSupport: StoryFn<typeof Rating> = (args) => {
+  const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
   return (
     <FormField labelPlacement="top">
       <FormFieldLabel color="secondary">Overall Experience</FormFieldLabel>
       <Rating
-        semanticLabels={["Poor", "Fair", "Good", "Very Good", "Excellent"]}
+        getLabel={(value) => labels[value - 1] || "No rating"}
         {...args}
       />
       <FormFieldHelperText>
@@ -111,14 +129,17 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Custom icon</FormFieldLabel>
-        <Rating
-          outlinedIcon={<LikeIcon />}
-          filledIcon={<LikeSolidIcon />}
-          emptyIcon={<LikeIcon />}
-          value={value}
-          max={6}
-          onChange={(event, value) => setValue(value)}
-        />
+        <SemanticIconProvider iconMap={{
+          FavoriteEmptyIcon: LikeIcon,
+          FavoriteSolidIcon: LikeSolidIcon,
+          FavoriteStrongIcon: LikeIcon
+        }}>
+          <Rating
+            value={value}
+            max={6}
+            onChange={(event, value) => setValue(value)}
+          />
+        </SemanticIconProvider>
       </FormField>
     </FlexLayout>
   );

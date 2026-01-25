@@ -3,6 +3,9 @@ import {
   makePrefixer,
   useControlled,
   useForkRef,
+  useId,
+  useFormFieldProps,
+  useIcon
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -56,14 +59,9 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    */
   max?: number;
   /**
-   * Custom labels for each rating value. Can be an array of strings or a function
-   * that generates labels dynamically (e.g., numerical values like "1/5").
+   * Function that generates labels dynamically based on the value and max.
    */
-  semanticLabels?: string[] | ((value: number, max: number) => string);
-  /**
-   * Whether to display the label.
-   */
-  showLabel?: boolean;
+  getLabel?: (value: number, max: number) => string;
   /**
    * Custom character for the rating icons.
    */
@@ -73,11 +71,11 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * Can be "top", "right", "bottom", or "left".
    * @default "right"
    */
-  labelPosition?: "top" | "right" | "bottom" | "left";
+  labelPlacement?: "top" | "right" | "bottom" | "left";
   /**
    * Custom icon for the outlined state.
    */
-  outlinedIcon?: React.ReactNode;
+  strongIcon?: React.ReactNode;
   /**
    * Custom icon for the filled state.
    */
@@ -86,27 +84,33 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * Custom icon for the empty state.
    */
   emptyIcon?: React.ReactNode;
+  /**
+   * The name to be set on each radio button within the group. If not set, then one will be generated for you.
+   */
+  name?: string;
 }
 
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   {
     value: valueProp,
     defaultValue = 0,
+    name: nameProp,
     onChange,
     className,
-    readOnly = false,
-    disabled = false,
+    readOnly,
+    disabled,
     enableDeselect = true,
     max = 5,
-    semanticLabels,
-    showLabel = false,
+    getLabel,
     character,
-    outlinedIcon,
+    strongIcon,
     filledIcon,
     emptyIcon,
-    labelPosition = "right",
+    labelPlacement = "right",
     onKeyDown,
     onFocus,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...restProps
   },
   ref?,
@@ -117,6 +121,14 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     css: ratingCss,
     window: targetWindow,
   });
+  const {
+    a11yProps: {
+      "aria-describedby": formFieldDescribedBy,
+      "aria-labelledby": formFieldLabelledBy,
+    } = {},
+  } = useFormFieldProps();
+
+
   const [currentHoveredIndex, setCurrentHoveredIndex] = useState(0);
   const [selected, setSelected] = useControlled({
     controlled: valueProp,
@@ -126,179 +138,172 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   });
   const wrapperRef = useRef<HTMLDivElement>(null);
   const handleWrapperRef = useForkRef(ref, wrapperRef);
+  const name = useId(nameProp);
+  const labelId = useId();
+  const { FavoriteEmptyIcon, FavoriteSolidIcon, FavoriteStrongIcon } = useIcon();
 
-  const getLabel = (value: number): string => {
-    if (typeof semanticLabels === "function") {
-      return semanticLabels(value, max); // Generate label dynamically
-    }
-    return semanticLabels?.[value - 1] || "No rating selected";
+  const getSemanticLabels = (value: number): string => 
+    value > 0 
+      ? getLabel?.(value, max) || `${value}/${max}`
+      : "No rating selected";
+
+  const updateRating = (newValue: number, event: any) => {
+    setSelected(newValue);
+    onChange?.(event, newValue);
   };
-
-  const label = currentHoveredIndex > 0 
-  ? getLabel(currentHoveredIndex)
-  : selected > 0 
-    ? getLabel(selected) 
-    : "No rating selected";
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (readOnly) {
-      // Prevent focus movement in read-only mode
-      if (
-        ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"].includes(event.key)
-      ) {
+      if (["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"].includes(event.key)) {
         event.preventDefault();
       }
       return;
     }
+
     const elements: HTMLElement[] = Array.from(
-      wrapperRef.current?.querySelectorAll("button:not([disabled])") ?? [],
+      wrapperRef.current?.querySelectorAll("input[type='radio']") ?? [],
     );
-    const currentIndex = elements.findIndex(
-      (element) => element === document.activeElement,
-    );
-    const isLastStar = currentIndex === elements.length - 1; // Check if this is the last star
-    const isFirstStar = currentIndex === 0; // Check if this is the first star
+    const currentIndex = elements.findIndex((el) => el === document.activeElement);
+
+    let newValue: number | null = null;
+    let targetIndex = -1;
 
     switch (event.key) {
       case "ArrowDown":
       case "ArrowRight":
-        if (!isLastStar) {
-          const nextIndex = currentIndex + 1;
-          const newValue = nextIndex + 1;
-          elements[nextIndex]?.focus();
-          setSelected(newValue); // Save the selection as the rating
-
-          // Trigger onChange for controlled mode
-          if (onChange) {
-            // Create a synthetic event since keyboard events don't have a button target
-            onChange(event as any, newValue);
-          }
+        if (currentIndex < elements.length - 1) {
+          targetIndex = currentIndex + 1;
+          newValue = targetIndex + 1;
         }
         break;
+
       case "ArrowUp":
       case "ArrowLeft":
-        if (!isFirstStar) {
-          const prevIndex = currentIndex - 1;
-          const newValue = prevIndex + 1;
-          elements[prevIndex]?.focus();
-          setSelected(newValue); // Save the selection as the rating
-          // Trigger onChange for controlled mode
-          if (onChange) {
-            onChange(event as any, newValue);
-          }
+        if (currentIndex > 0) {
+          targetIndex = currentIndex - 1;
+          newValue = targetIndex + 1;
         }
         break;
+
+      case "Enter":
+      case " ":
+        if (currentIndex !== -1 && enableDeselect) {
+          newValue = selected === currentIndex + 1 ? 0 : currentIndex + 1;
+        }
+        break;
+
+      default:
+        onKeyDown?.(event);
+        return;
+    }
+
+    event.preventDefault();
+    
+    if (targetIndex >= 0) {
+      elements[targetIndex]?.focus();
+    }
+    
+    if (newValue !== null) {
+      updateRating(newValue, event);
+      setCurrentHoveredIndex(0);
     }
 
     onKeyDown?.(event);
   };
 
-  const handleMouseHover = (
-    event: MouseEvent<HTMLButtonElement>,
-    value: number,
-  ) => {
-    if (event.type === "mouseenter") {
-      setCurrentHoveredIndex(value);
-    } else if (event.type === "mouseleave") {
-      setCurrentHoveredIndex(0);
-    }
+  const handleMouseHover = (itemValue: number) => (event: MouseEvent<HTMLLabelElement>) => {
+    if (readOnly) return;
+    setCurrentHoveredIndex(event.type === "mouseenter" ? itemValue : 0);
   };
 
   const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-    if (selected === 0) {
-      const newValue = 1;
-      setSelected(newValue);
-      
-      // Trigger onChange for controlled mode
-      if (onChange) {
-        onChange(event as any, newValue);
-      }
+    if (selected === 0 && !readOnly) {
+      updateRating(1, event);
     }
-    
     onFocus?.(event);
   };
 
-  const handleItemClick = (
-    event: MouseEvent<HTMLButtonElement>,
-    value: number,
-  ) => {
-    const newValue = selected === value && enableDeselect ? 0 : value;
-    
-    setSelected(newValue);
-    
-    if (onChange) {
-      onChange(event, newValue);
+  const handleClick = (itemValue: number) => (event: MouseEvent<HTMLInputElement>) => {
+    if (readOnly) {
+      event.preventDefault();
+      return;
     }
+    const newValue = selected === itemValue && enableDeselect ? 0 : itemValue;
+    updateRating(newValue, event);
   };
+
+  const isTopLeft = labelPlacement === "top" || labelPlacement === "left";
+  const label = getSemanticLabels(currentHoveredIndex || selected);
+
+  const displayLabel = getLabel && (
+    <div id={labelId} className={clsx(withBaseName("label"), withBaseName(`label-${labelPlacement}`))}>
+      {label}
+    </div>
+  );
 
   return (
     <div
       ref={handleWrapperRef}
       className={clsx(
         withBaseName("wrapper"),
-        withBaseName(`wrapper-${labelPosition}`),
+        withBaseName(`wrapper-${labelPlacement}`),
         className
       )}
       {...restProps}
     >
-      {(showLabel || semanticLabels) &&
-        (labelPosition === "top" || labelPosition === "left") && (
-          <div
-            className={clsx(
-              withBaseName("label"),
-              withBaseName(`label-${labelPosition}`),
-            )}
-          >
-            {label}
-          </div>
-        )}
+      <div aria-live="polite" aria-atomic="true" className="salt-visuallyHidden">
+        {selected === 0 ? "Rating cleared" : `Rating updated to ${getSemanticLabels(selected)}`}
+      </div>
+      {isTopLeft && displayLabel}
       <div
         role="radiogroup"
-        onKeyDown={handleKeyDown}
+        className={withBaseName("container")}
+        ref={wrapperRef}
         onFocus={handleFocus}
-        className={clsx(withBaseName("container"))}
+        onKeyDown={handleKeyDown}
+        aria-labelledby={
+          clsx(
+            getLabel && labelId,
+            formFieldLabelledBy,
+            ariaLabelledBy
+          ) || undefined
+        }
+        aria-describedby={
+          clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
+        }
       >
         {Array.from({ length: max }, (_, index) => {
           const itemValue = index + 1;
-          const isHovered =
-            currentHoveredIndex > 0 && itemValue <= currentHoveredIndex;
-          const isSelected = itemValue > 0 && itemValue <= selected;
-          const isActive =
-            currentHoveredIndex > 0 &&
-            itemValue > currentHoveredIndex &&
-            itemValue <= selected;
+          const isHovered = currentHoveredIndex > 0 && itemValue <= currentHoveredIndex;
+          const isFocusable = itemValue === selected || (selected === 0 && itemValue === 1);
+          const isSelected = currentHoveredIndex === 0 && itemValue <= selected;
+          const isActive = currentHoveredIndex > 0 && 
+                          itemValue > currentHoveredIndex && 
+                          itemValue <= selected;
           return (
             <RatingItem
               currentRating={selected}
               isHovered={isHovered}
+              isFocusable={isFocusable}
               isSelected={isSelected}
               isActive={isActive}
-              onHover={handleMouseHover}
-              onItemClick={handleItemClick}
+              onHover={handleMouseHover(itemValue)}
+              onClick={handleClick(itemValue)}
               value={itemValue}
               key={itemValue}
               readOnly={readOnly}
               disabled={disabled}
               character={character}
-              outlinedIcon={outlinedIcon}
-              filledIcon={filledIcon}
-              emptyIcon={emptyIcon}
+              strongIcon={<FavoriteStrongIcon />}
+              filledIcon={<FavoriteSolidIcon />}
+              emptyIcon={<FavoriteEmptyIcon />}
               index={index}
+              name={name}
             />
           );
         })}
       </div>
-      {(showLabel || semanticLabels) &&
-        (labelPosition === "bottom" || labelPosition === "right") && (
-          <div
-            className={clsx(
-              withBaseName("label"),
-              withBaseName(`label-${labelPosition}`),
-            )}
-          >
-            {label}
-          </div>
-        )}
+      {!isTopLeft && displayLabel}
     </div>
   );
 });

@@ -1,23 +1,19 @@
 import { makePrefixer } from "@salt-ds/core";
-import {
-  FavoriteIcon,
-  FavoriteSolidIcon,
-  FavoriteStrongIcon,
-} from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
-  isValidElement,
   type MouseEvent,
+  useCallback,
+  useMemo,
 } from "react";
 import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
 
-export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
+export interface RatingItemProps extends Omit<ComponentPropsWithoutRef<"button">, "onClick"> {
   /**
    * specifies the value of the feedback item.
    */
@@ -31,20 +27,21 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
    */
   isSelected?: boolean;
   /**
+   * If true, this item should be in the tab order.
+   */
+  isFocusable?: boolean;
+  /**
    * defines the current selected rating.
    */
   currentRating?: number;
   /**
    *  callback function when feedback item is hovered.
    */
-  onHover: (event: MouseEvent<HTMLButtonElement>, itemValue: number) => void;
+  onHover: (event: MouseEvent<HTMLLabelElement>) => void;
   /**
    *  callback function when feedback item is clicked.
    */
-  onItemClick: (
-    event: MouseEvent<HTMLButtonElement>,
-    itemValue: number,
-  ) => void;
+  onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
   /**
    * If true, the rating item will be in a read-only state.
    */
@@ -56,7 +53,7 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * Custom icon for the outlined state.
    */
-  outlinedIcon?: React.ReactNode;
+  strongIcon?: React.ReactNode;
   /**
    * Custom icon for the filled state.
    */
@@ -82,27 +79,30 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"button"> {
    * or interaction (e.g., hover or focus).
    */
   isActive?: boolean;
+  /**
+   * Name of the radio group
+   */
+  name?: string;
 }
 
-export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
-  function RatingItem(props, ref?) {
+export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
+  function RatingItem(props, ref) {
     const {
       value,
       currentRating,
-      className,
-      isSelected,
       isHovered,
+      isSelected,
+      isFocusable,
+      isActive,
       onHover,
-      onItemClick,
+      onClick,
       readOnly = false,
       disabled = false,
-      isActive,
-      outlinedIcon = props?.emptyIcon || <FavoriteStrongIcon />,
-      filledIcon = <FavoriteSolidIcon />,
-      emptyIcon = <FavoriteIcon />,
       character,
-      index,
-      ...restProps
+      filledIcon,
+      emptyIcon,
+      strongIcon,
+      name,
     } = props;
 
     const targetWindow = useWindow();
@@ -112,71 +112,55 @@ export const RatingItem = forwardRef<HTMLButtonElement, RatingItemProps>(
       window: targetWindow,
     });
 
-    const handleMouseEnter = (event: MouseEvent<HTMLButtonElement>) => {
-      if (readOnly || disabled) return; // Prevent hover interaction in read-only mode
-      onHover(event, value);
-    };
-    const handleMouseLeave = (event: MouseEvent<HTMLButtonElement>) => {
-      if (readOnly || disabled) return; // Prevent hover interaction in read-only mode
-      onHover(event, 0);
-    };
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      if (readOnly || disabled) return; // Prevent click interaction in read-only mode
-      onItemClick(event, value);
-    };
+    const isInteractive = !readOnly && !disabled;
 
-    const renderIcon = () => {
-      const iconClass = clsx(withBaseName("icon"), {
-        [withBaseName("icon-outlined")]: isActive,
-        [withBaseName("icon-hovered")]: isHovered,
-        [withBaseName("icon-filled")]: isSelected,
-        [withBaseName("icon-empty")]: !isActive && !isHovered && !isSelected,
-      });
-      // Render custom character if provided
-      if (typeof character === "function") {
-        return <div className={iconClass}>{character(props)}</div>;
+    const handleHover = useCallback(
+      (event: MouseEvent<HTMLLabelElement>) => {
+        if (isInteractive) {
+          onHover(event);
+        }
+      },
+      [isInteractive, onHover]
+    );
+
+    const icon = useMemo(() => {
+      if (character) {
+        return typeof character === "function" ? character(props) : character;
       }
-      // Render the custom character as a React node
-      if (isValidElement(character) || typeof character === "string") {
-        return <div className={iconClass}>{character}</div>;
-      }
-      // Determine the icon to render based on the state
-      const iconToRender = isActive
-        ? outlinedIcon
-        : isHovered || isSelected
-          ? filledIcon
-          : emptyIcon;
-      return <div className={iconClass}>{iconToRender}</div>;
-    };
+      if (isHovered || isSelected) return filledIcon;
+      if (isActive) return strongIcon;
+      return emptyIcon;
+    }, [character, props, isHovered, isSelected, isActive, filledIcon, strongIcon, emptyIcon]);
 
     return (
-      <button
-        aria-checked={value === currentRating}
-        aria-label={`Rating${value}`}
-        role="radio"
-        tabIndex={
-          disabled
-            ? -1
-            : (readOnly && value === currentRating) ||
-                value === currentRating ||
-                (value === 1 && currentRating === 0)
-              ? 0
-              : -1
-        }
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
-        className={clsx(withBaseName(), className, {
-          [withBaseName("read-only")]: readOnly,
+      <label
+        className={clsx(withBaseName(), {
+          [withBaseName("hovered")]: isHovered,
+          [withBaseName("selected")]: isSelected,
+          [withBaseName("active")]: isActive,
           [withBaseName("disabled")]: disabled,
-          [withBaseName("current")]: value === currentRating,
+          [withBaseName("readOnly")]: readOnly,
         })}
-        ref={ref}
-        disabled={disabled}
-        {...restProps}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleHover}
       >
-        {renderIcon()}
-      </button>
+        <input
+          ref={ref}
+          type="radio"
+          name={name}
+          value={value}
+          checked={currentRating === value}
+          onClick={onClick}
+          disabled={disabled}
+          readOnly={readOnly}
+          className={withBaseName("input")}
+          aria-label={`${value} star${value !== 1 ? 's' : ''}`}
+          tabIndex={isFocusable ? 0 : -1}
+        />
+        <span className={withBaseName("icon")} aria-hidden>
+          {icon}
+        </span>
+      </label>
     );
   },
 );

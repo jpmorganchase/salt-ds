@@ -1,52 +1,53 @@
 .saltRatingItem {
   height: var(--salt-size-icon);
   width: var(--salt-size-icon);
-  padding: 0;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.saltRatingItem:not(.saltRatingItem-disabled):not(.saltRatingItem-readOnly) {
+  cursor: var(--salt-cursor-hover);
+}
+
+.saltRatingItem-input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: inherit;
+  z-index: 1;
+}
+
+.saltRatingItem-icon {
+  --saltIcon-size: var(--salt-size-icon);
+  pointer-events: none;
+  transition: color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: inherit;
-  border: none;
-  cursor: var(--salt-cursor-hover);
-}
-.saltRatingItem-icon {
-  --saltIcon-size: var(--salt-size-icon);
-  position: relative;
+  color: var(--salt-content-secondary-foreground);
 }
 
-.saltRatingItem:focus-visible {
+.saltRatingItem-input:focus-visible ~ .saltRatingItem-icon {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
 }
 
-.saltRatingItem-read-only {
-  cursor: var(--salt-cursor-readonly);
-}
-
 .saltRatingItem-disabled {
   cursor: var(--salt-cursor-disabled);
-  opacity: 0.4;
+  opacity: var(--salt-palette-opacity-disabled);
 }
 
-.saltRatingItem .saltRatingItem-icon {
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+.saltRatingItem-disabled .saltRatingItem-input {
+  cursor: var(--salt-cursor-disabled);
 }
 
-.saltRatingItem-icon.saltRatingItem-icon-filled {
-  color: var(--salt-accent-background);
-}
-
-.saltRatingItem-icon.saltRatingItem-icon-empty {
-  color: var(--salt-content-secondary-foreground);
-}
-
-.saltRatingItem-icon.saltRatingItem-icon-hovered {
-  color: var(--salt-accent-background);
-}
-
-.saltRatingItem-icon-outlined {
+.saltRatingItem-selected .saltRatingItem-icon,
+.saltRatingItem-hovered .saltRatingItem-icon,
+.saltRatingItem-active .saltRatingItem-icon {
   color: var(--salt-accent-background);
 }
