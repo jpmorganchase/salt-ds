@@ -13,7 +13,8 @@ import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
 
-export interface RatingItemProps extends Omit<ComponentPropsWithoutRef<"button">, "onClick"> {
+export interface RatingItemProps
+  extends Omit<ComponentPropsWithoutRef<"button">, "onClick"> {
   /**
    * specifies the value of the feedback item.
    */
@@ -120,7 +121,7 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
           onHover(event);
         }
       },
-      [isInteractive, onHover]
+      [isInteractive, onHover],
     );
 
     const icon = useMemo(() => {
@@ -130,7 +131,16 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       if (isHovered || isSelected) return filledIcon;
       if (isActive) return strongIcon;
       return emptyIcon;
-    }, [character, props, isHovered, isSelected, isActive, filledIcon, strongIcon, emptyIcon]);
+    }, [
+      character,
+      props,
+      isHovered,
+      isSelected,
+      isActive,
+      filledIcon,
+      strongIcon,
+      emptyIcon,
+    ]);
 
     return (
       <label
@@ -154,7 +164,7 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
           disabled={disabled}
           readOnly={readOnly}
           className={withBaseName("input")}
-          aria-label={`${value} star${value !== 1 ? 's' : ''}`}
+          aria-label={`${value} star${value !== 1 ? "s" : ""}`}
           tabIndex={isFocusable ? 0 : -1}
         />
         <span className={withBaseName("icon")} aria-hidden>

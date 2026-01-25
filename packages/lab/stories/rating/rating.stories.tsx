@@ -129,11 +129,13 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Custom icon</FormFieldLabel>
-        <SemanticIconProvider iconMap={{
-          FavoriteEmptyIcon: LikeIcon,
-          FavoriteSolidIcon: LikeSolidIcon,
-          FavoriteStrongIcon: LikeIcon
-        }}>
+        <SemanticIconProvider
+          iconMap={{
+            FavoriteEmptyIcon: LikeIcon,
+            FavoriteSolidIcon: LikeSolidIcon,
+            FavoriteStrongIcon: LikeIcon,
+          }}
+        >
           <Rating
             value={value}
             max={6}
