@@ -7,17 +7,17 @@ export const ClearSelection = (): ReactElement => (
     <FormField labelPlacement="top">
       <FormFieldLabel>Click to clear selection</FormFieldLabel>
       <Rating
-        value={3}
-        allowClear={true}
-        onValueChange={(value) => console.log(value)}
+        defaultValue={3}
+        enableDeselect={true}
+        onChange={(event, value) => console.log(value)}
       />
     </FormField>
     <FormField labelPlacement="top">
       <FormFieldLabel>Prevent Clearing Selection</FormFieldLabel>
       <Rating
-        value={3}
-        allowClear={false}
-        onValueChange={(value) => console.log(value)}
+        defaultValue={3}
+        enableDeselect={false}
+        onChange={(event, value) => console.log(value)}
       />
     </FormField>
   </FlexLayout>

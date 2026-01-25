@@ -9,25 +9,25 @@ export const CustomIcons = (): ReactElement => {
     <FlexLayout direction="column" gap={3}>
       <FormField labelPlacement="top">
         <FormFieldLabel>Decreased increments</FormFieldLabel>
-        <Rating max={3} onValueChange={(value) => console.log(value)} />
+        <Rating max={3} onChange={(event, value) => console.log(value)} />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Increased increments</FormFieldLabel>
         <Rating
-          value={7}
+          defaultValue={7}
           max={10}
-          onValueChange={(value) => console.log(value)}
+          onChange={(event, value) => console.log(value)}
         />
       </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Custom icon</FormFieldLabel>
         <Rating
-          outlinedIcon={<LikeIcon />}
+          strongIcon={<LikeIcon />}
           filledIcon={<LikeSolidIcon />}
           emptyIcon={<LikeIcon />}
-          value={value}
+          defaultValue={value}
           max={6}
-          onValueChange={(event, value) => setValue(value)}
+          onChange={(event, value) => setValue(value)}
         />
       </FormField>
     </FlexLayout>
