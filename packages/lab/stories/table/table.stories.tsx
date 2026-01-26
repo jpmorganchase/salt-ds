@@ -1,17 +1,14 @@
+import { Code, StackLayout, Text, useId } from "@salt-ds/core";
 import {
-  Code,
-  StackLayout,
   Table,
   TableContainer,
   TBody,
   TD,
-  Text,
   TFoot,
   TH,
   THead,
   TR,
-  useId,
-} from "@salt-ds/core";
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
 

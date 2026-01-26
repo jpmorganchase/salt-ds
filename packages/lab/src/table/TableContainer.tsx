@@ -1,8 +1,8 @@
+import { useElementScrollable, useForkRef } from "@salt-ds/core/src/utils";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes, useRef } from "react";
-import { useElementScrollable, useForkRef } from "../utils";
 import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 

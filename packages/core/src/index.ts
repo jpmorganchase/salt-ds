@@ -58,7 +58,6 @@ export * from "./status-adornment";
 export * from "./status-indicator";
 export * from "./stepper";
 export * from "./switch";
-export * from "./table";
 export * from "./tag";
 export * from "./text";
 export * from "./theme";
