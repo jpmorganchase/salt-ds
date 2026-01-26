@@ -76,7 +76,7 @@ type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
 };
 
 export default {
-  title: "Core/Table",
+  title: "Lab/Table",
   component: Table,
   subcomponents: { TD, TH, Text, Code, TBody, THead, TR, TFoot },
   args: {

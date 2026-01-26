@@ -1,4 +1,4 @@
-import { Table, TBody, TH, THead, TR } from "@salt-ds/core";
+import { Table, TBody, TH, THead, TR } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import type { FC, ReactNode } from "react";
 import styles from "./KeyboardControls.module.css";

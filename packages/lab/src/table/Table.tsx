@@ -3,6 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+
 import tableCss from "./Table.css";
 
 export interface TableProps extends ComponentPropsWithoutRef<"table"> {
