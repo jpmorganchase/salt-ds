@@ -1,4 +1,5 @@
-import { useElementScrollable, useForkRef } from "@salt-ds/core/src/utils";
+import { useForkRef } from "@salt-ds/core";
+import { useElementScrollable } from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";

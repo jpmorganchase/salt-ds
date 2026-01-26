@@ -3,6 +3,11 @@ import {
   FormField,
   FormFieldLabel,
   StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+  useId,
+} from "@salt-ds/core";
+import {
   Table,
   TableContainer,
   type TableProps,
@@ -11,11 +16,8 @@ import {
   TFoot,
   TH,
   THead,
-  ToggleButton,
-  ToggleButtonGroup,
   TR,
-  useId,
-} from "@salt-ds/core";
+} from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Variants = (): ReactElement => {

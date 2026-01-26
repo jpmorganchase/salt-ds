@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core/src/utils";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";

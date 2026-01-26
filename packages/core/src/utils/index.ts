@@ -13,7 +13,6 @@ export * from "./polymorphicTypes";
 export * from "./renderProps";
 export * from "./setRef";
 export * from "./useControlled";
-export * from "./useElementScrollable";
 export * from "./useEventCallback";
 export * from "./useFloatingUI";
 export * from "./useForkRef";

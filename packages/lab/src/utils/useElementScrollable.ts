@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-interface ElementScrollable {
+export interface ElementScrollable {
   x: boolean;
   y: boolean;
   isScrollable: boolean;

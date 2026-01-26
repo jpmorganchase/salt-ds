@@ -1,13 +1,5 @@
-import {
-  Table,
-  TableContainer,
-  TBody,
-  TD,
-  TH,
-  THead,
-  TR,
-  useId,
-} from "@salt-ds/core";
+import { useId } from "@salt-ds/core";
+import { Table, TableContainer, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { planetData, planetDataColumns } from "./exampleData";
 

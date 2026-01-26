@@ -4,6 +4,7 @@ export * from "./isEmail";
 export * from "./isPlainObject";
 export * from "./partition";
 export * from "./useClickOutside";
+export * from "./useElementScrollable";
 export * from "./useEventCallback";
 export * from "./useIsViewportLargerThanBreakpoint";
 export * from "./useLayoutEffectOnce";
