@@ -3,14 +3,9 @@ import {
   SaltProvider,
   SaltProviderNext,
   Spinner,
-  Table,
-  TBody,
-  TD,
   Text,
-  TH,
-  THead,
-  TR,
 } from "@salt-ds/core";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { ColorBlock } from "./style-blocks/ColorBlock";

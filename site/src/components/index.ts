@@ -10,19 +10,22 @@ export {
   Panel,
   SaltProvider,
   StackLayout,
+  Tag,
+  Text,
+} from "@salt-ds/core";
+
+export {
   /**
    * Salt -> Markdown/MDXProvider mappings
    */
   Table as table,
-  Tag,
   TBody as tbody,
   TD as td,
-  Text,
   TFoot as tfoot,
   TH as th,
   THead as thead,
   TR as tr,
-} from "@salt-ds/core";
+} from "@salt-ds/lab";
 
 export * from "./ag-grid-doc";
 export * from "./app-header";
