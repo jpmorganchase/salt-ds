@@ -6,47 +6,48 @@ import { useElementScrollable, useForkRef } from "../utils";
 import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
-export const TableContainer = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement>
->(function TableContainer(props, ref) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-table-container",
-    css: tableCss,
-    window: targetWindow,
-  });
+export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {}
 
-  const {
-    children,
-    className,
-    role,
-    tabIndex,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledby,
-    ...rest
-  } = props;
+export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
+  function TableContainer(props, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-table-container",
+      css: tableCss,
+      window: targetWindow,
+    });
 
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
+    const {
+      children,
+      className,
+      role,
+      tabIndex,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+      ...rest
+    } = props;
 
-  const { isScrollable } = useElementScrollable(scrollRef, {
-    targetWindow,
-  });
+    const scrollRef = useRef<HTMLDivElement | null>(null);
+    const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
 
-  return (
-    <div
-      ref={handleRef}
-      className={clsx(withTableBaseName("container"), className)}
-      role={role ?? (isScrollable ? "region" : undefined)}
-      tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
-      {...(ariaLabelledby && isScrollable
-        ? { "aria-labelledby": ariaLabelledby }
-        : {})}
-      {...(ariaLabel && isScrollable ? { "aria-label": ariaLabel } : {})}
-      {...rest}
-    >
-      {children}
-    </div>
-  );
-});
+    const { isScrollable } = useElementScrollable(scrollRef, {
+      targetWindow,
+    });
+
+    return (
+      <div
+        ref={handleRef}
+        className={clsx(withTableBaseName("container"), className)}
+        role={role ?? (isScrollable ? "region" : undefined)}
+        tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
+        {...(ariaLabelledby && isScrollable
+          ? { "aria-labelledby": ariaLabelledby }
+          : {})}
+        {...(ariaLabel && isScrollable ? { "aria-label": ariaLabel } : {})}
+        {...rest}
+      >
+        {children}
+      </div>
+    );
+  },
+);
