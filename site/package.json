@@ -9,7 +9,7 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build && yarn gen:css && next build",
+    "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build && yarn workspace @salt-ds/highcharts-theme build && yarn gen:css && next build",
     "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.mjs",
     "dev": "next dev",
     "start": "next start",
@@ -46,16 +46,16 @@
     "shiki": "^3.0.0"
   },
   "devDependencies": {
+    "@next/env": "^14.0.0",
     "@types/luxon": "^3.6.2",
     "@types/node": "^24.0.0",
     "@types/react": "^18.3.22",
     "concurrently": "^9.0.0",
     "cross-env": "^10.0.0",
     "cspell": "^9.2.1",
-    "dotenv-load": "^2.0.1",
     "embla-carousel-class-names": "^8.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-markdown": "^8.0.7"
+    "react-markdown": "^9.0.0"
   }
 }

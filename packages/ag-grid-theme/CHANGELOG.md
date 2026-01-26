@@ -1,5 +1,14 @@
 # @salt-ds/ag-grid-theme
 
+## 2.6.1
+
+### Patch Changes
+
+- ce18830: Fixed the background color of inputs in the header of a zebra striped grid being incorrect.
+- Updated dependencies [df46ef9]
+- Updated dependencies [afe9104]
+  - @salt-ds/theme@1.38.0
+
 ## 2.6.0
 
 ### Minor Changes

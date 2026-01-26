@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/ag-grid-theme",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "provenance": true
   },
   "devDependencies": {
-    "del": "^7.0.0"
+    "del": "^8.0.0"
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",

@@ -1,5 +1,4 @@
 import "cypress-real-events";
-import "@cypress/code-coverage/support.js";
 import { setProjectAnnotations } from "@storybook/react-vite";
 import * as globalStorybookConfig from "../../.storybook/preview"; // path of your preview.js file
 import "./assertions";

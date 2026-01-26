@@ -1,5 +1,42 @@
 # @salt-ds/icons
 
+## 1.17.0
+
+### Minor Changes
+
+- f3a0eea: - Updated `FavoriteIcon` and `FavoriteSolidIcon`.
+  - Added `FavoriteHalfIcon` and `FavoriteStrongIcon`
+- fcc4021: - Added `NotAllowedIcon`
+  - Deprecated `ErrorExecuteIcon`. `NotAllowedIcon` should be used instead.
+
+## 1.16.0
+
+### Minor Changes
+
+- 0c664ed: - Added `FigmaIcon`.
+  - Deprecated `IconFigmaIcon`. `FigmaIcon` should be used instead.
+- ee16c19: Deprecated `BarChartIcon`, `PieChartIcon` and `LineChartIcon`. `ChartBarIcon`, `ChartPieIcon` and `ChartLineIcon` should be used instead.
+- ee16c19: Added new chart icons:
+
+  - `ChartAreaIcon`
+  - `ChartBarIcon`
+  - `ChartBoxPlotIcon`
+  - `ChartBubbleIcon`
+  - `ChartBubbleSolidIcon`
+  - `ChartBulletIcon`
+  - `ChartCandlestickIcon`
+  - `ChartCandlestickSolidIcon`
+  - `ChartColumnIcon`
+  - `ChartDonutIcon`
+  - `ChartLineIcon`
+  - `ChartLineSolidIcon`
+  - `ChartPieIcon`
+  - `ChartPieSolidIcon`
+  - `ChartScatterIcon`
+  - `ChartScatterSolidIcon`
+  - `ChartStackedBarIcon`
+  - `ChartWaterfallIcon`
+
 ## 1.15.0
 
 ### Minor Changes

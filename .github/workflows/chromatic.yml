@@ -21,7 +21,7 @@ jobs:
           repository: ${{ github.event.workflow_run.head_repository.full_name }}
           ref: ${{ github.event.workflow_run.head_branch }}
       - name: "Download run metadata"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: metadata
           path: ./METADATA
@@ -63,7 +63,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: "Download build artifact"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: storybook-build
           path: ./storybook-static
@@ -71,7 +71,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
         if: ${{ steps.run_metadata.outputs.branchName == 'main' || steps.run_metadata.outputs.runChromatic == 'true' }}
-        uses: chromaui/action@v13.0.1
+        uses: chromaui/action@v13.3.5
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
