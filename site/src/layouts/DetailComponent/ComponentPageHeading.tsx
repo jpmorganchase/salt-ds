@@ -10,14 +10,9 @@ import {
   OverlayTrigger,
   SplitLayout,
   type StackLayoutProps,
-  Table,
   Tag,
-  TBody,
-  TD,
   Text,
-  TH,
   Tooltip,
-  TR,
   useResponsiveProp,
 } from "@salt-ds/core";
 import {
@@ -26,6 +21,7 @@ import {
   GithubIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
+import { Table, TBody, TD, TH, TR } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import type { ElementType } from "react";
 import { ThemeControls } from "../../components/components/ThemeControls";
