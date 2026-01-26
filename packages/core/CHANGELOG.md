@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.54.2
+
+### Patch Changes
+
+- ee94785: Fixed duplicate option registered by list when using virtualization. Fixes #5930.
+- Updated dependencies [f3a0eea]
+- Updated dependencies [fcc4021]
+  - @salt-ds/icons@1.17.0
+
 ## 1.54.1
 
 ### Patch Changes

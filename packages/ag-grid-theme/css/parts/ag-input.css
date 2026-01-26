@@ -24,6 +24,7 @@
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"] {
   border: none;
+  background: transparent;
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: 0 var(--salt-spacing-100);
