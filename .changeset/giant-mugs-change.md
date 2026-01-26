@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": minor
+"@salt-ds/lab": minor
 ---
 
 Added `TableContainer` wrapper component that provides accessibility features including keyboard navigation support and focus indicators for scrollable tables.
