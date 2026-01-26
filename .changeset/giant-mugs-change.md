@@ -1,13 +1,8 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
-Added `TableContainer` component to provide accessibility features for scrollable tables
-
-- Introduced new TableContainer wrapper component for tables with horizontal scroll
-- Implemented ARIA attributes (role="region", aria-labelledby) for screen reader support
-- Added keyboard navigation support for scrollable content (tab focus on container)
-- Ensured focus indicators are visible when navigating scrollable areas
+Added `TableContainer` wrapper component that provides accessibility features including keyboard navigation support and focus indicators for scrollable tables.
 
 ```jsx
 <TableContainer aria-labelledby={captionId}>
@@ -15,5 +10,5 @@ Added `TableContainer` component to provide accessibility features for scrollabl
     <caption id={captionId}>{...}</caption>
     {...}
   </Table>
-</TableCOntainer
+</TableContainer>
 ```
