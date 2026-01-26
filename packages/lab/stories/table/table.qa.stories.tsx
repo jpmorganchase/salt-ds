@@ -18,7 +18,7 @@ const NUM_COLS = 2;
 const NUM_ROWS = 3;
 
 export default {
-  title: "Core/Table/Table QA",
+  title: "Lab/Table/Table QA",
   component: Table,
 };
 

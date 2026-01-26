@@ -1,4 +1,4 @@
-import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/core";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
 import { Code } from "../mdx/code";
