@@ -433,7 +433,7 @@ export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
   );
 };
 
-export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
+export const ScrollableLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps: _TFootProps,
@@ -468,9 +468,7 @@ export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   </TableContainer>
 );
 
-export const ScrollableAriaLabelledByTable: StoryFn<
-  TablePropsAndCustomArgs
-> = ({
+export const ScrollableLabelIdTable: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps: _TFootProps,
@@ -497,6 +495,91 @@ export const ScrollableAriaLabelledByTable: StoryFn<
           <TBody {...TBodyProps}>
             {generateRows({
               rowCount: 20,
+              colCount: 3,
+              cellProps: TDProps,
+              rowProps: TRProps,
+            })}
+          </TBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export const ScrollableUserLabelOverride: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <TableContainer
+      aria-label="User provided region label"
+      label="Default container label"
+      style={{ height: 120 }}
+    >
+      <Table {...args}>
+        <caption>Default container label</caption>
+        <THead {...THeadProps}>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 3,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
+        </THead>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 10,
+            colCount: 3,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
+        </TBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export const ScrollableUserLabelIdOverride: StoryFn<
+  TablePropsAndCustomArgs
+> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  const defaultLabelId = useId();
+  const overrideLabelId = useId();
+  return (
+    <>
+      <Text id={overrideLabelId}>User provided labelled-by text</Text>
+      <TableContainer
+        aria-labelledby={overrideLabelId}
+        labelId={defaultLabelId}
+        style={{ height: 120 }}
+      >
+        <Table {...args}>
+          <caption id={defaultLabelId}>Default caption label</caption>
+          <THead {...THeadProps}>
+            {generateCustomRows({
+              label: "Header",
+              colCount: 3,
+              Cell: TH,
+              cellProps: THProps,
+              rowProps: TRProps,
+            })}
+          </THead>
+          <TBody {...TBodyProps}>
+            {generateRows({
+              rowCount: 10,
               colCount: 3,
               cellProps: TDProps,
               rowProps: TRProps,

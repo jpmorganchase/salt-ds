@@ -5,10 +5,12 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 const composedStories = composeStories(tableStories);
 const {
   ScrollableVertically,
-  ScrollableAriaLabelledByTable,
-  ScrollableAriaLabelTable,
+  ScrollableLabelIdTable,
+  ScrollableLabelTable,
   ScrollableCaptionTable,
   NonScrollableTable,
+  ScrollableUserLabelOverride,
+  ScrollableUserLabelIdOverride,
 } = composedStories;
 
 describe("GIVEN a Table", () => {
@@ -47,7 +49,7 @@ describe("GIVEN a Table inside a TableContainer", () => {
   });
 
   it("THEN should have accessible name when scrollable and aria-label is used", () => {
-    cy.mount(<ScrollableAriaLabelTable />);
+    cy.mount(<ScrollableLabelTable />);
 
     cy.findByRole("table", { name: "Aria Labelled Table" }).should(
       "be.visible",
@@ -63,12 +65,32 @@ describe("GIVEN a Table inside a TableContainer", () => {
   });
 
   it("THEN should have accessible name when scrollable and aria-labelledby is used", () => {
-    cy.mount(<ScrollableAriaLabelledByTable />);
+    cy.mount(<ScrollableLabelIdTable />);
 
     cy.findByRole("table", { name: "Labelled Table Name" }).should(
       "be.visible",
     );
     cy.findByRole("region", { name: "Labelled Table Name" })
+      .should("be.visible")
+      .and("have.attr", "tabindex", "0");
+  });
+
+  it("THEN should respect user provided aria-label override", () => {
+    cy.mount(<ScrollableUserLabelOverride />);
+
+    cy.findByRole("region", { name: "User provided region label" })
+      .should("be.visible")
+      .and("have.attr", "aria-label", "User provided region label");
+
+    cy.findByRole("table", { name: "Default container label" }).should(
+      "be.visible",
+    );
+  });
+
+  it("THEN should respect user provided aria-labelledby override", () => {
+    cy.mount(<ScrollableUserLabelIdOverride />);
+
+    cy.findByRole("region", { name: "User provided labelled-by text" })
       .should("be.visible")
       .and("have.attr", "tabindex", "0");
   });
