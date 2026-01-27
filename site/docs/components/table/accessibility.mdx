@@ -17,7 +17,7 @@ data:
 
 **Provide an accessible name for the `TableContainer`**
 
-- Reference the table's caption using `aria-labelledby` on the TableContainer, or provide a descriptive `aria-label`
+- Reference the table's caption using `labelId` on the TableContainer, or provide a descriptive `label`
 - This ensures screen reader users can identify the scrollable region and understand its purpose when navigating into the area
 - The container's label should match or complement the table's label for consistency
 - This ensures compliance with WCAG 4.1.2 and prevents "unnamed region" errors
@@ -25,7 +25,7 @@ data:
 **Example:**
 
 ```jsx
-<TableContainer aria-labelledby="table-caption">
+<TableContainer labelId="table-caption">
   <Table>
     <caption id="table-caption">Quarterly Sales Data</caption>
     {/* table content */}
