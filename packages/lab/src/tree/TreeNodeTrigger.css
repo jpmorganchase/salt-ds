@@ -1,11 +1,4 @@
 .saltTreeNodeTrigger {
-  appearance: none;
-  border: none;
-  font: inherit;
-  text-align: inherit;
-  margin: 0;
-  outline: none;
-
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
@@ -20,19 +13,15 @@
 
   background: var(--salt-selectable-background);
   color: var(--salt-content-primary-foreground);
-  cursor: var(--salt-cursor-hover);
 }
 
 .saltTreeNodeTrigger:hover {
   background: var(--salt-selectable-background-hover);
 }
 
-.saltTreeNodeTrigger:focus-visible,
-.saltTreeNodeTrigger-focused {
+.saltTreeNode:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
   background: var(--salt-selectable-background-hover);
-  outline: var(--salt-focused-outline);
-  position: relative;
-  z-index: calc(var(--salt-zIndex-default) + 1);
 }
 
 .saltTreeNode-selected > .saltTreeNodeTrigger {
@@ -44,16 +33,12 @@
   z-index: var(--salt-zIndex-default);
 }
 
-.saltTreeNode-selected > .saltTreeNodeTrigger:focus-visible,
-.saltTreeNode-selected > .saltTreeNodeTrigger-focused {
+.saltTreeNode-selected:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-selected.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
   background: var(--salt-selectable-background-selected);
-  outline: var(--salt-focused-outline);
-  z-index: calc(var(--salt-zIndex-default) + 1);
 }
 
-.saltTreeNode-disabled > .saltTreeNodeTrigger,
-.saltTreeNodeTrigger:disabled {
+.saltTreeNode-disabled > .saltTreeNodeTrigger {
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-cursor-disabled);
   background: var(--salt-selectable-background-disabled);
 }

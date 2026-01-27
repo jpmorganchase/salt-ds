@@ -1,11 +1,31 @@
 .saltTreeNode {
   list-style: none;
-  outline: none;
   position: relative;
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltTreeNode:focus {
   outline: none;
+}
+
+/* Focus visible styles - applied when keyboard navigation is used */
+.saltTreeNode:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
+  outline: var(--salt-focused-outline);
+  position: relative;
+  z-index: calc(var(--salt-zIndex-default) + 1);
+}
+
+/* Selected + focus visible */
+.saltTreeNode-selected:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-selected.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
+  outline: var(--salt-focused-outline);
+  z-index: calc(var(--salt-zIndex-default) + 1);
+}
+
+/* Disabled cursor */
+.saltTreeNode-disabled {
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltTreeNode-group {

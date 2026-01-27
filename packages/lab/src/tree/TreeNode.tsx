@@ -1,19 +1,15 @@
-import { CheckboxIcon, makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
 import {
   Children,
-  type ComponentPropsWithoutRef,
   type ComponentType,
-  type CSSProperties,
   forwardRef,
   isValidElement,
   type ReactNode,
-  useEffect,
+  useImperativeHandle,
   useMemo,
-  useRef,
 } from "react";
 import {
   TreeNodeProvider,
@@ -24,13 +20,13 @@ import treeNodeCss from "./TreeNode.css";
 import { TreeNodeLabel } from "./TreeNodeLabel";
 import { TreeNodeTrigger } from "./TreeNodeTrigger";
 
-export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
+export interface TreeNodeProps {
   /**
    * Unique value representing this node within the tree
    */
   value: string;
   /**
-   * Label for the node.
+   * Label for the node. When provided, TreeNode automatically renders a TreeNodeTrigger.
    */
   label?: ReactNode;
   /**
@@ -39,12 +35,10 @@ export interface TreeNodeProps extends ComponentPropsWithoutRef<"li"> {
   icon?: ComponentType<IconProps>;
   /**
    * Whether the node is disabled.
-   * Disabled nodes cannot be selected, expanded, or interacted with.
-   * Inherits disabled state from parent nodes and tree-level disabled prop.
    */
   disabled?: boolean;
   /**
-   * Child nodes. Nested TreeNodes create a hierarchy.
+   * Child nodes or content.
    */
   children?: ReactNode;
 }
@@ -80,9 +74,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       icon: Icon,
       disabled: disabledProp = false,
       children,
-      className,
-      id: idProp,
-      ...rest
     } = props;
 
     const targetWindow = useWindow();
@@ -92,19 +83,17 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       window: targetWindow,
     });
 
-    const id = useId(idProp);
+    const generatedId = useId();
+    const id = generatedId ?? value;
     const labelId = `${id}-label`;
-    const nodeRef = useRef<HTMLLIElement>(null);
 
     const {
       expandedState,
       selectedState,
-      multiselect,
-      registerElement,
-      activeNode,
       disabled: treeDisabled,
       disabledIdsSet,
       indeterminateState,
+      getElement,
     } = useTreeContext();
 
     const parentContext = useTreeNodeContext();
@@ -114,25 +103,23 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const expanded = expandedState.has(value);
     const selected = selectedState.includes(value);
     const indeterminate = indeterminateState.has(value);
-    const isActive = activeNode === value;
 
     const usesLabelProp = label !== undefined;
     const { contentChildren, nodeChildren } = useMemo(
       () =>
         usesLabelProp
-          ? { contentChildren: [], nodeChildren: [] }
+          ? { contentChildren: [], nodeChildren: Children.toArray(children) }
           : separateChildren(children),
       [children, usesLabelProp],
     );
 
-    const nestedChildren = usesLabelProp ? children : nodeChildren;
-    const hasChildren = Children.count(nestedChildren) > 0;
+    const hasChildren = nodeChildren.length > 0;
 
-    useEffect(() => {
-      if (nodeRef.current) {
-        return registerElement(value, nodeRef.current);
-      }
-    }, [value, registerElement]);
+    // Forward ref to the <li> element rendered by TreeNodeTrigger
+    useImperativeHandle(ref, () => getElement(value) as HTMLLIElement, [
+      getElement,
+      value,
+    ]);
 
     const nodeContext = useMemo(
       () => ({
@@ -142,69 +129,35 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         expanded,
         disabled,
         labelId,
+        id,
+        selected,
+        indeterminate,
+        nodeChildren,
       }),
-      [value, level, hasChildren, expanded, disabled, labelId],
+      [
+        value,
+        level,
+        hasChildren,
+        expanded,
+        disabled,
+        labelId,
+        id,
+        selected,
+        indeterminate,
+        nodeChildren,
+      ],
     );
 
-    const handleRef = useForkRef(nodeRef, ref);
+    const defaultContent = usesLabelProp ? (
+      <TreeNodeTrigger>
+        {Icon ? <Icon aria-hidden className={withBaseName("icon")} /> : null}
+        <TreeNodeLabel>{label}</TreeNodeLabel>
+      </TreeNodeTrigger>
+    ) : null;
 
     return (
       <TreeNodeProvider value={nodeContext}>
-        <li
-          ref={handleRef}
-          id={id}
-          role="treeitem"
-          aria-labelledby={labelId}
-          aria-expanded={hasChildren ? expanded : undefined}
-          aria-selected={multiselect ? undefined : selected}
-          aria-checked={
-            multiselect ? (indeterminate ? "mixed" : selected) : undefined
-          }
-          aria-level={level}
-          aria-disabled={disabled || undefined}
-          className={clsx(
-            withBaseName(),
-            {
-              [withBaseName("expanded")]: expanded,
-              [withBaseName("selected")]: selected && !multiselect,
-              [withBaseName("active")]: isActive,
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("hasChildren")]: hasChildren,
-            },
-            className,
-          )}
-          style={
-            {
-              "--saltTreeNode-level": level,
-            } as CSSProperties
-          }
-          {...rest}
-        >
-          {usesLabelProp ? (
-            <TreeNodeTrigger>
-              {multiselect && (
-                <CheckboxIcon
-                  checked={selected}
-                  indeterminate={indeterminate}
-                  disabled={disabled}
-                  className={withBaseName("checkbox")}
-                />
-              )}
-              {Icon ? (
-                <Icon aria-hidden className={withBaseName("icon")} />
-              ) : null}
-              <TreeNodeLabel>{label}</TreeNodeLabel>
-            </TreeNodeTrigger>
-          ) : (
-            contentChildren
-          )}
-
-          {hasChildren && expanded && (
-            <ul role="group" className={withBaseName("group")}>
-              {nestedChildren}
-            </ul>
-          )}
-        </li>
+        {usesLabelProp ? defaultContent : contentChildren}
       </TreeNodeProvider>
     );
   },

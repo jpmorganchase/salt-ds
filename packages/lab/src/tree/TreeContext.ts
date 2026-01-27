@@ -1,6 +1,7 @@
 import { createContext } from "@salt-ds/core";
 import {
   type Dispatch,
+  type ReactNode,
   type SetStateAction,
   type SyntheticEvent,
   useContext,
@@ -89,6 +90,14 @@ export interface TreeNodeContextValue {
   disabled: boolean;
   /** Label element id for aria-labelledby */
   labelId: string;
+  /** Node id for the li element */
+  id: string;
+  /** Whether node is selected */
+  selected: boolean;
+  /** Whether node is in indeterminate state (partially selected children) */
+  indeterminate: boolean;
+  /** Child TreeNode elements to be rendered inside the group */
+  nodeChildren: ReactNode;
 }
 
 const TreeNodeContext = createContext<TreeNodeContextValue | undefined>(

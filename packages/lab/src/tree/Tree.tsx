@@ -108,7 +108,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       getVisibleNodes,
       getNodeMeta,
       getElement,
-      getTrigger,
       getParent,
       getChildren,
       treeModel,
@@ -123,7 +122,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
     useEffect(() => {
       if (!activeNode) return;
-      const element = getTrigger(activeNode) ?? getElement(activeNode);
+      const element = getElement(activeNode);
       if (!element) return;
 
       const activeEl = targetWindow?.document.activeElement;
@@ -131,7 +130,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
         element.focus();
         element.scrollIntoView({ block: "nearest", inline: "nearest" });
       }
-    }, [activeNode, getElement, getTrigger, targetWindow]);
+    }, [activeNode, getElement, targetWindow]);
 
     useEffect(() => {
       return () => {
@@ -289,8 +288,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
             let found = false;
 
             for (let i = currentIndex + 1; i < visibleNodes.length; i++) {
-              const element =
-                getTrigger(visibleNodes[i]) ?? getElement(visibleNodes[i]);
+              const element = getElement(visibleNodes[i]);
               if (
                 element?.textContent?.toLowerCase().startsWith(searchString)
               ) {
@@ -302,8 +300,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
             if (!found) {
               for (let i = 0; i <= currentIndex; i++) {
-                const element =
-                  getTrigger(visibleNodes[i]) ?? getElement(visibleNodes[i]);
+                const element = getElement(visibleNodes[i]);
                 if (
                   element?.textContent?.toLowerCase().startsWith(searchString)
                 ) {
