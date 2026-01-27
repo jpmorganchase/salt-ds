@@ -66,21 +66,6 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
         {...args}
       />
       <Rating
-        labelPlacement="top"
-        getLabel={(value) => labels[value - 1] || "No rating"}
-        {...args}
-      />
-      <Rating
-        labelPlacement="left"
-        getLabel={(value) => labels[value - 1] || "No rating"}
-        {...args}
-      />
-      <Rating
-        labelPlacement="bottom"
-        getLabel={(value) => labels[value - 1] || "No rating"}
-        {...args}
-      />
-      <Rating
         defaultValue={4}
         getLabel={(value, max) => `${value}/${max}`}
         {...args}
