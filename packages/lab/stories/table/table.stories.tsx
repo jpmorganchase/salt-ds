@@ -12,52 +12,67 @@ import {
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
 
-const generateCustomRow = (
-  label: string,
+interface GenerateCustomRowParams {
+  label: string;
+  colCount?: number;
+  Cell?: typeof TH | typeof TD;
+  cellProps?: ComponentProps<typeof TH> | ComponentProps<typeof TD>;
+  rowProps?: ComponentProps<typeof TR>;
+}
+
+const generateCustomRows = ({
+  label,
   colCount = 3,
-  Cell: typeof TH | typeof TD = TH,
-  cellProps?: ComponentProps<typeof TH> | ComponentProps<typeof TD>,
-  rowProps?: ComponentProps<typeof TR>,
-) => {
-  const columns = Array.from({ length: colCount }, (_, index) => ({
+  Cell = TH,
+  cellProps,
+  rowProps,
+}: GenerateCustomRowParams) => {
+  const columns = Array.from({ length: colCount }).map((_, index) => ({
     id: `${label.toLowerCase()}-col-${index + 1}`,
     position: index + 1,
   }));
 
   return (
     <TR {...rowProps}>
-      {columns.map(({ id, position }) => (
-        <Cell key={id} {...cellProps}>
-          {label} {position}
+      {columns.map((col) => (
+        <Cell key={col.id} {...cellProps}>
+          {label} {col.position}
         </Cell>
       ))}
     </TR>
   );
 };
 
-const generateRows = (
+interface GenerateRowsParams {
+  rowCount?: number;
+  colCount?: number;
+  rowProps?: ComponentProps<typeof TR>;
+  cellProps?: ComponentProps<typeof TD>;
+}
+
+const generateRows = ({
   rowCount = 20,
   colCount = 3,
-  rowProps?: ComponentProps<typeof TR>,
-  cellProps?: ComponentProps<typeof TD>,
-) => {
-  const rows = Array.from({ length: rowCount }, (_, index) => ({
+  rowProps,
+  cellProps,
+}: GenerateRowsParams = {}) => {
+  const rows = Array.from({ length: rowCount }).map((_, index) => ({
     id: `row-${index + 1}`,
     position: index + 1,
   }));
 
-  const columns = Array.from({ length: colCount }, (_, index) => ({
+  const columns = Array.from({ length: colCount }).map((_, index) => ({
     id: `col-${index + 1}`,
     position: index + 1,
   }));
 
   return (
     <>
-      {rows.map(({ id: rowId, position: rowNumber }) => (
-        <TR key={rowId} {...rowProps}>
-          {columns.map(({ id: colId, position: colNumber }) => (
-            <TD key={`${rowId}-${colId}`} {...cellProps}>
-              Row {rowNumber} Col {colNumber}
+      {rows.map((row) => (
+        <TR key={row.id} {...rowProps}>
+          {columns.map((col) => (
+            <TD key={`${row.id}-${col.id}`} {...cellProps}>
+              Row {row.position} Col {col.position}
             </TD>
           ))}
         </TR>
@@ -102,11 +117,30 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
     <TableContainer style={{ width: "800px", height: "300px" }}>
       <Table {...args}>
         <THead {...THeadProps}>
-          {generateCustomRow("Header", 7, TH, THProps, TRProps)}
+          {generateCustomRows({
+            label: "Header",
+            colCount: 7,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
         </THead>
-        <TBody {...TBodyProps}>{generateRows(10, 7, TRProps, TDProps)}</TBody>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 10,
+            colCount: 7,
+            rowProps: TRProps,
+            cellProps: TDProps,
+          })}
+        </TBody>
         <TFoot {...TFootProps}>
-          {generateCustomRow("Footer", 7, TD, TDProps, TRProps)}
+          {generateCustomRows({
+            label: "Footer",
+            colCount: 7,
+            Cell: TD,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
         </TFoot>
       </Table>
     </TableContainer>
@@ -159,11 +193,30 @@ export const StickyHeaderFooter: StoryFn<TablePropsAndCustomArgs> = ({
     >
       <Table {...args}>
         <THead {...THeadProps}>
-          {generateCustomRow("Header", 7, TH, THProps, TRProps)}
+          {generateCustomRows({
+            label: "Header",
+            colCount: 7,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
         </THead>
-        <TBody {...TBodyProps}>{generateRows(10, 7, TRProps, TDProps)}</TBody>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 10,
+            colCount: 7,
+            rowProps: TRProps,
+            cellProps: TDProps,
+          })}
+        </TBody>
         <TFoot {...TFootProps}>
-          {generateCustomRow("Footer", 7, TD, TDProps, TRProps)}
+          {generateCustomRows({
+            label: "Footer",
+            colCount: 7,
+            Cell: TD,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
         </TFoot>
       </Table>
     </StackLayout>
@@ -176,26 +229,34 @@ StickyHeaderFooter.args = {
 
 export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
+  TDProps,
+  THProps,
   ...args
 }) => {
   return (
     <TableContainer aria-label="Scrollable column headers">
       <Table divider="none" {...args} aria-label="Column headers">
-        <TBody>
-          <TR>
-            <TH scope="row">Label</TH>
-            <TD>Value</TD>
+        <TBody {...TBodyProps}>
+          <TR {...TRProps}>
+            <TH {...THProps} scope="row">
+              Label
+            </TH>
+            <TD {...TDProps}>Value</TD>
           </TR>
-          <TR>
-            <TH scope="row">Label</TH>
-            <TD>Value</TD>
+          <TR {...TRProps}>
+            <TH {...THProps} scope="row">
+              Label
+            </TH>
+            <TD {...TDProps}>Value</TD>
           </TR>
-          <TR>
-            <TH scope="row">Label</TH>
-            <TD>Value</TD>
+          <TR {...TRProps}>
+            <TH {...THProps} scope="row">
+              Label
+            </TH>
+            <TD {...TDProps}>Value</TD>
           </TR>
         </TBody>
       </Table>
@@ -204,10 +265,10 @@ export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
 };
 
 export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -215,22 +276,22 @@ export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
   return (
     <TableContainer aria-label="Scrollable long cell content">
       <Table style={{ width: 200 }} {...args} aria-label="Long cell content">
-        <THead>
-          <TR>
+        <THead {...THeadProps}>
+          <TR {...TRProps}>
             <TH {...THProps}>Super long column header that will wrap</TH>
             <TH {...THProps}>Two</TH>
           </TR>
         </THead>
-        <TBody>
-          <TR>
+        <TBody {...TBodyProps}>
+          <TR {...TRProps}>
             <TD {...TDProps}>Super long cell content that will wrap</TD>
             <TD {...TDProps}>Value</TD>
           </TR>
-          <TR>
+          <TR {...TRProps}>
             <TD {...TDProps}>Value</TD>
             <TD {...TDProps}>Value</TD>
           </TR>
-          <TR>
+          <TR {...TRProps}>
             <TD {...TDProps}>Value</TD>
             <TD {...TDProps}>Value</TD>
           </TR>
@@ -241,10 +302,10 @@ export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
 };
 
 export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -252,20 +313,26 @@ export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
   return (
     <TableContainer aria-label="Scrollable Numerical Data Table">
       <Table {...args} aria-label="Numerical Data Table">
-        <THead>
-          <TR>
-            <TH>City</TH>
-            <TH textAlign="right">Population</TH>
+        <THead {...THeadProps}>
+          <TR {...TRProps}>
+            <TH {...THProps}>City</TH>
+            <TH {...THProps} textAlign="right">
+              Population
+            </TH>
           </TR>
         </THead>
-        <TBody>
-          <TR>
-            <TD>London</TD>
-            <TD textAlign="right">9.8 million</TD>
+        <TBody {...TBodyProps}>
+          <TR {...TRProps}>
+            <TD {...TDProps}>London</TD>
+            <TD {...TDProps} textAlign="right">
+              9.8 million
+            </TD>
           </TR>
-          <TR>
-            <TD>New York</TD>
-            <TD textAlign="right">8.8 million</TD>
+          <TR {...TRProps}>
+            <TD {...TDProps}>New York</TD>
+            <TD {...TDProps} textAlign="right">
+              8.8 million
+            </TD>
           </TR>
         </TBody>
       </Table>
@@ -274,10 +341,10 @@ export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
 };
 
 export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -288,8 +355,23 @@ export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
       <TableContainer aria-labelledby={id}>
         <Table {...args}>
           <caption id={id}>Scrollable vertically</caption>
-          <THead>{generateCustomRow("Header", 10)}</THead>
-          <TBody>{generateRows(3, 10)}</TBody>
+          <THead {...THeadProps}>
+            {generateCustomRows({
+              label: "Header",
+              colCount: 10,
+              Cell: TH,
+              cellProps: THProps,
+              rowProps: TRProps,
+            })}
+          </THead>
+          <TBody {...TBodyProps}>
+            {generateRows({
+              rowCount: 3,
+              colCount: 10,
+              rowProps: TRProps,
+              cellProps: TDProps,
+            })}
+          </TBody>
         </Table>
       </TableContainer>
 
@@ -305,10 +387,10 @@ export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
 };
 
 export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -318,18 +400,33 @@ export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
     <TableContainer style={{ height: 120 }} aria-labelledby={id}>
       <Table {...args}>
         <caption id={id}>Caption Name</caption>
-        <THead>{generateCustomRow("Header", 3)}</THead>
-        <TBody>{generateRows()}</TBody>
+        <THead {...THeadProps}>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 3,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
+        </THead>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 20,
+            colCount: 3,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
+        </TBody>
       </Table>
     </TableContainer>
   );
 };
 
 export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -339,8 +436,23 @@ export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
     style={{ height: 120 }}
   >
     <Table aria-label="Aria Labelled Table" {...args}>
-      <THead>{generateCustomRow("Header", 3)}</THead>
-      <TBody>{generateRows()}</TBody>
+      <THead {...THeadProps}>
+        {generateCustomRows({
+          label: "Header",
+          colCount: 3,
+          Cell: TH,
+          cellProps: THProps,
+          rowProps: TRProps,
+        })}
+      </THead>
+      <TBody {...TBodyProps}>
+        {generateRows({
+          rowCount: 20,
+          colCount: 3,
+          cellProps: TDProps,
+          rowProps: TRProps,
+        })}
+      </TBody>
     </Table>
   </TableContainer>
 );
@@ -348,10 +460,10 @@ export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
 export const ScrollableAriaLabelledByTable: StoryFn<
   TablePropsAndCustomArgs
 > = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -362,8 +474,23 @@ export const ScrollableAriaLabelledByTable: StoryFn<
       <Text id={id}>Labelled Table Name</Text>
       <TableContainer style={{ height: 120 }} aria-labelledby={id}>
         <Table aria-labelledby={id} {...args}>
-          <THead>{generateCustomRow("Header", 3)}</THead>
-          <TBody>{generateRows()}</TBody>
+          <THead {...THeadProps}>
+            {generateCustomRows({
+              label: "Header",
+              colCount: 3,
+              Cell: TH,
+              cellProps: THProps,
+              rowProps: TRProps,
+            })}
+          </THead>
+          <TBody {...TBodyProps}>
+            {generateRows({
+              rowCount: 20,
+              colCount: 3,
+              cellProps: TDProps,
+              rowProps: TRProps,
+            })}
+          </TBody>
         </Table>
       </TableContainer>
     </>
@@ -371,10 +498,10 @@ export const ScrollableAriaLabelledByTable: StoryFn<
 };
 
 export const NonScrollableTable: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
-  TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  THeadProps,
+  TBodyProps,
+  TFootProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
@@ -388,22 +515,22 @@ export const NonScrollableTable: StoryFn<TablePropsAndCustomArgs> = ({
     >
       <Table {...args}>
         <caption id={id}>Non-Scrollable Table</caption>
-        <THead>
-          <TR>
-            <TH>H1</TH>
-            <TH>H2</TH>
+        <THead {...THeadProps}>
+          <TR {...TRProps}>
+            <TH {...THProps}>H1</TH>
+            <TH {...THProps}>H2</TH>
           </TR>
         </THead>
         <TBody>
-          <TR>
-            <TD>Data</TD>
-            <TD>More Data</TD>
+          <TR {...TRProps}>
+            <TD {...TDProps}>Data</TD>
+            <TD {...TDProps}>More Data</TD>
           </TR>
         </TBody>
-        <TFoot>
-          <TR>
-            <TD>Foot</TD>
-            <TD>Foot</TD>
+        <TFoot {...TFootProps}>
+          <TR {...TRProps}>
+            <TD {...TDProps}>Foot</TD>
+            <TD {...TDProps}>Foot</TD>
           </TR>
         </TFoot>
       </Table>
