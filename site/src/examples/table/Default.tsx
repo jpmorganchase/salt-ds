@@ -10,7 +10,7 @@ const columns = planetDataColumns.filter(({ key }) =>
 export const Default = (): ReactElement => {
   const id = useId();
   return (
-    <TableContainer aria-labelledby={id}>
+    <TableContainer labelId={id}>
       <Table>
         <caption id={id}>Planet Data</caption>
         <THead>

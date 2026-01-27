@@ -53,7 +53,7 @@ export const Variants = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <TableContainer aria-labelledby={id}>
+      <TableContainer labelId={id}>
         <Table
           variant={variant}
           divider={divider === "on" ? "tertiary" : "none"}

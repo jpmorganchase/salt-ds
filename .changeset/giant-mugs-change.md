@@ -5,9 +5,9 @@
 Added `TableContainer` wrapper component that provides accessibility features including keyboard navigation support and focus indicators for scrollable tables.
 
 ```jsx
-<TableContainer aria-labelledby={captionId}>
+<TableContainer labelId={labelId}>
   <Table>
-    <caption id={captionId}>{...}</caption>
+    <caption id={labelId}>{...}</caption>
     {...}
   </Table>
 </TableContainer>

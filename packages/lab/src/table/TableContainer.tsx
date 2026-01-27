@@ -7,7 +7,16 @@ import { forwardRef, type HTMLAttributes, useRef } from "react";
 import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
-export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {}
+export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Accessible label for the table when it is scrollable.
+   */
+  label?: string;
+  /**
+   * ID of the element that contains the accessible label for the table when it is scrollable.
+   */
+  labelId?: string;
+}
 
 export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
   function TableContainer(props, ref) {
@@ -18,15 +27,11 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       window: targetWindow,
     });
 
-    const {
-      children,
-      className,
-      role,
-      tabIndex,
-      "aria-label": ariaLabel,
-      "aria-labelledby": ariaLabelledby,
-      ...rest
-    } = props;
+    const ariaLabel = props["aria-label"];
+    const ariaLabelledBy = props["aria-labelledby"];
+
+    const { children, className, role, tabIndex, label, labelId, ...rest } =
+      props;
 
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
@@ -35,16 +40,21 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       targetWindow,
     });
 
+    const ariaProps = isScrollable
+      ? {
+          ...(ariaLabel === undefined && label && { "aria-label": label }),
+          ...(ariaLabelledBy === undefined &&
+            labelId && { "aria-labelledby": labelId }),
+        }
+      : {};
+
     return (
       <div
         ref={handleRef}
         className={clsx(withTableBaseName("container"), className)}
         role={role ?? (isScrollable ? "region" : undefined)}
         tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
-        {...(ariaLabelledby && isScrollable
-          ? { "aria-labelledby": ariaLabelledby }
-          : {})}
-        {...(ariaLabel && isScrollable ? { "aria-label": ariaLabel } : {})}
+        {...ariaProps}
         {...rest}
       >
         {children}
