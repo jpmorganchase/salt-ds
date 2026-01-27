@@ -3705,7 +3705,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/date-adapters@workspace:*, @salt-ds/date-adapters@workspace:packages/date-adapters":
+"@salt-ds/date-adapters@workspace:packages/date-adapters":
   version: 0.0.0-use.local
   resolution: "@salt-ds/date-adapters@workspace:packages/date-adapters"
   peerDependencies:
@@ -3795,7 +3795,6 @@ __metadata:
     "@date-fns/tz": "npm:^1.2.0"
     "@floating-ui/react": "npm:^0.26.28"
     "@salt-ds/core": "workspace:^"
-    "@salt-ds/date-adapters": "workspace:*"
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
@@ -3816,6 +3815,7 @@ __metadata:
     tabbable: "npm:^6.0.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
+    "@salt-ds/date-adapters": ">=0.1.0-alpha.6"
     "@types/react": ">=16.14.0"
     react: ">=16.14.0"
     react-dom: ">=16.14.0"

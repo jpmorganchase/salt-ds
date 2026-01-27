@@ -1,4 +1,4 @@
-import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import type { Timezone } from "@salt-ds/date-adapters";
 import { forwardRef, type ReactNode } from "react";
 import {
   DateRangeSelectionContext,
@@ -52,41 +52,31 @@ export interface DatePickerBaseProps {
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `single`.
- * @template TDate - The type of the date object.
  */
-export interface DatePickerSingleProps<TDate extends DateFrameworkType>
+export interface DatePickerSingleProps
   extends DatePickerBaseProps,
-    UseDatePickerSingleProps<TDate> {
+    UseDatePickerSingleProps {
   selectionVariant: "single";
 }
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `range`.
- * @template TDate - The type of the date object.
  */
-export interface DatePickerRangeProps<TDate extends DateFrameworkType>
+export interface DatePickerRangeProps
   extends DatePickerBaseProps,
-    UseDatePickerRangeProps<TDate> {
+    UseDatePickerRangeProps {
   selectionVariant: "range";
 }
 
 /**
  * Props for the DatePicker component.
- * @template TDate - The type of the date object.
  */
-export type DatePickerProps<TDate extends DateFrameworkType> =
-  | DatePickerSingleProps<TDate>
-  | DatePickerRangeProps<TDate>;
+export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
-export const DatePickerMain = forwardRef<
-  HTMLDivElement,
-  DatePickerProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: DatePickerProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
+export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
+  (props: DatePickerProps, ref: React.Ref<HTMLDivElement>) => {
     const {
+      createAnnouncement,
       children,
       readOnly,
       disabled,
@@ -105,6 +95,7 @@ export const DatePickerMain = forwardRef<
     } = props;
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useDatePickerProps: any = {
+      createAnnouncement,
       readOnly,
       disabled,
       isDayHighlighted,
@@ -120,30 +111,24 @@ export const DatePickerMain = forwardRef<
       timezone,
     };
 
+    const stateAndHelpers = useDatePicker(useDatePickerProps, ref);
+
     if (props.selectionVariant === "range") {
-      // TODO
-      // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-      const stateAndHelpers = useDatePicker<TDate, "range">(
-        useDatePickerProps,
-        ref,
-      ) as RangeDatePickerState<TDate>;
       return (
-        <DateRangeSelectionContext.Provider value={stateAndHelpers}>
+        <DateRangeSelectionContext.Provider
+          value={stateAndHelpers as RangeDatePickerState}
+        >
           <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
             {children}
           </div>
         </DateRangeSelectionContext.Provider>
       );
     }
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    const stateAndHelpers = useDatePicker(
-      useDatePickerProps,
-      ref,
-    ) as SingleDatePickerState<TDate>;
 
     return (
-      <SingleDateSelectionContext.Provider value={stateAndHelpers}>
+      <SingleDateSelectionContext.Provider
+        value={stateAndHelpers as SingleDatePickerState}
+      >
         <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
           {children}
         </div>
@@ -152,14 +137,16 @@ export const DatePickerMain = forwardRef<
   },
 );
 
-export const DatePicker = forwardRef(function DatePicker<
-  TDate extends DateFrameworkType,
->(props: DatePickerProps<TDate>, ref: React.Ref<HTMLDivElement>) {
+export const DatePicker = forwardRef(function DatePicker(
+  props: DatePickerProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
   const { defaultOpen, open, openOnClick, onOpenChange, readOnly, ...rest } =
     props;
 
   return (
     <DatePickerOverlayProvider
+      disabled={rest.disabled}
       defaultOpen={defaultOpen}
       open={open}
       openOnClick={openOnClick}
