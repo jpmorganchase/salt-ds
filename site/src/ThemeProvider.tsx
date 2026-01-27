@@ -23,7 +23,7 @@ function DensitySetter({
 }) {
   const isMobileOrTablet = useIsMobileView();
 
-  const density = isMobileOrTablet ? "touch" : "low";
+  const density = isMobileOrTablet ? "mobile" : "low";
 
   useEffect(() => {
     setDensity(density);

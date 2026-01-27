@@ -27,6 +27,7 @@
 @import url(next/characteristics/content.css);
 @import url(next/characteristics/editable.css);
 @import url(next/characteristics/focused.css);
+@import url(next/characteristics/layout.css);
 @import url(next/characteristics/navigable.css);
 @import url(next/characteristics/overlayable.css);
 @import url(next/characteristics/selectable.css);
