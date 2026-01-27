@@ -7,8 +7,17 @@ import {
 } from "react";
 
 export interface ElementScrollable {
+  /**
+   * Indicates whether the element is scrollable in the horizontal direction.
+   */
   x: boolean;
+  /**
+   * Indicates whether the element is scrollable in the vertical direction.
+   */
   y: boolean;
+  /**
+   * Indicates whether the element is scrollable in either direction.
+   */
   isScrollable: boolean;
 }
 
