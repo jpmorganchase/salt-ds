@@ -2175,14 +2175,15 @@ __metadata:
   linkType: hard
 
 "@fastify/middie@npm:^9.0.0":
-  version: 9.0.3
-  resolution: "@fastify/middie@npm:9.0.3"
+  version: 9.1.0
+  resolution: "@fastify/middie@npm:9.1.0"
   dependencies:
     "@fastify/error": "npm:^4.0.0"
     fastify-plugin: "npm:^5.0.0"
+    find-my-way: "npm:^9.4.0"
     path-to-regexp: "npm:^8.1.0"
     reusify: "npm:^1.0.4"
-  checksum: 10/d1e8cd97cd5a86992d12c98d0b7a621d3e92f44cfab8b76808d6410258861e142ec1ea97bdd9a67ae4a6fecc63db7b2e0fa646737c4976c2829415bb64c64b93
+  checksum: 10/e225ae2f65788c1743bd7e112f8c228343be3898f58d6fbd42df99040676b5f542756c043f0d89a3c7b4e1c3b35df6aadd4d2edb68a28c1fd1b45686010fdacb
   languageName: node
   linkType: hard
 
@@ -3648,7 +3649,9 @@ __metadata:
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
+    "@types/react-window": "npm:^1.8.2"
     clsx: "npm:^2.0.0"
+    react-window: "npm:^1.8.6"
     use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
@@ -3746,6 +3749,21 @@ __metadata:
       optional: true
     embla-carousel-react:
       optional: true
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/highcharts-theme@workspace:packages/highcharts-theme":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"
+  dependencies:
+    "@salt-ds/core": "workspace:^"
+    "@salt-ds/window": "workspace:^"
+  peerDependencies:
+    "@salt-ds/theme": "workspace:^"
+    highcharts: 10.2.0 || >=11.0.0 <13
+    highcharts-react-official: ^3.2.2
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   languageName: unknown
   linkType: soft
 
@@ -3865,6 +3883,8 @@ __metadata:
     dom-accessibility-api: "npm:^0.7.0"
     execa: "npm:^9.0.0"
     get-tsconfig: "npm:^4.7.5"
+    highcharts: "npm:10.3.3"
+    highcharts-react-official: "npm:^3.2.2"
     mockdate: "npm:^3.0.5"
     msw: "npm:^2.12.3"
     msw-storybook-addon: "npm:^2.0.6"
@@ -3948,7 +3968,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/window@workspace:*, @salt-ds/window@workspace:packages/window":
+"@salt-ds/window@workspace:*, @salt-ds/window@workspace:^, @salt-ds/window@workspace:packages/window":
   version: 0.0.0-use.local
   resolution: "@salt-ds/window@workspace:packages/window"
   peerDependencies:
@@ -8980,6 +9000,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"find-my-way@npm:^9.4.0":
+  version: 9.4.0
+  resolution: "find-my-way@npm:9.4.0"
+  dependencies:
+    fast-deep-equal: "npm:^3.1.3"
+    fast-querystring: "npm:^1.0.0"
+    safe-regex2: "npm:^5.0.0"
+  checksum: 10/bddbf51f8ede0e4240c227184d232b2879b269a22262179c7ded2d18d4f856390615b236f0ec9b492817e89b7935db7da2c967d217bc13fa7e9c00169e460f23
+  languageName: node
+  linkType: hard
+
 "find-up@npm:^4.1.0":
   version: 4.1.0
   resolution: "find-up@npm:4.1.0"
@@ -9684,6 +9715,23 @@ __metadata:
   version: 4.0.3
   resolution: "headers-polyfill@npm:4.0.3"
   checksum: 10/3a008aa2ef71591e2077706efb48db1b2729b90cf646cc217f9b69744e35cca4ba463f39debb6000904aa7de4fada2e5cc682463025d26bcc469c1d99fa5af27
+  languageName: node
+  linkType: hard
+
+"highcharts-react-official@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "highcharts-react-official@npm:3.2.2"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: 10/f93b051d0a599bcd7cddb4e7ebf0c513c888782eacdf8879111b3627247b98faba55b75ffebccfa10bf92ee9389973d321ea61ee989f7c5eca36933e2a43b280
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:10.3.3":
+  version: 10.3.3
+  resolution: "highcharts@npm:10.3.3"
+  checksum: 10/7085b584379fe35cc9a45ffeac950ed1c0de8ee4bd0efaaa3224f3772b4ec1c92e225b10188172286cfbb6bb75ae8b4ffbf0bbbe3e6cb3147d04481637015097
   languageName: node
   linkType: hard
 
@@ -10716,9 +10764,9 @@ __metadata:
   linkType: hard
 
 "lodash-es@npm:^4.17.15, lodash-es@npm:^4.17.21":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 10/03f39878ea1e42b3199bd3f478150ab723f93cc8730ad86fec1f2804f4a07c6e30deaac73cad53a88e9c3db33348bb8ceeb274552390e7a75d7849021c02df43
+  version: 4.17.23
+  resolution: "lodash-es@npm:4.17.23"
+  checksum: 10/1feae200df22eb0bd93ca86d485e77784b8a9fb1d13e91b66e9baa7a7e5e04be088c12a7e20c2250fc0bd3db1bc0ef0affc7d9e3810b6af2455a3c6bf6dde59e
   languageName: node
   linkType: hard
 
@@ -10779,9 +10827,9 @@ __metadata:
   linkType: hard
 
 "lodash@npm:^4.0.1, lodash@npm:^4.15.0, lodash@npm:^4.17.15, lodash@npm:^4.17.21":
-  version: 4.17.21
-  resolution: "lodash@npm:4.17.21"
-  checksum: 10/c08619c038846ea6ac754abd6dd29d2568aa705feb69339e836dfa8d8b09abbb2f859371e86863eda41848221f9af43714491467b5b0299122431e202bb0c532
+  version: 4.17.23
+  resolution: "lodash@npm:4.17.23"
+  checksum: 10/82504c88250f58da7a5a4289f57a4f759c44946c005dd232821c7688b5fcfbf4a6268f6a6cdde4b792c91edd2f3b5398c1d2a0998274432cff76def48735e233
   languageName: node
   linkType: hard
 
@@ -15512,15 +15560,15 @@ __metadata:
   linkType: hard
 
 "tar@npm:^7.5.2":
-  version: 7.5.2
-  resolution: "tar@npm:7.5.2"
+  version: 7.5.6
+  resolution: "tar@npm:7.5.6"
   dependencies:
     "@isaacs/fs-minipass": "npm:^4.0.0"
     chownr: "npm:^3.0.0"
     minipass: "npm:^7.1.2"
     minizlib: "npm:^3.1.0"
     yallist: "npm:^5.0.0"
-  checksum: 10/dbad9c9a07863cd1bdf8801d563b3280aa7dd0f4a6cead779ff7516d148dc80b4c04639ba732d47f91f04002f57e8c3c6573a717d649daecaac74ce71daa7ad3
+  checksum: 10/cf4a84d79b9327fcf765f2ea16de4702b9b8dd7dc6b1840b16e0f999628d96b81b2c7efbf83d4eb42b0164856f1db887a5a61ffef97d36cdb77cac742219f9ee
   languageName: node
   linkType: hard
 
