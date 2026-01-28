@@ -470,8 +470,8 @@ export function useTree(props: UseTreeProps) {
     ],
   );
 
-  // Returns nodes in depth-first order matching visual tree order from set
-  const getVisibleNodes = useCallback((): string[] => {
+  // Visible nodes in depth-first order matching visual tree order
+  const visibleNodes = useMemo((): string[] => {
     const visible: string[] = [];
 
     function traverse(values: string[]): void {
@@ -498,15 +498,22 @@ export function useTree(props: UseTreeProps) {
     return visible;
   }, [treeModel, expandedState, disabledIdsSet]);
 
-  const getFirstVisibleNode = useCallback((): string | undefined => {
-    const visibleNodes = getVisibleNodes();
-    return visibleNodes[0];
-  }, [getVisibleNodes]);
+  const tabbableNodeId = useMemo((): string | undefined => {
+    if (activeNode) {
+      return activeNode;
+    }
 
-  const getFirstSelectedVisibleNode = useCallback((): string | undefined => {
-    const visibleNodes = getVisibleNodes();
-    return visibleNodes.find((node) => selectedState.includes(node));
-  }, [getVisibleNodes, selectedState]);
+    const selectedSet = new Set(selectedState);
+    const firstSelectedVisible = visibleNodes.find((node) =>
+      selectedSet.has(node),
+    );
+
+    if (firstSelectedVisible !== undefined) {
+      return firstSelectedVisible;
+    }
+
+    return visibleNodes[0];
+  }, [activeNode, selectedState, visibleNodes]);
 
   return {
     expandedArray,
@@ -525,9 +532,8 @@ export function useTree(props: UseTreeProps) {
     getChildren,
     getDescendants,
     getAncestors,
-    getVisibleNodes,
-    getFirstVisibleNode,
-    getFirstSelectedVisibleNode,
+    visibleNodes,
+    tabbableNodeId,
     registerElement,
     getElement,
     registerTrigger,

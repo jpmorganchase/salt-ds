@@ -78,8 +78,7 @@ export const TreeNodeTrigger = forwardRef<
     activeNode,
     setActiveNode,
     select,
-    getFirstVisibleNode,
-    getFirstSelectedVisibleNode,
+    tabbableNodeId,
     registerElement,
   } = useTreeContext();
 
@@ -90,18 +89,7 @@ export const TreeNodeTrigger = forwardRef<
 
   const isActive = activeNode === value;
 
-  // Calculate if this node should be tabbable (roving tabindex)
-  const firstSelectedVisible = getFirstSelectedVisibleNode();
-  const firstVisibleNode = getFirstVisibleNode();
-  const isTabbable =
-    !disabled &&
-    (isActive ||
-      (!activeNode &&
-        firstSelectedVisible !== undefined &&
-        firstSelectedVisible === value) ||
-      (!activeNode &&
-        firstSelectedVisible === undefined &&
-        firstVisibleNode === value));
+  const isTabbable = !disabled && tabbableNodeId === value;
 
   // Expose the trigger content span for tooltip positioning
   // The li handles focus and ARIA, but positioning should be relative to the visual row

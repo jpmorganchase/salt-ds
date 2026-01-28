@@ -105,7 +105,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       select,
       selectedState,
       setSelectedState,
-      getVisibleNodes,
+      visibleNodes,
       getNodeMeta,
       getElement,
       getParent,
@@ -153,7 +153,6 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
       if (disabled) return;
 
-      const visibleNodes = getVisibleNodes();
       if (visibleNodes.length === 0) return;
 
       const currentIndex = activeNode ? visibleNodes.indexOf(activeNode) : -1;

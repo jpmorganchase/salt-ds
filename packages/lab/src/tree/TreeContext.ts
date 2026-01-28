@@ -39,12 +39,10 @@ export interface TreeContextValue {
   getDescendants: (value: string) => string[];
   /** Get all ancestors of a node */
   getAncestors: (value: string) => string[];
-  /** Get all visible (navigable) nodes in tree order */
-  getVisibleNodes: () => string[];
-  /** Get the first visible node */
-  getFirstVisibleNode: () => string | undefined;
-  /** Get the first selected visible node */
-  getFirstSelectedVisibleNode: () => string | undefined;
+  /** Memoized visible (navigable) nodes in tree order */
+  visibleNodes: string[];
+  /** Memoized tabbable node ID for roving tabindex (computed once at tree level) */
+  tabbableNodeId: string | undefined;
   /** Register a DOM element for focus management */
   registerElement: (value: string, element: HTMLElement) => () => void;
   /** Get DOM element for a node (if mounted) */
