@@ -1,0 +1,19 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- The Kbd component renders a `<kbd>` element for keyboard input text. Screen readers announce its content as plain text.
+- Always use Kbd alongside descriptive text that explains the associated action. For example: "Press Ctrl+K to open search" This ensures users understand the purpose of the keyboard shortcut.
+- For multi-key shortcuts, include clear text separators (such as “+”) between keys. Example: "Ctrl + Shift + K". Avoid combining keys without separators (e.g., "CtrlShiftK")
+
+### Focus Management
+
+- The Kbd component itself is not focusable. When Kbd is nested within interactive elements (such as buttons or inputs), the parent element is responsible for handling all keyboard interactions.

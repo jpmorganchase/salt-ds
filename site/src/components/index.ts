@@ -14,6 +14,8 @@ export {
   Text,
 } from "@salt-ds/core";
 
+export { Kbd } from "@salt-ds/lab";
+
 export * from "./ag-grid-doc";
 export * from "./app-header";
 export * from "./article-card";
@@ -40,6 +42,13 @@ export * from "./quick-links";
  * Salt -> Markdown/MDXProvider mappings
  */
 import {
+  Table,
+  TBody,
+  TD,
+  TFoot,
+  TH,
+  THead,
+  TR,
   Table as table,
   TBody as tbody,
   TD as td,
@@ -49,4 +58,19 @@ import {
   TR as tr,
 } from "@salt-ds/lab";
 
-export { table, tbody, thead, th, td, tr, tfoot };
+export {
+  Table,
+  TBody,
+  TD,
+  TFoot,
+  TH,
+  THead,
+  TR,
+  tbody,
+  td,
+  tfoot,
+  th,
+  thead,
+  tr,
+  table,
+};
