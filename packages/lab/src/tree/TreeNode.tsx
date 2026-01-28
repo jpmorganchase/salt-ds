@@ -85,7 +85,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const generatedId = useId();
     const id = generatedId ?? value;
-    const labelId = `${id}-label`;
 
     const {
       expandedState,
@@ -128,7 +127,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         hasChildren,
         expanded,
         disabled,
-        labelId,
         id,
         selected,
         indeterminate,
@@ -140,7 +138,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         hasChildren,
         expanded,
         disabled,
-        labelId,
         id,
         selected,
         indeterminate,

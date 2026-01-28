@@ -86,8 +86,6 @@ export interface TreeNodeContextValue {
   expanded: boolean;
   /** Whether node is disabled */
   disabled: boolean;
-  /** Label element id for aria-labelledby */
-  labelId: string;
   /** Node id for the li element */
   id: string;
   /** Whether node is selected */

@@ -66,7 +66,6 @@ export const TreeNodeTrigger = forwardRef<
     hasChildren,
     expanded,
     disabled,
-    labelId,
     id,
     selected,
     indeterminate,
@@ -150,7 +149,6 @@ export const TreeNodeTrigger = forwardRef<
       ref={nodeRef}
       id={id}
       role="treeitem"
-      aria-labelledby={labelId}
       aria-expanded={hasChildren ? expanded : undefined}
       aria-selected={multiselect ? undefined : selected}
       aria-checked={
