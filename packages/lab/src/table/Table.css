@@ -30,6 +30,10 @@
 }
 
 /* Zebra styling */
+table.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
+  --table-background: var(--salt-container-tertiary-background);
+}
+
 table.saltTable-primary.saltTable-zebra tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-secondary-background);
 }
@@ -42,10 +46,6 @@ table.saltTable-tertiary.saltTable-zebra tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-primary-background);
 }
 
-table.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
-  --table-background: var(--salt-container-tertiary-background);
-}
-
 table.saltTable {
   border-spacing: 0;
   border-radius: var(--salt-palette-corner, 0);
@@ -54,8 +54,25 @@ table.saltTable {
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
-  table-layout: fixed;
   width: 100%;
+}
+
+/* TR */
+table.saltTable tr {
+  background: var(--table-background);
+}
+
+table.saltTable tbody tr {
+  height: var(--table-row-height);
+  min-height: var(--table-row-height);
+}
+
+table.saltTable tbody tr:not(:last-child) {
+  border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
+}
+
+table.saltTable.saltTable-divider-none tbody tr {
+  --table-divider-color: transparent;
 }
 
 /* THead */
@@ -191,24 +208,6 @@ table.saltTable th + th::before {
   top: var(--salt-spacing-100);
 }
 
-/* TR */
-table.saltTable tr {
-  background: var(--table-background);
-}
-
-table.saltTable tbody tr {
-  height: var(--table-row-height);
-  min-height: var(--table-row-height);
-}
-
-table.saltTable tbody tr:not(:last-child) {
-  border-bottom: var(--salt-borderStyle-solid) var(--table-divider-color) var(--salt-size-fixed-100);
-}
-
-table.saltTable.saltTable-divider-none tbody tr {
-  --table-divider-color: transparent;
-}
-
 /* TD */
 table.saltTable td {
   height: 100%;
@@ -222,4 +221,9 @@ table.saltTable td.saltTable-td-align-left {
 
 table.saltTable td.saltTable-td-align-right {
   text-align: end;
+}
+
+.saltTable-container {
+  width: 100%;
+  overflow: auto;
 }
