@@ -160,7 +160,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
           className={clsx(withBaseName("input"), inputClassName)}
           defaultChecked={defaultChecked}
           disabled={disabled}
-          readOnly={readOnly}
           onBlur={onBlur}
           onChange={handleChange}
           onFocus={onFocus}
