@@ -18,7 +18,7 @@ export const AllExamplesGrid: StoryFn<
 > = (props) => {
   const { className } = props;
   return (
-    <QAContainer cols={4} {...props}>
+    <QAContainer cols={6} {...props}>
       <Switch className={className} label="Default" />
       <Switch className={className} checked label="Checked" />
       <Switch className={className} disabled label="Disabled" />
@@ -28,6 +28,13 @@ export const AllExamplesGrid: StoryFn<
         disabled
         label="Checked + Disabled"
       />
+      <Switch
+        className={className}
+        checked
+        readOnly
+        label="Checked + Read-only"
+      />
+      <Switch className={className} readOnly label="Readonly" />
     </QAContainer>
   );
 };

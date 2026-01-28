@@ -175,4 +175,30 @@ describe("GIVEN a Switch", () => {
     cy.findByRole("switch").should("be.focused");
     cy.findByRole("switch").should("be.checked");
   });
+
+  describe("WHEN readOnly is true", () => {
+    it("THEN should not toggle if clicked", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+      cy.mount(<Switch readOnly onChange={changeSpy} />);
+      cy.findByRole("switch").should("have.attr", "aria-readonly", "true");
+      cy.findByRole("switch").should("not.be.checked");
+
+      cy.findByRole("switch").realClick();
+      cy.findByRole("switch").should("not.be.checked");
+      cy.get("@changeSpy").should("not.have.been.called");
+    });
+
+    it("THEN should not toggle when pressing the Space key", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+      cy.mount(<Switch readOnly onChange={changeSpy} />);
+      cy.findByRole("switch").should("have.attr", "aria-readonly", "true");
+      cy.findByRole("switch").should("not.be.checked");
+
+      cy.realPress("Tab");
+      cy.findByRole("switch").should("be.focused");
+      cy.realPress("Space");
+      cy.findByRole("switch").should("not.be.checked");
+      cy.get("@changeSpy").should("not.have.been.called");
+    });
+  });
 });

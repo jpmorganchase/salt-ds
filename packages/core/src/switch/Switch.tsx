@@ -1,4 +1,4 @@
-import { CheckmarkSolidIcon } from "@salt-ds/icons";
+import { CheckmarkIcon, CheckmarkSolidIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -61,6 +61,10 @@ export interface SwitchProps
    * The value of the switch.
    */
   value?: string;
+  /**
+   * If `true`, the switch will be read-only.
+   */
+  readOnly?: boolean;
 }
 
 const withBaseName = makePrefixer("saltSwitch");
@@ -79,6 +83,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
       onChange,
       onFocus,
       value,
+      readOnly: readOnlyProp,
       ...rest
     } = props;
 
@@ -104,14 +109,18 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
       state: "checked",
     });
 
-    const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
-      useFormFieldProps();
+    const {
+      a11yProps: formFieldA11yProps,
+      disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
+    } = useFormFieldProps();
 
     const disabled = formFieldDisabled || disabledProp;
+    const readOnly = formFieldReadOnly || readOnlyProp;
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
-      if (event.nativeEvent.defaultPrevented) {
+      if (event.nativeEvent.defaultPrevented || readOnly) {
         return;
       }
 
@@ -128,6 +137,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("checked")]: checked,
+            [withBaseName("readOnly")]: readOnly,
           },
           className,
         )}
@@ -135,6 +145,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
         {...rest}
       >
         <input
+          aria-readonly={readOnly || undefined}
           aria-describedby={clsx(
             formFieldA11yProps?.["aria-describedby"],
             inputDescribedBy,
@@ -159,11 +170,14 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
         />
         <span className={withBaseName("track")}>
           <span className={withBaseName("thumb")}>
-            {checked && (
+            {checked && !readOnly && (
               <CheckmarkSolidIcon
                 aria-hidden
                 className={withBaseName("icon")}
               />
+            )}
+            {checked && readOnly && (
+              <CheckmarkIcon aria-hidden className={withBaseName("icon")} />
             )}
           </span>
         </span>
