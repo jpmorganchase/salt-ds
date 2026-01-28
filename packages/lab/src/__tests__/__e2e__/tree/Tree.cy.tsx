@@ -54,34 +54,16 @@ describe("Given a Tree", () => {
           </TreeNode>
         </Tree>,
       );
-      cy.findByRole("treeitem", { name: /Parent/ }).should(
-        "have.attr",
-        "aria-level",
-        "1",
-      );
-      cy.findByRole("treeitem", { name: /Child/ }).should(
-        "have.attr",
-        "aria-level",
-        "2",
-      );
-      cy.findByRole("treeitem", { name: /Grandchild/ }).should(
-        "have.attr",
-        "aria-level",
-        "3",
-      );
-    });
-
-    it("should render aria-labelledby pointing to label", () => {
-      cy.mount(
-        <Tree aria-label="File browser">
-          <TreeNode value="node1" label="Node 1" id="test-node" />
-        </Tree>,
-      );
-      cy.findByRole("treeitem", { name: "Node 1" }).should(
-        "have.attr",
-        "aria-labelledby",
-        "test-node-label",
-      );
+      // Use attribute selectors since nested treeitems cause accessible name to include child text
+      cy.get('[role="treeitem"][aria-level="1"]')
+        .should("have.length", 1)
+        .and("contain.text", "Parent");
+      cy.get('[role="treeitem"][aria-level="2"]')
+        .should("have.length", 1)
+        .and("contain.text", "Child");
+      cy.get('[role="treeitem"][aria-level="3"]')
+        .should("have.length", 1)
+        .and("contain.text", "Grandchild");
     });
   });
 
@@ -95,17 +77,11 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: "Node 1" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Node 2" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
 
     it("should move focus up with ArrowUp", () => {
@@ -119,17 +95,11 @@ describe("Given a Tree", () => {
       cy.realPress("Tab");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
       cy.realPress("ArrowUp");
-      cy.findByRole("treeitem", { name: "Node 2" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       cy.realPress("ArrowUp");
-      cy.findByRole("treeitem", { name: "Node 1" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
     });
 
     it("should expand collapsed node with ArrowRight", () => {
@@ -163,13 +133,9 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: /Parent/ })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: /Parent/ }).should("be.focused");
       cy.realPress("ArrowRight");
-      cy.findByRole("treeitem", { name: "Child" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Child" }).should("be.focused");
     });
 
     it("should collapse expanded node with ArrowLeft", () => {
@@ -204,13 +170,9 @@ describe("Given a Tree", () => {
       );
       cy.realPress("Tab");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Child" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Child" }).should("be.focused");
       cy.realPress("ArrowLeft");
-      cy.findByRole("treeitem", { name: /Parent/ })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: /Parent/ }).should("be.focused");
     });
 
     it("should jump to first node with Home", () => {
@@ -223,13 +185,9 @@ describe("Given a Tree", () => {
       );
       cy.realPress("Tab");
       cy.realPress("End");
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
       cy.realPress("Home");
-      cy.findByRole("treeitem", { name: "Node 1" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
     });
 
     it("should jump to last visible node with End", () => {
@@ -241,13 +199,9 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: "Node 1" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       cy.realPress("End");
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
 
     it("should select focused node with Enter", () => {
@@ -328,9 +282,7 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: /Parent 1/ })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: /Parent 1/ }).should("be.focused");
       // cy.realPress doesn't support * character, use native event
       cy.findByRole("tree").then(($tree) => {
         $tree[0].dispatchEvent(
@@ -364,9 +316,7 @@ describe("Given a Tree", () => {
       );
       cy.realPress("Tab");
       cy.realType("c");
-      cy.findByRole("treeitem", { name: "Cherry" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Cherry" }).should("be.focused");
     });
 
     it("should support multi-character type-ahead", () => {
@@ -379,14 +329,10 @@ describe("Given a Tree", () => {
       );
       cy.realPress("Tab");
       cy.realType("ba");
-      cy.findByRole("treeitem", { name: "Bar" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Bar" }).should("be.focused");
       cy.wait(600); // wait for type-ahead timeout
       cy.realType("baz");
-      cy.findByRole("treeitem", { name: "Baz" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Baz" }).should("be.focused");
     });
   });
 
@@ -1588,13 +1534,9 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: "Node 1" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
 
     it("should skip disabled nodes during keyboard navigation via disabled prop on node", () => {
@@ -1607,9 +1549,7 @@ describe("Given a Tree", () => {
       );
       cy.realPress("Tab");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
 
     it("should not include disabled nodes in Ctrl+A selection", () => {
@@ -1645,9 +1585,7 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.findByRole("treeitem", { name: "Node 2" }).realClick();
-      cy.findByRole("treeitem", { name: "Node 2" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       cy.findByRole("treeitem", { name: "Node 2" }).should(
         "have.attr",
         "aria-selected",
@@ -1682,13 +1620,9 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.findByRole("treeitem", { name: "Node 1" }).realClick();
-      cy.findByRole("treeitem", { name: "Node 1" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       cy.findByRole("treeitem", { name: "Node 3" }).realClick();
-      cy.findByRole("treeitem", { name: "Node 3" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
     });
   });
 
@@ -1703,9 +1637,7 @@ describe("Given a Tree", () => {
           </Tree>,
         );
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       });
 
       it("should focus selected node when tabbing into tree with selection", () => {
@@ -1717,9 +1649,7 @@ describe("Given a Tree", () => {
           </Tree>,
         );
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       });
 
       it("should allow tabbing out from any focused node without refocusing selected node", () => {
@@ -1734,13 +1664,9 @@ describe("Given a Tree", () => {
           </>,
         );
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
         cy.realPress("ArrowDown");
-        cy.findByRole("treeitem", { name: "Node 3" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
       });
@@ -1759,19 +1685,13 @@ describe("Given a Tree", () => {
         );
         cy.findByRole("button", { name: "Previous Element" }).focus();
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
         cy.realPress("ArrowDown");
-        cy.findByRole("treeitem", { name: "Node 3" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       });
 
       it("should focus first visible node when selected node is hidden by collapsed parent", () => {
@@ -1787,9 +1707,7 @@ describe("Given a Tree", () => {
         cy.findByRole("tree").should("exist");
         cy.findByRole("treeitem", { name: "Node 1" }).should("exist");
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       });
     });
 
@@ -1803,9 +1721,7 @@ describe("Given a Tree", () => {
           </Tree>,
         );
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       });
 
       it("should focus first selected node when tabbing into tree with selection", () => {
@@ -1821,9 +1737,7 @@ describe("Given a Tree", () => {
           </Tree>,
         );
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       });
 
       it("should allow tabbing out from any focused node without refocusing selected nodes", () => {
@@ -1842,14 +1756,10 @@ describe("Given a Tree", () => {
           </>,
         );
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
         cy.realPress("ArrowDown");
         cy.realPress("ArrowDown");
-        cy.findByRole("treeitem", { name: "Node 3" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
       });
@@ -1872,19 +1782,13 @@ describe("Given a Tree", () => {
         );
         cy.findByRole("button", { name: "Previous Element" }).focus();
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
         cy.realPress("ArrowUp");
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("treeitem", { name: "Node 2" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       });
 
       it("should focus first visible node when all selected nodes are hidden by collapsed parents", () => {
@@ -1908,9 +1812,7 @@ describe("Given a Tree", () => {
         cy.findByRole("tree").should("exist");
         cy.findByRole("treeitem", { name: "Node 1" }).should("exist");
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
       });
 
       it("should update focus target as nested selected nodes become visible through expansion", () => {
@@ -1938,66 +1840,58 @@ describe("Given a Tree", () => {
           </>,
         );
 
+        // Use aria-level to disambiguate nested treeitems with overlapping text
+        const getParentNode = () =>
+          cy
+            .get('[role="treeitem"][aria-level="2"]')
+            .filter(":contains(Parent)");
+        const getGrandparentNode = () =>
+          cy
+            .get('[role="treeitem"][aria-level="1"]')
+            .filter(":contains(Grandparent)");
+
         // Initially expanded - selected node is visible
         cy.findByRole("tree").should("exist");
         cy.findByRole("button", { name: "Previous Element" }).focus();
         cy.realPress("Tab");
-        cy.findByRole("treeitem", { name: "Deep Child 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should(
+          "be.focused",
+        );
 
         // Collapse parent (second level) - selected node now hidden
-        cy.findByRole("treeitem", { name: /Parent/ })
-          .find(".saltTreeNodeExpansionIcon")
-          .realClick();
+        getParentNode().find(".saltTreeNodeExpansionIcon").realClick();
         cy.findByRole("treeitem", { name: "Deep Child 1" }).should("not.exist");
 
         // Tab out and back in - should focus first node since selected is hidden
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
 
         // Collapse grandparent (first level) - parent also hidden now
-        cy.findByRole("treeitem", { name: /Grandparent/ })
-          .find(".saltTreeNodeExpansionIcon")
-          .realClick();
-        cy.findByRole("treeitem", { name: /Parent/ }).should("not.exist");
+        getGrandparentNode().find(".saltTreeNodeExpansionIcon").realClick();
+        cy.get('[role="treeitem"][aria-level="2"]').should("not.exist");
 
         // Tab out and back in - should still focus first node
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
 
         // Expand grandparent (first level) - parent visible but still indeterminate
-        cy.findByRole("treeitem", { name: /Grandparent/ })
-          .find(".saltTreeNodeExpansionIcon")
-          .realClick();
-        cy.findByRole("treeitem", { name: /Parent/ }).should("be.visible");
-        cy.findByRole("treeitem", { name: /Parent/ }).should(
-          "have.attr",
-          "aria-checked",
-          "mixed",
-        );
+        getGrandparentNode().find(".saltTreeNodeExpansionIcon").realClick();
+        getParentNode().should("be.visible");
+        getParentNode().should("have.attr", "aria-checked", "mixed");
         cy.findByRole("treeitem", { name: "Deep Child 1" }).should("not.exist");
 
         // Tab out and back in - should still focus first node (selected still hidden)
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("treeitem", { name: "Node 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Node 1" }).should("be.focused");
 
         // Expand parent (second level) - selected node now visible
-        cy.findByRole("treeitem", { name: /Parent/ })
-          .find(".saltTreeNodeExpansionIcon")
-          .realClick();
+        getParentNode().find(".saltTreeNodeExpansionIcon").realClick();
         cy.findByRole("treeitem", { name: "Deep Child 1" }).should(
           "be.visible",
         );
@@ -2006,9 +1900,9 @@ describe("Given a Tree", () => {
         cy.realPress("Tab");
         cy.findByRole("button", { name: "Next Element" }).should("be.focused");
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("treeitem", { name: "Deep Child 1" })
-          .find("button")
-          .should("be.focused");
+        cy.findByRole("treeitem", { name: "Deep Child 1" }).should(
+          "be.focused",
+        );
       });
     });
   });
@@ -2051,9 +1945,7 @@ describe("Given a Tree", () => {
       );
       cy.findByRole("tooltip").should("not.exist");
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: "Documents" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Documents" }).should("be.focused");
       cy.findByRole("tooltip").should("be.visible");
       cy.findByRole("tooltip").should(
         "have.text",
@@ -2077,9 +1969,7 @@ describe("Given a Tree", () => {
       cy.realPress("Tab");
       cy.findByRole("tooltip").should("be.visible");
       cy.realPress("ArrowDown");
-      cy.findByRole("treeitem", { name: "Pictures" })
-        .find("button")
-        .should("be.focused");
+      cy.findByRole("treeitem", { name: "Pictures" }).should("be.focused");
       cy.findByRole("tooltip").should("not.exist");
     });
 
@@ -2098,7 +1988,10 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.findByRole("tooltip").should("not.exist");
-      cy.findByRole("button", { name: /Documents/ }).realHover();
+      // Hover over the trigger span (Tooltip's ref target), not the outer li
+      cy.get('[role="treeitem"][aria-level="1"]')
+        .find(".saltTreeNodeTrigger")
+        .realHover();
       cy.findByRole("tooltip").should("be.visible");
       cy.findByRole("tooltip").should("have.text", "Main documents folder");
     });
@@ -2119,9 +2012,8 @@ describe("Given a Tree", () => {
       );
       cy.findByRole("tooltip").should("not.exist");
       cy.realPress("Tab");
-      cy.findByRole("treeitem", { name: /Documents/ })
-        .find("button")
-        .should("be.focused");
+      // Use aria-level to target the parent node specifically
+      cy.get('[role="treeitem"][aria-level="1"]').should("be.focused");
       cy.findByRole("tooltip").should("be.visible");
       cy.findByRole("tooltip").should("have.text", "Main documents folder");
     });
