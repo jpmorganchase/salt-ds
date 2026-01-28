@@ -1,6 +1,6 @@
 .salt-theme.salt-theme-next {
   --salt-selectable-borderColor: var(--salt-palette-neutral);
-  --salt-selectable-borderColor-hover: var(--salt-palette-accent-weak);
+  --salt-selectable-borderColor-hover: var(--salt-palette-accent);
   --salt-selectable-borderColor-selected: var(--salt-palette-accent);
   --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-accent-disabled);
   --salt-selectable-borderColor-disabled: var(--salt-palette-neutral-disabled);
@@ -8,7 +8,7 @@
 
   --salt-selectable-foreground: var(--salt-palette-neutral-strong);
   --salt-selectable-foreground-disabled: var(--salt-palette-neutral-strong-disabled);
-  --salt-selectable-foreground-hover: var(--salt-palette-accent-weak);
+  --salt-selectable-foreground-hover: var(--salt-palette-accent);
   --salt-selectable-foreground-selected: var(--salt-palette-accent);
   --salt-selectable-foreground-selectedDisabled: var(--salt-palette-accent-disabled);
   --salt-selectable-background: var(--salt-palette-alpha-none);
