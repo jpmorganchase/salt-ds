@@ -5,10 +5,10 @@ import {
   Spinner,
   StackLayout,
 } from "@salt-ds/core";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { Code } from "../mdx/code";
-import { Table, Thead, Tr } from "../mdx/table";
 import { BlockView } from "./BlockView";
 import styles from "./CharacteristicsTokenTable.module.css";
 
@@ -76,31 +76,31 @@ export const CharacteristicsTokenTable = ({
 
   return (
     <Table>
-      <Thead>
-        <Tr>
-          <th>Preview</th>
-          <th>Token name & token value</th>
-        </Tr>
-      </Thead>
-      <tbody>
+      <THead>
+        <TR>
+          <TH>Preview</TH>
+          <TH>Token name & token value</TH>
+        </TR>
+      </THead>
+      <TBody>
         {Object.entries(cssVariablesData).map(([name, value]) => (
-          <Tr key={name}>
-            <td>
+          <TR key={name}>
+            <TD>
               <ChosenProvider theme="">
                 <BlockView name={name} />
               </ChosenProvider>
-            </td>
-            <td>
+            </TD>
+            <TD>
               <StackLayout gap={0} align="start">
                 <FlowLayout align="center" gap={1}>
                   <CopyToClipboard value={name} />
                 </FlowLayout>
                 <Code>{value}</Code>
               </StackLayout>
-            </td>
-          </Tr>
+            </TD>
+          </TR>
         ))}
-      </tbody>
+      </TBody>
     </Table>
   );
 };

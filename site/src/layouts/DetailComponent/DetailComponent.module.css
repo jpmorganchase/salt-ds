@@ -1,5 +1,4 @@
-.root table {
-  /* Fixed table column width for props table */
+.propsTable {
   table-layout: fixed;
 }
 
