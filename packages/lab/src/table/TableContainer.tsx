@@ -48,10 +48,11 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
 
     const checkOverflow = useCallback(() => {
-      if (!scrollRef.current) return;
-      setIsOverflowing(
-        scrollRef.current.scrollHeight > scrollRef.current.offsetHeight,
-      );
+      const element = scrollRef.current;
+      if (!element) return;
+      const verticalScroll = element.scrollHeight > element.clientHeight;
+      const horizontalScroll = element.scrollWidth > element.clientWidth;
+      setIsOverflowing(verticalScroll || horizontalScroll);
     }, []);
 
     useResizeObserver({ ref: scrollRef, onResize: checkOverflow });
