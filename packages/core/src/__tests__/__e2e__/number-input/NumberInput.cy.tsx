@@ -2,7 +2,7 @@ import {
   FormField,
   FormFieldLabel,
   NumberInput,
-  NumberInputProps,
+  type NumberInputProps,
 } from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";

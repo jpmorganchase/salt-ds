@@ -15,13 +15,6 @@ export interface StatusIndicatorProps extends IconProps {
   status: ValidationStatus;
 }
 
-const statusToAriaLabelMap: Record<ValidationStatus, string> = {
-  error: "error",
-  success: "success",
-  warning: "warning",
-  info: "info",
-};
-
 const withBaseName = makePrefixer("saltStatusIndicator");
 
 export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
@@ -36,17 +29,11 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
       window: targetWindow,
     });
 
-    const { ErrorIcon, WarningIcon, SuccessIcon, InfoIcon } = useIcon();
-
-    const iconMap = {
-      error: ErrorIcon,
-      success: SuccessIcon,
-      warning: WarningIcon,
-      info: InfoIcon,
-    };
-
-    const IconComponent = iconMap[status];
-    const ariaLabel = statusToAriaLabelMap[status];
+    const icons = useIcon();
+    const titleCaseStatus = status.charAt(0).toUpperCase() + status.slice(1);
+    const iconKey = `${titleCaseStatus}Icon` as keyof typeof icons;
+    const IconComponent = icons[iconKey];
+    const ariaLabel = status;
 
     if (IconComponent === undefined) {
       return null;

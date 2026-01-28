@@ -181,6 +181,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-wrap: nowrap;
+  line-height: normal;
 }
 
 .saltDropdown-placeholder {

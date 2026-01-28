@@ -45,6 +45,7 @@ export * from "./parent-child-layout";
 export * from "./pill";
 export * from "./progress";
 export * from "./radio-button";
+export type {} from "./registerClassNameInjection";
 export * from "./salt-provider";
 export * from "./scrim";
 export * from "./segmented-button-group";
