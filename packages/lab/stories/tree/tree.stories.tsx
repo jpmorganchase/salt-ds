@@ -171,7 +171,7 @@ MultiselectWithIcons.args = {
   multiselect: true,
 };
 
-export const Controlled: StoryFn<typeof Tree> = (args) => {
+export const ControlledSingleSelect: StoryFn<typeof Tree> = (args) => {
   const [expanded, setExpanded] = useState<string[]>(["documents"]);
   const [selected, setSelected] = useState<string[]>(["annual-report"]);
 
@@ -212,18 +212,22 @@ export const Controlled: StoryFn<typeof Tree> = (args) => {
   );
 };
 
-export const MultiSelect: StoryFn<typeof Tree> = (args) => {
+export const ControlledMultiselect: StoryFn<typeof Tree> = (args) => {
+  const [expanded, setExpanded] = useState<string[]>(["documents", "reports"]);
   const [selected, setSelected] = useState<string[]>([]);
 
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
+        <strong>Expanded:</strong> {expanded.join(", ") || "none"}
+        <br />
         <strong>Selected:</strong> {selected.join(", ") || "none"}
       </div>
       <Tree
         {...args}
         aria-label="File browser"
-        defaultExpanded={["documents", "reports"]}
+        expanded={expanded}
+        onExpandedChange={(_, newExpanded) => setExpanded(newExpanded)}
         selected={selected}
         onSelectionChange={(_, newSelected) => setSelected(newSelected)}
       >
@@ -248,7 +252,7 @@ export const MultiSelect: StoryFn<typeof Tree> = (args) => {
     </div>
   );
 };
-MultiSelect.args = {
+ControlledMultiselect.args = {
   multiselect: true,
 };
 
