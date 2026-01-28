@@ -1,9 +1,18 @@
-import { useForkRef } from "@salt-ds/core";
-import { useElementScrollable } from "@salt-ds/lab";
+import {
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useResizeObserver,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, useRef } from "react";
+import {
+  forwardRef,
+  type HTMLAttributes,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
@@ -20,6 +29,8 @@ export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {
 
 export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
   function TableContainer(props, ref) {
+    const [isOverflowing, setIsOverflowing] = useState(false);
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-container",
@@ -36,11 +47,20 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
 
-    const { isScrollable } = useElementScrollable(scrollRef, {
-      targetWindow,
-    });
+    const checkOverflow = useCallback(() => {
+      if (!scrollRef.current) return;
+      setIsOverflowing(
+        scrollRef.current.scrollHeight > scrollRef.current.offsetHeight,
+      );
+    }, []);
 
-    const ariaProps = isScrollable
+    useResizeObserver({ ref: scrollRef, onResize: checkOverflow });
+
+    useIsomorphicLayoutEffect(() => {
+      checkOverflow();
+    }, [checkOverflow]);
+
+    const ariaProps = isOverflowing
       ? {
           ...(ariaLabel === undefined && label && { "aria-label": label }),
           ...(ariaLabelledBy === undefined &&
@@ -52,8 +72,8 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       <div
         ref={handleRef}
         className={clsx(withTableBaseName("container"), className)}
-        role={role ?? (isScrollable ? "region" : undefined)}
-        tabIndex={tabIndex ?? (isScrollable ? 0 : undefined)}
+        role={role ?? (isOverflowing ? "region" : undefined)}
+        tabIndex={tabIndex ?? (isOverflowing ? 0 : undefined)}
         {...ariaProps}
         {...rest}
       >
