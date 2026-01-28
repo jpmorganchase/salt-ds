@@ -6,7 +6,7 @@ import { planetData, planetDataColumns } from "./exampleData";
 export const TextAlignment = (): ReactElement => {
   const id = useId();
   return (
-    <TableContainer labelId={id}>
+    <TableContainer>
       <Table>
         <caption id={id}>Planet Data</caption>
         <THead>

@@ -115,10 +115,7 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
 }) => {
   const labelId = useId();
   return (
-    <TableContainer
-      labelId={labelId}
-      style={{ width: "800px", height: "300px" }}
-    >
+    <TableContainer style={{ width: "800px", height: "300px" }}>
       <Table {...args}>
         <caption id={labelId}>Sample data table</caption>
         <THead {...THeadProps}>
@@ -243,7 +240,7 @@ export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
 }) => {
   const labelId = useId();
   return (
-    <TableContainer labelId={labelId}>
+    <TableContainer>
       <Table divider="none" {...args} aria-label="Column headers">
         <caption id={labelId}>Scrollable column headers</caption>
         <TBody {...TBodyProps}>
@@ -282,7 +279,7 @@ export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
 }) => {
   const labelId = useId();
   return (
-    <TableContainer labelId={labelId}>
+    <TableContainer>
       <Table style={{ width: 200 }} {...args} aria-label="Long cell content">
         <caption id={labelId}>Scrollable long cell content</caption>
         <THead {...THeadProps}>
@@ -321,7 +318,7 @@ export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
 }) => {
   const labelId = useId();
   return (
-    <TableContainer labelId={labelId}>
+    <TableContainer>
       <Table {...args} aria-label="Numerical Data Table">
         <caption id={labelId}>Numerical data table</caption>
         <THead {...THeadProps}>
@@ -363,7 +360,7 @@ export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
   const labelId = useId();
   return (
     <StackLayout style={{ width: 300 }}>
-      <TableContainer labelId={labelId}>
+      <TableContainer>
         <Table {...args}>
           <caption id={labelId}>Scrollable vertically</caption>
           <THead {...THeadProps}>
@@ -408,7 +405,7 @@ export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
 }) => {
   const labelId = useId();
   return (
-    <TableContainer labelId={labelId} style={{ height: 120 }}>
+    <TableContainer style={{ height: 120 }}>
       <Table {...args}>
         <caption id={labelId}>Caption Name</caption>
         <THead {...THeadProps}>
@@ -433,7 +430,7 @@ export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
   );
 };
 
-export const ScrollableLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
+export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps: _TFootProps,
@@ -442,11 +439,8 @@ export const ScrollableLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => (
-  <TableContainer
-    label="Scrollable Aria Labelled Table"
-    style={{ height: 120 }}
-  >
-    <Table aria-label="Aria Labelled Table" {...args}>
+  <TableContainer style={{ height: 120 }}>
+    <Table aria-label="Aria Label Table" {...args}>
       <THead {...THeadProps}>
         {generateCustomRows({
           label: "Header",
@@ -468,7 +462,7 @@ export const ScrollableLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   </TableContainer>
 );
 
-export const ScrollableLabelIdTable: StoryFn<TablePropsAndCustomArgs> = ({
+export const ScrollableExternalLableTable: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps: _TFootProps,
@@ -477,11 +471,11 @@ export const ScrollableLabelIdTable: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
+  const labelId = "custom-label-id";
   return (
     <>
-      <Text id={labelId}>Labelled Table Name</Text>
-      <TableContainer labelId={labelId} style={{ height: 120 }}>
+      <Text id={labelId}>External Table Name</Text>
+      <TableContainer style={{ height: 120 }}>
         <Table aria-labelledby={labelId} {...args}>
           <THead {...THeadProps}>
             {generateCustomRows({
@@ -506,7 +500,7 @@ export const ScrollableLabelIdTable: StoryFn<TablePropsAndCustomArgs> = ({
   );
 };
 
-export const ScrollableUserLabelOverride: StoryFn<TablePropsAndCustomArgs> = ({
+export const ScrollableIdOverride: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps: _TFootProps,
@@ -516,13 +510,10 @@ export const ScrollableUserLabelOverride: StoryFn<TablePropsAndCustomArgs> = ({
   ...args
 }) => {
   return (
-    <TableContainer
-      aria-label="User provided region label"
-      label="Default container label"
-      style={{ height: 120 }}
-    >
-      <Table {...args}>
-        <caption>Default container label</caption>
+    <TableContainer style={{ height: 120 }}>
+      {/** biome-ignore lint/correctness/useUniqueElementIds: Added for testing purposes */}
+      <Table id="user-provided-id" {...args}>
+        <caption>Caption Name</caption>
         <THead {...THeadProps}>
           {generateCustomRows({
             label: "Header",
@@ -534,7 +525,7 @@ export const ScrollableUserLabelOverride: StoryFn<TablePropsAndCustomArgs> = ({
         </THead>
         <TBody {...TBodyProps}>
           {generateRows({
-            rowCount: 10,
+            rowCount: 20,
             colCount: 3,
             cellProps: TDProps,
             rowProps: TRProps,
@@ -545,7 +536,7 @@ export const ScrollableUserLabelOverride: StoryFn<TablePropsAndCustomArgs> = ({
   );
 };
 
-export const ScrollableUserLabelIdOverride: StoryFn<
+export const ScrollableAriaLabelledByOverride: StoryFn<
   TablePropsAndCustomArgs
 > = ({
   THeadProps,
@@ -556,18 +547,15 @@ export const ScrollableUserLabelIdOverride: StoryFn<
   THProps,
   ...args
 }) => {
-  const defaultLabelId = useId();
-  const overrideLabelId = useId();
+  const labelId = "external-aria-labelledby";
   return (
     <>
-      <Text id={overrideLabelId}>User provided labelled-by text</Text>
+      <Text id={labelId}>External Table Name</Text>
       <TableContainer
-        aria-labelledby={overrideLabelId}
-        labelId={defaultLabelId}
+        aria-labelledby="user-provided-aria-labelledby"
         style={{ height: 120 }}
       >
-        <Table {...args}>
-          <caption id={defaultLabelId}>Default caption label</caption>
+        <Table aria-labelledby={labelId} {...args}>
           <THead {...THeadProps}>
             {generateCustomRows({
               label: "Header",
@@ -579,7 +567,7 @@ export const ScrollableUserLabelIdOverride: StoryFn<
           </THead>
           <TBody {...TBodyProps}>
             {generateRows({
-              rowCount: 10,
+              rowCount: 20,
               colCount: 3,
               cellProps: TDProps,
               rowProps: TRProps,
@@ -603,7 +591,6 @@ export const NonScrollableTable: StoryFn<TablePropsAndCustomArgs> = ({
   const labelId = useId();
   return (
     <TableContainer
-      labelId={labelId}
       data-testid="non-scrollable-container"
       style={{ width: 400 }}
     >

@@ -53,7 +53,7 @@ export const TFootVariant = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <TableContainer labelId={id}>
+      <TableContainer>
         <Table>
           <caption id={id}>Table with TFoot variants</caption>
           <THead>

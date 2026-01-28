@@ -5,12 +5,12 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 const composedStories = composeStories(tableStories);
 const {
   ScrollableVertically,
-  ScrollableLabelIdTable,
-  ScrollableLabelTable,
+  ScrollableAriaLabelTable,
+  ScrollableExternalLableTable,
+  ScrollableIdOverride,
+  ScrollableAriaLabelledByOverride,
   ScrollableCaptionTable,
   NonScrollableTable,
-  ScrollableUserLabelOverride,
-  ScrollableUserLabelIdOverride,
 } = composedStories;
 
 describe("GIVEN a Table", () => {
@@ -49,50 +49,61 @@ describe("GIVEN a Table inside a TableContainer", () => {
   });
 
   it("THEN should have accessible name when scrollable and aria-label is used", () => {
-    cy.mount(<ScrollableLabelTable />);
+    cy.mount(<ScrollableAriaLabelTable />);
 
-    cy.findByRole("table", { name: "Aria Labelled Table" }).should(
-      "be.visible",
-    );
-    cy.findByRole("region", { name: "Scrollable Aria Labelled Table" })
+    cy.findByRole("table", { name: "Aria Label Table" }).should("be.visible");
+
+    cy.findByRole("region", { name: "Aria Label Table" })
       .should("be.visible")
       .and("have.attr", "tabindex", "0");
 
     cy.realPress("Tab");
-    cy.findByRole("region", { name: "Scrollable Aria Labelled Table" }).should(
+    cy.findByRole("region", { name: "Aria Label Table" }).should("have.focus");
+  });
+
+  it("THEN should have accessible name when scrollable and aria-labelledby is used", () => {
+    cy.mount(<ScrollableExternalLableTable />);
+
+    cy.findByRole("table", { name: "External Table Name" }).should(
+      "be.visible",
+    );
+
+    cy.findByRole("region", { name: "External Table Name" })
+      .should("be.visible")
+      .and("have.attr", "tabindex", "0");
+
+    cy.realPress("Tab");
+    cy.findByRole("region", { name: "External Table Name" }).should(
       "have.focus",
     );
   });
 
-  it("THEN should have accessible name when scrollable and aria-labelledby is used", () => {
-    cy.mount(<ScrollableLabelIdTable />);
+  it("THEN should use user provided id", () => {
+    cy.mount(<ScrollableIdOverride />);
 
-    cy.findByRole("table", { name: "Labelled Table Name" }).should(
-      "be.visible",
-    );
-    cy.findByRole("region", { name: "Labelled Table Name" })
+    cy.findByRole("table", { name: "Caption Name" })
       .should("be.visible")
-      .and("have.attr", "tabindex", "0");
+      .and("have.attr", "id", "user-provided-id");
+
+    cy.findByRole("region", { name: "Caption Name" }).should("be.visible");
+
+    cy.realPress("Tab");
+    cy.findByRole("region", { name: "Caption Name" }).should("have.focus");
   });
 
-  it("THEN should respect user provided aria-label override", () => {
-    cy.mount(<ScrollableUserLabelOverride />);
+  it("THEN should use user provided aria-labelledby", () => {
+    cy.mount(<ScrollableAriaLabelledByOverride />);
 
-    cy.findByRole("region", { name: "User provided region label" })
-      .should("be.visible")
-      .and("have.attr", "aria-label", "User provided region label");
-
-    cy.findByRole("table", { name: "Default container label" }).should(
+    cy.findByRole("table", { name: "External Table Name" }).should(
       "be.visible",
     );
-  });
 
-  it("THEN should respect user provided aria-labelledby override", () => {
-    cy.mount(<ScrollableUserLabelIdOverride />);
-
-    cy.findByRole("region", { name: "User provided labelled-by text" })
+    cy.findByRole("region")
       .should("be.visible")
-      .and("have.attr", "tabindex", "0");
+      .and("have.attr", "aria-labelledby", "user-provided-aria-labelledby");
+
+    cy.realPress("Tab");
+    cy.findByRole("region").should("have.focus");
   });
 
   it("THEN should not have region role or be focusable when not scrollable", () => {

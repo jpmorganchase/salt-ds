@@ -1,10 +1,11 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import tableCss from "./Table.css";
+import { useTable } from "./TableContext";
 
 export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   /**
@@ -26,39 +27,56 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
 
 export const withTableBaseName = makePrefixer("saltTable");
 
-export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
-  {
-    children,
-    className,
-    variant = "primary",
-    divider = "tertiary",
-    zebra = false,
-    ...rest
-  },
-  ref,
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-table",
-    css: tableCss,
-    window: targetWindow,
-  });
+export const Table = forwardRef<HTMLTableElement, TableProps>(
+  function Table(props, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-table",
+      css: tableCss,
+      window: targetWindow,
+    });
 
-  return (
-    <table
-      className={clsx(
-        withTableBaseName(),
-        {
-          [withTableBaseName(variant)]: variant,
-          [withTableBaseName("zebra")]: zebra,
-          [withTableBaseName(`divider-${divider}`)]: divider,
-        },
-        className,
-      )}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </table>
-  );
-});
+    const {
+      children,
+      className,
+      variant = "primary",
+      divider = "tertiary",
+      zebra = false,
+      ...rest
+    } = props;
+
+    const generatedId = useId();
+    const { setId, setLabelledBy } = useTable();
+    const tableId = props.id ?? generatedId;
+    const tableLabelledBy = props["aria-labelledby"];
+    const labelledBy = tableLabelledBy ?? tableId;
+
+    useIsomorphicLayoutEffect(() => {
+      if (tableId) {
+        setId?.(tableId);
+      }
+      if (labelledBy) {
+        setLabelledBy?.(labelledBy);
+      }
+    }, [tableId, labelledBy, setId, setLabelledBy]);
+
+    return (
+      <table
+        id={tableId}
+        className={clsx(
+          withTableBaseName(),
+          {
+            [withTableBaseName(variant)]: variant,
+            [withTableBaseName("zebra")]: zebra,
+            [withTableBaseName(`divider-${divider}`)]: divider,
+          },
+          className,
+        )}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </table>
+    );
+  },
+);

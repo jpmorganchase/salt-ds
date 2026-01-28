@@ -53,7 +53,7 @@ export const Zebra = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <TableContainer labelId={id}>
+      <TableContainer>
         <Table
           zebra
           variant={variant}

@@ -74,7 +74,7 @@ export const Dividers = (): ReactElement => {
           </FormField>
         </FlexItem>
       </FlexLayout>
-      <TableContainer labelId={id}>
+      <TableContainer>
         <Table divider={body}>
           <caption id={id}>Table with dividers</caption>
           <THead divider={header}>
