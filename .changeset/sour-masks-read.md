@@ -27,8 +27,16 @@ import { Tree, TreeNode } from "@salt-ds/lab";
 <Tree aria-label="File browser" defaultExpanded={["documents"]}>
   <TreeNode value="documents" label="Documents" icon={FolderOpenIcon}>
     <TreeNode value="reports" label="Reports" icon={FolderClosedIcon}>
-      <TreeNode value="annual-report" label="Annual Report" icon={DocumentIcon} />
-      <TreeNode value="quarterly-report" label="Quarterly Report" icon={DocumentIcon} />
+      <TreeNode
+        value="annual-report"
+        label="Annual Report"
+        icon={DocumentIcon}
+      />
+      <TreeNode
+        value="quarterly-report"
+        label="Quarterly Report"
+        icon={DocumentIcon}
+      />
     </TreeNode>
     <TreeNode value="invoices" label="Invoices" icon={FolderClosedIcon}>
       <TreeNode value="invoice-001" label="Invoice 001" icon={DocumentIcon} />
@@ -36,7 +44,7 @@ import { Tree, TreeNode } from "@salt-ds/lab";
     </TreeNode>
   </TreeNode>
   <TreeNode value="downloads" label="Downloads" icon={FolderClosedIcon} />
-</Tree>
+</Tree>;
 ```
 
 **Tree with Tooltip** — use `TreeNodeTrigger` and `TreeNodeLabel` inside `TreeNode` when you need to wrap the row (e.g. in a `Tooltip`). Icons can be passed as direct children of `TreeNodeTrigger`.
@@ -66,5 +74,5 @@ import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
     </TreeNode>
   </TreeNode>
   <TreeNode value="downloads" label="Downloads" />
-</Tree>
+</Tree>;
 ```

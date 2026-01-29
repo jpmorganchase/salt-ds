@@ -23,8 +23,16 @@ export const WithTooltip = (): ReactElement => (
             <TreeNodeLabel>Reports</TreeNodeLabel>
           </TreeNodeTrigger>
         </Tooltip>
-        <TreeNode value="annual-report" label="Annual Report" icon={DocumentIcon} />
-        <TreeNode value="quarterly-report" label="Quarterly Report" icon={DocumentIcon} />
+        <TreeNode
+          value="annual-report"
+          label="Annual Report"
+          icon={DocumentIcon}
+        />
+        <TreeNode
+          value="quarterly-report"
+          label="Quarterly Report"
+          icon={DocumentIcon}
+        />
       </TreeNode>
       <TreeNode value="invoices" label="Invoices" icon={FolderClosedIcon}>
         <TreeNode value="invoice-001" label="Invoice 001" icon={DocumentIcon} />
