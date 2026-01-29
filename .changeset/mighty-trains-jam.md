@@ -2,4 +2,4 @@
 "@salt-ds/highcharts-theme": minor
 ---
 
-Add stroke to Bubble Chart data labels when pattern fills are applied via `.salt-fill-patterns`
+Added stroke to Bubble Chart data labels to ensure contrast requirements are met when pattern fills are applied.
