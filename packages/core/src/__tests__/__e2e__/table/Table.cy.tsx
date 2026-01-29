@@ -98,7 +98,9 @@ describe("GIVEN a Table inside a TableContainer", () => {
       "be.visible",
     );
 
-    cy.findByRole("region")
+    cy.findByRole("region", {
+      name: "External Table Container Name",
+    })
       .should("be.visible")
       .and("have.attr", "aria-labelledby", "user-provided-aria-labelledby");
 

@@ -544,6 +544,10 @@ export const ScrollableAriaLabelledByOverride: StoryFn<
   const labelId = "external-aria-labelledby";
   return (
     <>
+      {/** biome-ignore lint/correctness/useUniqueElementIds: Added for testing purposes */}
+      <Text id="user-provided-aria-labelledby">
+        External Table Container Name
+      </Text>
       <Text id={labelId}>External Table Name</Text>
       <TableContainer
         aria-labelledby="user-provided-aria-labelledby"
@@ -570,6 +574,45 @@ export const ScrollableAriaLabelledByOverride: StoryFn<
         </Table>
       </TableContainer>
     </>
+  );
+};
+export const ScrollableContainerAriaLabelOverride: StoryFn<
+  TablePropsAndCustomArgs
+> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <TableContainer
+      aria-label="External Table Container Name"
+      style={{ height: 120 }}
+    >
+      <Table {...args}>
+        <caption>Caption Name</caption>
+        <THead {...THeadProps}>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 3,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
+        </THead>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 20,
+            colCount: 3,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
+        </TBody>
+      </Table>
+    </TableContainer>
   );
 };
 
