@@ -12,6 +12,8 @@ import {
 import { MicroMenuIcon, SearchIcon } from "@salt-ds/icons";
 import { Kbd, type KbdProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
+import { useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export default {
   title: "Lab/Kbd",
@@ -137,10 +139,21 @@ function AlignmentMenu() {
 }
 
 export const NestedInMenu: StoryFn<KbdProps> = () => {
+  const [open, setOpen] = useState(false);
+
+  useHotkeys("meta+m", (event) => {
+    event.preventDefault();
+    setOpen(true);
+  });
+
   return (
-    <Menu>
+    <Menu open={open} onOpenChange={setOpen}>
       <MenuTrigger>
-        <Button appearance="transparent" aria-label="Open Menu">
+        <Button
+          appearance="transparent"
+          aria-label="Open Menu"
+          aria-keyshortcuts="Meta+M"
+        >
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
