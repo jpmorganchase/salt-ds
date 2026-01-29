@@ -347,6 +347,83 @@ export const WithTooltip: StoryFn<typeof Tree> = (args) => (
   </Tree>
 );
 
+export const CompositionalWithIcons: StoryFn<typeof Tree> = (args) => (
+  <Tree {...args} aria-label="File browser" defaultExpanded={["documents"]}>
+    <TreeNode value="documents">
+      <TreeNodeTrigger>
+        <FolderOpenIcon aria-hidden />
+        <TreeNodeLabel>Documents</TreeNodeLabel>
+      </TreeNodeTrigger>
+      <TreeNode value="reports">
+        <TreeNodeTrigger>
+          <FolderClosedIcon aria-hidden />
+          <TreeNodeLabel>Reports</TreeNodeLabel>
+        </TreeNodeTrigger>
+        <TreeNode value="annual-report">
+          <TreeNodeTrigger>
+            <DocumentIcon aria-hidden />
+            <TreeNodeLabel>Annual Report</TreeNodeLabel>
+          </TreeNodeTrigger>
+        </TreeNode>
+        <TreeNode value="quarterly-report">
+          <TreeNodeTrigger>
+            <DocumentIcon aria-hidden />
+            <TreeNodeLabel>Quarterly Report</TreeNodeLabel>
+          </TreeNodeTrigger>
+        </TreeNode>
+      </TreeNode>
+      <TreeNode value="invoices">
+        <TreeNodeTrigger>
+          <FolderClosedIcon aria-hidden />
+          <TreeNodeLabel>Invoices</TreeNodeLabel>
+        </TreeNodeTrigger>
+        <TreeNode value="invoice-001">
+          <TreeNodeTrigger>
+            <DocumentIcon aria-hidden />
+            <TreeNodeLabel>Invoice 001</TreeNodeLabel>
+          </TreeNodeTrigger>
+        </TreeNode>
+        <TreeNode value="invoice-002">
+          <TreeNodeTrigger>
+            <DocumentIcon aria-hidden />
+            <TreeNodeLabel>Invoice 002</TreeNodeLabel>
+          </TreeNodeTrigger>
+        </TreeNode>
+      </TreeNode>
+    </TreeNode>
+    <TreeNode value="pictures">
+      <TreeNodeTrigger>
+        <FolderClosedIcon aria-hidden />
+        <TreeNodeLabel>Pictures</TreeNodeLabel>
+      </TreeNodeTrigger>
+      <TreeNode value="vacation">
+        <TreeNodeTrigger>
+          <FolderClosedIcon aria-hidden />
+          <TreeNodeLabel>Vacation</TreeNodeLabel>
+        </TreeNodeTrigger>
+        <TreeNode value="beach">
+          <TreeNodeTrigger>
+            <DocumentIcon aria-hidden />
+            <TreeNodeLabel>Beach</TreeNodeLabel>
+          </TreeNodeTrigger>
+        </TreeNode>
+        <TreeNode value="mountains">
+          <TreeNodeTrigger>
+            <DocumentIcon aria-hidden />
+            <TreeNodeLabel>Mountains</TreeNodeLabel>
+          </TreeNodeTrigger>
+        </TreeNode>
+      </TreeNode>
+    </TreeNode>
+    <TreeNode value="downloads">
+      <TreeNodeTrigger>
+        <FolderClosedIcon aria-hidden />
+        <TreeNodeLabel>Downloads</TreeNodeLabel>
+      </TreeNodeTrigger>
+    </TreeNode>
+  </Tree>
+);
+
 export const DeepNesting: StoryFn<typeof Tree> = (args) => (
   <Tree
     {...args}

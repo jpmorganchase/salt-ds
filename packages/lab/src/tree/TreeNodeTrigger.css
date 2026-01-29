@@ -42,3 +42,15 @@
   color: var(--salt-content-primary-foreground-disabled);
   background: var(--salt-selectable-background-disabled);
 }
+
+.saltTreeNodeTrigger > .saltIcon {
+  width: var(--salt-size-selectable);
+  height: var(--salt-size-selectable);
+  min-width: var(--salt-size-selectable);
+  flex-shrink: 0;
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltTreeNode-disabled .saltTreeNodeTrigger > .saltIcon {
+  color: var(--salt-content-primary-foreground-disabled);
+}
