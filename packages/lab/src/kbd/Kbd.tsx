@@ -8,7 +8,7 @@ import kbdCss from "./Kbd.css";
 
 export interface KbdProps extends ComponentPropsWithoutRef<"kbd"> {
   /**
-   * The variant of the divider. Defaults to `"primary"`.
+   * The variant of the kbd. Defaults to `"primary"`.
    */
   variant?: "primary" | "secondary" | "tertiary";
 }
