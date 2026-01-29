@@ -5,7 +5,6 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  useId,
 } from "@salt-ds/core";
 import {
   Table,
@@ -32,8 +31,6 @@ export const Zebra = (): ReactElement => {
     setDivider(event.currentTarget.value as "on" | "off");
   };
 
-  const id = useId();
-
   return (
     <StackLayout style={{ width: "100%" }}>
       <FlexLayout direction="row">
@@ -59,7 +56,7 @@ export const Zebra = (): ReactElement => {
           variant={variant}
           divider={divider === "on" ? "tertiary" : "none"}
         >
-          <caption id={id}>Zebra table with variants</caption>
+          <caption>Zebra table with variants</caption>
           <THead>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {

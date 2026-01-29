@@ -5,7 +5,7 @@ export interface TableContextValue {
   id?: string;
   setId: (id: string) => void;
   labelledBy?: string;
-  setLabelledBy?: (labelId: string) => void;
+  setLabelledBy: (labelId: string) => void;
 }
 
 export const TableContext = createContext<TableContextValue>("TableContext", {

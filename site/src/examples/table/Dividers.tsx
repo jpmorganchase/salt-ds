@@ -6,7 +6,6 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  useId,
 } from "@salt-ds/core";
 import {
   Table,
@@ -39,8 +38,6 @@ export const Dividers = (): ReactElement => {
   const onChangeFooter = (event: SyntheticEvent<HTMLButtonElement>) => {
     setFooter(event.currentTarget.value as TFootProps["divider"]);
   };
-
-  const id = useId();
 
   return (
     <StackLayout style={{ width: "90%" }}>
@@ -76,7 +73,7 @@ export const Dividers = (): ReactElement => {
       </FlexLayout>
       <TableContainer>
         <Table divider={body}>
-          <caption id={id}>Table with dividers</caption>
+          <caption>Table with dividers</caption>
           <THead divider={header}>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {

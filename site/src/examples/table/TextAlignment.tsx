@@ -1,14 +1,12 @@
-import { useId } from "@salt-ds/core";
 import { Table, TableContainer, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { planetData, planetDataColumns } from "./exampleData";
 
 export const TextAlignment = (): ReactElement => {
-  const id = useId();
   return (
     <TableContainer>
       <Table>
-        <caption id={id}>Planet Data</caption>
+        <caption>Planet Data</caption>
         <THead>
           <TR>
             {planetDataColumns.map(({ title, type }) => {

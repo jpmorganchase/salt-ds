@@ -5,7 +5,6 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  useId,
 } from "@salt-ds/core";
 import {
   Table,
@@ -32,8 +31,6 @@ export const Variants = (): ReactElement => {
     setDivider(event.currentTarget.value as "on" | "off");
   };
 
-  const id = useId();
-
   return (
     <StackLayout style={{ width: "100%" }}>
       <FlexLayout direction="row">
@@ -58,7 +55,7 @@ export const Variants = (): ReactElement => {
           variant={variant}
           divider={divider === "on" ? "tertiary" : "none"}
         >
-          <caption id={id}>Table with variants</caption>
+          <caption>Table with variants</caption>
           <THead>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {

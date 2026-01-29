@@ -53,10 +53,10 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
 
     useIsomorphicLayoutEffect(() => {
       if (tableId) {
-        setId?.(tableId);
+        setId(tableId);
       }
       if (labelledBy) {
-        setLabelledBy?.(labelledBy);
+        setLabelledBy(labelledBy);
       }
     }, [tableId, labelledBy, setId, setLabelledBy]);
 

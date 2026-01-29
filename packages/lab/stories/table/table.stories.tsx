@@ -113,11 +113,10 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <TableContainer style={{ width: "800px", height: "300px" }}>
       <Table {...args}>
-        <caption id={labelId}>Sample data table</caption>
+        <caption>Sample data table</caption>
         <THead {...THeadProps}>
           {generateCustomRows({
             label: "Header",
@@ -238,11 +237,10 @@ export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <TableContainer>
       <Table divider="none" {...args} aria-label="Column headers">
-        <caption id={labelId}>Scrollable column headers</caption>
+        <caption>Scrollable column headers</caption>
         <TBody {...TBodyProps}>
           <TR {...TRProps}>
             <TH {...THProps} scope="row">
@@ -277,11 +275,10 @@ export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <TableContainer>
       <Table style={{ width: 200 }} {...args} aria-label="Long cell content">
-        <caption id={labelId}>Scrollable long cell content</caption>
+        <caption>Scrollable long cell content</caption>
         <THead {...THeadProps}>
           <TR {...TRProps}>
             <TH {...THProps}>Super long column header that will wrap</TH>
@@ -316,11 +313,10 @@ export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <TableContainer>
       <Table {...args} aria-label="Numerical Data Table">
-        <caption id={labelId}>Numerical data table</caption>
+        <caption>Numerical data table</caption>
         <THead {...THeadProps}>
           <TR {...TRProps}>
             <TH {...THProps}>City</TH>
@@ -357,12 +353,11 @@ export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <StackLayout style={{ width: 300 }}>
       <TableContainer>
         <Table {...args}>
-          <caption id={labelId}>Scrollable vertically</caption>
+          <caption>Scrollable vertically</caption>
           <THead {...THeadProps}>
             {generateCustomRows({
               label: "Header",
@@ -403,11 +398,10 @@ export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <TableContainer style={{ height: 120 }}>
       <Table {...args}>
-        <caption id={labelId}>Caption Name</caption>
+        <caption>Caption Name</caption>
         <THead {...THeadProps}>
           {generateCustomRows({
             label: "Header",
@@ -471,7 +465,7 @@ export const ScrollableExternalLableTable: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = "custom-label-id";
+  const labelId = useId();
   return (
     <>
       <Text id={labelId}>External Table Name</Text>
@@ -588,14 +582,13 @@ export const NonScrollableTable: StoryFn<TablePropsAndCustomArgs> = ({
   THProps,
   ...args
 }) => {
-  const labelId = useId();
   return (
     <TableContainer
       data-testid="non-scrollable-container"
       style={{ width: 400 }}
     >
       <Table {...args}>
-        <caption id={labelId}>Non-Scrollable Table</caption>
+        <caption>Non-Scrollable Table</caption>
         <THead {...THeadProps}>
           <TR {...TRProps}>
             <TH {...THProps}>H1</TH>

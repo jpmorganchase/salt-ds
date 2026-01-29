@@ -5,7 +5,6 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  useId,
 } from "@salt-ds/core";
 import {
   Table,
@@ -32,8 +31,6 @@ export const TFootVariant = (): ReactElement => {
     setDivider(event.currentTarget.value as "on" | "off");
   };
 
-  const id = useId();
-
   return (
     <StackLayout style={{ width: "100%" }}>
       <FlexLayout direction="row">
@@ -55,7 +52,7 @@ export const TFootVariant = (): ReactElement => {
       </FlexLayout>
       <TableContainer>
         <Table>
-          <caption id={id}>Table with TFoot variants</caption>
+          <caption>Table with TFoot variants</caption>
           <THead>
             <TR>
               {Array.from({ length: 3 }, (_arrItem, i) => {
