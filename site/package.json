@@ -46,7 +46,7 @@
     "shiki": "^3.0.0"
   },
   "devDependencies": {
-    "@next/env": "^14.0.0",
+    "@next/env": "^16.0.0",
     "@types/luxon": "^3.6.2",
     "@types/node": "^24.0.0",
     "@types/react": "^18.3.22",
