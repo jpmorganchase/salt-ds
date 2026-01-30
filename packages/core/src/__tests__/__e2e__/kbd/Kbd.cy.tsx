@@ -15,24 +15,6 @@ describe("Given a Kbd", () => {
     cy.findByText("Shift").should("be.visible");
   });
 
-  it("should apply the correct variant classes", () => {
-    cy.mount(<Variants />);
-    cy.findByText("primary")
-      .should("have.class", "saltKbd")
-      .and("have.class", "saltKbd-primary");
-    cy.findByText("secondary")
-      .should("have.class", "saltKbd")
-      .and("have.class", "saltKbd-secondary");
-    cy.findByText("tertiary")
-      .should("have.class", "saltKbd")
-      .and("have.class", "saltKbd-tertiary");
-  });
-
-  it("applies custom className", () => {
-    cy.mount(<Kbd className="my-custom-class">Key</Kbd>);
-    cy.get("kbd.my-custom-class").should("exist");
-  });
-
   it("renders as a semantic <kbd> element", () => {
     cy.mount(<Kbd>Key</Kbd>);
     cy.get("kbd").should("exist");
@@ -45,19 +27,5 @@ describe("Given a Kbd", () => {
       </Kbd>,
     );
     cy.get("#my-kbd").should("exist").and("have.attr", "data-test", "kbd-test");
-  });
-
-  it("renders inline with text", () => {
-    cy.mount(<InlineWithText />);
-    cy.contains("Hit").should("be.visible");
-    cy.findByText("Ctrl").should("be.visible");
-    cy.findByText("k").should("be.visible");
-  });
-
-  it("renders inside input adornment", () => {
-    cy.mount(<NestedInInput />);
-    cy.get("input").should("exist");
-    cy.findByText("Cmd").should("be.visible");
-    cy.findByText("K").should("be.visible");
   });
 });

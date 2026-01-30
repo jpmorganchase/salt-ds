@@ -1,6 +1,17 @@
+import {
+  FlexLayout,
+  FlowLayout,
+  Input,
+  Menu,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+  Text,
+} from "@salt-ds/core";
 import { Kbd } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import { SearchIcon } from "packages/icons/src";
 
 export default {
   title: "Lab/Kbd/QA",
@@ -8,10 +19,30 @@ export default {
 } as Meta<typeof Kbd>;
 
 export const AllExamples: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={4} height={950} itemPadding={5}>
+  <QAContainer cols={5} itemPadding={1} vertical transposeDensity>
     <Kbd>primary</Kbd>
     <Kbd variant="secondary">secondary</Kbd>
     <Kbd variant="tertiary">tertiary</Kbd>
+    <FlexLayout gap={0.5} align="center">
+      <Text>Press</Text>
+      <Kbd>Ctrl</Kbd>
+      <Text>+</Text>
+      <Kbd>Shift</Kbd>
+    </FlexLayout>
+    <FlowLayout style={{ maxWidth: "256px" }}>
+      <Input
+        bordered
+        style={{ width: "198px" }}
+        placeholder="Search"
+        startAdornment={<SearchIcon />}
+        endAdornment={
+          <FlexLayout gap={0.5} wrap align="center">
+            <Kbd>Cmd</Kbd>
+            <Kbd>K</Kbd>
+          </FlexLayout>
+        }
+      />
+    </FlowLayout>
   </QAContainer>
 );
 

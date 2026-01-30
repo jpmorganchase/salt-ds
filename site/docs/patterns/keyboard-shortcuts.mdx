@@ -47,7 +47,7 @@ This pattern is a recommended layout and should be displayed within an appropria
     background="secondary"
   />
 
-<Callout status="success" title='Best practices' >
+<Callout status="success" title="Best practices" >
   Use concise and descriptive names for actions to reflect the UI command executed by the shortcut.
 </Callout>
 
@@ -72,7 +72,7 @@ Use this pattern to:
 - Provide an alternative to mouse or trackpad interactions, supporting users who prefer or require keyboard input.
 - Allow users to search for available keyboard shortcuts and execute actions using those shortcuts, improving accessibility and user experience.
 
-<Callout status="success" title='Best practices' >
+<Callout status="success" title="Best practices" >
   Provide keyboard shortcuts to users with accessibility needs, who may not have access to, or prefer not to use, a mouse.
 </Callout>
 
@@ -90,7 +90,7 @@ Use this pattern to:
   background="secondary"
 />
 
-2. When the user enters text in the filter input, the list updates to show only the matching shortcuts. For more details on filtering behavior, refer to the [List Filtering pattern](salt/patterns/list-filtering) page.
+2. When the user enters text in the filter input, the list updates to show only the matching shortcuts. For guidance on filtering behavior, refer to the [List Filtering pattern](salt/patterns/list-filtering) page.
 
 <Diagram
   src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-searching-shortcuts-results.png"
@@ -102,9 +102,9 @@ Use this pattern to:
 
 ### Enabling or Disabling Keyboard Shortcuts
 
-Allow users to control keyboard shortcuts with a switch. When shortcuts are disabled, the shortcut list should be hidden from the pattern.
+Allow users to control keyboard shortcuts with a switch. When shortcuts are disabled, the shortcut list should be hidden.
 
-<Callout status="success" title='Best practices' >
+<Callout status="success" title="Best practices" >
   Provide users with the option to disable keyboard shortcuts to enhance usability and accessibility. This is especially important in applications with custom shortcuts, as it helps prevent accidental activation and reduces user frustration.
 </Callout>
 
@@ -162,13 +162,9 @@ The choice of container should be guided by how and when users will need to acce
   background="secondary"
 />
 
-<Callout status="success" title='Best practices' >
-  To ensure accessibility for all users, any action to open or close the keyboard shortcuts—such as clicking a settings or close button—should also be operable through keyboard interaction. Providing both interactive elements and keyboard access ensures that all users can easily access and exit the keyboard shortcuts list, supporting a wide range of needs and preferences.
-</Callout>
-
 ## How to define shortcuts
 
-When defining your shortcuts, we recommend:
+When defining your shortcuts, we recommend taking the following steps:
 
 - Consider whether each shortcut should be global or contextual.
 - Combine one modifier key with a character key that's associated with the name of the action (e.g., "Cmd + S" for Save).
@@ -177,7 +173,7 @@ When defining your shortcuts, we recommend:
 - Avoid ambiguous or hard-to-reach keys—prefer letters and numbers over symbols, as some characters (like the £ sign) are not universally available or may require complex key combinations on certain layouts.
 - Clearly document shortcuts for each operating system.
 
-<Callout status="success" title='Best practices' >
+<Callout status="success" title="Best practices" >
   If your application includes shortcuts bound to a single character, you must comply with the Web Content Accessibility Guidelines (WCAG) 2.1. For further information, please refer to the Accessibility section below.
 </Callout>
 
@@ -310,7 +306,7 @@ Common character keys include:
   </TBody>
 </Table>
 
-<Callout status="success" title='Best practices' >
+<Callout status="success" title="Best practices" >
   When designing keyboard shortcuts, always ensure your chosen combination does not conflict with important pre-existing shortcuts or reserved browser hotkeys. To manage potential conflicts:
   - Use a different modifier key (e.g., Ctrl, Alt, Shift).
   - Consider the second character key in the action’s name.
@@ -337,6 +333,4 @@ It’s important to note that adding keyboard shortcuts alone does not guarantee
 
 If you have shortcuts that are bound to only a single character, you must meet a requirement in the 2.1 version of the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/character-key-shortcuts.html). Make sure you provide a mechanism to toggle the shortcuts on/off, remap them to different keys or (if they're related to a particular element) make them active only when that element has focus.
 
-## Feedback
-
-If you need to expand the pattern or share feedback with us, please [contact the team](salt/support-and-contributions).
+:fragment{src="./fragments/feedback.mdx"}
