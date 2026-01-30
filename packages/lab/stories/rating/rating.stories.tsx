@@ -50,9 +50,9 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
         />
         <Text style={{ maxWidth: "450px" }}>
           When using labels with `labelPlacement` set to 'left', set a minimum
-          width on the label container using the `labelProps` with inline styles.
-          This prevents layout shifts as the label text changes between different
-          rating values.
+          width on the label container using the `labelProps` with inline
+          styles. This prevents layout shifts as the label text changes between
+          different rating values.
         </Text>
       </FormField>
     </FlexLayout>
