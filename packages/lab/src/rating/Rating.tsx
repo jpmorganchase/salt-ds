@@ -79,6 +79,10 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * The name to be set on each radio button within the group. If not set, then one will be generated for you.
    */
   name?: string;
+  /**
+   * Additional props to be applied to the label element.
+   */
+  labelProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
@@ -97,6 +101,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     filledIcon,
     emptyIcon,
     labelPlacement = "right",
+    labelProps,
     onKeyDown,
     onFocus,
     "aria-labelledby": ariaLabelledBy,
@@ -244,6 +249,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         withBaseName("label"),
         withBaseName(`label-${labelPlacement}`),
       )}
+      {...labelProps}
     >
       {label}
     </div>

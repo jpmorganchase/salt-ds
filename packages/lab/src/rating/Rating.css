@@ -35,7 +35,7 @@
   font-style: normal;
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
-  min-width: var(--label-min-width, auto);
+  min-width: auto;
 }
 
 .saltRating-label.saltRating-label-top,

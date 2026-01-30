@@ -18,13 +18,13 @@ export const VisualLabel = (): ReactElement => (
       <Rating
         labelPlacement="left"
         getLabel={(value) => labels[value - 1] || "No rating"}
-        style={{ "--label-min-width": "15ch" } as React.CSSProperties}
+        labelProps={{ style: { minWidth: "15ch" } }}
       />
       <Text style={{ maxWidth: "450px" }}>
         When using labels with `labelPlacement` set to 'left', set a minimum
-        width on the label container using the `--label-min-width` CSS custom
-        property via inline styles. This prevents layout shifts as the label
-        text changes between different rating values.
+        width on the label container using the `labelProps` with inline styles.
+        This prevents layout shifts as the label text changes between different
+        rating values.
       </Text>
     </FormField>
   </FlexLayout>
