@@ -4,6 +4,7 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   SemanticIconProvider,
+  Text,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
 import { Rating } from "@salt-ds/lab";
@@ -19,70 +20,51 @@ export default {
   },
 } as Meta<typeof Rating>;
 
-export const Basic: StoryFn<typeof Rating> = (args) => {
-  return <Rating {...args} />;
-};
-
-export const ClearSelection: StoryFn<typeof Rating> = (args) => {
-  const [rating1, setRating1] = useState(3);
-  const [rating2, setRating2] = useState(3);
+export const Basic: StoryFn<typeof Rating> = () => {
   return (
-    <FlexLayout direction="column" gap={3}>
-      <FormField labelPlacement="top">
-        <FormFieldLabel>Click to clear selection</FormFieldLabel>
-        <Rating
-          defaultValue={rating1}
-          enableDeselect
-          onChange={(event, value) => {
-            console.log(event, value);
-            setRating1(value);
-          }}
-          {...args}
-        />
-      </FormField>
-      <FormField labelPlacement="top">
-        <FormFieldLabel>Prevent Clearing Selection</FormFieldLabel>
-        <Rating
-          defaultValue={rating2}
-          enableDeselect={false}
-          onChange={(event, value) => {
-            console.log(event, value);
-            setRating2(value);
-          }}
-          {...args}
-        />
-      </FormField>
-    </FlexLayout>
+    <FormField>
+      <FormFieldLabel color="secondary">Rate your experience</FormFieldLabel>
+      <Rating />
+    </FormField>
   );
 };
 
-export const VisualLabel: StoryFn<typeof Rating> = (args) => {
+export const VisualLabel: StoryFn<typeof Rating> = () => {
   const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
   return (
-    <FlexLayout direction="column" gap={2}>
-      <Rating
-        labelPlacement="right"
-        getLabel={(value) => labels[value - 1] || "No rating"}
-        {...args}
-      />
-      <Rating
-        defaultValue={4}
-        getLabel={(value, max) => `${value}/${max}`}
-        {...args}
-      />
+    <FlexLayout direction="column" gap={3}>
+      <FormField>
+        <FormFieldLabel>Product quality</FormFieldLabel>
+        <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Customer service</FormFieldLabel>
+        <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Select rating</FormFieldLabel>
+        <Rating
+          labelPlacement="left"
+          getLabel={(value) => labels[value - 1] || "No rating"}
+          style={{ "--label-min-width": "15ch" } as React.CSSProperties}
+        />
+        <Text style={{ maxWidth: "450px" }}>
+          When using labels with `labelPlacement` set to 'left', set a minimum
+          width on the label container using the `--label-min-width` CSS custom
+          property via inline styles. This prevents layout shifts as the label
+          text changes between different rating values.
+        </Text>
+      </FormField>
     </FlexLayout>
   );
 };
 
-export const FormFieldSupport: StoryFn<typeof Rating> = (args) => {
+export const FormFieldSupport: StoryFn<typeof Rating> = () => {
   const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
   return (
     <FormField labelPlacement="top">
       <FormFieldLabel color="secondary">Overall Experience</FormFieldLabel>
-      <Rating
-        getLabel={(value) => labels[value - 1] || "No rating"}
-        {...args}
-      />
+      <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
       <FormFieldHelperText>
         Please rate your overall experience with our service. Select the number
         of stars that best reflects your satisfaction.
@@ -96,14 +78,6 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
 
   return (
     <FlexLayout direction="column" gap={3}>
-      <FormField labelPlacement="top">
-        <FormFieldLabel>Decreased increments</FormFieldLabel>
-        <Rating
-          defaultValue={2}
-          max={3}
-          onChange={(event, value) => console.log(event, value)}
-        />
-      </FormField>
       <FormField labelPlacement="top">
         <FormFieldLabel>Increased increments</FormFieldLabel>
         <Rating
@@ -123,7 +97,7 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
         >
           <Rating
             value={value}
-            max={6}
+            max={5}
             onChange={(event, value) => setValue(value)}
           />
         </SemanticIconProvider>
@@ -132,10 +106,20 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
   );
 };
 
-export const Disabled: StoryFn<typeof Rating> = (args) => {
-  return <Rating disabled defaultValue={3} {...args} />;
+export const Disabled: StoryFn<typeof Rating> = () => {
+  return (
+    <FormField>
+      <FormFieldLabel>Disabled example</FormFieldLabel>
+      <Rating disabled defaultValue={3} />
+    </FormField>
+  );
 };
 
-export const ReadOnly: StoryFn<typeof Rating> = (args) => {
-  return <Rating readOnly defaultValue={3} {...args} />;
+export const ReadOnly: StoryFn<typeof Rating> = () => {
+  return (
+    <FormField>
+      <FormFieldLabel>Read-only example</FormFieldLabel>
+      <Rating readOnly defaultValue={3} />
+    </FormField>
+  );
 };

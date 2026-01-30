@@ -36,10 +36,7 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
    */
-  onChange?: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    itemValue: number,
-  ) => void;
+  onChange?: (event: React.SyntheticEvent, itemValue: number) => void;
   /**
    * If true, the rating component will be in a read-only state.
    */
@@ -48,11 +45,6 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * If true, the rating component will be in a disabled state.
    */
   disabled?: boolean;
-  /**
-   * Whether to allow clearing the rating when clicking the same rating again.
-   * @default true
-   */
-  enableDeselect?: boolean;
   /**
    * Total number of icons displayed.
    * @default 5
@@ -99,7 +91,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     className,
     readOnly,
     disabled,
-    enableDeselect = true,
     max = 5,
     getLabel,
     character,
@@ -135,16 +126,14 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     name: "Rating",
     state: "value",
   });
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const handleWrapperRef = useForkRef(ref, wrapperRef);
+  const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
-  const labelId = useId();
   const { FavoriteEmptyIcon, FavoriteSolidIcon, FavoriteStrongIcon } =
     useIcon();
 
   const getSemanticLabels = (value: number): string =>
     value > 0
-      ? getLabel?.(value, max) || `${value}/${max}`
+      ? getLabel?.(value, max) || `${value} out of ${max}`
       : "No rating selected";
 
   const updateRating = (newValue: number, event: any) => {
@@ -155,7 +144,9 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (readOnly) {
       if (
-        ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"].includes(event.key)
+        ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown", " "].includes(
+          event.key,
+        )
       ) {
         event.preventDefault();
       }
@@ -163,7 +154,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     }
 
     const elements: HTMLElement[] = Array.from(
-      wrapperRef.current?.querySelectorAll("input[type='radio']") ?? [],
+      radioGroupRef.current?.querySelectorAll("input[type='radio']") ?? [],
     );
     const currentIndex = elements.findIndex(
       (el) => el === document.activeElement,
@@ -175,6 +166,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     switch (event.key) {
       case "ArrowDown":
       case "ArrowRight":
+        event.preventDefault();
         if (currentIndex < elements.length - 1) {
           targetIndex = currentIndex + 1;
           newValue = targetIndex + 1;
@@ -183,16 +175,20 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
 
       case "ArrowUp":
       case "ArrowLeft":
+        event.preventDefault();
         if (currentIndex > 0) {
           targetIndex = currentIndex - 1;
           newValue = targetIndex + 1;
         }
         break;
 
-      case "Enter":
       case " ":
-        if (currentIndex !== -1 && enableDeselect) {
-          newValue = selected === currentIndex + 1 ? 0 : currentIndex + 1;
+        event.preventDefault();
+        if (currentIndex >= 0) {
+          newValue = currentIndex + 1;
+        } else if (selected === 0) {
+          newValue = 1;
+          targetIndex = 0;
         }
         break;
 
@@ -201,9 +197,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         return;
     }
 
-    event.preventDefault();
-
-    if (targetIndex >= 0) {
+    if (targetIndex >= 0 && targetIndex !== currentIndex) {
       elements[targetIndex]?.focus();
     }
 
@@ -222,8 +216,13 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     };
 
   const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-    if (selected === 0 && !readOnly) {
-      updateRating(1, event);
+    if (selected === 0 && radioGroupRef.current) {
+      const firstInput = radioGroupRef.current.querySelector<HTMLInputElement>(
+        "input[type='radio']",
+      );
+      if (firstInput && event.target === radioGroupRef.current) {
+        firstInput.focus();
+      }
     }
     onFocus?.(event);
   };
@@ -234,8 +233,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         event.preventDefault();
         return;
       }
-      const newValue = selected === itemValue && enableDeselect ? 0 : itemValue;
-      updateRating(newValue, event);
+      updateRating(itemValue, event);
     };
 
   const isTopLeft = labelPlacement === "top" || labelPlacement === "left";
@@ -243,7 +241,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
 
   const displayLabel = getLabel && (
     <div
-      id={labelId}
       className={clsx(
         withBaseName("label"),
         withBaseName(`label-${labelPlacement}`),
@@ -253,9 +250,12 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     </div>
   );
 
+  const ariaLabelledByValue =
+    clsx(formFieldLabelledBy, ariaLabelledBy) || undefined;
+
   return (
     <div
-      ref={handleWrapperRef}
+      ref={ref}
       className={clsx(
         withBaseName("wrapper"),
         withBaseName(`wrapper-${labelPlacement}`),
@@ -276,13 +276,11 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       <div
         role="radiogroup"
         className={withBaseName("container")}
-        ref={wrapperRef}
+        ref={radioGroupRef}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
-        aria-labelledby={
-          clsx(getLabel && labelId, formFieldLabelledBy, ariaLabelledBy) ||
-          undefined
-        }
+        aria-labelledby={ariaLabelledByValue}
+        aria-label={!ariaLabelledByValue ? "Rating" : undefined}
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
@@ -317,6 +315,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
               emptyIcon={<FavoriteEmptyIcon />}
               index={index}
               name={name}
+              aria-label={label}
             />
           );
         })}

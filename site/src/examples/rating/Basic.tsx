@@ -1,6 +1,10 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import { Rating } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Basic = (): ReactElement => (
-  <Rating onChange={(event, value) => console.log(value)} />
+  <FormField>
+    <FormFieldLabel color="secondary">Rate your experience</FormFieldLabel>
+    <Rating />
+  </FormField>
 );

@@ -2,19 +2,12 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  type ComponentPropsWithoutRef,
-  forwardRef,
-  type MouseEvent,
-  useCallback,
-  useMemo,
-} from "react";
+import { forwardRef, type MouseEvent, useCallback, useMemo } from "react";
 import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
 
-export interface RatingItemProps
-  extends Omit<ComponentPropsWithoutRef<"button">, "onClick"> {
+export interface RatingItemProps {
   /**
    * specifies the value of the feedback item.
    */
@@ -84,6 +77,10 @@ export interface RatingItemProps
    * Name of the radio group
    */
   name?: string;
+  /**
+   * Accessible label for the rating item
+   */
+  "aria-label"?: string;
 }
 
 export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
@@ -104,6 +101,7 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       emptyIcon,
       strongIcon,
       name,
+      "aria-label": ariaLabel,
     } = props;
 
     const targetWindow = useWindow();
@@ -164,7 +162,7 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
           disabled={disabled}
           readOnly={readOnly}
           className={withBaseName("input")}
-          aria-label={`${value} star${value !== 1 ? "s" : ""}`}
+          aria-label={`${value} star${value !== 1 ? "s" : ""}, ${ariaLabel ?? ""}`}
           tabIndex={isFocusable ? 0 : -1}
         />
         <span className={withBaseName("icon")} aria-hidden>

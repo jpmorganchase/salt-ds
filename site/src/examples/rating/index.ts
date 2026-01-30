@@ -1,5 +1,4 @@
 export * from "./Basic";
-export * from "./ClearSelection";
 export * from "./CustomIcons";
 export * from "./Disabled";
 export * from "./ReadOnly";
