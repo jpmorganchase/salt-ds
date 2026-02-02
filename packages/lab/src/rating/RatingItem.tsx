@@ -57,10 +57,6 @@ export interface RatingItemProps {
    */
   emptyIcon?: React.ReactNode;
   /**
-   * Custom character for the rating icons.
-   */
-  character?: React.ReactNode | ((props: RatingItemProps) => React.ReactNode);
-  /**
    * The index of the current rating item in the list of all rating items.
    * This is a zero-based index, starting from 0 for the first item.
    * It can be used to determine the position of the item in the rating component.
@@ -96,7 +92,6 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       onClick,
       readOnly = false,
       disabled = false,
-      character,
       filledIcon,
       emptyIcon,
       strongIcon,
@@ -123,14 +118,10 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
     );
 
     const icon = useMemo(() => {
-      if (character) {
-        return typeof character === "function" ? character(props) : character;
-      }
       if (isHovered || isSelected) return filledIcon;
       if (isActive) return strongIcon;
       return emptyIcon;
     }, [
-      character,
       props,
       isHovered,
       isSelected,

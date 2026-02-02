@@ -2,7 +2,7 @@
 "@salt-ds/lab": minor
 ---
 
-New `Rating` and `RatingItem` components have been added to allow users to provide feedback relating to your product or experience.
+`Rating` has been added to allow users to provide feedback relating to your product or experience.
 
 Basic usage:
 

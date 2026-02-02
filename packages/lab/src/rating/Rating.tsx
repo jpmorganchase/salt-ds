@@ -54,27 +54,11 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    */
   getLabel?: (value: number, max: number) => string;
   /**
-   * Custom character for the rating icons.
-   */
-  character?: React.ReactNode | ((props: RatingItemProps) => React.ReactNode);
-  /**
    * Position of the label relative to the rating component.
    * Can be "top", "right", "bottom", or "left".
    * @default "right"
    */
   labelPlacement?: "top" | "right" | "bottom" | "left";
-  /**
-   * Custom icon for the outlined state.
-   */
-  strongIcon?: React.ReactNode;
-  /**
-   * Custom icon for the filled state.
-   */
-  filledIcon?: React.ReactNode;
-  /**
-   * Custom icon for the empty state.
-   */
-  emptyIcon?: React.ReactNode;
   /**
    * The name to be set on each radio button within the group. If not set, then one will be generated for you.
    */
@@ -96,10 +80,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     disabled,
     max = 5,
     getLabel,
-    character,
-    strongIcon,
-    filledIcon,
-    emptyIcon,
     labelPlacement = "right",
     labelProps,
     onKeyDown,
@@ -314,7 +294,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
               key={itemValue}
               readOnly={readOnly}
               disabled={disabled}
-              character={character}
               strongIcon={<FavoriteStrongIcon />}
               filledIcon={<FavoriteSolidIcon />}
               emptyIcon={<FavoriteEmptyIcon />}
