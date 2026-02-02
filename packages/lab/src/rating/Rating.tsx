@@ -17,7 +17,7 @@ import {
   useState,
 } from "react";
 import ratingCss from "./Rating.css";
-import { RatingItem, type RatingItemProps } from "./RatingItem";
+import { RatingItem } from "./RatingItem";
 
 const withBaseName = makePrefixer("saltRating");
 
