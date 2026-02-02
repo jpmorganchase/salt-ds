@@ -11,33 +11,37 @@ While Salt provides a general approach to spacing, it isn’t an exhaustive set 
 
 ## Spacing ramp
 
-Consistent use of spatial tokens aligns layouts, creates a steady visual rhythm, and enhances your application's design.
+Consistent use of spatial tokens helps align layouts, establish a clear visual rhythm, and enhance your application's overall design.
 
-The Salt spacing system is built on a base unit of `--salt-spacing-100` for each density, with a proportional scale across all densities. Each space token is a multiple of `--salt-spacing-100` and percentages of the base unit. This scale ensures consistency and flexibility with values that adjust predictably.
+Salt’s spacing system uses a base unit, `--salt-spacing-100`, which scales proportionally across all desktop densities (high, medium and low densities). Each spacing token is a multiple or percentage of this base unit, ensuring predictable and flexible spacing. 
 
-| Token                | Formula | High Density (HD) (px) | Medium Density (MD) (px) | Low Density (LD) (px) | Touch Density (TD) (px) |
-| -------------------- | ------- | ---------------------- | ------------------------ | --------------------- | ----------------------- |
-| `--salt-spacing-25`  | 0.25x   | 1                      | 2                        | 3                     | 4                       |
-| `--salt-spacing-50`  | 0.50x   | 2                      | 4                        | 6                     | 8                       |
-| `--salt-spacing-75`  | 0.75x   | 3                      | 6                        | 9                     | 12                      |
-| `--salt-spacing-100` | 1.00x   | 4                      | 8                        | 12                    | 16                      |
-| `--salt-spacing-150` | 1.50x   | 6                      | 12                       | 18                    | 24                      |
-| `--salt-spacing-200` | 2.00x   | 8                      | 16                       | 24                    | 32                      |
-| `--salt-spacing-250` | 2.50x   | 10                     | 20                       | 30                    | 40                      |
-| `--salt-spacing-300` | 3.00x   | 12                     | 24                       | 36                    | 48                      |
-| `--salt-spacing-350` | 3.50x   | 14                     | 28                       | 42                    | 56                      |
-| `--salt-spacing-400` | 4.00x   | 16                     | 32                       | 48                    | 64                      |
-| `--salt-spacing-450` | 4.50x   | 18                     | 36                       | 54                    | 72                      |
-| `--salt-spacing-500` | 5.00x   | 20                     | 40                       | 60                    | 80                      |
-| `--salt-spacing-550` | 5.50x   | 22                     | 44                       | 66                    | 88                      |
-| `--salt-spacing-600` | 6.00x   | 24                     | 48                       | 72                    | 96                      |
-| `--salt-spacing-650` | 6.50x   | 26                     | 52                       | 78                    | 104                     |
-| `--salt-spacing-700` | 7.00x   | 28                     | 56                       | 84                    | 112                     |
-| `--salt-spacing-750` | 7.50x   | 30                     | 60                       | 90                    | 120                     |
-| `--salt-spacing-800` | 8.00x   | 32                     | 64                       | 96                    | 128                     |
-| `--salt-spacing-850` | 8.50x   | 34                     | 68                       | 102                   | 136                     |
-| `--salt-spacing-900` | 9.00x   | 36                     | 72                       | 108                   | 144                     |
-| `--salt-spacing-950` | 9.50x   | 38                     | 76                       | 114                   | 152                     |
+Mobile density uses a different spacing formula, tailored to optimize usability and readability on smaller devices.
+
+Learn more about desktop densities, mobile densities, and how to choose densities in the [Density](https://www.saltdesignsystem.com/salt/foundations/density) foundation.
+
+| Token                | Formula | High Density      (px) | Medium Density      (px) | Low Density      (px) | Mobile Density   (px) | Touch Density      (px) |
+| -------------------- | ------- | ---------------------- | ------------------------ | --------------------- | --------------------- | ----------------------- |
+| `--salt-spacing-25`  | 0.25x   | 1                      | 2                        | 3                     | 4                     | 4                       |
+| `--salt-spacing-50`  | 0.50x   | 2                      | 4                        | 6                     | 8                     | 8                       |
+| `--salt-spacing-75`  | 0.75x   | 3                      | 6                        | 9                     | 12                    | 12                      |
+| `--salt-spacing-100` | 1.00x   | 4                      | 8                        | 12                    | 16                    | 16                      |
+| `--salt-spacing-150` | 1.50x   | 6                      | 12                       | 18                    | 18                    | 24                      |
+| `--salt-spacing-200` | 2.00x   | 8                      | 16                       | 24                    | 20                    | 32                      |
+| `--salt-spacing-250` | 2.50x   | 10                     | 20                       | 30                    | 22                    | 40                      |
+| `--salt-spacing-300` | 3.00x   | 12                     | 24                       | 36                    | 24                    | 48                      |
+| `--salt-spacing-350` | 3.50x   | 14                     | 28                       | 42                    | 26                    | 56                      |
+| `--salt-spacing-400` | 4.00x   | 16                     | 32                       | 48                    | 28                    | 64                      |
+| `--salt-spacing-450` | 4.50x   | 18                     | 36                       | 54                    | 30                    | 72                      |
+| `--salt-spacing-500` | 5.00x   | 20                     | 40                       | 60                    | 32                    | 80                      |
+| `--salt-spacing-550` | 5.50x   | 22                     | 44                       | 66                    | 34                    | 88                      |
+| `--salt-spacing-600` | 6.00x   | 24                     | 48                       | 72                    | 36                    | 96                      |
+| `--salt-spacing-650` | 6.50x   | 26                     | 52                       | 78                    | 38                    | 104                     |
+| `--salt-spacing-700` | 7.00x   | 28                     | 56                       | 84                    | 40                    | 112                     |
+| `--salt-spacing-750` | 7.50x   | 30                     | 60                       | 90                    | 42                    | 120                     |
+| `--salt-spacing-800` | 8.00x   | 32                     | 64                       | 96                    | 44                    | 128                     |
+| `--salt-spacing-850` | 8.50x   | 34                     | 68                       | 102                   | 46                    | 136                     |
+| `--salt-spacing-900` | 9.00x   | 36                     | 72                       | 108                   | 48                    | 144                     |
+| `--salt-spacing-950` | 9.50x   | 38                     | 76                       | 114                   | 50                    | 152                     |
 
 ## Fixed spacing
 
@@ -123,6 +127,7 @@ Horizontal spacing between items can vary depending on relationship and context.
 | ------------------ | -------------------- |
 | Between buttons    | `--salt-spacing-100` |
 | Between components | `--salt-spacing-300` |
+|                    | `layout-gap`         |
 
 Standard spacing between items in a [form pattern](/salt/patterns/forms) is typically `--salt-spacing-300`, which aligns with the design systems [responsive layout grid](/salt/foundations/responsiveness), and automatically will adjust depending on what density you use.
 
