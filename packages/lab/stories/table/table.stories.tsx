@@ -238,9 +238,8 @@ export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
   ...args
 }) => {
   return (
-    <TableContainer>
+    <TableContainer data-testid="non-scrollable-container">
       <Table divider="none" {...args} aria-label="Column headers">
-        <caption>Scrollable column headers</caption>
         <TBody {...TBodyProps}>
           <TR {...TRProps}>
             <TH {...THProps} scope="row">
@@ -379,48 +378,15 @@ export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
       </TableContainer>
 
       <Text>
-        A data table relies on two-dimensional layout for understanding, but by
-        presenting the table in its own scrollable container it allows other
-        content which does not meet a two-dimensional layout exception to reflow
-        as its containing element adjusts. for example, due to browser resizing,
-        or zooming.
+        Extra long text to ensure only the table container is scrollable and not
+        the entire page. Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
       </Text>
     </StackLayout>
-  );
-};
-
-export const ScrollableCaptionTable: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps,
-  TBodyProps,
-  TFootProps: _TFootProps,
-  TRProps,
-  TDProps,
-  THProps,
-  ...args
-}) => {
-  return (
-    <TableContainer style={{ height: 120 }}>
-      <Table {...args}>
-        <caption>Caption Name</caption>
-        <THead {...THeadProps}>
-          {generateCustomRows({
-            label: "Header",
-            colCount: 3,
-            Cell: TH,
-            cellProps: THProps,
-            rowProps: TRProps,
-          })}
-        </THead>
-        <TBody {...TBodyProps}>
-          {generateRows({
-            rowCount: 20,
-            colCount: 3,
-            cellProps: TDProps,
-            rowProps: TRProps,
-          })}
-        </TBody>
-      </Table>
-    </TableContainer>
   );
 };
 
@@ -456,7 +422,7 @@ export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   </TableContainer>
 );
 
-export const ScrollableExternalLableTable: StoryFn<TablePropsAndCustomArgs> = ({
+export const ScrollableExternalLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
   TFootProps: _TFootProps,
@@ -589,7 +555,7 @@ export const ScrollableContainerAriaLabelOverride: StoryFn<
 }) => {
   return (
     <TableContainer
-      aria-label="External Table Container Name"
+      aria-label="User Provided Aria Label"
       style={{ height: 120 }}
     >
       <Table {...args}>
@@ -611,45 +577,6 @@ export const ScrollableContainerAriaLabelOverride: StoryFn<
             rowProps: TRProps,
           })}
         </TBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const NonScrollableTable: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps,
-  TBodyProps,
-  TFootProps,
-  TRProps,
-  TDProps,
-  THProps,
-  ...args
-}) => {
-  return (
-    <TableContainer
-      data-testid="non-scrollable-container"
-      style={{ width: 400 }}
-    >
-      <Table {...args}>
-        <caption>Non-Scrollable Table</caption>
-        <THead {...THeadProps}>
-          <TR {...TRProps}>
-            <TH {...THProps}>H1</TH>
-            <TH {...THProps}>H2</TH>
-          </TR>
-        </THead>
-        <TBody>
-          <TR {...TRProps}>
-            <TD {...TDProps}>Data</TD>
-            <TD {...TDProps}>More Data</TD>
-          </TR>
-        </TBody>
-        <TFoot {...TFootProps}>
-          <TR {...TRProps}>
-            <TD {...TDProps}>Foot</TD>
-            <TD {...TDProps}>Foot</TD>
-          </TR>
-        </TFoot>
       </Table>
     </TableContainer>
   );

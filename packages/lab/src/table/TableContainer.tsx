@@ -23,8 +23,8 @@ export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {}
 export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
   function TableContainer(props, ref) {
     const [isOverflowing, setIsOverflowing] = useState(false);
-    const [tableId, setTableId] = useState<string | undefined>(undefined);
-    const [labelledBy, setLabelledBy] = useState<string | undefined>(undefined);
+    const [tableId, setTableId] = useState<string | undefined>();
+    const [labelledBy, setLabelledBy] = useState<string | undefined>();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -34,6 +34,7 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     });
 
     const ariaLabelledBy = props["aria-labelledby"];
+    const ariaLabel = props["aria-label"];
 
     const { children, className, role, tabIndex, ...rest } = props;
 
@@ -43,9 +44,10 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     const checkOverflow = useCallback(() => {
       const element = scrollRef.current;
       if (!element) return;
-      const verticalScroll = element.scrollHeight > element.clientHeight;
-      const horizontalScroll = element.scrollWidth > element.clientWidth;
-      setIsOverflowing(verticalScroll || horizontalScroll);
+      const overflowing =
+        element.scrollHeight > element.clientHeight ||
+        element.scrollWidth > element.clientWidth;
+      setIsOverflowing((prev) => (prev !== overflowing ? overflowing : prev));
     }, []);
 
     useResizeObserver({ ref: scrollRef, onResize: checkOverflow });
@@ -56,9 +58,10 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
 
     const ariaProps = isOverflowing
       ? {
-          ...(ariaLabelledBy === undefined && {
-            "aria-labelledby": labelledBy ?? (tableId || undefined),
-          }),
+          ...(ariaLabelledBy === undefined &&
+            ariaLabel === undefined && {
+              "aria-labelledby": labelledBy ?? (tableId || undefined),
+            }),
         }
       : {};
 
