@@ -14,7 +14,15 @@ import {
 } from "@salt-ds/lab";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { type SyntheticEvent, useEffect } from "react";
+import {
+  Children,
+  Fragment,
+  isValidElement,
+  type ReactNode,
+  type SyntheticEvent,
+  useEffect,
+  useRef,
+} from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
@@ -90,6 +98,13 @@ function getRelatedComponentLinks(
 
 const ComponentPageHeading = dynamic(() => import("./ComponentPageHeading"));
 
+const flatten = (nodes: ReactNode): ReactNode[] =>
+  Children.toArray(nodes).flatMap((node) =>
+    isValidElement(node) && node.type === Fragment
+      ? flatten(node.props.children)
+      : [node],
+  );
+
 export const DetailComponent = ({ children }: LayoutProps) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
@@ -104,6 +119,20 @@ export const DetailComponent = ({ children }: LayoutProps) => {
 
   const currentTab = tabs.find(({ name }) => route?.includes(name));
   const currentTabName = currentTab?.name ?? tabs[0].name;
+
+  const panelsRef = useRef<Record<string, ReactNode>>({});
+  const childArray = flatten(children).filter(isValidElement);
+  const activeChild = childArray[0];
+
+  tabs.forEach(({ name }, index) => {
+    if (panelsRef.current[name] !== undefined) return;
+
+    if (childArray.length === tabs.length) {
+      panelsRef.current[name] = childArray[index];
+    } else if (name === currentTabName && activeChild) {
+      panelsRef.current[name] = activeChild;
+    }
+  });
 
   useEffect(() => {
     // Default to first tab, "Examples"
@@ -167,8 +196,8 @@ export const DetailComponent = ({ children }: LayoutProps) => {
               </TabListNext>
             </TabBar>
             {tabs.map(({ name }) => (
-              <TabNextPanel className={styles.tabPanel} key={name} value={name}>
-                {name === currentTabName ? children : null}
+              <TabNextPanel className={styles.tabPanel} value={name} key={name}>
+                {panelsRef.current[name] ?? null}
               </TabNextPanel>
             ))}
           </TabsNext>
