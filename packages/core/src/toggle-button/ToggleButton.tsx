@@ -48,7 +48,7 @@ export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * Value of the toggle button, to be used when in a controlled state.
    */
-  value?: string | ReadonlyArray<string> | number;
+  value: string | ReadonlyArray<string> | number | undefined;
 }
 
 const withBaseName = makePrefixer("saltToggleButton");

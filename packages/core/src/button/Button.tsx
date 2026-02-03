@@ -4,11 +4,7 @@ import {
 } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  type ComponentPropsWithoutRef,
-  forwardRef,
-  type ReactElement,
-} from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { Spinner } from "../spinner";
 import { makePrefixer } from "../utils";
 
@@ -23,11 +19,7 @@ export interface ButtonVariants {
   cta: string;
 }
 export type ButtonVariant = keyof ButtonVariants;
-export const ButtonVariantValues = [
-  "primary",
-  "secondary",
-  "cta",
-] as const satisfies ReadonlyArray<ButtonVariant>;
+export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 
 export interface ButtonAppearances {
   solid: string;
@@ -39,7 +31,7 @@ export const ButtonAppearanceValues = [
   "solid",
   "bordered",
   "transparent",
-] as const satisfies ReadonlyArray<ButtonAppearance>;
+] as const;
 
 export interface ButtonSentiments {
   accented: string;
@@ -55,7 +47,7 @@ export const ButtonSentimentValues = [
   "positive",
   "negative",
   "caution",
-] as const satisfies ReadonlyArray<ButtonSentiment>;
+] as const;
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**

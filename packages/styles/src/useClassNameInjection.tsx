@@ -1,5 +1,11 @@
 import { clsx } from "clsx";
-import { createContext, useContext, useEffect, useMemo } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 
 /**
  * Extensible map of supported components → their props.
@@ -31,7 +37,7 @@ const InjectionContext =
   createContext<ClassNameInjectionRegistry>(EMPTY_REGISTRY);
 
 export type ClassNameInjectionProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   value?: ClassNameInjectionRegistry;
 };
 

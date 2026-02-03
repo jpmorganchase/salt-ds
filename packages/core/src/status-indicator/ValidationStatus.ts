@@ -7,12 +7,7 @@ export interface ValidationStatuses {
 
 export type ValidationStatus = keyof ValidationStatuses;
 
-const ValidationStatusValues = [
-  "error",
-  "warning",
-  "success",
-  "info",
-] as const satisfies ReadonlyArray<ValidationStatus>;
+const ValidationStatusValues = ["error", "warning", "success", "info"] as const;
 
 /**
  * @deprecated use ValidationStatusValues
