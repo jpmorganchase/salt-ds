@@ -47,7 +47,7 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       // Same reasoning as above: we forward aria-label for accessibility purposes.
       "aria-label": ariaLabel,
       // @ts-expect-error: Allow passing role even though it's omitted from HTMLAttributes
-      // Same reasoning as above: we forward aria-label for accessibility purposes.
+      // Same reasoning as above: we forward role for accessibility purposes.
       role,
       tabIndex,
       ...rest
