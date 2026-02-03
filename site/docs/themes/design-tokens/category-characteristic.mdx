@@ -1,0 +1,53 @@
+---
+title: Category characteristic
+layout: DetailTechnical
+sidebar:
+priority: 3
+---
+
+Category tokens provide a palette of distinct colors for differentiating groups within your interface, such as in data visualizations or components that support content grouping. While the colors themselves do not imply meaning, meaning can be associated to each category within the context of your application.
+
+## Assigning a category
+
+Assigning categories to components allows you to visually distinguish and group information within your interface. Categories can be applied to simple components such as tags and avatars, helping users quickly identify context or meaning at a glance.
+
+_(insert image here)_
+
+<Code>--salt-category-8-background</Code> \
+<Code>--salt-category-8-borderColor</Code> \
+<Code>--salt-category-8-foreground</Code>
+
+## Applying emphasis
+
+To make a category stand out, you can emphasis it by using bold tokens. This enhances visual prominence and helps draw attention to key categories within your interface.
+
+Bold tokens are useful when you need to highlight categories that require immediate recognition or are of higher importance, such as primary classifications or featured items. Use bold tokens to make a category easily distinguishable, where quick identification is essential. Subtle options are better for secondary or supporting categories, where less visual emphasis helps maintain balance within the layout. Thoughtful use of bold tokens ensures the most important categories remain clear and accessible to users.
+
+_(insert image here)_
+
+<Code>--salt-category-8-bold-background</Code> \
+<Code>--salt-content-bold-foreground</Code>
+
+## Categories and data visualization
+
+In [data visualization](/salt/foundations/data-visualization/color-and-pattern), categories are typically displayed in numerical order to maximize color contrast and visual clarity. Avoid associating status or sentiment with category colors, as these are represented by separate characteristics. Note that the color assigned to each numerical category may vary between themes, so relying on category color for meaning can lead to inconsistencies.
+
+Each category includes a ‘dataviz’ token, specifically intended for charts and other forms of data visualization. This token acts as a property—similar to foreground, background, or border—allowing it to be used for strokes, fills, markers, or patterns while maintaining consistency across visualizations.
+
+_(insert image here)_
+
+<Code>--salt-category-1-dataviz</Code> \
+<Code>--salt-category-2-dataviz</Code> \
+<Code>--salt-category-3-dataviz</Code> \
+<Code>--salt-category-4-dataviz</Code>
+
+Find out more about [data visualization colors and patterns](/salt/foundations/data-visualization/color-and-pattern)
+
+
+
+
+
+
+
+
+
