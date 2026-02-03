@@ -6,7 +6,7 @@ import { forwardRef } from "react";
 import type { FormFieldValidationStatus } from "../form-field-context";
 import { useIcon } from "../semantic-icon-provider";
 import type { ValidationStatus } from "../status-indicator";
-import { makePrefixer } from "../utils";
+import { capitalize, makePrefixer } from "../utils";
 import statusAdornmentCss from "./StatusAdornment.css";
 
 export type AdornmentValidationStatus = Exclude<ValidationStatus, "info">;
@@ -23,7 +23,7 @@ const withBaseName = makePrefixer("saltStatusAdornment");
 export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
   function StatusAdornment({ className, status, ...restProps }, ref) {
     const icons = useIcon();
-    const titleCaseStatus = status.charAt(0).toUpperCase() + status.slice(1);
+    const titleCaseStatus = capitalize(status);
     const iconKey = `${titleCaseStatus}StatusAdornment` as keyof typeof icons;
     const AdornmentComponent = icons[iconKey];
 
