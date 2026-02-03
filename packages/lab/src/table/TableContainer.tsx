@@ -21,7 +21,7 @@ import { TableContext } from "./TableContext";
 export interface TableContainerProps
   extends Omit<
     HTMLAttributes<HTMLDivElement>,
-    "aria-label" | "aria-labelledby"
+    "aria-label" | "aria-labelledby" | "role"
   > {}
 
 export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
@@ -46,6 +46,8 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       // @ts-expect-error: Allow passing aria-label even though it's omitted from HTMLAttributes
       // Same reasoning as above: we forward aria-label for accessibility purposes.
       "aria-label": ariaLabel,
+      // @ts-expect-error: Allow passing role even though it's omitted from HTMLAttributes
+      // Same reasoning as above: we forward aria-label for accessibility purposes.
       role,
       tabIndex,
       ...rest
