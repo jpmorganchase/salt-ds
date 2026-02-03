@@ -2131,7 +2131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/ajv-compiler@npm:^4.0.0":
+"@fastify/ajv-compiler@npm:^4.0.5":
   version: 4.0.5
   resolution: "@fastify/ajv-compiler@npm:4.0.5"
   dependencies:
@@ -8891,10 +8891,10 @@ __metadata:
   linkType: hard
 
 "fastify@npm:^5.6.1":
-  version: 5.6.2
-  resolution: "fastify@npm:5.6.2"
+  version: 5.7.4
+  resolution: "fastify@npm:5.7.4"
   dependencies:
-    "@fastify/ajv-compiler": "npm:^4.0.0"
+    "@fastify/ajv-compiler": "npm:^4.0.5"
     "@fastify/error": "npm:^4.0.0"
     "@fastify/fast-json-stringify-compiler": "npm:^5.0.0"
     "@fastify/proxy-addr": "npm:^5.0.0"
@@ -8909,7 +8909,7 @@ __metadata:
     secure-json-parse: "npm:^4.0.0"
     semver: "npm:^7.6.0"
     toad-cache: "npm:^3.7.0"
-  checksum: 10/8c006cd600b44b2bb82526035bca3ebe3491600ac7aa0225981d75a1be171dc45aac2c045d8fc7c8c723ac2996544983b8c8a6b538db0dcf60bb9b875ce7452d
+  checksum: 10/037fb94fb40b85b9da430dd5314ab3326ee40b10419ca81d514a5e948b67547aacfa60131e330a8e28927b8b875c70c7a156954118a06c958e9c20b24ab00881
   languageName: node
   linkType: hard
 
