@@ -2,7 +2,13 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type MouseEvent, useCallback, useMemo } from "react";
+import {
+  forwardRef,
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useMemo,
+} from "react";
 import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
@@ -35,7 +41,7 @@ export interface RatingItemProps {
   /**
    *  callback function when feedback item is clicked.
    */
-  onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onClick: (event: MouseEvent<HTMLInputElement>) => void;
   /**
    * If true, the rating item will be in a read-only state.
    */
@@ -47,15 +53,15 @@ export interface RatingItemProps {
   /**
    * Custom icon for the outlined state.
    */
-  strongIcon?: React.ReactNode;
+  strongIcon?: ReactNode;
   /**
    * Custom icon for the filled state.
    */
-  filledIcon?: React.ReactNode;
+  filledIcon?: ReactNode;
   /**
    * Custom icon for the empty state.
    */
-  emptyIcon?: React.ReactNode;
+  emptyIcon?: ReactNode;
   /**
    * The index of the current rating item in the list of all rating items.
    * This is a zero-based index, starting from 0 for the first item.

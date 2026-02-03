@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 export const Basic = (): ReactElement => (
   <FormField>
-    <FormFieldLabel color="secondary">Rate your experience</FormFieldLabel>
+    <FormFieldLabel>Rate your experience</FormFieldLabel>
     <Rating />
   </FormField>
 );

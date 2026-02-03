@@ -10,9 +10,12 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type FocusEvent,
   forwardRef,
+  type HTMLAttributes,
+  type KeyboardEvent,
   type MouseEvent,
-  type ReactElement,
+  type SyntheticEvent,
   useRef,
   useState,
 } from "react";
@@ -35,7 +38,7 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
    */
-  onChange?: (event: React.SyntheticEvent, itemValue: number) => void;
+  onChange?: (event: SyntheticEvent, itemValue: number) => void;
   /**
    * If true, the rating component will be in a read-only state.
    */
@@ -66,7 +69,7 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
   /**
    * Additional props to be applied to the label element.
    */
-  labelProps?: React.HTMLAttributes<HTMLDivElement>;
+  labelProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
@@ -89,7 +92,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     ...restProps
   },
   ref?,
-): ReactElement<RatingProps> {
+) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-rating",
@@ -125,7 +128,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     onChange?.(event, newValue);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (readOnly) {
       if (
         ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown", " "].includes(
@@ -199,7 +202,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       setCurrentHoveredIndex(event.type === "mouseenter" ? itemValue : 0);
     };
 
-  const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
     if (selected === 0 && radioGroupRef.current) {
       const firstInput = radioGroupRef.current.querySelector<HTMLInputElement>(
         "input[type='radio']",
