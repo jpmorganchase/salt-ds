@@ -2131,7 +2131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/ajv-compiler@npm:^4.0.0":
+"@fastify/ajv-compiler@npm:^4.0.5":
   version: 4.0.5
   resolution: "@fastify/ajv-compiler@npm:4.0.5"
   dependencies:
@@ -3873,7 +3873,7 @@ __metadata:
     ag-grid-react: "npm:^32.0.0"
     axe-core: "npm:^4.9.0"
     browserslist-to-esbuild: "npm:^2.1.1"
-    chromatic: "npm:^13.0.0"
+    chromatic: "npm:^15.0.0"
     ci-info: "npm:^4.0.0"
     clsx: "npm:^2.0.0"
     cypress: "npm:^15.8.2"
@@ -6962,9 +6962,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "chromatic@npm:13.0.0"
+"chromatic@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "chromatic@npm:15.0.0"
   peerDependencies:
     "@chromatic-com/cypress": ^0.*.* || ^1.0.0
     "@chromatic-com/playwright": ^0.*.* || ^1.0.0
@@ -6977,7 +6977,7 @@ __metadata:
     chroma: dist/bin.js
     chromatic: dist/bin.js
     chromatic-cli: dist/bin.js
-  checksum: 10/1cfa77b7eac73ba508dfb860c0e35a41e061b4e8c3953b5feebe4bb1c9c513e5098f4ce260daf92fe166f100c9110ae8fbaeaa46b8d6f72ef57c88660ac50856
+  checksum: 10/469fb1d1ce5b9874264bf989cdf26ccdb458dc5db4e62d69fb1a9737ec7f9eb277c8ac2214ce7ec1d8e1c3103fa885d293f1ddee29ff908752046ad5192f7e92
   languageName: node
   linkType: hard
 
@@ -8891,10 +8891,10 @@ __metadata:
   linkType: hard
 
 "fastify@npm:^5.6.1":
-  version: 5.6.2
-  resolution: "fastify@npm:5.6.2"
+  version: 5.7.4
+  resolution: "fastify@npm:5.7.4"
   dependencies:
-    "@fastify/ajv-compiler": "npm:^4.0.0"
+    "@fastify/ajv-compiler": "npm:^4.0.5"
     "@fastify/error": "npm:^4.0.0"
     "@fastify/fast-json-stringify-compiler": "npm:^5.0.0"
     "@fastify/proxy-addr": "npm:^5.0.0"
@@ -8909,7 +8909,7 @@ __metadata:
     secure-json-parse: "npm:^4.0.0"
     semver: "npm:^7.6.0"
     toad-cache: "npm:^3.7.0"
-  checksum: 10/8c006cd600b44b2bb82526035bca3ebe3491600ac7aa0225981d75a1be171dc45aac2c045d8fc7c8c723ac2996544983b8c8a6b538db0dcf60bb9b875ce7452d
+  checksum: 10/037fb94fb40b85b9da430dd5314ab3326ee40b10419ca81d514a5e948b67547aacfa60131e330a8e28927b8b875c70c7a156954118a06c958e9c20b24ab00881
   languageName: node
   linkType: hard
 
@@ -8988,18 +8988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-my-way@npm:^9.0.0":
-  version: 9.3.0
-  resolution: "find-my-way@npm:9.3.0"
-  dependencies:
-    fast-deep-equal: "npm:^3.1.3"
-    fast-querystring: "npm:^1.0.0"
-    safe-regex2: "npm:^5.0.0"
-  checksum: 10/f049b41d12f65bcef5366aa369450df246c83ca0bf5854e0072d1251ce0f364423350c18e8d66e38eb48737fa585963a16c21b675e10a63c9685238a1fefa20a
-  languageName: node
-  linkType: hard
-
-"find-my-way@npm:^9.4.0":
+"find-my-way@npm:^9.0.0, find-my-way@npm:^9.4.0":
   version: 9.4.0
   resolution: "find-my-way@npm:9.4.0"
   dependencies:
