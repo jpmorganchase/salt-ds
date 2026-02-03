@@ -42,14 +42,14 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
       variant = "primary",
       divider = "tertiary",
       zebra = false,
+      "aria-labelledby": ariaLabelledBy,
+      id,
       ...rest
     } = props;
 
-    const generatedId = useId();
+    const tableId = useId(id);
     const { setId, setLabelledBy } = useTable();
-    const tableId = props.id ?? generatedId;
-    const tableLabelledBy = props["aria-labelledby"];
-    const labelledBy = tableLabelledBy ?? tableId;
+    const labelledBy = ariaLabelledBy ?? tableId;
 
     useIsomorphicLayoutEffect(() => {
       if (tableId) {
@@ -72,6 +72,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
           },
           className,
         )}
+        aria-labelledby={labelledBy}
         ref={ref}
         {...rest}
       >

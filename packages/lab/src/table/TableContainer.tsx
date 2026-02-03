@@ -18,7 +18,11 @@ import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 import { TableContext } from "./TableContext";
 
-export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {}
+export interface TableContainerProps
+  extends Omit<
+    HTMLAttributes<HTMLDivElement>,
+    "aria-label" | "aria-labelledby"
+  > {}
 
 export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
   function TableContainer(props, ref) {
@@ -33,10 +37,19 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       window: targetWindow,
     });
 
-    const ariaLabelledBy = props["aria-labelledby"];
-    const ariaLabel = props["aria-label"];
-
-    const { children, className, role, tabIndex, ...rest } = props;
+    const {
+      children,
+      className,
+      // @ts-expect-error: "aria-labelledby" is omitted to prevent accidental misuse,
+      // but we still want to forward it for advanced accessible labeling scenarios.
+      "aria-labelledby": ariaLabelledBy,
+      // @ts-expect-error: Allow passing aria-label even though it's omitted from HTMLAttributes
+      // Same reasoning as above: we forward aria-label for accessibility purposes.
+      "aria-label": ariaLabel,
+      role,
+      tabIndex,
+      ...rest
+    } = props;
 
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const handleRef = useForkRef<HTMLDivElement>(ref, scrollRef);
@@ -56,14 +69,25 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       checkOverflow();
     }, [checkOverflow]);
 
-    const ariaProps = isOverflowing
+    const overflowProps = isOverflowing
       ? {
+          role: "region",
+          tabIndex: 0,
+          "aria-label": ariaLabel,
           ...(ariaLabelledBy === undefined &&
             ariaLabel === undefined && {
-              "aria-labelledby": labelledBy ?? (tableId || undefined),
+              "aria-labelledby": labelledBy ?? tableId,
             }),
+          ...(ariaLabelledBy !== undefined && {
+            "aria-labelledby": ariaLabelledBy,
+          }),
         }
-      : {};
+      : {
+          role,
+          tabIndex,
+          "aria-labelledby": ariaLabelledBy,
+          "aria-label": ariaLabel,
+        };
 
     const contextValue = useMemo(
       () => ({ id: tableId, setId: setTableId, labelledBy, setLabelledBy }),
@@ -75,9 +99,7 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
         <div
           ref={handleRef}
           className={clsx(withTableBaseName("container"), className)}
-          role={role ?? (isOverflowing ? "region" : undefined)}
-          tabIndex={tabIndex ?? (isOverflowing ? 0 : undefined)}
-          {...ariaProps}
+          {...overflowProps}
           {...rest}
         >
           {children}

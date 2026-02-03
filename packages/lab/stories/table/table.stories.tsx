@@ -507,19 +507,14 @@ export const ScrollableAriaLabelledByOverride: StoryFn<
   THProps,
   ...args
 }) => {
-  const labelId = "external-aria-labelledby";
+  const tableId = "external-aria-labelledby";
+  const containerId = "user-provided-aria-labelledby";
   return (
     <>
-      {/** biome-ignore lint/correctness/useUniqueElementIds: Added for testing purposes */}
-      <Text id="user-provided-aria-labelledby">
-        External Table Container Name
-      </Text>
-      <Text id={labelId}>External Table Name</Text>
-      <TableContainer
-        aria-labelledby="user-provided-aria-labelledby"
-        style={{ height: 120 }}
-      >
-        <Table aria-labelledby={labelId} {...args}>
+      <Text id={containerId}>External Table Container Name</Text>
+      <Text id={tableId}>External Table Name</Text>
+      <TableContainer aria-labelledby={containerId} style={{ height: 120 }}>
+        <Table aria-labelledby={tableId} {...args}>
           <THead {...THeadProps}>
             {generateCustomRows({
               label: "Header",
