@@ -1,14 +1,85 @@
+import { Code, StackLayout, Text, useId } from "@salt-ds/core";
 import {
-  Button,
-  Code,
-  FlexLayout,
-  StackLayout,
-  Switch,
-  Text,
-} from "@salt-ds/core";
-import { Table, TBody, TD, TFoot, TH, THead, TR } from "@salt-ds/lab";
+  Table,
+  TableContainer,
+  TBody,
+  TD,
+  TFoot,
+  TH,
+  THead,
+  TR,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
+
+interface GenerateCustomRowParams {
+  label: string;
+  colCount?: number;
+  Cell?: typeof TH | typeof TD;
+  cellProps?: ComponentProps<typeof TH> | ComponentProps<typeof TD>;
+  rowProps?: ComponentProps<typeof TR>;
+}
+
+const generateCustomRows = ({
+  label,
+  colCount = 3,
+  Cell = TH,
+  cellProps,
+  rowProps,
+}: GenerateCustomRowParams) => {
+  const columns = Array.from({ length: colCount }).map((_, index) => ({
+    id: `${label.toLowerCase()}-col-${index + 1}`,
+    position: index + 1,
+  }));
+
+  return (
+    <TR {...rowProps}>
+      {columns.map((col) => (
+        <Cell key={col.id} {...cellProps}>
+          {label} {col.position}
+        </Cell>
+      ))}
+    </TR>
+  );
+};
+
+interface GenerateRowsParams {
+  rowCount?: number;
+  colCount?: number;
+  rowProps?: ComponentProps<typeof TR>;
+  cellProps?: ComponentProps<typeof TD>;
+}
+
+const generateRows = ({
+  rowCount = 20,
+  colCount = 3,
+  rowProps,
+  cellProps,
+}: GenerateRowsParams = {}) => {
+  const rows = Array.from({ length: rowCount }).map((_, index) => ({
+    id: `row-${index + 1}`,
+    position: index + 1,
+  }));
+
+  const columns = Array.from({ length: colCount }).map((_, index) => ({
+    id: `col-${index + 1}`,
+    position: index + 1,
+  }));
+
+  return (
+    <>
+      {rows.map((row) => (
+        <TR key={row.id} {...rowProps}>
+          {columns.map((col) => (
+            <TD key={`${row.id}-${col.id}`} {...cellProps}>
+              Row {row.position} Col {col.position}
+            </TD>
+          ))}
+        </TR>
+      ))}
+    </>
+  );
+};
 
 type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
   THeadProps: ComponentProps<typeof THead>;
@@ -33,9 +104,6 @@ export default {
   },
 } as Meta<TablePropsAndCustomArgs>;
 
-const NUM_COLS = 7;
-const NUM_ROWS = 10;
-
 const Template: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
   TBodyProps,
@@ -46,50 +114,37 @@ const Template: StoryFn<TablePropsAndCustomArgs> = ({
   ...args
 }) => {
   return (
-    <StackLayout
-      style={{ width: "800px", height: "300px", overflow: "auto" }}
-      tabIndex={0}
-    >
+    <TableContainer style={{ width: "800px", height: "300px" }}>
       <Table {...args}>
+        <caption>Sample data table</caption>
         <THead {...THeadProps}>
-          <TR {...TRProps}>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return (
-                <TH {...THProps} key={`col-${arrItem}`}>
-                  Column {i}
-                </TH>
-              );
-            })}
-          </TR>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 7,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
         </THead>
         <TBody {...TBodyProps}>
-          {Array.from({ length: NUM_ROWS }, (arrItem, x) => {
-            return (
-              <TR {...TRProps} key={`tr-${arrItem}`}>
-                {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
-                  return (
-                    <TD {...TDProps} key={`td-${nestedArrItem}`}>
-                      Row {x}
-                    </TD>
-                  );
-                })}
-              </TR>
-            );
+          {generateRows({
+            rowCount: 10,
+            colCount: 7,
+            rowProps: TRProps,
+            cellProps: TDProps,
           })}
         </TBody>
         <TFoot {...TFootProps}>
-          <TR {...TRProps}>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return (
-                <TD {...TDProps} key={`footer-${arrItem}`}>
-                  Footer {i}
-                </TD>
-              );
-            })}
-          </TR>
+          {generateCustomRows({
+            label: "Footer",
+            colCount: 7,
+            Cell: TD,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
         </TFoot>
       </Table>
-    </StackLayout>
+    </TableContainer>
   );
 };
 
@@ -123,82 +178,46 @@ FooterVariant.args = {
   TFootProps: { variant: "tertiary" },
 };
 
-export const CustomContent: StoryFn<TablePropsAndCustomArgs> = () => {
-  return (
-    <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
-      <Table>
-        <THead>
-          <TR>
-            <TH>Col 1</TH>
-            <TH>Col 2</TH>
-          </TR>
-        </THead>
-        <TBody>
-          <TR>
-            <TD>
-              <FlexLayout justify="space-between" align="center">
-                <Button>Click me</Button>
-                <Text>
-                  <strong>Date:</strong> {new Date().toDateString()}
-                </Text>
-              </FlexLayout>
-            </TD>
-            <TD>
-              <StackLayout gap={1}>
-                <Switch label="Click me" />
-                <Text>12345</Text>
-              </StackLayout>
-            </TD>
-          </TR>
-          <TR>
-            <TD>Some standard text</TD>
-            <TD>
-              <StackLayout gap={0}>
-                <strong>Data</strong>
-                <Text>12345</Text>
-              </StackLayout>
-            </TD>
-          </TR>
-        </TBody>
-      </Table>
-    </StackLayout>
-  );
-};
-
 export const StickyHeaderFooter: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps,
+  TBodyProps,
   TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
 }) => {
   return (
     <StackLayout
       style={{ width: "800px", height: "300px", overflow: "auto" }}
       tabIndex={0}
     >
-      <Table>
+      <Table {...args}>
         <THead {...THeadProps}>
-          <TR>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return <TH key={`col-${arrItem}`}>Column {i + 1}</TH>;
-            })}
-          </TR>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 7,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
         </THead>
-        <TBody>
-          {Array.from({ length: NUM_ROWS }, (arrItem, i) => {
-            return (
-              <TR key={`tr-${arrItem}`}>
-                {Array.from({ length: NUM_COLS }, (nestedArrItem) => {
-                  return <TD key={`td-${nestedArrItem}`}>Row {i + 1}</TD>;
-                })}
-              </TR>
-            );
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 10,
+            colCount: 7,
+            rowProps: TRProps,
+            cellProps: TDProps,
           })}
         </TBody>
         <TFoot {...TFootProps}>
-          <TR>
-            {Array.from({ length: NUM_COLS }, (arrItem, i) => {
-              return <TD key={`footer-${arrItem}`}>Footer {i + 1}</TD>;
-            })}
-          </TR>
+          {generateCustomRows({
+            label: "Footer",
+            colCount: 7,
+            Cell: TD,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
         </TFoot>
       </Table>
     </StackLayout>
@@ -211,93 +230,349 @@ StickyHeaderFooter.args = {
 
 export const ColumnHeaders: StoryFn<TablePropsAndCustomArgs> = ({
   THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
+  TDProps,
+  THProps,
   ...args
 }) => {
   return (
-    <Table divider="none" {...args}>
-      <TBody>
-        <TR>
-          <TH scope="row">Label</TH>
-          <TD>Value</TD>
-        </TR>
-        <TR>
-          <TH scope="row">Label</TH>
-          <TD>Value</TD>
-        </TR>
-        <TR>
-          <TH scope="row">Label</TH>
-          <TD>Value</TD>
-        </TR>
-      </TBody>
-    </Table>
+    <TableContainer data-testid="non-scrollable-container">
+      <Table divider="none" {...args} aria-label="Column headers">
+        <TBody {...TBodyProps}>
+          <TR {...TRProps}>
+            <TH {...THProps} scope="row">
+              Label
+            </TH>
+            <TD {...TDProps}>Value</TD>
+          </TR>
+          <TR {...TRProps}>
+            <TH {...THProps} scope="row">
+              Label
+            </TH>
+            <TD {...TDProps}>Value</TD>
+          </TR>
+          <TR {...TRProps}>
+            <TH {...THProps} scope="row">
+              Label
+            </TH>
+            <TD {...TDProps}>Value</TD>
+          </TR>
+        </TBody>
+      </Table>
+    </TableContainer>
   );
 };
 
 export const LongCellContent: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
 }) => {
   return (
-    <Table style={{ width: 200 }} {...args}>
-      <THead>
-        <TR>
-          <TH {...THProps}>Super long column header that will wrap</TH>
-          <TH {...THProps}>Two</TH>
-        </TR>
-      </THead>
-      <TBody>
-        <TR>
-          <TD {...TDProps}>Super long cell content that will wrap</TD>
-          <TD {...TDProps}>Value</TD>
-        </TR>
-        <TR>
-          <TD {...TDProps}>Value</TD>
-          <TD {...TDProps}>Value</TD>
-        </TR>
-        <TR>
-          <TD {...TDProps}>Value</TD>
-          <TD {...TDProps}>Value</TD>
-        </TR>
-      </TBody>
-    </Table>
+    <TableContainer>
+      <Table style={{ width: 200 }} {...args} aria-label="Long cell content">
+        <caption>Scrollable long cell content</caption>
+        <THead {...THeadProps}>
+          <TR {...TRProps}>
+            <TH {...THProps}>Super long column header that will wrap</TH>
+            <TH {...THProps}>Two</TH>
+          </TR>
+        </THead>
+        <TBody {...TBodyProps}>
+          <TR {...TRProps}>
+            <TD {...TDProps}>Super long cell content that will wrap</TD>
+            <TD {...TDProps}>Value</TD>
+          </TR>
+          <TR {...TRProps}>
+            <TD {...TDProps}>Value</TD>
+            <TD {...TDProps}>Value</TD>
+          </TR>
+          <TR {...TRProps}>
+            <TD {...TDProps}>Value</TD>
+            <TD {...TDProps}>Value</TD>
+          </TR>
+        </TBody>
+      </Table>
+    </TableContainer>
   );
 };
 
 export const NumericalData: StoryFn<TablePropsAndCustomArgs> = ({
-  THeadProps: _THeadProps,
-  TBodyProps: _TBodyProps,
+  THeadProps,
+  TBodyProps,
   TFootProps: _TFootProps,
-  TRProps: _TRProps,
+  TRProps,
   TDProps,
   THProps,
   ...args
 }) => {
   return (
-    <Table {...args}>
-      <THead>
-        <TR>
-          <TH>City</TH>
-          <TH textAlign="right">Population</TH>
-        </TR>
+    <TableContainer>
+      <Table {...args} aria-label="Numerical Data Table">
+        <caption>Numerical data table</caption>
+        <THead {...THeadProps}>
+          <TR {...TRProps}>
+            <TH {...THProps}>City</TH>
+            <TH {...THProps} textAlign="right">
+              Population
+            </TH>
+          </TR>
+        </THead>
+        <TBody {...TBodyProps}>
+          <TR {...TRProps}>
+            <TD {...TDProps}>London</TD>
+            <TD {...TDProps} textAlign="right">
+              9.8 million
+            </TD>
+          </TR>
+          <TR {...TRProps}>
+            <TD {...TDProps}>New York</TD>
+            <TD {...TDProps} textAlign="right">
+              8.8 million
+            </TD>
+          </TR>
+        </TBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export const ScrollableVertically: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <StackLayout style={{ width: 300 }}>
+      <TableContainer>
+        <Table {...args}>
+          <caption>Scrollable vertically</caption>
+          <THead {...THeadProps}>
+            {generateCustomRows({
+              label: "Header",
+              colCount: 10,
+              Cell: TH,
+              cellProps: THProps,
+              rowProps: TRProps,
+            })}
+          </THead>
+          <TBody {...TBodyProps}>
+            {generateRows({
+              rowCount: 3,
+              colCount: 10,
+              rowProps: TRProps,
+              cellProps: TDProps,
+            })}
+          </TBody>
+        </Table>
+      </TableContainer>
+
+      <Text>
+        Extra long text to ensure only the table container is scrollable and not
+        the entire page. Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+      </Text>
+    </StackLayout>
+  );
+};
+
+export const ScrollableAriaLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => (
+  <TableContainer style={{ height: 120 }}>
+    <Table aria-label="Aria Label Table" {...args}>
+      <THead {...THeadProps}>
+        {generateCustomRows({
+          label: "Header",
+          colCount: 3,
+          Cell: TH,
+          cellProps: THProps,
+          rowProps: TRProps,
+        })}
       </THead>
-      <TBody>
-        <TR>
-          <TD>London</TD>
-          <TD textAlign="right">9.8 million</TD>
-        </TR>
-        <TR>
-          <TD>New York</TD>
-          <TD textAlign="right">8.8 million</TD>
-        </TR>
+      <TBody {...TBodyProps}>
+        {generateRows({
+          rowCount: 20,
+          colCount: 3,
+          cellProps: TDProps,
+          rowProps: TRProps,
+        })}
       </TBody>
     </Table>
+  </TableContainer>
+);
+
+export const ScrollableExternalLabelTable: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  const labelId = useId();
+  return (
+    <>
+      <Text id={labelId}>External Table Name</Text>
+      <TableContainer style={{ height: 120 }}>
+        <Table aria-labelledby={labelId} {...args}>
+          <THead {...THeadProps}>
+            {generateCustomRows({
+              label: "Header",
+              colCount: 3,
+              Cell: TH,
+              cellProps: THProps,
+              rowProps: TRProps,
+            })}
+          </THead>
+          <TBody {...TBodyProps}>
+            {generateRows({
+              rowCount: 20,
+              colCount: 3,
+              cellProps: TDProps,
+              rowProps: TRProps,
+            })}
+          </TBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export const ScrollableIdOverride: StoryFn<TablePropsAndCustomArgs> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <TableContainer style={{ height: 120 }}>
+      {/** biome-ignore lint/correctness/useUniqueElementIds: Added for testing purposes */}
+      <Table id="user-provided-id" {...args}>
+        <caption>Caption Name</caption>
+        <THead {...THeadProps}>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 3,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
+        </THead>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 20,
+            colCount: 3,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
+        </TBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export const ScrollableAriaLabelledByOverride: StoryFn<
+  TablePropsAndCustomArgs
+> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  const tableId = "external-aria-labelledby";
+  const containerId = "user-provided-aria-labelledby";
+  return (
+    <>
+      <Text id={containerId}>External Table Container Name</Text>
+      <Text id={tableId}>External Table Name</Text>
+      <TableContainer aria-labelledby={containerId} style={{ height: 120 }}>
+        <Table aria-labelledby={tableId} {...args}>
+          <THead {...THeadProps}>
+            {generateCustomRows({
+              label: "Header",
+              colCount: 3,
+              Cell: TH,
+              cellProps: THProps,
+              rowProps: TRProps,
+            })}
+          </THead>
+          <TBody {...TBodyProps}>
+            {generateRows({
+              rowCount: 20,
+              colCount: 3,
+              cellProps: TDProps,
+              rowProps: TRProps,
+            })}
+          </TBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+export const ScrollableContainerAriaLabelOverride: StoryFn<
+  TablePropsAndCustomArgs
+> = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps: _TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
+  return (
+    <TableContainer
+      aria-label="User Provided Aria Label"
+      style={{ height: 120 }}
+    >
+      <Table {...args}>
+        <caption>Caption Name</caption>
+        <THead {...THeadProps}>
+          {generateCustomRows({
+            label: "Header",
+            colCount: 3,
+            Cell: TH,
+            cellProps: THProps,
+            rowProps: TRProps,
+          })}
+        </THead>
+        <TBody {...TBodyProps}>
+          {generateRows({
+            rowCount: 20,
+            colCount: 3,
+            cellProps: TDProps,
+            rowProps: TRProps,
+          })}
+        </TBody>
+      </Table>
+    </TableContainer>
   );
 };
