@@ -62,7 +62,7 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
       const overflowing =
         element.scrollHeight > element.clientHeight ||
         element.scrollWidth > element.clientWidth;
-      setIsOverflowing((prev) => (prev !== overflowing ? overflowing : prev));
+      setIsOverflowing(overflowing);
     }, []);
 
     useResizeObserver({ ref: scrollRef, onResize: checkOverflow });
