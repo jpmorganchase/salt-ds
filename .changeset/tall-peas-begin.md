@@ -1,5 +1,5 @@
 ---
-"@salt-ds/styles": patch
+"@salt-ds/styles": minor
 ---
 
 This feature is in-development, for exploration and feedback only.
