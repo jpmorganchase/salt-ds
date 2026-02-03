@@ -7,8 +7,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
   forwardRef,
-  type HTMLAttributes,
   useCallback,
   useMemo,
   useRef,
@@ -20,7 +20,7 @@ import { TableContext } from "./TableContext";
 
 export interface TableContainerProps
   extends Omit<
-    HTMLAttributes<HTMLDivElement>,
+    ComponentPropsWithoutRef<"div">,
     "aria-label" | "aria-labelledby" | "role"
   > {}
 
