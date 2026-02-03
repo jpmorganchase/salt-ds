@@ -73,8 +73,8 @@ export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
 
     const overflowProps = isOverflowing
       ? {
-          role: "region",
-          tabIndex: 0,
+          role: role ?? "region",
+          tabIndex: tabIndex ?? 0,
           "aria-label": ariaLabel,
           ...(ariaLabelledBy === undefined &&
             ariaLabel === undefined && {
