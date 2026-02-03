@@ -51,7 +51,6 @@ export function ClassNameInjectionProvider({
 
   useEffect(() => {
     if (!hasWarnedExperimentalOnce && process.env.NODE_ENV !== "production") {
-      // eslint-disable-next-line no-console
       console.warn(
         "Salt ClassNameInjectionProvider is experimental and subject to change. JPM users: only recommended in non-production environments or with prior permission from the Salt team.",
       );
