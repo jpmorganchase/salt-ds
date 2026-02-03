@@ -11,61 +11,91 @@ Actionable tokens define the colors and styles for interactive components, makin
 
 For actionable items, the absence of a sentiment results in a neutral component—a good starting point for understanding actionable tokens in Salt. Buttons use actionable tokens to style borders, foregrounds, and backgrounds. Neutral buttons are ideal for routine or secondary actions that should remain intuitive but not visually dominate the interface.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-background</Code><CopyToClipboard value={--salt-actionable-background} /> \
+<Code>--salt-actionable-borderColor</Code> \
+<Code>--salt-actionable-foreground</Code>
 
 ### Neutral state changes
 
 To visually indicate state changes—such as hover and active—in interactive components, use the correct tokens. Salt’s consistent token naming makes it easy to identify which tokens to apply. Each property within a component should reflect the state change, ensuring clear and consistent feedback for users.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-background-active</Code> \
+<Code>--salt-actionable-borderColor-active</Code> \
+<Code>--salt-actionable-foreground-active</Code> \
+<Code>--salt-actionable-background-hover</Code> \
+<Code>--salt-actionable-borderColor-hover</Code> \
+<Code>--salt-actionable-foreground-hover</Code>
 
 ### Emphasizing neutral actions
 
 Emphasizing neutral actions can help routine or secondary tasks stand out when needed. By applying bold tokens to neutral actionable components, you increase their visual prominence without introducing other sentiments, making these actions easier for users to identify.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-bold-background</Code> \
+<Code>--salt-actionable-bold-borderColor</Code> \
+<Code>--salt-actionable-bold-foreground</Code>
 
 ### De-emphasizing neutral actions
 
 Reducing the prominence of neutral actions is useful for tasks that remain relevant but shouldn’t visually dominate. Applying subtle tokens to actionable components lowers their visual emphasis, allowing more important actions to stand out. For example, a subtle close icon in the top right corner of a dialog stays accessible without drawing attention from the primary action. This approach maintains a clear hierarchy and prevents less critical actions from distracting users.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-subtle-background</Code> \
+<Code>--salt-actionable-subtle-borderColor</Code> \
+<Code>--salt-actionable-subtle-foreground</Code>
 
 ### Indicating selected actions
 
 Certain scenarios may require an actionable component to visually communicate a selected state. Toggle Button and Pill are examples of actionable components that allow users to make selections within an interface. To indicate which option is selected, apply the appropriate selected state tokens. This visual change clearly communicates the current selection, helping users identify the active option and supporting intuitive, accessible interactions.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-background-selected</Code> \
+<Code>--salt-actionable-borderColor-selected</Code> \
+<Code>--salt-actionable-foreground-selected</Code>
 
 ## Accented actions
 
 Accented actionable tokens are used to style components that represent core actions within a user interface. These tokens apply the dominant accent color from a theme, making key actions stand out while reinforcing a brand identity. Accented buttons are typically reserved for the most important actions in a workflow, with three appearances available to match the needed level of prominence. Thoughtful use of accent tokens ensures essential actions are visually distinct and easy to identify.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-accented-bold-background</Code> \
+<Code>--salt-actionable-accented-bold-borderColor</Code> \
+<Code>--salt-actionable-accented-bold-foreground</Code>
 
 ## Cautious actions
 
 Caution actionable tokens are used to style components that alert users to potential consequences or risks associated with an action. Applying these tokens helps draw attention to actions that may require extra care or consideration, ensuring users are aware of possible outcomes before proceeding.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-caution-bold-background</Code> \
+<Code>--salt-actionable-caution-bold-borderColor</Code> \
+<Code>--salt-actionable-caution-bold-foreground</Code>
 
 ## Negative actions
 
 Negative actionable tokens are used to style components that indicate actions with potentially harmful or destructive outcomes, such as deleting data or canceling a process. Applying these tokens helps users recognize actions that may result in loss or irreversible changes, prompting them to proceed with increased caution.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-negative-bold-background</Code> \
+<Code>--salt-actionable-negative-bold-borderColor</Code> \
+<Code>--salt-actionable-negative-bold-foreground</Code>
 
 ## Positive actions
 
 Positive actionable tokens are used to style components that indicate actions with beneficial or constructive outcomes, such as saving changes or confirming a successful process. Applying these tokens helps users easily identify actions that lead to positive results, reinforcing confidence and encouraging engagement.
 
-- _(insert image here)_
-- _(insert tokens here)_
+_(insert image here)_
+
+<Code>--salt-actionable-positive-bold-background</Code> \
+<Code>--salt-actionable-positive-bold-borderColor</Code> \
+<Code>--salt-actionable-positive-bold-foreground</Code>
