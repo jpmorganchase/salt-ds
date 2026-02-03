@@ -123,7 +123,7 @@ function variantToAppearanceAndColor(
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(props, ref?): ReactElement<ButtonProps> {
+  function Button(props, ref) {
     const { className, props: finalProps } = useClassNameInjection(
       "saltButton",
       props,
