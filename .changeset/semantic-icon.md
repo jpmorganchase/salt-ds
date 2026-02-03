@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
 - added semantics icons to support status
