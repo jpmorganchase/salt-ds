@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
 - added experimental extended style support to a subset of Salt components
