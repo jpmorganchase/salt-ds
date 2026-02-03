@@ -15,7 +15,7 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   variant?: "primary" | "secondary" | "tertiary";
   /**
    * Divider styling variant. Defaults to "tertiary";
-   * @default secondary
+   * @default tertiary
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
