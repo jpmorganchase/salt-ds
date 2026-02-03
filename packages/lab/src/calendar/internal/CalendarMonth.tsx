@@ -16,86 +16,80 @@ import { CalendarDay, type CalendarDayProps } from "./CalendarDay";
 import calendarMonthCss from "./CalendarMonth.css";
 import { generateVisibleDays } from "./utils";
 
-export interface CalendarMonthProps<TDate>
-  extends ComponentPropsWithRef<"div"> {
+export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
   /**
    * Month to render as selectable dates
    */
-  date: TDate;
+  date: DateFrameworkType;
   /**
    * Props for the CalendarDay component.
    */
-  CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
+  CalendarDayProps?: Partial<CalendarDayProps>;
 }
 
-const chunkArray = (array: DateFrameworkType[], chunkSize: number) => {
+function chunkArray(array: DateFrameworkType[], chunkSize: number) {
   const result = [];
   for (let chunkIndex = 0; chunkIndex < array.length; chunkIndex += chunkSize) {
     result.push(array.slice(chunkIndex, chunkIndex + chunkSize));
   }
   return result;
-};
+}
 
 const withBaseName = makePrefixer("saltCalendarMonth");
 
-export const CalendarMonth = forwardRef<
-  HTMLDivElement,
-  CalendarMonthProps<DateFrameworkType>
->(function CalendarMonth<TDate extends DateFrameworkType>(
-  props: CalendarMonthProps<TDate>,
-  ref: React.Ref<HTMLDivElement>,
-) {
-  const { className, date, onMouseLeave, CalendarDayProps, ...rest } = props;
-  const { dateAdapter } = useLocalization<TDate>();
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-calendar-month",
-    css: calendarMonthCss,
-    window: targetWindow,
-  });
+export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
+  function CalendarMonth(
+    props: CalendarMonthProps,
+    ref: React.Ref<HTMLDivElement>,
+  ) {
+    const { className, date, onMouseLeave, CalendarDayProps, ...rest } = props;
+    const { dateAdapter } = useLocalization();
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-calendar-month",
+      css: calendarMonthCss,
+      window: targetWindow,
+    });
 
-  const {
-    state: { selectionVariant, timezone = "default" },
-    helpers: { setHoveredDate },
-  } = useCalendarContext<TDate>();
-  const days = useMemo(
-    () => generateVisibleDays<TDate>(dateAdapter, date, timezone),
-    [dateAdapter, date, timezone],
-  );
-  const handleMouseLeave = (event: SyntheticEvent) => {
-    setHoveredDate(event, null);
-    onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
-  };
+    const {
+      state: { selectionVariant, timezone = "default" },
+      helpers: { setHoveredDate },
+    } = useCalendarContext();
+    const handleMouseLeave = (event: SyntheticEvent) => {
+      setHoveredDate(event, null);
+      onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
+    };
 
-  const weeks = useMemo(() => {
-    const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
-    return chunkArray(days, 7);
-  }, [dateAdapter, date, timezone]);
+    const weeks = useMemo(() => {
+      const days = generateVisibleDays(dateAdapter, date, timezone);
+      return chunkArray(days, 7);
+    }, [dateAdapter, date, timezone]);
 
-  return (
-    <div
-      className={clsx(withBaseName(), className)}
-      ref={ref}
-      onMouseLeave={handleMouseLeave}
-      {...rest}
-    >
+    return (
       <div
-        data-testid="CalendarGrid"
-        className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+        onMouseLeave={handleMouseLeave}
+        {...rest}
       >
-        {weeks.map((week, index) => (
-          <div key={`row-${index}`} className={withBaseName("week")}>
-            {week.map((day: TDate) => (
-              <CalendarDay
-                {...CalendarDayProps}
-                key={dateAdapter.format(day, "DD MMM YYYY")}
-                date={day}
-                month={date}
-              />
-            ))}
-          </div>
-        ))}
+        <div
+          data-testid="CalendarGrid"
+          className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}
+        >
+          {weeks.map((week, index) => (
+            <div key={`row-${index}`} className={withBaseName("week")}>
+              {week.map((day) => (
+                <CalendarDay
+                  {...CalendarDayProps}
+                  key={dateAdapter.format(day, "DD MMM YYYY")}
+                  date={day}
+                  month={date}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);

@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -20,7 +19,7 @@ import {
 
 export const RangeWithMinMaxDate = (): ReactElement => {
   const { dateAdapter } = useLocalization();
-  const defaultHelperText = "Select date between 15/01/2030 and 15/01/2031";
+  const defaultHelperText = "Select date between 15 Jan 2030 and 15 Jan 2031";
   const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
@@ -29,7 +28,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -65,12 +64,12 @@ export const RangeWithMinMaxDate = (): ReactElement => {
       if (startDateErrors?.length && startDateOriginalValue) {
         setValidationStatus("error");
         setHelperText(
-          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+          `${errorHelperText} - start date, ${startDateErrors[0].message}`,
         );
       } else if (endDateErrors?.length && endDateOriginalValue) {
         setValidationStatus("error");
         setHelperText(
-          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+          `${errorHelperText} - end date, ${endDateErrors[0].message}`,
         );
       } else {
         setValidationStatus(undefined);
@@ -88,9 +87,12 @@ export const RangeWithMinMaxDate = (): ReactElement => {
     dateAdapter.parse("01/01/2030", "DD/MM/YYYY").date ?? undefined;
   const defaultEndVisibleMonth =
     dateAdapter.parse("01/01/2031", "DD/MM/YYYY").date ?? undefined;
+
+  const labelId = useId();
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         minDate={minDate}
@@ -98,7 +100,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerRangeInput />
+          <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel

@@ -9,14 +9,12 @@ import calendarMonthHeaderCss from "./CalendarMonthHeader.css";
 
 /**
  * Props for the CalendarMonthHeader component.
- * @template TDate - The type of the date object.
  */
-export interface CalendarMonthHeaderProps<TDate extends DateFrameworkType>
-  extends ComponentPropsWithRef<"div"> {
+export interface CalendarMonthHeaderProps extends ComponentPropsWithRef<"div"> {
   /**
    * Month value
    */
-  month: TDate;
+  month: DateFrameworkType;
   /**
    * Format the month value
    * @param date
@@ -28,43 +26,33 @@ const withBaseName = makePrefixer("saltCalendarMonthHeader");
 
 export const CalendarMonthHeader = forwardRef<
   HTMLDivElement,
-  CalendarMonthHeaderProps<DateFrameworkType>
->(
-  <TDate extends DateFrameworkType>(
-    props: CalendarMonthHeaderProps<TDate>,
-    ref: React.Ref<HTMLDivElement>,
-  ) => {
-    const {
-      className,
-      format: formatMonthProp = "MMMM",
-      month,
-      ...rest
-    } = props;
-    const { dateAdapter } = useLocalization<TDate>();
+  CalendarMonthHeaderProps
+>((props: CalendarMonthHeaderProps, ref: React.Ref<HTMLDivElement>) => {
+  const { className, format: formatMonthProp = "MMMM", month, ...rest } = props;
+  const { dateAdapter } = useLocalization();
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-calendar-month-header",
-      css: calendarMonthHeaderCss,
-      window: targetWindow,
-    });
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-calendar-month-header",
+    css: calendarMonthHeaderCss,
+    window: targetWindow,
+  });
 
-    const formatMonth = useCallback(
-      (date?: TDate) => {
-        return dateAdapter.format(date, formatMonthProp);
-      },
-      [dateAdapter, formatMonthProp],
-    );
+  const formatMonth = useCallback(
+    (date?: DateFrameworkType) => {
+      return dateAdapter.format(date, formatMonthProp);
+    },
+    [dateAdapter, formatMonthProp],
+  );
 
-    return (
-      <div
-        data-testid="CalendarMonthHeader"
-        className={clsx(withBaseName(), className)}
-        ref={ref}
-        {...rest}
-      >
-        <Text>{formatMonth(month)}</Text>
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      data-testid="CalendarMonthHeader"
+      className={clsx(withBaseName(), className)}
+      ref={ref}
+      {...rest}
+    >
+      <Text>{formatMonth(month)}</Text>
+    </div>
+  );
+});

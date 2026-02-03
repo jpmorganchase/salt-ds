@@ -55,6 +55,40 @@ To import `DatePicker` from the Salt lab package, use:
 import { DatePicker } from "@salt-ds/lab";
 ```
 
+### Setting the date
+
+Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+
+Pass a date object from your configured date framework via the `defaultDate` or `date` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import {
+  DateInputSingle
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+  LocalizationProvider,
+} from "@salt-ds/lab";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+  <DatePicker
+    selectionVariant="single"
+    defaultSelectedDate={new DateTime().now()}
+  >
+    <DatePickerTrigger>
+      <DatePickerSingleInput />
+    </DatePickerTrigger>
+    <DatePickerOverlay>
+      <DatePickerSingleGridPanel />
+    </DatePickerOverlay>
+  </DatePicker>
+<LocalizationProvider>
+```
+
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".

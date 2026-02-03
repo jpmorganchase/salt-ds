@@ -509,15 +509,6 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   }
 
   /**
-   * Gets the day of the week for a Moment.js date object.
-   * @param date - The Moment.js date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  public getDayOfWeek(date: Moment): number {
-    return date.day();
-  }
-
-  /**
    * Gets the day of the month for a Moment.js date object.
    * @param date - The Moment.js date object.
    * @returns The day of the month as a number (1-31).
@@ -574,4 +565,8 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   public clone(date: Moment): Moment {
     return date.clone();
   }
+
+  public toJSDate = (value: Moment) => {
+    return value.toDate();
+  };
 }

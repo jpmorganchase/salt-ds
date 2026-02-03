@@ -117,11 +117,6 @@ describe("GIVEN a AdapterDateFns", () => {
     expect(now.getDate()).toBe(current.getDate());
   });
 
-  it("SHOULD get the day of the week", () => {
-    const date = new Date(2023, 10, 1); // November 1, 2023 is a Wednesday
-    expect(adapter.getDayOfWeek(date)).toBe(3); // 0 = Sunday, 3 = Wednesday
-  });
-
   it("SHOULD get the name of the day of the week", () => {
     const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");

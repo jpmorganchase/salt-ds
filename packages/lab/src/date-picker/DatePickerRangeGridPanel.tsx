@@ -28,6 +28,7 @@ import {
   CalendarNavigation,
   type CalendarRangeProps,
   type DateRangeSelection,
+  type SingleDateSelection,
 } from "../calendar";
 import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
@@ -43,35 +44,33 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 /**
  * Props for the DatePickerRangeGridPanel component.
- * @template TDate - The type of the date object.
  */
-export type DatePickerRangeGridPanelProps<TDate extends DateFrameworkType> =
-  DatePickerPanelBaseProps<TDate> &
-    DateRangeSelection<TDate> & {
-      onSelectionChange?: (
-        event: SyntheticEvent,
-        selectedDate?: DateRangeSelection<TDate> | null,
-      ) => void;
-      CalendarProps?: Partial<
-        Omit<
-          CalendarRangeProps<TDate>,
-          | "selectionVariant"
-          | "selectedDate"
-          | "defaultSelectedDate"
-          | "multiselect"
-          | "onHoveredDateChange"
-          | "onSelectionChange"
-          | "onVisibleMonthChange"
-        >
-      >;
-    };
+export type DatePickerRangeGridPanelProps = DatePickerPanelBaseProps &
+  DateRangeSelection & {
+    onSelectionChange?: (
+      event: SyntheticEvent,
+      selectedDate?: DateRangeSelection | null,
+    ) => void;
+    CalendarProps?: Partial<
+      Omit<
+        CalendarRangeProps,
+        | "selectionVariant"
+        | "selectedDate"
+        | "defaultSelectedDate"
+        | "multiselect"
+        | "onHoveredDateChange"
+        | "onSelectionChange"
+        | "onVisibleMonthChange"
+      >
+    >;
+  };
 
 export const DatePickerRangeGridPanel = forwardRef(
-  function DatePickerRangeGridPanel<TDate extends DateFrameworkType>(
-    props: DatePickerRangeGridPanelProps<TDate>,
+  function DatePickerRangeGridPanel(
+    props: DatePickerRangeGridPanelProps,
     ref: React.Ref<HTMLDivElement>,
   ) {
-    const { dateAdapter } = useLocalization<TDate>();
+    const { dateAdapter } = useLocalization();
 
     const {
       CalendarProps,
@@ -97,16 +96,20 @@ export const DatePickerRangeGridPanel = forwardRef(
       window: targetWindow,
     });
 
-    const stateAndHelpers: RangeDatePickerState<TDate> = useDatePickerContext({
+    const stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    });
+    }) as RangeDatePickerState;
 
     const {
       state: { focused, initialFocusRef },
     } = useDatePickerOverlay();
 
-    const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
-    const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
+    const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
+      null,
+    );
+    const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+      null,
+    );
     const calendarGridFocused = useRef(false);
 
     const {
@@ -127,7 +130,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
 
     const [uncontrolledDefaultVisibleMonth] = useState(() => {
-      const validDate: TDate =
+      const validDate: DateFrameworkType =
         selectedDate?.startDate && dateAdapter.isValid(selectedDate.startDate)
           ? selectedDate.startDate
           : dateAdapter.today(timezone);
@@ -144,14 +147,14 @@ export const DatePickerRangeGridPanel = forwardRef(
     });
 
     const getNextFocusedDate = () => {
-      const isOutsideAllowedDates = (date: TDate) => {
+      const isOutsideAllowedDates = (date: DateFrameworkType) => {
         return (
           dateAdapter.compare(date, minDate) < 0 ||
           dateAdapter.compare(date, maxDate) > 0
         );
       };
 
-      const isDaySelectable = (date: TDate) =>
+      const isDaySelectable = (date: DateFrameworkType) =>
         !(date && (isDayUnselectable?.(date) || isOutsideAllowedDates(date)));
 
       const startVisibleMonth = dateAdapter.startOf(visibleMonth, "month");
@@ -205,7 +208,7 @@ export const DatePickerRangeGridPanel = forwardRef(
 
       // First selectable date across visible months
       const getFirstSelectableDate = (
-        startMonth: TDate,
+        startMonth: DateFrameworkType,
         numberOfMonths: number,
       ) => {
         for (let i = 0; i < numberOfMonths; i++) {
@@ -232,9 +235,9 @@ export const DatePickerRangeGridPanel = forwardRef(
     const handleSelectionChange = useCallback(
       (
         event: SyntheticEvent,
-        newDate: TDate | DateRangeSelection<TDate> | null,
+        newDate: SingleDateSelection | DateRangeSelection | null,
       ) => {
-        const dateRange = newDate as DateRangeSelection<TDate> | null;
+        const dateRange = newDate as DateRangeSelection | null;
         select(event, dateRange);
         onSelectionChange?.(event, dateRange);
       },
@@ -242,7 +245,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     const handleHoveredDateChange = useCallback(
-      (event: SyntheticEvent, newHoveredDate: TDate | null) => {
+      (event: SyntheticEvent, newHoveredDate: DateFrameworkType | null) => {
         setHoveredDate(newHoveredDate);
         onHoveredDateChange?.(event, newHoveredDate);
       },
@@ -250,7 +253,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     const handleVisibleMonthChange = useCallback(
-      (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
+      (event: SyntheticEvent | null, newVisibleMonth: DateFrameworkType) => {
         setVisibleMonth(newVisibleMonth);
         onVisibleMonthChange?.(event, newVisibleMonth);
       },
@@ -258,7 +261,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     const handleFocusedDateChange = useCallback(
-      (event: SyntheticEvent | null, newFocusedDate: TDate) => {
+      (event: SyntheticEvent | null, newFocusedDate: DateFrameworkType) => {
         setFocusedDate(newFocusedDate);
         if (!newFocusedDate) {
           onFocusedDateChange?.(event, newFocusedDate);
@@ -302,7 +305,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     useIsomorphicLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
       if (focused && !calendarGridFocused.current) {
-        setFocusedDate((prevFocusedDate) => {
+        setFocusedDate((prevFocusedDate: typeof focusedDate) => {
           if (!prevFocusedDate) {
             return getNextFocusedDate();
           }
@@ -349,7 +352,7 @@ export const DatePickerRangeGridPanel = forwardRef(
           <FormFieldContext.Provider value={{} as FormFieldContextValue}>
             <Calendar
               selectionVariant={"range"}
-              {...(calendarProps as Partial<CalendarRangeProps<TDate>>)}
+              {...(calendarProps as Partial<CalendarRangeProps>)}
             >
               <CalendarNavigation {...CalendarNavigationProps} />
               <CalendarGrid

@@ -6,7 +6,6 @@ import {
   FormField,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -32,15 +31,17 @@ const TodayButton = () => {
     helpers: { select },
   } = useDatePickerContext({
     selectionVariant: "single",
-  }) as SingleDatePickerState<DateFrameworkType>;
+  }) as SingleDatePickerState;
   const { dateAdapter } = useLocalization();
+  const today = dateAdapter.today();
   return (
     <div style={{ display: "flex" }}>
       <Button
-        style={{ flexGrow: 1 }}
+        aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
+        style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
         sentiment="accented"
         appearance="solid"
-        onClick={(event: SyntheticEvent) => select(event, dateAdapter.today())}
+        onClick={(event: SyntheticEvent) => select(event, today)}
       >
         Select Today
       </Button>
@@ -59,7 +60,7 @@ export const SingleWithTodayButton = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};

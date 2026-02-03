@@ -5,7 +5,6 @@ import {
   FormField,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -37,8 +36,9 @@ export const RangeWithConfirmation = (): ReactElement => {
     "error" | undefined
   >();
   const savedValidationState = useRef<typeof validationStatus>();
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
   const savedState = useRef<{
@@ -51,7 +51,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -122,10 +122,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   }, []);
 
   const handleApply = useCallback(
-    (
-      _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
-    ) => {
+    (_event: SyntheticEvent, date: DateRangeSelection | null) => {
       const { startDate, endDate } = date ?? {};
       console.log(
         `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,

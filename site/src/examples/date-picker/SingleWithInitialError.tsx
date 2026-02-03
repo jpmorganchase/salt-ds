@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -29,7 +28,7 @@ export const SingleWithInitialError = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -57,16 +56,21 @@ export const SingleWithInitialError = (): ReactElement => {
     [dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput defaultValue="bad date" />
+          <DatePickerSingleInput
+            aria-labelledby={labelId}
+            defaultValue="bad date"
+          />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />

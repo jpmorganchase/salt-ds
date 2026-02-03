@@ -254,17 +254,17 @@
 .saltCalendarDay-highlighted {
   position: absolute;
   left: 0;
-  right: 0;
+  right: -1px;
   height: 100%;
   overflow: hidden;
   border-radius: var(--salt-palette-corner-weak, 0);
 }
+.saltCalendarDay-selectedStart .saltCalendarDay-highlighted {
+  right: 0;
+}
 
 .saltCalendarDay-selectedEnd .saltCalendarDay-highlighted {
   right: 1px;
-}
-.saltCalendarDay-selectedSpan .saltCalendarDay-highlighted {
-  right: -1px;
 }
 
 .saltCalendarDay-selectedStart .saltCalendarDay-highlighted,

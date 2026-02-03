@@ -7,17 +7,17 @@ import type {
 import {
   Calendar,
   CalendarGrid,
+  type CalendarMultiselectSingleProps,
   CalendarNavigation,
-  type CalendarSingleProps,
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
-function selectMultiselectSingle<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: SingleDateSelection<TDate>[],
-  newDate: TDate,
+function selectMultiselectSingle(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: SingleDateSelection[],
+  newDate: DateFrameworkType,
 ) {
   const newSelection = previousSelectedDate.filter(
     (previousSingleDate) =>
@@ -30,7 +30,7 @@ function selectMultiselectSingle<TDate extends DateFrameworkType>(
 }
 
 export const SingleMultiselectControlled = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const initialVisibleMonth = dateAdapter.parse(
     "01/01/2024",
     "DD/MM/YYYY",
@@ -73,18 +73,18 @@ export const SingleMultiselectControlled = (): ReactElement => {
   ].map((date) => dateAdapter.parse(date, "DD/MM/YYYY").date);
 
   const [visibleMonth, setVisibleMonth] =
-    useState<CalendarSingleProps<DateFrameworkType>["visibleMonth"][]>(
+    useState<CalendarMultiselectSingleProps["visibleMonth"]>(
       initialVisibleMonth,
     );
   const [selectedDate, setSelectedDate] =
-    useState<CalendarSingleProps<DateFrameworkType>["selectedDate"][]>(
+    useState<CalendarMultiselectSingleProps["selectedDate"]>(
       initialSelectedDate,
     );
-  const handleSelectionChange: CalendarSingleProps<DateFrameworkType>["onSelectionChange"] =
+  const handleSelectionChange: CalendarMultiselectSingleProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
-  const handleVisibleMonthChange: CalendarSingleProps<DateFrameworkType>["onVisibleMonthChange"] =
+  const handleVisibleMonthChange: CalendarMultiselectSingleProps["onVisibleMonthChange"] =
     (_event, newVisibleMonth) => {
       setVisibleMonth(newVisibleMonth);
     };
@@ -99,8 +99,8 @@ export const SingleMultiselectControlled = (): ReactElement => {
       onVisibleMonthChange={handleVisibleMonthChange}
       hideOutOfRangeDates
       select={(
-        previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
-        newDate: SingleDateSelection<DateFrameworkType>,
+        previousSelectedDate: SingleDateSelection[],
+        newDate: SingleDateSelection,
       ) => selectMultiselectSingle(dateAdapter, previousSelectedDate, newDate)}
     >
       <StackLayout gap={0}>

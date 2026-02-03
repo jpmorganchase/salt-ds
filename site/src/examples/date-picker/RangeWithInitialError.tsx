@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -30,7 +29,7 @@ export const RangeWithInitialError = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -66,12 +65,12 @@ export const RangeWithInitialError = (): ReactElement => {
       if (startDateErrors?.length && startDateOriginalValue) {
         setValidationStatus("error");
         setHelperText(
-          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+          `${errorHelperText} - start date, ${startDateErrors[0].message}`,
         );
       } else if (endDateErrors?.length && endDateOriginalValue) {
         setValidationStatus("error");
         setHelperText(
-          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+          `${errorHelperText} - end date, ${endDateErrors[0].message}`,
         );
       } else {
         setValidationStatus(undefined);
@@ -83,9 +82,12 @@ export const RangeWithInitialError = (): ReactElement => {
 
   const defaultStartVisibleMonth =
     dateAdapter.parse("01/06/2024", "DD/MM/YYYY").date ?? dateAdapter.today();
+
+  const labelId = useId();
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel id={labelId}>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         defaultSelectedDate={{
@@ -96,6 +98,7 @@ export const RangeWithInitialError = (): ReactElement => {
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
+            aria-labelledby={labelId}
             defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
           />
         </DatePickerTrigger>

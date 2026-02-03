@@ -21,7 +21,6 @@ import {
   type CalendarMultiselectSingleProps,
   CalendarNavigation,
   type CalendarOffsetProps,
-  type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
   type DateRangeSelection,
@@ -44,6 +43,9 @@ import "dayjs/locale/es"; // Import the Spanish locale
 import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 import { withDateMock } from ".storybook/decorators/withDateMock";
+import type { Dayjs } from "dayjs";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment/moment";
 
 export default {
   title: "Lab/Calendar",
@@ -64,10 +66,10 @@ export default {
 } as Meta<typeof Calendar>;
 
 const Template: StoryFn<typeof Calendar> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   return (
     <Calendar
-      {...args}
+      {...(args as any)}
       selectionVariant={"single"}
       defaultSelectedDate={dateAdapter.today()}
     >
@@ -77,10 +79,8 @@ const Template: StoryFn<typeof Calendar> = (args) => {
   );
 };
 
-export const Single: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const Single: StoryFn<React.FC<CalendarSingleProps>> = (args) => {
+  const { dateAdapter } = useLocalization();
   const selectedDate = dateAdapter.today();
   return (
     <Calendar
@@ -94,15 +94,14 @@ export const Single: StoryFn<
   );
 };
 
-export const Grid: StoryFn<React.FC<CalendarSingleProps<DateFrameworkType>>> = (
-  args,
-) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const Grid: StoryFn<React.FC<CalendarSingleProps>> = (args) => {
+  const { dateAdapter } = useLocalization();
   const selectedDate = dateAdapter.today();
   return (
     <Calendar
       {...args}
       defaultSelectedDate={selectedDate}
+      hideOutOfRangeDates
       numberOfVisibleMonths={12}
       selectionVariant="single"
     >
@@ -112,24 +111,27 @@ export const Grid: StoryFn<React.FC<CalendarSingleProps<DateFrameworkType>>> = (
   );
 };
 
-export const SingleControlled: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const SingleControlled: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    CalendarSingleProps<DateFrameworkType>["selectedDate"]
+    CalendarSingleProps["selectedDate"]
   >(dateAdapter.today());
-  const handleSelectionChange: CalendarSingleProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, newSelectedDate) => {
-      if (
-        selectedDate &&
-        dateAdapter.isSame(selectedDate, newSelectedDate, "day")
-      ) {
-        setSelectedDate(null);
-      } else {
-        setSelectedDate(newSelectedDate);
-      }
-    };
+  const handleSelectionChange: CalendarSingleProps["onSelectionChange"] = (
+    _event,
+    newSelectedDate,
+  ) => {
+    if (
+      selectedDate &&
+      newSelectedDate &&
+      dateAdapter.isSame(selectedDate, newSelectedDate, "day")
+    ) {
+      setSelectedDate(null);
+    } else {
+      setSelectedDate(newSelectedDate);
+    }
+  };
 
   return (
     <Calendar
@@ -138,6 +140,9 @@ export const SingleControlled: StoryFn<
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
       select={(previousSelectedDate, newDate) => {
+        if (!previousSelectedDate) {
+          return newDate;
+        }
         return dateAdapter.isSame(previousSelectedDate, newDate, "day")
           ? null
           : newDate;
@@ -152,9 +157,9 @@ export const SingleControlled: StoryFn<
 };
 
 export const SingleMultiselect: StoryFn<
-  React.FC<CalendarMultiselectSingleProps<DateFrameworkType>>
+  React.FC<CalendarMultiselectSingleProps>
 > = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const defaultSelectedDate = [
     "02/01/2024",
     "03/01/2024",
@@ -211,10 +216,10 @@ export const SingleMultiselect: StoryFn<
   );
 };
 
-function selectMultiselectSingle<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: SingleDateSelection<TDate>[],
-  newDate: TDate,
+function selectMultiselectSingle(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: SingleDateSelection[],
+  newDate: DateFrameworkType,
 ) {
   const newSelection = previousSelectedDate.filter(
     (previousSingleDate) =>
@@ -227,9 +232,9 @@ function selectMultiselectSingle<TDate extends DateFrameworkType>(
 }
 
 export const SingleMultiselectControlled: StoryFn<
-  React.FC<CalendarMultiselectSingleProps<DateFrameworkType>>
+  React.FC<CalendarMultiselectSingleProps>
 > = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const initialVisibleMonth = dateAdapter.parse(
     "01/01/2024",
     "DD/MM/YYYY",
@@ -272,25 +277,25 @@ export const SingleMultiselectControlled: StoryFn<
   ].map((date) => dateAdapter.parse(date, "DD/MM/YYYY").date);
 
   const [visibleMonth, setVisibleMonth] =
-    useState<CalendarSingleProps<DateFrameworkType>["visibleMonth"][]>(
+    useState<CalendarMultiselectSingleProps["visibleMonth"]>(
       initialVisibleMonth,
     );
   const [selectedDate, setSelectedDate] =
-    useState<CalendarSingleProps<DateFrameworkType>["selectedDate"][]>(
+    useState<CalendarMultiselectSingleProps["selectedDate"]>(
       initialSelectedDate,
     );
-  const handleSelectionChange: CalendarSingleProps<DateFrameworkType>["onSelectionChange"] =
+  const handleSelectionChange: CalendarMultiselectSingleProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
-  const handleVisibleMonthChange: CalendarSingleProps<DateFrameworkType>["onVisibleMonthChange"] =
+  const handleVisibleMonthChange: CalendarMultiselectSingleProps["onVisibleMonthChange"] =
     (_event, newVisibleMonth) => {
       setVisibleMonth(newVisibleMonth);
     };
 
   return (
     <Calendar
-      {...args}
+      {...(args as any)}
       selectionVariant={"single"}
       multiselect={true}
       visibleMonth={visibleMonth}
@@ -299,8 +304,8 @@ export const SingleMultiselectControlled: StoryFn<
       onVisibleMonthChange={handleVisibleMonthChange}
       hideOutOfRangeDates
       select={(
-        previousSelectedDate: SingleDateSelection<DateFrameworkType>[],
-        newDate: SingleDateSelection<DateFrameworkType>,
+        previousSelectedDate: SingleDateSelection[],
+        newDate: SingleDateSelection,
       ) => selectMultiselectSingle(dateAdapter, previousSelectedDate, newDate)}
     >
       <StackLayout gap={0}>
@@ -311,19 +316,21 @@ export const SingleMultiselectControlled: StoryFn<
   );
 };
 
-function selectDateRange<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: DateRangeSelection<DateFrameworkType>,
+function selectDateRange(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection,
   newDate: DateFrameworkType,
-): DateRangeSelection<TDate> {
+): DateRangeSelection {
   const isSelectedAlready =
     !!previousSelectedDate?.startDate && !!previousSelectedDate?.endDate;
   if (
     isSelectedAlready &&
-    dateAdapter.compare(newDate, previousSelectedDate?.startDate) >= 0 &&
-    dateAdapter.compare(newDate, previousSelectedDate?.endDate) <= 0
+    previousSelectedDate?.startDate &&
+    dateAdapter.compare(newDate, previousSelectedDate.startDate) >= 0 &&
+    previousSelectedDate?.endDate &&
+    dateAdapter.compare(newDate, previousSelectedDate.endDate) <= 0
   ) {
-    return {};
+    return { startDate: null, endDate: null };
   }
   if (previousSelectedDate?.startDate && previousSelectedDate?.endDate) {
     return {
@@ -344,10 +351,8 @@ function selectDateRange<TDate extends DateFrameworkType>(
   };
 }
 
-export const Range: StoryFn<React.FC<CalendarRangeProps<DateFrameworkType>>> = (
-  args,
-) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const Range: StoryFn<React.FC<CalendarRangeProps>> = (args) => {
+  const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { days: 4 });
   return (
@@ -363,20 +368,22 @@ export const Range: StoryFn<React.FC<CalendarRangeProps<DateFrameworkType>>> = (
   );
 };
 
-export const RangeControlled: StoryFn<
-  React.FC<CalendarRangeProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const RangeControlled: StoryFn<React.FC<CalendarRangeProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    CalendarRangeProps<DateFrameworkType>["selectedDate"]
+    CalendarRangeProps["selectedDate"]
   >({
     startDate: dateAdapter.today(),
     endDate: dateAdapter.add(dateAdapter.today(), { days: 4 }),
   });
-  const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, newSelectedDate) => {
-      setSelectedDate(newSelectedDate);
-    };
+  const handleSelectionChange: CalendarRangeProps["onSelectionChange"] = (
+    _event,
+    newSelectedDate,
+  ) => {
+    setSelectedDate(newSelectedDate);
+  };
 
   return (
     <Calendar
@@ -385,9 +392,9 @@ export const RangeControlled: StoryFn<
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
       select={(
-        previousSelectedDate: DateRangeSelection<DateFrameworkType>,
+        previousSelectedDate: DateRangeSelection,
         newDate: DateFrameworkType,
-      ): DateRangeSelection<DateFrameworkType> => {
+      ): DateRangeSelection => {
         return selectDateRange(dateAdapter, previousSelectedDate, newDate);
       }}
     >
@@ -400,9 +407,9 @@ export const RangeControlled: StoryFn<
 };
 
 export const RangeMultiselect: StoryFn<
-  React.FC<CalendarMultiselectRangeProps<DateFrameworkType>>
+  React.FC<CalendarMultiselectRangeProps>
 > = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { days: 4 });
   return (
@@ -419,11 +426,11 @@ export const RangeMultiselect: StoryFn<
   );
 };
 
-function selectMultiselectRange<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: DateRangeSelection<TDate>[],
-  newDate: TDate,
-): DateRangeSelection<TDate>[] {
+function selectMultiselectRange(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection[],
+  newDate: DateFrameworkType,
+): DateRangeSelection[] {
   const lastRange = previousSelectedDate.length
     ? previousSelectedDate[previousSelectedDate.length - 1]
     : undefined;
@@ -442,14 +449,14 @@ function selectMultiselectRange<TDate extends DateFrameworkType>(
     return [
       ...previousSelectedDate.slice(0, -1),
       completeDateRange,
-    ] as DateRangeSelection<TDate>[];
+    ] as DateRangeSelection[];
   }
 
   const newSelection = previousSelectedDate.filter((previousDateRange) => {
     return !(
       previousDateRange?.startDate &&
-      dateAdapter.compare(newDate, previousDateRange?.startDate) >= 0 &&
       previousDateRange?.endDate &&
+      dateAdapter.compare(newDate, previousDateRange?.startDate) >= 0 &&
       dateAdapter.compare(newDate, previousDateRange?.endDate) <= 0
     );
   });
@@ -460,18 +467,18 @@ function selectMultiselectRange<TDate extends DateFrameworkType>(
 }
 
 export const RangeMultiselectControlled: StoryFn<
-  React.FC<CalendarMultiselectRangeProps<DateFrameworkType>>
+  React.FC<CalendarMultiselectRangeProps>
 > = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    CalendarMultiselectRangeProps<DateFrameworkType>["selectedDate"]
+    CalendarMultiselectRangeProps["selectedDate"]
   >([
     {
       startDate: dateAdapter.today(),
       endDate: dateAdapter.add(dateAdapter.today(), { days: 4 }),
     },
   ]);
-  const handleSelectionChange: CalendarMultiselectRangeProps<DateFrameworkType>["onSelectionChange"] =
+  const handleSelectionChange: CalendarMultiselectRangeProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
@@ -484,8 +491,8 @@ export const RangeMultiselectControlled: StoryFn<
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
       select={(
-        previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
-        newDate: DateRangeSelection<DateFrameworkType>,
+        previousSelectedDate: DateRangeSelection[],
+        newDate: DateFrameworkType,
       ) => selectMultiselectRange(dateAdapter, previousSelectedDate, newDate)}
     >
       <StackLayout gap={0}>
@@ -496,10 +503,8 @@ export const RangeMultiselectControlled: StoryFn<
   );
 };
 
-export const Offset: StoryFn<
-  React.FC<CalendarOffsetProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const Offset: StoryFn<React.FC<CalendarOffsetProps>> = (args) => {
+  const { dateAdapter } = useLocalization();
   const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
     dateAdapter.add(date, { days: 4 });
   const startDate = dateAdapter.today();
@@ -518,18 +523,19 @@ export const Offset: StoryFn<
   );
 };
 
-function selectOffset<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: DateRangeSelection<DateFrameworkType>,
+function selectOffset(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection,
   newDate: DateFrameworkType,
-  endDateOffset: CalendarOffsetProps<TDate>["endDateOffset"],
+  endDateOffset: CalendarOffsetProps["endDateOffset"],
 ) {
   if (
-    previousSelectedDate &&
+    previousSelectedDate?.startDate &&
+    previousSelectedDate?.endDate &&
     dateAdapter.compare(newDate, previousSelectedDate.startDate) >= 0 &&
     dateAdapter.compare(newDate, previousSelectedDate.endDate) <= 0
   ) {
-    return {};
+    return { startDate: null, endDate: null };
   }
   return {
     startDate: newDate,
@@ -537,22 +543,24 @@ function selectOffset<TDate extends DateFrameworkType>(
   };
 }
 
-export const OffsetControlled: StoryFn<
-  React.FC<CalendarOffsetProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const OffsetControlled: StoryFn<React.FC<CalendarOffsetProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
   const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
     dateAdapter.add(date, { days: 4 });
   const [selectedDate, setSelectedDate] = useState<
-    CalendarOffsetProps<DateFrameworkType>["selectedDate"]
+    CalendarOffsetProps["selectedDate"]
   >({
     startDate: dateAdapter.today(),
     endDate: endDateOffset(dateAdapter.today()),
   });
-  const handleSelectionChange: CalendarOffsetProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, newSelectedDate) => {
-      setSelectedDate(newSelectedDate);
-    };
+  const handleSelectionChange: CalendarOffsetProps["onSelectionChange"] = (
+    _event,
+    newSelectedDate,
+  ) => {
+    setSelectedDate(newSelectedDate);
+  };
 
   return (
     <Calendar
@@ -562,9 +570,9 @@ export const OffsetControlled: StoryFn<
       endDateOffset={endDateOffset}
       onSelectionChange={handleSelectionChange}
       select={(
-        previousSelectedDate: DateRangeSelection<DateFrameworkType>,
+        previousSelectedDate: DateRangeSelection,
         newDate: DateFrameworkType,
-      ): DateRangeSelection<DateFrameworkType> => {
+      ): DateRangeSelection => {
         return selectOffset(
           dateAdapter,
           previousSelectedDate,
@@ -581,12 +589,12 @@ export const OffsetControlled: StoryFn<
   );
 };
 
-function selectMultiselectOffset<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  previousSelectedDate: DateRangeSelection<TDate>[],
-  newDate: TDate,
-  endDateOffset: CalendarOffsetProps<TDate>["endDateOffset"],
-): DateRangeSelection<TDate>[] {
+function selectMultiselectOffset(
+  dateAdapter: SaltDateAdapter,
+  previousSelectedDate: DateRangeSelection[],
+  newDate: DateFrameworkType,
+  endDateOffset: CalendarOffsetProps["endDateOffset"],
+): DateRangeSelection[] {
   if (previousSelectedDate.length === 0) {
     return [{ startDate: newDate, endDate: endDateOffset?.(newDate) }];
   }
@@ -609,9 +617,9 @@ function selectMultiselectOffset<TDate extends DateFrameworkType>(
 }
 
 export const OffsetMultiselect: StoryFn<
-  React.FC<CalendarMultiselectOffsetProps<DateFrameworkType>>
+  React.FC<CalendarMultiselectOffsetProps>
 > = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
     dateAdapter.add(date, { days: 4 });
   const startDate = dateAdapter.today();
@@ -632,20 +640,20 @@ export const OffsetMultiselect: StoryFn<
 };
 
 export const OffsetMultiselectControlled: StoryFn<
-  React.FC<CalendarMultiselectOffsetProps<DateFrameworkType>>
+  React.FC<CalendarMultiselectOffsetProps>
 > = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
     dateAdapter.add(date, { days: 4 });
   const [selectedDate, setSelectedDate] = useState<
-    CalendarMultiselectOffsetProps<DateFrameworkType>["selectedDate"]
+    CalendarMultiselectOffsetProps["selectedDate"]
   >([
     {
       startDate: dateAdapter.today(),
       endDate: endDateOffset(dateAdapter.today()),
     },
   ]);
-  const handleSelectionChange: CalendarMultiselectOffsetProps<DateFrameworkType>["onSelectionChange"] =
+  const handleSelectionChange: CalendarMultiselectOffsetProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
@@ -659,8 +667,8 @@ export const OffsetMultiselectControlled: StoryFn<
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
       select={(
-        previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
-        newDate: DateRangeSelection<DateFrameworkType>,
+        previousSelectedDate: DateRangeSelection[],
+        newDate: DateFrameworkType,
       ) => {
         return selectMultiselectOffset(
           dateAdapter,
@@ -678,17 +686,33 @@ export const OffsetMultiselectControlled: StoryFn<
   );
 };
 
-export const UnselectableDates: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
-  const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
-    const dayOfWeek = dateAdapter.getDayOfWeek(day);
-    const isWeekend =
-      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
-      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+export const UnselectableDates: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
+  const isDayUnselectable = (day: DateFrameworkType) => {
+    let dayOfWeek: number;
 
-    return isWeekend ? "Weekends are un-selectable" : false;
+    if (dateAdapter.lib === "luxon") {
+      // Luxon: 1 (Monday) to 7 (Sunday)
+      dayOfWeek = (day as DateTime).weekday;
+    } else if (dateAdapter.lib === "moment") {
+      // Moment: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Moment).day();
+    } else if (dateAdapter.lib === "dayjs") {
+      // Day.js: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Dayjs).day();
+    } else {
+      // date-fns: 0 (Sunday) to 6 (Saturday)
+      dayOfWeek = (day as Date).getDay();
+    }
+
+    const isWeekend =
+      dateAdapter.lib === "luxon"
+        ? dayOfWeek === 6 || dayOfWeek === 7 // Saturday or Sunday
+        : dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+
+    return isWeekend ? "weekends are un-selectable" : false;
   };
   return (
     <Calendar
@@ -703,10 +727,10 @@ export const UnselectableDates: StoryFn<
   );
 };
 
-export const HighlightedDates: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const HighlightedDates: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startOfMonth = dateAdapter.startOf(day, "month");
     return dateAdapter.isSame(
@@ -730,21 +754,21 @@ export const HighlightedDates: StoryFn<
   );
 };
 
-export const HideOutOfRangeDates: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
+export const HideOutOfRangeDates: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
   return (
     // biome-ignore lint/suspicious/noExplicitAny: story args
-    <Calendar {...args} selectionVariant="single" hideOutOfRangeDates>
+    <Calendar {...(args as any)} selectionVariant="single" hideOutOfRangeDates>
       <CalendarNavigation />
       <CalendarGrid />
     </Calendar>
   );
 };
 
-export const HideYearDropdown: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
+export const HideYearDropdown: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
   return (
     <Calendar {...args}>
       <CalendarNavigation hideYearDropdown />
@@ -753,17 +777,20 @@ export const HideYearDropdown: StoryFn<
   );
 };
 
-export const TodayButton: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = ({ selectionVariant, ...args }) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const TodayButton: StoryFn<React.FC<CalendarSingleProps>> = ({
+  selectionVariant,
+  ...args
+}) => {
+  const { dateAdapter } = useLocalization();
   const today = dateAdapter.today();
   const [selectedDate, setSelectedDate] =
-    useState<CalendarSingleProps<DateFrameworkType>["selectedDate"]>(null);
-  const handleSelectionChange: CalendarSingleProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, newSelectedDate) => {
-      setSelectedDate(newSelectedDate);
-    };
+    useState<CalendarSingleProps["selectedDate"]>(null);
+  const handleSelectionChange: CalendarSingleProps["onSelectionChange"] = (
+    _event,
+    newSelectedDate,
+  ) => {
+    setSelectedDate(newSelectedDate);
+  };
 
   return (
     <Calendar
@@ -778,6 +805,7 @@ export const TodayButton: StoryFn<
         <CalendarGrid />
         <Divider />
         <Button
+          aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
           style={{ margin: "var(--salt-spacing-50)" }}
           sentiment="accented"
           appearance="bordered"
@@ -790,17 +818,17 @@ export const TodayButton: StoryFn<
   );
 };
 
-export const CustomDayRendering: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const CustomDayRendering: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
 
   function renderDayButton({
     className,
     date,
     status,
     ...rest
-  }: renderCalendarDayProps<DateFrameworkType>): ReactElement {
+  }: renderCalendarDayProps): ReactElement {
     return (
       <button
         {...rest}
@@ -827,10 +855,8 @@ export const CustomDayRendering: StoryFn<
   );
 };
 
-export const MinMaxDate: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const MinMaxDate: StoryFn<React.FC<CalendarSingleProps>> = (args) => {
+  const { dateAdapter } = useLocalization();
   const defaultSelectedDate = dateAdapter.today();
   const minDate = dateAdapter.startOf(defaultSelectedDate, "month");
   const maxDate = dateAdapter.endOf(defaultSelectedDate, "month");
@@ -849,35 +875,39 @@ export const MinMaxDate: StoryFn<
   );
 };
 
-export const TwinCalendars: StoryFn<
-  React.FC<CalendarRangeProps<DateFrameworkType>>
-> = ({
+export const TwinCalendars: StoryFn<React.FC<CalendarRangeProps>> = ({
   defaultSelectedDate = { startDate: undefined, endDate: undefined },
   defaultVisibleMonth,
   selectionVariant,
   ...args
 }) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const today = dateAdapter.today();
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  const [hoveredDate, setHoveredDate] = useState<any | null>(null);
-  const handleHoveredDateChange: CalendarProps<DateFrameworkType>["onHoveredDateChange"] =
-    (event, newHoveredDate) => {
-      setHoveredDate(newHoveredDate);
-      args?.onHoveredDateChange?.(event, newHoveredDate);
-    };
+  const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
+    null,
+  );
+  const handleHoveredDateChange: CalendarRangeProps["onHoveredDateChange"] = (
+    _event,
+    newHoveredDate,
+  ) => {
+    setHoveredDate(newHoveredDate);
+    args?.onHoveredDateChange?.(_event, newHoveredDate);
+  };
   const [startVisibleMonth, setStartVisibleMonth] = useState<
-    CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
+    CalendarRangeProps["defaultVisibleMonth"]
   >(defaultVisibleMonth ?? dateAdapter.startOf(today, "month"));
   const [endVisibleMonth, setEndVisibleMonth] = useState<
-    CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
+    CalendarRangeProps["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
+  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+    startVisibleMonth ? dateAdapter.startOf(startVisibleMonth, "month") : null,
+  );
 
   const handleStartVisibleMonthChange = useCallback(
     (
       _event: SyntheticEvent | null,
-      newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
+      newVisibleMonth: CalendarRangeProps["defaultVisibleMonth"],
     ) => {
       setStartVisibleMonth(newVisibleMonth);
       if (
@@ -894,7 +924,7 @@ export const TwinCalendars: StoryFn<
   const handleEndVisibleMonthChange = useCallback(
     (
       _event: SyntheticEvent | null,
-      newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
+      newVisibleMonth: CalendarRangeProps["defaultVisibleMonth"],
     ) => {
       setEndVisibleMonth(newVisibleMonth);
       if (
@@ -914,63 +944,119 @@ export const TwinCalendars: StoryFn<
   );
 
   const [selectedDate, setSelectedDate] =
-    useState<CalendarRangeProps<DateFrameworkType>["selectedDate"]>(
-      defaultSelectedDate,
-    );
+    useState<CalendarRangeProps["selectedDate"]>(defaultSelectedDate);
+  const handleSelectionChange: CalendarRangeProps["onSelectionChange"] = (
+    event,
+    newSelectedDate,
+  ) => {
+    setSelectedDate(newSelectedDate);
+    args?.onSelectionChange?.(event, newSelectedDate);
+  };
 
-  const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
-    (event, newSelectedDate) => {
-      setSelectedDate(newSelectedDate);
-      args?.onSelectionChange?.(event, newSelectedDate);
-    };
+  const handleFocusedDateChange: CalendarRangeProps["onFocusedDateChange"] = (
+    _event,
+    newFocusedDate,
+  ) => {
+    setFocusedDate(newFocusedDate);
+  };
 
   return (
-    <div style={{ display: "flex", gap: 16 }}>
+    <div
+      role="region"
+      aria-label="Twin Calendar example"
+      style={{ display: "flex", gap: 16 }}
+    >
+      {/* biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set */}
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) < 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month first calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month first calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month first calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year first calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
+      {/* biome-ignore lint/a11y/useValidAriaRole: composed calendar component does not need the role set */}
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          focusedDate &&
+          endVisibleMonth &&
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) >= 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
         visibleMonth={endVisibleMonth}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
+        role={undefined}
       >
-        <CalendarNavigation />
+        <CalendarNavigation
+          MonthDropdownProps={{
+            "aria-label": "Select month second calendar",
+          }}
+          PreviousButtonProps={{
+            "aria-label": "Previous month second calendar",
+          }}
+          NextButtonProps={{ "aria-label": "Next month second calendar" }}
+          YearDropdownProps={{
+            "aria-label": "Select year second calendar",
+          }}
+        />
         <CalendarGrid />
       </Calendar>
     </div>
   );
 };
 
-export const WithLocale: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
+export const WithLocale: StoryFn<React.FC<CalendarSingleProps>> = (args) => {
   // Include any locales, required by your DateAdapter of choice.
   // Wrap in your own LocalizationProvider to specify the locale or modify the current context
   // <LocalizationProvider DateAdapter={DateAdapter} locale="es-ES"></LocalizationProvider>
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const isDateFns = dateAdapter.lib === "date-fns";
   dateAdapter.locale = isDateFns ? dateFnsEs : "es-ES";
   return (
     <FormField style={{ width: "180px" }}>
       <FormFieldLabel>ES locale calendar</FormFieldLabel>
-      <Calendar {...args}>
+      <Calendar lang="es" {...args}>
         <CalendarNavigation />
         <CalendarGrid />
       </Calendar>
@@ -978,10 +1064,10 @@ export const WithLocale: StoryFn<
   );
 };
 
-export const SingleWithTimezone: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const SingleWithTimezone: StoryFn<React.FC<CalendarSingleProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
   const timezoneOptions = [
     "default",
     "system",
@@ -1006,53 +1092,49 @@ export const SingleWithTimezone: StoryFn<
     setDateString("");
   }, [selectedTimezone]);
 
-  const handleSelectionChange: CalendarSingleProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, selection) => {
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
+  const handleSelectionChange: CalendarSingleProps["onSelectionChange"] = (
+    _event,
+    selection,
+  ) => {
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const ianaTimezone =
+      selectedTimezone !== "system" && selectedTimezone !== "default"
+        ? selectedTimezone
+        : undefined;
 
-      const formatDate = (date: DateFrameworkType) => {
-        const iso = date.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        return { iso, locale, formatted };
-      };
-
-      const jsDate =
-        dateAdapter.lib === "luxon"
-          ? selection.toJSDate()
-          : dateAdapter.lib === "moment" || dateAdapter.lib === "dayjs"
-            ? selection.toDate()
-            : selection;
-      const formattedDate = formatDate(jsDate);
-
-      setCurrentTimezone(dateAdapter.getTimezone(selection));
-
-      setIso8601String(formattedDate.iso);
-      setLocaleDateString(formattedDate.locale);
-      setDateString(formattedDate.formatted);
+    const formatDate = (date: DateFrameworkType) => {
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
+      const locale = new Intl.DateTimeFormat(undefined, {
+        timeZone: systemTimeZone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      const formatted = new Intl.DateTimeFormat(undefined, {
+        timeZone: ianaTimezone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      return { iso, locale, formatted };
     };
+
+    setCurrentTimezone(selection ? dateAdapter.getTimezone(selection) : "");
+
+    const formattedDate = selection ? formatDate(selection) : null;
+    setIso8601String(formattedDate?.iso ?? "");
+    setLocaleDateString(formattedDate?.locale ?? "");
+    setDateString(formattedDate?.formatted ?? "");
+  };
 
   const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
     setSelectedTimezone(selection[0]);
@@ -1118,10 +1200,10 @@ export const SingleWithTimezone: StoryFn<
   );
 };
 
-export const RangeWithTimezone: StoryFn<
-  React.FC<CalendarRangeProps<DateFrameworkType>>
-> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+export const RangeWithTimezone: StoryFn<React.FC<CalendarRangeProps>> = (
+  args,
+) => {
+  const { dateAdapter } = useLocalization();
   const timezoneOptions = [
     "default",
     "system",
@@ -1154,64 +1236,55 @@ export const RangeWithTimezone: StoryFn<
     setEndDateString("");
   }, [selectedTimezone]);
 
-  const handleSelectionChange: CalendarRangeProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, selection) => {
-      const { startDate, endDate } = selection;
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
+  const handleSelectionChange: CalendarRangeProps["onSelectionChange"] = (
+    _event,
+    selection,
+  ) => {
+    const { startDate, endDate } = selection;
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const ianaTimezone =
+      selectedTimezone !== "system" && selectedTimezone !== "default"
+        ? selectedTimezone
+        : undefined;
 
-      const formatDate = (date: DateFrameworkType) => {
-        const iso = date.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        return { iso, locale, formatted };
-      };
-
-      const startJSDate =
-        dateAdapter.lib === "luxon"
-          ? startDate.toJSDate()
-          : dateAdapter.lib === "moment" || dateAdapter.lib === "dayjs"
-            ? startDate.toDate()
-            : startDate;
-      const start = formatDate(startJSDate);
-      setStartIso8601String(start.iso);
-      setStartLocaleDateString(start.locale);
-      setStartDateString(start.formatted);
-
-      if (endDate) {
-        const endJSDate =
-          dateAdapter.lib === "luxon"
-            ? endDate.toJSDate()
-            : dateAdapter.lib === "moment" || dateAdapter.lib === "dayjs"
-              ? endDate.toDate()
-              : endDate;
-        const end = formatDate(endJSDate);
-        setEndIso8601String(end.iso);
-        setEndLocaleDateString(end.locale);
-        setEndDateString(end.formatted);
-      }
+    const formatDate = (date: DateFrameworkType) => {
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
+      const locale = new Intl.DateTimeFormat(undefined, {
+        timeZone: systemTimeZone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      const formatted = new Intl.DateTimeFormat(undefined, {
+        timeZone: ianaTimezone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      return { iso, locale, formatted };
     };
+
+    const start = startDate ? formatDate(startDate) : null;
+    setStartIso8601String(start?.iso ?? "");
+    setStartLocaleDateString(start?.locale ?? "");
+    setStartDateString(start?.formatted ?? "");
+
+    if (endDate) {
+      const end = formatDate(endDate);
+      setEndIso8601String(end.iso);
+      setEndLocaleDateString(end.locale);
+      setEndDateString(end.formatted);
+    }
+  };
 
   const handleTimezoneSelect = (
     _event: SyntheticEvent,
@@ -1311,9 +1384,7 @@ export const RangeWithTimezone: StoryFn<
   );
 };
 
-export const Bordered: StoryFn<
-  React.FC<CalendarSingleProps<DateFrameworkType>>
-> = (args) => (
+export const Bordered: StoryFn<React.FC<CalendarSingleProps>> = (args) => (
   <Calendar {...args}>
     <CalendarNavigation
       MonthDropdownProps={{ bordered: true }}

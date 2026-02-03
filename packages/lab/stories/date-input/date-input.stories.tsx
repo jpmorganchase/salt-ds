@@ -35,13 +35,11 @@ export default {
   decorators: [withDateMock],
 } as Meta<typeof DateInputSingle>;
 
-const DateInputSingleTemplate: StoryFn<
-  DateInputSingleProps<DateFrameworkType>
-> = (args) => {
+const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
   const { dateAdapter } = useLocalization();
-  function handleDateChange<TDate extends DateFrameworkType>(
+  function handleDateChange(
     event: SyntheticEvent,
-    date: TDate | null,
+    date: DateFrameworkType | null | undefined,
     details: DateInputSingleDetails,
   ) {
     console.log(
@@ -68,9 +66,7 @@ const DateInputSingleTemplate: StoryFn<
   );
 };
 
-const DateInputRangeTemplate: StoryFn<
-  DateInputRangeProps<DateFrameworkType>
-> = (args) => {
+const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
   const { dateAdapter } = useLocalization();
 
   function handleDateChange(
@@ -109,7 +105,11 @@ const DateInputRangeTemplate: StoryFn<
   }
   return (
     <div style={{ width: "250px" }}>
-      <DateInputRange {...args} onDateChange={handleDateChange} />
+      <DateInputRange
+        // biome-ignore lint/suspicious/noExplicitAny: story args
+        {...(args as any)}
+        onDateChange={handleDateChange}
+      />
     </div>
   );
 };
@@ -124,17 +124,15 @@ Range.args = {
   onDateValueChange: fn(),
 };
 
-export const SingleControlled: StoryFn<
-  DateInputSingleProps<DateFrameworkType>
-> = (args) => {
+export const SingleControlled: StoryFn<DateInputSingleProps> = (args) => {
   const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection<DateFrameworkType> | null | undefined
+    SingleDateSelection | null | undefined
   >(args?.date ?? null);
 
-  function handleDateChange<TDate extends DateFrameworkType>(
+  function handleDateChange(
     event: SyntheticEvent,
-    date: TDate | null,
+    date: DateFrameworkType | null | undefined,
     details: DateInputSingleDetails,
   ) {
     console.log(
@@ -180,18 +178,19 @@ export const SingleControlled: StoryFn<
   );
 };
 
-export const RangeControlled: StoryFn<
-  DateInputRangeProps<DateFrameworkType>
-> = ({ date, ...args }) => {
+export const RangeControlled: StoryFn<DateInputRangeProps> = ({
+  date,
+  ...args
+}) => {
   const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    DateRangeSelection<DateFrameworkType> | null | undefined
+    DateRangeSelection | null | undefined
   >(date ?? null);
 
   const handleDateChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -400,7 +399,7 @@ EmptyReadOnlyMarker.args = {
 };
 
 export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const timezoneOptions =
     dateAdapter.lib !== "date-fns"
       ? [
@@ -432,73 +431,69 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
     setError(undefined);
   }, [selectedTimezone]);
 
-  const handleDateChange: DateInputSingleProps<DateFrameworkType>["onDateChange"] =
-    (_event, date, details) => {
-      const isDateUnset =
-        details?.errors?.length && details.errors[0].type === "unset";
-      const hasError = details?.errors?.length;
+  const handleDateChange: DateInputSingleProps["onDateChange"] = (
+    _event,
+    date,
+    details,
+  ) => {
+    const isDateUnset =
+      details?.errors?.length && details.errors[0].type === "unset";
+    const hasError = details?.errors?.length;
 
-      setError(
-        !isDateUnset && hasError ? details?.errors?.[0].message : undefined,
-      );
+    setError(
+      !isDateUnset && hasError ? details?.errors?.[0].message : undefined,
+    );
 
-      if (isDateUnset || hasError) {
-        setCurrentTimezone("");
-        setIso8601String("");
-        setLocaleDateString("");
-        setDateString("");
-        return;
-      }
+    if (isDateUnset || hasError) {
+      setCurrentTimezone("");
+      setIso8601String("");
+      setLocaleDateString("");
+      setDateString("");
+      return;
+    }
 
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const ianaTimezone =
+      selectedTimezone !== "system" && selectedTimezone !== "default"
+        ? selectedTimezone
+        : undefined;
 
-      const formatDate = (date: Date, hasError: boolean) => {
-        if (hasError) return { iso: "", locale: "", formatted: "" };
-        const iso = date.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        return { iso, locale, formatted };
-      };
-
-      const jsDate =
-        dateAdapter.lib === "luxon"
-          ? date.toJSDate()
-          : dateAdapter.lib === "moment"
-            ? date.toDate()
-            : date;
-      const formattedDate = formatDate(
-        jsDate,
-        isDateUnset || (!isDateUnset && !!hasError),
-      );
-
-      setCurrentTimezone(dateAdapter.getTimezone(date));
-
-      setIso8601String(formattedDate.iso);
-      setLocaleDateString(formattedDate.locale);
-      setDateString(formattedDate.formatted);
+    const formatDate = (date: DateFrameworkType, hasError: boolean) => {
+      if (hasError) return { iso: "", locale: "", formatted: "" };
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
+      const locale = new Intl.DateTimeFormat(undefined, {
+        timeZone: systemTimeZone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      const formatted = new Intl.DateTimeFormat(undefined, {
+        timeZone: ianaTimezone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      return { iso, locale, formatted };
     };
+
+    setCurrentTimezone(date ? dateAdapter.getTimezone(date) : "");
+
+    const formattedDate = date
+      ? formatDate(date, isDateUnset || (!isDateUnset && !!hasError))
+      : null;
+    setIso8601String(formattedDate?.iso ?? "");
+    setLocaleDateString(formattedDate?.locale ?? "");
+    setDateString(formattedDate?.formatted ?? "");
+  };
 
   const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
     setSelectedTimezone(selection[0]);
@@ -571,7 +566,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
 };
 
 export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const timezoneOptions =
     dateAdapter.lib !== "date-fns"
       ? [
@@ -616,103 +611,94 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
     setEndDateError(undefined);
   }, [selectedTimezone]);
 
-  const handleDateChange: DateInputRangeProps<DateFrameworkType>["onDateChange"] =
-    (_event, date, details) => {
-      const { startDate, endDate } =
-        date as DateRangeSelection<DateFrameworkType>;
-      const isStartDateUnset =
-        details.startDate?.errors?.length &&
-        details.startDate.errors[0].type === "unset";
-      const hasStartDateError = details.startDate?.errors?.length;
-      const isEndDateUnset =
-        details.endDate?.errors?.length &&
-        details.endDate.errors[0].type === "unset";
-      const hasEndDateError = details.endDate?.errors?.length;
+  const handleDateChange: DateInputRangeProps["onDateChange"] = (
+    _event,
+    date,
+    details,
+  ) => {
+    const { startDate, endDate } = date as DateRangeSelection;
+    const isStartDateUnset =
+      details.startDate?.errors?.length &&
+      details.startDate.errors[0].type === "unset";
+    const hasStartDateError = details.startDate?.errors?.length;
+    const isEndDateUnset =
+      details.endDate?.errors?.length &&
+      details.endDate.errors[0].type === "unset";
+    const hasEndDateError = details.endDate?.errors?.length;
 
-      setStartDateError(
-        !isStartDateUnset && hasStartDateError
-          ? details.startDate?.errors?.[0].message
-          : undefined,
-      );
-      setEndDateError(
-        !isEndDateUnset && hasEndDateError
-          ? details.endDate?.errors?.[0].message
-          : undefined,
-      );
+    setStartDateError(
+      !isStartDateUnset && hasStartDateError
+        ? details.startDate?.errors?.[0].message
+        : undefined,
+    );
+    setEndDateError(
+      !isEndDateUnset && hasEndDateError
+        ? details.endDate?.errors?.[0].message
+        : undefined,
+    );
 
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const ianaTimezone =
+      selectedTimezone !== "system" && selectedTimezone !== "default"
+        ? selectedTimezone
+        : undefined;
 
-      const formatDate = (date: Date, hasError: boolean) => {
-        if (hasError) return { iso: "", locale: "", formatted: "" };
-        const iso = date.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        return { iso, locale, formatted };
-      };
-
-      if (!isStartDateUnset && !hasStartDateError) {
-        const startJSDate =
-          dateAdapter.lib === "luxon"
-            ? startDate.toJSDate()
-            : dateAdapter.lib === "moment"
-              ? startDate.toDate()
-              : startDate;
-        const start = formatDate(
-          startJSDate,
-          isStartDateUnset || (!isStartDateUnset && !!hasStartDateError),
-        );
-        setStartIso8601String(start.iso);
-        setStartLocaleDateString(start.locale);
-        setStartDateString(start.formatted);
-      } else {
-        setStartIso8601String("");
-        setStartLocaleDateString("");
-        setStartDateString("");
-      }
-      if (!isStartDateUnset && !hasEndDateError) {
-        const endJSDate =
-          dateAdapter.lib === "luxon"
-            ? endDate.toJSDate()
-            : dateAdapter.lib === "moment"
-              ? endDate.toDate()
-              : endDate;
-        const end = formatDate(
-          endJSDate,
-          isEndDateUnset || (!isEndDateUnset && !!hasEndDateError),
-        );
-        setEndIso8601String(end.iso);
-        setEndLocaleDateString(end.locale);
-        setEndDateString(end.formatted);
-      } else {
-        setEndIso8601String("");
-        setEndLocaleDateString("");
-        setEndDateString("");
-      }
-
-      setCurrentTimezone(dateAdapter.getTimezone(startDate));
+    const formatDate = (date: DateFrameworkType, hasError: boolean) => {
+      if (hasError) return { iso: "", locale: "", formatted: "" };
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
+      const locale = new Intl.DateTimeFormat(undefined, {
+        timeZone: systemTimeZone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      const formatted = new Intl.DateTimeFormat(undefined, {
+        timeZone: ianaTimezone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      return { iso, locale, formatted };
     };
+
+    if (startDate && !isStartDateUnset && !hasStartDateError) {
+      const start = formatDate(
+        startDate,
+        isStartDateUnset || (!isStartDateUnset && !!hasStartDateError),
+      );
+      setStartIso8601String(start.iso);
+      setStartLocaleDateString(start.locale);
+      setStartDateString(start.formatted);
+    } else {
+      setStartIso8601String("");
+      setStartLocaleDateString("");
+      setStartDateString("");
+    }
+    if (endDate && !isStartDateUnset && !hasEndDateError) {
+      const end = formatDate(
+        endDate,
+        isEndDateUnset || (!isEndDateUnset && !!hasEndDateError),
+      );
+      setEndIso8601String(end.iso);
+      setEndLocaleDateString(end.locale);
+      setEndDateString(end.formatted);
+    } else {
+      setEndIso8601String("");
+      setEndLocaleDateString("");
+      setEndDateString("");
+    }
+
+    setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
+  };
 
   const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
     setSelectedTimezone(selection[0]);

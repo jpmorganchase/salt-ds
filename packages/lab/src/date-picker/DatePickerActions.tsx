@@ -15,9 +15,9 @@ import {
   useDatePickerContext,
 } from "./DatePickerContext";
 import "./DatePickerActions.css";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useLocalization } from "../localization-provider";
 import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");
@@ -55,7 +55,6 @@ export interface DatePickerActionsBaseProps
  * @template SelectionVariant - The selection variant, either "single" or "range".
  */
 export type DatePickerActionsProps<
-  TDate extends DateFrameworkType,
   SelectionVariant extends "single" | "range",
 > = SelectionVariant extends "single"
   ? DatePickerActionsBaseProps & {
@@ -70,7 +69,7 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: SingleDateSelection<TDate> | null,
+        date: SingleDateSelection | null,
       ) => void;
     }
   : DatePickerActionsBaseProps & {
@@ -85,14 +84,12 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: DateRangeSelection<TDate> | null,
+        date: DateRangeSelection | null,
       ) => void;
     };
 
-export const DatePickerActions = forwardRef(function DatePickerRangeInput<
-  TDate extends DateFrameworkType,
->(
-  props: DatePickerActionsProps<TDate, "single" | "range">,
+export const DatePickerActions = forwardRef(function DatePickerActions(
+  props: DatePickerActionsProps<"single" | "range">,
   ref: React.Ref<HTMLDivElement>,
 ) {
   const {
@@ -114,25 +111,15 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
     window: targetWindow,
   });
 
-  // biome-ignore lint/suspicious/noExplicitAny: state and helpers coerced based on selectionVariant
-  let stateAndHelpers: any;
-  if (selectionVariant === "range") {
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    stateAndHelpers = useDatePickerContext({
-      selectionVariant: "range",
-    }) as RangeDatePickerState<TDate>;
-  } else {
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    stateAndHelpers = useDatePickerContext({
-      selectionVariant: "single",
-    }) as SingleDatePickerState<TDate>;
-  }
+  const { dateAdapter } = useLocalization();
+
+  const stateAndHelpers = useDatePickerContext({
+    selectionVariant,
+  });
 
   const {
     state: { selectedDate },
-    helpers: { cancel, apply, setEnableApply },
+    helpers: { cancel, setEnableApply },
   } = stateAndHelpers;
 
   useEffect(() => {
@@ -140,21 +127,60 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
   }, [setEnableApply]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
-    cancel(event);
+    cancel(event.nativeEvent);
     CancelButtonProps?.onClick?.(event);
     onCancel?.(event);
   };
 
   const handleApply: MouseEventHandler<HTMLButtonElement> = (event) => {
-    apply(event, selectedDate);
-    onApply?.(event, selectedDate);
+    if (selectionVariant === "range") {
+      const {
+        helpers: { apply },
+        state: { selectedDate },
+      } = stateAndHelpers as RangeDatePickerState;
+      apply(event, selectedDate);
+      onApply?.(event, selectedDate);
+    } else {
+      const {
+        helpers: { apply },
+        state: { selectedDate },
+      } = stateAndHelpers as SingleDatePickerState;
+      apply(event, selectedDate);
+      onApply?.(event, selectedDate);
+    }
     ApplyButtonProps?.onClick?.(event);
   };
+
+  let selectedLabel = "";
+  if (selectedDate === null) {
+    selectedLabel = "no date selected";
+  } else if (selectionVariant === "single") {
+    const date = selectedDate as SingleDateSelection[] | SingleDateSelection;
+    if (Array.isArray(date)) {
+      selectedLabel =
+        date?.length === 0
+          ? "no dates selected"
+          : `${date.length} single dates`;
+    } else {
+      selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
+    }
+  } else if (selectionVariant === "range") {
+    const dateRange = selectedDate as DateRangeSelection;
+    if (Array.isArray(dateRange)) {
+      selectedLabel =
+        dateRange?.length === 0
+          ? "no dates selected"
+          : `${dateRange.length} range dates`;
+    } else {
+      selectedLabel = `${dateAdapter.format(dateRange?.startDate, "dddd D MMMM YYYY")} to ${dateAdapter.format(dateRange?.endDate, "dddd D MMMM YYYY")}`;
+    }
+  }
 
   return (
     <div className={clsx(className, withBaseName())} ref={ref} {...rest}>
       <div className={withBaseName("body")}>{children}</div>
       <Button
+        aria-label={`Cancel ${selectedLabel}`}
         appearance="bordered"
         sentiment="neutral"
         ref={cancelButtonRef}
@@ -165,6 +191,7 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
         Cancel
       </Button>
       <Button
+        aria-label={`Apply ${selectedLabel}`}
         appearance="solid"
         sentiment="accented"
         ref={applyButtonRef}

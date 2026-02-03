@@ -7,21 +7,17 @@ import type {
 import { useLocalization } from "../../localization-provider";
 import { useCalendarContext } from "./CalendarContext";
 
-export function useFocusManagement<TDate extends DateFrameworkType>({
-  date,
-}: {
-  date: TDate;
-}) {
-  const { dateAdapter } = useLocalization<TDate>();
+export function useFocusManagement({ date }: { date: DateFrameworkType }) {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
   const {
     helpers: { setFocusedDate },
-  } = useCalendarContext<TDate>();
+  } = useCalendarContext();
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     setFocusedDate(event, date);
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    let newDate: TDate | undefined;
+    let newDate: DateFrameworkType | undefined;
     switch (event.key) {
       case "ArrowUp":
         newDate = dateAdapter.subtract(date, { weeks: 1 });

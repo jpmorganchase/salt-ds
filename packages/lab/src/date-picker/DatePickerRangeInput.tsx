@@ -13,7 +13,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import type { DateRangeSelection } from "../calendar";
 import {
   DateInputRange,
   type DateInputRangeDetails,
@@ -21,17 +21,18 @@ import {
   type DateInputRangeValue,
 } from "../date-input";
 import { useLocalization } from "../localization-provider";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  type RangeDatePickerState,
+  useDatePickerContext,
+} from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
 /**
  * Props for the DatePickerRangeInput component.
- * @template TDate - The type of the date object.
  */
-export interface DatePickerRangeInputProps<TDate extends DateFrameworkType>
-  extends DateInputRangeProps<TDate> {
+export interface DatePickerRangeInputProps extends DateInputRangeProps {
   /**
    * Function to validate the entered date
    * @param date - The selected date
@@ -39,17 +40,17 @@ export interface DatePickerRangeInputProps<TDate extends DateFrameworkType>
    * @returns updated DateInputRangeDetails details
    */
   validate?: (
-    date: DateRangeSelection<TDate> | null,
+    date: DateRangeSelection | null,
     details: DateInputRangeDetails,
   ) => DateInputRangeDetails;
 }
 
-export function defaultRangeValidator<TDate extends DateFrameworkType>(
-  dateAdapter: SaltDateAdapter<TDate>,
-  date: DateRangeSelection<TDate> | null,
+export function defaultRangeValidator(
+  dateAdapter: SaltDateAdapter,
+  date: DateRangeSelection | null,
   details: DateInputRangeDetails,
-  minDate?: TDate,
-  maxDate?: TDate,
+  minDate?: DateFrameworkType,
+  maxDate?: DateFrameworkType,
 ): DateInputRangeDetails {
   const { startDate, endDate } = date || {};
 
@@ -152,13 +153,11 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
   return details;
 }
 
-export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
-  TDate extends DateFrameworkType,
->(
-  props: DatePickerRangeInputProps<SingleDateSelection<TDate>>,
-  ref: React.Ref<HTMLDivElement>,
-) {
-  const { dateAdapter } = useLocalization<TDate>();
+export const DatePickerRangeInput = forwardRef<
+  HTMLDivElement,
+  DatePickerRangeInputProps
+>((props: DatePickerRangeInputProps, ref: React.Ref<HTMLDivElement>) => {
+  const { dateAdapter } = useLocalization();
   const {
     className,
     endInputProps,
@@ -185,7 +184,9 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       timezone,
     },
     helpers: { select },
-  } = useDatePickerContext<TDate>({ selectionVariant: "range" });
+  } = useDatePickerContext({
+    selectionVariant: "range",
+  }) as RangeDatePickerState;
   const {
     state: { open },
     helpers: { setOpen },
@@ -229,7 +230,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const handleDateChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<TDate> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails,
     ) => {
       const validatedDetails = validate
@@ -286,7 +287,9 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
             sentiment="neutral"
             onClick={handleCalendarButton}
             disabled={disabled}
+            aria-haspopup="dialog"
             aria-label="Open Calendar"
+            aria-expanded={open}
           >
             <CalendarIcon aria-hidden />
           </Button>

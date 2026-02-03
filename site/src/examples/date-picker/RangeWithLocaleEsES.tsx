@@ -1,5 +1,4 @@
 import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -45,7 +44,7 @@ export const RangeWithLocaleEsES = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -97,7 +96,11 @@ export const RangeWithLocaleEsES = (): ReactElement => {
   );
 
   return (
-    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
+    <FormField
+      style={{ width: "256px" }}
+      validationStatus={validationStatus}
+      lang="es"
+    >
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}

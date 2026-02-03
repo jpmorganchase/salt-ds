@@ -1,5 +1,4 @@
 import { FormField, FormFieldLabel, Input, StackLayout } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -27,7 +26,7 @@ export const SingleGridPanel = () => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -93,8 +92,7 @@ export const SingleGridPanel = () => {
               Number.parseInt(
                 numberOfVisibleMonths,
                 10,
-                // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
-              ) as DatePickerSingleGridPanelProps<any>["numberOfVisibleMonths"]
+              ) as DatePickerSingleGridPanelProps["numberOfVisibleMonths"]
             }
             CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
           />
