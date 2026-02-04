@@ -1,0 +1,46 @@
+.saltRating-wrapper {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+}
+
+.saltFormField .saltRating-wrapper {
+  min-height: var(--salt-size-base);
+}
+
+.saltRating-wrapper-top,
+.saltRating-wrapper-bottom {
+  flex-direction: column;
+}
+
+.saltRating-wrapper-left,
+.saltRating-wrapper-right {
+  flex-direction: row;
+}
+
+.saltRating-container {
+  gap: var(--salt-spacing-50);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.saltRating-label {
+  color: var(--salt-content-primary-foreground);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+}
+
+.saltRating-label.saltRating-label-top,
+.saltRating-label.saltRating-label-bottom {
+  text-align: center;
+}
+
+.saltRating-label.saltRating-label-left {
+  text-align: right;
+}

@@ -12,4 +12,5 @@
   --salt-sentiment-negative-dataviz: var(--salt-palette-negative);
   --salt-sentiment-positive-dataviz: var(--salt-palette-positive);
   --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral);
+  --salt-sentiment-accent-dataviz: var(--salt-palette-accent);
 }
