@@ -24,19 +24,6 @@ export {
   TR as tr,
 } from "@salt-ds/core";
 
-export {
-  /**
-   * Salt -> Markdown/MDXProvider mappings
-   */
-  Table as table,
-  TBody as tbody,
-  TD as td,
-  TFoot as tfoot,
-  TH as th,
-  THead as thead,
-  TR as tr,
-} from "@salt-ds/lab";
-
 export * from "./ag-grid-doc";
 export * from "./app-header";
 export * from "./article-card";
