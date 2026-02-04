@@ -1,0 +1,26 @@
+---
+title: Overlayable characteristic
+layout: DetailTechnical
+sidebar:
+  priority: 6
+---
+
+Overlayable tokens define translucent styles for shadows and scrims, as well as neutral overlay layers that highlight hovered, selected, or highlighted items without masking underlying colors. This ensures that other visual cues—like zebra striping, validation states, or sentiments—remain visible and relevant. All overlayable tokens are translucent to maintain clarity across different states.
+
+## Hover overlays
+
+Hover overlays use the overlayable background hover token to provide a subtle transition from the default state. A translucent background is applied to the item being interacted with, allowing the container’s background to remain visible. This prevents color clashes and ensures the hover state stands out without blending into its parent background, maintaining clarity and visual distinction.
+
+_(insert image here)_
+
+`--salt-overlayable-background-hover`
+
+## Scrims
+
+Scrims use the overlayable background token to create translucent layers that dim page content behind modals. This helps focus user attention on the active dialog while allowing underlying content and visual cues to remain partially visible.
+
+`--salt-overlayable-background`
+
+## Shadows
+
+Shadows in Salt are created using a combination of overlayable tokens that control color, position, and blur. This approach allows for flexible and consistent shadow styling across components. For more details, see the Shadows foundation.
