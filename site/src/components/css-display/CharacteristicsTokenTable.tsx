@@ -11,6 +11,7 @@ import {
   THead,
   TR,
 } from "@salt-ds/core";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { Code } from "../mdx/code";

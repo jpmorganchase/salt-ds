@@ -1,5 +1,48 @@
 # @salt-ds/theme
 
+## 1.38.0
+
+### Minor Changes
+
+- df46ef9: Added new categorical and sentiment data visualization tokens.
+
+  ## Category
+
+  - `--salt-category-1-dataviz`
+  - `--salt-category-2-dataviz`
+  - `--salt-category-3-dataviz`
+  - `--salt-category-4-dataviz`
+  - `--salt-category-5-dataviz`
+  - `--salt-category-6-dataviz`
+  - `--salt-category-7-dataviz`
+  - `--salt-category-8-dataviz`
+  - `--salt-category-9-dataviz`
+  - `--salt-category-10-dataviz`
+  - `--salt-category-11-dataviz`
+  - `--salt-category-12-dataviz`
+  - `--salt-category-13-dataviz`
+  - `--salt-category-14-dataviz`
+  - `--salt-category-15-dataviz`
+  - `--salt-category-16-dataviz`
+  - `--salt-category-17-dataviz`
+  - `--salt-category-18-dataviz`
+  - `--salt-category-19-dataviz`
+  - `--salt-category-20-dataviz`
+
+  ## Sentiment
+
+  - `--salt-positive-dataviz`
+  - `--salt-negative-dataviz`
+  - `--salt-neutral-dataviz`
+  - `--salt-caution-dataviz`
+
+### Patch Changes
+
+- afe9104: Renamed subtle category tokens to remove the "subtle" word from their names and deprecated the old tokens. For example,
+  `--salt-category-1-subtle-foreground` is now `--salt-category-1-foreground`.
+
+  This change improves consistency and clarity in the naming of category tokens.
+
 ## 1.37.0
 
 ### Minor Changes
