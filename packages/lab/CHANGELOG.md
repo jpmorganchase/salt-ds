@@ -1,5 +1,31 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.84
+
+### Minor Changes
+
+- aba5610: Added `TableContainer` wrapper component that provides accessibility features including keyboard navigation support and focus indicators for scrollable tables.
+
+  ```jsx
+  <TableContainer>
+    <Table>
+      <caption>{...}</caption>
+      {...}
+    </Table>
+  </TableContainer>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [27c4338]
+- Updated dependencies [27c4338]
+- Updated dependencies [27c4338]
+- Updated dependencies [472a1b4]
+- Updated dependencies [27c4338]
+  - @salt-ds/core@1.55.0
+  - @salt-ds/styles@0.3.0
+  - @salt-ds/icons@1.17.1
+
 ## 1.0.0-alpha.83
 
 ### Patch Changes
