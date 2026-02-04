@@ -13,6 +13,11 @@
   max-width: 100vw;
 }
 
+.overlayContent > div {
+  overflow: auto;
+  display: flex;
+}
+
 .content {
   min-width: 1px;
   flex-basis: var(--site-content-max-width);
