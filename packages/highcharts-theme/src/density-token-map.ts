@@ -25,6 +25,7 @@ const DEFAULTS_BY_DENSITY: Record<
   medium: { spacing100: 8, sizeIcon: 12, cornerWeaker: 4 },
   low: { spacing100: 12, sizeIcon: 14, cornerWeaker: 5 },
   touch: { spacing100: 16, sizeIcon: 16, cornerWeaker: 5 },
+  mobile: { spacing100: 16, sizeIcon: 16, cornerWeaker: 5 },
   default: { spacing100: 8, sizeIcon: 12, cornerWeaker: 4 },
 };
 
