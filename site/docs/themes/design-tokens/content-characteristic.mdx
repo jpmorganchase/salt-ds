@@ -1,0 +1,48 @@
+---
+title: Content characteristic
+layout: DetailTechnical
+sidebar:
+  priority: 6
+---
+
+Content tokens define the standard foreground colors for all text and icons within Salt, ensuring clarity and consistency across your interface. Available in variants such as primary, secondary, accent, and attention, these tokens should be applied to all foreground elements unless another characteristic—like actionable—takes precedence for interactive states. Using content tokens appropriately helps maintain visual harmony and supports accessibility throughout your application.
+
+## Static foregrounds
+
+There are two main options for static foregrounds: primary or secondary. Since both icons and text are considered foreground elements, the design system doesn’t differentiate between them at this level, ensuring that static content is styled cohesively.
+
+_(insert image here)_
+
+`--salt-content-primary-foreground` \
+`--salt-content-secondary-foreground`
+
+## Interactive components
+
+Static content tokens can also be used for interactive components such as selections and navigation. In these cases, state changes are managed through other aspects of the component—such as background color, border, or indicator—while the foreground color remains consistent. This approach streamlines the system and reduces complexity, making it easier to maintain and extend.
+
+_(insert image here)_
+
+## Interactive content
+
+Accented foreground tokens can be used to indicate interactive content, such as links. For clarity and accessibility, links should also be underlined and can include an icon when pointing to an external location. To support usability, links may be styled differently to show when their destination has already been visited, helping users easily distinguish between new and previously accessed content.
+
+_(insert image here)_
+
+`--salt-content-accent-foreground` \
+`--salt-content-foreground-visited`
+
+## Adding emphasis
+
+If you need to make static content more prominent, use bold foreground tokens—but only when paired with bold backgrounds. This pairing ensures sufficient contrast (greater than 4.5:1) for accessibility and readability. Emphasising content in this way helps important information stand out clearly within your interface, making it easier for users to notice and understand key details.
+
+_(insert image here)_
+
+`--salt-content-bold-foreground`
+
+## Calling attention
+
+The attention foreground token can be used to highlight specific labels, such as required field indicators or asterisks. It’s intended for short content—one to two words or a symbol—and is especially useful in forms to ensure important details stand out without using the negative sentiment, warning, or error statuses.
+
+_(insert image here)_
+
+`--salt-content-attention-foreground`
