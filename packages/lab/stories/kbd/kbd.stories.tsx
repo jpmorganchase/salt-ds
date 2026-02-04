@@ -20,58 +20,6 @@ export default {
   component: Kbd,
 };
 
-export const Default: StoryFn<KbdProps> = () => {
-  return (
-    <FlexLayout gap={2}>
-      <Kbd>Cmd</Kbd>
-      <Kbd>Shift</Kbd>
-      <Kbd>Ctrl</Kbd>
-    </FlexLayout>
-  );
-};
-export const Variants: StoryFn<KbdProps> = () => {
-  return (
-    <FlexLayout gap={2}>
-      <Kbd>primary</Kbd>
-      <Kbd variant="secondary">secondary</Kbd>
-      <Kbd variant="tertiary">tertiary</Kbd>
-    </FlexLayout>
-  );
-};
-
-export const InlineWithText: StoryFn<KbdProps> = () => {
-  return (
-    <FlexLayout gap={0.5} align="center" wrap>
-      <Text>Hit</Text>
-      <Kbd>Ctrl</Kbd>
-      <Text>+</Text>
-      <Kbd>Shift</Kbd>
-      <Text>+</Text>
-      <Kbd>k</Kbd>
-      <Text>to open the command palette</Text>
-    </FlexLayout>
-  );
-};
-
-export const NestedInInput: StoryFn<KbdProps> = () => {
-  return (
-    <FlowLayout style={{ maxWidth: "256px" }}>
-      <Input
-        bordered
-        style={{ width: "198px" }}
-        placeholder="Search"
-        startAdornment={<SearchIcon />}
-        endAdornment={
-          <FlexLayout gap={0.5} wrap align="center">
-            <Kbd>Cmd</Kbd>
-            <Kbd>K</Kbd>
-          </FlexLayout>
-        }
-      />
-    </FlowLayout>
-  );
-};
-
 function AlignmentMenu() {
   return (
     <Menu>

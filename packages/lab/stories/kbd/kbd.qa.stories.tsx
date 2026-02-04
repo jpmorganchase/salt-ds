@@ -1,13 +1,4 @@
-import {
-  FlexLayout,
-  FlowLayout,
-  Input,
-  Menu,
-  MenuItem,
-  MenuPanel,
-  MenuTrigger,
-  Text,
-} from "@salt-ds/core";
+import { FlexLayout, FlowLayout, Input, Text } from "@salt-ds/core";
 import { Kbd } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -29,10 +20,9 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       <Text>+</Text>
       <Kbd>Shift</Kbd>
     </FlexLayout>
-    <FlowLayout style={{ maxWidth: "256px" }}>
+    <FlowLayout>
       <Input
         bordered
-        style={{ width: "198px" }}
         placeholder="Search"
         startAdornment={<SearchIcon />}
         endAdornment={

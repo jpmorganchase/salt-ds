@@ -443,106 +443,104 @@ const ShortcutPanel: FC = () => {
     setFilter(event.target.value);
 
   return (
-    <>
-      <StackLayout gap={3} className="keyboardShortcuts-panel">
-        <Switch
-          checked={shortcutsEnabled}
-          onChange={handleSwitchChange}
-          label="Turn on keyboard shortcuts"
-        />
-        {shortcutsEnabled && (
-          <StackLayout gap={1}>
-            <Text className="keyboardShortcuts-actions-title" styleAs="h3">
-              Actions
-            </Text>
-            <StackLayout gap={filteredShortcuts.length ? 3 : 0.75}>
-              <Input
-                onChange={handleFilterChange}
-                value={filter}
-                bordered
-                variant="secondary"
-                placeholder="Filter actions"
-                startAdornment={
-                  <FilterIcon color="secondary" aria-hidden="true" />
-                }
-                inputProps={{ "aria-label": "Filter actions" }}
-              />
-              {filteredShortcuts.length ? (
-                <StackLayout className="keyboardShortcuts-tableScroll">
-                  <Table>
-                    <THead>
-                      <TR>
-                        <TH>Action</TH>
-                        <TH>Key combination</TH>
-                      </TR>
-                    </THead>
-                    <TBody>
-                      {filteredShortcuts.map((shortcut, idx) => (
-                        <TR key={shortcut.label + idx}>
-                          <TD className="keyboardShortcuts-td">
-                            <StackLayout
-                              gap={0.5}
-                              className="keyboardShortcuts-shortcuts"
-                            >
-                              <Text>
-                                {highlightTextMatch(shortcut.label, filter)}
+    <StackLayout gap={3} className="keyboardShortcuts-panel">
+      <Switch
+        checked={shortcutsEnabled}
+        onChange={handleSwitchChange}
+        label="Turn on keyboard shortcuts"
+      />
+      {shortcutsEnabled && (
+        <StackLayout gap={1}>
+          <Text className="keyboardShortcuts-actions-title" styleAs="h3">
+            Actions
+          </Text>
+          <StackLayout gap={filteredShortcuts.length ? 3 : 0.75}>
+            <Input
+              onChange={handleFilterChange}
+              value={filter}
+              bordered
+              variant="secondary"
+              placeholder="Filter actions"
+              startAdornment={
+                <FilterIcon color="secondary" aria-hidden="true" />
+              }
+              inputProps={{ "aria-label": "Filter actions" }}
+            />
+            {filteredShortcuts.length ? (
+              <StackLayout className="keyboardShortcuts-tableScroll">
+                <Table>
+                  <THead>
+                    <TR>
+                      <TH>Action</TH>
+                      <TH>Key combination</TH>
+                    </TR>
+                  </THead>
+                  <TBody>
+                    {filteredShortcuts.map((shortcut, idx) => (
+                      <TR key={shortcut.label + idx}>
+                        <TD className="keyboardShortcuts-td">
+                          <StackLayout
+                            gap={0.5}
+                            className="keyboardShortcuts-shortcuts"
+                          >
+                            <Text>
+                              {highlightTextMatch(shortcut.label, filter)}
+                            </Text>
+                            {shortcut.description && (
+                              <Text color="secondary">
+                                {shortcut.description}
                               </Text>
-                              {shortcut.description && (
-                                <Text color="secondary">
-                                  {shortcut.description}
-                                </Text>
-                              )}
-                            </StackLayout>
-                          </TD>
-                          <TD className="keyboardShortcuts-td">
-                            <FlexLayout gap={0.5} wrap>
-                              {shortcut.keys.map((combo, comboIdx) => (
-                                <FlexLayout
-                                  align="center"
-                                  gap={0.5}
-                                  key={combo + comboIdx}
-                                  wrap
-                                >
-                                  {combo.split("+").map((key, idx, arr) => (
-                                    <FlexLayout
-                                      align="center"
-                                      wrap
-                                      gap={0.5}
-                                      key={key + idx}
-                                    >
-                                      <div className="keyboardShortcuts-kbd" />
-                                      <Kbd>{displayKeyName(key)}</Kbd>
-                                      {idx < arr.length - 1 && (
-                                        <Text className="keyboardShortcuts-kbd">
-                                          +
-                                        </Text>
-                                      )}
-                                    </FlexLayout>
-                                  ))}
-                                  {comboIdx < shortcut.keys.length - 1 && (
-                                    <Text className="keyboardShortcuts-kbd">
-                                      ,
-                                    </Text>
-                                  )}
-                                </FlexLayout>
-                              ))}
-                            </FlexLayout>
-                          </TD>
-                        </TR>
-                      ))}
-                    </TBody>
-                  </Table>
-                </StackLayout>
-              ) : (
-                <FormFieldHelperText color="secondary">
-                  No actions found
-                </FormFieldHelperText>
-              )}
-            </StackLayout>
+                            )}
+                          </StackLayout>
+                        </TD>
+                        <TD className="keyboardShortcuts-td">
+                          <FlexLayout gap={0.5} wrap>
+                            {shortcut.keys.map((combo, comboIdx) => (
+                              <FlexLayout
+                                align="center"
+                                gap={0.5}
+                                key={combo + comboIdx}
+                                wrap
+                              >
+                                {combo.split("+").map((key, idx, arr) => (
+                                  <FlexLayout
+                                    align="center"
+                                    wrap
+                                    gap={0.5}
+                                    key={key + idx}
+                                  >
+                                    <div className="keyboardShortcuts-kbd" />
+                                    <Kbd>{displayKeyName(key)}</Kbd>
+                                    {idx < arr.length - 1 && (
+                                      <Text className="keyboardShortcuts-kbd">
+                                        +
+                                      </Text>
+                                    )}
+                                  </FlexLayout>
+                                ))}
+                                {comboIdx < shortcut.keys.length - 1 && (
+                                  <Text className="keyboardShortcuts-kbd">
+                                    ,
+                                  </Text>
+                                )}
+                              </FlexLayout>
+                            ))}
+                          </FlexLayout>
+                        </TD>
+                      </TR>
+                    ))}
+                  </TBody>
+                </Table>
+              </StackLayout>
+            ) : (
+              <FormFieldHelperText color="secondary">
+                No actions found
+              </FormFieldHelperText>
+            )}
           </StackLayout>
-        )}
-      </StackLayout>
-    </>
+        </StackLayout>
+      )}
+    </StackLayout>
   );
 };
 

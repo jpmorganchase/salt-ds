@@ -7,7 +7,6 @@ export const NestedInInput = (): ReactElement => (
   <FlowLayout style={{ maxWidth: "256px" }}>
     <Input
       bordered
-      style={{ width: "198px" }}
       placeholder="Search"
       startAdornment={<SearchIcon />}
       endAdornment={
