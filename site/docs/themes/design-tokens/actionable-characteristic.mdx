@@ -2,7 +2,7 @@
 title: Actionable characteristic
 layout: DetailTechnical
 sidebar:
-  priority: 3
+  priority: 18
 ---
 
 Actionable tokens define the colors and styles for interactive components, making elements that can perform actions—such as buttons—distinct and easy to identify. Actionable is organized by sentiment values (accented, caution, positive, negative) and emphasis levels (bold, subtle), allowing you to convey the importance or nature of an action.
@@ -18,7 +18,7 @@ _(insert image here)_
 `--salt-actionable-borderColor` \
 `--salt-actionable-foreground`
 
-### Neutral state changes
+## Neutral state changes
 
 To visually indicate state changes—such as hover and active—in interactive components, use the correct tokens. Salt’s consistent token naming makes it easy to identify which tokens to apply. Each property within a component should reflect the state change, ensuring clear and consistent feedback for users.
 
@@ -31,7 +31,7 @@ _(insert image here)_
 `--salt-actionable-borderColor-hover` \
 `--salt-actionable-foreground-hover`
 
-### Emphasizing neutral actions
+## Emphasizing neutral actions
 
 Emphasizing neutral actions can help routine or secondary tasks stand out when needed. By applying bold tokens to neutral actionable components, you increase their visual prominence without introducing other sentiments, making these actions easier for users to identify.
 
@@ -41,7 +41,7 @@ _(insert image here)_
 `--salt-actionable-bold-borderColor` \
 `--salt-actionable-bold-foreground`
 
-### De-emphasizing neutral actions
+## De-emphasizing neutral actions
 
 Reducing the prominence of neutral actions is useful for tasks that remain relevant but shouldn’t visually dominate. Applying subtle tokens to actionable components lowers their visual emphasis, allowing more important actions to stand out. For example, a subtle close icon in the top right corner of a dialog stays accessible without drawing attention from the primary action. This approach maintains a clear hierarchy and prevents less critical actions from distracting users.
 
@@ -51,7 +51,7 @@ _(insert image here)_
 `--salt-actionable-subtle-borderColor` \
 `--salt-actionable-subtle-foreground`
 
-### Indicating selected actions
+## Indicating selected actions
 
 Certain scenarios may require an actionable component to visually communicate a selected state. Toggle Button and Pill are examples of actionable components that allow users to make selections within an interface. To indicate which option is selected, apply the appropriate selected state tokens. This visual change clearly communicates the current selection, helping users identify the active option and supporting intuitive, accessible interactions.
 
