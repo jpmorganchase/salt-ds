@@ -26,6 +26,8 @@ Salt’s layout grid uses four key types of spacing to structure and separate co
 | Gutters      | The equally distributed space between columns that defines the width of UI elements.                                               |
 | Margins      | The left and right spacing on the edge of the screen that defines the distance between UI elements and their container's boundary. |
 
+These spacing types work together to create a balanced, readable, and visually appealing layout. Columns organize content, gutters separate columns, margins provide padding at the edges, and gaps space elements within the grid.
+
 ## Types of grid
 
 Salt supports two grid types to suit different layout needs: fluid grids adapt to the screen size, allowing columns to resize responsively, while fixed grids use set column widths for consistent structure.
@@ -59,21 +61,14 @@ Salt offers a variety of layout components to help you build flexible, responsiv
 Layout tokens help manage margins and gaps in your layouts, especially when switching between desktop and mobile densities—In this scenario layout tokens ensure that margins and gaps are always optimized for each density and screen size without manual adjustments.
 
 Learn more about [switching density](/salt/foundations/density#switching-density).
-Use the `layout-page-margin` token to set left and right margins.
-Use the `layout-gap` token to set spacing between elements, including top and bottom gaps.
+Use the `--salt-layout-page-margin` token to set left and right margins.
+Use the `--salt-layout-gap` token to set spacing between elements, including top and bottom gaps.
+
+Below is a visual comparison showing how the `--salt-layout-page-margin` and `--salt-layout-gap` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
 
 <Diagram
-  src="/img/foundations/layout-page-tokens.png"
-  srcDark="/img/foundations/layout-page-tokens-dark.png"
-  alt="Layout page token"
-  background="secondary"
-/>
-
-Below is a visual comparison showing how the layout-page-margin token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
-
-<Diagram
-  src="/img/foundations/layout-grid-layout-page-tokens.png"
-  srcDark="/img/foundations/layout-grid-layout-page-tokens-dark.png"
+  src="/img/foundations/layout-grid-tokens.png"
+  srcDark="/img/foundations/layout-grid-tokens-dark.png"
   alt="Example of layout page token"
   background="secondary"
 />
