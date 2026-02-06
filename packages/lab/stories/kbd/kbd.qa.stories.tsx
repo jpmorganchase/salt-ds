@@ -5,7 +5,7 @@ import { QAContainer, type QAContainerProps } from "docs/components";
 import { SearchIcon } from "packages/icons/src";
 
 export default {
-  title: "Lab/Kbd/QA",
+  title: "Lab/Kbd/Kbd QA",
   component: Kbd,
 } as Meta<typeof Kbd>;
 
