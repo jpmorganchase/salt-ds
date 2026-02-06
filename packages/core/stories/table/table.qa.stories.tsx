@@ -1,4 +1,5 @@
 import {
+  StackLayout,
   Table,
   type TableProps,
   TBody,
@@ -7,18 +8,17 @@ import {
   TH,
   THead,
   TR,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "docs/story.css";
-import { StackLayout } from "@salt-ds/core";
 
 const NUM_COLS = 2;
 const NUM_ROWS = 3;
 
 export default {
-  title: "Lab/Table/Table QA",
+  title: "Core/Table/Table QA",
   component: Table,
 };
 

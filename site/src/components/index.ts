@@ -10,22 +10,27 @@ export {
   Panel,
   SaltProvider,
   StackLayout,
+<<<<<<< keyboard-shortcut
   Tag,
   Text,
 } from "@salt-ds/core";
 export {
   Kbd,
+=======
+>>>>>>> main
   /**
    * Salt -> Markdown/MDXProvider mappings
    */
   Table as table,
+  Tag,
   TBody as tbody,
   TD as td,
+  Text,
   TFoot as tfoot,
   TH as th,
   THead as thead,
   TR as tr,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export * from "./ag-grid-doc";
 export * from "./app-header";
