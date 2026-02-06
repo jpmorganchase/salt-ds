@@ -13,9 +13,9 @@ While Salt provides a general approach to spacing, it isn’t an exhaustive set 
 
 Consistent use of spatial tokens helps align layouts, establish a clear visual rhythm, and enhance your application's overall design.
 
-Salt’s spacing system uses a base unit, `--salt-spacing-100`, which scales proportionally across all desktop densities (high, medium and low densities). Each spacing token is a multiple or percentage of this base unit, ensuring predictable and flexible spacing.
+Salt’s spacing system uses a base unit, `--salt-spacing-100`, which scales proportionally across all desktop densities (high, medium and low densities). Each spacing token is a multiple or percentage of this base unit, ensuring predictable and flexible spacing.
 
-Mobile density uses a different spacing formula, tailored to optimize usability and readability on smaller devices.
+Mobile density uses a different spacing formula, tailored to optimize usability and readability on phones or tablets.
 
 Learn more about desktop densities, mobile densities, and how to choose densities in the [Density](/salt/foundations/density) foundation.
 
@@ -45,7 +45,7 @@ Learn more about desktop densities, mobile densities, and how to choose densitie
 
 ## Fixed spacing
 
-Fixed spacing offers tokens with values that stay the same across all densities. For instance, `--salt-spacing-100` is consistently 1px, and `--salt-spacing-200` is 2px, no matter the density. This provides a stable reference for design elements needing uniform spacing, ensuring consistency and simplicity within the design system.
+Fixed spacing offers tokens with values that stay the same across all densities. For instance, `--salt-spacing-fixed-100` is consistently 1px, and `--salt-spacing-fixed-200` is 2px, no matter the density. This provides a stable reference for design elements needing uniform spacing, ensuring consistency and simplicity within the design system.
 
 | Token                      | All densities (px) |
 | -------------------------- | ------------------ |
@@ -59,7 +59,7 @@ Fixed spacing offers tokens with values that stay the same across all densities.
 | `--salt-spacing-fixed-800` | 8                  |
 | `--salt-spacing-fixed-900` | 9                  |
 
-Consider a numerical input with two buttons to its left, allowing users to step through values incrementally. Fixed spacing tokens define the distance between the input and the buttons, as well as the space between the two buttons. These spaces remain constant, ensuring precise control and uniformity. Meanwhile, the space between the numerical input and other components adjusts with density, providing flexibility and adaptability in the design.
+Consider a numerical input with two buttons to its right, allowing users to step through values incrementally. Fixed spacing tokens define the distance between the input and the buttons, as well as the space between the two buttons. These spaces remain constant, ensuring precise control and uniformity. Meanwhile, the space between the numerical input and other components adjusts with density, providing flexibility and adaptability in the design.
 
 <ImageSwitcher
   images={[
@@ -75,9 +75,9 @@ Consider a numerical input with two buttons to its left, allowing users to step 
 
 ## Hierarchical spacing
 
-Spacing is a key tool for emphasizing certain elements while downplaying others, guiding users through content. We suggests using varied spacing (`--salt-spacing-300`, `--salt-spacing-200`, `--salt-spacing-100`) to establish a visual hierarchy. Consistent vertical separation of items like headings, text blocks, form elements, and cards creates a visual rhythm.
+Spacing is a key tool for emphasizing certain elements while downplaying others, guiding users through content. We suggest using varied spacing (`--salt-spacing-300`, `--salt-spacing-200`, `--salt-spacing-100`) to establish a visual hierarchy. Consistent vertical separation of items like headings, text blocks, form elements, and cards creates a visual rhythm.
 
-Horizontal dividers help segment layout regions and should be spaced consistently with `--salt-spacing-300` above and below sections. For more details on dividers, please refer to the [Divider](/salt/components/divider).
+Horizontal dividers help segment layout regions and should be consistently spaced on the page. For more details on dividers, please refer to [Divider](/salt/components/divider).
 
 <ImageSwitcher
   images={[
