@@ -70,3 +70,10 @@ export const WithFormField: StoryFn<typeof Switch> = (args) => {
     </StackLayout>
   );
 };
+
+export const Readonly: StoryFn<typeof Switch> = (args) => (
+  <StackLayout>
+    <Switch {...args} readOnly checked label="Read-only + Checked" />
+    <Switch {...args} readOnly label="Read-only" />
+  </StackLayout>
+);

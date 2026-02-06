@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.54.1",
+  "version": "1.55.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -12,6 +12,10 @@
   "sideEffects": [
     "*.css"
   ],
+  "devDependencies": {
+    "@types/react-window": "^1.8.2",
+    "react-window": "^1.8.6"
+  },
   "dependencies": {
     "@floating-ui/react": "^0.26.28",
     "@salt-ds/icons": "workspace:^",

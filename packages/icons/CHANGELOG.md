@@ -1,5 +1,21 @@
 # @salt-ds/icons
 
+## 1.17.1
+
+### Patch Changes
+
+- Updated dependencies [27c4338]
+  - @salt-ds/styles@0.3.0
+
+## 1.17.0
+
+### Minor Changes
+
+- f3a0eea: - Updated `FavoriteIcon` and `FavoriteSolidIcon`.
+  - Added `FavoriteHalfIcon` and `FavoriteStrongIcon`
+- fcc4021: - Added `NotAllowedIcon`
+  - Deprecated `ErrorExecuteIcon`. `NotAllowedIcon` should be used instead.
+
 ## 1.16.0
 
 ### Minor Changes
