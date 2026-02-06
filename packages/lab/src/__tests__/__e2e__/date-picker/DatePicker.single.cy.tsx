@@ -399,6 +399,61 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
       });
 
+      it("SHOULD show minDate month when entering a date before minDate", () => {
+        // Bug #5910: When entering a date prior to minDate, the visible month should
+        // jump to minDate, not the start of the current year
+        cy.mount(<SingleWithMinMaxDate />);
+        // Enter a date before minDate (minDate is 15 Jan 2030)
+        cy.findByRole("textbox").clear().type("01 Jan 2020");
+        cy.realPress("Tab");
+        // Open the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify the calendar is displayed
+        cy.findByRole("application").should("exist");
+        // Verify the visible month is January 2030 (minDate's month), not January 2020
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("exist");
+        // Verify the first selectable date (minDate) is focused
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("be.focused");
+        // Verify Previous Month is disabled (can't go before minDate's month)
+        cy.findByLabelText("Previous Month").should(
+          "have.attr",
+          "aria-disabled",
+          "true",
+        );
+      });
+
+      it("SHOULD show valid month when entering a date after maxDate", () => {
+        // Bug #5910: When entering a date after maxDate, the visible month should
+        // show a valid month within the min/max range, not the entered date's month
+        cy.mount(<SingleWithMinMaxDate />);
+        // Enter a date after maxDate (maxDate is 15 Jan 2031)
+        cy.findByRole("textbox").clear().type("01 Jan 2040");
+        cy.realPress("Tab");
+        // Open the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify the calendar is displayed
+        cy.findByRole("application").should("exist");
+        // Verify the visible month is within the valid range (Jan 2030 - defaultVisibleMonth)
+        // not January 2040 (the invalid entered date)
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("exist");
+        // Verify a selectable date is focused (minDate since that's the first selectable date in the visible month)
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("be.focused");
+        // Verify Previous Month is disabled (can't go before minDate's month)
+        cy.findByLabelText("Previous Month").should(
+          "have.attr",
+          "aria-disabled",
+          "true",
+        );
+      });
+
       it("SHOULD render helper text in the panel when opened ", () => {
         cy.mount(<SingleWithFormField />);
         // Verify the helper text is visible on the page
