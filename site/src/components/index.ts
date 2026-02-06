@@ -13,8 +13,19 @@ export {
   Tag,
   Text,
 } from "@salt-ds/core";
-
-export { Kbd } from "@salt-ds/lab";
+export {
+  Kbd,
+  /**
+   * Salt -> Markdown/MDXProvider mappings
+   */
+  Table as table,
+  TBody as tbody,
+  TD as td,
+  TFoot as tfoot,
+  TH as th,
+  THead as thead,
+  TR as tr,
+} from "@salt-ds/lab";
 
 export * from "./ag-grid-doc";
 export * from "./app-header";
@@ -37,40 +48,3 @@ export * from "./keyboard-controls";
 export * from "./mdx";
 export * from "./patterns";
 export * from "./quick-links";
-
-/**
- * Salt -> Markdown/MDXProvider mappings
- */
-import {
-  Table,
-  TBody,
-  TD,
-  TFoot,
-  TH,
-  THead,
-  TR,
-  Table as table,
-  TBody as tbody,
-  TD as td,
-  TFoot as tfoot,
-  TH as th,
-  THead as thead,
-  TR as tr,
-} from "@salt-ds/lab";
-
-export {
-  Table,
-  TBody,
-  TD,
-  TFoot,
-  TH,
-  THead,
-  TR,
-  tbody,
-  td,
-  tfoot,
-  th,
-  thead,
-  tr,
-  table,
-};

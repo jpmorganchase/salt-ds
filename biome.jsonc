@@ -118,6 +118,16 @@
       }
     },
     {
+      "includes": ["**/packages/styles/src/useClassNameInjection.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noEmptyInterface": "off"
+          }
+        }
+      }
+    },
+    {
       // Disable some rules for tests and stories, because they are not production code.
       "includes": ["**/__tests__/**"],
       "linter": {
