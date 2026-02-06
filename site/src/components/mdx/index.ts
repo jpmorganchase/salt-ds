@@ -1,4 +1,10 @@
-import { Table as table, THead as thead, TR as tr } from "@salt-ds/core";
+import {
+  Table as table,
+  TFoot as tfoot,
+  TH as th,
+  THead as thead,
+  TR as tr,
+} from "@salt-ds/core";
 import { withAnchorHeading } from "./anchorHeading";
 import { Code as code } from "./code";
 import { Heading2 } from "./h2";
@@ -25,6 +31,8 @@ export {
   table,
   thead,
   tr,
+  tfoot,
+  th,
   ul,
   Image as img,
   Image,
