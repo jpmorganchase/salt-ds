@@ -240,7 +240,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
                 </OverlayTrigger>
               </Tooltip>
               <OverlayPanel className={styles.overlay}>
-                <OverlayPanelContent>
+                <OverlayPanelContent className={styles.overlayContent}>
                   <ThemeControls />
                 </OverlayPanelContent>
               </OverlayPanel>

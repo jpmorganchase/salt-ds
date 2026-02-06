@@ -1,0 +1,12 @@
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high,
+.salt-density-touch {
+  --salt-layout-page-margin: var(--salt-spacing-300);
+  --salt-layout-gap: var(--salt-spacing-300);
+}
+
+.salt-density-mobile {
+  --salt-layout-page-margin: var(--salt-spacing-100);
+  --salt-layout-gap: var(--salt-spacing-100);
+}

@@ -39,6 +39,7 @@ const sizeAndStrokeWidthMapping = {
   medium: { size: 12, strokeWidth: 2 },
   low: { size: 14, strokeWidth: 2 },
   touch: { size: 16, strokeWidth: 2 },
+  mobile: { size: 16, strokeWidth: 2 },
 };
 
 export const CarouselAutoplayIndicator = forwardRef<

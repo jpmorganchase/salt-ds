@@ -15,7 +15,7 @@ import { type PerformanceResult, PerformanceTester } from "./PerformanceTester";
 
 const SupportedThemeModeValues = ["light", "dark"] as const;
 type SupportedThemeMode = (typeof SupportedThemeModeValues)[number];
-const SupportedDensityValues = ["touch", "low", "medium", "high"];
+const SupportedDensityValues = ["mobile", "touch", "low", "medium", "high"];
 type SupportedDensity = (typeof SupportedDensityValues)[number];
 
 Cypress.Commands.add("setMode", (mode: SupportedThemeMode) => {
@@ -78,7 +78,7 @@ Cypress.Commands.add(
       cy.state("announcement", announcement);
     };
 
-    const density: "touch" | "low" | "medium" | "high" | undefined =
+    const density: "mobile" | "touch" | "low" | "medium" | "high" | undefined =
       Cypress.env("density");
     const mode: "light" | "dark" | undefined = Cypress.env("mode");
     const dateAdapter: SaltDateAdapter<DateFrameworkType> | undefined =
