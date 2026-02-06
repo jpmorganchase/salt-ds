@@ -1,14 +1,17 @@
-import { Code, StackLayout, Text, useId } from "@salt-ds/core";
 import {
+  Code,
+  StackLayout,
   Table,
   TableContainer,
   TBody,
   TD,
+  Text,
   TFoot,
   TH,
   THead,
   TR,
-} from "@salt-ds/lab";
+  useId,
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ComponentProps } from "react";
 
@@ -91,7 +94,7 @@ type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
 };
 
 export default {
-  title: "Lab/Table",
+  title: "Core/Table",
   component: Table,
   subcomponents: { TD, TH, Text, Code, TBody, THead, TR, TFoot },
   args: {

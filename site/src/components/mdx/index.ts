@@ -1,4 +1,4 @@
-import { Table as table, THead as thead, TR as tr } from "@salt-ds/lab";
+import { Table as table, THead as thead, TR as tr } from "@salt-ds/core";
 import { withAnchorHeading } from "./anchorHeading";
 import { Code as code } from "./code";
 import { Heading2 } from "./h2";
