@@ -9,54 +9,54 @@ Responsive design utilizes breakpoints to adapt UI layouts and optimize presenta
 
 ## Breakpoint ramps
 
-Salt’s breakpoints and column counts are optimized for the layout of Salt components across each density in desktop and web environments. This helps to ensure that application layout is fit-for-purpose, whether for data-heavy or content-light applications.
+Salt’s breakpoints and column counts are optimized for the layout of Salt components across all densities, ensuring responsive design for desktop as well as mobile and other smaller devices. This helps ensure your application layout is fit-for-purpose, whether for data-heavy or content-light use cases.
 
-Learn more about Salt densities in the [Density foundation](/salt/foundations/density) documentation.
+## High density
 
-For guidance on breakpoints and column layouts for mobile and tablet devices, see the [Small screens](/salt/foundations/responsiveness/small-viewports) documentation.
+| Breakpoint  | Width (px) | Columns |
+| ----------- | ---------- | ------- |
+| Extra Small | 0 - 599    | 2       |
+| Small       | 600 - 959  | 4       |
+| Medium      | 960 - 1279 | 6       |
+| Large       | 1280-1919  | 8       |
+| Extra Large | >1920      | 12      |
 
-### High density
+## Medium density
 
-| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
-| ----------- | ---------- | ------- | -------------------- | -------------------- |
-| Extra Small | 0 - 599    | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Small       | 600 - 959  | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Medium      | 960 - 1279 | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Large       | 1280-1919  | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Extra Large | >1920      | 12      | `--salt-spacing-300` | `--salt-spacing-300` |
+| Breakpoint  | Width (px) | Columns |
+| ----------- | ---------- | ------- |
+| Extra Small | 0 - 599    | 2       |
+| Small       | 600 - 959  | 4       |
+| Medium      | 960 - 1279 | 6       |
+| Large       | 1280-1919  | 8       |
+| Extra Large | >1920      | 12      |
 
-### Medium density
+## Low density
 
-| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
-| ----------- | ---------- | ------- | -------------------- | -------------------- |
-| Extra Small | 0 - 599    | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Small       | 600 - 959  | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Medium      | 960 - 1279 | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Large       | 1280-1919  | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Extra Large | >1920      | 12      | `--salt-spacing-300` | `--salt-spacing-300` |
+| Breakpoint  | Width (px) | Columns |
+| ----------- | ---------- | ------- |
+| Extra Small | 0 - 599    | 1       |
+| Small       | 600 - 959  | 2       |
+| Medium      | 960 - 1279 | 4       |
+| Large       | 1280-1919  | 6       |
+| Extra Large | >1920      | 8       |
 
-### Low density
+## Mobile density
 
-| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
-| ----------- | ---------- | ------- | -------------------- | -------------------- |
-| Extra Small | 0 - 599    | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Small       | 600 - 959  | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Medium      | 960 - 1279 | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Large       | 1280-1919  | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Extra Large | >1920      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Breakpoint  | Width (px) | Columns |
+| ----------- | ---------- | ------- |
+| Extra Small | 0 - 599    | 1       |
+| Small       | 600 - 959  | 2       |
+| Medium      | 960 - 1279 | 2       |
 
-### Touch density
+## Touch density
 
-| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
-| ----------- | ---------- | ------- | -------------------- | -------------------- |
-| Extra Small | 0 - 599    | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Small       | 600 - 959  | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Medium      | 960 - 1279 | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Large       | 1280-1919  | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
-| Extra Large | >1920      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
-
-## Implementing breakpoints
-
-Use the Salt Provider component to [control the breakpoints](/salt/components/salt-provider/examples#breakpoints) you use in your application. Salt provides default breakpoints in its core foundation.
+| Breakpoint  | Width (px) | Columns |
+| ----------- | ---------- | ------- |
+| Extra Small | 0 - 599    | 1       |
+| Small       | 600 - 959  | 2       |
+| Medium      | 960 - 1279 | 4       |
+| Large       | 1280-1919  | 6       |
+| Extra Large | >1920      | 8       |
 
 :fragment{src="../fragments/feedback.mdx"}
