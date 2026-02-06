@@ -7,10 +7,16 @@ import {
   Input,
   StackLayout,
   Switch,
+  Table,
+  TBody,
+  TD,
   Text,
+  TH,
+  THead,
+  TR,
 } from "@salt-ds/core";
 import { FilterIcon } from "@salt-ds/icons";
-import { Kbd, Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
+import { Kbd } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import React, { type ChangeEvent, type FC, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
