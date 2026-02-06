@@ -2,7 +2,7 @@ import { FlexLayout, FlowLayout, Input, Text } from "@salt-ds/core";
 import { Kbd } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { SearchIcon } from "packages/icons/src";
+import { SearchIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/Kbd/Kbd QA",
