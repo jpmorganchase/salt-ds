@@ -15,7 +15,7 @@
   box-sizing: border-box;
   width: fit-content;
   border-radius: var(--salt-palette-corner-weaker);
-  border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   background: var(--kbd-background);
   box-shadow: 0 var(--salt-size-fixed-100) 0 0 var(--salt-container-primary-borderColor);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
