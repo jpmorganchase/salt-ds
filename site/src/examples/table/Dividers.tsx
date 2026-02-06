@@ -4,10 +4,6 @@ import {
   FormField,
   FormFieldLabel,
   StackLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
-import {
   Table,
   TableContainer,
   type TableProps,
@@ -18,8 +14,10 @@ import {
   TH,
   THead,
   type THeadProps,
+  ToggleButton,
+  ToggleButtonGroup,
   TR,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Dividers = (): ReactElement => {
