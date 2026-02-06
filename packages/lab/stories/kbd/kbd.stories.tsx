@@ -2,14 +2,12 @@ import {
   Button,
   FlexLayout,
   FlowLayout,
-  Input,
   Menu,
   MenuItem,
   MenuPanel,
   MenuTrigger,
-  Text,
 } from "@salt-ds/core";
-import { MicroMenuIcon, SearchIcon } from "@salt-ds/icons";
+import { MicroMenuIcon } from "@salt-ds/icons";
 import { Kbd, type KbdProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
