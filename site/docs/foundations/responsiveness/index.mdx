@@ -58,19 +58,33 @@ Salt offers a variety of layout components to help you build flexible, responsiv
 
 ## Layout tokens
 
-Layout tokens help manage margins and gaps in your layouts, especially when switching between desktop and mobile densities—In this scenario layout tokens ensure that margins and gaps are always optimized for each density and screen size without manual adjustments.
+Layout tokens help manage margins and gaps in your layouts, especially when switching dynamically between desktop and mobile densities—In this scenario layout tokens ensure that margins and gaps are always optimized for each density and screen size without manual adjustments.
 
 Learn more about [switching density](/salt/foundations/density#switching-density).
 
 - Use the `--salt-layout-page-margin` token to set left and right margins.
 - Use the `--salt-layout-gap` token to set spacing between elements, including top and bottom gaps.
 
-Below is a visual comparison showing how the `--salt-layout-page-margin` and `--salt-layout-gap` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
+| Token                       | High Density(px) | Medium Density(px) | Low Density(px) | Mobile Density(px) |
+| --------------------------- | ---------------- | ------------------ | --------------- | ------------------ |
+| `--salt-layout-page-margin` | 12               | 24                 | 36              | 16                 |  
+| `--salt-layout-gap`         | 12               | 24                 | 36              | 16                 |
+
+Below is a visual comparison showing how the `--salt-layout-page-margin` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
 
 <Diagram
-  src="/img/foundations/layout-grid-tokens.png"
-  srcDark="/img/foundations/layout-grid-tokens-dark.png"
-  alt="Example of layout page token"
+  src="/img/foundations/layout-grid-layout-page-margin.png"
+  srcDark="/img/foundations/layout-grid-layout-page-margin-dark.png"
+  alt="Example of layout-page-margin token"
+  background="secondary"
+/>
+
+Below is a visual comparison showing how the `--salt-layout-gap` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
+
+<Diagram
+  src="/img/foundations/layout-grid-layout-gap-token.png"
+  srcDark="/img/foundations/layout-grid-layout-gap-token-dark.png"
+  alt="Example of layout-gap token"
   background="secondary"
 />
 
