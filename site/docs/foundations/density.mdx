@@ -9,22 +9,26 @@ Density relates to the amount of content that can fit on a screen based on the s
 
 Read about implementing density in code on the [SaltProvider](/salt/components/salt-provider/examples) documentation.
 
-| Desk Density | Use case                                                                                                                              |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| High         | Ideal for data-heavy or complex applications, such as trading platforms, where maximum information needs to be displayed efficiently  |
-| Medium       | Suited for standard applications and websites, providing a balanced default density for most use cases                                |
-| Low          | Best for data-light or content-focused interfaces, such as marketing and communications, where a spacious layout enhances readability |
+## Desktop densities
+
+Desktop densities are tailored for different types of applications, from complex data platforms to content-focused interfaces. Select the density that best fits your app or websites complexity and user needs.
+
+| Densities | Use case                                                                                                                               |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| High      | Ideal for data-heavy or complex applications, such as trading platforms, where maximum information needs to be displayed efficiently.  |
+| Medium    | Suited for standard applications and websites, providing a balanced default density for most use cases.                                |
+| Low       | Best for data-light or content-focused interfaces, such as marketing and communications, where a spacious layout enhances readability. |
 
 <Diagram
-  src="/img/foundations/density-destkop-densities.png"
-  srcDark="/img/foundations/density-destkop-densities-dark.png"
+  src="/img/foundations/density-desktop-densities.png"
+  srcDark="/img/foundations/density-desktop-densities-dark.png"
   alt="Example of desktop densities"
   background="secondary"
 />
 
-## High density
+### High density
 
-High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout. High density is designed for frequent application use by experienced users.
+High density is suitable for specialized use cases. It’s ideal for data-dense applications where screen real estate is maximized, or for applications frequently used by experienced users.
 
 <Diagram
   src="/img/foundations/density-high-density.png"
@@ -33,7 +37,7 @@ High density scales components down to their smallest size and reduces the size 
   background="secondary"
 />
 
-## Medium density
+### Medium density
 
 Medium density is suitable for most use-cases. It's ideal for standard applications or content-rich websites.
 
@@ -44,7 +48,7 @@ Medium density is suitable for most use-cases. It's ideal for standard applicati
   background="secondary"
 />
 
-## Low density
+### Low density
 
 Low density is suitable for use cases that require increased legibility and whitespace. It’s ideal for marketing applications or interfaces with simpler layouts.
 
@@ -74,14 +78,14 @@ Touch density’s main purpose is to address accessibility concerns on smaller v
   status="warning"
   title="Touch density deprecation"
 >
-  Touch density will be removed in the next breaking change.
+Touch density will be removed in the next breaking change.
 
 It was originally introduced to support basic touch accessibility, but is not optimized for smaller screens—as density increases, components and spacing become larger, leading to inefficient layouts and usability issues on mobile devices.
 
 What you should do:
 
 - For mobile or tablet experiences, migrate to mobile density.
-- For desktop or web applications, migrate to low density.
+- For desktop or web experiences, migrate to low density.
 
 Refer to the [Migrating from touch to mobile density](https://go/saltds/content/news/20260204-migrating-from-touch-to-mobile-density) (Internal users only) for step-by-step instructions.
 
@@ -95,8 +99,8 @@ Select a density early in the design process to meet your application's requirem
 
 In some cases, you may want to switch density to optimize the experience for different devices or screen sizes. There are two main approaches:
 
-1. By screen size (breakpoints): change density as the viewport crosses defined breakpoints. For more information on breakpoints, see the [breakpoints](/salt/foundations/responsiveness/breakpoints) documentation.
+1. By screen size (breakpoints): change density as the viewport crosses defined breakpoints. For more information on breakpoints, see the [breakpoints](/salt/foundations/responsiveness/breakpoints) documentation.
 
-2. By device type: change density depending on whether the user is on a mobile, tablet, or desktop device. See an example of this in the [SaltProvider](/salt/components/salt-provider/examples) documentation.
+2. By device type: change density depending on whether the user is on a mobile, tablet, or desktop device. See an example of this in the [SaltProvider](/salt/components/salt-provider/examples) documentation.
 
 :fragment{src="./fragments/feedback.mdx"}
