@@ -65,7 +65,7 @@ export const PropsTable: FC<PropsTableType> = ({
   }
 
   return (
-    <Table className="propsTable">
+    <Table className={styles.propsTable}>
       <THead>
         <TR>
           <TH>Name</TH>

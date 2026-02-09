@@ -1,3 +1,7 @@
 .overflowWrap {
   overflow-wrap: anywhere;
 }
+
+.propsTable {
+  table-layout: fixed;
+}
