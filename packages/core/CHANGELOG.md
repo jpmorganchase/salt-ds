@@ -1,5 +1,43 @@
 # @salt-ds/core
 
+## 1.55.0
+
+### Minor Changes
+
+- 27c4338: - added experimental extended style support to a subset of Salt components
+  - `Button`
+  - `ComboBox`
+  - `Dropdown`
+  - `Input`
+  - `NumberInput`
+  - `ToggleButton`
+  - `Tooltip`
+- 27c4338: - added semantics icons to support status
+  - `ErrorStatusAdornment`
+  - `WarningStatusAdornment`
+  - `SuccessStatusAdornment`
+  - refactored `StatusIndicator` so icon can be provided through experimental API
+- 472a1b4: Added support for read-only `Switch` via `readOnly` prop.
+
+  Example usage:
+
+  ```jsx
+  <Switch readOnly label="Read-only" />
+  ```
+
+### Patch Changes
+
+- 27c4338: Refactored type definitions to support extended types for experimental features. These changes are non-breaking and aim to improve type safety and flexibility.
+
+  **Details**:
+
+  - Refactored `FormFieldValidationStatus` type to omit `"info"` from `ValidationStatuses`.
+  - Refactored `ValidationStatusValues` for consistency.
+
+- Updated dependencies [27c4338]
+  - @salt-ds/styles@0.3.0
+  - @salt-ds/icons@1.17.1
+
 ## 1.54.2
 
 ### Patch Changes

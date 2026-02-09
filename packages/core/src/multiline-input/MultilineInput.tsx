@@ -13,7 +13,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  type FormFieldValidationStatus,
+  useFormFieldProps,
+} from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
@@ -65,7 +68,7 @@ export interface MultilineInputProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning" | "success";
+  validationStatus?: FormFieldValidationStatus;
   /**
    * Styling variant. Defaults to "primary".
    */

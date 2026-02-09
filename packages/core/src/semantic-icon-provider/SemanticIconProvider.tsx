@@ -29,8 +29,11 @@ import {
   type ReactNode,
   useContext,
 } from "react";
+import { ErrorAdornmentIcon } from "../status-adornment/ErrorAdornment";
+import { SuccessAdornmentIcon } from "../status-adornment/SuccessAdornment";
+import { WarningAdornmentIcon } from "../status-adornment/WarningAdornment";
 
-export type SemanticIconMap = {
+export interface SemanticIconMap {
   ExpandIcon: ElementType;
   CollapseIcon: ElementType;
   ExpandGroupIcon: ElementType;
@@ -57,7 +60,10 @@ export type SemanticIconMap = {
   FavoriteEmptyIcon: ElementType;
   FavoriteSolidIcon: ElementType;
   FavoriteStrongIcon: ElementType;
-};
+  ErrorStatusAdornment: ElementType;
+  WarningStatusAdornment: ElementType;
+  SuccessStatusAdornment: ElementType;
+}
 
 export interface SemanticIconProviderProps {
   /**
@@ -98,6 +104,9 @@ const defaultIconMap: SemanticIconMap = {
   FavoriteEmptyIcon: FavoriteIcon,
   FavoriteSolidIcon: FavoriteSolidIcon,
   FavoriteStrongIcon: FavoriteStrongIcon,
+  ErrorStatusAdornment: ErrorAdornmentIcon,
+  WarningStatusAdornment: WarningAdornmentIcon,
+  SuccessStatusAdornment: SuccessAdornmentIcon,
 };
 
 const SemanticIconContext = createContext<SemanticIconMap>(defaultIconMap);

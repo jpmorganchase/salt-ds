@@ -33,6 +33,7 @@ export {
   type InputLegacyProps as InputProps,
   StaticInputAdornment,
 } from "./input-legacy";
+export * from "./kbd";
 export * from "./layer-layout";
 export * from "./list";
 export type {
@@ -55,7 +56,6 @@ export * from "./responsive";
 export * from "./search-input";
 export * from "./static-list";
 export * from "./system-status";
-export * from "./table";
 export * from "./tabs";
 export * from "./tabs-next";
 export * from "./toast-group";
