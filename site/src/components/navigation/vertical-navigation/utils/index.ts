@@ -23,8 +23,10 @@ export function statusToBadgeValue(status: string) {
  This function normalizes the selectedNodeId to match the href in navData
  **/
 export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
-  if (link.endsWith("/examples")) {
-    const indexLink = link.replace(/\/examples$/, "/index");
+  const tabRoutes = ["/examples", "/usage", "/accessibility"];
+  const matchedRoute = tabRoutes.find((route) => link.endsWith(route));
+  if (matchedRoute) {
+    const indexLink = link.replace(new RegExp(`${matchedRoute}$`), "/index");
     // Check if navData contains indexLink
     const exists = (items: Item[]): boolean =>
       items.some(
@@ -34,8 +36,8 @@ export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
     if (exists(navData)) {
       return indexLink;
     }
-    // Fallback to removing /examples
-    return link.replace(/\/examples$/, "");
+    // Fallback to removing the matched tab route
+    return link.replace(new RegExp(`${matchedRoute}$`), "");
   }
   return link;
 }
