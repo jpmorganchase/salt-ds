@@ -1,7 +1,3 @@
-.propsTable {
-  table-layout: fixed;
-}
-
 .secondarySidebar {
   flex: 0 0 250px;
   display: flex;
