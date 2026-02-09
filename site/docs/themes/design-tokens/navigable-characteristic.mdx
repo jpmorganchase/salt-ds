@@ -11,7 +11,12 @@ The Navigable characteristic defines the colors and styles for components that s
 
 Navigable items typically appear in a list and use standard content and container styling. Clear context and labeling help with sign-posting and recognition, ensuring users can quickly identify and access different sections.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-navigable-items-light.png"
+  srcDark="/img/theming/characteristic-navigable-items-dark.png"
+  alt="Anotated example of navigable items"
+  background="secondary"
+/>
 
 `--salt-container-primary-background` \
 `--salt-separable-tertiary-borderColor` \
@@ -21,7 +26,12 @@ _(insert image here)_
 
 An active tab, page, or section can be indicated using accented border and background tokens. This styling allows the active item to stand out from other navigable options, making it clear which section is currently selected.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-active-states-light.png"
+  srcDark="/img/theming/characteristic-active-states-dark.png"
+  alt="Anotated example of navigable active states"
+  background="secondary"
+/>
 
 `--salt-navigable-accent-background-active` \
 `--salt-navigable-accent-borderColor-active`
@@ -30,7 +40,12 @@ _(insert image here)_
 
 Hover states for navigable items use the overlayable characteristic to provide a subtle transition from the default state. A translucent background is applied to the item being interacted with, allowing the container’s background to remain visible. This approach prevents color clashes and ensures the hover state does not blend in with its parent background, maintaining clarity and visual distinction.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-hover-states-light.png"
+  srcDark="/img/theming/characteristic-hover-states-dark.png"
+  alt="Anotated example of navigable hover states"
+  background="secondary"
+/>
 
 `--salt-overlayable-background-hover`
 
@@ -38,13 +53,23 @@ _(insert image here)_
 
 Indicators can be used alongside or instead of background and border changes to highlight navigable items. Applying indicators together with background changes gives active items greater prominence and emphasis, making them stand out—especially useful in primary navigation with many options, where clear differentiation is important.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-navigation-indicators-light.png"
+  srcDark="/img/theming/characteristic-navigation-indicators-dark.png"
+  alt="Anotated example of navigation indicators"
+  background="secondary"
+/>
 
 `--salt-navigable-accent-indicator-active`
 
 Alternatively, relying solely on indicators for hover and active states creates a subtler navigation experience, which is typically reserved for in-page navigation components such as tabs. This approach helps maintain a clean interface while still providing clear feedback to users.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-navigation-indicators-2-light.png"
+  srcDark="/img/theming/characteristic-navigation-indicators-2-dark.png"
+  alt="Anotated example of navigation indicators"
+  background="secondary"
+/>
 
 `--salt-navigable-accent-indicator-active` \
 `--salt-navigable-indicator-hover`
