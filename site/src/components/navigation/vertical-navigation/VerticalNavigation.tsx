@@ -12,7 +12,7 @@ import {
   VerticalNavigationItemTrigger,
   VerticalNavigationSubMenu,
 } from "@salt-ds/core";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LinkBase } from "../../link/Link";
 import {
   containsSelected,
@@ -122,12 +122,35 @@ export const VerticalNavigation = ({
     mappedNavData,
   );
 
+  const navigationRef = useRef<HTMLElement | null>(null);
+  const hasScrolledToActiveRef = useRef(false);
+
+  useEffect(() => {
+    if (
+      hasScrolledToActiveRef.current ||
+      !normalizedSelectedNodeId ||
+      !mappedNavData.length
+    ) {
+      return;
+    }
+
+    const navigationItem = navigationRef.current;
+    if (!navigationItem) return;
+
+    const activeItem = navigationItem.querySelector('[aria-current="page"]');
+    if (activeItem instanceof HTMLElement) {
+      activeItem.scrollIntoView({ block: "center" });
+      hasScrolledToActiveRef.current = true;
+    }
+  }, [mappedNavData, normalizedSelectedNodeId]);
+
   return (
     <VerticalNavigationComponent
       aria-label="Sidebar"
       data-testid="vertical-navigation"
       appearance="bordered"
       className={styles.verticalNavigation}
+      ref={navigationRef}
     >
       {mappedNavData.map((item) => (
         <NestedItem
