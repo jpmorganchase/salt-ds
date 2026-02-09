@@ -19,7 +19,7 @@
 }
 
 .saltRating-container {
-  gap: var(--salt-spacing-50);
+  gap: calc(2 * var(--salt-spacing-fixed-600));
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

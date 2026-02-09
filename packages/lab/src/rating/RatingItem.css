@@ -24,11 +24,15 @@
 .saltRatingItem-icon {
   --saltIcon-size: var(--salt-size-icon);
   pointer-events: none;
-  transition: color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--salt-content-secondary-foreground);
+  color: var(--salt-sentiment-neutral-dataviz);
+  transition: color var(--salt-duration-instant) ease-in-out;
+}
+
+.saltRatingItem-icon .saltIcon {
+  --saltIcon-size: var(--salt-size-icon);
 }
 
 .saltRatingItem-input:focus-visible ~ .saltRatingItem-icon {
@@ -49,5 +53,9 @@
 .saltRatingItem-selected .saltRatingItem-icon,
 .saltRatingItem-hovered .saltRatingItem-icon,
 .saltRatingItem-active .saltRatingItem-icon {
-  color: var(--salt-accent-background);
+  color: var(--salt-sentiment-accent-dataviz);
+}
+
+.saltRatingItem.saltRatingItem-active .saltRatingItem-icon {
+  transition-duration: var(--salt-duration-perceptible);
 }
