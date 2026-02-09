@@ -134,10 +134,12 @@ export const VerticalNavigation = ({
       return;
     }
 
-    const navigationItem = navigationRef.current;
-    if (!navigationItem) return;
+    const navigationContainer = navigationRef.current;
+    if (!navigationContainer) return;
 
-    const activeItem = navigationItem.querySelector('[aria-current="page"]');
+    const activeItem = navigationContainer.querySelector(
+      '[aria-current="page"]',
+    );
     if (activeItem instanceof HTMLElement) {
       activeItem.scrollIntoView({ block: "center" });
       hasScrolledToActiveRef.current = true;
