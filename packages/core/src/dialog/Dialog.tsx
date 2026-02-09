@@ -107,6 +107,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     const currentBreakpoint = useCurrentBreakpoint();
 
     const [showComponent, setShowComponent] = useState(false);
+    const [dialogId, setDialogId] = useState(id);
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
@@ -135,7 +136,10 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       }
     }, [open, showComponent]);
 
-    const contextValue = useMemo(() => ({ status, id }), [status, id]);
+    const contextValue = useMemo(
+      () => ({ status, id: dialogId, setId: setDialogId }),
+      [status, dialogId],
+    );
 
     return (
       <DialogContext.Provider value={contextValue}>
