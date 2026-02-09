@@ -1,5 +1,27 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.85
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+- 4507919: Removed `Table` from labs and promoted to core.
+- 4badc14: Added `Kbd` component.
+
+  `Kbd` is a decorative element used to represent specific keyboard keys.
+
+  ```tsx
+  <Kbd>Option</Kbd>
+  <Kbd>Cmd</Kbd>
+  <Kbd>L</Kbd>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [972e37e]
+- Updated dependencies [4507919]
+  - @salt-ds/core@1.56.0
+
 ## 1.0.0-alpha.84
 
 ### Minor Changes
