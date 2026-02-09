@@ -1,5 +1,17 @@
 # @salt-ds/ag-grid-theme
 
+## 2.7.0
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+
+### Patch Changes
+
+- Updated dependencies [972e37e]
+- Updated dependencies [972e37e]
+  - @salt-ds/theme@1.39.0
+
 ## 2.6.1
 
 ### Patch Changes
