@@ -15,7 +15,12 @@ Each theme in Salt offers three background colors to help define hierarchy withi
 - **Secondary** can provide the page-level background.
 - **Tertiary** is used less frequently, it can offer an alternate to primary and secondary, mainly to highlight key content areas.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-backgrounds-light.png"
+  srcDark="/img/theming/characteristic-backgrounds-dark.png"
+  alt="Anotated example of container backgrounds"
+  background="secondary"
+/>
 
 ## Borders
 
@@ -32,7 +37,12 @@ Each container background has a corresponding border color designed to be used t
 
 Primary containers combine background and border tokens to ensure a consistent container style. They serve as the dominant container within a page, providing the standard background for components such as cards, panels, drawers, and dialogs. Optional borders and shadows can be added to enhance visual appeal and adjust the container’s prominence within the visual hierarchy.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-primary-containers-light.png"
+  srcDark="/img/theming/characteristic-primary-containers-dark.png"
+  alt="Anotated example of primary containers"
+  background="secondary"
+/>
 
 `--salt-container-primary-background` \
 `--salt-container-primary-borderColor`
@@ -41,7 +51,13 @@ _(insert image here)_
 
 Secondary containers combine secondary background and border tokens to provide an alternative container style. They are available as a variant for components such as cards and drawers, offering a different visual treatment within a layout.  
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-secondary-containers-light.png"
+  srcDark="/img/theming/characteristic-secondary-containers-dark.png"
+  alt="Anotated example of secondary containers"
+  background="primary"
+  border
+/>
 
 `--salt-container-secondary-background` \
 `--salt-container-secondary-borderColor`
@@ -50,7 +66,13 @@ _(insert image here)_
 
 Tertiary containers use tertiary background and border tokens to offer an alternative visual style within a layout. They are available as a variant for components such as cards and panels, and are typically used to highlight key content areas or provide subtle differentiation from primary and secondary containers.   
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-tertiary-containers-light.png"
+  srcDark="/img/theming/characteristic-tertiary-containers-dark.png"
+  alt="Anotated example of tertiary containers"
+  background="primary"
+  border
+/>
 
 `--salt-container-tertiary-background` \
 `--salt-container-tertiary-borderColor`
@@ -59,7 +81,13 @@ _(insert image here)_
 
 Ghost containers use translucent backgrounds and borders to blend seamlessly with surrounding elements, supporting a fluid and less compartmentalized layout. They are ideal for designs that require a continuous flow of information, such as highlighting specific content over custom backgrounds, images or gradients. Borders can be used optionally to provide subtle distinction when needed.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-ghost-containers-light.png"
+  srcDark="/img/theming/characteristic-ghost-containers-dark.png"
+  alt="Anotated example of ghost containers"
+  background="primary"
+  border
+/>
 
 `--salt-container-ghost-background` \
 `--salt-container-ghost-borderColor`
@@ -68,7 +96,13 @@ _(insert image here)_
 
 The target characteristic is used in drag-and-drop interactions to visually indicate when a container or area of the screen is an eligible drop target. It updates the container’s appearance to show when a dragged item—such as a document for attaching or uploading—can be dropped, providing clear feedback and enhancing the user experience.
 
-_(insert image here)_
+<Diagram
+  src="/img/theming/characteristic-styling-a-container-as-a-drop-target-light.png"
+  srcDark="/img/theming/characteristic-styling-a-container-as-a-drop-target-dark.png"
+  alt="Anotated example of drop target containers"
+  background="secondary"
+/>
+
 
 `--salt-target-background-hover` \
 `--salt-target-borderColor-hover`
