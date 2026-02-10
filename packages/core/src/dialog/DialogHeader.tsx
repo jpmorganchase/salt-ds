@@ -65,7 +65,6 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
 
     return (
       <div
-        id={id}
         className={clsx(
           withBaseName(),
           {
@@ -79,7 +78,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       >
         {status && <StatusIndicator status={status} />}
         <div className={withBaseName("container")}>
-          <H2 className={withBaseName("header")}>
+          <H2 id={id} className={withBaseName("header")}>
             {preheader && <Text color="primary">{preheader}</Text>}
             {header}
           </H2>
