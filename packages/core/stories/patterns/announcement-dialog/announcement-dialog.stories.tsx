@@ -478,13 +478,13 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
             </StackLayout>
           ) : (
             <FlexLayout gap={1}>
+              <Button sentiment="accented" appearance="transparent">
+                Remind me later
+              </Button>
               <Button sentiment="accented" appearance="bordered">
                 Go to dashboard
               </Button>
               <Button sentiment="accented">Try it now</Button>
-              <Button sentiment="accented" appearance="transparent">
-                Remind me later
-              </Button>
             </FlexLayout>
           )}
         </DialogActions>
