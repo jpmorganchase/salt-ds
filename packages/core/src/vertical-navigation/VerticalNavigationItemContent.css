@@ -49,7 +49,7 @@
   position: absolute;
   top: var(--salt-spacing-50);
   bottom: var(--salt-spacing-50);
-  border-radius: var(--salt-palette-corner-strongest);
+  border-radius: var(--salt-palette-corner-stronger);
   width: var(--salt-size-indicator);
 }
 
