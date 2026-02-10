@@ -109,7 +109,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   });
   const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
-  const { FavoriteEmptyIcon, FavoriteSolidIcon, FavoriteStrongIcon } =
+  const { RatingIcon, RatingSelectedIcon, RatingUnselectingIcon } =
     useIcon();
 
   const getSemanticLabels = (value: number): string =>
@@ -290,9 +290,9 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
               key={itemValue}
               readOnly={readOnly}
               disabled={disabled}
-              strongIcon={<FavoriteStrongIcon />}
-              filledIcon={<FavoriteSolidIcon />}
-              emptyIcon={<FavoriteEmptyIcon />}
+              strongIcon={<RatingUnselectingIcon />}
+              filledIcon={<RatingSelectedIcon />}
+              emptyIcon={<RatingIcon />}
               index={index}
               name={name}
               aria-label={label}

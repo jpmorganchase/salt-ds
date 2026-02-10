@@ -24,9 +24,9 @@ export const CustomIcons = (): ReactElement => {
         <FormFieldLabel>Custom icon</FormFieldLabel>
         <SemanticIconProvider
           iconMap={{
-            FavoriteEmptyIcon: LikeIcon,
-            FavoriteSolidIcon: LikeSolidIcon,
-            FavoriteStrongIcon: LikeIcon,
+            RatingIcon: LikeIcon,
+            RatingSelectedIcon: LikeSolidIcon,
+            RatingUnselectingIcon: LikeIcon,
           }}
         >
           <Rating
