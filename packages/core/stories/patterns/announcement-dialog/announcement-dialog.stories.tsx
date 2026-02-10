@@ -344,12 +344,7 @@ export const ContentScrolling: StoryFn = () => {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
-      <Dialog
-        open={open}
-        onOpenChange={setOpen}
-        size="small"
-        style={{ maxHeight: 420 }}
-      >
+      <Dialog open={open} onOpenChange={setOpen} style={{ maxHeight: 420 }}>
         <DialogHeader
           preheader="Major Update"
           header="What's New in Version 3.0"
