@@ -194,3 +194,11 @@ describe("GIVEN a Dialog", () => {
     });
   });
 });
+
+// scrollable content should have role region, tabIndex 0 and labelledby by dialog by default
+// non-scrollable content should not have role, tabIndex or labelledby by dialog by default
+// Dialog content with aria-label and no aria-labelledby should keep aria-label regardless of overflow
+// Dialog content should inherit accessible dialog name when dialog is labelled using aria-label
+// Dialog content should prioritize user provided aria-labelledby regardless of overflow
+// Dialog should prioritize user provided id over generated id for aria-labelledby
+// TBC - Dialog name should not include close button/actions
