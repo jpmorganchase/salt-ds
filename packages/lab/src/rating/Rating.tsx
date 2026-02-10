@@ -109,8 +109,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   });
   const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
-  const { RatingIcon, RatingSelectedIcon, RatingUnselectingIcon } =
-    useIcon();
+  const { RatingIcon, RatingSelectedIcon, RatingUnselectingIcon } = useIcon();
 
   const getSemanticLabels = (value: number): string =>
     value > 0
