@@ -145,6 +145,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       <DialogContext.Provider value={contextValue}>
         <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
           <FloatingComponent
+            id={dialogId}
             open={showComponent}
             role="dialog"
             aria-modal="true"
