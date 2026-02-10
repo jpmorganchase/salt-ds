@@ -96,12 +96,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         };
 
     return (
-      <div
-        className={clsx(withBaseName(), className)}
-        {...overflowProps}
-        {...rest}
-        ref={ref}
-      >
+      <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
         <div
           onScrollCapture={handleScroll}
           ref={divRef}
@@ -110,6 +105,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
             [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
             [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
           })}
+          {...overflowProps}
           {...rest}
         >
           {children}
