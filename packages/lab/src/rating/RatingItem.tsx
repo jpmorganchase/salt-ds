@@ -2,11 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  forwardRef,
-  type MouseEvent,
-  type ReactNode,
-} from "react";
+import { forwardRef, type MouseEvent, type ReactNode } from "react";
 import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
@@ -118,11 +114,8 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       }
     };
 
-    const icon = isHovered || isSelected
-      ? filledIcon
-      : isActive
-        ? strongIcon
-        : emptyIcon;
+    const icon =
+      isHovered || isSelected ? filledIcon : isActive ? strongIcon : emptyIcon;
 
     return (
       <label

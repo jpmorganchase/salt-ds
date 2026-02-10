@@ -8,7 +8,8 @@
   cursor: var(--salt-cursor-hover);
 }
 
-.saltRatingItem-disabled, .saltRatingItem-readOnly {
+.saltRatingItem-disabled,
+.saltRatingItem-readOnly {
   cursor: default;
 }
 

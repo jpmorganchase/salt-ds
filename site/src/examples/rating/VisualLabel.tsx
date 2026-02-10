@@ -20,7 +20,9 @@ export const VisualLabel = (): ReactElement => (
         getLabel={(value) => labels[value - 1] || "No rating"}
         className="custom-rating-width"
       />
-      <style>{`.custom-rating-width .saltRating-label { min-width: 15ch; }`}</style>
+      <style>
+        {".custom-rating-width .saltRating-label { min-width: 15ch; }"}
+      </style>
       <Text style={{ maxWidth: "75ch" }}>
         When using labels with `labelPlacement` set to 'left', set a minimum
         width on the label container by targeting the `.saltRating-label` class.
