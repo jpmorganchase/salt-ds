@@ -1,5 +1,12 @@
 # @salt-ds/theme
 
+## 1.39.0
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+- 972e37e: Added a new layout characteristic to the theme. This also adds `--salt-layout-page-margin` for the margin around the main content area and `--salt-layout-gap` for gutters.
+
 ## 1.38.1
 
 ### Patch Changes

@@ -27,7 +27,7 @@ export interface ThemeApplicatorProps {
    */
   applyClassesTo: "root" | "scope" | "child";
   /**
-   * Either "high", "medium", "low" or "touch".
+   * Either "high", "medium", "low", "touch" or "mobile".
    * Determines the amount of content that can fit on a screen based on the size and spacing of components.
    * Refer to [density](https://www.saltdesignsystem.com/salt/foundations/density) doc for more detail.
    *

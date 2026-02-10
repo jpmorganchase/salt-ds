@@ -13,39 +13,39 @@ While Salt provides a general approach to spacing, it isn’t an exhaustive set 
 
 Consistent use of spatial tokens helps align layouts, establish a clear visual rhythm, and enhance your application's overall design.
 
-Salt’s spacing system uses a base unit, `--salt-spacing-100`, which scales proportionally across all desktop densities (high, medium and low densities). Each spacing token is a multiple or percentage of this base unit, ensuring predictable and flexible spacing.
+Salt’s spacing system uses a base unit, `--salt-spacing-100`, which scales proportionally across all desktop densities (high, medium and low densities). Each spacing token is a multiple or percentage of this base unit, ensuring predictable and flexible spacing.
 
-Mobile density uses a different spacing formula, tailored to optimize usability and readability on smaller devices.
+Mobile density uses a different spacing formula, tailored to optimize usability and readability on phones or tablets.
 
 Learn more about desktop densities, mobile densities, and how to choose densities in the [Density](/salt/foundations/density) foundation.
 
-| Token                | High Density (px) | Medium Density (px) | Low Density (px) | Mobile Density (px) | Touch Density (px) |
-| -------------------- | ----------------- | ------------------- | ---------------- | ------------------- | ------------------ |
-| `--salt-spacing-25`  | 1                 | 2                   | 3                | 4                   | 4                  |
-| `--salt-spacing-50`  | 2                 | 4                   | 6                | 8                   | 8                  |
-| `--salt-spacing-75`  | 3                 | 6                   | 9                | 12                  | 12                 |
-| `--salt-spacing-100` | 4                 | 8                   | 12               | 16                  | 16                 |
-| `--salt-spacing-150` | 6                 | 12                  | 18               | 18                  | 24                 |
-| `--salt-spacing-200` | 8                 | 16                  | 24               | 20                  | 32                 |
-| `--salt-spacing-250` | 10                | 20                  | 30               | 22                  | 40                 |
-| `--salt-spacing-300` | 12                | 24                  | 36               | 24                  | 48                 |
-| `--salt-spacing-350` | 14                | 28                  | 42               | 26                  | 56                 |
-| `--salt-spacing-400` | 16                | 32                  | 48               | 28                  | 64                 |
-| `--salt-spacing-450` | 18                | 36                  | 54               | 30                  | 72                 |
-| `--salt-spacing-500` | 20                | 40                  | 60               | 32                  | 80                 |
-| `--salt-spacing-550` | 22                | 44                  | 66               | 34                  | 88                 |
-| `--salt-spacing-600` | 24                | 48                  | 72               | 36                  | 96                 |
-| `--salt-spacing-650` | 26                | 52                  | 78               | 38                  | 104                |
-| `--salt-spacing-700` | 28                | 56                  | 84               | 40                  | 112                |
-| `--salt-spacing-750` | 30                | 60                  | 90               | 42                  | 120                |
-| `--salt-spacing-800` | 32                | 64                  | 96               | 44                  | 128                |
-| `--salt-spacing-850` | 34                | 68                  | 102              | 46                  | 136                |
-| `--salt-spacing-900` | 36                | 72                  | 108              | 48                  | 144                |
-| `--salt-spacing-950` | 38                | 76                  | 114              | 50                  | 152                |
+| Token                | High Density (px) | Medium Density (px) | Low Density (px) | Touch Density (px) | Mobile Density (px) |
+| -------------------- | ----------------- | ------------------- | ---------------- | ------------------ | ------------------- |
+| `--salt-spacing-25`  | 1                 | 2                   | 3                | 4                  | 4                   |
+| `--salt-spacing-50`  | 2                 | 4                   | 6                | 8                  | 8                   |
+| `--salt-spacing-75`  | 3                 | 6                   | 9                | 12                 | 12                  |
+| `--salt-spacing-100` | 4                 | 8                   | 12               | 16                 | 16                  |
+| `--salt-spacing-150` | 6                 | 12                  | 18               | 24                 | 18                  |
+| `--salt-spacing-200` | 8                 | 16                  | 24               | 32                 | 20                  |
+| `--salt-spacing-250` | 10                | 20                  | 30               | 40                 | 22                  |
+| `--salt-spacing-300` | 12                | 24                  | 36               | 48                 | 24                  |
+| `--salt-spacing-350` | 14                | 28                  | 42               | 56                 | 26                  |
+| `--salt-spacing-400` | 16                | 32                  | 48               | 64                 | 28                  |
+| `--salt-spacing-450` | 18                | 36                  | 54               | 72                 | 30                  |
+| `--salt-spacing-500` | 20                | 40                  | 60               | 80                 | 32                  |
+| `--salt-spacing-550` | 22                | 44                  | 66               | 88                 | 34                  |
+| `--salt-spacing-600` | 24                | 48                  | 72               | 96                 | 36                  |
+| `--salt-spacing-650` | 26                | 52                  | 78               | 104                | 38                  |
+| `--salt-spacing-700` | 28                | 56                  | 84               | 112                | 40                  |
+| `--salt-spacing-750` | 30                | 60                  | 90               | 120                | 42                  |
+| `--salt-spacing-800` | 32                | 64                  | 96               | 128                | 44                  |
+| `--salt-spacing-850` | 34                | 68                  | 102              | 136                | 46                  |
+| `--salt-spacing-900` | 36                | 72                  | 108              | 144                | 48                  |
+| `--salt-spacing-950` | 38                | 76                  | 114              | 152                | 50                  |
 
 ## Fixed spacing
 
-Fixed spacing offers tokens with values that stay the same across all densities. For instance, `--salt-spacing-100` is consistently 1px, and `--salt-spacing-200` is 2px, no matter the density. This provides a stable reference for design elements needing uniform spacing, ensuring consistency and simplicity within the design system.
+Fixed spacing offers tokens with values that stay the same across all densities. For instance, `--salt-spacing-fixed-100` is consistently 1px, and `--salt-spacing-fixed-200` is 2px, no matter the density. This provides a stable reference for design elements needing uniform spacing, ensuring consistency and simplicity within the design system.
 
 | Token                      | All densities (px) |
 | -------------------------- | ------------------ |
@@ -59,7 +59,7 @@ Fixed spacing offers tokens with values that stay the same across all densities.
 | `--salt-spacing-fixed-800` | 8                  |
 | `--salt-spacing-fixed-900` | 9                  |
 
-Consider a numerical input with two buttons to its left, allowing users to step through values incrementally. Fixed spacing tokens define the distance between the input and the buttons, as well as the space between the two buttons. These spaces remain constant, ensuring precise control and uniformity. Meanwhile, the space between the numerical input and other components adjusts with density, providing flexibility and adaptability in the design.
+Consider a numerical input with two buttons to its right, allowing users to step through values incrementally. Fixed spacing tokens define the distance between the input and the buttons, as well as the space between the two buttons. These spaces remain constant, ensuring precise control and uniformity. Meanwhile, the space between the numerical input and other components adjusts with density, providing flexibility and adaptability in the design.
 
 <ImageSwitcher
   images={[
@@ -75,9 +75,9 @@ Consider a numerical input with two buttons to its left, allowing users to step 
 
 ## Hierarchical spacing
 
-Spacing is a key tool for emphasizing certain elements while downplaying others, guiding users through content. We suggests using varied spacing (`--salt-spacing-300`, `--salt-spacing-200`, `--salt-spacing-100`) to establish a visual hierarchy. Consistent vertical separation of items like headings, text blocks, form elements, and cards creates a visual rhythm.
+Spacing is a key tool for emphasizing certain elements while downplaying others, guiding users through content. We suggest using varied spacing (`--salt-spacing-300`, `--salt-spacing-200`, `--salt-spacing-100`) to establish a visual hierarchy. Consistent vertical separation of items like headings, text blocks, form elements, and cards creates a visual rhythm.
 
-Horizontal dividers help segment layout regions and should be spaced consistently with `--salt-spacing-300` above and below sections. For more details on dividers, please refer to the [Divider](/salt/components/divider).
+Horizontal dividers help segment layout regions and should be consistently spaced on the page. For more details on dividers, please refer to [Divider](/salt/components/divider).
 
 <ImageSwitcher
   images={[

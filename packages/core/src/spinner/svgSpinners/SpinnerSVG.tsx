@@ -18,18 +18,21 @@ const sizeAndStrokeWidthMapping = {
     medium: { width: 12, strokeWidth: 2 },
     low: { width: 14, strokeWidth: 2 },
     touch: { width: 16, strokeWidth: 2 },
+    mobile: { width: 16, strokeWidth: 2 },
   },
   medium: {
     high: { width: 20, strokeWidth: 2 },
     medium: { width: 28, strokeWidth: 4 },
     low: { width: 36, strokeWidth: 6 },
     touch: { width: 44, strokeWidth: 8 },
+    mobile: { width: 44, strokeWidth: 8 },
   },
   large: {
     high: { width: 40, strokeWidth: 2 },
     medium: { width: 56, strokeWidth: 4 },
     low: { width: 72, strokeWidth: 6 },
     touch: { width: 88, strokeWidth: 8 },
+    mobile: { width: 88, strokeWidth: 8 },
   },
 };
 
@@ -64,8 +67,8 @@ export const SpinnerSVG = ({
         </linearGradient>
       </defs>
       <g fill="none">
-        {/* 
-          This first path draws the top half of the circle without a gradient. 
+        {/*
+          This first path draws the top half of the circle without a gradient.
           It starts from the right end, moves in a circular arc, and ends at the left end.
         */}
         <path
@@ -76,8 +79,8 @@ export const SpinnerSVG = ({
           strokeWidth="var(--spinner-strokeWidth)"
           fill="none"
         />
-        {/* 
-          This second path draws the left half of the circle with a gradient that transitions 
+        {/*
+          This second path draws the left half of the circle with a gradient that transitions
           from opaque on the left to transparent on the right.
           It starts from the top-center, moves in a circular arc, and ends at the bottom-center.
         */}

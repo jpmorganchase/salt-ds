@@ -1,7 +1,3 @@
-.propsTable {
-  table-layout: fixed;
-}
-
 .secondarySidebar {
   flex: 0 0 250px;
   display: flex;
@@ -15,6 +11,11 @@
 
 .overlay {
   max-width: 100vw;
+}
+
+.overlayContent > div {
+  overflow: auto;
+  display: flex;
 }
 
 .content {
