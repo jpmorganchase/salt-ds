@@ -39,7 +39,37 @@
   --salt-spacing-850: calc(8.5 * var(--salt-spacing-100));
   --salt-spacing-900: calc(9 * var(--salt-spacing-100));
   --salt-spacing-950: calc(9.5 * var(--salt-spacing-100));
+}
 
+.salt-density-mobile {
+  --salt-spacing-25: 4px;
+  --salt-spacing-50: 8px;
+  --salt-spacing-75: 12px;
+  --salt-spacing-100: 16px;
+  --salt-spacing-150: 18px;
+  --salt-spacing-200: 20px;
+  --salt-spacing-250: 22px;
+  --salt-spacing-300: 24px;
+  --salt-spacing-350: 26px;
+  --salt-spacing-400: 28px;
+  --salt-spacing-450: 30px;
+  --salt-spacing-500: 32px;
+  --salt-spacing-550: 34px;
+  --salt-spacing-600: 36px;
+  --salt-spacing-650: 38px;
+  --salt-spacing-700: 40px;
+  --salt-spacing-750: 42px;
+  --salt-spacing-800: 44px;
+  --salt-spacing-850: 46px;
+  --salt-spacing-900: 48px;
+  --salt-spacing-950: 50px;
+}
+
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high,
+.salt-density-mobile {
   --salt-spacing-fixed-100: 1px;
   --salt-spacing-fixed-200: 2px;
   --salt-spacing-fixed-300: 3px;

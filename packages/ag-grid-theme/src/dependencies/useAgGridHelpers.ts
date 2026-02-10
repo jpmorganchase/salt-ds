@@ -51,6 +51,8 @@ export function useAgGridHelpers({
         return [49, 48]; // 36 + 12 + [1 (border)]
       case "touch":
         return [61, 60]; // 44 + 16 + [1 (border)]
+      case "mobile":
+        return [61, 60]; // 44 + 16 + [1 (border)]
       default:
         return [25, 24];
     }

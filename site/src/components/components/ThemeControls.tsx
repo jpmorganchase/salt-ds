@@ -27,6 +27,7 @@ export function ThemeControls() {
           <ToggleButton value="medium">Medium</ToggleButton>
           <ToggleButton value="low">Low</ToggleButton>
           <ToggleButton value="touch">Touch</ToggleButton>
+          <ToggleButton value="mobile">Mobile</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
       <StackLayout gap={0.75} align="baseline" padding={0}>

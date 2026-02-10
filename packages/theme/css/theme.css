@@ -29,6 +29,7 @@
 @import url(legacy/characteristics/content.css);
 @import url(legacy/characteristics/editable.css);
 @import url(legacy/characteristics/focused.css);
+@import url(legacy/characteristics/layout.css);
 @import url(legacy/characteristics/navigable.css);
 @import url(legacy/characteristics/overlayable.css);
 @import url(legacy/characteristics/selectable.css);

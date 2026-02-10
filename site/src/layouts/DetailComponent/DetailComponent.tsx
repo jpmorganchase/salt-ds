@@ -103,6 +103,7 @@ export const DetailComponent = ({ children }: LayoutProps) => {
   const isOverview = route?.endsWith("components/index");
 
   const currentTab = tabs.find(({ name }) => route?.includes(name));
+  const currentTabName = currentTab?.name ?? tabs[0].name;
 
   useEffect(() => {
     // Default to first tab, "Examples"
@@ -153,7 +154,7 @@ export const DetailComponent = ({ children }: LayoutProps) => {
         {!isOverview && (
           <TabsNext
             className={styles.content}
-            value={currentTab?.name ?? tabs[0].name}
+            value={currentTabName}
             onChange={handleTabChange}
           >
             <TabBar divider>
@@ -167,7 +168,7 @@ export const DetailComponent = ({ children }: LayoutProps) => {
             </TabBar>
             {tabs.map(({ name }) => (
               <TabNextPanel className={styles.tabPanel} key={name} value={name}>
-                {children}
+                {name === currentTabName ? children : null}
               </TabNextPanel>
             ))}
           </TabsNext>
