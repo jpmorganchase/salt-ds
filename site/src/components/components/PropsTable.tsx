@@ -1,4 +1,4 @@
-import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/lab";
+import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/core";
 import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
 import { Code } from "../mdx/code";
@@ -65,7 +65,7 @@ export const PropsTable: FC<PropsTableType> = ({
   }
 
   return (
-    <Table className="propsTable">
+    <Table className={styles.propsTable}>
       <THead>
         <TR>
           <TH>Name</TH>

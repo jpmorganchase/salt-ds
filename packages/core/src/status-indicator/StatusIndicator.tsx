@@ -4,7 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { useIcon } from "../semantic-icon-provider";
-import { makePrefixer } from "../utils";
+import { capitalize, makePrefixer } from "../utils";
 import statusIndicatorCss from "./StatusIndicator.css";
 import type { ValidationStatus } from "./ValidationStatus";
 
@@ -14,13 +14,6 @@ export interface StatusIndicatorProps extends IconProps {
    */
   status: ValidationStatus;
 }
-
-const statusToAriaLabelMap: Record<ValidationStatus, string> = {
-  error: "error",
-  success: "success",
-  warning: "warning",
-  info: "info",
-};
 
 const withBaseName = makePrefixer("saltStatusIndicator");
 
@@ -36,17 +29,11 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
       window: targetWindow,
     });
 
-    const { ErrorIcon, WarningIcon, SuccessIcon, InfoIcon } = useIcon();
-
-    const iconMap = {
-      error: ErrorIcon,
-      success: SuccessIcon,
-      warning: WarningIcon,
-      info: InfoIcon,
-    };
-
-    const IconComponent = iconMap[status];
-    const ariaLabel = statusToAriaLabelMap[status];
+    const icons = useIcon();
+    const titleCaseStatus = capitalize(status);
+    const iconKey = `${titleCaseStatus}Icon` as keyof typeof icons;
+    const IconComponent = icons[iconKey];
+    const ariaLabel = status;
 
     if (IconComponent === undefined) {
       return null;
