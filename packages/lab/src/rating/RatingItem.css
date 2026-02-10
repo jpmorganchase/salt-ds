@@ -5,10 +5,11 @@
   position: relative;
   align-items: center;
   justify-content: center;
+  cursor: var(--salt-cursor-hover);
 }
 
-.saltRatingItem:not(.saltRatingItem-disabled):not(.saltRatingItem-readOnly) {
-  cursor: var(--salt-cursor-hover);
+.saltRatingItem-disabled, .saltRatingItem-readOnly {
+  cursor: default;
 }
 
 .saltRatingItem-input {
@@ -22,7 +23,6 @@
 }
 
 .saltRatingItem-icon {
-  --saltIcon-size: var(--salt-size-icon);
   pointer-events: none;
   display: flex;
   align-items: center;

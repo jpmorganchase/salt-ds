@@ -5,7 +5,7 @@ import type { ReactElement } from "react";
 const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
 export const WithFormField = (): ReactElement => (
   <FormField labelPlacement="top">
-    <FormFieldLabel color="secondary">Overall Experience</FormFieldLabel>
+    <FormFieldLabel>Overall Experience</FormFieldLabel>
     <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
     <FormFieldHelperText>
       Please rate your overall experience with our service. Select the number of

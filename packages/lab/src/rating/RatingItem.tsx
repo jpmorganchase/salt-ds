@@ -6,8 +6,6 @@ import {
   forwardRef,
   type MouseEvent,
   type ReactNode,
-  useCallback,
-  useMemo,
 } from "react";
 import ratingItemCss from "./RatingItem.css";
 
@@ -114,28 +112,17 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
 
     const isInteractive = !readOnly && !disabled;
 
-    const handleHover = useCallback(
-      (event: MouseEvent<HTMLLabelElement>) => {
-        if (isInteractive) {
-          onHover(event);
-        }
-      },
-      [isInteractive, onHover],
-    );
+    const handleHover = (event: MouseEvent<HTMLLabelElement>) => {
+      if (isInteractive) {
+        onHover(event);
+      }
+    };
 
-    const icon = useMemo(() => {
-      if (isHovered || isSelected) return filledIcon;
-      if (isActive) return strongIcon;
-      return emptyIcon;
-    }, [
-      props,
-      isHovered,
-      isSelected,
-      isActive,
-      filledIcon,
-      strongIcon,
-      emptyIcon,
-    ]);
+    const icon = isHovered || isSelected
+      ? filledIcon
+      : isActive
+        ? strongIcon
+        : emptyIcon;
 
     return (
       <label

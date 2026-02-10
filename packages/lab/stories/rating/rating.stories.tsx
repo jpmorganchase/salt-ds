@@ -23,7 +23,7 @@ export default {
 export const Basic: StoryFn<typeof Rating> = () => {
   return (
     <FormField>
-      <FormFieldLabel color="secondary">Rate your experience</FormFieldLabel>
+      <FormFieldLabel>Rate your experience</FormFieldLabel>
       <Rating />
     </FormField>
   );
@@ -46,12 +46,13 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
         <Rating
           labelPlacement="left"
           getLabel={(value) => labels[value - 1] || "No rating"}
-          labelProps={{ style: { minWidth: "15ch" } }}
+          className="custom-rating-width"
         />
-        <Text style={{ maxWidth: "450px" }}>
+        <style>{`.custom-rating-width .saltRating-label { min-width: 15ch; }`}</style>
+        <Text style={{ maxWidth: "75ch" }}>
           When using labels with `labelPlacement` set to 'left', set a minimum
-          width on the label container using the `labelProps` with inline
-          styles. This prevents layout shifts as the label text changes between
+          width on the label container by targeting the `.saltRating-label`
+          class. This prevents layout shifts as the label text changes between
           different rating values.
         </Text>
       </FormField>
@@ -63,7 +64,7 @@ export const FormFieldSupport: StoryFn<typeof Rating> = () => {
   const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
   return (
     <FormField labelPlacement="top">
-      <FormFieldLabel color="secondary">Overall Experience</FormFieldLabel>
+      <FormFieldLabel>Overall Experience</FormFieldLabel>
       <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
       <FormFieldHelperText>
         Please rate your overall experience with our service. Select the number

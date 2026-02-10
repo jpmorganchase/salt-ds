@@ -12,7 +12,6 @@ import { clsx } from "clsx";
 import {
   type FocusEvent,
   forwardRef,
-  type HTMLAttributes,
   type KeyboardEvent,
   type MouseEvent,
   type SyntheticEvent,
@@ -38,7 +37,7 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
    */
-  onChange?: (event: SyntheticEvent, itemValue: number) => void;
+  onChange?: (event: SyntheticEvent, value: number) => void;
   /**
    * If true, the rating component will be in a read-only state.
    */
@@ -66,10 +65,6 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * The name to be set on each radio button within the group. If not set, then one will be generated for you.
    */
   name?: string;
-  /**
-   * Additional props to be applied to the label element.
-   */
-  labelProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
@@ -84,7 +79,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     max = 5,
     getLabel,
     labelPlacement = "right",
-    labelProps,
     onKeyDown,
     onFocus,
     "aria-labelledby": ariaLabelledBy,
@@ -232,7 +226,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         withBaseName("label"),
         withBaseName(`label-${labelPlacement}`),
       )}
-      {...labelProps}
     >
       {label}
     </div>

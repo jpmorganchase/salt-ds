@@ -24,7 +24,7 @@ You can display Rating with a aligned label. This alignment is particularly usef
 
 ## Form field support
 
-If the component is wrapped in a Form Field and you need to provide additional guidance, you can display help text beneath the rating.
+If the component is wrapped in a [`FormField`](/salt/components/form-field) and you need to provide additional guidance, you can display help text beneath the rating.
 
 <LivePreview componentName="rating" exampleName="WithFormField" />
 
@@ -32,21 +32,13 @@ If the component is wrapped in a Form Field and you need to provide additional g
 
 You can display up to 10 increments, reducing or increasing the number to suit your particular use case. To configure the number of increments, use the max prop.
 
-**Note:** There should be at least 3 increments—this allows users to express a basic range of sentiment -
-Poor/ Unsatisfactory
-Average/Neutral
-Good/Satisfactory
-Fewer than 3 increments (such as a binary thumbs up/down or like/dislike) do not provide enough nuance for most rating scenarios.
-In this scenario, use a Toggle Button Group.
-10 increments is the recommended maximum for highly detailed feedback but can be overwhelming, and is unnecessary for most scenarios.
-
 ### Best practice
 
 Display the same number of increments across all Rating components within your application to ensure that the value of each increment remains consistent for users.
 
 <LivePreview componentName="rating" exampleName="CustomIcons" />
 
-### Disabled
+## Disabled
 
 You can disable Rating if required, e.g., due to context or user permissions. Showing the component in a disabled state indicates its presence and functionality which may become available.
 
