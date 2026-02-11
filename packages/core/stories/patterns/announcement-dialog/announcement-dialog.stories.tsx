@@ -4,14 +4,17 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  FlexItem,
   H3,
   SplitLayout,
   StackLayout,
+  type StackLayoutProps,
   Text,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type ElementType, useState } from "react";
 import exampleImage from "../../assets/exampleImage4x.png";
 import "./announcement-dialog.stories.css";
 
@@ -423,6 +426,41 @@ export const ResponsiveStackedContent: StoryFn = () => {
 export const ResponsiveStackedButtonBar: StoryFn = () => {
   const [open, setOpen] = useState(true);
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
+  const remindMeLater = (
+    <FlexItem>
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        style={{ width: "100%" }}
+      >
+        Remind me later
+      </Button>
+    </FlexItem>
+  );
+
+  const goToDashboard = (
+    <FlexItem>
+      <Button
+        sentiment="accented"
+        appearance="bordered"
+        style={{ width: "100%" }}
+      >
+        Go to dashboard
+      </Button>
+    </FlexItem>
+  );
+
+  const tryItNow = (
+    <FlexItem>
+      <Button sentiment="accented" style={{ width: "100%" }}>
+        Try it now
+      </Button>
+    </FlexItem>
+  );
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
@@ -450,27 +488,24 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <SplitLayout
-            direction={{ xs: "column-reverse", sm: "row" }}
-            gap={1}
-            startItem={
-              <Button sentiment="accented" appearance="transparent">
-                Remind me later
-              </Button>
-            }
-            endItem={
-              <StackLayout
-                direction={{ xs: "column-reverse", sm: "row" }}
-                gap={1}
-              >
-                <Button sentiment="accented" appearance="bordered">
-                  Go to dashboard
-                </Button>
-                <Button sentiment="accented">Try it now</Button>
-              </StackLayout>
-            }
-            style={{ width: "100%" }}
-          />
+          {direction === "column" ? (
+            <StackLayout direction="column" gap={1} style={{ width: "100%" }}>
+              {tryItNow}
+              {goToDashboard}
+              {remindMeLater}
+            </StackLayout>
+          ) : (
+            <SplitLayout
+              startItem={remindMeLater}
+              endItem={
+                <StackLayout direction="row" gap={1}>
+                  {goToDashboard}
+                  {tryItNow}
+                </StackLayout>
+              }
+              style={{ width: "100%" }}
+            />
+          )}
         </DialogActions>
       </Dialog>
     </>
