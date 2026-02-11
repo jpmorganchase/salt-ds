@@ -29,7 +29,6 @@
   align-items: center;
   justify-content: center;
   color: var(--salt-sentiment-neutral-dataviz);
-  transition: color var(--salt-duration-instant) ease-in-out;
 }
 
 .saltRatingItem-icon .saltIcon {
@@ -55,8 +54,4 @@
 .saltRatingItem-hovered .saltRatingItem-icon,
 .saltRatingItem-active .saltRatingItem-icon {
   color: var(--salt-sentiment-accent-dataviz);
-}
-
-.saltRatingItem.saltRatingItem-active .saltRatingItem-icon {
-  transition-duration: var(--salt-duration-perceptible);
 }
