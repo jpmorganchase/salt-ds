@@ -8,14 +8,12 @@ import {
   H3,
   SplitLayout,
   StackLayout,
-  type StackLayoutProps,
   Text,
-  useResponsiveProp,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ElementType, useState } from "react";
-import stockPhoto from "../../assets/stockPhoto.png";
+import { useState } from "react";
+import exampleImage from "../../assets/exampleImage4x.png";
 import "./announcement-dialog.stories.css";
 
 export default {
@@ -27,7 +25,6 @@ interface AnnouncementContent {
   header: string;
   subheader?: string;
   body: string;
-  imageAlt: string;
 }
 
 const multiSlideAnnouncementContent: AnnouncementContent[] = [
@@ -36,21 +33,18 @@ const multiSlideAnnouncementContent: AnnouncementContent[] = [
     header: "Trade across markets",
     subheader: "Builder",
     body: "Create your own optimised corporate bond portfolios targeting specific characteristics using a wide range of parameters and constraints including Yield, Risk, churn, costs and more.",
-    imageAlt: "Clouds in the sky",
   },
   {
     preheader: "New feature",
     header: "Seamless Trade Execution",
     subheader: "Trading",
     body: "Execute trades efficiently across multiple markets with smart routing technology and integrated compliance checks to ensure regulatory adherence.",
-    imageAlt: "Clouds in the sky",
   },
   {
     preheader: "New feature",
     header: "Risk Management Tools",
     subheader: "Protection",
     body: "Monitor and manage risk exposure with advanced analytics, scenario modeling, and automated alerts that keep your portfolio within defined parameters.",
-    imageAlt: "Clouds in the sky",
   },
 ];
 
@@ -100,11 +94,7 @@ export const AnnouncementDialog: StoryFn = () => {
               </StackLayout>
             }
             endItem={
-              <img
-                alt="Clouds in the sky"
-                src={stockPhoto}
-                className="announcementImage"
-              />
+              <img alt="" src={exampleImage} className="announcementImage" />
             }
           />
         </DialogContent>
@@ -158,11 +148,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
               </StackLayout>
             }
             endItem={
-              <img
-                alt={currentSlide.imageAlt}
-                src={stockPhoto}
-                className="announcementImage"
-              />
+              <img alt="" src={exampleImage} className="announcementImage" />
             }
           />
         </DialogContent>
@@ -182,21 +168,24 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                 >
                   {activeIndex + 1}/{multiSlideAnnouncementContent.length}
                 </Text>
-                <Button
-                  sentiment="accented"
-                  appearance="bordered"
-                  onClick={handlePrevious}
-                  disabled={isFirst}
-                >
-                  Previous
-                </Button>
-                <Button
-                  sentiment="accented"
-                  onClick={handleNext}
-                  disabled={isLast}
-                >
-                  Next
-                </Button>
+                {!isFirst && (
+                  <Button
+                    sentiment="accented"
+                    appearance="bordered"
+                    onClick={handlePrevious}
+                  >
+                    Previous
+                  </Button>
+                )}
+                {!isLast && (
+                  <Button
+                    sentiment="accented"
+                    onClick={handleNext}
+                    disabled={isLast}
+                  >
+                    Next
+                  </Button>
+                )}
               </StackLayout>
             }
             style={{ width: "100%" }}
@@ -252,11 +241,7 @@ export const WithDisclaimer: StoryFn = () => {
               </StackLayout>
             }
             endItem={
-              <img
-                alt={currentSlide.imageAlt}
-                src={stockPhoto}
-                className="announcementImage"
-              />
+              <img alt="" src={exampleImage} className="announcementImage" />
             }
           />
         </DialogContent>
@@ -276,21 +261,24 @@ export const WithDisclaimer: StoryFn = () => {
                   >
                     {activeIndex + 1}/{multiSlideAnnouncementContent.length}
                   </Text>
-                  <Button
-                    sentiment="accented"
-                    appearance="bordered"
-                    onClick={handlePrevious}
-                    disabled={isFirst}
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    sentiment="accented"
-                    onClick={handleNext}
-                    disabled={isLast}
-                  >
-                    Next
-                  </Button>
+                  {!isFirst && (
+                    <Button
+                      sentiment="accented"
+                      appearance="bordered"
+                      onClick={handlePrevious}
+                    >
+                      Previous
+                    </Button>
+                  )}
+                  {!isLast && (
+                    <Button
+                      sentiment="accented"
+                      onClick={handleNext}
+                      disabled={isLast}
+                    >
+                      Next
+                    </Button>
+                  )}
                 </StackLayout>
               }
               style={{ width: "100%" }}
@@ -309,7 +297,7 @@ export const FullImage: StoryFn = () => {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
-      <Dialog open={open} onOpenChange={setOpen} size="small">
+      <Dialog open={open} onOpenChange={setOpen} style={{ maxWidth: 400 }}>
         <DialogHeader
           preheader="Product Update"
           header="New Dashboard Experience"
@@ -323,11 +311,7 @@ export const FullImage: StoryFn = () => {
               navigation, faster loading times, and a cleaner interface that
               helps you focus on what matters most.
             </Text>
-            <img
-              alt="Clouds in the sky"
-              src={stockPhoto}
-              className="announcementImage"
-            />
+            <img alt="" src={exampleImage} />
           </StackLayout>
         </DialogContent>
         <DialogActions>
@@ -356,13 +340,8 @@ export const ContentScrolling: StoryFn = () => {
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
-                  Heading
+                  Analytics Engine
                 </H3>
-                <Text>
-                  We're thrilled to introduce a comprehensive suite of new
-                  features designed to transform the way you work with data.
-                </Text>
-                <H3>Analytics Engine</H3>
                 <Text>
                   The new analytics engine processes data up to 10x faster than
                   before, enabling real-time insights that help you make
@@ -370,14 +349,26 @@ export const ContentScrolling: StoryFn = () => {
                   tools, you can create stunning charts that communicate complex
                   information.
                 </Text>
+                <H3>Collaboration Features</H3>
+                <Text>
+                  Share insights seamlessly across your organization with
+                  enhanced collaboration tools. Team members can annotate data,
+                  create shared workspaces, and receive real-time notifications
+                  when important metrics change. Export capabilities support
+                  multiple formats including PDF, Excel, and interactive web
+                  reports. Version control ensures everyone works with the most
+                  up-to-date information.
+                </Text>
+                <H3>Security & Compliance</H3>
+                <Text>
+                  Enhanced security protocols and compliance certifications
+                  ensure your data remains protected and meets industry
+                  standards.
+                </Text>
               </StackLayout>
             }
             endItem={
-              <img
-                alt="Clouds in the sky"
-                src={stockPhoto}
-                className="announcementImage"
-              />
+              <img alt="" src={exampleImage} className="announcementImage" />
             }
           />
         </DialogContent>
@@ -414,11 +405,7 @@ export const ResponsiveStackedContent: StoryFn = () => {
               </StackLayout>
             }
             endItem={
-              <img
-                alt="Clouds in the sky"
-                src={stockPhoto}
-                className="announcementImage"
-              />
+              <img alt="" src={exampleImage} className="announcementImage" />
             }
           />
         </DialogContent>
@@ -432,8 +419,6 @@ export const ResponsiveStackedContent: StoryFn = () => {
 
 export const ResponsiveStackedButtonBar: StoryFn = () => {
   const [open, setOpen] = useState(true);
-  const direction: StackLayoutProps<ElementType>["direction"] =
-    useResponsiveProp({ xs: "column", sm: "row" }, "row");
 
   return (
     <>
@@ -457,36 +442,25 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
               </StackLayout>
             }
             endItem={
-              <img
-                alt="Clouds in the sky"
-                src={stockPhoto}
-                className="announcementImage"
-              />
+              <img alt="" src={exampleImage} className="announcementImage" />
             }
           />
         </DialogContent>
         <DialogActions>
-          {direction === "column" ? (
-            <StackLayout gap={1} style={{ width: "100%" }}>
-              <Button sentiment="accented">Try it now</Button>
-              <Button sentiment="accented" appearance="bordered">
-                Go to dashboard
-              </Button>
-              <Button sentiment="accented" appearance="transparent">
-                Remind me later
-              </Button>
-            </StackLayout>
-          ) : (
-            <FlexLayout gap={1}>
-              <Button sentiment="accented" appearance="transparent">
-                Remind me later
-              </Button>
-              <Button sentiment="accented" appearance="bordered">
-                Go to dashboard
-              </Button>
-              <Button sentiment="accented">Try it now</Button>
-            </FlexLayout>
-          )}
+          <FlexLayout
+            direction={{ xs: "column-reverse", sm: "row" }}
+            justify="end"
+            gap={1}
+            style={{ width: "100%" }}
+          >
+            <Button sentiment="accented" appearance="transparent">
+              Remind me later
+            </Button>
+            <Button sentiment="accented" appearance="bordered">
+              Go to dashboard
+            </Button>
+            <Button sentiment="accented">Try it now</Button>
+          </FlexLayout>
         </DialogActions>
       </Dialog>
     </>
