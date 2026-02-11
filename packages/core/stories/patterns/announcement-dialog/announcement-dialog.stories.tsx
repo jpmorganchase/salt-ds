@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
-  FlexLayout,
   H3,
   SplitLayout,
   StackLayout,
@@ -69,6 +68,7 @@ export const AnnouncementDialog: StoryFn = () => {
         />
         <DialogContent>
           <SplitLayout
+            direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
@@ -137,6 +137,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
         />
         <DialogContent>
           <SplitLayout
+            direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 {currentSlide.subheader && (
@@ -230,6 +231,7 @@ export const WithDisclaimer: StoryFn = () => {
         />
         <DialogContent>
           <SplitLayout
+            direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 {currentSlide.subheader && (
@@ -337,6 +339,7 @@ export const ContentScrolling: StoryFn = () => {
         />
         <DialogContent>
           <SplitLayout
+            direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
@@ -447,20 +450,27 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <FlexLayout
+          <SplitLayout
             direction={{ xs: "column-reverse", sm: "row" }}
-            justify="end"
             gap={1}
+            startItem={
+              <Button sentiment="accented" appearance="transparent">
+                Remind me later
+              </Button>
+            }
+            endItem={
+              <StackLayout
+                direction={{ xs: "column-reverse", sm: "row" }}
+                gap={1}
+              >
+                <Button sentiment="accented" appearance="bordered">
+                  Go to dashboard
+                </Button>
+                <Button sentiment="accented">Try it now</Button>
+              </StackLayout>
+            }
             style={{ width: "100%" }}
-          >
-            <Button sentiment="accented" appearance="transparent">
-              Remind me later
-            </Button>
-            <Button sentiment="accented" appearance="bordered">
-              Go to dashboard
-            </Button>
-            <Button sentiment="accented">Try it now</Button>
-          </FlexLayout>
+          />
         </DialogActions>
       </Dialog>
     </>
