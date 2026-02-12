@@ -1,5 +1,17 @@
 # @salt-ds/embla-carousel
 
+## 1.1.0
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+
+### Patch Changes
+
+- Updated dependencies [972e37e]
+- Updated dependencies [4507919]
+  - @salt-ds/core@1.56.0
+
 ## 1.0.0
 
 ### Major Changes

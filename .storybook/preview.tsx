@@ -85,7 +85,7 @@ const preview: Preview = {
         // Storybook built in icons here - https://www.chromatic.com/component?appId=5a375b97f4b14f0020b0cda3&name=Basics%2FIcon&buildNumber=20654
         icon: "graphbar",
         // array of plain string values or MenuItem shape (see below)
-        items: ["touch", "low", "medium", "high"],
+        items: ["mobile", "touch", "low", "medium", "high"],
       },
     },
     responsive: {

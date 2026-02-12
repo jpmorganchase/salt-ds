@@ -174,8 +174,16 @@
 /* Bubble chart data labels use primary foreground for better visibility */
 .highcharts-theme-salt .highcharts-bubble-series .highcharts-data-label text,
 .highcharts-theme-salt .highcharts-bubble-series text.highcharts-data-label {
-  fill: var(--salt-content-primary-foreground);
+  fill: var(--salt-content-bold-foreground);
   font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+.highcharts-theme-salt.salt-fill-patterns .highcharts-bubble-series .highcharts-data-label text,
+.highcharts-theme-salt.salt-fill-patterns .highcharts-bubble-series text.highcharts-data-label {
+  /* stylelint-disable-next-line salt/correct-theme-token-usage -- permissable due to lack of better token */
+  stroke: var(--salt-color-black);
+  stroke-width: var(--salt-size-fixed-200);
+  paint-order: stroke;
 }
 
 .highcharts-theme-salt .highcharts-waterfall-series .highcharts-data-label text,

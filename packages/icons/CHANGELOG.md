@@ -1,5 +1,12 @@
 # @salt-ds/icons
 
+## 1.17.1
+
+### Patch Changes
+
+- Updated dependencies [27c4338]
+  - @salt-ds/styles@0.3.0
+
 ## 1.17.0
 
 ### Minor Changes
