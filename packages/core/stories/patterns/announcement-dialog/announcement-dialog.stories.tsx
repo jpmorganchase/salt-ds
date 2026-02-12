@@ -214,18 +214,29 @@ export const MultiAnnouncementDialog: StoryFn = () => {
 export const WithDisclaimer: StoryFn = () => {
   const [open, setOpen] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const headingRef = useRef<HTMLSpanElement>(null);
+  const navigatedRef = useRef(false);
   const currentSlide = multiSlideAnnouncementContent[activeIndex];
   const isFirst = activeIndex === 0;
   const isLast = activeIndex === multiSlideAnnouncementContent.length - 1;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus heading when active slide changes via navigation
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    headingRef.current?.focus();
+  }, [activeIndex]);
+
   const handlePrevious = () => {
     if (!isFirst) {
+      navigatedRef.current = true;
       setActiveIndex((prev) => prev - 1);
     }
   };
 
   const handleNext = () => {
     if (!isLast) {
+      navigatedRef.current = true;
       setActiveIndex((prev) => prev + 1);
     }
   };
@@ -239,7 +250,14 @@ export const WithDisclaimer: StoryFn = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogHeader
           preheader={currentSlide.preheader}
-          header={currentSlide.header}
+          header={
+            <span tabIndex={-1} ref={headingRef}>
+              {currentSlide.header}
+              <span className="salt-visuallyHidden">
+                {`, slide ${activeIndex + 1} of ${multiSlideAnnouncementContent.length}`}
+              </span>
+            </span>
+          }
           actions={<CloseButton onClick={() => setOpen(false)} />}
           disableAccent
         />
@@ -287,11 +305,7 @@ export const WithDisclaimer: StoryFn = () => {
                     </Button>
                   )}
                   {!isLast && (
-                    <Button
-                      sentiment="accented"
-                      onClick={handleNext}
-                      disabled={isLast}
-                    >
+                    <Button sentiment="accented" onClick={handleNext}>
                       Next
                     </Button>
                   )}
