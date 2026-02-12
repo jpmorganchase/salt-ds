@@ -14,7 +14,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ElementType, useState } from "react";
+import { type ElementType, useEffect, useRef, useState } from "react";
 import exampleImage from "../../assets/exampleImage4x.png";
 import "./announcement-dialog.stories.css";
 
@@ -74,7 +74,7 @@ export const AnnouncementDialog: StoryFn = () => {
             direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
-                <H3 style={{ margin: "0" }}>Builder</H3>
+                <H3 className="announcementHeading">Builder</H3>
                 <Text>
                   Create your own optimised corporate bond portfolios targeting
                   specific characteristics using a wide range of parameters and
@@ -110,18 +110,29 @@ export const AnnouncementDialog: StoryFn = () => {
 export const MultiAnnouncementDialog: StoryFn = () => {
   const [open, setOpen] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const headingRef = useRef<HTMLSpanElement>(null);
+  const navigatedRef = useRef(false);
   const currentSlide = multiSlideAnnouncementContent[activeIndex];
   const isFirst = activeIndex === 0;
   const isLast = activeIndex === multiSlideAnnouncementContent.length - 1;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus heading when active slide changes via navigation
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    headingRef.current?.focus();
+  }, [activeIndex]);
+
   const handlePrevious = () => {
     if (!isFirst) {
+      navigatedRef.current = true;
       setActiveIndex((prev) => prev - 1);
     }
   };
 
   const handleNext = () => {
     if (!isLast) {
+      navigatedRef.current = true;
       setActiveIndex((prev) => prev + 1);
     }
   };
@@ -132,7 +143,14 @@ export const MultiAnnouncementDialog: StoryFn = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogHeader
           preheader={currentSlide.preheader}
-          header={currentSlide.header}
+          header={
+            <span tabIndex={-1} ref={headingRef}>
+              {currentSlide.header}
+              <span className="salt-visuallyHidden">
+                {`, slide ${activeIndex + 1} of ${multiSlideAnnouncementContent.length}`}
+              </span>
+            </span>
+          }
           actions={<CloseButton onClick={() => setOpen(false)} />}
           disableAccent
         />
@@ -142,7 +160,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 {currentSlide.subheader && (
-                  <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
+                  <H3 className="announcementHeading">
                     {currentSlide.subheader}
                   </H3>
                 )}
@@ -164,7 +182,6 @@ export const MultiAnnouncementDialog: StoryFn = () => {
             endItem={
               <StackLayout direction="row" gap={1} align="center">
                 <Text
-                  role="status"
                   color="secondary"
                   style={{ marginRight: "var(--salt-spacing-200)" }}
                 >
@@ -180,11 +197,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                   </Button>
                 )}
                 {!isLast && (
-                  <Button
-                    sentiment="accented"
-                    onClick={handleNext}
-                    disabled={isLast}
-                  >
+                  <Button sentiment="accented" onClick={handleNext}>
                     Next
                   </Button>
                 )}
@@ -236,7 +249,7 @@ export const WithDisclaimer: StoryFn = () => {
             startItem={
               <StackLayout gap={1} className="announcementContent">
                 {currentSlide.subheader && (
-                  <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
+                  <H3 className="announcementHeading">
                     {currentSlide.subheader}
                   </H3>
                 )}
@@ -343,9 +356,7 @@ export const ContentScrolling: StoryFn = () => {
             direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
-                <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
-                  Analytics Engine
-                </H3>
+                <H3 className="announcementHeading">Analytics Engine</H3>
                 <Text>
                   The new analytics engine processes data up to 10x faster than
                   before, enabling real-time insights that help you make
@@ -353,7 +364,7 @@ export const ContentScrolling: StoryFn = () => {
                   tools, you can create stunning charts that communicate complex
                   information.
                 </Text>
-                <H3>Collaboration Features</H3>
+                <H3 className="announcementHeading">Collaboration Features</H3>
                 <Text>
                   Share insights seamlessly across your organization with
                   enhanced collaboration tools. Team members can annotate data,
@@ -363,7 +374,7 @@ export const ContentScrolling: StoryFn = () => {
                   reports. Version control ensures everyone works with the most
                   up-to-date information.
                 </Text>
-                <H3>Security & Compliance</H3>
+                <H3 className="announcementHeading">Security & Compliance</H3>
                 <Text>
                   Enhanced security protocols and compliance certifications
                   ensure your data remains protected and meets industry
