@@ -74,9 +74,7 @@ export const AnnouncementDialog: StoryFn = () => {
             direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
-                <H3 style={{ margin: "0 0 var(--salt-spacing-100) 0" }}>
-                  Builder
-                </H3>
+                <H3 style={{ margin: "0" }}>Builder</H3>
                 <Text>
                   Create your own optimised corporate bond portfolios targeting
                   specific characteristics using a wide range of parameters and
