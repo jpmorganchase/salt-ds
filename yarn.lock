@@ -12148,19 +12148,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-mdx-remote@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "next-mdx-remote@npm:5.0.0"
+"next-mdx-remote@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "next-mdx-remote@npm:6.0.0"
   dependencies:
     "@babel/code-frame": "npm:^7.23.5"
     "@mdx-js/mdx": "npm:^3.0.1"
     "@mdx-js/react": "npm:^3.0.1"
-    unist-util-remove: "npm:^3.1.0"
+    unist-util-remove: "npm:^4.0.0"
+    unist-util-visit: "npm:^5.1.0"
     vfile: "npm:^6.0.1"
     vfile-matter: "npm:^5.0.0"
   peerDependencies:
     react: ">=16"
-  checksum: 10/6c69266eed98d9abda8f7c006dd3fb812d3ee9cbd2deb80b9df24e1b52400ca5b3ed837afff5e68b3f393e38c58e7ff9178e583033ad0a2a5df2a1dcc59e2d14
+  checksum: 10/627d0e69b99986f8ca3144d816fe6d43bafae732f60ef970cad0251818691673cc4dbf2e85d1556245957a2b1fd191a4cbd396e50547e392e2c17c966994baa5
   languageName: node
   linkType: hard
 
@@ -16096,13 +16097,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-is@npm:^5.0.0":
-  version: 5.2.0
-  resolution: "unist-util-is@npm:5.2.0"
-  checksum: 10/4903d0dc0ddfbf4e32643032ffc153f733b6f5f75dedf0f3b8c814e41582a1143311074c6bd8613fdb87f3c4f9ca03e324d9ae499736dd3b57ea8e0af6dcfe01
-  languageName: node
-  linkType: hard
-
 "unist-util-is@npm:^6.0.0":
   version: 6.0.0
   resolution: "unist-util-is@npm:6.0.0"
@@ -16130,14 +16124,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-remove@npm:^3.1.0":
-  version: 3.1.1
-  resolution: "unist-util-remove@npm:3.1.1"
+"unist-util-remove@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "unist-util-remove@npm:4.0.0"
   dependencies:
-    "@types/unist": "npm:^2.0.0"
-    unist-util-is: "npm:^5.0.0"
-    unist-util-visit-parents: "npm:^5.0.0"
-  checksum: 10/317fc912a3177a6f8a67cf38d9250df55f39de389e2ba3c831081d619b47afae535f07f9854468ea332b42c38f5241fa74d33d1a12fb493ffddd1e8275e43194
+    "@types/unist": "npm:^3.0.0"
+    unist-util-is: "npm:^6.0.0"
+    unist-util-visit-parents: "npm:^6.0.0"
+  checksum: 10/24a84224720f4c2d2ffce1d570c00b83ef545de80ec32a246698feff880446af6c410fc94deec4b4daafe09851d59f17cd1770e20f66d68092e3cd60c2147fb8
   languageName: node
   linkType: hard
 
@@ -16159,16 +16153,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit-parents@npm:^5.0.0":
-  version: 5.1.3
-  resolution: "unist-util-visit-parents@npm:5.1.3"
-  dependencies:
-    "@types/unist": "npm:^2.0.0"
-    unist-util-is: "npm:^5.0.0"
-  checksum: 10/5381fc57a129d478d983b988d86b72a1266d6f91fc608562b00bfa76596128d6e4d1c2b26ced64d96e55eb5d27d620081b4ee9703979bab63e1210789e781372
-  languageName: node
-  linkType: hard
-
 "unist-util-visit-parents@npm:^6.0.0":
   version: 6.0.1
   resolution: "unist-util-visit-parents@npm:6.0.1"
@@ -16179,14 +16163,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "unist-util-visit@npm:5.0.0"
+"unist-util-visit@npm:^5.0.0, unist-util-visit@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "unist-util-visit@npm:5.1.0"
   dependencies:
     "@types/unist": "npm:^3.0.0"
     unist-util-is: "npm:^6.0.0"
     unist-util-visit-parents: "npm:^6.0.0"
-  checksum: 10/f2bbde23641e9ade7640358c06ddeec0f38342322eb8e7819d9ee380b0f859d25d084dde22bf63db0280b3b2f36575f15aa1d6c23acf276c91c2493cf799e3b0
+  checksum: 10/340fc1929062d21156200284105caad79cc188bd98f285b60aba887492a70e6e6cadbc7e383a68909c7e0fdd83f855cb9f4184ad8e5aa153eb2d810445aea8e5
   languageName: node
   linkType: hard
 
