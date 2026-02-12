@@ -10,7 +10,7 @@ import {
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
-export const ClosableTabs = (): ReactElement => {
+export const DismissibleTabs = (): ReactElement => {
   const [tabs, setTabs] = useState([
     "Home",
     "Transactions",
@@ -46,7 +46,7 @@ export const ClosableTabs = (): ReactElement => {
                   onClick={() => {
                     handleCloseTab(label);
                   }}
-                  aria-label="Close tab"
+                  aria-label="Dismiss tab"
                 >
                   <CloseIcon aria-hidden />
                 </TabNextAction>

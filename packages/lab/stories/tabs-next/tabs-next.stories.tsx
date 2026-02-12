@@ -223,7 +223,7 @@ Overflow.args = {
   defaultValue: lotsOfTabs[0],
 };
 
-export const Closable: StoryFn<typeof TabsNext> = (args) => {
+export const Dismissible: StoryFn<typeof TabsNext> = (args) => {
   const [tabs, setTabs] = useState([
     "Home",
     "Transactions",
@@ -236,7 +236,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
 
   const handleCloseTab = (value: string) => {
     setTabs((old) => old.filter((tab) => tab !== value));
-    announce(`${value} tab has been closed`, 150);
+    announce(`${value} tab has been removed`, 150);
   };
 
   return (
@@ -260,7 +260,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
                     onClick={() => {
                       handleCloseTab(label);
                     }}
-                    aria-label="Close tab"
+                    aria-label="Dismiss tab"
                   >
                     <CloseIcon aria-hidden />
                   </TabNextAction>
@@ -274,7 +274,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
   );
 };
 
-Closable.args = {
+Dismissible.args = {
   defaultValue: tabs[0],
 };
 
