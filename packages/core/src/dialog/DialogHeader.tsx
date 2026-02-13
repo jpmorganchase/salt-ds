@@ -8,7 +8,7 @@ import {
 } from "react";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { H2, Text } from "../text";
-import { makePrefixer } from "../utils";
+import { makePrefixer, useId, useIsomorphicLayoutEffect } from "../utils";
 import { useDialogContext } from "./DialogContext";
 import dialogHeaderCss from "./DialogHeader.css";
 
@@ -43,6 +43,7 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   function DialogHeader(props, ref) {
     const {
+      id: idProp,
       className,
       description,
       disableAccent,
@@ -52,7 +53,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       status: statusProp,
       ...rest
     } = props;
-    const { status: statusContext, id } = useDialogContext();
+    const { status: statusContext, setHeaderId } = useDialogContext();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -62,6 +63,13 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     });
 
     const status = statusProp ?? statusContext;
+    const id = useId(idProp);
+
+    useIsomorphicLayoutEffect(() => {
+      if (id) {
+        setHeaderId(id);
+      }
+    }, [id, setHeaderId]);
 
     return (
       <div
