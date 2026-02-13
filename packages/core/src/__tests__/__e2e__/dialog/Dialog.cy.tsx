@@ -217,11 +217,9 @@ describe("GIVEN a Dialog", () => {
       cy.mount(<Default />);
       cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      cy.findByRole("dialog").should(
-        "have.attr",
-        "aria-label",
-        "Congratulations! You have created a Dialog.",
-      );
+      cy.findByRole("dialog", {
+        name: "Congratulations! You have created a Dialog.",
+      }).should("be.visible");
     });
   });
 
