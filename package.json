@@ -112,7 +112,8 @@
     "ag-grid-react": "32.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-error-boundary": "^6.0.0"
+    "react-error-boundary": "^6.0.0",
+    "next-mdx-remote": "^6.0.0"
   },
   "browserslist": {
     "production": [
