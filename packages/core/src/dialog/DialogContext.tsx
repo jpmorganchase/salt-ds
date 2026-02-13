@@ -3,10 +3,10 @@ import type { ValidationStatus } from "../status-indicator";
 
 export const DialogContext = createContext<{
   status?: ValidationStatus;
-  headerId: string | undefined;
-  setHeaderId: (id: string | undefined) => void;
+  headerId?: string;
+  setHeaderId: (id: string) => void;
   contentScrollId?: string;
-  setContentScrollId?: (id: string | undefined) => void;
+  setContentScrollId?: (id: string) => void;
 }>({
   status: undefined,
   headerId: undefined,
