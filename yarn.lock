@@ -2690,7 +2690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-site-middleware@npm:^0.1.0-beta.97":
+"@jpmorganchase/mosaic-site-middleware@npm:0.1.0-beta.97":
   version: 0.1.0-beta.97
   resolution: "@jpmorganchase/mosaic-site-middleware@npm:0.1.0-beta.97"
   dependencies:
@@ -2722,6 +2722,41 @@ __metadata:
   peerDependencies:
     next-auth: ^4.22.1
   checksum: 10/c6861fdcdef583ac1c943ac8fa9db237e27eeb4bcf6ddb460f20888e74466b54bf57bc88a9b60114e2f5a30a4a82f3dc0f7cb33bb4e7c391113e13e0a1d6269b
+  languageName: node
+  linkType: hard
+
+"@jpmorganchase/mosaic-site-middleware@patch:@jpmorganchase/mosaic-site-middleware@npm%3A0.1.0-beta.97#~/.yarn/patches/@jpmorganchase-mosaic-site-middleware-npm-0.1.0-beta.97-137f775128.patch":
+  version: 0.1.0-beta.97
+  resolution: "@jpmorganchase/mosaic-site-middleware@patch:@jpmorganchase/mosaic-site-middleware@npm%3A0.1.0-beta.97#~/.yarn/patches/@jpmorganchase-mosaic-site-middleware-npm-0.1.0-beta.97-137f775128.patch::version=0.1.0-beta.97&hash=a610b6"
+  dependencies:
+    "@aws-sdk/client-s3": "npm:^3.859.0"
+    "@jpmorganchase/mosaic-schemas": "npm:^0.1.0-beta.97"
+    "@jpmorganchase/mosaic-store": "npm:^0.1.0-beta.97"
+    "@jpmorganchase/mosaic-types": "npm:^0.1.0-beta.97"
+    "@types/mdast": "npm:^3.0.0"
+    acorn: "npm:^8.0.0"
+    acorn-jsx: "npm:^5.0.0"
+    deepmerge: "npm:^4.2.2"
+    hast-util-properties-to-mdx-jsx-attributes: "npm:^1.0.0"
+    jwt-decode: "npm:^3.1.2"
+    lodash-es: "npm:^4.17.21"
+    mdast-util-from-markdown: "npm:^2.0.0"
+    mdast-util-mdx: "npm:^3.0.0"
+    mdast-util-mdx-jsx: "npm:^3.0.0"
+    micromark-extension-mdxjs: "npm:^3.0.0"
+    next: "npm:^14.2.32"
+    next-mdx-remote: "npm:^5.0.0"
+    node-cookie: "npm:^2.1.2"
+    react-error-boundary: "npm:^3.1.4"
+    rehype-slug: "npm:^6.0.0"
+    remark-gfm: "npm:^4.0.0"
+    unified: "npm:^11.0.0"
+    unist-util-visit: "npm:^5.0.0"
+    unist-util-visit-parents: "npm:^6.0.0"
+    warning: "npm:^3.0.0"
+  peerDependencies:
+    next-auth: ^4.22.1
+  checksum: 10/ddce2553b4aca157d356e528e3a8c8460bc2358391bebe82939edad35f6aded9448c92bc08592c945c6f71020d6070926d3823d24fe3a8a04d71be0e3847adca
   languageName: node
   linkType: hard
 
