@@ -5,6 +5,8 @@
   --salt-editable-borderColor-hover: var(--salt-palette-accent);
   --salt-editable-borderColor-readonly: var(--salt-palette-neutral-readonly);
 
+  --salt-editable-background-readonly: var(--salt-palette-alpha-none);
+
   --salt-editable-primary-background: var(--salt-palette-background-primary);
   --salt-editable-primary-background-disabled: var(--salt-palette-background-primary-disabled);
 

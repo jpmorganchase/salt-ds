@@ -100,7 +100,7 @@
   --input-background-active: var(--salt-editable-primary-background-active);
   --input-background-hover: var(--salt-editable-primary-background-hover);
   --input-background-disabled: var(--salt-editable-primary-background-disabled);
-  --input-background-readonly: var(--salt-editable-primary-background-readonly);
+  --input-background-readonly: var(--salt-editable-background-readonly);
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -113,7 +113,7 @@
   --input-background-active: var(--salt-editable-secondary-background-active);
   --input-background-hover: var(--salt-editable-secondary-background-active);
   --input-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --input-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --input-background-readonly: var(--salt-editable-background-readonly);
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
