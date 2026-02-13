@@ -171,31 +171,40 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     ]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.repeat) {
-        return;
-      }
       const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
       const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
 
       // Find the current snap
       const currentSnap = Math.floor(focusedSlideIndex / numberOfSlidesPerSnap);
 
+      let newIndex = focusedSlideIndex;
+
       switch (event.key) {
         case "ArrowLeft": {
           event.preventDefault();
-          const prevSnap = Math.max(currentSnap - 1, 0);
-          const newIndex = prevSnap * numberOfSlidesPerSnap;
-          setFocusedSlideIndex(newIndex);
+          if (event.repeat) {
+            newIndex = 0;
+          } else {
+            const prevSnap = Math.max(currentSnap - 1, 0);
+            newIndex = prevSnap * numberOfSlidesPerSnap;
+          }
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
-          const nextSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
-          const newIndex = nextSnap * numberOfSlidesPerSnap;
-          setFocusedSlideIndex(newIndex);
+          if (event.repeat) {
+            newIndex = (numberOfSnaps - 1) * numberOfSlidesPerSnap;
+          } else {
+            const nextSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
+            newIndex = nextSnap * numberOfSlidesPerSnap;
+          }
           break;
         }
       }
+
+      emblaApi?.scrollTo(newIndex);
+      setFocusedSlideIndex(newIndex);
+
       onKeyDown?.(event);
     };
 
