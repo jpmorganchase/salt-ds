@@ -1,7 +1,8 @@
 .salt-density-touch,
 .salt-density-low,
 .salt-density-medium,
-.salt-density-high {
+.salt-density-high,
+.salt-density-mobile {
   --salt-zIndex-default: 1;
   --salt-zIndex-popout: 1000;
   --salt-zIndex-appHeader: 1100;

@@ -458,6 +458,7 @@ export const VariableHeight: StoryFn<ListProps> = () => {
       medium: 32,
       low: 36,
       touch: 36,
+      mobile: 36,
     }),
     [],
   );
