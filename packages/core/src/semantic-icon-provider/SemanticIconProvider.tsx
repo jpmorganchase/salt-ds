@@ -6,6 +6,9 @@ import {
   ChevronUpIcon,
   CloseIcon,
   ErrorSolidIcon,
+  FavoriteIcon,
+  FavoriteSolidIcon,
+  FavoriteStrongIcon,
   InfoSolidIcon,
   LockedIcon,
   OverflowMenuIcon,
@@ -54,6 +57,9 @@ export interface SemanticIconMap {
   CompletedIcon: ElementType;
   LockedIcon: ElementType;
   InProgressIcon: ElementType;
+  RatingIcon: ElementType;
+  RatingSelectedIcon: ElementType;
+  RatingUnselectingIcon: ElementType;
   ErrorStatusAdornment: ElementType;
   WarningStatusAdornment: ElementType;
   SuccessStatusAdornment: ElementType;
@@ -95,6 +101,9 @@ const defaultIconMap: SemanticIconMap = {
   CompletedIcon: SuccessCircleSolidIcon,
   LockedIcon: LockedIcon,
   InProgressIcon: ProgressInprogressIcon,
+  RatingIcon: FavoriteIcon,
+  RatingSelectedIcon: FavoriteSolidIcon,
+  RatingUnselectingIcon: FavoriteStrongIcon,
   ErrorStatusAdornment: ErrorAdornmentIcon,
   WarningStatusAdornment: WarningAdornmentIcon,
   SuccessStatusAdornment: SuccessAdornmentIcon,
