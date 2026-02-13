@@ -1,5 +1,13 @@
 # @salt-ds/highcharts-theme
 
+## 0.2.1
+
+### Patch Changes
+
+- 8a643e1: Added stroke to Bubble Chart data labels to ensure contrast requirements are met when pattern fills are applied.
+- Updated dependencies [c7079b6]
+  - @salt-ds/theme@1.40.0
+
 ## 0.2.0
 
 ### Minor Changes
