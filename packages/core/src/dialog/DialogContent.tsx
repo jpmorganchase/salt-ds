@@ -14,8 +14,8 @@ import {
   useIsomorphicLayoutEffect,
   useResizeObserver,
 } from "../utils";
-
 import dialogContentCss from "./DialogContent.css";
+import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
@@ -28,9 +28,18 @@ export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
-    const { children, className, ...rest } = props;
+    const {
+      children,
+      className,
+      "aria-labelledby": ariaLabelledBy,
+      role,
+      tabIndex,
+      ...rest
+    } = props;
     const [canScrollUp, setCanScrollUp] = useState(false);
     const [canScrollDown, setCanScrollDown] = useState(true);
+    const [isOverflowingVertically, setIsOverflowingVertically] =
+      useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
@@ -58,8 +67,12 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     const checkOverflow = useCallback(() => {
       if (!divRef.current) return;
-      setIsOverflowing(
+      setIsOverflowingVertically(
         divRef.current.scrollHeight > divRef.current.offsetHeight,
+      );
+      setIsOverflowing(
+        divRef.current.scrollWidth > divRef.current.offsetWidth ||
+          divRef.current.scrollHeight > divRef.current.offsetHeight,
       );
     }, []);
 
@@ -69,16 +82,38 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       checkOverflow();
     }, [checkOverflow]);
 
+    const { contentScrollId, headerId } = useDialogContext();
+
+    const overflowProps = isOverflowing
+      ? {
+          role: role ?? "region",
+          tabIndex: tabIndex ?? 0,
+          ...(ariaLabelledBy === undefined && {
+            "aria-labelledby": headerId ?? contentScrollId,
+          }),
+          ...(ariaLabelledBy !== undefined && {
+            "aria-labelledby": ariaLabelledBy ?? headerId ?? contentScrollId,
+          }),
+        }
+      : {
+          role,
+          tabIndex,
+          "aria-labelledby": ariaLabelledBy,
+        };
+
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
         <div
           onScrollCapture={handleScroll}
           ref={divRef}
           className={clsx(withBaseName("inner"), {
-            [withBaseName("overflow")]: isOverflowing,
-            [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
-            [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
+            [withBaseName("overflow")]: isOverflowingVertically,
+            [withBaseName("scrollTop")]: isOverflowingVertically && canScrollUp,
+            [withBaseName("scrollBottom")]:
+              isOverflowingVertically && canScrollDown,
           })}
+          {...overflowProps}
+          {...rest}
         >
           {children}
         </div>

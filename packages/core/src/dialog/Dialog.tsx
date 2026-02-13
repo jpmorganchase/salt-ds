@@ -72,6 +72,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableScrim?: boolean;
   /**
+   * @deprecated
    * Optional id prop
    * Used for accessibility purposes to announce the title and subtitle when using a screen reader
    * */
@@ -91,8 +92,8 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       disableDismiss,
       size = "medium",
       disableScrim,
-      idProp,
       initialFocus,
+      id,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -102,11 +103,11 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       window: targetWindow,
     });
 
-    const id = useId(idProp);
-
+    const contentScrollId = useId(id);
     const currentBreakpoint = useCurrentBreakpoint();
 
     const [showComponent, setShowComponent] = useState(false);
+    const [headerId, setHeaderId] = useState<string | undefined>();
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
@@ -135,16 +136,20 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       }
     }, [open, showComponent]);
 
-    const contextValue = useMemo(() => ({ status, id }), [status, id]);
+    const contextValue = useMemo(
+      () => ({ status, headerId, setHeaderId, contentScrollId }),
+      [status, headerId, contentScrollId],
+    );
 
     return (
       <DialogContext.Provider value={contextValue}>
         <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
           <FloatingComponent
+            id={contentScrollId}
             open={showComponent}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={id}
+            aria-labelledby={headerId}
             ref={floatingRef}
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}
