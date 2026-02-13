@@ -5,56 +5,56 @@ sidebar:
   priority: 1
 ---
 
-Colors are divided into several categories to communicate several concepts across the Salt design system.
+Salt uses semantic naming conventions for color, organizing tokens by their intended meaning—such as error, warning, success, or informational states. This approach ensures designs are consistent, adaptable, and accessible across themes and modes.
 
-## Semantic tokens
+Colors are grouped into semantic categories, which are used to communicate concepts consistently across the design system.
 
-For further guidance on how to apply theme and tokens using Salt, please refer to the [Themes page](/salt/themes/index).
+For help with applying themes in Salt, visit [Themes](/salt/themes/index). To find out more about the use of semantic tokens, learn [How to read semantic tokens](/salt/themes/design-tokens/how-to-read-tokens)
 
 ## Status
 
-Status colors are visual indicators that reflect changes in the state or condition of a system or process. These colors help users understand what’s happening, what actions are needed, and whether any issues need to be addressed.
+Statuses provide visual cues that communicate the current state of a system or process. Each status—error, info, caution, and success—helps users quickly understand what’s happening, identify issues, and determine if action is needed. Consistent use of status tokens ensures users can respond confidently and efficiently to changes or events within your application.
 
-The Salt design system includes 4 statuses:
+Salt represents each status with a distinct color, helping users quickly identify and interpret system states visually.
 
-| Status  | Color  |
-| ------- | ------ |
-| Info    | Blue   |
-| Error   | Red    |
-| Warning | Orange |
-| Success | Green  |
+To learn how to use status tokens, read the [Status characteristic](/salt/themes/design-tokens/status-characteristic) guide.
 
-<Image
+<Diagram
   src="/img/foundations/color-status.png"
+  srcDark="/img/foundations/color-status-dark.png"
   alt="Example of Banner in all four statuses side-by-side"
+  background="secondary"
 />
+
+| Status  | JPM Brand theme color  |
+| ------- | ------ |
+| Error   | Red    |
+| Info    | Blue   |
+| Success | Green  |
+| Warning | Orange |
+
 
 ## Sentiment
 
-Sentiment colors guide users through an interface by providing visual cues about potential outcomes and evoking specific feelings. Sentiment can be used independently of status.
+Sentiment colors provide visual cues that help guide users through an interface by suggesting potential outcomes and evoking specific feelings. Each sentiment—accented, neutral, positive, negative, and caution—can be used to reinforce meaning, highlight important elements, or influence user perception. When applied thoughtfully, sentiment colors make interfaces more intuitive, engaging, and emotionally resonant for users.
 
-The Salt design system includes 5 sentiments:
+To learn how to use sentiment tokens, read the [Sentiment characteristic](/salt/themes/design-tokens/sentiment-characteristic) guide.
 
-| Sentiment | Color                                              | Feeling     |
-| --------- | -------------------------------------------------- | ----------- |
-| Negative  | Red                                                | Negativity  |
-| Caution   | Orange                                             | Carefulness |
-| Neutral   | Gray                                               | Comfort     |
-| Accent    | Teal (JPM brand theme) or blue (Legacy UITK theme) | Trust       |
-| Positive  | Green                                              | Positivity  |
-
-<Image
+<Diagram
   src="/img/foundations/color-sentiment.png"
+  srcDark="/img/foundations/color-sentiment-dark.png"
   alt="Example of Button in all five sentiments side-by-side"
+  background="secondary"
 />
 
-### Accent
+| Sentiment | Feeling                                            | JPM Brand theme color       |
+| --------- | -------------------------------------------------- | --------------------------- |
+| Accent    | Trust                                              | Teal                        |
+| Caution   | Carefulness                                        | Orange                      |
+| Negative  | Negativity                                         | Red                         |
+| Neutral   | Neutrality                                         | Gray                        |
+| Positive  | Positivity                                         | Green                       |
 
-Accent is a concept within sentiment and is used to highlight key elements of an interface, such as an active tab or an important headline. The accent color serves as the dominant 'brand' color in a theme and conveys a sense of trust.
 
-<Image
-  src="/img/foundations/color-accent.png"
-  alt="Example of Card without accent and with accent side-by-side"
-/>
 
 :fragment{src="../fragments/feedback.mdx"}
