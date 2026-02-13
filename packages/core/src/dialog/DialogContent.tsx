@@ -38,6 +38,8 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     } = props;
     const [canScrollUp, setCanScrollUp] = useState(false);
     const [canScrollDown, setCanScrollDown] = useState(true);
+    const [isOverflowingVertically, setIsOverflowingVertically] =
+      useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
@@ -65,8 +67,12 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     const checkOverflow = useCallback(() => {
       if (!divRef.current) return;
-      setIsOverflowing(
+      setIsOverflowingVertically(
         divRef.current.scrollHeight > divRef.current.offsetHeight,
+      );
+      setIsOverflowing(
+        divRef.current.scrollWidth > divRef.current.offsetWidth ||
+          divRef.current.scrollHeight > divRef.current.offsetHeight,
       );
     }, []);
 
@@ -76,17 +82,17 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       checkOverflow();
     }, [checkOverflow]);
 
-    const { id: dialogId } = useDialogContext();
+    const { contentScrollId, headerId } = useDialogContext();
 
     const overflowProps = isOverflowing
       ? {
           role: role ?? "region",
           tabIndex: tabIndex ?? 0,
           ...(ariaLabelledBy === undefined && {
-            "aria-labelledby": dialogId,
+            "aria-labelledby": headerId ?? contentScrollId,
           }),
           ...(ariaLabelledBy !== undefined && {
-            "aria-labelledby": ariaLabelledBy ?? dialogId,
+            "aria-labelledby": ariaLabelledBy ?? headerId ?? contentScrollId,
           }),
         }
       : {
@@ -101,9 +107,10 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           onScrollCapture={handleScroll}
           ref={divRef}
           className={clsx(withBaseName("inner"), {
-            [withBaseName("overflow")]: isOverflowing,
-            [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
-            [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
+            [withBaseName("overflow")]: isOverflowingVertically,
+            [withBaseName("scrollTop")]: isOverflowingVertically && canScrollUp,
+            [withBaseName("scrollBottom")]:
+              isOverflowingVertically && canScrollDown,
           })}
           {...overflowProps}
           {...rest}

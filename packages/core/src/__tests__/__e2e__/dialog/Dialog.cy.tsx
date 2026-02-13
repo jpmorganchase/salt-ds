@@ -3,7 +3,14 @@ import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(dialogStories);
 
-const { Default, Preheader, LongContent } = composedStories;
+const {
+  Default,
+  Preheader,
+  LongContent,
+  LongContentWithAriaLabel,
+  DialogIdOverride,
+  DialogContentAriaLabelledByOverride,
+} = composedStories;
 
 describe("GIVEN a Dialog", () => {
   describe("WHEN only header is provided", () => {
@@ -66,6 +73,15 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.get(".saltDialogHeader-header").contains("I am a preheader");
+    });
+  });
+
+  describe("WHEN no header is provided", () => {
+    it("THEN it should not have aria-labelledby attribute on the dialog", () => {
+      cy.mount(<LongContentWithAriaLabel style={{ height: 300 }} />);
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("dialog").should("not.have.attr", "aria-labelledby");
     });
   });
 
@@ -183,8 +199,33 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: "Next" }).should("be.focused");
     });
+
+    it("THEN its content should not have role region, tabIndex 0 or labelledby by dialog by default", () => {
+      cy.mount(<Default />);
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+
+      cy.findByRole("dialog")
+        .find("div.saltDialogContent")
+        .find("div.saltDialogContent-inner")
+        .should("not.have.attr", "role", "region")
+        .and("not.have.attr", "tabIndex", "0")
+        .and("not.have.attr", "aria-labelledby");
+    });
+
+    it("THEN should have correct accessible name", () => {
+      cy.mount(<Default />);
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("dialog").should(
+        "have.attr",
+        "aria-label",
+        "Congratulations! You have created a Dialog.",
+      );
+    });
   });
-  describe("WHEN overflowing content is detected", () => {
+
+  describe("WHEN vertically overflowing content is detected", () => {
     it("THEN it should add padding to the right of the scroll bar", () => {
       cy.mount(<LongContent style={{ height: 300 }} />);
       cy.findByRole("button", { name: "Open dialog" }).realClick();
@@ -193,12 +234,50 @@ describe("GIVEN a Dialog", () => {
         .should("exist");
     });
   });
+
+  it("THEN should allow user to override dialog id", () => {
+    cy.mount(<DialogIdOverride />);
+    cy.findByRole("button", { name: "Open dialog" }).realClick();
+
+    cy.findByRole("dialog").should("be.visible");
+    cy.findByRole("dialog").should("have.attr", "id", "user-provided-id");
+  });
 });
 
-// scrollable content should have role region, tabIndex 0 and labelledby by dialog by default
-// non-scrollable content should not have role, tabIndex or labelledby by dialog by default
-// Dialog content with aria-label and no aria-labelledby should keep aria-label regardless of overflow
-// Dialog content should inherit accessible dialog name when dialog is labelled using aria-label
-// Dialog content should prioritize user provided aria-labelledby regardless of overflow
-// Dialog should prioritize user provided id over generated id for aria-labelledby
-// TBC - Dialog name should not include close button/actions
+describe("GIVEN a Dialog with scrollable content", () => {
+  it("THEN it should have role region, tabIndex 0 and labelledby by dialog by default", () => {
+    cy.mount(<LongContent style={{ height: 300 }} />);
+    cy.findByRole("button", { name: "Open dialog" }).realClick();
+    cy.findByRole("dialog").should("be.visible");
+
+    cy.findByRole("dialog")
+      .find("div.saltDialogContent-inner")
+      .should("have.attr", "role", "region")
+      .and("have.attr", "tabIndex", "0")
+      .and("have.attr", "aria-labelledby");
+  });
+
+  it("THEN should use user provided aria-label for the content region name", () => {
+    cy.mount(<LongContentWithAriaLabel style={{ height: 300 }} />);
+    cy.findByRole("button", { name: "Open dialog" }).realClick();
+
+    cy.findByRole("dialog").should("be.visible");
+    cy.findByRole("dialog", { name: "Aria labelled dialog" }).should(
+      "be.visible",
+    );
+    cy.findByRole("region", { name: "Aria labelled dialog" }).should(
+      "be.visible",
+    );
+  });
+
+  it("THEN should allow user to override content aria-labelledby", () => {
+    cy.mount(<DialogContentAriaLabelledByOverride />);
+    cy.findByRole("button", { name: "Open dialog" }).realClick();
+    cy.findByRole("dialog").should("be.visible");
+    cy.findByRole("region").should(
+      "have.attr",
+      "aria-labelledby",
+      "user-provided-aria-labelledby",
+    );
+  });
+});
