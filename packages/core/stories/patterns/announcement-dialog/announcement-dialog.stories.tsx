@@ -38,13 +38,13 @@ const multiSlideAnnouncementContent: AnnouncementContent[] = [
   },
   {
     preheader: "New feature",
-    header: "Seamless Trade Execution",
+    header: "Seamless trade execution",
     subheader: "Trading",
     body: "Execute trades efficiently across multiple markets with smart routing technology and integrated compliance checks to ensure regulatory adherence.",
   },
   {
     preheader: "New feature",
-    header: "Risk Management Tools",
+    header: "Risk management tools",
     subheader: "Protection",
     body: "Monitor and manage risk exposure with advanced analytics, scenario modeling, and automated alerts that keep your portfolio within defined parameters.",
   },
@@ -58,6 +58,9 @@ const CloseButton = ({ onClick }: { onClick: () => void }) => (
 
 export const AnnouncementDialog: StoryFn = () => {
   const [open, setOpen] = useState(true);
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
 
   return (
     <>
@@ -80,18 +83,6 @@ export const AnnouncementDialog: StoryFn = () => {
                   specific characteristics using a wide range of parameters and
                   constraints including Yield, Risk, churn, costs and more.
                 </Text>
-                <Text>
-                  Our advanced algorithm analyzes market conditions in real-time
-                  to suggest optimal portfolio compositions. You can set custom
-                  thresholds for risk tolerance, expected returns, and
-                  diversification requirements.
-                </Text>
-                <Text>
-                  Get started today and discover how easy it is to build
-                  institutional-grade portfolios with just a few clicks. Your
-                  team can collaborate on shared portfolios and track
-                  performance across all your investments.
-                </Text>
               </StackLayout>
             }
             endItem={
@@ -100,7 +91,12 @@ export const AnnouncementDialog: StoryFn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button sentiment="accented">Try it now</Button>
+          <Button
+            sentiment="accented"
+            style={direction === "column" ? { width: "100%" } : undefined}
+          >
+            Try it now
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -116,6 +112,9 @@ export const MultiAnnouncementDialog: StoryFn = () => {
   const isFirst = activeIndex === 0;
   const isLast = activeIndex === multiSlideAnnouncementContent.length - 1;
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: Focus heading when active slide changes via navigation
   useEffect(() => {
     if (!navigatedRef.current) return;
@@ -136,6 +135,8 @@ export const MultiAnnouncementDialog: StoryFn = () => {
       setActiveIndex((prev) => prev + 1);
     }
   };
+
+  const primaryLabel = isLast ? "Try it now" : "Next";
 
   return (
     <>
@@ -173,118 +174,41 @@ export const MultiAnnouncementDialog: StoryFn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <SplitLayout
-            startItem={
-              <Button sentiment="accented" appearance="transparent">
-                Go to Dashboard
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              <Button
+                sentiment="accented"
+                onClick={isLast ? undefined : handleNext}
+                style={{ width: "100%" }}
+              >
+                {primaryLabel}
               </Button>
-            }
-            endItem={
-              <StackLayout direction="row" gap={1} align="center">
-                <Text
-                  color="secondary"
-                  style={{ marginRight: "var(--salt-spacing-200)" }}
+              {!isFirst && (
+                <Button
+                  sentiment="accented"
+                  appearance="bordered"
+                  onClick={handlePrevious}
+                  style={{ width: "100%" }}
                 >
-                  {activeIndex + 1}/{multiSlideAnnouncementContent.length}
-                </Text>
-                {!isFirst && (
-                  <Button
-                    sentiment="accented"
-                    appearance="bordered"
-                    onClick={handlePrevious}
-                  >
-                    Previous
-                  </Button>
-                )}
-                {!isLast && (
-                  <Button sentiment="accented" onClick={handleNext}>
-                    Next
-                  </Button>
-                )}
-              </StackLayout>
-            }
-            style={{ width: "100%" }}
-          />
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-};
-
-export const WithDisclaimer: StoryFn = () => {
-  const [open, setOpen] = useState(true);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const headingRef = useRef<HTMLSpanElement>(null);
-  const navigatedRef = useRef(false);
-  const currentSlide = multiSlideAnnouncementContent[activeIndex];
-  const isFirst = activeIndex === 0;
-  const isLast = activeIndex === multiSlideAnnouncementContent.length - 1;
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Focus heading when active slide changes via navigation
-  useEffect(() => {
-    if (!navigatedRef.current) return;
-    navigatedRef.current = false;
-    headingRef.current?.focus();
-  }, [activeIndex]);
-
-  const handlePrevious = () => {
-    if (!isFirst) {
-      navigatedRef.current = true;
-      setActiveIndex((prev) => prev - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (!isLast) {
-      navigatedRef.current = true;
-      setActiveIndex((prev) => prev + 1);
-    }
-  };
-
-  const disclaimer =
-    "By continuing, you agree to our Terms of Service and Privacy Policy. Your use of these features is subject to applicable regulations and may vary by jurisdiction. Market data is provided for informational purposes only and should not be construed as investment advice. Past performance is not indicative of future results. Please consult with a qualified financial advisor before making investment decisions.";
-
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogHeader
-          preheader={currentSlide.preheader}
-          header={
-            <span tabIndex={-1} ref={headingRef}>
-              {currentSlide.header}
-              <span className="salt-visuallyHidden">
-                {`, slide ${activeIndex + 1} of ${multiSlideAnnouncementContent.length}`}
-              </span>
-            </span>
-          }
-          actions={<CloseButton onClick={() => setOpen(false)} />}
-          disableAccent
-        />
-        <DialogContent>
-          <SplitLayout
-            direction={{ xs: "column", sm: "row" }}
-            startItem={
-              <StackLayout gap={1} className="announcementContent">
-                {currentSlide.subheader && (
-                  <H3 className="announcementHeading">
-                    {currentSlide.subheader}
-                  </H3>
-                )}
-                <Text>{currentSlide.body}</Text>
-              </StackLayout>
-            }
-            endItem={
-              <img alt="" src={exampleImage} className="announcementImage" />
-            }
-          />
-        </DialogContent>
-        <DialogActions>
-          <StackLayout gap={2} style={{ width: "100%" }}>
+                  Previous
+                </Button>
+              )}
+              <Button
+                sentiment="accented"
+                appearance="transparent"
+                style={{ width: "100%" }}
+              >
+                Go to dashboard
+              </Button>
+              <Text color="secondary" style={{ textAlign: "center" }}>
+                {activeIndex + 1}/{multiSlideAnnouncementContent.length}
+              </Text>
+            </StackLayout>
+          ) : (
             <SplitLayout
               startItem={
                 <Button sentiment="accented" appearance="transparent">
-                  Go to Dashboard
+                  Go to dashboard
                 </Button>
               }
               endItem={
@@ -304,17 +228,16 @@ export const WithDisclaimer: StoryFn = () => {
                       Previous
                     </Button>
                   )}
-                  {!isLast && (
-                    <Button sentiment="accented" onClick={handleNext}>
-                      Next
-                    </Button>
-                  )}
+                  <Button
+                    sentiment="accented"
+                    onClick={isLast ? undefined : handleNext}
+                  >
+                    {primaryLabel}
+                  </Button>
                 </StackLayout>
               }
-              style={{ width: "100%" }}
             />
-            <Text>{disclaimer}</Text>
-          </StackLayout>
+          )}
         </DialogActions>
       </Dialog>
     </>
@@ -324,13 +247,16 @@ export const WithDisclaimer: StoryFn = () => {
 export const FullImage: StoryFn = () => {
   const [open, setOpen] = useState(true);
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
       <Dialog open={open} onOpenChange={setOpen} style={{ maxWidth: 400 }}>
         <DialogHeader
-          preheader="Product Update"
-          header="New Dashboard Experience"
+          preheader="Product update"
+          header="New dashboard experience"
           actions={<CloseButton onClick={() => setOpen(false)} />}
           disableAccent
         />
@@ -345,7 +271,12 @@ export const FullImage: StoryFn = () => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <Button sentiment="accented">Try It Now</Button>
+          <Button
+            sentiment="accented"
+            style={direction === "column" ? { width: "100%" } : undefined}
+          >
+            Try it now
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -355,13 +286,16 @@ export const FullImage: StoryFn = () => {
 export const ContentScrolling: StoryFn = () => {
   const [open, setOpen] = useState(true);
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
       <Dialog open={open} onOpenChange={setOpen} style={{ maxHeight: 420 }}>
         <DialogHeader
-          preheader="Major Update"
-          header="What's New in Version 3.0"
+          preheader="Major update"
+          header="What's new in version 3.0"
           actions={<CloseButton onClick={() => setOpen(false)} />}
           disableAccent
         />
@@ -370,7 +304,7 @@ export const ContentScrolling: StoryFn = () => {
             direction={{ xs: "column", sm: "row" }}
             startItem={
               <StackLayout gap={1} className="announcementContent">
-                <H3 className="announcementHeading">Analytics Engine</H3>
+                <H3 className="announcementHeading">Analytics engine</H3>
                 <Text>
                   The new analytics engine processes data up to 10x faster than
                   before, enabling real-time insights that help you make
@@ -378,7 +312,7 @@ export const ContentScrolling: StoryFn = () => {
                   tools, you can create stunning charts that communicate complex
                   information.
                 </Text>
-                <H3 className="announcementHeading">Collaboration Features</H3>
+                <H3 className="announcementHeading">Collaboration features</H3>
                 <Text>
                   Share insights seamlessly across your organization with
                   enhanced collaboration tools. Team members can annotate data,
@@ -388,11 +322,25 @@ export const ContentScrolling: StoryFn = () => {
                   reports. Version control ensures everyone works with the most
                   up-to-date information.
                 </Text>
-                <H3 className="announcementHeading">Security & Compliance</H3>
+                <H3 className="announcementHeading">Security & compliance</H3>
                 <Text>
                   Enhanced security protocols and compliance certifications
                   ensure your data remains protected and meets industry
                   standards.
+                </Text>
+                <H3 className="announcementHeading">
+                  Performance & reliability
+                </H3>
+                <Text>
+                  Faster load times and fewer outages keep your team productive.
+                  We maintain high availability and optimise resource use across
+                  all environments.
+                </Text>
+                <H3 className="announcementHeading">Accessibility & theming</H3>
+                <Text>
+                  Built-in support for screen readers, keyboard navigation, and
+                  high-contrast modes. Customise colours, density, and layout to
+                  match your brand and user needs.
                 </Text>
               </StackLayout>
             }
@@ -402,7 +350,12 @@ export const ContentScrolling: StoryFn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button sentiment="accented">Got It</Button>
+          <Button
+            sentiment="accented"
+            style={direction === "column" ? { width: "100%" } : undefined}
+          >
+            Got it
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -412,12 +365,15 @@ export const ContentScrolling: StoryFn = () => {
 export const ResponsiveStackedContent: StoryFn = () => {
   const [open, setOpen] = useState(true);
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogHeader
-          preheader="Product Update"
+          preheader="Product update"
           header="Change the viewport to see how the content stacks"
           actions={<CloseButton onClick={() => setOpen(false)} />}
           disableAccent
@@ -439,7 +395,12 @@ export const ResponsiveStackedContent: StoryFn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button sentiment="accented">Get Started</Button>
+          <Button
+            sentiment="accented"
+            style={direction === "column" ? { width: "100%" } : undefined}
+          >
+            Get started
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -489,7 +450,7 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
       <Button onClick={() => setOpen(true)}>Announcement Trigger</Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogHeader
-          preheader="Product Update"
+          preheader="Product update"
           header="Change the viewport to see how the buttons stack"
           actions={<CloseButton onClick={() => setOpen(false)} />}
           disableAccent
@@ -512,7 +473,7 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
         </DialogContent>
         <DialogActions>
           {direction === "column" ? (
-            <StackLayout direction="column" gap={1} style={{ width: "100%" }}>
+            <StackLayout gap={1} style={{ width: "100%" }}>
               {tryItNow}
               {goToDashboard}
               {remindMeLater}
@@ -526,7 +487,6 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
                   {tryItNow}
                 </StackLayout>
               }
-              style={{ width: "100%" }}
             />
           )}
         </DialogActions>
