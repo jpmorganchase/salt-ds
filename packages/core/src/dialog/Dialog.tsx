@@ -94,6 +94,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       idProp,
       initialFocus,
       id,
+      "aria-labelledby": ariaLabelledBy,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -149,7 +150,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             open={showComponent}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={headerId}
+            aria-labelledby={ariaLabelledBy ?? headerId}
             ref={floatingRef}
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}
