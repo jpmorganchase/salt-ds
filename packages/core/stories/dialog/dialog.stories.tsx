@@ -301,6 +301,15 @@ DialogIdOverride.args = {
   ),
 };
 
+export const DialogHeaderIdProp = DialogTemplate.bind({});
+DialogHeaderIdProp.args = {
+  header: "Congratulations! You have created a Dialog.",
+  idProp: "user-provided-header-id",
+  content: (
+    <StackLayout style={{ maxHeight: "200px" }}>{longContent}</StackLayout>
+  ),
+};
+
 export const DialogContentAriaLabelledByOverride: StoryFn<typeof Dialog> = ({
   open: openProp = false,
 }) => {

@@ -9,6 +9,7 @@ const {
   LongContent,
   LongContentWithAriaLabel,
   DialogIdOverride,
+  DialogHeaderIdProp,
   DialogContentAriaLabelledByOverride,
 } = composedStories;
 
@@ -239,6 +240,24 @@ describe("GIVEN a Dialog", () => {
 
     cy.findByRole("dialog").should("be.visible");
     cy.findByRole("dialog").should("have.attr", "id", "user-provided-id");
+  });
+
+  it("THEN should use idProp as header id and aria-labelledby", () => {
+    cy.mount(<DialogHeaderIdProp />);
+    cy.findByRole("button", { name: "Open dialog" }).realClick();
+
+    cy.findByRole("dialog").should(
+      "have.attr",
+      "aria-labelledby",
+      "user-provided-header-id",
+    );
+
+    cy.findByRole("dialog").find("h2.saltDialogHeader-header").should(
+      "have.attr",
+      "id",
+      "user-provided-header-id",
+    );
+
   });
 });
 

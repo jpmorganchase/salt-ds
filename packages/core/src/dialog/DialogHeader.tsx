@@ -53,7 +53,11 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       status: statusProp,
       ...rest
     } = props;
-    const { status: statusContext, setHeaderId } = useDialogContext();
+    const {
+      status: statusContext,
+      setHeaderId,
+      headerId: contextHeaderId,
+    } = useDialogContext();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -63,7 +67,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     });
 
     const status = statusProp ?? statusContext;
-    const id = useId(idProp);
+  const id = useId(idProp ?? contextHeaderId);
 
     useIsomorphicLayoutEffect(() => {
       if (id) {
