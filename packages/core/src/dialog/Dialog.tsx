@@ -72,7 +72,6 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableScrim?: boolean;
   /**
-   * @deprecated
    * Optional id prop
    * Used for accessibility purposes to announce the title and subtitle when using a screen reader
    * */
@@ -92,6 +91,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       disableDismiss,
       size = "medium",
       disableScrim,
+      idProp,
       initialFocus,
       id,
       ...rest
@@ -107,7 +107,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     const currentBreakpoint = useCurrentBreakpoint();
 
     const [showComponent, setShowComponent] = useState(false);
-    const [headerId, setHeaderId] = useState<string | undefined>();
+    const [headerId, setHeaderId] = useState(idProp);
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
