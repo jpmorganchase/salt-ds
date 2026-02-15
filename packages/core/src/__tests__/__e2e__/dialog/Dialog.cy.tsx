@@ -252,12 +252,9 @@ describe("GIVEN a Dialog", () => {
       "user-provided-header-id",
     );
 
-    cy.findByRole("dialog").find("h2.saltDialogHeader-header").should(
-      "have.attr",
-      "id",
-      "user-provided-header-id",
-    );
-
+    cy.findByRole("dialog")
+      .find("h2.saltDialogHeader-header")
+      .should("have.attr", "id", "user-provided-header-id");
   });
 });
 

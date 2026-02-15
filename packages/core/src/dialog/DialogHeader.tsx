@@ -67,7 +67,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     });
 
     const status = statusProp ?? statusContext;
-  const id = useId(idProp ?? contextHeaderId);
+    const id = useId(idProp ?? contextHeaderId);
 
     useIsomorphicLayoutEffect(() => {
       if (id) {
