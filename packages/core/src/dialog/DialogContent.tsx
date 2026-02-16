@@ -19,11 +19,7 @@ import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
-export interface DialogContentProps
-  extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    "aria-label" | "aria-labelledby" | "role"
-  > {
+export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The content of Dialog Content
    */
@@ -32,18 +28,7 @@ export interface DialogContentProps
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
-    const {
-      children,
-      className,
-      // @ts-expect-error: "aria-labelledby" is omitted to prevent accidental misuse,
-      // but we still want to forward it for advanced accessible labeling scenarios.
-      "aria-labelledby": ariaLabelledBy,
-      // @ts-expect-error: Allow passing role even though it's omitted from HTMLAttributes
-      // Same reasoning as above: we forward role for accessibility purposes.
-      role,
-      tabIndex,
-      ...rest
-    } = props;
+    const { children, className, ...rest } = props;
     const [canScrollUp, setCanScrollUp] = useState(false);
     const [canScrollDown, setCanScrollDown] = useState(true);
     const [isOverflowingVertically, setIsOverflowingVertically] =
@@ -94,20 +79,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     const overflowProps = isOverflowing
       ? {
-          role: role ?? "region",
-          tabIndex: tabIndex ?? 0,
-          ...(ariaLabelledBy === undefined && {
-            "aria-labelledby": headerId ?? contentScrollId,
-          }),
-          ...(ariaLabelledBy !== undefined && {
-            "aria-labelledby": ariaLabelledBy ?? headerId ?? contentScrollId,
-          }),
+          role: "region",
+          tabIndex: 0,
+          "aria-labelledby": headerId ?? contentScrollId,
         }
-      : {
-          role,
-          tabIndex,
-          "aria-labelledby": ariaLabelledBy,
-        };
+      : {};
 
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
