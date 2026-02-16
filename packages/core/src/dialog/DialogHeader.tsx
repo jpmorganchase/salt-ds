@@ -43,7 +43,6 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   function DialogHeader(props, ref) {
     const {
-      id: idProp,
       className,
       description,
       disableAccent,
@@ -67,17 +66,16 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     });
 
     const status = statusProp ?? statusContext;
-    const id = useId(idProp ?? contextHeaderId);
+    const headerId = useId(contextHeaderId);
 
     useIsomorphicLayoutEffect(() => {
-      if (id) {
-        setHeaderId(id);
+      if (headerId) {
+        setHeaderId(headerId);
       }
-    }, [id, setHeaderId]);
+    }, [headerId, setHeaderId]);
 
     return (
       <div
-        id={idProp}
         className={clsx(
           withBaseName(),
           {
@@ -91,7 +89,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       >
         {status && <StatusIndicator status={status} />}
         <div className={withBaseName("container")}>
-          <H2 id={id} className={withBaseName("header")}>
+          <H2 id={headerId} className={withBaseName("header")}>
             {preheader && <Text color="primary">{preheader}</Text>}
             {header}
           </H2>
