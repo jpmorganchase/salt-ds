@@ -51,13 +51,13 @@ const multiSlideAnnouncementContent: AnnouncementContent[] = [
 ];
 
 const CloseButton = ({ onClick }: { onClick: () => void }) => (
-  <Button aria-label="Close dialog" appearance="transparent" onClick={onClick}>
+  <Button aria-label="Close" appearance="transparent" onClick={onClick}>
     <CloseIcon aria-hidden />
   </Button>
 );
 
 export const AnnouncementDialog: StoryFn = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
@@ -104,7 +104,7 @@ export const AnnouncementDialog: StoryFn = () => {
 };
 
 export const MultiAnnouncementDialog: StoryFn = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const headingRef = useRef<HTMLSpanElement>(null);
   const navigatedRef = useRef(false);
@@ -176,6 +176,9 @@ export const MultiAnnouncementDialog: StoryFn = () => {
         <DialogActions>
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
+              <Text color="secondary" style={{ textAlign: "center" }}>
+                {`${activeIndex + 1}/${multiSlideAnnouncementContent.length}`}
+              </Text>
               <Button
                 sentiment="accented"
                 onClick={isLast ? undefined : handleNext}
@@ -200,9 +203,6 @@ export const MultiAnnouncementDialog: StoryFn = () => {
               >
                 Go to dashboard
               </Button>
-              <Text color="secondary" style={{ textAlign: "center" }}>
-                {activeIndex + 1}/{multiSlideAnnouncementContent.length}
-              </Text>
             </StackLayout>
           ) : (
             <SplitLayout
@@ -217,7 +217,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                     color="secondary"
                     style={{ marginRight: "var(--salt-spacing-200)" }}
                   >
-                    {activeIndex + 1}/{multiSlideAnnouncementContent.length}
+                    {`${activeIndex + 1}/${multiSlideAnnouncementContent.length}`}
                   </Text>
                   {!isFirst && (
                     <Button
@@ -245,7 +245,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
 };
 
 export const FullImage: StoryFn = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
@@ -284,7 +284,7 @@ export const FullImage: StoryFn = () => {
 };
 
 export const ContentScrolling: StoryFn = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
@@ -363,7 +363,7 @@ export const ContentScrolling: StoryFn = () => {
 };
 
 export const ResponsiveStackedContent: StoryFn = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
@@ -408,7 +408,7 @@ export const ResponsiveStackedContent: StoryFn = () => {
 };
 
 export const ResponsiveStackedButtonBar: StoryFn = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
