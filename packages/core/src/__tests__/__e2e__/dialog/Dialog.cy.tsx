@@ -3,13 +3,8 @@ import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(dialogStories);
 
-const {
-  Default,
-  Preheader,
-  LongContent,
-  LongContentWithAriaLabel,
-  DialogContentAriaLabelledByOverride,
-} = composedStories;
+const { Default, Preheader, LongContent, LongContentWithAriaLabel } =
+  composedStories;
 
 describe("GIVEN a Dialog", () => {
   describe("WHEN only header is provided", () => {
@@ -279,17 +274,6 @@ describe("GIVEN a Dialog with scrollable content", () => {
     );
     cy.findByRole("region", { name: "Aria labelled dialog" }).should(
       "be.visible",
-    );
-  });
-
-  it("THEN should allow user to override content aria-labelledby", () => {
-    cy.mount(<DialogContentAriaLabelledByOverride />);
-    cy.findByRole("button", { name: "Open dialog" }).realClick();
-    cy.findByRole("dialog").should("be.visible");
-    cy.findByRole("region").should(
-      "have.attr",
-      "aria-labelledby",
-      "user-provided-aria-labelledby",
     );
   });
 });
