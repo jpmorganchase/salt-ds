@@ -8,8 +8,6 @@ const {
   Preheader,
   LongContent,
   LongContentWithAriaLabel,
-  DialogIdOverride,
-  DialogHeaderIdProp,
   DialogContentAriaLabelledByOverride,
 } = composedStories;
 
@@ -234,7 +232,7 @@ describe("GIVEN a Dialog", () => {
   });
 
   it("THEN should allow user to override dialog id", () => {
-    cy.mount(<DialogIdOverride />);
+    cy.mount(<Default id="user-provided-id" />);
     cy.findByRole("button", { name: "Open dialog" }).realClick();
 
     cy.findByRole("dialog").should("be.visible");
@@ -242,7 +240,7 @@ describe("GIVEN a Dialog", () => {
   });
 
   it("THEN should use idProp as header id and aria-labelledby", () => {
-    cy.mount(<DialogHeaderIdProp />);
+    cy.mount(<Default idProp="user-provided-header-id" />);
     cy.findByRole("button", { name: "Open dialog" }).realClick();
 
     cy.findByRole("dialog").should(
