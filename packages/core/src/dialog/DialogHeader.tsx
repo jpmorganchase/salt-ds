@@ -77,6 +77,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
 
     return (
       <div
+        id={idProp}
         className={clsx(
           withBaseName(),
           {

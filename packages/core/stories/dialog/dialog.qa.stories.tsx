@@ -28,7 +28,13 @@ export default {
 function FakeDialog({ children, status, id }: DialogProps) {
   return (
     <DialogContext.Provider
-      value={{ status, headerId: id, setHeaderId: () => {} }}
+      value={{
+        status,
+        headerId: id,
+        setHeaderId: () => {},
+        contentScrollId: undefined,
+        setContentScrollId: () => {},
+      }}
     >
       <div className="fakeDialogWindow">{children}</div>
     </DialogContext.Provider>
