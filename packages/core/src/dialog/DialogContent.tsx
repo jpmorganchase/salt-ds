@@ -19,7 +19,11 @@ import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
-export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
+export interface DialogContentProps
+  extends Omit<
+    HTMLAttributes<HTMLDivElement>,
+    "aria-label" | "aria-labelledby" | "role"
+  > {
   /**
    * The content of Dialog Content
    */
@@ -31,7 +35,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const {
       children,
       className,
+      // @ts-expect-error: "aria-labelledby" is omitted to prevent accidental misuse,
+      // but we still want to forward it for advanced accessible labeling scenarios.
       "aria-labelledby": ariaLabelledBy,
+      // @ts-expect-error: Allow passing role even though it's omitted from HTMLAttributes
+      // Same reasoning as above: we forward role for accessibility purposes.
       role,
       tabIndex,
       ...rest
