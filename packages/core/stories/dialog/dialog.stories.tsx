@@ -295,9 +295,6 @@ export const Preheader = DialogTemplate.bind({});
 Preheader.args = {
   header: "Congratulations! You have created a Dialog.",
   preheader: "I am a preheader",
-  content: (
-    <StackLayout style={{ maxHeight: "200px" }}>{longContent}</StackLayout>
-  ),
 };
 
 const AlertDialogTemplate: StoryFn<
