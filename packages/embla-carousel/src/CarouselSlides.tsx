@@ -177,14 +177,12 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       switch (event.key) {
         case "ArrowLeft": {
           event.preventDefault();
-          newSnap = event.repeat ? 0 : Math.max(currentSnap - 1, 0);
+          newSnap = Math.max(currentSnap - 1, 0);
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
-          newSnap = event.repeat
-            ? numberOfSnaps - 1
-            : Math.min(currentSnap + 1, numberOfSnaps - 1);
+          newSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
           break;
         }
         default:
