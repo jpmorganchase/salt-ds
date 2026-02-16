@@ -1,0 +1,13 @@
+diff --git a/dist/compileMdx.js b/dist/compileMdx.js
+index b64901b7aba24b8983d6ab143a0da0b4eced14eb..46c4686733b6501ec39b552c536001077b2ea866 100644
+--- a/dist/compileMdx.js
++++ b/dist/compileMdx.js
+@@ -4,6 +4,8 @@ import rehypeSlug from 'rehype-slug';
+ import { codeBlocks } from './plugins/codeBlocks.js';
+ export async function compileMDX(content, parseFrontmatter = true, rehypePlugins = [], remarkPlugins = []) {
+     const mdxSource = await serialize(content, {
++        blockDangerousJS: false,
++        blockJS: false,
+         mdxOptions: {
+             rehypePlugins: [codeBlocks, rehypeSlug, ...remarkPlugins],
+             remarkPlugins: [remarkGfm, ...rehypePlugins]

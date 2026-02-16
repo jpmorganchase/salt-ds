@@ -18,7 +18,6 @@
 @import url(legacy/palette/positive.css);
 @import url(legacy/palette/shadow.css);
 @import url(legacy/palette/success.css);
-@import url(legacy/palette/text.css);
 @import url(legacy/palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
