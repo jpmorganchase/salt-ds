@@ -8,15 +8,22 @@ data:
   $ref: ./#/data
 ---
 
-## Using the components
+## Using the component
 
 ### When to use
 
 - When you have to provide feedback or indicate your level of satisfaction with a product, service, or experience.
+- When there are at least 3 increments—this allows users to express a basic range of sentiment (poor, average, good).
 
 ### When not to use
 
-- When you have fewer than 3 increments (such as a binary thumbs up/down or like/dislike) don't provide enough nuance for most rating scenarios. In this scenario, use a [`ToggleButtonGroup`](../toggle-button).
+- When there are fewer than 3 increments (such as a binary thumbs up/down or like/dislike) the component doesn’t offer enough nuance for most rating scenarios. In this scenario, use a [`ToggleButtonGroup`](../toggle-button).
+- When there are more than 10 increments and users need to select an option, use a [`ComboBox`](../combo-box).
+
+### Content
+
+- Label text should always be on one line.
+- Labels have no character limit, however a maximum of 30 characters is recommended before truncation.
 
 ## Import
 

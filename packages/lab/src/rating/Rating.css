@@ -1,6 +1,6 @@
 .saltRating-wrapper {
   display: flex;
-  gap: var(--salt-spacing-100);
+  gap: calc(2 * var(--salt-spacing-fixed-600));
   align-items: center;
 }
 

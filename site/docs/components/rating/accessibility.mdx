@@ -11,25 +11,29 @@ data:
 ## Keyboard interactions
 
 <KeyboardControls>
-<KeyboardControl keyOrCombos="Tab">
+  <KeyboardControl keyOrCombos="Tab">
+    - Tab moves focus into the rating component. Focus is set to the selected rating item. 
+    - If the user hasn’t selected a rating item, Tab moves focus to the first rating item in the group.
+    - If focus is inside the Rating component, Tab moves focus out of the Rating component. Focus is set to the next component in the tab order.
+  </KeyboardControl>
 
-- Tab moves focus into the component and currently selected icon receives focus.
-- If the user hasn't selected rating, Tab moves focus to the first rating in the group.
-
+{" "}
+<KeyboardControl keyOrCombos="Shift + Tab">
+  - If focus is inside the rating, this action moves focus out of the component.
+  Focus is set to the previously selected rating item. - If focus is below the
+  rating, this action move focus into the rating. Focus is set to the selected
+  rating item.
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Space">
 
-- User can press enter or space to deselect/re-select the current rating.
-
+{" "}
+<KeyboardControl keyOrCombos="Right arrow / Down key">
+  - This action moves focus to the next rating item in the rating component. -
+  If focus is on the last rating item, this action wraps focus to the first
+  rating item.
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Up arrow / Left arrow">
 
-- This action moves focus between the available rating, and simultaneously selects an option.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Down arrow / Right arrow">
-
-- This action moves focus between the available rating, and simultaneously selects an option.
-
-</KeyboardControl>
+  <KeyboardControl keyOrCombos="Left arrow / Up key">
+    - This action moves focus to the previous rating item in the Rating component.
+    - If focus is on the first rating item, this action wraps focus to the last rating item.
+  </KeyboardControl>
 </KeyboardControls>

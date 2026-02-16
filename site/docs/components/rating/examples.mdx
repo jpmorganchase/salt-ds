@@ -8,49 +8,63 @@ data:
   $ref: ./#/data
 ---
 
-## Basic
+## Default
 
-The default Rating configuration displays five increments, as stars, from which users can select a rating.
+By default, the Rating displays five increments, as stars, from which users can select a rating.
 
-<LivePreview componentName="rating" exampleName="Basic" />
-
-## Visual label
-
-You can display Rating with a aligned label. This alignment is particularly useful when your application’s vertical real estate is limited.
-
-**Note:** Label position: The label can be positioned top, right, bottom or left of the Rating component. The default label position is ‘right’. The application can define the semantic value of each icon; it could also be a numerical value (e.g., 1/5 - 5/5)
-
-<LivePreview componentName="rating" exampleName="VisualLabel" />
-
-## Form field support
-
-If the component is wrapped in a [`FormField`](/salt/components/form-field) and you need to provide additional guidance, you can display help text beneath the rating.
-
-<LivePreview componentName="rating" exampleName="WithFormField" />
-
-## Custom Icons
-
-You can display up to 10 increments, reducing or increasing the number to suit your particular use case. To configure the number of increments, use the max prop.
-
-### Best practice
-
-Display the same number of increments across all Rating components within your application to ensure that the value of each increment remains consistent for users.
-
-<LivePreview componentName="rating" exampleName="CustomIcons" />
-
-## Disabled
-
-You can disable Rating if required, e.g., due to context or user permissions. Showing the component in a disabled state indicates its presence and functionality which may become available.
-
-**Note:** In a disabled state, the component is not considered relevant to the user flow and does not need to meet accessibility criteria for 3:1 minimum contrast.
-
-<LivePreview componentName="rating" exampleName="Disabled" />
+<LivePreview componentName="rating" exampleName="Default" />
 
 ## Read-only
 
-Display Rating in a read-only state when you need to communicate the current rating, and prevent it from being edited. A rating in a read-only state will be submitted with the corresponding form.
-
-**Note:** A read-only state is typically used to display a single user’s, or an aggregate, rating for a product, service, page, or other entity (non-interactive)
-Mouse is displayed with a ‘Default’ arrow cursor on hover.
+Use the read-only state when you need to communicate a single user’s or an aggregate rating, and prevent it from being edited. A rating in a read-only state will be submitted with the corresponding form.
 
 <LivePreview componentName="rating" exampleName="ReadOnly" />
+
+## Disabled
+
+Use the disabled state for the Rating component when context or user permissions require it. Showing the component in a disabled state indicates its presence and functionality, even though it’s not available.
+
+<LivePreview componentName="rating" exampleName="Disabled" />
+
+## Visual label
+
+A visual label can be added to the Rating component as an optional feature, appearing by default on the right. Applications can define the label of each icon. The label may be a number, text, or a combination (for example, '4/5', '4/5 very good', or 'Very good').
+
+### Best practices
+
+If using a label positioned to the left, set a fixed width to avoid the component jumping when moving between selections.
+
+<LivePreview componentName="rating" exampleName="VisualLabel" />
+
+## Form Field support
+
+Rating component is compatible with [`FormField`](/salt/components/form-field). However, the component doesn’t include Form Field out-the-box.
+
+<LivePreview componentName="rating" exampleName="WithFormField" />
+
+## Custom increments
+
+The recommended number of rating increments is 5 (e.g., 1–5 stars). However, you can increase or decrease the number of increments. The 5 point scale strikes a balance between giving users enough options to express their feelings and not overwhelming them with too many choices.
+
+### Best practice
+
+It’s recommended to not exceed 10 increments for highly detailed feedback as it can be overwhelming, and is unnecessary for most scenarios.
+
+<LivePreview componentName="rating" exampleName="CustomIncrements" />
+
+## Custom icons
+
+The default star icon can be replaced with other Salt DS icons depending on your use case. Achieve custom icons in code using the semantic icon provider.
+
+<LivePreview componentName="rating" exampleName="CustomIcons" />
+
+## Clear selection
+
+If clearing Rating selection is necessary, you can achieve this combining Rating with a Button. Activating the button should reset the rating component, clearing any previously submitted score.
+
+### Best practice
+
+- The clear button should remain visible and enabled as long as the rating is editable, allowing users to change their input.
+- If the Rating component is set to read-only, the clear button should be hidden, since users cannot modify or clear the rating in this state. This approach ensures clarity and prevents confusion, as users only see actionable controls when interaction is possible.
+
+<LivePreview componentName="rating" exampleName="ClearSelection" />

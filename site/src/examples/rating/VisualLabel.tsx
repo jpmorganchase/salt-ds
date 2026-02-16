@@ -1,34 +1,23 @@
-import { FlexLayout, FormField, FormFieldLabel, Text } from "@salt-ds/core";
+import { FlexLayout } from "@salt-ds/core";
 import { Rating } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
+const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
 export const VisualLabel = (): ReactElement => (
   <FlexLayout direction="column" gap={3}>
-    <FormField>
-      <FormFieldLabel>Product quality</FormFieldLabel>
-      <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>Customer service</FormFieldLabel>
-      <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>Select rating</FormFieldLabel>
-      <Rating
-        labelPlacement="left"
-        getLabel={(value) => labels[value - 1] || "No rating"}
-        className="custom-rating-width"
-      />
-      <style>
-        {".custom-rating-width .saltRating-label { min-width: 15ch; }"}
-      </style>
-      <Text style={{ maxWidth: "75ch" }}>
-        When using labels with `labelPlacement` set to 'left', set a minimum
-        width on the label container by targeting the `.saltRating-label` class.
-        This prevents layout shifts as the label text changes between different
-        rating values.
-      </Text>
-    </FormField>
+    <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
+    <Rating
+      defaultValue={4}
+      getLabel={(value) => labels[value - 1] || "No rating"}
+    />
+    <Rating
+      labelPlacement="left"
+      defaultValue={4}
+      getLabel={(value) => labels[value - 1] || "No rating"}
+      className="custom-rating-width"
+    />
+    <style>
+      {".custom-rating-width .saltRating-label { min-width: 9ch; }"}
+    </style>
   </FlexLayout>
 );

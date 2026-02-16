@@ -10,9 +10,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type FocusEvent,
   forwardRef,
-  type KeyboardEvent,
   type MouseEvent,
   type SyntheticEvent,
   useRef,
@@ -79,8 +77,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     max = 5,
     getLabel,
     labelPlacement = "right",
-    onKeyDown,
-    onFocus,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     ...restProps
@@ -121,91 +117,11 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     onChange?.(event, newValue);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (readOnly) {
-      if (
-        ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown", " "].includes(
-          event.key,
-        )
-      ) {
-        event.preventDefault();
-      }
-      return;
-    }
-
-    const elements: HTMLElement[] = Array.from(
-      radioGroupRef.current?.querySelectorAll("input[type='radio']") ?? [],
-    );
-    const currentIndex = elements.findIndex(
-      (el) => el === document.activeElement,
-    );
-
-    let newValue: number | null = null;
-    let targetIndex = -1;
-
-    switch (event.key) {
-      case "ArrowDown":
-      case "ArrowRight":
-        event.preventDefault();
-        if (currentIndex < elements.length - 1) {
-          targetIndex = currentIndex + 1;
-          newValue = targetIndex + 1;
-        }
-        break;
-
-      case "ArrowUp":
-      case "ArrowLeft":
-        event.preventDefault();
-        if (currentIndex > 0) {
-          targetIndex = currentIndex - 1;
-          newValue = targetIndex + 1;
-        }
-        break;
-
-      case " ":
-        event.preventDefault();
-        if (currentIndex >= 0) {
-          newValue = currentIndex + 1;
-        } else if (selected === 0) {
-          newValue = 1;
-          targetIndex = 0;
-        }
-        break;
-
-      default:
-        onKeyDown?.(event);
-        return;
-    }
-
-    if (targetIndex >= 0 && targetIndex !== currentIndex) {
-      elements[targetIndex]?.focus();
-    }
-
-    if (newValue !== null) {
-      updateRating(newValue, event);
-      setCurrentHoveredIndex(0);
-    }
-
-    onKeyDown?.(event);
-  };
-
   const handleMouseHover =
     (itemValue: number) => (event: MouseEvent<HTMLLabelElement>) => {
       if (readOnly) return;
       setCurrentHoveredIndex(event.type === "mouseenter" ? itemValue : 0);
     };
-
-  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
-    if (selected === 0 && radioGroupRef.current) {
-      const firstInput = radioGroupRef.current.querySelector<HTMLInputElement>(
-        "input[type='radio']",
-      );
-      if (firstInput && event.target === radioGroupRef.current) {
-        firstInput.focus();
-      }
-    }
-    onFocus?.(event);
-  };
 
   const handleClick =
     (itemValue: number) => (event: MouseEvent<HTMLInputElement>) => {
@@ -243,24 +159,13 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       )}
       {...restProps}
     >
-      <div
-        aria-live="polite"
-        aria-atomic="true"
-        className="salt-visuallyHidden"
-      >
-        {selected === 0
-          ? "Rating cleared"
-          : `Rating updated to ${getSemanticLabels(selected)}`}
-      </div>
       {isTopLeft && displayLabel}
       <div
         role="radiogroup"
         className={withBaseName("container")}
         ref={radioGroupRef}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
+        aria-readonly={readOnly || undefined}
         aria-labelledby={ariaLabelledByValue}
-        aria-label={!ariaLabelledByValue ? "Rating" : undefined}
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
@@ -269,8 +174,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
           const itemValue = index + 1;
           const isHovered =
             currentHoveredIndex > 0 && itemValue <= currentHoveredIndex;
-          const isFocusable =
-            itemValue === selected || (selected === 0 && itemValue === 1);
           const isSelected = currentHoveredIndex === 0 && itemValue <= selected;
           const isActive =
             currentHoveredIndex > 0 &&
@@ -280,7 +183,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
             <RatingItem
               currentRating={selected}
               isHovered={isHovered}
-              isFocusable={isFocusable}
               isSelected={isSelected}
               isActive={isActive}
               onHover={handleMouseHover(itemValue)}
@@ -294,7 +196,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
               emptyIcon={<RatingIcon />}
               index={index}
               name={name}
-              aria-label={label}
             />
           );
         })}

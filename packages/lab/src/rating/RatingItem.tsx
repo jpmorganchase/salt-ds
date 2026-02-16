@@ -21,10 +21,6 @@ export interface RatingItemProps {
    */
   isSelected?: boolean;
   /**
-   * If true, this item should be in the tab order.
-   */
-  isFocusable?: boolean;
-  /**
    * defines the current selected rating.
    */
   currentRating?: number;
@@ -73,10 +69,6 @@ export interface RatingItemProps {
    * Name of the radio group
    */
   name?: string;
-  /**
-   * Accessible label for the rating item
-   */
-  "aria-label"?: string;
 }
 
 export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
@@ -86,7 +78,6 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       currentRating,
       isHovered,
       isSelected,
-      isFocusable,
       isActive,
       onHover,
       onClick,
@@ -96,7 +87,6 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       emptyIcon,
       strongIcon,
       name,
-      "aria-label": ariaLabel,
     } = props;
 
     const targetWindow = useWindow();
@@ -139,8 +129,7 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
           disabled={disabled}
           readOnly={readOnly}
           className={withBaseName("input")}
-          aria-label={`${value} star${value !== 1 ? "s" : ""}, ${ariaLabel ?? ""}`}
-          tabIndex={isFocusable ? 0 : -1}
+          aria-label={`${value} star${value !== 1 ? "s" : ""}`}
         />
         <span className={withBaseName("icon")} aria-hidden>
           {icon}

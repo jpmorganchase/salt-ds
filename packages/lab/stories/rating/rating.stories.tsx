@@ -1,10 +1,10 @@
 import {
+  Button,
   FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   SemanticIconProvider,
-  Text,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
 import { Rating } from "@salt-ds/lab";
@@ -20,59 +20,64 @@ export default {
   },
 } as Meta<typeof Rating>;
 
-export const Basic: StoryFn<typeof Rating> = () => {
-  return (
-    <FormField>
-      <FormFieldLabel>Rate your experience</FormFieldLabel>
-      <Rating />
-    </FormField>
-  );
+export const Default: StoryFn<typeof Rating> = () => {
+  return <Rating defaultValue={3} />;
+};
+
+export const ReadOnly: StoryFn<typeof Rating> = () => {
+  return <Rating readOnly defaultValue={3} />;
+};
+
+export const Disabled: StoryFn<typeof Rating> = () => {
+  return <Rating disabled defaultValue={3} />;
 };
 
 export const VisualLabel: StoryFn<typeof Rating> = () => {
-  const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
+  const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
     <FlexLayout direction="column" gap={3}>
-      <FormField>
-        <FormFieldLabel>Product quality</FormFieldLabel>
-        <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Customer service</FormFieldLabel>
-        <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Select rating</FormFieldLabel>
-        <Rating
-          labelPlacement="left"
-          getLabel={(value) => labels[value - 1] || "No rating"}
-          className="custom-rating-width"
-        />
-        <style>
-          {".custom-rating-width .saltRating-label { min-width: 15ch; }"}
-        </style>
-        <Text style={{ maxWidth: "75ch" }}>
-          When using labels with `labelPlacement` set to 'left', set a minimum
-          width on the label container by targeting the `.saltRating-label`
-          class. This prevents layout shifts as the label text changes between
-          different rating values.
-        </Text>
-      </FormField>
+      <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
+      <Rating
+        defaultValue={4}
+        getLabel={(value) => labels[value - 1] || "No rating"}
+      />
+      <Rating
+        labelPlacement="left"
+        defaultValue={4}
+        getLabel={(value) => labels[value - 1] || "No rating"}
+        className="custom-rating-width"
+      />
+      <style>
+        {".custom-rating-width .saltRating-label { min-width: 9ch; }"}
+      </style>
     </FlexLayout>
   );
 };
 
 export const FormFieldSupport: StoryFn<typeof Rating> = () => {
-  const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
+  const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
-    <FormField labelPlacement="top">
-      <FormFieldLabel>Overall Experience</FormFieldLabel>
+    <FormField labelPlacement="top" style={{ width: "225px" }}>
+      <FormFieldLabel>Form field label</FormFieldLabel>
       <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
-      <FormFieldHelperText>
-        Please rate your overall experience with our service. Select the number
-        of stars that best reflects your satisfaction.
-      </FormFieldHelperText>
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
+  );
+};
+
+export const CustomIncrements: StoryFn<typeof Rating> = () => {
+  return (
+    <FlexLayout direction="column" gap={3}>
+      <Rating
+        defaultValue={1}
+        onChange={(event, value) => console.log(event, value)}
+      />
+      <Rating
+        defaultValue={7}
+        max={10}
+        onChange={(event, value) => console.log(event, value)}
+      />
+    </FlexLayout>
   );
 };
 
@@ -80,49 +85,38 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
   const [value, setValue] = useState(3);
 
   return (
-    <FlexLayout direction="column" gap={3}>
-      <FormField labelPlacement="top">
-        <FormFieldLabel>Increased increments</FormFieldLabel>
-        <Rating
-          defaultValue={7}
-          max={10}
-          onChange={(event, value) => console.log(event, value)}
-        />
-      </FormField>
-      <FormField labelPlacement="top">
-        <FormFieldLabel>Custom icon</FormFieldLabel>
-        <SemanticIconProvider
-          iconMap={{
-            RatingIcon: LikeIcon,
-            RatingSelectedIcon: LikeSolidIcon,
-            RatingUnselectingIcon: LikeIcon,
-          }}
-        >
-          <Rating
-            value={value}
-            max={5}
-            onChange={(event, value) => setValue(value)}
-          />
-        </SemanticIconProvider>
-      </FormField>
+    <SemanticIconProvider
+      iconMap={{
+        RatingIcon: LikeIcon,
+        RatingSelectedIcon: LikeSolidIcon,
+        RatingUnselectingIcon: LikeIcon,
+      }}
+    >
+      <Rating
+        value={value}
+        max={5}
+        onChange={(event, value) => setValue(value)}
+      />
+    </SemanticIconProvider>
+  );
+};
+
+export const ClearSelection: StoryFn<typeof Rating> = () => {
+  const [value, setValue] = useState<number>(3);
+
+  return (
+    <FlexLayout gap={2}>
+      <Rating
+        value={value}
+        onChange={(event, newValue) => setValue(newValue)}
+      />
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={() => setValue(0)}
+      >
+        clear
+      </Button>
     </FlexLayout>
-  );
-};
-
-export const Disabled: StoryFn<typeof Rating> = () => {
-  return (
-    <FormField>
-      <FormFieldLabel>Disabled example</FormFieldLabel>
-      <Rating disabled defaultValue={3} />
-    </FormField>
-  );
-};
-
-export const ReadOnly: StoryFn<typeof Rating> = () => {
-  return (
-    <FormField>
-      <FormFieldLabel>Read-only example</FormFieldLabel>
-      <Rating readOnly defaultValue={3} />
-    </FormField>
   );
 };
