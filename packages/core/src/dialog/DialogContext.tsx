@@ -6,7 +6,7 @@ export const DialogContext = createContext<{
   headerId?: string;
   setHeaderId: (id: string) => void;
   contentScrollId?: string;
-  setContentScrollId: (id: string) => void;
+  setContentScrollId?: (id: string) => void;
 }>({
   status: undefined,
   headerId: undefined,
