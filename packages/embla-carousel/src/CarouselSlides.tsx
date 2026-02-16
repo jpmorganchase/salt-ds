@@ -92,6 +92,11 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           selectedScrollSnap * numberOfSlidesPerSnap,
         );
         setFocusedSlideIndex(settledSlideIndex);
+        if (focusOnSettle.current) {
+          slideRefs.current[settledSlideIndex]?.focus();
+          setAnnouncementState("focus");
+          focusOnSettle.current = false;
+        }
       };
 
       if (!emblaApi) {
@@ -110,15 +115,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("pointerDown", pointerDownCallback);
       };
     }, [emblaApi, setAnnouncementState]);
-
-    useEffect(() => {
-      if (!focusOnSettle.current || stableScrollSnap === undefined) {
-        return;
-      }
-      slideRefs.current[focusedSlideIndex]?.focus();
-      setAnnouncementState("focus");
-      focusOnSettle.current = false;
-    }, [stableScrollSnap, focusedSlideIndex, setAnnouncementState]);
 
     useEffect(() => {
       const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
@@ -171,40 +167,32 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     ]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
+      if (!emblaApi) return;
+
+      const numberOfSnaps = emblaApi.scrollSnapList().length ?? 1;
       const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
-
-      // Find the current snap
       const currentSnap = Math.floor(focusedSlideIndex / numberOfSlidesPerSnap);
-
-      let newIndex = focusedSlideIndex;
+      let newSnap = currentSnap;
 
       switch (event.key) {
         case "ArrowLeft": {
           event.preventDefault();
-          if (event.repeat) {
-            newIndex = 0;
-          } else {
-            const prevSnap = Math.max(currentSnap - 1, 0);
-            newIndex = prevSnap * numberOfSlidesPerSnap;
-          }
+          newSnap = event.repeat ? 0 : Math.max(currentSnap - 1, 0);
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
-          if (event.repeat) {
-            newIndex = (numberOfSnaps - 1) * numberOfSlidesPerSnap;
-          } else {
-            const nextSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
-            newIndex = nextSnap * numberOfSlidesPerSnap;
-          }
+          newSnap = event.repeat
+            ? numberOfSnaps - 1
+            : Math.min(currentSnap + 1, numberOfSnaps - 1);
           break;
         }
+        default:
+          return;
       }
 
-      emblaApi?.scrollTo(newIndex);
-      setFocusedSlideIndex(newIndex);
-
+      emblaApi.scrollTo(newSnap);
+      focusOnSettle.current = true;
       onKeyDown?.(event);
     };
 

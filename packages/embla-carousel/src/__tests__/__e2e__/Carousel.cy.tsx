@@ -168,6 +168,30 @@ describe("Given a Carousel", () => {
       cy.realPress("ArrowLeft");
       cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1", true));
     });
+
+    it("should jump to last slide on long right arrow press and to first slide on long left arrow press, with focus on shown slide", function () {
+      // TODO : Skipping for React 16 and 17 (https://github.com/jpmorganchase/salt-ds/issues/5933)
+      if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
+        this.skip();
+      }
+
+      cy.get(".carouselSlide.is-snapped.is-in-view").focus();
+      verifySlide("1", true);
+
+      cy.get(".carouselSlide.is-snapped.is-in-view").trigger("keydown", {
+        key: "ArrowRight",
+        repeat: true,
+      });
+
+      cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4", true));
+
+      cy.get(".carouselSlide.is-snapped.is-in-view").trigger("keydown", {
+        key: "ArrowLeft",
+        repeat: true,
+      });
+
+      cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1", true));
+    });
   });
 
   describe("WITH the current slide as slide 4", () => {
