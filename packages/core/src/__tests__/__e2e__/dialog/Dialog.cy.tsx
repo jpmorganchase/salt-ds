@@ -79,7 +79,7 @@ describe("GIVEN a Dialog", () => {
 
   describe("WHEN no header is provided", () => {
     it("THEN it should not have aria-labelledby attribute on the dialog", () => {
-      cy.mount(<LongContentWithAriaLabel style={{ height: 300 }} />);
+      cy.mount(<LongContentWithAriaLabel />);
       cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("dialog").should("not.have.attr", "aria-labelledby");
@@ -207,7 +207,6 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("dialog").should("be.visible");
 
       cy.findByRole("dialog")
-        .find("div.saltDialogContent")
         .find("div.saltDialogContent-inner")
         .should("not.have.attr", "role", "region")
         .and("not.have.attr", "tabIndex", "0")
@@ -226,7 +225,7 @@ describe("GIVEN a Dialog", () => {
 
   describe("WHEN vertically overflowing content is detected", () => {
     it("THEN it should add padding to the right of the scroll bar", () => {
-      cy.mount(<LongContent style={{ height: 300 }} />);
+      cy.mount(<LongContent />);
       cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog")
         .find("div.saltDialogContent-overflow")
@@ -260,19 +259,20 @@ describe("GIVEN a Dialog", () => {
 
 describe("GIVEN a Dialog with scrollable content", () => {
   it("THEN it should have role region, tabIndex 0 and labelledby by dialog by default", () => {
-    cy.mount(<LongContent style={{ height: 300 }} />);
+    cy.mount(<LongContent />);
     cy.findByRole("button", { name: "Open dialog" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("dialog")
-      .find("div.saltDialogContent-inner")
-      .should("have.attr", "role", "region")
+      .findByRole("region", {
+        name: "Congratulations! You have created a Dialog.",
+      })
       .and("have.attr", "tabIndex", "0")
       .and("have.attr", "aria-labelledby");
   });
 
   it("THEN should use user provided aria-label for the content region name", () => {
-    cy.mount(<LongContentWithAriaLabel style={{ height: 300 }} />);
+    cy.mount(<LongContentWithAriaLabel />);
     cy.findByRole("button", { name: "Open dialog" }).realClick();
 
     cy.findByRole("dialog").should("be.visible");
