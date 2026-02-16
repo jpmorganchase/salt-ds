@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   FlexItem,
+  FlexLayout,
   H3,
   SplitLayout,
   StackLayout,
@@ -73,10 +74,9 @@ export const AnnouncementDialog: StoryFn = () => {
           disableAccent
         />
         <DialogContent>
-          <SplitLayout
-            direction={{ xs: "column", sm: "row" }}
-            startItem={
-              <StackLayout gap={1} className="announcementContent">
+          <FlexLayout direction={{ xs: "column", sm: "row" }}>
+            <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
+              <StackLayout gap={1}>
                 <H3 className="announcementHeading">Builder</H3>
                 <Text>
                   Create your own optimised corporate bond portfolios targeting
@@ -84,11 +84,16 @@ export const AnnouncementDialog: StoryFn = () => {
                   constraints including Yield, Risk, churn, costs and more.
                 </Text>
               </StackLayout>
-            }
-            endItem={
+            </FlexItem>
+            <FlexItem
+              grow={1}
+              basis="50%"
+              align="start"
+              style={{ minWidth: 0 }}
+            >
               <img alt="" src={exampleImage} className="announcementImage" />
-            }
-          />
+            </FlexItem>
+          </FlexLayout>
         </DialogContent>
         <DialogActions>
           <Button
@@ -156,10 +161,9 @@ export const MultiAnnouncementDialog: StoryFn = () => {
           disableAccent
         />
         <DialogContent>
-          <SplitLayout
-            direction={{ xs: "column", sm: "row" }}
-            startItem={
-              <StackLayout gap={1} className="announcementContent">
+          <FlexLayout direction={{ xs: "column", sm: "row" }}>
+            <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
+              <StackLayout gap={1}>
                 {currentSlide.subheader && (
                   <H3 className="announcementHeading">
                     {currentSlide.subheader}
@@ -167,11 +171,16 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                 )}
                 <Text>{currentSlide.body}</Text>
               </StackLayout>
-            }
-            endItem={
+            </FlexItem>
+            <FlexItem
+              grow={1}
+              basis="50%"
+              align="start"
+              style={{ minWidth: 0 }}
+            >
               <img alt="" src={exampleImage} className="announcementImage" />
-            }
-          />
+            </FlexItem>
+          </FlexLayout>
         </DialogContent>
         <DialogActions>
           {direction === "column" ? (
@@ -300,10 +309,9 @@ export const ContentScrolling: StoryFn = () => {
           disableAccent
         />
         <DialogContent>
-          <SplitLayout
-            direction={{ xs: "column", sm: "row" }}
-            startItem={
-              <StackLayout gap={1} className="announcementContent">
+          <FlexLayout direction={{ xs: "column", sm: "row" }}>
+            <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
+              <StackLayout gap={1}>
                 <H3 className="announcementHeading">Analytics engine</H3>
                 <Text>
                   The new analytics engine processes data up to 10x faster than
@@ -343,11 +351,16 @@ export const ContentScrolling: StoryFn = () => {
                   match your brand and user needs.
                 </Text>
               </StackLayout>
-            }
-            endItem={
+            </FlexItem>
+            <FlexItem
+              grow={1}
+              basis="50%"
+              align="start"
+              style={{ minWidth: 0 }}
+            >
               <img alt="" src={exampleImage} className="announcementImage" />
-            }
-          />
+            </FlexItem>
+          </FlexLayout>
         </DialogContent>
         <DialogActions>
           <Button
@@ -379,20 +392,24 @@ export const ResponsiveStackedContent: StoryFn = () => {
           disableAccent
         />
         <DialogContent>
-          <SplitLayout
-            direction={{ xs: "column", sm: "row" }}
-            startItem={
-              <StackLayout gap={1} className="announcementContent">
+          <FlexLayout direction={{ xs: "column", sm: "row" }}>
+            <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
+              <StackLayout gap={1}>
                 <Text>
                   We're excited to announce a powerful new analytics dashboard
                   that helps you visualize your data in real-time.
                 </Text>
               </StackLayout>
-            }
-            endItem={
+            </FlexItem>
+            <FlexItem
+              grow={1}
+              basis="50%"
+              align="start"
+              style={{ minWidth: 0 }}
+            >
               <img alt="" src={exampleImage} className="announcementImage" />
-            }
-          />
+            </FlexItem>
+          </FlexLayout>
         </DialogContent>
         <DialogActions>
           <Button
@@ -456,20 +473,24 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
           disableAccent
         />
         <DialogContent>
-          <SplitLayout
-            direction={{ xs: "column", sm: "row" }}
-            startItem={
-              <StackLayout gap={1} className="announcementContent">
+          <FlexLayout direction={{ xs: "column", sm: "row" }}>
+            <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
+              <StackLayout gap={1}>
                 <Text>
                   We're excited to announce a powerful new analytics dashboard
                   that helps you visualize your data in real-time.
                 </Text>
               </StackLayout>
-            }
-            endItem={
+            </FlexItem>
+            <FlexItem
+              grow={1}
+              basis="50%"
+              align="start"
+              style={{ minWidth: 0 }}
+            >
               <img alt="" src={exampleImage} className="announcementImage" />
-            }
-          />
+            </FlexItem>
+          </FlexLayout>
         </DialogContent>
         <DialogActions>
           {direction === "column" ? (
