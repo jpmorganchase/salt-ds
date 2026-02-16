@@ -121,7 +121,6 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
               isOverflowingVertically && canScrollDown,
           })}
           {...overflowProps}
-          {...rest}
         >
           {children}
         </div>
