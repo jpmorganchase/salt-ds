@@ -177,7 +177,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
           {direction === "column" ? (
             <StackLayout gap={1} style={{ width: "100%" }}>
               <Text color="secondary" style={{ textAlign: "center" }}>
-                {`${activeIndex + 1}/${multiSlideAnnouncementContent.length}`}
+                {`${activeIndex + 1} of ${multiSlideAnnouncementContent.length}`}
               </Text>
               <Button
                 sentiment="accented"
@@ -217,7 +217,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                     color="secondary"
                     style={{ marginRight: "var(--salt-spacing-200)" }}
                   >
-                    {`${activeIndex + 1}/${multiSlideAnnouncementContent.length}`}
+                    {`${activeIndex + 1} of ${multiSlideAnnouncementContent.length}`}
                   </Text>
                   {!isFirst && (
                     <Button
