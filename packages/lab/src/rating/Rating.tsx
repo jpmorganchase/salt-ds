@@ -146,6 +146,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         withBaseName("label"),
         withBaseName(`label-${labelPlacement}`),
       )}
+      aria-hidden
     >
       {getVisibleLabel(hoveredValue || selected, max)}
     </div>
