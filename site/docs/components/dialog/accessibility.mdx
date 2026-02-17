@@ -12,7 +12,7 @@ data:
 
 ### Focus
 
-The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will return to the element that was focused before the dialog was opened.
+The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will return to the element that triggered the dialog.
 
 ### Initial focus
 
@@ -23,12 +23,15 @@ You can control which element receives focus when the dialog is opened by passin
 - For dialogs that prompt for user confirmation, the call to action button takes focus first.
 - For dialogs with destructive interactions, the cancel button takes focus first.
 
+### Scrollable Content
+
+When content in the dialog is scrollable, it will receive keyboard focus (with a visible focus indicator). This allows keyboard and screen reader reliant users to navigate and scroll the content using arrow keys, satisfying [WCAG 2.1.1](https://www.w3.org/TR/WCAG21/#keyboard) and related accessibility requirements. 
+
 ## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- When the dialog is opened, Tab sets focus to the first focusable component in the dialog.
 - If focus is in the dialog, Tab sets focus to the next focusable component in the tab order.
 - If the last element in the dialog has focus, Tab wraps to the first focusable element in the dialog.
 
