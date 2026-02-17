@@ -5,6 +5,7 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   SemanticIconProvider,
+  StackLayout,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
 import { Rating } from "@salt-ds/lab";
@@ -36,15 +37,20 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
     <FlexLayout direction="column" gap={3}>
-      <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
       <Rating
         defaultValue={4}
-        getLabel={(value) => labels[value - 1] || "No rating"}
+        getVisibleLabel={(value, max) => `${value}/${max}`}
+      />
+      <Rating
+        defaultValue={4}
+        getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+        getLabel={(value) => labels[value - 1]}
       />
       <Rating
         labelPlacement="left"
         defaultValue={4}
-        getLabel={(value) => labels[value - 1] || "No rating"}
+        getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+        getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
       />
       <style>
@@ -59,7 +65,10 @@ export const FormFieldSupport: StoryFn<typeof Rating> = () => {
   return (
     <FormField labelPlacement="top" style={{ width: "225px" }}>
       <FormFieldLabel>Form field label</FormFieldLabel>
-      <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
+      <Rating
+        getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+        getLabel={(value) => labels[value - 1]}
+      />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
   );
@@ -96,6 +105,7 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
         value={value}
         max={5}
         onChange={(event, value) => setValue(value)}
+        getLabel={(value) => `${value} Heart${value > 1 ? "s" : ""}`}
       />
     </SemanticIconProvider>
   );
@@ -105,7 +115,7 @@ export const ClearSelection: StoryFn<typeof Rating> = () => {
   const [value, setValue] = useState<number>(3);
 
   return (
-    <FlexLayout gap={2}>
+    <StackLayout direction="row" gap={1}>
       <Rating
         value={value}
         onChange={(event, newValue) => setValue(newValue)}
@@ -117,6 +127,6 @@ export const ClearSelection: StoryFn<typeof Rating> = () => {
       >
         clear
       </Button>
-    </FlexLayout>
+    </StackLayout>
   );
 };
