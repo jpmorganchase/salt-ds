@@ -1,10 +1,11 @@
-.saltRating-wrapper {
+.saltRating {
   display: flex;
   gap: calc(2 * var(--salt-spacing-fixed-600));
   align-items: center;
+  box-sizing: border-box;
 }
 
-.saltFormField .saltRating-wrapper {
+.saltFormField .saltRating {
   min-height: var(--salt-size-base);
 }
 
@@ -19,13 +20,12 @@
 }
 
 .saltRating-container {
-  gap: calc(2 * var(--salt-spacing-fixed-600));
   display: flex;
   flex-direction: row;
+  gap: calc(2 * var(--salt-spacing-fixed-600));
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: stretch;
-  box-sizing: border-box;
 }
 
 .saltRating-label {

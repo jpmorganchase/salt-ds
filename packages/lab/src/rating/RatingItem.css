@@ -23,6 +23,23 @@
   z-index: 1;
 }
 
+.saltRatingItem-input::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--salt-spacing-fixed-600));
+  right: calc(-1 * var(--salt-spacing-fixed-600));
+}
+
+.saltRatingItem:first-of-type .saltRatingItem-input::before {
+  left: 0;
+}
+
+.saltRatingItem:last-of-type .saltRatingItem-input::before {
+  right: 0;
+}
+
 .saltRatingItem-icon {
   pointer-events: none;
   display: flex;
@@ -52,6 +69,6 @@
 
 .saltRatingItem-selected .saltRatingItem-icon,
 .saltRatingItem-hovered .saltRatingItem-icon,
-.saltRatingItem-active .saltRatingItem-icon {
+.saltRatingItem-unselecting .saltRatingItem-icon {
   color: var(--salt-sentiment-accent-dataviz);
 }

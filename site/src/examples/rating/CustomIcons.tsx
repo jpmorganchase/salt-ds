@@ -17,6 +17,7 @@ export const CustomIcons = (): ReactElement => {
         value={value}
         max={5}
         onChange={(event, value) => setValue(value)}
+        getLabel={(value) => `${value} Heart${value > 1 ? "s" : ""}`}
       />
     </SemanticIconProvider>
   );
