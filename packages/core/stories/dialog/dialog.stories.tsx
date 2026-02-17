@@ -239,8 +239,6 @@ export const LongContentWithAriaLabel: StoryFn<typeof Dialog> = ({
       "row",
     );
 
-  const initialFocusButtonIndex = direction === "column" ? 0 : 1;
-
   const cancel = (
     <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
       Cancel
@@ -260,7 +258,6 @@ export const LongContentWithAriaLabel: StoryFn<typeof Dialog> = ({
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        initialFocus={initialFocusButtonIndex}
         disableDismiss
         aria-label="Aria labelled dialog"
         style={{
