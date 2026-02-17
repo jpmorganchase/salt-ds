@@ -185,16 +185,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           newSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
           break;
         }
-        case "Home": {
-          event.preventDefault();
-          newSnap = 0;
-          break;
-        }
-        case "End": {
-          event.preventDefault();
-          newSnap = numberOfSnaps - 1;
-          break;
-        }
         default:
           return;
       }

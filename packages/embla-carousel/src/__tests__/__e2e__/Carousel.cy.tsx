@@ -168,27 +168,6 @@ describe("Given a Carousel", () => {
       cy.realPress("ArrowLeft");
       cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1", true));
     });
-
-    it("should jump to first slide on Home key and last slide on End key, with focus shown correctly", function () {
-      // TODO : Skipping for React 16 and 17 (https://github.com/jpmorganchase/salt-ds/issues/5933)
-      if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
-        this.skip();
-      }
-
-      cy.get(".carouselSlide.is-snapped.is-in-view").focus();
-      verifySlide("1", true);
-
-      cy.realPress("ArrowRight");
-      cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2", true));
-      cy.realPress("ArrowRight");
-      cy.wrap(waitForSettle(emblaApi, 2)).then(() => verifySlide("3", true));
-
-      cy.realPress("Home");
-      cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1", true));
-
-      cy.realPress("End");
-      cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4", true));
-    });
   });
 
   describe("WITH the current slide as slide 4", () => {
