@@ -138,7 +138,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ status, headerId, setHeaderId, contentScrollId }),
+      () => ({ status, id: headerId, setId: setHeaderId, contentScrollId }),
       [status, headerId, contentScrollId],
     );
 
