@@ -28,7 +28,7 @@ export const Default: StoryFn<typeof Rating> = () => {
 
 export const ReadOnly: StoryFn<typeof Rating> = () => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
-  return(
+  return (
     <StackLayout>
       <FormField>
         <FormFieldLabel>Rating (Read-only)</FormFieldLabel>
@@ -72,7 +72,7 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
         getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
       />
-  </FlexLayout>
+    </FlexLayout>
   );
 };
 
