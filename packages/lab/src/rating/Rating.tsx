@@ -85,6 +85,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     getLabel = defaultGetLabel,
     getVisibleLabel,
     labelPlacement = "right",
+    "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     ...restProps
@@ -152,9 +153,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     </div>
   );
 
-  const ariaLabelledByValue =
-    clsx(formFieldLabelledBy, ariaLabelledBy) || undefined;
-
   return (
     <div
       ref={ref}
@@ -171,7 +169,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         className={withBaseName("container")}
         ref={radioGroupRef}
         aria-readonly={readOnly || undefined}
-        aria-labelledby={ariaLabelledByValue}
+        aria-label={ariaLabel}
+        aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
