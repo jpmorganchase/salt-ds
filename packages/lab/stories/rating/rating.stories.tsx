@@ -12,6 +12,7 @@ import { Rating } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
+import "./rating.stories.css";
 
 export default {
   title: "Lab/Rating",
@@ -22,15 +23,30 @@ export default {
 } as Meta<typeof Rating>;
 
 export const Default: StoryFn<typeof Rating> = () => {
-  return <Rating defaultValue={3} />;
+  return <Rating aria-label="Rating" defaultValue={3} />;
 };
 
 export const ReadOnly: StoryFn<typeof Rating> = () => {
-  return <Rating readOnly defaultValue={3} />;
+  const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  return(
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>Rating (Read-only)</FormFieldLabel>
+        <Rating readOnly defaultValue={3} />
+      </FormField>
+      <Rating
+        aria-label="Rating (Read-only)"
+        readOnly
+        defaultValue={3}
+        getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+        getLabel={(value) => labels[value - 1]}
+      />
+    </StackLayout>
+  );
 };
 
 export const Disabled: StoryFn<typeof Rating> = () => {
-  return <Rating disabled defaultValue={3} />;
+  return <Rating aria-label="Rating" disabled defaultValue={3} />;
 };
 
 export const VisualLabel: StoryFn<typeof Rating> = () => {
@@ -38,25 +54,25 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
   return (
     <FlexLayout direction="column" gap={3}>
       <Rating
+        aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value, max) => `${value}/${max}`}
       />
       <Rating
+        aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
       />
       <Rating
+        aria-label="Rating"
         labelPlacement="left"
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
       />
-      <style>
-        {".custom-rating-width .saltRating-label { min-width: 9ch; }"}
-      </style>
-    </FlexLayout>
+  </FlexLayout>
   );
 };
 
@@ -78,10 +94,12 @@ export const CustomIncrements: StoryFn<typeof Rating> = () => {
   return (
     <FlexLayout direction="column" gap={3}>
       <Rating
+        aria-label="Rating"
         defaultValue={1}
         onChange={(event, value) => console.log(event, value)}
       />
       <Rating
+        aria-label="Rating"
         defaultValue={7}
         max={10}
         onChange={(event, value) => console.log(event, value)}
@@ -102,9 +120,10 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
       }}
     >
       <Rating
+        aria-label="Rating"
         value={value}
         max={5}
-        onChange={(event, value) => setValue(value)}
+        onChange={(_event, value) => setValue(value)}
         getLabel={(value) => `${value} Heart${value > 1 ? "s" : ""}`}
       />
     </SemanticIconProvider>
@@ -113,19 +132,32 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
 
 export const ClearSelection: StoryFn<typeof Rating> = () => {
   const [value, setValue] = useState<number>(3);
+  const [cleared, setCleared] = useState(false);
 
   return (
-    <StackLayout direction="row" gap={1}>
-      <Rating
-        value={value}
-        onChange={(event, newValue) => setValue(newValue)}
-      />
+    <StackLayout direction="row" align="end" gap={1}>
+      <FormField>
+        <FormFieldLabel aria-live="polite">
+          Rating {cleared && <span className="srOnly">was cleared</span>}
+        </FormFieldLabel>
+        <Rating
+          value={value}
+          onChange={(_event, newValue) => {
+            setValue(newValue);
+            setCleared(false);
+          }}
+        />
+      </FormField>
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => setValue(0)}
+        onClick={() => {
+          setValue(0);
+          setCleared(true);
+        }}
+        aria-label="Clear rating"
       >
-        clear
+        Clear
       </Button>
     </StackLayout>
   );
