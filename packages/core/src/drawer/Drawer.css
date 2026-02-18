@@ -24,6 +24,11 @@
   --drawer-background: var(--salt-container-secondary-background);
 }
 
+/* Styles applied when variant = "tertiary" */
+.saltDrawer-tertiary {
+  --drawer-background: var(--salt-container-tertiary-background);
+}
+
 /* Styles applied when position = "top" */
 .saltDrawer-top {
   left: 0;
