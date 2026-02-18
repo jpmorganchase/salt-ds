@@ -1,5 +1,34 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.86
+
+### Minor Changes
+
+- a16cbc5: `Rating` has been added to allow users to provide feedback relating to your product or experience.
+
+  Basic usage:
+
+  ```jsx
+  import { Rating } from "@salt-ds/lab";
+
+  function App() {
+    const [value, setValue] = useState(0);
+
+    return (
+      <Rating
+        value={value}
+        onValueChange={(event, newValue) => setValue(newValue)}
+      />
+    );
+  }
+  ```
+
+### Patch Changes
+
+- Updated dependencies [47d113d]
+- Updated dependencies [a16cbc5]
+  - @salt-ds/core@1.57.0
+
 ## 1.0.0-alpha.85
 
 ### Minor Changes
