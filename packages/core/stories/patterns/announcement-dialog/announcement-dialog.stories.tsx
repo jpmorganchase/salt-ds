@@ -35,7 +35,7 @@ const multiSlideAnnouncementContent: AnnouncementContent[] = [
     preheader: "New feature",
     header: "Trade across markets",
     subheader: "Builder",
-    body: "Create your own optimised corporate bond portfolios targeting specific characteristics using a wide range of parameters and constraints including Yield, Risk, churn, costs and more.",
+    body: "Create your own optimized corporate bond portfolios targeting specific characteristics using a wide range of parameters and constraints including yield, risk, churn, costs and more.",
   },
   {
     preheader: "New feature",
