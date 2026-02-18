@@ -44,6 +44,7 @@ const UnmountLogger = () => {
 export const Default: StoryFn<DrawerProps> = (args) => {
   const [openPrimary, setOpenPrimary] = useState(false);
   const [openSecondary, setOpenSecondary] = useState(false);
+  const [openTertiary, setOpenTertiary] = useState(false);
 
   return (
     <StackLayout>
@@ -68,6 +69,18 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+      </Drawer>
+      <Button onClick={() => setOpenTertiary(true)}>
+        Open Tertiary Drawer
+      </Button>
+      <Drawer
+        {...args}
+        open={openTertiary}
+        onOpenChange={(newOpen) => setOpenTertiary(newOpen)}
+        variant="tertiary"
+        style={{ width: 200 }}
+      >
+        <DrawerCloseButton onClick={() => setOpenTertiary(false)} />
       </Drawer>
     </StackLayout>
   );
