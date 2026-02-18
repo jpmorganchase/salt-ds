@@ -30,10 +30,8 @@ function FakeDialog({ children, status, id }: DialogProps) {
     <DialogContext.Provider
       value={{
         status,
-        headerId: id,
-        setHeaderId: () => {},
-        contentScrollId: undefined,
-        setContentScrollId: () => {},
+        id,
+        setId: () => {},
       }}
     >
       <div className="fakeDialogWindow">{children}</div>
