@@ -11,7 +11,7 @@ Container tokens define the background and structure of interface elements, help
 
 Each theme in Salt offers three background colors to help define hierarchy within a layout. These are typically used as the background color for an entire screen as well as any neutral containers within it. While these are suggested uses for the three background colors, they are not strict rules—designers can adapt them as needed to suit their layout and content.
 
-- **Primary** can serve as the first-level container within a page, forming the standard background for components like cards, panels, drawers, and app headers. 
+- **Primary** can serve as the first-level container within a page, forming the standard background for components like cards, panels, drawers, and app headers.
 - **Secondary** can provide the page-level background.
 - **Tertiary** is used less frequently, it can offer an alternate to primary and secondary, mainly to highlight key content areas.
 
@@ -26,12 +26,12 @@ Each theme in Salt offers three background colors to help define hierarchy withi
 
 Borders in Salt maintain a consistent style and width, providing thin, solid lines around containers when needed.
 
-| Property | Token |
-|---|---|
-|borderWidth | `--salt-size-fixed-100` |
-|borderStyle | `--salt-borderStyle-solid` |
+| Property    | Token                      |
+| ----------- | -------------------------- |
+| borderWidth | `--salt-size-fixed-100`    |
+| borderStyle | `--salt-borderStyle-solid` |
 
-Each container background has a corresponding border color designed to be used together for a cohesive appearance. Avoid mixing container backgrounds and border colors from different levels, as this may disrupt visual consistency within your layout, depending on the theme you are using. 
+Each container background has a corresponding border color designed to be used together for a cohesive appearance. Avoid mixing container backgrounds and border colors from different levels, as this may disrupt visual consistency within your layout, depending on the theme you are using.
 
 ## Primary containers
 
@@ -49,7 +49,7 @@ Primary containers combine background and border tokens to ensure a consistent c
 
 ## Secondary containers
 
-Secondary containers combine secondary background and border tokens to provide an alternative container style. They are available as a variant for components such as cards and drawers, offering a different visual treatment within a layout.  
+Secondary containers combine secondary background and border tokens to provide an alternative container style. They are available as a variant for components such as cards and drawers, offering a different visual treatment within a layout.
 
 <Diagram
   src="/img/theming/characteristic-secondary-containers-light.png"
@@ -63,7 +63,7 @@ Secondary containers combine secondary background and border tokens to provide a
 
 ## Tertiary containers
 
-Tertiary containers use tertiary background and border tokens to offer an alternative visual style within a layout. They are available as a variant for components such as cards and panels, and are typically used to highlight key content areas or provide subtle differentiation from primary and secondary containers.   
+Tertiary containers use tertiary background and border tokens to offer an alternative visual style within a layout. They are available as a variant for components such as cards and panels, and are typically used to highlight key content areas or provide subtle differentiation from primary and secondary containers.
 
 <Diagram
   src="/img/theming/characteristic-tertiary-containers-light.png"
@@ -101,16 +101,15 @@ The target characteristic is used in drag-and-drop interactions to visually indi
   background="secondary"
 />
 
-
 `--salt-target-background-hover` \
 `--salt-target-borderColor-hover`
 
 Drag-and-drop targets are one of the few instances where a container’s border style differs from the standard solid style. The `--salt-borderStyle-dashed` token is used to indicate that a container is a valid drop target.
 
-| Property | State | Token |
-|---|---|---|
-|borderStyle | Target | `--salt-borderStyle-dashed` |
-| | Hover | `--salt-borderStyle-solid` |
+| Property    | State  | Token                       |
+| ----------- | ------ | --------------------------- |
+| borderStyle | Target | `--salt-borderStyle-dashed` |
+|             | Hover  | `--salt-borderStyle-solid`  |
 
 ## Shadows
 
