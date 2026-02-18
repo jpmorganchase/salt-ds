@@ -1,5 +1,17 @@
 # @salt-ds/core
 
+## 1.57.0
+
+### Minor Changes
+
+- 47d113d: Added tertiary variant to Drawer.
+
+  ```tsx
+  <Drawer variant="tertiary" />
+  ```
+
+- a16cbc5: Added RatingIcon, RatingSelectedIcon, RatingUnselectingIcon to SemanticIconProvider.
+
 ## 1.56.0
 
 ### Minor Changes

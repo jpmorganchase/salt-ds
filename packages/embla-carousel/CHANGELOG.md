@@ -1,5 +1,14 @@
 # @salt-ds/embla-carousel
 
+## 1.1.1
+
+### Patch Changes
+
+- 0445a79: Fixed holding left or right arrow key not navigating to the first or last slide in the carousel when using the carousel slides.
+- Updated dependencies [47d113d]
+- Updated dependencies [a16cbc5]
+  - @salt-ds/core@1.57.0
+
 ## 1.1.0
 
 ### Minor Changes
