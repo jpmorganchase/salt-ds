@@ -10,6 +10,10 @@ data:
 
 ## Best practices
 
+### Accessible name
+
+Provide an accessible name for dialogs by using a visible header (recommended) or, if design constraints prevent this, apply an `aria-label` attribute directly to the Dialog component to meet WCAG requirements.
+
 ### Focus
 
 The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will return to the element that triggered the dialog.
