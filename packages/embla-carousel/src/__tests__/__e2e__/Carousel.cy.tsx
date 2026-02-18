@@ -1,7 +1,7 @@
 import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
-import { version as reactVersion, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
