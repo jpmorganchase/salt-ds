@@ -18,6 +18,8 @@ By default, the Rating displays five increments, as stars, from which users can 
 
 Use the read-only state when you need to communicate a single user’s or an aggregate rating, and prevent it from being edited. A rating in a read-only state will be submitted with the corresponding form.
 
+Note: If you must use a read-only rating, you should always add an accessible name that makes it obvious the switch is read-only, be that via a visual label or an aria-label if there's no space for a visual label.
+
 <LivePreview componentName="rating" exampleName="ReadOnly" />
 
 ## Disabled
@@ -62,8 +64,9 @@ The default star icon can be replaced with other Salt DS icons depending on your
 
 If clearing Rating selection is necessary, you can achieve this combining Rating with a Button. Activating the button should reset the rating component, clearing any previously submitted score.
 
-### Best practice
+### Best practices
 
+- A live region or an announcement should be used to provide feedback to screen reader users.
 - The clear button should remain visible and enabled as long as the rating is editable, allowing users to change their input.
 - If the Rating component is set to read-only, the clear button should be hidden, since users cannot modify or clear the rating in this state. This approach ensures clarity and prevents confusion, as users only see actionable controls when interaction is possible.
 

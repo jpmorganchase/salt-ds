@@ -5,15 +5,23 @@ import type { ReactElement } from "react";
 const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
 export const VisualLabel = (): ReactElement => (
   <FlexLayout direction="column" gap={3}>
-    <Rating defaultValue={4} getLabel={(value, max) => `${value}/${max}`} />
     <Rating
+      aria-label="Rating"
       defaultValue={4}
-      getLabel={(value) => labels[value - 1] || "No rating"}
+      getVisibleLabel={(value, max) => `${value}/${max}`}
     />
     <Rating
+      aria-label="Rating"
+      defaultValue={4}
+      getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+      getLabel={(value) => labels[value - 1]}
+    />
+    <Rating
+      aria-label="Rating"
       labelPlacement="left"
       defaultValue={4}
-      getLabel={(value) => labels[value - 1] || "No rating"}
+      getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+      getLabel={(value) => labels[value - 1]}
       className="custom-rating-width"
     />
     <style>

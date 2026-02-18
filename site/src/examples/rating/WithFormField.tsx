@@ -6,7 +6,10 @@ const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
 export const WithFormField = (): ReactElement => (
   <FormField labelPlacement="top" style={{ width: "225px" }}>
     <FormFieldLabel>Form field label</FormFieldLabel>
-    <Rating getLabel={(value) => labels[value - 1] || "No rating"} />
+    <Rating
+      getVisibleLabel={(value) => labels[value - 1] || "No rating"}
+      getLabel={(value) => labels[value - 1]}
+    />
     <FormFieldHelperText>Helper text</FormFieldHelperText>
   </FormField>
 );

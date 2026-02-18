@@ -1,13 +1,18 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type MouseEvent, type ReactNode } from "react";
+import {
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type MouseEvent,
+} from "react";
 import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
 
-export interface RatingItemProps {
+export interface RatingItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * specifies the value of the feedback item.
    */
@@ -27,11 +32,11 @@ export interface RatingItemProps {
   /**
    *  callback function when feedback item is hovered.
    */
-  onHover: (event: MouseEvent<HTMLLabelElement>) => void;
+  onMouseEnter: (event: MouseEvent<HTMLInputElement>) => void;
   /**
    *  callback function when feedback item is clicked.
    */
-  onClick: (event: MouseEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   /**
    * If true, the rating item will be in a read-only state.
    */
@@ -41,30 +46,12 @@ export interface RatingItemProps {
    */
   disabled?: boolean;
   /**
-   * Custom icon for the outlined state.
-   */
-  strongIcon?: ReactNode;
-  /**
-   * Custom icon for the filled state.
-   */
-  filledIcon?: ReactNode;
-  /**
-   * Custom icon for the empty state.
-   */
-  emptyIcon?: ReactNode;
-  /**
-   * The index of the current rating item in the list of all rating items.
-   * This is a zero-based index, starting from 0 for the first item.
-   * It can be used to determine the position of the item in the rating component.
-   */
-  index?: number;
-  /**
    * Indicates whether the current rating item is in an active state.
    * An active state typically means that the item is visually highlighted
    * or styled differently to indicate that it is part of the current selection
    * or interaction (e.g., hover or focus).
    */
-  isActive?: boolean;
+  isUnselecting?: boolean;
   /**
    * Name of the radio group
    */
@@ -74,20 +61,20 @@ export interface RatingItemProps {
 export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
   function RatingItem(props, ref) {
     const {
+      "aria-label": ariaLabel,
       value,
       currentRating,
       isHovered,
       isSelected,
-      isActive,
-      onHover,
-      onClick,
+      isUnselecting,
+      onMouseEnter,
+      onChange,
       readOnly = false,
       disabled = false,
-      filledIcon,
-      emptyIcon,
-      strongIcon,
       name,
     } = props;
+
+    const { RatingIcon, RatingSelectedIcon, RatingUnselectingIcon } = useIcon();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -96,28 +83,24 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
       window: targetWindow,
     });
 
-    const isInteractive = !readOnly && !disabled;
-
-    const handleHover = (event: MouseEvent<HTMLLabelElement>) => {
-      if (isInteractive) {
-        onHover(event);
-      }
-    };
-
     const icon =
-      isHovered || isSelected ? filledIcon : isActive ? strongIcon : emptyIcon;
+      isHovered || isSelected ? (
+        <RatingSelectedIcon aria-hidden />
+      ) : isUnselecting ? (
+        <RatingUnselectingIcon aria-hidden />
+      ) : (
+        <RatingIcon aria-hidden />
+      );
 
     return (
-      <label
+      <div
         className={clsx(withBaseName(), {
           [withBaseName("hovered")]: isHovered,
           [withBaseName("selected")]: isSelected,
-          [withBaseName("active")]: isActive,
+          [withBaseName("unselecting")]: isUnselecting,
           [withBaseName("disabled")]: disabled,
           [withBaseName("readOnly")]: readOnly,
         })}
-        onMouseEnter={handleHover}
-        onMouseLeave={handleHover}
       >
         <input
           ref={ref}
@@ -125,16 +108,17 @@ export const RatingItem = forwardRef<HTMLInputElement, RatingItemProps>(
           name={name}
           value={value}
           checked={currentRating === value}
-          onClick={onClick}
+          onChange={onChange}
+          onMouseEnter={onMouseEnter}
           disabled={disabled}
           readOnly={readOnly}
           className={withBaseName("input")}
-          aria-label={`${value} star${value !== 1 ? "s" : ""}`}
+          aria-label={ariaLabel}
         />
         <span className={withBaseName("icon")} aria-hidden>
           {icon}
         </span>
-      </label>
+      </div>
     );
   },
 );

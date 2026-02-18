@@ -14,9 +14,11 @@ export const CustomIcons = (): ReactElement => {
       }}
     >
       <Rating
+        aria-label="Rating"
         value={value}
         max={5}
-        onChange={(event, value) => setValue(value)}
+        onChange={(_event, value) => setValue(value)}
+        getLabel={(value) => `${value} Heart${value > 1 ? "s" : ""}`}
       />
     </SemanticIconProvider>
   );

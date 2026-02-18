@@ -1,18 +1,18 @@
 import {
+  capitalize,
   type FlexLayoutProps,
   makePrefixer,
   useControlled,
   useFormFieldProps,
-  useIcon,
   useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ChangeEvent,
   forwardRef,
   type MouseEvent,
-  type SyntheticEvent,
   useRef,
   useState,
 } from "react";
@@ -35,7 +35,7 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    * Callback function for rating change.
    * The first parameter is the event, and the second is the selected rating value.
    */
-  onChange?: (event: SyntheticEvent, value: number) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>, value: number) => void;
   /**
    * If true, the rating component will be in a read-only state.
    */
@@ -50,9 +50,13 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    */
   max?: number;
   /**
-   * Function that generates labels dynamically based on the value and max.
+   * Function used to provider a user-friendly name for the current value of the rating. Primarily used by screen readers.
    */
-  getLabel?: (value: number, max: number) => string;
+  getLabel?: (value: number) => string;
+  /**
+   * Function used to provider a visible label for the rating.
+   */
+  getVisibleLabel?: (value: number, max: number) => string;
   /**
    * Position of the label relative to the rating component.
    * Can be "top", "right", "bottom", or "left".
@@ -65,6 +69,9 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
   name?: string;
 }
 
+const defaultGetLabel = (value: number) =>
+  `${value} Star${value > 1 ? "s" : ""}`;
+
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   {
     value: valueProp,
@@ -75,13 +82,14 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     readOnly,
     disabled,
     max = 5,
-    getLabel,
+    getLabel = defaultGetLabel,
+    getVisibleLabel,
     labelPlacement = "right",
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     ...restProps
   },
-  ref?,
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -96,7 +104,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     } = {},
   } = useFormFieldProps();
 
-  const [currentHoveredIndex, setCurrentHoveredIndex] = useState(0);
+  const [hoveredValue, setHoveredValue] = useState(0);
   const [selected, setSelected] = useControlled({
     controlled: valueProp,
     default: defaultValue,
@@ -105,44 +113,42 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   });
   const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
-  const { RatingIcon, RatingSelectedIcon, RatingUnselectingIcon } = useIcon();
 
-  const getSemanticLabels = (value: number): string =>
-    value > 0
-      ? getLabel?.(value, max) || `${value} out of ${max}`
-      : "No rating selected";
-
-  const updateRating = (newValue: number, event: any) => {
+  const updateRating = (
+    newValue: number,
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
     setSelected(newValue);
     onChange?.(event, newValue);
   };
 
-  const handleMouseHover =
-    (itemValue: number) => (event: MouseEvent<HTMLLabelElement>) => {
-      if (readOnly) return;
-      setCurrentHoveredIndex(event.type === "mouseenter" ? itemValue : 0);
-    };
+  const handleMouseEnter = (event: MouseEvent<HTMLInputElement>) => {
+    if (readOnly || disabled) return;
+    const itemValue = Number.parseInt(event.currentTarget.value, 10);
+    setHoveredValue(itemValue);
+  };
 
-  const handleClick =
-    (itemValue: number) => (event: MouseEvent<HTMLInputElement>) => {
-      if (readOnly) {
-        event.preventDefault();
-        return;
-      }
-      updateRating(itemValue, event);
-    };
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (readOnly) {
+      event.preventDefault();
+      return;
+    }
+
+    const itemValue = Number.parseInt(event.currentTarget.value, 10);
+    updateRating(itemValue, event);
+  };
 
   const isTopLeft = labelPlacement === "top" || labelPlacement === "left";
-  const label = getSemanticLabels(currentHoveredIndex || selected);
 
-  const displayLabel = getLabel && (
+  const displayLabel = getVisibleLabel && (
     <div
       className={clsx(
         withBaseName("label"),
         withBaseName(`label-${labelPlacement}`),
       )}
+      aria-hidden
     >
-      {label}
+      {getVisibleLabel(hoveredValue || selected, max)}
     </div>
   );
 
@@ -153,8 +159,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     <div
       ref={ref}
       className={clsx(
-        withBaseName("wrapper"),
-        withBaseName(`wrapper-${labelPlacement}`),
+        withBaseName(),
+        withBaseName(`label${capitalize(labelPlacement)}`),
         className,
       )}
       {...restProps}
@@ -169,33 +175,30 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
+        onMouseLeave={() => setHoveredValue(0)}
       >
         {Array.from({ length: max }, (_, index) => {
           const itemValue = index + 1;
-          const isHovered =
-            currentHoveredIndex > 0 && itemValue <= currentHoveredIndex;
-          const isSelected = currentHoveredIndex === 0 && itemValue <= selected;
-          const isActive =
-            currentHoveredIndex > 0 &&
-            itemValue > currentHoveredIndex &&
+          const isHovered = hoveredValue > 0 && itemValue <= hoveredValue;
+          const isSelected = hoveredValue === 0 && itemValue <= selected;
+          const isUnselecting =
+            hoveredValue > 0 &&
+            itemValue > hoveredValue &&
             itemValue <= selected;
           return (
             <RatingItem
+              key={itemValue}
               currentRating={selected}
               isHovered={isHovered}
               isSelected={isSelected}
-              isActive={isActive}
-              onHover={handleMouseHover(itemValue)}
-              onClick={handleClick(itemValue)}
+              isUnselecting={isUnselecting}
+              onMouseEnter={handleMouseEnter}
+              onChange={handleChange}
               value={itemValue}
-              key={itemValue}
               readOnly={readOnly}
               disabled={disabled}
-              strongIcon={<RatingUnselectingIcon />}
-              filledIcon={<RatingSelectedIcon />}
-              emptyIcon={<RatingIcon />}
-              index={index}
               name={name}
+              aria-label={getLabel?.(itemValue)}
             />
           );
         })}

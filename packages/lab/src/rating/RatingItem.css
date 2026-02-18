@@ -23,6 +23,18 @@
   z-index: 1;
 }
 
+.saltRatingItem-input::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: var(--salt-spacing-fixed-600);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  box-sizing: content-box;
+}
+
 .saltRatingItem-icon {
   pointer-events: none;
   display: flex;
@@ -35,10 +47,20 @@
   --saltIcon-size: var(--salt-size-icon);
 }
 
-.saltRatingItem-input:focus-visible ~ .saltRatingItem-icon {
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  outline-color: var(--salt-focused-outlineColor);
+.saltRatingItem-input:focus-visible ~ .saltRatingItem-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: var(--salt-spacing-fixed-600);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  box-sizing: content-box;
+
+  border-radius: var(--salt-palette-corner-strongest);
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(-1 * var(--salt-spacing-fixed-200));
 }
 
 .saltRatingItem-disabled {
@@ -52,6 +74,6 @@
 
 .saltRatingItem-selected .saltRatingItem-icon,
 .saltRatingItem-hovered .saltRatingItem-icon,
-.saltRatingItem-active .saltRatingItem-icon {
+.saltRatingItem-unselecting .saltRatingItem-icon {
   color: var(--salt-sentiment-accent-dataviz);
 }
