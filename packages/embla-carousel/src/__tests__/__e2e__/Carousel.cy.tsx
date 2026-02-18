@@ -130,7 +130,7 @@ describe("Given a Carousel", () => {
       );
     });
 
-    it("should navigate slides using left/right arrow keys(including long press)", function () {
+    it("should navigate slides using left/right arrow keys(including long press)", () => {
       // Focus the slide element
       cy.get(".carouselSlide.is-snapped.is-in-view").focus();
 
@@ -175,7 +175,7 @@ describe("Given a Carousel", () => {
       });
     });
 
-    it("should navigate back to first slide", function () {
+    it("should navigate back to first slide", () => {
       cy.findAllByRole("tab").eq(3).focus();
       verifySlide("4", false);
 
@@ -209,7 +209,7 @@ describe("Given a Carousel", () => {
       cy.findAllByRole("tab").should("have.length", 4);
     });
 
-    it("should navigate to each slide in the tablist", function () {
+    it("should navigate to each slide in the tablist", () => {
       cy.findAllByRole("tab").eq(3).focus();
       verifySlide("4", false);
 
