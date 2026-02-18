@@ -75,7 +75,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       checkOverflow();
     }, [checkOverflow]);
 
-    const { contentScrollId, headerId } = useDialogContext();
+    const { contentScrollId, id: headerId } = useDialogContext();
 
     const overflowProps = isOverflowing
       ? {
