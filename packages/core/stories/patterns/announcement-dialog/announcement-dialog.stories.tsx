@@ -99,6 +99,7 @@ export const AnnouncementDialog: StoryFn = () => {
           <Button
             sentiment="accented"
             style={direction === "column" ? { width: "100%" } : undefined}
+            onClick={() => setOpen(false)}
           >
             Try it now
           </Button>
@@ -190,7 +191,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
               </Text>
               <Button
                 sentiment="accented"
-                onClick={isLast ? undefined : handleNext}
+                onClick={isLast ? () => setOpen(false) : handleNext}
                 style={{ width: "100%" }}
               >
                 {primaryLabel}
@@ -208,6 +209,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
               <Button
                 sentiment="accented"
                 appearance="transparent"
+                onClick={() => setOpen(false)}
                 style={{ width: "100%" }}
               >
                 Go to dashboard
@@ -216,7 +218,11 @@ export const MultiAnnouncementDialog: StoryFn = () => {
           ) : (
             <SplitLayout
               startItem={
-                <Button sentiment="accented" appearance="transparent">
+                <Button
+                  sentiment="accented"
+                  appearance="transparent"
+                  onClick={() => setOpen(false)}
+                >
                   Go to dashboard
                 </Button>
               }
@@ -239,7 +245,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                   )}
                   <Button
                     sentiment="accented"
-                    onClick={isLast ? undefined : handleNext}
+                    onClick={isLast ? () => setOpen(false) : handleNext}
                   >
                     {primaryLabel}
                   </Button>
@@ -282,6 +288,7 @@ export const FullImage: StoryFn = () => {
         <DialogActions>
           <Button
             sentiment="accented"
+            onClick={() => setOpen(false)}
             style={direction === "column" ? { width: "100%" } : undefined}
           >
             Try it now
@@ -365,6 +372,7 @@ export const ContentScrolling: StoryFn = () => {
         <DialogActions>
           <Button
             sentiment="accented"
+            onClick={() => setOpen(false)}
             style={direction === "column" ? { width: "100%" } : undefined}
           >
             Got it
@@ -414,14 +422,19 @@ export const ResponsiveStackedContent: StoryFn = () => {
         <DialogActions>
           <Button
             sentiment="accented"
+            onClick={() => setOpen(false)}
             style={direction === "column" ? { width: "100%" } : undefined}
           >
-            Get started
+            Try it now
           </Button>
         </DialogActions>
       </Dialog>
     </>
   );
+};
+
+ResponsiveStackedContent.globals = {
+  viewport: { value: "mobile2" },
 };
 
 export const ResponsiveStackedButtonBar: StoryFn = () => {
@@ -435,6 +448,7 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
       <Button
         sentiment="accented"
         appearance="transparent"
+        onClick={() => setOpen(false)}
         style={{ width: "100%" }}
       >
         Remind me later
@@ -447,6 +461,7 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
       <Button
         sentiment="accented"
         appearance="bordered"
+        onClick={() => setOpen(false)}
         style={{ width: "100%" }}
       >
         Go to dashboard
@@ -456,7 +471,11 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
 
   const tryItNow = (
     <FlexItem>
-      <Button sentiment="accented" style={{ width: "100%" }}>
+      <Button
+        sentiment="accented"
+        onClick={() => setOpen(false)}
+        style={{ width: "100%" }}
+      >
         Try it now
       </Button>
     </FlexItem>
@@ -514,4 +533,8 @@ export const ResponsiveStackedButtonBar: StoryFn = () => {
       </Dialog>
     </>
   );
+};
+
+ResponsiveStackedButtonBar.globals = {
+  viewport: { value: "mobile2" },
 };
