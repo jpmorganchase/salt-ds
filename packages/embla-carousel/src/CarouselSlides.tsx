@@ -167,6 +167,8 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     ]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event);
+
       if (!emblaApi) return;
 
       const numberOfSnaps = emblaApi.scrollSnapList().length ?? 1;
@@ -191,7 +193,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
       emblaApi.scrollTo(newSnap);
       focusOnSettle.current = true;
-      onKeyDown?.(event);
     };
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
