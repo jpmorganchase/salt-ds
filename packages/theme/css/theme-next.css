@@ -16,7 +16,6 @@
 @import url(next/palette/neutral.css);
 @import url(next/palette/positive.css);
 @import url(next/palette/shadow.css);
-@import url(next/palette/text.css);
 @import url(next/palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
