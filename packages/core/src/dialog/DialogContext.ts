@@ -4,8 +4,8 @@ import { createContext } from "../utils";
 
 export interface DialogContextValue {
   status?: ValidationStatus;
-  headerId?: string;
-  setHeaderId: (id: string) => void;
+  id?: string;
+  setId: (id: string) => void;
   contentScrollId?: string;
   setContentScrollId?: (id: string) => void;
 }
@@ -14,8 +14,8 @@ export const DialogContext = createContext<DialogContextValue>(
   "DialogContext",
   {
     status: undefined,
-    headerId: undefined,
-    setHeaderId: () => {},
+    id: undefined,
+    setId: () => {},
     contentScrollId: undefined,
     setContentScrollId: () => {},
   },

@@ -54,8 +54,8 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     } = props;
     const {
       status: statusContext,
-      setHeaderId,
-      headerId: contextHeaderId,
+      setId: setHeaderId,
+      id: contextHeaderId,
     } = useDialogContext();
 
     const targetWindow = useWindow();
