@@ -18,16 +18,19 @@ export function statusToBadgeValue(status: string) {
   }, "");
 }
 
-/** 
- Component links currently redirect from /index to /examples
- This function normalizes the selectedNodeId to match the href in navData
- **/
+/**
+ * This function normalizes the selectedNodeId to match the href in navData.
+ * It handles cases where the link might end with a tab route (e.g., /examples, /usage, /accessibility)
+ * and checks if there's a corresponding index page in the navData.
+ * If so, it returns the index page href; otherwise, it falls back to the base link without the tab route.
+ */
 export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
   const tabRoutes = ["/examples", "/usage", "/accessibility"];
   const matchedRoute = tabRoutes.find((route) => link.endsWith(route));
   if (matchedRoute) {
-    const indexLink = link.replace(new RegExp(`${matchedRoute}$`), "/index");
-    // Check if navData contains indexLink
+    const base = link.slice(0, -matchedRoute.length);
+    const indexLink = `${base}/index`;
+
     const exists = (items: Item[]): boolean =>
       items.some(
         (item) =>
@@ -36,8 +39,7 @@ export function normalizeSelectedNodeId(link: string, navData: Item[]): string {
     if (exists(navData)) {
       return indexLink;
     }
-    // Fallback to removing the matched tab route
-    return link.replace(new RegExp(`${matchedRoute}$`), "");
+    return base;
   }
   return link;
 }

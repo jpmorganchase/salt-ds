@@ -128,8 +128,7 @@ export const VerticalNavigation = ({
   useEffect(() => {
     if (
       hasScrolledToActiveRef.current ||
-      !normalizedSelectedNodeId ||
-      !mappedNavData.length
+      !normalizedSelectedNodeId
     ) {
       return;
     }
@@ -144,7 +143,7 @@ export const VerticalNavigation = ({
       activeItem.scrollIntoView({ block: "center" });
       hasScrolledToActiveRef.current = true;
     }
-  }, [mappedNavData, normalizedSelectedNodeId]);
+  }, [normalizedSelectedNodeId]);
 
   return (
     <VerticalNavigationComponent
