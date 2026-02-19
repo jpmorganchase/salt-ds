@@ -1,4 +1,13 @@
-import { Button, FlexLayout, H2, H3, Link, Text, useId } from "@salt-ds/core";
+import {
+  Button,
+  FlexLayout,
+  H2,
+  H3,
+  Link,
+  StackLayout,
+  Text,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselAutoplayIndicator,
@@ -147,13 +156,7 @@ export const Autoplay = () => {
       <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
         Autoplay example
       </H2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column-reverse",
-          gap: "var(--salt-spacing-100)",
-        }}
-      >
+      <StackLayout gap={1} direction="column-reverse">
         <FlexLayout justify="start" direction="row" gap={1}>
           <Button
             aria-label={`${playState === "play" ? "stop" : "start"} automatic slide rotation`}
@@ -218,7 +221,7 @@ export const Autoplay = () => {
             );
           })}
         </CarouselSlides>
-      </div>
+      </StackLayout>
     </Carousel>
   );
 };
