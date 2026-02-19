@@ -176,7 +176,6 @@ describe("Given a Carousel", () => {
     });
 
     it("should navigate back to first slide", () => {
-      cy.findAllByRole("tab").eq(3).focus();
       verifySlide("4", false);
 
       cy.findByLabelText(/Previous slide/).click();
@@ -210,7 +209,6 @@ describe("Given a Carousel", () => {
     });
 
     it("should navigate to each slide in the tablist", () => {
-      cy.findAllByRole("tab").eq(3).focus();
       verifySlide("4", false);
 
       cy.findAllByRole("tab").eq(1).click();
