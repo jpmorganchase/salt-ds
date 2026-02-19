@@ -126,10 +126,7 @@ export const VerticalNavigation = ({
   const hasScrolledToActiveRef = useRef(false);
 
   useEffect(() => {
-    if (
-      hasScrolledToActiveRef.current ||
-      !normalizedSelectedNodeId
-    ) {
+    if (hasScrolledToActiveRef.current || !normalizedSelectedNodeId) {
       return;
     }
 
