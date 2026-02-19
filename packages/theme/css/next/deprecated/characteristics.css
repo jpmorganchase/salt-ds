@@ -4,6 +4,8 @@
   --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
 
   --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);
+  --salt-selectable-borderColor-disabled: var(--salt-palette-neutral-disabled);
+  --salt-selectable-foreground-disabled: var(--salt-palette-neutral-strong-disabled);
 
   --salt-status-static-foreground: var(--salt-palette-foreground-secondary); /* Use --salt-content-secondary-foreground */
 
@@ -143,8 +145,11 @@
   --salt-category-20-subtle-borderColor: var(--salt-palette-categorical-20);
 
   --salt-accent-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-accent-borderColor-disabled: var(--salt-palette-accent-disabled);
 
   --salt-content-foreground-highlight: var(--salt-palette-accent-weaker);
   --salt-content-foreground-active: var(--salt-palette-accent-stronger);
   --salt-content-foreground-hover: var(--salt-palette-accent-strong);
+
+  --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
 }
