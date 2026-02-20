@@ -146,14 +146,14 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
       >
         <input
           aria-readonly={readOnly || undefined}
-          aria-describedby={clsx(
-            formFieldA11yProps?.["aria-describedby"],
-            inputDescribedBy,
-          )}
-          aria-labelledby={clsx(
-            formFieldA11yProps?.["aria-labelledby"],
-            inputLabelledBy,
-          )}
+          aria-describedby={
+            clsx(formFieldA11yProps?.["aria-describedby"], inputDescribedBy) ||
+            undefined
+          }
+          aria-labelledby={
+            clsx(formFieldA11yProps?.["aria-labelledby"], inputLabelledBy) ||
+            undefined
+          }
           name={name}
           value={value}
           checked={checked}
