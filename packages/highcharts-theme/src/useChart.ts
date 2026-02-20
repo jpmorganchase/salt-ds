@@ -1,9 +1,9 @@
-import { useDensity, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { useDensity } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import type { Options } from "highcharts";
 import Highcharts from "highcharts";
 import type HighchartsReact from "highcharts-react-official";
-import { type RefObject, useRef, useState } from "react";
+import { type RefObject, useEffect, useRef, useState } from "react";
 import { getDefaultOptions } from "./default-options";
 
 export const useChart = (
@@ -20,7 +20,7 @@ export const useChart = (
     return Highcharts.merge(defaults, chartOptions);
   });
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     const chart = chartRef.current?.chart as Highcharts.Chart | null;
     const container = chart?.container ?? null;
 
