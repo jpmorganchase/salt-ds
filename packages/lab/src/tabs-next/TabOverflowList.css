@@ -8,7 +8,6 @@
   overflow: hidden;
   overflow-y: auto;
   position: absolute;
-  z-index: var(--salt-zIndex-flyover);
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner, 0);
@@ -20,14 +19,6 @@
   gap: var(--salt-spacing-fixed-100);
   max-height: inherit;
   min-height: inherit;
-}
-
-.saltTabOverflow-list[data-hidden="true"] {
-  opacity: 0;
-  pointer-events: none;
-  /* Avoid causing page to overflow with the hidden elements */
-  width: 1px;
-  height: 1px;
 }
 
 .saltTabOverflow-list .saltTabNext {
