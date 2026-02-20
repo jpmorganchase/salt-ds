@@ -193,6 +193,17 @@
       }
     },
     {
+      "includes": ["**/tooling/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedFunctionParameters": "warn"
+          }
+        }
+      }
+    },
+    {
+      // Per-package self-import restrictions (one override per package)
       "includes": [
         "**/packages/core/src/**",
         "!**/packages/core/src/__tests__/**"
@@ -204,20 +215,14 @@
               "level": "error",
               "options": {
                 "paths": {
-                  "@salt-ds/core": "Using relative import instead of import from the package itself"
+                  "@salt-ds/core": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
                 }
               }
             }
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/tooling/**"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnusedFunctionParameters": "warn"
           }
         }
       }
@@ -229,33 +234,15 @@
       ],
       "linter": {
         "rules": {
-          "nursery": {},
           "style": {
             "noRestrictedImports": {
               "level": "error",
               "options": {
                 "paths": {
-                  "@salt-ds/lab": "Using relative import instead of import from the package itself"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/packages/*/src/**", "!**/useIsomorphicLayoutEffect.ts"],
-      "linter": {
-        "rules": {
-          "nursery": {},
-          "style": {
-            "noRestrictedImports": {
-              "level": "error",
-              "options": {
-                "paths": {
+                  "@salt-ds/lab": "Using relative import instead of import from the package itself",
                   "react": {
-                    "importNames": ["useLayoutEffect"],
-                    "message": "useIsomorphicLayoutEffect should be used instead to avoid warnings during SSR"
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
                   }
                 }
               }
@@ -265,18 +252,262 @@
       }
     },
     {
-      "includes": ["**/packages/*/src/**"],
+      "includes": [
+        "**/packages/icons/src/**",
+        "!**/packages/icons/src/__tests__/**"
+      ],
       "linter": {
         "rules": {
-          "nursery": {},
           "style": {
             "noRestrictedImports": {
               "level": "error",
               "options": {
                 "paths": {
+                  "@salt-ds/icons": "Using relative import instead of import from the package itself",
                   "react": {
-                    "importNames": ["useId"],
-                    "message": "useId should be imported from @salt-ds/core instead of react"
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/styles/src/**",
+        "!**/packages/styles/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/styles": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/theme/src/**",
+        "!**/packages/theme/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/theme": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/window/src/**",
+        "!**/packages/window/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/window": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/react-resizable-panels-theme/src/**",
+        "!**/packages/react-resizable-panels-theme/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/react-resizable-panels-theme": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/ag-grid-theme/src/**",
+        "!**/packages/ag-grid-theme/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/ag-grid-theme": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/highcharts-theme/src/**",
+        "!**/packages/highcharts-theme/src/__tests__/**",
+        "!**/packages/highcharts-theme/src/examples/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/highcharts-theme": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/date-adapters/src/**",
+        "!**/packages/date-adapters/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/date-adapters": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/embla-carousel/src/**",
+        "!**/packages/embla-carousel/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/embla-carousel": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/data-grid/src/**",
+        "!**/packages/data-grid/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/data-grid": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/packages/countries/src/**",
+        "!**/packages/countries/src/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/countries": "Using relative import instead of import from the package itself",
+                  "react": {
+                    "importNames": ["useLayoutEffect", "useId"],
+                    "message": "useLayoutEffect -> useIsomorphicLayoutEffect; useId -> import from @salt-ds/core instead of react"
                   }
                 }
               }

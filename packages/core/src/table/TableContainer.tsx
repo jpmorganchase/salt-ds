@@ -1,8 +1,3 @@
-import {
-  useForkRef,
-  useIsomorphicLayoutEffect,
-  useResizeObserver,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -14,6 +9,11 @@ import {
   useRef,
   useState,
 } from "react";
+import {
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useResizeObserver,
+} from "../utils";
 import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 import { TableContext } from "./TableContext";
