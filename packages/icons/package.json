@@ -40,7 +40,7 @@
   "devDependencies": {
     "glob": "^10.0.0",
     "mustache": "^4.2.0",
-    "rimraf": "^4.4.0",
+    "rimraf": "^5.0.0",
     "svgo": "^4.0.0"
   },
   "publishConfig": {
