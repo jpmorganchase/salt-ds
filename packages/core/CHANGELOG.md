@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.57.1
+
+### Patch Changes
+
+- 47a23b9: Removed a self-import that caused issues in module federation environments.
+
 ## 1.57.0
 
 ### Minor Changes
