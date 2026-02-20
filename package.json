@@ -44,9 +44,9 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.2.0",
-    "@biomejs/js-api": "^3.0.0",
-    "@biomejs/wasm-nodejs": "^2.2.0",
+    "@biomejs/biome": "^2.4.3",
+    "@biomejs/js-api": "^4.0.0",
+    "@biomejs/wasm-nodejs": "^2.4.3",
     "@changesets/cli": "^2.29.6",
     "@cypress/react": "^8.0.0",
     "@e965/xlsx": "^0.20.3",
