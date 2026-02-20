@@ -14,8 +14,8 @@ import {
   useIsomorphicLayoutEffect,
   useResizeObserver,
 } from "../utils";
-
 import dialogContentCss from "./DialogContent.css";
+import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
@@ -31,6 +31,8 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const { children, className, ...rest } = props;
     const [canScrollUp, setCanScrollUp] = useState(false);
     const [canScrollDown, setCanScrollDown] = useState(true);
+    const [isOverflowingVertically, setIsOverflowingVertically] =
+      useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
@@ -58,8 +60,12 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     const checkOverflow = useCallback(() => {
       if (!divRef.current) return;
-      setIsOverflowing(
+      setIsOverflowingVertically(
         divRef.current.scrollHeight > divRef.current.offsetHeight,
+      );
+      setIsOverflowing(
+        divRef.current.scrollWidth > divRef.current.offsetWidth ||
+          divRef.current.scrollHeight > divRef.current.offsetHeight,
       );
     }, []);
 
@@ -69,16 +75,28 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       checkOverflow();
     }, [checkOverflow]);
 
+    const { contentScrollId, id: headerId } = useDialogContext();
+
+    const overflowProps = isOverflowing
+      ? {
+          role: "region",
+          tabIndex: 0,
+          "aria-labelledby": headerId ?? contentScrollId,
+        }
+      : {};
+
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
         <div
           onScrollCapture={handleScroll}
           ref={divRef}
           className={clsx(withBaseName("inner"), {
-            [withBaseName("overflow")]: isOverflowing,
-            [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
-            [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
+            [withBaseName("overflow")]: isOverflowingVertically,
+            [withBaseName("scrollTop")]: isOverflowingVertically && canScrollUp,
+            [withBaseName("scrollBottom")]:
+              isOverflowingVertically && canScrollDown,
           })}
+          {...overflowProps}
         >
           {children}
         </div>
