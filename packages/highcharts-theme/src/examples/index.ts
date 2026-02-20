@@ -6,6 +6,7 @@ export { default as BulletChart } from "./BulletChart";
 export { default as CandlestickChart } from "./CandlestickChart";
 export { default as ColumnChart } from "./ColumnChart";
 export { default as DonutChart } from "./DonutChart";
+export { default as Heatmap } from "./Heatmap";
 export { default as LineChart } from "./LineChart";
 export { default as PieChart } from "./PieChart";
 export { default as ScatterChart } from "./ScatterChart";
