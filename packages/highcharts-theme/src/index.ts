@@ -1,2 +1,8 @@
+export {
+  buildColorAxis,
+  type ColorAxisConfig,
+  type SingleColorAxisConfig,
+  type ThresholdColorAxisConfig,
+} from "./color-axis";
 export { saltPatternDef } from "./patterns";
-export { useChart } from "./useChart";
+export { type UseChartConfig, useChart } from "./useChart";

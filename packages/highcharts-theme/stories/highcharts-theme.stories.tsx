@@ -10,6 +10,7 @@ import {
   CandlestickChart as CandlestickChartComponent,
   ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
+  Heatmap as HeatmapComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
   ScatterChart as ScatterChartComponent,
@@ -25,6 +26,7 @@ import {
   candlestickOptions,
   columnOptions,
   donutOptions,
+  heatmapOptions,
   lineOptions,
   pieOptions,
   scatterOptions,
@@ -161,5 +163,13 @@ export const WaterfallChart = {
   args: {
     patterns: false,
     options: waterfallOptions,
+  },
+};
+
+export const Heatmap = {
+  render: (args: ChartStoryArgs) => <HeatmapComponent {...args} />,
+  args: {
+    patterns: false,
+    options: heatmapOptions,
   },
 };
