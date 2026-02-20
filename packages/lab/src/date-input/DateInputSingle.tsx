@@ -367,7 +367,9 @@ export const DateInputSingle = forwardRef<
         )}
         <input
           autoComplete="off"
-          aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
+          aria-describedby={
+            clsx(formFieldDescribedBy, dateInputDescribedBy) || undefined
+          }
           aria-labelledby={clsx(
             formFieldLabelledBy,
             dateInputLabelledBy,

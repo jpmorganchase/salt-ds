@@ -334,8 +334,12 @@ export const PillInput = forwardRef(function PillInput(
           )}
         </div>
         <input
-          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+          aria-describedby={
+            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
+          }
+          aria-labelledby={
+            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
+          }
           autoComplete="off"
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}

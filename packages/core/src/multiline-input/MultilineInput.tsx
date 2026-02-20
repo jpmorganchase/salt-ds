@@ -239,8 +239,12 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         )}
         <div className={withBaseName("wrapper")}>
           <textarea
-            aria-describedby={clsx(formFieldDescribedBy, textAreaDescribedBy)}
-            aria-labelledby={clsx(formFieldLabelledBy, textAreaLabelledBy)}
+            aria-describedby={
+              clsx(formFieldDescribedBy, textAreaDescribedBy) || undefined
+            }
+            aria-labelledby={
+              clsx(formFieldLabelledBy, textAreaLabelledBy) || undefined
+            }
             className={clsx(withBaseName("textarea"), textAreaProps?.className)}
             disabled={isDisabled}
             id={id}
