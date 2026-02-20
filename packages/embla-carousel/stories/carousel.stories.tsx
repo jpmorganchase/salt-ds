@@ -9,7 +9,15 @@ import {
 } from "@salt-ds/embla-carousel";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
-import { Display1, FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
+import {
+  Display1,
+  FlexLayout,
+  H2,
+  H3,
+  StackLayout,
+  Text,
+  useId,
+} from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
 import Fade from "embla-carousel-fade";
 import { sliderData } from "./exampleData";
@@ -34,13 +42,7 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
       <H2 id={`${carouselId}-title`} className="carouselHeading">
         Carousel card example
       </H2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column-reverse",
-          gap: "var(--salt-spacing-100)",
-        }}
-      >
+      <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton tabIndex={-1} />
           {ariaVariant === "tabpanel" ? <CarouselTabList /> : null}
@@ -52,7 +54,7 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
             withActions: true,
           })}
         </CarouselSlides>
-      </div>
+      </StackLayout>
     </Carousel>
   );
 };
@@ -123,13 +125,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
       <H2 id={`${carouselId}-title`} className="carouselHeading">
         Multiple slides carousel example
       </H2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column-reverse",
-          gap: "var(--salt-spacing-100)",
-        }}
-      >
+      <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton aria-label="Previous slide group" />
           <CarouselNextButton aria-label="Next slide group" />
@@ -158,7 +154,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
             );
           })}
         </CarouselSlides>
-      </div>
+      </StackLayout>
     </Carousel>
   );
 };
