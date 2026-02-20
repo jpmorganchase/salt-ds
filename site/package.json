@@ -9,9 +9,9 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build && yarn workspace @salt-ds/highcharts-theme build && yarn gen:css && next build",
-    "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.mjs",
-    "dev": "next dev",
+    "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build && yarn workspace @salt-ds/highcharts-theme build && yarn gen:css && next build --webpack",
+    "deploy": "",
+    "dev": "next dev --webpack",
     "start": "next start",
     "gen:snapshot": "yarn gen:props && yarn gen:css && yarn mosaic build --out snapshots --name latest --config mosaic.config.mjs",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",
@@ -41,12 +41,12 @@
     "luxon": "^3.6.1",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.46",
-    "next": "^14.2.26",
+    "next": "^16.0.0",
     "next-auth": "^4.24.11",
     "shiki": "^3.0.0"
   },
   "devDependencies": {
-    "@next/env": "^14.0.0",
+    "@next/env": "^16.0.0",
     "@types/luxon": "^3.6.2",
     "@types/node": "^24.0.0",
     "@types/react": "^18.3.22",

@@ -67,7 +67,6 @@ const saltConfig = {
 };
 
 export default deepmerge(saltConfig, {
-  deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
       modulePath: "@jpmorganchase/mosaic-source-local-folder",
