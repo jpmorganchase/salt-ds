@@ -6,11 +6,12 @@ const {
   DisabledTabs,
   Overflow,
   AddTabs,
-  Closable,
+  Dismissible,
   AddWithDialog,
-  CloseWithConfirmation,
+  DismissWithConfirmation,
   WithInteractiveElementInPanel,
   Controlled,
+  AsyncDismissibleTabs,
 } = composeStories(tabsStories);
 
 describe("Given a Tabstrip", () => {
@@ -168,7 +169,7 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("button", { name: "end" }).should("be.focused");
   });
 
-  it("should close the overflow menu when a click is detected outside", () => {
+  it("should dismiss the overflow menu when a click is detected outside", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
@@ -276,13 +277,13 @@ describe("Given a Tabstrip", () => {
   });
 
   it("should add the correct aria when tab actions are used", () => {
-    cy.mount(<Closable />);
+    cy.mount(<Dismissible />);
 
     // TODO: enable when aria-actions is supported in browsers.
     // cy.findByRole("tab", { name: "Home" })
     //   .invoke("attr", "aria-actions")
     //   .then((actionId) => {
-    //     cy.findByRole("button", { name: "Home Close tab" }).should(
+    //     cy.findByRole("button", { name: "Home Dismiss tab" }).should(
     //       "have.attr",
     //       "id",
     //       actionId,
@@ -296,7 +297,7 @@ describe("Given a Tabstrip", () => {
   });
 
   it("should support closing tabs with a mouse", () => {
-    cy.mount(<Closable />);
+    cy.mount(<Dismissible />);
 
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -305,7 +306,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findAllByRole("tab").should("have.length", 5);
 
-    cy.findByRole("button", { name: "Liquidity Close tab" }).realClick();
+    cy.findByRole("button", { name: "Liquidity Dismiss tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 4);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -314,7 +315,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
-    cy.findByRole("button", { name: "Loans Close tab" }).realClick();
+    cy.findByRole("button", { name: "Loans Dismiss tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 3);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -323,7 +324,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
-    cy.findByRole("button", { name: "Home Close tab" }).realClick();
+    cy.findByRole("button", { name: "Home Dismiss tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 2);
     cy.findByRole("tab", { name: "Transactions" }).should(
       "have.attr",
@@ -333,21 +334,30 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
   });
 
+  it("should restore focus when selected tab removal is async", () => {
+    cy.mount(<AsyncDismissibleTabs />);
+
+    cy.findByRole("button", { name: "Home Dismiss tab" }).realClick();
+    cy.findByRole("tab", { name: "Transactions" })
+      .should("have.attr", "aria-selected", "true")
+      .and("be.focused");
+  });
+
   it("should support closing with a keyboard", () => {
-    cy.mount(<Closable />);
+    cy.mount(<Dismissible />);
     cy.findAllByRole("tab").should("have.length", 5);
 
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Dismiss tab" }).should("be.focused");
 
     cy.realPress("ArrowRight");
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Transactions Close tab" }).should(
+    cy.findByRole("button", { name: "Transactions Dismiss tab" }).should(
       "be.focused",
     );
 
@@ -355,7 +365,7 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.realPress(["Shift", "Tab"]);
-    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Dismiss tab" }).should("be.focused");
 
     cy.realPress("Enter");
 
@@ -369,17 +379,17 @@ describe("Given a Tabstrip", () => {
   });
 
   it("should support closing with confirmation", () => {
-    cy.mount(<CloseWithConfirmation />);
+    cy.mount(<DismissWithConfirmation />);
     cy.findAllByRole("tab").should("have.length", 3);
 
-    cy.findAllByRole("button", { name: "Home Close tab" }).realClick();
+    cy.findAllByRole("button", { name: "Home Dismiss tab" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("button", { name: "No" }).realClick();
     cy.findByRole("dialog").should("not.to.exist");
-    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Dismiss tab" }).should("be.focused");
 
-    cy.findAllByRole("button", { name: "Home Close tab" }).realClick();
+    cy.findAllByRole("button", { name: "Home Dismiss tab" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("button", { name: "Yes" }).realClick();
@@ -450,7 +460,7 @@ describe("Given a Tabstrip", () => {
       "true",
     );
 
-    cy.findByRole("button", { name: "Lots Close tab" }).realClick();
+    cy.findByRole("button", { name: "Lots Dismiss tab" }).realClick();
     cy.findByRole("tab", { name: "Transactions" })
       .should("have.attr", "aria-selected", "true")
       .and("be.focused");
