@@ -10,7 +10,7 @@ import {
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
-export const ClosableTabs = (): ReactElement => {
+export const DismissibleTabs = (): ReactElement => {
   const [tabs, setTabs] = useState([
     "Home",
     "Transactions",
@@ -21,7 +21,7 @@ export const ClosableTabs = (): ReactElement => {
 
   const { announce } = useAriaAnnouncer();
 
-  const handleCloseTab = (value: string) => {
+  const handleDismissTab = (value: string) => {
     setTabs(tabs.filter((tab) => tab !== value));
     announce(`${value} tab has been removed`, 150);
   };
@@ -35,7 +35,7 @@ export const ClosableTabs = (): ReactElement => {
               <TabNextTrigger
                 onKeyDown={(event) => {
                   if (event.key === "Delete") {
-                    handleCloseTab(label);
+                    handleDismissTab(label);
                   }
                 }}
               >
@@ -44,9 +44,9 @@ export const ClosableTabs = (): ReactElement => {
               {tabs.length > 1 && (
                 <TabNextAction
                   onClick={() => {
-                    handleCloseTab(label);
+                    handleDismissTab(label);
                   }}
-                  aria-label="Close tab"
+                  aria-label="Dismiss tab"
                 >
                   <CloseIcon aria-hidden />
                 </TabNextAction>
