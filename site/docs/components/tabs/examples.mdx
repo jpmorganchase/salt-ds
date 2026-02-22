@@ -54,17 +54,17 @@ Buttons can be nested inside `TabBar` to provide related actions e.g. adding a n
 
 <LivePreview componentName="tabs" exampleName="AddANewTab" />
 
-## Closable tabs
+## Dismissible tabs
 
-`TabAction`s can be used to add actions to tabs e.g. closing a tab. When closing a tab, a warning dialog may be used when closing a tab will result in data loss.
+`TabAction`s can be used to add actions to tabs e.g. dismissing a tab. When dismissing a tab, a warning dialog may be used when dismissing a tab will result in data loss.
 
 ### Best practices
 
-- Don't use closable tabs for tabs that are essential to the user's workflow.
-- Don't allow users to close the last tab in a tabstrip.
+- Don't use dismissible tabs for tabs that are essential to the user's workflow.
+- Don't allow users to dismiss the last tab in a tabstrip.
 - `useAriaAnnouncer` should be used to provide feedback to screen reader users.
 
-<LivePreview componentName="tabs" exampleName="ClosableTabs" />
+<LivePreview componentName="tabs" exampleName="DismissibleTabs" />
 
 ## Disabled tabs
 
