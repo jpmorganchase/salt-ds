@@ -20,6 +20,7 @@ import "dayjs/locale/es";
 const {
   // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
   SingleWithTimezone,
+  Single,
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = dateInputStories as any;
 
@@ -459,5 +460,12 @@ describe("GIVEN a DateInputSingle", () => {
         });
       });
     });
+  });
+
+  it("should not have an empty aria-describedby attribute if used outside a formfield", () => {
+    cy.setDateAdapter(adapterLuxon);
+    cy.mount(<Single />);
+
+    cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
   });
 });
