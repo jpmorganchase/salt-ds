@@ -14,6 +14,7 @@ import {
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
   ScatterChart as ScatterChartComponent,
+  SingleColorHeatmap as SingleColorHeatmapComponent,
   StackedBarChart as StackedBarChartComponent,
   WaterfallChart as WaterfallChartComponent,
 } from "../src/examples";
@@ -30,6 +31,7 @@ import {
   lineOptions,
   pieOptions,
   scatterOptions,
+  singleColorHeatmapOptions,
   stackedBarOptions,
   waterfallOptions,
 } from "../src/examples/dependencies";
@@ -171,5 +173,13 @@ export const Heatmap = {
   args: {
     patterns: false,
     options: heatmapOptions,
+  },
+};
+
+export const SingleColorHeatmap = {
+  render: (args: ChartStoryArgs) => <SingleColorHeatmapComponent {...args} />,
+  args: {
+    patterns: false,
+    options: singleColorHeatmapOptions,
   },
 };

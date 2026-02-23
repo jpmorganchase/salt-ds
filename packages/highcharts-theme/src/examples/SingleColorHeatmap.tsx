@@ -1,5 +1,5 @@
 import {
-  type ThresholdColorAxisConfig,
+  type SingleColorAxisConfig,
   useChart,
 } from "@salt-ds/highcharts-theme";
 import { clsx } from "clsx";
@@ -7,31 +7,29 @@ import Highcharts, { type Options } from "highcharts";
 import heatmap from "highcharts/modules/heatmap";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { heatmapOptions } from "./dependencies";
+import { singleColorHeatmapOptions } from "./dependencies";
 
 heatmap(Highcharts);
 
-const heatmapColorConfig: ThresholdColorAxisConfig = {
-  lowColorToken: "--salt-sentiment-negative-dataviz",
-  highColorToken: "--salt-sentiment-positive-dataviz",
-  min: -50,
-  max: 50,
-  threshold: -25,
+const singleColorConfig: SingleColorAxisConfig = {
+  colorToken: "--salt-category-4-dataviz",
+  min: 0,
+  max: 100,
 };
 
-export interface HeatmapProps {
+export interface SingleColorHeatmapProps {
   patterns?: boolean;
   options: Options;
 }
 
-const HeatmapChart: FC<HeatmapProps> = ({
+const SingleColorHeatmapChart: FC<SingleColorHeatmapProps> = ({
   patterns = false,
-  options = heatmapOptions,
+  options = singleColorHeatmapOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
   const chartOptions = useChart(chartRef, options, {
-    colorAxis: heatmapColorConfig,
+    colorAxis: singleColorConfig,
   });
 
   return (
@@ -49,4 +47,4 @@ const HeatmapChart: FC<HeatmapProps> = ({
   );
 };
 
-export default HeatmapChart;
+export default SingleColorHeatmapChart;

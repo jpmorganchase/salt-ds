@@ -10,5 +10,6 @@ export { heatmapOptions } from "./heatmapOptions";
 export { lineOptions } from "./lineOptions";
 export { pieOptions } from "./pieOptions";
 export { scatterOptions } from "./scatterOptions";
+export { singleColorHeatmapOptions } from "./singleColorHeatmapOptions";
 export { stackedBarOptions } from "./stackedBarOptions";
 export { waterfallOptions } from "./waterfallOptions";

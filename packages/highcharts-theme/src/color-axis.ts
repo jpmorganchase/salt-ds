@@ -119,27 +119,71 @@ export const buildColorAxis = (
   };
 };
 
+/**
+ * Sequential (single-hue) color axis.
+ *
+ * Produces a gradient that varies the opacity of a single Salt color token
+ * from `minOpacity` at `min` to `maxOpacity` at `max`, giving a light-to-dark
+ * ramp of one hue. Useful for heatmaps where all values are of the same
+ * sentiment (e.g. volume, count).
+ */
 export interface SingleColorAxisConfig {
+  /** Salt CSS custom property name for the hue, e.g. `"--salt-category-1-dataviz"`. */
   colorToken: string;
+  /** Lower bound of the data range (maps to position 0 in the gradient). */
   min: number;
+  /** Upper bound of the data range (maps to position 1 in the gradient). */
   max: number;
+  /** Number of discrete opacity stops generated between `min` and `max`. @defaultValue 10 */
   steps?: number;
+  /** Opacity at the `min` end of the ramp (0–1). @defaultValue 0.15 */
   minOpacity?: number;
+  /** Opacity at the `max` end of the ramp (0–1). @defaultValue 1 */
   maxOpacity?: number;
 }
 
+/**
+ * Divergent (two-hue) color axis split at a threshold.
+ *
+ * Values below the `threshold` are rendered with `lowColorToken` and values
+ * above it with `highColorToken`. Each side has its own opacity ramp: the
+ * colour is most vivid at the extremes (`min` / `max`) and fades to near-
+ * transparent at the `threshold`, creating a visual "zero-point" in the middle.
+ *
+ * Typical use: positive/negative performance where green fades in below zero
+ * and red fades in above zero.
+ */
 export interface ThresholdColorAxisConfig {
+  /** Salt CSS custom property for the "low" side (values between `min` and `threshold`). */
   lowColorToken: string;
+  /** Salt CSS custom property for the "high" side (values between `threshold` and `max`). */
   highColorToken: string;
+  /** Lower bound of the data range (maps to position 0 in the gradient). */
   min: number;
+  /** Upper bound of the data range (maps to position 1 in the gradient). */
   max: number;
+  /**
+   * The data value at which the colour switches from `lowColorToken` to
+   * `highColorToken`. Normalised to a `[0, 1]` position within the gradient
+   * via `(threshold - min) / (max - min)`.
+   */
   threshold: number;
+  /** Number of opacity stops on the low side (`min` → `threshold`). @defaultValue 4 */
   lowSteps?: number;
+  /** Number of opacity stops on the high side (`threshold` → `max`). @defaultValue 4 */
   highSteps?: number;
+  /** Opacity of `lowColorToken` closest to the threshold (the faint end). @defaultValue 0.15 */
   lowMinOpacity?: number;
+  /** Opacity of `lowColorToken` at `min` (the vivid end). @defaultValue 1 */
   lowMaxOpacity?: number;
+  /** Opacity of `highColorToken` closest to the threshold (the faint end). @defaultValue 0.15 */
   highMinOpacity?: number;
+  /** Opacity of `highColorToken` at `max` (the vivid end). @defaultValue 1 */
   highMaxOpacity?: number;
 }
 
+/**
+ * Discriminated union: provide `colorToken` for a single-hue sequential ramp,
+ * or `lowColorToken` + `highColorToken` + `threshold` for a divergent ramp.
+ */
 export type ColorAxisConfig = SingleColorAxisConfig | ThresholdColorAxisConfig;
