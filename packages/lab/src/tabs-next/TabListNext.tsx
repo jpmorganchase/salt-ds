@@ -66,7 +66,8 @@ function useTabListFocusOutRecovery({
       const wasInTablist =
         event.target instanceof HTMLElement && isInTabList(event.target);
       const stillInTablist =
-        event.relatedTarget instanceof HTMLElement && isInTabList(event.relatedTarget);
+        event.relatedTarget instanceof HTMLElement &&
+        isInTabList(event.relatedTarget);
       if ((wasInTablist && !stillInTablist) || event.relatedTarget === null) {
         requestAnimationFrame(() => handleTabRemoval());
       }
@@ -143,7 +144,9 @@ function useTabListMutationObserver({
       if (raf != null) {
         cancelAnimationFrame(raf);
       }
-      observers.forEach((observer) => observer.disconnect());
+      observers.forEach((observer) => {
+        observer.disconnect();
+      });
     };
   }, [
     handleTabRemoval,
@@ -273,7 +276,10 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         const activeElement = doc.activeElement;
 
         if (!activeElement) return true;
-        if (activeElement === doc.body || activeElement === doc.documentElement) {
+        if (
+          activeElement === doc.body ||
+          activeElement === doc.documentElement
+        ) {
           return true;
         }
 
