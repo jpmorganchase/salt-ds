@@ -50,11 +50,11 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    */
   max?: number;
   /**
-   * Function used to provider a user-friendly name for the current value of the rating. Primarily used by screen readers.
+   * Function used to provide a user-friendly name for the current value of the rating. Primarily used by screen readers.
    */
   getLabel?: (value: number) => string;
   /**
-   * Function used to provider a visible label for the rating.
+   * Function used to provide a visible label for the rating.
    */
   getVisibleLabel?: (value: number, max: number) => string;
   /**

@@ -22,11 +22,11 @@ export default {
   },
 } as Meta<typeof Rating>;
 
-export const Default: StoryFn<typeof Rating> = () => {
-  return <Rating aria-label="Rating" defaultValue={3} />;
+export const Default: StoryFn<typeof Rating> = (args) => {
+  return <Rating aria-label="Rating" defaultValue={3} {...args} />;
 };
 
-export const ReadOnly: StoryFn<typeof Rating> = () => {
+export const ReadOnly: StoryFn<typeof Rating> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
     <StackLayout>
@@ -40,29 +40,32 @@ export const ReadOnly: StoryFn<typeof Rating> = () => {
         defaultValue={3}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
+        {...args}
       />
     </StackLayout>
   );
 };
 
-export const Disabled: StoryFn<typeof Rating> = () => {
-  return <Rating aria-label="Rating" disabled defaultValue={3} />;
+export const Disabled: StoryFn<typeof Rating> = (args) => {
+  return <Rating aria-label="Rating" disabled defaultValue={3} {...args} />;
 };
 
-export const VisualLabel: StoryFn<typeof Rating> = () => {
+export const VisualLabel: StoryFn<typeof Rating> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
-    <FlexLayout direction="column" gap={3}>
+    <StackLayout>
       <Rating
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value, max) => `${value}/${max}`}
+        {...args}
       />
       <Rating
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
+        {...args}
       />
       <Rating
         aria-label="Rating"
@@ -71,44 +74,49 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
+        {...args}
       />
-    </FlexLayout>
+    </StackLayout>
   );
 };
 
-export const FormFieldSupport: StoryFn<typeof Rating> = () => {
+export const FormFieldSupport: StoryFn<typeof FormField> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
-    <FormField labelPlacement="top" style={{ width: "225px" }}>
+    <FormField labelPlacement="top" style={{ width: "225px" }} {...args}>
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Rating
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
+        defaultValue={3}
+        readOnly
       />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
   );
 };
 
-export const CustomIncrements: StoryFn<typeof Rating> = () => {
+export const CustomIncrements: StoryFn<typeof Rating> = (args) => {
   return (
     <FlexLayout direction="column" gap={3}>
       <Rating
         aria-label="Rating"
         defaultValue={1}
         onChange={(event, value) => console.log(event, value)}
+        {...args}
       />
       <Rating
         aria-label="Rating"
         defaultValue={7}
         max={10}
         onChange={(event, value) => console.log(event, value)}
+        {...args}
       />
     </FlexLayout>
   );
 };
 
-export const CustomIcons: StoryFn<typeof Rating> = () => {
+export const CustomIcons: StoryFn<typeof Rating> = (args) => {
   const [value, setValue] = useState(3);
 
   return (
@@ -125,12 +133,13 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
         max={5}
         onChange={(_event, value) => setValue(value)}
         getLabel={(value) => `${value} Heart${value > 1 ? "s" : ""}`}
+        {...args}
       />
     </SemanticIconProvider>
   );
 };
 
-export const ClearSelection: StoryFn<typeof Rating> = () => {
+export const ClearSelection: StoryFn<typeof Rating> = (args) => {
   const [value, setValue] = useState<number>(3);
   const [cleared, setCleared] = useState(false);
 
@@ -146,6 +155,7 @@ export const ClearSelection: StoryFn<typeof Rating> = () => {
             setValue(newValue);
             setCleared(false);
           }}
+          {...args}
         />
       </FormField>
       <Button
