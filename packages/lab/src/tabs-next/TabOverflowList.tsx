@@ -24,6 +24,7 @@ import {
   Children,
   type ComponentPropsWithoutRef,
   type Dispatch,
+  useEffect,
   forwardRef,
   type ReactNode,
   type Ref,
@@ -124,6 +125,57 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     };
 
     const childCount = Children.count(children);
+
+    useEffect(() => {
+      if (!open || !targetWindow) return;
+
+      let raf1: number | null = null;
+      let raf2: number | null = null;
+
+      const restoreFocus = () => {
+        const floating = refs.floating.current;
+        const active = targetWindow.document.activeElement as HTMLElement | null;
+
+        const isMenuTabFocused =
+          !!active &&
+          active.isConnected &&
+          active.getAttribute("role") === "tab" &&
+          !!floating &&
+          floating.contains(active);
+
+        if (isMenuTabFocused) {
+          return;
+        }
+
+        const items = listNavigationRef.current.filter(
+          (item): item is HTMLButtonElement => !!item,
+        );
+
+        const tabIndexCandidate = items.find((item) => item.tabIndex === 0);
+        const candidate = tabIndexCandidate ?? items[0];
+        if (!candidate) return;
+
+        const nextIndex = items.indexOf(candidate);
+        if (nextIndex >= 0) {
+          // Keep Floating UI list navigation state aligned with the item we
+          // programmatically focus.
+          setActiveIndex(nextIndex);
+        }
+        candidate.focus();
+      };
+
+      // The overflow list can remount items after open; run once after mount and
+      // once more on the next frame to recover focus if it drops back to body.
+      raf1 = requestAnimationFrame(() => {
+        restoreFocus();
+        raf2 = requestAnimationFrame(restoreFocus);
+      });
+
+      return () => {
+        if (raf1 != null) cancelAnimationFrame(raf1);
+        if (raf2 != null) cancelAnimationFrame(raf2);
+      };
+    }, [open, refs.floating, targetWindow]);
 
     useIsomorphicLayoutEffect(() => {
       if (overflowId && overflowRef.current && childCount > 0) {

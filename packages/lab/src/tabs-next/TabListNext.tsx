@@ -71,6 +71,13 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const overflowListRef = useRef<HTMLDivElement>(null);
+    const removalRecoveryRafRef = useRef<number | null>(null);
+    const pendingRemovalRecoveryRef = useRef(false);
+    const pendingRemovalRecoveryRetriesRef = useRef(0);
+    const clearPendingRemovalRecovery = () => {
+      pendingRemovalRecoveryRef.current = false;
+      pendingRemovalRecoveryRetriesRef.current = 0;
+    };
 
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
@@ -127,20 +134,77 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       const doc = targetWindow?.document;
       if (!doc) return;
 
-      // If focus was lost due to deletion, the focus will be on the document body.
-      if (doc.activeElement !== doc.body) return;
+      const focusWasLost = () => {
+        const activeElement = doc.activeElement;
 
-      if (!activeTab.current) return;
+        if (!activeElement) return true;
+        if (activeElement === doc.body || activeElement === doc.documentElement) {
+          return true;
+        }
+
+        return !activeElement.isConnected;
+      };
+
+      const shouldRecoverFocus = () => {
+        if (focusWasLost()) return true;
+
+        const activeElement = doc.activeElement;
+        if (!menuOpen || !(activeElement instanceof HTMLElement)) return false;
+
+        if (activeElement === overflowButtonRef.current) {
+          return true;
+        }
+
+        if (overflowListRef.current?.contains(activeElement)) {
+          // When closing tabs from the overflow menu, focus can remain within
+          // the floating UI rather than falling back to body.
+          return activeElement.getAttribute("role") !== "tab";
+        }
+
+        return false;
+      };
+
+      // If focus was lost due to deletion, browsers may report body/html or a
+      // disconnected active element depending on browser behavior.
+      if (!shouldRecoverFocus()) {
+        if (
+          pendingRemovalRecoveryRef.current &&
+          removalRecoveryRafRef.current == null
+        ) {
+          if (pendingRemovalRecoveryRetriesRef.current < 120) {
+            pendingRemovalRecoveryRetriesRef.current += 1;
+            removalRecoveryRafRef.current = requestAnimationFrame(() => {
+              removalRecoveryRafRef.current = null;
+              handleTabRemoval();
+            });
+          } else {
+            clearPendingRemovalRecovery();
+          }
+        }
+        return;
+      }
+
+      if (!activeTab.current) {
+        clearPendingRemovalRecovery();
+        return;
+      }
 
       const removedItems = getRemovedItems();
       const removed = removedItems.get(activeTab.current.id);
-      if (!removed) return;
+      if (!removed) {
+        clearPendingRemovalRecovery();
+        return;
+      }
+
+      clearPendingRemovalRecovery();
 
       const removedWasSelected = removed.value === selected;
       const baseIndex = removed.staleIndex ?? -1;
 
       const restoreFocus = () => {
-        if (doc.activeElement !== doc.body) return;
+        if (!shouldRecoverFocus()) {
+          return;
+        }
 
         let nextTab =
           (baseIndex >= 0 ? itemAt(baseIndex) : null) ??
@@ -166,11 +230,21 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           nextTab.element?.click();
         }
 
-        requestAnimationFrame(() => nextTab?.element?.focus());
+        requestAnimationFrame(() => {
+          nextTab?.element?.focus();
+        });
       };
 
       requestAnimationFrame(() => requestAnimationFrame(() => restoreFocus()));
     });
+
+    useEffect(() => {
+      return () => {
+        if (removalRecoveryRafRef.current != null) {
+          cancelAnimationFrame(removalRecoveryRafRef.current);
+        }
+      };
+    }, []);
 
     useEffect(() => {
       const isInTabList = (node: HTMLElement | null) => {
@@ -190,7 +264,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         const stillInTablist =
           event.relatedTarget instanceof HTMLElement &&
           isInTabList(event.relatedTarget);
-
         if ((wasInTablist && !stillInTablist) || event.relatedTarget === null) {
           requestAnimationFrame(() => handleTabRemoval());
         }
@@ -211,23 +284,59 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       if (!tabstripRef.current) return;
 
       let raf: number | null = null;
-      const observer = new MutationObserver(() => {
+      let sawTabRemoval = false;
+      const isTabRemoval = (nodes: NodeList) => {
+        return Array.from(nodes).some((node) => {
+          if (!(node instanceof Element)) return false;
+
+          return (
+            node.matches("[data-overflowitem], [role='tab']") ||
+            node.querySelector("[data-overflowitem], [role='tab']") !== null
+          );
+        });
+      };
+
+      const observerCallback: MutationCallback = (records) => {
+        if (records.some((record) => isTabRemoval(record.removedNodes))) {
+          sawTabRemoval = true;
+          pendingRemovalRecoveryRef.current = true;
+          pendingRemovalRecoveryRetriesRef.current = 0;
+        }
+
         if (raf != null) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
+          const shouldHandleTabRemoval = sawTabRemoval;
+          sawTabRemoval = false;
+
           raf = null;
           sortItems();
+          if (shouldHandleTabRemoval) {
+            handleTabRemoval();
+          }
         });
-      });
+      };
 
-      observer.observe(tabstripRef.current, { childList: true });
+      const observers: MutationObserver[] = [];
+      const observeTarget = (node: Node | null) => {
+        if (!node) return;
+
+        const observer = new MutationObserver(observerCallback);
+        observer.observe(node, { childList: true, subtree: true });
+        observers.push(observer);
+      };
+
+      observeTarget(tabstripRef.current);
+      if (menuOpen) {
+        observeTarget(targetWindow?.document.body ?? null);
+      }
 
       return () => {
         if (raf != null) {
           cancelAnimationFrame(raf);
         }
-        observer.disconnect();
+        observers.forEach((observer) => observer.disconnect());
       };
-    }, [sortItems]);
+    }, [sortItems, handleTabRemoval, menuOpen, targetWindow]);
 
     const warningId = useId();
 
