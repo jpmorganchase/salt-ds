@@ -217,11 +217,19 @@ describe("Given a Tabstrip", () => {
 
     cy.findByRole("tablist").invoke("css", "max-width", 140);
 
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+
     cy.findAllByRole("tab").should("have.length", 2);
 
     cy.findByRole("tab", { name: "Overflow" }).realClick();
 
     cy.findAllByRole("tab").should("have.length", 16); // overflow menu shown
+
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
