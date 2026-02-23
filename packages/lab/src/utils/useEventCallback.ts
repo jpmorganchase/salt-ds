@@ -1,5 +1,5 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
 /**
  * https://github.com/facebook/react/issues/14099#issuecomment-440013892
@@ -17,8 +17,8 @@ export function useEventCallback<const T extends (...args: any[]) => void>(
     ref.current = fn;
   }, [fn]);
 
-  return ((...args: any) => {
+  return useCallback(((...args: any[]) => {
     const latestFn = ref.current!;
     return latestFn(...args);
-  }) as T;
+  }) as T, []);
 }
