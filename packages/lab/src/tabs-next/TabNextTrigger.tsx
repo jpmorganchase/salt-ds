@@ -53,7 +53,7 @@ export const TabNextTrigger = forwardRef<
     window: targetWindow,
   });
 
-  const { setSelected, registerTab, getPanelId } = useTabsNext();
+  const { setSelected, registerTab, getPanelId, activeTab } = useTabsNext();
   const { selected, value, focused, disabled, tabId, actions } = useTabNext();
   const overflowContext = useTabOverflow();
   const item = useListItem();
@@ -84,6 +84,10 @@ export const TabNextTrigger = forwardRef<
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
     onFocus?.(event);
+
+    if (value && id) {
+      activeTab.current = { value, id };
+    }
 
     // Ensures the associated tab in in view.
     event.currentTarget.parentElement?.scrollIntoView({
