@@ -17,8 +17,11 @@ export function useEventCallback<const T extends (...args: any[]) => void>(
     ref.current = fn;
   }, [fn]);
 
-  return useCallback(((...args: any[]) => {
-    const latestFn = ref.current!;
-    return latestFn(...args);
-  }) as T, []);
+  return useCallback(
+    ((...args: any[]) => {
+      const latestFn = ref.current!;
+      return latestFn(...args);
+    }) as T,
+    [],
+  );
 }
