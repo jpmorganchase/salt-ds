@@ -13,6 +13,8 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type KeyboardEvent,
+  type MutableRefObject,
+  type RefObject,
   useEffect,
   useRef,
 } from "react";
@@ -23,6 +25,136 @@ import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
 
 const withBaseName = makePrefixer("saltTabListNext");
+
+function containsTabItemNode(nodes: NodeList) {
+  return Array.from(nodes).some((node) => {
+    if (!(node instanceof Element)) return false;
+
+    return (
+      node.matches("[data-overflowitem], [role='tab']") ||
+      node.querySelector("[data-overflowitem], [role='tab']") !== null
+    );
+  });
+}
+
+interface UseTabListFocusOutRecoveryArgs {
+  targetWindow: Window | null | undefined;
+  tabstripRef: RefObject<HTMLDivElement | null>;
+  overflowListRef: RefObject<HTMLDivElement | null>;
+  handleTabRemoval: () => void;
+}
+
+function useTabListFocusOutRecovery({
+  targetWindow,
+  tabstripRef,
+  overflowListRef,
+  handleTabRemoval,
+}: UseTabListFocusOutRecoveryArgs) {
+  useEffect(() => {
+    const isInTabList = (node: HTMLElement | null) => {
+      if (!node) return;
+
+      return (
+        (tabstripRef.current?.contains(node) ?? false) ||
+        (overflowListRef.current?.contains(node) ?? false)
+      );
+    };
+
+    const handleFocus = (event: FocusEvent) => {
+      if (!tabstripRef.current) return;
+
+      const wasInTablist =
+        event.target instanceof HTMLElement && isInTabList(event.target);
+      const stillInTablist =
+        event.relatedTarget instanceof HTMLElement && isInTabList(event.relatedTarget);
+      if ((wasInTablist && !stillInTablist) || event.relatedTarget === null) {
+        requestAnimationFrame(() => handleTabRemoval());
+      }
+    };
+
+    targetWindow?.document.addEventListener("focusout", handleFocus, true);
+
+    return () => {
+      targetWindow?.document.removeEventListener("focusout", handleFocus, true);
+    };
+  }, [targetWindow, handleTabRemoval, tabstripRef, overflowListRef]);
+}
+
+interface UseTabListMutationObserverArgs {
+  menuOpen: boolean;
+  targetWindow: Window | null | undefined;
+  tabstripRef: RefObject<HTMLDivElement | null>;
+  sortItems: () => void;
+  handleTabRemoval: () => void;
+  pendingRemovalRecoveryRef: MutableRefObject<boolean>;
+  pendingRemovalRecoveryRetriesRef: MutableRefObject<number>;
+}
+
+function useTabListMutationObserver({
+  menuOpen,
+  targetWindow,
+  tabstripRef,
+  sortItems,
+  handleTabRemoval,
+  pendingRemovalRecoveryRef,
+  pendingRemovalRecoveryRetriesRef,
+}: UseTabListMutationObserverArgs) {
+  useEffect(() => {
+    if (!tabstripRef.current) return;
+
+    let raf: number | null = null;
+    let sawTabRemoval = false;
+
+    const observerCallback: MutationCallback = (records) => {
+      if (records.some((record) => containsTabItemNode(record.removedNodes))) {
+        sawTabRemoval = true;
+        pendingRemovalRecoveryRef.current = true;
+        pendingRemovalRecoveryRetriesRef.current = 0;
+      }
+
+      if (raf != null) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const shouldHandleTabRemoval = sawTabRemoval;
+        sawTabRemoval = false;
+
+        raf = null;
+        sortItems();
+        if (shouldHandleTabRemoval) {
+          handleTabRemoval();
+        }
+      });
+    };
+
+    const observers: MutationObserver[] = [];
+    const observeTarget = (node: Node | null) => {
+      if (!node) return;
+
+      const observer = new MutationObserver(observerCallback);
+      observer.observe(node, { childList: true, subtree: true });
+      observers.push(observer);
+    };
+
+    observeTarget(tabstripRef.current);
+    if (menuOpen) {
+      observeTarget(targetWindow?.document.body ?? null);
+    }
+
+    return () => {
+      if (raf != null) {
+        cancelAnimationFrame(raf);
+      }
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [
+    handleTabRemoval,
+    menuOpen,
+    pendingRemovalRecoveryRef,
+    pendingRemovalRecoveryRetriesRef,
+    sortItems,
+    tabstripRef,
+    targetWindow,
+  ]);
+}
 
 export interface TabListNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
@@ -105,6 +237,9 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
       if (action) {
         event.preventDefault();
+        // Item registration/sorting is raf-driven; flush before keyboard nav to
+        // avoid navigating against stale collection order/registration.
+        sortItems();
         const activeTabId = activeTab.current?.id;
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
@@ -200,8 +335,21 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
       const removedWasSelected = removed.value === selected;
       const baseIndex = removed.staleIndex ?? -1;
+      const removedId = removed.id;
 
       const restoreFocus = () => {
+        const restoredTab = item(removedId);
+
+        // Overflow menu updates can temporarily remount tabs. If the tab is
+        // back and focus was lost to a disconnected node, restore focus to the
+        // remounted tab rather than treating it as a real deletion.
+        if (restoredTab?.element) {
+          if (shouldRecoverFocus()) {
+            restoredTab.element.focus();
+          }
+          return;
+        }
+
         if (!shouldRecoverFocus()) {
           return;
         }
@@ -223,6 +371,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
         if (
           removedWasSelected &&
+          !menuOpen &&
           !tabstripRef.current?.querySelector(
             '[role="tab"][aria-selected="true"]',
           )
@@ -246,97 +395,22 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       };
     }, []);
 
-    useEffect(() => {
-      const isInTabList = (node: HTMLElement | null) => {
-        if (!node) return;
+    useTabListFocusOutRecovery({
+      targetWindow,
+      tabstripRef,
+      overflowListRef,
+      handleTabRemoval,
+    });
 
-        return (
-          (tabstripRef.current?.contains(node) ?? false) ||
-          (overflowListRef.current?.contains(node) ?? false)
-        );
-      };
-
-      const handleFocus = (event: FocusEvent) => {
-        if (!tabstripRef.current) return;
-
-        const wasInTablist =
-          event.target instanceof HTMLElement && isInTabList(event.target);
-        const stillInTablist =
-          event.relatedTarget instanceof HTMLElement &&
-          isInTabList(event.relatedTarget);
-        if ((wasInTablist && !stillInTablist) || event.relatedTarget === null) {
-          requestAnimationFrame(() => handleTabRemoval());
-        }
-      };
-
-      targetWindow?.document.addEventListener("focusout", handleFocus, true);
-
-      return () => {
-        targetWindow?.document.removeEventListener(
-          "focusout",
-          handleFocus,
-          true,
-        );
-      };
-    }, [targetWindow, handleTabRemoval]);
-
-    useEffect(() => {
-      if (!tabstripRef.current) return;
-
-      let raf: number | null = null;
-      let sawTabRemoval = false;
-      const isTabRemoval = (nodes: NodeList) => {
-        return Array.from(nodes).some((node) => {
-          if (!(node instanceof Element)) return false;
-
-          return (
-            node.matches("[data-overflowitem], [role='tab']") ||
-            node.querySelector("[data-overflowitem], [role='tab']") !== null
-          );
-        });
-      };
-
-      const observerCallback: MutationCallback = (records) => {
-        if (records.some((record) => isTabRemoval(record.removedNodes))) {
-          sawTabRemoval = true;
-          pendingRemovalRecoveryRef.current = true;
-          pendingRemovalRecoveryRetriesRef.current = 0;
-        }
-
-        if (raf != null) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          const shouldHandleTabRemoval = sawTabRemoval;
-          sawTabRemoval = false;
-
-          raf = null;
-          sortItems();
-          if (shouldHandleTabRemoval) {
-            handleTabRemoval();
-          }
-        });
-      };
-
-      const observers: MutationObserver[] = [];
-      const observeTarget = (node: Node | null) => {
-        if (!node) return;
-
-        const observer = new MutationObserver(observerCallback);
-        observer.observe(node, { childList: true, subtree: true });
-        observers.push(observer);
-      };
-
-      observeTarget(tabstripRef.current);
-      if (menuOpen) {
-        observeTarget(targetWindow?.document.body ?? null);
-      }
-
-      return () => {
-        if (raf != null) {
-          cancelAnimationFrame(raf);
-        }
-        observers.forEach((observer) => observer.disconnect());
-      };
-    }, [sortItems, handleTabRemoval, menuOpen, targetWindow]);
+    useTabListMutationObserver({
+      menuOpen,
+      targetWindow,
+      tabstripRef,
+      sortItems,
+      handleTabRemoval,
+      pendingRemovalRecoveryRef,
+      pendingRemovalRecoveryRetriesRef,
+    });
 
     const warningId = useId();
 
