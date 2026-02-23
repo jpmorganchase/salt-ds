@@ -92,6 +92,11 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           selectedScrollSnap * numberOfSlidesPerSnap,
         );
         setFocusedSlideIndex(settledSlideIndex);
+        if (focusOnSettle.current) {
+          slideRefs.current[settledSlideIndex]?.focus();
+          setAnnouncementState("focus");
+          focusOnSettle.current = false;
+        }
       };
 
       if (!emblaApi) {
@@ -110,15 +115,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         emblaApi.off("pointerDown", pointerDownCallback);
       };
     }, [emblaApi, setAnnouncementState]);
-
-    useEffect(() => {
-      if (!focusOnSettle.current || stableScrollSnap === undefined) {
-        return;
-      }
-      slideRefs.current[focusedSlideIndex]?.focus();
-      setAnnouncementState("focus");
-      focusOnSettle.current = false;
-    }, [stableScrollSnap, focusedSlideIndex, setAnnouncementState]);
 
     useEffect(() => {
       const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
@@ -171,32 +167,32 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     ]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.repeat) {
-        return;
-      }
-      const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
-      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+      onKeyDown?.(event);
 
-      // Find the current snap
+      if (!emblaApi) return;
+
+      const numberOfSnaps = emblaApi.scrollSnapList().length ?? 1;
+      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
       const currentSnap = Math.floor(focusedSlideIndex / numberOfSlidesPerSnap);
+      let newSnap = currentSnap;
 
       switch (event.key) {
         case "ArrowLeft": {
           event.preventDefault();
-          const prevSnap = Math.max(currentSnap - 1, 0);
-          const newIndex = prevSnap * numberOfSlidesPerSnap;
-          setFocusedSlideIndex(newIndex);
+          newSnap = Math.max(currentSnap - 1, 0);
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
-          const nextSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
-          const newIndex = nextSnap * numberOfSlidesPerSnap;
-          setFocusedSlideIndex(newIndex);
+          newSnap = Math.min(currentSnap + 1, numberOfSnaps - 1);
           break;
         }
+        default:
+          return;
       }
-      onKeyDown?.(event);
+
+      emblaApi.scrollTo(newSnap);
+      focusOnSettle.current = true;
     };
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {

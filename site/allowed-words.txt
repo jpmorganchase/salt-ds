@@ -3,6 +3,7 @@ Armaan
 Blaise
 Brailescu
 Cathrine
+dataviz
 EMEA
 Embla
 Gerda
@@ -46,3 +47,4 @@ UITK
 frontmatter
 kmbt
 affordances
+trackpad

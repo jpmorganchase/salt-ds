@@ -130,7 +130,7 @@ describe("Given a Carousel", () => {
       );
     });
 
-    it("should navigate slides using left/right arrow keys", function () {
+    it("should navigate slides using left/right arrow keys(including long press)", function () {
       // TODO : Skipping for React 16 and 17 (https://github.com/jpmorganchase/salt-ds/issues/5933)
       if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
         this.skip();

@@ -5,64 +5,102 @@ sidebar:
   priority: 8
 ---
 
-Density relates to the amount of content that can fit on a screen based on the size and spacing of components. Choose a base density as a starting point when creating a product using Salt. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose. Density can be changed at a page or region level. For more information about mixing densities, please refer to the [mixing densities section](#mixing-densities) on this page.
+Density relates to the amount of content that can fit on a screen based on the size and spacing of components. When building a product with Salt, select the density that best suits your use case. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose.
 
-To learn how to change Salt density with Figma variables, watch [our demo video](https://go/techtube/#/videos/c7717cb0-4332-4cf0-9c8c-7f66e5eaf339) by the design team. (Internal users only)
+Read about implementing density in code on the [SaltProvider](/salt/components/salt-provider/examples) documentation.
 
-For information on how to implement density in code, you can learn more on the [Salt provider page](/salt/components/salt-provider/examples#density).
+## Desktop densities
 
-Salt offers 4 densities:
+Desktop densities are tailored for different types of applications, from complex data platforms to content-focused interfaces. Select the density that best fits your app or websites complexity and user needs.
 
-| Density | Use case                                                                         |
-| ------- | -------------------------------------------------------------------------------- |
-| High    | Optimized for data-heavy or complex applications such as trading platforms       |
-| Medium  | Optimized for standard applications and websites at default density              |
-| Low     | Optimized for data/content-light interfaces such as marketing and communications |
-| Touch   | Optimized for touch interactions in mobile and tablet devices                    |
+| Densities | Use case                                                                                                                               |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| High      | Ideal for data-heavy or complex applications, such as trading platforms, where maximum information needs to be displayed efficiently.  |
+| Medium    | Suited for standard applications and websites, providing a balanced default density for most use cases.                                |
+| Low       | Best for data-light or content-focused interfaces, such as marketing and communications, where a spacious layout enhances readability. |
 
-<Image
-  src="/img/foundations/density-buttons.png"
-  alt="Example of Button in all densities side-by-side"
+<Diagram
+  src="/img/foundations/density-desktop-densities.png"
+  srcDark="/img/foundations/density-desktop-densities-dark.png"
+  alt="Example of desktop densities"
+  background="secondary"
 />
 
-## High density (HD)
+### High density
 
-High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout. High density is designed for frequent application use by experienced users.
+High density is suitable for specialized use cases. It’s ideal for data-dense applications where screen real estate is maximized, or for applications frequently used by experienced users.
 
-<Image
-  src="/img/foundations/density-skeletons.png"
-  alt="Example of Dialog skeleton in high density and medium density side-by-side"
+<Diagram
+  src="/img/foundations/density-high-density.png"
+  srcDark="/img/foundations/density-high-density-dark.png"
+  alt="Example of a high density"
+  background="secondary"
 />
 
-## Medium density (MD)
+### Medium density
 
-Medium density is the default solution for most use cases. It's ideal for most standard applications or content-rich websites.
+Medium density is suitable for most use-cases. It's ideal for standard applications or content-rich websites.
 
-## Low density (LD)
+<Diagram
+  src="/img/foundations/density-medium-density.png"
+  srcDark="/img/foundations/density-medium-density-dark.png"
+  alt="Example of a medium density"
+  background="secondary"
+/>
 
-Low density is optimized for content-light interfaces. It's ideal for marketing, communications, or onboarding experiences. In contrast to high density, low density is intended for infrequently used applications by inexperienced users.
+### Low density
 
-## Touch density (TD)
+Low density is suitable for use cases that require increased legibility and whitespace. It’s ideal for marketing applications or interfaces with simpler layouts.
+
+<Diagram
+  src="/img/foundations/density-low-density.png"
+  srcDark="/img/foundations/density-low-density-dark.png"
+  alt="Example of a low density"
+  background="secondary"
+/>
+
+## Mobile density
+
+Mobile density optimizes component sizing and spacing for phones and tablets, ensuring touch targets are met and layouts remain clear and usable.
+
+<Diagram
+  src="/img/foundations/density-mobile-density.png"
+  srcDark="/img/foundations/density-mobile-density-dark.png"
+  alt="Example of a mobile density"
+  background="secondary"
+/>
+
+## Touch density
 
 Touch density’s main purpose is to address accessibility concerns on smaller viewports that deal with higher resolutions. When a screen has a higher resolution, touch targets are adjusted to remain large enough for easy interaction.
 
-For more information on how to adjust typography and spacing in TD, please refer to the [small viewports page](/salt/foundations/responsiveness/small-viewports).
+<Callout
+  status="warning"
+  title="Touch density deprecation"
+>
+Touch density will be removed in the next breaking change.
 
-## Mixing densities
+It was originally introduced to support basic touch accessibility, but is not optimized for smaller screens—as density increases, components and spacing become larger, leading to inefficient layouts and usability issues on mobile devices.
 
-Density is intended to be used one at a time, only changing when part of a responsive breakpoint. To learn more about densities at various breakpoints, please refer to the [breakpoints page](/salt/foundations/responsiveness/breakpoints).
+What you should do:
 
-When applying density:
+- For mobile or tablet experiences, migrate to mobile density.
+- For desktop or web experiences, migrate to low density.
 
-- Pick a density and be consistent with it across your application
-- Alternatively, set density to align to breakpoints and define which density to use per breakpoint
-- If the use case requires it, you can mix densities only at a regional level and not at a component level
+Refer to the [Migrating from touch to mobile density](https://go/saltds/content/news/20260204-migrating-from-touch-to-mobile-density) (Internal users only) for step-by-step instructions.
 
-Before mixing densities, consider other ways to establish hierarchy or emphasize certain elements:
+</Callout>
 
-- Using typographic hierarchy or weight
-- Mixing primary and secondary background colors
-- Applying greater spacing between elements
-- Scaling components
+## Choosing density
+
+Select a density early in the design process to meet your application's requirements. Salt’s scaling system ensures components fit together seamlessly when using a consistent density. Mixing densities can cause alignment issues and reduce overall design quality.
+
+## Switching density
+
+In some cases, you may want to switch density to optimize the experience for different devices or screen sizes. There are two main approaches:
+
+1. By screen size (breakpoints): change density as the viewport crosses defined breakpoints. For more information on breakpoints, see the [breakpoints](/salt/foundations/responsiveness/breakpoints) documentation.
+
+2. By device type: change density depending on whether the user is on a mobile, tablet, or desktop device. See an example of this in the [SaltProvider](/salt/components/salt-provider/examples) documentation.
 
 :fragment{src="./fragments/feedback.mdx"}

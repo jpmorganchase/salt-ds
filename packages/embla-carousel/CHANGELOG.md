@@ -1,5 +1,26 @@
 # @salt-ds/embla-carousel
 
+## 1.1.1
+
+### Patch Changes
+
+- 0445a79: Fixed holding left or right arrow key not navigating to the first or last slide in the carousel when using the carousel slides.
+- Updated dependencies [47d113d]
+- Updated dependencies [a16cbc5]
+  - @salt-ds/core@1.57.0
+
+## 1.1.0
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+
+### Patch Changes
+
+- Updated dependencies [972e37e]
+- Updated dependencies [4507919]
+  - @salt-ds/core@1.56.0
+
 ## 1.0.0
 
 ### Major Changes

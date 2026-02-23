@@ -3,19 +3,18 @@ import {
   FormField,
   FormFieldLabel,
   StackLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
-import {
   Table,
+  TableContainer,
   type TableProps,
   TBody,
   TD,
   TFoot,
   TH,
   THead,
+  ToggleButton,
+  ToggleButtonGroup,
   TR,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Zebra = (): ReactElement => {
@@ -49,37 +48,64 @@ export const Zebra = (): ReactElement => {
           </ToggleButtonGroup>
         </FormField>
       </FlexLayout>
-      <Table
-        zebra
-        variant={variant}
-        divider={divider === "on" ? "tertiary" : "none"}
-      >
-        <THead>
-          <TR>
-            {Array.from({ length: 3 }, (_arrItem, i) => {
-              return <TH key={`col-${i}`}>Column {i + 1}</TH>;
+      <TableContainer>
+        <Table
+          zebra
+          variant={variant}
+          divider={divider === "on" ? "tertiary" : "none"}
+        >
+          <caption>Zebra table with variants</caption>
+          <THead>
+            <TR>
+              {Array.from({ length: 3 }, (_arrItem, i) => {
+                return (
+                  <TH
+                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                    key={`col-${i}`}
+                  >
+                    Column {i + 1}
+                  </TH>
+                );
+              })}
+            </TR>
+          </THead>
+          <TBody>
+            {Array.from({ length: 5 }, (_arrItem, x) => {
+              return (
+                <TR
+                  // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                  key={`tr-${x}`}
+                >
+                  {Array.from({ length: 3 }, (_nestedArrItem, i) => {
+                    return (
+                      <TD
+                        // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                        key={`td-${i}`}
+                      >
+                        Row {x + 1}
+                      </TD>
+                    );
+                  })}
+                </TR>
+              );
             })}
-          </TR>
-        </THead>
-        <TBody>
-          {Array.from({ length: 5 }, (_arrItem, x) => {
-            return (
-              <TR key={`tr-${x}`}>
-                {Array.from({ length: 3 }, (_nestedArrItem, i) => {
-                  return <TD key={`td-${i}`}>Row {x + 1}</TD>;
-                })}
-              </TR>
-            );
-          })}
-        </TBody>
-        <TFoot>
-          <TR>
-            {Array.from({ length: 3 }, (_arrItem, i) => {
-              return <TD key={`footer-${i}`}>Footer {i + 1}</TD>;
-            })}
-          </TR>
-        </TFoot>
-      </Table>
+          </TBody>
+          <TFoot>
+            <TR>
+              {Array.from({ length: 3 }, (_arrItem, i) => {
+                return (
+                  <TD
+                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                    key={`footer-${i}`}
+                  >
+                    Footer {i + 1}
+                  </TD>
+                );
+              })}
+            </TR>
+          </TFoot>
+        </Table>
+      </TableContainer>
     </StackLayout>
   );
 };

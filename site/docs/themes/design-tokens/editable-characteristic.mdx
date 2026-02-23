@@ -1,0 +1,72 @@
+---
+title: Editable characteristic
+layout: DetailTechnical
+sidebar:
+  priority: 14
+---
+
+Editable tokens specify the colors and styles for components that support data entry and modification. This characteristic is used for input controls like text fields, where users can write or edit information. Editable tokens ensure that these components are visually distinct and easy to identify, often accompanied by labels to guide user interaction and support clear, accessible data entry.
+
+## Primary inputs
+
+Editable tokens are used to style interactive components such as text fields, dropdowns, and multiline inputs. Editable borders are colored consistently across all editable components, while the distinction between primary and secondary variants is made through the background color token. Applying a primary background token ensures that inputs blend seamlessly within primary containers or, alternatively, provide clear contrast when placed in secondary or tertiary containers.
+
+<Diagram
+  src="/img/theming/characteristic-primary-inputs-light.png"
+  srcDark="/img/theming/characteristic-primary-inputs-dark.png"
+  alt="Annotated example of primary inputs"
+  background="primary"
+  border
+/>
+
+`--salt-editable-borderColor` \
+`--salt-editable-primary-background`
+
+## Primary state changes
+
+Editable tokens change when a component is hovered over or active, such as when a user is typing into an input. These adjustments to background and border tokens provide subtle visual feedback, helping users identify which component is interactive and currently in use.
+
+<Diagram
+  src="/img/theming/characteristic-primary-state-changes-light.png"
+  srcDark="/img/theming/characteristic-primary-state-changes-dark.png"
+  alt="Annotated example of primary input state changes"
+  background="primary"
+  border
+/>
+
+`--salt-editable-borderColor-active` \
+`--salt-editable-primary-background-active` \
+`--salt-editable-borderColor-hover` \
+`--salt-editable-primary-background-hover`
+
+## Secondary inputs
+
+Secondary backgrounds can be applied to editable components, allowing inputs to stand out in primary containers or blend seamlessly within secondary containers. This supports flexible layouts and helps maintain visual hierarchy.
+
+<Diagram
+  src="/img/theming/characteristic-secondary-inputs-light.png"
+  srcDark="/img/theming/characteristic-secondary-inputs-dark.png"
+  alt="Annotated example of secondary inputs"
+  background="primary"
+  border
+/>
+
+`--salt-editable-borderColor` \
+`--salt-editable-secondary-background`
+
+## Secondary state changes
+
+When a secondary input is hovered over or active, background and border tokens update to provide subtle visual feedback, helping users identify which component is interactive and in use.
+
+<Diagram
+  src="/img/theming/characteristic-secondary-state-changes-light.png"
+  srcDark="/img/theming/characteristic-secondary-state-changes-dark.png"
+  alt="Annotated example of secondary input state changes"
+  background="primary"
+  border
+/>
+
+`--salt-editable-borderColor-active` \
+`--salt-editable-secondary-background-active` \
+`--salt-editable-borderColor-hover` \
+`--salt-editable-secondary-background-hover`

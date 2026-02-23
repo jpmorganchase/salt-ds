@@ -44,9 +44,9 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.2.0",
-    "@biomejs/js-api": "^3.0.0",
-    "@biomejs/wasm-nodejs": "^2.2.0",
+    "@biomejs/biome": "^2.4.3",
+    "@biomejs/js-api": "^4.0.0",
+    "@biomejs/wasm-nodejs": "^2.4.3",
     "@changesets/cli": "^2.29.6",
     "@cypress/react": "^8.0.0",
     "@e965/xlsx": "^0.20.3",
@@ -72,7 +72,7 @@
     "ag-grid-enterprise": "^32.0.0",
     "ag-grid-react": "^32.0.0",
     "axe-core": "^4.9.0",
-    "chromatic": "^13.0.0",
+    "chromatic": "^15.0.0",
     "ci-info": "^4.0.0",
     "clsx": "^2.0.0",
     "cypress": "^15.8.2",
@@ -89,6 +89,7 @@
     "react": "^18.3.1",
     "react-docgen-typescript": "2.4.0",
     "react-dom": "^18.3.1",
+    "react-hotkeys-hook": "^5.1.0",
     "react-resizable-panels": "^3.0.0",
     "react-router": "^7.10.1",
     "storybook": "^10.0.0",
@@ -111,7 +112,9 @@
     "ag-grid-react": "32.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-error-boundary": "^6.0.0"
+    "react-error-boundary": "^6.0.0",
+    "next-mdx-remote": "^6.0.0",
+    "@jpmorganchase/mosaic-site-middleware@npm:^0.1.0-beta.97": "patch:@jpmorganchase/mosaic-site-middleware@npm%3A0.1.0-beta.97#~/.yarn/patches/@jpmorganchase-mosaic-site-middleware-npm-0.1.0-beta.97-137f775128.patch"
   },
   "browserslist": {
     "production": [

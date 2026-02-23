@@ -1,0 +1,329 @@
+---
+title: Keyboard shortcuts
+description: "Keyboard shortcuts allow users to execute actions, that are usually performed with a mouse or trackpad, using a keyboard. They increase the efficiency and productivity of users who primarily rely on their keyboard when interacting with applications."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/keyboard-shortcuts
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-keyboard-shortcuts--with-dialog", label: "Examples" },
+    ]
+  components: ["Input", "Kbd", "Switch", "Table"]
+---
+The keyboard shortcuts pattern is a comprehensive and searchable list of the shortcuts that are currently available to the application user, helping them to quickly reference and learn key combinations and perform actions efficiently.
+
+This pattern is a recommended layout and should be displayed within an appropriate container component that fits the application's information architecture and supports the user's workflow.
+
+ <Diagram
+    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-example.png"
+    srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-example-dark.png"
+    alt="Keyboard Shortcuts pattern example, showing the actions and respective key combinations side by side"
+    border
+    background="secondary"
+  />
+
+## How to build
+
+### Anatomy
+
+1. **Keyboard shortcuts switch**: Allows users to enable or disable application keyboard shortcuts.
+2. **Filter**: Allows users to quickly search and discover specific shortcuts by typing keywords.
+3. **Action name**: User-initiated commands—such as Save or Delete—that correspond to defined shortcuts. 
+4. **Description**: A brief description for actions that are unique to your application or require additional context to help users understand their purpose.
+3. **Key**: Keyboard shortcuts use a combination of modifier keys and character keys to perform actions.
+
+ <Diagram
+    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-anatomy.png"
+    srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-anatomy-dark.png"
+    alt="The anatomy of the Keyboard Shortcuts Pattern, with numbers indicating the position of the examples given"
+    border
+    background="secondary"
+  />
+
+<Callout status="success" title="Best practices" >
+  Use concise and descriptive names for actions to reflect the UI command executed by the shortcut.
+</Callout>
+
+### Layout
+
+- Use [Switch](/salt/components/switch) to display keyboard shortcuts on/off switch.
+- Use [Combo box](/salt/components/combo-box) to display search field.
+- Use [Table](/salt/components/table) to display keyboard shortcut list.
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-layout.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-layout-dark.png"
+  alt="The layout of the Keyboard Shortcuts pattern, showing how other components are used within it"
+  border
+  background="secondary"
+/>
+
+## When to use
+
+Use this pattern to:
+- Display a comprehensive and searchable list of keyboard shortcuts available in the application.
+- Help users quickly reference, discover, and learn key combinations, improving efficiency, accessibility, and overall user experience.
+
+<Callout status="success" title="Best practices" >
+  Provide keyboard shortcuts as an alternative to mouse or trackpad interactions, supporting users who prefer or require keyboard input.
+</Callout>
+
+## How it works
+
+### Searching shortcuts
+
+1. The keyboard shortcuts initially displays all available shortcuts.
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-searching-shortcuts-default.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-searching-shortcuts-default-dark.png"
+  alt="The Keyboard Shortcuts Pattern in its initial state, showing all shortcuts"
+  border
+  background="secondary"
+/>
+
+2. When the user enters text in the filter input, the list updates to show only the matching shortcuts. For guidance on filtering behavior, refer to the [List Filtering pattern](/salt/patterns/list-filtering) page.
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-searching-shortcuts-results.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-searching-shortcuts-results-dark.png"
+  alt="The Keyboard Shortcuts Pattern showing search results after inputting a word"
+  border
+  background="secondary"
+/>
+
+### Enabling or Disabling Keyboard Shortcuts
+
+Allow users to control keyboard shortcuts with a switch. When shortcuts are disabled, the shortcut list should be hidden.
+
+<Callout status="success" title="Best practices" >
+  Provide users with the option to disable keyboard shortcuts to enhance usability and accessibility. This is especially important in applications with custom shortcuts, as it helps prevent accidental activation and reduces user frustration.
+</Callout>
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-enabling-disabling-shortcuts.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-enabling-disabling-shortcuts-dark.png"
+  alt="a block diagram showing how to enable and disable the Keyboard Shortcuts pattern"
+  border
+  background="secondary"
+/>
+
+### Scrolling keyboard shortcuts
+
+If the keyboard shortcuts list exceeds the available display area, an overflow shadow and scrollbar should be displayed to help the user navigate the list and recognize that more shortcuts are available.
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-scrolling-shortcuts.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-scrolling-shortcuts-dark.png"
+  alt="The keyboard Shortcuts pattern showing a vertical scrollbar with overflowing content"
+  border
+  background="secondary"
+/>
+
+### Choosing a container for the keyboard shortcuts
+
+This pattern should be placed inside the appropriate container for your application. Select a container that aligns with the product’s user experience and context of use. Common options include:
+
+- [Dialog](salt/components/dialog): Suitable when users need to focus on shortcuts without distraction, and when shortcuts should be accessible from anywhere in the application through a keyboard shortcut—quickly and without disrupting common tasks.
+-  [Preferences dialog](salt/patterns/preferences-dialog): Works well if keyboard shortcuts are part of broader settings.
+- [Drawer](salt/components/drawer): Appropriate for persistent access, or when shortcut settings are relevant to a specific part of the application that is in focus.
+
+The choice of container should be guided by how and when users will need to access the shortcuts, ensuring the pattern effectively supports the intended task.
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-in-dialog.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-in-dialog-dark.png"
+  alt="the Keyboard Shortcuts pattern located inside a dialog"
+  border
+  background="secondary"
+/>
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-in-preferences-dialog.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-in-preferences-dialog-dark.png"
+  alt="The Keyboard Shortcuts pattern located inside a preferences dialog"
+  border
+  background="secondary"
+/>
+
+<Diagram
+  src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-in-drawer.png"
+  srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-in-drawer-dark.png"
+  alt="The Keyboard Shortcuts pattern located inside a drawer"
+  border
+  background="secondary"
+/>
+
+## How to define shortcuts
+
+When defining your shortcuts, we recommend taking the following steps:
+
+- Consider whether each shortcut should be global or contextual.
+- Combine one modifier key with a character key that's associated with the name of the action (e.g., "Cmd + S" for Save).
+- Use a maximum of three keys, at least one of which must be a modifier key.
+- Test your shortcuts on multiple keyboard layouts, operating systems, platforms, and browsers to ensure they are easy to use and do not conflict with essential system or browser shortcuts.
+- Avoid ambiguous or hard-to-reach keys—prefer letters and numbers over symbols, as some characters (like the £ sign) are not universally available or may require complex key combinations on certain layouts.
+- Clearly document shortcuts for each operating system.
+
+<Callout status="success" title="Best practices" >
+  If your application includes shortcuts bound to a single character, you must comply with the Web Content Accessibility Guidelines (WCAG) 2.1. For further information, please refer to the Accessibility section below.
+</Callout>
+
+### Global vs Contextual shortcuts
+
+When setting up keyboard shortcuts for your application, consider both global and contextual shortcuts. 
+
+<Table>
+  <THead>
+    <tr>
+      <th></th>
+      <th>Global shortcuts</th>
+      <th>Contextual shortcuts</th>
+    </tr>
+  </THead>
+  <TBody>
+    <tr>
+      <td>Definition</td>
+      <td>Available throughout the application, regardless of focus</td>
+      <td>Active only when specific elements are focused</td>
+    </tr>
+    <tr>
+     <td>Example use case</td>
+      <td>Saving a document from any screen</td>
+      <td>Selecting text in an input field</td>
+    </tr>
+    <tr>
+      <td>Example shortcut</td>
+      <td><Kbd>Ctrl/Cmd</Kbd> + <Kbd>S</Kbd></td>
+     <td><Kbd>Ctrl/Cmd</Kbd> + <Kbd>A</Kbd></td>
+    </tr>
+  </TBody>
+</Table>
+
+### Modifier and Character keys
+
+#### Modifier keys
+
+When the user presses a modifier key at the same time as another key, the default function of that key is modified—and together they execute the assigned shortcut. Cmd, Ctrl, Shift and Alt are examples of keys that you can use to modify other keys. Modifier keys can differ depending on the platform.
+
+<Table>
+  <THead>
+    <tr>
+      <th colSpan="1">Platform</th>
+      <th colSpan="4">Modifiers</th>
+    </tr>
+  </THead>
+  <TBody>
+    <tr>
+      <td>macOS</td>
+      <td>Ctrl</td>
+      <td>Shift</td>
+      <td>Option</td>
+      <td>Cmd</td>
+    </tr>
+    <tr>
+     <td>Windows</td>
+      <td>Ctrl</td>
+      <td>Shift</td>
+      <td>Alt</td>
+      <td>Win</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>Ctrl</td>
+      <td>Shift</td>
+      <td>Alt</td>
+      <td>Meta</td>
+    </tr>
+    <tr>
+      <td>Bloomberg</td>
+      <td>Ctrl</td>
+      <td>Shift</td>
+      <td>Alt</td>
+      <td>Go</td>
+    </tr>
+  </TBody>
+</Table>
+
+<Callout title="Bloomberg Keyboards">
+
+Bloomberg keyboards, common in financial environments, feature a distinctive orange "Go" key used to execute commands. When designing shortcuts for these keyboards, consider supporting the "Go" key and avoid conflicts with Bloomberg’s built-in shortcuts. Always test your shortcuts for compatibility.
+
+</Callout>
+
+#### Character keys
+
+It is recommended to display up to three character keys in a keyboard shortcut. Make sure at least one of the keys has a close association to the action that the shortcut executes—for example, "Cmd + S" for the Save action. This will make it easier for users to memorize keyboard shortcuts they'll use frequently.
+
+Common character keys include:
+
+<Table>
+  <THead>
+    <tr>
+      <th>Key Type</th>
+      <th>Modifier keys</th>
+    </tr>
+  </THead>
+  <TBody>
+    <tr>
+      <td>Letters</td>
+      <td>a-z</td>
+    </tr>
+    <tr>
+     <td>Numbers</td>
+      <td>0-9</td>
+    </tr>
+    <tr>
+      <td>Function Keys</td>
+      <td>F1-F19</td>
+    </tr>
+     <tr>
+      <td>Punctuation</td>
+      <td>', -, =, [, ], , ;, *, ,, ., /</td>
+    </tr>
+     <tr>
+      <td>Navigation</td>
+      <td>Left, Up, Right, Down, PageUp, PageDown, End, Home</td>
+    </tr>
+    <tr>
+      <td>Other</td>
+      <td>Tab, Enter, Escape, Space, Backspace, Delete, Pause/Break, CapsLock, Insert</td>
+    </tr>
+    <tr>
+      <td>Numpad</td>
+      <td>Numpad0–Numpad9, Numpad_multiply, Numpad_add, Numpad_separator, Numpad_subtract, Numpad_decimal, Numpad_divide</td>
+    </tr>
+  </TBody>
+</Table>
+
+<Callout status="success" title="Best practices" >
+  When designing keyboard shortcuts, always ensure your chosen combination does not conflict with important pre-existing shortcuts or reserved browser hotkeys. To manage potential conflicts:
+  - Use a different modifier key (e.g., Ctrl, Alt, Shift).
+  - Consider the second character key in the action’s name.
+  - Add an extra character key if needed, but keep the total to no more than three keys for usability.
+
+  Some hotkeys cannot be overridden, as they are reserved by browsers to maintain user safety and a consistent browsing experience. Always verify that your shortcut does not interfere with these reserved combinations.
+</Callout>
+
+## Technical note
+
+### Integrating third party keyboard shortcut libraries
+
+In our examples, we use the react-hotkeys-hook library to demonstrate keyboard shortcut implementation. It offers a simple and intuitive API for handling keyboard events, enabling you to add shortcut functionality with minimal setup. For installation instructions and detailed API usage, please refer to the official library [documentation](https://react-hotkeys-hook.vercel.app/).
+
+## Accessibility
+
+Providing keyboard functionality is essential for accessibility. 
+
+Users with visual or mobility impairments may rely entirely on the keyboard, and many power users prefer keyboard shortcuts for efficiency. By implementing the keyboard shortcuts pattern, you enhance the user experience for everyone.
+
+It’s important to note that adding keyboard shortcuts alone does not guarantee full keyboard accessibility. All interactive elements in your application should remain accessible through standard keyboard navigation, such as using Tab, Shift+Tab, Enter, and Space keys to move focus and activate controls.
+
+### WCAG 2.1 keyboard requirements
+
+If you have shortcuts that are bound to only a single character, you must meet a requirement in the 2.1 version of the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/character-key-shortcuts.html). Make sure you provide a mechanism to toggle the shortcuts on/off, remap them to different keys or (if they're related to a particular element) make them active only when that element has focus.
+
+:fragment{src="./fragments/feedback.mdx"}

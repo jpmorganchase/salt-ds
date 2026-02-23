@@ -4,6 +4,7 @@ import { type ReactElement, useState } from "react";
 export const Default = (): ReactElement => {
   const [openPrimary, setOpenPrimary] = useState(false);
   const [openSecondary, setOpenSecondary] = useState(false);
+  const [openTertiary, setOpenTertiary] = useState(false);
 
   return (
     <StackLayout>
@@ -25,6 +26,17 @@ export const Default = (): ReactElement => {
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+      </Drawer>
+      <Button onClick={() => setOpenTertiary(true)}>
+        Open Tertiary Drawer
+      </Button>
+      <Drawer
+        open={openTertiary}
+        onOpenChange={(newOpen) => setOpenTertiary(newOpen)}
+        variant="tertiary"
+        style={{ width: 200 }}
+      >
+        <DrawerCloseButton onClick={() => setOpenTertiary(false)} />
       </Drawer>
     </StackLayout>
   );
