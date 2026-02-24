@@ -1,8 +1,8 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 
 import kbdCss from "./Kbd.css";
 

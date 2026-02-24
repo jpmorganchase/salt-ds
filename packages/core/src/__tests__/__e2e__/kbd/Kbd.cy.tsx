@@ -1,4 +1,4 @@
-import { Kbd } from "@salt-ds/lab";
+import { Kbd } from "@salt-ds/core";
 import * as kbdStories from "@stories/kbd/kbd.stories";
 import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";

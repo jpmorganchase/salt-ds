@@ -1,11 +1,10 @@
-import { FlexLayout, FlowLayout, Input, Text } from "@salt-ds/core";
+import { FlexLayout, FlowLayout, Input, Kbd, Text } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import { Kbd } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Kbd/Kbd QA",
+  title: "Core/Kbd/Kbd QA",
   component: Kbd,
 } as Meta<typeof Kbd>;
 
