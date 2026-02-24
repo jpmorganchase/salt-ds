@@ -178,8 +178,13 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
       if (!emblaApi) return;
 
-      const numberOfSnaps = emblaApi.scrollSnapList().length ?? 1;
-      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+      const numberOfSnaps = emblaApi.scrollSnapList().length;
+
+      if (numberOfSnaps === 0) return;
+
+      const numberOfSlides = slideRefs.current.length;
+      const numberOfSlidesPerSnap = numberOfSlides / numberOfSnaps;
+
       const currentSnap = Math.floor(focusedSlideIndex / numberOfSlidesPerSnap);
       let newSnap = currentSnap;
 
