@@ -974,6 +974,11 @@ describe("GIVEN a DateInputRange", () => {
     cy.setDateAdapter(adapterLuxon);
     cy.mount(<Range />);
 
-    cy.findAllByRole("textbox").should("not.have.attr", "aria-describedby");
+    cy.findAllByRole("textbox")
+      .eq(0)
+      .should("not.have.attr", "aria-describedby");
+    cy.findAllByRole("textbox")
+      .eq(1)
+      .should("not.have.attr", "aria-describedby");
   });
 });
