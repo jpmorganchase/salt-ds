@@ -7,6 +7,7 @@ export {
   FlowLayout,
   GridLayout,
   H1,
+  Kbd,
   Panel,
   SaltProvider,
   StackLayout,
@@ -20,8 +21,6 @@ export {
   THead,
   TR,
 } from "@salt-ds/core";
-
-export { Kbd } from "@salt-ds/lab";
 
 export * from "./ag-grid-doc";
 export * from "./app-header";
