@@ -58,6 +58,7 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value, max) => `${value}/${max}`}
+        className="custom-rating-width"
         {...args}
       />
       <Rating
@@ -65,6 +66,7 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
+        className="custom-rating-width"
         {...args}
       />
       <Rating
