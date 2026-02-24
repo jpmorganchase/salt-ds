@@ -24,9 +24,6 @@ import "./keyboard-shortcuts.stories.css";
 
 export default {
   title: "Patterns/Keyboard Shortcuts",
-  parameters: {
-    layout: "padded",
-  },
 } as Meta;
 
 type Shortcut = {
@@ -141,7 +138,8 @@ const KeyboardShortcuts: FC = () => {
   useHotkeys(
     "meta+b",
     (e) => {
-      shortcutsEnabled && alert("Set direction to buy triggered");
+      e.preventDefault();
+      alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
     [shortcutsEnabled],
@@ -196,12 +194,13 @@ const KeyboardShortcuts: FC = () => {
     { enabled: shortcutsEnabled },
   );
 
-  const filteredShortcuts: Shortcut[] = shortcutList.filter(
-    (s) =>
-      s.label.toLowerCase().includes(filter.trim().toLowerCase()) ||
-      (s.description &&
-        s.description.toLowerCase().includes(filter.trim().toLowerCase())),
-  );
+  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) => {
+    const searchText = filter.trim().toLowerCase();
+    return (
+      s.label.toLowerCase().includes(searchText) ||
+      s.description?.toLowerCase().includes(searchText)
+    );
+  });
 
   const handleDialogOpen = (): void => {
     setFilter("");
@@ -240,7 +239,6 @@ const KeyboardShortcuts: FC = () => {
       <Dialog
         open={open}
         onOpenChange={handleDialogChange}
-        id="keyboard-shortcuts-dialog"
         size="medium"
         className="keyboardShortcuts-dialog"
       >
@@ -279,8 +277,8 @@ const KeyboardShortcuts: FC = () => {
                           </TR>
                         </THead>
                         <TBody>
-                          {filteredShortcuts.map((shortcut, idx) => (
-                            <TR key={shortcut.label + idx}>
+                          {filteredShortcuts.map((shortcut) => (
+                            <TR key={shortcut.label}>
                               <TD className="keyboardShortcuts-td">
                                 <StackLayout
                                   gap={0.5}
@@ -390,7 +388,8 @@ const ShortcutPanel: FC = () => {
   useHotkeys(
     "meta+b",
     (e) => {
-      shortcutsEnabled && alert("Set direction to buy triggered");
+      e.preventDefault();
+      alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
     [shortcutsEnabled],
@@ -436,12 +435,13 @@ const ShortcutPanel: FC = () => {
     { enabled: shortcutsEnabled },
   );
 
-  const filteredShortcuts: Shortcut[] = shortcutList.filter(
-    (s) =>
-      s.label.toLowerCase().includes(filter.trim().toLowerCase()) ||
-      (s.description &&
-        s.description.toLowerCase().includes(filter.trim().toLowerCase())),
-  );
+  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) => {
+    const searchText = filter.trim().toLowerCase();
+    return (
+      s.label.toLowerCase().includes(searchText) ||
+      s.description?.toLowerCase().includes(searchText)
+    );
+  });
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void =>
     setShortcutsEnabled(event.target.checked);
@@ -482,8 +482,8 @@ const ShortcutPanel: FC = () => {
                     </TR>
                   </THead>
                   <TBody>
-                    {filteredShortcuts.map((shortcut, idx) => (
-                      <TR key={shortcut.label + idx}>
+                    {filteredShortcuts.map((shortcut) => (
+                      <TR key={shortcut.label}>
                         <TD className="keyboardShortcuts-td">
                           <StackLayout
                             gap={0.5}
