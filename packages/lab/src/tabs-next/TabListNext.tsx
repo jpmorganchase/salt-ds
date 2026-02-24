@@ -122,7 +122,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         data-ismeasuring={isMeasuring ? true : undefined}
         ref={handleRef}
         onKeyDown={handleKeyDown}
-        aria-describedby={clsx(ariaDescribedBy, warningId)}
+        aria-describedby={clsx(ariaDescribedBy, warningId) || undefined}
         {...rest}
       >
         {!isMeasuring && hidden.length > 0 && (

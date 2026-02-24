@@ -200,18 +200,22 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       >
         <input
           aria-readonly={readOnly || undefined}
-          aria-describedby={clsx(
-            checkboxGroup === undefined
-              ? formFieldA11yProps?.["aria-describedby"]
-              : undefined,
-            inputDescribedBy,
-          ) || undefined}
-          aria-labelledby={clsx(
-            checkboxGroup === undefined
-              ? formFieldA11yProps?.["aria-labelledby"]
-              : undefined,
-            inputLabelledBy,
-          ) || undefined}
+          aria-describedby={
+            clsx(
+              checkboxGroup === undefined
+                ? formFieldA11yProps?.["aria-describedby"]
+                : undefined,
+              inputDescribedBy,
+            ) || undefined
+          }
+          aria-labelledby={
+            clsx(
+              checkboxGroup === undefined
+                ? formFieldA11yProps?.["aria-labelledby"]
+                : undefined,
+              inputLabelledBy,
+            ) || undefined
+          }
           name={name}
           value={value}
           checked={checked}
