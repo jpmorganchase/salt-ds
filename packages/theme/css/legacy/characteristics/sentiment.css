@@ -12,5 +12,5 @@
   --salt-sentiment-negative-dataviz: var(--salt-palette-error-foreground-decorative);
   --salt-sentiment-positive-dataviz: var(--salt-palette-success-foreground-decorative);
   --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral-secondary-foreground);
-  --salt-sentiment-accent-dataviz: var(--salt-palette-accent-foreground-informative);
+  --salt-sentiment-accent-dataviz: var(--salt-palette-warning-foreground-decorative);
 }
