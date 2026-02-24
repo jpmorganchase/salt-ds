@@ -205,13 +205,13 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
               ? formFieldA11yProps?.["aria-describedby"]
               : undefined,
             inputDescribedBy,
-          )}
+          ) || undefined}
           aria-labelledby={clsx(
             checkboxGroup === undefined
               ? formFieldA11yProps?.["aria-labelledby"]
               : undefined,
             inputLabelledBy,
-          )}
+          ) || undefined}
           name={name}
           value={value}
           checked={checked}
