@@ -80,6 +80,9 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     const registerTab = useEventCallback((tab: Item) => {
       const cleanup = registerItem(tab);
       setValueToIdMap((map) => {
+        if (map.get(tab.value) === tab.id) {
+          return map;
+        }
         const next = new Map(map);
         next.set(tab.value, tab.id);
         return next;
@@ -88,6 +91,9 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       return () => {
         cleanup();
         setValueToIdMap((map) => {
+          if (map.get(tab.value) !== tab.id) {
+            return map;
+          }
           const next = new Map(map);
           next.delete(tab.value);
           return next;
@@ -97,12 +103,18 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
     const registerPanel = useCallback((id: string, value: string) => {
       setValueToPanelIdMap((map) => {
+        if (map.get(value) === id) {
+          return map;
+        }
         const next = new Map(map);
         next.set(value, id);
         return next;
       });
       return () => {
         setValueToPanelIdMap((map) => {
+          if (map.get(value) !== id) {
+            return map;
+          }
           const next = new Map(map);
           next.delete(value);
           return next;

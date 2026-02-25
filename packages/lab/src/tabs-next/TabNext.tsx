@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -56,7 +56,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     const disabled = !!disabledProp;
 
-    const id = value;
+    const id = useId(idProp);
 
     const wasMouseDown = useRef(false);
     const [focusVisible, setFocusVisible] = useState(false);

@@ -11,7 +11,7 @@ import {
   type ReactNode,
   type RefObject,
   useEffect,
-  useMemo,
+  useRef,
   useState,
 } from "react";
 import type { TabNextProps } from "../TabNext";
@@ -42,6 +42,7 @@ export function useOverflow({
     isMeasuring: false,
   });
   const [pinned, setPinned] = useState(selected);
+  const updateOverflowRafRef = useRef<number | null>(null);
 
   const pinnedValue = pinned ?? selected;
 
@@ -49,6 +50,18 @@ export function useOverflow({
   const updateOverflow = useEventCallback(() => {
     const computeVisible = (visibleCount: number) => {
       if (container.current && targetWindow) {
+        const widthCache = new Map<HTMLElement, number>();
+        const getCachedTabWidth = (element: HTMLElement) => {
+          const cached = widthCache.get(element);
+          if (cached !== undefined) {
+            return cached;
+          }
+
+          const width = getTabWidth(element);
+          widthCache.set(element, width);
+          return width;
+        };
+
         const items = Array.from(
           container.current.querySelectorAll<HTMLElement>(
             "[data-overflowitem]",
@@ -73,10 +86,11 @@ export function useOverflow({
         while (newVisibleCount < items.length) {
           const element = items[newVisibleCount];
           if (element) {
-            if (currentWidth + getTabWidth(element) + gap > maxWidth) {
+            const elementWidth = getCachedTabWidth(element) + gap;
+            if (currentWidth + elementWidth > maxWidth) {
               break;
             }
-            currentWidth += getTabWidth(element) + gap;
+            currentWidth += elementWidth;
             visible.push(element);
           }
           newVisibleCount++;
@@ -94,16 +108,16 @@ export function useOverflow({
         while (currentWidth > maxWidth) {
           const removed = visible.pop();
           if (!removed) break;
-          currentWidth -= getTabWidth(removed) + gap;
+          currentWidth -= getCachedTabWidth(removed) + gap;
           newVisibleCount--;
         }
 
         if (pinnedTab && !visible.includes(pinnedTab)) {
-          const selectedTabWidth = getTabWidth(pinnedTab) + gap;
+          const selectedTabWidth = getCachedTabWidth(pinnedTab) + gap;
           while (currentWidth + selectedTabWidth > maxWidth) {
             const removed = visible.pop();
             if (!removed) break;
-            currentWidth -= getTabWidth(removed) + gap;
+            currentWidth -= getCachedTabWidth(removed) + gap;
             newVisibleCount--;
           }
         }
@@ -140,45 +154,50 @@ export function useOverflow({
       }
     });
   });
+  const scheduleOverflowUpdate = useEventCallback(() => {
+    if (updateOverflowRafRef.current != null) {
+      return;
+    }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to update when selected changes.
-  useIsomorphicLayoutEffect(() => {
-    updateOverflow();
-  }, [selected]);
+    if (typeof requestAnimationFrame !== "function") {
+      updateOverflow();
+      return;
+    }
+
+    updateOverflowRafRef.current = requestAnimationFrame(() => {
+      updateOverflowRafRef.current = null;
+      updateOverflow();
+    });
+  });
 
   useEffect(() => {
-    const handleWindowResize = () => {
-      updateOverflow();
-    };
-
-    targetWindow?.addEventListener("resize", handleWindowResize);
-
     return () => {
-      targetWindow?.removeEventListener("resize", handleWindowResize);
+      if (updateOverflowRafRef.current != null) {
+        cancelAnimationFrame(updateOverflowRafRef.current);
+      }
     };
-  }, [updateOverflow, targetWindow]);
+  }, []);
 
   useEffect(() => {
     const element = container?.current;
     if (!element) return;
 
     const win = ownerWindow(element);
+    const parentElement = element.parentElement;
 
     const resizeObserver = new win.ResizeObserver((entries) => {
       if (entries.length === 0) return;
-      requestAnimationFrame(updateOverflow);
+      scheduleOverflowUpdate();
     });
     resizeObserver.observe(element);
-    if (element.parentElement) {
-      resizeObserver.observe(element.parentElement);
+    if (parentElement) {
+      resizeObserver.observe(parentElement);
     }
 
     return () => {
-      if (element) {
-        resizeObserver.unobserve(element);
-      }
+      resizeObserver.disconnect();
     };
-  }, [container, updateOverflow]);
+  }, [container, scheduleOverflowUpdate]);
 
   useEffect(() => {
     const element = container?.current;
@@ -187,7 +206,7 @@ export function useOverflow({
     const win = ownerWindow(element);
 
     const mutationObserver = new win.MutationObserver(() => {
-      requestAnimationFrame(updateOverflow);
+      scheduleOverflowUpdate();
     });
 
     mutationObserver.observe(element, {
@@ -197,35 +216,39 @@ export function useOverflow({
     return () => {
       mutationObserver.disconnect();
     };
-  }, [container, updateOverflow, isMeasuring]);
+  }, [container, scheduleOverflowUpdate, isMeasuring]);
 
-  const childArray = useMemo(() => Children.toArray(children), [children]);
-  const visible = useMemo(
-    () => childArray.slice(0, visibleCount),
-    [visibleCount, childArray],
-  );
-  const hidden = useMemo(
-    () => childArray.slice(visibleCount),
-    [childArray, visibleCount],
-  );
+  const childArray = Children.toArray(children);
+  let visible = childArray.slice(0, visibleCount);
+  let hidden = childArray.slice(visibleCount);
 
-  const hiddenSelected = hidden.find(
+  const isSelectedHidden = hidden.some(
     (child) =>
-      isValidElement<TabNextProps>(child) && child?.props?.value === selected,
+      isValidElement<TabNextProps>(child) && child.props?.value === selected,
   );
 
-  if (hiddenSelected) {
-    setPinned(selected);
-  }
+  useIsomorphicLayoutEffect(() => {
+    if (!isMeasuring && isSelectedHidden && selected !== pinned) {
+      setPinned(selected);
+    }
+  }, [isMeasuring, isSelectedHidden, pinned, selected]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we need to recompute when selected or pinned changes.
+  useIsomorphicLayoutEffect(() => {
+    updateOverflow();
+  }, [pinned, selected, updateOverflow]);
 
   const hiddenPinnedIndex = hidden.findIndex(
     (child) =>
-      isValidElement<TabNextProps>(child) && child?.props?.value === pinned,
+      isValidElement<TabNextProps>(child) && child.props?.value === pinned,
   );
 
   if (hiddenPinnedIndex !== -1) {
-    const removed = hidden.splice(hiddenPinnedIndex, 1);
-    visible.push(removed[0]);
+    const pinnedChild = hidden[hiddenPinnedIndex];
+    hidden = hidden.filter((_, index) => index !== hiddenPinnedIndex);
+    if (pinnedChild !== undefined) {
+      visible = [...visible, pinnedChild];
+    }
   }
 
   if (isMeasuring) {
