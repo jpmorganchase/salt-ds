@@ -79,8 +79,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     name: nameProp,
     onChange,
     className,
-    readOnly,
-    disabled,
+    readOnly: readOnlyProp,
+    disabled: disabledProp,
     max = 5,
     getLabel = defaultGetLabel,
     getVisibleLabel,
@@ -99,11 +99,16 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     window: targetWindow,
   });
   const {
+    disabled: formFieldDisabled,
+    readOnly: formFieldReadOnly,
     a11yProps: {
       "aria-describedby": formFieldDescribedBy,
       "aria-labelledby": formFieldLabelledBy,
     } = {},
   } = useFormFieldProps();
+
+  const disabled = formFieldDisabled || disabledProp;
+  const readOnly = formFieldReadOnly || readOnlyProp;
 
   const [hoveredValue, setHoveredValue] = useState(0);
   const [selected, setSelected] = useControlled({
