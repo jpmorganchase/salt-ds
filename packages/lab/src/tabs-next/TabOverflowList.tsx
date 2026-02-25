@@ -30,6 +30,7 @@ import {
   type Ref,
   type SetStateAction,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -188,6 +189,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     };
 
     const childCount = Children.count(children);
+    const hasOverflowItems = childCount > 0;
 
     useOverflowOpenFocusRecovery({
       open,
@@ -198,19 +200,24 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     });
 
     useIsomorphicLayoutEffect(() => {
-      if (overflowId && overflowRef.current && childCount > 0) {
+      if (overflowId && overflowRef.current && hasOverflowItems) {
         return registerTab({
           id: overflowId,
           value: overflowId,
           element: overflowRef.current,
         });
       }
-    }, [overflowId, registerTab, childCount]);
+    }, [overflowId, registerTab, hasOverflowItems]);
 
-    if (childCount === 0 && !isMeasuring) return null;
+    const overflowContext = useMemo(
+      () => ({ activeIndex, getItemProps }),
+      [activeIndex, getItemProps],
+    );
+
+    if (!hasOverflowItems && !isMeasuring) return null;
 
     return (
-      <TabOverflowContext.Provider value={{ activeIndex, getItemProps }}>
+      <TabOverflowContext.Provider value={overflowContext}>
         <div className={withBaseName()} data-overflow>
           <Button
             data-overflowbutton
