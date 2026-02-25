@@ -90,7 +90,7 @@ export interface DropdownProps<Item = string>
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * The content of the dropdown shown in the button. The component will be controlled if this prop is provided.
    */

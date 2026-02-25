@@ -123,6 +123,20 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
       </Dropdown>
       <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
+    <Dropdown variant="secondary">
+      {usStateExampleData.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </Dropdown>
+    <Dropdown variant="tertiary">
+      {usStateExampleData.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </Dropdown>
   </QAContainer>
 );
 

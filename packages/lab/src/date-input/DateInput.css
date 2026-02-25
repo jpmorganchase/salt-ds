@@ -21,7 +21,6 @@
 }
 
 .saltDateInput:hover {
-  background: var(--saltDateInput-background-hover, var(--input-background-hover));
   cursor: var(--salt-cursor-text);
 }
 
@@ -97,10 +96,8 @@
 /* Class applied if `variant="primary"` */
 .saltDateInput-primary {
   --input-background: var(--salt-editable-primary-background);
-  --input-background-active: var(--salt-editable-primary-background-active);
-  --input-background-hover: var(--salt-editable-primary-background-hover);
   --input-background-disabled: var(--salt-editable-primary-background-disabled);
-  --input-background-readonly: var(--salt-editable-primary-background-readonly);
+  --input-background-readonly: var(--salt-editable-background-readonly);
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -110,10 +107,18 @@
 /* Class applied if `variant="secondary"` */
 .saltDateInput-secondary {
   --input-background: var(--salt-editable-secondary-background);
-  --input-background-active: var(--salt-editable-secondary-background-active);
-  --input-background-hover: var(--salt-editable-secondary-background-active);
   --input-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --input-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --input-background-readonly: var(--salt-editable-background-readonly);
+  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderColor-active: var(--salt-editable-borderColor-active);
+  --input-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --input-outlineColor: var(--salt-focused-outlineColor);
+}
+
+/* Class applied if `variant="tertiary"` */
+.saltDateInput-tertiary {
+  --input-background: var(--salt-editable-secondary-background);
+  --input-background-readonly: var(--salt-editable-background-readonly);
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -123,8 +128,6 @@
 /* Style applied to input if `validationState="error"` */
 .saltDateInput-error {
   --input-background: var(--salt-status-error-background);
-  --input-background-active: var(--salt-status-error-background);
-  --input-background-hover: var(--salt-status-error-background);
   --input-background-readonly: var(--salt-status-error-background);
   --input-borderColor: var(--salt-status-error-borderColor);
   --input-borderColor-active: var(--salt-status-error-borderColor);
@@ -135,8 +138,6 @@
 /* Style applied to input if `validationState="warning"` */
 .saltDateInput-warning {
   --input-background: var(--salt-status-warning-background);
-  --input-background-active: var(--salt-status-warning-background);
-  --input-background-hover: var(--salt-status-warning-background);
   --input-background-readonly: var(--salt-status-warning-background);
   --input-borderColor: var(--salt-status-warning-borderColor);
   --input-borderColor-active: var(--salt-status-warning-borderColor);
@@ -147,8 +148,6 @@
 /* Style applied to input if `validationState="success"` */
 .saltDateInput-success {
   --input-background: var(--salt-status-success-background);
-  --input-background-active: var(--salt-status-success-background);
-  --input-background-hover: var(--salt-status-success-background);
   --input-background-readonly: var(--salt-status-success-background);
   --input-borderColor: var(--salt-status-success-borderColor);
   --input-borderColor-active: var(--salt-status-success-borderColor);
@@ -159,7 +158,6 @@
 /* Styling when focused */
 .saltDateInput-focused,
 .saltDateInput-focused:hover {
-  background: var(--saltDateInput-background-active, var(--input-background-active));
   cursor: var(--salt-cursor-text);
   outline: var(--saltDateInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
 }

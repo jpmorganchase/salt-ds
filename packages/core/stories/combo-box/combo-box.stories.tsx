@@ -177,6 +177,7 @@ export const Variants: StoryFn<typeof ComboBox> = () => {
     <StackLayout>
       <Template variant="primary" />
       <Template variant="secondary" />
+      <Template variant="tertiary" />
     </StackLayout>
   );
 };
@@ -911,6 +912,7 @@ export const Bordered = () => {
     <StackLayout>
       <Template bordered />
       <Template bordered variant="secondary" />
+      <Template bordered variant="tertiary" />
       <Template bordered validationStatus="error" />
       <Template bordered validationStatus="warning" />
       <Template bordered validationStatus="success" />

@@ -57,6 +57,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = () => {
         min={-5}
         step={0.5}
       />
+      <NumberInput variant="secondary" value={"100"} />
+      <NumberInput variant="tertiary" value={"100"} />
       <NumberInput validationStatus="success" value={"100"} />
       <NumberInput validationStatus="error" value={"100"} />
       <NumberInput validationStatus="warning" value={"100"} />

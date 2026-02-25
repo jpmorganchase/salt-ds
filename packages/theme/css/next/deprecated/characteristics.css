@@ -147,4 +147,11 @@
   --salt-content-foreground-highlight: var(--salt-palette-accent-weaker);
   --salt-content-foreground-active: var(--salt-palette-accent-stronger);
   --salt-content-foreground-hover: var(--salt-palette-accent-strong);
+
+  --salt-editable-primary-background-active: var(--salt-palette-background-primary);
+  --salt-editable-primary-background-hover: var(--salt-palette-background-primary);
+  --salt-editable-primary-background-readonly: var(--salt-palette-alpha-none);
+  --salt-editable-secondary-background-active: var(--salt-palette-background-secondary);
+  --salt-editable-secondary-background-hover: var(--salt-palette-background-secondary);
+  --salt-editable-secondary-background-readonly: var(--salt-palette-alpha-none);
 }

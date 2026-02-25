@@ -90,7 +90,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Format string for date.
    */

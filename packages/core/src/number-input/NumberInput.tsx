@@ -183,7 +183,7 @@ export interface NumberInputProps
    * Styling variant.
    * @default "primary"
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Value of the `NumberInput`, to be used when in a controlled state.
    */

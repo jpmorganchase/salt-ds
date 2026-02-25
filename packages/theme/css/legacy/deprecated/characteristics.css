@@ -3,11 +3,15 @@
   --salt-differential-positive-foreground: var(--salt-palette-positive-foreground);
   --salt-differential-negative-foreground: var(--salt-palette-negative-foreground);
 
-  --salt-editable-tertiary-background: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-active: var(--salt-palette-neutral-tertiary-background);
-  --salt-editable-tertiary-background-disabled: var(--salt-palette-neutral-tertiary-background-disabled);
   --salt-editable-tertiary-background-hover: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-readonly: var(--salt-palette-neutral-tertiary-background-readonly);
+  --salt-editable-primary-background-active: var(--salt-palette-neutral-primary-background);
+  --salt-editable-primary-background-hover: var(--salt-palette-neutral-primary-background);
+  --salt-editable-primary-background-readonly: var(--salt-palette-alpha-none);
+  --salt-editable-secondary-background-active: var(--salt-palette-neutral-secondary-background);
+  --salt-editable-secondary-background-hover: var(--salt-palette-neutral-secondary-background);
+  --salt-editable-secondary-background-readonly: var(--salt-palette-alpha-none);
 
   --salt-measured-background: var(--salt-palette-measured-background);
   --salt-measured-background-disabled: var(--salt-palette-measured-background-disabled);

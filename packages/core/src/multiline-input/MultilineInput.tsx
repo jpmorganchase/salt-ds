@@ -72,7 +72,7 @@ export interface MultilineInputProps
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(

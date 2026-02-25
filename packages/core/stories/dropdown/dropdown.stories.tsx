@@ -146,6 +146,11 @@ export const Variants: StoryFn<typeof Dropdown> = () => {
           <Option value={state} key={state} />
         ))}
       </Dropdown>
+      <Dropdown variant="tertiary">
+        {usStates.map((state) => (
+          <Option value={state} key={state} />
+        ))}
+      </Dropdown>
     </StackLayout>
   );
 };
@@ -414,6 +419,7 @@ export const Bordered = () => {
     <StackLayout>
       <Template bordered />
       <Template bordered variant="secondary" />
+      <Template bordered variant="tertiary" />
       <Template bordered validationStatus="error" />
       <Template bordered validationStatus="warning" />
       <Template bordered validationStatus="success" />
