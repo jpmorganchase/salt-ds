@@ -177,4 +177,11 @@ describe("GIVEN an MultilineInput", () => {
           });
       });
   });
+
+  it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", () => {
+    cy.mount(<Default />);
+
+    cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
+    cy.findByRole("textbox").should("not.have.attr", "aria-labelledby");
+  });
 });
