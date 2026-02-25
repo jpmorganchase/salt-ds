@@ -99,9 +99,9 @@ function highlightTextMatch(text: string, query: string): React.ReactNode {
 }
 
 const KeyboardShortcuts: FC = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(false);
-  const [filter, setFilter] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [shortcutsEnabled, setShortcutsEnabled] = useState(false);
+  const [filter, setFilter] = useState("");
 
   useHotkeys(
     "meta+option+p",
@@ -142,7 +142,6 @@ const KeyboardShortcuts: FC = () => {
       alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
-    [shortcutsEnabled],
   );
   useHotkeys(
     "meta+s",
@@ -394,7 +393,6 @@ const ShortcutPanel: FC = () => {
       alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
-    [shortcutsEnabled],
   );
   useHotkeys(
     "meta+s",
