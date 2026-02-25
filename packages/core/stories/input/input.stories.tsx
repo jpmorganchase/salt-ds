@@ -54,6 +54,11 @@ export const Variants: StoryFn<typeof Input> = (args) => {
         variant="secondary"
         {...args}
       />
+      <Input
+        defaultValue={args.defaultValue ?? "Value"}
+        variant="tertiary"
+        {...args}
+      />
     </FlowLayout>
   );
 };
@@ -370,6 +375,12 @@ export const Bordered: StoryFn<typeof Input> = (args) => {
       <Input
         bordered
         variant="secondary"
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        bordered
+        variant="tertiary"
         defaultValue={args.defaultValue ?? "Value"}
         {...args}
       />

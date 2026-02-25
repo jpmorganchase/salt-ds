@@ -77,7 +77,7 @@ export interface PillInputProps
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   hidePillClose?: boolean;
   truncate?: boolean;
   /** Styling variant with full border. Defaults to false

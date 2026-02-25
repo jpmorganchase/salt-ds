@@ -33,7 +33,6 @@
   --numberInput-borderStyle: var(--salt-borderStyle-solid);
   --numberInput-borderColor: var(--salt-editable-borderColor-hover);
 
-  background: var(--numberInput-background-hover);
   cursor: var(--salt-cursor-text);
 }
 
@@ -48,27 +47,28 @@
 /* Class applied if `variant="primary"` */
 .saltNumberInput-primary {
   --numberInput-background: var(--salt-editable-primary-background);
-  --numberInput-background-active: var(--salt-editable-primary-background-active);
-  --numberInput-background-hover: var(--salt-editable-primary-background-hover);
   --numberInput-background-disabled: var(--salt-editable-primary-background-disabled);
-  --numberInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --numberInput-background-readonly: var(--salt-editable-background-readonly);
 }
 
 /* Class applied if `variant="secondary"` */
 .saltNumberInput-secondary {
   --numberInput-background: var(--salt-editable-secondary-background);
-  --numberInput-background-active: var(--salt-editable-secondary-background-active);
-  --numberInput-background-hover: var(--salt-editable-secondary-background-active);
   --numberInput-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --numberInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --numberInput-background-readonly: var(--salt-editable-background-readonly);
+}
+
+/* Class applied if `variant="tertiary"` */
+.saltNumberInput-tertiary {
+  --numberInput-background: var(--salt-editable-tertiary-background);
+  --numberInput-background-disabled: var(--salt-editable-tertiary-background-disabled);
+  --numberInput-background-readonly: var(--salt-editable-background-readonly);
 }
 
 /* Style applied to input if `validationState="error"` */
 .saltNumberInput-error,
 .saltNumberInput-error:hover {
   --numberInput-background: var(--salt-status-error-background);
-  --numberInput-background-active: var(--salt-status-error-background);
-  --numberInput-background-hover: var(--salt-status-error-background);
   --numberInput-borderColor: var(--salt-status-error-borderColor);
   --numberInput-outlineColor: var(--salt-status-error-borderColor);
   --numberInput-background-readonly: var(--salt-status-error-background);
@@ -78,8 +78,6 @@
 .saltNumberInput-warning,
 .saltNumberInput-warning:hover {
   --numberInput-background: var(--salt-status-warning-background);
-  --numberInput-background-active: var(--salt-status-warning-background);
-  --numberInput-background-hover: var(--salt-status-warning-background);
   --numberInput-borderColor: var(--salt-status-warning-borderColor);
   --numberInput-outlineColor: var(--salt-status-warning-borderColor);
   --numberInput-background-readonly: var(--salt-status-warning-background);
@@ -89,8 +87,6 @@
 .saltNumberInput-success,
 .saltNumberInput-success:hover {
   --numberInput-background: var(--salt-status-success-background);
-  --numberInput-background-active: var(--salt-status-success-background);
-  --numberInput-background-hover: var(--salt-status-success-background);
   --numberInput-borderColor: var(--salt-status-success-borderColor);
   --numberInput-outlineColor: var(--salt-status-success-borderColor);
   --numberInput-background-readonly: var(--salt-status-success-background);

@@ -15,6 +15,11 @@ export const Bordered = (): ReactElement => {
           <Option value={color} key={color} />
         ))}
       </ComboBox>
+      <ComboBox bordered variant="tertiary" style={{ width: "266px" }}>
+        {shortColorData.map((color) => (
+          <Option value={color} key={color} />
+        ))}
+      </ComboBox>
     </StackLayout>
   );
 };

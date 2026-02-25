@@ -29,7 +29,6 @@
 
 /* Style applied on hover */
 .saltMultilineInput:hover {
-  background: var(--multilineInput-background-hover);
   cursor: var(--salt-cursor-text);
 }
 
@@ -108,10 +107,8 @@
 /* Class applied if `variant="primary"` */
 .saltMultilineInput-primary {
   --multilineInput-background: var(--salt-editable-primary-background);
-  --multilineInput-background-active: var(--salt-editable-primary-background-active);
-  --multilineInput-background-hover: var(--salt-editable-primary-background-hover);
   --multilineInput-background-disabled: var(--salt-editable-primary-background-disabled);
-  --multilineInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --multilineInput-background-readonly: var(--salt-editable-background-readonly);
   --multilineInput-borderColor: var(--salt-editable-borderColor);
   --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
   --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -121,10 +118,19 @@
 /* Class applied if `variant="secondary"` */
 .saltMultilineInput-secondary {
   --multilineInput-background: var(--salt-editable-secondary-background);
-  --multilineInput-background-active: var(--salt-editable-secondary-background-active);
-  --multilineInput-background-hover: var(--salt-editable-secondary-background-active);
   --multilineInput-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --multilineInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --multilineInput-background-readonly: var(--salt-editable-background-readonly);
+  --multilineInput-borderColor: var(--salt-editable-borderColor);
+  --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
+  --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --multilineInput-outlineColor: var(--salt-focused-outlineColor);
+}
+
+/* Class applied if `variant="tertiary"` */
+.saltMultilineInput-tertiary {
+  --multilineInput-background: var(--salt-editable-tertiary-background);
+  --multilineInput-background-disabled: var(--salt-editable-tertiary-background-disabled);
+  --multilineInput-background-readonly: var(--salt-editable-background-readonly);
   --multilineInput-borderColor: var(--salt-editable-borderColor);
   --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
   --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -134,8 +140,6 @@
 /* Style applied to input if `validationState="error"` */
 .saltMultilineInput-error {
   --multilineInput-background: var(--salt-status-error-background);
-  --multilineInput-background-active: var(--salt-status-error-background);
-  --multilineInput-background-hover: var(--salt-status-error-background);
   --multilineInput-background-readonly: var(--salt-status-error-background);
   --multilineInput-borderColor: var(--salt-status-error-borderColor);
   --multilineInput-borderColor-active: var(--salt-status-error-borderColor);
@@ -146,8 +150,6 @@
 /* Style applied to input if `validationState="warning"` */
 .saltMultilineInput-warning {
   --multilineInput-background: var(--salt-status-warning-background);
-  --multilineInput-background-active: var(--salt-status-warning-background);
-  --multilineInput-background-hover: var(--salt-status-warning-background);
   --multilineInput-background-readonly: var(--salt-status-warning-background);
   --multilineInput-borderColor: var(--salt-status-warning-borderColor);
   --multilineInput-borderColor-active: var(--salt-status-warning-borderColor);
@@ -158,8 +160,6 @@
 /* Style applied to input if `validationState="success"` */
 .saltMultilineInput-success {
   --multilineInput-background: var(--salt-status-success-background);
-  --multilineInput-background-active: var(--salt-status-success-background);
-  --multilineInput-background-hover: var(--salt-status-success-background);
   --multilineInput-background-readonly: var(--salt-status-success-background);
   --multilineInput-borderColor: var(--salt-status-success-borderColor);
   --multilineInput-borderColor-active: var(--salt-status-success-borderColor);
@@ -170,7 +170,6 @@
 /* Styling when focused */
 .saltMultilineInput-focused,
 .saltMultilineInput-focused:hover {
-  background: var(--multilineInput-background-active);
   cursor: var(--salt-cursor-text);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
 }
@@ -187,6 +186,10 @@
   background: var(--input-background-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
+}
+
+.saltMultilineInput-disabled .saltMultilineInput-textarea {
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltMultilineInput.saltMultilineInput-withAdornmentRow {

@@ -20,7 +20,6 @@
 }
 
 .saltDropdown:hover {
-  background: var(--dropdown-background-hover);
   cursor: var(--salt-cursor-hover);
 }
 
@@ -97,10 +96,8 @@
 .saltDropdown-primary {
   --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-editable-primary-background);
-  --dropdown-background-active: var(--salt-editable-primary-background-active);
-  --dropdown-background-hover: var(--salt-editable-primary-background-hover);
   --dropdown-background-disabled: var(--salt-editable-primary-background-disabled);
-  --dropdown-background-readonly: var(--salt-editable-primary-background-readonly);
+  --dropdown-background-readonly: var(--salt-editable-background-readonly);
   --dropdown-borderColor: var(--salt-editable-borderColor);
   --dropdown-borderColor-active: var(--salt-editable-borderColor-active);
   --dropdown-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -110,10 +107,19 @@
 .saltDropdown-secondary {
   --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-editable-secondary-background);
-  --dropdown-background-active: var(--salt-editable-secondary-background-active);
-  --dropdown-background-hover: var(--salt-editable-secondary-background-active);
   --dropdown-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --dropdown-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --dropdown-background-readonly: var(--salt-editable-background-readonly);
+  --dropdown-borderColor: var(--salt-editable-borderColor);
+  --dropdown-borderColor-active: var(--salt-editable-borderColor-active);
+  --dropdown-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --dropdown-outlineColor: var(--salt-focused-outlineColor);
+}
+
+.saltDropdown-tertiary {
+  --dropdown-color: var(--salt-content-primary-foreground);
+  --dropdown-background: var(--salt-editable-tertiary-background);
+  --dropdown-background-disabled: var(--salt-editable-tertiary-background-disabled);
+  --dropdown-background-readonly: var(--salt-editable-background-readonly);
   --dropdown-borderColor: var(--salt-editable-borderColor);
   --dropdown-borderColor-active: var(--salt-editable-borderColor-active);
   --dropdown-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -123,8 +129,6 @@
 .saltDropdown-error {
   --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-status-error-background);
-  --dropdown-background-active: var(--salt-status-error-background);
-  --dropdown-background-hover: var(--salt-status-error-background);
   --dropdown-background-readonly: var(--salt-status-error-background);
   --dropdown-borderColor: var(--salt-status-error-borderColor);
   --dropdown-borderColor-active: var(--salt-status-error-borderColor);
@@ -135,8 +139,6 @@
 .saltDropdown-warning {
   --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-status-warning-background);
-  --dropdown-background-active: var(--salt-status-warning-background);
-  --dropdown-background-hover: var(--salt-status-warning-background);
   --dropdown-background-readonly: var(--salt-status-warning-background);
   --dropdown-borderColor: var(--salt-status-warning-borderColor);
   --dropdown-borderColor-active: var(--salt-status-warning-borderColor);
@@ -147,8 +149,6 @@
 .saltDropdown-success {
   --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-status-success-background);
-  --dropdown-background-active: var(--salt-status-success-background);
-  --dropdown-background-hover: var(--salt-status-success-background);
   --dropdown-background-readonly: var(--salt-status-success-background);
   --dropdown-borderColor: var(--salt-status-success-borderColor);
   --dropdown-borderColor-active: var(--salt-status-success-borderColor);
@@ -158,7 +158,6 @@
 
 .saltDropdown:focus,
 .saltDropdown:focus:hover {
-  background: var(--dropdown-background-active);
   cursor: var(--salt-cursor-hover);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--dropdown-outlineColor);
 }

@@ -68,7 +68,7 @@ export interface InputProps
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /** Styling variant with full border. Defaults to false
    */
   bordered?: boolean;
