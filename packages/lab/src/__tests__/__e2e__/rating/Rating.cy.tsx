@@ -1,28 +1,19 @@
-// shows correct labels - done
-// has correct aria attributes - done
-// respects max prop - done
-// uses correct value and default value - done
-// onChange returns the correct value
 // getLabel and getVisibleLabel functions work correctly
-// supports keyboard navigation - done
-// supports mouse interactions - done
-// supports read-only state - done
-// supports disabled state - done
-// supports form fields - done
-// supports custom icons
-// focus wraps with arrow key navigation - done
-// support up / down and left / right arrow key navigation - done
-// single tab stop into the rating component, then arrow keys to change value, then tab to move focus out of the component - done
-// tab moves focus to the selected rating, if any, otherwise the first rating - done
 // visual reg for label placement
-// name?
 
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { Rating } from "@salt-ds/lab";
+import * as ratingStories from "@stories/rating/rating.stories";
+import { composeStories } from "@storybook/react-vite";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+
+const composedStories = composeStories(ratingStories);
+const { Default, ReadOnly, Disabled, CustomIcons, FormFieldSupport } =
+  composedStories;
 
 describe("GIVEN a Rating component", () => {
+  checkAccessibility(composedStories);
+
   it("SHOULD have the correct accessibility attributes", () => {
-    cy.mount(<Rating aria-label="rating label" />);
+    cy.mount(<Default aria-label="rating label" />);
 
     cy.findByRole("radiogroup", { name: "rating label" }).should("be.visible");
     cy.findAllByRole("radio").should("have.length", 5);
@@ -38,12 +29,12 @@ describe("GIVEN a Rating component", () => {
   });
 
   it("SHOULD use user provided name", () => {
-    cy.mount(<Rating name="custom-name" />);
+    cy.mount(<Default name="custom-name" />);
     cy.findAllByRole("radio").should("have.attr", "name", "custom-name");
   });
 
   it("SHOULD respect the max prop", () => {
-    cy.mount(<Rating max={10} />);
+    cy.mount(<Default max={10} />);
     cy.findAllByRole("radio").should("have.length", 10);
   });
 
@@ -51,7 +42,7 @@ describe("GIVEN a Rating component", () => {
     cy.mount(
       <>
         <button>Before</button>
-        <Rating />
+        <Default />
         <button>After</button>
       </>,
     );
@@ -68,7 +59,7 @@ describe("GIVEN a Rating component", () => {
     cy.mount(
       <>
         <button>Before</button>
-        <Rating defaultValue={4} />
+        <Default defaultValue={4} />
       </>,
     );
 
@@ -80,7 +71,7 @@ describe("GIVEN a Rating component", () => {
 
   describe("WHEN mounted as a controlled component", () => {
     it("SHOULD have correct value", () => {
-      cy.mount(<Rating value={4} />);
+      cy.mount(<Default value={4} />);
       cy.findByRole("radio", {
         name: /4 Stars/i,
       })
@@ -91,7 +82,7 @@ describe("GIVEN a Rating component", () => {
 
   describe("WHEN mounted as an uncontrolled component", () => {
     it("SHOULD have correct default value", () => {
-      cy.mount(<Rating defaultValue={3} />);
+      cy.mount(<Default defaultValue={3} />);
 
       cy.findByRole("radio", {
         name: /3 Stars/i,
@@ -103,18 +94,22 @@ describe("GIVEN a Rating component", () => {
     describe("AND using a mouse", () => {
       it("THEN should change value when clicked", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Rating onChange={onChangeSpy} />);
+        cy.mount(<Default onChange={onChangeSpy} />);
         cy.findByRole("radio", { name: /2 Stars/i }).realClick();
         cy.findByRole("radio", { name: /2 Stars/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "2" },
-        });
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "2" },
+          },
+          2,
+        );
       });
 
       describe("AND is disabled", () => {
         it("THEN should not change value when clicked", () => {
           const onChangeSpy = cy.stub().as("onChangeSpy");
-          cy.mount(<Rating disabled onChange={onChangeSpy} />);
+          cy.mount(<Disabled onChange={onChangeSpy} />);
           cy.findByRole("radio", { name: /2 Stars/i }).realClick();
           cy.findByRole("radio", { name: /2 Stars/i }).should("not.be.checked");
           cy.get("@onChangeSpy").should("not.be.called");
@@ -123,77 +118,127 @@ describe("GIVEN a Rating component", () => {
     });
 
     describe("AND using keyboard", () => {
+      it("THEN should select with space", () => {
+        const onChangeSpy = cy.stub().as("onChangeSpy");
+        cy.mount(<Default onChange={onChangeSpy} />);
+
+        cy.realPress("Tab");
+        cy.findByRole("radio", { name: /1 Star/i }).should("not.be.checked");
+        // Enter key should not select a rating, only space should
+        cy.realPress("Enter");
+        cy.findByRole("radio", { name: /1 Star/i }).should("not.be.checked");
+        cy.get("@onChangeSpy").should("not.be.called");
+
+        cy.realPress("Space");
+        cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "1" },
+          },
+          1,
+        );
+      });
+
       it("THEN should increase value with down and right arrow keys", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Rating onChange={onChangeSpy} />);
+        cy.mount(<Default defaultValue={1} onChange={onChangeSpy} />);
 
         cy.realPress("Tab");
         cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
         cy.realPress("ArrowRight");
         cy.findByRole("radio", { name: /1 Star/i }).should("not.be.checked");
         cy.findByRole("radio", { name: /2 Stars/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "2" },
-        });
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "2" },
+          },
+          2,
+        );
         cy.realPress("ArrowDown");
         cy.findByRole("radio", { name: /2 Stars/i }).should("not.be.checked");
         cy.findByRole("radio", { name: /3 Stars/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "3" },
-        });
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "3" },
+          },
+          3,
+        );
       });
 
       it("THEN should decrease value with up and left arrow keys", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Rating defaultValue={5} onChange={onChangeSpy} />);
+        cy.mount(<Default defaultValue={5} onChange={onChangeSpy} />);
 
         cy.realPress("Tab");
         cy.findByRole("radio", { name: /5 Stars/i }).should("be.checked");
         cy.realPress("ArrowLeft");
         cy.findByRole("radio", { name: /5 Stars/i }).should("not.be.checked");
         cy.findByRole("radio", { name: /4 Stars/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "4" },
-        });
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "4" },
+          },
+          4,
+        );
         cy.realPress("ArrowUp");
         cy.findByRole("radio", { name: /4 Stars/i }).should("not.be.checked");
         cy.findByRole("radio", { name: /3 Stars/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "3" },
-        });
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "3" },
+          },
+          3,
+        );
       });
 
       it("THEN should wrap around values with arrow keys", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Rating onChange={onChangeSpy} />);
+        cy.mount(<Default onChange={onChangeSpy} />);
 
         cy.realPress("Tab");
-        cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
+        cy.findByRole("radio", { name: /1 Star/i })
+          .should("be.focused")
+          .and("not.be.checked");
         cy.realPress("ArrowLeft");
-        cy.findByRole("radio", { name: /1 Star/i }).should("not.be.checked");
-        cy.findByRole("radio", { name: /5 Stars/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "5" },
-        });
+        cy.findByRole("radio", { name: /5 Stars/i })
+          .should("be.focused")
+          .and("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "5" },
+          },
+          5,
+        );
         cy.realPress("ArrowRight");
-        cy.findByRole("radio", { name: /5 Stars/i }).should("not.be.checked");
-        cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
-        cy.get("@onChangeSpy").should("have.been.calledWithMatch", {
-          target: { value: "1" },
-        });
+        cy.findByRole("radio", { name: /1 Star/i })
+          .should("be.focused")
+          .and("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          {
+            target: { value: "1" },
+          },
+          1,
+        );
       });
     });
   });
 
   describe("WHEN disabled", () => {
     it("SHOULD render disabled rating component", () => {
-      cy.mount(<Rating disabled />);
+      cy.mount(<Disabled />);
       cy.findAllByRole("radio").should("be.disabled");
     });
 
     it("SHOULD not call onChange handler when clicked", () => {
       const onChangeSpy = cy.stub().as("onChangeSpy");
-      cy.mount(<Rating disabled onChange={onChangeSpy} />);
+      cy.mount(<Disabled onChange={onChangeSpy} />);
       cy.findByRole("radio", { name: /1 Star/i }).realClick();
       cy.get("@onChangeSpy").should("not.be.called");
     });
@@ -202,14 +247,14 @@ describe("GIVEN a Rating component", () => {
       cy.mount(
         <>
           <button>Before</button>
-          <Rating disabled />
+          <Disabled />
           <button>After</button>
         </>,
       );
 
       cy.findByRole("button", { name: "Before" }).realClick();
       cy.realPress("Tab");
-      cy.findByRole("radio").should("not.be.focused");
+      cy.findAllByRole("radio").should("not.be.focused");
       cy.findByRole("button", { name: "After" }).should("be.focused");
     });
   });
@@ -217,17 +262,11 @@ describe("GIVEN a Rating component", () => {
   describe("WHEN read-only", () => {
     it("SHOULD be focusable", () => {
       const selectSpy = cy.stub().as("selectSpy");
-      cy.mount(<Rating defaultValue={3} readOnly onChange={selectSpy} />);
+      cy.mount(<ReadOnly defaultValue={3} onChange={selectSpy} />);
 
       cy.findAllByRole("radio").should("have.attr", "readonly");
       cy.realPress("Tab");
       cy.findByRole("radio", { name: /3 Stars/i }).should("be.focused");
-
-      // cy.realPress("Enter");
-      // cy.get("@selectSpy").should("not.be.called");
-      // cy.realPress("Space");
-      // cy.get("@selectSpy").should("not.be.called");
-
       cy.realPress("ArrowRight");
       cy.get("@selectSpy").should("not.be.called");
       cy.findByRole("radio", { name: /4 Stars/i }).should("be.focused");
@@ -239,35 +278,28 @@ describe("GIVEN a Rating component", () => {
 
   describe("WHEN wrapped in a FormField", () => {
     it("THEN should respect the context when disabled", () => {
-      cy.mount(
-        <FormField disabled>
-          <FormFieldLabel>Label</FormFieldLabel>
-          <Rating />
-        </FormField>,
-      );
+      cy.mount(<FormFieldSupport disabled />);
       cy.findAllByRole("radio").should("be.disabled");
     });
 
     it("THEN should respect the context when read-only", () => {
-      cy.mount(
-        <FormField readOnly>
-          <FormFieldLabel>Label</FormFieldLabel>
-          <Rating />
-        </FormField>,
-      );
+      cy.mount(<FormFieldSupport readOnly />);
       cy.findAllByRole("radio").should("have.attr", "readonly");
     });
 
-    it("THEN should have the correct aria labelling", () => {
-      cy.mount(
-        <FormField>
-          <FormFieldLabel>Rating</FormFieldLabel>
-          <Rating />
-        </FormField>,
+    it("THEN should use form field label", () => {
+      cy.mount(<FormFieldSupport />);
+      cy.findByRole("radiogroup", { name: "Form field label" }).should(
+        "be.visible",
       );
-      cy.findByRole("radiogroup", { name: "Rating" }).should("be.visible");
     });
   });
 
-  //   describe("WHEN custom icons are provided", () => {});
+  describe("WHEN custom icons are provided", () => {
+    it("THEN should render the custom icons", () => {
+      cy.mount(<CustomIcons />);
+      cy.findAllByTestId("LikeSolidIcon").should("have.length", 3);
+      cy.findAllByTestId("LikeIcon").should("have.length", 2);
+    });
+  });
 });

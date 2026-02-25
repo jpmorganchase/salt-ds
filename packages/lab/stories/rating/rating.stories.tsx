@@ -22,32 +22,20 @@ export default {
   },
 } as Meta<typeof Rating>;
 
-export const Default: StoryFn<typeof Rating> = (args) => {
-  return <Rating aria-label="Rating" defaultValue={3} {...args} />;
+const Template: StoryFn<typeof Rating> = (args) => {
+  return <Rating aria-label="Rating" {...args} />;
 };
 
-export const ReadOnly: StoryFn<typeof Rating> = (args) => {
-  const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
-  return (
-    <StackLayout>
-      <FormField>
-        <FormFieldLabel>Rating (Read-only)</FormFieldLabel>
-        <Rating readOnly defaultValue={3} />
-      </FormField>
-      <Rating
-        aria-label="Rating (Read-only)"
-        readOnly
-        defaultValue={3}
-        getVisibleLabel={(value) => labels[value - 1] || "No rating"}
-        getLabel={(value) => labels[value - 1]}
-        {...args}
-      />
-    </StackLayout>
-  );
+export const Default = Template.bind({});
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
 };
 
-export const Disabled: StoryFn<typeof Rating> = (args) => {
-  return <Rating aria-label="Rating" disabled defaultValue={3} {...args} />;
+export const ReadOnly = Template.bind({});
+ReadOnly.args = {
+  readOnly: true,
 };
 
 export const VisualLabel: StoryFn<typeof Rating> = (args) => {
@@ -91,7 +79,6 @@ export const FormFieldSupport: StoryFn<typeof FormField> = (args) => {
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
         defaultValue={3}
-        readOnly
       />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
