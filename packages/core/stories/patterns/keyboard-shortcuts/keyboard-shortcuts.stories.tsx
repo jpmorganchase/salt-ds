@@ -84,18 +84,18 @@ function displayKeyName(key: string): string {
 
   return keyMap[key] ?? key;
 }
+
 function highlightTextMatch(text: string, query: string): React.ReactNode {
   if (!query) return text;
   const regex = new RegExp(`(${query})`, "gi");
-  return text
-    .split(regex)
-    .map((part, i) =>
-      part.toLowerCase() === query.toLowerCase() ? (
-        <strong key={i}>{part}</strong>
-      ) : (
-        part
-      ),
-    );
+  return text.split(regex).map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+      <strong key={i}>{part}</strong>
+    ) : (
+      part
+    ),
+  );
 }
 
 const KeyboardShortcuts: FC = () => {
@@ -300,7 +300,8 @@ const KeyboardShortcuts: FC = () => {
                                     <FlexLayout
                                       align="center"
                                       gap={0.5}
-                                      key={combo + comboIdx}
+                                      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                      key={`${combo}-${comboIdx}`}
                                       wrap
                                     >
                                       {combo.split("+").map((key, idx, arr) => (
@@ -308,7 +309,8 @@ const KeyboardShortcuts: FC = () => {
                                           align="center"
                                           wrap
                                           gap={0.5}
-                                          key={key + idx}
+                                          // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                          key={`${combo}-${key}-${idx}`}
                                         >
                                           <div className="keyboardShortcuts-kbd">
                                             {" "}
@@ -505,7 +507,8 @@ const ShortcutPanel: FC = () => {
                               <FlexLayout
                                 align="center"
                                 gap={0.5}
-                                key={combo + comboIdx}
+                                // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                key={`${combo}-${comboIdx}`}
                                 wrap
                               >
                                 {combo.split("+").map((key, idx, arr) => (
@@ -513,10 +516,12 @@ const ShortcutPanel: FC = () => {
                                     align="center"
                                     wrap
                                     gap={0.5}
-                                    key={key + idx}
+                                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                    key={`${combo}-${key}-${idx}`}
                                   >
-                                    <div className="keyboardShortcuts-kbd" />
-                                    <Kbd>{displayKeyName(key)}</Kbd>
+                                    <div className="keyboardShortcuts-kbd">
+                                      <Kbd>{displayKeyName(key)}</Kbd>
+                                    </div>
                                     {idx < arr.length - 1 && (
                                       <Text className="keyboardShortcuts-kbd">
                                         +
