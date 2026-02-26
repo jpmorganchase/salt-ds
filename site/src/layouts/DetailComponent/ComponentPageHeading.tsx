@@ -29,6 +29,7 @@ import {
 import dynamic from "next/dynamic";
 import type { ElementType } from "react";
 import { ThemeControls } from "../../components/components/ThemeControls";
+import { CopyForLLM } from "../../components/copy-for-llm";
 import { CTALink } from "../../components/cta-link/CTALink";
 import { LinkBase } from "../../components/link/Link";
 import type { PageHeadingProps } from "../Base/PageHeading";
@@ -223,6 +224,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
                   Design
                 </CTALink>
               )}
+              <CopyForLLM />
             </FlexLayout>
           }
           endItem={
