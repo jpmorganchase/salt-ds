@@ -1,3 +1,4 @@
+import { useListItem } from "@floating-ui/react";
 import {
   makePrefixer,
   useForkRef,
@@ -8,6 +9,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   forwardRef,
   type KeyboardEvent,
   type MouseEvent,
@@ -15,6 +17,7 @@ import {
 } from "react";
 import { useTabNext } from "./TabNextContext";
 import tabTriggerCss from "./TabNextTrigger.css";
+import { useTabOverflow } from "./TabOverflowContext";
 import { useTabsNext } from "./TabsNextContext";
 
 export interface TabNextTriggerProps
@@ -41,7 +44,7 @@ export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
 >(function TabNextTrigger(props, ref) {
-  const { children, onClick, onKeyDown, ...rest } = props;
+  const { children, onClick, onKeyDown, onFocus, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -50,8 +53,10 @@ export const TabNextTrigger = forwardRef<
     window: targetWindow,
   });
 
-  const { setSelected, registerTab, getPanelId } = useTabsNext();
+  const { setSelected, registerTab, getPanelId, activeTab } = useTabsNext();
   const { selected, value, focused, disabled, tabId, actions } = useTabNext();
+  const overflowContext = useTabOverflow();
+  const item = useListItem();
 
   const tabRef = useRef<HTMLButtonElement>(null);
 
@@ -77,7 +82,22 @@ export const TabNextTrigger = forwardRef<
     }
   };
 
-  const handleRef = useForkRef<HTMLButtonElement>(tabRef, ref);
+  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+    onFocus?.(event);
+
+    if (value && id) {
+      activeTab.current = { value, id };
+    }
+
+    // Ensures the associated tab in in view.
+    event.currentTarget.parentElement?.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+    });
+  };
+
+  const handleTabRef = useForkRef<HTMLButtonElement>(item.ref, tabRef);
+  const handleRef = useForkRef<HTMLButtonElement>(handleTabRef, ref);
   const panelId = getPanelId(value);
 
   // Applying aria-actions this way avoid React warnings about unknown props
@@ -87,6 +107,8 @@ export const TabNextTrigger = forwardRef<
       }
     : {};
 
+  const active = overflowContext && item.index === overflowContext?.activeIndex;
+
   return (
     <button
       aria-selected={selected}
@@ -94,14 +116,16 @@ export const TabNextTrigger = forwardRef<
       aria-controls={panelId}
       {...ariaActionsProps}
       aria-description={getAriaDescription(actions.length)}
-      tabIndex={focused || selected ? undefined : -1}
+      tabIndex={focused || selected || active ? 0 : -1}
       role="tab"
       type="button"
       onClick={!disabled ? handleClick : undefined}
       onKeyDown={!disabled ? handleKeyDown : undefined}
+      onFocus={handleFocus}
       className={withBaseName()}
       id={id}
       ref={handleRef}
+      data-value={value}
       {...rest}
     >
       {children}

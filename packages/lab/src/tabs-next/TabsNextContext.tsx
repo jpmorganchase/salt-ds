@@ -23,7 +23,6 @@ export interface TabsNextContextValue
   selected?: string;
   setSelected: (event: SyntheticEvent, value: string) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
-  removedActiveTabRef: MutableRefObject<string | undefined>;
   menuOpen: boolean;
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -36,7 +35,9 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getNext: () => null,
     getPrevious: () => null,
     item: () => null,
-    items: [],
+    getIndex: () => -1,
+    itemAt: () => null,
+    sortItems: () => undefined,
     selected: undefined,
     registerTab: () => () => undefined,
     registerPanel: () => () => undefined,
@@ -44,9 +45,9 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getTabId: () => undefined,
     setSelected: () => undefined,
     activeTab: { current: undefined },
-    removedActiveTabRef: { current: undefined },
     menuOpen: false,
     setMenuOpen: () => undefined,
+    getRemovedItems: () => new Map(),
   },
 );
 
