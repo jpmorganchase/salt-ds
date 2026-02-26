@@ -85,7 +85,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         getEmblaApi?.(emblaApi);
       }
       return undefined;
-    }, [emblaApi]);
+    }, [emblaApi, getEmblaApi]);
 
     const [ariaVariant, setAriaVariant] =
       useState<CarouselAriaVariant>("group");
