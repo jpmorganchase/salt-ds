@@ -43,11 +43,11 @@ export const Controlled: StoryFn<typeof Rating> = (args) => {
 
   return (
     <Rating
+      {...args}
       value={value}
       onChange={(_event, newValue) => {
         setValue(newValue);
       }}
-      {...args}
     />
   );
 };
@@ -57,28 +57,28 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
   return (
     <StackLayout>
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value, max) => `${value}/${max}`}
         className="custom-rating-width"
-        {...args}
       />
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
-        {...args}
       />
       <Rating
+        {...args}
         aria-label="Rating"
         labelPlacement="left"
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
-        {...args}
       />
     </StackLayout>
   );
@@ -87,7 +87,7 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
 export const FormFieldSupport: StoryFn<typeof FormField> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
-    <FormField labelPlacement="top" style={{ width: "225px" }} {...args}>
+    <FormField {...args} labelPlacement="top" style={{ width: "225px" }}>
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Rating
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
@@ -103,17 +103,17 @@ export const CustomIncrements: StoryFn<typeof Rating> = (args) => {
   return (
     <FlexLayout direction="column" gap={3}>
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={1}
         onChange={(event, value) => console.log(event, value)}
-        {...args}
       />
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={7}
         max={10}
         onChange={(event, value) => console.log(event, value)}
-        {...args}
       />
     </FlexLayout>
   );
@@ -153,12 +153,12 @@ export const ClearSelection: StoryFn<typeof Rating> = (args) => {
           Rating {cleared && <span className="srOnly">was cleared</span>}
         </FormFieldLabel>
         <Rating
+          {...args}
           value={value}
           onChange={(_event, newValue) => {
             setValue(newValue);
             setCleared(false);
           }}
-          {...args}
         />
       </FormField>
       <Button
