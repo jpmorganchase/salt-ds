@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.40.1
+
+### Patch Changes
+
+- 40cdcb4: Updated `--salt-sentiment-accent-dataviz` to use `--salt-palette-warning-foreground-decorative` in the legacy theme.
+
 ## 1.40.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.87
+
+### Minor Changes
+
+- 133a519: Removed `Kbd` from lab and promoted to core.
+
+### Patch Changes
+
+- aae0846: Fixed some controls having empty `aria-labelledby` or `aria-describedby` attributes when used outside a FormField.
+- Updated dependencies [aae0846]
+- Updated dependencies [133a519]
+  - @salt-ds/core@1.58.0
+
 ## 1.0.0-alpha.86
 
 ### Minor Changes
