@@ -27,7 +27,8 @@
 
   --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
   --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
-
+  --salt-selectable-borderColor-disabled: var(--salt-palette-interact-border-disabled);
+  --salt-selectable-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
   --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
 
   --salt-selectable-cta-foreground: var(--salt-palette-interact-foreground);
@@ -119,6 +120,7 @@
   /* Accent */
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
   --salt-accent-foreground: var(--salt-palette-accent-foreground);
+  --salt-accent-borderColor-disabled: var(--salt-palette-accent-disabled);
 
   --salt-track-background: var(--salt-palette-track-background);
   --salt-track-background-disabled: var(--salt-palette-track-background-disabled);
@@ -330,4 +332,6 @@
   --salt-category-20-subtle-foreground: var(--salt-palette-categorical-20-strong);
   --salt-category-20-subtle-background: var(--salt-palette-categorical-20-weakest);
   --salt-category-20-subtle-borderColor: var(--salt-palette-categorical-20);
+
+  --salt-sentiment-neutral-track-disabled: var(--salt-palette-neutral-border-disabled);
 }
