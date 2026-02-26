@@ -1,5 +1,4 @@
-import { FlexLayout } from "@salt-ds/core";
-import { Kbd } from "@salt-ds/lab";
+import { FlexLayout, Kbd } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Variants = (): ReactElement => (

@@ -1,6 +1,5 @@
-import { FlexLayout, FlowLayout, Input } from "@salt-ds/core";
+import { FlexLayout, FlowLayout, Input, Kbd } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import { Kbd } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const NestedInInput = (): ReactElement => (

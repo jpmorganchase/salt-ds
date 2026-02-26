@@ -29,6 +29,7 @@ export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./input";
 export * from "./interactable-card";
+export * from "./kbd";
 export * from "./link";
 export * from "./link-card";
 export * from "./list-box";

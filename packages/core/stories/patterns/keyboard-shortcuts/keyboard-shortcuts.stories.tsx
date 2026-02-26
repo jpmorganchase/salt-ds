@@ -5,6 +5,7 @@ import {
   FlexLayout,
   FormFieldHelperText,
   Input,
+  Kbd,
   StackLayout,
   Switch,
   Table,
@@ -16,7 +17,6 @@ import {
   TR,
 } from "@salt-ds/core";
 import { FilterIcon } from "@salt-ds/icons";
-import { Kbd } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import React, { type ChangeEvent, type FC, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -24,9 +24,6 @@ import "./keyboard-shortcuts.stories.css";
 
 export default {
   title: "Patterns/Keyboard Shortcuts",
-  parameters: {
-    layout: "padded",
-  },
 } as Meta;
 
 type Shortcut = {
@@ -87,24 +84,24 @@ function displayKeyName(key: string): string {
 
   return keyMap[key] ?? key;
 }
+
 function highlightTextMatch(text: string, query: string): React.ReactNode {
   if (!query) return text;
   const regex = new RegExp(`(${query})`, "gi");
-  return text
-    .split(regex)
-    .map((part, i) =>
-      part.toLowerCase() === query.toLowerCase() ? (
-        <strong key={i}>{part}</strong>
-      ) : (
-        part
-      ),
-    );
+  return text.split(regex).map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+      <strong key={i}>{part}</strong>
+    ) : (
+      part
+    ),
+  );
 }
 
 const KeyboardShortcuts: FC = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(false);
-  const [filter, setFilter] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [shortcutsEnabled, setShortcutsEnabled] = useState(false);
+  const [filter, setFilter] = useState("");
 
   useHotkeys(
     "meta+option+p",
@@ -141,10 +138,10 @@ const KeyboardShortcuts: FC = () => {
   useHotkeys(
     "meta+b",
     (e) => {
-      shortcutsEnabled && alert("Set direction to buy triggered");
+      e.preventDefault();
+      alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
-    [shortcutsEnabled],
   );
   useHotkeys(
     "meta+s",
@@ -196,12 +193,13 @@ const KeyboardShortcuts: FC = () => {
     { enabled: shortcutsEnabled },
   );
 
-  const filteredShortcuts: Shortcut[] = shortcutList.filter(
-    (s) =>
-      s.label.toLowerCase().includes(filter.trim().toLowerCase()) ||
-      (s.description &&
-        s.description.toLowerCase().includes(filter.trim().toLowerCase())),
-  );
+  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) => {
+    const searchText = filter.trim().toLowerCase();
+    return (
+      s.label.toLowerCase().includes(searchText) ||
+      s.description?.toLowerCase().includes(searchText)
+    );
+  });
 
   const handleDialogOpen = (): void => {
     setFilter("");
@@ -240,7 +238,6 @@ const KeyboardShortcuts: FC = () => {
       <Dialog
         open={open}
         onOpenChange={handleDialogChange}
-        id="keyboard-shortcuts-dialog"
         size="medium"
         className="keyboardShortcuts-dialog"
       >
@@ -279,8 +276,8 @@ const KeyboardShortcuts: FC = () => {
                           </TR>
                         </THead>
                         <TBody>
-                          {filteredShortcuts.map((shortcut, idx) => (
-                            <TR key={shortcut.label + idx}>
+                          {filteredShortcuts.map((shortcut) => (
+                            <TR key={shortcut.label}>
                               <TD className="keyboardShortcuts-td">
                                 <StackLayout
                                   gap={0.5}
@@ -302,7 +299,8 @@ const KeyboardShortcuts: FC = () => {
                                     <FlexLayout
                                       align="center"
                                       gap={0.5}
-                                      key={combo + comboIdx}
+                                      // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                      key={`${combo}-${comboIdx}`}
                                       wrap
                                     >
                                       {combo.split("+").map((key, idx, arr) => (
@@ -310,7 +308,8 @@ const KeyboardShortcuts: FC = () => {
                                           align="center"
                                           wrap
                                           gap={0.5}
-                                          key={key + idx}
+                                          // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                          key={`${combo}-${key}-${idx}`}
                                         >
                                           <div className="keyboardShortcuts-kbd">
                                             {" "}
@@ -390,10 +389,10 @@ const ShortcutPanel: FC = () => {
   useHotkeys(
     "meta+b",
     (e) => {
-      shortcutsEnabled && alert("Set direction to buy triggered");
+      e.preventDefault();
+      alert("Set direction to buy triggered");
     },
     { enabled: shortcutsEnabled },
-    [shortcutsEnabled],
   );
   useHotkeys(
     "meta+s",
@@ -436,12 +435,13 @@ const ShortcutPanel: FC = () => {
     { enabled: shortcutsEnabled },
   );
 
-  const filteredShortcuts: Shortcut[] = shortcutList.filter(
-    (s) =>
-      s.label.toLowerCase().includes(filter.trim().toLowerCase()) ||
-      (s.description &&
-        s.description.toLowerCase().includes(filter.trim().toLowerCase())),
-  );
+  const filteredShortcuts: Shortcut[] = shortcutList.filter((s) => {
+    const searchText = filter.trim().toLowerCase();
+    return (
+      s.label.toLowerCase().includes(searchText) ||
+      s.description?.toLowerCase().includes(searchText)
+    );
+  });
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void =>
     setShortcutsEnabled(event.target.checked);
@@ -482,8 +482,8 @@ const ShortcutPanel: FC = () => {
                     </TR>
                   </THead>
                   <TBody>
-                    {filteredShortcuts.map((shortcut, idx) => (
-                      <TR key={shortcut.label + idx}>
+                    {filteredShortcuts.map((shortcut) => (
+                      <TR key={shortcut.label}>
                         <TD className="keyboardShortcuts-td">
                           <StackLayout
                             gap={0.5}
@@ -505,7 +505,8 @@ const ShortcutPanel: FC = () => {
                               <FlexLayout
                                 align="center"
                                 gap={0.5}
-                                key={combo + comboIdx}
+                                // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                key={`${combo}-${comboIdx}`}
                                 wrap
                               >
                                 {combo.split("+").map((key, idx, arr) => (
@@ -513,10 +514,12 @@ const ShortcutPanel: FC = () => {
                                     align="center"
                                     wrap
                                     gap={0.5}
-                                    key={key + idx}
+                                    // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+                                    key={`${combo}-${key}-${idx}`}
                                   >
-                                    <div className="keyboardShortcuts-kbd" />
-                                    <Kbd>{displayKeyName(key)}</Kbd>
+                                    <div className="keyboardShortcuts-kbd">
+                                      <Kbd>{displayKeyName(key)}</Kbd>
+                                    </div>
                                     {idx < arr.length - 1 && (
                                       <Text className="keyboardShortcuts-kbd">
                                         +

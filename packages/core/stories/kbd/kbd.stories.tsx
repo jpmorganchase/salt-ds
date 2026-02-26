@@ -2,19 +2,20 @@ import {
   Button,
   FlexLayout,
   FlowLayout,
+  Kbd,
+  type KbdProps,
   Menu,
   MenuItem,
   MenuPanel,
   MenuTrigger,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
-import { Kbd, type KbdProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 export default {
-  title: "Lab/Kbd",
+  title: "Core/Kbd",
   component: Kbd,
 };
 
