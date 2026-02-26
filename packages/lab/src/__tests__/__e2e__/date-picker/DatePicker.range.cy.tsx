@@ -334,6 +334,60 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         });
       });
 
+      it("SHOULD show minDate month when entering a start date before minDate", () => {
+        // Bug #5910: When entering a date prior to minDate, the visible month should
+        // jump to minDate, not the start of the current year
+        cy.mount(<RangeWithMinMaxDate selectionVariant={"range"} />);
+        // Enter a start date before minDate (minDate is 15 Jan 2030)
+        cy.findByLabelText("Start date").clear().type("01 Jan 2020");
+        cy.realPress("Tab");
+        // Open the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify the calendars are displayed (range picker shows 2 calendars)
+        cy.findAllByRole("application").should("have.length", 2);
+        // Verify the visible month is January 2030 (minDate's month), not January 2020
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("exist");
+        // Verify the first selectable date (minDate) is focused
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("be.focused");
+        // Verify Previous Month on first calendar is disabled (can't go before minDate's month)
+        cy.findAllByLabelText("Previous Month")
+          .eq(0)
+          .should("have.attr", "aria-disabled", "true");
+      });
+
+      it("SHOULD show valid months when entering an end date after maxDate", () => {
+        // Bug #5910: When entering a date after maxDate, the visible months should
+        // show valid months within the min/max range, not the entered date's month
+        cy.mount(<RangeWithMinMaxDate selectionVariant={"range"} />);
+        // Enter an end date after maxDate (maxDate is 15 Jan 2031)
+        cy.findByLabelText("End date").clear().type("01 Jan 2040");
+        cy.realPress("Tab");
+        // Open the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify the calendars are displayed (range picker shows 2 calendars)
+        cy.findAllByRole("application").should("have.length", 2);
+        // Verify the visible months are within the valid range (defaultStartVisibleMonth=Jan 2030, defaultEndVisibleMonth=Jan 2031)
+        // not January 2040 (the invalid entered date)
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("exist");
+        cy.findByRole("button", {
+          name: "15 January 2031",
+        }).should("exist");
+        // Verify Previous Month on first calendar is disabled (can't go before minDate's month)
+        cy.findAllByLabelText("Previous Month")
+          .eq(0)
+          .should("have.attr", "aria-disabled", "true");
+        // Verify Next Month on second calendar is disabled (can't go after maxDate's month)
+        cy.findAllByLabelText("Next Month")
+          .eq(1)
+          .should("have.attr", "aria-disabled", "true");
+      });
+
       it("SHOULD support validation", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
