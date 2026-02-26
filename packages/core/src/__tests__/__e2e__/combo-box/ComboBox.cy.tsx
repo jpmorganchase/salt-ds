@@ -896,4 +896,11 @@ describe("Given a ComboBox", () => {
     cy.realPress("ArrowUp");
     cy.findByRole("option", { name: "f" }).should("be.activeDescendant");
   });
+
+  it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", () => {
+    cy.mount(<Default />);
+
+    cy.findByRole("combobox").should("not.have.attr", "aria-describedby");
+    cy.findByRole("combobox").should("not.have.attr", "aria-labelledby");
+  });
 });

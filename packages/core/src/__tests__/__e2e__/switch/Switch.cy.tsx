@@ -201,4 +201,11 @@ describe("GIVEN a Switch", () => {
       cy.get("@changeSpy").should("not.have.been.called");
     });
   });
+
+  it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", () => {
+    cy.mount(<Switch />);
+
+    cy.findByRole("switch").should("not.have.attr", "aria-describedby");
+    cy.findByRole("switch").should("not.have.attr", "aria-labelledby");
+  });
 });
