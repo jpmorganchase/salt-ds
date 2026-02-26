@@ -1,7 +1,15 @@
+export interface RgbColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
 const parseCSSNumber = (value?: string | null): number | undefined => {
   const parsedNumber = Number.parseFloat(value?.trim() ?? "");
   return Number.isFinite(parsedNumber) ? parsedNumber : undefined;
 };
+
+const RGB_RE = /(\d{1,3})\D+(\d{1,3})\D+(\d{1,3})/;
 
 /**
  * Read multiple CSS custom properties as numbers using a single computedStyle lookup.
@@ -25,4 +33,23 @@ export const getCSSTokensFromElement = (
     result[name] = parseCSSNumber(raw);
   }
   return result;
+};
+
+// Convert css variable into rgb
+export const getCSSColorTokenFromElement = (
+  tokenName: string,
+  element: Element,
+): RgbColor | undefined => {
+  const view = element.ownerDocument?.defaultView;
+  if (!view?.getComputedStyle) return undefined;
+
+  const raw = view.getComputedStyle(element).getPropertyValue(tokenName).trim();
+  const m = RGB_RE.exec(raw);
+  if (!m) return undefined;
+
+  return {
+    r: Number.parseInt(m[1], 10),
+    g: Number.parseInt(m[2], 10),
+    b: Number.parseInt(m[3], 10),
+  };
 };
