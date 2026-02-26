@@ -117,7 +117,7 @@
 
 /* Class applied if `variant="tertiary"` */
 .saltDateInput-tertiary {
-  --input-background: var(--salt-editable-secondary-background);
+  --input-background: var(--salt-editable-tertiary-background);
   --input-background-readonly: var(--salt-editable-background-readonly);
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
