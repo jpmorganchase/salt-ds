@@ -93,6 +93,8 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       disableScrim,
       idProp,
       initialFocus,
+      id,
+      "aria-labelledby": ariaLabelledBy,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -102,11 +104,11 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       window: targetWindow,
     });
 
-    const id = useId(idProp);
-
+    const contentScrollId = useId(id);
     const currentBreakpoint = useCurrentBreakpoint();
 
     const [showComponent, setShowComponent] = useState(false);
+    const [headerId, setHeaderId] = useState(idProp);
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
@@ -135,16 +137,20 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       }
     }, [open, showComponent]);
 
-    const contextValue = useMemo(() => ({ status, id }), [status, id]);
+    const contextValue = useMemo(
+      () => ({ status, id: headerId, setId: setHeaderId, contentScrollId }),
+      [status, headerId, contentScrollId],
+    );
 
     return (
       <DialogContext.Provider value={contextValue}>
         <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
           <FloatingComponent
+            id={contentScrollId}
             open={showComponent}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={id}
+            aria-labelledby={ariaLabelledBy ?? headerId}
             ref={floatingRef}
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}
