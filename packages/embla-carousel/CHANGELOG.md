@@ -1,5 +1,14 @@
 # @salt-ds/embla-carousel
 
+## 1.1.2
+
+### Patch Changes
+
+- a7932f1: Fix `emblaOptions.startIndex` not working on React 16 and 17.
+- Updated dependencies [aae0846]
+- Updated dependencies [133a519]
+  - @salt-ds/core@1.58.0
+
 ## 1.1.1
 
 ### Patch Changes

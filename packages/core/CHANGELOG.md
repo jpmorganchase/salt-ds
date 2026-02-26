@@ -1,5 +1,25 @@
 # @salt-ds/core
 
+## 1.58.0
+
+### Minor Changes
+
+- 133a519: Added `Kbd`.
+
+  Kbd is a decorative element used to represent specific keyboard keys.
+
+  ```tsx
+  <>
+    <Kbd>cmd</Kbd>
+    <Kbd variant="secondary">shift</Kbd>
+    <Kbd variant="tertiary">ctrl</Kbd>
+  </>
+  ```
+
+### Patch Changes
+
+- aae0846: Fixed some controls having empty `aria-labelledby` or `aria-describedby` attributes when used outside a FormField.
+
 ## 1.57.1
 
 ### Patch Changes
