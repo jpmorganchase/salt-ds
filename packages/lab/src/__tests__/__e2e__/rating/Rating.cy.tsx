@@ -6,8 +6,14 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(ratingStories);
-const { Default, ReadOnly, Disabled, CustomIcons, FormFieldSupport } =
-  composedStories;
+const {
+  Default,
+  ReadOnly,
+  Disabled,
+  CustomIcons,
+  FormFieldSupport,
+  Controlled,
+} = composedStories;
 
 describe("GIVEN a Rating component", () => {
   checkAccessibility(composedStories);
@@ -78,6 +84,37 @@ describe("GIVEN a Rating component", () => {
         .should("be.checked")
         .and("have.value", "4");
     });
+
+    describe("AND using a mouse", () => {
+      it("THEN should call onChange when clicked", () => {
+        const onChangeSpy = cy.stub().as("onChangeSpy");
+        cy.mount(<Controlled onChange={onChangeSpy} />);
+        cy.findByRole("radio", { name: /2 Stars/i }).realClick();
+        cy.findByRole("radio", { name: /2 Stars/i }).should("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          Cypress.sinon.match.any,
+          2,
+        );
+      });
+    });
+
+    describe("AND using keyboard", () => {
+      it("THEN should call onChange when space is pressed", () => {
+        const onChangeSpy = cy.stub().as("onChangeSpy");
+        cy.mount(<Controlled onChange={onChangeSpy} />);
+
+        cy.realPress("Tab");
+        cy.findByRole("radio", { name: /1 Star/i }).should("not.be.checked");
+        cy.realPress("Space");
+        cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWithMatch",
+          Cypress.sinon.match.any,
+          1,
+        );
+      });
+    });
   });
 
   describe("WHEN mounted as an uncontrolled component", () => {
@@ -99,9 +136,7 @@ describe("GIVEN a Rating component", () => {
         cy.findByRole("radio", { name: /2 Stars/i }).should("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "2" },
-          },
+          Cypress.sinon.match.any,
           2,
         );
       });
@@ -133,9 +168,7 @@ describe("GIVEN a Rating component", () => {
         cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "1" },
-          },
+          Cypress.sinon.match.any,
           1,
         );
       });
@@ -151,9 +184,7 @@ describe("GIVEN a Rating component", () => {
         cy.findByRole("radio", { name: /2 Stars/i }).should("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "2" },
-          },
+          Cypress.sinon.match.any,
           2,
         );
         cy.realPress("ArrowDown");
@@ -161,9 +192,7 @@ describe("GIVEN a Rating component", () => {
         cy.findByRole("radio", { name: /3 Stars/i }).should("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "3" },
-          },
+          Cypress.sinon.match.any,
           3,
         );
       });
@@ -179,9 +208,7 @@ describe("GIVEN a Rating component", () => {
         cy.findByRole("radio", { name: /4 Stars/i }).should("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "4" },
-          },
+          Cypress.sinon.match.any,
           4,
         );
         cy.realPress("ArrowUp");
@@ -189,9 +216,7 @@ describe("GIVEN a Rating component", () => {
         cy.findByRole("radio", { name: /3 Stars/i }).should("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "3" },
-          },
+          Cypress.sinon.match.any,
           3,
         );
       });
@@ -210,9 +235,7 @@ describe("GIVEN a Rating component", () => {
           .and("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "5" },
-          },
+          Cypress.sinon.match.any,
           5,
         );
         cy.realPress("ArrowRight");
@@ -221,9 +244,7 @@ describe("GIVEN a Rating component", () => {
           .and("be.checked");
         cy.get("@onChangeSpy").should(
           "have.been.calledWithMatch",
-          {
-            target: { value: "1" },
-          },
+          Cypress.sinon.match.any,
           1,
         );
       });

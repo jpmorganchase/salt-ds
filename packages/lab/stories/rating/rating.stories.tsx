@@ -38,6 +38,20 @@ ReadOnly.args = {
   readOnly: true,
 };
 
+export const Controlled: StoryFn<typeof Rating> = (args) => {
+  const [value, setValue] = useState(0);
+
+  return (
+    <Rating
+      value={value}
+      onChange={(_event, newValue) => {
+        setValue(newValue);
+      }}
+      {...args}
+    />
+  );
+};
+
 export const VisualLabel: StoryFn<typeof Rating> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
@@ -129,7 +143,7 @@ export const CustomIcons: StoryFn<typeof Rating> = (args) => {
 };
 
 export const ClearSelection: StoryFn<typeof Rating> = (args) => {
-  const [value, setValue] = useState<number>(3);
+  const [value, setValue] = useState(3);
   const [cleared, setCleared] = useState(false);
 
   return (
