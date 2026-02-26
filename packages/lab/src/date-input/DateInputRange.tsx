@@ -539,10 +539,9 @@ export const DateInputRange = forwardRef<
       >
         <input
           autoComplete="off"
-          aria-describedby={clsx(
-            formFieldDescribedBy,
-            startInputPropsDescribedBy,
-          )}
+          aria-describedby={
+            clsx(formFieldDescribedBy, startInputPropsDescribedBy) || undefined
+          }
           aria-labelledby={clsx(
             formFieldLabelledBy,
             startInputPropsLabelledBy,
@@ -571,10 +570,9 @@ export const DateInputRange = forwardRef<
         <span className={withBaseName("dash")}>-</span>
         <input
           autoComplete="off"
-          aria-describedby={clsx(
-            formFieldDescribedBy,
-            endInputPropsDescribedBy,
-          )}
+          aria-describedby={
+            clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined
+          }
           aria-labelledby={clsx(
             formFieldLabelledBy,
             endInputPropsLabelledBy,

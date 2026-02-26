@@ -1,7 +1,7 @@
 import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
-import { version as reactVersion, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
@@ -130,12 +130,7 @@ describe("Given a Carousel", () => {
       );
     });
 
-    it("should navigate slides using left/right arrow keys(including long press)", function () {
-      // TODO : Skipping for React 16 and 17 (https://github.com/jpmorganchase/salt-ds/issues/5933)
-      if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
-        this.skip();
-      }
-
+    it("should navigate slides using left/right arrow keys(including long press)", () => {
       // Focus the slide element
       cy.get(".carouselSlide.is-snapped.is-in-view").focus();
 
@@ -180,12 +175,7 @@ describe("Given a Carousel", () => {
       });
     });
 
-    it("should navigate back to first slide", function () {
-      // TODO : Skipping for React 16 and 17 (https://github.com/jpmorganchase/salt-ds/issues/5933)
-      if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
-        this.skip();
-      }
-
+    it("should navigate back to first slide", () => {
       verifySlide("4", false);
 
       cy.findByLabelText(/Previous slide/).click();
@@ -218,12 +208,7 @@ describe("Given a Carousel", () => {
       cy.findAllByRole("tab").should("have.length", 4);
     });
 
-    it("should navigate to each slide in the tablist", function () {
-      // TODO : Skipping for React 16 and 17 (https://github.com/jpmorganchase/salt-ds/issues/5933)
-      if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
-        this.skip();
-      }
-
+    it("should navigate to each slide in the tablist", () => {
       verifySlide("4", false);
 
       cy.findAllByRole("tab").eq(1).click();

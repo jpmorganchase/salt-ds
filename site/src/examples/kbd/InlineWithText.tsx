@@ -1,5 +1,4 @@
-import { FlexLayout, Text } from "@salt-ds/core";
-import { Kbd } from "@salt-ds/lab";
+import { FlexLayout, Kbd, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const InlineWithText = (): ReactElement => (

@@ -117,22 +117,29 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     }, [emblaApi, setAnnouncementState]);
 
     useEffect(() => {
-      const numberOfSnaps = emblaApi?.scrollSnapList().length ?? 1;
-      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+      if (!emblaApi) return;
+
+      const numberOfSnaps = emblaApi.scrollSnapList().length;
+      if (numberOfSnaps === 0) return;
+
+      const numberOfSlides = slideRefs.current.length;
+      const numberOfSlidesPerSnap = numberOfSlides / numberOfSnaps;
+
       if (focusedSlideIndex >= 0) {
         const nearestScrollSnap = Math.floor(
           focusedSlideIndex / numberOfSlidesPerSnap,
         );
-        if (emblaApi?.selectedScrollSnap() !== nearestScrollSnap) {
-          emblaApi?.scrollTo(nearestScrollSnap);
+        if (emblaApi.selectedScrollSnap() !== nearestScrollSnap) {
+          emblaApi.scrollTo(nearestScrollSnap);
           focusOnSettle.current = true;
         }
       } else if (focusedSlideIndex === -1) {
-        const initialSnap = emblaApi?.selectedScrollSnap();
+        const initialSnap = emblaApi.selectedScrollSnap();
         const initialSlideIndex =
           initialSnap !== undefined
             ? Math.floor(initialSnap * numberOfSlidesPerSnap)
             : 0;
+
         setFocusedSlideIndex(initialSlideIndex);
         setStableScrollSnap(initialSnap);
       }
@@ -171,8 +178,13 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
       if (!emblaApi) return;
 
-      const numberOfSnaps = emblaApi.scrollSnapList().length ?? 1;
-      const numberOfSlidesPerSnap = slideRefs.current.length / numberOfSnaps;
+      const numberOfSnaps = emblaApi.scrollSnapList().length;
+
+      if (numberOfSnaps === 0) return;
+
+      const numberOfSlides = slideRefs.current.length;
+      const numberOfSlidesPerSnap = numberOfSlides / numberOfSnaps;
+
       const currentSnap = Math.floor(focusedSlideIndex / numberOfSlidesPerSnap);
       let newSnap = currentSnap;
 

@@ -2,13 +2,13 @@ import {
   Button,
   FlexLayout,
   FlowLayout,
+  Kbd,
   Menu,
   MenuItem,
   MenuPanel,
   MenuTrigger,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
-import { Kbd } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 function AlignmentMenu() {
