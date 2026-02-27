@@ -88,21 +88,34 @@ describe("GIVEN a Rating component", () => {
 
     describe("AND using a mouse", () => {
       it("THEN should call onChange when clicked", () => {
-        cy.mount(<Controlled />);
+        const onChangeSpy = cy.stub().as("onChangeSpy");
+        cy.mount(<Controlled onChange={onChangeSpy} />);
         cy.findAllByRole("radio").should("not.be.checked");
         cy.findByRole("radio", { name: /2 Stars/i }).realClick();
         cy.findByRole("radio", { name: /2 Stars/i }).should("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          2,
+        );
       });
     });
 
     describe("AND using keyboard", () => {
       it("THEN should call onChange when space is pressed", () => {
-        cy.mount(<Controlled />);
+        const onChangeSpy = cy.stub().as("onChangeSpy");
+        cy.mount(<Controlled onChange={onChangeSpy} />);
         cy.findAllByRole("radio").should("not.be.checked");
         cy.realPress("Tab");
         cy.findByRole("radio", { name: /1 Star/i }).should("not.be.checked");
+        cy.get("@onChangeSpy").should("not.be.called");
         cy.realPress("Space");
         cy.findByRole("radio", { name: /1 Star/i }).should("be.checked");
+        cy.get("@onChangeSpy").should(
+          "have.been.calledWith",
+          Cypress.sinon.match.any,
+          1,
+        );
       });
     });
   });

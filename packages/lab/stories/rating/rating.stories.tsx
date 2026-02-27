@@ -8,7 +8,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
-import { Rating } from "@salt-ds/lab";
+import { Rating, type RatingProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
@@ -41,15 +41,12 @@ ReadOnly.args = {
 export const Controlled: StoryFn<typeof Rating> = (args) => {
   const [value, setValue] = useState(0);
 
-  return (
-    <Rating
-      {...args}
-      value={value}
-      onChange={(_event, newValue) => {
-        setValue(newValue);
-      }}
-    />
-  );
+  const handleChange: RatingProps["onChange"] = (event, newValue) => {
+    setValue(newValue);
+    args.onChange?.(event, newValue);
+  };
+
+  return <Rating {...args} value={value} onChange={handleChange} />;
 };
 
 export const VisualLabel: StoryFn<typeof Rating> = (args) => {
