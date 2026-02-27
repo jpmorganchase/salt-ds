@@ -22,9 +22,7 @@ export default {
   },
 } as Meta<typeof Rating>;
 
-const Template: StoryFn<typeof Rating> = (args) => {
-  return <Rating aria-label="Rating" {...args} />;
-};
+const Template: StoryFn<typeof Rating> = (args) => <Rating {...args} />;
 
 export const Default = Template.bind({});
 
