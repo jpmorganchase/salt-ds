@@ -1,0 +1,9 @@
+.saltTreeNodeLabel {
+  flex: 1;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  word-break: break-word;
+}
