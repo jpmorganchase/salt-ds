@@ -81,13 +81,20 @@ export const VisualLabel: StoryFn<typeof Rating> = (args) => {
 
 export const FormFieldSupport: StoryFn<typeof FormField> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  const { onChange, ...formFieldArgs } = args;
+
   return (
-    <FormField {...args} labelPlacement="top" style={{ width: "225px" }}>
+    <FormField
+      {...formFieldArgs}
+      labelPlacement="top"
+      style={{ width: "225px" }}
+    >
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Rating
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
         defaultValue={3}
+        onChange={onChange}
       />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>

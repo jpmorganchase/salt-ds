@@ -120,14 +120,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
 
-  const updateRating = (
-    newValue: number,
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
-    setSelected(newValue);
-    onChange?.(event, newValue);
-  };
-
   const handleMouseEnter = (event: MouseEvent<HTMLInputElement>) => {
     if (readOnly || disabled) return;
     const itemValue = Number.parseInt(event.currentTarget.value, 10);
@@ -141,7 +133,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     }
 
     const itemValue = Number.parseInt(event.currentTarget.value, 10);
-    updateRating(itemValue, event);
+    setSelected(itemValue);
+    onChange?.(event, itemValue);
   };
 
   const isTopLeft = labelPlacement === "top" || labelPlacement === "left";

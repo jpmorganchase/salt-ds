@@ -8,8 +8,8 @@ const {
   ReadOnly,
   Disabled,
   CustomIcons,
-  FormFieldSupport,
   Controlled,
+  FormFieldSupport,
 } = composedStories;
 
 describe("GIVEN a Rating component", () => {
@@ -337,11 +337,14 @@ describe("GIVEN a Rating component", () => {
     });
 
     it("THEN should respect the context when read-only", () => {
-      cy.mount(<FormFieldSupport readOnly />);
+      const onChangeSpy = cy.stub().as("onChangeSpy");
+      cy.mount(<FormFieldSupport onChange={onChangeSpy} readOnly />);
       cy.findByRole("radiogroup", { name: "Form field label" }).should(
         "be.visible",
       );
       cy.findAllByRole("radio").should("have.attr", "readonly");
+      cy.findByRole("radio", { name: "Poor" }).realClick();
+      cy.get("@onChangeSpy").should("not.be.called");
     });
   });
 
