@@ -1,31 +1,35 @@
 .saltRating {
-  display: flex;
-  gap: calc(2 * var(--salt-spacing-fixed-600));
-  align-items: center;
+  display: inline-flex;
   box-sizing: border-box;
 }
 
-.saltFormField .saltRating {
+.saltFormField .saltRating-container,
+.saltFormField .saltRating-label {
   min-height: var(--salt-size-base);
+  padding-top: var(--salt-spacing-100);
 }
 
-.saltRating-wrapper-top,
-.saltRating-wrapper-bottom {
+.saltRating-labelTop,
+.saltRating-labelBottom {
   flex-direction: column;
+  align-items: flex-start;
+  gap: var(--salt-spacing-fixed-600);
 }
 
-.saltRating-wrapper-left,
-.saltRating-wrapper-right {
+.saltRating-labelLeft,
+.saltRating-labelRight {
   flex-direction: row;
+  gap: var(--salt-spacing-fixed-1200);
 }
 
 .saltRating-container {
   display: flex;
   flex-direction: row;
-  gap: calc(2 * var(--salt-spacing-fixed-600));
+  gap: var(--salt-spacing-fixed-1200);
   flex-wrap: nowrap;
   justify-content: flex-start;
-  align-items: stretch;
+  margin-top: var(--salt-spacing-fixed-100);
+  box-sizing: border-box;
 }
 
 .saltRating-label {
@@ -34,11 +38,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
-}
-
-.saltRating-label.saltRating-label-top,
-.saltRating-label.saltRating-label-bottom {
-  text-align: center;
+  box-sizing: border-box;
 }
 
 .saltRating-label.saltRating-label-left {
