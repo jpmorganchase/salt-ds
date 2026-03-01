@@ -8,21 +8,31 @@ data:
   $ref: ./#/data
 ---
 
-## Primary
+## Basic
 
-`Input` comprises value text and a focus ring. The component is initially empty; once it has focus, it accepts text on a single line only.
+`Input` is a single-line text field that accepts user input. It can be used in forms, search bars, or anywhere you need to capture user input.
 
-The default variant for Input is "primary."
+<LivePreview componentName="input" exampleName="Basic" />
 
-<LivePreview componentName="input" exampleName="Primary" />
+## Variants
 
-## Secondary
+`Input` has three variants:
 
-`Input` has a "secondary" variant.
+- Primary
+- Secondary
+- Tertiary
 
-For recommendations on variant choice, see the [forms pattern](salt/patterns/forms).
+This changes the background color of the field and can be used to create a visual hierarchy.
 
-<LivePreview componentName="input" exampleName="Secondary" />
+<LivePreview componentName="input" exampleName="Variants" />
+
+## Bordered
+
+To style Input with a full border, set `bordered={true}`.
+
+We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
+
+<LivePreview componentName="input" exampleName="Bordered" />
 
 ## Disabled
 
@@ -100,11 +110,3 @@ Numeric values often have right alignment to make comparing them easier. However
 You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception, and you should use it sparingly.
 
 <LivePreview componentName="input" exampleName="TextAlignment" />
-
-## Bordered
-
-To style Input with a full border, set `bordered={true}`.
-
-We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
-
-<LivePreview componentName="input" exampleName="Bordered" />

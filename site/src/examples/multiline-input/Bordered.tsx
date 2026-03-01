@@ -1,6 +1,10 @@
-import { MultilineInput } from "@salt-ds/core";
+import { MultilineInput, StackLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Bordered = (): ReactElement => (
-  <MultilineInput bordered defaultValue="Value" style={{ maxWidth: "256px" }} />
+  <StackLayout style={{ maxWidth: "256px" }}>
+    <MultilineInput bordered defaultValue="Value" />
+    <MultilineInput bordered variant="secondary" defaultValue="Value" />
+    <MultilineInput bordered variant="tertiary" defaultValue="Value" />
+  </StackLayout>
 );
