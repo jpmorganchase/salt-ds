@@ -124,7 +124,7 @@ jobs:
           install: false
           component: true
           browser: chrome
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.react }}
