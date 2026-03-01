@@ -112,6 +112,12 @@ export const Bordered: StoryFn<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
+      <MultilineInput
+        variant="tertiary"
+        bordered
+        defaultValue="Value"
+        {...args}
+      />
     </FlowLayout>
   );
 };
@@ -121,6 +127,7 @@ export const Variants: StoryFn<typeof MultilineInput> = (args) => {
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput defaultValue="Value" {...args} />
       <MultilineInput variant="secondary" defaultValue="Value" {...args} />
+      <MultilineInput variant="tertiary" defaultValue="Value" {...args} />
     </FlowLayout>
   );
 };

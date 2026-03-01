@@ -14,5 +14,10 @@ export const Bordered = (): ReactElement => (
         <Option value={color} key={color} />
       ))}
     </Dropdown>
+    <Dropdown bordered variant="tertiary">
+      {shortColorData.map((color) => (
+        <Option value={color} key={color} />
+      ))}
+    </Dropdown>
   </StackLayout>
 );

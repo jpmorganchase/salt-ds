@@ -50,6 +50,12 @@ Secondary.args = {
   variant: "secondary",
 };
 
+export const Tertiary = Template.bind({});
+
+Tertiary.args = {
+  variant: "tertiary",
+};
+
 export const ReadOnly = Template.bind({});
 
 ReadOnly.args = {
