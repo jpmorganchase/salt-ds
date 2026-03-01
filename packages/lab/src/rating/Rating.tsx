@@ -1,6 +1,5 @@
 import {
   capitalize,
-  type FlexLayoutProps,
   makePrefixer,
   useControlled,
   useFormFieldProps,
@@ -11,6 +10,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
+  type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
   useRef,
@@ -21,7 +21,8 @@ import { RatingItem } from "./RatingItem";
 
 const withBaseName = makePrefixer("saltRating");
 
-export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
+export interface RatingProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
    * When provided, the component is controlled.
    */
