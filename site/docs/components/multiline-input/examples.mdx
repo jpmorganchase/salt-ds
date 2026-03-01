@@ -8,25 +8,33 @@ data:
   $ref: ./#/data
 ---
 
-## Primary
+## Basic
 
-Values entered into the multiline input wrap based on the width of the component. Initially, the component is empty. Once it has focus, it accepts text across multiple lines. By default, the component presents three rows of text at a time.
+`MultilineInput` is a text input field that allows the user to enter multiple lines of text. Values entered into the multiline input wrap based on the width of the component. By default, the component presents three rows of text at a time.
 
 If entering more than three rows of text, the height of the input will grow with the content unless resized by the user, that can then review the entered value using keyboard controls.
 
-`MultilineInput` has two variants: primary and secondary. The primary variant is the default. Consider the choice between primary and secondary variants alongside the background color it sits upon. For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
+<LivePreview componentName="multiline-input" exampleName="Basic" />
 
-<LivePreview componentName="multiline-input" exampleName="Primary" />
+## Variants
 
-## Secondary
+`MultilineInput` has three variants:
 
-Secondary variant is an effective option if included as part of a data-dense or compact interface or within a form with multiple columns or sections.
+- Primary
+- Secondary
+- Tertiary
 
-Consider the choice between primary and secondary variants in the context of the background color it sits upon.
+This changes the background color of the field and can be used to create a visual hierarchy.
 
-For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
+<LivePreview componentName="multiline-input" exampleName="Variants" />
 
-<LivePreview componentName="multiline-input" exampleName="Secondary" />
+## Bordered
+
+To style `MultilineInput` with a full border, set `bordered={true}`.
+
+We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
+
+<LivePreview componentName="multiline-input" exampleName="Bordered" />
 
 ## Disabled
 
@@ -43,14 +51,6 @@ Use the read-only state when the value is necessary for the user’s flow or cur
 When setting `MultilineInput` to a read-only state, ensure to also disable any nested interactive adornments, such as buttons.
 
 <LivePreview componentName="multiline-input" exampleName="Readonly" />
-
-## Bordered
-
-To style `MultilineInput` with a full border, set `bordered={true}`.
-
-We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
-
-<LivePreview componentName="multiline-input" exampleName="Bordered" />
 
 ## Number of rows
 
