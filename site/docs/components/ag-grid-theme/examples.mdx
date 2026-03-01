@@ -24,14 +24,26 @@ AG Grid Community does not have a menu, but can launch [Column Filters](https://
 
 ## Variants
 
-There are three variants of the Salt AG Grid theme: primary (default), secondary and zebra. To use one of the non-default variants, add an additional class name to the container element above `<AgGridReact/>`.
+The Salt AG Grid theme supports three variants: primary (default), secondary and tertiary. Each variants adjusts the background color of the data grid, providing options to support the creation of a visual hierarchy. To use one of the non-default variants, add an additional class name to the container element above `<AgGridReact/>`.
 
 The class names are:
 
 - `ag-theme-salt-variant-secondary`
-- `ag-theme-salt-variant-zebra`
+- `ag-theme-salt-variant-tertiary`
 
 <LivePreview componentName="ag-grid-theme" exampleName="Variants" />
+
+## Zebra
+
+The Salt AG GRid theme supports alternating row colors to improve readability. This is particularly useful for large datasets where distinguishing between rows can be challenging.
+
+The color of the alternating rows is determined by the variant:
+
+- primary variant uses the secondary background for alternating rows.
+- secondary variant uses the primary background for alternating rows.
+- tertiary variant uses the primary background for alternating rows.
+
+<LivePreview componentName="ag-grid-theme" exampleName="Zebra" />
 
 ## Checkbox selection
 
