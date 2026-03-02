@@ -43,7 +43,7 @@
     "moment-timezone": "^0.5.46",
     "next": "^16.0.0",
     "next-auth": "^4.24.11",
-    "shiki": "^3.0.0"
+    "shiki": "^4.0.0"
   },
   "devDependencies": {
     "@next/env": "^16.0.0",
