@@ -72,6 +72,8 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableScrim?: boolean;
   /**
+   * @deprecated IDs are now auto-generated internally for proper ARIA labeling.
+   *
    * Optional id prop
    * Used for accessibility purposes to announce the title and subtitle when using a screen reader
    * */
@@ -104,7 +106,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       window: targetWindow,
     });
 
-    const contentScrollId = useId(id);
+    const dialogId = useId(id);
     const currentBreakpoint = useCurrentBreakpoint();
 
     const [showComponent, setShowComponent] = useState(false);
@@ -138,19 +140,19 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ status, id: headerId, setId: setHeaderId, contentScrollId }),
-      [status, headerId, contentScrollId],
+      () => ({ status, id: headerId, setId: setHeaderId, dialogId }),
+      [status, headerId, dialogId],
     );
 
     return (
       <DialogContext.Provider value={contextValue}>
         <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
           <FloatingComponent
-            id={contentScrollId}
+            id={dialogId}
             open={showComponent}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={ariaLabelledBy ?? headerId}
+            aria-labelledby={clsx(ariaLabelledBy ?? headerId) || undefined}
             ref={floatingRef}
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}

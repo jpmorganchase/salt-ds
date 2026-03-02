@@ -31,7 +31,6 @@ function FakeDialog({ children, status, id }: DialogProps) {
       value={{
         status,
         id,
-        setId: () => {},
       }}
     >
       <div className="fakeDialogWindow">{children}</div>

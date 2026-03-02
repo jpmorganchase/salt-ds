@@ -5,7 +5,7 @@ import { createContext } from "../utils";
 export interface DialogContextValue {
   status?: ValidationStatus;
   id?: string;
-  setId: (id: string) => void;
+  setId?: (id: string) => void;
   contentScrollId?: string;
   setContentScrollId?: (id: string) => void;
 }

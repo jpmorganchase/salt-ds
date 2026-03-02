@@ -5,10 +5,11 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  useEffect,
 } from "react";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { H2, Text } from "../text";
-import { makePrefixer, useId, useIsomorphicLayoutEffect } from "../utils";
+import { makePrefixer, useId } from "../utils";
 import { useDialogContext } from "./DialogContext";
 import dialogHeaderCss from "./DialogHeader.css";
 
@@ -68,9 +69,9 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     const status = statusProp ?? statusContext;
     const headerId = useId(contextHeaderId);
 
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
       if (headerId) {
-        setHeaderId(headerId);
+        setHeaderId?.(headerId);
       }
     }, [headerId, setHeaderId]);
 
