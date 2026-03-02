@@ -70,7 +70,7 @@ describe("GIVEN a Rating component", () => {
     describe("AND using a mouse", () => {
       it("THEN should handle selection", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Controlled onChange={onChangeSpy} value={4} />);
+        cy.mount(<Controlled onChange={onChangeSpy} />);
         cy.findAllByRole("radio").should("not.be.checked");
         cy.findByRole("radio", { name: "2 Stars" }).realClick();
         cy.findByRole("radio", { name: "2 Stars" }).should("be.checked");
