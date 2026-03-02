@@ -3,8 +3,8 @@ import type { ReactElement } from "react";
 
 export const Variants = (): ReactElement => (
   <StackLayout style={{ maxWidth: "256px" }}>
-    <MultilineInput variant="primary" defaultValue="Value" />
-    <MultilineInput variant="secondary" defaultValue="Value" />
-    <MultilineInput variant="tertiary" defaultValue="Value" />
+    <MultilineInput variant="primary" defaultValue="Primary" />
+    <MultilineInput variant="secondary" defaultValue="Secondary" />
+    <MultilineInput variant="tertiary" defaultValue="Tertiary" />
   </StackLayout>
 );

@@ -3,8 +3,8 @@ import type { ReactElement } from "react";
 
 export const Bordered = (): ReactElement => (
   <StackLayout style={{ maxWidth: "256px" }}>
-    <Input bordered defaultValue="Value" />
-    <Input bordered variant="secondary" defaultValue="Value" />
-    <Input bordered variant="tertiary" defaultValue="Value" />
+    <Input bordered variant="primary" defaultValue="Primary" />
+    <Input bordered variant="secondary" defaultValue="Secondary" />
+    <Input bordered variant="tertiary" defaultValue="Tertiary" />
   </StackLayout>
 );

@@ -3,8 +3,8 @@ import type { ReactElement } from "react";
 
 export const Bordered = (): ReactElement => (
   <StackLayout style={{ maxWidth: "256px" }}>
-    <MultilineInput bordered defaultValue="Value" />
-    <MultilineInput bordered variant="secondary" defaultValue="Value" />
-    <MultilineInput bordered variant="tertiary" defaultValue="Value" />
+    <MultilineInput bordered variant="primary" defaultValue="Primary" />
+    <MultilineInput bordered variant="secondary" defaultValue="Secondary" />
+    <MultilineInput bordered variant="tertiary" defaultValue="Tertiary" />
   </StackLayout>
 );
