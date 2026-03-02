@@ -6,8 +6,8 @@ export interface DialogContextValue {
   status?: ValidationStatus;
   id?: string;
   setId?: (id: string) => void;
-  contentScrollId?: string;
-  setContentScrollId?: (id: string) => void;
+  dialogId?: string;
+  setDialogId?: (id: string) => void;
 }
 
 export const DialogContext = createContext<DialogContextValue>(
@@ -16,8 +16,8 @@ export const DialogContext = createContext<DialogContextValue>(
     status: undefined,
     id: undefined,
     setId: () => {},
-    contentScrollId: undefined,
-    setContentScrollId: () => {},
+    dialogId: undefined,
+    setDialogId: () => {},
   },
 );
 
