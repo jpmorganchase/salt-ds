@@ -8,7 +8,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
-import { Rating } from "@salt-ds/lab";
+import { Rating, type RatingProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
@@ -22,49 +22,52 @@ export default {
   },
 } as Meta<typeof Rating>;
 
-export const Default: StoryFn<typeof Rating> = () => {
-  return <Rating aria-label="Rating" defaultValue={3} />;
+const Template: StoryFn<typeof Rating> = (args) => <Rating {...args} />;
+
+export const Default = Template.bind({});
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
 };
 
-export const ReadOnly: StoryFn<typeof Rating> = () => {
+export const ReadOnly = Template.bind({});
+ReadOnly.args = {
+  readOnly: true,
+};
+
+export const Controlled: StoryFn<typeof Rating> = (args) => {
+  const [value, setValue] = useState(0);
+
+  const handleChange: RatingProps["onChange"] = (event, newValue) => {
+    setValue(newValue);
+    args.onChange?.(event, newValue);
+  };
+
+  return <Rating {...args} value={value} onChange={handleChange} />;
+};
+
+export const VisualLabel: StoryFn<typeof Rating> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
   return (
     <StackLayout>
-      <FormField>
-        <FormFieldLabel>Rating (Read-only)</FormFieldLabel>
-        <Rating readOnly defaultValue={3} />
-      </FormField>
       <Rating
-        aria-label="Rating (Read-only)"
-        readOnly
-        defaultValue={3}
-        getVisibleLabel={(value) => labels[value - 1] || "No rating"}
-        getLabel={(value) => labels[value - 1]}
-      />
-    </StackLayout>
-  );
-};
-
-export const Disabled: StoryFn<typeof Rating> = () => {
-  return <Rating aria-label="Rating" disabled defaultValue={3} />;
-};
-
-export const VisualLabel: StoryFn<typeof Rating> = () => {
-  const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
-  return (
-    <FlexLayout direction="column" gap={3}>
-      <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value, max) => `${value}/${max}`}
+        className="custom-rating-width"
       />
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={4}
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
+        className="custom-rating-width"
       />
       <Rating
+        {...args}
         aria-label="Rating"
         labelPlacement="left"
         defaultValue={4}
@@ -72,33 +75,43 @@ export const VisualLabel: StoryFn<typeof Rating> = () => {
         getLabel={(value) => labels[value - 1]}
         className="custom-rating-width"
       />
-    </FlexLayout>
+    </StackLayout>
   );
 };
 
-export const FormFieldSupport: StoryFn<typeof Rating> = () => {
+export const FormFieldSupport: StoryFn<typeof FormField> = (args) => {
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  const { onChange, ...formFieldArgs } = args;
+
   return (
-    <FormField labelPlacement="top" style={{ width: "225px" }}>
+    <FormField
+      {...formFieldArgs}
+      labelPlacement="top"
+      style={{ width: "225px" }}
+    >
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Rating
         getVisibleLabel={(value) => labels[value - 1] || "No rating"}
         getLabel={(value) => labels[value - 1]}
+        defaultValue={3}
+        onChange={onChange}
       />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
   );
 };
 
-export const CustomIncrements: StoryFn<typeof Rating> = () => {
+export const CustomIncrements: StoryFn<typeof Rating> = (args) => {
   return (
     <FlexLayout direction="column" gap={3}>
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={1}
         onChange={(event, value) => console.log(event, value)}
       />
       <Rating
+        {...args}
         aria-label="Rating"
         defaultValue={7}
         max={10}
@@ -108,7 +121,7 @@ export const CustomIncrements: StoryFn<typeof Rating> = () => {
   );
 };
 
-export const CustomIcons: StoryFn<typeof Rating> = () => {
+export const CustomIcons: StoryFn<typeof Rating> = (args) => {
   const [value, setValue] = useState(3);
 
   return (
@@ -125,13 +138,14 @@ export const CustomIcons: StoryFn<typeof Rating> = () => {
         max={5}
         onChange={(_event, value) => setValue(value)}
         getLabel={(value) => `${value} Heart${value > 1 ? "s" : ""}`}
+        {...args}
       />
     </SemanticIconProvider>
   );
 };
 
-export const ClearSelection: StoryFn<typeof Rating> = () => {
-  const [value, setValue] = useState<number>(3);
+export const ClearSelection: StoryFn<typeof Rating> = (args) => {
+  const [value, setValue] = useState(3);
   const [cleared, setCleared] = useState(false);
 
   return (
@@ -141,6 +155,7 @@ export const ClearSelection: StoryFn<typeof Rating> = () => {
           Rating {cleared && <span className="srOnly">was cleared</span>}
         </FormFieldLabel>
         <Rating
+          {...args}
           value={value}
           onChange={(_event, newValue) => {
             setValue(newValue);

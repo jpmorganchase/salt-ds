@@ -50,11 +50,11 @@ export interface RatingProps extends Omit<FlexLayoutProps<"div">, "onChange"> {
    */
   max?: number;
   /**
-   * Function used to provider a user-friendly name for the current value of the rating. Primarily used by screen readers.
+   * Function used to provide a user-friendly name for the current value of the rating. Primarily used by screen readers.
    */
   getLabel?: (value: number) => string;
   /**
-   * Function used to provider a visible label for the rating.
+   * Function used to provide a visible label for the rating.
    */
   getVisibleLabel?: (value: number, max: number) => string;
   /**
@@ -79,8 +79,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     name: nameProp,
     onChange,
     className,
-    readOnly,
-    disabled,
+    readOnly: readOnlyProp,
+    disabled: disabledProp,
     max = 5,
     getLabel = defaultGetLabel,
     getVisibleLabel,
@@ -99,11 +99,16 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     window: targetWindow,
   });
   const {
+    disabled: formFieldDisabled,
+    readOnly: formFieldReadOnly,
     a11yProps: {
       "aria-describedby": formFieldDescribedBy,
       "aria-labelledby": formFieldLabelledBy,
     } = {},
   } = useFormFieldProps();
+
+  const disabled = formFieldDisabled || disabledProp;
+  const readOnly = formFieldReadOnly || readOnlyProp;
 
   const [hoveredValue, setHoveredValue] = useState(0);
   const [selected, setSelected] = useControlled({
@@ -114,14 +119,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   });
   const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
-
-  const updateRating = (
-    newValue: number,
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
-    setSelected(newValue);
-    onChange?.(event, newValue);
-  };
 
   const handleMouseEnter = (event: MouseEvent<HTMLInputElement>) => {
     if (readOnly || disabled) return;
@@ -136,7 +133,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     }
 
     const itemValue = Number.parseInt(event.currentTarget.value, 10);
-    updateRating(itemValue, event);
+    setSelected(itemValue);
+    onChange?.(event, itemValue);
   };
 
   const isTopLeft = labelPlacement === "top" || labelPlacement === "left";
