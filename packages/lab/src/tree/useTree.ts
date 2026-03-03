@@ -437,13 +437,7 @@ export function useTree(props: UseTreeProps) {
       setSelectedState(newSelected);
       onSelectionChange?.(event, newSelected);
     },
-    [
-      disabled,
-      disabledIdsSet,
-      multiselect,
-      selectedState,
-      onSelectionChange,
-    ],
+    [disabled, disabledIdsSet, multiselect, selectedState, onSelectionChange],
   );
 
   // Visible nodes in depth-first order matching visual tree order
