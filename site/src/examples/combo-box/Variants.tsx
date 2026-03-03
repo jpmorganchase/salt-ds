@@ -14,5 +14,10 @@ export const Variants = (): ReactElement => (
         <Option value={color} key={color} />
       ))}
     </ComboBox>
+    <ComboBox variant="tertiary">
+      {shortColorData.map((color) => (
+        <Option value={color} key={color} />
+      ))}
+    </ComboBox>
   </StackLayout>
 );

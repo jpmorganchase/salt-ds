@@ -45,7 +45,7 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Change background color palette
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Prevent the dialog closing on click away
    * */

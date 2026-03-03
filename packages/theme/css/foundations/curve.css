@@ -28,6 +28,7 @@
   --salt-curve-999: 999px;
 }
 
+.salt-density-mobile,
 .salt-density-touch {
   --salt-curve-0: 0;
   --salt-curve-50: 4px;

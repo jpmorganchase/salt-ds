@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useHookAtTopLevel: biome doesn't recognise the component correctly */
 import { type ForwardedRef, forwardRef, type ReactElement } from "react";
 import { useDescendant } from "./internal/DescendantContext";
 import { isPlainObject } from "./internal/helpers";

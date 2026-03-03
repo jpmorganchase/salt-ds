@@ -32,6 +32,22 @@ const renderQAContainer = () => {
       <DateInputSingle defaultDate={startDate} />
       <DateInputSingle defaultDate={startDate} bordered />
       <DateInputSingle defaultDate={startDate} bordered readOnly />
+      <DateInputSingle variant="secondary" defaultDate={startDate} />
+      <DateInputSingle variant="secondary" defaultDate={startDate} bordered />
+      <DateInputSingle
+        variant="secondary"
+        defaultDate={startDate}
+        bordered
+        readOnly
+      />
+      <DateInputSingle variant="tertiary" defaultDate={startDate} />
+      <DateInputSingle variant="tertiary" defaultDate={startDate} bordered />
+      <DateInputSingle
+        variant="tertiary"
+        defaultDate={startDate}
+        bordered
+        readOnly
+      />
       <DateInputSingle
         defaultDate={startDate}
         bordered
@@ -86,6 +102,54 @@ const renderQAContainer = () => {
         }}
         bordered
         readOnly
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        variant="secondary"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        variant="secondary"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        readOnly
+        variant="secondary"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        variant="tertiary"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        variant="tertiary"
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+        readOnly
+        variant="tertiary"
       />
       <DateInputRange
         defaultDate={{

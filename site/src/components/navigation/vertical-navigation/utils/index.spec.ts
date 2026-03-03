@@ -54,19 +54,27 @@ describe("normalizeSelectedNodeId", () => {
     { title: "Button", href: "/salt/components/button" },
   ];
 
-  it("replaces /examples with /index if /index exists", () => {
+  it.each([
+    "/examples",
+    "/usage",
+    "/accessibility",
+  ])("replaces %s with /index if /index exists", (route) => {
     expect(
-      normalizeSelectedNodeId("/salt/components/slider/examples", navData),
+      normalizeSelectedNodeId(`/salt/components/slider${route}`, navData),
     ).toBe("/salt/components/slider/index");
   });
 
-  it("removes /examples if /index does not exist", () => {
+  it.each([
+    "/examples",
+    "/usage",
+    "/accessibility",
+  ])("removes %s if /index does not exist", (route) => {
     expect(
-      normalizeSelectedNodeId("/salt/components/button/examples", navData),
+      normalizeSelectedNodeId(`/salt/components/button${route}`, navData),
     ).toBe("/salt/components/button");
   });
 
-  it("returns link unchanged if not ending with /examples", () => {
+  it("returns link unchanged if not ending with a tab route", () => {
     expect(normalizeSelectedNodeId("/salt/components/slider", navData)).toBe(
       "/salt/components/slider",
     );

@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
+/** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
 import type { StoryObj } from "@storybook/react-vite";
 import { AgGridReact } from "ag-grid-react";
 import { expect, userEvent, within } from "storybook/test";

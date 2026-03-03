@@ -106,7 +106,7 @@ export interface DateInputRangeProps
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Format string for date.
    */
@@ -529,10 +529,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       >
         <input
           autoComplete="off"
-          aria-describedby={clsx(
-            formFieldDescribedBy,
-            startInputPropsDescribedBy,
-          )}
+          aria-describedby={
+            clsx(formFieldDescribedBy, startInputPropsDescribedBy) || undefined
+          }
           aria-labelledby={clsx(
             formFieldLabelledBy,
             startInputPropsLabelledBy,
@@ -564,10 +563,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         <span className={withBaseName("dash")}>-</span>
         <input
           autoComplete="off"
-          aria-describedby={clsx(
-            formFieldDescribedBy,
-            endInputPropsDescribedBy,
-          )}
+          aria-describedby={
+            clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined
+          }
           aria-labelledby={clsx(
             formFieldLabelledBy,
             endInputPropsLabelledBy,

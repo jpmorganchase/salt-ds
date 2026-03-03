@@ -100,4 +100,11 @@ describe("GIVEN a Checkbox", () => {
       cy.get("@selectSpy").should("not.be.called");
     });
   });
+
+  it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", () => {
+    cy.mount(<Checkbox />);
+
+    cy.findByRole("checkbox").should("not.have.attr", "aria-describedby");
+    cy.findByRole("checkbox").should("not.have.attr", "aria-labelledby");
+  });
 });

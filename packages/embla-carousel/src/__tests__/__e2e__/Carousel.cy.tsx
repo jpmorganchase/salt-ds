@@ -130,7 +130,7 @@ describe("Given a Carousel", () => {
       );
     });
 
-    it("should navigate slides using left/right arrow keys", () => {
+    it("should navigate slides using left/right arrow keys(including long press)", () => {
       // Focus the slide element
       cy.get(".carouselSlide.is-snapped.is-in-view").focus();
 

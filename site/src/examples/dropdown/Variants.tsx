@@ -14,5 +14,10 @@ export const Variants = (): ReactElement => (
         <Option value={color} key={color} />
       ))}
     </Dropdown>
+    <Dropdown variant="tertiary" style={{ width: "266px" }}>
+      {shortColorData.map((color) => (
+        <Option value={color} key={color} />
+      ))}
+    </Dropdown>
   </StackLayout>
 );

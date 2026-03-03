@@ -29,6 +29,7 @@ export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./input";
 export * from "./interactable-card";
+export * from "./kbd";
 export * from "./link";
 export * from "./link-card";
 export * from "./list-box";
@@ -45,6 +46,10 @@ export * from "./parent-child-layout";
 export * from "./pill";
 export * from "./progress";
 export * from "./radio-button";
+/**
+ * Defines the components that support useClassNameInjection via module augmentation of @salt-ds/styles ComponentPropsMap
+ */
+export type {} from "./registerClassNameInjection";
 export * from "./salt-provider";
 export * from "./scrim";
 export * from "./segmented-button-group";
@@ -58,6 +63,7 @@ export * from "./status-adornment";
 export * from "./status-indicator";
 export * from "./stepper";
 export * from "./switch";
+export * from "./table";
 export * from "./tag";
 export * from "./text";
 export * from "./theme";

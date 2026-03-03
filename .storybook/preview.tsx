@@ -13,6 +13,8 @@ import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
+import "highcharts/css/highcharts.css";
+import "@salt-ds/highcharts-theme/index.css";
 import "./styles.css";
 
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
@@ -83,7 +85,7 @@ const preview: Preview = {
         // Storybook built in icons here - https://www.chromatic.com/component?appId=5a375b97f4b14f0020b0cda3&name=Basics%2FIcon&buildNumber=20654
         icon: "graphbar",
         // array of plain string values or MenuItem shape (see below)
-        items: ["touch", "low", "medium", "high"],
+        items: ["mobile", "touch", "low", "medium", "high"],
       },
     },
     responsive: {

@@ -1,0 +1,104 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the package
+
+## Import
+
+Install the following dependencies:
+
+- `highcharts` - version 10.2.0 specifically, or version 11+
+- `highcharts-react-official`
+- `@salt-ds/highcharts-theme`
+
+```bash
+npm install highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme
+# or
+yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme
+```
+
+### Import Highcharts CSS
+
+The Salt Highcharts theme overrides the default Highcharts CSS. To ensure the theme is applied correctly, import the Highcharts CSS before the Salt Highcharts theme CSS.
+
+<Callout title="Note">
+  You can download the Highcharts CSS from the official CDN:
+  - [For v10.2.0](https://code.highcharts.com/10.2.0/css/highcharts.css)
+  - For v11+: https://code.highcharts.com/your-version/css/highcharts.css
+
+For more information on loading Highcharts CSS, [visit the Highcharts docs](https://www.highcharts.com/docs/chart-design-and-style/style-by-css).
+
+</Callout>
+
+### Import Salt Highcharts theme
+
+To import the Salt Highcharts theme, use:
+
+```js
+import "@salt-ds/highcharts-theme/index.css";
+```
+
+Then wrap your Highcharts with `highcharts-theme-salt` class name as shown below:
+
+```jsx
+<div className="highcharts-theme-salt">
+  <HighchartsReact highcharts={Highcharts} options={options} />
+</div>
+```
+
+## useChart hook
+
+Use the `useChart` hook to apply the Salt theme to your Highcharts. The hook merges your chart options with the default Salt theme options and handles density changes automatically.
+
+```jsx
+import { useRef } from "react";
+import { useChart } from "@salt-ds/highcharts-theme";
+import HighchartsReact from "highcharts-react-official";
+
+const chartRef = useRef(null);
+const options = useChart(chartRef, yourChartSpecificOptions);
+
+return (
+  <div className="highcharts-theme-salt">
+    <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />
+  </div>
+);
+```
+
+The `useChart` hook takes two parameters:
+
+- `chartRef`: A ref object to be attached to the `HighchartsReact` component
+- `chartOptions`: Your chart-specific options
+
+See [examples](./examples) and the [Highcharts options](https://www.highcharts.com/docs/getting-started/how-to-set-options) documentation for more information.
+
+## Patterns and fills
+
+The Salt Highcharts theme provides patterns and fills that can be applied to create visible contrast between series. This is particularly valuable for users with accessibility needs.
+
+### Line patterns
+
+To apply line patterns to line charts, apply the `salt-line-patterns` class name to the chart container.
+
+```jsx
+<div className="highcharts-theme-salt salt-line-patterns">
+  <HighchartsReact highcharts={Highcharts} options={options} />
+</div>
+```
+
+### Fill patterns
+
+To apply fill patterns to charts, for example the donut chart, apply the `salt-fill-patterns` class name to the chart container.
+
+```jsx
+<div className="highcharts-theme-salt salt-fill-patterns">
+  <HighchartsReact highcharts={Highcharts} options={options} />
+</div>
+```

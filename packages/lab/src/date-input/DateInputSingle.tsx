@@ -85,7 +85,7 @@ export interface DateInputSingleProps
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Format string for date.
    */
@@ -359,7 +359,9 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         )}
         <input
           autoComplete="off"
-          aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
+          aria-describedby={
+            clsx(formFieldDescribedBy, dateInputDescribedBy) || undefined
+          }
           aria-labelledby={clsx(
             formFieldLabelledBy,
             dateInputLabelledBy,

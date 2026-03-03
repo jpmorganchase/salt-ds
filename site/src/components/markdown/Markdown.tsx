@@ -4,7 +4,6 @@ import { code, p, ul } from "../mdx/index";
 
 const components = { code, ul, p };
 
-// @ts-expect-error
 const ReactMarkdown = dynamic(() => import("react-markdown"));
 
 export default function Markdown(

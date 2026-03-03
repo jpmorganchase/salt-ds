@@ -1,0 +1,35 @@
+.keyboardShortcuts-description {
+  padding: var(--salt-spacing-25) 0;
+}
+.keyboardShortcuts-button {
+  width: fit-content;
+}
+.keyboardShortcuts-actions-title {
+  font-weight: var(--salt-text-heading-fontWeight);
+}
+table.saltTable td.keyboardShortcuts-td {
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+}
+.keyboardShortcuts-dialog .saltTable {
+  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+.keyboardShortcuts-shortcuts {
+  padding: var(--salt-spacing-75) 0;
+}
+.keyboardShortcuts-kbd {
+  padding-top: var(--salt-spacing-50);
+  padding-bottom: var(--salt-spacing-50);
+}
+.keyboardShortcuts-dialog .saltDialogContent-inner {
+  overflow-y: hidden;
+}
+.keyboardShortcuts-dialog .keyboardShortcuts-tableScroll {
+  overflow-y: auto;
+  max-height: 40vh;
+  position: "relative";
+}
+
+.keyboardShortcuts-connector {
+  display: inline-block;
+  vertical-align: middle;
+}

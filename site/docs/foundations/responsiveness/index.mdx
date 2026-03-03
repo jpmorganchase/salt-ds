@@ -7,13 +7,17 @@ sidebar:
   groupPriority: 4
 ---
 
-A responsive layout grid is made up of a set of consistently proportioned columns, separated by gutters, and flanked by margins. Basic layout grids are included in the design system to provide a starting point for designing any user interface.
+A layout grid provides a consistent structure for Salt user interfaces, organizing content into columns separated by gutters and framed by margins. The grid adapts to different screen sizes, with column number and width changing by density and breakpoint. This ensures layouts remain clear, balanced, and accessible across devices.
 
-The number of columns and their widths vary depending on the density and breakpoint set. Learn more about Salt densities in the [density foundation](/salt/foundations/density).
+## Types of spacing
 
-<Image
-  src="/img/foundations/responsiveness-gutters.png"
-  alt="Illustration of columns, gutters and margins."
+Salt’s layout grid uses four key types of spacing to structure and separate content. Each type plays a distinct role in organizing the user interface and ensuring clarity.
+
+<Diagram
+  src="/img/foundations/layout-grid.png"
+  srcDark="/img/foundations/layout-grid-dark.png"
+  alt="Types of spacing"
+  background="secondary"
 />
 
 | Spacing type | Definition                                                                                                                         |
@@ -22,24 +26,28 @@ The number of columns and their widths vary depending on the density and breakpo
 | Gutters      | The equally distributed space between columns that defines the width of UI elements.                                               |
 | Margins      | The left and right spacing on the edge of the screen that defines the distance between UI elements and their container's boundary. |
 
+These spacing types work together to create a balanced, readable, and visually appealing layout. Columns organize content, gutters separate columns, margins provide padding at the edges, and gaps space elements within the grid.
+
 ## Types of grid
 
-**Fluid grid**: As the application window's width decreases, the size and position of its content (regions, components, text, etc.) adjusts dynamically to remain readable and accessible. This is a common layout practice used for [dashboard](https://www.saltdesignsystem.com/salt/patterns/analytical-dashboard) design and layout.
+Salt supports two grid types to suit different layout needs: fluid grids adapt to the screen size, allowing columns to resize responsively, while fixed grids use set column widths for consistent structure.
 
-**Fixed grid**: The grid grows with the application window as its width increases, until the grid meets its maximum width. Past this point, the grid remains centered in the window, with margins to either side, and its content remains the same. A max width for the grid of 1280px can improve the reading experience of text heavy applications.
+**Fluid grid**: Fluid grids automatically adjust the size and position of content as the application window changes. This ensures layouts remain readable and accessible on any device. Fluid grids are commonly used for [dashboard](/salt/patterns/analytical-dashboard) design and layout.
 
-Learn how to adjust your Salt grid in [this video tutorial](https://go/salt-ds-internal/content/insights/tutorials/20250109-saltds-figma-layout-grids) created by our design team (Internal users only).
+**Fixed grid**: Fixed grids expand with the application window until reaching a maximum width. Beyond this point, the grid stays centered, with margins on either side, and the content width remains constant. A maximum grid width of 1280px is recommended for text-heavy applications to improve readability.
 
-<Image
-  src="/img/foundations/responsiveness-grids.png"
-  alt="Example of fluid grid, mixed grid usage and fixed grid."
+Learn how to adjust your Salt grid in [this video tutorial](https://go/saltds/resources/tutorials/20250109-saltds-figma-layout-grids) (Internal users only).
+
+<Diagram
+  src="/img/foundations/layout-grid-varied-widths.png"
+  srcDark="/img/foundations/layout-grid-varied-widths-dark.png"
+  alt="Layout grid varied widths"
+  background="secondary"
 />
 
-### Associated components
+### Layout components
 
-You can customize your grid to best suit your needs.
-
-Salt offers a range of layout grids in the components section:
+Salt offers a variety of layout components to help you build flexible, responsive interfaces. The list below highlights each layout option available in the Salt component library.
 
 - [Border layout](/salt/components/layouts/border-layout)
 - [Flex layout](/salt/components/layouts/flex-layout)
@@ -47,5 +55,37 @@ Salt offers a range of layout grids in the components section:
 - [Parent-child layout](/salt/components/layouts/parent-child-layout)
 - [Split layout](/salt/components/layouts/split-layout)
 - [Stack layout](/salt/components/layouts/stack-layout)
+
+## Layout tokens
+
+Layout tokens help manage margins and gaps in your layouts, especially when switching dynamically between desktop and mobile densities—In this scenario layout tokens ensure that margins and gaps are always optimized for each density and screen size without manual adjustments.
+
+Learn more about [switching density](/salt/foundations/density#switching-density).
+
+- Use the `--salt-layout-page-margin` token to set left and right margins.
+- Use the `--salt-layout-gap` token to set spacing between elements, for both horizontal and vertical gaps.
+
+| Token                       | High Density (px) | Medium Density (px) | Low Density (px) | Touch Density (px) | Mobile Density (px) |
+| --------------------------- | ----------------- | ------------------- | ---------------- | ------------------ | ------------------- |
+| `--salt-layout-page-margin` | 12                | 24                  | 36               | 48                 | 16                  |
+| `--salt-layout-gap`         | 12                | 24                  | 36               | 48                 | 16                  |
+
+Below is a visual comparison showing how the `--salt-layout-page-margin` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
+
+<Diagram
+  src="/img/foundations/layout-grid-layout-page-margin-token.png"
+  srcDark="/img/foundations/layout-grid-layout-page-margin-token-dark.png"
+  alt="Example of layout-page-margin token"
+  background="secondary"
+/>
+
+Below is a visual comparison showing how the `--salt-layout-gap` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
+
+<Diagram
+  src="/img/foundations/layout-grid-layout-gap-token.png"
+  srcDark="/img/foundations/layout-grid-layout-gap-token-dark.png"
+  alt="Example of layout-gap token"
+  background="secondary"
+/>
 
 :fragment{src="../fragments/feedback.mdx"}

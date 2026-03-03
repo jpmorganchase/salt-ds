@@ -1,5 +1,93 @@
 # @salt-ds/theme
 
+## 1.40.0
+
+### Minor Changes
+
+- c7079b6: Simplify the themes and deprecate the text palette.
+
+  Deprecated tokens:
+
+  - `--salt-palette-text-fontFamily`
+  - `--salt-palette-text-fontFamily-heading`
+  - `--salt-palette-text-fontFamily-code`
+  - `--salt-palette-text-fontFamily-action`
+  - `--salt-palette-text-action-fontWeight`
+  - `--salt-palette-text-action-fontWeight-small`
+  - `--salt-palette-text-action-fontWeight-strong`
+  - `--salt-palette-text-display-fontWeight`
+  - `--salt-palette-text-display-fontWeight-small`
+  - `--salt-palette-text-display-fontWeight-strong`
+  - `--salt-palette-text-heading-fontWeight`
+  - `--salt-palette-text-heading-fontWeight-small`
+  - `--salt-palette-text-heading-fontWeight-strong`
+  - `--salt-palette-text-body-fontWeight`
+  - `--salt-palette-text-body-fontWeight-small`
+  - `--salt-palette-text-body-fontWeight-strong`
+  - `--salt-palette-text-notation-fontWeight`
+  - `--salt-palette-text-notation-fontWeight-small`
+  - `--salt-palette-text-notation-fontWeight-strong`
+
+  If you are using any of these tokens directly, the relevant typography foundation tokens should be used instead.
+
+- a16cbc5: Added `--salt-sentiment-accent-dataviz`.
+
+## 1.39.0
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+- 972e37e: Added a new layout characteristic to the theme. This also adds `--salt-layout-page-margin` for the margin around the main content area and `--salt-layout-gap` for gutters.
+
+## 1.38.1
+
+### Patch Changes
+
+- c8affab: Updated `--salt-selectable-borderColor-hover` and `--salt-selectable-foreground-hover` to address color contrast issues.
+
+## 1.38.0
+
+### Minor Changes
+
+- df46ef9: Added new categorical and sentiment data visualization tokens.
+
+  ## Category
+
+  - `--salt-category-1-dataviz`
+  - `--salt-category-2-dataviz`
+  - `--salt-category-3-dataviz`
+  - `--salt-category-4-dataviz`
+  - `--salt-category-5-dataviz`
+  - `--salt-category-6-dataviz`
+  - `--salt-category-7-dataviz`
+  - `--salt-category-8-dataviz`
+  - `--salt-category-9-dataviz`
+  - `--salt-category-10-dataviz`
+  - `--salt-category-11-dataviz`
+  - `--salt-category-12-dataviz`
+  - `--salt-category-13-dataviz`
+  - `--salt-category-14-dataviz`
+  - `--salt-category-15-dataviz`
+  - `--salt-category-16-dataviz`
+  - `--salt-category-17-dataviz`
+  - `--salt-category-18-dataviz`
+  - `--salt-category-19-dataviz`
+  - `--salt-category-20-dataviz`
+
+  ## Sentiment
+
+  - `--salt-positive-dataviz`
+  - `--salt-negative-dataviz`
+  - `--salt-neutral-dataviz`
+  - `--salt-caution-dataviz`
+
+### Patch Changes
+
+- afe9104: Renamed subtle category tokens to remove the "subtle" word from their names and deprecated the old tokens. For example,
+  `--salt-category-1-subtle-foreground` is now `--salt-category-1-foreground`.
+
+  This change improves consistency and clarity in the naming of category tokens.
+
 ## 1.37.0
 
 ### Minor Changes

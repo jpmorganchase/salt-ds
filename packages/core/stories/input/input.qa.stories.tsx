@@ -104,6 +104,69 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       variant="secondary"
       defaultValue="Secondary bordered readonly"
     />
+
+    <Input defaultValue="Tertiary Value" variant="tertiary" />
+    <Input placeholder="Tertiary Placeholder" variant="tertiary" />
+    <Input defaultValue="Tertiary Readonly" readOnly variant="tertiary" />
+    <Input defaultValue="Tertiary Disabled" disabled variant="tertiary" />
+    <Input
+      variant="tertiary"
+      startAdornment={<FlagIcon />}
+      endAdornment={
+        <>
+          <Text>%</Text>
+          <FilterClearIcon />
+        </>
+      }
+      defaultValue={"Static adornments"}
+    />
+    <Input
+      variant="tertiary"
+      startAdornment={
+        <Button sentiment="accented">
+          <FlagIcon />
+        </Button>
+      }
+      endAdornment={
+        <Button appearance="transparent">
+          <CloseIcon />
+        </Button>
+      }
+      defaultValue={"Button adornments"}
+    />
+    <Input
+      variant="tertiary"
+      endAdornment={<Button sentiment="accented">SEND</Button>}
+      defaultValue={"Text button adornments"}
+    />
+
+    <Input defaultValue="Error value" validationStatus="error" />
+    <Input defaultValue="Warning value" validationStatus="warning" />
+    <Input defaultValue="Success value" validationStatus="success" />
+
+    <Input
+      startAdornment={<FlagIcon />}
+      endAdornment={<CreditCardIcon />}
+      defaultValue={"Error with adornments"}
+      validationStatus="error"
+    />
+    <Input bordered defaultValue="Bordered" />
+    <Input bordered disabled defaultValue="Bordered disabled" />
+    <Input bordered readOnly defaultValue="Bordered readonly" />
+    <Input bordered variant="tertiary" defaultValue="Tertiary bordered" />
+    <Input
+      bordered
+      disabled
+      variant="tertiary"
+      defaultValue="Tertiary bordered disabled"
+    />
+    <Input
+      bordered
+      readOnly
+      variant="tertiary"
+      defaultValue="Tertiary bordered readonly"
+    />
+
     <Input bordered defaultValue="Error bordered" validationStatus="error" />
     <Input
       bordered

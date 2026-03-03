@@ -1,3 +1,4 @@
+// biome-ignore lint/style/noRestrictedImports: This is the only place useLayoutEffect is acceptable.
 import { useEffect, useLayoutEffect } from "react";
 
 // React currently throws a warning when using useLayoutEffect on the server.

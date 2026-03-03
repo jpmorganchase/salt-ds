@@ -23,6 +23,7 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  version as reactVersion,
   useState,
 } from "react";
 import { Link, MemoryRouter, useLocation } from "react-router";
@@ -36,13 +37,16 @@ import {
 } from "@salt-ds/icons";
 import { clsx } from "clsx";
 
+const isLegacyReact =
+  reactVersion.startsWith("16") || reactVersion.startsWith("17");
+
 export default {
   title: "Core/Vertical Navigation",
   component: VerticalNavigation,
   decorators: [
     (Story) => {
       return (
-        <MemoryRouter>
+        <MemoryRouter unstable_useTransitions={!isLegacyReact}>
           <Story />
         </MemoryRouter>
       );

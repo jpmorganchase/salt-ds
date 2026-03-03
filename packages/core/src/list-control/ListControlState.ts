@@ -169,6 +169,15 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const { id } = optionValue;
 
+      // Remove any existing entry with the same id to prevent duplicates.
+      // This is needed for virtualization where components may re-register.
+      const existingIndex = optionsRef.current.findIndex(
+        (item) => item.data.id === id,
+      );
+      if (existingIndex !== -1) {
+        optionsRef.current.splice(existingIndex, 1);
+      }
+
       optionsRef.current.push({ data: optionValue, element });
 
       return () => {

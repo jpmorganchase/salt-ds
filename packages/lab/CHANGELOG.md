@@ -1,5 +1,82 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.86
+
+### Minor Changes
+
+- a16cbc5: `Rating` has been added to allow users to provide feedback relating to your product or experience.
+
+  Basic usage:
+
+  ```jsx
+  import { Rating } from "@salt-ds/lab";
+
+  function App() {
+    const [value, setValue] = useState(0);
+
+    return (
+      <Rating
+        value={value}
+        onValueChange={(event, newValue) => setValue(newValue)}
+      />
+    );
+  }
+  ```
+
+### Patch Changes
+
+- Updated dependencies [47d113d]
+- Updated dependencies [a16cbc5]
+  - @salt-ds/core@1.57.0
+
+## 1.0.0-alpha.85
+
+### Minor Changes
+
+- 972e37e: Added mobile density tokens.
+- 4507919: Removed `Table` from labs and promoted to core.
+- 4badc14: Added `Kbd` component.
+
+  `Kbd` is a decorative element used to represent specific keyboard keys.
+
+  ```tsx
+  <Kbd>Option</Kbd>
+  <Kbd>Cmd</Kbd>
+  <Kbd>L</Kbd>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [972e37e]
+- Updated dependencies [4507919]
+  - @salt-ds/core@1.56.0
+
+## 1.0.0-alpha.84
+
+### Minor Changes
+
+- aba5610: Added `TableContainer` wrapper component that provides accessibility features including keyboard navigation support and focus indicators for scrollable tables.
+
+  ```jsx
+  <TableContainer>
+    <Table>
+      <caption>{...}</caption>
+      {...}
+    </Table>
+  </TableContainer>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [27c4338]
+- Updated dependencies [27c4338]
+- Updated dependencies [27c4338]
+- Updated dependencies [472a1b4]
+- Updated dependencies [27c4338]
+  - @salt-ds/core@1.55.0
+  - @salt-ds/styles@0.3.0
+  - @salt-ds/icons@1.17.1
+
 ## 1.0.0-alpha.83
 
 ### Patch Changes

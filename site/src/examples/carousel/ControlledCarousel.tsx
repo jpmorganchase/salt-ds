@@ -1,4 +1,12 @@
-import { Button, FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
+import {
+  Button,
+  FlexLayout,
+  H2,
+  H3,
+  StackLayout,
+  Text,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -51,35 +59,37 @@ export const ControlledCarousel = (): ReactElement => {
         <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
           Controlled carousel example
         </H2>
-        <CarouselSlides>
-          {sliderData.map((slide, index) => {
-            const tabId = `${carouselId}-tab${index}`;
-            return (
-              <CarouselCard
-                className={styles.carouselSlide}
-                key={tabId}
-                aria-labelledby={`${tabId}-title`}
-                appearance="bordered"
-                media={
-                  <img
-                    aria-hidden={true}
-                    className={styles.carouselImage}
-                    src={slide.image}
-                  />
-                }
-                header={<H3 id={`${tabId}-title`}>{slide.title}</H3>}
-              >
-                <Text>{slide.content}</Text>
-              </CarouselCard>
-            );
-          })}
-        </CarouselSlides>
-        <FlexLayout gap={1} wrap={true}>
-          <CarouselPreviousButton tabIndex={-1} />
-          <CarouselTabList />
-          <CarouselNextButton tabIndex={-1} />
-          <CarouselProgressLabel />
-        </FlexLayout>
+        <StackLayout gap={1} direction="column-reverse">
+          <FlexLayout gap={1} wrap={true}>
+            <CarouselPreviousButton tabIndex={-1} />
+            <CarouselTabList />
+            <CarouselNextButton tabIndex={-1} />
+            <CarouselProgressLabel />
+          </FlexLayout>
+          <CarouselSlides>
+            {sliderData.map((slide, index) => {
+              const tabId = `${carouselId}-tab${index}`;
+              return (
+                <CarouselCard
+                  className={styles.carouselSlide}
+                  key={tabId}
+                  aria-labelledby={`${tabId}-title`}
+                  appearance="bordered"
+                  media={
+                    <img
+                      aria-hidden={true}
+                      className={styles.carouselImage}
+                      src={slide.image}
+                    />
+                  }
+                  header={<H3 id={`${tabId}-title`}>{slide.title}</H3>}
+                >
+                  <Text>{slide.content}</Text>
+                </CarouselCard>
+              );
+            })}
+          </CarouselSlides>
+        </StackLayout>
       </Carousel>
     </>
   );

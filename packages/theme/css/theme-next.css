@@ -16,7 +16,6 @@
 @import url(next/palette/neutral.css);
 @import url(next/palette/positive.css);
 @import url(next/palette/shadow.css);
-@import url(next/palette/text.css);
 @import url(next/palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
@@ -27,6 +26,7 @@
 @import url(next/characteristics/content.css);
 @import url(next/characteristics/editable.css);
 @import url(next/characteristics/focused.css);
+@import url(next/characteristics/layout.css);
 @import url(next/characteristics/navigable.css);
 @import url(next/characteristics/overlayable.css);
 @import url(next/characteristics/selectable.css);

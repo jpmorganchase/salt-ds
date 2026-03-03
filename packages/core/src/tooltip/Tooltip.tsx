@@ -1,3 +1,4 @@
+import { useClassNameInjection } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import {
   cloneElement,
@@ -7,11 +8,11 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
 import {
-  VALIDATION_NAMED_STATUS,
-  type ValidationStatus,
-} from "../status-indicator";
+  type FormFieldValidationStatus,
+  useFormFieldProps,
+} from "../form-field-context";
+import type { ValidationStatus } from "../status-indicator";
 import {
   getRefFromChildren,
   makePrefixer,
@@ -48,7 +49,7 @@ export interface TooltipProps
   /**
    * Optional string to determine the status of the Tooltip.
    */
-  status?: ValidationStatus;
+  status?: FormFieldValidationStatus | ValidationStatus;
   /**
    * Delay in milliseconds before the Tooltip is shown.
    */
@@ -73,9 +74,13 @@ export interface TooltipProps
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip(props, ref) {
+    const { className, props: finalProps } = useClassNameInjection(
+      "saltTooltip",
+      props,
+    );
+
     const {
       children,
-      className,
       disabled: disabledProp = false,
       hideArrow = false,
       hideIcon = false,
@@ -86,7 +91,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       enterDelay = 300,
       leaveDelay = 0,
       ...rest
-    } = props;
+    } = finalProps;
 
     const {
       disabled: formFieldDisabled,
@@ -94,12 +99,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = useFormFieldProps();
 
     const disabled = disabledProp || formFieldDisabled;
-    const status =
-      statusProp ??
-      (formFieldValidationStatus !== undefined &&
-      VALIDATION_NAMED_STATUS.includes(formFieldValidationStatus)
-        ? formFieldValidationStatus
-        : undefined);
+    const status = statusProp ?? (formFieldValidationStatus || undefined);
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const hookProps: UseTooltipProps = {

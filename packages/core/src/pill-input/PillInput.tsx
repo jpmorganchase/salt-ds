@@ -16,7 +16,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  type FormFieldValidationStatus,
+  useFormFieldProps,
+} from "../form-field-context";
 import { Pill } from "../pill";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
@@ -70,11 +73,11 @@ export interface PillInputProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning" | "success";
+  validationStatus?: FormFieldValidationStatus;
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   hidePillClose?: boolean;
   truncate?: boolean;
   /** Styling variant with full border. Defaults to false
@@ -331,8 +334,12 @@ export const PillInput = forwardRef(function PillInput(
           )}
         </div>
         <input
-          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+          aria-describedby={
+            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
+          }
+          aria-labelledby={
+            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
+          }
           autoComplete="off"
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}

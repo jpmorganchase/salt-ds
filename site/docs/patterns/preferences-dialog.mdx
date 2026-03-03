@@ -11,13 +11,14 @@ data:
   relatedPatterns: ["Button bar", "Navigation", "Vertical navigation"]
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/core-layout-parent-child-layout--preferences-dialog", label: "Examples" },
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-preferences-dialog--preferences-dialog", label: "Examples" },
       { href: "https://www.figma.com/file/N6cSYycc4z6XkCjVvc1kIA/Preferences-Dialog-Pattern?type=design&node-id=157-40560&mode=design&t=eq3OapLjaquXm3UP-0", label: "Preferences dialog stickersheet", internal: true },
     ]
 ---
  
   <Diagram
-    src="/img/patterns/preferences-dialog/blotter_grid_settings.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-dark.png"
     alt="Preferences dialog example"
     border
   />
@@ -39,7 +40,8 @@ A preferences dialog comprises three key features:
 3. **Buttons**: possible actions for users to take. See the [applying preferences](#applying-preferences) section to learn more.
   
   <Diagram
-    src="/img/patterns/preferences-dialog/preferences_dialog_anatomy.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog-anatomy.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-anatomy-dark.png"
     alt="Preferences Dialog navigation and content."
     border
   />
@@ -52,18 +54,22 @@ A preferences dialog comprises three key features:
 - Use a [parent-child layout](/salt/components/layouts/parent-child-layout) component to position the navigation and content within a preferences dialog. 
 
 <Diagram
-    src="/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_on.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog-spacing.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-spacing-dark.png"
     alt="Example showing a preferences dialog's layout construction."
     border
   />
 
-<GuidanceCallout type="positive" customPillText="Best practices">
-  - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
-  - Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
 
-  To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
+<Callout
+  status="success"
+  title="Best practices"
+>
+ - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
+ - Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
 
-</GuidanceCallout>
+ To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
+</Callout>
 
 ## Content area scrolling
 
@@ -72,7 +78,8 @@ We recommend that scrolling affordance should only take effect if content in the
 This is visually indicated by two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow. 
 
   <Diagram
-    src="/img/patterns/preferences-dialog/scrolling_content_area.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog-scrolling.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-scrolling-dark.png"
     alt="Example of content section scrolling."
     caption="A preferences dialog with scrolling content area."
     border
@@ -81,7 +88,8 @@ This is visually indicated by two separator lines above and below the parent-chi
 Display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
 
   <Diagram
-    src="/img/patterns/preferences-dialog/scrollable_navigation_and_content.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog-scrolling-overflow.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-scrolling-overflow-dark.png"
     alt="Example of scrolling affordance."
     caption="A preferences dialog with scrollable navigation and content area."
     border
@@ -101,22 +109,27 @@ Display either a button bar at the bottom of the dialog, or a close button in th
 - Change preferences that can't take immediate effect for any other reason.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/actions_manually_applied_preferences.png"
+  src="/img/patterns/preferences-dialog/preferences-dialog-button-bar.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-button-bar-dark.png"
   alt="Applying preferences."
   caption="This preferences dialog has Cancel and Save actions for applying preferences."
   border
 />
 
-<GuidanceCallout type="positive" customPillText="Best practices">
+<Callout
+  status="success"
+  title="Best practices"
+>
   Display core actions to the right of a dialog. Refer to the [button bar pattern](./button-bar) for further guidance on how to display user actions within dialogs. 
-</GuidanceCallout>
+</Callout>
 
 ### Close button
 
 If your preferences dialog does not need a button bar, instead display a close button in the top-right corner of the dialog. This allows the user to close the dialog after editing any preferences. Changes should take effect as soon as the user changes a preference.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/live_updating_dialog.png"
+  src="/img/patterns/preferences-dialog/preferences-dialog-close-button.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-close-button-dark.png"
   alt="Live updates."
   caption="Updating preferences automatically within a dialog negates the need for a button bar."
   border
@@ -127,7 +140,8 @@ If your preferences dialog does not need a button bar, instead display a close b
 We recommend configuring the button bar to display secondary actions to the left such as **Import** and **Export** if you need to enable other actions.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/preferences_dialog_secondary_action.png"
+  src="/img/patterns/preferences-dialog/preferences-dialog-secondary-action.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-secondary-action-dark.png"
   alt="Secondary actions displayed to the left."
   caption="A preferences dialog with secondary actions displayed to the left."
   border
@@ -147,7 +161,8 @@ Once a preference dialog hits a certain breakpoint, you can configure the layout
 When the navigation collapses, the preferences content spans the entire width of the dialog. To select and view alternative preference types, users should use the back chevron button to navigate back to the vertical navigation. The vertical navigation view also spans the dialog width. A collapsed layout ensures improved usability of dialog content in smaller screen sizes or application resolutions.
 
   <Diagram
-    src="/img/patterns/preferences-dialog/preferences_dialog_collapsed_navigation.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation-dark.png"
     alt="Collapsed navigation."
     caption="A preferences dialog with a collapsed navigation."
     border
@@ -157,12 +172,16 @@ When the navigation collapses, the preferences content spans the entire width of
 
 For smaller viewports (i.e. devices with limited screen sizes), it's preferable to configure buttons to stack horizontally at the [XS breakpoint](../foundations/responsiveness#breakpoints). This ensures longer button labels accommodate mobile devices that may not fit within the horizontal layout. They also remain an adequate size for touch interactions.
 
-<GuidanceCallout type="positive" customPillText="Best practices">
+<Callout
+  status="success"
+  title="Best practices"
+>
   View the [stacked button bar](./button-bar#stacked-button-bar-layout) guidance to understand how to order and build a stacked button bar. 
-</GuidanceCallout>
+</Callout>
 
   <Diagram
-    src="/img/patterns/preferences-dialog/preferences_dialog_stacked_button_bar.png"
+    src="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar.png"
+    srcDark="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar-dark.png"
     alt="Stacked button bar."
     caption="A preferences dialog with a stacked button bar."
     border

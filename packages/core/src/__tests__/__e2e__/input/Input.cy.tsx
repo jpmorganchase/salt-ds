@@ -267,4 +267,11 @@ describe("GIVEN an Input", () => {
     cy.findByText("Username").realClick();
     cy.findByRole("textbox").should("be.focused");
   });
+
+  it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", () => {
+    cy.mount(<Input />);
+
+    cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
+    cy.findByRole("textbox").should("not.have.attr", "aria-labelledby");
+  });
 });

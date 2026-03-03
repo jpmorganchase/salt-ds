@@ -1,0 +1,63 @@
+---
+title: Separable characteristic
+layout: DetailTechnical
+sidebar:
+  priority: 9
+---
+
+Separable tokens help organize and structure interfaces by visually dividing regions of a screen, sections of content, or groups of related information. Using separable tokens consistently makes complex layouts easier to navigate and helps users focus on what matters most.
+
+## Static separators
+
+Static separators use primary, secondary, and tertiary variants to provide different levels of emphasis. Primary separators create strong visual divisions; secondary separators offer moderate emphasis; and tertiary separators provide subtle separation. This range allows you to establish clear hierarchies and improve readability across your interface.
+
+<Diagram
+  src="/img/theming/characteristic-static-separators-light.png"
+  srcDark="/img/theming/characteristic-static-separators-dark.png"
+  alt="Annotated example of static separators"
+  background="secondary"
+/>
+
+`--salt-separable-primary-borderColor` \
+`--salt-separable-secondary-borderColor` \
+`--salt-separable-tertiary-borderColor`
+
+## Controllable separators
+
+Controllable separators use different tokens to indicate interactive states, such as hover and active. When a user interacts with a separator—like dragging to resize regions—the tokens change to provide clear visual feedback.
+
+<Diagram
+  src="/img/theming/characteristic-controllable-separators-light.png"
+  srcDark="/img/theming/characteristic-controllable-separators-dark.png"
+  alt="Annotated example of controllable separators"
+  background="secondary"
+/>
+
+`--salt-container-primary-background` \
+`--salt-separable-foreground` \
+`--salt-separable-secondary-borderColor`
+
+On hover, controllable separators update their background and border tokens to provide subtle visual feedback, indicating the separator is interactive.
+
+<Diagram
+  src="/img/theming/characteristic-controllable-separators-2-light.png"
+  srcDark="/img/theming/characteristic-controllable-separators-2-dark.png"
+  alt="Annotated example of controllable separators"
+  background="secondary"
+/>
+
+`--salt-separable-background-hover` \
+`--salt-separable-foreground-hover` \
+`--salt-separable-secondary-borderColor`
+
+When active, the tokens change again to highlight the separator, making it clear which element is currently being adjusted.
+
+<Diagram
+  src="/img/theming/characteristic-controllable-separators-3-light.png"
+  srcDark="/img/theming/characteristic-controllable-separators-3-dark.png"
+  alt="Annotated example of controllable separators"
+  background="secondary"
+/>
+
+`--salt-separable-background-active` \
+`--salt-separable-foreground-active`

@@ -1,4 +1,4 @@
-import { FlexLayout, H2, H3, Text, useId } from "@salt-ds/core";
+import { FlexLayout, H2, H3, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
@@ -23,13 +23,7 @@ export const Card = (): ReactElement => {
       <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
         Carousel cards example
       </H2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column-reverse",
-          gap: "var(--salt-spacing-100)",
-        }}
-      >
+      <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true}>
           <CarouselPreviousButton tabIndex={-1} />
           <CarouselTabList />
@@ -58,7 +52,7 @@ export const Card = (): ReactElement => {
             );
           })}
         </CarouselSlides>
-      </div>
+      </StackLayout>
     </Carousel>
   );
 };

@@ -1,9 +1,7 @@
 module.exports = {
-  eslint: {
-    ignoreDuringBuilds: true,
+  outputFileTracingIncludes: {
+    "/*": ["snapshots/**/*"],
   },
-  reactStrictMode: true,
-  swcMinify: true,
   transpilePackages: [
     "@jpmorganchase/mosaic-site-middleware",
     "@jpmorganchase/mosaic-store",

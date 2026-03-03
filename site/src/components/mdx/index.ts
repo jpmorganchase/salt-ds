@@ -1,3 +1,10 @@
+import {
+  Table as table,
+  TFoot as tfoot,
+  TH as th,
+  THead as thead,
+  TR as tr,
+} from "@salt-ds/core";
 import { withAnchorHeading } from "./anchorHeading";
 import { Code as code } from "./code";
 import { Heading2 } from "./h2";
@@ -7,7 +14,6 @@ import { Image } from "./image";
 import { Link as a } from "./link";
 import { Paragraph as p } from "./p";
 import { Pre as pre } from "./pre";
-import { Table as table, Thead as thead, Tr as tr } from "./table";
 import { UnorderedList as ul } from "./ul";
 
 const h2 = withAnchorHeading(Heading2);
@@ -25,6 +31,8 @@ export {
   table,
   thead,
   tr,
+  tfoot,
+  th,
   ul,
   Image as img,
   Image,

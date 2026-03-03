@@ -301,8 +301,12 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             );
           })}
         <textarea
-          aria-labelledby={clsx(inputAriaLabelledBy, textAreaLabelledBy)}
-          aria-describedby={clsx(ariaDescribedBy, textAreaDescribedBy)}
+          aria-labelledby={
+            clsx(inputAriaLabelledBy, textAreaLabelledBy) || undefined
+          }
+          aria-describedby={
+            clsx(ariaDescribedBy, textAreaDescribedBy) || undefined
+          }
           aria-label={clsx(ariaLabel, getItemsAriaLabel(selectedItems.length))}
           aria-activedescendant={
             highlightedIndex && highlightedIndex >= 0

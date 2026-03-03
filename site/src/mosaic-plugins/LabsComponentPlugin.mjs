@@ -11,7 +11,7 @@ function createPageTest(ignorePages, pageExtensions) {
 }
 
 const statusLabel = "Release Candidate";
-const RCPackages = ["@salt-ds/lab"];
+const RCPackages = ["@salt-ds/lab", "@salt-ds/highcharts-theme"];
 
 const LabsComponentPlugin = {
   async $afterSource(pages, { ignorePages, pageExtensions }) {

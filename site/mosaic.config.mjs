@@ -1,10 +1,11 @@
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import fsConfig from "@jpmorganchase/mosaic-cli/fs.config.js";
+import nextEnv from "@next/env";
 import deepmerge from "deepmerge";
-import dotenvLoad from "dotenv-load";
 
-dotenvLoad();
+const projectDir = process.cwd();
+nextEnv.loadEnvConfig(projectDir);
 
 const require = createRequire(import.meta.url);
 
@@ -66,7 +67,6 @@ const saltConfig = {
 };
 
 export default deepmerge(saltConfig, {
-  deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
       modulePath: "@jpmorganchase/mosaic-source-local-folder",

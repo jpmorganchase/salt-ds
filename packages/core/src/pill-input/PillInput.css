@@ -28,7 +28,6 @@
 }
 
 .saltPillInput:hover {
-  background: var(--saltPillInput-background-hover, var(--pillInput-background-hover));
   cursor: var(--salt-cursor-text);
 }
 
@@ -105,10 +104,8 @@
 /* Class applied if `variant="primary"` */
 .saltPillInput-primary {
   --pillInput-background: var(--salt-editable-primary-background);
-  --pillInput-background-active: var(--salt-editable-primary-background-active);
-  --pillInput-background-hover: var(--salt-editable-primary-background-hover);
   --pillInput-background-disabled: var(--salt-editable-primary-background-disabled);
-  --pillInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --pillInput-background-readonly: var(--salt-editable-background-readonly);
   --pillInput-borderColor: var(--salt-editable-borderColor);
   --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
   --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -118,10 +115,18 @@
 /* Class applied if `variant="secondary"` */
 .saltPillInput-secondary {
   --pillInput-background: var(--salt-editable-secondary-background);
-  --pillInput-background-active: var(--salt-editable-secondary-background-active);
-  --pillInput-background-hover: var(--salt-editable-secondary-background-active);
   --pillInput-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --pillInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --pillInput-background-readonly: var(--salt-editable-background-readonly);
+  --pillInput-borderColor: var(--salt-editable-borderColor);
+  --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
+  --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --pillInput-outlineColor: var(--salt-focused-outlineColor);
+}
+
+/* Class applied if `variant="tertiary"` */
+.saltPillInput-tertiary {
+  --pillInput-background: var(--salt-editable-tertiary-background);
+  --pillInput-background-readonly: var(--salt-editable-background-readonly);
   --pillInput-borderColor: var(--salt-editable-borderColor);
   --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
   --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
@@ -131,34 +136,26 @@
 /* Style applied to input if `validationState="error"` */
 .saltPillInput-error {
   --pillInput-background: var(--salt-status-error-background);
-  --pillInput-background-active: var(--salt-status-error-background);
-  --pillInput-background-hover: var(--salt-status-error-background);
   --pillInput-background-readonly: var(--salt-status-error-background);
   --pillInput-borderColor: var(--salt-status-error-borderColor);
   --pillInput-borderColor-active: var(--salt-status-error-borderColor);
   --pillInput-borderColor-hover: var(--salt-status-error-borderColor);
-  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
   --pillInput-outlineColor: var(--salt-status-error-borderColor);
 }
 
 /* Style applied to input if `validationState="warning"` */
 .saltPillInput-warning {
   --pillInput-background: var(--salt-status-warning-background);
-  --pillInput-background-active: var(--salt-status-warning-background);
-  --pillInput-background-hover: var(--salt-status-warning-background);
   --pillInput-background-readonly: var(--salt-status-warning-background);
   --pillInput-borderColor: var(--salt-status-warning-borderColor);
   --pillInput-borderColor-active: var(--salt-status-warning-borderColor);
   --pillInput-borderColor-hover: var(--salt-status-warning-borderColor);
-  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
   --pillInput-outlineColor: var(--salt-status-warning-borderColor);
 }
 
 /* Style applied to input if `validationState="success"` */
 .saltPillInput-success {
   --pillInput-background: var(--salt-status-success-background);
-  --pillInput-background-active: var(--salt-status-success-background);
-  --pillInput-background-hover: var(--salt-status-success-background);
   --pillInput-background-readonly: var(--salt-status-success-background);
   --pillInput-borderColor: var(--salt-status-success-borderColor);
   --pillInput-borderColor-active: var(--salt-status-success-borderColor);
@@ -169,7 +166,6 @@
 /* Styling when focused */
 .saltPillInput-focused,
 .saltPillInput-focused:hover {
-  background: var(--saltPillInput-background-active, var(--pillInput-background-active));
   cursor: var(--salt-cursor-text);
   outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
 }

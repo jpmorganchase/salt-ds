@@ -8,4 +8,64 @@ data:
   $ref: ./#/data
 ---
 
-## Coming soon
+## Best practices
+
+**Provide an accessible name for the `Table`**
+
+- Use a `<caption>` element (preferred method) or apply `aria-labelledby` / `aria-label` attributes to the table
+- The caption should clearly describe the table's content and purpose
+
+**Example:**
+
+```jsx
+<TableContainer>
+  <Table>
+    <caption>Quarterly Sales Data</caption>
+    {/* table content */}
+  </Table>
+</TableContainer>
+```
+
+## Table container
+
+This component conditionally wraps tables in a scrollable region container when the viewport shrinks below breakpoints. At narrow viewports, table content can overlap and display incorrectly. The scrollable wrapper prevents this overlap while ensuring the table content remains accessible to all users.
+
+### Accessible naming approach
+
+We use `aria-labelledby` on the container, pointing to the table element itself rather than requiring a separate specific caption or label structure. This approach:
+
+- Works with tables that use `<caption>` elements
+- Works with tables that use aria-label
+- Works with tables that use neither (by including table content)
+- Requires no additional markup from implementing teams
+- Ensures the region always has an accessible name (required by WCAG SC 4.1.2)
+
+### Known Behavior:
+
+Some browser and screen reader combinations will announce the region's accessible name by reading the table's accessible name followed by the table's content (headers and data cells). This creates a verbose announcement when focus first enters the scrollable region.
+
+### Why we chose this approach:
+
+We evaluated several alternatives and determined that providing a guaranteed accessible name (even if verbose) is better than risking WCAG 4.1.2 violations when teams implement tables without captions or labels. Users can stop verbose announcements using the Control key (NVDA, JAWS) or the Control key / two-finger tap (VoiceOver) and continue navigating normally.
+
+### WCAG Conformance
+
+This implementation supports the following WCAG success criteria for tables at reflow dimensions:
+
+- **SC 1.4.10 Reflow (Level AA):** Tables can be scrolled in two dimensions when necessary, without loss of information or functionality
+- **SC 2.1.1 Keyboard (Level A):** Scrollable regions are keyboard-accessible
+- **SC 4.1.2 Name, Role, Value (Level A):** Region has a programmatically determined accessible name
+
+## Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab">
+    - Moves focus to the table container when the table is scrollable - When the
+    container has focus, pressing Tab again moves focus to the next focusable
+    element in the tab order
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Tab">
+    When focus is on table container, this action moves focus out of the table
+    container to the previous element in the tab order
+  </KeyboardControl>
+</KeyboardControls>

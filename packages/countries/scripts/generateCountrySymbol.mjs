@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Biome } from "@biomejs/js-api/nodejs";
-import glob from "glob";
+import { glob } from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 
@@ -78,7 +78,9 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     .join(basePath, `./SVG/+(${fileArg})`)
     .replace(/\\/g, "/");
 
-  const fileNames = glob.sync(globPath, options);
+  const fileNames = glob
+    .sync(globPath, options)
+    .sort((a, b) => a.localeCompare(b, "en"));
 
   const countryCss = fileNames
     .filter((fileName) => !fileName.includes("_sharp"))
@@ -117,7 +119,9 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     .join(basePath, `./SVG/+(${fileArg})`)
     .replace(/\\/g, "/");
 
-  const fileNames = glob.sync(globPath, options);
+  const fileNames = glob
+    .sync(globPath, options)
+    .sort((a, b) => a.localeCompare(b, "en"));
 
   const countryCss = fileNames
     .filter((fileName) => fileName.includes("_sharp"))
@@ -170,7 +174,9 @@ const generateCountrySymbolComponents = ({
     .join(basePath, `./SVG/+(${fileArg})`)
     .replace(/\\/g, "/");
 
-  const fileNames = glob.sync(globPath, options);
+  const fileNames = glob
+    .sync(globPath, options)
+    .sort((a, b) => a.localeCompare(b, "en"));
 
   for (const fileName of fileNames) {
     const svgString = fs.readFileSync(fileName, "utf-8");
