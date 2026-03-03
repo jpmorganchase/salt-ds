@@ -72,7 +72,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       value,
       label,
       icon: Icon,
-      disabled: disabledProp = false,
+      disabled: disabledProp,
       children,
     } = props;
 
