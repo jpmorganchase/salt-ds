@@ -96,6 +96,62 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     />
 
     <MultilineInput
+      defaultValue="Tertiary value 3 rows"
+      rows={3}
+      variant="tertiary"
+    />
+    <MultilineInput placeholder="Tertiary Placeholder" variant="tertiary" />
+    <MultilineInput
+      defaultValue="Tertiary Disabled"
+      disabled
+      variant="tertiary"
+    />
+    <MultilineInput
+      defaultValue="Tertiary Readonly"
+      readOnly
+      variant="tertiary"
+    />
+    <MultilineInput
+      defaultValue="Tertiary with multiple adornment"
+      variant="tertiary"
+      startAdornment={<Text>£</Text>}
+      endAdornment={
+        <>
+          <Text>GBP</Text>
+          <Button appearance="transparent">
+            <HelpSolidIcon />
+          </Button>
+          <Button sentiment="accented">
+            <SendIcon />
+          </Button>
+        </>
+      }
+    />
+    <MultilineInput
+      defaultValue="Tertiary with text button adornment"
+      variant="tertiary"
+      startAdornment={<Text>£</Text>}
+      endAdornment={<Button sentiment="accented">SEND</Button>}
+    />
+    <MultilineInput
+      defaultValue="Tertiary bordered"
+      bordered
+      variant="tertiary"
+    />
+    <MultilineInput
+      defaultValue="Tertiary disabled bordered"
+      bordered
+      disabled
+      variant="tertiary"
+    />
+    <MultilineInput
+      defaultValue="Tertiary readonly bordered"
+      bordered
+      readOnly
+      variant="tertiary"
+    />
+
+    <MultilineInput
       startAdornment={<FlagIcon />}
       endAdornment={<PinSolidIcon />}
       validationStatus="success"

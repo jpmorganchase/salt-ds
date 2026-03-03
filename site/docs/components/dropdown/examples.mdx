@@ -8,11 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-## Default (single-select)
+## Single-select
 
 Users can select a single item from the dropdown options.
-
-`Dropdown` contains a button that opens a list on mouse or keyboard interaction.
 
 ### Best practices
 
@@ -48,11 +46,9 @@ More information can be found [in the W3C form instructions](https://www.w3.org/
 
 ## Variants
 
-The component has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
+The `Dropdown` has three variants: primary, secondary and tertiary. Each variant adjusts the background color of the dropdown. The default variant is primary but can be switched using the `variant` prop.
 
-The choice between primary and secondary variants should be considered alongside the background color it sits upon.
-
-Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. `Dropdown` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+The choice between variants should be considered alongside the background color it sits upon.
 
 <LivePreview componentName="dropdown" exampleName="Variants" />
 
@@ -83,7 +79,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 <LivePreview componentName="dropdown" exampleName="DisabledOption" />
 
-## `FormField` support
+## Form field support
 
 Wrap `Dropdown` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the dropdown with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 

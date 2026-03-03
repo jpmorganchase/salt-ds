@@ -8,11 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-## Default (single-select)
+## Single-select
 
-A single item can be selected from the combo box options.
-
-`ComboBox` contains an input field that opens a list. As users type, the list displays all filtered options based on their input.
+By default, a single item can be selected from the combo box options. The selected option is displayed in the input field.
 
 ### Best practices
 
@@ -42,13 +40,9 @@ More information can be found [in the W3C form instructions](https://www.w3.org/
 
 ## Variants
 
-The component has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
+The `ComboBox` has three variants: primary, secondary and tertiary. Each variant adjusts the background color of the combo box. The default variant is primary but can be switched using the `variant` prop.
 
-The choice between primary and secondary variants should be considered alongside the background color it sits upon.
-
-### Best practices
-
-The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. You can wrap `ComboBox` in a `FormField` when it’s displayed within a orm context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+The choice between variants should be considered alongside the background color it sits upon.
 
 <LivePreview componentName="combo-box" exampleName="Variants" />
 
@@ -79,7 +73,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 <LivePreview componentName="combo-box" exampleName="DisabledOption" />
 
-## `FormField` support
+## Form field support
 
 Wrap `ComboBox` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the combo box with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
