@@ -6,7 +6,7 @@ import { type SyntheticEvent, useState } from "react";
 import { defaultColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-export const Variants = (props: AgGridReactProps) => {
+export const Zebra = (props: AgGridReactProps) => {
   const [selected, setSelected] = useState("primary");
   // We've created a local custom hook to set the rows and column sizes.
   // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
@@ -25,10 +25,14 @@ export const Variants = (props: AgGridReactProps) => {
       </ToggleButtonGroup>
       <div
         {...containerProps}
-        className={clsx(containerProps.className, {
-          "ag-theme-salt-variant-secondary": selected === "secondary",
-          "ag-theme-salt-variant-tertiary": selected === "tertiary",
-        })}
+        className={clsx(
+          containerProps.className,
+          "ag-theme-salt-variant-zebra",
+          {
+            "ag-theme-salt-variant-secondary": selected === "secondary",
+            "ag-theme-salt-variant-tertiary": selected === "tertiary",
+          },
+        )}
       >
         <AgGridReact
           {...agGridProps}
