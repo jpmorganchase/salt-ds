@@ -20,11 +20,7 @@ export const WithIcons = (): ReactElement => {
         label="Documents"
         icon={folderIcon("documents")}
       >
-        <TreeNode
-          value="reports"
-          label="Reports"
-          icon={folderIcon("reports")}
-        >
+        <TreeNode value="reports" label="Reports" icon={folderIcon("reports")}>
           <TreeNode
             value="annual-report"
             label="Annual Report"
@@ -53,11 +49,7 @@ export const WithIcons = (): ReactElement => {
           />
         </TreeNode>
       </TreeNode>
-      <TreeNode
-        value="pictures"
-        label="Pictures"
-        icon={folderIcon("pictures")}
-      >
+      <TreeNode value="pictures" label="Pictures" icon={folderIcon("pictures")}>
         <TreeNode
           value="vacation"
           label="Vacation"
