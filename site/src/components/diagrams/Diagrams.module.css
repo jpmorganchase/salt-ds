@@ -84,6 +84,7 @@
   justify-content: center;
   display: flex;
   border-radius: var(--salt-palette-corner);
+  padding: var(--salt-spacing-200);
 }
 
 .diagramsContainer .image img {
