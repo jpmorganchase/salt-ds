@@ -52,6 +52,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { fn } from "storybook/test";
 
 import "./tabs-next.stories.css";
 
@@ -60,7 +61,7 @@ export default {
   component: TabsNext,
   args: {
     value: undefined,
-    onChange: undefined,
+    onChange: fn(),
   },
 };
 
