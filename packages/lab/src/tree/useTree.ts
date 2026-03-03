@@ -370,9 +370,10 @@ export function useTree(props: UseTreeProps) {
     [multiselect, selectedState, calculateIndeterminateState],
   );
 
-  const updateAncestors = (currentSelected: string[], value: string) => {
-    let nextSelected = [...currentSelected];
-    const nextSelectedSet = new Set(nextSelected);
+  const updateAncestors = (
+    currentSet: Set<string>,
+    value: string,
+  ): string[] => {
     const ancestors = getAncestors(value);
 
     for (const ancestor of ancestors) {
@@ -384,42 +385,39 @@ export function useTree(props: UseTreeProps) {
       if (enabledChildren.length === 0) continue;
 
       const allSelected = enabledChildren.every((child) =>
-        nextSelectedSet.has(child),
+        currentSet.has(child),
       );
-      const ancestorSelected = nextSelectedSet.has(ancestor);
 
-      if (allSelected && !ancestorSelected) {
-        nextSelected.push(ancestor);
-        nextSelectedSet.add(ancestor);
-      } else if (!allSelected && ancestorSelected) {
-        nextSelected = nextSelected.filter((v) => v !== ancestor);
-        nextSelectedSet.delete(ancestor);
+      if (allSelected) {
+        currentSet.add(ancestor);
+      } else {
+        currentSet.delete(ancestor);
       }
     }
 
-    return nextSelected;
+    return Array.from(currentSet);
   };
 
   const getMultiSelectState = (value: string) => {
-    const isCurrentlySelected = selectedState.includes(value);
-    let newSelected: string[];
+    const currentSet = new Set(selectedState);
+    const descendants = getDescendants(value);
 
-    if (isCurrentlySelected) {
-      newSelected = selectedState.filter((v) => v !== value);
-
-      const descendants = getDescendants(value);
-      newSelected = newSelected.filter((v) => !descendants.includes(v));
+    if (currentSet.has(value)) {
+      currentSet.delete(value);
+      const descendantSet = new Set(descendants);
+      for (const d of descendantSet) {
+        currentSet.delete(d);
+      }
     } else {
-      newSelected = [...selectedState, value];
-
-      const descendants = getDescendants(value);
-      const newDescendants = descendants.filter(
-        (d) => !newSelected.includes(d),
-      );
-      newSelected = [...newSelected, ...newDescendants];
+      currentSet.add(value);
+      for (const d of descendants) {
+        if (!currentSet.has(d)) {
+          currentSet.add(d);
+        }
+      }
     }
 
-    return updateAncestors(newSelected, value);
+    return updateAncestors(currentSet, value);
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: getMultiSelectState/updateAncestors are intentionally not memoized - their captured values (selectedState, treeModel, etc.) are already in deps
