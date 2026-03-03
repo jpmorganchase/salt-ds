@@ -1,5 +1,21 @@
 # @salt-ds/highcharts-theme
 
+## 0.2.2
+
+### Patch Changes
+
+- 66ed273: Use passive effect in useChart to ensure CSS tokens are read after ThemeApplicator applies root density classes
+- Updated dependencies [23b5f53]
+- Updated dependencies [23b5f53]
+- Updated dependencies [40cdcb4]
+- Updated dependencies [aae0846]
+- Updated dependencies [fdb9cfc]
+- Updated dependencies [23b5f53]
+- Updated dependencies [133a519]
+- Updated dependencies [503c186]
+  - @salt-ds/theme@1.41.0
+  - @salt-ds/core@1.58.0
+
 ## 0.2.1
 
 ### Patch Changes
