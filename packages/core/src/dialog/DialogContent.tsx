@@ -14,8 +14,8 @@ import {
   useIsomorphicLayoutEffect,
   useResizeObserver,
 } from "../utils";
-
 import dialogContentCss from "./DialogContent.css";
+import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
@@ -59,7 +59,8 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const checkOverflow = useCallback(() => {
       if (!divRef.current) return;
       setIsOverflowing(
-        divRef.current.scrollHeight > divRef.current.offsetHeight,
+        divRef.current.scrollWidth > divRef.current.offsetWidth ||
+          divRef.current.scrollHeight > divRef.current.offsetHeight,
       );
     }, []);
 
@@ -68,6 +69,16 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     useIsomorphicLayoutEffect(() => {
       checkOverflow();
     }, [checkOverflow]);
+
+    const { dialogId, id: headerId } = useDialogContext();
+
+    const overflowProps = isOverflowing
+      ? {
+          role: "region",
+          tabIndex: 0,
+          "aria-labelledby": headerId ?? dialogId,
+        }
+      : {};
 
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
@@ -79,6 +90,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
             [withBaseName("scrollTop")]: isOverflowing && canScrollUp,
             [withBaseName("scrollBottom")]: isOverflowing && canScrollDown,
           })}
+          {...overflowProps}
         >
           {children}
         </div>
