@@ -20,6 +20,7 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   Children,
   type ComponentPropsWithoutRef,
@@ -112,7 +113,15 @@ function useOverflowOpenFocusRecovery({
 
 export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
   function TabOverflowList(props, ref) {
-    const { buttonRef, children, isMeasuring, open, setOpen, ...rest } = props;
+    const {
+      buttonRef,
+      children,
+      className,
+      isMeasuring,
+      open,
+      setOpen,
+      ...rest
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -218,8 +227,9 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     return (
       <TabOverflowContext.Provider value={overflowContext}>
-        <div className={withBaseName()} data-overflow>
+        <>
           <Button
+            className={clsx(withBaseName(), className)}
             data-overflowbutton
             appearance="transparent"
             sentiment="neutral"
@@ -272,7 +282,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
               </div>
             </FloatingComponent>
           </FloatingList>
-        </div>
+        </>
       </TabOverflowContext.Provider>
     );
   },

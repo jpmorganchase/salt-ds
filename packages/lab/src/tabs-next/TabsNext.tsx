@@ -64,12 +64,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     const [selected, setSelectedState] = useControlled({
       controlled: value,
       default: defaultValue,
-      name: "TabListNext",
+      name: "TabsNext",
       state: "selected",
     });
 
     const setSelected = useCallback(
-      (event: SyntheticEvent | null, value: string) => {
+      (event: SyntheticEvent, value: string) => {
         setMenuOpen(false);
         setSelectedState(value);
         onChange?.(event, value);

@@ -78,6 +78,7 @@ export const TabNextTrigger = forwardRef<
     onKeyDown?.(event);
 
     if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
       setSelected(event, value);
     }
   };
@@ -89,7 +90,7 @@ export const TabNextTrigger = forwardRef<
       activeTab.current = { value, id };
     }
 
-    // Ensures the associated tab in in view.
+    // Ensures the associated tab is in view.
     event.currentTarget.parentElement?.scrollIntoView({
       block: "nearest",
       inline: "nearest",
@@ -100,7 +101,7 @@ export const TabNextTrigger = forwardRef<
   const handleRef = useForkRef<HTMLButtonElement>(handleTabRef, ref);
   const panelId = getPanelId(value);
 
-  // Applying aria-actions this way avoid React warnings about unknown props
+  // Applying aria-actions this way avoids React warnings about unknown props
   const ariaActionsProps = ariaActionSupported
     ? {
         "aria-actions": clsx(actions) || undefined,
