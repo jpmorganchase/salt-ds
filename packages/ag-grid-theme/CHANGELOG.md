@@ -1,5 +1,21 @@
 # @salt-ds/ag-grid-theme
 
+## 2.8.0
+
+### Minor Changes
+
+- feffe8d: - Added tertiary support to the ag grid theme.
+  - Added secondary zebra support to the ag grid theme.
+  - Added tertiary zebra support to the ag grid theme.
+
+### Patch Changes
+
+- Updated dependencies [23b5f53]
+- Updated dependencies [40cdcb4]
+- Updated dependencies [fdb9cfc]
+- Updated dependencies [23b5f53]
+  - @salt-ds/theme@1.41.0
+
 ## 2.7.0
 
 ### Minor Changes
