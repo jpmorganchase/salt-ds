@@ -92,6 +92,9 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       onMouseDown?.(event);
+      if (value && id) {
+        activeTab.current = { value, id };
+      }
       wasMouseDown.current = true;
     };
 
