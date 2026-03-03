@@ -5,7 +5,6 @@ import {
   type ReactNode,
   type SyntheticEvent,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -230,10 +229,6 @@ export function useTree(props: UseTreeProps) {
     state: "selected",
   });
 
-  const [indeterminateState, setIndeterminateState] = useState<Set<string>>(
-    new Set(),
-  );
-
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
 
   const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
@@ -365,12 +360,13 @@ export function useTree(props: UseTreeProps) {
     [getParent, getChildren, disabledIdsSet],
   );
 
-  useEffect(() => {
-    if (multiselect) {
-      const newIndeterminate = calculateIndeterminateState(selectedState);
-      setIndeterminateState(newIndeterminate);
-    }
-  }, [multiselect, selectedState, calculateIndeterminateState]);
+  const indeterminateState = useMemo(
+    () =>
+      multiselect
+        ? calculateIndeterminateState(selectedState)
+        : new Set<string>(),
+    [multiselect, selectedState, calculateIndeterminateState],
+  );
 
   const updateAncestors = (currentSelected: string[], value: string) => {
     let nextSelected = [...currentSelected];
@@ -439,10 +435,6 @@ export function useTree(props: UseTreeProps) {
       }
 
       setSelectedState(newSelected);
-      if (multiselect) {
-        const newIndeterminate = calculateIndeterminateState(newSelected);
-        setIndeterminateState(newIndeterminate);
-      }
       onSelectionChange?.(event, newSelected);
     },
     [
@@ -450,7 +442,6 @@ export function useTree(props: UseTreeProps) {
       disabledIdsSet,
       multiselect,
       selectedState,
-      calculateIndeterminateState,
       onSelectionChange,
     ],
   );
