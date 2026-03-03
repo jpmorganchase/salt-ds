@@ -229,6 +229,8 @@ export function useTree(props: UseTreeProps) {
     state: "selected",
   });
 
+  const selectedSet = useMemo(() => new Set(selectedState), [selectedState]);
+
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
 
   const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
@@ -430,7 +432,7 @@ export function useTree(props: UseTreeProps) {
       if (multiselect) {
         newSelected = getMultiSelectState(value);
       } else {
-        const isCurrentlySelected = selectedState.includes(value);
+        const isCurrentlySelected = selectedSet.has(value);
         newSelected = isCurrentlySelected ? [] : [value];
       }
 
@@ -471,7 +473,6 @@ export function useTree(props: UseTreeProps) {
       return activeNode;
     }
 
-    const selectedSet = new Set(selectedState);
     const firstSelectedVisible = visibleNodes.find((node) =>
       selectedSet.has(node),
     );
@@ -481,7 +482,7 @@ export function useTree(props: UseTreeProps) {
     }
 
     return visibleNodes[0];
-  }, [activeNode, selectedState, visibleNodes]);
+  }, [activeNode, selectedSet, visibleNodes]);
 
   return {
     expandedArray,
@@ -489,6 +490,7 @@ export function useTree(props: UseTreeProps) {
     expandedState,
     toggleExpanded,
     selectedState,
+    selectedSet,
     setSelectedState,
     select,
     multiselect,

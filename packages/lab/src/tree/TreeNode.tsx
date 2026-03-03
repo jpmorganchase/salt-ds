@@ -87,7 +87,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const {
       expandedState,
-      selectedState,
+      selectedSet,
       disabled: treeDisabled,
       disabledIdsSet,
       indeterminateState,
@@ -99,7 +99,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const disabled = treeDisabled || disabledProp || disabledIdsSet.has(value);
     const expanded = expandedState.has(value);
-    const selected = selectedState.includes(value);
+    const selected = selectedSet.has(value);
     const indeterminate = indeterminateState.has(value);
 
     const usesLabelProp = label !== undefined;

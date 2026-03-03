@@ -97,7 +97,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       expandedState,
       toggleExpanded,
       select,
-      selectedState,
+      selectedSet,
       setSelectedState,
       visibleNodes,
       getNodeMeta,
@@ -329,7 +329,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           (visibleNode) => !disabledIdsSet.has(visibleNode),
         );
         const allSelected = allVisibleValues.every((visible) =>
-          selectedState.includes(visible),
+          selectedSet.has(visible),
         );
 
         const newSelected = allSelected ? [] : allVisibleValues;

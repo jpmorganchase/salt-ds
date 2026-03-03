@@ -15,6 +15,8 @@ export interface TreeContextValue {
 
   /** Selected node values */
   selectedState: string[];
+  /** Selected node values as Set for O(1) lookups */
+  selectedSet: Set<string>;
   /** Set selected state directly */
   setSelectedState: Dispatch<SetStateAction<string[]>>;
   /** Select node */
