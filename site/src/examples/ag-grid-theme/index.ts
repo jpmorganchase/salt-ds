@@ -23,3 +23,4 @@ export * from "./RowValidation";
 export * from "./StatusBar";
 export * from "./Variants";
 export * from "./WrappedHeader";
+export * from "./Zebra";

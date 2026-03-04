@@ -1,179 +1,505 @@
+import { useControlled } from "@salt-ds/core";
 import {
-  type KeyboardEvent,
-  type MouseEvent,
+  Children,
+  isValidElement,
+  type ReactNode,
+  type SyntheticEvent,
   useCallback,
+  useMemo,
   useRef,
+  useState,
 } from "react";
-import {
-  closestListItemIndex,
-  type ListHandlers,
-  type SelectionStrategy,
-  useCollapsibleGroups,
-  useKeyboardNavigation,
-  useSelection,
-  useViewportTracking,
-} from "../common-hooks";
-import type { ListControlProps } from "../list/listTypes";
-import type { TreeHookProps, TreeHookResult } from "./treeTypes";
-import { useKeyboardNavigation as useTreeNavigation } from "./use-tree-keyboard-navigation";
 
-export const useTree = <Item, Selection extends SelectionStrategy = "default">({
-  collectionHook,
-  containerRef,
-  contentRef = containerRef,
-  defaultSelected,
-  disabled,
-  onSelect,
-  onSelectionChange,
-  onToggle,
-  onHighlight: onHighlightProp,
-  selected: selectedProp,
-  selectionStrategy,
-}: // totalItemCount,
-TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
-  const lastSelection = useRef(selectedProp || defaultSelected);
+export interface UseTreeProps {
+  /**
+   * Default expanded nodes (uncontrolled)
+   */
+  defaultExpanded?: string[];
+  /**
+   * Expanded nodes (controlled)
+   */
+  expanded?: string[];
+  /**
+   * Callback on expanded nodes change
+   */
+  onExpandedChange?: (event: SyntheticEvent, expanded: string[]) => void;
+  /**
+   * Default selected nodes (uncontrolled)
+   */
+  defaultSelected?: string[];
+  /**
+   * Selected nodes
+   */
+  selected?: string[];
+  /**
+   * Callback on selected nodes change
+   */
+  onSelectionChange?: (event: SyntheticEvent, selected: string[]) => void;
+  /**
+   * Sets multiselect mode with checkboxes and allows for multiple node selection
+   */
+  multiselect?: boolean;
+  /**
+   * Sets tree to disabled state, preventing all interaction
+   */
+  disabled?: boolean;
+  /**
+   * Tree children used to build the tree model for traversal an state management
+   */
+  children?: ReactNode;
+}
 
-  const handleKeyboardNavigation = (
-    evt: KeyboardEvent<HTMLElement>,
-    nextIdx: number,
-  ) => {
-    selectionHook.listHandlers.onKeyboardNavigation?.(evt, nextIdx);
-  };
+export interface TreeNodeMeta {
+  value: string;
+  parentValue: string | undefined;
+  hasChildren: boolean;
+  disabled: boolean;
+}
 
-  const { highlightedIndex: highlightedIdx, ...keyboardHook } =
-    useKeyboardNavigation<Item, Selection>({
-      containerRef,
-      indexPositions: collectionHook.data,
-      onHighlight: onHighlightProp,
-      onKeyboardNavigation: handleKeyboardNavigation,
-      selected: lastSelection.current,
+export interface TreeModel {
+  /** All nodes indexed by value */
+  nodes: Map<string, TreeNodeMeta>;
+  /** Ordered list of root node values */
+  rootValues: string[];
+  /** Maps parent value to ordered list of child values */
+  childrenOf: Map<string, string[]>;
+}
+
+function buildTreeModel(children: ReactNode): TreeModel {
+  const nodes = new Map<string, TreeNodeMeta>();
+  const rootValues: string[] = [];
+  const childrenOf = new Map<string, string[]>();
+
+  function traverse(
+    reactChildren: ReactNode,
+    parentValue?: string,
+    parentDisabled = false,
+  ): void {
+    const siblingValues: string[] = [];
+
+    Children.forEach(reactChildren, (child) => {
+      if (isValidElement(child) && typeof child.props.value === "string") {
+        const value = child.props.value;
+        const nodeChildren = child.props.children;
+        const hasChildren = Children.count(nodeChildren) > 0;
+        const disabled = parentDisabled || Boolean(child.props.disabled);
+
+        nodes.set(value, {
+          value,
+          parentValue,
+          hasChildren,
+          disabled,
+        });
+
+        siblingValues.push(value);
+
+        // Process children recursively and pass down disabled state
+        if (hasChildren) {
+          traverse(nodeChildren, value, disabled);
+        }
+      }
     });
 
-  const collapsibleHook = useCollapsibleGroups<Item>({
-    collapsibleHeaders: true,
-    collectionHook,
-    highlightedIdx,
-    onToggle,
-  });
+    // Ordered children of parent
+    if (parentValue !== undefined) {
+      childrenOf.set(parentValue, siblingValues);
+    } else {
+      // ...and the root nodes
+      rootValues.push(...siblingValues);
+    }
+  }
 
-  const selectionHook = useSelection({
-    defaultSelected,
-    // groupSelection,
-    highlightedIdx,
-    indexPositions: collectionHook.data,
-    onSelect,
-    onSelectionChange,
+  traverse(children);
+
+  return { nodes, rootValues, childrenOf };
+}
+
+function expandSelectionWithDescendants(
+  selection: string[],
+  model: TreeModel,
+  disabledIds: Set<string>,
+): string[] {
+  const expanded = new Set(selection);
+
+  function addDescendants(parentValue: string): void {
+    const children = model.childrenOf.get(parentValue) ?? [];
+    for (const child of children) {
+      if (!disabledIds.has(child)) {
+        expanded.add(child);
+        addDescendants(child);
+      }
+    }
+  }
+
+  for (const value of selection) {
+    addDescendants(value);
+  }
+
+  return Array.from(expanded);
+}
+
+function expandSelectionUpwards(
+  selection: string[],
+  model: TreeModel,
+  disabledIds: Set<string>,
+): string[] {
+  const selectedSet = new Set(selection);
+
+  for (const [value, meta] of model.nodes) {
+    if (
+      meta.hasChildren &&
+      !selectedSet.has(value) &&
+      !disabledIds.has(value)
+    ) {
+      const children = model.childrenOf.get(value) ?? [];
+      const enabledChildren = children.filter((c) => !disabledIds.has(c));
+
+      if (
+        enabledChildren.length > 0 &&
+        enabledChildren.every((c) => selectedSet.has(c))
+      ) {
+        selectedSet.add(value);
+      }
+    }
+  }
+
+  return Array.from(selectedSet);
+}
+
+export function useTree(props: UseTreeProps) {
+  const {
+    defaultExpanded = [],
+    expanded: expandedProp,
+    onExpandedChange,
+    defaultSelected = [],
     selected: selectedProp,
-    selectionStrategy: selectionStrategy,
+    onSelectionChange,
+    multiselect = false,
+    disabled = false,
+    children,
+  } = props;
+
+  const clampedDefaultSelected = multiselect
+    ? defaultSelected
+    : defaultSelected.slice(0, 1);
+
+  const clampedSelectedProp =
+    selectedProp && !multiselect ? selectedProp.slice(0, 1) : selectedProp;
+
+  const treeModel = useMemo(() => buildTreeModel(children), [children]);
+
+  const disabledIdsSet = useMemo(() => {
+    const set = new Set<string>();
+    for (const [value, meta] of treeModel.nodes) {
+      if (meta.disabled) set.add(value);
+    }
+    return set;
+  }, [treeModel]);
+
+  const [expandedArray, setExpandedArray] = useControlled({
+    controlled: expandedProp,
+    default: defaultExpanded,
+    name: "Tree",
+    state: "expanded",
   });
 
-  const treeNavigationHook = useTreeNavigation<Item>({
-    collectionHook,
-    highlightedIdx,
-    highlightItemAtIndex: keyboardHook.setHighlightedIndex,
+  // Convert array to Set for more efficient lookups during rendering and nav
+  const expandedState = useMemo(() => new Set(expandedArray), [expandedArray]);
+
+  const expandedDefaultSelected = useMemo(() => {
+    if (!multiselect || clampedDefaultSelected.length === 0) {
+      return clampedDefaultSelected;
+    }
+
+    let expanded = expandSelectionWithDescendants(
+      clampedDefaultSelected,
+      treeModel,
+      disabledIdsSet,
+    );
+
+    expanded = expandSelectionUpwards(expanded, treeModel, disabledIdsSet);
+
+    return expanded;
+  }, [clampedDefaultSelected, treeModel, disabledIdsSet, multiselect]);
+
+  const [selectedState, setSelectedState] = useControlled({
+    controlled: clampedSelectedProp,
+    default: expandedDefaultSelected,
+    name: "Tree",
+    state: "selected",
   });
 
-  const handleClick = useCallback(
-    (evt: MouseEvent<HTMLElement>) => {
-      collapsibleHook?.onClick?.(evt);
-      if (!evt.defaultPrevented) {
-        selectionHook.listHandlers.onClick?.(evt);
-      }
+  const selectedSet = useMemo(() => new Set(selectedState), [selectedState]);
+
+  const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
+
+  const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
+
+  const registerElement = (value: string, element: HTMLElement) => {
+    elementsRef.current.set(value, element);
+    return () => {
+      elementsRef.current.delete(value);
+    };
+  };
+
+  const getElement = (value: string): HTMLElement | undefined => {
+    return elementsRef.current.get(value);
+  };
+
+  const getNodeMeta = useCallback(
+    (value: string): TreeNodeMeta | undefined => {
+      return treeModel.nodes.get(value);
     },
-    [collapsibleHook, selectionHook],
+    [treeModel],
   );
 
-  const handleKeyDown = useCallback(
-    (evt: KeyboardEvent<HTMLElement>) => {
-      keyboardHook.listProps.onKeyDown?.(evt);
-      if (!evt.defaultPrevented) {
-        selectionHook.listHandlers.onKeyDown?.(evt);
-      }
-      if (!evt.defaultPrevented) {
-        collapsibleHook?.onKeyDown?.(evt);
-      }
-      if (!evt.defaultPrevented) {
-        treeNavigationHook.listHandlers.onKeyDown?.(evt);
-      }
+  const getParent = useCallback(
+    (value: string): string | undefined => {
+      return treeModel.nodes.get(value)?.parentValue;
     },
-    [
-      collapsibleHook.onKeyDown,
-      keyboardHook.listProps,
-      selectionHook.listHandlers,
-      treeNavigationHook.listHandlers,
-    ],
+    [treeModel],
   );
 
-  // This is only appropriate when we are directly controlling a List,
-  // not when a control is manipulating the list
-  const { isScrolling } = useViewportTracking({
-    containerRef,
-    contentRef,
-    highlightedIdx,
-    indexPositions: collectionHook.data,
-  });
+  const getChildren = useCallback(
+    (parentValue: string): string[] => {
+      return treeModel.childrenOf.get(parentValue) ?? [];
+    },
+    [treeModel],
+  );
 
-  const handleMouseMove = useCallback(
-    (evt: MouseEvent) => {
-      if (!isScrolling.current && !disabled) {
-        keyboardHook.listProps.onMouseMove();
-        const idx = closestListItemIndex(evt.target as HTMLElement);
-        if (idx !== undefined && idx !== highlightedIdx) {
-          const item = collectionHook.data[idx];
-          if (item.disabled) {
-            keyboardHook.setHighlightedIndex(-1);
-          } else {
-            keyboardHook.setHighlightedIndex(idx);
+  // Depth-first search (with pre-order traversal)
+  const getDescendants = useCallback(
+    (value: string): string[] => {
+      const descendants: string[] = [];
+
+      function traverse(parentValue: string): void {
+        const children = treeModel.childrenOf.get(parentValue) ?? [];
+        for (const child of children) {
+          if (!disabledIdsSet.has(child)) {
+            descendants.push(child);
+            traverse(child);
           }
         }
       }
+
+      traverse(value);
+      return descendants;
     },
-    [
-      collectionHook.data,
-      disabled,
-      keyboardHook.setHighlightedIndex,
-      highlightedIdx,
-      isScrolling,
-    ],
+    [treeModel, disabledIdsSet],
   );
 
-  const getActiveDescendant = () =>
-    highlightedIdx === undefined || highlightedIdx === -1
-      ? undefined
-      : collectionHook.data[highlightedIdx]?.id;
+  const getAncestors = useCallback(
+    (value: string): string[] => {
+      const ancestors: string[] = [];
+      let current = treeModel.nodes.get(value)?.parentValue;
 
-  // We need this on reEntry for navigation hook to handle focus
-  lastSelection.current = selectionHook.selected;
+      while (current) {
+        ancestors.push(current);
+        current = treeModel.nodes.get(current)?.parentValue;
+      }
 
-  const listProps: ListControlProps = {
-    "aria-activedescendant": getActiveDescendant(),
-    onBlur: keyboardHook.listProps.onBlur,
-    onFocus: keyboardHook.listProps.onFocus,
-    onKeyDown: handleKeyDown,
-    onMouseDownCapture: keyboardHook.listProps.onMouseDownCapture,
-    onMouseLeave: keyboardHook.listProps.onMouseLeave,
+      return ancestors;
+    },
+    [treeModel],
+  );
+
+  const toggleExpanded = useCallback(
+    (event: SyntheticEvent, value: string) => {
+      const isExpanding = !expandedState.has(value);
+      const newExpanded = isExpanding
+        ? [...expandedArray, value]
+        : expandedArray.filter((v) => v !== value);
+
+      setExpandedArray(newExpanded);
+      onExpandedChange?.(event, newExpanded);
+    },
+    [expandedArray, expandedState, onExpandedChange],
+  );
+
+  const calculateIndeterminateState = useCallback(
+    (selected: string[]): Set<string> => {
+      const indeterminate = new Set<string>();
+      const selectedSet = new Set(selected);
+
+      for (const selectedValue of selected) {
+        let current = getParent(selectedValue);
+
+        while (current) {
+          const children = getChildren(current);
+          const enabledChildren = children.filter(
+            (child) => !disabledIdsSet.has(child),
+          );
+
+          if (enabledChildren.length === 0) {
+            current = getParent(current);
+            continue;
+          }
+
+          const selectedChildren = enabledChildren.filter((child) =>
+            selectedSet.has(child),
+          );
+          const allChildrenSelected =
+            selectedChildren.length === enabledChildren.length;
+          const someChildrenSelected = selectedChildren.length > 0;
+
+          const someChildrenIndeterminate = enabledChildren.some((child) =>
+            indeterminate.has(child),
+          );
+
+          if (
+            someChildrenIndeterminate ||
+            (someChildrenSelected && !allChildrenSelected)
+          ) {
+            indeterminate.add(current);
+          }
+
+          current = getParent(current);
+        }
+      }
+
+      return indeterminate;
+    },
+    [getParent, getChildren, disabledIdsSet],
+  );
+
+  const indeterminateState = useMemo(
+    () =>
+      multiselect
+        ? calculateIndeterminateState(selectedState)
+        : new Set<string>(),
+    [multiselect, selectedState, calculateIndeterminateState],
+  );
+
+  const updateAncestors = (
+    currentSet: Set<string>,
+    value: string,
+  ): string[] => {
+    const ancestors = getAncestors(value);
+
+    for (const ancestor of ancestors) {
+      const children = treeModel.childrenOf.get(ancestor) ?? [];
+      const enabledChildren = children.filter(
+        (child) => !disabledIdsSet.has(child),
+      );
+
+      if (enabledChildren.length === 0) continue;
+
+      const allSelected = enabledChildren.every((child) =>
+        currentSet.has(child),
+      );
+
+      if (allSelected) {
+        currentSet.add(ancestor);
+      } else {
+        currentSet.delete(ancestor);
+      }
+    }
+
+    return Array.from(currentSet);
   };
 
-  const listHandlers: ListHandlers = /*listHandlersProp || */ {
-    onClick: handleClick,
-    // MouseEnter would be much better for this. There is a bug in Cypress
-    // wheby it emits spurious MouseEnter (and MouseOver) events around
-    // keypress events, which break many tests.
-    onMouseMove: handleMouseMove,
+  const getMultiSelectState = (value: string) => {
+    const currentSet = new Set(selectedState);
+    const descendants = getDescendants(value);
+
+    if (currentSet.has(value)) {
+      currentSet.delete(value);
+      const descendantSet = new Set(descendants);
+      for (const d of descendantSet) {
+        currentSet.delete(d);
+      }
+    } else {
+      currentSet.add(value);
+      for (const d of descendants) {
+        if (!currentSet.has(d)) {
+          currentSet.add(d);
+        }
+      }
+    }
+
+    return updateAncestors(currentSet, value);
   };
 
-  const listItemHandlers = {
-    onClick: handleClick,
-  };
+  // biome-ignore lint/correctness/useExhaustiveDependencies: getMultiSelectState/updateAncestors are intentionally not memoized - their captured values (selectedState, treeModel, etc.) are already in deps
+  const select = useCallback(
+    (event: SyntheticEvent, value: string) => {
+      if (disabled || disabledIdsSet.has(value)) return;
+
+      let newSelected: string[];
+
+      if (multiselect) {
+        newSelected = getMultiSelectState(value);
+      } else {
+        const isCurrentlySelected = selectedSet.has(value);
+        newSelected = isCurrentlySelected ? [] : [value];
+      }
+
+      setSelectedState(newSelected);
+      onSelectionChange?.(event, newSelected);
+    },
+    [disabled, disabledIdsSet, multiselect, selectedState, onSelectionChange],
+  );
+
+  // Visible nodes in depth-first order matching visual tree order
+  const visibleNodes = useMemo((): string[] => {
+    const visible: string[] = [];
+
+    function traverse(values: string[]): void {
+      for (const value of values) {
+        visible.push(value);
+
+        const nodeMeta = treeModel.nodes.get(value);
+        if (nodeMeta?.hasChildren && expandedState.has(value)) {
+          const children = treeModel.childrenOf.get(value) ?? [];
+          traverse(children);
+        }
+      }
+    }
+
+    traverse(treeModel.rootValues);
+    return visible;
+  }, [treeModel, expandedState]);
+
+  const tabbableNodeId = useMemo((): string | undefined => {
+    if (activeNode) {
+      return activeNode;
+    }
+
+    const firstSelectedVisible = visibleNodes.find((node) =>
+      selectedSet.has(node),
+    );
+
+    if (firstSelectedVisible !== undefined) {
+      return firstSelectedVisible;
+    }
+
+    return visibleNodes[0];
+  }, [activeNode, selectedSet, visibleNodes]);
 
   return {
-    focusVisible: keyboardHook.focusVisible,
-    highlightedIdx,
-    highlightItemAtIndex: keyboardHook.setHighlightedIndex,
-    listHandlers,
-    listProps,
-    listItemHandlers,
-    selected: selectionHook.selected,
-    setSelected: selectionHook.setSelected,
+    expandedArray,
+    setExpandedArray,
+    expandedState,
+    toggleExpanded,
+    selectedState,
+    selectedSet,
+    setSelectedState,
+    select,
+    multiselect,
+    disabled,
+    disabledIdsSet,
+    treeModel,
+    getNodeMeta,
+    getParent,
+    getChildren,
+    getDescendants,
+    getAncestors,
+    visibleNodes,
+    tabbableNodeId,
+    registerElement,
+    getElement,
+    activeNode,
+    setActiveNode,
+    indeterminateState,
   };
-};
+}

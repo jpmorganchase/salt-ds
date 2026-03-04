@@ -1,41 +1,12 @@
 .saltTree {
-  --tree-node-collapse: var(--saltTree-node-collapse, var(--list-svg-tree-node-collapse));
-  --tree-node-expand: var(--saltTree-node-expand, var(--list-svg-tree-node-expand));
-  --tree-node-expanded-transform: var(--saltTree-node-expanded-transform, none);
-  --tree-node-indent: 0px;
-  --tree-toggle-width: 12px;
-
-  /* TODO: Use appropriate characteristics */
-  --list-background-highlighted: rgba(1, 1, 1, 0.1);
-  --list-item-height: 30px;
-  --list-item-padding: 0 6px;
-  --list-item-header-background: black;
-  --list-item-header-color: white;
-  --list-item-header-fontWeight: bold;
-  --list-item-header-twisty-color: black;
-  --list-item-header-twisty-content: "";
-  --list-item-header-twisty-top: 50%;
-  --list-item-header-twisty-left: -18px;
-  --list-item-header-twisty-right: auto;
-  --list-item-selected-color: white;
-
-  margin: 0;
-  padding: 0 1px;
-  font-size: var(--saltTree-fontSize, 14px);
-  max-height: inherit;
-  outline: none;
-  overflow-y: auto;
-  position: relative;
-  user-select: none;
-}
-
-.saltTree-child-nodes {
-  width: 100%;
-}
-
-.saltTree-scrollingContentContainer {
-  box-sizing: inherit;
   list-style: none;
   margin: 0;
-  position: relative;
+  padding: 0;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.saltTree-disabled {
+  cursor: var(--salt-cursor-disabled);
 }

@@ -1,5 +1,26 @@
 # @salt-ds/theme
 
+## 1.41.0
+
+### Minor Changes
+
+- 23b5f53: Added `--salt-editable-tertiary-background`, `--salt-editable-background-readonly` and `--salt-editable-tertiary-background-disabled`.
+- fdb9cfc: Added `--salt-spacing-fixed-1000`, `--salt-spacing-fixed-1100` and `--salt-spacing-fixed-1200`.
+- 23b5f53: Deprecated a number of editable tokens to simplify token structure:
+
+  | Deprecated token                                | Replacement token                      |
+  | ----------------------------------------------- | -------------------------------------- |
+  | `--salt-editable-primary-background-readonly`   | `--salt-editable-background-readonly`  |
+  | `--salt-editable-secondary-background-readonly` | `--salt-editable-background-readonly`  |
+  | `--salt-editable-primary-background-hover`      | `--salt-editable-primary-background`   |
+  | `--salt-editable-primary-background-active`     | `--salt-editable-primary-background`   |
+  | `--salt-editable-secondary-background-hover`    | `--salt-editable-secondary-background` |
+  | `--salt-editable-secondary-background-active`   | `--salt-editable-secondary-background` |
+
+### Patch Changes
+
+- 40cdcb4: Updated `--salt-sentiment-accent-dataviz` to use `--salt-palette-warning-foreground-decorative` in the legacy theme.
+
 ## 1.40.0
 
 ### Minor Changes

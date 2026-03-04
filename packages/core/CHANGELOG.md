@@ -1,5 +1,28 @@
 # @salt-ds/core
 
+## 1.58.0
+
+### Minor Changes
+
+- 23b5f53: Added tertiary variant support to `ComboBox`, `Dropdown`, `Input`, `MultilineInput` and `NumberInput`.
+- 133a519: Added `Kbd`.
+
+  Kbd is a decorative element used to represent specific keyboard keys.
+
+  ```tsx
+  <>
+    <Kbd>cmd</Kbd>
+    <Kbd variant="secondary">shift</Kbd>
+    <Kbd variant="tertiary">ctrl</Kbd>
+  </>
+  ```
+
+### Patch Changes
+
+- aae0846: Fixed some controls having empty `aria-labelledby` or `aria-describedby` attributes when used outside a FormField.
+- 503c186: - Fixed dialog accessible name to exclude interactive elements and added keyboard navigation for scrollable dialog content.
+  - Deprecated `idProp` prop in Dialog component.
+
 ## 1.57.1
 
 ### Patch Changes
