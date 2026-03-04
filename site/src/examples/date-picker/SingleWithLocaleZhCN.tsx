@@ -1,5 +1,4 @@
 import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -45,7 +44,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -74,7 +73,11 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   );
 
   return (
-    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
+    <FormField
+      style={{ width: "256px" }}
+      validationStatus={validationStatus}
+      lang="zh"
+    >
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}

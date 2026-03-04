@@ -458,15 +458,6 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   }
 
   /**
-   * Gets the day of the week for a Luxon DateTime object.
-   * @param date - The Luxon DateTime object.
-   * @returns The day of the week as a number (1-7).
-   */
-  public getDayOfWeek(date: DateTime): number {
-    return date.weekday;
-  }
-
-  /**
    * Gets the day of the month for a Luxon DateTime object.
    * @param date - The Luxon DateTime object.
    * @returns The day of the month as a number (1-31).
@@ -523,4 +514,8 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   public clone(date: DateTime): DateTime {
     return DateTime.fromMillis(date.toMillis());
   }
+
+  public toJSDate = (value: DateTime) => {
+    return value.toJSDate();
+  };
 }
