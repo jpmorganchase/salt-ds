@@ -50,21 +50,22 @@ export const Controlled: StoryFn<typeof Switch> = (args) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
+    args.onChange?.(event);
   };
 
   return <Switch {...args} checked={checked} onChange={handleChange} />;
 };
-
 Controlled.args = {
   label: "Controlled",
 };
 
-export const WithFormField: StoryFn<typeof Switch> = (args) => {
+export const WithFormField: StoryFn<typeof FormField> = (args) => {
+  const { onChange, ...formFieldArgs } = args;
   return (
     <StackLayout direction="row">
-      <FormField labelPlacement="left">
+      <FormField labelPlacement="left" {...formFieldArgs}>
         <FormFieldLabel>Label</FormFieldLabel>
-        <Switch {...args} />
+        <Switch onChange={onChange} />
         <FormFieldHelperText>Helper text</FormFieldHelperText>
       </FormField>
     </StackLayout>
