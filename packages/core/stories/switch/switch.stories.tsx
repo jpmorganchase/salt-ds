@@ -2,7 +2,6 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  StackLayout,
   Switch,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
