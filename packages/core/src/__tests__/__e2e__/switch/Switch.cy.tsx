@@ -3,7 +3,8 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(switchStories);
-const { Default, Disabled, Controlled, WithFormField } = composedStories;
+const { Default, Disabled, Controlled, WithFormField, Readonly } =
+  composedStories;
 
 describe("GIVEN a Switch", () => {
   checkAccessibility(composedStories);
@@ -66,18 +67,23 @@ describe("GIVEN a Switch", () => {
     });
 
     describe("AND using a mouse", () => {
-      it("THEN should be toggle if clicked", () => {
-        cy.mount(<Controlled />);
+      it("THEN should allow selection", () => {
+        const onChangeSpy = cy.stub().as("onChangeSpy");
+        cy.mount(<Controlled onChange={onChangeSpy} />);
+
         cy.findByRole("switch").should("not.be.checked");
         cy.findByRole("switch").realClick();
         cy.findByRole("switch").should("be.checked");
+        cy.get("@onChangeSpy").should("have.callCount", 1);
+
         cy.findByRole("switch").realClick();
         cy.findByRole("switch").should("not.be.checked");
+        cy.get("@onChangeSpy").should("have.callCount", 2);
       });
     });
 
     describe("AND using a keyboard", () => {
-      it("SHOULD allow selection", () => {
+      it("THEN should allow selection", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
         cy.mount(<Controlled onChange={onChangeSpy} />);
         cy.realPress("Tab");
@@ -108,7 +114,7 @@ describe("GIVEN a Switch", () => {
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
 
-      cy.findByText("Disabled").realClick();
+      cy.findByLabelText("Disabled").realClick();
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
     });
@@ -132,7 +138,7 @@ describe("GIVEN a Switch", () => {
   describe("WHEN used without label", () => {
     it("THEN should NOT render label", () => {
       cy.mount(<Default label={undefined} />);
-      cy.get(".saltSwitch-label").should("not.exist");
+      cy.findByLabelText("Default").should("not.exist");
 
       cy.findByRole("switch").should("not.have.attr", "aria-describedby");
       cy.findByRole("switch").should("not.have.attr", "aria-labelledby");
@@ -142,12 +148,11 @@ describe("GIVEN a Switch", () => {
   describe("WHEN readOnly is true", () => {
     it("THEN should not be selectable", () => {
       const changeSpy = cy.stub().as("changeSpy");
-      cy.mount(<Default readOnly onChange={changeSpy} />);
+      cy.mount(<Readonly onChange={changeSpy} />);
       cy.findByRole("switch").should("have.attr", "aria-readonly", "true");
-      cy.findByRole("switch").should("not.be.checked");
 
       cy.realPress("Tab");
-      cy.findByRole("switch").should("be.focused");
+      cy.findByRole("switch").should("not.be.checked").and("be.focused");
 
       cy.realPress("Space");
       cy.findByRole("switch").should("not.be.checked");
@@ -157,8 +162,7 @@ describe("GIVEN a Switch", () => {
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
 
-      // Clicking the label should also not toggle the switch
-      cy.findByText("Default").realClick();
+      cy.findByLabelText("Read-only").realClick();
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
     });
@@ -173,7 +177,7 @@ describe("GIVEN a Switch", () => {
         "Helper text",
       );
 
-      cy.findByText("Label").realClick();
+      cy.findByLabelText("Label").realClick();
       cy.findByRole("switch").should("be.focused").and("be.checked");
     });
 
@@ -191,7 +195,7 @@ describe("GIVEN a Switch", () => {
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
 
-      cy.findByText("Label").realClick();
+      cy.findByLabelText("Label").realClick();
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
     });
@@ -211,7 +215,7 @@ describe("GIVEN a Switch", () => {
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
 
-      cy.findByText("Label").realClick();
+      cy.findByLabelText("Label").realClick();
       cy.findByRole("switch").should("not.be.checked");
       cy.get("@changeSpy").should("not.have.been.called");
     });

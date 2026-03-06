@@ -62,19 +62,16 @@ Controlled.args = {
 export const WithFormField: StoryFn<typeof FormField> = (args) => {
   const { onChange, ...formFieldArgs } = args;
   return (
-    <StackLayout direction="row">
-      <FormField labelPlacement="left" {...formFieldArgs}>
-        <FormFieldLabel>Label</FormFieldLabel>
-        <Switch onChange={onChange} />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-    </StackLayout>
+    <FormField labelPlacement="left" {...formFieldArgs}>
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch onChange={onChange} />
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
+    </FormField>
   );
 };
 
-export const Readonly: StoryFn<typeof Switch> = (args) => (
-  <StackLayout>
-    <Switch {...args} readOnly checked label="Read-only + Checked" />
-    <Switch {...args} readOnly label="Read-only" />
-  </StackLayout>
-);
+export const Readonly = Template.bind({});
+Readonly.args = {
+  readOnly: true,
+  label: "Read-only",
+};
