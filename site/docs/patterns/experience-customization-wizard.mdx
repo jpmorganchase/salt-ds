@@ -1,0 +1,137 @@
+---
+title: Experience Customization Wizard
+description: "The Experience Customization Wizard (ECW) allows users to select preferences that personalize their experience within your application."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/experience-customization-wizard
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-wizard", label: "Examples"},
+    ]
+  components: ["Button Bar", "Dialog", "Selectable card"]
+---
+
+<Diagram
+  src="/img/patterns/wizard/wizard-pattern-example.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-example-dark.png"
+  alt="Example of a multi-step wizard workflow with stepper navigation"
+  border
+  background="secondary"
+/>
+
+## When to use
+
+The ECW is primarily used to surface significant options that change the user experience, such as accessibility settings or language selection. It guides new users through their first-time setup and onboarding process. For tasks that require the user’s full attention, use the wizard in a modal container to prevent interaction with the rest of the UI. This ensures specific settings are confirmed before the application content is displayed.
+
+
+## How to build
+
+### Anatomy
+
+The wizard contains:
+
+1. **Workflow title**: use a standardized, actionable title that clearly reflects the intent of the wizard (e.g., “Create a new account”). The title should remain consistent across all steps to maintain context.
+2. **Step title**: to reflect the current step. Step titles should be concise, descriptive, and clearly reflect the purpose of each step. Use plain language that's easy for users to understand.
+3. **Stepper**: to reflect status and progress through steps.
+4. **Content area**: displays the relevant content for the current step, guiding the user’s attention to a specific task or piece of information.
+5. **Button bar**: possible actions for users to take.
+
+<Diagram
+  src="/img/patterns/wizard/wizard-pattern-anatomy.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-anatomy-dark.png"
+  alt="Anatomy of a wizard pattern showing workflow title, step title, stepper, content area, and button bar"
+  border
+  background="secondary"
+/>
+
+## Single step
+
+The ECW supports a varying number of steps. In cases where there’s only a single step, the Stepper does not display and the Button Bar CTA button includes the label “Finish”.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  A wizard should focus on a specific set of tasks, collecting information for a clear purpose. If you need to collect different types of information from a user, provide multiple wizards, each accessed separately at an appropriate time. Avoid linking from one to another directly, ensuring users can complete one flow before starting another.
+</GuidanceCallout>
+
+## Multi-step
+
+Use a multi-step wizard when preferences are best understood in smaller, focused chunks. Splitting the flow into steps helps users maintain attention, reduces cognitive load, and makes it easier to recover from mistakes without abandoning the entire setup.
+
+For broader guidance on wizard layouts (for example, horizontal vs. vertical steppers), refer to the [Wizard](/salt/patterns/wizard) pattern.
+
+### Stepper and titles
+
+- Show the Stepper when there are 2+ steps.
+- Keep the **workflow title** consistent across all steps, and use the **step title** to describe what changes on each screen.
+- Use short, task-based step titles (for example, “Choose language”, “Accessibility”, “Notifications”).
+- Keep the number of steps as low as possible; if you need many options, group related preferences into 3–6 steps rather than listing one preference per step.
+- Decide whether the Stepper is linear (read-only) or allows direct navigation. If users can jump between steps, only allow navigation to steps that are complete or previously visited.
+
+### Navigation and actions
+
+- Use **Back** and **Next** to move between steps. Only use **Finish** on the final step.
+- Always include **Cancel** to let users exit the flow intentionally.
+- If preferences can be safely applied progressively, consider persisting selections as the user moves forward so they don’t lose work if they cancel late in the flow.
+- When possible, allow users to return to previous steps (including via the Stepper) to review and adjust selections.
+
+### Validation and guidance
+
+- Validate step inputs when the user selects **Next** (or earlier, inline) and show clear, specific error messages near the relevant control.
+- If a step has required preferences, disable **Next** until the minimum requirements are met.
+- Keep each step’s content scannable: prioritize the most important choices first and provide concise supporting text.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  If a preference has significant consequences, consider adding a lightweight “Review” step before the final action. This helps users confirm their selections without forcing them to revisit each step.
+</GuidanceCallout>
+
+### Success message
+
+<Diagram
+  src="/img/patterns/wizard/wizard-confirmation-modal-success.png"
+  srcDark="/img/patterns/wizard/wizard-confirmation-modal-success-dark.png"
+  alt="Modal wizard displaying success message after flow completion"
+  border
+  background="secondary"
+  caption="The success message shows up to confirm the flow is completed."
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  The wizard should maintain a consistent size as users navigate between steps, ensuring a stable and predictable layout throughout the workflow.
+</GuidanceCallout>
+
+## Dynamic
+
+If required, you can display dynamic visuals in an optional container that’s supported by the ECW. You’ll have to configure the visuals to dynamically update to reflect the preference selections made in the left-hand content area—building up a picture of the combined effects of the user’s choices.
+
+Create dynamic visuals by including logic to link the preferences to a simple front-end UI or a combination of stacked images, as demonstrated in this example.
+
+The container and content area are set to fill 50% of the available space, but you can override this allocation.
+
+## Reset to defaults
+
+ny steps that include preferences with default selections can include a “Reset to defaults” button, and you can configure the label, if necessary. The button should be disabled until the user changes the default selections—at which point it should enable. When actioned, the current step’s options should return to their default state.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  Include a “Reset to defaults” button on steps where you provide default selections.
+</GuidanceCallout>
+
+## Mandatory preferences
+
+Make required preferences explicit. If a step contains required selections, disable **Next** until the minimum requirements are met and provide inline helper text that explains what’s needed.
+
+If a step is optional, indicate this beneath the step title (and in the Stepper, when used) so users understand they can proceed without making a selection.
+
+<Diagram
+  src="/img/patterns/wizard/wizard-pattern-modal.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-modal-dark.png"
+  alt="Modal wizard example with stepper and dialog container"
+  border
+  background="secondary"
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  Don't include a close button, as it can be ambiguous whether the progress or the entered information will be saved or lost. Use a cancel button instead to clearly indicate the user’s intent to exit the flow, ensuring a conscious, deliberate action to stop the process.
+</GuidanceCallout>
+
