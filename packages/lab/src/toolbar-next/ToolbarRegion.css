@@ -1,0 +1,28 @@
+.saltToolbarRegion {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+  min-width: 0;
+}
+
+.saltToolbarRegion[data-position="start"] {
+  grid-column: 1;
+  justify-self: stretch;
+}
+
+.saltToolbarRegion[data-position="center"] {
+  grid-column: 2;
+  justify-self: center;
+  max-width: 100%;
+}
+
+.saltToolbarRegion[data-position="end"] {
+  grid-column: 3;
+  justify-content: flex-end;
+  justify-self: stretch;
+}
+
+.saltToolbarRegion[data-implicit] > .saltTooltrayNext[data-align="center"],
+.saltToolbarRegion[data-implicit] > .saltTooltrayNext[data-align="end"] {
+  margin-inline: 0;
+}
