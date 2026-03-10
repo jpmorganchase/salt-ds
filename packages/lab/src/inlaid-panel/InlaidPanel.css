@@ -1,0 +1,8 @@
+.saltInlaidPanel-track {
+  /* Track clips the inner — no further visual style needed by default */
+}
+
+.saltInlaidPanel-inner {
+  /* Inner is naturally sized; track animates around it */
+  box-sizing: border-box;
+}
