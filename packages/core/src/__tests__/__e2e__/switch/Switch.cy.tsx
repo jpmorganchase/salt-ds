@@ -1,5 +1,6 @@
 import * as switchStories from "@stories/switch/switch.stories";
 import { composeStories } from "@storybook/react";
+import type { ChangeEvent } from "react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(switchStories);
@@ -47,7 +48,13 @@ describe("GIVEN a Switch", () => {
     describe("AND using a keyboard", () => {
       it("SHOULD handle selection", () => {
         const changeSpy = cy.stub().as("changeSpy");
-        cy.mount(<Default onChange={changeSpy} />);
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          changeSpy(event);
+        };
+
+        cy.mount(<Default onChange={handleChange} />);
 
         cy.realPress("Tab");
         cy.findByRole("switch").should("not.be.checked").and("be.focused");
@@ -85,7 +92,13 @@ describe("GIVEN a Switch", () => {
     describe("AND using a mouse", () => {
       it("THEN should allow selection", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Controlled onChange={onChangeSpy} />);
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          onChangeSpy(event);
+        };
+
+        cy.mount(<Controlled onChange={handleChange} />);
 
         cy.findByRole("switch").should("not.be.checked");
         cy.findByRole("switch").realClick();
@@ -109,7 +122,13 @@ describe("GIVEN a Switch", () => {
     describe("AND using a keyboard", () => {
       it("THEN should allow selection", () => {
         const onChangeSpy = cy.stub().as("onChangeSpy");
-        cy.mount(<Controlled onChange={onChangeSpy} />);
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          onChangeSpy(event);
+        };
+
+        cy.mount(<Controlled onChange={handleChange} />);
         cy.realPress("Tab");
         cy.findByRole("switch").should("not.be.checked").and("be.focused");
 
@@ -203,7 +222,15 @@ describe("GIVEN a Switch", () => {
 
   describe("WHEN wrapped in a form field", () => {
     it("THEN should respect form field accessibility attributes and allow selection", () => {
-      cy.mount(<WithFormField />);
+      const changeSpy = cy.stub().as("changeSpy");
+
+      const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+        changeSpy(event);
+      };
+
+      cy.mount(<WithFormField onChange={handleChange} />);
       cy.findByRole("switch").should("have.accessibleName", "Label");
       cy.findByRole("switch").should(
         "have.accessibleDescription",
@@ -212,9 +239,19 @@ describe("GIVEN a Switch", () => {
 
       cy.findByLabelText("Label").realClick();
       cy.findByRole("switch").should("be.focused").and("be.checked");
+      cy.get("@changeSpy")
+        .should("have.callCount", 1)
+        .and("have.been.calledWithMatch", {
+          target: { checked: true },
+        });
 
       cy.findByRole("switch").realClick();
       cy.findByRole("switch").should("be.focused").and("not.be.checked");
+      cy.get("@changeSpy")
+        .should("have.callCount", 2)
+        .and("have.been.calledWithMatch", {
+          target: { checked: false },
+        });
     });
 
     it("THEN should respect form field disabled state", () => {
