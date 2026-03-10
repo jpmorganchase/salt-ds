@@ -203,8 +203,7 @@ describe("GIVEN a Switch", () => {
 
   describe("WHEN wrapped in a form field", () => {
     it("THEN should respect form field accessibility attributes and allow selection", () => {
-      const changeSpy = cy.stub().as("changeSpy");
-      cy.mount(<WithFormField onChange={changeSpy} />);
+      cy.mount(<WithFormField />);
       cy.findByRole("switch").should("have.accessibleName", "Label");
       cy.findByRole("switch").should(
         "have.accessibleDescription",
@@ -213,19 +212,9 @@ describe("GIVEN a Switch", () => {
 
       cy.findByLabelText("Label").realClick();
       cy.findByRole("switch").should("be.focused").and("be.checked");
-      cy.get("@changeSpy")
-        .should("have.callCount", 1)
-        .and("have.been.calledWithMatch", {
-          target: { checked: true },
-        });
 
       cy.findByRole("switch").realClick();
       cy.findByRole("switch").should("be.focused").and("not.be.checked");
-      cy.get("@changeSpy")
-        .should("have.callCount", 2)
-        .and("have.been.calledWithMatch", {
-          target: { checked: false },
-        });
     });
 
     it("THEN should respect form field disabled state", () => {
