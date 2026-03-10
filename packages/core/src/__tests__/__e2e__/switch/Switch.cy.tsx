@@ -24,7 +24,12 @@ describe("GIVEN a Switch", () => {
     describe("AND using a mouse", () => {
       it("SHOULD handle selection", () => {
         const changeSpy = cy.stub().as("changeSpy");
-        cy.mount(<Default onChange={changeSpy} />);
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          changeSpy(event);
+        };
+        cy.mount(<Default onChange={handleChange} />);
         cy.findByRole("switch").should("not.be.checked");
 
         cy.findByRole("switch").realClick();
