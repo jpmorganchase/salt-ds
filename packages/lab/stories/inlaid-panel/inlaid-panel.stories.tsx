@@ -23,7 +23,7 @@ export const Left: StoryFn = () => {
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
       <FlexLayout
         style={{
-          height: 400,
+          height: "100vh",
         }}
         gap={0}
       >
@@ -82,7 +82,7 @@ export const Right: StoryFn = () => {
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
       <FlexLayout
         style={{
-          height: 400,
+          height: "100vh",
         }}
       >
         <FlexItem grow={1}>
@@ -138,10 +138,10 @@ export const Top: StoryFn = () => {
         }}
       >
         <InlaidPanel position="top" label="Filters">
-          <StackLayout>
+          <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <Text>Filter controls</Text>
-          </StackLayout>
+          </div>
         </InlaidPanel>
         <FlexItem grow={1}>
           <InlaidPanelTrigger>Toggle Filters</InlaidPanelTrigger>
@@ -159,19 +159,19 @@ export const Bottom: StoryFn = () => {
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
       <StackLayout
         style={{
-          height: 400,
+          height: "100vh",
         }}
         gap={0}
       >
-        <FlexItem basis={1}>
+        <FlexItem grow={1}>
           <InlaidPanelTrigger>Toggle Log</InlaidPanelTrigger>
           <Text>Main content</Text>
         </FlexItem>
         <InlaidPanel position="bottom" label="Log">
-          <StackLayout>
+          <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <Text>Log entries</Text>
-          </StackLayout>
+          </div>
         </InlaidPanel>
       </StackLayout>
     </InlaidPanelGroup>
