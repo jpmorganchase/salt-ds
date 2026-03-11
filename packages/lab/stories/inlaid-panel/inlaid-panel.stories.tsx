@@ -10,6 +10,9 @@ import { useState } from "react";
 export default {
   title: "Lab/InlaidPanel",
   component: InlaidPanel,
+  parameters: {
+    layout: "padded",
+  },
 } as Meta<typeof InlaidPanel>;
 
 // Left panel (default)
@@ -21,11 +24,10 @@ export const Left: StoryFn = () => {
         style={{
           display: "flex",
           height: 400,
-          border: "1px solid var(--salt-separable-primary-borderColor)",
         }}
       >
         <InlaidPanel label="Navigation">
-          <div style={{ padding: "var(--salt-spacing-200)" }}>
+          <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <nav>Nav content</nav>
             <button>Button 1</button>
@@ -79,7 +81,6 @@ export const Right: StoryFn = () => {
         style={{
           display: "flex",
           height: 400,
-          border: "1px solid var(--salt-separable-primary-borderColor)",
         }}
       >
         <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
@@ -87,7 +88,7 @@ export const Right: StoryFn = () => {
           <p>Main content</p>
         </main>
         <InlaidPanel position="right" label="Details">
-          <div style={{ padding: "var(--salt-spacing-200)" }}>
+          <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <div>
               <p>Details panel</p>
@@ -133,11 +134,10 @@ export const Top: StoryFn = () => {
           display: "flex",
           flexDirection: "column",
           height: 400,
-          border: "1px solid var(--salt-separable-primary-borderColor)",
         }}
       >
         <InlaidPanel position="top" label="Filters">
-          <div style={{ padding: "var(--salt-spacing-200)" }}>
+          <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <p>Filter controls</p>
           </div>
@@ -161,7 +161,6 @@ export const Bottom: StoryFn = () => {
           display: "flex",
           flexDirection: "column",
           height: 400,
-          border: "1px solid var(--salt-separable-primary-borderColor)",
         }}
       >
         <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
@@ -169,7 +168,7 @@ export const Bottom: StoryFn = () => {
           <p>Main content</p>
         </main>
         <InlaidPanel position="bottom" label="Log">
-          <div style={{ padding: "var(--salt-spacing-200)" }}>
+          <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <p>Log entries</p>
           </div>

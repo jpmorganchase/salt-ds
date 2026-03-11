@@ -1,55 +1,70 @@
-.saltInlaidPanel-track {
+.saltInlaidPanel {
   overflow: hidden;
   flex-shrink: 0;
   align-self: stretch;
   transition-property: width, height;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+  transition-duration: var(--salt-duration-perceptible);
   visibility: visible;
+  background-color: var(--salt-container-primary-background);
 }
 
 /* Position-based open dimensions — consumer overrides --saltInlaidPanel-size */
-.saltInlaidPanel-track[data-position="left"],
-.saltInlaidPanel-track[data-position="right"] {
+.saltInlaidPanel[data-position="left"] {
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+}
+.saltInlaidPanel[data-position="right"] {
+  border-left: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+}
+.saltInlaidPanel[data-position="top"] {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+}
+.saltInlaidPanel[data-position="bottom"] {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+}
+
+.saltInlaidPanel[data-position="left"],
+.saltInlaidPanel[data-position="right"] {
   width: var(--saltInlaidPanel-size, 280px);
   height: 100%;
 }
 
-.saltInlaidPanel-track[data-position="top"],
-.saltInlaidPanel-track[data-position="bottom"] {
+.saltInlaidPanel[data-position="top"],
+.saltInlaidPanel[data-position="bottom"] {
   height: var(--saltInlaidPanel-size, 280px);
   width: 100%;
 }
 
 /* Closed state: placed after position rules so it wins without !important */
-.saltInlaidPanel-track[data-state="closed"] {
+.saltInlaidPanel[data-state="closed"] {
   width: 0;
   height: 0;
   visibility: hidden;
   /* Delay visibility until size transition completes */
   transition:
-    width 300ms cubic-bezier(0.4, 0, 0.2, 1),
-    height 300ms cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0s linear 300ms;
+    width var(--salt-duration-perceptible) cubic-bezier(0.4, 0, 0.2, 1),
+    height var(--salt-duration-perceptible) cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear var(--salt-duration-perceptible);
 }
 
 .saltInlaidPanel-inner {
   box-sizing: border-box;
   overflow: auto;
+  padding: var(--salt-spacing-300);
 }
 
 .saltInlaidPanel-focused {
   outline: var(--salt-focused-outline);
 }
 
-.saltInlaidPanel-track[data-position="left"] .saltInlaidPanel-inner,
-.saltInlaidPanel-track[data-position="right"] .saltInlaidPanel-inner {
+.saltInlaidPanel[data-position="left"] .saltInlaidPanel-inner,
+.saltInlaidPanel[data-position="right"] .saltInlaidPanel-inner {
   width: var(--saltInlaidPanel-size, 280px);
   height: 100%;
 }
 
-.saltInlaidPanel-track[data-position="top"] .saltInlaidPanel-inner,
-.saltInlaidPanel-track[data-position="bottom"] .saltInlaidPanel-inner {
+.saltInlaidPanel[data-position="top"] .saltInlaidPanel-inner,
+.saltInlaidPanel[data-position="bottom"] .saltInlaidPanel-inner {
   height: var(--saltInlaidPanel-size, 280px);
   width: 100%;
 }
