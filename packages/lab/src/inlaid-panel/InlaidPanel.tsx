@@ -40,7 +40,7 @@ export function InlaidPanel({
 
   return (
     <div
-      className={clsx(withBaseName("track"), {
+      className={clsx(withBaseName(), {
         [withBaseName("focused")]: focused,
       })}
       data-position={position}
