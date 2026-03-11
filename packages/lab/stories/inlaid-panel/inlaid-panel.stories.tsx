@@ -1,3 +1,4 @@
+import { Button, FlexItem, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
   InlaidPanel,
   InlaidPanelClose,
@@ -20,54 +21,56 @@ export const Left: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
-      <div
+      <FlexLayout
         style={{
-          display: "flex",
           height: 400,
         }}
+        gap={0}
       >
         <InlaidPanel label="Navigation">
           <div>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
             <nav>Nav content</nav>
-            <button>Button 1</button>
-            <button>Button 2</button>
-            <div>
-              <p>Details panel</p>
-              <p>
+            <Button>Button 1</Button>
+            <Button>Button 2</Button>
+            <StackLayout>
+              <Text>Details panel</Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-            </div>
+              </Text>
+            </StackLayout>
           </div>
         </InlaidPanel>
-        <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
-          <InlaidPanelTrigger>Toggle Navigation</InlaidPanelTrigger>
-          <button>Another Action</button>
-          <button>More Actions</button>
-          <p>Main content</p>
-        </main>
-      </div>
+        <FlexItem>
+          <FlexLayout gap={1}>
+            <InlaidPanelTrigger>Toggle Navigation</InlaidPanelTrigger>
+            <InlaidPanelTrigger>Another Action</InlaidPanelTrigger>
+            <Button>More Actions</Button>
+          </FlexLayout>
+          <Text>Main content</Text>
+        </FlexItem>
+      </FlexLayout>
     </InlaidPanelGroup>
   );
 };
@@ -77,49 +80,48 @@ export const Right: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
-      <div
+      <FlexLayout
         style={{
-          display: "flex",
           height: 400,
         }}
       >
-        <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
+        <FlexItem grow={1}>
           <InlaidPanelTrigger>Toggle Details</InlaidPanelTrigger>
-          <p>Main content</p>
-        </main>
+          <Text>Main content</Text>
+        </FlexItem>
         <InlaidPanel position="right" label="Details">
-          <div>
+          <StackLayout>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
-            <div>
-              <p>Details panel</p>
-              <p>
+            <StackLayout>
+              <Text>Details panel</Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
                 repudiandae, ullam nihil architecto neque rerum necessitatibus
                 blanditiis? Iusto expedita dolore et doloribus officiis.
-              </p>
-            </div>
-          </div>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </InlaidPanel>
-      </div>
+      </FlexLayout>
     </InlaidPanelGroup>
   );
 };
@@ -129,24 +131,23 @@ export const Top: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
-      <div
+      <StackLayout
+        gap={0}
         style={{
-          display: "flex",
-          flexDirection: "column",
           height: 400,
         }}
       >
         <InlaidPanel position="top" label="Filters">
-          <div>
+          <StackLayout>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
-            <p>Filter controls</p>
-          </div>
+            <Text>Filter controls</Text>
+          </StackLayout>
         </InlaidPanel>
-        <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
+        <FlexItem grow={1}>
           <InlaidPanelTrigger>Toggle Filters</InlaidPanelTrigger>
-          <p>Main content</p>
-        </main>
-      </div>
+          <Text>Main content</Text>
+        </FlexItem>
+      </StackLayout>
     </InlaidPanelGroup>
   );
 };
@@ -156,24 +157,23 @@ export const Bottom: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
     <InlaidPanelGroup open={open} onOpenChange={setOpen}>
-      <div
+      <StackLayout
         style={{
-          display: "flex",
-          flexDirection: "column",
           height: 400,
         }}
+        gap={0}
       >
-        <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
+        <FlexItem basis={1}>
           <InlaidPanelTrigger>Toggle Log</InlaidPanelTrigger>
-          <p>Main content</p>
-        </main>
+          <Text>Main content</Text>
+        </FlexItem>
         <InlaidPanel position="bottom" label="Log">
-          <div>
+          <StackLayout>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
-            <p>Log entries</p>
-          </div>
+            <Text>Log entries</Text>
+          </StackLayout>
         </InlaidPanel>
-      </div>
+      </StackLayout>
     </InlaidPanelGroup>
   );
 };

@@ -1,4 +1,4 @@
-import { useForkRef, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { Button, useForkRef, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { type ComponentPropsWithoutRef, forwardRef, useRef } from "react";
 import { useInlaidPanel } from "./InlaidPanelContext";
 
@@ -20,7 +20,7 @@ export const InlaidPanelTrigger = forwardRef<
   }, [triggerRef]);
 
   return (
-    <button
+    <Button
       ref={handleRef}
       type="button"
       aria-expanded={open}
@@ -29,6 +29,6 @@ export const InlaidPanelTrigger = forwardRef<
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 });
