@@ -30,6 +30,33 @@ export const Left: StoryFn = () => {
             <nav>Nav content</nav>
             <button>Button 1</button>
             <button>Button 2</button>
+            <div>
+              <p>Details panel</p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+            </div>
           </div>
         </InlaidPanel>
         <main style={{ flex: 1, padding: "var(--salt-spacing-200)" }}>
@@ -62,7 +89,33 @@ export const Right: StoryFn = () => {
         <InlaidPanel position="right" label="Details">
           <div style={{ padding: "var(--salt-spacing-200)" }}>
             <InlaidPanelClose>✕ Close</InlaidPanelClose>
-            <p>Details panel</p>
+            <div>
+              <p>Details panel</p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+                repudiandae, ullam nihil architecto neque rerum necessitatibus
+                blanditiis? Iusto expedita dolore et doloribus officiis.
+              </p>
+            </div>
           </div>
         </InlaidPanel>
       </div>
