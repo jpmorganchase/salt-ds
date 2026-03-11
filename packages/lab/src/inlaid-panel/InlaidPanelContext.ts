@@ -5,7 +5,8 @@ export interface InlaidPanelContextValue {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   panelId?: string;
-  triggerRef: MutableRefObject<HTMLButtonElement | null>;
+  lastTriggerRef: MutableRefObject<HTMLButtonElement | null>;
+  setLastTrigger: (trigger: HTMLButtonElement | null) => void;
 }
 
 const InlaidPanelContext = createContext<InlaidPanelContextValue>(
@@ -13,7 +14,8 @@ const InlaidPanelContext = createContext<InlaidPanelContextValue>(
   {
     open: false,
     onOpenChange: () => undefined,
-    triggerRef: { current: null },
+    lastTriggerRef: { current: null },
+    setLastTrigger: () => undefined,
   },
 );
 
