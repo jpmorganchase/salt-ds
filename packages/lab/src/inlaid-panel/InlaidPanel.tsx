@@ -7,6 +7,7 @@ import inlaidPanelCss from "./InlaidPanel.css";
 import { useInlaidPanel } from "./InlaidPanelContext";
 
 const withBaseName = makePrefixer("saltInlaidPanel");
+const animationDurationMs = 300;
 
 export interface InlaidPanelProps {
   position?: "left" | "right" | "top" | "bottom";
@@ -19,9 +20,11 @@ export function InlaidPanel({
   label = "Side panel",
   children,
 }: InlaidPanelProps) {
-  const { open, panelId, triggerRef } = useInlaidPanel();
-  const innerRef = useRef<HTMLDivElement>(null);
-  const [focused, setFocused] = useState(false);
+  const { open, panelId, lastTriggerRef } = useInlaidPanel();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const previousOpenRef = useRef(open);
+  const [isClosing, setIsClosing] = useState(false);
+  const [isClosed, setIsClosed] = useState(!open);
   const targetWindow = useWindow();
 
   useComponentCssInjection({
@@ -31,35 +34,56 @@ export function InlaidPanel({
   });
 
   useEffect(() => {
-    if (open) {
-      innerRef.current?.focus({ preventScroll: true });
-    } else {
-      triggerRef.current?.focus({ preventScroll: true });
+    if (previousOpenRef.current && !open) {
+      const trigger = lastTriggerRef.current;
+      if (trigger?.isConnected) {
+        trigger.focus({ preventScroll: true });
+      }
     }
-  }, [open]);
+
+    previousOpenRef.current = open;
+  }, [open, lastTriggerRef]);
+
+  useEffect(() => {
+    if (open && !isClosed) {
+      panelRef.current?.focus({ preventScroll: true });
+    }
+  }, [open, isClosed]);
+
+  useEffect(() => {
+    if (open) {
+      setIsClosing(false);
+      setIsClosed(false);
+      return;
+    }
+
+    if (!isClosed) {
+      setIsClosing(true);
+      const timer = setTimeout(() => {
+        setIsClosing(false);
+        setIsClosed(true);
+      }, animationDurationMs);
+      return () => clearTimeout(timer);
+    }
+  }, [open, isClosed]);
 
   return (
     <div
+      id={panelId}
+      ref={panelRef}
       className={clsx(withBaseName(), {
-        [withBaseName("focused")]: focused,
+        [withBaseName(position)]: position,
+        [withBaseName("open")]: open,
+        [withBaseName("closing")]: isClosing,
+        [withBaseName("closed")]: isClosed,
+        [withBaseName("enterAnimation")]: open,
+        [withBaseName("exitAnimation")]: isClosing,
       })}
-      data-position={position}
-      data-state={open ? "open" : "closed"}
+      role="region"
+      aria-label={label}
+      tabIndex={-1}
     >
-      <div
-        id={panelId}
-        ref={innerRef}
-        className={clsx(withBaseName("inner"))}
-        role="region"
-        aria-label={label}
-        tabIndex={-1}
-        onFocus={(e) => {
-          if (e.target === e.currentTarget) setFocused(true);
-        }}
-        onBlur={() => setFocused(false)}
-      >
-        {children}
-      </div>
+      <div className={clsx(withBaseName("inner"))}>{children}</div>
     </div>
   );
 }
