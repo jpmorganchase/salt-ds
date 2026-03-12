@@ -64,8 +64,12 @@ export const Left: StoryFn = () => {
         </InlaidPanel>
         <FlexItem>
           <FlexLayout gap={1}>
-            <InlaidPanelTrigger>Toggle Navigation</InlaidPanelTrigger>
-            <InlaidPanelTrigger>Another Action</InlaidPanelTrigger>
+            <InlaidPanelTrigger>
+              <Button>Toggle Navigation</Button>
+            </InlaidPanelTrigger>
+            <InlaidPanelTrigger>
+              <Button>Another Action</Button>
+            </InlaidPanelTrigger>
             <Button>More Actions</Button>
           </FlexLayout>
           <Text>Main content</Text>
@@ -86,7 +90,9 @@ export const Right: StoryFn = () => {
         }}
       >
         <FlexItem grow={1}>
-          <InlaidPanelTrigger>Toggle Details</InlaidPanelTrigger>
+          <InlaidPanelTrigger>
+            <Button>Toggle Details</Button>
+          </InlaidPanelTrigger>
           <Text>Main content</Text>
         </FlexItem>
         <InlaidPanel position="right" aria-label="Details">
@@ -144,7 +150,9 @@ export const Top: StoryFn = () => {
           </div>
         </InlaidPanel>
         <FlexItem grow={1}>
-          <InlaidPanelTrigger>Toggle Filters</InlaidPanelTrigger>
+          <InlaidPanelTrigger>
+            <Button>Toggle Filters</Button>
+          </InlaidPanelTrigger>
           <Text>Main content</Text>
         </FlexItem>
       </StackLayout>
@@ -164,7 +172,9 @@ export const Bottom: StoryFn = () => {
         gap={0}
       >
         <FlexItem grow={1}>
-          <InlaidPanelTrigger>Toggle Log</InlaidPanelTrigger>
+          <InlaidPanelTrigger>
+            <Button>Toggle Log</Button>
+          </InlaidPanelTrigger>
           <Text>Main content</Text>
         </FlexItem>
         <InlaidPanel position="bottom" aria-label="Log">
