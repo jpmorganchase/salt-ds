@@ -1,0 +1,122 @@
+.treeSpacingDebugWrap {
+  position: relative;
+}
+
+.treeSpacingDebugOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.treeSpacingDebugRect {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+/* Legend */
+.treeSpacingLegend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  font-size: var(--salt-text-fontSize, 12px);
+  font-family: var(--salt-text-fontFamily, sans-serif);
+}
+
+.treeSpacingLegend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.treeSpacing150 .saltTreeNodeTrigger {
+  gap: var(--salt-spacing-150);
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-150));
+  padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
+  padding-right: var(--salt-spacing-100);
+}
+
+.treeSpacing150[aria-multiselectable="true"] .saltTreeNodeTrigger {
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-150));
+}
+
+.treeSpacing150 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.treeSpacingFixed1200 .saltTreeNodeTrigger {
+  gap: var(--salt-spacing-fixed-1200);
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-fixed-1200));
+  padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
+  padding-right: var(--salt-spacing-100);
+}
+
+.treeSpacingFixed1200[aria-multiselectable="true"] .saltTreeNodeTrigger {
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-fixed-1200));
+}
+
+.treeSpacingFixed1200 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.treeSpacingMixed150 .saltTreeNodeTrigger {
+  gap: 0;
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-150));
+  padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
+  padding-right: var(--salt-spacing-100);
+}
+
+.treeSpacingMixed150[aria-multiselectable="true"] .saltTreeNodeTrigger {
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-150));
+}
+
+.treeSpacingMixed150 .saltTreeNodeTrigger > .saltTreeNodeExpansionIcon {
+  margin-right: var(--salt-spacing-150);
+}
+
+.treeSpacingMixed150 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
+  margin-left: 0;
+  margin-right: var(--salt-spacing-150);
+}
+
+.treeSpacingMixed150 .saltTreeNodeTrigger > .saltTreeNode-icon {
+  margin-right: var(--salt-spacing-100);
+}
+
+.treeSpacingMixed150 .saltTreeNodeTrigger > .saltIcon {
+  margin-right: var(--salt-spacing-100);
+}
+
+.treeSpacingMixedFixed1200 .saltTreeNodeTrigger {
+  gap: 0;
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-fixed-1200));
+  padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
+  padding-right: var(--salt-spacing-100);
+}
+
+.treeSpacingMixedFixed1200[aria-multiselectable="true"] .saltTreeNodeTrigger {
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-fixed-1200));
+}
+
+.treeSpacingMixedFixed1200 .saltTreeNodeTrigger > .saltTreeNodeExpansionIcon {
+  margin-right: var(--salt-spacing-fixed-1200);
+}
+
+.treeSpacingMixedFixed1200 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
+  margin-left: 0;
+  margin-right: var(--salt-spacing-fixed-1200);
+}
+
+.treeSpacingMixedFixed1200 .saltTreeNodeTrigger > .saltTreeNode-icon {
+  margin-right: var(--salt-spacing-100);
+}
+
+.treeSpacingMixedFixed1200 .saltTreeNodeTrigger > .saltIcon {
+  margin-right: var(--salt-spacing-100);
+}
