@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-tokens.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "tokens"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "category",
+          "type",
+          "value",
+          "themes",
+          "deprecated",
+          "last_verified_at"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "@salt-ds/mcp",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/salt-mcp"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "bin",
+    "generated",
+    "schemas"
+  ],
+  "bin": {
+    "salt-mcp": "bin/salt-mcp.js"
+  },
+  "scripts": {
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build:registry": "node ./scripts/buildRegistry.mjs",
+    "sync:generated": "node ./scripts/syncGenerated.mjs",
+    "build": "yarn build:package && yarn build:registry && yarn sync:generated",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@types/semver": "^7.7.1",
+    "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "mdast-util-to-string": "^4.0.0",
+    "minisearch": "^7.2.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "semver": "^7.7.3",
+    "typescript": "^5.8.3",
+    "unified": "^11.0.5",
+    "zod": "^4.1.11"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-mcp",
+    "provenance": true
+  }
+}

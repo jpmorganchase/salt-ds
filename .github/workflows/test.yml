@@ -92,6 +92,8 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
+      - name: Generate site snapshot inputs
+        run: yarn workspace @salt-ds/site gen:snapshot
       - run: yarn run test
   cypress-tests:
     strategy:
