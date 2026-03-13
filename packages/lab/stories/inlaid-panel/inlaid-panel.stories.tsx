@@ -1,7 +1,6 @@
 import { Button, FlexItem, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
   InlaidPanel,
-  InlaidPanelClose,
   InlaidPanelGroup,
   InlaidPanelTrigger,
 } from "@salt-ds/lab";
@@ -12,11 +11,10 @@ export default {
   title: "Lab/InlaidPanel",
   component: InlaidPanel,
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
   },
 } as Meta<typeof InlaidPanel>;
 
-// Left panel (default)
 export const Left: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
@@ -29,7 +27,7 @@ export const Left: StoryFn = () => {
       >
         <InlaidPanel aria-label="Navigation">
           <div>
-            <InlaidPanelClose>✕ Close</InlaidPanelClose>
+            <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <Text>Nav content</Text>
             <Button>Button 1</Button>
             <Button>Button 2</Button>
@@ -79,7 +77,6 @@ export const Left: StoryFn = () => {
   );
 };
 
-// Right panel
 export const Right: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
@@ -97,7 +94,7 @@ export const Right: StoryFn = () => {
         </FlexItem>
         <InlaidPanel position="right" aria-label="Details">
           <StackLayout>
-            <InlaidPanelClose>✕ Close</InlaidPanelClose>
+            <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <StackLayout>
               <Text>Details panel</Text>
               <Text>
@@ -132,7 +129,6 @@ export const Right: StoryFn = () => {
   );
 };
 
-// Top panel
 export const Top: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
@@ -145,7 +141,7 @@ export const Top: StoryFn = () => {
       >
         <InlaidPanel position="top" aria-label="Filters">
           <div>
-            <InlaidPanelClose>✕ Close</InlaidPanelClose>
+            <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <Text>Filter controls</Text>
           </div>
         </InlaidPanel>
@@ -160,7 +156,6 @@ export const Top: StoryFn = () => {
   );
 };
 
-// Bottom panel
 export const Bottom: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
@@ -179,7 +174,7 @@ export const Bottom: StoryFn = () => {
         </FlexItem>
         <InlaidPanel position="bottom" aria-label="Log">
           <div>
-            <InlaidPanelClose>✕ Close</InlaidPanelClose>
+            <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <Text>Log entries</Text>
           </div>
         </InlaidPanel>

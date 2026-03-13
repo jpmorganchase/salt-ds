@@ -17,7 +17,7 @@ const animationDurationMs = 300;
 
 export interface InlaidPanelProps extends ComponentPropsWithRef<"div"> {
   /**
-   *  Defines the position of the panel within the screen. Defaults to `left`.
+   * Edge the panel is anchored to; controls animation direction and divider side. Defaults to `left`.
    */
   position?: "left" | "right" | "top" | "bottom";
 }
