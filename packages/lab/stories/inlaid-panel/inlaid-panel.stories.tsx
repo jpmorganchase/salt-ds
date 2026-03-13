@@ -25,7 +25,12 @@ export const Left: StoryFn = () => {
         }}
         gap={0}
       >
-        <InlaidPanel aria-label="Navigation">
+        <InlaidPanel
+          aria-label="Navigation"
+          style={{
+            width: 280,
+          }}
+        >
           <div>
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <Text>Nav content</Text>
@@ -92,7 +97,13 @@ export const Right: StoryFn = () => {
           </InlaidPanelTrigger>
           <Text>Main content</Text>
         </FlexItem>
-        <InlaidPanel position="right" aria-label="Details">
+        <InlaidPanel
+          position="right"
+          aria-label="Details"
+          style={{
+            width: 280,
+          }}
+        >
           <StackLayout>
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <StackLayout>
@@ -139,7 +150,13 @@ export const Top: StoryFn = () => {
           height: 400,
         }}
       >
-        <InlaidPanel position="top" aria-label="Filters">
+        <InlaidPanel
+          position="top"
+          aria-label="Filters"
+          style={{
+            height: 280,
+          }}
+        >
           <div>
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <Text>Filter controls</Text>
@@ -172,7 +189,13 @@ export const Bottom: StoryFn = () => {
           </InlaidPanelTrigger>
           <Text>Main content</Text>
         </FlexItem>
-        <InlaidPanel position="bottom" aria-label="Log">
+        <InlaidPanel
+          position="bottom"
+          aria-label="Log"
+          style={{
+            height: 280,
+          }}
+        >
           <div>
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <Text>Log entries</Text>

@@ -2,10 +2,7 @@
   overflow: hidden;
   flex-shrink: 0;
   align-self: stretch;
-  visibility: visible;
   background-color: var(--salt-container-primary-background);
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: var(--salt-duration-perceptible);
 }
 
 .saltInlaidPanel.saltInlaidPanel-left {
@@ -25,61 +22,64 @@
 .saltInlaidPanel.saltInlaidPanel-right {
   width: var(--saltInlaidPanel-size, 280px);
   height: 100%;
-  transition-property: width;
 }
 
 .saltInlaidPanel.saltInlaidPanel-top,
 .saltInlaidPanel.saltInlaidPanel-bottom {
   height: var(--saltInlaidPanel-size, 280px);
   width: 100%;
-  transition-property: height;
-}
-
-.saltInlaidPanel.saltInlaidPanel-closing,
-.saltInlaidPanel.saltInlaidPanel-closed {
-  width: 0;
-  height: 0;
-}
-
-.saltInlaidPanel.saltInlaidPanel-closing {
-  pointer-events: none;
-}
-
-.saltInlaidPanel.saltInlaidPanel-closed {
-  visibility: hidden;
-  pointer-events: none;
 }
 
 .saltInlaidPanel.saltInlaidPanel-left.saltInlaidPanel-enterAnimation {
-  animation: var(--salt-animation-slide-in-left);
+  animation:
+    var(--salt-animation-slide-in-left),
+    saltInlaidPanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
 }
 
 .saltInlaidPanel.saltInlaidPanel-left.saltInlaidPanel-exitAnimation {
-  animation: var(--salt-animation-slide-out-left);
+  animation:
+    var(--salt-animation-slide-out-left),
+    saltInlaidPanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
 }
 
 .saltInlaidPanel.saltInlaidPanel-right.saltInlaidPanel-enterAnimation {
-  animation: var(--salt-animation-slide-in-right);
+  animation:
+    var(--salt-animation-slide-in-right),
+    saltInlaidPanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
 }
 
 .saltInlaidPanel.saltInlaidPanel-right.saltInlaidPanel-exitAnimation {
-  animation: var(--salt-animation-slide-out-right);
+  animation:
+    var(--salt-animation-slide-out-right),
+    saltInlaidPanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
 }
 
 .saltInlaidPanel.saltInlaidPanel-top.saltInlaidPanel-enterAnimation {
-  animation: var(--salt-animation-slide-in-bottom);
+  animation:
+    var(--salt-animation-slide-in-bottom),
+    saltInlaidPanel-expandHeight var(--salt-animation-duration) var(--salt-animation-timing-function);
 }
 
 .saltInlaidPanel.saltInlaidPanel-top.saltInlaidPanel-exitAnimation {
-  animation: var(--salt-animation-slide-out-bottom);
+  animation:
+    var(--salt-animation-slide-out-bottom),
+    saltInlaidPanel-collapseHeight var(--salt-animation-duration) var(--salt-animation-timing-function) both;
 }
 
 .saltInlaidPanel.saltInlaidPanel-bottom.saltInlaidPanel-enterAnimation {
-  animation: var(--salt-animation-slide-in-top);
+  animation:
+    var(--salt-animation-slide-in-top),
+    saltInlaidPanel-expandHeight var(--salt-animation-duration) var(--salt-animation-timing-function);
 }
 
 .saltInlaidPanel.saltInlaidPanel-bottom.saltInlaidPanel-exitAnimation {
-  animation: var(--salt-animation-slide-out-top);
+  animation:
+    var(--salt-animation-slide-out-top),
+    saltInlaidPanel-collapseHeight var(--salt-animation-duration) var(--salt-animation-timing-function) both;
+}
+
+.saltInlaidPanel.saltInlaidPanel-exitAnimation {
+  pointer-events: none;
 }
 
 .saltInlaidPanel-inner {
@@ -106,4 +106,25 @@
 .saltInlaidPanel.saltInlaidPanel-bottom .saltInlaidPanel-inner {
   height: var(--saltInlaidPanel-size, 280px);
   width: 100%;
+}
+
+@keyframes saltInlaidPanel-expandWidth {
+  from {
+    width: 0;
+  }
+}
+@keyframes saltInlaidPanel-collapseWidth {
+  to {
+    width: 0;
+  }
+}
+@keyframes saltInlaidPanel-expandHeight {
+  from {
+    height: 0;
+  }
+}
+@keyframes saltInlaidPanel-collapseHeight {
+  to {
+    height: 0;
+  }
 }
