@@ -13,7 +13,6 @@ import inlaidPanelCss from "./InlaidPanel.css";
 import { useInlaidPanel } from "./InlaidPanelContext";
 
 const withBaseName = makePrefixer("saltInlaidPanel");
-const animationDurationMs = 300;
 
 export interface InlaidPanelProps extends ComponentPropsWithRef<"div"> {
   /**
@@ -29,11 +28,9 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
     const { open, panelId, lastTriggerRef } = useInlaidPanel();
 
     const panelRef = useRef<HTMLDivElement>(null);
-    const previousOpenRef = useRef(open);
     const handleRef = useForkRef(panelRef, ref);
 
-    const [isClosing, setIsClosing] = useState(false);
-    const [isClosed, setIsClosed] = useState(!open);
+    const [showComponent, setShowComponent] = useState(open);
 
     const targetWindow = useWindow();
 
@@ -44,38 +41,32 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
     });
 
     useEffect(() => {
-      if (previousOpenRef.current && !open) {
+      if (open && !showComponent) {
+        setShowComponent(true);
+      }
+
+      if (!open && showComponent) {
         const trigger = lastTriggerRef.current;
         if (trigger?.isConnected) {
           trigger.focus({ preventScroll: true });
         }
-      }
 
-      previousOpenRef.current = open;
-    }, [open, lastTriggerRef]);
-
-    useEffect(() => {
-      if (open && !isClosed) {
-        panelRef.current?.focus({ preventScroll: true });
-      }
-    }, [open, isClosed]);
-
-    useEffect(() => {
-      if (open) {
-        setIsClosing(false);
-        setIsClosed(false);
-        return;
-      }
-
-      if (!isClosed) {
-        setIsClosing(true);
         const timer = setTimeout(() => {
-          setIsClosing(false);
-          setIsClosed(true);
-        }, animationDurationMs);
+          setShowComponent(false);
+        }, 300); // var(--salt-duration-perceptible)
         return () => clearTimeout(timer);
       }
-    }, [open, isClosed]);
+    }, [open, showComponent, lastTriggerRef]);
+
+    useEffect(() => {
+      if (open && showComponent) {
+        panelRef.current?.focus({ preventScroll: true });
+      }
+    }, [open, showComponent]);
+
+    if (!showComponent) {
+      return null;
+    }
 
     return (
       <div
@@ -83,11 +74,8 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
         ref={handleRef}
         className={clsx(withBaseName(), {
           [withBaseName(position)]: position,
-          [withBaseName("open")]: open,
-          [withBaseName("closing")]: isClosing,
-          [withBaseName("closed")]: isClosed,
           [withBaseName("enterAnimation")]: open,
-          [withBaseName("exitAnimation")]: isClosing,
+          [withBaseName("exitAnimation")]: !open,
         })}
         role="region"
         tabIndex={-1}
