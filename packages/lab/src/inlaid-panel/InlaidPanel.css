@@ -30,52 +30,24 @@
   width: 100%;
 }
 
-.saltInlaidPanel.saltInlaidPanel-left.saltInlaidPanel-enterAnimation {
-  animation:
-    var(--salt-animation-slide-in-left),
-    saltInlaidPanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
-}
-
-.saltInlaidPanel.saltInlaidPanel-left.saltInlaidPanel-exitAnimation {
-  animation:
-    var(--salt-animation-slide-out-left),
-    saltInlaidPanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
-}
-
+.saltInlaidPanel.saltInlaidPanel-left.saltInlaidPanel-enterAnimation,
 .saltInlaidPanel.saltInlaidPanel-right.saltInlaidPanel-enterAnimation {
-  animation:
-    var(--salt-animation-slide-in-right),
-    saltInlaidPanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
+  animation: saltInlaidPanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
 }
 
+.saltInlaidPanel.saltInlaidPanel-left.saltInlaidPanel-exitAnimation,
 .saltInlaidPanel.saltInlaidPanel-right.saltInlaidPanel-exitAnimation {
-  animation:
-    var(--salt-animation-slide-out-right),
-    saltInlaidPanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
+  animation: saltInlaidPanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
 }
 
-.saltInlaidPanel.saltInlaidPanel-top.saltInlaidPanel-enterAnimation {
-  animation:
-    var(--salt-animation-slide-in-bottom),
-    saltInlaidPanel-expandHeight var(--salt-animation-duration) var(--salt-animation-timing-function);
-}
-
-.saltInlaidPanel.saltInlaidPanel-top.saltInlaidPanel-exitAnimation {
-  animation:
-    var(--salt-animation-slide-out-bottom),
-    saltInlaidPanel-collapseHeight var(--salt-animation-duration) var(--salt-animation-timing-function) both;
-}
-
+.saltInlaidPanel.saltInlaidPanel-top.saltInlaidPanel-enterAnimation,
 .saltInlaidPanel.saltInlaidPanel-bottom.saltInlaidPanel-enterAnimation {
-  animation:
-    var(--salt-animation-slide-in-top),
-    saltInlaidPanel-expandHeight var(--salt-animation-duration) var(--salt-animation-timing-function);
+  animation: saltInlaidPanel-expandHeight var(--salt-animation-duration) var(--salt-animation-timing-function);
 }
 
+.saltInlaidPanel.saltInlaidPanel-top.saltInlaidPanel-exitAnimation,
 .saltInlaidPanel.saltInlaidPanel-bottom.saltInlaidPanel-exitAnimation {
-  animation:
-    var(--salt-animation-slide-out-top),
-    saltInlaidPanel-collapseHeight var(--salt-animation-duration) var(--salt-animation-timing-function) both;
+  animation: saltInlaidPanel-collapseHeight var(--salt-animation-duration) var(--salt-animation-timing-function) both;
 }
 
 .saltInlaidPanel.saltInlaidPanel-exitAnimation {
