@@ -15,8 +15,9 @@ export default {
   },
 } as Meta<typeof InlaidPanel>;
 
-export const Left: StoryFn = () => {
+export const Default: StoryFn = () => {
   const [open, setOpen] = useState(false);
+
   return (
     <InlaidPanel open={open} onOpenChange={setOpen}>
       <FlexLayout
@@ -27,9 +28,11 @@ export const Left: StoryFn = () => {
       >
         <InlaidPanelContent
           aria-label="Navigation"
-          style={{
-            width: 280,
-          }}
+          style={
+            {
+              "--saltInlaidPanel-width": "500px",
+            } as React.CSSProperties
+          }
         >
           <div>
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
@@ -65,18 +68,14 @@ export const Left: StoryFn = () => {
             </StackLayout>
           </div>
         </InlaidPanelContent>
-        <FlexItem>
-          <FlexLayout gap={1}>
-            <InlaidPanelTrigger>
-              <Button>Toggle Navigation</Button>
-            </InlaidPanelTrigger>
-            <InlaidPanelTrigger>
-              <Button>Another Action</Button>
-            </InlaidPanelTrigger>
-            <Button>More Actions</Button>
-          </FlexLayout>
-          <Text>Main content</Text>
-        </FlexItem>
+        <FlexLayout gap={1} padding={1}>
+          <InlaidPanelTrigger>
+            <Button>Open Left Panel</Button>
+          </InlaidPanelTrigger>
+          <Button>Button 1</Button>
+          <Button>Button 2</Button>
+          <Button>Button 3</Button>
+        </FlexLayout>
       </FlexLayout>
     </InlaidPanel>
   );
@@ -91,7 +90,7 @@ export const Right: StoryFn = () => {
           height: "100vh",
         }}
       >
-        <FlexItem grow={1}>
+        <FlexItem grow={1} padding={1}>
           <InlaidPanelTrigger>
             <Button>Toggle Details</Button>
           </InlaidPanelTrigger>
@@ -100,11 +99,11 @@ export const Right: StoryFn = () => {
         <InlaidPanelContent
           position="right"
           aria-label="Details"
-          style={{
-            width: 280,
-          }}
+          // style={{
+          //   width: 280,
+          // }}
         >
-          <StackLayout>
+          <StackLayout align="start">
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
             <StackLayout>
               <Text>Details panel</Text>
@@ -146,9 +145,9 @@ export const Top: StoryFn = () => {
     <InlaidPanel open={open} onOpenChange={setOpen}>
       <StackLayout
         gap={0}
-        style={{
-          height: 400,
-        }}
+        // style={{
+        //   height: 400,
+        // }}
       >
         <InlaidPanelContent
           position="top"
@@ -162,7 +161,7 @@ export const Top: StoryFn = () => {
             <Text>Filter controls</Text>
           </div>
         </InlaidPanelContent>
-        <FlexItem grow={1}>
+        <FlexItem padding={1}>
           <InlaidPanelTrigger>
             <Button>Toggle Filters</Button>
           </InlaidPanelTrigger>
@@ -183,7 +182,7 @@ export const Bottom: StoryFn = () => {
         }}
         gap={0}
       >
-        <FlexItem grow={1}>
+        <FlexItem grow={1} padding={1}>
           <InlaidPanelTrigger>
             <Button>Toggle Log</Button>
           </InlaidPanelTrigger>
@@ -192,9 +191,9 @@ export const Bottom: StoryFn = () => {
         <InlaidPanelContent
           position="bottom"
           aria-label="Log"
-          style={{
-            height: 280,
-          }}
+          // style={{
+          //   height: 280,
+          // }}
         >
           <div>
             <Button onClick={() => setOpen(false)}>✕ Close</Button>
