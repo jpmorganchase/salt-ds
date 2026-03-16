@@ -1,37 +1,81 @@
-import { useId } from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  type MutableRefObject,
-  type ReactNode,
-  useCallback,
+  type ComponentPropsWithRef,
+  forwardRef,
+  useEffect,
   useRef,
+  useState,
 } from "react";
-import { InlaidPanelContext } from "./InlaidPanelContext";
+import inlaidPanelCss from "./InlaidPanel.css";
 
-export interface InlaidPanelProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  children: ReactNode;
+const withBaseName = makePrefixer("saltInlaidPanel");
+
+export interface InlaidPanelProps extends ComponentPropsWithRef<"div"> {
+  /**
+   * Whether the panel is open.
+   */
+  open?: boolean;
+  /**
+   * Edge the panel is anchored to; controls animation direction and divider side. Defaults to `left`.
+   */
+  position?: "left" | "right" | "top" | "bottom";
 }
 
-export function InlaidPanel({
-  open,
-  onOpenChange,
-  children,
-}: InlaidPanelProps) {
-  const panelId = useId();
+export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
+  function InlaidPanel(props, ref) {
+    const { open = false, position = "left", children, ...rest } = props;
+    const [showComponent, setShowComponent] = useState(open);
+    const targetWindow = useWindow();
+    const panelRef = useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef(panelRef, ref);
+    const returnFocusRef = useRef<Element | null>(null);
 
-  const lastTriggerRef: MutableRefObject<HTMLButtonElement | null> =
-    useRef<HTMLButtonElement | null>(null);
+    useComponentCssInjection({
+      testId: "salt-inlaid-panel",
+      css: inlaidPanelCss,
+      window: targetWindow,
+    });
 
-  const setLastTrigger = useCallback((trigger: HTMLButtonElement | null) => {
-    lastTriggerRef.current = trigger;
-  }, []);
+    useEffect(() => {
+      if (open) {
+        setShowComponent(true);
+        return;
+      }
+      const animate = setTimeout(() => {
+        setShowComponent(false);
+      }, 300); // var(--salt-duration-perceptible)
+      return () => clearTimeout(animate);
+    }, [open]);
 
-  return (
-    <InlaidPanelContext.Provider
-      value={{ open, onOpenChange, panelId, lastTriggerRef, setLastTrigger }}
-    >
-      {children}
-    </InlaidPanelContext.Provider>
-  );
-}
+    useEffect(() => {
+      if (showComponent && open) {
+        returnFocusRef.current = document.activeElement;
+        panelRef.current?.focus();
+      } else if (showComponent && !open) {
+        (returnFocusRef.current as HTMLElement | null)?.focus?.();
+        returnFocusRef.current = null;
+      }
+    }, [showComponent, open]);
+
+    if (!showComponent) return null;
+
+    return (
+      <div
+        ref={handleRef}
+        className={clsx(withBaseName(), {
+          [withBaseName(position)]: position,
+          [withBaseName("enterAnimation")]: open,
+          [withBaseName("exitAnimation")]: !open,
+        })}
+        role="region"
+        tabIndex={-1}
+        {...rest}
+      >
+        <div className={clsx(withBaseName("inner"))}>{children}</div>
+      </div>
+    );
+  }
+);
