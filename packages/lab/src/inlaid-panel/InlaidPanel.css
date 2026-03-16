@@ -3,6 +3,8 @@
   flex-shrink: 0;
   align-self: stretch;
   background-color: var(--salt-container-primary-background);
+  --saltInlaidPanel-width: 16rem;
+  --saltInlaidPanel-height: 16rem;
 }
 
 .saltInlaidPanel.saltInlaidPanel-left {
@@ -20,13 +22,13 @@
 
 .saltInlaidPanel.saltInlaidPanel-left,
 .saltInlaidPanel.saltInlaidPanel-right {
-  width: var(--saltInlaidPanel-size, 280px);
+  width: var(--saltInlaidPanel-width);
   height: 100%;
 }
 
 .saltInlaidPanel.saltInlaidPanel-top,
 .saltInlaidPanel.saltInlaidPanel-bottom {
-  height: var(--saltInlaidPanel-size, 280px);
+  height: var(--saltInlaidPanel-height);
   width: 100%;
 }
 
@@ -70,13 +72,13 @@
 
 .saltInlaidPanel.saltInlaidPanel-left .saltInlaidPanel-inner,
 .saltInlaidPanel.saltInlaidPanel-right .saltInlaidPanel-inner {
-  width: var(--saltInlaidPanel-size, 280px);
+  width: var(--saltInlaidPanel-width);
   height: 100%;
 }
 
 .saltInlaidPanel.saltInlaidPanel-top .saltInlaidPanel-inner,
 .saltInlaidPanel.saltInlaidPanel-bottom .saltInlaidPanel-inner {
-  height: var(--saltInlaidPanel-size, 280px);
+  height: var(--saltInlaidPanel-height);
   width: 100%;
 }
 
