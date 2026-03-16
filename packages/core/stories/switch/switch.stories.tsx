@@ -2,7 +2,6 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  StackLayout,
   Switch,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -50,30 +49,28 @@ export const Controlled: StoryFn<typeof Switch> = (args) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
+    args.onChange?.(event);
   };
 
   return <Switch {...args} checked={checked} onChange={handleChange} />;
 };
-
 Controlled.args = {
   label: "Controlled",
 };
 
-export const WithFormField: StoryFn<typeof Switch> = (args) => {
+export const WithFormField: StoryFn<typeof FormField> = (args) => {
+  const { onChange, ...formFieldArgs } = args;
   return (
-    <StackLayout direction="row">
-      <FormField labelPlacement="left">
-        <FormFieldLabel>Label</FormFieldLabel>
-        <Switch {...args} />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-    </StackLayout>
+    <FormField labelPlacement="left" {...formFieldArgs}>
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch onChange={onChange} />
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
+    </FormField>
   );
 };
 
-export const Readonly: StoryFn<typeof Switch> = (args) => (
-  <StackLayout>
-    <Switch {...args} readOnly checked label="Read-only + Checked" />
-    <Switch {...args} readOnly label="Read-only" />
-  </StackLayout>
-);
+export const Readonly = Template.bind({});
+Readonly.args = {
+  readOnly: true,
+  label: "Read-only",
+};
