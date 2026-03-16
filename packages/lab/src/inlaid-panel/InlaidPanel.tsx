@@ -1,88 +1,37 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
+import { useId } from "@salt-ds/core";
 import {
-  type ComponentPropsWithRef,
-  forwardRef,
-  useEffect,
+  type MutableRefObject,
+  type ReactNode,
+  useCallback,
   useRef,
-  useState,
 } from "react";
-import inlaidPanelCss from "./InlaidPanel.css";
-import { useInlaidPanel } from "./InlaidPanelContext";
+import { InlaidPanelContext } from "./InlaidPanelContext";
 
-const withBaseName = makePrefixer("saltInlaidPanel");
-
-export interface InlaidPanelProps extends ComponentPropsWithRef<"div"> {
-  /**
-   * Edge the panel is anchored to; controls animation direction and divider side. Defaults to `left`.
-   */
-  position?: "left" | "right" | "top" | "bottom";
+export interface InlaidPanelProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: ReactNode;
 }
 
-export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
-  function InlaidPanel(props, ref) {
-    const { position = "left", children, ...rest } = props;
+export function InlaidPanel({
+  open,
+  onOpenChange,
+  children,
+}: InlaidPanelProps) {
+  const panelId = useId();
 
-    const { open, panelId, lastTriggerRef } = useInlaidPanel();
+  const lastTriggerRef: MutableRefObject<HTMLButtonElement | null> =
+    useRef<HTMLButtonElement | null>(null);
 
-    const panelRef = useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef(panelRef, ref);
+  const setLastTrigger = useCallback((trigger: HTMLButtonElement | null) => {
+    lastTriggerRef.current = trigger;
+  }, []);
 
-    const [showComponent, setShowComponent] = useState(open);
-
-    const targetWindow = useWindow();
-
-    useComponentCssInjection({
-      testId: "salt-inlaid-panel",
-      css: inlaidPanelCss,
-      window: targetWindow,
-    });
-
-    useEffect(() => {
-      if (open && !showComponent) {
-        setShowComponent(true);
-      }
-
-      if (!open && showComponent) {
-        const trigger = lastTriggerRef.current;
-        if (trigger?.isConnected) {
-          trigger.focus({ preventScroll: true });
-        }
-
-        const timer = setTimeout(() => {
-          setShowComponent(false);
-        }, 300); // var(--salt-duration-perceptible)
-        return () => clearTimeout(timer);
-      }
-    }, [open, showComponent, lastTriggerRef]);
-
-    useEffect(() => {
-      if (open && showComponent) {
-        panelRef.current?.focus({ preventScroll: true });
-      }
-    }, [open, showComponent]);
-
-    if (!showComponent) {
-      return null;
-    }
-
-    return (
-      <div
-        id={panelId}
-        ref={handleRef}
-        className={clsx(withBaseName(), {
-          [withBaseName(position)]: position,
-          [withBaseName("enterAnimation")]: open,
-          [withBaseName("exitAnimation")]: !open,
-        })}
-        role="region"
-        tabIndex={-1}
-        {...rest}
-      >
-        <div className={clsx(withBaseName("inner"))}>{children}</div>
-      </div>
-    );
-  },
-);
+  return (
+    <InlaidPanelContext.Provider
+      value={{ open, onOpenChange, panelId, lastTriggerRef, setLastTrigger }}
+    >
+      {children}
+    </InlaidPanelContext.Provider>
+  );
+}
