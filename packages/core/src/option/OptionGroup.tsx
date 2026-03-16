@@ -6,6 +6,7 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
+import { useListControlContext } from "../list-control/ListControlContext";
 import { makePrefixer, useId } from "../utils";
 import optionGroupCss from "./OptionGroup.css";
 
@@ -33,6 +34,7 @@ export const OptionGroup = forwardRef<HTMLDivElement, OptionGroupProps>(
     });
 
     const labelId = useId();
+    const { setActive } = useListControlContext();
 
     return (
       <div
@@ -42,7 +44,12 @@ export const OptionGroup = forwardRef<HTMLDivElement, OptionGroupProps>(
         ref={ref}
         {...rest}
       >
-        <div aria-hidden className={withBaseName("label")} id={labelId}>
+        <div
+          aria-hidden
+          className={withBaseName("label")}
+          id={labelId}
+          onMouseOver={() => setActive(undefined)}
+        >
           {label}
         </div>
         {children}
