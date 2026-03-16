@@ -11,9 +11,9 @@
   --salt-selectable-foreground-hover: var(--salt-palette-accent);
   --salt-selectable-foreground-selected: var(--salt-palette-accent);
   --salt-selectable-foreground-selectedDisabled: var(--salt-palette-accent-disabled);
-  --salt-selectable-background: var(--salt-palette-alpha-none);
+  --salt-selectable-background: var(--salt-color-transparent);
   --salt-selectable-background-hover: var(--salt-palette-accent-weakest);
   --salt-selectable-background-selected: var(--salt-palette-accent-weaker);
-  --salt-selectable-background-disabled: var(--salt-palette-alpha-none);
+  --salt-selectable-background-disabled: var(--salt-color-transparent);
   --salt-selectable-background-selectedDisabled: var(--salt-palette-accent-weaker-disabled);
 }
