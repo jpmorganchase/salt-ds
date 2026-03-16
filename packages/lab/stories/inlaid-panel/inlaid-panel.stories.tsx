@@ -1,9 +1,5 @@
 import { Button, FlexItem, FlexLayout, StackLayout, Text } from "@salt-ds/core";
-import {
-  InlaidPanel,
-  InlaidPanelContent,
-  InlaidPanelTrigger,
-} from "@salt-ds/lab";
+import { InlaidPanel } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -19,188 +15,165 @@ export const Default: StoryFn = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <InlaidPanel open={open} onOpenChange={setOpen}>
-      <FlexLayout
-        style={{
-          height: "100vh",
-        }}
-        gap={0}
+    <FlexLayout
+      style={{
+        height: "100vh",
+      }}
+      gap={0}
+    >
+      <InlaidPanel
+        open={open}
+        aria-label="Navigation"
+        style={
+          {
+            "--saltInlaidPanel-width": "500px",
+          } as React.CSSProperties
+        }
       >
-        <InlaidPanelContent
-          aria-label="Navigation"
-          style={
-            {
-              "--saltInlaidPanel-width": "500px",
-            } as React.CSSProperties
-          }
-        >
-          <div>
-            <Button onClick={() => setOpen(false)}>✕ Close</Button>
-            <Text>Nav content</Text>
-            <Button>Button 1</Button>
-            <Button>Button 2</Button>
-            <StackLayout>
-              <Text>Details panel</Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-            </StackLayout>
-          </div>
-        </InlaidPanelContent>
-        <FlexLayout gap={1} padding={1}>
-          <InlaidPanelTrigger>
-            <Button>Open Left Panel</Button>
-          </InlaidPanelTrigger>
+        <div>
+          <Button onClick={() => setOpen(false)}>✕ Close</Button>
+          <Text>Nav content</Text>
           <Button>Button 1</Button>
           <Button>Button 2</Button>
-          <Button>Button 3</Button>
-        </FlexLayout>
+          <StackLayout>
+            <Text>Details panel</Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+          </StackLayout>
+        </div>
+      </InlaidPanel>
+      <FlexLayout gap={1} padding={1}>
+        <Button onClick={() => setOpen(!open)}>Open Left Panel</Button>
+        <Button onClick={() => setOpen(true)}>Button 1</Button>
+        <Button>Button 2</Button>
+        <Button>Button 3</Button>
       </FlexLayout>
-    </InlaidPanel>
+    </FlexLayout>
   );
 };
 
 export const Right: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
-    <InlaidPanel open={open} onOpenChange={setOpen}>
-      <FlexLayout
-        style={{
-          height: "100vh",
-        }}
+    <FlexLayout
+      style={{
+        height: "100vh",
+      }}
+    >
+      <FlexItem grow={1} padding={1}>
+        <Button onClick={() => setOpen(!open)}>Toggle Details</Button>
+        <Text>Main content</Text>
+      </FlexItem>
+      <InlaidPanel
+        open={open}
+        position="right"
+        aria-label="Details"
       >
-        <FlexItem grow={1} padding={1}>
-          <InlaidPanelTrigger>
-            <Button>Toggle Details</Button>
-          </InlaidPanelTrigger>
-          <Text>Main content</Text>
-        </FlexItem>
-        <InlaidPanelContent
-          position="right"
-          aria-label="Details"
-          // style={{
-          //   width: 280,
-          // }}
-        >
-          <StackLayout align="start">
-            <Button onClick={() => setOpen(false)}>✕ Close</Button>
-            <StackLayout>
-              <Text>Details panel</Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
-                repudiandae, ullam nihil architecto neque rerum necessitatibus
-                blanditiis? Iusto expedita dolore et doloribus officiis.
-              </Text>
-            </StackLayout>
+        <StackLayout align="start">
+          <Button onClick={() => setOpen(false)}>✕ Close</Button>
+          <StackLayout>
+            <Text>Details panel</Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Eligendi, a. Dignissimos aperiam, aut temporibus voluptatum non
+              repudiandae, ullam nihil architecto neque rerum necessitatibus
+              blanditiis? Iusto expedita dolore et doloribus officiis.
+            </Text>
           </StackLayout>
-        </InlaidPanelContent>
-      </FlexLayout>
-    </InlaidPanel>
+        </StackLayout>
+      </InlaidPanel>
+    </FlexLayout>
   );
 };
 
 export const Top: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
-    <InlaidPanel open={open} onOpenChange={setOpen}>
-      <StackLayout
-        gap={0}
-        // style={{
-        //   height: 400,
-        // }}
+    <StackLayout gap={0}>
+      <InlaidPanel
+        open={open}
+        position="top"
+        aria-label="Filters"
+        style={{
+          height: 280,
+        }}
       >
-        <InlaidPanelContent
-          position="top"
-          aria-label="Filters"
-          style={{
-            height: 280,
-          }}
-        >
-          <div>
-            <Button onClick={() => setOpen(false)}>✕ Close</Button>
-            <Text>Filter controls</Text>
-          </div>
-        </InlaidPanelContent>
-        <FlexItem padding={1}>
-          <InlaidPanelTrigger>
-            <Button>Toggle Filters</Button>
-          </InlaidPanelTrigger>
-          <Text>Main content</Text>
-        </FlexItem>
-      </StackLayout>
-    </InlaidPanel>
+        <div>
+          <Button onClick={() => setOpen(false)}>✕ Close</Button>
+          <Text>Filter controls</Text>
+        </div>
+      </InlaidPanel>
+      <FlexItem padding={1}>
+        <Button onClick={() => setOpen(!open)}>Toggle Filters</Button>
+        <Text>Main content</Text>
+      </FlexItem>
+    </StackLayout>
   );
 };
 
 export const Bottom: StoryFn = () => {
   const [open, setOpen] = useState(false);
   return (
-    <InlaidPanel open={open} onOpenChange={setOpen}>
-      <StackLayout
-        style={{
-          height: "100vh",
-        }}
-        gap={0}
+    <StackLayout
+      style={{
+        height: "100vh",
+      }}
+      gap={0}
+    >
+      <FlexItem grow={1} padding={1}>
+        <Button onClick={() => setOpen(!open)}>Toggle Log</Button>
+        <Text>Main content</Text>
+      </FlexItem>
+      <InlaidPanel
+        open={open}
+        position="bottom"
+        aria-label="Log"
       >
-        <FlexItem grow={1} padding={1}>
-          <InlaidPanelTrigger>
-            <Button>Toggle Log</Button>
-          </InlaidPanelTrigger>
-          <Text>Main content</Text>
-        </FlexItem>
-        <InlaidPanelContent
-          position="bottom"
-          aria-label="Log"
-          // style={{
-          //   height: 280,
-          // }}
-        >
-          <div>
-            <Button onClick={() => setOpen(false)}>✕ Close</Button>
-            <Text>Log entries</Text>
-          </div>
-        </InlaidPanelContent>
-      </StackLayout>
-    </InlaidPanel>
+        <div>
+          <Button onClick={() => setOpen(false)}>✕ Close</Button>
+          <Text>Log entries</Text>
+        </div>
+      </InlaidPanel>
+    </StackLayout>
   );
 };
