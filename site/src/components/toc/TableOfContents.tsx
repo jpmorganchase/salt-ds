@@ -12,17 +12,52 @@ import styles from "./TableOfContents.module.css";
 const stripMarkdownLinks = (text: string) =>
   text.replace(/\[([^[\]]*)\]\((.*?)\)/gm, "$1");
 
-function getHeaderAnchors(): HTMLAnchorElement[] {
+type TocItem = {
+  id: string;
+  level: number;
+  text: string;
+};
+
+function getTocRoot(): ParentNode {
   // Some layout (e.g. components) has multiple tabs with hidden headings
   const visibleTabPanel = document.querySelector(
     '[role="tabpanel"]:not([hidden])',
   );
 
+  return (
+    visibleTabPanel ?? document.querySelector(".contentWrapper") ?? document
+  );
+}
+
+function getHeaderElements(): HTMLElement[] {
   return Array.from(
-    (visibleTabPanel ?? document).querySelectorAll('[data-mdx="heading2"]'),
-  ).map((testElement) => {
-    return testElement.parentNode as HTMLAnchorElement;
+    getTocRoot().querySelectorAll(
+      '[data-mdx="heading2"], [data-mdx="heading3"]',
+    ),
+  ) as HTMLElement[];
+}
+
+function getHeaderAnchors(): HTMLElement[] {
+  return getHeaderElements().map((headerElement) => {
+    const anchorParent = headerElement.closest("a");
+    return (anchorParent ?? headerElement) as HTMLElement;
   });
+}
+
+function getDomTableOfContents(): TocItem[] {
+  return getHeaderElements()
+    .map((headerElement) => {
+      if (!headerElement.id) {
+        return null;
+      }
+
+      return {
+        id: headerElement.id,
+        level: headerElement.dataset.mdx === "heading3" ? 3 : 2,
+        text: headerElement.textContent?.trim() ?? "",
+      } satisfies TocItem;
+    })
+    .filter((item): item is TocItem => item !== null && item.text.length > 0);
 }
 
 const TOP_OFFSET = 80; /** Header height */
@@ -90,19 +125,64 @@ function useTocHighlight(topOffset = TOP_OFFSET) {
 export function TableOfContents(props: ComponentPropsWithoutRef<"aside">) {
   const { className, ...rest } = props;
   const { tableOfContents } = useTableOfContents();
+  const [fallbackTableOfContents, setFallbackTableOfContents] = useState<
+    TocItem[]
+  >([]);
   const [showTOC, setShowTOC] = useState(false);
   const headingId = useId();
+  const observerRef = useRef<MutationObserver | null>(null);
+  const observedRootRef = useRef<ParentNode | null>(null);
 
   const { currentIndex } = useTocHighlight();
 
   useEffect(() => {
+    const updateFallbackToc = () => {
+      if (tableOfContents.length === 0) {
+        setFallbackTableOfContents(getDomTableOfContents());
+      }
+    };
+
     const handle = window.requestIdleCallback(() => {
+      updateFallbackToc();
       setShowTOC(true);
     });
-    return () => window.cancelIdleCallback(handle);
-  }, []);
+    const ensureObservedRoot = () => {
+      const nextRoot = getTocRoot();
 
-  if (!showTOC || tableOfContents.length === 0) {
+      if (observedRootRef.current === nextRoot) {
+        return;
+      }
+
+      observerRef.current?.disconnect();
+
+      const observer = new MutationObserver(() => {
+        updateFallbackToc();
+        ensureObservedRoot();
+      });
+
+      observer.observe(nextRoot, {
+        childList: true,
+        subtree: true,
+      });
+
+      observerRef.current = observer;
+      observedRootRef.current = nextRoot;
+    };
+
+    ensureObservedRoot();
+
+    return () => {
+      window.cancelIdleCallback(handle);
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+      observedRootRef.current = null;
+    };
+  }, [tableOfContents]);
+
+  const items =
+    tableOfContents.length > 0 ? tableOfContents : fallbackTableOfContents;
+
+  if (!showTOC || items.length === 0) {
     return null;
   }
 
@@ -116,7 +196,7 @@ export function TableOfContents(props: ComponentPropsWithoutRef<"aside">) {
         On this page
       </H3>
       <ul className={styles.list}>
-        {tableOfContents.map((item, index) => (
+        {items.map((item, index) => (
           <li key={item.id}>
             <NavigationItem
               orientation="vertical"
