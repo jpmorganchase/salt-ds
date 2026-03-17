@@ -63,18 +63,20 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
     if (!showComponent) return null;
 
     return (
-      <aside
+      <div
         ref={handleRef}
         className={clsx(withBaseName(), {
           [withBaseName(position)]: position,
           [withBaseName("enterAnimation")]: open,
           [withBaseName("exitAnimation")]: !open,
         })}
+        aria-hidden={!open}
         tabIndex={-1}
+        role="region"
         {...rest}
       >
         <div className={clsx(withBaseName("inner"))}>{children}</div>
-      </aside>
+      </div>
     );
   },
 );
