@@ -166,17 +166,16 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       useDismiss(context),
     ]);
 
-    const { getFloatingProps: getListFloatingProps, getItemProps } =
-      useInteractions([
-        useListNavigation(context, {
-          listRef: listNavigationRef,
-          activeIndex,
-          onNavigate: setActiveIndex,
-          loop: true,
-          scrollItemIntoView: { block: "nearest", inline: "nearest" },
-          focusItemOnOpen: true,
-        }),
-      ]);
+    const { getFloatingProps: getListFloatingProps } = useInteractions([
+      useListNavigation(context, {
+        listRef: listNavigationRef,
+        activeIndex,
+        onNavigate: setActiveIndex,
+        loop: true,
+        scrollItemIntoView: { block: "nearest", inline: "nearest" },
+        focusItemOnOpen: true,
+      }),
+    ]);
 
     const handleListRef = useForkRef<HTMLDivElement>(ref, refs.setFloating);
 
@@ -218,71 +217,66 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       }
     }, [overflowId, registerTab, hasOverflowItems]);
 
-    const overflowContext = useMemo(
-      () => ({ activeIndex, getItemProps }),
-      [activeIndex, getItemProps],
-    );
+    const overflowContext = useMemo(() => ({ activeIndex }), [activeIndex]);
 
     if (!hasOverflowItems && !isMeasuring) return null;
 
     return (
       <TabOverflowContext.Provider value={overflowContext}>
-        <>
-          <Button
-            className={clsx(withBaseName(), className)}
-            data-overflowbutton
-            appearance="transparent"
-            sentiment="neutral"
-            {...getReferenceProps({
-              onFocus: handleFocus,
+        <Button
+          className={clsx(withBaseName(), className)}
+          data-overflowbutton
+          appearance="transparent"
+          sentiment="neutral"
+          {...getReferenceProps({
+            onFocus: handleFocus,
+          })}
+          ref={handleRef}
+          aria-label="Overflow"
+          aria-haspopup
+          aria-expanded={open}
+          aria-controls={overlayId}
+          role="tab"
+          tabIndex={-1}
+          {...rest}
+        >
+          <OverflowIcon aria-hidden />
+        </Button>
+        <FloatingList elementsRef={listNavigationRef}>
+          <FloatingComponent
+            ref={handleListRef}
+            {...getFloatingProps({
+              "aria-modal": true,
+              role: "dialog",
+              id: overlayId,
             })}
-            ref={handleRef}
-            aria-label="Overflow"
-            aria-haspopup
-            aria-expanded={open}
-            aria-controls={overlayId}
-            role="tab"
-            tabIndex={-1}
-            {...rest}
+            aria-label="Overflow Menu"
+            focusManagerProps={
+              context
+                ? {
+                    context,
+                    returnFocus: false,
+                    modal: true,
+                  }
+                : undefined
+            }
+            className={withBaseName("list")}
+            open={open}
+            left={x ?? 0}
+            top={y ?? 0}
+            position={strategy}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
           >
-            <OverflowIcon aria-hidden />
-          </Button>
-          <FloatingList elementsRef={listNavigationRef}>
-            <FloatingComponent
-              ref={handleListRef}
-              {...getFloatingProps({
-                "aria-modal": true,
-                role: "dialog",
-                id: overlayId,
-              })}
-              aria-label="Overflow Menu"
-              focusManagerProps={
-                context
-                  ? {
-                      context,
-                      returnFocus: false,
-                      modal: true,
-                    }
-                  : undefined
-              }
-              className={withBaseName("list")}
-              open={open}
-              left={x ?? 0}
-              top={y ?? 0}
-              position={strategy}
-              width={elements.floating?.offsetWidth}
-              height={elements.floating?.offsetHeight}
+            <div
+              role="tablist"
+              {...getListFloatingProps()}
+              className={withBaseName("listContainer")}
             >
-              <div
-                role="tablist"
-                {...getListFloatingProps()}
-                className={withBaseName("listContainer")}
-              >
-                {children}
-              </div>
-            </FloatingComponent>
-          </FloatingList>
-        </>
+              {children}
+            </div>
+          </FloatingComponent>
+        </FloatingList>
       </TabOverflowContext.Provider>
     );
   },

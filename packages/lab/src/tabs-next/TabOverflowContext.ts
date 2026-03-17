@@ -3,7 +3,6 @@ import { useContext } from "react";
 
 export interface TabOverflowContextValue {
   activeIndex: number | null;
-  getItemProps: (props: any) => Record<string, unknown>;
 }
 
 export const TabOverflowContext = createContext<TabOverflowContextValue | null>(
