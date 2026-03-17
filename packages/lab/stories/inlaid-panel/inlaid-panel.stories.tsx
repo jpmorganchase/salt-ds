@@ -13,8 +13,6 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
-  ToggleButton,
-  ToggleButtonGroup,
 } from "@salt-ds/core";
 import { ExportIcon, LaptopIcon, UserIcon } from "@salt-ds/icons";
 import { InlaidPanel } from "@salt-ds/lab";
@@ -77,10 +75,9 @@ export const Left: StoryFn = () => {
         </StackLayout>
       </InlaidPanel>
       <FlexLayout gap={1} padding={1}>
-        <Button onClick={() => setOpen(!open)}>Open Left Panel</Button>
         <Button>Button 1</Button>
         <Button>Button 2</Button>
-        <Button>Button 3</Button>
+        <Button onClick={() => setOpen(!open)}>Open Left Panel</Button>
       </FlexLayout>
     </FlexLayout>
   );
@@ -375,20 +372,17 @@ export const ContentSwitching: StoryFn = () => {
           Click any button to open the panel or switch between different
           settings:
         </Text>
-        <ToggleButtonGroup
-          onChange={(event) => setActiveSetting(event.currentTarget.value)}
-          value={activeSetting}
-        >
-          <ToggleButton value="display">
+        <FlexLayout gap={1}>
+          <Button onClick={() => setActiveSetting("display")}>
             <LaptopIcon /> Display Settings
-          </ToggleButton>
-          <ToggleButton value="account">
+          </Button>
+          <Button onClick={() => setActiveSetting("account")}>
             <UserIcon /> Account Settings
-          </ToggleButton>
-          <ToggleButton value="export">
+          </Button>
+          <Button onClick={() => setActiveSetting("export")}>
             <ExportIcon /> Export Settings
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </Button>
+        </FlexLayout>
       </FlexLayout>
     </FlexLayout>
   );
