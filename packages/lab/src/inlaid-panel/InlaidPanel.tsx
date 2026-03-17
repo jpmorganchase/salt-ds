@@ -1,3 +1,9 @@
+import {
+  FloatingFocusManager,
+  useDismiss,
+  useFloating,
+  useInteractions,
+} from "@floating-ui/react";
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -5,8 +11,8 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
   forwardRef,
+  type MutableRefObject,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import inlaidPanelCss from "./InlaidPanel.css";
@@ -22,16 +28,36 @@ export interface InlaidPanelProps extends ComponentPropsWithRef<"div"> {
    * Edge the panel is anchored to; controls animation direction and divider side. Defaults to `left`.
    */
   position?: "left" | "right" | "top" | "bottom";
+  /**
+   * Callback when open state should change (e.g. Escape key pressed).
+   */
+  onOpenChange?: (newOpen: boolean) => void;
+  /**
+   * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref. Defaults to 0.
+   */
+  initialFocus?: number | MutableRefObject<HTMLElement | null>;
 }
 
 export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
   function InlaidPanel(props, ref) {
-    const { open = false, position = "left", children, ...rest } = props;
+    const {
+      open = false,
+      position = "left",
+      onOpenChange,
+      initialFocus,
+      children,
+      ...rest
+    } = props;
     const [showComponent, setShowComponent] = useState(open);
     const targetWindow = useWindow();
-    const panelRef = useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef(panelRef, ref);
-    const returnFocusRef = useRef<Element | null>(null);
+
+    const { context, refs } = useFloating({ open, onOpenChange });
+
+    const { getFloatingProps } = useInteractions([
+      useDismiss(context, { escapeKey: true, outsidePress: false }),
+    ]);
+
+    const handleRef = useForkRef<HTMLDivElement>(refs.setFloating, ref);
 
     useComponentCssInjection({
       testId: "salt-inlaid-panel",
@@ -50,19 +76,9 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
       return () => clearTimeout(animate);
     }, [open]);
 
-    useEffect(() => {
-      if (showComponent && open) {
-        returnFocusRef.current = document.activeElement;
-        panelRef.current?.focus();
-      } else if (showComponent && !open) {
-        (returnFocusRef.current as HTMLElement | null)?.focus?.();
-        returnFocusRef.current = null;
-      }
-    }, [showComponent, open]);
-
     if (!showComponent) return null;
 
-    return (
+    const panelDiv = (
       <div
         ref={handleRef}
         className={clsx(withBaseName(), {
@@ -70,13 +86,30 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
           [withBaseName("enterAnimation")]: open,
           [withBaseName("exitAnimation")]: !open,
         })}
-        aria-hidden={!open}
         tabIndex={-1}
         role="region"
+        {...getFloatingProps()}
         {...rest}
       >
         <div className={clsx(withBaseName("inner"))}>{children}</div>
       </div>
     );
+
+    if (open) {
+      return (
+        <FloatingFocusManager
+          context={context}
+          modal={false}
+          initialFocus={initialFocus ?? 0}
+          returnFocus
+          closeOnFocusOut={false}
+          guards={false}
+        >
+          {panelDiv}
+        </FloatingFocusManager>
+      );
+    }
+
+    return panelDiv;
   },
 );
