@@ -13,6 +13,10 @@ import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
 import { distinct } from "./utils.mjs";
 
 const cwd = process.cwd();
+const repoRoot = path.resolve(
+  path.dirname(url.fileURLToPath(import.meta.url)),
+  "..",
+);
 
 const packageJson = (
   await import(url.pathToFileURL(path.join(cwd, "package.json")), {
@@ -128,7 +132,10 @@ await fs.writeJSON(
 );
 
 for (const file of FILES_TO_COPY) {
-  const filePath = path.join(cwd, file);
+  let filePath = path.join(cwd, file);
+  if (file === "LICENSE" && !(await fs.pathExists(filePath))) {
+    filePath = path.join(repoRoot, file);
+  }
   try {
     await fs.copy(filePath, path.join(outputDir, file));
   } catch (error) {

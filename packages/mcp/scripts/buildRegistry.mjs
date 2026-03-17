@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { ensureSiteBuildInputs } from "./ensureSiteBuildInputs.mjs";
 
 const ALLOWED_FLAGS = new Set(["source-root", "output-dir"]);
 
@@ -46,6 +47,13 @@ const distIndexPath = path.join(
   "index.js",
 );
 const require = createRequire(import.meta.url);
+const flags = parseFlags(process.argv.slice(2));
+const sourceRoot = flags["source-root"]
+  ? path.resolve(flags["source-root"])
+  : repoRoot;
+const outputDir = flags["output-dir"]
+  ? path.resolve(flags["output-dir"])
+  : path.join(packageRoot, "generated");
 
 try {
   await fs.access(distIndexPath);
@@ -56,13 +64,7 @@ try {
 }
 
 const { buildRegistry } = require(distIndexPath);
-const flags = parseFlags(process.argv.slice(2));
-const sourceRoot = flags["source-root"]
-  ? path.resolve(flags["source-root"])
-  : repoRoot;
-const outputDir = flags["output-dir"]
-  ? path.resolve(flags["output-dir"])
-  : path.join(packageRoot, "generated");
+await ensureSiteBuildInputs(sourceRoot);
 
 const registry = await buildRegistry({
   sourceRoot,
