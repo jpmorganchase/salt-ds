@@ -2,7 +2,7 @@
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
-  gap: var(--salt-spacing-fixed-1200);
+  gap: var(--salt-spacing-100);
   width: 100%;
   min-height: var(--salt-size-base);
 
@@ -11,10 +11,10 @@
   padding-right: var(--salt-spacing-100);
   /* Keep a fixed spacing-100 outer left padding for all nodes, then add one
    indent step per additional level. Each indent step = (selectable element
-   width + fixed inter-item gap).
+   width + inter-item gap).
    Level-1 nodes get no extra indent; level-2 gets 1 step, level-3 gets 2, etc.
    */
-  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-fixed-1200));
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-100));
   padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
   background: var(--salt-selectable-background);
   color: var(--salt-content-primary-foreground);
