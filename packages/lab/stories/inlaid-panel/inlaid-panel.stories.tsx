@@ -50,6 +50,7 @@ export const Left: StoryFn = () => {
     >
       <InlaidPanel
         open={open}
+        onOpenChange={setOpen}
         aria-labelledby={id}
         style={
           {
@@ -59,7 +60,7 @@ export const Left: StoryFn = () => {
       >
         <StackLayout align="start" gap={1}>
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
-            ✕ Close
+            Close
           </Button>
           <H2 id={id}>Section Title</H2>
           <Text>
@@ -100,6 +101,7 @@ export const Right: StoryFn = () => {
       </FlexItem>
       <InlaidPanel
         open={open}
+        onOpenChange={setOpen}
         position="right"
         aria-labelledby={id}
         style={
@@ -110,7 +112,7 @@ export const Right: StoryFn = () => {
       >
         <StackLayout align="start" gap={1}>
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
-            ✕ Close
+            Close
           </Button>
           <H2 id={id}>Section Title</H2>
           <Text>
@@ -139,6 +141,7 @@ export const Top: StoryFn = () => {
     <StackLayout gap={0}>
       <InlaidPanel
         open={open}
+        onOpenChange={setOpen}
         position="top"
         aria-labelledby={id}
         style={{
@@ -152,7 +155,7 @@ export const Top: StoryFn = () => {
               marginLeft: "auto",
             }}
           >
-            ✕ Close
+            Close
           </Button>
           <H2 id={id}>Section title</H2>
           <Text>
@@ -192,7 +195,7 @@ export const Bottom: StoryFn = () => {
       <FlexItem grow={1} padding={1}>
         <Button onClick={() => setOpen(!open)}>Open bottom panel</Button>
       </FlexItem>
-      <InlaidPanel open={open} position="bottom" aria-labelledby={id}>
+      <InlaidPanel open={open} onOpenChange={setOpen} position="bottom" aria-labelledby={id}>
         <StackLayout align="start">
           <Button
             onClick={() => setOpen(false)}
@@ -200,7 +203,7 @@ export const Bottom: StoryFn = () => {
               marginLeft: "auto",
             }}
           >
-            ✕ Close
+            Close
           </Button>
           <H2 id={id}>Section title</H2>
           <Text>
@@ -352,6 +355,7 @@ export const ContentSwitching: StoryFn = () => {
     >
       <InlaidPanel
         open={open}
+        onOpenChange={(newOpen) => { if (!newOpen) setActiveSetting(undefined); }}
         position="left"
         aria-label="Sample form"
         style={
@@ -365,7 +369,7 @@ export const ContentSwitching: StoryFn = () => {
             onClick={() => setActiveSetting(undefined)}
             style={{ marginLeft: "auto" }}
           >
-            ✕ Close
+            Close
           </Button>
           {activeItem && (
             <>
