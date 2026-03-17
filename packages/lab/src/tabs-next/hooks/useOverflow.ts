@@ -12,9 +12,10 @@ import {
   type RefObject,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import type { TabNextProps } from "../TabNext";
+
+const unmeasuredSelection = Symbol("unmeasuredSelection");
 
 interface UseOverflowProps {
   container: RefObject<HTMLElement>;
@@ -41,14 +42,26 @@ export function useOverflow({
     visibleCount: Number.POSITIVE_INFINITY,
     isMeasuring: false,
   });
-  const [pinned, setPinned] = useState(selected);
+  const pinnedSelectionRef = useRef(selected);
   const updateOverflowRafRef = useRef<number | null>(null);
+  const lastMeasuredSelectionRef = useRef<
+    string | undefined | typeof unmeasuredSelection
+  >(unmeasuredSelection);
 
-  const pinnedValue = pinned ?? selected;
+  const childArray = Children.toArray(children);
+  let visible = childArray.slice(0, visibleCount);
+  let hidden = childArray.slice(visibleCount);
+  const selectedIsHidden = hidden.some(
+    (child) =>
+      isValidElement<TabNextProps>(child) && child.props?.value === selected,
+  );
+  const effectivePinnedValue = selectedIsHidden
+    ? selected
+    : pinnedSelectionRef.current;
 
   const targetWindow = useWindow();
   const updateOverflow = useEventCallback(() => {
-    const computeVisible = (visibleCount: number) => {
+    const computeVisible = (visibleCount: number, pinnedValue?: string) => {
       if (container.current && targetWindow) {
         const widthCache = new Map<HTMLElement, number>();
         const getCachedTabWidth = (element: HTMLElement) => {
@@ -68,9 +81,11 @@ export function useOverflow({
           ),
         );
 
-        const pinnedTab = container.current.querySelector<HTMLElement>(
-          `[role=tab][data-value="${pinnedValue}"]`,
-        )?.parentElement;
+        const pinnedTab = pinnedValue
+          ? (items.find(
+              (item) => item.getAttribute("data-value") === pinnedValue,
+            ) ?? null)
+          : null;
         let maxWidth = container.current.clientWidth ?? 0;
 
         const containerStyles = targetWindow.getComputedStyle(
@@ -138,6 +153,7 @@ export function useOverflow({
       // Measure the visible count
       const { visibleCount: newVisibleCount, items } = computeVisible(
         Number.POSITIVE_INFINITY,
+        effectivePinnedValue,
       );
       const isMeasuring = newVisibleCount < items.length && newVisibleCount > 0;
       yield {
@@ -148,7 +164,8 @@ export function useOverflow({
       // ensure the visible count is correct
       if (isMeasuring) {
         yield {
-          visibleCount: computeVisible(newVisibleCount).visibleCount,
+          visibleCount: computeVisible(newVisibleCount, effectivePinnedValue)
+            .visibleCount,
           isMeasuring: false,
         };
       }
@@ -218,29 +235,25 @@ export function useOverflow({
     };
   }, [container, scheduleOverflowUpdate, isMeasuring]);
 
-  const childArray = Children.toArray(children);
-  let visible = childArray.slice(0, visibleCount);
-  let hidden = childArray.slice(visibleCount);
-
-  const isSelectedHidden = hidden.some(
-    (child) =>
-      isValidElement<TabNextProps>(child) && child.props?.value === selected,
-  );
-
   useIsomorphicLayoutEffect(() => {
-    if (!isMeasuring && isSelectedHidden && selected !== pinned) {
-      setPinned(selected);
+    if (selectedIsHidden && selected !== pinnedSelectionRef.current) {
+      pinnedSelectionRef.current = selected;
     }
-  }, [isMeasuring, isSelectedHidden, pinned, selected]);
+  }, [selectedIsHidden, selected]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we need to recompute when selected or pinned changes.
   useIsomorphicLayoutEffect(() => {
+    if (lastMeasuredSelectionRef.current === selected) {
+      return;
+    }
+
+    lastMeasuredSelectionRef.current = selected;
     updateOverflow();
-  }, [pinned, selected, updateOverflow]);
+  });
 
   const hiddenPinnedIndex = hidden.findIndex(
     (child) =>
-      isValidElement<TabNextProps>(child) && child.props?.value === pinned,
+      isValidElement<TabNextProps>(child) &&
+      child.props?.value === effectivePinnedValue,
   );
 
   if (hiddenPinnedIndex !== -1) {
@@ -252,7 +265,7 @@ export function useOverflow({
   }
 
   if (isMeasuring) {
-    return [childArray, [], isMeasuring] as const;
+    return [childArray, [] as typeof hidden, isMeasuring] as const;
   }
 
   return [visible, hidden, isMeasuring] as const;

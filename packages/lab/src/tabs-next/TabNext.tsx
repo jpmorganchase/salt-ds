@@ -98,15 +98,33 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       wasMouseDown.current = true;
     };
 
-    const [actions, setActions] = useState<string[]>([]);
+    const [actionIds, setActionIds] = useState(() => new Set<string>());
 
     const registerAction = useCallback((id: string) => {
-      setActions((old) => old.concat(id));
+      setActionIds((old) => {
+        if (old.has(id)) {
+          return old;
+        }
+
+        const next = new Set(old);
+        next.add(id);
+        return next;
+      });
 
       return () => {
-        setActions((old) => old.filter((action) => action !== id));
+        setActionIds((old) => {
+          if (!old.has(id)) {
+            return old;
+          }
+
+          const next = new Set(old);
+          next.delete(id);
+          return next;
+        });
       };
     }, []);
+
+    const actions = useMemo(() => Array.from(actionIds), [actionIds]);
 
     const context = useMemo(
       () => ({
@@ -134,6 +152,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
             className,
           )}
           data-overflowitem="true"
+          data-value={value}
           ref={ref}
           onMouseDown={handleMouseDown}
           onFocusCapture={handleFocusCapture}

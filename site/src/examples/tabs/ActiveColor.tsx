@@ -29,7 +29,7 @@ export const ActiveColor = (): ReactElement => {
 
   return (
     <StackLayout gap={6}>
-      <div style={{ alignItems: "center", width: "40vw" }}>
+      <div>
         <TabsNext defaultValue={tabs[0]}>
           <TabBar divider>
             <TabListNext activeColor={variant}>

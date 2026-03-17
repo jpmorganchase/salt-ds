@@ -31,7 +31,3 @@
 .saltTabListNext-activeColorTertiary {
   --saltTabListNext-activeColor: var(--salt-container-tertiary-background);
 }
-
-.saltTabListNext-overflowWarning {
-  display: none;
-}

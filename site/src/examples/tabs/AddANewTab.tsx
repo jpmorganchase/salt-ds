@@ -17,7 +17,7 @@ export const AddANewTab = (): ReactElement => {
 
   return (
     <TabsNext value={value} onChange={(_event, newValue) => setValue(newValue)}>
-      <TabBar inset divider style={{ width: 500 }}>
+      <TabBar inset divider>
         <TabListNext>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>

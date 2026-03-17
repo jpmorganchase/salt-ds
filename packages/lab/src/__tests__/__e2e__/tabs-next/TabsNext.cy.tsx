@@ -1,3 +1,10 @@
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import * as tabsStories from "@stories/tabs-next/tabs-next.stories";
 import { composeStories } from "@storybook/react-vite";
 
@@ -13,6 +20,50 @@ const {
   Controlled,
   AsyncDismissibleTabs,
 } = composeStories(tabsStories);
+
+const selectorSafeTabs = [
+  "Home",
+  "Transactions",
+  'Loan "A"',
+  "Checks",
+  "Liquidity",
+];
+
+function OverflowWithSelectorSafeValues() {
+  return (
+    <TabsNext defaultValue={selectorSafeTabs[0]}>
+      <TabBar inset divider>
+        <TabListNext style={{ margin: "auto", maxWidth: 150 }}>
+          {selectorSafeTabs.map((label) => (
+            <TabNext key={label} value={label}>
+              <TabNextTrigger>{label}</TabNextTrigger>
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabBar>
+    </TabsNext>
+  );
+}
+
+function clickOverflowTab(name: string) {
+  cy.findByRole("dialog", { name: "Overflow Menu" })
+    .should("be.visible")
+    .within(() => {
+      cy.findByRole("tab", { name }).click();
+    });
+
+  cy.findByRole("tab", { name: "Overflow" }).should(
+    "have.attr",
+    "aria-expanded",
+    "false",
+  );
+}
+
+function assertSelectedMainTab(name: string) {
+  cy.findByRole("tablist").within(() => {
+    cy.findByRole("tab", { name, selected: true }).should("be.visible");
+  });
+}
 
 describe("Given a Tabstrip", () => {
   it("should render with tablist and tab roles", () => {
@@ -212,6 +263,20 @@ describe("Given a Tabstrip", () => {
       .should("be.focused");
   });
 
+  it("should announce when a selected overflow tab moves to the main list", () => {
+    cy.mount(<Overflow />);
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    clickOverflowTab("Liquidity");
+    assertSelectedMainTab("Liquidity");
+    cy.get("[aria-live]", { timeout: 8000 }).should(
+      "contain.text",
+      "Liquidity moved to main tab list",
+    );
+  });
+
   it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
     cy.mount(<Overflow />);
 
@@ -231,13 +296,40 @@ describe("Given a Tabstrip", () => {
 
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
-    cy.findByRole("tab", { name: "Liquidity" }).realClick();
+    clickOverflowTab("Liquidity");
 
     cy.findAllByRole("tab").should("have.length", 2); // overflow menu hidden
 
-    cy.findByRole("tab", { name: "Liquidity" })
-      .should("have.attr", "aria-selected", "true")
-      .should("be.focused");
+    cy.findByRole("tab", { name: "Liquidity", selected: true }).should(
+      "be.focused",
+    );
+  });
+
+  it("should allow overflow selection when values contain selector characters", () => {
+    cy.mount(<OverflowWithSelectorSafeValues />);
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    clickOverflowTab('Loan "A"');
+
+    cy.findByRole("tab", { name: 'Loan "A"', selected: true }).should(
+      "be.focused",
+    );
+  });
+
+  it("should keep a pinned overflow tab visible when selection moves to an already visible tab", () => {
+    cy.mount(<Overflow />);
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    clickOverflowTab("Liquidity");
+    assertSelectedMainTab("Liquidity");
+
+    cy.findByRole("tab", { name: "Transactions" }).realClick();
+    assertSelectedMainTab("Transactions");
+    cy.findByRole("tab", { name: "Liquidity" }).should("be.visible");
   });
 
   it("should support adding tabs", () => {
@@ -349,6 +441,19 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" })
       .should("have.attr", "aria-selected", "true")
       .and("be.focused");
+  });
+
+  it("should call onChange with null when selection moves automatically after removal", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<Dismissible onChange={changeSpy} />);
+
+    cy.findByRole("button", { name: "Home Dismiss tab" }).realClick();
+
+    cy.findByRole("tab", { name: "Transactions" })
+      .should("have.attr", "aria-selected", "true")
+      .and("be.focused");
+
+    cy.get("@changeSpy").should("have.been.calledWith", null, "Transactions");
   });
 
   it("should support closing with a keyboard", () => {

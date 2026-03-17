@@ -25,7 +25,8 @@ export interface TabsNextProps
    */
   value?: string;
   /**
-   * Callback fired when the selection changes. The event will be null when selection is moved automatically.
+   * Callback fired when the selection changes. The event will be null when
+   * selection is moved automatically.
    */
   onChange?: (event: SyntheticEvent | null, value: string) => void;
 }
@@ -69,7 +70,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     });
 
     const setSelected = useCallback(
-      (event: SyntheticEvent, value: string) => {
+      (event: SyntheticEvent | null, value: string) => {
         setMenuOpen(false);
         setSelectedState(value);
         onChange?.(event, value);
