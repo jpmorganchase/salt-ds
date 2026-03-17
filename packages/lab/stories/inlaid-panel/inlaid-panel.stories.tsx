@@ -13,6 +13,7 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
+  useId,
 } from "@salt-ds/core";
 import { ExportIcon, LaptopIcon, UserIcon } from "@salt-ds/icons";
 import { InlaidPanel } from "@salt-ds/lab";
@@ -38,6 +39,7 @@ const FormFieldExample = () => (
 
 export const Left: StoryFn = () => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   return (
     <FlexLayout
@@ -48,7 +50,7 @@ export const Left: StoryFn = () => {
     >
       <InlaidPanel
         open={open}
-        aria-label="Sample form"
+        aria-labelledby={id}
         style={
           {
             "--saltInlaidPanel-width": "500px",
@@ -59,7 +61,7 @@ export const Left: StoryFn = () => {
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
             ✕ Close
           </Button>
-          <H2>Section Title</H2>
+          <H2 id={id}>Section Title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for
@@ -85,6 +87,8 @@ export const Left: StoryFn = () => {
 
 export const Right: StoryFn = () => {
   const [open, setOpen] = useState(false);
+  const id = useId();
+
   return (
     <FlexLayout
       style={{
@@ -97,7 +101,7 @@ export const Right: StoryFn = () => {
       <InlaidPanel
         open={open}
         position="right"
-        aria-label="Sample form"
+        aria-labelledby={id}
         style={
           {
             "--saltInlaidPanel-width": "500px",
@@ -108,7 +112,7 @@ export const Right: StoryFn = () => {
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
             ✕ Close
           </Button>
-          <H2>Section Title</H2>
+          <H2 id={id}>Section Title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for
@@ -129,12 +133,14 @@ export const Right: StoryFn = () => {
 
 export const Top: StoryFn = () => {
   const [open, setOpen] = useState(false);
+  const id = useId();
+
   return (
     <StackLayout gap={0}>
       <InlaidPanel
         open={open}
         position="top"
-        aria-label="Sample form"
+        aria-labelledby={id}
         style={{
           height: 280,
         }}
@@ -148,7 +154,7 @@ export const Top: StoryFn = () => {
           >
             ✕ Close
           </Button>
-          <H2>Section title</H2>
+          <H2 id={id}>Section title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for
@@ -174,6 +180,8 @@ export const Top: StoryFn = () => {
 
 export const Bottom: StoryFn = () => {
   const [open, setOpen] = useState(false);
+  const id = useId();
+
   return (
     <StackLayout
       style={{
@@ -184,7 +192,7 @@ export const Bottom: StoryFn = () => {
       <FlexItem grow={1} padding={1}>
         <Button onClick={() => setOpen(!open)}>Open bottom panel</Button>
       </FlexItem>
-      <InlaidPanel open={open} position="bottom" aria-label="Sample form">
+      <InlaidPanel open={open} position="bottom" aria-labelledby={id}>
         <StackLayout align="start">
           <Button
             onClick={() => setOpen(false)}
@@ -194,7 +202,7 @@ export const Bottom: StoryFn = () => {
           >
             ✕ Close
           </Button>
-          <H2>Section title</H2>
+          <H2 id={id}>Section title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for
