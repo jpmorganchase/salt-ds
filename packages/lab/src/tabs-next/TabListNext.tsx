@@ -1,14 +1,15 @@
 import {
   capitalize,
   makePrefixer,
+  useAriaAnnouncer,
   useForkRef,
-  useId,
   useIsomorphicLayoutEffect,
   usePrevious,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import { computeAccessibleName } from "dom-accessibility-api";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
@@ -16,7 +17,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { useEventCallback } from "../utils/index";
+import { useEventCallback } from "../utils/useEventCallback";
 import { useOverflow } from "./hooks/useOverflow";
 import { useTabListFocusOutRecovery } from "./hooks/useTabListFocusOutRecovery";
 import { useTabListMutationObserver } from "./hooks/useTabListMutationObserver";
@@ -38,12 +39,15 @@ export interface TabListNextProps
   appearance?: "bordered" | "transparent";
 }
 
+function getTabAccessibleName(element: HTMLElement) {
+  return computeAccessibleName(element).trim();
+}
+
 export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
   function TabListNext(props, ref) {
     const {
       appearance = "bordered",
       activeColor = "primary",
-      "aria-describedby": ariaDescribedBy,
       children,
       className,
       onKeyDown,
@@ -58,6 +62,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     const {
       selected,
+      setSelected,
       getNext,
       getPrevious,
       getFirst,
@@ -74,6 +79,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     const tabstripRef = useRef<HTMLDivElement>(null);
     const overflowListRef = useRef<HTMLDivElement>(null);
     const removalRecoveryRafRef = useRef<number | null>(null);
+    const selectionFocusOuterRafRef = useRef<number | null>(null);
+    const selectionFocusInnerRafRef = useRef<number | null>(null);
     const pendingRemovalRecoveryRef = useRef(false);
     const pendingRemovalRecoveryRetriesRef = useRef(0);
     const clearPendingRemovalRecovery = () => {
@@ -83,6 +90,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
+
+    const { announce } = useAriaAnnouncer();
 
     const [visible, hidden, isMeasuring] = useOverflow({
       container: tabstripRef,
@@ -120,20 +129,91 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       }
     };
 
-    const previousSelected = usePrevious(selected);
+    const previousSelected = usePrevious(selected, [selected]);
+    const previousMenuOpen = usePrevious(menuOpen, [menuOpen]);
+    const selectedFromOverflow =
+      !!previousMenuOpen &&
+      !menuOpen &&
+      !!selected &&
+      selected !== previousSelected;
+
+    const getSelectedTabElement = useEventCallback(() => {
+      return (
+        tabstripRef.current?.querySelector<HTMLElement>(
+          '[role="tab"][aria-selected="true"]',
+        ) ?? item(activeTab.current?.id)?.element
+      );
+    });
+
+    const cancelScheduledSelectionFocus = useEventCallback(() => {
+      if (selectionFocusOuterRafRef.current != null && targetWindow) {
+        targetWindow.cancelAnimationFrame(selectionFocusOuterRafRef.current);
+        selectionFocusOuterRafRef.current = null;
+      }
+
+      if (selectionFocusInnerRafRef.current != null && targetWindow) {
+        targetWindow.cancelAnimationFrame(selectionFocusInnerRafRef.current);
+        selectionFocusInnerRafRef.current = null;
+      }
+    });
+
+    const scheduleSelectedTabFocus = useEventCallback(() => {
+      const focusSelectedTab = () => {
+        getSelectedTabElement()?.focus({ preventScroll: true });
+      };
+
+      cancelScheduledSelectionFocus();
+
+      if (targetWindow?.requestAnimationFrame) {
+        selectionFocusOuterRafRef.current = targetWindow.requestAnimationFrame(
+          () => {
+            selectionFocusOuterRafRef.current = null;
+            selectionFocusInnerRafRef.current =
+              targetWindow.requestAnimationFrame(() => {
+                selectionFocusInnerRafRef.current = null;
+                focusSelectedTab();
+              });
+          },
+        );
+      } else {
+        queueMicrotask(() => {
+          focusSelectedTab();
+        });
+      }
+    });
 
     // Handle select from menu
     useIsomorphicLayoutEffect(() => {
-      if (!menuOpen && selected !== previousSelected) {
-        queueMicrotask(() => {
-          const activeItem = item(activeTab.current?.id);
-
-          if (activeItem) {
-            activeItem.element?.focus();
-          }
-        });
+      if (!selectedFromOverflow) {
+        return;
       }
-    }, [menuOpen, selected, previousSelected, item, activeTab]);
+      scheduleSelectedTabFocus();
+    }, [scheduleSelectedTabFocus, selectedFromOverflow]);
+
+    useEffect(() => {
+      return cancelScheduledSelectionFocus;
+    }, [cancelScheduledSelectionFocus]);
+
+    useEffect(() => {
+      return () => {
+        if (removalRecoveryRafRef.current != null) {
+          cancelAnimationFrame(removalRecoveryRafRef.current);
+        }
+      };
+    }, []);
+
+    useIsomorphicLayoutEffect(() => {
+      if (!selectedFromOverflow || !selected) {
+        return;
+      }
+
+      const selectedTab = getSelectedTabElement();
+      const selectedTabName = selectedTab
+        ? getTabAccessibleName(selectedTab)
+        : selected;
+
+      announce(`${selectedTabName} moved to main tab list`, 150);
+    }, [announce, getSelectedTabElement, selected, selectedFromOverflow]);
 
     const handleTabRemoval = useEventCallback(() => {
       const doc = targetWindow?.document;
@@ -249,7 +329,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
             '[role="tab"][aria-selected="true"]',
           )
         ) {
-          nextTab.element?.click();
+          activeTab.current = { id: nextTab.id, value: nextTab.value };
+          setSelected(null, nextTab.value);
         }
 
         requestAnimationFrame(() => {
@@ -259,14 +340,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
       requestAnimationFrame(() => requestAnimationFrame(() => restoreFocus()));
     });
-
-    useEffect(() => {
-      return () => {
-        if (removalRecoveryRafRef.current != null) {
-          cancelAnimationFrame(removalRecoveryRafRef.current);
-        }
-      };
-    }, []);
 
     useTabListFocusOutRecovery({
       targetWindow,
@@ -286,8 +359,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       pendingRemovalRecoveryRetriesRef,
     });
 
-    const warningId = useId();
-
     return (
       <div
         role="tablist"
@@ -301,15 +372,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         data-ismeasuring={isMeasuring ? true : undefined}
         ref={handleRef}
         onKeyDown={handleKeyDown}
-        aria-describedby={clsx(ariaDescribedBy, warningId) || undefined}
         {...rest}
       >
-        {!isMeasuring && hidden.length > 0 && (
-          <span id={warningId} className={withBaseName("overflowWarning")}>
-            Note: This tab list includes overflow; tab positions may be
-            inaccurate or change when a tab is selected
-          </span>
-        )}
         {visible}
         <TabOverflowList
           isMeasuring={isMeasuring}

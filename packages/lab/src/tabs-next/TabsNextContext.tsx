@@ -21,7 +21,7 @@ export interface TabsNextContextValue
   getPanelId: (value: string) => string | undefined;
   getTabId: (value: string) => string | undefined;
   selected?: string;
-  setSelected: (event: SyntheticEvent, value: string) => void;
+  setSelected: (event: SyntheticEvent | null, value: string) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
   menuOpen: boolean;
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
