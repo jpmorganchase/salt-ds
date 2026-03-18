@@ -1,6 +1,5 @@
 import {
   Button,
-  Dropdown,
   FlexItem,
   FlexLayout,
   FormField,
@@ -8,26 +7,21 @@ import {
   FormFieldLabel,
   H2,
   Input,
-  Option,
-  RadioButton,
-  RadioButtonGroup,
   StackLayout,
   Text,
   useId,
 } from "@salt-ds/core";
-import { ExportIcon, LaptopIcon, UserIcon } from "@salt-ds/icons";
-import { InlaidPanel } from "@salt-ds/lab";
-
+import { SidePanel } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {
-  title: "Lab/InlaidPanel",
-  component: InlaidPanel,
+  title: "Lab/SidePanel",
+  component: SidePanel,
   parameters: {
     layout: "fullscreen",
   },
-} as Meta<typeof InlaidPanel>;
+} as Meta<typeof SidePanel>;
 
 const FormFieldExample = () => (
   <FormField>
@@ -48,13 +42,13 @@ export const Left: StoryFn = () => {
       }}
       gap={0}
     >
-      <InlaidPanel
+      <SidePanel
         open={open}
         onOpenChange={setOpen}
         aria-labelledby={id}
         style={
           {
-            "--saltInlaidPanel-width": "500px",
+            "--saltSidePanel-width": "500px",
           } as React.CSSProperties
         }
       >
@@ -76,7 +70,7 @@ export const Left: StoryFn = () => {
             <FormFieldExample key={index} />
           ))}
         </StackLayout>
-      </InlaidPanel>
+      </SidePanel>
       <FlexLayout gap={1} padding={1}>
         <Button>Button 1</Button>
         <Button>Button 2</Button>
@@ -99,14 +93,14 @@ export const Right: StoryFn = () => {
       <FlexItem grow={1} padding={1}>
         <Button onClick={() => setOpen(!open)}>Open Right Panel</Button>
       </FlexItem>
-      <InlaidPanel
+      <SidePanel
         open={open}
         onOpenChange={setOpen}
-        position="right"
+        side="right"
         aria-labelledby={id}
         style={
           {
-            "--saltInlaidPanel-width": "500px",
+            "--saltSidePanel-width": "500px",
           } as React.CSSProperties
         }
       >
@@ -128,7 +122,7 @@ export const Right: StoryFn = () => {
             <FormFieldExample key={index} />
           ))}
         </StackLayout>
-      </InlaidPanel>
+      </SidePanel>
     </FlexLayout>
   );
 };
@@ -139,10 +133,10 @@ export const Top: StoryFn = () => {
 
   return (
     <StackLayout gap={0}>
-      <InlaidPanel
+      <SidePanel
         open={open}
         onOpenChange={setOpen}
-        position="top"
+        side="top"
         aria-labelledby={id}
         style={{
           height: 280,
@@ -173,7 +167,7 @@ export const Top: StoryFn = () => {
             ))}
           </FlexLayout>
         </StackLayout>
-      </InlaidPanel>
+      </SidePanel>
       <FlexItem padding={1}>
         <Button onClick={() => setOpen(!open)}>Open top panel</Button>
       </FlexItem>
@@ -195,7 +189,12 @@ export const Bottom: StoryFn = () => {
       <FlexItem grow={1} padding={1}>
         <Button onClick={() => setOpen(!open)}>Open bottom panel</Button>
       </FlexItem>
-      <InlaidPanel open={open} onOpenChange={setOpen} position="bottom" aria-labelledby={id}>
+      <SidePanel
+        open={open}
+        onOpenChange={setOpen}
+        side="bottom"
+        aria-labelledby={id}
+      >
         <StackLayout align="start">
           <Button
             onClick={() => setOpen(false)}
@@ -221,181 +220,7 @@ export const Bottom: StoryFn = () => {
             ))}
           </FlexLayout>
         </StackLayout>
-      </InlaidPanel>
+      </SidePanel>
     </StackLayout>
-  );
-};
-
-export const ContentSwitching: StoryFn = () => {
-  const [activeSetting, setActiveSetting] = useState<string | undefined>(
-    undefined,
-  );
-
-  const open = activeSetting !== undefined;
-
-  const items = [
-    {
-      label: "Display",
-      icon: <LaptopIcon />,
-      title: "Display settings",
-      view: () => (
-        <StackLayout gap={1}>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Language</FormFieldLabel>
-            <Dropdown defaultSelected={["English"]}>
-              <Option value="English" />
-              <Option value="French" />
-              <Option value="German" />
-              <Option value="Italian" />
-              <Option value="Spanish" />
-            </Dropdown>
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Time format</FormFieldLabel>
-            <RadioButtonGroup direction="horizontal">
-              <RadioButton label="12 hour" />
-              <RadioButton checked label="24 hour" />
-            </RadioButtonGroup>
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Link destination</FormFieldLabel>
-            <RadioButtonGroup>
-              <RadioButton label="Same window" />
-              <RadioButton checked label="New window" />
-            </RadioButtonGroup>
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Date format</FormFieldLabel>
-            <RadioButtonGroup direction="horizontal">
-              <RadioButton label="DD/MM/YY" />
-              <RadioButton checked label="MM/DD/YY" />
-            </RadioButtonGroup>
-          </FormField>
-        </StackLayout>
-      ),
-    },
-    {
-      label: "Account",
-      icon: <UserIcon />,
-      title: "Account settings",
-      view: () => (
-        <StackLayout gap={1}>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Full name</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Company ID</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Email</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Security type</FormFieldLabel>
-            <Dropdown defaultSelected={["Password"]}>
-              <Option value="Password" />
-              <Option value="Soft token" />
-              <Option value="Biometric" />
-            </Dropdown>
-          </FormField>
-        </StackLayout>
-      ),
-    },
-    {
-      label: "Export",
-      icon: <ExportIcon />,
-      title: "Export settings",
-      view: () => (
-        <StackLayout gap={1}>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>File type</FormFieldLabel>
-            <Dropdown defaultSelected={["PNG"]}>
-              <Option value="JPG" />
-              <Option value="PDF" />
-              <Option value="PNG" />
-              <Option value="SVG" />
-            </Dropdown>
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Size</FormFieldLabel>
-            <Dropdown defaultSelected={["1x"]}>
-              <Option value="1x" />
-              <Option value="2x" />
-              <Option value="3x" />
-            </Dropdown>
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Suffix</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Color profile</FormFieldLabel>
-            <Dropdown defaultSelected={["Same as current (sRGB)"]}>
-              <Option value="Same as current (sRGB)" />
-              <Option value="Display P3" />
-            </Dropdown>
-          </FormField>
-        </StackLayout>
-      ),
-    },
-  ];
-
-  const activeItem = items.find(
-    (item) => item.label.toLowerCase() === activeSetting,
-  );
-
-  return (
-    <FlexLayout
-      style={{
-        height: "100vh",
-      }}
-      gap={0}
-    >
-      <InlaidPanel
-        open={open}
-        onOpenChange={(newOpen) => { if (!newOpen) setActiveSetting(undefined); }}
-        position="left"
-        aria-label="Sample form"
-        style={
-          {
-            "--saltInlaidPanel-width": "500px",
-          } as React.CSSProperties
-        }
-      >
-        <StackLayout gap={1}>
-          <Button
-            onClick={() => setActiveSetting(undefined)}
-            style={{ marginLeft: "auto" }}
-          >
-            Close
-          </Button>
-          {activeItem && (
-            <>
-              <H2>{activeItem.title}</H2>
-              {activeItem.view()}
-            </>
-          )}
-        </StackLayout>
-      </InlaidPanel>
-      <FlexLayout direction="column" gap={1} padding={1}>
-        <Text>
-          Click any button to open the panel or switch between different
-          settings:
-        </Text>
-        <FlexLayout gap={1}>
-          <Button onClick={() => setActiveSetting("display")}>
-            <LaptopIcon /> Display Settings
-          </Button>
-          <Button onClick={() => setActiveSetting("account")}>
-            <UserIcon /> Account Settings
-          </Button>
-          <Button onClick={() => setActiveSetting("export")}>
-            <ExportIcon /> Export Settings
-          </Button>
-        </FlexLayout>
-      </FlexLayout>
-    </FlexLayout>
   );
 };
