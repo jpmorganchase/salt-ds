@@ -47,9 +47,13 @@
   background: var(--salt-selectable-background-selected);
 }
 
-.saltTreeNode-disabled > .saltTreeNodeTrigger {
-  color: var(--salt-content-primary-foreground-disabled);
-  background: var(--salt-selectable-background-disabled);
+.saltTreeNode-disabled > .saltTreeNodeTrigger,
+.saltTreeNode-disabled:hover > .saltTreeNodeTrigger {
+  opacity: 0.4;
+  cursor: var(--salt-cursor-disabled);
+
+  background: var(--salt-selectable-background);
+  color: var(--salt-content-primary-foreground);
 }
 
 .saltTreeNodeTrigger > .saltIcon {
@@ -63,8 +67,4 @@
 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
   margin-left: calc(var(--salt-spacing-150) - var(--salt-spacing-100));
   margin-right: calc(var(--salt-spacing-150) - var(--salt-spacing-100));
-}
-
-.saltTreeNode-disabled .saltTreeNodeTrigger > .saltIcon {
-  color: var(--salt-content-primary-foreground-disabled);
 }

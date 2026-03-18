@@ -8,7 +8,6 @@
   --salt-color-blue-800-40a: rgba(var(--salt-color-blue-800-rgb), 0.4);
   --salt-color-gray-300-10a: rgba(var(--salt-color-gray-300-rgb), 0.1);
   --salt-color-gray-300-40a: rgba(var(--salt-color-gray-300-rgb), 0.4);
-  --salt-color-gray-400-40a: rgba(var(--salt-color-gray-400-rgb), 0.4);
   --salt-color-gray-500-10a: rgba(var(--salt-color-gray-500-rgb), 0.1);
   --salt-color-gray-500-40a: rgba(var(--salt-color-gray-500-rgb), 0.4);
   --salt-color-gray-600-40a: rgba(var(--salt-color-gray-600-rgb), 0.4);
