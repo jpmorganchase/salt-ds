@@ -18,7 +18,7 @@
 }
 
 .saltSliderTrack-disabled {
-  cursor: var(--salt-cursor-disabled);
+  opacity: 0.4;
 }
 
 .saltSliderTrack-container {
@@ -67,7 +67,7 @@
   background: var(--slider-track-fill);
   border-top-left-radius: var(--salt-palette-corner-weaker);
   border-bottom-left-radius: var(--salt-palette-corner-weaker);
-  width: calc(var(--slider-progressPercentage) - var(--salt-size-fixed-300));
+  width: calc(var(--slider-progressPercentage) - var(--salt-spacing-fixed-300));
 }
 
 .saltSliderTrack-hasMinTick.saltSliderTrack-rail::before {
@@ -78,7 +78,7 @@
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
-  width: calc(100% - var(--slider-progressPercentage) - var(--salt-size-fixed-300));
+  width: calc(100% - var(--slider-progressPercentage) - var(--salt-spacing-fixed-300));
 }
 
 .saltSliderTrack-hasMaxTick.saltSliderTrack-rail::after {
@@ -87,18 +87,18 @@
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
   background: var(--slider-track-background);
-  width: calc(var(--slider-progressPercentageStart) - var(--salt-size-fixed-300));
+  width: calc(var(--slider-progressPercentageStart) - var(--salt-spacing-fixed-300));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
-  width: calc(100% - var(--slider-progressPercentageEnd) - var(--salt-size-fixed-300));
+  width: calc(100% - var(--slider-progressPercentageEnd) - var(--salt-spacing-fixed-300));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {
   background: var(--slider-track-fill);
   height: 100%;
-  left: calc(var(--slider-progressPercentageStart) + var(--salt-size-fixed-300));
+  left: calc(var(--slider-progressPercentageStart) + var(--salt-spacing-fixed-300));
   position: absolute;
   width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-fixed-600));
 }
@@ -111,11 +111,6 @@
 .saltSliderTrack-dragging,
 .saltSliderTrack-dragging .saltSliderTrack-wrapper {
   cursor: var(--salt-cursor-grab-active);
-}
-
-.saltSliderTrack-disabled {
-  --slider-track-fill: var(--salt-accent-borderColor-disabled);
-  --slider-track-background: var(--salt-sentiment-neutral-track-disabled);
 }
 
 .saltSliderTrack-ticks {

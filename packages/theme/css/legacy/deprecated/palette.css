@@ -75,6 +75,7 @@
   --salt-palette-interact-cta-foreground-hover: var(--salt-color-white);
   --salt-palette-interact-cta-background-disabled: var(--salt-color-blue-600-40a);
   --salt-palette-interact-primary-background-disabled: var(--salt-color-gray-60-40a);
+  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-40a);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-500);
@@ -188,6 +189,7 @@
   --salt-palette-interact-cta-foreground-hover: var(--salt-color-white);
   --salt-palette-interact-cta-background-disabled: var(--salt-color-blue-600-40a);
   --salt-palette-interact-primary-background-disabled: var(--salt-color-gray-300-40a);
+  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-40a);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-300);
