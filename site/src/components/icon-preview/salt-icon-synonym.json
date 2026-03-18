@@ -655,13 +655,13 @@
     "category": "media"
   },
   {
-    "iconName": "help",
+    "iconName": "help-circle",
     "synonym": [
       "question",
       "support",
       "information",
       "assist",
-      "question mark"
+      "question mark circle"
     ],
     "category": "indicators"
   },
