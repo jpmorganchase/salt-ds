@@ -23,7 +23,7 @@ const FormFieldExample = () => (
 );
 
 export const BottomPanel = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   return (

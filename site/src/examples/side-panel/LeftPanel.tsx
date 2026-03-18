@@ -22,7 +22,7 @@ const FormFieldExample = () => (
 );
 
 export const LeftPanel = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   return (
