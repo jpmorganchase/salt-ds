@@ -48,6 +48,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       onOpenChange,
       initialFocus = 0,
       children,
+      className,
       ...rest
     } = props;
     const [showComponent, setShowComponent] = useState(open);
@@ -83,11 +84,15 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const panelDiv = (
       <div
         ref={handleRef}
-        className={clsx(withBaseName(), {
-          [withBaseName(side)]: side,
-          [withBaseName("enterAnimation")]: open,
-          [withBaseName("exitAnimation")]: !open,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName(side)]: side,
+            [withBaseName("enterAnimation")]: open,
+            [withBaseName("exitAnimation")]: !open,
+          },
+          className,
+        )}
         tabIndex={-1}
         role="region"
         {...getFloatingProps()}
