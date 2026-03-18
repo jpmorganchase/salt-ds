@@ -1,79 +1,52 @@
-import type { SaltRegistry, SaltStatus } from "../types.js";
+import type {
+  SaltRegistry,
+  SaltStatus,
+  SearchArea,
+  SearchIndexEntry,
+} from "../types.js";
+import type { SuggestedFollowUp } from "./consumerPresentation.js";
 import {
-  getFoundationSuggestedFollowUpsByTitle,
-  type SuggestedFollowUp,
-} from "./consumerPresentation.js";
+  getDiscoverySuggestedFollowUps,
+  resolveDiscoverNextStep,
+  resolveDiscoverStarterCode,
+  toCompactApiMatches,
+  toCompactComponentOptions,
+  toCompactDocs,
+  toCompactFoundationOption,
+  toCompactPatternOptions,
+  toCompactTokenOptions,
+} from "./discoverSaltPresentation.js";
+import {
+  FOUNDATION_DISCOVERY_KEYWORDS,
+  inferDiscoveryPreferences,
+  RECIPE_DISCOVERY_KEYWORDS,
+  scoreDiscoveryKeywordIntent,
+  TOKEN_DISCOVERY_KEYWORDS,
+} from "./discoverSaltSignals.js";
 import { getCompositionRecipe } from "./getCompositionRecipe.js";
 import { getFoundation } from "./getFoundation.js";
+import { getRelatedEntities } from "./getRelatedEntities.js";
 import { listFoundations } from "./listFoundations.js";
+import { listSaltCatalog } from "./listSaltCatalog.js";
 import { recommendComponent } from "./recommendComponent.js";
 import { recommendTokens } from "./recommendTokens.js";
+import { searchApiSurface } from "./searchApiSurface.js";
 import { searchSaltDocs } from "./searchSaltDocs.js";
 import type { StarterCodeSnippet } from "./starterCode.js";
-import { normalizeQuery, tokenize } from "./utils.js";
+import { normalizeQuery } from "./utils.js";
 
-const FOUNDATION_KEYWORDS = [
-  "breakpoint",
-  "breakpoints",
-  "density",
-  "elevation",
-  "foundation",
-  "foundations",
-  "grid",
-  "layout",
-  "motion",
-  "responsive",
-  "responsiveness",
-  "size",
-  "spacing",
-  "typography",
-];
-
-const TOKEN_KEYWORDS = [
-  "background",
-  "border",
-  "color",
-  "density",
-  "font",
-  "foreground",
-  "margin",
-  "padding",
-  "radius",
-  "semantic",
-  "shadow",
-  "theme",
-  "token",
-  "tokens",
-];
-
-const RECIPE_KEYWORDS = [
-  "build",
-  "compose",
-  "composition",
-  "dashboard",
-  "filter",
-  "flow",
-  "form",
-  "header",
-  "layout",
-  "login",
-  "page",
-  "pattern",
-  "screen",
-  "toolbar",
-  "wizard",
-];
+type DiscoveryEntityType = "component" | "pattern" | "token" | "guide" | "page";
 
 export interface DiscoverSaltInput {
-  query: string;
+  query?: string;
+  area?: SearchArea;
   package?: string;
   status?: SaltStatus;
-  top_k?: number;
-  production_ready?: boolean;
-  prefer_stable?: boolean;
-  a11y_required?: boolean;
-  form_field_support?: boolean;
-  include_starter_code?: boolean;
+  related_to?: {
+    entity_type: DiscoveryEntityType;
+    name: string;
+    package?: string;
+  };
   view?: "compact" | "full";
 }
 
@@ -84,25 +57,33 @@ export interface ClarifyingQuestion {
   options: string[];
 }
 
+export interface DiscoverSaltDecision {
+  tool:
+    | "discover_salt"
+    | "choose_salt_solution"
+    | "get_salt_entity"
+    | "get_salt_examples"
+    | "compare_salt_versions";
+  why: string;
+  args?: Record<string, unknown>;
+  result: Record<string, unknown> | null;
+}
+
 export interface DiscoverSaltResult {
-  query: string;
-  best_start: {
-    tool:
-      | "get_foundation"
-      | "recommend_tokens"
-      | "get_composition_recipe"
-      | "recommend_component"
-      | "search_salt_docs";
-    why: string;
-    result: Record<string, unknown> | null;
-  } | null;
-  options: {
+  mode: "route" | "browse" | "related";
+  query?: string;
+  decision: DiscoverSaltDecision | null;
+  best_start?: DiscoverSaltDecision | null;
+  options?: {
     components: Array<Record<string, unknown>>;
-    recipes: Array<Record<string, unknown>>;
+    patterns: Array<Record<string, unknown>>;
     foundations: Array<Record<string, unknown>>;
     tokens: Array<Record<string, unknown>>;
     docs: Array<Record<string, unknown>>;
+    api_surface: Array<Record<string, unknown>>;
   };
+  catalog?: ReturnType<typeof listSaltCatalog>;
+  related?: ReturnType<typeof getRelatedEntities>["related"];
   clarifying_questions?: ClarifyingQuestion[];
   starter_code?: StarterCodeSnippet[];
   suggested_follow_ups?: SuggestedFollowUp[];
@@ -110,363 +91,247 @@ export interface DiscoverSaltResult {
   signals?: {
     foundations: number;
     tokens: number;
-    recipes: number;
+    patterns: number;
   };
   raw?: Record<string, unknown>;
+  did_you_mean?: string[];
+  ambiguity?: Record<string, unknown>;
 }
 
-function scoreIntent(query: string, keywords: string[]): number {
-  const queryTokens = new Set(tokenize(query));
-  const tokenScore = keywords.reduce(
-    (score, keyword) => score + (queryTokens.has(keyword) ? 1 : 0),
-    0,
-  );
-  const phraseScore = keywords.reduce(
-    (score, keyword) => score + (query.includes(keyword) ? 1 : 0),
-    0,
-  );
-
-  return tokenScore + phraseScore;
-}
-
-function toCompactDocs(
-  results: ReturnType<typeof searchSaltDocs>["results"],
-): Array<Record<string, unknown>> {
-  return results.map((result) => ({
-    title: result.name,
-    type: result.type,
-    summary: result.summary,
-    why: result.matched_excerpt ?? result.summary,
-    docs: result.source_url ? [result.source_url] : [],
-  }));
-}
-
-function toStringArray(value: unknown): string[] {
-  return Array.isArray(value)
-    ? value.filter((entry): entry is string => typeof entry === "string")
-    : [];
-}
-
-function toRecord(value: unknown): Record<string, unknown> | null {
-  return value && typeof value === "object"
-    ? (value as Record<string, unknown>)
-    : null;
-}
-
-function getDocsFromRelatedDocs(value: unknown): string[] {
-  const relatedDocs = toRecord(value);
-  if (!relatedDocs) {
-    return [];
-  }
-
-  return Object.values(relatedDocs).filter(
-    (entry): entry is string => typeof entry === "string" && entry.length > 0,
-  );
-}
-
-function toCompactFoundationOption(
-  foundation: Record<string, unknown> | null | undefined,
-): Record<string, unknown> | null {
-  const record = toRecord(foundation);
-  if (!record) {
+function toDecisionFromSearchResult(
+  result: ReturnType<typeof searchSaltDocs>["results"][number] | undefined,
+): DiscoverSaltDecision | null {
+  if (!result) {
     return null;
   }
 
-  const docs =
-    toStringArray(record.docs).length > 0
-      ? toStringArray(record.docs)
-      : typeof record.route === "string"
-        ? [record.route]
-        : [];
-  const topics =
-    toStringArray(record.topics).length > 0
-      ? toStringArray(record.topics).slice(0, 6)
-      : toStringArray(record.section_headings).slice(0, 6);
-  const guidance =
-    toStringArray(record.guidance).length > 0
-      ? toStringArray(record.guidance).slice(0, 3)
-      : toStringArray(record.content).slice(0, 3);
-  const title =
-    typeof record.title === "string" ? record.title : "Suggested foundation";
-  const nextStep =
-    typeof record.next_step === "string"
-      ? record.next_step
-      : getFoundationNextStep(record);
-
-  return {
-    title,
-    summary: typeof record.summary === "string" ? record.summary : "",
-    topics,
-    guidance,
-    docs,
-    next_step: nextStep,
-  };
+  switch (result.type) {
+    case "component":
+      return {
+        tool: "get_salt_entity",
+        why: "The closest match looks like a specific Salt component.",
+        args: {
+          entity_type: "component",
+          name: result.name,
+          package: result.package ?? undefined,
+        },
+        result: {
+          name: result.name,
+          summary: result.summary,
+          package: result.package,
+        },
+      };
+    case "pattern":
+      return {
+        tool: "get_salt_entity",
+        why: "The closest match looks like a specific Salt pattern.",
+        args: {
+          entity_type: "pattern",
+          name: result.name,
+        },
+        result: {
+          name: result.name,
+          summary: result.summary,
+        },
+      };
+    case "guide":
+    case "page":
+    case "token":
+    case "package":
+    case "icon":
+    case "country_symbol":
+      return {
+        tool: "get_salt_entity",
+        why: "The closest match looks like a specific Salt entity.",
+        args: {
+          entity_type:
+            result.type === "country_symbol" ? "country_symbol" : result.type,
+          name: result.name,
+        },
+        result: {
+          name: result.name,
+          summary: result.summary,
+          package: result.package,
+        },
+      };
+    case "example":
+      return {
+        tool: "get_salt_examples",
+        why: "The closest match is an implementation example.",
+        args: {
+          query: result.name,
+        },
+        result: {
+          title: result.name,
+          summary: result.summary,
+        },
+      };
+    case "change":
+      return {
+        tool: "compare_salt_versions",
+        why: "The closest match is upgrade or change history content.",
+        args: {
+          package: result.package ?? undefined,
+          from_version: "1.0.0",
+        },
+        result: {
+          title: result.name,
+          summary: result.summary,
+        },
+      };
+    default:
+      return {
+        tool: "discover_salt",
+        why: "Stay in discovery mode and narrow further from the nearest docs result.",
+        args: {
+          query: result.name,
+        },
+        result: {
+          title: result.name,
+          summary: result.summary,
+        },
+      };
+  }
 }
 
-function toCompactComponentOptions(
-  result: ReturnType<typeof recommendComponent>,
-): Array<Record<string, unknown>> {
-  if (result.recommended || result.alternatives) {
-    return [
-      ...(result.recommended ? [result.recommended] : []),
-      ...(result.alternatives ?? []),
-    ];
+function toDecisionFromDocOption(
+  doc: Record<string, unknown> | undefined,
+): DiscoverSaltDecision | null {
+  if (!doc || typeof doc.type !== "string") {
+    return null;
   }
 
-  return (result.recommendations ?? []).map((recommendation) => {
-    const recommendationRecord = toRecord(recommendation);
-    const component = toRecord(recommendationRecord?.component);
-    const status =
-      typeof component?.status === "string" ? component.status : "stable";
-    const examples =
-      component &&
-      typeof toRecord(component.related_docs)?.examples === "string"
-        ? [String(toRecord(component.related_docs)?.examples)]
-        : [];
+  const type = doc.type as SearchIndexEntry["type"];
+  const name = String(doc.title ?? "");
+  const summary = String(doc.summary ?? "");
+  const packageName = typeof doc.package === "string" ? doc.package : null;
 
-    return {
-      name: typeof component?.name === "string" ? component.name : "Component",
-      summary: typeof component?.summary === "string" ? component.summary : "",
-      why:
-        toStringArray(recommendationRecord?.why)[0] ??
-        (typeof component?.summary === "string" ? component.summary : ""),
-      tradeoffs: toStringArray(recommendationRecord?.tradeoffs).slice(0, 2),
-      docs: getDocsFromRelatedDocs(component?.related_docs),
-      examples,
-      caveats: toStringArray(recommendationRecord?.caveats),
-      ship_check: toRecord(recommendationRecord?.ship_check),
-      ...(status !== "stable" ? { status } : {}),
-    };
+  return toDecisionFromSearchResult({
+    id: "search-result",
+    type,
+    name,
+    package: packageName,
+    status:
+      doc.status === "stable" ||
+      doc.status === "beta" ||
+      doc.status === "lab" ||
+      doc.status === "deprecated"
+        ? doc.status
+        : null,
+    summary,
+    score: 0,
+    match_reasons: [],
+    score_breakdown: {
+      name_exact: 0,
+      name_phrase: 0,
+      summary_phrase: 0,
+      content_phrase: 0,
+      name_tokens: 0,
+      summary_tokens: 0,
+      content_tokens: 0,
+      keyword_tokens: 0,
+    },
+    matched_keywords: [],
+    matched_excerpt: typeof doc.why === "string" ? doc.why : null,
+    source_url:
+      Array.isArray(doc.docs) && typeof doc.docs[0] === "string"
+        ? doc.docs[0]
+        : null,
   });
 }
 
-function toCompactRecipeOptions(
-  result: ReturnType<typeof getCompositionRecipe>,
-): Array<Record<string, unknown>> {
-  if (result.recommended || result.alternatives) {
-    return [
-      ...(result.recommended ? [result.recommended] : []),
-      ...(result.alternatives ?? []),
-    ];
-  }
-
-  return (result.recipes ?? []).map((recipe) => {
-    const recipeRecord = toRecord(recipe);
-
-    return {
-      name:
-        typeof recipeRecord?.recipe_name === "string"
-          ? recipeRecord.recipe_name
-          : typeof recipeRecord?.name === "string"
-            ? recipeRecord.name
-            : "Recipe",
-      type:
-        typeof recipeRecord?.recipe_type === "string"
-          ? recipeRecord.recipe_type
-          : typeof recipeRecord?.type === "string"
-            ? recipeRecord.type
-            : "pattern",
-      summary:
-        typeof recipeRecord?.summary === "string" ? recipeRecord.summary : "",
-      steps: Array.isArray(recipeRecord?.steps) ? recipeRecord.steps : [],
-      components: Array.isArray(recipeRecord?.components)
-        ? recipeRecord.components
-        : [],
-      examples: Array.isArray(recipeRecord?.supporting_examples)
-        ? recipeRecord.supporting_examples
-        : [],
-      docs: toStringArray(recipeRecord?.docs),
-      caveats: toStringArray(recipeRecord?.caveats),
-      ship_check: toRecord(recipeRecord?.ship_check),
-    };
-  });
-}
-
-function toCompactTokenOptions(
-  result: ReturnType<typeof recommendTokens>,
-): Array<Record<string, unknown>> {
-  if (result.recommended || result.alternatives) {
-    return [
-      ...(result.recommended ? [result.recommended] : []),
-      ...(result.alternatives ?? []),
-    ];
-  }
-
-  return (result.recommendations ?? []).map((recommendation) => {
-    const recommendationRecord = toRecord(recommendation);
-    const token = toRecord(recommendationRecord?.token);
-    const guidance = toStringArray(token?.guidance);
-
-    return {
-      name: typeof token?.name === "string" ? token.name : "Token",
-      category: typeof token?.category === "string" ? token.category : null,
-      semantic_intent:
-        typeof token?.semantic_intent === "string"
-          ? token.semantic_intent
-          : null,
-      why:
-        guidance[0] ??
-        (typeof token?.semantic_intent === "string"
-          ? token.semantic_intent
-          : "Matches the requested styling need."),
-      applies_to: toStringArray(token?.applies_to),
-      docs: [result.source_url],
-      ...(token?.deprecated ? { status: "deprecated" } : {}),
-    };
-  });
-}
-
-function chooseBestStart(input: {
+function chooseRouteDecision(input: {
+  query: string;
   foundationScore: number;
   tokenScore: number;
-  recipeScore: number;
+  patternScore: number;
   foundations: Array<Record<string, unknown>>;
   tokens: Array<Record<string, unknown>>;
-  recipes: Array<Record<string, unknown>>;
+  patterns: Array<Record<string, unknown>>;
   components: Array<Record<string, unknown>>;
   docs: Array<Record<string, unknown>>;
-}): DiscoverSaltResult["best_start"] {
+  apiSurface: Array<Record<string, unknown>>;
+}): DiscoverSaltDecision | null {
   const {
+    query,
     foundationScore,
     tokenScore,
-    recipeScore,
+    patternScore,
     foundations,
     tokens,
-    recipes,
+    patterns,
     components,
     docs,
+    apiSurface,
   } = input;
 
   if (
     foundations.length > 0 &&
     foundationScore >= tokenScore &&
-    foundationScore >= recipeScore &&
+    foundationScore >= patternScore &&
     foundationScore > 0
   ) {
     return {
-      tool: "get_foundation",
-      why: "The query looks foundation-oriented, so start with layout, spacing, typography, or responsiveness guidance.",
+      tool: "get_salt_entity",
+      why: "The query looks foundation-oriented, so start from the closest foundation guidance.",
+      args: {
+        entity_type: "foundation",
+        name: foundations[0]?.title,
+      },
       result: foundations[0] ?? null,
     };
   }
 
-  if (tokens.length > 0 && tokenScore >= recipeScore && tokenScore > 0) {
+  if (tokens.length > 0 && tokenScore >= patternScore && tokenScore > 0) {
     return {
-      tool: "recommend_tokens",
-      why: "The query looks styling-oriented, so start with a token recommendation.",
+      tool: "choose_salt_solution",
+      why: "The query looks styling-oriented, so start from token selection.",
+      args: {
+        solution_type: "token",
+        query,
+      },
       result: tokens[0] ?? null,
     };
   }
 
-  if (recipes.length > 0 && recipeScore > 0) {
+  if (patterns.length > 0 && patternScore > 0) {
     return {
-      tool: "get_composition_recipe",
-      why: "The query sounds like a UI flow or pattern, so start with a composition recipe.",
-      result: recipes[0] ?? null,
+      tool: "choose_salt_solution",
+      why: "The query sounds like a pattern or flow problem, so start from composition guidance.",
+      args: {
+        solution_type: "pattern",
+        query,
+      },
+      result: patterns[0] ?? null,
     };
   }
 
   if (components.length > 0) {
     return {
-      tool: "recommend_component",
-      why: "The query sounds like a component choice problem, so start with the strongest component fit.",
+      tool: "choose_salt_solution",
+      why: "The query sounds like a component choice problem, so start from the strongest component fit.",
+      args: {
+        solution_type: "component",
+        query,
+      },
       result: components[0] ?? null,
     };
   }
 
-  if (docs.length > 0) {
+  if (apiSurface.length > 0) {
     return {
-      tool: "search_salt_docs",
-      why: "No strong component, token, or pattern match was found, so start with the closest docs result.",
-      result: docs[0] ?? null,
+      tool: "get_salt_entity",
+      why: "The query looks like a prop or API lookup, so start from the component that exposes the closest prop match.",
+      args: {
+        entity_type: "component",
+        name: apiSurface[0]?.component,
+        include: ["props"],
+      },
+      result: apiSurface[0] ?? null,
     };
   }
 
-  return null;
-}
-
-function getFoundationNextStep(
-  foundation: Record<string, unknown> | undefined,
-): string {
-  const title =
-    typeof foundation?.title === "string"
-      ? foundation.title.toLowerCase()
-      : "suggested foundation";
-
-  return `Apply the ${title} guidance to the current layout or component.`;
-}
-
-function getDiscoverySuggestedFollowUps(input: {
-  bestStart: DiscoverSaltResult["best_start"];
-  foundationLookup: ReturnType<typeof getFoundation>;
-  recipeResult: ReturnType<typeof getCompositionRecipe>;
-  componentResult: ReturnType<typeof recommendComponent>;
-  query: string;
-  foundations: Array<Record<string, unknown>>;
-  docs: Array<Record<string, unknown>>;
-}): SuggestedFollowUp[] | undefined {
-  const {
-    bestStart,
-    foundationLookup,
-    recipeResult,
-    componentResult,
-    query,
-    foundations,
-    docs,
-  } = input;
-
-  if (bestStart?.tool === "get_foundation") {
-    if (foundationLookup.suggested_follow_ups) {
-      return foundationLookup.suggested_follow_ups;
-    }
-
-    if (typeof foundations[0]?.title === "string") {
-      return getFoundationSuggestedFollowUpsByTitle(foundations[0].title);
-    }
-
-    return undefined;
-  }
-
-  if (bestStart?.tool === "get_composition_recipe") {
-    return recipeResult.suggested_follow_ups;
-  }
-
-  if (bestStart?.tool === "recommend_component") {
-    return componentResult.suggested_follow_ups;
-  }
-
-  if (bestStart?.tool === "recommend_tokens") {
-    return [
-      {
-        tool: "search_salt_docs",
-        reason: "Review nearby token docs and examples after choosing a token.",
-        args: {
-          query,
-          area: "tokens",
-          top_k: 5,
-        },
-      },
-    ];
-  }
-
-  if (docs[0]) {
-    return [
-      {
-        tool: "search_salt_docs",
-        reason: "Inspect the nearest docs results before narrowing further.",
-        args: {
-          query,
-          top_k: 5,
-        },
-      },
-    ];
-  }
-
-  return undefined;
-}
-
-function hasStatusFlag(item: Record<string, unknown>): boolean {
-  return typeof item.status === "string" && item.status !== "stable";
+  return toDecisionFromDocOption(docs[0]);
 }
 
 function getClarifyingQuestions(input: {
@@ -478,7 +343,7 @@ function getClarifyingQuestions(input: {
   components: Array<Record<string, unknown>>;
   foundationScore: number;
   tokenScore: number;
-  recipeScore: number;
+  patternScore: number;
 }): ClarifyingQuestion[] {
   const questions: ClarifyingQuestion[] = [];
   const { query } = input;
@@ -524,22 +389,24 @@ function getClarifyingQuestions(input: {
   if (
     input.production_ready === undefined &&
     input.prefer_stable === undefined &&
-    input.components.some(hasStatusFlag)
+    input.components.some(
+      (item) => typeof item.status === "string" && item.status !== "stable",
+    )
   ) {
     questions.push({
       id: "stable-only",
       question: "Do you need production-ready stable components only?",
-      why: "Some close matches may be lab or otherwise not ideal for shipping.",
-      options: ["Stable only", "Stable preferred", "Open to lab"],
+      why: "Some close matches may still be beta or lab.",
+      options: ["Stable only", "Stable preferred", "Open to beta or lab"],
     });
   }
 
   const strongSignals = [
     input.foundationScore > 0,
     input.tokenScore > 0,
-    input.recipeScore > 0,
+    input.patternScore > 0,
   ].filter(Boolean).length;
-  const scores = [input.foundationScore, input.tokenScore, input.recipeScore]
+  const scores = [input.foundationScore, input.tokenScore, input.patternScore]
     .filter((score) => score > 0)
     .sort((left, right) => right - left);
 
@@ -547,9 +414,9 @@ function getClarifyingQuestions(input: {
     questions.push({
       id: "guidance-vs-implementation",
       question:
-        "Do you want design guidance, a starter implementation, or both?",
+        "Do you want design guidance, a specific implementation direction, or both?",
       why: "The query is pulling equally toward foundations and implementation help.",
-      options: ["Design guidance", "Starter implementation", "Both"],
+      options: ["Design guidance", "Implementation direction", "Both"],
     });
   }
 
@@ -561,7 +428,7 @@ function getClarifyingQuestions(input: {
       id: "a11y-priority",
       question:
         "Should accessibility guidance be treated as a hard requirement?",
-      why: "That can remove candidates that have weaker a11y documentation.",
+      why: "That can remove candidates with thinner accessibility coverage.",
       options: ["Required", "Preferred", "Not a filter"],
     });
   }
@@ -569,40 +436,191 @@ function getClarifyingQuestions(input: {
   return questions.slice(0, 3);
 }
 
+function getCatalogDecision(
+  catalog: ReturnType<typeof listSaltCatalog>,
+): DiscoverSaltDecision | null {
+  const [first] = catalog.items;
+  if (!first) {
+    return null;
+  }
+
+  if (first.type === "change") {
+    return {
+      tool: "compare_salt_versions",
+      why: "The current browse view is change-oriented, so version comparison is the next step.",
+      args: {
+        package: first.package ?? undefined,
+        from_version: "1.0.0",
+      },
+      result: {
+        title: first.name,
+        summary: first.summary,
+      },
+    };
+  }
+
+  if (first.type === "example") {
+    return {
+      tool: "get_salt_examples",
+      why: "The current browse view is example-oriented, so jump straight to examples.",
+      args: {
+        query: first.name,
+      },
+      result: {
+        title: first.name,
+        summary: first.summary,
+      },
+    };
+  }
+
+  return {
+    tool: "get_salt_entity",
+    why: "The current browse view already has a likely Salt entity to inspect next.",
+    args: {
+      entity_type:
+        first.type === "country_symbol" ? "country_symbol" : first.type,
+      name: first.name,
+      package: first.package ?? undefined,
+    },
+    result: {
+      name: first.name,
+      type: first.type,
+      summary: first.summary,
+    },
+  };
+}
+
+function getRelatedDecision(
+  related: ReturnType<typeof getRelatedEntities>,
+): DiscoverSaltDecision | null {
+  const firstComponent = related.related.components[0];
+  if (firstComponent) {
+    return {
+      tool: "get_salt_entity",
+      why: "The related component is the closest next lookup.",
+      args: {
+        entity_type: "component",
+        name: firstComponent.name,
+        package:
+          typeof firstComponent.package === "string"
+            ? firstComponent.package
+            : undefined,
+      },
+      result: firstComponent,
+    };
+  }
+
+  const firstPattern = related.related.patterns[0];
+  if (firstPattern) {
+    return {
+      tool: "get_salt_entity",
+      why: "The related pattern is the closest next lookup.",
+      args: {
+        entity_type: "pattern",
+        name: firstPattern.name,
+      },
+      result: firstPattern,
+    };
+  }
+
+  const firstToken = related.related.tokens[0];
+  if (firstToken) {
+    return {
+      tool: "get_salt_entity",
+      why: "The related token is the closest next lookup.",
+      args: {
+        entity_type: "token",
+        name: firstToken.name,
+      },
+      result: firstToken,
+    };
+  }
+
+  return null;
+}
+
 export function discoverSalt(
   registry: SaltRegistry,
   input: DiscoverSaltInput,
 ): DiscoverSaltResult {
-  const query = normalizeQuery(input.query);
-  const topK = Math.max(1, Math.min(input.top_k ?? 5, 10));
   const view = input.view ?? "compact";
-  const recommendationView = view === "full" ? "full" : "compact";
+  const topK = 5;
+  const query = normalizeQuery(input.query ?? "");
+  const preferences = inferDiscoveryPreferences(query);
 
+  if (input.related_to) {
+    const related = getRelatedEntities(registry, {
+      target_type: input.related_to.entity_type,
+      name: input.related_to.name,
+      package: input.related_to.package,
+      max_results: topK,
+    });
+    const decision = getRelatedDecision(related);
+
+    return {
+      mode: "related",
+      query: input.related_to.name,
+      decision,
+      best_start: decision,
+      related: related.related,
+      did_you_mean: related.did_you_mean,
+      ambiguity: related.ambiguity as Record<string, unknown> | undefined,
+      next_step:
+        decision?.tool === "get_salt_entity"
+          ? "Inspect the closest related entity next."
+          : "Broaden the related-entity exploration with a more specific starting entity.",
+      raw: view === "full" ? { related } : undefined,
+    };
+  }
+
+  if (!query) {
+    const catalog = listSaltCatalog(registry, {
+      area: input.area,
+      package: input.package,
+      status: input.status,
+      max_results: topK,
+    });
+    const decision = getCatalogDecision(catalog);
+
+    return {
+      mode: "browse",
+      decision,
+      best_start: decision,
+      catalog,
+      next_step:
+        catalog.items.length > 0
+          ? "Choose one of the surfaced Salt entries and inspect it directly."
+          : "Remove a filter or provide a query to broaden discovery.",
+      raw: view === "full" ? { catalog } : undefined,
+    };
+  }
+
+  const recommendationView = view === "full" ? "full" : "compact";
   const componentResult = recommendComponent(registry, {
-    task: input.query,
+    task: input.query ?? "",
     package: input.package,
     status: input.status,
     top_k: topK,
-    production_ready: input.production_ready,
-    prefer_stable: input.prefer_stable,
-    a11y_required: input.a11y_required,
-    form_field_support: input.form_field_support,
-    include_starter_code: input.include_starter_code,
+    production_ready: preferences.production_ready,
+    prefer_stable: preferences.prefer_stable,
+    a11y_required: preferences.a11y_required,
+    form_field_support: preferences.form_field_support,
+    include_starter_code: preferences.include_starter_code,
     view: recommendationView,
   });
-  const recipeResult = getCompositionRecipe(registry, {
-    query: input.query,
-    top_k: Math.min(topK, 3),
-    production_ready: input.production_ready,
-    prefer_stable: input.prefer_stable,
-    a11y_required: input.a11y_required,
-    form_field_support: input.form_field_support,
-    include_starter_code: input.include_starter_code,
+  const patternResult = getCompositionRecipe(registry, {
+    query: input.query ?? "",
+    top_k: Math.min(topK, 5),
+    production_ready: preferences.production_ready,
+    prefer_stable: preferences.prefer_stable,
+    a11y_required: preferences.a11y_required,
+    form_field_support: preferences.form_field_support,
+    include_starter_code: preferences.include_starter_code,
     view: recommendationView,
   });
   const foundationLookup = getFoundation(registry, {
-    name: input.query,
-    include_starter_code: input.include_starter_code,
+    name: input.query ?? "",
+    include_starter_code: preferences.include_starter_code,
     view: recommendationView,
   });
   const foundationList = listFoundations(registry, {
@@ -610,19 +628,27 @@ export function discoverSalt(
     max_results: topK,
   });
   const tokenResult = recommendTokens(registry, {
-    query: input.query,
+    query: input.query ?? "",
     top_k: topK,
     view: recommendationView,
   });
   const docsResult = searchSaltDocs(registry, {
-    query: input.query,
+    query: input.query ?? "",
+    area: input.area,
     package: input.package,
     status: input.status,
     top_k: topK,
   });
+  const apiSurfaceResult = searchApiSurface(registry, {
+    query: input.query ?? "",
+    component_name: undefined,
+    package: input.package,
+    status: input.status,
+    top_k: Math.min(topK, 5),
+  });
 
   const components = toCompactComponentOptions(componentResult);
-  const recipes = toCompactRecipeOptions(recipeResult);
+  const patterns = toCompactPatternOptions(patternResult);
   const primaryFoundation = toCompactFoundationOption(
     foundationLookup.foundation,
   );
@@ -631,95 +657,95 @@ export function discoverSalt(
     : foundationList.foundations;
   const tokens = toCompactTokenOptions(tokenResult);
   const docs = toCompactDocs(docsResult.results);
-
+  const apiSurface = toCompactApiMatches(apiSurfaceResult);
   const foundationScore =
-    scoreIntent(query, FOUNDATION_KEYWORDS) +
+    scoreDiscoveryKeywordIntent(query, FOUNDATION_DISCOVERY_KEYWORDS) +
     (foundationLookup.foundation ? 4 : 0);
-  const tokenScore = scoreIntent(query, TOKEN_KEYWORDS);
-  const recipeScore = scoreIntent(query, RECIPE_KEYWORDS);
-
-  const bestStart = chooseBestStart({
+  const tokenScore = scoreDiscoveryKeywordIntent(
+    query,
+    TOKEN_DISCOVERY_KEYWORDS,
+  );
+  const patternScore = scoreDiscoveryKeywordIntent(
+    query,
+    RECIPE_DISCOVERY_KEYWORDS,
+  );
+  const decision = chooseRouteDecision({
+    query: input.query ?? "",
     foundationScore,
     tokenScore,
-    recipeScore,
+    patternScore,
     foundations,
     tokens,
-    recipes,
+    patterns,
     components,
     docs,
+    apiSurface,
   });
   const clarifyingQuestions = getClarifyingQuestions({
     query,
-    production_ready: input.production_ready,
-    prefer_stable: input.prefer_stable,
-    a11y_required: input.a11y_required,
-    form_field_support: input.form_field_support,
+    production_ready: preferences.production_ready,
+    prefer_stable: preferences.prefer_stable,
+    a11y_required: preferences.a11y_required,
+    form_field_support: preferences.form_field_support,
     components,
     foundationScore,
     tokenScore,
-    recipeScore,
+    patternScore,
   });
 
-  const result: DiscoverSaltResult = {
+  return {
+    mode: "route",
     query: input.query,
-    best_start: bestStart,
+    decision,
+    best_start: decision,
     options: {
       components,
-      recipes,
+      patterns,
       foundations,
       tokens,
       docs,
+      api_surface: apiSurface,
     },
     clarifying_questions:
       clarifyingQuestions.length > 0 ? clarifyingQuestions : undefined,
-    starter_code:
-      input.include_starter_code && bestStart?.tool === "get_foundation"
-        ? foundationLookup.starter_code
-        : input.include_starter_code &&
-            bestStart?.tool === "get_composition_recipe"
-          ? recipeResult.starter_code
-          : input.include_starter_code &&
-              bestStart?.tool === "recommend_component"
-            ? componentResult.starter_code
-            : undefined,
-    suggested_follow_ups: getDiscoverySuggestedFollowUps({
-      bestStart,
-      foundationLookup,
-      recipeResult,
-      componentResult,
-      query: input.query,
-      foundations,
-      docs,
+    starter_code: resolveDiscoverStarterCode({
+      decision,
+      foundationStarterCode: foundationLookup.starter_code,
+      patternStarterCode: patternResult.starter_code,
+      componentStarterCode: componentResult.starter_code,
     }),
-    next_step:
-      bestStart?.tool === "get_foundation"
-        ? (foundationLookup.next_step ?? getFoundationNextStep(foundations[0]))
-        : bestStart?.tool === "recommend_tokens"
-          ? tokenResult.next_step
-          : bestStart?.tool === "get_composition_recipe"
-            ? recipeResult.next_step
-            : bestStart?.tool === "recommend_component"
-              ? componentResult.next_step
-              : docs[0]
-                ? "Open the closest docs result and follow the referenced guidance."
-                : "Try a more specific Salt query.",
+    suggested_follow_ups: getDiscoverySuggestedFollowUps(
+      decision,
+      input.query ?? "",
+      docs,
+    ),
+    next_step: resolveDiscoverNextStep({
+      decision,
+      firstFoundation: foundations[0],
+      foundationNextStep: foundationLookup.next_step,
+      componentNextStep: componentResult.next_step,
+      patternNextStep: patternResult.next_step,
+      tokenNextStep: tokenResult.next_step,
+    }),
+    signals:
+      view === "full"
+        ? {
+            foundations: foundationScore,
+            tokens: tokenScore,
+            patterns: patternScore,
+          }
+        : undefined,
+    raw:
+      view === "full"
+        ? {
+            component_recommendations: componentResult,
+            composition_recipes: patternResult,
+            foundation_lookup: foundationLookup,
+            foundation_list: foundationList,
+            token_recommendations: tokenResult,
+            docs_results: docsResult,
+            api_surface: apiSurfaceResult,
+          }
+        : undefined,
   };
-
-  if (view === "full") {
-    result.signals = {
-      foundations: foundationScore,
-      tokens: tokenScore,
-      recipes: recipeScore,
-    };
-    result.raw = {
-      foundation_lookup: foundationLookup,
-      foundation_list: foundationList,
-      component_recommendations: componentResult,
-      composition_recipes: recipeResult,
-      token_recommendations: tokenResult,
-      docs_results: docsResult,
-    };
-  }
-
-  return result;
 }

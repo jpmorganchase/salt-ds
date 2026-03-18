@@ -238,7 +238,7 @@ function getRecipeNextStep(
     return `Start with ${name}: ${firstStep}`;
   }
 
-  return "Broaden the query or try search_salt_docs for a more specific Salt pattern.";
+  return "Broaden the query or try discover_salt for a more specific Salt pattern.";
 }
 
 function toSupportingExample(recipe: Record<string, unknown> | undefined): {

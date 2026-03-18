@@ -206,16 +206,16 @@ function getComparisonNextStep(
 
 function getNoComparisonNextStep(optionType: CompareOptionType): string {
   return optionType === "component"
-    ? "Retry with exact component names or start from recommend_component."
-    : "Retry with exact pattern names or start from get_composition_recipe.";
+    ? "Retry with exact component names or start from choose_salt_solution."
+    : "Retry with exact pattern names or start from choose_salt_solution.";
 }
 
 function getInsufficientComparisonNextStep(
   optionType: CompareOptionType,
 ): string {
   return optionType === "component"
-    ? "Provide at least two exact component names to compare, or start from recommend_component."
-    : "Provide at least two exact pattern names to compare, or start from get_composition_recipe.";
+    ? "Provide at least two exact component names to compare, or start from choose_salt_solution."
+    : "Provide at least two exact pattern names to compare, or start from choose_salt_solution.";
 }
 
 function buildDifference(

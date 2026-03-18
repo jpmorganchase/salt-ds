@@ -92,7 +92,7 @@ function getRecommendationNextStep(
     return `Review usage guidance for ${candidate.component.name} before implementing.`;
   }
 
-  return "Broaden the task description or try search_salt_docs for related guidance.";
+  return "Broaden the task description or try discover_salt for related guidance.";
 }
 
 export function recommendComponent(

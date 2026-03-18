@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  chooseSaltSolution,
   compareOptions,
+  compareSaltVersions,
   compareVersions,
   discoverSalt,
   getChanges,
@@ -17,6 +19,8 @@ import {
   getPage,
   getPattern,
   getRelatedEntities,
+  getSaltEntity,
+  getSaltExamples,
   getToken,
   listFoundations,
   listSaltCatalog,
@@ -1504,17 +1508,17 @@ describe("getComponent", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_examples",
+          tool: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "compare_options",
+          tool: "choose_salt_solution",
         }),
       ]),
     );
     expect(result.suggested_follow_ups).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_component",
+          tool: "get_salt_entity",
         }),
       ]),
     );
@@ -1640,17 +1644,17 @@ describe("getPattern", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_examples",
+          tool: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "compare_options",
+          tool: "choose_salt_solution",
         }),
       ]),
     );
     expect(result.suggested_follow_ups).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_pattern",
+          tool: "get_salt_entity",
         }),
       ]),
     );
@@ -1765,7 +1769,7 @@ describe("getFoundation", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "search_salt_docs",
+          tool: "discover_salt",
         }),
       ]),
     );
@@ -2218,7 +2222,7 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_component",
+          tool: "get_salt_entity",
         }),
       ]),
     );
@@ -2305,10 +2309,10 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_examples",
+          tool: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "compare_options",
+          tool: "choose_salt_solution",
         }),
       ]),
     );
@@ -2343,7 +2347,7 @@ describe("consumer tools", () => {
 
     expect(result.recommended).toBeNull();
     expect(result.next_step).toBe(
-      "Broaden the task description or try search_salt_docs for related guidance.",
+      "Broaden the task description or try discover_salt for related guidance.",
     );
   });
 
@@ -2407,10 +2411,10 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_examples",
+          tool: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "get_pattern",
+          tool: "get_salt_entity",
         }),
       ]),
     );
@@ -2456,7 +2460,7 @@ describe("consumer tools", () => {
     expect(result.unresolved_names).toEqual(["MadeUp"]);
     expect(result.recommendation).toBeUndefined();
     expect(result.next_step).toBe(
-      "Retry with exact component names or start from recommend_component.",
+      "Retry with exact component names or start from choose_salt_solution.",
     );
   });
 
@@ -2468,7 +2472,7 @@ describe("consumer tools", () => {
 
     expect(result.compared).toEqual([]);
     expect(result.next_step).toBe(
-      "Provide at least two exact component names to compare, or start from recommend_component.",
+      "Provide at least two exact component names to compare, or start from choose_salt_solution.",
     );
   });
 
@@ -2648,13 +2652,12 @@ describe("consumer tools", () => {
   it("routes broad queries to the best consumer starting point", () => {
     const result = discoverSalt(REGISTRY, {
       query: "how should I handle typography hierarchy",
-      top_k: 3,
     });
 
     expect(result.best_start).toMatchObject({
-      tool: "get_foundation",
+      tool: "get_salt_entity",
     });
-    expect(result.options.foundations[0]).toMatchObject({
+    expect(result.options?.foundations[0]).toMatchObject({
       title: "Typography",
     });
     expect(result.next_step).toBe(
@@ -2663,7 +2666,7 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "search_salt_docs",
+          tool: "get_salt_entity",
         }),
       ]),
     );
@@ -2672,7 +2675,6 @@ describe("consumer tools", () => {
   it("returns clarifying questions for broad consumer intent", () => {
     const result = discoverSalt(REGISTRY, {
       query: "select an option",
-      top_k: 3,
     });
 
     expect(result.clarifying_questions).toEqual(
@@ -2684,17 +2686,13 @@ describe("consumer tools", () => {
     );
   });
 
-  it("can surface starter code and consumer filters through discover_salt", () => {
+  it("can infer starter-code intent through discover_salt", () => {
     const result = discoverSalt(REGISTRY, {
-      query: "navigate to another route",
-      top_k: 3,
-      include_starter_code: true,
-      a11y_required: true,
-      prefer_stable: true,
+      query: "starter code for navigate to another route",
     });
 
     expect(result.best_start).toMatchObject({
-      tool: "recommend_component",
+      tool: "choose_salt_solution",
     });
     expect(result.starter_code?.[0]?.code).toContain(
       'import { Link } from "@salt-ds/core";',
@@ -2704,7 +2702,6 @@ describe("consumer tools", () => {
   it("returns full-fidelity foundation data in discover_salt raw output", () => {
     const result = discoverSalt(REGISTRY, {
       query: "Typography",
-      top_k: 3,
       view: "full",
     });
 
@@ -2717,11 +2714,11 @@ describe("consumer tools", () => {
         },
       },
     });
-    expect(result.options.foundations[0]).toMatchObject({
+    expect(result.options?.foundations[0]).toMatchObject({
       title: "Typography",
       docs: ["/salt/foundations/typography"],
     });
-    expect(result.options.foundations[0]).not.toHaveProperty("route");
+    expect(result.options?.foundations[0]).not.toHaveProperty("route");
   });
 
   it("returns related entities for a component", () => {
@@ -2798,12 +2795,18 @@ describe("consumer tools", () => {
       name: "Typography",
     });
 
-    expect(result.suggested_follow_ups?.[1]).toMatchObject({
-      tool: "discover_salt",
-      args: {
+    expect(
+      result.suggested_follow_ups
+        ?.filter((followUp) => followUp.tool === "discover_salt")
+        .map((followUp) => followUp.args),
+    ).toEqual([
+      {
+        query: "Typography",
+      },
+      {
         query: "Typography for a component or layout",
       },
-    });
+    ]);
   });
 
   it("returns deeper related entities for a page", () => {
@@ -2914,5 +2917,93 @@ describe("consumer tools", () => {
         }),
       ]),
     );
+  });
+});
+
+describe("curated public tools", () => {
+  it("chooses a workflow-oriented Salt solution", () => {
+    const result = chooseSaltSolution(REGISTRY, {
+      query: "navigate to another route",
+      include_starter_code: true,
+    });
+
+    expect(result.mode).toBe("recommend");
+    expect(result.solution_type).toBe("component");
+    expect(result.decision).toMatchObject({
+      name: "Link",
+    });
+    expect(result.starter_code?.[0]).toMatchObject({
+      label: "Link starter",
+    });
+  });
+
+  it("treats names as an explicit comparison request", () => {
+    const result = chooseSaltSolution(REGISTRY, {
+      query: "navigate to another route",
+      names: ["Button"],
+    });
+
+    expect(result.mode).toBe("compare");
+    expect(result.decision.name).toBeNull();
+    expect(result.next_step).toBe(
+      "Provide at least two exact component names to compare, or start from choose_salt_solution.",
+    );
+  });
+
+  it("resolves canonical Salt entities through a single lookup tool", () => {
+    const result = getSaltEntity(REGISTRY, {
+      name: "Button",
+      include_related: true,
+      include_starter_code: true,
+    });
+
+    expect(result.entity_type).toBe("component");
+    expect(result.decision.status).toBe("found");
+    expect(result.entity).toMatchObject({
+      name: "Button",
+    });
+    expect(result.related?.patterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "Split button",
+        }),
+      ]),
+    );
+    expect(result.starter_code?.[0]).toMatchObject({
+      label: "Button starter",
+    });
+  });
+
+  it("returns curated Salt examples with optional starter code", () => {
+    const result = getSaltExamples(REGISTRY, {
+      target_type: "component",
+      target_name: "Button",
+      include_starter_code: true,
+    });
+
+    expect(result.decision).toMatchObject({
+      target_name: "Button",
+      target_type: "component",
+    });
+    expect(result.best_example).toMatchObject({
+      title: "Primary form submit",
+    });
+    expect(result.starter_code?.[0]).toMatchObject({
+      label: "Button starter",
+    });
+  });
+
+  it("supports history-style version analysis through compare_salt_versions", () => {
+    const result = compareSaltVersions(REGISTRY, {
+      package: "@salt-ds/core",
+      from_version: "1.1.0",
+    });
+
+    expect(result.mode).toBe("history");
+    expect(result.decision).toMatchObject({
+      target: "@salt-ds/core",
+      to_version: "2.0.0",
+    });
+    expect(result.notes?.[0]).toContain("to_version was not provided");
   });
 });

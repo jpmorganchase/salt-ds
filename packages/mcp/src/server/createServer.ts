@@ -3,6 +3,10 @@ import { loadRegistry } from "../registry/loadRegistry.js";
 import { TOOL_DEFINITIONS, type ToolDefinition } from "../tools/index.js";
 import type { SaltRegistry } from "../types.js";
 import {
+  buildSaltMcpInstructions,
+  buildSaltMcpServerInfo,
+} from "./serverMetadata.js";
+import {
   buildStructuredToolContent,
   type SourceAttributionOptions,
 } from "./sourceAttribution.js";
@@ -49,9 +53,8 @@ function registerTool(
 export async function createSaltMcpServer(options: CreateServerOptions = {}) {
   const registry = await loadRegistry({ registryDir: options.registryDir });
 
-  const server = new McpServer({
-    name: "salt-mcp",
-    version: registry.version,
+  const server = new McpServer(buildSaltMcpServerInfo(registry), {
+    instructions: buildSaltMcpInstructions(registry),
   });
 
   for (const definition of TOOL_DEFINITIONS) {

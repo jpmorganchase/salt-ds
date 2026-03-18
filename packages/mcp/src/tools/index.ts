@@ -1,8 +1,24 @@
 export {
+  type AnalyzeSaltCodeInput,
+  type AnalyzeSaltCodeResult,
+  analyzeSaltCode,
+} from "./analyzeSaltCode.js";
+export {
+  type ChooseSaltSolutionInput,
+  type ChooseSaltSolutionResult,
+  chooseSaltSolution,
+  type SaltSolutionType,
+} from "./chooseSaltSolution.js";
+export {
   type CompareOptionsInput,
   type CompareOptionsResult,
   compareOptions,
 } from "./compareOptions.js";
+export {
+  type CompareSaltVersionsInput,
+  type CompareSaltVersionsResult,
+  compareSaltVersions,
+} from "./compareSaltVersions.js";
 export {
   type CompareVersionsInput,
   type CompareVersionsResult,
@@ -83,6 +99,17 @@ export {
   type GetRelatedEntitiesResult,
   getRelatedEntities,
 } from "./getRelatedEntities.js";
+export {
+  type GetSaltEntityInput,
+  type GetSaltEntityResult,
+  getSaltEntity,
+  type SaltEntityType,
+} from "./getSaltEntity.js";
+export {
+  type GetSaltExamplesInput,
+  type GetSaltExamplesResult,
+  getSaltExamples,
+} from "./getSaltExamples.js";
 export {
   type GetTokenInput,
   type GetTokenResult,

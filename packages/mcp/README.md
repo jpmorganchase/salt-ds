@@ -2,55 +2,30 @@
 
 `@salt-ds/mcp` is a publishable MCP server package for Salt Design System runtime use cases.
 
-It builds a machine-readable registry from Salt source material and is presented as a single MCP server with a consumer-first default experience.
+It builds a machine-readable registry from Salt source material and serves it through a single MCP server with a compact, workflow-oriented public interface.
 
-## Default Consumer Workflows
+## Public Tool Surface
 
-These are the primary tools to surface in docs, prompts, and demos:
+The server now exposes six workflow tools:
 
 - `discover_salt`
-  - Route a broad Salt question to the best starting point, with clarifying questions when the intent is still ambiguous.
-- `recommend_component`
-  - Choose the right Salt primitive from a user need, with opt-in starter code and shipping/a11y filters.
-- `get_composition_recipe`
-  - Assemble a common Salt flow or pattern correctly, with opt-in starter code and shipping/a11y filters.
-- `get_component`
-  - Look up a specific component once the name is known.
-- `get_examples`
-  - Find implementation examples with a best example, nearby variants, and scenario hints.
-- `get_foundation`
-  - Look up typography, spacing, density, size, and responsiveness guidance, with opt-in starter scaffolds.
-- `recommend_tokens`
-  - Find the right design tokens from styling intent.
-- `recommend_fix_recipes`
-  - Turn code issues into actionable Salt remediation steps.
-- `compare_versions`
-  - Understand upgrade impact between versions.
-- `search_salt_docs`
-  - General escape hatch when the caller is not sure where to start.
-
-## Additional Tools
-
-These stay available in the same server but are not the primary consumer starting points:
-
-- `list_salt_catalog`
-- `get_package`
-- `get_guide`
-- `list_foundations`
-- `get_page`
-- `get_changes`
-- `get_icon`
-- `get_icons`
-- `get_country_symbol`
-- `get_country_symbols`
-- `get_pattern`
-- `get_token`
-- `search_api_surface`
-- `search_component_capabilities`
-- `get_related_entities`
-- `compare_options`
-- `suggest_migration`
-- `validate_salt_usage`
+  - Use this for broad, ambiguous, or exploratory Salt requests.
+  - It searches, clarifies intent, and routes to the next best Salt workflow.
+  - Do not use it when the caller already wants a direct recommendation or a known-entity lookup.
+- `choose_salt_solution`
+  - Use this for recommendation or side-by-side comparison.
+  - If `names` is present, comparison mode wins. Otherwise `query` drives recommendation mode.
+- `get_salt_entity`
+  - Use this for known or near-known Salt entity lookup.
+  - It resolves specific or almost-specific components, patterns, foundations, tokens, guides, pages, packages, icons, and country symbols.
+  - Do not use it for broad discovery or recommendation/comparison.
+- `get_salt_examples`
+  - Find the best implementation example and nearby variants for a component or pattern.
+  - Can return lightweight starter snippets when Salt already has a corresponding starter path.
+- `analyze_salt_code`
+  - Analyze existing React and Salt code with AST-based validation, version-aware deprecation checks, fix guidance, and migration suggestions.
+- `compare_salt_versions`
+  - Explain upgrade impact between versions, highlight breaking changes, and suggest the next actions.
 
 ## Usage
 
@@ -73,13 +48,13 @@ Build the package from the repo:
 yarn workspace @salt-ds/mcp build
 ```
 
-Generate registry artifacts from repo sources with the repo-only maintainer script:
+Generate registry artifacts from repo sources with the maintainer script:
 
 ```sh
 yarn workspace @salt-ds/mcp build:package
-node packages/salt-mcp/scripts/buildRegistry.mjs \
+node packages/mcp/scripts/buildRegistry.mjs \
   --source-root D:/Work/salt-ds-2 \
-  --output-dir D:/Work/salt-ds-2/packages/salt-mcp/generated
+  --output-dir D:/Work/salt-ds-2/packages/mcp/generated
 ```
 
 Run the MCP server over stdio from a built checkout:
@@ -90,38 +65,30 @@ node dist/salt-ds-mcp/bin/salt-mcp.js
 
 ## Notes
 
-- Salt MCP is intentionally a single-server setup. The simplification is in the recommended workflow and documentation, not in separate profiles or install modes.
-- The main consumer tools are compact by default and optimized for decision-making. Use `view: "full"` on tools like `discover_salt`, `get_component`, `get_examples`, `get_foundation`, `recommend_component`, `get_composition_recipe`, `compare_versions`, `recommend_tokens`, and `recommend_fix_recipes` when you want the richer evidence.
-- `discover_salt` can return structured `clarifying_questions` when a broad query still needs consumer decisions such as single vs multi-select or design guidance vs implementation help.
-- `recommend_component`, `get_composition_recipe`, and `get_foundation` can return opt-in `starter_code` scaffolds that stay lightweight enough for MCP and avoid turning the server into a workflow skill. Where registry examples exist, the starter payload also includes an example-derived snippet.
-- Consumer recommendation tools support filters like `production_ready`, `prefer_stable`, `a11y_required`, and `form_field_support` to bias toward ship-ready guidance.
-- Consumer-facing tools now bias toward a decision-first shape with `best_example`, `caveats`, `ship_check`, and `suggested_follow_ups` fields before exposing raw scoring details.
-- Tool responses are compact by default to reduce token usage.
+- Salt MCP stays intentionally single-server. The simplification is in the public tool contract, not in server splitting.
+- Public tool responses are compact by default and decision-first. Use `view: "full"` when you need richer evidence.
+- `discover_salt` absorbs broad docs search, browse-first catalog exploration, and related-entity exploration.
+- `choose_salt_solution` absorbs component recommendation, pattern/composition recommendation, capability-driven selection, and option comparison.
+- `get_salt_entity` absorbs entity lookup plus icon and country-symbol lookup/list flows.
+- Tool boundary shorthand:
+  - `discover_salt`: broad, ambiguous, exploratory routing.
+  - `choose_salt_solution`: recommendation or comparison.
+  - `get_salt_entity`: known or near-known lookup.
+- `analyze_salt_code` absorbs validation, fix recipes, and migration guidance while preserving AST-based analysis and version-aware checks.
+- `compare_salt_versions` supports both explicit version-to-version comparison and open-ended history mode when `to_version` is omitted.
+- Starter scaffolds stay intentionally lightweight to keep the MCP focused on guidance instead of turning into a workflow engine.
 - Tool responses include a top-level `sources` array that normalizes site routes to absolute URLs while preserving local repo paths for debugging.
-- `get_changes` exposes changelog-derived package and component history for AI-friendly "what changed?" lookups.
-- `list_salt_catalog` provides a browse-first catalog view when the consumer does not know the exact Salt name yet, including country symbols alongside icons and docs-backed entities.
-- `get_guide` exposes structured setup and theming guidance sourced from the Salt docs.
-- `list_foundations` and `get_foundation` expose foundations as a first-class consumer entry point instead of requiring generic page lookup.
-- Icon search metadata is sourced from the same synonym dataset used by the site icon preview.
-- Country symbol search metadata is sourced from `@salt-ds/countries` generated country metadata and includes both circle and sharp exports.
 - The published package serves the bundled registry by default. `--registry-dir` is only needed for local development or testing against a custom registry build.
 - Registry generation is a repo-only build step. The published CLI only supports serving the bundled registry.
-- Use the package bin entrypoint (`bin/salt-mcp.js` or installed `salt-mcp`) when launching the CLI. `dist-cjs/cli.js` exports `runCli` but is not a direct executable.
-- Use `view: "full"` or `include` fields on relevant tools to request expanded payloads.
-- The default consumer workflow is centered on ten tools: `discover_salt`, `recommend_component`, `get_composition_recipe`, `get_component`, `get_examples`, `get_foundation`, `recommend_tokens`, `recommend_fix_recipes`, `compare_versions`, and `search_salt_docs`.
-- `search_api_surface` is intended for more technical questions such as “which components support validationStatus?” or “what props are deprecated?”
-- `recommend_tokens` and `get_related_entities` support discovery flows that start from styling intent or a nearby Salt entity instead of an exact API name.
-- `compare_options` supports structured side-by-side comparison for close Salt choices such as `Button` vs `Link` or one pattern versus another.
-- `recommend_fix_recipes` exposes consumer-facing remediation on top of the raw registry and code-analysis tools.
-- `validate_salt_usage` uses AST-based React analysis and supports version-aware deprecation checks via `package_version`.
+- The MCP handshake advertises the `@salt-ds/mcp` runtime version. Treat that separately from the Salt registry version and `generated_at` timestamp used for content metadata.
 
 ## Maintainer Notes
 
-- Registry artifact filenames and payload keys are centralized in [`src/registry/artifacts.ts`](./src/registry/artifacts.ts). Update that file first when adding or renaming a generated artifact.
+- Registry artifact filenames and payload keys are centralized in [`src/registry/artifacts.ts`](./src/registry/artifacts.ts).
 - Runtime loading lives in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts). Registry build output is assembled in [`src/build/buildRegistry.ts`](./src/build/buildRegistry.ts).
-- MCP tool metadata is defined in [`src/tools/toolDefinitions.ts`](./src/tools/toolDefinitions.ts). The server registration layer in [`src/server/createServer.ts`](./src/server/createServer.ts) is intentionally thin.
-- Reusable lookup/ambiguity behavior for `get_*` tools lives in [`src/tools/lookupResolver.ts`](./src/tools/lookupResolver.ts).
+- MCP tool metadata is defined in [`src/tools/toolDefinitions.ts`](./src/tools/toolDefinitions.ts). The server registration layer in [`src/server/createServer.ts`](./src/server/createServer.ts) stays intentionally thin, with runtime-vs-registry version metadata centralized in [`src/server/serverMetadata.ts`](./src/server/serverMetadata.ts).
+- Lookup, recommendation, search, and code-analysis helpers still live in `src/tools/` as internal building blocks. The public surface is the curated six-tool set above.
 - The main test entry points are:
-  - [`src/__tests__/tools.spec.ts`](./src/__tests__/tools.spec.ts) for catalog/query tools
-  - [`src/__tests__/codeAnalysisTools.spec.ts`](./src/__tests__/codeAnalysisTools.spec.ts) for AST-based code analysis tools
-  - [`src/__tests__/registry.integration.spec.ts`](./src/__tests__/registry.integration.spec.ts) for generated-registry integration
+  - [`src/__tests__/tools.spec.ts`](./src/__tests__/tools.spec.ts)
+  - [`src/__tests__/codeAnalysisTools.spec.ts`](./src/__tests__/codeAnalysisTools.spec.ts)
+  - [`src/__tests__/registry.integration.spec.ts`](./src/__tests__/registry.integration.spec.ts)

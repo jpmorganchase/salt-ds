@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  analyzeSaltCode,
   recommendFixRecipes,
   suggestMigration,
   validateSaltUsage,
@@ -782,6 +783,29 @@ describe("recommendFixRecipes", () => {
       issue: expect.objectContaining({
         id: "component-choice.navigation",
       }),
+    });
+  });
+});
+
+describe("analyzeSaltCode", () => {
+  it("combines validation, fixes, and migrations into one workflow result", () => {
+    const result = analyzeSaltCode(REGISTRY, {
+      code: `
+        import { Button } from "@salt-ds/core";
+
+        export function Demo() {
+          return <Button href="/next">Go</Button>;
+        }
+      `,
+      framework: "react",
+      package_version: "2.0.0",
+    });
+
+    expect(result.decision.status).toBe("needs_attention");
+    expect(result.summary.errors).toBeGreaterThan(0);
+    expect(result.fixes?.[0]).toBeTruthy();
+    expect(result.issues?.[0]).toMatchObject({
+      id: "component-choice.navigation",
     });
   });
 });
