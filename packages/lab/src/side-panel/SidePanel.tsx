@@ -15,36 +15,38 @@ import {
   useEffect,
   useState,
 } from "react";
-import inlaidPanelCss from "./InlaidPanel.css";
+import sidePanelCss from "./SidePanel.css";
 
-const withBaseName = makePrefixer("saltInlaidPanel");
+const withBaseName = makePrefixer("saltSidePanel");
 
-export interface InlaidPanelProps extends ComponentPropsWithRef<"div"> {
+export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
    * Whether the panel is open.
    */
   open?: boolean;
   /**
-   * Edge the panel is anchored to; controls animation direction and divider side. Defaults to `left`.
+   * Edge the panel is anchored to; controls animation direction and divider side.
+   * @default "left"
    */
-  position?: "left" | "right" | "top" | "bottom";
+  side?: "left" | "right" | "top" | "bottom";
   /**
    * Callback when open state should change (e.g. Escape key pressed).
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**
-   * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref. Defaults to 0.
+   * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref.
+   * @default 0
    */
   initialFocus?: number | MutableRefObject<HTMLElement | null>;
 }
 
-export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
-  function InlaidPanel(props, ref) {
+export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
+  function SidePanel(props, ref) {
     const {
       open = false,
-      position = "left",
+      side = "left",
       onOpenChange,
-      initialFocus,
+      initialFocus = 0,
       children,
       ...rest
     } = props;
@@ -60,8 +62,8 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
     const handleRef = useForkRef<HTMLDivElement>(refs.setFloating, ref);
 
     useComponentCssInjection({
-      testId: "salt-inlaid-panel",
-      css: inlaidPanelCss,
+      testId: "salt-side-panel",
+      css: sidePanelCss,
       window: targetWindow,
     });
 
@@ -82,7 +84,7 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
       <div
         ref={handleRef}
         className={clsx(withBaseName(), {
-          [withBaseName(position)]: position,
+          [withBaseName(side)]: side,
           [withBaseName("enterAnimation")]: open,
           [withBaseName("exitAnimation")]: !open,
         })}
@@ -100,7 +102,7 @@ export const InlaidPanel = forwardRef<HTMLDivElement, InlaidPanelProps>(
         <FloatingFocusManager
           context={context}
           modal={false}
-          initialFocus={initialFocus ?? 0}
+          initialFocus={initialFocus}
           returnFocus
           closeOnFocusOut={false}
           guards={false}

@@ -1,10 +1,10 @@
-import { InlaidPanel } from "@salt-ds/lab";
-import * as inlaidPanel from "@stories/inlaid-panel/inlaid-panel.stories";
+import { SidePanel } from "@salt-ds/lab";
+import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
 
-const { Left, Right, Top, Bottom } = composeStories(inlaidPanel);
+const { Left, Right, Top, Bottom } = composeStories(sidePanel);
 
-describe("GIVEN an InlaidPanel", () => {
+describe("GIVEN an SidePanel", () => {
   it("WHEN the Left panel is opened and closed via Close button, THEN should open and close correctly", () => {
     cy.mount(<Left />);
 
@@ -13,31 +13,31 @@ describe("GIVEN an InlaidPanel", () => {
     cy.findByRole("region", {
       name: "Section Title",
     }).should("be.visible");
-    cy.findByRole("region").should("have.class", "saltInlaidPanel-left");
+    cy.findByRole("region").should("have.class", "saltSidePanel-left");
 
     cy.findByRole("button", { name: "Close" }).click();
 
-    cy.get(".saltInlaidPanel").should("not.exist");
+    cy.get(".saltSidePanel").should("not.exist");
   });
 
   it("WHEN each position variant is opened and closed via Close button, THEN each panel shows the correct position class and is fully removed on close", () => {
     cy.mount(<Right />);
     cy.findByRole("button", { name: "Open Right Panel" }).click();
-    cy.findByRole("region").should("have.class", "saltInlaidPanel-right");
+    cy.findByRole("region").should("have.class", "saltSidePanel-right");
     cy.findByRole("button", { name: "Close" }).click();
-    cy.get(".saltInlaidPanel").should("not.exist");
+    cy.get(".saltSidePanel").should("not.exist");
 
     cy.mount(<Top />);
     cy.findByRole("button", { name: "Open top panel" }).click();
-    cy.findByRole("region").should("have.class", "saltInlaidPanel-top");
+    cy.findByRole("region").should("have.class", "saltSidePanel-top");
     cy.findByRole("button", { name: "Close" }).click();
-    cy.get(".saltInlaidPanel").should("not.exist");
+    cy.get(".saltSidePanel").should("not.exist");
 
     cy.mount(<Bottom />);
     cy.findByRole("button", { name: "Open bottom panel" }).click();
-    cy.findByRole("region").should("have.class", "saltInlaidPanel-bottom");
+    cy.findByRole("region").should("have.class", "saltSidePanel-bottom");
     cy.findByRole("button", { name: "Close" }).click();
-    cy.get(".saltInlaidPanel").should("not.exist");
+    cy.get(".saltSidePanel").should("not.exist");
   });
 
   it("WHEN the Left panel is opened and the user tabs through fields then presses Escape, THEN focus is managed correctly throughout", () => {
@@ -58,7 +58,7 @@ describe("GIVEN an InlaidPanel", () => {
 
     cy.realPress("Escape");
 
-    cy.get(".saltInlaidPanel").should("not.exist");
+    cy.get(".saltSidePanel").should("not.exist");
     cy.focused().should("have.text", "Open Left Panel");
   });
 
@@ -69,7 +69,7 @@ describe("GIVEN an InlaidPanel", () => {
     cy.findByRole("region").should("be.visible");
 
     cy.realPress("Escape");
-    cy.get(".saltInlaidPanel").should("not.exist");
+    cy.get(".saltSidePanel").should("not.exist");
     cy.focused().should("have.text", "Open Left Panel");
 
     cy.findByRole("button", { name: "Open Left Panel" }).click();
@@ -80,13 +80,13 @@ describe("GIVEN an InlaidPanel", () => {
   it("WHEN the Left panel is open, THEN it has correct ARIA attributes and onOpenChange fires with false on Escape", () => {
     const onOpenChange = cy.spy().as("onOpenChange");
     cy.mount(
-      <InlaidPanel
+      <SidePanel
         open={true}
         onOpenChange={onOpenChange}
         aria-label="Test panel"
       >
         Content
-      </InlaidPanel>,
+      </SidePanel>,
     );
 
     cy.findByRole("region").should("be.visible");
