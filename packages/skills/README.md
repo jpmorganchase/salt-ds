@@ -11,11 +11,13 @@ These skills work especially well alongside the Salt MCP in `packages/mcp`, whic
 Review existing React UI that uses Salt Design System.
 
 Use when:
+
 - Reviewing, critiquing, fixing, simplifying, or modernizing Salt-based UI.
 - Checking JSX, composition, styling, accessibility, or design-system alignment.
 - Turning a code review or UI audit into a priority-ordered set of findings.
 
 Covers:
+
 - Component and pattern choice.
 - Composition and hierarchy quality.
 - Foundations, styling, accessibility, and maintainability checks.
@@ -25,11 +27,13 @@ Covers:
 Build Salt-first UI from product requirements, rough descriptions, screenshots, mockups, or partial code.
 
 Use when:
+
 - Creating a component, page, screen, layout, or scaffold with Salt.
 - Translating a screenshot or mockup into a Salt-first structure.
 - Refining partial Salt code into a cleaner implementation direction.
 
 Covers:
+
 - Requirement-to-structure workflow.
 - Primitive, pattern, foundation, and token selection.
 - Clarifying questions, assumptions, and starter output shape.
@@ -39,11 +43,13 @@ Covers:
 Upgrade Salt usage across versions and replace deprecated or outdated APIs and patterns.
 
 Use when:
+
 - Migrating Salt code between versions.
 - Understanding upgrade impact or breaking changes.
 - Replacing deprecated usage with current, canonical alternatives.
 
 Covers:
+
 - Version boundary analysis.
 - Deprecated API and pattern review.
 - Migration planning, action sequencing, and risk framing.

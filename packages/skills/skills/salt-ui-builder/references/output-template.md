@@ -17,3 +17,4 @@
 ```tsx
 // Include starter code only when it materially helps the task move forward
 // and follows the chosen Salt structure.
+```

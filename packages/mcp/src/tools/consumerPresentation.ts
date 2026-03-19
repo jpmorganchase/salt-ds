@@ -23,7 +23,7 @@ export interface ShipCheck {
 }
 
 export interface SuggestedFollowUp {
-  tool: string;
+  workflow: string;
   reason: string;
   args: Record<string, unknown>;
 }
@@ -33,14 +33,14 @@ export function getFoundationSuggestedFollowUpsByTitle(
 ): SuggestedFollowUp[] {
   return [
     {
-      tool: "discover_salt",
+      workflow: "discover_salt",
       reason: `Find related Salt docs and nearby entities that apply ${title.toLowerCase()} to real components and patterns.`,
       args: {
         query: title,
       },
     },
     {
-      tool: "discover_salt",
+      workflow: "discover_salt",
       reason: `Route your UI task through Salt after reviewing ${title.toLowerCase()}.`,
       args: {
         query: `${title} for a component or layout`,
@@ -200,7 +200,7 @@ export function getComponentSuggestedFollowUps(
 
   if (component.related_docs.examples || component.examples.length > 0) {
     followUps.push({
-      tool: "get_salt_examples",
+      workflow: "get_salt_examples",
       reason: `Find the best implementation example for ${component.name}.`,
       args: {
         target_type: "component",
@@ -212,7 +212,7 @@ export function getComponentSuggestedFollowUps(
 
   if (includeLookup) {
     followUps.push({
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       reason: `Review ${component.name} guidance, alternatives, and docs links.`,
       args: {
         entity_type: "component",
@@ -223,7 +223,7 @@ export function getComponentSuggestedFollowUps(
 
   if (alternatives[0]) {
     followUps.push({
-      tool: "choose_salt_solution",
+      workflow: "choose_salt_solution",
       reason: `Compare ${component.name} with ${alternatives[0]} before committing.`,
       args: {
         solution_type: "component",
@@ -243,7 +243,7 @@ export function getPatternSuggestedFollowUps(
 ): SuggestedFollowUp[] {
   const followUps: SuggestedFollowUp[] = [
     {
-      tool: "get_salt_examples",
+      workflow: "get_salt_examples",
       reason: `Find examples that illustrate ${pattern.name}.`,
       args: {
         target_type: "pattern",
@@ -256,7 +256,7 @@ export function getPatternSuggestedFollowUps(
 
   if (includeLookup) {
     followUps.push({
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       reason: `Review the full ${pattern.name} pattern guidance.`,
       args: {
         entity_type: "pattern",
@@ -267,7 +267,7 @@ export function getPatternSuggestedFollowUps(
 
   if (pattern.related_patterns[0]) {
     followUps.push({
-      tool: "choose_salt_solution",
+      workflow: "choose_salt_solution",
       reason: `Compare ${pattern.name} with the nearest related pattern.`,
       args: {
         solution_type: "pattern",

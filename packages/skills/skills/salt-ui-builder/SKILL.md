@@ -13,11 +13,11 @@ Start from requirements and choose Salt primitives, patterns, foundations, and t
 2. Load `references/build-workflow.md` and `references/gotchas.md`.
 3. Load `references/clarifying-questions.md` only when missing information blocks a good Salt-first structure.
 4. Use Salt MCP selectively:
-    - `discover_salt` for broad starting points.
-    - `choose_salt_solution` for component, pattern, foundation, or token decisions.
-    - `get_salt_entity` for canonical details.
-    - `get_salt_examples` for examples and nearby variants.
-    - `analyze_salt_code` when refining existing partial code.
+   - `discover_salt` for broad starting points.
+   - `choose_salt_solution` for component, pattern, foundation, or token decisions.
+   - `get_salt_entity` for canonical details.
+   - `get_salt_examples` for examples and nearby variants.
+   - `analyze_salt_code` when refining existing partial code.
 5. When partial code already exists, prefer refining it toward cleaner Salt usage instead of rebuilding from scratch unless the structure is fundamentally wrong.
 6. Write the response with `references/output-template.md`.
 

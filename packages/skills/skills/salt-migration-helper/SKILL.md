@@ -12,10 +12,10 @@ Identify the version boundaries and code scope before suggesting changes. Focus 
 1. Confirm or infer the source version, target version, affected package scope, and whether the request is about required migration work or optional modernization.
 2. Load `references/migration-workflow.md` and `references/common-migration-gotchas.md`.
 3. Use Salt MCP selectively:
-    - `compare_salt_versions` for upgrade impact, breaking changes, and deprecations.
-    - `analyze_salt_code` for code-level deprecated usage and fix opportunities.
-    - `get_salt_entity` for canonical replacement guidance.
-    - `get_salt_examples` when a better replacement pattern or updated usage example is needed.
+   - `compare_salt_versions` for upgrade impact, breaking changes, and deprecations.
+   - `analyze_salt_code` for code-level deprecated usage and fix opportunities.
+   - `get_salt_entity` for canonical replacement guidance.
+   - `get_salt_examples` when a better replacement pattern or updated usage example is needed.
 4. Write the response with `references/output-template.md`.
 
 ## Output

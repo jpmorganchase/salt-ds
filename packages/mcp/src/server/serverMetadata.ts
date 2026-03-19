@@ -78,5 +78,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     `Registry generated at ${metadata.registry_generated_at}.`,
     "When asked for the MCP version, use the runtime version.",
     "When asked about the Salt content version, use the registry version.",
+    "Routing decisions and suggested follow-ups use logical workflow labels, not guaranteed callable tool IDs.",
+    "Only call tools that are actually present in the current session tool list.",
   ].join(" ");
 }

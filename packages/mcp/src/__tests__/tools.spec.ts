@@ -1508,17 +1508,17 @@ describe("getComponent", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_examples",
+          workflow: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "choose_salt_solution",
+          workflow: "choose_salt_solution",
         }),
       ]),
     );
     expect(result.suggested_follow_ups).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_entity",
+          workflow: "get_salt_entity",
         }),
       ]),
     );
@@ -1644,17 +1644,17 @@ describe("getPattern", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_examples",
+          workflow: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "choose_salt_solution",
+          workflow: "choose_salt_solution",
         }),
       ]),
     );
     expect(result.suggested_follow_ups).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_entity",
+          workflow: "get_salt_entity",
         }),
       ]),
     );
@@ -1769,7 +1769,7 @@ describe("getFoundation", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "discover_salt",
+          workflow: "discover_salt",
         }),
       ]),
     );
@@ -2222,7 +2222,7 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_entity",
+          workflow: "get_salt_entity",
         }),
       ]),
     );
@@ -2309,10 +2309,10 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_examples",
+          workflow: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "choose_salt_solution",
+          workflow: "choose_salt_solution",
         }),
       ]),
     );
@@ -2411,10 +2411,10 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_examples",
+          workflow: "get_salt_examples",
         }),
         expect.objectContaining({
-          tool: "get_salt_entity",
+          workflow: "get_salt_entity",
         }),
       ]),
     );
@@ -2655,7 +2655,7 @@ describe("consumer tools", () => {
     });
 
     expect(result.best_start).toMatchObject({
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
     });
     expect(result.options?.foundations[0]).toMatchObject({
       title: "Typography",
@@ -2666,7 +2666,7 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          tool: "get_salt_entity",
+          workflow: "get_salt_entity",
         }),
       ]),
     );
@@ -2692,7 +2692,7 @@ describe("consumer tools", () => {
     });
 
     expect(result.best_start).toMatchObject({
-      tool: "choose_salt_solution",
+      workflow: "choose_salt_solution",
     });
     expect(result.starter_code?.[0]?.code).toContain(
       'import { Link } from "@salt-ds/core";',
@@ -2797,7 +2797,7 @@ describe("consumer tools", () => {
 
     expect(
       result.suggested_follow_ups
-        ?.filter((followUp) => followUp.tool === "discover_salt")
+        ?.filter((followUp) => followUp.workflow === "discover_salt")
         .map((followUp) => followUp.args),
     ).toEqual([
       {

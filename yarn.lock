@@ -4350,6 +4350,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/skills@workspace:packages/skills":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/skills@workspace:packages/skills"
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/styles@workspace:*, @salt-ds/styles@workspace:packages/styles":
   version: 0.0.0-use.local
   resolution: "@salt-ds/styles@workspace:packages/styles"

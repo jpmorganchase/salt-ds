@@ -184,6 +184,9 @@ describe("createSaltMcpServer", () => {
         expect(internalServer._instructions).toContain(
           `Serving Salt registry v${VERSION}.`,
         );
+        expect(internalServer._instructions).toContain(
+          "Only call tools that are actually present in the current session tool list.",
+        );
       },
     );
   });

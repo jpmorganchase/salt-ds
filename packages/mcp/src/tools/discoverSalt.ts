@@ -58,7 +58,7 @@ export interface ClarifyingQuestion {
 }
 
 export interface DiscoverSaltDecision {
-  tool:
+  workflow:
     | "discover_salt"
     | "choose_salt_solution"
     | "get_salt_entity"
@@ -108,7 +108,7 @@ function toDecisionFromSearchResult(
   switch (result.type) {
     case "component":
       return {
-        tool: "get_salt_entity",
+        workflow: "get_salt_entity",
         why: "The closest match looks like a specific Salt component.",
         args: {
           entity_type: "component",
@@ -123,7 +123,7 @@ function toDecisionFromSearchResult(
       };
     case "pattern":
       return {
-        tool: "get_salt_entity",
+        workflow: "get_salt_entity",
         why: "The closest match looks like a specific Salt pattern.",
         args: {
           entity_type: "pattern",
@@ -141,7 +141,7 @@ function toDecisionFromSearchResult(
     case "icon":
     case "country_symbol":
       return {
-        tool: "get_salt_entity",
+        workflow: "get_salt_entity",
         why: "The closest match looks like a specific Salt entity.",
         args: {
           entity_type:
@@ -156,7 +156,7 @@ function toDecisionFromSearchResult(
       };
     case "example":
       return {
-        tool: "get_salt_examples",
+        workflow: "get_salt_examples",
         why: "The closest match is an implementation example.",
         args: {
           query: result.name,
@@ -168,7 +168,7 @@ function toDecisionFromSearchResult(
       };
     case "change":
       return {
-        tool: "compare_salt_versions",
+        workflow: "compare_salt_versions",
         why: "The closest match is upgrade or change history content.",
         args: {
           package: result.package ?? undefined,
@@ -181,7 +181,7 @@ function toDecisionFromSearchResult(
       };
     default:
       return {
-        tool: "discover_salt",
+        workflow: "discover_salt",
         why: "Stay in discovery mode and narrow further from the nearest docs result.",
         args: {
           query: result.name,
@@ -272,7 +272,7 @@ function chooseRouteDecision(input: {
     foundationScore > 0
   ) {
     return {
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       why: "The query looks foundation-oriented, so start from the closest foundation guidance.",
       args: {
         entity_type: "foundation",
@@ -284,7 +284,7 @@ function chooseRouteDecision(input: {
 
   if (tokens.length > 0 && tokenScore >= patternScore && tokenScore > 0) {
     return {
-      tool: "choose_salt_solution",
+      workflow: "choose_salt_solution",
       why: "The query looks styling-oriented, so start from token selection.",
       args: {
         solution_type: "token",
@@ -296,7 +296,7 @@ function chooseRouteDecision(input: {
 
   if (patterns.length > 0 && patternScore > 0) {
     return {
-      tool: "choose_salt_solution",
+      workflow: "choose_salt_solution",
       why: "The query sounds like a pattern or flow problem, so start from composition guidance.",
       args: {
         solution_type: "pattern",
@@ -308,7 +308,7 @@ function chooseRouteDecision(input: {
 
   if (components.length > 0) {
     return {
-      tool: "choose_salt_solution",
+      workflow: "choose_salt_solution",
       why: "The query sounds like a component choice problem, so start from the strongest component fit.",
       args: {
         solution_type: "component",
@@ -320,7 +320,7 @@ function chooseRouteDecision(input: {
 
   if (apiSurface.length > 0) {
     return {
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       why: "The query looks like a prop or API lookup, so start from the component that exposes the closest prop match.",
       args: {
         entity_type: "component",
@@ -446,7 +446,7 @@ function getCatalogDecision(
 
   if (first.type === "change") {
     return {
-      tool: "compare_salt_versions",
+      workflow: "compare_salt_versions",
       why: "The current browse view is change-oriented, so version comparison is the next step.",
       args: {
         package: first.package ?? undefined,
@@ -461,7 +461,7 @@ function getCatalogDecision(
 
   if (first.type === "example") {
     return {
-      tool: "get_salt_examples",
+      workflow: "get_salt_examples",
       why: "The current browse view is example-oriented, so jump straight to examples.",
       args: {
         query: first.name,
@@ -474,7 +474,7 @@ function getCatalogDecision(
   }
 
   return {
-    tool: "get_salt_entity",
+    workflow: "get_salt_entity",
     why: "The current browse view already has a likely Salt entity to inspect next.",
     args: {
       entity_type:
@@ -496,7 +496,7 @@ function getRelatedDecision(
   const firstComponent = related.related.components[0];
   if (firstComponent) {
     return {
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       why: "The related component is the closest next lookup.",
       args: {
         entity_type: "component",
@@ -513,7 +513,7 @@ function getRelatedDecision(
   const firstPattern = related.related.patterns[0];
   if (firstPattern) {
     return {
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       why: "The related pattern is the closest next lookup.",
       args: {
         entity_type: "pattern",
@@ -526,7 +526,7 @@ function getRelatedDecision(
   const firstToken = related.related.tokens[0];
   if (firstToken) {
     return {
-      tool: "get_salt_entity",
+      workflow: "get_salt_entity",
       why: "The related token is the closest next lookup.",
       args: {
         entity_type: "token",
@@ -566,7 +566,7 @@ export function discoverSalt(
       did_you_mean: related.did_you_mean,
       ambiguity: related.ambiguity as Record<string, unknown> | undefined,
       next_step:
-        decision?.tool === "get_salt_entity"
+        decision?.workflow === "get_salt_entity"
           ? "Inspect the closest related entity next."
           : "Broaden the related-entity exploration with a more specific starting entity.",
       raw: view === "full" ? { related } : undefined,

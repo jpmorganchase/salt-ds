@@ -194,10 +194,10 @@ export function getDiscoverySuggestedFollowUps(
     return undefined;
   }
 
-  if (decision.tool === "choose_salt_solution") {
+  if (decision.workflow === "choose_salt_solution") {
     return [
       {
-        tool: "get_salt_examples",
+        workflow: "get_salt_examples",
         reason:
           "Review the best implementation examples after choosing a Salt direction.",
         args: {
@@ -207,10 +207,10 @@ export function getDiscoverySuggestedFollowUps(
     ];
   }
 
-  if (decision.tool === "get_salt_entity") {
+  if (decision.workflow === "get_salt_entity") {
     return [
       {
-        tool: "get_salt_entity",
+        workflow: "get_salt_entity",
         reason: "Inspect the closest resolved Salt entity in full detail.",
         args: {
           ...(decision.args ?? {}),
@@ -223,7 +223,7 @@ export function getDiscoverySuggestedFollowUps(
   if (docs[0]) {
     return [
       {
-        tool: "discover_salt",
+        workflow: "discover_salt",
         reason: "Narrow the query after checking the closest docs result.",
         args: {
           query,
@@ -244,21 +244,21 @@ export function resolveDiscoverStarterCode(input: {
   const { decision } = input;
 
   if (
-    decision?.tool === "get_salt_entity" &&
+    decision?.workflow === "get_salt_entity" &&
     decision.args?.entity_type === "foundation"
   ) {
     return input.foundationStarterCode;
   }
 
   if (
-    decision?.tool === "choose_salt_solution" &&
+    decision?.workflow === "choose_salt_solution" &&
     decision.args?.solution_type === "pattern"
   ) {
     return input.patternStarterCode;
   }
 
   if (
-    decision?.tool === "choose_salt_solution" &&
+    decision?.workflow === "choose_salt_solution" &&
     decision.args?.solution_type === "component"
   ) {
     return input.componentStarterCode;
@@ -278,7 +278,7 @@ export function resolveDiscoverNextStep(input: {
   const { decision } = input;
 
   if (
-    decision?.tool === "get_salt_entity" &&
+    decision?.workflow === "get_salt_entity" &&
     decision.args?.entity_type === "foundation"
   ) {
     return (
@@ -292,7 +292,7 @@ export function resolveDiscoverNextStep(input: {
   }
 
   if (
-    decision?.tool === "choose_salt_solution" &&
+    decision?.workflow === "choose_salt_solution" &&
     decision.args?.solution_type === "component"
   ) {
     return (
@@ -302,7 +302,7 @@ export function resolveDiscoverNextStep(input: {
   }
 
   if (
-    decision?.tool === "choose_salt_solution" &&
+    decision?.workflow === "choose_salt_solution" &&
     decision.args?.solution_type === "pattern"
   ) {
     return (
@@ -312,7 +312,7 @@ export function resolveDiscoverNextStep(input: {
   }
 
   if (
-    decision?.tool === "choose_salt_solution" &&
+    decision?.workflow === "choose_salt_solution" &&
     decision.args?.solution_type === "token"
   ) {
     return (
@@ -321,11 +321,11 @@ export function resolveDiscoverNextStep(input: {
     );
   }
 
-  if (decision?.tool === "get_salt_examples") {
+  if (decision?.workflow === "get_salt_examples") {
     return "Inspect the best example and adapt it to the current use case.";
   }
 
-  if (decision?.tool === "compare_salt_versions") {
+  if (decision?.workflow === "compare_salt_versions") {
     return "Compare the relevant versions and review the breaking changes first.";
   }
 
