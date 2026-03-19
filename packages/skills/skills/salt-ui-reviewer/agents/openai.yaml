@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salt UI Reviewer"
+  short_description: "Review Salt UI for quality and alignment"
+  default_prompt: "Review this Salt-based React UI, identify the highest-impact issues, and prioritize the most important fixes."
