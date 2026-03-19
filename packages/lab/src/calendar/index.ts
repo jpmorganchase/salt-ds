@@ -9,3 +9,4 @@ export type {
 export * from "./useCalendar";
 export * from "./useCalendarDay";
 export * from "./useCalendarSelection";
+export * from "./useDateSelectionAnnouncer";

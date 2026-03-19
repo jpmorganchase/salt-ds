@@ -541,15 +541,6 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   }
 
   /**
-   * Gets the day of the week for a Day.js date object.
-   * @param date - The Day.js date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  public getDayOfWeek(date: Dayjs): number {
-    return date.day();
-  }
-
-  /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
@@ -623,4 +614,8 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   public clone(date: Dayjs): Dayjs {
     return date.clone();
   }
+
+  public toJSDate = (value: Dayjs) => {
+    return value.toDate();
+  };
 }

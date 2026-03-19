@@ -1,5 +1,4 @@
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   Calendar,
@@ -31,15 +30,14 @@ export const MinMax = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>({
-      startDate: defaultMinDate,
-      endDate: defaultMaxDate,
-    });
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>({
+    startDate: defaultMinDate,
+    endDate: defaultMaxDate,
+  });
   const handleDateChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -80,8 +78,8 @@ export const MinMax = (): ReactElement => {
     <LocalizationProvider
       DateAdapter={AdapterDateFns}
       locale={dateFnsEnUs}
-      minDate={selectedDate?.startDate ?? defaultMinDate}
-      maxDate={selectedDate?.endDate ?? defaultMaxDate}
+      minDate={(selectedDate?.startDate as Date) ?? defaultMinDate}
+      maxDate={(selectedDate?.endDate as Date) ?? defaultMaxDate}
     >
       <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
         <FormFieldLabel>Calendar's Min/Max Date Range</FormFieldLabel>
