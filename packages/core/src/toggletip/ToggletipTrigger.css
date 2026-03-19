@@ -1,0 +1,31 @@
+.saltToggletipTrigger {
+  box-sizing: border-box;
+  align-items: center;
+  appearance: none;
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  justify-content: center;
+  font-size: var(--salt-text-fontSize);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  padding: var(--salt-spacing-fixed-100);
+  margin: 0;
+  min-height: calc(var(--salt-size-icon) + var(--salt-spacing-fixed-200));
+  min-width: calc(var(--salt-size-icon) + var(--salt-spacing-fixed-200));
+  position: relative;
+  text-align: var(--salt-text-action-textAlign);
+  text-decoration: none;
+  transition: none;
+  width: auto;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  color: var(--salt-content-primary-foreground);
+  background: transparent;
+  border: none;
+
+  cursor: var(--salt-cursor-hover);
+  border-radius: var(--salt-palette-corner-weaker);
+}
