@@ -1,0 +1,13 @@
+{
+  "name": "@salt-ds/skills",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Consumable Salt Design System agent skills",
+  "license": "MIT",
+  "files": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "README.md",
+    "skills"
+  ]
+}

@@ -1,0 +1,483 @@
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { buildRegistry } from "../build/buildRegistry.js";
+import { loadRegistry } from "../registry/loadRegistry.js";
+import { getChanges } from "../tools/getChanges.js";
+import { getCountrySymbol } from "../tools/getCountrySymbol.js";
+import { getCountrySymbols } from "../tools/getCountrySymbols.js";
+import { getExamples } from "../tools/getExamples.js";
+import { getGuide } from "../tools/getGuide.js";
+import { getIcon } from "../tools/getIcon.js";
+import { getPage } from "../tools/getPage.js";
+import { getPattern } from "../tools/getPattern.js";
+import { searchSaltDocs } from "../tools/searchSaltDocs.js";
+import { validateSaltUsage } from "../tools/validateSaltUsage.js";
+import type { SaltRegistry } from "../types.js";
+
+const BUILT_AT = "2026-03-10T00:00:00Z";
+
+let registry: SaltRegistry;
+let registryDir: string;
+
+beforeAll(async () => {
+  registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "salt-mcp-registry-"));
+  await buildRegistry({
+    sourceRoot: path.resolve(process.cwd()),
+    outputDir: registryDir,
+    timestamp: BUILT_AT,
+  });
+  registry = await loadRegistry({ registryDir });
+}, 120000);
+
+afterAll(async () => {
+  if (registryDir) {
+    await fs.rm(registryDir, { recursive: true, force: true });
+  }
+});
+
+describe("registry integration", () => {
+  it("maps Button variant deprecation to Button guidance", () => {
+    const result = validateSaltUsage(registry, {
+      code: 'import { Button } from "@salt-ds/core"; const Demo = () => <Button variant="cta">Go</Button>;',
+      framework: "react",
+      package_version: "2.0.0",
+    });
+    const variantIssue = result.issues.find(
+      (issue) => issue.id === "deprecated.prop.salt-ds-core.variant",
+    );
+
+    expect(variantIssue).toBeDefined();
+    expect(variantIssue?.message.toLowerCase()).toContain("appearance");
+    expect(
+      variantIssue?.source_urls.some((url) =>
+        url.includes("packages/core/src/button/Button.tsx"),
+      ),
+    ).toBe(true);
+  });
+
+  it("flags Button href as navigation misuse", () => {
+    const result = validateSaltUsage(registry, {
+      code: 'import { Button } from "@salt-ds/core"; const Demo = () => <Button href="/next">Go</Button>;',
+      framework: "react",
+    });
+
+    expect(
+      result.issues.some((issue) => issue.id === "component-choice.navigation"),
+    ).toBe(true);
+  });
+
+  it("resolves package metadata for non-core components", () => {
+    const rangeDatePicker = registry.components.find(
+      (component) => component.name === "Range date picker",
+    );
+    expect(rangeDatePicker?.package.name).toBe("@salt-ds/lab");
+
+    const rangeSlider = registry.components.find(
+      (component) => component.name === "Range slider",
+    );
+    expect(rangeSlider?.package.name).toBe("@salt-ds/core");
+  });
+
+  it("uses the build timestamp for verification fields", () => {
+    expect(registry.build_info).toBeTruthy();
+    expect(registry.build_info?.source_artifacts.docs_root.path).toBe(
+      "site/docs",
+    );
+    expect(registry.build_info?.source_artifacts.search_data.path).toBe(
+      "site/public/search-data.json",
+    );
+    expect(registry.components[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.icons[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.country_symbols[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.patterns[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.guides[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.tokens[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.changes[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.pages[0]?.last_verified_at).toBe(BUILT_AT);
+  });
+
+  it("records build inference metadata for component docgen, tokens, and deprecations", () => {
+    const button = registry.components.find(
+      (component) => component.name === "Button",
+    );
+    const buttonVariantDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "prop" &&
+        deprecation.name === "variant",
+    );
+
+    expect(button?.inference?.docgen?.candidate_count).toBeGreaterThan(0);
+    expect(button?.inference?.docgen?.selected_display_name).toBeTruthy();
+    expect(button?.inference?.tokens).toMatchObject({
+      source: "repo_scan",
+      max_returned: 40,
+    });
+    expect(typeof button?.inference?.tokens?.truncated).toBe("boolean");
+    expect(button?.inference?.deprecations?.matched_count).toBeGreaterThan(0);
+    expect(
+      buttonVariantDeprecation?.inference?.matched_component_names,
+    ).toContain("Button");
+    expect(typeof buttonVariantDeprecation?.inference?.component_inferred).toBe(
+      "boolean",
+    );
+  });
+
+  it("builds searchable icon metadata from the icon synonym source", () => {
+    const workflowIcon = registry.icons.find(
+      (icon) => icon.name === "WorkflowIcon",
+    );
+    const sparkleRefreshIcon = registry.icons.find(
+      (icon) => icon.name === "SparkleRefreshIcon",
+    );
+
+    expect(workflowIcon).toBeDefined();
+    expect(workflowIcon?.category).toBe("organize");
+    expect(workflowIcon?.synonyms).toEqual(
+      expect.arrayContaining(["nodes", "process", "sequence"]),
+    );
+    expect(workflowIcon?.related_docs.foundation).toBe(
+      "/salt/foundations/assets/index",
+    );
+
+    expect(sparkleRefreshIcon?.synonyms).toEqual(
+      expect.arrayContaining(["ai", "llm", "artificial intelligence"]),
+    );
+    expect(
+      registry.search_index.some(
+        (entry) => entry.type === "icon" && entry.name === "WorkflowIcon",
+      ),
+    ).toBe(true);
+  });
+
+  it("builds searchable country symbol metadata from countryMetaMap", () => {
+    const unitedStates = registry.country_symbols.find(
+      (countrySymbol) => countrySymbol.code === "US",
+    );
+    const england = registry.country_symbols.find(
+      (countrySymbol) => countrySymbol.code === "GB-ENG",
+    );
+
+    expect(unitedStates).toBeDefined();
+    expect(unitedStates?.aliases).toEqual(
+      expect.arrayContaining(["United States of America", "United States"]),
+    );
+    expect(unitedStates?.related_docs.foundation).toBe(
+      "/salt/foundations/assets/country-symbols",
+    );
+    expect(unitedStates?.variants.sharp.export_name).toBe("US_Sharp");
+
+    expect(england?.variants.circle.export_name).toBe("GB_ENG");
+    expect(
+      registry.search_index.some(
+        (entry) =>
+          entry.type === "country_symbol" &&
+          entry.name === "United States of America (the)",
+      ),
+    ).toBe(true);
+  });
+
+  it("resolves country symbol lookups by code, fuzzy country name, and query search", () => {
+    const codeResult = getCountrySymbol(registry, {
+      name: "US",
+    });
+    const fuzzyResult = getCountrySymbol(registry, {
+      name: "United States",
+    });
+    const listResult = getCountrySymbols(registry, {
+      query: "england",
+      max_results: 10,
+    });
+
+    expect(codeResult.country_symbol).toMatchObject({
+      code: "US",
+    });
+    expect(fuzzyResult.country_symbol).toMatchObject({
+      code: "US",
+    });
+    expect(
+      listResult.country_symbols.some(
+        (countrySymbol) => countrySymbol.code === "GB-ENG",
+      ),
+    ).toBe(true);
+  });
+
+  it("treats shared icon base names as ambiguous across outline and solid variants", () => {
+    const result = getIcon(registry, {
+      name: "workflow",
+    });
+
+    expect(result.icon).toBeNull();
+    expect(result.ambiguity).toMatchObject({
+      query: "workflow",
+      matched_by: "name",
+    });
+    expect(result.ambiguity?.matches).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "WorkflowIcon",
+          variant: "outline",
+        }),
+        expect.objectContaining({
+          name: "WorkflowSolidIcon",
+          variant: "solid",
+        }),
+      ]),
+    );
+  });
+
+  it("excludes the MCP package from consumer registry artifacts", () => {
+    expect(registry.packages.some((pkg) => pkg.name === "@salt-ds/mcp")).toBe(
+      false,
+    );
+    expect(
+      registry.search_index.some(
+        (entry) => entry.type === "package" && entry.name === "@salt-ds/mcp",
+      ),
+    ).toBe(false);
+  });
+
+  it("emits unique deprecation ids and source-backed deprecated_in versions", () => {
+    expect(
+      new Set(registry.deprecations.map((deprecation) => deprecation.id)).size,
+    ).toBe(registry.deprecations.length);
+
+    const buttonVariantDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "prop" &&
+        deprecation.name === "variant",
+    );
+    expect(buttonVariantDeprecation?.deprecated_in).toBe("1.36.0");
+    expect(buttonVariantDeprecation?.replacement.notes).toBe(
+      "Use appearance and sentiment instead.",
+    );
+
+    const dialogIdPropDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "prop" &&
+        deprecation.name === "idProp",
+    );
+    expect(dialogIdPropDeprecation?.deprecated_in).toBe("1.58.0");
+
+    const unstableProviderDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "component" &&
+        deprecation.name === "UNSTABLE_SaltProviderNext",
+    );
+    expect(unstableProviderDeprecation?.deprecated_in).toBe("1.32.0");
+    expect(unstableProviderDeprecation?.replacement.name).toBe(
+      "SaltProviderNext",
+    );
+  });
+
+  it("attaches package metadata to component and pattern-story examples", () => {
+    const componentExamples = registry.examples.filter(
+      (example) => example.target_type === "component",
+    );
+    expect(componentExamples.length).toBeGreaterThan(0);
+    expect(
+      componentExamples.every((example) =>
+        example.package?.startsWith("@salt-ds/"),
+      ),
+    ).toBe(true);
+
+    const patternStoryExample = registry.examples.find((example) =>
+      example.id.startsWith("pattern-story."),
+    );
+    expect(patternStoryExample?.package).toMatch(/^@salt-ds\//);
+  });
+
+  it("returns component examples by canonical component name", () => {
+    const result = getExamples(registry, {
+      target_type: "component",
+      target_name: "Data grid",
+      max_results: 10,
+    });
+
+    expect(result.examples.length).toBeGreaterThan(0);
+    expect(result.resolved_target).toMatchObject({
+      name: "Data grid",
+      target_type: "component",
+    });
+  });
+
+  it("extracts multiline LivePreview examples from docs pages", () => {
+    const result = getExamples(registry, {
+      target_type: "component",
+      target_name: "Date input",
+      max_results: 20,
+    });
+
+    expect(result.examples.length).toBeGreaterThan(2);
+    expect(
+      result.examples.some((example) => example.title === "Single controlled"),
+    ).toBe(true);
+    expect(
+      result.examples.some((example) => example.title === "Range controlled"),
+    ).toBe(true);
+  });
+
+  it("returns pattern story examples by canonical pattern name", () => {
+    const result = getExamples(registry, {
+      target_type: "pattern",
+      target_name: "Button bar",
+      max_results: 20,
+      view: "full",
+    });
+
+    expect(
+      result.examples.some((example) =>
+        String(example.id).startsWith("pattern-story."),
+      ),
+    ).toBe(true);
+  });
+
+  it("extracts setup guides and makes them searchable", () => {
+    const result = getGuide(registry, {
+      name: "setup",
+      view: "full",
+    });
+
+    expect(result.guide).toMatchObject({
+      name: "Developing with Salt",
+      kind: "getting-started",
+    });
+    expect(
+      registry.search_index.some(
+        (entry) =>
+          entry.type === "guide" && entry.name === "Developing with Salt",
+      ),
+    ).toBe(true);
+  });
+
+  it("indexes site pages so broad docs statements are searchable", () => {
+    const result = searchSaltDocs(registry, {
+      query: "wcag 2.1 aa standards",
+      area: "pages",
+      top_k: 10,
+    });
+
+    expect(result.results.length).toBeGreaterThan(0);
+    expect(result.results.every((entry) => entry.type === "page")).toBe(true);
+    expect(
+      result.results.some((entry) =>
+        String(entry.source_url).startsWith("/salt/"),
+      ),
+    ).toBe(true);
+  });
+
+  it("returns a page record for the Salt homepage", () => {
+    const result = getPage(registry, {
+      name: "/salt/index",
+    });
+
+    expect(result.page).toMatchObject({
+      title: "Salt Design System",
+      route: "/salt/index",
+    });
+  });
+
+  it("preserves inline code tokens in docs-backed page content", () => {
+    const layoutGridPage = getPage(registry, {
+      name: "/salt/foundations/responsiveness/index",
+      view: "full",
+    });
+    const spacingPage = getPage(registry, {
+      name: "/salt/foundations/spacing",
+      view: "full",
+    });
+
+    const layoutGridContent =
+      (layoutGridPage.page as { content?: string[] } | null)?.content ?? [];
+    const spacingContent =
+      (spacingPage.page as { content?: string[] } | null)?.content ?? [];
+
+    expect(
+      layoutGridContent.some((block) => block.includes("--salt-layout-gap")),
+    ).toBe(true);
+    expect(
+      spacingContent.some(
+        (block) =>
+          block.includes("--salt-layout-gap") &&
+          block.includes("--salt-spacing-300"),
+      ),
+    ).toBe(true);
+  });
+
+  it("returns docs-backed layout gap guidance in page search results", () => {
+    const result = searchSaltDocs(registry, {
+      query: "salt-layout-gap",
+      area: "pages",
+      top_k: 10,
+    });
+
+    expect(
+      result.results.some(
+        (entry) =>
+          entry.source_url === "/salt/foundations/responsiveness/index" &&
+          entry.matched_excerpt?.includes("--salt-layout-gap"),
+      ),
+    ).toBe(true);
+  });
+
+  it("uses structured MDX extraction instead of flattened site-search code blocks", () => {
+    const result = getPage(registry, {
+      name: "/salt/themes/index",
+      view: "full",
+    });
+    const content =
+      (result.page as { content?: string[] } | null)?.content ?? [];
+
+    expect(content.some((block) => block.includes("Amplitude font"))).toBe(
+      true,
+    );
+    expect(content.some((block) => block.includes("```"))).toBe(false);
+    expect(content.some((block) => block.includes("src: local("))).toBe(false);
+  });
+
+  it("resolves patterns by slug and includes docs-backed build guidance", () => {
+    const result = getPattern(registry, {
+      name: "preferences-dialog",
+    });
+
+    expect(result.pattern).toMatchObject({
+      name: "Preferences dialog",
+    });
+    expect(
+      Array.isArray(
+        (result.pattern as { how_to_build?: unknown }).how_to_build,
+      ),
+    ).toBe(true);
+  });
+
+  it("emits examples only for supported target types", () => {
+    expect(
+      registry.examples.every(
+        (example) =>
+          example.target_type === "component" ||
+          example.target_type === "pattern",
+      ),
+    ).toBe(true);
+  });
+
+  it("builds changelog-derived change records for component history lookups", () => {
+    const result = getChanges(registry, {
+      target_type: "component",
+      target_name: "Button",
+      limit: 20,
+    });
+
+    expect(result.changes.length).toBeGreaterThan(0);
+    expect(
+      result.changes.some(
+        (change) =>
+          change.target_name === "Button" && change.package === "@salt-ds/core",
+      ),
+    ).toBe(true);
+  });
+});
