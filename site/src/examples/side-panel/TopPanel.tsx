@@ -25,6 +25,7 @@ const FormFieldExample = () => (
 export const TopPanel = () => {
   const [open, setOpen] = useState(false);
   const id = useId();
+  const headingId = useId();
 
   return (
     <StackLayout gap={0} style={{ width: "100%" }}>
@@ -32,7 +33,8 @@ export const TopPanel = () => {
         open={open}
         onOpenChange={setOpen}
         side="top"
-        aria-labelledby={id}
+        id={id}
+        aria-labelledby={headingId}
         style={{
           height: 280,
         }}
@@ -46,7 +48,7 @@ export const TopPanel = () => {
           >
             Close
           </Button>
-          <H2 id={id}>Section title</H2>
+          <H2 id={headingId}>Section title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for
@@ -64,7 +66,11 @@ export const TopPanel = () => {
         </StackLayout>
       </SidePanel>
       <FlexItem padding={1}>
-        <Button onClick={() => setOpen(!open)}>
+        <Button
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          aria-controls={id}
+        >
           {open ? "Close" : "Open"} Top Panel
         </Button>
       </FlexItem>

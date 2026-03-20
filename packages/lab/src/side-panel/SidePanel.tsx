@@ -1,10 +1,9 @@
 import {
   FloatingFocusManager,
   useDismiss,
-  useFloating,
   useInteractions,
 } from "@floating-ui/react";
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -21,42 +20,52 @@ const withBaseName = makePrefixer("saltSidePanel");
 
 export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Whether the panel is open.
-   */
-  open?: boolean;
-  /**
    * Edge the panel is anchored to; controls animation direction and divider side.
    * @default "left"
    */
   side?: "left" | "right" | "top" | "bottom";
   /**
-   * Callback when open state should change (e.g. Escape key pressed).
-   */
-  onOpenChange?: (newOpen: boolean) => void;
-  /**
    * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref.
    * @default 0
    */
   initialFocus?: number | MutableRefObject<HTMLElement | null>;
+  /**
+   * Whether the panel is open.
+   */
+  open?: boolean;
+  /**
+   * Callback when open state should change (e.g. Escape key pressed).
+   */
+  onOpenChange?: (newOpen: boolean) => void;
+  /**
+   * Change background color palette
+   * @default "primary"
+   */
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
     const {
-      open = false,
       side = "left",
-      onOpenChange,
       initialFocus = 0,
+      open = false,
+      onOpenChange,
+      variant = "primary",
       children,
       className,
       ...rest
     } = props;
-    const [showComponent, setShowComponent] = useState(open);
+    const [showComponent, setShowComponent] = useState(false);
     const targetWindow = useWindow();
 
-    const { context, refs } = useFloating({ open, onOpenChange });
+    // Create floating UI context
+    const { context, refs } = useFloatingUI({
+      open,
+      onOpenChange,
+    });
 
-    const { getFloatingProps } = useInteractions([
+    useInteractions([
       useDismiss(context, { escapeKey: true, outsidePress: false }),
     ]);
 
@@ -88,6 +97,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           withBaseName(),
           {
             [withBaseName(side)]: side,
+            [withBaseName(variant)]: variant,
             [withBaseName("enterAnimation")]: open,
             [withBaseName("exitAnimation")]: !open,
           },
@@ -95,7 +105,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         )}
         tabIndex={-1}
         role="region"
-        {...getFloatingProps()}
         {...rest}
       >
         <div className={clsx(withBaseName("inner"))}>{children}</div>

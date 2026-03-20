@@ -1,0 +1,10 @@
+.customWidth {
+  /* --saltSidePanel-width: 20rem; */
+  /* width: 450px; */
+  --saltSidePanel-width: 450px;
+}
+
+.customHeight {
+  /* --saltSidePanel-height: 20rem; */
+  height: 450px;
+}
