@@ -62,7 +62,8 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
     const arrowRef = useRef<SVGSVGElement>(null);
-    const { y, x, elements, strategy, context, refs } = useFloatingUI({
+    const contentRef = useRef<HTMLDivElement>(null);
+    const { y, x, elements, strategy, context } = useFloatingUI({
       rootContext: floatingRootContext,
       placement,
       middleware: [
@@ -77,13 +78,10 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
         }),
       ],
     });
-
     return (
       <FloatingComponent
         open={openState}
         className={clsx(withBaseName(), className)}
-        aria-modal="false"
-        {...getFloatingProps()}
         ref={handleRef}
         width={elements.floating?.offsetWidth}
         height={elements.floating?.offsetHeight}
@@ -93,14 +91,18 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
         focusManagerProps={{
           context,
           modal: false,
-          initialFocus: refs.floating,
+          initialFocus: contentRef,
           closeOnFocusOut: true,
           order: ["floating", "content"],
         }}
-        aria-labelledby={ariaLabelledby}
-        tabIndex={0}
       >
-        <div {...rest}> {children} </div>
+        <div
+          className={withBaseName("content")}
+          tabIndex={0}
+          {...getFloatingProps(rest)}
+        >
+          {children}
+        </div>
         <FloatingArrow
           ref={arrowRef}
           context={context}
