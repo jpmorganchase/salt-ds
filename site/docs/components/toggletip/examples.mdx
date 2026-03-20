@@ -1,0 +1,27 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+The toggletip is consists of a trigger and panel. The panel is revealed on click of the trigger and remains persistent until the user dismisses it.
+
+<LivePreview componentName="toggletip" exampleName="Default" />
+
+## Placement
+
+Use the `placement` prop to specify the position of the panel relative to the trigger. Choose the placement that obscures the least amount of content and critical interface elements. The default placement is `top`.
+
+<LivePreview componentName="toggletip" exampleName="Placement" />
+
+## Long content
+
+In most cases, scrolling shouldn't be required. However, if you have a large amount of content that can't be avoided, the panel will scroll internally.
+
+<LivePreview componentName="toggletip" exampleName="LongContent" />
