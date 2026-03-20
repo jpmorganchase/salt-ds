@@ -1,9 +1,21 @@
 .saltSidePanel {
   overflow: hidden;
-  background-color: var(--salt-container-primary-background);
+  background-color: var(--saltSidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 16rem;
   --saltSidePanel-height: 16rem;
   --saltSidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+}
+
+.saltSidePanel-primary {
+  --saltSidePanel-background: var(--salt-container-primary-background);
+}
+
+.saltSidePanel-secondary {
+  --saltSidePanel-background: var(--salt-container-secondary-background);
+}
+
+.saltSidePanel-tertiary {
+  --saltSidePanel-background: var(--salt-container-tertiary-background);
 }
 
 .saltSidePanel-left {
