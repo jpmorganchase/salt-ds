@@ -18,19 +18,19 @@ export interface AriaAnnounceProps extends AnnounceFnOptions {
 export const AriaAnnounce: ComponentType<AriaAnnounceProps> = ({
   announcement,
   delay,
-  ...rest
+  ariaLive
 }) => {
   const { announce } = useAriaAnnouncer();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignore rest
   useEffect(() => {
     if (announcement) {
       if (delay !== undefined) {
         announce(announcement, delay);
+      } else {
+        announce(announcement, ariaLive ? { ariaLive } : undefined);
       }
-      announce(announcement, rest);
     }
-  }, [announce, announcement, delay]);
+  }, [announce, announcement, ariaLive, delay]);
 
   // biome-ignore lint/complexity/noUselessFragments: If we return null here, react-docgen wouldn't be able to locate the component.
   return <></>;

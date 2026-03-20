@@ -1,7 +1,15 @@
 import { type AriaAttributes, createContext } from "react";
 
 export type AnnounceFnOptions = {
+  /**
+   * Assertiveness
+   */
   ariaLive?: Exclude<AriaAttributes["aria-live"], "off">;
+  /**
+   * How long (ms) the announcement should remain in the DOM before being removed.
+   * Defaults to the provider's ANNOUNCEMENT_TIME_IN_DOM.
+   */
+  duration?: number;
 };
 
 export type AriaAnnouncer = {
