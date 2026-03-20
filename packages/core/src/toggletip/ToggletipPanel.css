@@ -18,4 +18,12 @@
 
   color: var(--salt-content-primary-foreground);
   z-index: var(--salt-zIndex-flyover);
+
+  max-width: 45ch;
+  max-height: 100vh;
+}
+
+.saltToggletipPanel-content {
+  max-height: 100%;
+  overflow-y: auto;
 }
