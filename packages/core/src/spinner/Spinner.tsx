@@ -97,7 +97,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     useEffect(() => {
       if (disableAnnouncer) return;
 
-      announce(ariaLabel, { ariaLive: "assertive" });
+      announce(ariaLabel);
 
       const startTime = Date.now();
 
