@@ -1,6 +1,14 @@
 import type { SaltRegistry, SaltStatus } from "../types.js";
 import { compareOptions } from "./compareOptions.js";
 import type { SuggestedFollowUp } from "./consumerPresentation.js";
+import {
+  getRelevantGuidesForRecords,
+  type GuideReference,
+} from "./guideAwareness.js";
+import {
+  buildGuidanceBoundary,
+  type GuidanceBoundary,
+} from "./guidanceBoundary.js";
 import { getCompositionRecipe } from "./getCompositionRecipe.js";
 import { getFoundation } from "./getFoundation.js";
 import { listFoundations } from "./listFoundations.js";
@@ -74,6 +82,7 @@ export interface ChooseSaltSolutionInput {
 export interface ChooseSaltSolutionResult {
   mode: "recommend" | "compare";
   solution_type: Exclude<SaltSolutionType, "auto">;
+  guidance_boundary: GuidanceBoundary;
   decision: {
     name: string | null;
     why: string;
@@ -89,11 +98,29 @@ export interface ChooseSaltSolutionResult {
     }>;
   }>;
   suggested_follow_ups?: SuggestedFollowUp[];
+  related_guides?: GuideReference[];
   starter_code?: StarterCodeSnippet[];
   next_step?: string;
   did_you_mean?: string[];
   ambiguity?: Record<string, unknown>;
   raw?: Record<string, unknown>;
+}
+
+function getChooseSaltSolutionRelatedGuides(
+  registry: SaltRegistry,
+  records: unknown[],
+  options?: {
+    fallbackComponentNames?: string[];
+    fallbackPackages?: string[];
+  },
+): GuideReference[] | undefined {
+  const guides = getRelevantGuidesForRecords(registry, records, {
+    fallbackComponentNames: options?.fallbackComponentNames,
+    fallbackPackages: options?.fallbackPackages,
+    top_k: 4,
+  });
+
+  return guides.length > 0 ? guides : undefined;
 }
 
 function scoreIntent(query: string, keywords: readonly string[]): number {
@@ -214,6 +241,10 @@ export function chooseSaltSolution(
     .filter(Boolean)
     .slice(0, 10);
   const solutionType = resolveSolutionType(input);
+  const guidanceBoundary = buildGuidanceBoundary({
+    workflow: "choose_salt_solution",
+    solution_type: solutionType,
+  });
 
   // When names are supplied, comparison mode takes precedence over query-based recommendation.
   if (comparisonRequested) {
@@ -222,6 +253,7 @@ export function chooseSaltSolution(
         return {
           mode: "compare",
           solution_type: "foundation",
+          guidance_boundary: guidanceBoundary,
           decision: {
             name: null,
             why: "Comparison mode was requested, but at least two exact foundation titles are required.",
@@ -243,6 +275,7 @@ export function chooseSaltSolution(
           return {
             mode: "compare",
             solution_type: "foundation",
+            guidance_boundary: guidanceBoundary,
             decision: {
               name: null,
               why: "Multiple foundation matches share that title or slug.",
@@ -258,6 +291,7 @@ export function chooseSaltSolution(
           return {
             mode: "compare",
             solution_type: "foundation",
+            guidance_boundary: guidanceBoundary,
             decision: {
               name: null,
               why: `At least one foundation could not be resolved from ${name}.`,
@@ -287,6 +321,7 @@ export function chooseSaltSolution(
       return {
         mode: "compare",
         solution_type: "foundation",
+        guidance_boundary: guidanceBoundary,
         decision: {
           name: recommendedName,
           why: query
@@ -320,6 +355,7 @@ export function chooseSaltSolution(
               ),
             ]
           : undefined,
+        related_guides: getChooseSaltSolutionRelatedGuides(registry, ranked),
         next_step:
           typeof recommended?.next_step === "string"
             ? recommended.next_step
@@ -350,6 +386,7 @@ export function chooseSaltSolution(
     return {
       mode: "compare",
       solution_type: solutionType === "pattern" ? "pattern" : "component",
+      guidance_boundary: guidanceBoundary,
       decision: {
         name: comparison.recommendation?.name ?? null,
         why:
@@ -359,6 +396,18 @@ export function chooseSaltSolution(
       compared: comparison.compared,
       differences: comparison.differences,
       suggested_follow_ups: comparison.suggested_follow_ups,
+      related_guides:
+        comparison.related_guides ??
+        getChooseSaltSolutionRelatedGuides(
+          registry,
+          comparison.compared,
+          solutionType === "component"
+            ? {
+                fallbackComponentNames: names,
+                fallbackPackages: input.package ? [input.package] : undefined,
+              }
+            : undefined,
+        ),
       next_step: comparison.next_step,
       did_you_mean: comparison.did_you_mean,
       ambiguity: comparison.ambiguity as Record<string, unknown> | undefined,
@@ -396,6 +445,7 @@ export function chooseSaltSolution(
     return {
       mode: "recommend",
       solution_type: "foundation",
+      guidance_boundary: guidanceBoundary,
       decision: {
         name: recommendedName,
         why: recommendedName
@@ -407,6 +457,10 @@ export function chooseSaltSolution(
       recommended: recommended ?? null,
       alternatives,
       suggested_follow_ups: exact.suggested_follow_ups,
+      related_guides: getChooseSaltSolutionRelatedGuides(registry, [
+        recommended,
+        ...alternatives,
+      ]),
       starter_code:
         exact.starter_code ??
         (() => {
@@ -455,6 +509,7 @@ export function chooseSaltSolution(
     return {
       mode: "recommend",
       solution_type: "token",
+      guidance_boundary: guidanceBoundary,
       decision: {
         name: getDecisionName(recommended),
         why:
@@ -464,6 +519,10 @@ export function chooseSaltSolution(
       },
       recommended: recommended ?? null,
       alternatives,
+      related_guides: getChooseSaltSolutionRelatedGuides(registry, [
+        recommended,
+        ...alternatives,
+      ]),
       next_step: tokenResult.next_step,
       raw:
         view === "full"
@@ -497,6 +556,7 @@ export function chooseSaltSolution(
     return {
       mode: "recommend",
       solution_type: "pattern",
+      guidance_boundary: guidanceBoundary,
       decision: {
         name: getDecisionName(recommended),
         why:
@@ -507,6 +567,10 @@ export function chooseSaltSolution(
       recommended: recommended ?? null,
       alternatives,
       suggested_follow_ups: recipeResult.suggested_follow_ups,
+      related_guides: getChooseSaltSolutionRelatedGuides(registry, [
+        recommended,
+        ...alternatives,
+      ]),
       starter_code: recipeResult.starter_code,
       next_step: recipeResult.next_step,
       raw:
@@ -542,6 +606,7 @@ export function chooseSaltSolution(
   return {
     mode: "recommend",
     solution_type: "component",
+    guidance_boundary: guidanceBoundary,
     decision: {
       name: getDecisionName(recommended),
       why:
@@ -552,6 +617,15 @@ export function chooseSaltSolution(
     recommended: recommended ?? null,
     alternatives,
     suggested_follow_ups: recommendation.suggested_follow_ups,
+    related_guides: getChooseSaltSolutionRelatedGuides(
+      registry,
+      [recommended, ...alternatives],
+      {
+        fallbackComponentNames:
+          typeof recommended?.name === "string" ? [recommended.name] : [],
+        fallbackPackages: input.package ? [input.package] : undefined,
+      },
+    ),
     starter_code: recommendation.starter_code,
     next_step: recommendation.next_step,
     raw:

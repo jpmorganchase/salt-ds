@@ -19,6 +19,7 @@ import {
   createComponentStarterCode,
   type StarterCodeSnippet,
 } from "./starterCode.js";
+import { buildComponentPresentationBase } from "./solutionPresentation.js";
 import { isComponentAllowedByDocsPolicy, normalizeQuery } from "./utils.js";
 
 export interface RecommendComponentInput {
@@ -43,34 +44,18 @@ export interface RecommendComponentResult {
   next_step?: string;
 }
 
-function getComponentDocs(relatedDocs: {
-  overview: string | null;
-  usage: string | null;
-  accessibility: string | null;
-  examples: string | null;
-}): string[] {
-  return [
-    relatedDocs.overview,
-    relatedDocs.usage,
-    relatedDocs.accessibility,
-    relatedDocs.examples,
-  ].filter((value): value is string => Boolean(value));
-}
-
 function toCompactRecommendation(candidate: {
   component: SaltRegistry["components"][number];
-}): Record<string, unknown> {
+}, registry: SaltRegistry): Record<string, unknown> {
   const caveats = getComponentCaveats(candidate.component);
+  const presentation = buildComponentPresentationBase(registry, candidate.component);
 
   return {
     name: candidate.component.name,
     summary: candidate.component.summary,
     why: candidate.component.when_to_use[0] ?? candidate.component.summary,
     tradeoffs: candidate.component.when_not_to_use.slice(0, 2),
-    docs: getComponentDocs(candidate.component.related_docs),
-    examples: candidate.component.related_docs.examples
-      ? [candidate.component.related_docs.examples]
-      : [],
+    ...presentation,
     caveats,
     ship_check: getComponentShipCheck(candidate.component),
     ...(candidate.component.status !== "stable"
@@ -159,6 +144,10 @@ export function recommendComponent(
     tradeoffs: candidate.component.when_not_to_use.slice(0, 3),
     alternatives: candidate.component.alternatives,
     example_count: candidate.component.examples.length,
+    related_guides: buildComponentPresentationBase(
+      registry,
+      candidate.component,
+    ).related_guides,
     caveats: getComponentCaveats(candidate.component),
     ship_check: getComponentShipCheck(candidate.component),
   }));
@@ -184,9 +173,11 @@ export function recommendComponent(
 
   const [recommended, ...alternatives] = rankedCandidates;
   return {
-    recommended: recommended ? toCompactRecommendation(recommended) : null,
+    recommended: recommended
+      ? toCompactRecommendation(recommended, registry)
+      : null,
     alternatives: alternatives.map((alternative) =>
-      toCompactRecommendation(alternative),
+      toCompactRecommendation(alternative, registry),
     ),
     starter_code:
       input.include_starter_code && recommended

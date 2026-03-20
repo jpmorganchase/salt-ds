@@ -5,6 +5,7 @@
 - Find the current Salt version, the target version, and the packages in scope.
 - Use user input, package manifests, lockfiles, or explicit code references when available.
 - Do not guess across version ranges if the boundary materially affects the advice.
+- If the source UI is not Salt-based yet, use `translate_ui_to_salt` first to plan Salt adoption; this workflow is for Salt-native upgrade and modernization work once the target structure is in Salt.
 
 ## 2. map the upgrade impact
 
@@ -20,6 +21,9 @@
 
 - Use `get_salt_entity` for current guidance and `get_salt_examples` when the replacement pattern is not obvious.
 - Prefer documented replacements over compatibility shims or project-specific workarounds.
+- Keep canonical Salt replacements separate from repo-specific project conventions or compatibility conventions.
+- If the migration changes token usage, validate the replacement token family and direct-use rules against the canonical token policy rather than carrying old styling choices forward.
+- If a custom compatibility layer is still needed, state why the canonical replacement is insufficient and keep the workaround clearly scoped.
 
 ## 5. plan the migration
 

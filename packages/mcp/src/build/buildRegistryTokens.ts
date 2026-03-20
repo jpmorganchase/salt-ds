@@ -7,6 +7,7 @@ import type {
   ComponentTokenInference,
   TokenRecord,
 } from "../types.js";
+import { getTokenPolicy } from "./buildRegistryTokenPolicy.js";
 import {
   cleanMarkdownText,
   normalizeWhitespace,
@@ -148,6 +149,7 @@ export async function extractTokens(
     applies_to: token.applies_to,
     guidance: [...token.guidanceSet],
     aliases: token.aliases,
+    policy: getTokenPolicy(token),
     deprecated: token.deprecated,
     last_verified_at: token.last_verified_at,
   }));

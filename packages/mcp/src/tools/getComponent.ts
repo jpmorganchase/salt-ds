@@ -15,6 +15,10 @@ import {
   type SuggestedFollowUp,
 } from "./consumerPresentation.js";
 import { projectLookupRecord, resolveLookup } from "./lookupResolver.js";
+import {
+  buildComponentPresentationBase,
+  getComponentRelatedGuides,
+} from "./solutionPresentation.js";
 import { isComponentAllowedByDocsPolicy } from "./utils.js";
 
 export interface GetComponentInput {
@@ -49,15 +53,6 @@ export interface GetComponentResult {
   };
 }
 
-function getComponentDocs(component: ComponentRecord): string[] {
-  return [
-    component.related_docs.overview,
-    component.related_docs.usage,
-    component.related_docs.accessibility,
-    component.related_docs.examples,
-  ].filter((value): value is string => Boolean(value));
-}
-
 function getComponentNextStep(component: ComponentRecord): string {
   if (component.related_docs.examples) {
     return `Review examples for ${component.name} before implementing.`;
@@ -89,16 +84,14 @@ function toCompactComponent(
   input: GetComponentInput,
 ): Record<string, unknown> {
   const include = input.include ?? [];
+  const presentation = buildComponentPresentationBase(registry, component);
   const compact: Record<string, unknown> = {
     name: component.name,
     summary: component.summary,
     why: component.when_to_use[0] ?? component.summary,
     tradeoffs: component.when_not_to_use.slice(0, 2),
     alternatives: component.alternatives,
-    docs: getComponentDocs(component),
-    examples: component.related_docs.examples
-      ? [component.related_docs.examples]
-      : [],
+    ...presentation,
     next_step: getComponentNextStep(component),
   };
 
@@ -147,6 +140,7 @@ function toFullComponent(
 ): Record<string, unknown> {
   const fullComponent = {
     ...component,
+    related_guides: getComponentRelatedGuides(registry, component),
     next_step: getComponentNextStep(component),
   } as Record<string, unknown>;
 

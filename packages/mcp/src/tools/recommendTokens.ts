@@ -1,8 +1,10 @@
 import type { SaltRegistry } from "../types.js";
 import { getTokenQueryFields, scoreQueryFields } from "./consumerSignals.js";
+import { getTokenNextStep } from "./getToken.js";
 import { normalizeQuery } from "./utils.js";
 
 const TOKEN_DOCS_SOURCE_URL = "/salt/themes/design-tokens/index";
+const TOKEN_POLICY_DOCS_SOURCE_URL = "/salt/themes/design-tokens/token-usage-rules";
 
 export interface RecommendTokensInput {
   query: string;
@@ -31,23 +33,21 @@ function toCompactTokenRecommendation(candidate: {
     category: candidate.token.category,
     semantic_intent: candidate.token.semantic_intent,
     why:
+      candidate.token.policy?.notes[0] ??
       candidate.token.guidance[0] ??
       candidate.token.semantic_intent ??
       "Matches the requested styling need.",
     applies_to: candidate.token.applies_to,
-    docs: [TOKEN_DOCS_SOURCE_URL],
+    docs: [
+      ...new Set([
+        TOKEN_DOCS_SOURCE_URL,
+        TOKEN_POLICY_DOCS_SOURCE_URL,
+        ...(candidate.token.policy?.docs ?? []),
+      ]),
+    ],
+    policy: candidate.token.policy ?? null,
     ...(candidate.token.deprecated ? { status: "deprecated" } : {}),
   };
-}
-
-function getTokenNextStep(
-  candidate: { token: SaltRegistry["tokens"][number] } | undefined,
-): string {
-  if (candidate) {
-    return `Apply ${candidate.token.name} and verify it fits the relevant theme and density.`;
-  }
-
-  return "Broaden the styling description or remove one of the filters.";
 }
 
 export function recommendTokens(
@@ -107,6 +107,14 @@ export function recommendTokens(
       densities: candidate.token.densities,
       applies_to: candidate.token.applies_to,
       guidance: candidate.token.guidance,
+      docs: [
+        ...new Set([
+          TOKEN_DOCS_SOURCE_URL,
+          TOKEN_POLICY_DOCS_SOURCE_URL,
+          ...(candidate.token.policy?.docs ?? []),
+        ]),
+      ],
+      policy: candidate.token.policy ?? null,
       deprecated: candidate.token.deprecated,
     },
     score: candidate.score,
@@ -118,7 +126,7 @@ export function recommendTokens(
     return {
       source_url: TOKEN_DOCS_SOURCE_URL,
       recommendations,
-      next_step: getTokenNextStep(rankedCandidates[0]),
+      next_step: getTokenNextStep(rankedCandidates[0]?.token),
     };
   }
 
@@ -130,6 +138,6 @@ export function recommendTokens(
     alternatives: alternatives.map((candidate) =>
       toCompactTokenRecommendation(candidate),
     ),
-    next_step: getTokenNextStep(recommended),
+    next_step: getTokenNextStep(recommended?.token),
   };
 }

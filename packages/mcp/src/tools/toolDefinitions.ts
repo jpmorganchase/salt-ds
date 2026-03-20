@@ -6,6 +6,7 @@ import { compareSaltVersions } from "./compareSaltVersions.js";
 import { discoverSalt } from "./discoverSalt.js";
 import { getSaltEntity } from "./getSaltEntity.js";
 import { getSaltExamples } from "./getSaltExamples.js";
+import { translateUiToSalt } from "./translateUiToSalt.js";
 
 const SEARCH_AREAS = [
   "all",
@@ -58,6 +59,7 @@ function defineTool<Args extends object>(
 
 const DEFAULT_TOOL_ORDER = [
   "discover_salt",
+  "translate_ui_to_salt",
   "choose_salt_solution",
   "get_salt_entity",
   "get_salt_examples",
@@ -69,7 +71,7 @@ const RAW_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   defineTool<Parameters<typeof discoverSalt>[1]>({
     name: "discover_salt",
     description:
-      "Use this for broad, ambiguous, or exploratory Salt requests when the caller is not yet sure which Salt entity or workflow they need. It searches, clarifies intent, and routes to the best next Salt workflow. Do not use this for direct recommendation or known-entity lookup.",
+      "Use this for broad, ambiguous, or exploratory Salt requests when the caller is not yet sure which Salt entity or workflow they need. It searches, clarifies intent, and routes to the best next Salt workflow. Returns canonical Salt guidance only; project-specific conventions belong in separate project conventions. Do not use this for direct recommendation or known-entity lookup.",
     inputSchema: {
       query: z
         .string()
@@ -120,10 +122,57 @@ const RAW_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     },
     execute: discoverSalt,
   }),
+  defineTool<Parameters<typeof translateUiToSalt>[1]>({
+    name: "translate_ui_to_salt",
+    description:
+      "Use this when the input is non-Salt UI code, a foreign component library, native/custom React UI, or a rough interface description that needs to be translated into Salt primitives, patterns, and migration steps. It returns a canonical Salt starter plan only; project-specific patterns and wrappers belong in separate project conventions. Do not use it for Salt-native validation or version-to-version upgrade analysis.",
+    inputSchema: {
+      code: z
+        .string()
+        .optional()
+        .describe(
+          "Optional source UI code to inspect before translating it into Salt targets.",
+        ),
+      query: z
+        .string()
+        .optional()
+        .describe(
+          "Optional description of the source UI, mockup, or migration goal when code is partial or unavailable.",
+        ),
+      source_outline: z
+        .object({
+          regions: z.array(z.string()).optional(),
+          actions: z.array(z.string()).optional(),
+          states: z.array(z.string()).optional(),
+          notes: z.array(z.string()).optional(),
+        })
+        .optional()
+        .describe(
+          "Optional structured mockup or design outline with regions, actions, and states when you want to translate a screen description into Salt more explicitly.",
+        ),
+      package: z
+        .string()
+        .optional()
+        .describe(
+          "Restrict package-backed Salt targets to a specific Salt package such as @salt-ds/core or @salt-ds/lab.",
+        ),
+      prefer_stable: z.boolean().optional(),
+      a11y_required: z.boolean().optional(),
+      form_field_support: z.boolean().optional(),
+      include_starter_code: z.boolean().optional(),
+      view: z
+        .enum(VIEWS)
+        .optional()
+        .describe(
+          "Use full to include the raw detection signals and recommendation payloads.",
+        ),
+    },
+    execute: translateUiToSalt,
+  }),
   defineTool<Parameters<typeof chooseSaltSolution>[1]>({
     name: "choose_salt_solution",
     description:
-      "Use this for Salt recommendation or side-by-side comparison. If names is present, comparison mode wins; otherwise query drives recommendation mode.",
+      "Use this for Salt recommendation or side-by-side comparison. If names is present, comparison mode wins; otherwise query drives recommendation mode. Recommendations are canonical Salt guidance only; project-specific conventions belong in separate project conventions.",
     inputSchema: {
       query: z
         .string()

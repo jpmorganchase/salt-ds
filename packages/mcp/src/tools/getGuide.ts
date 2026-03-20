@@ -12,7 +12,7 @@ export interface GetGuideResult {
   did_you_mean?: string[];
   ambiguity?: {
     query: string;
-    matched_by: "name" | "alias";
+    matched_by: "name" | "alias" | "content";
     matches: Array<{
       name: string;
       kind: GuideRecord["kind"];

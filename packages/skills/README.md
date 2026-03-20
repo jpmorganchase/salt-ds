@@ -2,7 +2,7 @@
 
 This directory contains a collection of Salt-focused agent skills. Skills are packaged instructions and references for specific workflows, so an agent can load targeted guidance instead of carrying a large, general prompt.
 
-These skills work especially well alongside the Salt MCP in `packages/mcp`, which provides canonical lookup, recommendation, examples, analysis, and migration tooling.
+These skills work especially well alongside the Salt MCP in `packages/mcp`, which provides canonical lookup, recommendation, examples, UI-translation, analysis, and migration tooling. The MCP is intentionally Salt-only; repo-specific wrappers or local patterns should come from separate project conventions or explicit repo guidance.
 
 ## Available skills
 
@@ -56,7 +56,8 @@ Covers:
 
 ## Recommended companion tools
 
-- Salt MCP in `packages/mcp` for canonical lookup, recommendation, examples, analysis, and migration guidance.
+- Salt MCP in `packages/mcp` for canonical lookup, recommendation, examples, UI translation, analysis, and migration guidance.
+- `translate_ui_to_salt` for turning non-Salt UI, foreign-library code, or rough interface descriptions into Salt-first targets before implementation.
 - `discover_salt` and `choose_salt_solution` for broad discovery and solution selection.
 - `get_salt_entity` and `get_salt_examples` for canonical details and implementation examples.
 - `analyze_salt_code` and `compare_salt_versions` for validation, deprecations, and migrations.

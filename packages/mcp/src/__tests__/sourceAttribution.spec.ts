@@ -75,14 +75,44 @@ describe("sourceAttribution", () => {
     });
 
     expect(structuredContent).toMatchObject({
-      sources: [
+      sources: expect.arrayContaining([
         {
           original: "/salt/themes/design-tokens/index",
           resolved:
             "https://www.saltdesignsystem.com/salt/themes/design-tokens/index",
           kind: "site",
         },
-      ],
+        {
+          original: "/salt/themes/design-tokens/token-usage-rules",
+          resolved:
+            "https://www.saltdesignsystem.com/salt/themes/design-tokens/token-usage-rules",
+          kind: "site",
+        },
+      ]),
     });
+  });
+
+  it("collects docs arrays as source-bearing fields", () => {
+    const sources = collectToolSources({
+      recommended: {
+        docs: [
+          "/salt/themes/design-tokens/index",
+          "/salt/themes/design-tokens/token-usage-rules",
+        ],
+      },
+    });
+
+    expect(sources).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          original: "/salt/themes/design-tokens/index",
+          kind: "site",
+        }),
+        expect.objectContaining({
+          original: "/salt/themes/design-tokens/token-usage-rules",
+          kind: "site",
+        }),
+      ]),
+    );
   });
 });

@@ -10,13 +10,13 @@ import {
   inferExampleScenarioTags,
   scoreQueryFields,
 } from "./consumerSignals.js";
+import { getRelevantGuides } from "./guideAwareness.js";
+import { findGuideByIdentifier } from "./guideLookup.js";
 import { recommendTokens } from "./recommendTokens.js";
 import { suggestMigration } from "./suggestMigration.js";
 import { isExampleAllowedByDocsPolicy, tokenize, unique } from "./utils.js";
-import {
-  type ValidationIssue,
-  validateSaltUsage,
-} from "./validateSaltUsage.js";
+import { validateSaltUsage } from "./validateSaltUsage.js";
+import type { ValidationIssue } from "./validation/shared.js";
 
 export interface RecommendFixRecipesInput {
   code: string;
@@ -72,27 +72,13 @@ function collectRelatedComponentsForIssue(
     component: string | null;
   }>,
 ): ComponentRecord[] {
-  const text = [
-    issue.id,
-    issue.title,
-    issue.message,
-    issue.suggested_fix ?? "",
-    ...issue.source_urls,
-  ]
-    .join(" ")
-    .toLowerCase();
   const matches = new Map<string, ComponentRecord>();
 
-  for (const component of registry.components) {
-    if (text.includes(component.name.toLowerCase())) {
-      matches.set(component.id, component);
-      continue;
-    }
-
-    const docs = Object.values(component.related_docs)
-      .filter((value): value is string => Boolean(value))
-      .some((value) => issue.source_urls.includes(value));
-    if (docs) {
+  for (const componentName of issue.fix_hints?.related_components ?? []) {
+    const component =
+      registry.components.find((candidate) => candidate.name === componentName) ??
+      null;
+    if (component) {
       matches.set(component.id, component);
     }
   }
@@ -112,28 +98,51 @@ function collectRelatedComponentsForIssue(
     }
   }
 
-  if (issue.id.startsWith("component-choice.navigation")) {
-    for (const componentName of ["Button", "Link"]) {
-      const component =
-        registry.components.find(
-          (candidate) => candidate.name === componentName,
-        ) ?? null;
-      if (component) {
-        matches.set(component.id, component);
-      }
-    }
-  }
-
-  if (issue.id.startsWith("a11y.button")) {
-    const button =
-      registry.components.find((candidate) => candidate.name === "Button") ??
-      null;
-    if (button) {
-      matches.set(button.id, button);
+  for (const component of registry.components) {
+    const docs = Object.values(component.related_docs)
+      .filter((value): value is string => Boolean(value))
+      .some((value) => issue.source_urls.includes(value));
+    if (docs) {
+      matches.set(component.id, component);
     }
   }
 
   return [...matches.values()];
+}
+
+function getIssueSpecificSteps(
+  issue: ValidationIssue,
+  relatedComponents: ComponentRecord[],
+): string[] {
+  const extraSteps = [...(issue.fix_hints?.extra_steps ?? [])];
+
+  if (issue.id === "composition.pass-through-wrapper") {
+    const relatedNames = relatedComponents.map((component) => component.name);
+    const targetText =
+      relatedNames.length > 0
+        ? `Use ${relatedNames.join(" or ")} directly where possible.`
+        : "Use the underlying Salt primitive directly where possible.";
+
+    return [
+      ...extraSteps,
+      targetText,
+      "If the wrapper must remain, make it add meaningful shared behavior, semantics, or a stable public API beyond prop forwarding.",
+    ];
+  }
+
+  return extraSteps;
+}
+
+function getIssueGuideRoutes(
+  registry: SaltRegistry,
+  issue: ValidationIssue,
+): string[] {
+  return unique(
+    (issue.fix_hints?.guide_lookups ?? []).flatMap((lookup) => {
+      const guide = findGuideByIdentifier(registry.guides, lookup);
+      return guide?.related_docs.overview ? [guide.related_docs.overview] : [];
+    }),
+  );
 }
 
 function scoreExampleForIssue(
@@ -227,29 +236,19 @@ function getTokenRecommendationsForIssue(
   registry: SaltRegistry,
   issue: ValidationIssue,
 ): Array<Record<string, unknown>> {
-  if (issue.id === "tokens.hardcoded-size") {
-    return (
-      recommendTokens(registry, {
-        query: "size spacing control",
-        category: "size",
-        top_k: 3,
-        view: "full",
-      }).recommendations ?? []
-    );
+  const tokenRecommendation = issue.fix_hints?.token_recommendation;
+  if (!tokenRecommendation) {
+    return [];
   }
 
-  if (issue.id === "tokens.hardcoded-color") {
-    return (
-      recommendTokens(registry, {
-        query: "semantic color foreground background",
-        category: "color",
-        top_k: 3,
-        view: "full",
-      }).recommendations ?? []
-    );
-  }
-
-  return [];
+  return (
+    recommendTokens(registry, {
+      query: tokenRecommendation.query,
+      category: tokenRecommendation.category,
+      top_k: tokenRecommendation.top_k ?? 3,
+      view: "full",
+    }).recommendations ?? []
+  );
 }
 
 function getTokenRecommendationName(
@@ -350,6 +349,7 @@ export function recommendFixRecipes(
       registry,
       issue,
     );
+    const issueSpecificSteps = getIssueSpecificSteps(issue, relatedComponents);
     const docs = unique([
       ...issue.source_urls,
       ...relatedComponents.flatMap((component) =>
@@ -358,13 +358,30 @@ export function recommendFixRecipes(
         ),
       ),
     ]);
+    const relatedGuides = getRelevantGuides(registry, {
+      componentNames: relatedComponents.map((component) => component.name),
+      packages: unique(
+        relatedComponents.map((component) => component.package.name),
+      ),
+      guideRoutes: unique(
+        [
+          issue.canonical_source,
+          ...getIssueGuideRoutes(registry, issue),
+          ...issue.source_urls,
+        ].filter(
+          (value): value is string => Boolean(value),
+        ),
+      ),
+      top_k: 4,
+    });
     const steps = unique(
       [
         issue.suggested_fix,
+        ...issueSpecificSteps,
         ...relevantMigrations.map((migration) => migration.reason),
         ...(tokenRecommendations.length > 0
           ? [
-              "Use the recommended semantic Salt tokens instead of hard-coded values.",
+              "Use the recommended Salt tokens that match the semantic or structural role instead of the current styling values.",
             ]
           : []),
       ].filter((value): value is string => Boolean(value)),
@@ -373,14 +390,19 @@ export function recommendFixRecipes(
     return {
       issue: {
         id: issue.id,
+        category: issue.category,
+        rule: issue.rule,
         severity: issue.severity,
         title: issue.title,
         message: issue.message,
+        evidence: issue.evidence,
+        canonical_source: issue.canonical_source,
         confidence: issue.confidence,
         matches: issue.matches,
       },
       steps,
       supporting_docs: docs,
+      related_guides: relatedGuides,
       related_components: relatedComponents.map((component) => ({
         name: component.name,
         package: component.package.name,
@@ -415,11 +437,15 @@ export function recommendFixRecipes(
 
   const fixes = recipes.map((recipe) => ({
     problem: recipe.issue?.message ?? recipe.issue?.title,
+    category: recipe.issue?.category,
+    rule: recipe.issue?.rule,
     severity: recipe.issue?.severity,
+    canonical_source: recipe.issue?.canonical_source ?? null,
     recommended_fix: recipe.steps?.[0] ?? null,
     next_steps: recipe.steps?.slice(1) ?? [],
     example: recipe.supporting_examples?.[0]?.source_url ?? null,
     docs: recipe.supporting_docs?.slice(0, 4) ?? [],
+    related_guides: recipe.related_guides ?? [],
     token_recommendations: (recipe.token_recommendations ?? [])
       .map((tokenRecommendation: Record<string, unknown>) =>
         getTokenRecommendationName(tokenRecommendation),

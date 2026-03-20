@@ -314,6 +314,14 @@ export interface TokenRecord {
   applies_to: string[];
   guidance: string[];
   aliases: string[];
+  policy?: {
+    usage_tier: "characteristic" | "palette" | "foundation";
+    direct_component_use: "always" | "conditional" | "never";
+    preferred_for: string[];
+    avoid_for: string[];
+    notes: string[];
+    docs: string[];
+  } | null;
   deprecated: boolean;
   last_verified_at: string;
 }

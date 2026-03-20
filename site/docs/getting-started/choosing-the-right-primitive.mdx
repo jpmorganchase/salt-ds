@@ -1,0 +1,185 @@
+---
+title: Choosing the right primitive
+description: "Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI."
+layout: DetailTechnical
+sidebar:
+  label: Choosing primitives
+---
+
+Choose Salt UI building blocks by user intent first, then prefer the most
+constrained component, pattern, or foundation that satisfies that intent.
+
+## Start with user intent
+
+Ask what the user is trying to do before choosing a component:
+
+- Trigger an action in the current view: use an action primitive such as
+  [`Button`](/salt/components/button).
+- Move to another route, page, document, or destination: use
+  [`Link`](/salt/components/link).
+- Show or hide related content: use a disclosure component such as
+  [`Accordion`](/salt/components/accordion) or [`Collapsible`](/salt/components/collapsible).
+- Enter, select, or edit data: start with the relevant input or selection
+  component.
+- Structure a page or region: start with [layouts](/salt/components/layouts/index)
+  and only add custom wrappers when they add real value.
+- Build a repeated business flow made up of multiple components: start by
+  checking [patterns](/salt/patterns/index).
+
+## Quick decision table
+
+| User intent                                  | Prefer                                    | Avoid                                                                     | Notes                                                                                                               |
+| -------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Trigger work in the current view             | [`Button`](/salt/components/button)       | `Link`, native `a`, custom `role="link"`                                  | Use an action primitive for submit, save, apply, retry, confirm, and dialog triggers.                               |
+| Navigate to another destination              | [`Link`](/salt/components/link)           | `Button`, custom click-only action elements                               | Use a navigation primitive when the element has a real destination such as a route, page, document, or anchor.      |
+| Build a repeated multi-part flow             | [Patterns](/salt/patterns/index)          | Ad hoc custom assemblies                                                  | Start with a pattern when the solution spans multiple components and repeated structure.                            |
+| Arrange page structure                       | [Layouts](/salt/components/layouts/index) | Extra generic wrappers                                                    | Use Salt layouts before introducing custom structural containers.                                                   |
+| Build Salt UI in a screen already using Salt | Salt primitives                           | Native `button`, native `a`, custom `role="button"`, custom `role="link"` | Prefer Salt primitives over native or custom interactive recreations unless platform constraints require otherwise. |
+
+## Prefer the most constrained Salt option
+
+- Prefer a Salt component before using native HTML or a custom recreation.
+- Prefer Salt primitives over native or custom interactive elements in Salt UI.
+- Prefer a single primitive that already matches the interaction over composing
+  several pieces into a custom equivalent.
+- Prefer a pattern when the problem is a reusable flow or arrangement, not a
+  single element.
+- Prefer Salt foundations and tokens over raw styling values when structuring or
+  styling the UI.
+
+## Common decisions
+
+### Button or Link
+
+Use [`Button`](/salt/components/button) when the user is executing work in the
+current context, for example submitting, saving, confirming, filtering, or
+opening an in-app control.
+
+Use [`Link`](/salt/components/link) when the user is navigating to another
+destination, for example another page, route, document, help article, or page
+section.
+
+Do not use a button for navigation, and do not use a link as a generic action
+trigger without a real navigation target.
+
+### Salt primitive or native HTML
+
+If the screen already uses Salt, default to Salt primitives instead of native
+`button` or `a` elements and instead of custom elements with `role="button"` or
+`role="link"`.
+
+Use native or custom interactive elements only when platform constraints,
+third-party integrations, or native browser behavior make the Salt primitive a
+poor fit.
+
+Avoid custom button or link roles in Salt UI unless there is a strong reason to
+manage the interaction semantics manually.
+
+### Component or pattern
+
+Start with a component when you need a single, well-defined UI element.
+
+Start with a pattern when the solution spans multiple components, repeated page
+regions, or a common business task that needs consistent structure.
+
+## Examples
+
+### Action: prefer Button
+
+```tsx
+// Prefer
+import { Button } from "@salt-ds/core";
+
+export function SaveChanges() {
+  return <Button onClick={saveChanges}>Save</Button>;
+}
+```
+
+```tsx
+// Avoid
+import { Link } from "@salt-ds/core";
+
+export function SaveChanges() {
+  return <Link onClick={saveChanges}>Save</Link>;
+}
+```
+
+### Navigation: prefer Link
+
+```tsx
+// Prefer
+import { Link } from "@salt-ds/core";
+
+export function HelpLink() {
+  return <Link href="/help">Visit help</Link>;
+}
+```
+
+```tsx
+// Avoid
+import { Button } from "@salt-ds/core";
+
+export function HelpLink() {
+  return <Button href="/help">Visit help</Button>;
+}
+```
+
+### In Salt UI: prefer Salt primitives over recreated roles
+
+```tsx
+// Prefer
+import { Button } from "@salt-ds/core";
+
+export function RetryAction() {
+  return <Button onClick={retryRequest}>Retry</Button>;
+}
+```
+
+```tsx
+// Avoid
+export function RetryAction() {
+  return (
+    <div role="button" tabIndex={0} onClick={retryRequest}>
+      Retry
+    </div>
+  );
+}
+```
+
+## Do and don't
+
+### Do
+
+- Use `Button` for actions such as save, apply, merge, retry, or open dialog.
+- Use `Link` for navigation to another route, page, or document.
+- Use Salt inputs, selection controls, and layouts before inventing custom UI.
+- Prefer Salt primitives over native or custom interactive elements in Salt UI.
+- Use existing patterns when the same arrangement will recur across screens.
+
+### Don't
+
+- Don't use `Button` with `href` or route-navigation behavior.
+- Don't use `Link` as a button with only `onClick` and no navigation target.
+- Don't recreate standard Salt primitives with custom wrappers unless the wrapper
+  adds stable semantics, shared behavior, or a public API.
+- Don't jump straight to custom composition before checking whether Salt already
+  provides the primitive, pattern, or layout you need.
+
+## Before you create something custom
+
+Run this short check first:
+
+1. Is there already a Salt component that matches the interaction?
+2. Is this actually a known pattern rather than a new primitive?
+3. Can layouts and foundations solve the structure without extra wrappers?
+4. If a wrapper is still needed, does it add behavior or semantics beyond prop
+   forwarding?
+
+## Next reads
+
+- [Developing with Salt](./developing)
+- [Composition pitfalls](./composition-pitfalls)
+- [Button usage](/salt/components/button/usage)
+- [Link usage](/salt/components/link/usage)
+- [Layouts overview](/salt/components/layouts/index)
+- [Patterns overview](/salt/patterns/index)

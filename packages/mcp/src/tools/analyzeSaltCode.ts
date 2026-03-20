@@ -127,13 +127,18 @@ export function analyzeSaltCode(
     fixes: view === "full" ? fixes.recipes : fixes.fixes,
     issues: validation.issues.map((issue) => ({
       id: issue.id,
+      category: issue.category,
+      rule: issue.rule,
       severity: issue.severity,
       title: issue.title,
       message: issue.message,
+      evidence: issue.evidence,
+      canonical_source: issue.canonical_source,
       suggested_fix: issue.suggested_fix,
       confidence: issue.confidence,
       matches: issue.matches,
       source_urls: issue.source_urls,
+      fix_hints: issue.fix_hints,
     })),
     migrations: migrations.migrations.map((migration) => ({
       kind: migration.kind,

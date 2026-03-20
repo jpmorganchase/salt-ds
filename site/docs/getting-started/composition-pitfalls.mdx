@@ -1,0 +1,169 @@
+---
+title: Composition pitfalls
+description: "Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives."
+layout: DetailTechnical
+sidebar:
+  label: Composition pitfalls
+---
+
+Compose Salt components to simplify implementation and make behavior more
+predictable. If composition is making the hierarchy harder to understand or is
+recreating an existing Salt primitive, the structure is probably doing too much.
+
+## Compose to simplify
+
+Good composition should:
+
+- make intent clearer
+- reduce repeated code
+- preserve the semantics of the underlying Salt primitives
+- keep structure shallow unless deeper nesting is necessary for the interaction
+
+## Pitfalls to avoid
+
+### Avoid nesting interactive Salt primitives
+
+Do not nest interactive components such as [`Button`](/salt/components/button)
+and [`Link`](/salt/components/link) inside each other. Choose one interactive
+owner for the action or navigation.
+
+### Avoid pass-through wrappers over Salt primitives
+
+Treat wrappers that only forward props to a Salt primitive as suspicious. If a
+wrapper does not add behavior, semantics, or a stable domain API, prefer using
+the Salt primitive directly.
+
+### Recreating standard Salt primitives
+
+Avoid rebuilding Salt buttons, links, navigation items, or other common
+components from raw HTML, custom roles, and ad hoc styling when Salt already
+provides the correct primitive.
+
+### Extra layout wrappers
+
+Avoid stacking multiple layout containers when one Salt layout component can
+express the structure more clearly. Each wrapper should have a clear job such as
+controlling spacing, flow, split regions, or parent-child arrangement.
+
+### Styling that fights Salt
+
+Avoid raw spacing, sizing, and color values that override Salt foundations and
+token usage without a strong reason. Prefer Salt layouts, foundations, and
+tokens before introducing custom styling.
+
+## Before and after
+
+### Nested interactive primitives
+
+```tsx
+// Avoid
+import { Button, Link } from "@salt-ds/core";
+
+export function OpenHelp() {
+  return (
+    <Button>
+      <Link href="/help">Open help</Link>
+    </Button>
+  );
+}
+```
+
+```tsx
+// Prefer
+import { Link } from "@salt-ds/core";
+
+export function OpenHelp() {
+  return <Link href="/help">Open help</Link>;
+}
+```
+
+### Pass-through wrappers
+
+```tsx
+// Avoid
+import { Button } from "@salt-ds/core";
+
+export function PrimaryButton(props) {
+  return <Button {...props} />;
+}
+```
+
+```tsx
+// Prefer
+import { Button } from "@salt-ds/core";
+
+export function SaveAction() {
+  return <Button appearance="solid">Save</Button>;
+}
+```
+
+If a wrapper remains, it should add more than prop forwarding. Give it a clear
+reason such as shared behavior, domain semantics, or a stable public API.
+
+### Recreating a Salt primitive
+
+```tsx
+// Avoid
+export function HelpAction() {
+  return (
+    <a className="custom-link-button" onClick={openHelp}>
+      Help
+    </a>
+  );
+}
+```
+
+```tsx
+// Prefer
+import { Button } from "@salt-ds/core";
+
+export function HelpAction() {
+  return <Button onClick={openHelp}>Help</Button>;
+}
+```
+
+## When wrappers are justified
+
+A wrapper can be the right choice when it:
+
+- establishes a stable domain-specific API
+- adds shared behavior such as analytics, permissions, or data wiring
+- adds semantics that the base primitive does not carry on its own
+- coordinates multiple Salt primitives into a reusable higher-level unit
+
+If the wrapper is justified, keep the responsibilities explicit and avoid hiding
+the underlying interaction model.
+
+```tsx
+// Reasonable wrapper
+import { Button } from "@salt-ds/core";
+
+export function PermissionedAction({ canRun, onRun, children }) {
+  return (
+    <Button disabled={!canRun} onClick={onRun}>
+      {children}
+    </Button>
+  );
+}
+```
+
+This wrapper adds a domain-specific API and shared behavior rather than only
+renaming `Button`.
+
+## Quick review checklist
+
+Before shipping or reviewing composed UI, check:
+
+1. Is the interaction owned by the right Salt primitive?
+2. Are there nested interactive Salt primitives that should be flattened?
+3. Is there a pass-through wrapper over a Salt primitive that should be removed?
+4. Could a Salt layout or pattern replace some of the custom structure?
+5. Does the styling still follow Salt foundations and token guidance?
+
+## Next reads
+
+- [Choosing the right primitive](./choosing-the-right-primitive)
+- [Custom wrappers](./custom-wrappers)
+- [Developing with Salt](./developing)
+- [Layouts overview](/salt/components/layouts/index)
+- [Patterns overview](/salt/patterns/index)

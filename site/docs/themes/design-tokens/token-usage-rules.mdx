@@ -1,0 +1,74 @@
+---
+title: Token usage rules
+layout: DetailTechnical
+sidebar:
+  priority: 18
+---
+
+Use this page when you need to decide which Salt token layer or family should be applied in code. It turns the design token model into practical selection rules for components, patterns, and custom UI.
+
+## Default rule
+
+Choose tokens by meaning, not by appearance. If a UI decision is semantic, prefer a characteristic token. If it is structural, use the relevant foundation token. Do not select a token just because the current value looks visually correct.
+
+## Which token layer to use
+
+### Characteristics
+
+Use characteristic tokens directly in components and patterns. They are the default choice for semantic styling because they express purpose, remain stable across themes and modes, and support consistent interaction design.
+
+- Use [content](/salt/themes/design-tokens/content-characteristic) for standard text and icon foregrounds.
+- Use [container](/salt/themes/design-tokens/container-characteristic) for surfaces and container border colors.
+- Use [separable](/salt/themes/design-tokens/separable-characteristic) for dividers and separators.
+- Use other characteristic families when the UI role is more specific, such as actionable, selectable, navigable, status, or sentiment.
+
+### Palettes
+
+Palette tokens are never referenced directly in components or patterns. They exist to bridge foundations and characteristics so the same semantic token can adapt to different themes and modes.
+
+### Foundations
+
+Foundation tokens are low-level primitives. Reference them directly when the styling decision is structural rather than semantic, such as spacing, size, border style, typography, or other system measurements.
+
+## Border and separator rules
+
+- Use fixed-size tokens for border and separator thickness.
+- Default to `--salt-size-fixed-100` for a standard 1px line.
+- Use `--salt-size-fixed-200` only when a stronger established Salt pattern calls for it.
+- Use `--salt-borderStyle-solid` for standard lines unless a specific Salt pattern calls for another style.
+- Use separable tokens for separator color rather than borrowing unrelated container or content colors.
+
+## Container rules
+
+- Pair container background and border tokens from the same level.
+- Do not mix levels such as a secondary container background with a primary border color unless a documented Salt pattern explicitly requires it.
+- Use container tokens for neutral surfaces before introducing custom surface colors.
+
+## Structural foundation rules
+
+- Use responsive size and spacing tokens by default so layouts adapt correctly across densities.
+- Use fixed-size or fixed-spacing tokens only when the dimension must remain constant across densities.
+- Use foundation color tokens only for low-level system cases that are not already covered semantically by a characteristic token.
+
+## Examples
+
+### Do
+
+- Use `--salt-content-primary-foreground` for standard text or icon foreground.
+- Use `--salt-container-primary-background` with `--salt-container-primary-borderColor` for a primary surface.
+- Use `--salt-size-fixed-100` with `--salt-separable-secondary-borderColor` for a standard divider.
+
+### Don't
+
+- Do not apply `--salt-palette-*` tokens directly in component or pattern code.
+- Do not use a semantic color token just because it happens to match the desired hue in one theme.
+- Do not use responsive size tokens for border thickness when a fixed-size token is required.
+
+## When the right token is unclear
+
+Start from the UI role first:
+
+1. Ask whether the styling choice is semantic or structural.
+2. If it is semantic, choose the matching characteristic family.
+3. If it is structural, choose the matching foundation.
+4. If there is still ambiguity, check the closest Salt component, pattern, or foundation guidance before inventing a new token combination.

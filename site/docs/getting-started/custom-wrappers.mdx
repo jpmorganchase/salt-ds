@@ -1,0 +1,90 @@
+---
+title: Custom wrappers
+description: "Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding."
+layout: DetailTechnical
+sidebar:
+  label: Custom wrappers
+---
+
+Wrap Salt primitives only when the wrapper makes the API clearer or adds shared
+behavior. If the wrapper only renames a component and forwards props unchanged,
+it usually makes the system harder to understand.
+
+## When wrappers help
+
+Wrappers are useful when they:
+
+- add a stable domain-specific API
+- coordinate permissions, analytics, or data wiring
+- add semantics that the primitive does not carry on its own
+- combine several Salt primitives into a reusable higher-level unit
+
+## When wrappers hurt
+
+Wrappers usually cause problems when they:
+
+- only forward props to a single Salt primitive
+- hide the real interaction owner
+- recreate an existing Salt primitive with a different name
+- make it harder to find the canonical Salt usage guidance
+
+## Avoid pass-through wrappers over Salt primitives
+
+Treat pass-through wrappers as suspicious. If the wrapper only spreads props
+into `Button`, `Link`, or another Salt primitive, prefer using the primitive
+directly.
+
+```tsx
+// Avoid
+import { Button } from "@salt-ds/core";
+
+export function PrimaryButton(props) {
+  return <Button {...props} />;
+}
+```
+
+```tsx
+// Prefer
+import { Button } from "@salt-ds/core";
+
+export function SaveAction() {
+  return <Button appearance="solid">Save</Button>;
+}
+```
+
+## Prefer explicit added behavior
+
+If a wrapper remains, make the added value obvious in its API and
+implementation.
+
+```tsx
+// Reasonable wrapper
+import { Button } from "@salt-ds/core";
+
+export function PermissionedAction({ canRun, onRun, children }) {
+  return (
+    <Button disabled={!canRun} onClick={onRun}>
+      {children}
+    </Button>
+  );
+}
+```
+
+This wrapper adds domain behavior and a clearer business API instead of just
+renaming `Button`.
+
+## Wrapper review checklist
+
+Before introducing or approving a wrapper, check:
+
+1. Does it add behavior, semantics, or a stable domain API?
+2. Would direct use of the Salt primitive be clearer?
+3. Is the interaction owner still obvious from the JSX?
+4. Does the wrapper preserve Salt guidance instead of obscuring it?
+
+## Next reads
+
+- [Composition pitfalls](./composition-pitfalls)
+- [Choosing the right primitive](./choosing-the-right-primitive)
+- [Button usage](/salt/components/button/usage)
+- [Link usage](/salt/components/link/usage)

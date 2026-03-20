@@ -25,6 +25,14 @@ import {
   createRecipeStarterCode,
   type StarterCodeSnippet,
 } from "./starterCode.js";
+import {
+  getRelevantGuidesForContext,
+  mergeGuideContexts,
+} from "./guideAwareness.js";
+import {
+  buildPatternPresentationBase,
+  getComponentGuideContext,
+} from "./solutionPresentation.js";
 import { isComponentAllowedByDocsPolicy, normalizeQuery } from "./utils.js";
 
 export interface GetCompositionRecipeInput {
@@ -66,6 +74,7 @@ function buildPatternRecipe(
   });
 
   const supportingExample = pattern.examples[0];
+  const presentation = buildPatternPresentationBase(registry, pattern);
 
   return {
     recipe_name: pattern.name,
@@ -93,10 +102,8 @@ function buildPatternRecipe(
         }
       : null,
     related_patterns: pattern.related_patterns,
-    docs: [
-      pattern.related_docs.overview,
-      ...pattern.resources.map((r) => r.href),
-    ].filter((value): value is string => Boolean(value)),
+    docs: presentation.docs,
+    related_guides: presentation.related_guides,
     caveats: getPatternCaveats(registry, pattern),
     ship_check: getPatternShipCheck(registry, pattern),
     suggested_follow_ups: getPatternSuggestedFollowUps(pattern),
@@ -179,6 +186,15 @@ function buildFallbackRecipe(
   }
 
   const primaryCandidate = candidates[0];
+  const relatedGuides = getRelevantGuidesForContext(
+    registry,
+    mergeGuideContexts(
+      ...candidates.map((candidate) =>
+        getComponentGuideContext(candidate.component),
+      ),
+    ),
+    4,
+  );
 
   return {
     recipe_name: "Suggested component set",
@@ -205,6 +221,7 @@ function buildFallbackRecipe(
         candidate.component.related_docs.examples,
       ].filter((value): value is string => Boolean(value)),
     ),
+    related_guides: relatedGuides,
     caveats,
     ship_check: shipCheck,
     suggested_follow_ups: getComponentSuggestedFollowUps(
@@ -375,6 +392,7 @@ export function getCompositionRecipe(
     components: recipe.components,
     examples: recipe.supporting_examples ?? [],
     docs: recipe.docs ?? [],
+    related_guides: recipe.related_guides ?? [],
     caveats: recipe.caveats ?? [],
     ship_check: recipe.ship_check ?? null,
   }));

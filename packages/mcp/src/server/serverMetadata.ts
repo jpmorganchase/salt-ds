@@ -78,7 +78,11 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     `Registry generated at ${metadata.registry_generated_at}.`,
     "When asked for the MCP version, use the runtime version.",
     "When asked about the Salt content version, use the registry version.",
+    "This MCP only provides canonical Salt guidance from official Salt sources.",
+    "Repo-local wrappers, approved custom patterns, and team-specific conventions belong in separate project conventions, not in the core Salt registry.",
+    "When a tool response includes project_conventions.check_recommended = true, confirm project-specific conventions through those separate project conventions or a targeted clarification before finalizing implementation advice.",
     "Routing decisions and suggested follow-ups use logical workflow labels, not guaranteed callable tool IDs.",
+    "For non-Salt UI adoption, foreign-library conversion, or mockup-to-Salt planning, prefer translate_ui_to_salt before analyze_salt_code.",
     "Only call tools that are actually present in the current session tool list.",
   ].join(" ");
 }

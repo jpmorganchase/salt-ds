@@ -28,7 +28,16 @@ import {
   getPatternQueryFields,
   scoreQueryFields,
 } from "./consumerSignals.js";
+import {
+  getRelevantGuidesForRecords,
+  type GuideReference,
+} from "./guideAwareness.js";
 import { resolveLookup } from "./lookupResolver.js";
+import {
+  buildComponentPresentationBase,
+  buildPatternPresentationBase,
+  getPatternDocs,
+} from "./solutionPresentation.js";
 import { isComponentAllowedByDocsPolicy, normalizeQuery } from "./utils.js";
 
 type CompareOptionType = "component" | "pattern";
@@ -61,6 +70,7 @@ export interface CompareOptionsResult {
     }>;
   }>;
   suggested_follow_ups?: SuggestedFollowUp[];
+  related_guides?: GuideReference[];
   next_step?: string;
   did_you_mean?: string[];
   ambiguity?: {
@@ -99,26 +109,6 @@ function getRouteSlug(route: string | null): string | null {
 
   const parts = route.split("/").filter((part) => part.length > 0);
   return parts.at(-1) ?? null;
-}
-
-function getComponentDocs(component: ComponentRecord): string[] {
-  return [
-    component.related_docs.overview,
-    component.related_docs.usage,
-    component.related_docs.accessibility,
-    component.related_docs.examples,
-  ].filter((value): value is string => Boolean(value));
-}
-
-function getPatternDocs(pattern: PatternRecord): string[] {
-  return [
-    pattern.related_docs.overview,
-    ...pattern.resources.map((resource) => resource.href),
-  ].filter((value): value is string => Boolean(value));
-}
-
-function getExamplesDocs(sourceUrl: string | null): string[] {
-  return sourceUrl ? [sourceUrl] : [];
 }
 
 function getQualityScore(shipCheck: ShipCheck): number {
@@ -429,14 +419,18 @@ function comparePatternCandidates(
   return left.pattern.name.localeCompare(right.pattern.name);
 }
 
-function toCompactComponentComparison(candidate: ComponentCandidate) {
+function toCompactComponentComparison(
+  registry: SaltRegistry,
+  candidate: ComponentCandidate,
+) {
+  const presentation = buildComponentPresentationBase(registry, candidate.component);
+
   return {
     name: candidate.component.name,
     summary: candidate.component.summary,
     best_for: candidate.component.when_to_use[0] ?? candidate.component.summary,
     avoid_when: candidate.component.when_not_to_use[0] ?? null,
-    docs: getComponentDocs(candidate.component),
-    examples: getExamplesDocs(candidate.component.related_docs.examples),
+    ...presentation,
     caveats: candidate.caveats,
     ship_check: candidate.shipCheck,
     ...(candidate.component.status !== "stable"
@@ -447,9 +441,12 @@ function toCompactComponentComparison(candidate: ComponentCandidate) {
   };
 }
 
-function toFullComponentComparison(candidate: ComponentCandidate) {
+function toFullComponentComparison(
+  registry: SaltRegistry,
+  candidate: ComponentCandidate,
+) {
   return {
-    ...toCompactComponentComparison(candidate),
+    ...toCompactComponentComparison(registry, candidate),
     package: candidate.component.package.name,
     alternatives: candidate.component.alternatives,
     task_score: candidate.taskScore,
@@ -458,17 +455,18 @@ function toFullComponentComparison(candidate: ComponentCandidate) {
   };
 }
 
-function toCompactPatternComparison(candidate: PatternCandidate) {
+function toCompactPatternComparison(
+  registry: SaltRegistry,
+  candidate: PatternCandidate,
+) {
+  const presentation = buildPatternPresentationBase(registry, candidate.pattern);
+
   return {
     name: candidate.pattern.name,
     summary: candidate.pattern.summary,
     best_for: candidate.pattern.when_to_use[0] ?? candidate.pattern.summary,
     avoid_when: candidate.pattern.when_not_to_use[0] ?? null,
-    docs: getPatternDocs(candidate.pattern),
-    examples: candidate.pattern.examples
-      .slice(0, 3)
-      .map((example) => example.source_url)
-      .filter((value): value is string => Boolean(value)),
+    ...presentation,
     caveats: candidate.caveats,
     ship_check: candidate.shipCheck,
     components: candidate.pattern.composed_of,
@@ -480,9 +478,12 @@ function toCompactPatternComparison(candidate: PatternCandidate) {
   };
 }
 
-function toFullPatternComparison(candidate: PatternCandidate) {
+function toFullPatternComparison(
+  registry: SaltRegistry,
+  candidate: PatternCandidate,
+) {
   return {
-    ...toCompactPatternComparison(candidate),
+    ...toCompactPatternComparison(registry, candidate),
     related_patterns: candidate.pattern.related_patterns,
     task_score: candidate.taskScore,
     matched_terms: candidate.matchedTerms,
@@ -554,8 +555,18 @@ export function compareOptions(
     const [recommended, nextBest] = comparedCandidates;
     const compared =
       view === "full"
-        ? comparedCandidates.map(toFullPatternComparison)
-        : comparedCandidates.map(toCompactPatternComparison);
+        ? comparedCandidates.map((candidate) =>
+            toFullPatternComparison(registry, candidate),
+          )
+        : comparedCandidates.map((candidate) =>
+            toCompactPatternComparison(registry, candidate),
+          );
+    const relatedGuides = getRelevantGuidesForRecords(registry, compared, {
+      fallbackComponentNames: comparedCandidates.flatMap(
+        (candidate) => candidate.pattern.composed_of,
+      ),
+      top_k: 4,
+    });
 
     if (unresolvedNames.length > 0) {
       return {
@@ -647,6 +658,7 @@ export function compareOptions(
       suggested_follow_ups: recommended
         ? getPatternSuggestedFollowUps(recommended.pattern)
         : undefined,
+      related_guides: relatedGuides.length > 0 ? relatedGuides : undefined,
       next_step: getComparisonNextStep("pattern", recommended?.pattern.name),
     };
   }
@@ -689,8 +701,23 @@ export function compareOptions(
   const [recommended, nextBest] = comparedCandidates;
   const compared =
     view === "full"
-      ? comparedCandidates.map(toFullComponentComparison)
-      : comparedCandidates.map(toCompactComponentComparison);
+      ? comparedCandidates.map((candidate) =>
+          toFullComponentComparison(registry, candidate),
+        )
+      : comparedCandidates.map((candidate) =>
+          toCompactComponentComparison(registry, candidate),
+        );
+  const relatedGuides = getRelevantGuidesForRecords(registry, compared, {
+    fallbackComponentNames: comparedCandidates.map(
+      (candidate) => candidate.component.name,
+    ),
+    fallbackPackages: [
+      ...new Set(
+        comparedCandidates.map((candidate) => candidate.component.package.name),
+      ),
+    ],
+    top_k: 4,
+  });
 
   if (unresolvedNames.length > 0) {
     return {
@@ -780,6 +807,7 @@ export function compareOptions(
             .map((candidate) => candidate.component.name),
         )
       : undefined,
+    related_guides: relatedGuides.length > 0 ? relatedGuides : undefined,
     next_step: getComparisonNextStep("component", recommended?.component.name),
   };
 }

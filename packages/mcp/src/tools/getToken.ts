@@ -1,6 +1,7 @@
 import type { SaltRegistry, TokenRecord } from "../types.js";
 
 const TOKEN_DOCS_SOURCE_URL = "/salt/themes/design-tokens/index";
+const TOKEN_POLICY_DOCS_SOURCE_URL = "/salt/themes/design-tokens/token-usage-rules";
 
 export interface GetTokenInput {
   name?: string;
@@ -24,9 +25,29 @@ function toCompactToken(token: TokenRecord): Record<string, unknown> {
     category: token.category,
     semantic_intent: token.semantic_intent,
     guidance: token.guidance,
+    docs: [...new Set([TOKEN_DOCS_SOURCE_URL, TOKEN_POLICY_DOCS_SOURCE_URL, ...(token.policy?.docs ?? [])])],
+    policy: token.policy ?? null,
     themes: token.themes,
     deprecated: token.deprecated,
   };
+}
+
+export function getTokenNextStep(
+  token: Pick<TokenRecord, "name" | "policy"> | undefined,
+): string {
+  if (!token) {
+    return "Broaden the styling description or remove one of the filters.";
+  }
+
+  if (token.policy?.direct_component_use === "never") {
+    return `Do not apply ${token.name} directly in component code; choose a semantic characteristic token instead.`;
+  }
+
+  if (token.policy?.direct_component_use === "conditional") {
+    return `Use ${token.name} only when its low-level structural role matches the need, then verify it fits the relevant theme and density.`;
+  }
+
+  return `Apply ${token.name} and verify it fits the relevant theme and density.`;
 }
 
 export function getToken(

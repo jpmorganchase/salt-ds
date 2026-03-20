@@ -10,6 +10,20 @@ data:
 
 ## Using the component
 
+If you are deciding between `Link`, `Button`, or a custom interactive element,
+start with [Choosing the right primitive](/salt/getting-started/choosing-the-right-primitive).
+
+<Callout title="Quick check">
+
+- Use `Link` when the element has a real destination such as a route, page,
+  document, or page section.
+- Do not use `Link` as a generic action trigger with only `onClick`. Use
+  [`Button`](../button) for actions.
+- If the screen already uses Salt, prefer `Link` over recreating link behavior
+  with native or custom interactive elements.
+
+</Callout>
+
 ### When to use
 
 - To provide navigation to a page on the same or different site.

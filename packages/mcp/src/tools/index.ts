@@ -161,6 +161,11 @@ export {
   suggestMigration,
 } from "./suggestMigration.js";
 export {
+  type TranslateUiToSaltInput,
+  type TranslateUiToSaltResult,
+  translateUiToSalt,
+} from "./translateUiToSalt.js";
+export {
   TOOL_DEFINITIONS,
   type ToolDefinition,
 } from "./toolDefinitions.js";

@@ -15,7 +15,7 @@ import type {
   GetSaltEntityResult,
   SaltEntityType,
 } from "./getSaltEntity.js";
-import { getToken } from "./getToken.js";
+import { getToken, getTokenNextStep } from "./getToken.js";
 import { listFoundations } from "./listFoundations.js";
 import { searchSaltDocs } from "./searchSaltDocs.js";
 import {
@@ -476,7 +476,7 @@ function resolveTokenEntity(
       related: input.include_related
         ? getSuggestedRelated(registry, "token", tokenName)
         : undefined,
-      nextStep: `Apply ${tokenName} and verify it fits the active Salt theme and density.`,
+      nextStep: getTokenNextStep(tokenResult.tokens[0] as Parameters<typeof getTokenNextStep>[0]),
       raw: buildRawPayload(view, "token_result", tokenResult),
     });
   }
@@ -509,7 +509,9 @@ function resolveTokenEntity(
         related: input.include_related
           ? getSuggestedRelated(registry, "token", tokenName)
           : undefined,
-        nextStep: `Apply ${tokenName} and verify it fits the active Salt theme and density.`,
+        nextStep: getTokenNextStep(
+          resolvedToken.tokens[0] as Parameters<typeof getTokenNextStep>[0],
+        ),
         raw:
           view === "full"
             ? {

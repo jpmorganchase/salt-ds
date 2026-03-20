@@ -80,6 +80,158 @@ function createGuideSnippet(
   };
 }
 
+function normalizeGuideStepTitle(title: string): string {
+  return title.replace(/^\d+\.\s*/, "").trim();
+}
+
+function toTitleCaseWords(value: string): string {
+  return value
+    .split(/[-_\s]+/)
+    .filter((part) => part.length > 0)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("");
+}
+
+function normalizeGuideAlias(candidate: string): string {
+  return normalizeWhitespace(cleanMarkdownText(candidate)).trim();
+}
+
+function expandGuideAliasCandidate(candidate: string): string[] {
+  const normalized = normalizeGuideAlias(candidate);
+  if (!normalized) {
+    return [];
+  }
+
+  const comparisonMatch = normalized.match(/^(.+?)\s+or\s+(.+)$/i);
+  if (!comparisonMatch) {
+    return [normalized];
+  }
+
+  return uniqueStrings([
+    normalized,
+    `${comparisonMatch[1]} vs ${comparisonMatch[2]}`,
+  ]);
+}
+
+function inferGettingStartedGuideAliases(
+  basename: string,
+  title: string,
+  content: string,
+): string[] {
+  const h2Sections = parseMarkdownSections(content, 2);
+  const h3Sections = parseMarkdownSections(content, 3);
+
+  return uniqueStrings(
+    [
+      title,
+      basename.replace(/-/g, " "),
+      ...h2Sections.map((section) => section.title),
+      ...h3Sections.map((section) => section.title),
+    ]
+      .flatMap(expandGuideAliasCandidate)
+      .filter((candidate) => candidate.length >= 3 && candidate.length <= 80),
+  );
+}
+
+function inferGettingStartedGuidePackages(content: string): string[] {
+  return uniqueStrings(
+    [...content.matchAll(/@salt-ds\/[a-z-]+/g)].map((match) => match[0]),
+  );
+}
+
+function inferGettingStartedGuideRelatedComponents(content: string): string[] {
+  return uniqueStrings(
+    [...content.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)]
+      .map((match) => match[1]?.trim() ?? "")
+      .filter((href) =>
+        /(?:^\/salt\/components\/|^\.\.?\/components\/)/i.test(href),
+      )
+      .map((href) => href.split(/[?#]/)[0]?.replace(/\\/g, "/") ?? "")
+      .map((href) =>
+        href.match(/(?:^|\/)components\/([^/]+)(?:\/(?:usage|accessibility|examples|index))?$/i),
+      )
+      .map((match) => match?.[1] ?? "")
+      .filter((slug) => slug.length > 0 && slug !== "layouts")
+      .map((slug) => toTitleCaseWords(slug)),
+  );
+}
+
+function inferGettingStartedGuideStepHeadingDepth(content: string): number {
+  const hasStepByStepSection = /^##\s+The step-by-step process\b/m.test(content);
+  if (!hasStepByStepSection) {
+    return 2;
+  }
+
+  return parseMarkdownSections(content, 3).length > 0 ? 3 : 2;
+}
+
+function buildGettingStartedGuideRecord(
+  filePath: string,
+  source: string,
+  verifiedAt: string,
+): GuideRecord | null {
+  const parsed = matter(source);
+  const title = asString(parsed.data.title);
+
+  if (!title) {
+    return null;
+  }
+
+  const stepHeadingDepth = inferGettingStartedGuideStepHeadingDepth(
+    parsed.content,
+  );
+
+  const sections = parseMarkdownSections(parsed.content, stepHeadingDepth);
+  const steps = sections
+    .map((section) => {
+      const stepTitle = normalizeGuideStepTitle(section.title);
+      const snippets = extractFencedCodeBlocks(section.content)
+        .map((block, index) =>
+          createGuideSnippet(
+            `${stepTitle} example ${index + 1}`,
+            block.language,
+            block.code,
+          ),
+        )
+        .filter((snippet): snippet is GuideSnippet => snippet !== null);
+      const statements = extractStatementsFromSection(section.content);
+
+      if (statements.length === 0 && snippets.length === 0) {
+        return null;
+      }
+
+      return buildGuideStep(stepTitle, statements, snippets);
+    })
+    .filter((step): step is GuideRecord["steps"][number] => step !== null);
+
+  if (steps.length === 0) {
+    return null;
+  }
+
+  const basename = path.basename(filePath, path.extname(filePath));
+  const packages = inferGettingStartedGuidePackages(parsed.content);
+  const relatedComponents = inferGettingStartedGuideRelatedComponents(
+    parsed.content,
+  );
+
+  return {
+    id: `guide.${basename.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`,
+    name: title,
+    aliases: inferGettingStartedGuideAliases(basename, title, parsed.content),
+    kind: "getting-started",
+    summary:
+      asString(parsed.data.description) ?? extractFirstParagraph(parsed.content),
+    packages,
+    steps,
+    related_docs: {
+      overview: `/salt/getting-started/${basename}`,
+      related_components: relatedComponents,
+      related_packages: packages,
+    },
+    last_verified_at: verifiedAt,
+  };
+}
+
 function normalizeSiteRoute(route: string): string {
   return route
     .trim()
@@ -397,125 +549,29 @@ export async function extractGuides(
   verifiedAt: string,
 ): Promise<GuideRecord[]> {
   const guides: GuideRecord[] = [];
+  const gettingStartedPaths = (
+    await fg("site/docs/getting-started/*.mdx", {
+      cwd: repoRoot,
+      absolute: true,
+    })
+  )
+    .filter((filePath) => path.basename(filePath) !== "index.mdx")
+    .sort((left, right) => left.localeCompare(right));
 
-  const developingPath = path.join(
-    repoRoot,
-    "site/docs/getting-started/developing.mdx",
-  );
-  const developingSource = await readFileOrNull(developingPath);
-  if (developingSource) {
-    const parsed = matter(developingSource);
-    const sections = parseMarkdownSections(parsed.content, 3);
-    const installSection = findMarkdownSection(sections, (title) =>
-      title.includes("Install the Salt packages"),
-    );
-    const fontsSection = findMarkdownSection(sections, (title) =>
-      title.includes("Add required web fonts"),
-    );
-    const integrateSection = findMarkdownSection(sections, (title) =>
-      title.includes("Integrate Salt into your app"),
-    );
-    const importSection = findMarkdownSection(sections, (title) =>
-      title.includes("Import components"),
-    );
-    const labSection = findMarkdownSection(sections, (title) =>
-      title.includes("Play with lab components"),
-    );
+  for (const guidePath of gettingStartedPaths) {
+    const guideSource = await readFileOrNull(guidePath);
+    if (!guideSource) {
+      continue;
+    }
 
-    const installBlocks = extractFencedCodeBlocks(installSection);
-    const fontBlocks = extractFencedCodeBlocks(fontsSection);
-    const integrateBlocks = extractFencedCodeBlocks(integrateSection);
-    const importBlocks = extractFencedCodeBlocks(importSection);
-
-    const steps = [
-      buildGuideStep(
-        "Install core packages",
-        [
-          "`@salt-ds/core` contains production-ready UI components.",
-          "`@salt-ds/theme` contains CSS files that apply Salt's default theme.",
-          "`@salt-ds/icons` contains SVG-based icons.",
-        ],
-        [
-          createGuideSnippet(
-            "Install Salt packages",
-            installBlocks[0]?.language ?? "shell",
-            installBlocks[0]?.code,
-          ),
-        ].filter((snippet): snippet is GuideSnippet => snippet !== null),
-      ),
-      buildGuideStep(
-        "Add required web fonts",
-        [
-          "Salt’s default theme requires the Open Sans and PT Mono web fonts.",
-          "You can load them from Google Fonts or self-host them with Fontsource.",
-        ],
-        [
-          createGuideSnippet(
-            "Google Fonts",
-            fontBlocks[0]?.language ?? "html",
-            fontBlocks[0]?.code,
-          ),
-          createGuideSnippet(
-            "Install Fontsource packages",
-            fontBlocks[1]?.language ?? "shell",
-            fontBlocks[1]?.code,
-          ),
-          createGuideSnippet(
-            "Import Fontsource styles",
-            fontBlocks[2]?.language ?? "tsx",
-            fontBlocks[2]?.code,
-          ),
-        ].filter((snippet): snippet is GuideSnippet => snippet !== null),
-      ),
-      buildGuideStep(
-        "Bootstrap Salt in your app",
-        [
-          "Import the Salt theme CSS and wrap your application in `SaltProvider`.",
-          ...extractStatementsFromSection(integrateSection),
-        ],
-        [
-          createGuideSnippet(
-            "Bootstrap with SaltProvider",
-            integrateBlocks[0]?.language ?? "tsx",
-            integrateBlocks[0]?.code,
-          ),
-        ].filter((snippet): snippet is GuideSnippet => snippet !== null),
-      ),
-      buildGuideStep(
-        "Import components",
-        extractStatementsFromSection(importSection),
-        [
-          createGuideSnippet(
-            "Import and render a Button",
-            importBlocks[0]?.language ?? "tsx",
-            importBlocks[0]?.code,
-          ),
-        ].filter((snippet): snippet is GuideSnippet => snippet !== null),
-      ),
-      buildGuideStep(
-        "Adopt lab components intentionally",
-        extractStatementsFromSection(labSection),
-        [],
-      ),
-    ];
-
-    guides.push({
-      id: "guide.developing-with-salt",
-      name: "Developing with Salt",
-      aliases: ["getting started", "setup", "bootstrap", "developing"],
-      kind: "getting-started",
-      summary:
-        asString(parsed.data.description) ??
-        extractFirstParagraph(parsed.content),
-      packages: ["@salt-ds/core", "@salt-ds/theme", "@salt-ds/icons"],
-      steps,
-      related_docs: {
-        overview: "/salt/getting-started/developing",
-        related_components: ["SaltProvider", "Button"],
-        related_packages: ["@salt-ds/core", "@salt-ds/theme", "@salt-ds/icons"],
-      },
-      last_verified_at: verifiedAt,
-    });
+    const guide = buildGettingStartedGuideRecord(
+      guidePath,
+      guideSource,
+      verifiedAt,
+    );
+    if (guide) {
+      guides.push(guide);
+    }
   }
 
   const themesPath = path.join(repoRoot, "site/docs/themes/index.mdx");

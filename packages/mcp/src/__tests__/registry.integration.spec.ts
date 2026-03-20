@@ -98,6 +98,35 @@ describe("registry integration", () => {
     expect(registry.pages[0]?.last_verified_at).toBe(BUILT_AT);
   });
 
+  it("attaches token usage policy metadata for palette, characteristic, and foundation tokens", () => {
+    const paletteToken = registry.tokens.find(
+      (token) => token.name === "--salt-palette-accent-border",
+    );
+    const separableToken = registry.tokens.find(
+      (token) => token.name === "--salt-separable-secondary-borderColor",
+    );
+    const fixedSizeToken = registry.tokens.find(
+      (token) => token.name === "--salt-size-fixed-100",
+    );
+
+    expect(paletteToken?.policy).toMatchObject({
+      usage_tier: "palette",
+      direct_component_use: "never",
+    });
+    expect(separableToken?.policy).toMatchObject({
+      usage_tier: "characteristic",
+      direct_component_use: "always",
+    });
+    expect(fixedSizeToken?.policy).toMatchObject({
+      usage_tier: "foundation",
+      direct_component_use: "conditional",
+      preferred_for: expect.arrayContaining([
+        "border thickness",
+        "separator thickness",
+      ]),
+    });
+  });
+
   it("records build inference metadata for component docgen, tokens, and deprecations", () => {
     const button = registry.components.find(
       (component) => component.name === "Button",
@@ -337,9 +366,9 @@ describe("registry integration", () => {
     ).toBe(true);
   });
 
-  it("extracts setup guides and makes them searchable", () => {
+  it("extracts getting-started guides and makes them searchable by page content", () => {
     const result = getGuide(registry, {
-      name: "setup",
+      name: "bootstrap",
       view: "full",
     });
 
@@ -351,6 +380,61 @@ describe("registry integration", () => {
       registry.search_index.some(
         (entry) =>
           entry.type === "guide" && entry.name === "Developing with Salt",
+      ),
+    ).toBe(true);
+  });
+
+  it("extracts primitive-choice and composition guides into the registry", () => {
+    const primitiveGuide = getGuide(registry, {
+      name: "button vs link",
+      view: "full",
+    });
+    const compositionGuide = getGuide(registry, {
+      name: "nested interactive",
+      view: "full",
+    });
+    const wrapperGuide = getGuide(registry, {
+      name: "wrapper review",
+      view: "full",
+    });
+
+    expect(primitiveGuide.guide).toMatchObject({
+      name: "Choosing the right primitive",
+      kind: "getting-started",
+      related_docs: expect.objectContaining({
+        overview: "/salt/getting-started/choosing-the-right-primitive",
+      }),
+    });
+    expect(compositionGuide.guide).toMatchObject({
+      name: "Composition pitfalls",
+      kind: "getting-started",
+      related_docs: expect.objectContaining({
+        overview: "/salt/getting-started/composition-pitfalls",
+      }),
+    });
+    expect(wrapperGuide.guide).toMatchObject({
+      name: "Custom wrappers",
+      kind: "getting-started",
+      related_docs: expect.objectContaining({
+        overview: "/salt/getting-started/custom-wrappers",
+      }),
+    });
+    expect(
+      registry.search_index.some(
+        (entry) =>
+          entry.type === "guide" &&
+          entry.name === "Choosing the right primitive",
+      ),
+    ).toBe(true);
+    expect(
+      registry.search_index.some(
+        (entry) =>
+          entry.type === "guide" && entry.name === "Composition pitfalls",
+      ),
+    ).toBe(true);
+    expect(
+      registry.search_index.some(
+        (entry) => entry.type === "guide" && entry.name === "Custom wrappers",
       ),
     ).toBe(true);
   });

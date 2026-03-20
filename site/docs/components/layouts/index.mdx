@@ -19,3 +19,18 @@ Salt layouts are a special category of components designed to manage the overall
 Salt layout components are each tailored to specific structural needs:
 
 {meta.data.items?.map(({ title, data }, index) => <div style={{ marginTop: 'var(--salt-spacing-100)' }} key={`${title}-${index}`}><Text styleAs="h2">{title}</Text>{(data?.description?.replaceAll("`", "").match(/^.*?\./)?.[0]?.trim() || data?.description?.replaceAll("`", "").trim() || "")}</div>)}
+
+<Callout title="Layout review checklist">
+
+- Prefer a Salt layout before adding a generic wrapper with custom CSS.
+- Each extra container should have a clear structural job such as flow, split,
+  stack, grid, or parent-child arrangement.
+- If wrappers are accumulating, review
+  [Composition pitfalls](/salt/getting-started/composition-pitfalls) before
+  adding more structure.
+
+</Callout>
+
+If you are stacking multiple wrappers to achieve page structure, review
+[Composition pitfalls](/salt/getting-started/composition-pitfalls) before
+adding more custom layout layers.

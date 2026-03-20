@@ -7,9 +7,10 @@ const DIRECT_SOURCE_KEYS = new Set([
   "changelog_path",
   "repo_path",
 ]);
-const SOURCE_COLLECTION_KEYS = new Set(["source_urls"]);
+const SOURCE_COLLECTION_KEYS = new Set(["source_urls", "docs"]);
 const RELATED_DOCS_KEYS = new Set(["related_docs"]);
 const LINK_KEYS = new Set(["href"]);
+const TOKEN_POLICY_SOURCE_URL = "/salt/themes/design-tokens/token-usage-rules";
 
 export type ToolSourceKind = "site" | "external" | "repo";
 
@@ -208,6 +209,7 @@ export function collectToolSources(
 
   if (hasTokenQueryShape(payload)) {
     addSource("/salt/themes/design-tokens/index");
+    addSource(TOKEN_POLICY_SOURCE_URL);
   }
 
   return [...deduped.values()];

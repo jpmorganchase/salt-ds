@@ -29,6 +29,7 @@ import {
   searchApiSurface,
   searchComponentCapabilities,
   searchSaltDocs,
+  translateUiToSalt,
 } from "../tools/index.js";
 import { isComponentAllowedByDocsPolicy } from "../tools/utils.js";
 import type { SaltRegistry } from "../types.js";
@@ -710,6 +711,96 @@ const REGISTRY: SaltRegistry = {
         overview: "/salt/getting-started/developing",
         related_components: ["SaltProvider", "Button"],
         related_packages: ["@salt-ds/core", "@salt-ds/theme", "@salt-ds/icons"],
+      },
+      last_verified_at: TIMESTAMP,
+    },
+    {
+      id: "guide.choosing-the-right-primitive",
+      name: "Choosing the right primitive",
+      aliases: [
+        "primitive choice",
+        "button vs link",
+        "choose component",
+        "choosing primitives",
+      ],
+      kind: "getting-started",
+      summary:
+        "Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI.",
+      packages: ["@salt-ds/core"],
+      steps: [
+        {
+          title: "Start with user intent",
+          statements: [
+            "Use Button for actions in the current view.",
+            "Use Link for navigation to another route or destination.",
+          ],
+          snippets: [],
+        },
+      ],
+      related_docs: {
+        overview: "/salt/getting-started/choosing-the-right-primitive",
+        related_components: ["Button", "Link", "Accordion", "Collapsible"],
+        related_packages: ["@salt-ds/core"],
+      },
+      last_verified_at: TIMESTAMP,
+    },
+    {
+      id: "guide.composition-pitfalls",
+      name: "Composition pitfalls",
+      aliases: [
+        "composition",
+        "composition review",
+        "wrappers",
+        "nested interactive",
+        "pass-through wrapper",
+      ],
+      kind: "getting-started",
+      summary:
+        "Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives.",
+      packages: ["@salt-ds/core"],
+      steps: [
+        {
+          title: "Pitfalls to avoid",
+          statements: [
+            "Do not nest interactive Salt primitives.",
+            "Treat pass-through wrappers as suspicious.",
+          ],
+          snippets: [],
+        },
+      ],
+      related_docs: {
+        overview: "/salt/getting-started/composition-pitfalls",
+        related_components: ["Button", "Link"],
+        related_packages: ["@salt-ds/core"],
+      },
+      last_verified_at: TIMESTAMP,
+    },
+    {
+      id: "guide.custom-wrappers",
+      name: "Custom wrappers",
+      aliases: [
+        "wrapper component",
+        "custom wrappers",
+        "wrapper review",
+        "prop forwarding",
+      ],
+      kind: "getting-started",
+      summary:
+        "Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.",
+      packages: ["@salt-ds/core"],
+      steps: [
+        {
+          title: "When wrappers hurt",
+          statements: [
+            "Avoid wrappers that only forward props to a single Salt primitive.",
+          ],
+          snippets: [],
+        },
+      ],
+      related_docs: {
+        overview: "/salt/getting-started/custom-wrappers",
+        related_components: ["Button", "Link"],
+        related_packages: ["@salt-ds/core"],
       },
       last_verified_at: TIMESTAMP,
     },
@@ -1496,6 +1587,16 @@ describe("getComponent", () => {
     expect(result.component).toMatchObject({
       name: "Button",
       summary: "Executes an action.",
+      related_guides: expect.arrayContaining([
+        expect.objectContaining({
+          name: "Choosing the right primitive",
+          overview: "/salt/getting-started/choosing-the-right-primitive",
+        }),
+        expect.objectContaining({
+          name: "Composition pitfalls",
+          overview: "/salt/getting-started/composition-pitfalls",
+        }),
+      ]),
       next_step: "Review examples for Button before implementing.",
     });
     expect(result.component).toHaveProperty("props");
@@ -1694,6 +1795,32 @@ describe("getGuide", () => {
         "@salt-ds/theme",
         "@salt-ds/icons",
       ]),
+    });
+  });
+
+  it("finds the primitive decision guide by alias", () => {
+    const result = getGuide(REGISTRY, {
+      name: "button vs link",
+    });
+
+    expect(result.guide).toMatchObject({
+      name: "Choosing the right primitive",
+      related_docs: {
+        overview: "/salt/getting-started/choosing-the-right-primitive",
+      },
+    });
+  });
+
+  it("finds the composition guide by wrapper alias", () => {
+    const result = getGuide(REGISTRY, {
+      name: "pass-through wrapper",
+    });
+
+    expect(result.guide).toMatchObject({
+      name: "Composition pitfalls",
+      related_docs: {
+        overview: "/salt/getting-started/composition-pitfalls",
+      },
     });
   });
 });
@@ -2196,6 +2323,58 @@ describe("getToken", () => {
     expect(containsResult.source_url).toBe("/salt/themes/design-tokens/index");
     expect(containsResult.tokens).toHaveLength(1);
   });
+
+  it("surfaces token policy metadata and policy docs when available", () => {
+    const tokenRegistry: SaltRegistry = {
+      ...REGISTRY,
+      tokens: [
+        ...REGISTRY.tokens,
+        {
+          name: "--salt-palette-accent-border",
+          category: "palette",
+          type: "color",
+          value: "#1d4ed8",
+          semantic_intent: null,
+          themes: ["salt", "next"],
+          densities: [],
+          applies_to: [],
+          guidance: ["Intermediate palette token."],
+          aliases: [],
+          policy: {
+            usage_tier: "palette",
+            direct_component_use: "never",
+            preferred_for: ["internal theme and mode mapping inside the Salt token system"],
+            avoid_for: ["direct component styling"],
+            notes: [
+              "Palette tokens sit between foundations and characteristics and should not be referenced directly in components or patterns.",
+            ],
+            docs: ["/salt/themes/design-tokens/token-usage-rules"],
+          },
+          deprecated: false,
+          last_verified_at: TIMESTAMP,
+        },
+      ],
+    };
+
+    const result = getToken(tokenRegistry, {
+      name: "--salt-palette-accent-border",
+      max_results: 1,
+    });
+
+    expect(result.tokens[0]).toMatchObject({
+      name: "--salt-palette-accent-border",
+      policy: {
+        usage_tier: "palette",
+        direct_component_use: "never",
+      },
+    });
+    expect(result.tokens[0]).toMatchObject({
+      docs: expect.arrayContaining([
+        "/salt/themes/design-tokens/index",
+        "/salt/themes/design-tokens/token-usage-rules",
+      ]),
+    });
+  });
 });
 
 describe("consumer tools", () => {
@@ -2291,6 +2470,12 @@ describe("consumer tools", () => {
     expect(result.recommended).toMatchObject({
       name: "Link",
       why: "Navigate to another route.",
+      related_guides: expect.arrayContaining([
+        expect.objectContaining({
+          name: "Choosing the right primitive",
+          overview: "/salt/getting-started/choosing-the-right-primitive",
+        }),
+      ]),
     });
     expect(result.alternatives).toEqual(
       expect.arrayContaining([
@@ -2362,6 +2547,12 @@ describe("consumer tools", () => {
       component: {
         name: "Link",
       },
+      related_guides: expect.arrayContaining([
+        expect.objectContaining({
+          name: "Choosing the right primitive",
+          overview: "/salt/getting-started/choosing-the-right-primitive",
+        }),
+      ]),
     });
   });
 
@@ -2437,6 +2628,11 @@ describe("consumer tools", () => {
           ship_check: expect.objectContaining({
             stable_for_production: true,
           }),
+          related_guides: expect.arrayContaining([
+            expect.objectContaining({
+              name: "Choosing the right primitive",
+            }),
+          ]),
         }),
       ]),
     );
@@ -2444,6 +2640,14 @@ describe("consumer tools", () => {
       expect.arrayContaining([
         expect.objectContaining({
           criterion: "Accessibility guidance",
+        }),
+      ]),
+    );
+    expect(result.related_guides).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "Choosing the right primitive",
+          overview: "/salt/getting-started/choosing-the-right-primitive",
         }),
       ]),
     );
@@ -2474,6 +2678,406 @@ describe("consumer tools", () => {
     expect(result.next_step).toBe(
       "Provide at least two exact component names to compare, or start from choose_salt_solution.",
     );
+  });
+
+  it("translates external or generic UI descriptions into Salt targets", () => {
+    const translationRegistry: SaltRegistry = {
+      ...REGISTRY,
+      components: [
+        ...REGISTRY.components,
+        {
+          id: "component.input",
+          name: "Input",
+          aliases: ["text field"],
+          package: {
+            name: "@salt-ds/core",
+            status: "stable",
+            since: "1.0.0",
+          },
+          summary: "Collects short text input.",
+          status: "stable",
+          category: ["inputs"],
+          tags: ["form", "text"],
+          when_to_use: ["Capture short-form text."],
+          when_not_to_use: ["Use MultilineInput for longer content."],
+          alternatives: [],
+          props: [],
+          accessibility: {
+            summary: ["Associate Input with a visible label or FormField."],
+            rules: [],
+          },
+          tokens: [],
+          patterns: [],
+          examples: [
+            {
+              id: "input.basic",
+              title: "Basic input",
+              intent: ["capture short text"],
+              complexity: "basic",
+              code: '<Input aria-label="Search" />',
+              source_url: "/salt/components/input/examples",
+              package: "@salt-ds/core",
+              target_type: "component",
+              target_name: "Input",
+            },
+          ],
+          related_docs: {
+            overview: "/salt/components/input",
+            usage: "/salt/components/input/usage",
+            accessibility: "/salt/components/input/accessibility",
+            examples: "/salt/components/input/examples",
+          },
+          source: {
+            repo_path: "packages/core/src/input",
+            export_name: "Input",
+          },
+          deprecations: [],
+          last_verified_at: TIMESTAMP,
+        },
+      ],
+    };
+
+    const result = translateUiToSalt(translationRegistry, {
+      code: `
+        import { Button as MuiButton, Menu } from "@mui/material";
+        import { Link } from "react-router-dom";
+
+        export function Demo() {
+          return (
+            <>
+              <MuiButton onClick={() => console.log("save")}>Save</MuiButton>
+              <Link to="/next">Next</Link>
+              <input aria-label="Search" />
+              <Menu />
+            </>
+          );
+        }
+      `,
+      include_starter_code: true,
+    });
+
+    expect(result.source_profile).toMatchObject({
+      detected_libraries: expect.arrayContaining([
+        "@mui/material",
+        "react-router-dom",
+      ]),
+      ui_flavor: "external-ui",
+    });
+    expect(result.source_ui_model).toMatchObject({
+      summary: {
+        translation_mode: "scaffold-from-code",
+        dominant_scope: "control",
+      },
+      ui_regions: expect.arrayContaining([
+        expect.objectContaining({
+          kind: "split-action",
+          scope: "flow",
+          complexity: "multi-part",
+        }),
+        expect.objectContaining({
+          kind: "text-input",
+          scope: "control",
+          role: "data-entry",
+        }),
+      ]),
+    });
+    expect(result.translations).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_model_ref: "source-ui-1",
+          source_kind: "split-action",
+          migration_kind: "pattern",
+          implementation: expect.objectContaining({
+            readiness: "medium",
+            starter_code_available: true,
+          }),
+          salt_target: expect.objectContaining({
+            name: "Split button",
+          }),
+        }),
+        expect.objectContaining({
+          source_kind: "navigation",
+          migration_kind: "direct",
+          salt_target: expect.objectContaining({
+            name: "Link",
+          }),
+        }),
+        expect.objectContaining({
+          source_kind: "text-input",
+          migration_kind: "direct",
+          salt_target: expect.objectContaining({
+            name: "Input",
+          }),
+        }),
+      ]),
+    );
+    expect(result.implementation_plan).toMatchObject({
+      direct_swaps: expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "text-input",
+          target_name: "Input",
+        }),
+        expect.objectContaining({
+          source_kind: "navigation",
+          target_name: "Link",
+        }),
+      ]),
+      pattern_rewrites: expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "split-action",
+          target_name: "Split button",
+        }),
+      ]),
+      phases: expect.arrayContaining([
+        expect.objectContaining({
+          title: "Lock the translation map",
+        }),
+        expect.objectContaining({
+          title: "Validate the migrated Salt UI",
+        }),
+      ]),
+      starter_code_targets: expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "split-action",
+          target_name: "Split button",
+        }),
+      ]),
+    });
+    expect(result.starter_code?.[0]).toMatchObject({
+      label: "Split button starter",
+      language: "tsx",
+    });
+    expect(result.combined_scaffold?.[0]).toMatchObject({
+      label: "Translated Salt scaffold",
+      language: "tsx",
+    });
+    expect(result.combined_scaffold?.[0]?.code).toContain(
+      "export function TranslatedSaltScaffold()",
+    );
+    expect(result.suggested_follow_ups).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          workflow: "get_salt_examples",
+        }),
+      ]),
+    );
+  });
+
+  it("returns a normalized source model and explicit assumptions for description-led translation", () => {
+    const result = translateUiToSalt(REGISTRY, {
+      query:
+        "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
+    });
+
+    expect(result.source_profile).toMatchObject({
+      code_provided: false,
+      query_provided: true,
+      ui_flavor: "description",
+    });
+    expect(result.source_ui_model).toMatchObject({
+      summary: {
+        translation_mode: "map-from-description",
+        signal_sources: ["query"],
+      },
+      page_regions: expect.arrayContaining([
+        expect.objectContaining({
+          kind: "sidebar",
+        }),
+        expect.objectContaining({
+          kind: "content",
+        }),
+        expect.objectContaining({
+          kind: "toolbar",
+        }),
+      ]),
+      states: expect.arrayContaining([
+        expect.objectContaining({
+          kind: "loading",
+        }),
+        expect.objectContaining({
+          kind: "error",
+        }),
+      ]),
+      groupings: expect.arrayContaining([
+        expect.objectContaining({
+          kind: "app-shell",
+        }),
+        expect.objectContaining({
+          kind: "dialog-flow",
+        }),
+      ]),
+      ui_regions: expect.arrayContaining([
+        expect.objectContaining({
+          kind: "vertical-navigation",
+          scope: "app-structure",
+        }),
+        expect.objectContaining({
+          kind: "dialog",
+          scope: "flow",
+        }),
+      ]),
+    });
+    expect(result.implementation_plan.phases[0]).toMatchObject({
+      title: "Lock the translation map",
+      focus: expect.stringContaining("inferred UI regions"),
+    });
+    expect(result.implementation_plan.workstreams).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          label: "App shell",
+        }),
+        expect.objectContaining({
+          label: "Dialog flow",
+        }),
+      ]),
+    );
+    expect(result.implementation_plan.scaffold_handoff).toMatchObject({
+      build_around: expect.arrayContaining(["App shell"]),
+    });
+    expect(result.assumptions).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("inferred from the description or mockup language"),
+      ]),
+    );
+  });
+
+  it("surfaces clarifying questions for low-confidence translation paths", () => {
+    const result = translateUiToSalt(REGISTRY, {
+      query: "Build a data grid with filters and validation states.",
+      package: "@salt-ds/does-not-exist",
+      view: "full",
+    });
+
+    expect(result.summary.manual_reviews).toBeGreaterThan(0);
+    expect(result.translations).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "data-table",
+          confidence_detail: expect.objectContaining({
+            blocker: "no-direct-salt-match",
+            next_question: expect.stringContaining("dense data surface"),
+          }),
+        }),
+      ]),
+    );
+    expect(result.clarifying_questions).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("dense data surface"),
+      ]),
+    );
+    expect(result.decision_gates).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "data-table",
+          question: expect.stringContaining("dense data surface"),
+        }),
+      ]),
+    );
+    expect(result.suggested_follow_ups).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          workflow: "choose_salt_solution",
+        }),
+      ]),
+    );
+  });
+
+  it("accepts a structured source outline for mockup-style translation", () => {
+    const result = translateUiToSalt(REGISTRY, {
+      source_outline: {
+        regions: ["header", "sidebar", "main content", "dialog footer"],
+        actions: ["primary action with secondary menu", "navigation link"],
+        states: ["loading", "validation"],
+        notes: ["This screen has a confirmation dialog."],
+      },
+      include_starter_code: true,
+    });
+
+    expect(result.guidance_boundary).toMatchObject({
+      guidance_source: "canonical_salt",
+      scope: "official_salt_only",
+      project_conventions: {
+        supported: true,
+        contract: "project_conventions_v1",
+        check_recommended: true,
+      },
+    });
+    expect(result.source_profile).toMatchObject({
+      code_provided: false,
+      query_provided: true,
+      ui_flavor: "description",
+    });
+    expect(result.source_ui_model.page_regions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ kind: "header" }),
+        expect.objectContaining({ kind: "sidebar" }),
+        expect.objectContaining({ kind: "footer" }),
+      ]),
+    );
+    expect(result.source_ui_model.states).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ kind: "loading" }),
+        expect.objectContaining({ kind: "validation" }),
+      ]),
+    );
+    expect(result.source_ui_model.ui_regions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ kind: "split-action" }),
+        expect.objectContaining({ kind: "navigation" }),
+        expect.objectContaining({ kind: "dialog" }),
+      ]),
+    );
+    expect(result.combined_scaffold?.[0]?.notes).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Built from the translated workstreams"),
+      ]),
+    );
+  });
+
+  it("routes adoption-style discovery queries to translate_ui_to_salt", () => {
+    const result = discoverSalt(REGISTRY, {
+      query: "convert a material ui screen to salt",
+    });
+
+    expect(result.guidance_boundary).toMatchObject({
+      guidance_source: "canonical_salt",
+      project_conventions: {
+        contract: "project_conventions_v1",
+        check_recommended: true,
+      },
+    });
+    expect(result.decision).toMatchObject({
+      workflow: "translate_ui_to_salt",
+      args: {
+        query: "convert a material ui screen to salt",
+        include_starter_code: true,
+        view: "full",
+      },
+    });
+    expect(result.next_step).toContain(
+      "Translate the source UI into Salt targets first",
+    );
+    expect(result.suggested_follow_ups).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          workflow: "translate_ui_to_salt",
+        }),
+      ]),
+    );
+  });
+
+  it("routes page-level mockup questions to translate_ui_to_salt with richer defaults", () => {
+    const result = discoverSalt(REGISTRY, {
+      query: "Design a dashboard page with a sidebar, header, toolbar, loading state, and dialog footer",
+    });
+
+    expect(result.decision).toMatchObject({
+      workflow: "translate_ui_to_salt",
+      args: expect.objectContaining({
+        include_starter_code: true,
+        view: "full",
+      }),
+    });
   });
 
   it("finds component capabilities from consumer terminology", () => {
@@ -2649,11 +3253,67 @@ describe("consumer tools", () => {
     );
   });
 
+  it("uses token policy metadata in recommendation rationale and next steps", () => {
+    const tokenRegistry: SaltRegistry = {
+      ...REGISTRY,
+      tokens: [
+        {
+          name: "--salt-palette-accent-border",
+          category: "palette",
+          type: "color",
+          value: "#1d4ed8",
+          semantic_intent: null,
+          themes: ["salt", "next"],
+          densities: [],
+          applies_to: [],
+          guidance: ["Intermediate palette token."],
+          aliases: [],
+          policy: {
+            usage_tier: "palette",
+            direct_component_use: "never",
+            preferred_for: ["internal theme and mode mapping inside the Salt token system"],
+            avoid_for: ["direct component styling"],
+            notes: [
+              "Palette tokens sit between foundations and characteristics and should not be referenced directly in components or patterns.",
+            ],
+            docs: ["/salt/themes/design-tokens/token-usage-rules"],
+          },
+          deprecated: false,
+          last_verified_at: TIMESTAMP,
+        },
+      ],
+    };
+
+    const result = recommendTokens(tokenRegistry, {
+      query: "palette accent border",
+      top_k: 1,
+    });
+
+    expect(result.recommended).toMatchObject({
+      name: "--salt-palette-accent-border",
+      why:
+        "Palette tokens sit between foundations and characteristics and should not be referenced directly in components or patterns.",
+      policy: {
+        usage_tier: "palette",
+        direct_component_use: "never",
+      },
+    });
+    expect(result.next_step).toBe(
+      "Do not apply --salt-palette-accent-border directly in component code; choose a semantic characteristic token instead.",
+    );
+  });
+
   it("routes broad queries to the best consumer starting point", () => {
     const result = discoverSalt(REGISTRY, {
       query: "how should I handle typography hierarchy",
     });
 
+    expect(result.guidance_boundary).toMatchObject({
+      guidance_source: "canonical_salt",
+      project_conventions: {
+        check_recommended: false,
+      },
+    });
     expect(result.best_start).toMatchObject({
       workflow: "get_salt_entity",
     });
@@ -2694,6 +3354,14 @@ describe("consumer tools", () => {
     expect(result.best_start).toMatchObject({
       workflow: "choose_salt_solution",
     });
+    expect(result.related_guides).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "Choosing the right primitive",
+          overview: "/salt/getting-started/choosing-the-right-primitive",
+        }),
+      ]),
+    );
     expect(result.starter_code?.[0]?.code).toContain(
       'import { Link } from "@salt-ds/core";',
     );
@@ -2927,11 +3595,27 @@ describe("curated public tools", () => {
       include_starter_code: true,
     });
 
+    expect(result.guidance_boundary).toMatchObject({
+      guidance_source: "canonical_salt",
+      scope: "official_salt_only",
+      project_conventions: {
+        contract: "project_conventions_v1",
+        check_recommended: true,
+      },
+    });
     expect(result.mode).toBe("recommend");
     expect(result.solution_type).toBe("component");
     expect(result.decision).toMatchObject({
       name: "Link",
     });
+    expect(result.related_guides).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "Choosing the right primitive",
+          overview: "/salt/getting-started/choosing-the-right-primitive",
+        }),
+      ]),
+    );
     expect(result.starter_code?.[0]).toMatchObject({
       label: "Link starter",
     });

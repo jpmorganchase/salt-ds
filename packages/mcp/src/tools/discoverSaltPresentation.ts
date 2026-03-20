@@ -19,6 +19,15 @@ function toStringArray(value: unknown): string[] {
     : [];
 }
 
+function toRecordArray(value: unknown): Array<Record<string, unknown>> {
+  return Array.isArray(value)
+    ? value.filter(
+        (entry): entry is Record<string, unknown> =>
+          Boolean(entry) && typeof entry === "object",
+      )
+    : [];
+}
+
 export function toCompactDocs(
   results: ReturnType<typeof searchSaltDocs>["results"],
 ): Array<Record<string, unknown>> {
@@ -62,6 +71,7 @@ export function toCompactComponentOptions(
               typeof entry === "string" && entry.length > 0,
           )
         : [],
+      related_guides: toRecordArray(recommendationRecord?.related_guides),
       caveats: toStringArray(recommendationRecord?.caveats),
       ship_check: toRecord(recommendationRecord?.ship_check),
     };
@@ -99,6 +109,7 @@ export function toCompactPatternOptions(
         ? recipeRecord.components
         : [],
       docs: toStringArray(recipeRecord?.docs),
+      related_guides: toRecordArray(recipeRecord?.related_guides),
       caveats: toStringArray(recipeRecord?.caveats),
       ship_check: toRecord(recipeRecord?.ship_check),
     };
@@ -131,6 +142,7 @@ export function toCompactFoundationOption(
         : typeof record.route === "string"
           ? [record.route]
           : [],
+    related_guides: toRecordArray(record.related_guides),
     next_step:
       typeof record.next_step === "string"
         ? record.next_step
@@ -202,6 +214,21 @@ export function getDiscoverySuggestedFollowUps(
           "Review the best implementation examples after choosing a Salt direction.",
         args: {
           query,
+        },
+      },
+    ];
+  }
+
+  if (decision.workflow === "translate_ui_to_salt") {
+    return [
+      {
+        workflow: "translate_ui_to_salt",
+        reason:
+          "Translate the source UI into Salt targets, grouped regions, and scaffold-ready workstreams before narrowing to final component or pattern details.",
+        args: {
+          query,
+          include_starter_code: true,
+          view: "full",
         },
       },
     ];
@@ -327,6 +354,10 @@ export function resolveDiscoverNextStep(input: {
 
   if (decision?.workflow === "compare_salt_versions") {
     return "Compare the relevant versions and review the breaking changes first.";
+  }
+
+  if (decision?.workflow === "translate_ui_to_salt") {
+    return "Translate the source UI into Salt targets first, confirm any blocking decision gates, then scaffold the grouped regions and validate them with examples.";
   }
 
   return "Inspect the closest Salt entity next.";

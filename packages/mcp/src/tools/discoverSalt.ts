@@ -6,6 +6,14 @@ import type {
 } from "../types.js";
 import type { SuggestedFollowUp } from "./consumerPresentation.js";
 import {
+  buildGuidanceBoundary,
+  type GuidanceBoundary,
+} from "./guidanceBoundary.js";
+import {
+  type GuideReference,
+  getRelevantGuidesForRecords,
+} from "./guideAwareness.js";
+import {
   getDiscoverySuggestedFollowUps,
   resolveDiscoverNextStep,
   resolveDiscoverStarterCode,
@@ -60,6 +68,7 @@ export interface ClarifyingQuestion {
 export interface DiscoverSaltDecision {
   workflow:
     | "discover_salt"
+    | "translate_ui_to_salt"
     | "choose_salt_solution"
     | "get_salt_entity"
     | "get_salt_examples"
@@ -71,6 +80,7 @@ export interface DiscoverSaltDecision {
 
 export interface DiscoverSaltResult {
   mode: "route" | "browse" | "related";
+  guidance_boundary: GuidanceBoundary;
   query?: string;
   decision: DiscoverSaltDecision | null;
   best_start?: DiscoverSaltDecision | null;
@@ -86,6 +96,7 @@ export interface DiscoverSaltResult {
   related?: ReturnType<typeof getRelatedEntities>["related"];
   clarifying_questions?: ClarifyingQuestion[];
   starter_code?: StarterCodeSnippet[];
+  related_guides?: GuideReference[];
   suggested_follow_ups?: SuggestedFollowUp[];
   next_step?: string;
   signals?: {
@@ -96,6 +107,17 @@ export interface DiscoverSaltResult {
   raw?: Record<string, unknown>;
   did_you_mean?: string[];
   ambiguity?: Record<string, unknown>;
+}
+
+function getDiscoverRelatedGuides(
+  registry: SaltRegistry,
+  records: unknown[],
+): GuideReference[] | undefined {
+  const guides = getRelevantGuidesForRecords(registry, records, {
+    top_k: 4,
+  });
+
+  return guides.length > 0 ? guides : undefined;
 }
 
 function toDecisionFromSearchResult(
@@ -264,6 +286,34 @@ function chooseRouteDecision(input: {
     docs,
     apiSurface,
   } = input;
+  const looksLikeScreenTranslation =
+    /\b(screen|page|layout|dashboard|form|app shell|app-shell|wireframe)\b/.test(
+      query,
+    ) &&
+    /\b(sidebar|header|footer|content|toolbar|filter|dialog|modal|loading|error|validation)\b/.test(
+      query,
+    );
+
+  if (
+    /\b(figma|mockup|screenshot)\b/.test(query) ||
+    looksLikeScreenTranslation ||
+    ((/\b(convert|translate|port|adopt|replace|rewrite|rebuild)\b/.test(query) ||
+      /\bmigrate\b.*\bto salt\b/.test(query)) &&
+      /\b(salt|design system|component library|ui library|mui|material ui|chakra|antd|bootstrap|legacy app|existing app)\b/.test(
+        query,
+      ))
+  ) {
+    return {
+      workflow: "translate_ui_to_salt",
+      why: "The request sounds like translating external UI into Salt, so start from a Salt adoption plan before narrowing to specific components.",
+      args: {
+        query,
+        include_starter_code: true,
+        view: "full",
+      },
+      result: patterns[0] ?? components[0] ?? docs[0] ?? null,
+    };
+  }
 
   if (
     foundations.length > 0 &&
@@ -556,13 +606,22 @@ export function discoverSalt(
       max_results: topK,
     });
     const decision = getRelatedDecision(related);
+    const guidanceBoundary = buildGuidanceBoundary({
+      workflow: "discover_salt",
+      routed_workflow: decision?.workflow,
+    });
 
     return {
       mode: "related",
+      guidance_boundary: guidanceBoundary,
       query: input.related_to.name,
       decision,
       best_start: decision,
       related: related.related,
+      related_guides:
+        related.related.guides.length > 0
+          ? (related.related.guides as GuideReference[])
+          : undefined,
       did_you_mean: related.did_you_mean,
       ambiguity: related.ambiguity as Record<string, unknown> | undefined,
       next_step:
@@ -581,9 +640,14 @@ export function discoverSalt(
       max_results: topK,
     });
     const decision = getCatalogDecision(catalog);
+    const guidanceBoundary = buildGuidanceBoundary({
+      workflow: "discover_salt",
+      routed_workflow: decision?.workflow,
+    });
 
     return {
       mode: "browse",
+      guidance_boundary: guidanceBoundary,
       decision,
       best_start: decision,
       catalog,
@@ -681,6 +745,19 @@ export function discoverSalt(
     docs,
     apiSurface,
   });
+  const guidanceBoundary = buildGuidanceBoundary({
+    workflow: "discover_salt",
+    routed_workflow: decision?.workflow,
+    solution_type:
+      decision?.workflow === "choose_salt_solution" &&
+      typeof decision.args?.solution_type === "string" &&
+      (decision.args.solution_type === "component" ||
+        decision.args.solution_type === "pattern" ||
+        decision.args.solution_type === "foundation" ||
+        decision.args.solution_type === "token")
+        ? decision.args.solution_type
+        : undefined,
+  });
   const clarifyingQuestions = getClarifyingQuestions({
     query,
     production_ready: preferences.production_ready,
@@ -695,9 +772,16 @@ export function discoverSalt(
 
   return {
     mode: "route",
+    guidance_boundary: guidanceBoundary,
     query: input.query,
     decision,
     best_start: decision,
+    related_guides: getDiscoverRelatedGuides(registry, [
+      decision?.result,
+      components[0],
+      patterns[0],
+      foundations[0],
+    ]),
     options: {
       components,
       patterns,

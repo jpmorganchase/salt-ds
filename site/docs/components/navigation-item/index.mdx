@@ -7,9 +7,23 @@ data:
     name: "@salt-ds/core"
     initialVersion: "1.15.0"
   alsoKnownAs: ["Nav Item", "Link", "App button", "Header item"]
-  relatedComponents: [{ name: "Pill", relationship: "similarTo" }]
+  relatedComponents:
+    [
+      { name: "Pill", relationship: "similarTo" },
+      { name: "Vertical navigation", relationship: "similarTo" },
+    ]
   relatedPatterns: ["App header", "Navigation", "Vertical navigation"]
 keywords:
   $ref: "#/data/alsoKnownAs"
 layout: DetailComponent
 ---
+
+<Callout variant="secondary" status="warning">
+
+Use [`VerticalNavigation`](/salt/components/vertical-navigation) for new
+vertical navigation work. `NavigationItem` can remain in existing vertical
+implementations during migration, but we recommend moving to
+`VerticalNavigation` because it provides a more structured approach and
+`NavigationItem` vertical usage will be deprecated in a future release.
+
+</Callout>

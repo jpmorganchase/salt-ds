@@ -6,12 +6,18 @@ It builds a machine-readable registry from Salt source material and serves it th
 
 ## Public Tool Surface
 
-The server now exposes six workflow tools:
+The server now exposes seven workflow tools:
 
 - `discover_salt`
   - Use this for broad, ambiguous, or exploratory Salt requests.
   - It searches, clarifies intent, and routes to the next best Salt workflow.
   - Do not use it when the caller already wants a direct recommendation or a known-entity lookup.
+- `translate_ui_to_salt`
+  - Use this when the starting point is non-Salt UI, a foreign component library, native/custom React UI, or a rough interface description that needs to be translated into Salt.
+  - It detects source UI intent and structure, returns a normalized `source_ui_model`, maps that into likely Salt targets, and returns an implementation-ready migration plan plus redesign hotspots.
+  - It also supports lightweight structured screen input through `source_outline`, returns explicit decision gates for blocked translations, and can generate a combined scaffold for grouped workstreams.
+  - It returns canonical Salt starter guidance only and can flag when a separate project conventions check is recommended before implementation.
+  - Do not use it for Salt-native validation or Salt version-to-version upgrades.
 - `choose_salt_solution`
   - Use this for recommendation or side-by-side comparison.
   - If `names` is present, comparison mode wins. Otherwise `query` drives recommendation mode.
@@ -67,11 +73,14 @@ node dist/salt-ds-mcp/bin/salt-mcp.js
 
 - Salt MCP stays intentionally single-server. The simplification is in the public tool contract, not in server splitting.
 - Public tool responses are compact by default and decision-first. Use `view: "full"` when you need richer evidence.
+- The core MCP stays canonical-Salt-only by design. Recommendation, discovery, and translation responses include `guidance_boundary` metadata so agents can tell when repo-specific conventions should be resolved through separate project conventions.
 - `discover_salt` absorbs broad docs search, browse-first catalog exploration, and related-entity exploration.
+- `translate_ui_to_salt` absorbs non-Salt UI adoption planning, foreign-library translation, and rough interface-to-Salt mapping.
 - `choose_salt_solution` absorbs component recommendation, pattern/composition recommendation, capability-driven selection, and option comparison.
 - `get_salt_entity` absorbs entity lookup plus icon and country-symbol lookup/list flows.
 - Tool boundary shorthand:
   - `discover_salt`: broad, ambiguous, exploratory routing.
+  - `translate_ui_to_salt`: external UI translation into Salt.
   - `choose_salt_solution`: recommendation or comparison.
   - `get_salt_entity`: known or near-known lookup.
 - `analyze_salt_code` absorbs validation, fix recipes, and migration guidance while preserving AST-based analysis and version-aware checks.
@@ -82,12 +91,21 @@ node dist/salt-ds-mcp/bin/salt-mcp.js
 - Registry generation is a repo-only build step. The published CLI only supports serving the bundled registry.
 - The MCP handshake advertises the `@salt-ds/mcp` runtime version. Treat that separately from the Salt registry version and `generated_at` timestamp used for content metadata.
 
+## Canonical Boundary
+
+- Core Salt MCP answers: "What is the nearest correct Salt answer?"
+- Project conventions answer: "How should this repo apply Salt?"
+
+Keep project-specific wrappers, approved local patterns, and repo conventions out of the core Salt registry. If a tool response sets `project_conventions.check_recommended` to `true`, confirm local conventions through separate project conventions before treating the canonical Salt starter guidance as the final project answer.
+
+The recommended project conventions contract is documented in [`docs/project-conventions-contract.md`](./docs/project-conventions-contract.md), with a companion schema at [`schemas/project-conventions.schema.json`](./schemas/project-conventions.schema.json).
+
 ## Maintainer Notes
 
 - Registry artifact filenames and payload keys are centralized in [`src/registry/artifacts.ts`](./src/registry/artifacts.ts).
 - Runtime loading lives in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts). Registry build output is assembled in [`src/build/buildRegistry.ts`](./src/build/buildRegistry.ts).
 - MCP tool metadata is defined in [`src/tools/toolDefinitions.ts`](./src/tools/toolDefinitions.ts). The server registration layer in [`src/server/createServer.ts`](./src/server/createServer.ts) stays intentionally thin, with runtime-vs-registry version metadata centralized in [`src/server/serverMetadata.ts`](./src/server/serverMetadata.ts).
-- Lookup, recommendation, search, and code-analysis helpers still live in `src/tools/` as internal building blocks. The public surface is the curated six-tool set above.
+- Lookup, recommendation, search, translation, and code-analysis helpers still live in `src/tools/` as internal building blocks. The public surface is the curated seven-tool set above.
 - The main test entry points are:
   - [`src/__tests__/tools.spec.ts`](./src/__tests__/tools.spec.ts)
   - [`src/__tests__/codeAnalysisTools.spec.ts`](./src/__tests__/codeAnalysisTools.spec.ts)

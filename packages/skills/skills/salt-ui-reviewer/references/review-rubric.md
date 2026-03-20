@@ -5,6 +5,7 @@ Use this rubric to judge impact, not to generate comment volume.
 ## component choice
 
 - Check whether the UI uses the most constrained Salt primitive, pattern, or foundation that fits the need.
+- Before accepting custom UI or abstraction, check whether Salt already provides a standard component or pattern for the job.
 - Flag custom compositions that recreate a Salt primitive or pattern without a strong reason.
 - Check whether the package choice is appropriate and whether a more canonical Salt option exists.
 
@@ -17,6 +18,8 @@ Use this rubric to judge impact, not to generate comment volume.
 ## foundations
 
 - Check spacing, sizing, density, typography, color, and elevation against Salt foundations and tokens.
+- Check that token family choices and direct-use decisions follow the canonical Salt token policy instead of visual guesswork.
+- Check that borders or separator lines use the right structural tokens and that container surfaces do not mix mismatched background and border levels.
 - Flag places where the UI drifts because it uses raw values or inconsistent density assumptions.
 - Treat local overrides as suspect until they are justified by the product need.
 
