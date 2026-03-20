@@ -6,10 +6,11 @@ Calendar updates
 
 - fixed styling issues with selected range border.
 - improved screenreader support.
-- code hygiene improvements
+- type improvements
   - remove un-used code/types and simplified structure of selection types.
+  - simplify types, generics for usage of date adapters are no longer essentially required unless you are creating a custom date adapter.
 - Calendar provides default screen-reader announcements by default.
-- Custom live announcements can be configured through a `createAnnouncement` factory method.
+- custom live announcements can be configured through a `createAnnouncement` factory method.
 
 ```
 import { Calendar } from "@salt-ds/lab";
@@ -37,7 +38,7 @@ const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announc
 ```
 
 - `CalendarNavigation` has new props `PreviousButtonProps` and `NextButtonProps` to pass props to the navigation buttons.
-  These props can be used in place of `onNavigateNext`, `disableNavigateNext` and `onNavigatePrevious`, `disableNavigateprevious`.
+  These props can be used in place of `onNavigateNext`, `disableNavigateNext` and `onNavigatePrevious`, `disableNavigatePrevious`.
 - `CalendarNavigation` has removed props `onMonthSelect` and `onYearSelect`, use `MonthDropdownProps` and `YearDropdownProps` instead.
 
 ```diff
@@ -66,5 +67,4 @@ const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announc
 ```
 
 - `CalendarNavigation` now adds tooltips to out of range dates.
-- When a Calendar has a min/maxDate and the user navigates to a month outside of that range, the Calendar will now automatically navigate back to the closest valid month.
-- Simplify types, generics for usage of date adapters are no longer essentially required unless you are creating a custom date adapter.
+- when a Calendar has `minDate` or `maxDate` and the user navigates to a month outside of that range, the Calendar will now automatically navigate back to the closest valid month.
