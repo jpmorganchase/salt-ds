@@ -158,6 +158,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       value: valueProp,
       format = "DD MMM YYYY",
       defaultValue = "",
+      id,
       onChange,
       onClick,
       emptyReadOnlyMarker = "—",
@@ -186,7 +187,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       inputRefProp,
     );
 
-    const inputId = useId();
+    const inputId = useId(id);
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -266,6 +267,14 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       required: dateInputPropsRequired,
       ...restDateInputProps
     } = inputProps;
+
+    const inputAriaLabelledBy =
+      clsx(formFieldLabelledBy, dateInputLabelledBy) || undefined;
+    const inputAriaLabel = inputAriaLabelledBy
+      ? undefined
+      : ariaLabel
+        ? `Selected date ${ariaLabel}`
+        : "Selected date";
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -362,15 +371,11 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           aria-describedby={
             clsx(formFieldDescribedBy, dateInputDescribedBy) || undefined
           }
-          aria-labelledby={clsx(
-            formFieldLabelledBy,
-            dateInputLabelledBy,
-            inputId,
-          )}
+          aria-labelledby={inputAriaLabelledBy}
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
           }
-          aria-label={clsx("Selected date", ariaLabel)}
+          aria-label={inputAriaLabel}
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}
