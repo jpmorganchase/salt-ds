@@ -3,10 +3,8 @@ import {
   forwardRef,
   useCallback,
   useMemo,
-  useRef,
   useState,
 } from "react";
-import { useForkRef } from "../utils/index";
 import {
   type AnnounceFnOptions,
   AriaAnnouncerContext,
@@ -48,10 +46,12 @@ export const AriaAnnouncerProvider = forwardRef<
     AnnouncementMessage[]
   >([]);
 
-  const mountedRef = useRef(true);
-
   const makeAnnouncement = useCallback(
-    (message: string, assertiveness: "polite" | "assertive" = "polite") => {
+    (
+      message: string,
+      assertiveness: "polite" | "assertive" = "polite",
+      duration: number = ANNOUNCEMENT_TIME_IN_DOM,
+    ) => {
       const id = `announce-${assertiveness}-${Date.now()}`;
       if (assertiveness === "polite") {
         setPoliteAnnouncements((previous) => {
@@ -62,7 +62,7 @@ export const AriaAnnouncerProvider = forwardRef<
           setPoliteAnnouncements((previous) =>
             previous.filter((announcement) => announcement.id !== id),
           );
-        }, ANNOUNCEMENT_TIME_IN_DOM);
+        }, duration);
       } else {
         setAssertiveAnnouncements((previous) => {
           return previous.concat({ id, message });
@@ -72,7 +72,7 @@ export const AriaAnnouncerProvider = forwardRef<
           setAssertiveAnnouncements((previous) =>
             previous.filter((announcement) => announcement.id !== id),
           );
-        }, ANNOUNCEMENT_TIME_IN_DOM);
+        }, duration);
       }
     },
     [],
@@ -83,32 +83,23 @@ export const AriaAnnouncerProvider = forwardRef<
       announcement: string,
       legacyDelayOrOptions: number | AnnounceFnOptions | undefined = {},
     ) => {
-      const delay =
-        typeof legacyDelayOrOptions === "number" ? legacyDelayOrOptions : null;
+      // Legacy delay (number arg) is handled by useAriaAnnouncer; if we also delayed
+      // here we'd apply it twice. Keep supporting the signature but ignore the delay.
+      const options: AnnounceFnOptions =
+        typeof legacyDelayOrOptions === "object" && legacyDelayOrOptions
+          ? legacyDelayOrOptions
+          : {};
 
-      const assertiveness =
-        typeof legacyDelayOrOptions === "object"
-          ? legacyDelayOrOptions.ariaLive
-          : undefined;
-
-      if (delay) {
-        setTimeout(() => {
-          makeAnnouncement(announcement, assertiveness);
-        }, delay);
-      } else {
-        makeAnnouncement(announcement, assertiveness);
-      }
+      makeAnnouncement(
+        announcement,
+        options.ariaLive,
+        options.duration,
+      );
     },
     [makeAnnouncement],
   );
 
   const value = useMemo(() => ({ announce }), [announce]);
-
-  const handleMounted = useCallback((node: HTMLDivElement | null) => {
-    mountedRef.current = node !== null;
-  }, []);
-
-  const handleRef = useForkRef(ref, handleMounted);
 
   return (
     <AriaAnnouncerContext.Provider value={value}>
@@ -128,7 +119,7 @@ export const AriaAnnouncerProvider = forwardRef<
           ...style,
         }}
         {...rest}
-        ref={handleRef}
+        ref={ref}
       >
         <AnnouncementRegion aria-live="polite">
           {politeAnnouncements.map((announcement) => (
