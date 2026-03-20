@@ -10,10 +10,10 @@
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
-  padding: var(--salt-spacing-fixed-100);
+  padding: 0;
   margin: 0;
-  min-height: calc(var(--salt-size-icon) + var(--salt-spacing-fixed-200));
-  min-width: calc(var(--salt-size-icon) + var(--salt-spacing-fixed-200));
+  min-height: var(--salt-size-icon);
+  min-width: var(--salt-size-icon);
   position: relative;
   text-align: var(--salt-text-action-textAlign);
   text-decoration: none;
@@ -27,5 +27,9 @@
   border: none;
 
   cursor: var(--salt-cursor-hover);
-  border-radius: var(--salt-palette-corner-weaker);
+}
+
+.saltToggletipTrigger:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-size-fixed-100);
 }
