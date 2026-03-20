@@ -230,8 +230,8 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const endInputRef = useRef<HTMLInputElement>(null);
     const handleEndInputRef = useForkRef(endInputRef, endInputRefProp);
 
-    const startInputID = useId();
-    const endInputID = useId();
+    const startInputID = useId(startInputProps.id);
+    const endInputID = useId(endInputProps.id);
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -381,6 +381,23 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       required: endInputPropsRequired,
       ...restEndInputProps
     } = endInputProps;
+
+    const startAriaLabelledBy =
+      clsx(formFieldLabelledBy, startInputPropsLabelledBy) || undefined;
+    const endAriaLabelledBy =
+      clsx(formFieldLabelledBy, endInputPropsLabelledBy) || undefined;
+
+    const startAriaLabel = startAriaLabelledBy
+      ? undefined
+      : ariaLabel
+        ? `Start date ${ariaLabel}`
+        : "Start date";
+
+    const endAriaLabel = endAriaLabelledBy
+      ? undefined
+      : ariaLabel
+        ? `End date ${ariaLabel}`
+        : "End date";
 
     const endInputIsRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -532,15 +549,11 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           aria-describedby={
             clsx(formFieldDescribedBy, startInputPropsDescribedBy) || undefined
           }
-          aria-labelledby={clsx(
-            formFieldLabelledBy,
-            startInputPropsLabelledBy,
-            startInputID,
-          )}
+          aria-labelledby={startAriaLabelledBy}
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
           }
-          aria-label={clsx("Start date", ariaLabel)}
+          aria-label={startAriaLabel}
           id={startInputID}
           className={withBaseName("input")}
           disabled={isDisabled}
@@ -566,15 +579,11 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           aria-describedby={
             clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined
           }
-          aria-labelledby={clsx(
-            formFieldLabelledBy,
-            endInputPropsLabelledBy,
-            endInputID,
-          )}
+          aria-labelledby={endAriaLabelledBy}
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
           }
-          aria-label={clsx("End date", ariaLabel)}
+          aria-label={endAriaLabel}
           id={endInputID}
           className={withBaseName("input")}
           disabled={isDisabled}
