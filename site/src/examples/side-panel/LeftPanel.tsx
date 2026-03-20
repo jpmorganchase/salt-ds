@@ -24,6 +24,7 @@ const FormFieldExample = () => (
 export const LeftPanel = () => {
   const [open, setOpen] = useState(false);
   const id = useId();
+  const headingId = useId();
 
   return (
     <FlexLayout
@@ -32,12 +33,17 @@ export const LeftPanel = () => {
       }}
       gap={0}
     >
-      <SidePanel open={open} onOpenChange={setOpen} aria-labelledby={id}>
+      <SidePanel
+        open={open}
+        onOpenChange={setOpen}
+        id={id}
+        aria-labelledby={headingId}
+      >
         <StackLayout align="start" gap={1}>
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
             Close
           </Button>
-          <H2 id={id}>Section Title</H2>
+          <H2 id={headingId}>Section Title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for
@@ -53,7 +59,11 @@ export const LeftPanel = () => {
         </StackLayout>
       </SidePanel>
       <FlexLayout padding={1}>
-        <Button onClick={() => setOpen(!open)}>
+        <Button
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          aria-controls={id}
+        >
           {open ? "Close" : "Open"} Left Panel
         </Button>
       </FlexLayout>
