@@ -3,6 +3,7 @@ import {
   forwardRef,
   useCallback,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -21,9 +22,9 @@ const AnnouncementRegion = forwardRef<
 >(function AnnouncementRegion(props, ref) {
   return (
     <div
-      role="log"
-      aria-atomic={true}
-      aria-relevant="additions"
+      // Keep the region simple for maximum assistive-tech compatibility.
+      // aria-live is applied by the caller (polite/assertive).
+      aria-atomic={false}
       ref={ref}
       {...props}
     />
@@ -46,13 +47,19 @@ export const AriaAnnouncerProvider = forwardRef<
     AnnouncementMessage[]
   >([]);
 
+  const idCounterRef = useRef(0);
+
   const makeAnnouncement = useCallback(
     (
       message: string,
       assertiveness: "polite" | "assertive" = "polite",
       duration: number = ANNOUNCEMENT_TIME_IN_DOM,
     ) => {
-      const id = `announce-${assertiveness}-${Date.now()}`;
+      idCounterRef.current += 1;
+      // Date.now() can collide when multiple announcements are created in the same millisecond
+      // (e.g. tests with cy.clock, batching, or multiple announces during one tick).
+      // Add a monotonic counter suffix to guarantee uniqueness.
+      const id = `announce-${assertiveness}-${Date.now()}-${idCounterRef.current}`;
       if (assertiveness === "polite") {
         setPoliteAnnouncements((previous) => {
           return previous.concat({ id, message });
@@ -93,7 +100,7 @@ export const AriaAnnouncerProvider = forwardRef<
       makeAnnouncement(
         announcement,
         options.ariaLive,
-        options.duration,
+        options.duration ?? ANNOUNCEMENT_TIME_IN_DOM,
       );
     },
     [makeAnnouncement],
