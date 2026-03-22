@@ -294,14 +294,14 @@ export const SingleMultiselectControlled: StoryFn<
     };
 
   function renderDayToggleButton({
-                                   "aria-selected": _ariaSelected,
-                                   className,
-                                   date:_date,
-                                   status,
-                                   ...rest
-                                 }: renderCalendarDayProps): ReactElement {
+    "aria-selected": _ariaSelected,
+    className,
+    date: _date,
+    status,
+    ...rest
+  }: renderCalendarDayProps): ReactElement {
     return (
-      <button className={className} aria-pressed={status.selected} {...rest}/>
+      <button className={className} aria-pressed={status.selected} {...rest} />
     );
   }
 
@@ -322,7 +322,7 @@ export const SingleMultiselectControlled: StoryFn<
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton }}/>
+        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton }} />
       </StackLayout>
     </Calendar>
   );
@@ -496,16 +496,15 @@ export const RangeMultiselectControlled: StoryFn<
     };
 
   function renderDayToggleButton({
-                                   "aria-selected": _ariaSelected,
-                                   className,
-                                   date:_date,
-                                   status,
-                                   ...rest
-                                 }: renderCalendarDayProps): ReactElement {
-    const isPressed = status.selectedStart || status.selectedEnd || status.selectedSpan;
-    return (
-      <button className={className} aria-pressed={isPressed} {...rest}/>
-    );
+    "aria-selected": _ariaSelected,
+    className,
+    date: _date,
+    status,
+    ...rest
+  }: renderCalendarDayProps): ReactElement {
+    const isPressed =
+      status.selectedStart || status.selectedEnd || status.selectedSpan;
+    return <button className={className} aria-pressed={isPressed} {...rest} />;
   }
 
   return (
@@ -684,16 +683,15 @@ export const OffsetMultiselectControlled: StoryFn<
     };
 
   function renderDayToggleButton({
-                                   "aria-selected": _ariaSelected,
-                                   className,
-                                   date: _date,
-                                   status,
-                                   ...rest
-                                 }: renderCalendarDayProps): ReactElement {
-    const isPressed = status.selectedStart || status.selectedEnd || status.selectedSpan;
-    return (
-      <button className={className} aria-pressed={isPressed} {...rest}/>
-    );
+    "aria-selected": _ariaSelected,
+    className,
+    date: _date,
+    status,
+    ...rest
+  }: renderCalendarDayProps): ReactElement {
+    const isPressed =
+      status.selectedStart || status.selectedEnd || status.selectedSpan;
+    return <button className={className} aria-pressed={isPressed} {...rest} />;
   }
 
   return (
@@ -718,7 +716,7 @@ export const OffsetMultiselectControlled: StoryFn<
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton}}/>
+        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton }} />
       </StackLayout>
     </Calendar>
   );
