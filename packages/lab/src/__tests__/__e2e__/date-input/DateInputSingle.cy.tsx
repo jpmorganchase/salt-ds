@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -9,7 +10,6 @@ import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import { DateInputSingle } from "@salt-ds/lab";
-import { FormField, FormFieldLabel } from "@salt-ds/core";
 
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 
@@ -471,27 +471,27 @@ describe("GIVEN a DateInputSingle", () => {
           );
         });
 
-          it("SHOULD have an accessible name via aria-labelledby when wrapped in a FormField", () => {
-            cy.mount(
-              <FormField>
-                <FormFieldLabel>Date</FormFieldLabel>
-                <DateInputSingle defaultValue={"05 Jan 2025"} />
-              </FormField>,
-            );
+        it("SHOULD have an accessible name via aria-labelledby when wrapped in a FormField", () => {
+          cy.mount(
+            <FormField>
+              <FormFieldLabel>Date</FormFieldLabel>
+              <DateInputSingle defaultValue={"05 Jan 2025"} />
+            </FormField>,
+          );
 
-            cy.findByRole("textbox")
-              .should("have.attr", "aria-labelledby")
-              .and("not.be.empty");
-            cy.findByRole("textbox").should("not.have.attr", "aria-label");
-          });
+          cy.findByRole("textbox")
+            .should("have.attr", "aria-labelledby")
+            .and("not.be.empty");
+          cy.findByRole("textbox").should("not.have.attr", "aria-label");
+        });
 
-          it("SHOULD have an accessible name via aria-label when not labelled by FormField", () => {
-            cy.mount(<DateInputSingle defaultValue={"05 Jan 2025"} />);
-            cy.findByRole("textbox")
-              .should("not.have.attr", "aria-labelledby")
-              .and("have.attr", "aria-label")
-              .and("not.be.empty");
-          });
+        it("SHOULD have an accessible name via aria-label when not labelled by FormField", () => {
+          cy.mount(<DateInputSingle defaultValue={"05 Jan 2025"} />);
+          cy.findByRole("textbox")
+            .should("not.have.attr", "aria-labelledby")
+            .and("have.attr", "aria-label")
+            .and("not.be.empty");
+        });
       });
     });
   });

@@ -140,8 +140,8 @@ const Content = () => {
         />
       </FormField>
 
-        <Button onClick={handleClick}>{getButtonLabel()}</Button>
-        <span>{count}</span>
+      <Button onClick={handleClick}>{getButtonLabel()}</Button>
+      <span>{count}</span>
     </StackLayout>
   );
 };

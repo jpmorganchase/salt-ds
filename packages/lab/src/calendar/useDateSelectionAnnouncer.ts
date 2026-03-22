@@ -36,35 +36,38 @@ export function useDateSelectionAnnouncer(
    *   announce("dateSelected", { multiselect, selectedDate });
    *   announce("visibleMonthChanged", { startVisibleMonth, endVisibleMonth });
    */
-  const announce = useCallback((
-    announcementType: AnnouncementType,
-    state?: DateSelectionAnnouncerState | undefined,
-  ) => {
-    const create = createAnnouncementRef.current;
-    if (!create) {
-      return;
-    }
-    const announcement = create(
-      announcementType,
-      state ?? {},
-      dateAdapterRef.current,
-    );
-
-    if (announcement) {
-      latestAnnouncementRef.current = announcement;
-
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
+  const announce = useCallback(
+    (
+      announcementType: AnnouncementType,
+      state?: DateSelectionAnnouncerState | undefined,
+    ) => {
+      const create = createAnnouncementRef.current;
+      if (!create) {
+        return;
       }
+      const announcement = create(
+        announcementType,
+        state ?? {},
+        dateAdapterRef.current,
+      );
 
-      timerRef.current = setTimeout(() => {
-        if (latestAnnouncementRef.current) {
-          saltAnnouncer(latestAnnouncementRef.current);
-          latestAnnouncementRef.current = null;
+      if (announcement) {
+        latestAnnouncementRef.current = announcement;
+
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
         }
-      }, DEBOUNCE_MSECS);
-    }
-  }, [saltAnnouncer]);
+
+        timerRef.current = setTimeout(() => {
+          if (latestAnnouncementRef.current) {
+            saltAnnouncer(latestAnnouncementRef.current);
+            latestAnnouncementRef.current = null;
+          }
+        }, DEBOUNCE_MSECS);
+      }
+    },
+    [saltAnnouncer],
+  );
 
   useEffect(() => {
     return () => {

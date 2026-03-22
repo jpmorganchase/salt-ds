@@ -18,7 +18,7 @@ export interface AriaAnnounceProps extends AnnounceFnOptions {
 export const AriaAnnounce: ComponentType<AriaAnnounceProps> = ({
   announcement,
   delay,
-  ariaLive
+  ariaLive,
 }) => {
   const { announce } = useAriaAnnouncer();
 
