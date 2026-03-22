@@ -61,7 +61,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
 
     const {
       helpers: { setFocusedDate, setHoveredDate },
-      state: { visibleMonth, numberOfVisibleMonths = 1 },
+      state: { visibleMonth, multiselect, numberOfVisibleMonths = 1 },
     } = useCalendarContext();
     const calendarGridRef = useRef<HTMLDivElement>(null);
     const containerRef = useForkRef(ref, calendarGridRef);
@@ -95,6 +95,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
 
     return (
       <GridLayout
+        aria-multiselectable={multiselect}
         columns={columns}
         gap={1}
         ref={containerRef}
