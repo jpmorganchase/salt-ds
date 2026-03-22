@@ -1,4 +1,5 @@
 import {
+  AriaAnnouncerProvider,
   makePrefixer,
   useFloatingComponent,
   useForkRef,
@@ -68,7 +69,11 @@ export const DatePickerOverlay = forwardRef<
           })
         : rest)}
     >
-      {children}
+      <>
+        <AriaAnnouncerProvider >
+        {children}
+        </AriaAnnouncerProvider>
+      </>
     </FloatingComponent>
   );
 });
