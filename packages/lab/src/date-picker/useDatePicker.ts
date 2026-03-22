@@ -184,9 +184,10 @@ export function useDatePicker(
   const containerRef = useForkRef(ref, datePickerRef);
 
   const { announce } = useDateSelectionAnnouncer(
-    (createAnnouncement ?? selectionVariant === "single")
-      ? createSingleSelectionAnnouncement
-      : createRangeSelectionAnnouncement,
+    createAnnouncement ??
+      (selectionVariant === "single"
+        ? createSingleSelectionAnnouncement
+        : createRangeSelectionAnnouncement),
     dateAdapter,
   );
 
