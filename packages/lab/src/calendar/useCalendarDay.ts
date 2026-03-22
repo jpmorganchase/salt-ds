@@ -23,6 +23,18 @@ export interface DayStatus {
    */
   selected?: boolean;
   /**
+   * If `true`, the day is selected.
+   */
+  selectedStart?: boolean;
+  /**
+   * If `true`, the day is selected.
+   */
+  selectedSpan?: boolean;
+  /**
+   * If `true`, the day is selected.
+   */
+  selectedEnd?: boolean;
+  /**
    * If `true`, the day is today.
    */
   today?: boolean;
