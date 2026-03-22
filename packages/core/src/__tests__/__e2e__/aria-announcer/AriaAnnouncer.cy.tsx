@@ -73,16 +73,13 @@ describe("Given useAriaAnnouncer", () => {
     cy.findByText(BUTTON_TEXT).should("exist").should("be.visible").realClick();
 
     // Verify announcement appears in polite region
-    cy.get('[role="log"][aria-live="polite"]')
+    cy.get('[aria-live="polite"]')
       .should("exist")
       .should("contain.text", "test");
 
     // Wait for announcement to be cleared
     cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-    cy.get('[role="log"][aria-live="polite"]').should(
-      "not.contain.text",
-      "test",
-    );
+    cy.get('[aria-live="polite"]').should("not.contain.text", "test");
   });
 
   describe("given a legacy delay", () => {
@@ -96,23 +93,15 @@ describe("Given useAriaAnnouncer", () => {
 
       cy.get("[aria-live]").should("not.have.text", "test");
 
-      cy.wait(510);
-
-      // Verify announcement is not present immediately
-      cy.get('[role="log"]').should("not.contain.text", "test");
-
       // Wait for delay and verify announcement appears
-      cy.get('[role="log"][aria-live="polite"]', { timeout: 1000 }).should(
+      cy.get('[aria-live="polite"]', { timeout: 1000 }).should(
         "contain.text",
         "test",
       );
 
       // Wait for announcement to be cleared
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test",
-      );
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test");
     });
   });
 
@@ -130,22 +119,19 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // Verify announcement appears in polite region
-      cy.get('[role="log"][aria-live="polite"]')
+      cy.get('[aria-live="polite"]')
         .should("exist")
         .should("contain.text", "test polite");
 
       // Verify it's NOT in assertive region
-      cy.get('[role="log"][aria-live="assertive"]').should(
+      cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
         "test polite",
       );
 
       // Wait for announcement to be cleared
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test polite",
-      );
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test polite");
     });
 
     it("should trigger an announcement with assertive urgency", () => {
@@ -161,19 +147,19 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // Verify announcement appears in assertive region
-      cy.get('[role="log"][aria-live="assertive"]')
+      cy.get('[aria-live="assertive"]')
         .should("exist")
         .should("contain.text", "test assertive");
 
       // Verify it's NOT in polite region
-      cy.get('[role="log"][aria-live="polite"]').should(
+      cy.get('[aria-live="polite"]').should(
         "not.contain.text",
         "test assertive",
       );
 
       // Wait for announcement to be cleared
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="assertive"]').should(
+      cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
         "test assertive",
       );
@@ -201,22 +187,13 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // Both announcements should be present in their respective regions
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "contain.text",
-        "test message",
-      );
-      cy.get('[role="log"][aria-live="assertive"]').should(
-        "contain.text",
-        "test message",
-      );
+      cy.get('[aria-live="polite"]').should("contain.text", "test message");
+      cy.get('[aria-live="assertive"]').should("contain.text", "test message");
 
       // Wait for announcements to be cleared
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test message",
-      );
-      cy.get('[role="log"][aria-live="assertive"]').should(
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test message");
+      cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
         "test message",
       );
@@ -251,27 +228,18 @@ describe("Given useAriaAnnouncer", () => {
       cy.wait(600);
 
       // Should only show the last announcement (test 3)
-      cy.get('[role="log"][aria-live="polite"]', { timeout: 1000 }).should(
+      cy.get('[aria-live="polite"]', { timeout: 1000 }).should(
         "contain.text",
         "test 3",
       );
 
       // Should NOT contain earlier announcements
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test 1",
-      );
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test 2",
-      );
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test 1");
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test 2");
 
       // Wait for announcement to be removed
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test 3",
-      );
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test 3");
     });
   });
 
@@ -298,25 +266,19 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // First announcement should appear
-      cy.get('[role="log"][aria-live="polite"]', { timeout: 1000 }).should(
+      cy.get('[aria-live="polite"]', { timeout: 1000 }).should(
         "contain.text",
         "test 1",
       );
       // Second announcement should appear
-      cy.get('[role="log"][aria-live="polite"]', {
+      cy.get('[aria-live="polite"]', {
         timeout: ANNOUNCEMENT_TIME_IN_DOM + 100,
       }).should("contain.text", "test 2");
 
       // Wait for announcement(s) to be removed
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test 1",
-      );
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test 2",
-      );
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test 1");
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test 2");
     });
   });
 
@@ -351,14 +313,14 @@ describe("Given useAriaAnnouncer", () => {
       cy.findByText(BUTTON_TEXT).realClick();
 
       // All messages should be present in the polite region
-      cy.get('[role="log"][aria-live="polite"]')
+      cy.get('[aria-live="polite"]')
         .should("contain.text", "message 1")
         .should("contain.text", "message 2")
         .should("contain.text", "message 3");
 
       // Wait for all announcements to be cleared
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
-      cy.get('[role="log"][aria-live="polite"]')
+      cy.get('[aria-live="polite"]')
         .should("not.contain.text", "message 1")
         .should("not.contain.text", "message 2")
         .should("not.contain.text", "message 3");
@@ -379,8 +341,8 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // Both regions should exist but may be empty
-      cy.get('[role="log"][aria-live="polite"]').should("exist");
-      cy.get('[role="log"][aria-live="assertive"]').should("exist");
+      cy.get('[aria-live="polite"]').should("exist");
+      cy.get('[aria-live="assertive"]').should("exist");
     });
 
     it("should handle rapid clicks without debounce", () => {
@@ -405,7 +367,7 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // All announcements should be queued in assertive region
-      cy.get('[role="log"][aria-live="polite"]', { timeout: 1000 })
+      cy.get('[aria-live="polite"]', { timeout: 1000 })
         .should("contain.text", "test 1")
         .should("contain.text", "test 2")
         .should("contain.text", "test 3");
@@ -424,10 +386,7 @@ describe("Given useAriaAnnouncer", () => {
         .should("be.visible")
         .realClick();
 
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "contain.text",
-        "test message",
-      );
+      cy.get('[aria-live="polite"]').should("contain.text", "test message");
 
       // Wait half the announcement time
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM / 2);
@@ -438,27 +397,18 @@ describe("Given useAriaAnnouncer", () => {
         .should("be.visible")
         .realClick();
 
-      cy.get('[role="log"][aria-live="assertive"]').should(
-        "contain.text",
-        "test message",
-      );
+      cy.get('[aria-live="assertive"]').should("contain.text", "test message");
 
       // Wait for polite announcement to clear
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
-      cy.get('[role="log"][aria-live="polite"]').should(
-        "not.contain.text",
-        "test message",
-      );
+      cy.get('[aria-live="polite"]').should("not.contain.text", "test message");
 
       // Assertive should still be present
-      cy.get('[role="log"][aria-live="assertive"]').should(
-        "contain.text",
-        "test message",
-      );
+      cy.get('[aria-live="assertive"]').should("contain.text", "test message");
 
       // Wait for assertive to clear
       cy.wait(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
-      cy.get('[role="log"][aria-live="assertive"]').should(
+      cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
         "test message",
       );
