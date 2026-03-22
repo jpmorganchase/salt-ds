@@ -1,6 +1,6 @@
 import { useAriaAnnouncer } from "@salt-ds/core";
 import type { SaltDateAdapter } from "@salt-ds/date-adapters";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type {
   AnnouncementType,
   DateSelectionAnnouncerState,
@@ -20,6 +20,13 @@ export function useDateSelectionAnnouncer(
 ) {
   const { announce: saltAnnouncer } = useAriaAnnouncer();
 
+  // Ensure the returned announce function always uses the latest inputs.
+  const createAnnouncementRef = useRef(createAnnouncement);
+  createAnnouncementRef.current = createAnnouncement;
+
+  const dateAdapterRef = useRef(dateAdapter);
+  dateAdapterRef.current = dateAdapter;
+
   const latestAnnouncementRef = useRef<string | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -29,17 +36,18 @@ export function useDateSelectionAnnouncer(
    *   announce("dateSelected", { multiselect, selectedDate });
    *   announce("visibleMonthChanged", { startVisibleMonth, endVisibleMonth });
    */
-  const announce = (
+  const announce = useCallback((
     announcementType: AnnouncementType,
     state?: DateSelectionAnnouncerState | undefined,
   ) => {
-    if (!createAnnouncement) {
+    const create = createAnnouncementRef.current;
+    if (!create) {
       return;
     }
-    const announcement = createAnnouncement(
+    const announcement = create(
       announcementType,
       state ?? {},
-      dateAdapter,
+      dateAdapterRef.current,
     );
 
     if (announcement) {
@@ -56,7 +64,7 @@ export function useDateSelectionAnnouncer(
         }
       }, DEBOUNCE_MSECS);
     }
-  };
+  }, [saltAnnouncer]);
 
   useEffect(() => {
     return () => {
