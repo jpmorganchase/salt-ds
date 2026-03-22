@@ -226,6 +226,10 @@ export interface UseCalendarReturn {
     focusedDateRef?: React.MutableRefObject<HTMLButtonElement | null>;
 
     /**
+     * Multi-select variant of the calendar, indicating if multiple date selections are allowed.
+     */
+    multiselect: boolean;
+    /**
      * The minimum selectable date in the calendar.
      */
     minDate: DateFrameworkType;
@@ -931,7 +935,6 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
     () =>
       ({
         state: {
-          hoveredDate,
           visibleMonth,
           timezone,
           multiselect,
@@ -943,7 +946,6 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
           focusedDate,
           focusableDate,
           focusedDateRef,
-          selectedDate,
         },
         helpers: {
           setVisibleMonth,
@@ -969,7 +971,6 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
         },
       }) as UseCalendarReturn,
     [
-      hoveredDate,
       visibleMonth,
       timezone,
       multiselect,
@@ -981,7 +982,6 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       focusedDate,
       focusedDateRef,
       focusableDate,
-      selectedDate,
       setVisibleMonth,
       isDayUnselectable,
       isDayHighlighted,
