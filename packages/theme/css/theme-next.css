@@ -19,7 +19,6 @@
 @import url(next/palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
-@import url(next/characteristics/accent.css);
 @import url(next/characteristics/actionable.css);
 @import url(next/characteristics/category.css);
 @import url(next/characteristics/container.css);

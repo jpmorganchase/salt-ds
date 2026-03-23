@@ -285,7 +285,7 @@
   box-sizing: border-box;
   height: var(--calendar-day-highlight-size); /* TODO: change for size-modifier when available */
   width: var(--calendar-day-highlight-size);
-  background: var(--salt-accent-background);
+  background: var(--salt-sentiment-accent-background);
   position: absolute;
   clip-path: polygon(100% 0, 100% 100%, 0 0);
   z-index: var(--calendar-day-zIndex-highlight);
@@ -307,7 +307,7 @@
   display: block;
   width: calc(100% - calc(var(--salt-spacing-50) * 2));
   height: var(--salt-size-indicator);
-  background: var(--salt-accent-borderColor);
+  background: var(--salt-sentiment-accent-borderColor);
   border-radius: var(--salt-palette-corner-weak);
   position: absolute;
   bottom: var(--salt-spacing-50);
