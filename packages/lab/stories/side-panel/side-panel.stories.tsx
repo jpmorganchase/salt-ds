@@ -14,7 +14,6 @@ import {
 import { SidePanel } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
-import "./side-panel.css";
 
 export default {
   title: "Lab/SidePanel",
@@ -49,12 +48,7 @@ export const Left: StoryFn = () => {
         onOpenChange={setOpen}
         id={id}
         aria-labelledby={headingId}
-        // style={
-        //   {
-        //     "--saltSidePanel-width": "500px",
-        //   } as React.CSSProperties
-        // }
-        // className="customWidth"
+        width={500}
       >
         <StackLayout align="start" gap={1}>
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
@@ -116,11 +110,7 @@ export const Right: StoryFn = () => {
         side="right"
         id={id}
         aria-labelledby={headingId}
-        style={
-          {
-            "--saltSidePanel-width": "500px",
-          } as React.CSSProperties
-        }
+        width={500}
       >
         <StackLayout align="start" gap={1}>
           <Button onClick={() => setOpen(false)} style={{ marginLeft: "auto" }}>
@@ -158,9 +148,7 @@ export const Top: StoryFn = () => {
         side="top"
         id={id}
         aria-labelledby={headingId}
-        style={{
-          height: 280,
-        }}
+        height={280}
       >
         <StackLayout align="start">
           <Button
