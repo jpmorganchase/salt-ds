@@ -28,7 +28,7 @@
   font-weight: var(--salt-text-notation-fontWeight);
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-notation-lineHeight);
-  background: var(--salt-accent-background);
+  background: var(--salt-sentiment-accent-background);
   color: var(--salt-content-bold-foreground);
 
   -webkit-font-smoothing: antialiased;
