@@ -9,6 +9,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
+  type CSSProperties,
   forwardRef,
   type MutableRefObject,
   useEffect,
@@ -42,6 +43,14 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
+  /**
+   * Height of the panel. Can be a number (pixels) or a CSS string value.
+   */
+  height?: number | string;
+  /**
+   * Width of the panel. Can be a number (pixels) or a CSS string value.
+   */
+  width?: number | string;
 }
 
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
@@ -54,12 +63,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       variant = "primary",
       children,
       className,
+      width,
+      height,
+      style,
       ...rest
     } = props;
     const [showComponent, setShowComponent] = useState(false);
     const targetWindow = useWindow();
 
-    // Create floating UI context
     const { context, refs } = useFloatingUI({
       open,
       onOpenChange,
@@ -90,6 +101,18 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
+    const customStyle = {
+      ...style,
+      ...(width && {
+        "--saltSidePanel-width":
+          typeof width === "number" ? `${width}px` : width,
+      }),
+      ...(height && {
+        "--saltSidePanel-height":
+          typeof height === "number" ? `${height}px` : height,
+      }),
+    } as CSSProperties;
+
     const panelDiv = (
       <div
         ref={handleRef}
@@ -103,6 +126,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           },
           className,
         )}
+        style={customStyle}
         tabIndex={-1}
         role="region"
         {...rest}
