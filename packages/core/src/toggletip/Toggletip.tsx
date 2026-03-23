@@ -5,11 +5,12 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { type ComponentPropsWithoutRef, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useControlled } from "../utils";
 import { ToggletipContext } from "./ToggletipContext";
 
-export interface ToggletipProps extends ComponentPropsWithoutRef<"div"> {
+export interface ToggletipProps {
+  children?: ReactNode;
   /**
    * Display or hide the component.
    */
