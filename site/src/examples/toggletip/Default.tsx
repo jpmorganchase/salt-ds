@@ -1,5 +1,4 @@
 import {
-  StackLayout,
   Text,
   Toggletip,
   ToggletipPanel,
@@ -14,15 +13,10 @@ export const Default = (): ReactElement => (
       <HelpCircleIcon aria-hidden />
     </ToggletipTrigger>
     <ToggletipPanel>
-      <StackLayout gap={1}>
-        <Text>
-          <strong>Content locked</strong>
-        </Text>
-        <Text>
-          This setting is managed at a project level. Contact your administrator
-          for assistance.
-        </Text>
-      </StackLayout>
+      <Text>
+        This setting is managed at a project level. Contact your administrator
+        for assistance.
+      </Text>
     </ToggletipPanel>
   </Toggletip>
 );
