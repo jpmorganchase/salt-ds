@@ -13,7 +13,6 @@
 }
 
 .saltSliderThumb-disabled {
-  background: var(--salt-accent-borderColor-disabled);
   cursor: var(--salt-cursor-disabled);
   pointer-events: none;
 }

@@ -131,7 +131,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
         tabIndex={-1}
         {...rest}
       >
-        {multiselect && <CheckboxIcon checked={selected} disabled={disabled} />}
+        {multiselect && <CheckboxIcon checked={selected} />}
         {children ?? valueToString(value)}
       </div>
     );

@@ -23,7 +23,3 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-.saltTreeNode-disabled .saltTreeNodeExpansionIcon-icon {
-  color: var(--salt-content-primary-foreground-disabled);
-}

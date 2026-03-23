@@ -23,11 +23,6 @@
   z-index: calc(var(--salt-zIndex-default) + 1);
 }
 
-/* Disabled cursor */
-.saltTreeNode-disabled {
-  cursor: var(--salt-cursor-disabled);
-}
-
 .saltTreeNode-group {
   list-style: none;
   margin: 0;
@@ -51,8 +46,4 @@
 
 .saltTreeNode-icon > * {
   color: var(--salt-content-primary-foreground);
-}
-
-.saltTreeNode-disabled .saltTreeNode-icon > * {
-  color: var(--salt-content-primary-foreground-disabled);
 }

@@ -3,11 +3,9 @@
   --salt-selectable-borderColor-hover: var(--salt-palette-interact-border-hover);
   --salt-selectable-borderColor-selected: var(--salt-palette-interact-border-active);
   --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-interact-border-activeDisabled);
-  --salt-selectable-borderColor-disabled: var(--salt-palette-interact-border-disabled);
   --salt-selectable-borderColor-readonly: var(--salt-palette-interact-border);
 
   --salt-selectable-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
   --salt-selectable-foreground-hover: var(--salt-palette-interact-foreground-hover);
   --salt-selectable-foreground-selected: var(--salt-palette-interact-foreground-active);
   --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
