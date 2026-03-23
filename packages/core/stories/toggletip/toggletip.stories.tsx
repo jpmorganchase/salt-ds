@@ -1,4 +1,5 @@
 import {
+  Display3,
   Link,
   StackLayout,
   Text,
@@ -83,4 +84,25 @@ export const InteractiveContent: StoryFn<typeof Toggletip> = (args) => (
       </StackLayout>
     </ToggletipPanel>
   </Toggletip>
+);
+
+export const WithMetric: StoryFn<typeof Toggletip> = (args) => (
+  <StackLayout gap={0}>
+    <StackLayout direction="row" gap={1}>
+      <Text>
+        <strong>Active users</strong>
+      </Text>
+      <Toggletip {...args}>
+        <ToggletipTrigger aria-label="Active users explanation">
+          <HelpCircleIcon aria-hidden />
+        </ToggletipTrigger>
+        <ToggletipPanel>
+          <Text>
+            Users who have logged in at least once in the past 7 days.
+          </Text>
+        </ToggletipPanel>
+      </Toggletip>
+    </StackLayout>
+    <Display3>14,209</Display3>
+  </StackLayout>
 );
