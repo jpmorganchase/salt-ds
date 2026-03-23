@@ -109,8 +109,8 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
           strokeWidth={1}
           fill="var(--toggletip-background)"
           stroke="var(--toggletip-borderColor)"
-          height={5}
-          width={10}
+          height={6}
+          width={12}
         />
       </FloatingComponent>
     );
