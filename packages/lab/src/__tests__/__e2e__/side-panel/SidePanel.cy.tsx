@@ -132,7 +132,9 @@ describe("GIVEN a SidePanel component", () => {
           </SidePanel>,
         );
 
-        cy.findByRole("region", { name: "Test Panel" }).should("be.visible");
+        cy.findByRole("region", { name: "Test Panel" })
+          .should("be.visible")
+          .focus();
 
         cy.realPress("Escape");
 
