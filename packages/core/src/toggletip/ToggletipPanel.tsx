@@ -57,6 +57,7 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
       getFloatingProps,
       setFloating,
       placement,
+      triggerId,
     } = useToggletipContext();
 
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
@@ -99,7 +100,10 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
         <div
           className={withBaseName("content")}
           tabIndex={0}
-          {...getFloatingProps(rest)}
+          {...getFloatingProps({
+            "aria-labelledby": clsx(ariaLabelledby, triggerId) || undefined,
+            ...rest,
+          })}
         >
           {children}
         </div>

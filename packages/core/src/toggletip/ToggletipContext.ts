@@ -19,6 +19,8 @@ export interface ToggletipContextValue {
   ) => Record<string, unknown>;
   setFloating: Dispatch<SetStateAction<HTMLDivElement | null>>;
   setReference: Dispatch<SetStateAction<HTMLButtonElement | null>>;
+  setTriggerId: Dispatch<SetStateAction<string | undefined>>;
+  triggerId: string | undefined;
 }
 
 export const ToggletipContext = createContext<ToggletipContextValue>(
@@ -35,6 +37,8 @@ export const ToggletipContext = createContext<ToggletipContextValue>(
     },
     setFloating: () => {},
     setReference: () => {},
+    setTriggerId: () => {},
+    triggerId: undefined,
   },
 );
 

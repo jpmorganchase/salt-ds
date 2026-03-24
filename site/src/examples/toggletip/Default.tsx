@@ -9,7 +9,7 @@ import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => (
   <Toggletip>
-    <ToggletipTrigger aria-label="Content locked">
+    <ToggletipTrigger aria-label="More info about locked content">
       <HelpCircleIcon aria-hidden />
     </ToggletipTrigger>
     <ToggletipPanel>
