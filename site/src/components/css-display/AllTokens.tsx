@@ -1,12 +1,16 @@
 import {
+  Button,
   capitalize,
-  FlowLayout,
+  Dropdown,
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
   H2,
   H3,
   Input,
+  Option,
   Spinner,
   StackLayout,
-  Switch,
   Table,
   TBody,
   TD,
@@ -17,10 +21,12 @@ import {
   ToggleButtonGroup,
   TR,
 } from "@salt-ds/core";
+import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useEffect, useState } from "react";
 import { Callout } from "../callout";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import styles from "./AllTokens.module.css";
+import descriptions from "./descriptions";
 import { TokenPreview } from "./TokenPreview";
 import {
   filterFoundationTokens,
@@ -51,6 +57,17 @@ function getGroupHeadingId(tier: TokenTier, group: string) {
   return `${tier}-${group}`.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
 }
 type ThemeTokenTables = Record<ThemeType, TokenTableData>;
+
+const themes = [
+  {
+    displayName: "JPM Brand",
+    value: "next",
+  },
+  {
+    displayName: "Legacy",
+    value: "legacy",
+  },
+];
 
 export function AllTokens() {
   const [theme, setTheme] = useState<ThemeType>("next");
@@ -146,51 +163,74 @@ export function AllTokens() {
 
   return (
     <StackLayout gap={2} className={styles.container}>
-      <FlowLayout className={styles.controls} align="center">
-        <Text>
-          <strong>Theme</strong>
-        </Text>
+      <FlexLayout direction="row" align="end" gap={1}>
+        <FormField style={{ flex: 1 }}>
+          <FormFieldLabel>Theme</FormFieldLabel>
+          <Dropdown
+            bordered
+            selected={[theme]}
+            onSelectionChange={(_event, value) => {
+              setTheme(value[0] as ThemeType);
+            }}
+            valueToString={(value) =>
+              themes.find((t) => t.value === value)?.displayName || value
+            }
+          >
+            {themes.map(({ value }) => (
+              <Option key={value} value={value} />
+            ))}
+          </Dropdown>
+        </FormField>
+        <FormField style={{ flex: 1 }}>
+          <FormFieldLabel>Density</FormFieldLabel>
+          <Dropdown
+            bordered
+            selected={[density]}
+            onSelectionChange={(_event, value) => {
+              setDensity(value[0] as Density);
+            }}
+            valueToString={(value) => capitalize(value)}
+          >
+            <Option value="high" />
+            <Option value="medium" />
+            <Option value="low" />
+            <Option value="touch" />
+            <Option value="mobile" />
+          </Dropdown>
+        </FormField>
         <ToggleButtonGroup
-          aria-label="Select token theme"
-          value={theme}
-          onChange={(event) => setTheme(event.currentTarget.value as ThemeType)}
+          style={{ flex: 0.5 }}
+          aria-label="Mode"
+          value={mode}
+          onChange={(event) => setMode(event.currentTarget.value as Mode)}
         >
-          <ToggleButton value="next">JPM Brand</ToggleButton>
-          <ToggleButton value="legacy">Legacy</ToggleButton>
+          <ToggleButton value="light">Light</ToggleButton>
+          <ToggleButton value="dark">Dark</ToggleButton>
         </ToggleButtonGroup>
-        <Text>
-          <strong>Density</strong>
-        </Text>
-        <ToggleButtonGroup
-          aria-label="Select token density"
-          value={density}
-          onChange={(event) => setDensity(event.currentTarget.value as Density)}
-        >
-          <ToggleButton value="high">High</ToggleButton>
-          <ToggleButton value="medium">Medium</ToggleButton>
-          <ToggleButton value="low">Low</ToggleButton>
-          <ToggleButton value="touch">Touch</ToggleButton>
-          <ToggleButton value="mobile">Mobile</ToggleButton>
-        </ToggleButtonGroup>
-        <Text>
-          <strong>Dark mode</strong>
-        </Text>
-        <Switch
-          checked={mode === "dark"}
-          onChange={(event) =>
-            setMode(event.currentTarget.checked ? "dark" : "light")
+      </FlexLayout>
+      <FormField>
+        <FormFieldLabel>Search tokens</FormFieldLabel>
+        <Input
+          bordered
+          startAdornment={<SearchIcon aria-hidden />}
+          endAdornment={
+            filterText ? (
+              <Button
+                appearance="transparent"
+                aria-label="Clear search value"
+                onClick={() => setFilterText("")}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            ) : null
           }
+          className={styles.filterInput}
+          value={filterText}
+          inputProps={{
+            onChange: (event) => setFilterText(event.target.value),
+          }}
         />
-      </FlowLayout>
-      <Input
-        aria-label="Filter tokens"
-        className={styles.filterInput}
-        placeholder="Filter tokens"
-        value={filterText}
-        inputProps={{
-          onChange: (event) => setFilterText(event.target.value),
-        }}
-      />
+      </FormField>
       {showEmptyState ? (
         <Callout title="No matching tokens" status="info">
           No tokens match &quot;{filterText.trim()}&quot;. Try a different token
@@ -274,8 +314,9 @@ function TokenTable({
           <H3 id={getGroupHeadingId(tier, group)} data-mdx="heading3">
             {capitalize(group)}
           </H3>
+          <Text>{descriptions[group.toLowerCase()]}</Text>
           <div className={styles.tableWrap}>
-            <Table zebra>
+            <Table zebra divider="none">
               <THead>
                 <TR>
                   <TH>Value</TH>
@@ -300,7 +341,6 @@ function TokenTable({
                       </TD>
                       <TD className={styles.tokenCell}>
                         <div className={styles.tokenRow}>
-                          <Text styleAs="code">{name}</Text>
                           <CopyToClipboard value={name} />
                         </div>
                       </TD>
