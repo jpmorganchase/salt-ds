@@ -11,7 +11,7 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import { SidePanel } from "@salt-ds/lab";
+import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
 import { useState } from "react";
 
 const FormFieldExample = () => (
@@ -24,56 +24,50 @@ const FormFieldExample = () => (
 
 export const TopPanel = () => {
   const [open, setOpen] = useState(false);
-  const id = useId();
   const headingId = useId();
 
   return (
-    <StackLayout gap={0} style={{ width: "100%" }}>
-      <SidePanel
-        open={open}
-        onOpenChange={setOpen}
-        side="top"
-        id={id}
-        aria-labelledby={headingId}
-        style={{
-          height: 280,
-        }}
-      >
-        <StackLayout>
-          <Button
-            onClick={() => setOpen(false)}
-            style={{
-              marginLeft: "auto",
-            }}
-          >
-            Close
-          </Button>
-          <H2 id={headingId}>Section title</H2>
-          <Text>
-            This placeholder text is provided to illustrate how content will
-            appear within the component. The sentences are intended for
-            demonstration only and do not convey specific information. Generic
-            examples like this help review layout, spacing, and overall design.
-            Adjust the wording as needed to fit your use case or display
-            requirements.
-          </Text>
-          <FlexLayout>
-            {Array.from({ length: 4 }, (_, index) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
-              <FormFieldExample key={index} />
-            ))}
-          </FlexLayout>
-        </StackLayout>
-      </SidePanel>
-      <FlexItem padding={1}>
-        <Button
-          onClick={() => setOpen(!open)}
-          aria-expanded={open}
-          aria-controls={id}
+    <SidePanelGroup open={open} onOpenChange={setOpen}>
+      <StackLayout gap={0} style={{ width: "100%" }}>
+        <SidePanel
+          side="top"
+          aria-labelledby={headingId}
+          style={{
+            height: 280,
+          }}
         >
-          {open ? "Close" : "Open"} Top Panel
-        </Button>
-      </FlexItem>
-    </StackLayout>
+          <StackLayout>
+            <Button
+              onClick={() => setOpen(false)}
+              style={{
+                marginLeft: "auto",
+              }}
+            >
+              Close
+            </Button>
+            <H2 id={headingId}>Section title</H2>
+            <Text>
+              This placeholder text is provided to illustrate how content will
+              appear within the component. The sentences are intended for
+              demonstration only and do not convey specific information. Generic
+              examples like this help review layout, spacing, and overall
+              design. Adjust the wording as needed to fit your use case or
+              display requirements.
+            </Text>
+            <FlexLayout>
+              {Array.from({ length: 4 }, (_, index) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
+                <FormFieldExample key={index} />
+              ))}
+            </FlexLayout>
+          </StackLayout>
+        </SidePanel>
+        <FlexItem padding={1}>
+          <SidePanelTrigger>
+            <Button>{open ? "Close" : "Open"} Top Panel</Button>
+          </SidePanelTrigger>
+        </FlexItem>
+      </StackLayout>
+    </SidePanelGroup>
   );
 };
