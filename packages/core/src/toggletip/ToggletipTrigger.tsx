@@ -5,8 +5,9 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  useEffect,
 } from "react";
-import { makePrefixer, useForkRef } from "../utils";
+import { makePrefixer, useForkRef, useId } from "../utils";
 import { useToggletipContext } from "./ToggletipContext";
 import toggletipTriggerCss from "./ToggletipTrigger.css";
 
@@ -21,7 +22,7 @@ export const ToggletipTrigger = forwardRef<
   HTMLButtonElement,
   ToggletipTriggerProps
 >(function ToggletipTrigger(props, ref) {
-  const { children, className, ...rest } = props;
+  const { children, className, id: idProp, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -30,9 +31,18 @@ export const ToggletipTrigger = forwardRef<
     window: targetWindow,
   });
 
-  const { setReference, getReferenceProps } = useToggletipContext();
+  const { setReference, getReferenceProps, setTriggerId } =
+    useToggletipContext();
 
   const handleRef = useForkRef<HTMLButtonElement>(setReference, ref);
+
+  const id = useId(idProp);
+
+  useEffect(() => {
+    if (id) {
+      setTriggerId?.(id);
+    }
+  }, [id, setTriggerId]);
 
   return (
     <button
@@ -40,6 +50,7 @@ export const ToggletipTrigger = forwardRef<
       {...getReferenceProps({
         ref: handleRef,
         className: clsx(withBaseName(), className),
+        id,
         ...rest,
       })}
     >
