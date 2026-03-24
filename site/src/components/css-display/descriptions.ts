@@ -28,4 +28,4 @@ export default {
   target:
     "Target defines the styles for areas where draggable items, such as documents for attaching or uploading, can be dropped.",
   text: "Text defines all typographic styles and variants, such as font weight, and is used alongside other characteristics to style all textual content.",
-};
+} as Record<string, string>;

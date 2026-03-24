@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { Code } from "../mdx/code";
 import styles from "./AllTokens.module.css";
+import { formatTokenValue } from "./formatTokenValue";
 import { getPreviewType, getSwatchStyle } from "./tokenPreviewUtils";
 
 export function TokenPreview({
@@ -22,6 +23,7 @@ export function TokenPreview({
   const [isTransparent, setIsTransparent] = useState(false);
   const swatchRef = useRef<HTMLDivElement | null>(null);
   const ThemeProvider = theme === "next" ? SaltProviderNext : SaltProvider;
+  const swatchVersion = `${themeKey}:${value}`;
 
   useEffect(() => {
     if (type !== "color") {
@@ -31,6 +33,10 @@ export function TokenPreview({
 
     const node = swatchRef.current;
     if (!node) {
+      return;
+    }
+
+    if (node.dataset.swatchVersion !== swatchVersion) {
       return;
     }
 
@@ -44,10 +50,10 @@ export function TokenPreview({
         normalized.includes("rgba(0,0,0,0)") ||
         normalized.endsWith(",0)"),
     );
-  }, [themeKey, type, value]);
+  }, [swatchVersion, type]);
 
   if (type === "raw") {
-    return <Code>{value}</Code>;
+    return <Code>{formatTokenValue(value)}</Code>;
   }
 
   return (
@@ -55,6 +61,7 @@ export function TokenPreview({
       <ThemeProvider theme="" mode={mode} applyClassesTo="child">
         <div
           ref={swatchRef}
+          data-swatch-version={swatchVersion}
           className={clsx(styles.swatchInner, getSwatchClassName(type), {
             [styles.checkerboard]: type === "color" && isTransparent,
           })}

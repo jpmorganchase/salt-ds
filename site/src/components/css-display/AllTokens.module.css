@@ -3,13 +3,6 @@
   gap: var(--salt-spacing-200);
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--salt-spacing-100);
-}
-
 .filterInput {
   max-width: 24rem;
 }
@@ -33,17 +26,17 @@
 .swatch {
   width: var(--salt-size-base);
   height: var(--salt-size-base);
-  border-radius: 4px;
+  border-radius: var(--salt-palette-corner-weaker);
   border-width: var(--salt-size-fixed-100);
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-container-primary-borderColor);
   background: var(--salt-container-primary-background);
+  overflow: hidden;
 }
 
 .swatchInner {
   width: 100%;
   height: 100%;
-  border-radius: inherit;
 }
 
 .swatchColor {
