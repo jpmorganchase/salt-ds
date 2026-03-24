@@ -27,3 +27,7 @@
   max-height: 100%;
   overflow-y: auto;
 }
+
+.saltToggletipPanel-content:focus-visible {
+  outline-offset: var(--salt-spacing-fixed-100);
+}

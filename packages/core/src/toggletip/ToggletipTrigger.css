@@ -27,6 +27,7 @@
   border: none;
 
   cursor: var(--salt-cursor-hover);
+  flex: 0;
 }
 
 .saltToggletipTrigger:focus-visible {
