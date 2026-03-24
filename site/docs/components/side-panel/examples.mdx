@@ -14,6 +14,8 @@ By default, a side panel anchors to the `left` edge of the screen.
 
 You can place side panel on the `left`, `right`, `top` and `bottom` edges using the `side` prop.
 
+This example uses `SidePanelGroup` and `SidePanelTrigger`, so trigger `aria-expanded` and `aria-controls` are wired automatically.
+
 <LivePreview componentName="side-panel" exampleName="LeftPanel" />
 
 ## Right side panel
@@ -33,3 +35,11 @@ Anchor your side panel to the top edge if it will display supporting information
 Anchor a side panel to the bottom edge of the screen when using a master-detail layout with content, such as graphs, images or comparisons that requires a wider horizontal format.
 
 <LivePreview componentName="side-panel" exampleName="BottomPanel" />
+
+## Manual trigger outside group
+
+Use manual trigger wiring when the trigger is a sibling of, or outside, `SidePanelGroup`.
+
+In this pattern, provide both `aria-expanded` and `aria-controls` on the trigger.
+
+<LivePreview componentName="side-panel" exampleName="ManualTriggerPanel" />
