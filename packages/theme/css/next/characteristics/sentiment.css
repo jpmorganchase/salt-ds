@@ -14,6 +14,6 @@
   --salt-sentiment-accent-dataviz: var(--salt-palette-accent);
 
   --salt-sentiment-accent-background: var(--salt-palette-accent);
-  --salt-sentiment--accent-background-disabled: var(--salt-palette-accent-disabled);
-  --salt-sentiment--accent-borderColor: var(--salt-palette-accent);
+  --salt-sentiment-accent-background-disabled: var(--salt-palette-accent-disabled);
+  --salt-sentiment-accent-borderColor: var(--salt-palette-accent);
 }
