@@ -110,7 +110,6 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               aria-hidden
               className={withBaseName("minLabel")}
               color="secondary"
-              disabled={disabled}
               styleAs="label"
             >
               {minLabel || format?.(min)}
@@ -191,7 +190,6 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               aria-hidden
               className={withBaseName("maxLabel")}
               color="secondary"
-              disabled={disabled}
               styleAs="label"
             >
               {maxLabel || format?.(max)}
