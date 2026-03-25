@@ -98,6 +98,7 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
         }}
       >
         <div
+          ref={contentRef}
           className={withBaseName("content")}
           tabIndex={0}
           {...getFloatingProps({
