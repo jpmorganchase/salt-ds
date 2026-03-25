@@ -311,13 +311,17 @@ describe("GIVEN a AdapterDayjs", () => {
       // then setTimezone(assign) is applied.
       const parsedNaive = dayjs("2025-01-05T00:00:00");
       const ny = adapter.setTimezone(parsedNaive, "America/New_York");
-      expect(adapter.toJSDate(ny).toISOString()).toBe("2025-01-05T05:00:00.000Z");
+      expect(adapter.toJSDate(ny).toISOString()).toBe(
+        "2025-01-05T05:00:00.000Z",
+      );
     });
 
     it("SHOULD setTimezone reinterpret a naive local midnight as midnight in Asia/Shanghai", () => {
       const parsedNaive = dayjs("2025-01-05T00:00:00");
       const sh = adapter.setTimezone(parsedNaive, "Asia/Shanghai");
-      expect(adapter.toJSDate(sh).toISOString()).toBe("2025-01-04T16:00:00.000Z");
+      expect(adapter.toJSDate(sh).toISOString()).toBe(
+        "2025-01-04T16:00:00.000Z",
+      );
     });
 
     it("SHOULD keep the instant when parsing an explicit UTC instant (Z) with an IANA timezone", () => {
@@ -353,7 +357,7 @@ describe("GIVEN a AdapterDayjs", () => {
         "2025-01-04T18:30:00.000Z",
       );
     });
-  })
+  });
 
   describe("GIVEN isSame is passed an invalid date", () => {
     it("SHOULD return false if dateA is invalid", () => {
