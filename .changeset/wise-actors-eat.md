@@ -19,3 +19,5 @@ Messages are queued and remain in the DOM for 300 msecs before being removed, ne
 By default using the options prop will default to `polite` announcements.
 
 In addition both `Spinner` and `ContentStatus` have been updated to default to `polite` announcements, to meet firmwide accessibility standards.
+
+As part of the refactor, fixed announcements triggered during component unmount/cleanup (e.g. `Spinner` `completionAnnouncement`) being blocked.
