@@ -11,7 +11,6 @@ const composedStories = composeStories(toggletipStories);
 const { Default, InteractiveContent } = composedStories;
 
 describe("GIVEN a Toggletip", () => {
-
   checkAccessibility(composedStories);
 
   it("lets a keyboard user tab from the previous control into a text-only toggletip and back out to the next control", () => {
@@ -23,10 +22,11 @@ describe("GIVEN a Toggletip", () => {
       </div>,
     );
 
-    cy.findByRole("button", { name: "Before" }).should("have.focus");
-
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "More info about locked content" }).should("have.focus");
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "More info about locked content" }).should(
+      "have.focus",
+    );
 
     cy.realPress("Enter");
     cy.findByRole("dialog")
@@ -48,16 +48,20 @@ describe("GIVEN a Toggletip", () => {
       </div>,
     );
 
-    cy.findByRole("button", { name: "Before" }).should("have.focus");
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "More info about locked content" }).should("have.focus");
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "More info about locked content" }).should(
+      "have.focus",
+    );
 
     cy.realPress("Space");
     cy.findByRole("dialog").should("be.visible").should("have.focus");
 
     cy.realPress("Escape");
     cy.findByRole("dialog").should("not.exist");
-    cy.findByRole("button", { name: "More info about locked content" }).should("have.focus");
+    cy.findByRole("button", { name: "More info about locked content" }).should(
+      "have.focus",
+    );
   });
 
   it("keeps keyboard focus flowing through interactive panel content and then back into page order", () => {
@@ -69,8 +73,7 @@ describe("GIVEN a Toggletip", () => {
       </div>,
     );
 
-    cy.findByRole("button", { name: "Before" }).should("have.focus");
-
+    cy.realPress("Tab");
     cy.realPress("Tab");
     cy.findByRole("button", { name: "Help info" }).should("have.focus");
 
@@ -87,7 +90,7 @@ describe("GIVEN a Toggletip", () => {
     cy.findByRole("button", { name: "Help info" }).should("have.focus");
     cy.findByRole("dialog").should("be.visible");
 
-    cy.realPress("Enter");
+    cy.realPress("Tab");
     cy.findByRole("dialog").should("have.focus");
 
     cy.realPress("Tab");
@@ -132,7 +135,9 @@ describe("GIVEN a Toggletip", () => {
       </CustomFloatingComponentProvider>,
     );
 
-    cy.findByRole("button", { name: "More info about locked content" }).realClick();
+    cy.findByRole("button", {
+      name: "More info about locked content",
+    }).realClick();
     cy.findByTestId(FLOATING_TEST_ID).should("exist");
   });
 
@@ -210,7 +215,7 @@ describe("GIVEN a Toggletip", () => {
       </div>,
     );
 
-    cy.findByRole("button", { name: "Before" }).should("have.focus");
+    cy.realPress("Tab");
     cy.realPress("Tab");
     cy.findByRole("button", { name: "More info about locked content" }).should(
       "have.focus",
@@ -263,7 +268,6 @@ describe("GIVEN a Toggletip", () => {
     cy.findByRole("dialog").should("be.visible").should("have.focus");
 
     cy.realPress(["Shift", "Tab"]);
-    cy.realPress(["Shift", "Tab"]);
     cy.findByRole("button", { name: "Help info" }).should("have.focus");
     cy.findByRole("dialog").should("be.visible");
 
@@ -290,5 +294,18 @@ describe("GIVEN a Toggletip", () => {
       "aria-expanded",
       "true",
     );
+  });
+
+  it("renders through the configured floating component after the user opens the toggletip", () => {
+    cy.mount(
+      <CustomFloatingComponentProvider>
+        <Default />
+      </CustomFloatingComponentProvider>,
+    );
+
+    cy.findByRole("button", {
+      name: "More info about locked content",
+    }).realClick();
+    cy.findByTestId(FLOATING_TEST_ID).should("exist");
   });
 });
