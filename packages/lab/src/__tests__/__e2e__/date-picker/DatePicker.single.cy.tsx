@@ -221,7 +221,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("exist");
         // Verify the first element is focused
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
         }).should("be.focused");
         // Simulate tabbing between all elements in the overlay
         cy.realPress("Tab");
@@ -235,7 +235,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify focus returns to the first element in the overlay
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
         }).should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
@@ -724,11 +724,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           //Verify the selected date is focused
           cy.findByRole("button", {
-            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+            name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
           }).should("be.focused");
           // Verify that the default selected date is highlighted in the calendar
           cy.findByRole("button", {
-            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+            name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
           }).should("exist");
         });
 
@@ -770,11 +770,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("application").should("exist");
           //Verify the selected date is focused
           cy.findByRole("button", {
-            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+            name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
           }).should("be.focused");
           // Verify that the selected date is highlighted in the calendar
           cy.findByRole("button", {
-            name: `Selected date: ${adapter.format(initialDate, "dddd D MMMM YYYY")}`,
+            name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
           }).should("exist");
         });
 
@@ -798,7 +798,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
               currentDate,
               "day",
             )
-              ? `Selected date: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`
+              ? `${adapter.format(currentDate, "dddd D MMMM YYYY")}, selected`
               : adapter.format(currentDate, "dddd D MMMM YYYY");
 
             const isDayUnselectable = (day: DateFrameworkType) => {

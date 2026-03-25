@@ -19,6 +19,7 @@ import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
 
+
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
 const adapterDayjs = new AdapterDayjs();
@@ -231,7 +232,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByRole("application").should("have.length", 2);
         // Verify the first element focused in the first calendar is the start date
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
         }).should("be.focused");
         // Simulate tabbing to the next calendar
         cy.realPress("Tab");
@@ -267,7 +268,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.realPress("Tab");
         // Verify focus returns to the first focused element in the first calendar
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
         }).should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
@@ -924,14 +925,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
           cy.findByRole("button", {
-            name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
+            name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
           }).should("be.focused");
           // Verify that the default selected dates are highlighted in the calendar
           cy.findByRole("button", {
-            name: "Start selected range: Sunday 5 January 2025",
+              name: "Start range: Sunday 5 January 2025, selected",
           }).should("exist");
           cy.findByRole("button", {
-            name: "End selected range: Monday 6 January 2025",
+              name: "End range: Monday 6 January 2025, selected",
           }).should("exist");
         });
 
@@ -981,11 +982,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             if (
               adapter.isSame(currentDate, initialRangeDate.startDate, "day")
             ) {
-              formattedDate = `Start selected range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`;
+              formattedDate = `Start range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}, selected`;
             } else if (
               adapter.isSame(currentDate, initialRangeDate.endDate, "day")
             ) {
-              formattedDate = `End selected range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}`;
+              formattedDate = `End range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}, selected`;
             }
             if (isDayUnselectable(currentDate)) {
               // Verify weekend dates are disabled
@@ -1060,14 +1061,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
           cy.findByRole("button", {
-            name: `Start selected range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}`,
+            name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
           }).should("be.focused");
           // Verify that the selected dates are highlighted in the calendar
           cy.findByRole("button", {
-            name: "Start selected range: Sunday 5 January 2025",
+            name: "Start range: Sunday 5 January 2025, selected",
           }).should("exist");
           cy.findByRole("button", {
-            name: "End selected range: Monday 6 January 2025",
+            name: "End range: Monday 6 January 2025, selected",
           }).should("exist");
           cy.findByRole("button", {
             name: "Wednesday 1 January 2025",

@@ -95,7 +95,6 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
 
     return (
       <GridLayout
-        aria-multiselectable={multiselect}
         columns={columns}
         gap={1}
         ref={containerRef}
