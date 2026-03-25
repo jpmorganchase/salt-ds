@@ -33,13 +33,13 @@
     "tinycolor2": "^1.4.2"
   },
   "devDependencies": {
-    "@date-fns/tz": "^1.2.0",
-    "@types/luxon": "^3.6.2",
+    "@date-fns/tz": "^1.4.1",
+    "@types/luxon": "^3.7.1",
     "date-fns": "^4.1.0",
-    "dayjs": "^1.11.13",
-    "luxon": "^3.6.1",
+    "dayjs": "^1.11.20",
+    "luxon": "^3.7.2",
     "moment": "^2.30.1",
-    "moment-timezone": "^0.5.46"
+    "moment-timezone": "^0.6.1"
   },
   "peerDependencies": {
     "@salt-ds/date-adapters": ">=0.1.0-alpha.6",
