@@ -142,10 +142,7 @@ describe("GIVEN Content Status", () => {
     cy.mount(<ContentStatus id="1" status="success" />);
 
     // Disabled completion announcement from spinner
-    cy.get('[aria-live="polite"]').should(
-      "not.announce",
-      "finished loading",
-    );
+    cy.get('[aria-live="polite"]').should("not.announce", "finished loading");
     cy.get('[aria-live="polite"]').should("contain", "success");
   });
 

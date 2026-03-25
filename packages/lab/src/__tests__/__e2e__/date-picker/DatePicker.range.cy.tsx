@@ -928,10 +928,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           }).should("be.focused");
           // Verify that the default selected dates are highlighted in the calendar
           cy.findByRole("button", {
-              name: "Start range: Sunday 5 January 2025, selected",
+            name: "Start range: Sunday 5 January 2025, selected",
           }).should("exist");
           cy.findByRole("button", {
-              name: "End range: Monday 6 January 2025, selected",
+            name: "End range: Monday 6 January 2025, selected",
           }).should("exist");
         });
 
