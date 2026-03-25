@@ -5,6 +5,7 @@ import {
   useAriaAnnouncer,
 } from "@salt-ds/core";
 import { mount } from "cypress/react";
+import React from "react";
 
 const BUTTON_TEXT = "CLICK ME";
 const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
@@ -63,6 +64,40 @@ const TestComponent = ({
 };
 
 describe("Given useAriaAnnouncer", () => {
+  it("should allow announcements triggered during component cleanup (unmount)", () => {
+    const CleanupAnnouncer = () => {
+      const { announce } = useAriaAnnouncer();
+
+      // Announce on unmount (mirrors Spinner completionAnnouncement behavior)
+      React.useEffect(() => {
+        return () => {
+          announce("cleanup announcement", { ariaLive: "assertive" });
+        };
+      }, [announce]);
+
+      return <div>cleanup announcer</div>;
+    };
+
+    const Wrapper = () => {
+      const [show, setShow] = React.useState(true);
+      return (
+        <AriaAnnouncerProvider>
+          <button onClick={() => setShow(false)}>unmount</button>
+          {show ? <CleanupAnnouncer /> : null}
+        </AriaAnnouncerProvider>
+      );
+    };
+
+    mount(<Wrapper />);
+    // Trigger unmount -> cleanup runs (provider remains mounted)
+    cy.findByRole("button", { name: "unmount" }).click();
+
+    cy.get('[aria-live="assertive"]').should(
+      "contain.text",
+      "cleanup announcement",
+    );
+  });
+
   it("should trigger an announcement in the polite region by default", () => {
     mount(
       <AriaAnnouncerProvider>

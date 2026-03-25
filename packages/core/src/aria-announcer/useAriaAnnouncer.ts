@@ -1,5 +1,5 @@
-import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
-import { debounce } from "../utils/debounce";
+import { useCallback, useContext, useMemo } from "react";
+import { debounce } from "../utils";
 import {
   type AnnounceFnOptions,
   type AriaAnnouncer,
@@ -20,7 +20,6 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
   debounce: debounceInterval = 0,
 } = {}) => {
   const context = useContext(AriaAnnouncerContext);
-  const mountedRef = useRef(true);
   const baseAnnounce = useCallback(
     (announcement: string, delayOrOptions: number | AnnounceFnOptions = {}) => {
       const isLegacy = typeof delayOrOptions === "number";
@@ -50,10 +49,12 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       }
 
       function makeAnnouncement() {
-        if (mountedRef.current) {
-          if (isReactAnnouncerInstalled) {
-            context.announce(announcement, isLegacy ? legacyDelay : options);
-          }
+        // Allow announcements from component cleanup.
+        // React runs effect cleanups in parent->child ordering, so gating announcements on a
+        // hook-level mounted flag can incorrectly block announcements that occur during unmount
+        // (e.g. Spinner completionAnnouncement).
+        if (isReactAnnouncerInstalled) {
+          context.announce(announcement, isLegacy ? legacyDelay : options);
         }
       }
 
@@ -74,20 +75,11 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
     [baseAnnounce, debounceInterval],
   );
 
-  const ariaAnnouncer = useMemo(
+  return useMemo(
     () => ({
       ...context,
       announce,
     }),
     [context, announce],
   );
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  return ariaAnnouncer;
 };
