@@ -17,7 +17,7 @@ export default {
 
 const Template: StoryFn<typeof Toggletip> = (args) => (
   <Toggletip {...args}>
-    <ToggletipTrigger aria-label="Help info">
+    <ToggletipTrigger aria-label="More info about locked content">
       <HelpCircleIcon aria-hidden />
     </ToggletipTrigger>
     <ToggletipPanel>More info</ToggletipPanel>
