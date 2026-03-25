@@ -99,7 +99,7 @@ export const Right: StoryFn = () => {
             <Button>Open Right Panel</Button>
           </SidePanelTrigger>
         </FlexItem>
-        <SidePanel side="right" aria-labelledby={headingId} width={500}>
+        <SidePanel position="right" aria-labelledby={headingId} width={500}>
           <StackLayout align="start" gap={1}>
             <Button
               onClick={() => setOpen(false)}
@@ -134,7 +134,7 @@ export const Top: StoryFn = () => {
   return (
     <SidePanelGroup open={open} onOpenChange={setOpen}>
       <StackLayout gap={0}>
-        <SidePanel side="top" aria-labelledby={headingId} height={300}>
+        <SidePanel position="top" aria-labelledby={headingId} height={300}>
           <StackLayout align="start">
             <Button
               onClick={() => setOpen(false)}
@@ -188,7 +188,7 @@ export const Bottom: StoryFn = () => {
             <Button>Open bottom panel</Button>
           </SidePanelTrigger>
         </FlexItem>
-        <SidePanel side="bottom" aria-labelledby={headingId} height={300}>
+        <SidePanel position="bottom" aria-labelledby={headingId} height={300}>
           <StackLayout align="start">
             <Button
               onClick={() => setOpen(false)}
@@ -279,7 +279,7 @@ export const Variants: StoryFn = () => {
           </SidePanelTrigger>
           <SidePanel
             variant="primary"
-            side="left"
+            position="left"
             aria-labelledby={primaryHeadingId}
           >
             <StackLayout align="start" gap={1}>
@@ -305,7 +305,7 @@ export const Variants: StoryFn = () => {
           </SidePanelTrigger>
           <SidePanel
             variant="secondary"
-            side="left"
+            position="left"
             aria-labelledby={secondaryHeadingId}
           >
             <StackLayout align="start" gap={1}>
@@ -331,7 +331,7 @@ export const Variants: StoryFn = () => {
           </SidePanelTrigger>
           <SidePanel
             variant="tertiary"
-            side="left"
+            position="left"
             aria-labelledby={tertiaryHeadingId}
           >
             <StackLayout align="start" gap={1}>
@@ -464,7 +464,11 @@ export const WithTable: StoryFn = () => {
           </TableContainer>
         </div>
 
-        <SidePanel side="right" width={400} aria-labelledby={panelHeadingId}>
+        <SidePanel
+          position="right"
+          width={400}
+          aria-labelledby={panelHeadingId}
+        >
           <StackLayout align="start" gap={3}>
             <Button
               onClick={() => setOpen(false)}

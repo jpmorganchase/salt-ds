@@ -23,7 +23,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    * Edge the panel is anchored to; controls animation direction and divider side.
    * @default "left"
    */
-  side?: "left" | "right" | "top" | "bottom";
+  position?: "left" | "right" | "top" | "bottom";
   /**
    * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref.
    * @default 0
@@ -60,7 +60,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
     const {
-      side = "left",
+      position = "left",
       initialFocus = 0,
       open: openProp = false,
       onOpenChange: onOpenChangeProp,
@@ -153,7 +153,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName(side)]: side,
+            [withBaseName(position)]: position,
             [withBaseName(variant)]: variant,
             [withBaseName("enterAnimation")]: open,
             [withBaseName("exitAnimation")]: !open,

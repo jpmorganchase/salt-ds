@@ -34,7 +34,7 @@ export const BottomPanel = () => {
             <Button>{open ? "Close" : "Open"} Bottom Panel</Button>
           </SidePanelTrigger>
         </FlexItem>
-        <SidePanel side="bottom" aria-labelledby={headingId}>
+        <SidePanel position="bottom" aria-labelledby={headingId}>
           <StackLayout align="start">
             <Button
               onClick={() => setOpen(false)}

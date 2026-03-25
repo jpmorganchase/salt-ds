@@ -30,7 +30,7 @@ export const TopPanel = () => {
     <SidePanelGroup open={open} onOpenChange={setOpen}>
       <StackLayout gap={0} style={{ width: "100%" }}>
         <SidePanel
-          side="top"
+          position="top"
           aria-labelledby={headingId}
           style={{
             height: 280,

@@ -38,7 +38,7 @@ export const RightPanel = () => {
             <Button>{open ? "Close" : "Open"} Right Panel</Button>
           </SidePanelTrigger>
         </FlexItem>
-        <SidePanel side="right" aria-labelledby={headingId}>
+        <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout align="start" gap={1}>
             <Button
               onClick={() => setOpen(false)}
