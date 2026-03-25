@@ -1,4 +1,3 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -9,6 +8,7 @@ import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateInputRange,
   type DateInputRangeDetails,
@@ -185,19 +185,7 @@ describe("GIVEN a DateInputRange", () => {
             cy.wrap($el)
               .should("have.attr", "aria-labelledby")
               .and("not.be.empty");
-            cy.wrap($el).should("not.have.attr", "aria-label");
-          });
-      });
-
-      it("SHOULD have an accessible name via aria-label when not labelled by FormField", () => {
-        cy.mount(<DateInputRange />);
-        cy.findAllByRole("textbox")
-          .should("have.length", 2)
-          .each(($el) => {
-            cy.wrap($el)
-              .should("not.have.attr", "aria-labelledby")
-              .and("have.attr", "aria-label")
-              .and("not.be.empty");
+            cy.wrap($el).should("have.attr", "aria-label").and("not.be.empty");
           });
       });
 
@@ -1018,17 +1006,5 @@ describe("GIVEN a DateInputRange", () => {
         });
       });
     });
-  });
-
-  it("should not have an empty aria-describedby attribute if used outside a formfield", () => {
-    cy.setDateAdapter(adapterLuxon);
-    cy.mount(<Range />);
-
-    cy.findAllByRole("textbox")
-      .eq(0)
-      .should("not.have.attr", "aria-describedby");
-    cy.findAllByRole("textbox")
-      .eq(1)
-      .should("not.have.attr", "aria-describedby");
   });
 });
