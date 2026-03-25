@@ -293,18 +293,6 @@ export const SingleMultiselectControlled: StoryFn<
       setVisibleMonth(newVisibleMonth);
     };
 
-  function renderDayToggleButton({
-    "aria-selected": _ariaSelected,
-    className,
-    date: _date,
-    status,
-    ...rest
-  }: renderCalendarDayProps): ReactElement {
-    return (
-      <button className={className} aria-pressed={status.selected} {...rest} />
-    );
-  }
-
   return (
     <Calendar
       {...(args as any)}
@@ -322,7 +310,7 @@ export const SingleMultiselectControlled: StoryFn<
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton }} />
+        <CalendarGrid />
       </StackLayout>
     </Calendar>
   );
@@ -495,18 +483,6 @@ export const RangeMultiselectControlled: StoryFn<
       setSelectedDate(newSelectedDate);
     };
 
-  function renderDayToggleButton({
-    "aria-selected": _ariaSelected,
-    className,
-    date: _date,
-    status,
-    ...rest
-  }: renderCalendarDayProps): ReactElement {
-    const isPressed =
-      status.selectedStart || status.selectedEnd || status.selectedSpan;
-    return <button className={className} aria-pressed={isPressed} {...rest} />;
-  }
-
   return (
     <Calendar
       {...args}
@@ -521,7 +497,7 @@ export const RangeMultiselectControlled: StoryFn<
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton }} />
+        <CalendarGrid />
       </StackLayout>
     </Calendar>
   );
@@ -682,18 +658,6 @@ export const OffsetMultiselectControlled: StoryFn<
       setSelectedDate(newSelectedDate);
     };
 
-  function renderDayToggleButton({
-    "aria-selected": _ariaSelected,
-    className,
-    date: _date,
-    status,
-    ...rest
-  }: renderCalendarDayProps): ReactElement {
-    const isPressed =
-      status.selectedStart || status.selectedEnd || status.selectedSpan;
-    return <button className={className} aria-pressed={isPressed} {...rest} />;
-  }
-
   return (
     <Calendar
       {...args}
@@ -716,7 +680,7 @@ export const OffsetMultiselectControlled: StoryFn<
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarGrid CalendarDayProps={{ render: renderDayToggleButton }} />
+        <CalendarGrid />
       </StackLayout>
     </Calendar>
   );

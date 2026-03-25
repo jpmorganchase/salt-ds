@@ -597,20 +597,16 @@ export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
 
   // Determine aria-label based on selection state
   let ariaLabel = formattedDate;
-  let ariaSelected = false;
   if (selectionVariant === "single") {
     if (selected) {
-      ariaSelected = true;
+      ariaLabel = `${ariaLabel}, selected`;
     }
   } else if (selectedStart) {
-    ariaLabel = `Start range: ${formattedDate}`;
-    ariaSelected = true;
+    ariaLabel = `Start range: ${formattedDate}, selected`;
   } else if (selectedEnd) {
-    ariaLabel = `End range: ${formattedDate}`;
-    ariaSelected = true;
+    ariaLabel = `End range: ${formattedDate}, selected`;
   } else if (selectedSpan) {
-    ariaLabel = `In range: ${formattedDate}`;
-    ariaSelected = true;
+    ariaLabel = `In range: ${formattedDate}, selected`;
   } else if (hoveredStart) {
     ariaLabel = `Start new range: ${formattedDate}`;
   } else if (hoveredEnd) {
@@ -655,7 +651,6 @@ export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
         [withBaseName("hoveredEnd")]:
           selectionVariant !== "single" && hoveredEnd,
       }),
-      "aria-selected": ariaSelected,
       "aria-disabled":
         isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
       "aria-label": ariaLabel,

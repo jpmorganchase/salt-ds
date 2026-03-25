@@ -68,7 +68,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         cy.realPress("Tab");
         // Verify that the focus moves to the start date within the visible month
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -102,7 +102,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         cy.realPress("Tab");
         // Verify that the focus moves to the end date within the visible month
         cy.findByRole("button", {
-          name: `End selected range: ${adapter.format(endDate, "dddd D MMMM YYYY")}`,
+          name: `End range: ${adapter.format(endDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -258,7 +258,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         cy.realPress("Tab");
         // Verify that the focus moves to the start of the month
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -284,7 +284,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         }).realClick();
         // Verify that the start date button is selected
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate hovering over the end date button to select the range
@@ -308,18 +308,18 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         }).realClick();
         // Verify that the start date button is selected and has the correct class
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should("exist")
           .and("have.class", "saltCalendarDay-selectedStart");
         // Verify that the dates in the range are selected and have the correct class
         cy.findByRole("button", {
-          name: `In selected range: ${adapter.format(adapter.add(startDate, { days: 1 }), "dddd D MMMM YYYY")}`,
+          name: `In range: ${adapter.format(adapter.add(startDate, { days: 1 }), "dddd D MMMM YYYY")}, selected`,
         })
           .should("exist")
           .and("have.class", "saltCalendarDay-selectedSpan");
         cy.findByRole("button", {
-          name: `End selected range: ${adapter.format(endDate, "dddd D MMMM YYYY")}`,
+          name: `End range: ${adapter.format(endDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should("exist")
           .and("have.class", "saltCalendarDay-selectedEnd");
@@ -331,11 +331,11 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         }).realClick();
         // Verify that the new date is selected
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(newStartDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(newStartDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Verify that only one date is selected
         cy.findAllByRole("button", {
-          name: /^Start selected/,
+          name: /^Start.*selected$/,
         }).should("have.length", 1);
 
         // Simulate clicking on the start date button to select it again
@@ -344,11 +344,11 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         }).realClick();
         // Verify that the start date button is selected
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Verify that only one date is selected
         cy.findAllByRole("button", {
-          name: /^Start selected/,
+          name: /^Start .* selected$/,
         }).should("have.length", 1);
       });
 
@@ -395,7 +395,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
         cy.realPress("ArrowUp");
         // Verify that the focus moves to the next month
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(weekbeforeEndOfMonth, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(weekbeforeEndOfMonth, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -550,7 +550,7 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         cy.realPress("Tab");
         // Verify that the focus moves to the first selected date of the visible month
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate.startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate.startDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -705,7 +705,7 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         }).realClick();
         // Verify that the current date button is selected
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate clicking on the next date button to select it
@@ -715,12 +715,12 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         }).realClick();
         // Verify that the next date button is selected
         cy.findByRole("button", {
-          name: `End selected range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `End range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate clicking on the test date button again to unselect it
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).realClick();
         // Verify that the current date button is unselected
         cy.findByRole("button", {
@@ -747,11 +747,11 @@ describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', ()
         cy.realPress("Enter");
         // Verify that the current date button is selected
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Verify that the next date button is selected
         cy.findByRole("button", {
-          name: `End selected range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `End range: ${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Simulate pressing the Enter key to select the next date
         cy.realPress("Enter");

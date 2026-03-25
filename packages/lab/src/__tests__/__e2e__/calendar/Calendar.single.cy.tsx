@@ -63,7 +63,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.realPress("Tab");
         // Verify that the focus moves to the selected date within the visible month
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -83,7 +83,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
           </Calendar>,
         );
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Simulate clicking the "Next Month" button
         cy.findByRole("button", {
@@ -100,7 +100,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
           name: "Previous Month",
         }).realClick();
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Simulate focusing on the "Next Month" button
         cy.findByRole("button", {
@@ -110,7 +110,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.realPress("Tab");
         // Verify that the focus moves to the selected date within the visible month
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -268,7 +268,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         }).realClick();
         // Verify that the current date button is selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate clicking on the next date button to select it
@@ -282,7 +282,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         }).should("exist");
         // Verify that the next date button is selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate pressing the ArrowRight key to move the focus
@@ -292,7 +292,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         // Verify that the next date button is selected
         nextDay = adapter.add(nextDay, { days: 1 });
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
       });
 
@@ -335,7 +335,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         cy.realPress("ArrowUp");
         // Verify that the focus moves to the next month
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(weekbeforeEndOfMonth, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(weekbeforeEndOfMonth, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -361,11 +361,11 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
         }).realClick();
         // Simulate clicking on the current date button again to deselect it
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).realClick();
         // Verify that the current date button remains selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
       });
 
@@ -465,7 +465,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         cy.realPress("Tab");
         // Verify that the focus moves to the first selected date of the visible month
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -601,7 +601,7 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         }).realClick();
         // Verify that the current date button is selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate clicking on the next date button to select it
@@ -611,16 +611,16 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         }).realClick();
         // Verify that the next date button is selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
 
         // Simulate clicking on the next date button again to unselect it
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).realClick();
         // Simulate clicking on the current date button again to unselect it
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).realClick();
         // Verify that the current date button is unselected
         cy.findByRole("button", {
@@ -647,11 +647,11 @@ describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', (
         cy.realPress("Enter");
         // Verify that the current date button is selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
         // Verify that the next date button is selected
         cy.findByRole("button", {
-          name: `Selected date: ${adapter.format(nextDay, "dddd D MMMM YYYY")}`,
+          name: `${adapter.format(nextDay, "dddd D MMMM YYYY")}, selected`,
         }).should("exist");
       });
     });
