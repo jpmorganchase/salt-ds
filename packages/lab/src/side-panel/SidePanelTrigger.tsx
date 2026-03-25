@@ -1,4 +1,4 @@
-import { mergeProps, useId } from "@salt-ds/core";
+import { mergeProps, useForkRef, useId } from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
   cloneElement,
@@ -6,7 +6,6 @@ import {
   isValidElement,
   type MouseEvent,
   type ReactNode,
-  type Ref,
   useContext,
   useRef,
 } from "react";
@@ -28,6 +27,7 @@ export const SidePanelTrigger = forwardRef<
   const sidePanelGroup = useContext(SidePanelGroupContext);
   const triggerRef = useRef<HTMLElement | null>(null);
   const triggerId = useId();
+  const handleRef = useForkRef(triggerRef, ref);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (sidePanelGroup && triggerRef.current) {
@@ -48,7 +48,7 @@ export const SidePanelTrigger = forwardRef<
     onClick?.(event);
   };
 
-  if (!children || !isValidElement<{ ref?: Ref<unknown> }>(children)) {
+  if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;
   }
 
@@ -68,13 +68,6 @@ export const SidePanelTrigger = forwardRef<
 
   return cloneElement(children, {
     ...mergedProps,
-    ref: (element: unknown) => {
-      triggerRef.current = element as HTMLElement | null;
-      if (typeof ref === "function") {
-        ref(element as HTMLButtonElement | null);
-      } else if (ref) {
-        ref.current = element as HTMLButtonElement;
-      }
-    },
+    ref: handleRef,
   });
 });
