@@ -19,7 +19,6 @@ import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
 
-
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
 const adapterDayjs = new AdapterDayjs();
