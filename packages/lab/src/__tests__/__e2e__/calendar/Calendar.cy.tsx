@@ -509,10 +509,10 @@ describe("GIVEN a Calendar", () => {
             name: `Start new range: ${adapter.format(startOfMonth, "dddd D MMMM YYYY")}`,
           }).should("exist");
           cy.findByRole("button", {
-            name: `Start selected range: ${adapter.format(startDate, "dddd D MMMM YYYY")}`,
+            name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
           }).should("exist");
           cy.findByRole("button", {
-            name: `End selected range: ${adapter.format(endDate, "dddd D MMMM YYYY")}`,
+            name: `End range: ${adapter.format(endDate, "dddd D MMMM YYYY")}, selected`,
           }).should("exist");
           cy.findByRole("button", {
             name: adapter.format(endOfMonth, "dddd D MMMM YYYY"),
@@ -632,7 +632,6 @@ describe("GIVEN a Calendar", () => {
           }).realClick();
           const minMonth = adapter.getMonth(minDate);
           for (let monthIndex = 1; monthIndex <= 12; monthIndex++) {
-            console.log(monthIndex, minMonth);
             let testMonth = adapter.clone(minDate);
             testMonth = adapter.set(testMonth, { month: monthIndex });
 

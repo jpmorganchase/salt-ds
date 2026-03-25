@@ -99,11 +99,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
 
         // Verify that all dates in the range are selected
         datesInRange.forEach((dateInRange, index) => {
-          let expectedLabel = `In selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+          let expectedLabel = `In range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           if (index === 0) {
-            expectedLabel = `Start selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+            expectedLabel = `Start range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           } else if (index === datesInRange.length - 1) {
-            expectedLabel = `End selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+            expectedLabel = `End range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           }
           cy.findByRole("button", {
             name: expectedLabel,
@@ -125,11 +125,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
 
         // Verify that all dates in the new range are selected
         datesInNewRange.forEach((dateInRange, index) => {
-          let expectedLabel = `In selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+          let expectedLabel = `In range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           if (index === 0) {
-            expectedLabel = `Start selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+            expectedLabel = `Start range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           } else if (index === datesInRange.length - 1) {
-            expectedLabel = `End selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+            expectedLabel = `End range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           }
           cy.findByRole("button", {
             name: expectedLabel,
@@ -150,11 +150,11 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
 
         // Verify that the original range is selected again
         datesInRange.forEach((dateInRange, index) => {
-          let expectedLabel = `In selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+          let expectedLabel = `In range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           if (index === 0) {
-            expectedLabel = `Start selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+            expectedLabel = `Start range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           } else if (index === datesInRange.length - 1) {
-            expectedLabel = `End selected range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}`;
+            expectedLabel = `End range: ${adapter.format(dateInRange, "dddd D MMMM YYYY")}, selected`;
           }
           cy.findByRole("button", {
             name: expectedLabel,
@@ -211,7 +211,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
         cy.realPress("ArrowUp");
         // Verify that the focus moves to the next month
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(weekbeforeEndOfMonth, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(weekbeforeEndOfMonth, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -246,11 +246,11 @@ function assertRangeSelected(
     const date = adapter.add(baseDate, { days: i });
     let label;
     if (i === 0) {
-      label = `Start selected range: ${adapter.format(date, "dddd D MMMM YYYY")}`;
+      label = `Start range: ${adapter.format(date, "dddd D MMMM YYYY")}, selected`;
     } else if (i === 3) {
-      label = `End selected range: ${adapter.format(date, "dddd D MMMM YYYY")}`;
+      label = `End range: ${adapter.format(date, "dddd D MMMM YYYY")}, selected`;
     } else {
-      label = `In selected range: ${adapter.format(date, "dddd D MMMM YYYY")}`;
+      label = `In range: ${adapter.format(date, "dddd D MMMM YYYY")}, selected`;
     }
     cy.findByRole("button", { name: label }).should("exist");
   }
@@ -307,7 +307,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
         cy.findByRole("button", { name: "Next Month" }).focus();
         cy.realPress("Tab");
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate.startDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate.startDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
@@ -466,7 +466,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
 
         // Unselect range
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         }).realClick();
         cy.findByRole("button", {
           name: `Start new range: ${adapter.format(adapter.startOf(testDate, "month") as DateFrameworkType, "dddd D MMMM YYYY")}`,
@@ -487,7 +487,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', (
 
         // Unselect via keyboard
         cy.findByRole("button", {
-          name: `Start selected range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `Start range: ${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
         })
           .should(($button) =>
             expect($button.attr("class")).to.match(/saltCalendarDay-focused/),
