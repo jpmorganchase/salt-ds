@@ -1,15 +1,12 @@
-import { createContext, type MutableRefObject } from "react";
+import { createContext } from "@salt-ds/core";
+import type { MutableRefObject } from "react";
 
 export interface SidePanelGroupContextValue {
   open: boolean;
   setOpen: (open: boolean) => void;
   panelId?: string;
   activeTriggerId?: string;
-  setActiveTriggerId: (triggerId: string | undefined) => void;
   triggerRef?: MutableRefObject<HTMLElement | null>;
-  setTriggerRef: (
-    triggerRef: MutableRefObject<HTMLElement | null> | undefined,
-  ) => void;
   /**
    * Atomically activate a trigger: sets active trigger ID, keeps panel open,
    * and registers the trigger's ref for focus management.
@@ -21,4 +18,7 @@ export interface SidePanelGroupContextValue {
 }
 
 export const SidePanelGroupContext =
-  createContext<SidePanelGroupContextValue | null>(null);
+  createContext<SidePanelGroupContextValue | null>(
+    "SidePanelGroupContext",
+    null,
+  );
