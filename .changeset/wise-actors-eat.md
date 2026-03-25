@@ -17,3 +17,5 @@ The first element is used for `assertive` messages and the second for `polite` m
 Messages are queued and remain in the DOM for 300 msecs before being removed, negating the need for a delay.
 
 By default using the options prop will default to `polite` announcements.
+
+In addition both `Spinner` and `ContentStatus` have been updated to default to `polite` announcements, to meet firmwide accessibility standards. 
