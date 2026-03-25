@@ -270,11 +270,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
 
     const inputAriaLabelledBy =
       clsx(formFieldLabelledBy, dateInputLabelledBy) || undefined;
-    const inputAriaLabel = inputAriaLabelledBy
-      ? undefined
-      : ariaLabel
-        ? `Selected date ${ariaLabel}`
-        : "Selected date";
+    const inputAriaDescribedBy =
+      clsx(formFieldDescribedBy, dateInputDescribedBy) || undefined;
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -368,14 +365,12 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         )}
         <input
           autoComplete="off"
-          aria-describedby={
-            clsx(formFieldDescribedBy, dateInputDescribedBy) || undefined
-          }
+          aria-describedby={inputAriaDescribedBy}
           aria-labelledby={inputAriaLabelledBy}
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
           }
-          aria-label={inputAriaLabel}
+          aria-label={ariaLabel ?? "date input"}
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}

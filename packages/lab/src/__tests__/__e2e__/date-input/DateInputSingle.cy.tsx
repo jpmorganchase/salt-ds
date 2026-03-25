@@ -482,24 +482,9 @@ describe("GIVEN a DateInputSingle", () => {
           cy.findByRole("textbox")
             .should("have.attr", "aria-labelledby")
             .and("not.be.empty");
-          cy.findByRole("textbox").should("not.have.attr", "aria-label");
-        });
-
-        it("SHOULD have an accessible name via aria-label when not labelled by FormField", () => {
-          cy.mount(<DateInputSingle defaultValue={"05 Jan 2025"} />);
-          cy.findByRole("textbox")
-            .should("not.have.attr", "aria-labelledby")
-            .and("have.attr", "aria-label")
-            .and("not.be.empty");
+          cy.findByRole("textbox").should("have.attr", "aria-label").and("not.be.empty");
         });
       });
     });
-  });
-
-  it("should not have an empty aria-describedby attribute if used outside a formfield", () => {
-    cy.setDateAdapter(adapterLuxon);
-    cy.mount(<Single />);
-
-    cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
   });
 });

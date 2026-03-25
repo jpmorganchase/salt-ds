@@ -386,16 +386,17 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       clsx(formFieldLabelledBy, startInputPropsLabelledBy) || undefined;
     const endAriaLabelledBy =
       clsx(formFieldLabelledBy, endInputPropsLabelledBy) || undefined;
+    const startAriaDescribedBy =
+      clsx(formFieldDescribedBy, startInputPropsDescribedBy) || undefined;
+    const endAriaDescribedBy =
+      clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined;
 
-    const startAriaLabel = startAriaLabelledBy
-      ? undefined
-      : ariaLabel
-        ? `Start date ${ariaLabel}`
+    const startAriaLabel =
+      ariaLabel ? `Start date ${ariaLabel}`
         : "Start date";
 
-    const endAriaLabel = endAriaLabelledBy
-      ? undefined
-      : ariaLabel
+    const endAriaLabel =
+      ariaLabel
         ? `End date ${ariaLabel}`
         : "End date";
 
@@ -546,9 +547,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       >
         <input
           autoComplete="off"
-          aria-describedby={
-            clsx(formFieldDescribedBy, startInputPropsDescribedBy) || undefined
-          }
+          aria-describedby={startAriaDescribedBy}
           aria-labelledby={startAriaLabelledBy}
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
@@ -576,9 +575,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         <span className={withBaseName("dash")}>-</span>
         <input
           autoComplete="off"
-          aria-describedby={
-            clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined
-          }
+          aria-describedby={endAriaDescribedBy}
           aria-labelledby={endAriaLabelledBy}
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
