@@ -162,9 +162,6 @@ describe("GIVEN Content Status", () => {
           status="loading"
         />,
       );
-
-      cy.wait(2500);
-
       cy.get('[aria-live="polite"]').should("contain", "Loading component");
     });
   });
