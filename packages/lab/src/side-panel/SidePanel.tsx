@@ -95,13 +95,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       open,
       onOpenChange,
     });
+    const { setReference, setFloating } = refs;
 
     // Wire trigger ref to floating reference for deterministic focus return
     useEffect(() => {
       if (effectiveTriggerRef?.current) {
-        refs.setReference(effectiveTriggerRef.current);
+        setReference(effectiveTriggerRef.current);
       }
-    }, [effectiveTriggerRef, refs]);
+    }, [effectiveTriggerRef, setReference]);
 
     const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDownCapture?.(event);
@@ -114,7 +115,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       onOpenChange?.(false);
     };
 
-    const handleRef = useForkRef<HTMLDivElement>(refs.setFloating, ref);
+    const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
     useComponentCssInjection({
       testId: "salt-side-panel",
