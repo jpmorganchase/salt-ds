@@ -391,14 +391,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const endAriaDescribedBy =
       clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined;
 
-    const startAriaLabel =
-      ariaLabel ? `Start date ${ariaLabel}`
-        : "Start date";
+    const startAriaLabel = ariaLabel ? `Start date ${ariaLabel}` : "Start date";
 
-    const endAriaLabel =
-      ariaLabel
-        ? `End date ${ariaLabel}`
-        : "End date";
+    const endAriaLabel = ariaLabel ? `End date ${ariaLabel}` : "End date";
 
     const endInputIsRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)

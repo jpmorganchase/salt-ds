@@ -482,7 +482,9 @@ describe("GIVEN a DateInputSingle", () => {
           cy.findByRole("textbox")
             .should("have.attr", "aria-labelledby")
             .and("not.be.empty");
-          cy.findByRole("textbox").should("have.attr", "aria-label").and("not.be.empty");
+          cy.findByRole("textbox")
+            .should("have.attr", "aria-label")
+            .and("not.be.empty");
         });
       });
     });
