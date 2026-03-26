@@ -1,9 +1,7 @@
-import { makePrefixer, useControlled, useId } from "@salt-ds/core";
-import { clsx } from "clsx";
+import { useControlled, useId } from "@salt-ds/core";
 import {
-  type ComponentPropsWithoutRef,
-  forwardRef,
   type MutableRefObject,
+  type ReactNode,
   useCallback,
   useMemo,
   useState,
@@ -13,90 +11,72 @@ import {
   type SidePanelGroupContextValue,
 } from "./SidePanelGroupContext";
 
-const withBaseName = makePrefixer("saltSidePanelGroup");
-
-export interface SidePanelGroupProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+export interface SidePanelGroupProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  children: ReactNode;
 }
 
-export const SidePanelGroup = forwardRef<HTMLDivElement, SidePanelGroupProps>(
-  function SidePanelGroup(props, ref) {
-    const {
-      children,
-      className,
-      open: openProp,
-      defaultOpen,
-      onOpenChange,
-      ...rest
-    } = props;
+export function SidePanelGroup(props: SidePanelGroupProps) {
+  const { children, open: openProp, defaultOpen, onOpenChange } = props;
 
-    const [open, setOpenState] = useControlled({
-      default: Boolean(defaultOpen),
-      controlled: openProp,
-      name: "SidePanelGroup",
-      state: "open",
-    });
-    // Generate panel ID eagerly (not effect-delayed) for immediate aria-controls availability
-    const panelId = useId();
-    const [activeTriggerId, setActiveTriggerId] = useState<string | undefined>(
-      undefined,
-    );
-    const [triggerRef, setTriggerRef] = useState<
-      MutableRefObject<HTMLElement | null> | undefined
-    >(undefined);
+  const [open, setOpenState] = useControlled({
+    default: Boolean(defaultOpen),
+    controlled: openProp,
+    name: "SidePanelGroup",
+    state: "open",
+  });
 
-    const setOpen = useCallback(
-      (newOpen: boolean) => {
-        setOpenState(newOpen);
-        if (!newOpen) {
-          setActiveTriggerId(undefined);
-        }
-        onOpenChange?.(newOpen);
-      },
-      [onOpenChange],
-    );
+  const panelId = useId();
+  const [activeTriggerId, setActiveTriggerId] = useState<string | undefined>(
+    undefined,
+  );
+  const [triggerRef, setTriggerRef] = useState<
+    MutableRefObject<HTMLElement | null> | undefined
+  >(undefined);
 
-    /**
-     * Atomically activate a trigger: ensure it becomes the active trigger,
-     * keep panel open (don't close/reopen), and set its ref for focus return.
-     */
-    const activateTrigger = useCallback(
-      (
-        triggerId: string,
-        triggerElement: MutableRefObject<HTMLElement | null>,
-      ) => {
-        setActiveTriggerId(triggerId);
-        setTriggerRef(triggerElement);
-        // Only open if currently closed
-        if (!open) {
-          setOpenState(true);
-          onOpenChange?.(true);
-        }
-      },
-      [open, onOpenChange],
-    );
+  const setOpen = useCallback(
+    (newOpen: boolean) => {
+      setOpenState(newOpen);
+      if (!newOpen) {
+        setActiveTriggerId(undefined);
+      }
+      onOpenChange?.(newOpen);
+    },
+    [onOpenChange],
+  );
 
-    const contextValue = useMemo<SidePanelGroupContextValue>(
-      () => ({
-        open,
-        setOpen,
-        panelId,
-        activeTriggerId,
-        triggerRef,
-        activateTrigger,
-      }),
-      [open, setOpen, panelId, activeTriggerId, triggerRef, activateTrigger],
-    );
+  const activateTrigger = useCallback(
+    (
+      triggerId: string,
+      triggerElement: MutableRefObject<HTMLElement | null>,
+    ) => {
+      setActiveTriggerId(triggerId);
+      setTriggerRef(triggerElement);
+      if (!open) {
+        setOpenState(true);
+        onOpenChange?.(true);
+      }
+    },
+    [open, onOpenChange],
+  );
 
-    return (
-      <SidePanelGroupContext.Provider value={contextValue}>
-        <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
-          {children}
-        </div>
-      </SidePanelGroupContext.Provider>
-    );
-  },
-);
+  const contextValue = useMemo<SidePanelGroupContextValue>(
+    () => ({
+      open,
+      setOpen,
+      panelId,
+      activeTriggerId,
+      triggerRef,
+      activateTrigger,
+    }),
+    [open, setOpen, panelId, activeTriggerId, triggerRef, activateTrigger],
+  );
+
+  return (
+    <SidePanelGroupContext.Provider value={contextValue}>
+      {children}
+    </SidePanelGroupContext.Provider>
+  );
+}
