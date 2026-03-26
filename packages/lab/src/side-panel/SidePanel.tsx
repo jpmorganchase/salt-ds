@@ -21,9 +21,9 @@ const withBaseName = makePrefixer("saltSidePanel");
 export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
    * Edge the panel is anchored to; controls animation direction and divider side.
-   * @default "left"
+   * @default "right"
    */
-  position?: "left" | "right" | "top" | "bottom";
+  position?: "right" | "left" | "top" | "bottom";
   /**
    * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref.
    * @default 0
@@ -60,7 +60,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
     const {
-      position = "left",
+      position = "right",
       initialFocus = 0,
       open: openProp = false,
       onOpenChange: onOpenChangeProp,
