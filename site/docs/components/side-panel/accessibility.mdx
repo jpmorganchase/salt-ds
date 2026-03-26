@@ -8,47 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-## Focus management
-
-**Return focus to the trigger**
-
-When a side panel closes (either via user action like Escape, or programmatically), focus returns to the trigger element that opened the panel. This behavior is handled automatically in grouped mode and via the `triggerRef` prop in manual mode.
-
-**Grouped mode (automatic)**
-
-When using `SidePanelGroup` and `SidePanelTrigger`, focus return is handled automatically. Each panel tracks its associated trigger and restores focus correctly even when multiple panels are open.
-
-**Manual mode (explicit triggerRef)**
-
-When using a trigger outside `SidePanelGroup`, provide a `triggerRef` prop to ensure focus returns to the correct trigger element:
-
-```jsx
-const triggerRef = useRef<HTMLButtonElement>(null);
-
-<SidePanel
-  open={open}
-  onOpenChange={setOpen}
-  triggerRef={triggerRef as React.MutableRefObject<HTMLElement | null>}
-  aria-labelledby="panel-heading"
->
-  {/* content */}
-</SidePanel>
-
-<Button
-  ref={triggerRef}
-  onClick={() => setOpen(!open)}
-  aria-expanded={open}
-  aria-controls="panel-id"
->
-  Open panel
-</Button>
-```
-
 ## Best practices
 
 **Provide an accessible name for the `SidePanel`**
 
-Use `aria-labelledby` to link to a heading within the panel, or `aria-label` to provide a descriptive name for the region.
+Use `aria-labelledby` to link to a heading within the panel, or `aria-label` to provide a descriptive name for the `region`.
 
 **Example:**
 
@@ -59,48 +23,6 @@ Use `aria-labelledby` to link to a heading within the panel, or `aria-label` to 
 </SidePanel>
 ```
 
-**Choose trigger linkage based on structure**
-
-- If the trigger is inside `SidePanelGroup`, use `SidePanelTrigger` and ARIA linkage is set automatically.
-- If the trigger is a sibling or outside `SidePanelGroup`, provide `aria-expanded` and `aria-controls` manually.
-
-**Grouped trigger example (automatic ARIA linkage):**
-
-```jsx
-<SidePanelGroup>
-  <SidePanelTrigger>
-    <Button>Open panel</Button>
-  </SidePanelTrigger>
-  <SidePanel id="settings-panel" aria-labelledby="panel-heading">
-    <h2 id="panel-heading">Settings</h2>
-  </SidePanel>
-</SidePanelGroup>
-```
-
-**Manual trigger example (outside group):**
-
-```jsx
-const triggerRef = useRef<HTMLButtonElement>(null);
-
-<Button
-  ref={triggerRef}
-  aria-expanded={open}
-  aria-controls="settings-panel"
-  onClick={() => setOpen(!open)}
->
-  Open panel
-</Button>
-
-<SidePanel
-  id="settings-panel"
-  open={open}
-  onOpenChange={setOpen}
-  triggerRef={triggerRef as React.MutableRefObject<HTMLElement | null>}
-  aria-labelledby="panel-heading"
->
-  <h2 id="panel-heading">Settings</h2>
-</SidePanel>
-```
 
 ## Keyboard interactions
 
