@@ -11,6 +11,7 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
 import { useState } from "react";
 
@@ -37,12 +38,12 @@ export const BottomPanel = () => {
         <SidePanel position="bottom" aria-labelledby={headingId}>
           <StackLayout align="start">
             <Button
+              appearance="transparent"
+              aria-label="close panel"
               onClick={() => setOpen(false)}
-              style={{
-                marginLeft: "auto",
-              }}
+              style={{ marginLeft: "auto" }}
             >
-              Close
+              <CloseIcon aria-hidden />
             </Button>
             <H2 id={headingId}>Section title</H2>
             <Text>
