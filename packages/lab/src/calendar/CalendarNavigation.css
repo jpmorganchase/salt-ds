@@ -19,5 +19,5 @@
 .saltCalendarNavigation-dropdowns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: var(--salt-spacing-100);
+  grid-gap: var(--salt-spacing-50);
 }
