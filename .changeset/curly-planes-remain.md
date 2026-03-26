@@ -5,6 +5,7 @@
 Calendar updates
 
 - fixed styling issues with selected range border.
+- fix Calendar dropdown spacing that caused an ellipsis to appear at mobile breakpoints.
 - improved screenreader support.
 - type improvements
   - remove un-used code/types and simplified structure of selection types.
