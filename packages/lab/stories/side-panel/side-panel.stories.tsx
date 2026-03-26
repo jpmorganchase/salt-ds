@@ -59,7 +59,7 @@ export const Left: StoryFn = () => {
         }}
         gap={0}
       >
-        <SidePanel aria-labelledby={headingId} width={500}>
+        <SidePanel aria-labelledby={headingId} width={500} position="left">
           <StackLayout align="start" gap={1}>
             <Button
               onClick={() => setOpen(false)}
