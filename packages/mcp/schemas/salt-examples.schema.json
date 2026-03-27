@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-examples.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "examples"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "intent",
+          "complexity",
+          "target_type",
+          "target_name"
+        ]
+      }
+    }
+  }
+}

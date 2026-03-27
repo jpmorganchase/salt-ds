@@ -1,0 +1,61 @@
+{
+  "name": "@salt-ds/cli",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/cli"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "bin",
+    "generated"
+  ],
+  "publishBinEntrypoints": {
+    "bin/salt-ds.js": {
+      "requirePath": "../dist-cjs/cli/src/index.js",
+      "errorPrefix": "salt-ds cli error:"
+    }
+  },
+  "publishScriptExcludes": [
+    "build",
+    "build:generated",
+    "build:package",
+    "doctor",
+    "prepack"
+  ],
+  "publishBundledWorkspaceDependencies": [
+    "@salt-ds/runtime-inspector-core",
+    "@salt-ds/semantic-core"
+  ],
+  "bin": {
+    "salt-ds": "bin/salt-ds.js"
+  },
+  "generateTypings": false,
+  "publishEntryPath": "cli/src/index.js",
+  "publishExtraCopyPaths": [
+    {
+      "from": "../semantic-core/schemas",
+      "to": "schemas"
+    }
+  ],
+  "scripts": {
+    "build:generated": "node ./scripts/buildGenerated.mjs",
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build": "yarn build:generated && yarn build:package",
+    "doctor": "node ./bin/salt-ds.js doctor",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@salt-ds/runtime-inspector-core": "workspace:*",
+    "@salt-ds/semantic-core": "workspace:*",
+    "get-tsconfig": "^4.7.5"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-cli",
+    "provenance": true
+  }
+}

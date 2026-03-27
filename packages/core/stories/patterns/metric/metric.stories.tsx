@@ -35,25 +35,13 @@ export const HorizontalMetric = () => {
   );
 };
 
-export const Subtitle = () => {
+export const SubtitleAndSubvalue = () => {
   return (
     <StackLayout gap={0}>
       <Text>
         <strong>Performance</strong>
       </Text>
-      <Text variant="secondary">Interactions</Text>
-      <Display1>801</Display1>
-    </StackLayout>
-  );
-};
-
-export const Subvalue = () => {
-  return (
-    <StackLayout gap={0}>
-      <Text>
-        <strong>Performance</strong>
-      </Text>
-      <Text variant="secondary">Interactions</Text>
+      <Text color="secondary">Interactions</Text>
       <Display1>801</Display1>
       <Text
         style={{
@@ -72,7 +60,7 @@ export const LinkSubtitle = () => {
       <Text>
         <strong>Performance</strong>
       </Text>
-      <Link variant="secondary">Interactions</Link>
+      <Link color="secondary">Interactions</Link>
       <Display1>801</Display1>
       <Text
         style={{
@@ -92,7 +80,7 @@ export const Indicators = () => {
         <Text>
           <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Interactions</Text>
+        <Text color="secondary">Interactions</Text>
         <Display1>
           801
           <ArrowUpIcon
@@ -114,7 +102,7 @@ export const Indicators = () => {
         <Text>
           <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Interactions</Text>
+        <Text color="secondary">Interactions</Text>
         <Display1>
           801
           <ArrowDownIcon
@@ -136,14 +124,14 @@ export const Indicators = () => {
   );
 };
 
-export const HierarchicalVertical = () => {
+export const VerticalSizes = () => {
   return (
     <StackLayout direction={"row"} gap={8} align="end">
       <StackLayout gap={0}>
         <Text>
           <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Interactions</Text>
+        <Text color="secondary">Interactions</Text>
         <Display3>
           801
           <ArrowUpIcon
@@ -165,7 +153,7 @@ export const HierarchicalVertical = () => {
         <Text>
           <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Interactions</Text>
+        <Text color="secondary">Interactions</Text>
         <Display2>
           801
           <ArrowUpIcon
@@ -187,7 +175,7 @@ export const HierarchicalVertical = () => {
         <Text>
           <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Interactions</Text>
+        <Text color="secondary">Interactions</Text>
         <Display1>
           801
           <ArrowUpIcon
@@ -209,7 +197,7 @@ export const HierarchicalVertical = () => {
   );
 };
 
-export const HierarchicalHorizontal = () => {
+export const HorizontalSizes = () => {
   return (
     <StackLayout gap={8} align="end">
       <StackLayout direction="row" gap={1}>

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-country-symbols.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "country_symbols"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "country_symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "name",
+          "package",
+          "summary",
+          "status",
+          "aliases",
+          "variants",
+          "related_docs",
+          "deprecations",
+          "last_verified_at"
+        ]
+      }
+    }
+  }
+}

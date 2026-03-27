@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/migrate-visual-evidence-response.schema.json",
+  "title": "Migrate Visual Evidence Response",
+  "description": "Normalized response envelope returned by an external visual-evidence adapter before Salt migrate reasoning begins.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "visual_evidence"],
+  "properties": {
+    "contract": {
+      "const": "migrate_visual_evidence_v1"
+    },
+    "visual_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/visualEvidence"
+      }
+    },
+    "ambiguities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "derivedOutline": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "regions": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "actions": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "states": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["regions"]
+        },
+        {
+          "required": ["actions"]
+        },
+        {
+          "required": ["states"]
+        },
+        {
+          "required": ["notes"]
+        }
+      ]
+    },
+    "visualEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_type",
+        "source",
+        "derived_outline",
+        "confidence"
+      ],
+      "properties": {
+        "kind": {
+          "enum": ["mockup", "screenshot"]
+        },
+        "source_type": {
+          "enum": ["file", "url"]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "derived_outline": {
+          "$ref": "#/$defs/derivedOutline"
+        },
+        "confidence": {
+          "enum": ["low", "medium", "high"]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(borderStories);
-const { AllPanels } = composedStories;
+const { AllPanels, NoHeaderOrFooter } = composedStories;
 
 describe("GIVEN a Border", () => {
   checkAccessibility(composedStories);
@@ -52,6 +52,18 @@ describe("GIVEN a Border", () => {
       cy.get(".saltBorderLayout").should("have.css", "column-gap", "0px");
 
       cy.get(".saltBorderLayout").should("have.css", "row-gap", "0px");
+    });
+  });
+
+  describe("WHEN the north and south regions are omitted", () => {
+    it("THEN it should collapse to a single content row", () => {
+      cy.mount(<NoHeaderOrFooter />);
+
+      cy.get(".saltBorderLayout").should(
+        "have.css",
+        "grid-template-areas",
+        '"west center east"',
+      );
     });
   });
 });

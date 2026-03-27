@@ -1,0 +1,43 @@
+{
+  "contract": "migrate_visual_evidence_v1",
+  "visual_evidence": [
+    {
+      "kind": "mockup",
+      "source_type": "file",
+      "source": "D:/Work/consumer-app/designs/legacy-orders.mockup.png",
+      "label": "legacy-orders.mockup.png",
+      "derived_outline": {
+        "regions": ["header", "sidebar", "content"],
+        "actions": ["Save", "Cancel"],
+        "states": ["loading", "empty"],
+        "notes": [
+          "The mockup keeps the primary actions in the right-hand toolbar cluster."
+        ]
+      },
+      "confidence": "high",
+      "notes": [
+        "Mockup landmarks are stable enough for the first migration pass."
+      ]
+    },
+    {
+      "kind": "screenshot",
+      "source_type": "url",
+      "source": "https://example.test/legacy-orders/current-toolbar.png",
+      "label": "current-toolbar.png",
+      "derived_outline": {
+        "regions": ["toolbar"],
+        "actions": ["Refresh"],
+        "notes": [
+          "Screenshot-only interpretation is approximate and should be checked against runtime before rollout."
+        ]
+      },
+      "confidence": "low",
+      "notes": [
+        "Toolbar action labels are partially obscured in the screenshot."
+      ]
+    }
+  ],
+  "ambiguities": [
+    "Confirm the screenshot-derived toolbar landmarks against the running app before finalizing the first migration scaffold."
+  ]
+}

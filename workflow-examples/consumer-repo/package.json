@@ -1,0 +1,13 @@
+{
+  "name": "salt-consumer-example",
+  "private": true,
+  "scripts": {
+    "ui:verify": "salt-ds review ."
+  },
+  "dependencies": {
+    "@salt-ds/core": "workspace:^",
+    "@salt-ds/theme": "workspace:^",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

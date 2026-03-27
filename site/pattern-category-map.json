@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "source": "manual canonical pattern categorization",
+    "generatedOn": "2026-03-21",
+    "patternCount": 25,
+    "categoryCount": 8
+  },
+  "categoryOrder": [
+    "Actions and commands",
+    "Navigation and wayfinding",
+    "Dialogs and overlays",
+    "Forms and data entry",
+    "Selection and filtering",
+    "Data display and analysis",
+    "Layout and shells",
+    "Feedback and status"
+  ],
+  "patterns": {
+    "analytical-dashboard": {
+      "title": "Analytical dashboard",
+      "route": "/salt/patterns/analytical-dashboard",
+      "category": "Data display and analysis",
+      "secondaryCategories": ["Layout and shells"]
+    },
+    "announcement-dialog": {
+      "title": "Announcement dialog",
+      "route": "/salt/patterns/announcement-dialog",
+      "category": "Dialogs and overlays",
+      "secondaryCategories": ["Feedback and status"]
+    },
+    "app-header": {
+      "title": "App header",
+      "route": "/salt/patterns/app-header",
+      "category": "Layout and shells",
+      "secondaryCategories": ["Navigation and wayfinding"]
+    },
+    "breadcrumbs": {
+      "title": "Breadcrumbs",
+      "route": "/salt/patterns/breadcrumbs",
+      "category": "Navigation and wayfinding"
+    },
+    "button-bar": {
+      "title": "Button bar",
+      "route": "/salt/patterns/button-bar",
+      "category": "Actions and commands"
+    },
+    "contact-details": {
+      "title": "Contact details",
+      "route": "/salt/patterns/contact-details",
+      "category": "Forms and data entry"
+    },
+    "content-status": {
+      "title": "Content status",
+      "route": "/salt/patterns/content-status",
+      "category": "Feedback and status"
+    },
+    "file-upload": {
+      "title": "File upload",
+      "route": "/salt/patterns/file-upload",
+      "category": "Forms and data entry"
+    },
+    "forms": {
+      "title": "Forms",
+      "route": "/salt/patterns/forms",
+      "category": "Forms and data entry"
+    },
+    "header-block": {
+      "title": "Header block",
+      "route": "/salt/patterns/header-block",
+      "category": "Layout and shells"
+    },
+    "indication": {
+      "title": "Indication",
+      "route": "/salt/patterns/indication",
+      "category": "Feedback and status"
+    },
+    "international-address-form": {
+      "title": "International address form",
+      "route": "/salt/patterns/international-address-form",
+      "category": "Forms and data entry"
+    },
+    "international-phone-number-input": {
+      "title": "International phone number input",
+      "route": "/salt/patterns/international-phone-number-input",
+      "category": "Forms and data entry"
+    },
+    "keyboard-shortcuts": {
+      "title": "Keyboard shortcuts",
+      "route": "/salt/patterns/keyboard-shortcuts",
+      "category": "Actions and commands"
+    },
+    "list-builder": {
+      "title": "List builder",
+      "route": "/salt/patterns/list-builder",
+      "category": "Selection and filtering",
+      "secondaryCategories": ["Forms and data entry"]
+    },
+    "list-filtering": {
+      "title": "List filtering",
+      "route": "/salt/patterns/list-filtering",
+      "category": "Selection and filtering"
+    },
+    "menu-button": {
+      "title": "Menu button",
+      "route": "/salt/patterns/menu-button",
+      "category": "Actions and commands",
+      "secondaryCategories": ["Dialogs and overlays"]
+    },
+    "metric": {
+      "title": "Metric",
+      "route": "/salt/patterns/metric",
+      "category": "Data display and analysis"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "route": "/salt/patterns/navigation",
+      "category": "Navigation and wayfinding"
+    },
+    "preferences-dialog": {
+      "title": "Preferences dialog",
+      "route": "/salt/patterns/preferences-dialog",
+      "category": "Dialogs and overlays",
+      "secondaryCategories": ["Navigation and wayfinding"]
+    },
+    "search": {
+      "title": "Search",
+      "route": "/salt/patterns/search",
+      "category": "Navigation and wayfinding",
+      "secondaryCategories": ["Selection and filtering"]
+    },
+    "selectable-card": {
+      "title": "Selectable card",
+      "route": "/salt/patterns/selectable-card",
+      "category": "Selection and filtering"
+    },
+    "split-button": {
+      "title": "Split button",
+      "route": "/salt/patterns/split-button",
+      "category": "Actions and commands"
+    },
+    "vertical-navigation": {
+      "title": "Vertical navigation",
+      "route": "/salt/patterns/vertical-navigation",
+      "category": "Navigation and wayfinding",
+      "secondaryCategories": ["Layout and shells"]
+    },
+    "wizard": {
+      "title": "Wizard",
+      "route": "/salt/patterns/wizard",
+      "category": "Forms and data entry",
+      "secondaryCategories": ["Dialogs and overlays"]
+    }
+  }
+}

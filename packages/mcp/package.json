@@ -1,0 +1,67 @@
+{
+  "name": "@salt-ds/mcp",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "bin",
+    "generated",
+    "schemas"
+  ],
+  "publishBinEntrypoints": {
+    "bin/salt-mcp.js": {
+      "requirePath": "../dist-cjs/mcp/src/index.js",
+      "errorPrefix": "salt-mcp error:"
+    }
+  },
+  "publishExports": {
+    ".": {
+      "types": "./dist-types/mcp/src/index.d.ts",
+      "import": "./dist-es/mcp/src/index.js",
+      "require": "./dist-cjs/mcp/src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typescriptInclude": [
+    "src"
+  ],
+  "typescriptRootDir": "src",
+  "publishBundledWorkspaceDependencies": [
+    "@salt-ds/runtime-inspector-core",
+    "@salt-ds/semantic-core"
+  ],
+  "publishAdditionalEntryPaths": [
+    "src/evals/runWorkflowEval.ts"
+  ],
+  "bin": {
+    "salt-mcp": "bin/salt-mcp.js"
+  },
+  "scripts": {
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build:registry": "yarn workspace @salt-ds/semantic-core build && node ./scripts/buildRegistry.mjs",
+    "sync:generated": "node ./scripts/syncGenerated.mjs",
+    "build": "yarn build:package && yarn build:registry && yarn sync:generated",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@salt-ds/runtime-inspector-core": "workspace:*",
+    "@salt-ds/semantic-core": "workspace:*",
+    "get-tsconfig": "^4.7.5",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/semver": "^7.7.1"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-mcp",
+    "provenance": true
+  }
+}

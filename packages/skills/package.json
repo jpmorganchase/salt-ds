@@ -1,0 +1,15 @@
+{
+  "name": "@salt-ds/skills",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Consumable Salt Design System workflow skills led by the public salt-ds skill",
+  "license": "MIT",
+  "dependencies": {
+    "@salt-ds/semantic-core": "workspace:*"
+  },
+  "files": [
+    "AGENTS.md",
+    "README.md",
+    "salt-ds"
+  ]
+}

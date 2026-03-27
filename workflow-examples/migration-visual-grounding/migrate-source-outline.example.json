@@ -1,0 +1,9 @@
+{
+  "regions": ["header", "sidebar", "content", "footer actions"],
+  "actions": ["Refresh", "Save", "Cancel"],
+  "states": ["loading", "empty"],
+  "notes": [
+    "Keep the primary action order familiar in the first Salt migration pass.",
+    "The screenshot-only toolbar landmarks should be confirmed against runtime."
+  ]
+}
