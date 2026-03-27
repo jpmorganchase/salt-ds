@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-components.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "components"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "package",
+          "summary",
+          "status",
+          "when_to_use",
+          "when_not_to_use",
+          "props",
+          "accessibility",
+          "related_docs",
+          "last_verified_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "package": {
+            "type": "object"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["stable", "beta", "lab", "deprecated"]
+          },
+          "when_to_use": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "when_not_to_use": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "props": {
+            "type": "array"
+          },
+          "accessibility": {
+            "type": "object"
+          },
+          "related_docs": {
+            "type": "object"
+          },
+          "inference": {
+            "type": "object",
+            "properties": {
+              "docgen": {
+                "type": "object",
+                "properties": {
+                  "candidate_count": {
+                    "type": "integer"
+                  },
+                  "candidate_display_names": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "selected_display_name": {
+                    "type": ["string", "null"]
+                  },
+                  "selected_score": {
+                    "type": ["number", "null"]
+                  }
+                }
+              },
+              "tokens": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "enum": ["repo_scan", "none"]
+                  },
+                  "discovered_count": {
+                    "type": "integer"
+                  },
+                  "returned_count": {
+                    "type": "integer"
+                  },
+                  "max_returned": {
+                    "type": "integer"
+                  },
+                  "truncated": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "deprecations": {
+                "type": "object",
+                "properties": {
+                  "matched_count": {
+                    "type": "integer"
+                  },
+                  "inferred_component_count": {
+                    "type": "integer"
+                  },
+                  "ambiguous_match_count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "last_verified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

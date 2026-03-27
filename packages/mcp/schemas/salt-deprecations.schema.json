@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-deprecations.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "deprecations"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "deprecations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "package",
+          "kind",
+          "name",
+          "migration",
+          "source_urls"
+        ],
+        "properties": {
+          "inference": {
+            "type": "object",
+            "properties": {
+              "matched_component_names": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "component_inferred": {
+                "type": "boolean"
+              },
+              "ambiguous_component_match": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

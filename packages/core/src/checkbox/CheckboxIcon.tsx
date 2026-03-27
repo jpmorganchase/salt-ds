@@ -11,7 +11,7 @@ export interface CheckboxIconProps {
   className?: string;
   disabled?: boolean;
   /**
-   * @deprecated Use validationStatus instead
+   * @deprecated since 1.8.0-rc.2. Use `validationStatus` instead.
    */
   error?: boolean;
   indeterminate?: boolean;
