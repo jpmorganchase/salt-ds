@@ -33,7 +33,6 @@ Preheader
 Robo
 Selectability
 Stackable
-Stackoverflow
 Stickersheet
 Stickersheets
 Substep
