@@ -1,0 +1,39 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+By default, a side panel anchors to right edge of the screen and has `variant=”primary”`. You can place side panel on the `right` or `left` edges using the position prop. Set `variant=”secondary”` for a secondary side panel and `variant=”tertiary”` for a tertiary side panel.
+
+<LivePreview componentName="side-panel" exampleName="Default" />
+
+## Right side panel
+
+Consider using a right‑anchored side panel to surface contextual details and secondary tasks related to the current view—such as item details, comments, history, or quick edits. Always set the panel’s width to suit its content and ensure the main page stays visible and focusable while the panel is open.
+
+<LivePreview componentName="side-panel" exampleName="RightPanel" />
+
+## Left side panel
+
+Consider using a left‑anchored side panel for structure and exploration—such as hierarchical filters, folders, outlines, or multi‑facet filtering.
+
+<LivePreview componentName="side-panel" exampleName="LeftPanel" />
+
+## Local affordance examples
+
+Local affordances are in-context triggers that open side panels for quick tasks, typically placed close to what they affect so settings can be adjusted without losing sight of the primary page.
+
+A side panel can be triggered via a page-level utility, for example a control in the app header that acts on the current page’s primary content:
+
+<LivePreview componentName="side-panel" exampleName="WithAppHeader" />
+
+A side panel can be also triggered via a control embedded within the main content area, usually scoped to a specific component or subset of data (e.g., a grid toolbar button, row‑level action, card menu):
+
+<LivePreview componentName="side-panel" exampleName="WithTable" />
