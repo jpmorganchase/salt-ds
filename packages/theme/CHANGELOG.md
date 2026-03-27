@@ -1,5 +1,30 @@
 # @salt-ds/theme
 
+## 1.42.0
+
+### Minor Changes
+
+- 17cc3a9: - Added `--salt-color-transparent`.
+  - Deprecated `--salt-palette-alpha-none`. Use `--salt-color-transparent` instead.
+
+### Patch Changes
+
+- cfc1591: Simplify disabled styling across the system. This affected the following components:
+
+  ## Core
+
+  - Checkbox
+  - Combo box
+  - Dropdown
+  - List box
+  - Radio button
+  - Slider
+  - Switch
+
+  ## Lab
+
+  - Tree
+
 ## 1.41.0
 
 ### Minor Changes

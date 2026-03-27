@@ -1,5 +1,29 @@
 # @salt-ds/core
 
+## 1.58.1
+
+### Patch Changes
+
+- cfc1591: Simplify disabled styling across the system. This affected the following components:
+
+  ## Core
+
+  - Checkbox
+  - Combo box
+  - Dropdown
+  - List box
+  - Radio button
+  - Slider
+  - Switch
+
+  ## Lab
+
+  - Tree
+
+- 0a08ae0: Fixed `SaltProvider` and `SaltProviderNext` not applying inherited themes.
+- Updated dependencies [49b3486]
+  - @salt-ds/icons@1.18.0
+
 ## 1.58.0
 
 ### Minor Changes
