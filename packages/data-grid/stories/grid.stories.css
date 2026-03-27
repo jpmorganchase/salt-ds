@@ -67,7 +67,7 @@
 
 .miniChartBar {
   width: 7%;
-  background-color: var(--salt-accent-background);
+  background-color: var(--salt-sentiment-accent-background);
 }
 
 .paginatedGrid {
