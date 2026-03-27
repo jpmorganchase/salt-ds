@@ -45,11 +45,7 @@ export const Default = () => {
               <Button>{open ? "Close" : "Open"} side panel</Button>
             </SidePanelTrigger>
           </FlexItem>
-          <SidePanel
-            position="right"
-            aria-labelledby={headingId}
-            variant={variant}
-          >
+          <SidePanel aria-labelledby={headingId} variant={variant}>
             <StackLayout align="start" gap={1}>
               <Button
                 appearance="transparent"
@@ -67,11 +63,11 @@ export const Default = () => {
       </SidePanelGroup>
       <StackLayout>
         <FormField>
-          <FormFieldLabel>Direction</FormFieldLabel>
+          <FormFieldLabel>Variant</FormFieldLabel>
           <RadioButtonGroup
-            direction={"horizontal"}
-            aria-label="Direction Controls"
-            name="direction"
+            direction="horizontal"
+            aria-label="Variant Controls"
+            name="variant"
             onChange={handleVariantChange}
             value={variant}
           >

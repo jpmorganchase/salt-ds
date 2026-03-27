@@ -1,26 +1,21 @@
 import {
   Button,
+  Dropdown,
   FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   H2,
   Input,
+  Option,
+  RadioButton,
+  RadioButtonGroup,
   StackLayout,
-  Text,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
+import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
 import { useState } from "react";
-
-const FormFieldExample = () => (
-  <FormField>
-    <FormFieldLabel>Label</FormFieldLabel>
-    <Input />
-    <FormFieldHelperText>Help text appears here</FormFieldHelperText>
-  </FormField>
-);
 
 export const LeftPanel = () => {
   const [open, setOpen] = useState(false);
@@ -35,7 +30,7 @@ export const LeftPanel = () => {
         gap={0}
       >
         <SidePanel aria-labelledby={headingId} position="left">
-          <StackLayout align="start" gap={1}>
+          <StackLayout>
             <Button
               appearance="transparent"
               aria-label="close panel"
@@ -44,19 +39,37 @@ export const LeftPanel = () => {
             >
               <CloseIcon aria-hidden />
             </Button>
-            <H2 id={headingId}>Section Title</H2>
-            <Text>
-              This placeholder text is provided to illustrate how content will
-              appear within the component. The sentences are intended for
-              demonstration only and do not convey specific information. Generic
-              examples like this help review layout, spacing, and overall
-              design. Adjust the wording as needed to fit your use case or
-              display requirements.
-            </Text>
-            {Array.from({ length: 7 }, (_, index) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
-              <FormFieldExample key={index} />
-            ))}
+            <H2 id={headingId}>Filters</H2>
+            <Input startAdornment={<SearchIcon />} placeholder="Search" />
+
+            <FormField>
+              <FormFieldLabel>Color</FormFieldLabel>
+              <Dropdown>
+                <Option value="red" />
+                <Option value="blue" />
+                <Option value="green" />
+                <Option value="yellow" />
+                <Option value="purple" />
+                <Option value="orange" />
+              </Dropdown>
+              <FormFieldHelperText>Pick a color</FormFieldHelperText>
+            </FormField>
+
+            <FormField>
+              <FormFieldLabel>Location</FormFieldLabel>
+              <RadioButtonGroup>
+                <RadioButton label="NAMR" value="namr" />
+                <RadioButton label="APAC" value="apac" />
+                <RadioButton label="EMEA" value="emea" />
+              </RadioButtonGroup>
+              <FormFieldHelperText>Select one that applies</FormFieldHelperText>
+            </FormField>
+            <FlexLayout>
+              <Button sentiment="accented" appearance="bordered">
+                Reset
+              </Button>
+              <Button sentiment="accented">Update</Button>
+            </FlexLayout>
           </StackLayout>
         </SidePanel>
         <FlexLayout padding={1}>

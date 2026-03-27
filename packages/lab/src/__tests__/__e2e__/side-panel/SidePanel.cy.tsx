@@ -2,7 +2,7 @@ import { SidePanel } from "@salt-ds/lab";
 import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
 
-const { Left, Right, Top, Bottom, ManualTrigger, Variants, WithTable } =
+const { Left, Right, ManualTrigger, Variants, WithTable } =
   composeStories(sidePanel);
 
 describe("GIVEN a SidePanel component", () => {
@@ -27,34 +27,6 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("region")
         .should("have.class", "saltSidePanel-right")
-        .and("be.visible");
-
-      cy.findByRole("button", { name: "Close" }).click();
-
-      cy.findByRole("region").should("not.exist");
-    });
-
-    it("WHEN Top panel is opened, THEN displays with correct position class", () => {
-      cy.mount(<Top />);
-
-      cy.findByRole("button", { name: "Open top panel" }).click();
-
-      cy.findByRole("region")
-        .should("have.class", "saltSidePanel-top")
-        .and("be.visible");
-
-      cy.findByRole("button", { name: "Close" }).click();
-
-      cy.findByRole("region").should("not.exist");
-    });
-
-    it("WHEN Bottom panel is opened, THEN displays with correct position class", () => {
-      cy.mount(<Bottom />);
-
-      cy.findByRole("button", { name: "Open bottom panel" }).click();
-
-      cy.findByRole("region")
-        .should("have.class", "saltSidePanel-bottom")
         .and("be.visible");
 
       cy.findByRole("button", { name: "Close" }).click();

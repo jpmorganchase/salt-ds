@@ -5,47 +5,31 @@ import {
   FlexItem,
   FlexLayout,
   H2,
-  NavigationItem,
+  Input,
   StackLayout,
   Text,
   useId,
 } from "@salt-ds/core";
 import {
+  ChattingIcon,
   CloseIcon,
-  GithubIcon,
   HelpCircleIcon,
-  StackoverflowIcon,
+  NotificationIcon,
+  SearchIcon,
 } from "@salt-ds/icons";
 import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const DesktopAppHeader = ({ items }: { items?: string[] }) => {
-  const [active, setActive] = useState(items?.[0]);
-  const [offset, setOffset] = useState(0);
-  useEffect(() => {
-    const setScroll = () => {
-      setOffset(window.scrollY);
-    };
-
-    window.addEventListener("scroll", setScroll);
-    return () => {
-      window.removeEventListener("scroll", setScroll);
-    };
-  }, []);
-
+const DesktopAppHeader = () => {
   return (
     <header>
       <FlexLayout
         style={{
-          paddingLeft: "var(--salt-spacing-300)",
-          paddingRight: "var(--salt-spacing-300)",
-          backgroundColor: "var(--salt-container-primary-background)",
+          padding: "var(--salt-spacing-100) var(--salt-spacing-300)",
           position: "sticky",
           top: 0,
           width: "100%",
           zIndex: 1,
-          boxShadow:
-            offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
           borderBottom:
             "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
         }}
@@ -55,28 +39,12 @@ const DesktopAppHeader = ({ items }: { items?: string[] }) => {
         <FlexItem align="center">
           <Text styleAs="h2">Logo</Text>
         </FlexItem>
-        <nav>
-          <ul
-            style={{
-              display: "flex",
-              listStyle: "none",
-              padding: "0",
-              margin: "0",
-            }}
-          >
-            {items?.map((item) => (
-              <li key={item}>
-                <NavigationItem
-                  active={active === item}
-                  href="#"
-                  onClick={() => setActive(item)}
-                >
-                  {item}
-                </NavigationItem>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <Input
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 200 }}
+        />
+
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
             <SidePanelTrigger>
@@ -85,10 +53,10 @@ const DesktopAppHeader = ({ items }: { items?: string[] }) => {
               </Button>
             </SidePanelTrigger>
             <Button appearance="transparent">
-              <StackoverflowIcon aria-hidden />
+              <NotificationIcon aria-hidden />
             </Button>
             <Button appearance="transparent">
-              <GithubIcon aria-hidden />
+              <ChattingIcon aria-hidden />
             </Button>
           </StackLayout>
         </FlexItem>
@@ -98,18 +66,24 @@ const DesktopAppHeader = ({ items }: { items?: string[] }) => {
 };
 
 export const WithAppHeader = () => {
-  const items = ["Home", "About", "Services"];
   const [open, setOpen] = useState(false);
   const headingId = useId();
 
   return (
     <SidePanelGroup open={open} onOpenChange={setOpen}>
-      <BorderLayout style={{ position: "relative", width: "100%" }}>
+      <BorderLayout
+        style={{
+          position: "relative",
+          width: "100%",
+          border:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        }}
+      >
         <BorderItem position="north">
-          <DesktopAppHeader items={items} />
+          <DesktopAppHeader />
         </BorderItem>
         <BorderItem position="center">
-          {Array.from({ length: 5 }, (_, index) => (
+          {Array.from({ length: 4 }, (_, index) => (
             <div
               // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
               key={index}
