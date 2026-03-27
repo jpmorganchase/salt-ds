@@ -1,0 +1,33 @@
+.saltToggletipPanel {
+  --toggletip-background: var(--salt-container-primary-background);
+  --toggletip-borderColor: var(--salt-container-primary-borderColor);
+
+  box-sizing: border-box;
+  padding: var(--salt-spacing-100);
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--toggletip-borderColor);
+  border-radius: var(--salt-palette-corner-weak);
+
+  background: var(--toggletip-background);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+
+  color: var(--salt-content-primary-foreground);
+  z-index: var(--salt-zIndex-flyover);
+
+  max-width: 45ch;
+  max-height: 100vh;
+}
+
+.saltToggletipPanel-content {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.saltToggletipPanel-content:focus-visible {
+  outline-offset: var(--salt-spacing-fixed-100);
+}

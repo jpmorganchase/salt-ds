@@ -1,0 +1,33 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To provide supplementary information for elements on a page that you can't add a [`Tooltip`](/salt/components/tooltip) to, such as a section header.
+
+### When not to use
+
+- To provide supplementary information for an interactive element like a button. In this case, use a [`Tooltip`](/salt/components/tooltip).
+- To provide more complex information or user flows or present critical information that requires immediate action from the user. Instead, use [`Dialog`](/salt/components/dialog).
+- When the information is needed for the user to complete a task. Instead, add the information to the page so it's always visible.
+
+## Import
+
+To import `Toggletip` and related components from the core Salt package, use:
+
+```js
+import { Toggletip, ToggletipTrigger, ToggletipPanel } from "@salt-ds/core";
+```
+
+## Props
+
+<PropsTable packageName="core" componentName="Toggletip" />
