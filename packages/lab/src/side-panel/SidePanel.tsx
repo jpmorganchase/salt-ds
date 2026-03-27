@@ -22,7 +22,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    * Edge the panel is anchored to; controls animation direction and divider side.
    * @default "right"
    */
-  position?: "right" | "left" | "top" | "bottom";
+  position?: "right" | "left";
   /**
    * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref.
    * @default 0
