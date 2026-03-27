@@ -59,7 +59,7 @@ export const Left: StoryFn = () => {
         }}
         gap={0}
       >
-        <SidePanel aria-labelledby={headingId} width={500} position="left">
+        <SidePanel aria-labelledby={headingId} position="left">
           <StackLayout align="start" gap={1}>
             <Button
               onClick={() => setOpen(false)}
@@ -108,7 +108,7 @@ export const Right: StoryFn = () => {
             <Button>Open Right Panel</Button>
           </SidePanelTrigger>
         </FlexItem>
-        <SidePanel position="right" aria-labelledby={headingId} width={500}>
+        <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout align="start" gap={1}>
             <Button
               onClick={() => setOpen(false)}
@@ -143,7 +143,7 @@ export const Top: StoryFn = () => {
   return (
     <SidePanelGroup open={open} onOpenChange={setOpen}>
       <StackLayout gap={0}>
-        <SidePanel position="top" aria-labelledby={headingId} height={300}>
+        <SidePanel position="top" aria-labelledby={headingId}>
           <StackLayout align="start">
             <Button
               onClick={() => setOpen(false)}
@@ -197,7 +197,7 @@ export const Bottom: StoryFn = () => {
             <Button>Open bottom panel</Button>
           </SidePanelTrigger>
         </FlexItem>
-        <SidePanel position="bottom" aria-labelledby={headingId} height={300}>
+        <SidePanel position="bottom" aria-labelledby={headingId}>
           <StackLayout align="start">
             <Button
               onClick={() => setOpen(false)}
@@ -437,9 +437,9 @@ export const WithTable: StoryFn = () => {
             flexDirection: "column",
           }}
         >
-          <H2>Team Members</H2>
-          <TableContainer style={{ marginTop: "16px", flex: 1 }}>
+          <TableContainer>
             <Table>
+              <caption>Team members</caption>
               <THead>
                 <TR>
                   <TH>Name</TH>
@@ -473,11 +473,7 @@ export const WithTable: StoryFn = () => {
           </TableContainer>
         </div>
 
-        <SidePanel
-          position="right"
-          width={400}
-          aria-labelledby={panelHeadingId}
-        >
+        <SidePanel position="right" aria-labelledby={panelHeadingId}>
           <StackLayout align="start" gap={3}>
             <Button
               onClick={() => setOpen(false)}

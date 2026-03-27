@@ -5,7 +5,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
-  type CSSProperties,
   forwardRef,
   type KeyboardEvent,
   type MutableRefObject,
@@ -43,14 +42,6 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Height of the panel. Can be a number (pixels) or a CSS string value.
-   */
-  height?: number | string;
-  /**
-   * Width of the panel. Can be a number (pixels) or a CSS string value.
-   */
-  width?: number | string;
-  /**
    * Reference to the trigger element for manual mode. Used to return focus when panel closes.
    * When inside SidePanelGroup, this is automatically managed via SidePanelTrigger.
    */
@@ -67,9 +58,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       variant = "primary",
       children,
       className,
-      width,
-      height,
-      style,
       id: idProp,
       onKeyDownCapture,
       triggerRef: manualTriggerRef,
@@ -136,18 +124,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
-    const customStyle = {
-      ...style,
-      ...(width && {
-        "--saltSidePanel-width":
-          typeof width === "number" ? `${width}px` : width,
-      }),
-      ...(height && {
-        "--saltSidePanel-height":
-          typeof height === "number" ? `${height}px` : height,
-      }),
-    } as CSSProperties;
-
     const panelDiv = (
       <div
         ref={handleRef}
@@ -161,7 +137,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           },
           className,
         )}
-        style={customStyle}
         tabIndex={-1}
         role="region"
         id={id}

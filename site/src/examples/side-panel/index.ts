@@ -5,3 +5,4 @@ export * from "./ManualTriggerPanel";
 export * from "./RightPanel";
 export * from "./TopPanel";
 export * from "./WithAppHeader";
+export * from "./WithTable";

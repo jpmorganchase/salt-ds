@@ -103,12 +103,8 @@ export const WithAppHeader = () => {
   const headingId = useId();
 
   return (
-    <SidePanelGroup
-      open={open}
-      onOpenChange={setOpen}
-      style={{ position: "relative", width: "100%" }}
-    >
-      <BorderLayout>
+    <SidePanelGroup open={open} onOpenChange={setOpen}>
+      <BorderLayout style={{ position: "relative", width: "100%" }}>
         <BorderItem position="north">
           <DesktopAppHeader items={items} />
         </BorderItem>
