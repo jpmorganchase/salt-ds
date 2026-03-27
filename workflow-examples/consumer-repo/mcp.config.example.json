@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "npx",
+      "args": ["@salt-ds/mcp@latest"]
+    }
+  }
+}

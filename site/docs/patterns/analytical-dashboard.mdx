@@ -16,6 +16,27 @@ data:
       },
     ]
   components: ["Border layout", "Flow layout", "Stack layout", "Tabs"]
+  ai:
+    starterScaffold:
+      sourceUrls:
+        [
+          "/salt/patterns/analytical-dashboard",
+          "/salt/components/layouts/border-layout/usage",
+          "/salt/components/layouts/grid-layout/usage",
+          "/salt/patterns/metric",
+        ]
+      template: "analytical-dashboard"
+      semantics:
+        regions: ["dashboard-header", "key-metrics", "fixed-panel", "main-body"]
+        requiredRegions: ["main-body"]
+        optionalRegions: ["dashboard-header", "key-metrics", "fixed-panel"]
+        buildAround:
+          ["Main body region", "Header region", "Key metrics", "Fixed panel"]
+        preserveConstraints:
+          [
+            "Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.",
+            "Use BorderLayout only for the top-level layout and use GridLayout to manage the layout and responsiveness of the main content area.",
+          ]
 ---
 
 <ImageSwitcher

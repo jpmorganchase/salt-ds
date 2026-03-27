@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css",
+    "build": "yarn workspace @salt-ds/mcp build && yarn workspaces foreach --exclude @salt-ds/site --exclude @salt-ds/mcp -Apt run build && yarn bundle:css",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspace @salt-ds/highcharts-theme build",
     "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn bundle:embla-carousel:css && yarn copy:icon:css && yarn copy:countries:css",
@@ -23,6 +23,9 @@
     "copy:icon:css": "yarn workspace @salt-ds/icons copy:css",
     "copy:countries:css": "yarn workspace @salt-ds/countries copy:css",
     "test": "vitest",
+    "eval:deterministic": "vitest run packages/mcp/src/__tests__/agenticEvals.spec.ts packages/mcp/src/__tests__/createServer.spec.ts packages/mcp/src/__tests__/hostAttachmentEval.spec.ts",
+    "eval:live": "yarn workspace @salt-ds/mcp build && node packages/mcp/scripts/runWorkflowEval.mjs",
+    "eval:live:test": "vitest run packages/mcp/src/__tests__/liveEvalHarness.spec.ts",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",
     "prettier": "prettier --write .",
@@ -40,6 +43,7 @@
     "lint:style:theme": "yarn stylelint -f verbose \"packages/theme/css/**/*.css\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
+    "smoke:consumer": "node ./scripts/consumerRepoSmoke.mjs",
     "typecheck": "tsgo --noEmit",
     "chromatic": "chromatic"
   },

@@ -6,7 +6,7 @@ import {
 } from "./DatePickerSingleGridPanel";
 
 /**
- * @deprecated DatePickerSinglePanel is deprecated. Use DatePickerSingleGridPanel instead.
+ * @deprecated since 1.0.0-alpha.68. Use `DatePickerSingleGridPanel` instead.
  * This component will be deleted when we move DatePickerSingleGridPanel from labs to core.
  */
 export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<

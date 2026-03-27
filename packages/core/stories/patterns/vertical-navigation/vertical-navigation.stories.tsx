@@ -3,6 +3,7 @@ import {
   BorderLayout,
   NavigationItem,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import {
   LineChartIcon,
@@ -132,8 +133,9 @@ const RecursiveNavItem: FC<{
   item: NavigationItemData;
   active: string;
   setActive: Dispatch<SetStateAction<string>>;
-}> = ({ item, active, setActive }) => {
-  const [expanded, setExpanded] = useState<string[]>([]);
+  initiallyExpanded?: string[];
+}> = ({ item, active, setActive, initiallyExpanded = [] }) => {
+  const [expanded, setExpanded] = useState<string[]>(initiallyExpanded);
 
   const handleExpand = (item: NavigationItemData) => () => {
     const isExpanded = expanded.includes(item.name);
@@ -177,13 +179,14 @@ const RecursiveNavItem: FC<{
             key={item.name}
             active={active}
             setActive={setActive}
+            initiallyExpanded={initiallyExpanded}
           />
         ))}
     </li>
   );
 };
 
-export const Nested = () => {
+export const NestedGroup = () => {
   const navigationData = [
     { name: "Overview", href: "#" },
     {
@@ -200,7 +203,7 @@ export const Nested = () => {
     { name: "Reports", href: "#" },
   ];
 
-  const [active, setActive] = useState(navigationData[0].name);
+  const [active, setActive] = useState("Monitoring");
 
   return (
     <BorderLayout>
@@ -228,6 +231,7 @@ export const Nested = () => {
                   key={item.name}
                   active={active}
                   setActive={setActive}
+                  initiallyExpanded={["Data", "Data analysis"]}
                 />
               ))}
             </StackLayout>
@@ -244,6 +248,84 @@ export const Nested = () => {
   );
 };
 
-Nested.parameters = {
+NestedGroup.parameters = {
+  layout: "fullscreen",
+};
+
+export const SecondaryNavigation = () => {
+  const navigationData = [
+    { id: "overview", name: "Overview" },
+    { id: "exposure", name: "Exposure" },
+    { id: "positions", name: "Positions" },
+    { id: "limits", name: "Limits" },
+  ];
+  const [active, setActive] = useState(navigationData[0].name);
+
+  return (
+    <BorderLayout>
+      <BorderItem position="north" sticky>
+        <Header />
+      </BorderItem>
+      <BorderItem position="center">
+        <StackLayout gap={4} style={{ padding: "var(--salt-spacing-400)" }}>
+          {navigationData.map((item) => (
+            <section
+              id={item.id}
+              key={item.name}
+              style={{
+                minHeight: "160px",
+                padding: "var(--salt-spacing-400)",
+                backgroundColor: "var(--salt-container-tertiary-background)",
+              }}
+            >
+              <Text
+                style={{ fontWeight: "var(--salt-text-fontWeight-strong)" }}
+              >
+                {item.name}
+              </Text>
+            </section>
+          ))}
+        </StackLayout>
+      </BorderItem>
+      <BorderItem
+        position="east"
+        sticky
+        style={{
+          top: "calc(var(--salt-spacing-300) * 2)",
+          maxHeight: "calc(100vh - var(--salt-spacing-300) * 2)",
+          padding: "var(--salt-spacing-200)",
+        }}
+      >
+        <aside style={{ width: "180px" }}>
+          <nav aria-label="On-page sections">
+            <StackLayout
+              gap="var(--salt-spacing-fixed-100)"
+              as="ul"
+              style={{ listStyle: "none", margin: 0, padding: 0 }}
+            >
+              {navigationData.map((item) => (
+                <li key={item.name} style={{ listStyle: "none" }}>
+                  <NavigationItem
+                    active={active === item.name}
+                    href={`#${item.id}`}
+                    orientation="vertical"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setActive(item.name);
+                    }}
+                  >
+                    {item.name}
+                  </NavigationItem>
+                </li>
+              ))}
+            </StackLayout>
+          </nav>
+        </aside>
+      </BorderItem>
+    </BorderLayout>
+  );
+};
+
+SecondaryNavigation.parameters = {
   layout: "fullscreen",
 };

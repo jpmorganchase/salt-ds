@@ -7,7 +7,11 @@ data:
     name: "@salt-ds/core"
     initialVersion: "1.15.0"
   alsoKnownAs: ["Nav Item", "Link", "App button", "Header item"]
-  relatedComponents: [{ name: "Pill", relationship: "similarTo" }]
+  relatedComponents:
+    [
+      { name: "Pill", relationship: "similarTo" },
+      { name: "Vertical navigation", relationship: "similarTo" },
+    ]
   relatedPatterns: ["App header", "Navigation", "Vertical navigation"]
 keywords:
   $ref: "#/data/alsoKnownAs"

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-packages.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "packages"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "status",
+          "version",
+          "summary",
+          "source_root"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["stable", "beta", "lab", "deprecated"]
+          },
+          "version": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "source_root": {
+            "type": "string"
+          },
+          "changelog_path": {
+            "type": ["string", "null"]
+          },
+          "docs_root": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    }
+  }
+}

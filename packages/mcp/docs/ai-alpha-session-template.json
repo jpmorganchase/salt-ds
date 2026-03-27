@@ -1,0 +1,18 @@
+{
+  "session_id": "alpha-2026-04-04-01",
+  "date": "2026-04-04",
+  "audience": "existing-salt-team",
+  "repo_type": "existing-salt",
+  "host": "cursor",
+  "transport": "mcp",
+  "workflow_requested": "review",
+  "workflow_used": "review",
+  "task_prompt": "Use salt-ds to review this toolbar file. Focus on primitive choice, layout ownership, deprecated Salt usage, and the safest next fix.",
+  "user_asked_for_job": true,
+  "summary_first": true,
+  "verification_present": true,
+  "blocking_question_count": 0,
+  "outcome": "success",
+  "friction_category": "docs-gap",
+  "notes": "Replace this example with the actual session outcome and the main friction explanation."
+}

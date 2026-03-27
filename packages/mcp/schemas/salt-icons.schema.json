@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-icons.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "icons"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "icons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "base_name",
+          "figma_name",
+          "package",
+          "summary",
+          "status",
+          "category",
+          "synonyms",
+          "aliases",
+          "variant",
+          "related_docs",
+          "source",
+          "deprecations",
+          "last_verified_at"
+        ]
+      }
+    }
+  }
+}

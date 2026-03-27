@@ -1,0 +1,33 @@
+{
+  "contract": "project_conventions_v1",
+  "version": "1.0.0",
+  "project": "operations-console",
+  "pattern_preferences": [
+    {
+      "intent": "workspace shell navigation",
+      "prefer": "OperationsShell",
+      "canonical_salt_start": "VerticalNavigation",
+      "reason": "The console uses one approved shell composition around canonical Salt navigation and layout primitives.",
+      "docs": ["./docs/operations-shell.md"]
+    },
+    {
+      "intent": "filterable dashboard region",
+      "prefer": "DashboardFilterBar",
+      "canonical_salt_start": "Toolbar",
+      "reason": "Dashboard filter bars are standardized as one page-level pattern with fixed control ordering.",
+      "docs": ["./docs/dashboard-filter-bar.md"]
+    }
+  ],
+  "banned_choices": [
+    {
+      "name": "UNSTABLE_SaltProviderNext",
+      "replacement": "SaltProvider",
+      "reason": "The repo only supports the stable provider stack.",
+      "docs": ["./docs/platform-migration.md"]
+    }
+  ],
+  "notes": [
+    "Pattern preferences should narrow canonical Salt guidance, not replace Salt primitives with unrelated custom UI.",
+    "Keep canonical Salt rationale visible alongside project pattern names."
+  ]
+}

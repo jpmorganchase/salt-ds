@@ -13,6 +13,6 @@
 
 .saltGridLayout-area {
   grid-template: var(--gridLayout-gridTemplate);
-  grid-template-columns: min-content 1fr min-content;
-  grid-template-rows: min-content 1fr min-content;
+  grid-template-columns: var(--gridLayout-areaColumns, min-content 1fr min-content);
+  grid-template-rows: var(--gridLayout-areaRows, min-content 1fr min-content);
 }

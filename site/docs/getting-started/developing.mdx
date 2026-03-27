@@ -1,5 +1,7 @@
 ---
 title: Developing with Salt
+description: "Learn how to install Salt, bootstrap a React app with the recommended JPM Brand theme, and start importing components intentionally."
+salt_ai_guide: true
 layout: DetailTechnical
 sidebar:
   label: Developing
@@ -35,7 +37,7 @@ If you prefer not to use npm, you can install the packages using [yarn](https://
 
 ### 2. Add required web fonts
 
-Salt’s default theme requires the Open Sans and PT Mono web fonts. You can integrate them into your application using one of the following methods.
+Salt uses the Open Sans and PT Mono web fonts. If you follow the recommended JPM Brand setup below, also make the Amplitude font available for `headingFont="Amplitude"` and `actionFont="Amplitude"`. See [Themes](../themes/index) for the matching `@font-face` example and the Legacy theme setup.
 
 #### Use Google Fonts
 
@@ -112,7 +114,7 @@ If you prefer not to use Google Fonts or Fontsource, you can use any other metho
 
 ### 3. Integrate Salt into your app
 
-To integrate Salt into your project, import the CSS theme and [Salt Provider](../components/salt-provider) component—and then wrap your application in it.
+For new projects, import the Salt theme CSS, add the JPM Brand theme CSS, and wrap your application in `SaltProviderNext` with the default brand props.
 
 For example, in a typical React project, you can do this in your `src/index.js` as follows:
 
@@ -121,18 +123,24 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-// Import <SaltProvider>
-import { SaltProvider } from "@salt-ds/core";
+// Import <SaltProviderNext>
+import { SaltProviderNext } from "@salt-ds/core";
 
 // Import theme CSS
 import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/theme-next.css";
 
-// Wrap your application in a <SaltProvider>
+// Wrap your application in <SaltProviderNext>
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <SaltProvider>
+  <SaltProviderNext
+    accent="teal"
+    corner="rounded"
+    headingFont="Amplitude"
+    actionFont="Amplitude"
+  >
     <App />
-  </SaltProvider>,
+  </SaltProviderNext>,
 );
 ```
 
@@ -153,6 +161,18 @@ export default App;
 ```
 
 Head over to our available [components](../components/) to view their respective APIs.
+
+## Before you build screens and flows
+
+Before creating custom UI, check these guides:
+
+- [Choosing the right primitive](./choosing-the-right-primitive) explains how to
+  choose between Salt components, layouts, and patterns based on user intent.
+- [Composition pitfalls](./composition-pitfalls) highlights the most common
+  structural mistakes, including nested interactive primitives, pass-through
+  wrappers, and unnecessary custom composition.
+- [Custom wrappers](./custom-wrappers) shows when a wrapper adds shared value
+  and when it should be replaced with the underlying Salt primitive directly.
 
 ### 5. (Optional) Play with lab components
 
