@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/migrate-visual-evidence-request.schema.json",
+  "title": "Migrate Visual Evidence Request",
+  "description": "Normalized request envelope sent from the Salt CLI to an external visual-evidence adapter before migrate planning begins.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "cwd", "inputs"],
+  "properties": {
+    "contract": {
+      "const": "migrate_visual_evidence_v1"
+    },
+    "cwd": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/input"
+      }
+    }
+  },
+  "$defs": {
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source_type", "source", "label"],
+      "properties": {
+        "kind": {
+          "enum": ["mockup", "screenshot"]
+        },
+        "source_type": {
+          "enum": ["file", "url"]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

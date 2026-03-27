@@ -1,0 +1,77 @@
+{
+  "task_id": "legacy-orders-migration-visual-grounding-alpha",
+  "rubric_dimensions": [
+    "migration_fidelity",
+    "confidence_accuracy",
+    "clarification_quality",
+    "final_usefulness"
+  ],
+  "scoring_scale": "1-5",
+  "variants": {
+    "source_only": {
+      "inputs": ["query"],
+      "expected_signals": [
+        "generic clarification questions",
+        "no visual evidence impact",
+        "broader migration checkpoints"
+      ],
+      "scores": {
+        "migration_fidelity": null,
+        "confidence_accuracy": null,
+        "clarification_quality": null,
+        "final_usefulness": null
+      },
+      "notes": []
+    },
+    "outline_only": {
+      "inputs": ["source_outline"],
+      "expected_signals": [
+        "regions, actions, and states are explicit",
+        "mockup-style scoping is stronger than source-only",
+        "no live current-experience baseline"
+      ],
+      "scores": {
+        "migration_fidelity": null,
+        "confidence_accuracy": null,
+        "clarification_quality": null,
+        "final_usefulness": null
+      },
+      "notes": []
+    },
+    "runtime_only": {
+      "inputs": ["query", "url"],
+      "expected_signals": [
+        "landmarks and action anchors are explicit",
+        "runtime preservation guidance is stronger than source-only",
+        "no structured mockup reconciliation"
+      ],
+      "scores": {
+        "migration_fidelity": null,
+        "confidence_accuracy": null,
+        "clarification_quality": null,
+        "final_usefulness": null
+      },
+      "notes": []
+    },
+    "combined": {
+      "inputs": ["query", "source_outline", "url"],
+      "expected_signals": [
+        "combined clarification questions",
+        "stronger preserve and confirmation checks",
+        "explicit mismatch handling between structured outline and live UI"
+      ],
+      "scores": {
+        "migration_fidelity": null,
+        "confidence_accuracy": null,
+        "clarification_quality": null,
+        "final_usefulness": null
+      },
+      "notes": []
+    }
+  },
+  "decision": {
+    "visual_grounding": null,
+    "summary": "",
+    "follow_ups": []
+  }
+}

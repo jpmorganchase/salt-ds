@@ -1,0 +1,19 @@
+{
+  "contract": "project_conventions_stack_v1",
+  "layers": [
+    {
+      "id": "team-checkout",
+      "scope": "team",
+      "source": {
+        "type": "file",
+        "path": "./team.json"
+      }
+    }
+  ],
+  "notes": [
+    "Only use this manifest when shared upstream layers or explicit merge ordering are real.",
+    "Keep ./team.json as the repo-local default layer.",
+    "Put broader layers first and more specific layers later.",
+    "Each referenced layer still uses project_conventions_v1."
+  ]
+}

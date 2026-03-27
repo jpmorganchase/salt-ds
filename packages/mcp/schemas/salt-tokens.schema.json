@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-tokens.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "tokens"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "category",
+          "type",
+          "value",
+          "themes",
+          "deprecated",
+          "last_verified_at"
+        ],
+        "properties": {
+          "policy": {
+            "type": ["object", "null"],
+            "required": [
+              "usage_tier",
+              "direct_component_use",
+              "preferred_for",
+              "avoid_for",
+              "notes",
+              "docs"
+            ],
+            "properties": {
+              "usage_tier": {
+                "enum": ["characteristic", "palette", "foundation"]
+              },
+              "direct_component_use": {
+                "enum": ["always", "conditional", "never"]
+              },
+              "preferred_for": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "avoid_for": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "notes": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "docs": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

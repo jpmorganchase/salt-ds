@@ -1,0 +1,63 @@
+---
+title: Choosing the right primitive
+description: "Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI."
+salt_ai_guide: true
+layout: DetailTechnical
+sidebar:
+  label: Choosing primitives
+---
+
+Use this page as a short chooser, then follow the component usage pages for the
+authoritative details.
+
+## Start with user intent
+
+- Trigger work in the current view: use [`Button`](/salt/components/button).
+- Navigate to another route, page, or document: use
+  [`Link`](/salt/components/link).
+- Show or hide related content: use a disclosure primitive such as
+  [`Accordion`](/salt/components/accordion) or
+  [`Collapsible`](/salt/components/collapsible).
+- Structure a page or region: start with
+  [layouts](/salt/components/layouts/index).
+- Build a repeated multi-part flow: check [patterns](/salt/patterns/index)
+  before inventing a new composition.
+
+## Quick decision table
+
+| User intent                     | Prefer                                    | Main thing to avoid                                 |
+| ------------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| Trigger work                    | [`Button`](/salt/components/button)       | `Link` or custom link-like actions                  |
+| Navigate somewhere              | [`Link`](/salt/components/link)           | `Button` used as route or document navigation       |
+| Repeated multi-part flow        | [Patterns](/salt/patterns/index)          | ad hoc assemblies                                   |
+| Arrange page or shell structure | [Layouts](/salt/components/layouts/index) | generic wrappers that add no value                  |
+| Existing Salt screen            | Salt primitives                           | recreated native or role-based interactive elements |
+
+## Common decisions
+
+### Button or Link
+
+- Use `Button` for actions such as save, apply, retry, or open dialog.
+- Use `Link` for real destinations such as routes, pages, help articles, or
+  document downloads.
+
+### Component or pattern
+
+- Start with a component when you need one UI element with clear semantics.
+- Start with a pattern when the job spans multiple components or repeated page
+  structure.
+
+### Salt primitive or custom wrapper
+
+- Prefer the Salt primitive first.
+- Add a wrapper only when it adds stable semantics, shared behavior, or a real
+  domain API.
+
+## Read next
+
+- [Button usage](/salt/components/button/usage)
+- [Link usage](/salt/components/link/usage)
+- [Layouts overview](/salt/components/layouts/index)
+- [Patterns overview](/salt/patterns/index)
+- [Composition pitfalls](./composition-pitfalls)
+- [Custom wrappers](./custom-wrappers)

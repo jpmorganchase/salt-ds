@@ -1,0 +1,51 @@
+{
+  "name": "@salt-ds/semantic-core",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Internal Salt canonical reasoning core",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./bootstrapScaffolding": "./src/bootstrapScaffolding.ts",
+    "./package.json": "./package.json",
+    "./policy": "./src/policy/index.ts",
+    "./policy/*": "./src/policy/*.ts",
+    "./schemas/*": "./schemas/*",
+    "./types": "./src/types.ts",
+    "./build/*": "./src/build/*.ts",
+    "./registry/*": "./src/registry/*.ts",
+    "./search/*": "./src/search/*.ts",
+    "./tools/*": "./src/tools/*.ts",
+    "./validation/*": "./src/tools/validation/*.ts"
+  },
+  "sideEffects": false,
+  "typescriptRootDir": "src",
+  "publishAdditionalEntryPaths": [
+    "src/build/buildRegistry.ts"
+  ],
+  "dependencies": {
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
+    "minisearch": "^7.2.0",
+    "semver": "^7.7.3"
+  },
+  "devDependencies": {
+    "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "mdast-util-to-string": "^4.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "typescript": "^6.0.0",
+    "unified": "^11.0.5"
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-semantic-core",
+    "provenance": true
+  }
+}

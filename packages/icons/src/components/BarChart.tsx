@@ -6,7 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type BarChartIconProps = IconProps;
 
-/** @deprecated - Use `ChartBarIcon` instead. */
+/** @deprecated since 1.16.0. Use `ChartBarIcon` instead. */
 export const BarChartIcon = forwardRef<SVGSVGElement, BarChartIconProps>(
   function BarChartIcon(props: BarChartIconProps, ref) {
     return (

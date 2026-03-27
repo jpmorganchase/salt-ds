@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project Conventions",
+  "description": "Optional project-specific conventions that refine canonical Salt guidance without changing the core Salt MCP registry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "version"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "contract": {
+      "const": "project_conventions_v1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "type": "string"
+    },
+    "supported_salt_range": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preferred_components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/preferredComponent"
+      }
+    },
+    "approved_wrappers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/approvedWrapper"
+      }
+    },
+    "token_aliases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tokenAlias"
+      }
+    },
+    "theme_defaults": {
+      "$ref": "#/$defs/themeDefaults"
+    },
+    "token_family_policies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tokenFamilyPolicy"
+      }
+    },
+    "pattern_preferences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/patternPreference"
+      }
+    },
+    "banned_choices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/bannedChoice"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "preferredComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["salt_name", "prefer", "reason"],
+      "properties": {
+        "salt_name": {
+          "type": "string"
+        },
+        "prefer": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "approvedWrapper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "wraps", "reason"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "wraps": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "import": {
+          "$ref": "#/$defs/importReference"
+        },
+        "use_when": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoid_when": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "migration_shim": {
+          "type": "boolean"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "importReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "name"],
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "patternPreference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "prefer", "reason"],
+      "properties": {
+        "intent": {
+          "type": "string"
+        },
+        "prefer": {
+          "type": "string"
+        },
+        "canonical_salt_start": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tokenAlias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["salt_name", "prefer", "reason"],
+      "properties": {
+        "salt_name": {
+          "type": "string"
+        },
+        "prefer": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "themeDefaultProp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "themeDefaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "allOf": [
+        {
+          "if": {
+            "required": ["provider"],
+            "properties": {
+              "provider": {
+                "type": "string",
+                "not": {
+                  "enum": ["SaltProvider", "SaltProviderNext"]
+                }
+              }
+            }
+          },
+          "then": {
+            "required": ["provider_import"]
+          }
+        }
+      ],
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "provider_import": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["from", "name"],
+          "properties": {
+            "from": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "imports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "props": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/themeDefaultProp"
+          }
+        },
+        "reason": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tokenFamilyPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "mode", "reason"],
+      "properties": {
+        "family": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "prefer-local-aliases",
+            "allow-local-aliases",
+            "canonical-only"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "bannedChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "reason"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "replacement": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

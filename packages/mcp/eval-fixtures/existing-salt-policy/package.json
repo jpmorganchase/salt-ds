@@ -1,0 +1,9 @@
+{
+  "name": "eval-existing-salt-policy",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {
+    "@salt-ds/core": "^1.0.0",
+    "react": "^18.3.1"
+  }
+}
