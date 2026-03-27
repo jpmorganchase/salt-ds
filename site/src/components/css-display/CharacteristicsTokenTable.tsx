@@ -16,6 +16,7 @@ import { CopyToClipboard } from "../copy-to-clipboard";
 import { Code } from "../mdx/code";
 import { BlockView } from "./BlockView";
 import styles from "./CharacteristicsTokenTable.module.css";
+import { formatTokenValue } from "./formatTokenValue";
 
 const groupByType = (data: CssVariableData) => {
   const groupedData: { [key: string]: CssVariableData } = {};
@@ -100,7 +101,7 @@ export const CharacteristicsTokenTable = ({
                 <FlowLayout align="center" gap={1}>
                   <CopyToClipboard value={name} />
                 </FlowLayout>
-                <Code>{value}</Code>
+                <Code>{formatTokenValue(value)}</Code>
               </StackLayout>
             </TD>
           </TR>
