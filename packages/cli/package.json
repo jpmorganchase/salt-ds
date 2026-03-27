@@ -1,0 +1,36 @@
+{
+  "name": "@salt-ds/cli",
+  "version": "0.0.0",
+  "description": "Salt Design System workflow CLI",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "bin"
+  ],
+  "publishBinEntrypoints": {
+    "bin/salt-ds.js": {
+      "requirePath": "../dist-cjs/cli/src/index.js",
+      "errorPrefix": "salt-ds cli error:"
+    }
+  },
+  "publishScriptExcludes": [
+    "build",
+    "doctor",
+    "prepack"
+  ],
+  "bin": {
+    "salt-ds": "bin/salt-ds.js"
+  },
+  "generateTypings": false,
+  "publishEntryPath": "cli/src/index.js",
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs",
+    "doctor": "node ./bin/salt-ds.js doctor",
+    "prepack": "yarn build"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-cli",
+    "provenance": true
+  }
+}

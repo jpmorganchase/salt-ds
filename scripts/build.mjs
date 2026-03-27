@@ -13,12 +13,24 @@ import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
 import { distinct } from "./utils.mjs";
 
 const cwd = process.cwd();
+const repoRoot = path.resolve(
+  path.dirname(url.fileURLToPath(import.meta.url)),
+  "..",
+);
 
 const packageJson = (
   await import(url.pathToFileURL(path.join(cwd, "package.json")), {
     with: { type: "json" },
   })
 ).default;
+const {
+  publishExports,
+  publishBinEntrypoints = {},
+  publishScriptExcludes = [],
+  generateTypings = true,
+  publishEntryPath,
+  ...packageJsonForPublish
+} = packageJson;
 
 const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"].concat(
   packageJson.files ?? [],
@@ -26,13 +38,38 @@ const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"].concat(
 
 const packageName = packageJson.name;
 const outputDir = path.join(packageJson.publishConfig.directory);
+const sourceEntryPath = path.join(cwd, "src", "index.ts");
+
+const typingSourceConfig =
+  packageJson.typescriptInclude || packageJson.typescriptRootDir
+    ? {
+        include: (packageJson.typescriptInclude ?? ["src"]).map((entry) =>
+          path.join(cwd, entry),
+        ),
+        rootDir: path.join(cwd, packageJson.typescriptRootDir ?? "src"),
+      }
+    : path.join(cwd, "src");
+const typingRootDir =
+  typeof typingSourceConfig === "string"
+    ? typingSourceConfig
+    : typingSourceConfig.rootDir;
+
+const publishedEntryPath =
+  publishEntryPath ??
+  path
+    .relative(typingRootDir, sourceEntryPath)
+    .replace(/\\/g, "/")
+    .replace(/\.ts$/, ".js");
+const publishedTypingEntryPath = publishedEntryPath.replace(/\.js$/, ".d.ts");
 
 console.log(`Building ${packageName}`);
 
 await fs.mkdirp(outputDir);
 await fs.emptyDir(outputDir);
 
-await makeTypings(outputDir);
+if (generateTypings) {
+  await makeTypings(outputDir, typingSourceConfig);
+}
 
 const bundle = await rollup({
   input: path.join(cwd, "src/index.ts"),
@@ -101,10 +138,26 @@ await bundle.write({
 
 await bundle.close();
 
+const publishedScripts =
+  packageJsonForPublish.scripts &&
+  typeof packageJsonForPublish.scripts === "object"
+    ? Object.fromEntries(
+        Object.entries(packageJsonForPublish.scripts).filter(
+          ([scriptName]) => !publishScriptExcludes.includes(scriptName),
+        ),
+      )
+    : undefined;
+
+if (publishedScripts && Object.keys(publishedScripts).length > 0) {
+  packageJsonForPublish.scripts = publishedScripts;
+} else {
+  delete packageJsonForPublish.scripts;
+}
+
 await fs.writeJSON(
   path.join(outputDir, "package.json"),
   {
-    ...packageJson,
+    ...packageJsonForPublish,
     dependencies: await transformWorkspaceDeps(packageJson.dependencies),
     ...(packageJson.peerDependencies
       ? {
@@ -113,14 +166,17 @@ await fs.writeJSON(
           ),
         }
       : {}),
-    main: "dist-cjs/index.js",
-    module: "dist-es/index.js",
-    typings: "dist-types/index.d.ts",
+    ...(publishExports ? { exports: publishExports } : {}),
+    main: `dist-cjs/${publishedEntryPath}`,
+    module: `dist-es/${publishedEntryPath}`,
+    ...(generateTypings
+      ? { typings: `dist-types/${publishedTypingEntryPath}` }
+      : {}),
     files: distinct([
       ...(packageJson.files ?? []),
       "dist-cjs",
       "dist-es",
-      "dist-types",
+      ...(generateTypings ? ["dist-types"] : []),
       "CHANGELOG.md",
     ]),
   },
@@ -128,7 +184,10 @@ await fs.writeJSON(
 );
 
 for (const file of FILES_TO_COPY) {
-  const filePath = path.join(cwd, file);
+  let filePath = path.join(cwd, file);
+  if (file === "LICENSE" && !(await fs.pathExists(filePath))) {
+    filePath = path.join(repoRoot, file);
+  }
   try {
     await fs.copy(filePath, path.join(outputDir, file));
   } catch (error) {
@@ -136,6 +195,37 @@ for (const file of FILES_TO_COPY) {
       throw error;
     }
   }
+}
+
+for (const [relativeBinPath, entrypoint] of Object.entries(
+  publishBinEntrypoints,
+)) {
+  const {
+    requirePath,
+    exportName = "runCli",
+    errorPrefix = `${packageName} error:`,
+  } = entrypoint;
+  const binPath = path.join(outputDir, relativeBinPath);
+
+  await fs.mkdirp(path.dirname(binPath));
+  await fs.writeFile(
+    binPath,
+    `#!/usr/bin/env node
+
+const { ${exportName} } = require(${JSON.stringify(requirePath)});
+
+${exportName}(process.argv.slice(2))
+  .then((exitCode) => {
+    process.exit(exitCode);
+  })
+  .catch((error) => {
+    console.error(${JSON.stringify(errorPrefix)}, error);
+    process.exit(1);
+  });
+`,
+    "utf8",
+  );
+  await fs.chmod(binPath, 0o755);
 }
 
 console.log(`Built ${packageName} into ${outputDir}`);

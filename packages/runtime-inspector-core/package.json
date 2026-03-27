@@ -1,0 +1,26 @@
+{
+  "name": "@salt-ds/runtime-inspector-core",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Internal Salt runtime evidence and diagnostics core",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "typescriptRootDir": "src",
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs"
+  },
+  "dependencies": {
+    "dom-accessibility-api": "^0.7.0",
+    "jsdom": "^26.1.0",
+    "playwright": "^1.51.1",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-runtime-inspector-core",
+    "provenance": true
+  }
+}

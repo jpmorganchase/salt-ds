@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salt Migration Helper"
+  short_description: "Upgrade Salt usage across versions safely"
+  default_prompt: "Assess this Salt upgrade, identify affected APIs or patterns, validate the migrated result against Salt again when updated code is available, and call out CSS overrides that may be removable."

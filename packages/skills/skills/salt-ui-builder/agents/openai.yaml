@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salt UI Builder"
+  short_description: "Build Salt-first UI from requirements or mocks"
+  default_prompt: "Turn these requirements or mocks into a Salt-first UI implementation plan with recommended primitives, patterns, and starter code."

@@ -1,0 +1,32 @@
+{
+  "name": "@salt-ds/project-conventions-runtime",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/project-conventions-runtime"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "private": true,
+  "files": [
+    "bin",
+    "schemas"
+  ],
+  "bin": {
+    "salt-project-conventions": "bin/salt-project-conventions.js"
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs",
+    "doctor": "node ./bin/salt-project-conventions.js doctor"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-project-conventions-runtime",
+    "provenance": true
+  }
+}
