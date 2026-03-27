@@ -25,7 +25,8 @@ export interface TabsNextProps
    */
   value?: string;
   /**
-   * Callback fired when the selection changes. The event will be null when selection is moved automatically.
+   * Callback fired when the selection changes. The event will be null when
+   * selection is moved automatically.
    */
   onChange?: (event: SyntheticEvent | null, value: string) => void;
 }
@@ -37,12 +38,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     const { className, children, value, defaultValue, onChange, ...rest } =
       props;
 
-    const [valueToTabIdMap, setValueToIdMap] = useState({
-      map: new Map<string, string>(),
-    });
-    const [valueToPanelIdMap, setValueToPanelIdMap] = useState({
-      map: new Map<string, string>(),
-    });
+    const [valueToTabIdMap, setValueToIdMap] = useState(
+      () => new Map<string, string>(),
+    );
+    const [valueToPanelIdMap, setValueToPanelIdMap] = useState(
+      () => new Map<string, string>(),
+    );
 
     const {
       registerItem,
@@ -51,18 +52,20 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       getPrevious,
       getFirst,
       getLast,
-      items,
+      itemAt,
+      getIndex,
+      sortItems,
+      getRemovedItems,
     } = useCollection({ wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
-    const removedActiveTabRef = useRef<string | undefined>(undefined);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
     const [selected, setSelectedState] = useControlled({
       controlled: value,
       default: defaultValue,
-      name: "TabListNext",
+      name: "TabsNext",
       state: "selected",
     });
 
@@ -75,51 +78,61 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       [onChange],
     );
 
-    const registerTab = useEventCallback((item: Item) => {
-      const cleanup = registerItem(item);
-      setValueToIdMap(({ map }) => {
-        map.set(item.value, item.id);
-        return { map };
+    const registerTab = useEventCallback((tab: Item) => {
+      const cleanup = registerItem(tab);
+      setValueToIdMap((map) => {
+        if (map.get(tab.value) === tab.id) {
+          return map;
+        }
+        const next = new Map(map);
+        next.set(tab.value, tab.id);
+        return next;
       });
 
       return () => {
         cleanup();
-        setValueToIdMap(({ map }) => {
-          map.delete(item.value);
-          return { map };
+        setValueToIdMap((map) => {
+          if (map.get(tab.value) !== tab.id) {
+            return map;
+          }
+          const next = new Map(map);
+          next.delete(tab.value);
+          return next;
         });
-
-        if (activeTab.current?.value !== item.value) {
-          return;
-        }
-
-        removedActiveTabRef.current = item.value;
       };
     });
 
     const registerPanel = useCallback((id: string, value: string) => {
-      setValueToPanelIdMap(({ map }) => {
-        map.set(value, id);
-        return { map };
+      setValueToPanelIdMap((map) => {
+        if (map.get(value) === id) {
+          return map;
+        }
+        const next = new Map(map);
+        next.set(value, id);
+        return next;
       });
       return () => {
-        setValueToIdMap(({ map }) => {
-          map.delete(value);
-          return { map };
+        setValueToPanelIdMap((map) => {
+          if (map.get(value) !== id) {
+            return map;
+          }
+          const next = new Map(map);
+          next.delete(value);
+          return next;
         });
       };
     }, []);
 
     const getPanelId = useCallback(
       (value: string) => {
-        return valueToPanelIdMap.map.get(value);
+        return valueToPanelIdMap.get(value);
       },
       [valueToPanelIdMap],
     );
 
     const getTabId = useCallback(
       (value: string) => {
-        return valueToTabIdMap.map.get(value);
+        return valueToTabIdMap.get(value);
       },
       [valueToTabIdMap],
     );
@@ -137,11 +150,13 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getPrevious,
         getFirst,
         getLast,
-        items,
         activeTab,
         menuOpen,
         setMenuOpen,
-        removedActiveTabRef,
+        itemAt,
+        getIndex,
+        sortItems,
+        getRemovedItems,
       }),
       [
         registerPanel,
@@ -155,8 +170,11 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getPrevious,
         getFirst,
         getLast,
-        items,
         menuOpen,
+        itemAt,
+        getIndex,
+        sortItems,
+        getRemovedItems,
       ],
     );
 
