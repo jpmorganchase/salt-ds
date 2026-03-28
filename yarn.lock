@@ -6994,11 +6994,11 @@ __metadata:
   linkType: hard
 
 "brace-expansion@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "brace-expansion@npm:5.0.2"
+  version: 5.0.5
+  resolution: "brace-expansion@npm:5.0.5"
   dependencies:
     balanced-match: "npm:^4.0.2"
-  checksum: 10/18d382c0919c68f8bb56fbe4a9cb1181a0bf10e6786b5683e586493dfbb517bdcf972f4a3a8d560486627fd9c9c6ecef0a2b8fd454eb6082780307ffd5586251
+  checksum: 10/f259b2ddf04489da9512ad637ba6b4ef2d77abd4445d20f7f1714585f153435200a53fa6a2e4a5ee974df14ddad4cd16421f6f803e96e8b452bd48598878d0ee
   languageName: node
   linkType: hard
 
@@ -17246,9 +17246,9 @@ __metadata:
   linkType: hard
 
 "yaml@npm:^1.10.2":
-  version: 1.10.2
-  resolution: "yaml@npm:1.10.2"
-  checksum: 10/e088b37b4d4885b70b50c9fa1b7e54bd2e27f5c87205f9deaffd1fb293ab263d9c964feadb9817a7b129a5bf30a06582cb08750f810568ecc14f3cdbabb79cb3
+  version: 1.10.3
+  resolution: "yaml@npm:1.10.3"
+  checksum: 10/e2ef2feb92c708138f016c69777a0f1e45f6d3c5e7cbcda30807a98a37eda2e008bd4fa57352b043c65245a4c799d0c99d1f9b3425de40e70929e26d2ea38215
   languageName: node
   linkType: hard
 
