@@ -1,4 +1,5 @@
 import {
+  AriaAnnouncerProvider,
   makePrefixer,
   useFloatingComponent,
   useForkRef,
@@ -60,6 +61,7 @@ export const DatePickerOverlay = forwardRef<
       role="dialog"
       aria-modal="true"
       ref={floatingRef}
+      aria-label="date picker"
       {...(getFloatingProps
         ? getFloatingProps({
             ...a11yProps,
@@ -67,7 +69,9 @@ export const DatePickerOverlay = forwardRef<
           })
         : rest)}
     >
-      {children}
+      <>
+        <AriaAnnouncerProvider>{children}</AriaAnnouncerProvider>
+      </>
     </FloatingComponent>
   );
 });

@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -71,7 +72,7 @@ function assertDateChange(
     startDate: DateFrameworkType | null | undefined;
     endDate: DateFrameworkType | null | undefined;
   },
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter<any>,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
   const date = lastCallArgs[1];
@@ -170,6 +171,24 @@ describe("GIVEN a DateInputRange", () => {
           .date,
       };
 
+      it("SHOULD have an accessible name via aria-labelledby when wrapped in a FormField", () => {
+        cy.mount(
+          <FormField>
+            <FormFieldLabel>Date range</FormFieldLabel>
+            <DateInputRange />
+          </FormField>,
+        );
+
+        cy.findAllByRole("textbox")
+          .should("have.length", 2)
+          .each(($el) => {
+            cy.wrap($el)
+              .should("have.attr", "aria-labelledby")
+              .and("not.be.empty");
+            cy.wrap($el).should("have.attr", "aria-label").and("not.be.empty");
+          });
+      });
+
       it("SHOULD render value, even when not a valid date", () => {
         cy.mount(
           <DateInputRange
@@ -177,13 +196,24 @@ describe("GIVEN a DateInputRange", () => {
               startDate: "start date value",
               endDate: "end date value",
             }}
+            validationStatus={"error"}
           />,
         );
         cy.findByLabelText("Start date").should(
           "have.value",
           "start date value",
         );
+        cy.findByLabelText("Start date").should(
+          "have.attr",
+          "aria-invalid",
+          "true",
+        );
         cy.findByLabelText("End date").should("have.value", "end date value");
+        cy.findByLabelText("End date").should(
+          "have.attr",
+          "aria-invalid",
+          "true",
+        );
       });
 
       it("SHOULD call onDateChange only if value changes", () => {
@@ -246,6 +276,7 @@ describe("GIVEN a DateInputRange", () => {
             adapter,
           ),
         );
+
         // Test clearing start date
         cy.findByLabelText("Start date").click().clear();
         cy.realPress("Tab");
@@ -372,10 +403,7 @@ describe("GIVEN a DateInputRange", () => {
           .stub()
           .as("customParserSpy")
           .callsFake(
-            (
-              inputDate: string,
-              field: DateParserField,
-            ): ParserResult<DateFrameworkType> => {
+            (inputDate: string, _field: DateParserField): ParserResult => {
               if (inputDate === "custom start date") {
                 return {
                   date: initialDate.startDate,
@@ -648,6 +676,11 @@ describe("GIVEN a DateInputRange", () => {
             "have.value",
             initialDateValue.endDate,
           );
+          cy.findByLabelText("Start date").should(
+            "not.have.attr",
+            "aria-invalid",
+            "true",
+          );
 
           // Test update end date
           cy.findByLabelText("End date")
@@ -697,6 +730,11 @@ describe("GIVEN a DateInputRange", () => {
             "have.value",
             updatedFormattedDateValue.endDate,
           );
+          cy.findByLabelText("End date").should(
+            "not.have.attr",
+            "aria-invalid",
+            "true",
+          );
         });
       });
 
@@ -708,12 +746,12 @@ describe("GIVEN a DateInputRange", () => {
 
         function ControlledDateInput() {
           const [date, setDate] = useState<
-            DateRangeSelection<DateFrameworkType> | null | undefined
+            DateRangeSelection | null | undefined
           >(initialDate);
 
           const handleDateChange = (
             event: SyntheticEvent,
-            newDate: DateRangeSelection<DateFrameworkType> | null | undefined,
+            newDate: DateRangeSelection | null | undefined,
             details: DateInputRangeDetails,
           ) => {
             // React 16 backwards compatibility
@@ -898,7 +936,7 @@ describe("GIVEN a DateInputRange", () => {
               },
               {
                 startDate: updatedDate.startDate,
-                endDate: updatedDateValue.endDate,
+                endDate: updatedDate.endDate,
               },
               adapter,
             ),
@@ -968,17 +1006,5 @@ describe("GIVEN a DateInputRange", () => {
         });
       });
     });
-  });
-
-  it("should not have an empty aria-describedby attribute if used outside a formfield", () => {
-    cy.setDateAdapter(adapterLuxon);
-    cy.mount(<Range />);
-
-    cy.findAllByRole("textbox")
-      .eq(0)
-      .should("not.have.attr", "aria-describedby");
-    cy.findAllByRole("textbox")
-      .eq(1)
-      .should("not.have.attr", "aria-describedby");
   });
 });

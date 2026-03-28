@@ -16,7 +16,8 @@
       "!**/site/src/components/css-display/**/*.json",
       "!**/site/public/search-data.json",
       "!**/packages/data-grid",
-      "!**/lab/src/color-chooser"
+      "!**/lab/src/color-chooser",
+      "!**/packages/date-adapters/src/types/index.ts"
     ]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },

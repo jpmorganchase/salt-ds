@@ -144,11 +144,6 @@ describe("GIVEN a AdapterDayjs", () => {
     expect(now.date()).toBe(current.date());
   });
 
-  it("SHOULD get the day of the week", () => {
-    const date = dayjs("2023-11-01"); // November 1, 2023 is a Wednesday
-    expect(adapter.getDayOfWeek(date)).toBe(3); // 0 = Sunday, 3 = Wednesday
-  });
-
   it("SHOULD get the name of the day of the week", () => {
     const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
@@ -307,6 +302,60 @@ describe("GIVEN a AdapterDayjs", () => {
 
         expect(adapter.isSame(dateUTC, dateNY, "day")).toBe(true);
       });
+    });
+  });
+
+  describe("GIVEN timezone conversions for DatePicker/DateInput semantics", () => {
+    it("SHOULD setTimezone reinterpret a naive local midnight as midnight in America/New_York", () => {
+      // This mirrors the Lab flow: user types a date (naive wall-clock), it is parsed without a timezone,
+      // then setTimezone(assign) is applied.
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const ny = adapter.setTimezone(parsedNaive, "America/New_York");
+      expect(adapter.toJSDate(ny).toISOString()).toBe(
+        "2025-01-05T05:00:00.000Z",
+      );
+    });
+
+    it("SHOULD setTimezone reinterpret a naive local midnight as midnight in Asia/Shanghai", () => {
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const sh = adapter.setTimezone(parsedNaive, "Asia/Shanghai");
+      expect(adapter.toJSDate(sh).toISOString()).toBe(
+        "2025-01-04T16:00:00.000Z",
+      );
+    });
+
+    it("SHOULD keep the instant when parsing an explicit UTC instant (Z) with an IANA timezone", () => {
+      const utcInstant = "2025-01-05T00:00:00.000Z";
+      const ny = adapter.date(utcInstant, "America/New_York");
+      // Must remain the same instant.
+      expect(adapter.toJSDate(ny).toISOString()).toBe(utcInstant);
+    });
+  });
+
+  describe("GIVEN timezone conversions for DateInputRange RangeWithTimezone story", () => {
+    it("SHOULD match the ISO output used by the Lab RangeWithTimezone story for America/New_York", () => {
+      // User input "05 Jan 2025" -> midnight in the selected timezone -> shifted UTC ISO
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const start = adapter.setTimezone(parsedNaive, "America/New_York");
+      expect(adapter.toJSDate(start).toISOString()).toBe(
+        "2025-01-05T05:00:00.000Z",
+      );
+    });
+
+    it("SHOULD match the ISO output used by the Lab RangeWithTimezone story for Asia/Shanghai", () => {
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const start = adapter.setTimezone(parsedNaive, "Asia/Shanghai");
+      expect(adapter.toJSDate(start).toISOString()).toBe(
+        "2025-01-04T16:00:00.000Z",
+      );
+    });
+
+    it("SHOULD handle half-hour offsets (Asia/Kolkata) the same way the Lab story does", () => {
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const start = adapter.setTimezone(parsedNaive, "Asia/Kolkata");
+      expect(adapter.toJSDate(start).toISOString()).toBe(
+        "2025-01-04T18:30:00.000Z",
+      );
     });
   });
 

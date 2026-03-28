@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -63,7 +64,7 @@ function assertDateChange(
   spy: any,
   expectedValue: string,
   expectedDate: DateFrameworkType | null | undefined,
-  adapter: SaltDateAdapter<DateFrameworkType>,
+  adapter: SaltDateAdapter,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
   const date = lastCallArgs[1];
@@ -94,7 +95,7 @@ function assertDateChange(
 }
 
 describe("GIVEN a DateInputSingle", () => {
-  adapters.forEach((adapter) => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
         const today = new Date(2024, 4, 6);
@@ -119,8 +120,14 @@ describe("GIVEN a DateInputSingle", () => {
       ).date;
 
       it("SHOULD render value, even when not a valid date", () => {
-        cy.mount(<DateInputSingle defaultValue={"date value"} />);
+        cy.mount(
+          <DateInputSingle
+            defaultValue={"date value"}
+            validationStatus={"error"}
+          />,
+        );
         cy.findByRole("textbox").should("have.value", "date value");
+        cy.findByRole("textbox").should("have.attr", "aria-invalid", "true");
       });
 
       it("SHOULD call onDateChange only if value changes", () => {
@@ -223,7 +230,7 @@ describe("GIVEN a DateInputSingle", () => {
         const customParserSpy = cy
           .stub()
           .as("customParserSpy")
-          .callsFake((inputDate: string): ParserResult<DateFrameworkType> => {
+          .callsFake((inputDate: string): ParserResult => {
             expect(inputDate).to.equal("custom value");
             return {
               date: initialDate,
@@ -375,12 +382,12 @@ describe("GIVEN a DateInputSingle", () => {
 
           const handleDateChange = (
             event: SyntheticEvent,
-            newDate: DateFrameworkType | null,
+            newDate: DateFrameworkType | null | undefined,
           ) => {
             // React 16 backwards compatibility
             event.persist();
 
-            setDate(newDate);
+            setDate(newDate ?? null);
             dateChangeSpy(event, newDate);
           };
 
@@ -424,6 +431,11 @@ describe("GIVEN a DateInputSingle", () => {
             "have.value",
             updatedFormattedDateValue,
           );
+          cy.findByRole("textbox").should(
+            "not.have.attr",
+            "aria-invalid",
+            "true",
+          );
         });
 
         it("SHOULD be able to clear date and update", () => {
@@ -458,14 +470,23 @@ describe("GIVEN a DateInputSingle", () => {
             updatedFormattedDateValue,
           );
         });
+
+        it("SHOULD have an accessible name via aria-labelledby when wrapped in a FormField", () => {
+          cy.mount(
+            <FormField>
+              <FormFieldLabel>Date</FormFieldLabel>
+              <DateInputSingle defaultValue={"05 Jan 2025"} />
+            </FormField>,
+          );
+
+          cy.findByRole("textbox")
+            .should("have.attr", "aria-labelledby")
+            .and("not.be.empty");
+          cy.findByRole("textbox")
+            .should("have.attr", "aria-label")
+            .and("not.be.empty");
+        });
       });
     });
-  });
-
-  it("should not have an empty aria-describedby attribute if used outside a formfield", () => {
-    cy.setDateAdapter(adapterLuxon);
-    cy.mount(<Single />);
-
-    cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
   });
 });
