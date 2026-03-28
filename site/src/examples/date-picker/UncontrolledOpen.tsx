@@ -5,7 +5,7 @@ import {
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
   DatePickerTrigger,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ReactElement, useState } from "react";
 
 export const UncontrolledOpen = (): ReactElement => {

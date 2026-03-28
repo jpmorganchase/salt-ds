@@ -4,11 +4,11 @@ import {
   CalendarGrid,
   CalendarNavigation,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Calendar/QA",
+  title: "Date Components/Calendar/QA",
   component: Calendar,
   decorators: [withDateMock],
   globals: {
@@ -18,7 +18,7 @@ export default {
   },
 };
 
-export const renderCalendarQAContainer = (props: QAContainerProps = {}) => {
+export const calendarQaStories = (props: QAContainerProps = {}) => {
   const { dateAdapter } = useLocalization();
   const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
     const startDate = dateAdapter.parse("2024-05-02", "YYYY-MM-DD").date;

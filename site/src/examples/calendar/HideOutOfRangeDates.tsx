@@ -1,4 +1,4 @@
-import { Calendar, CalendarGrid, CalendarNavigation } from "@salt-ds/lab";
+import { Calendar, CalendarGrid, CalendarNavigation } from "@salt-ds/date-components";
 import type { ReactElement } from "react";
 
 export const HideOutOfRangeDates = (): ReactElement => (

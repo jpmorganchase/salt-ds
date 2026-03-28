@@ -1,0 +1,771 @@
+import type { SaltDateAdapter } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
+import { Calendar, CalendarGrid, CalendarNavigation } from "@salt-ds/lab";
+import * as calendarStories from "@stories/calendar/calendar.stories";
+import "moment/dist/locale/es";
+
+// Initialize adapters
+const adapterDateFns = new AdapterDateFns();
+const adapterDayjs = new AdapterDayjs();
+const adapterLuxon = new AdapterLuxon();
+const adapterMoment = new AdapterMoment();
+
+// Update locale for moment
+adapterMoment.moment.updateLocale("es", {
+  monthsShort: [
+    "ene",
+    "feb",
+    "mar",
+    "abr",
+    "may",
+    "jun",
+    "jul",
+    "ago",
+    "sep",
+    "oct",
+    "nov",
+    "dic",
+  ],
+});
+
+// Create an array of adapters
+const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+
+const {
+  // Storybook wraps components in their own LocalizationProvider, so do not compose Stories
+  CustomDayRendering,
+  TodayButton,
+  TwinCalendars,
+  UnselectableDates,
+  WithLocale,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
+} = calendarStories as any;
+
+describe("GIVEN a Calendar", () => {
+  adapters.forEach((adapter: SaltDateAdapter<any>) => {
+    describe(`Tests with ${adapter.lib}`, () => {
+      beforeEach(() => {
+        const today = new Date(2024, 4, 6);
+        cy.clock(today, ["Date"]);
+        cy.setDateAdapter(adapter);
+      });
+
+      afterEach(() => {
+        cy.clock().then((clock) => clock.restore());
+      });
+
+      const testDate = adapter.parse("02/03/2024", "DD/MM/YYYY").date;
+
+      describe("Today's Date", () => {
+        it("SHOULD set `aria-current=date` on today's date", () => {
+          cy.mount(
+            <Calendar selectionVariant={"single"}>
+              <CalendarNavigation />
+              <CalendarGrid />
+            </Calendar>,
+          );
+          cy.findByRole("application").should("exist");
+          const today = adapter.today();
+          cy.findByRole("application").should(
+            "have.accessibleName",
+            adapter.format(today, "MMMM YYYY"),
+          );
+          // Verify that today's date button has `aria-current=date`
+          cy.findByRole("button", {
+            name: adapter.format(today, "dddd D MMMM YYYY"),
+          }).should("have.attr", "aria-current", "date");
+        });
+      });
+
+      describe("Navigation", () => {
+        describe("Buttons", () => {
+          it("SHOULD navigate to the previous month when the previous month button is clicked", () => {
+            cy.mount(
+              <Calendar
+                selectionVariant={"single"}
+                defaultVisibleMonth={testDate}
+              >
+                <CalendarNavigation />
+                <CalendarGrid />
+              </Calendar>,
+            );
+            // Simulate clicking the "Previous Month" button
+            cy.findByRole("button", {
+              name: "Previous Month",
+            }).realClick();
+            // Verify that the calendar navigates to the previous month
+            const previousMonth = adapter.subtract(testDate, { months: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(previousMonth, "dddd D MMMM YYYY"),
+            }).should("be.visible");
+          });
+
+          it("SHOULD navigate to the next month when the next month button is clicked", () => {
+            cy.mount(
+              <Calendar
+                selectionVariant={"single"}
+                defaultVisibleMonth={testDate}
+              >
+                <CalendarNavigation />
+                <CalendarGrid />
+              </Calendar>,
+            );
+            // Simulate clicking the "Next Month" button
+            cy.findByRole("button", {
+              name: "Next Month",
+            }).realClick();
+            // Verify that the calendar navigates to the next month
+            const nextMonth = adapter.add(testDate, { months: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(nextMonth, "dddd D MMMM YYYY"),
+            }).should("be.visible");
+          });
+        });
+
+        describe("Dropdowns", () => {
+          it("SHOULD navigate to the selected month when using the month dropdown", () => {
+            cy.mount(
+              <Calendar
+                selectionVariant={"single"}
+                defaultVisibleMonth={testDate}
+              >
+                <CalendarNavigation />
+                <CalendarGrid />
+              </Calendar>,
+            );
+            // Verify the initial month in the dropdown
+            cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+              "have.text",
+              adapter.format(testDate, "MMM"),
+            );
+            // Simulate selecting a different month from the dropdown
+            cy.findByRole("combobox", {
+              name: "Month Dropdown",
+            }).realClick();
+            const nextMonth = adapter.add(testDate, { months: 4 });
+            cy.findByRole("option", {
+              name: adapter.format(nextMonth, "MMMM"),
+            })
+              .realHover()
+              .realClick();
+            // Verify that the calendar navigates to the selected month
+            cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+              "have.text",
+              adapter.format(nextMonth, "MMM"),
+            );
+            cy.findByRole("button", {
+              name: adapter.format(nextMonth, "dddd D MMMM YYYY"),
+            }).should("be.visible");
+          });
+
+          it("SHOULD navigate to the selected year when using the year dropdown", () => {
+            cy.mount(
+              <Calendar
+                selectionVariant={"single"}
+                defaultVisibleMonth={testDate}
+              >
+                <CalendarNavigation />
+                <CalendarGrid />
+              </Calendar>,
+            );
+            // Verify the initial year in the dropdown
+            cy.findByRole("combobox", { name: "Year Dropdown" }).should(
+              "have.text",
+              adapter.format(testDate, "YYYY"),
+            );
+            // Simulate selecting a different year from the dropdown
+            cy.findByRole("combobox", {
+              name: "Year Dropdown",
+            }).realClick();
+            const nextYear = adapter.add(testDate, { years: 1 });
+            cy.findByRole("option", { name: adapter.format(nextYear, "YYYY") })
+              .realHover()
+              .realClick();
+            // Verify that the calendar navigates to the selected year
+            cy.findByRole("combobox", { name: "Year Dropdown" }).should(
+              "have.text",
+              adapter.format(nextYear, "YYYY"),
+            );
+            cy.findByRole("button", {
+              name: adapter.format(nextYear, "dddd D MMMM YYYY"),
+            }).should("be.visible");
+          });
+        });
+
+        describe("Clicking", () => {
+          it("SHOULD navigate to the next month when clicking out of range dates", () => {
+            cy.mount(
+              <Calendar
+                selectionVariant={"single"}
+                defaultVisibleMonth={testDate}
+              >
+                <CalendarNavigation />
+                <CalendarGrid />
+              </Calendar>,
+            );
+            // Verify the initial month in the dropdown
+            cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+              "have.text",
+              adapter.format(testDate, "MMM"),
+            );
+            // Simulate clicking a date outside the current month range
+            let nextMonth = adapter.endOf(testDate, "month");
+            nextMonth = adapter.add(nextMonth, { days: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(nextMonth, "dddd D MMMM YYYY"),
+            }).realClick();
+            // Verify that the calendar navigates to the next month
+            cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+              "have.text",
+              adapter.format(nextMonth, "MMM"),
+            );
+          });
+        });
+
+        describe("Keyboard", () => {
+          it("SHOULD move the focus when the arrow keys are pressed", () => {
+            cy.mount(
+              <Calendar
+                selectionVariant={"single"}
+                defaultVisibleMonth={testDate}
+              >
+                <CalendarNavigation />
+                <CalendarGrid />
+              </Calendar>,
+            );
+
+            // Simulate focusing on the current date button
+            cy.findByRole("button", {
+              name: adapter.format(testDate, "dddd D MMMM YYYY"),
+            }).focus();
+            cy.findByRole("button", {
+              name: adapter.format(testDate, "dddd D MMMM YYYY"),
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
+
+            // Simulate pressing the ArrowRight key
+            cy.realPress("ArrowRight");
+            const nextDay = adapter.add(testDate, { days: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(nextDay, "dddd D MMMM YYYY"),
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
+
+            // Simulate pressing the ArrowLeft key
+            cy.realPress("ArrowLeft");
+            const previousDay = adapter.subtract(nextDay, { days: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(previousDay, "dddd D MMMM YYYY"),
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
+
+            // Simulate pressing the ArrowDown key
+            cy.realPress("ArrowDown");
+            const nextWeek = adapter.add(previousDay, { weeks: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(nextWeek, "dddd D MMMM YYYY"),
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
+
+            // Simulate pressing the ArrowUp key
+            cy.realPress("ArrowUp");
+            const previousWeek = adapter.subtract(nextWeek, { weeks: 1 });
+            cy.findByRole("button", {
+              name: adapter.format(previousWeek, "dddd D MMMM YYYY"),
+            })
+              .should(($button) =>
+                expect($button.attr("class")).to.match(
+                  /saltCalendarDay-focused/,
+                ),
+              )
+              .should("be.focused");
+          });
+
+          describe("SHOULD move the focus when the shortcut keys are pressed", () => {
+            beforeEach(() => {
+              cy.mount(
+                <Calendar
+                  selectionVariant={"single"}
+                  defaultVisibleMonth={testDate}
+                >
+                  <CalendarNavigation />
+                  <CalendarGrid />
+                </Calendar>,
+              );
+
+              // Simulate focusing on the current date button
+              cy.findByRole("button", {
+                name: adapter.format(testDate, "dddd D MMMM YYYY"),
+              }).focus();
+
+              cy.findByRole("button", {
+                name: adapter.format(testDate, "dddd D MMMM YYYY"),
+              })
+                .should(($button) =>
+                  expect($button.attr("class")).to.match(
+                    /saltCalendarDay-focused/,
+                  ),
+                )
+                .should("be.focused");
+            });
+
+            it("HOME", () => {
+              // Simulate pressing the Home key
+              const startOfWeek = adapter.startOf(testDate, "week");
+              cy.realPress("Home").then(() => {
+                cy.findByRole("button", {
+                  name: adapter.format(startOfWeek, "dddd D MMMM YYYY"),
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
+              });
+            });
+
+            it("END", () => {
+              // Simulate pressing the End key
+              const endOfWeek = adapter.endOf(testDate, "week");
+              cy.realPress("End").then(() => {
+                cy.findByRole("button", {
+                  name: adapter.format(endOfWeek, "dddd D MMMM YYYY"),
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
+              });
+            });
+
+            it("PageUp", () => {
+              // Simulate pressing the PageUp key
+              const lastMonth = adapter.subtract(testDate, { months: 1 });
+              cy.realPress("PageUp").then(() => {
+                cy.findByRole("button", {
+                  name: adapter.format(lastMonth, "dddd D MMMM YYYY"),
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
+              });
+            });
+
+            it("PageDown", () => {
+              // Simulate pressing the PageDown key
+              const nextMonth = adapter.add(testDate, { months: 1 });
+              cy.realPress("PageDown").then(() => {
+                cy.findByRole("button", {
+                  name: adapter.format(nextMonth, "dddd D MMMM YYYY"),
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
+              });
+            });
+
+            it("Shift PageUp", () => {
+              // Simulate pressing Shift + PageUp keys
+              const lastYear = adapter.subtract(testDate, { years: 1 });
+              cy.realPress(["Shift", "PageUp"]).then(() => {
+                cy.findByRole("button", {
+                  name: adapter.format(lastYear, "dddd D MMMM YYYY"),
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
+              });
+            });
+
+            it("Shift PageDown", () => {
+              // Simulate pressing Shift + PageDown keys
+              const nextYear = adapter.add(testDate, { years: 1 });
+              cy.realPress(["Shift", "PageDown"]).then(() => {
+                cy.findByRole("button", {
+                  name: adapter.format(nextYear, "dddd D MMMM YYYY"),
+                })
+                  .should(($button) =>
+                    expect($button.attr("class")).to.match(
+                      /saltCalendarDay-focused/,
+                    ),
+                  )
+                  .should("be.focused");
+              });
+            });
+          });
+        });
+      });
+
+      describe("Render", () => {
+        it("SHOULD hide year dropdown on navigation", () => {
+          cy.mount(
+            <Calendar
+              selectionVariant={"single"}
+              defaultVisibleMonth={testDate}
+            >
+              <CalendarNavigation hideYearDropdown />
+              <CalendarGrid />
+            </Calendar>,
+          );
+          // Verify that the year dropdown is not visible
+          cy.findByRole("combobox", { name: "Year Dropdown" }).should(
+            "not.exist",
+          );
+
+          // Simulate selecting a different month from the month dropdown
+          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+            "have.text",
+            adapter.format(testDate, "MMM"),
+          );
+          cy.findByRole("combobox", {
+            name: "Month Dropdown",
+          }).realClick();
+          const nextQuarter = adapter.add(testDate, { months: 4 });
+          cy.findByRole("option", {
+            name: adapter.format(nextQuarter, "MMMM"),
+          })
+            .realHover()
+            .realClick();
+          // Verify that the calendar navigates to the selected month
+          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+            "have.text",
+            adapter.format(nextQuarter, "MMM"),
+          );
+          cy.findByRole("button", {
+            name: adapter.format(nextQuarter, "dddd D MMMM YYYY"),
+          }).should("be.visible");
+        });
+
+        it("SHOULD render custom headers", () => {
+          cy.mount(<TodayButton defaultVisibleMonth={testDate} />);
+          const today = adapter.today();
+          // Simulate clicking the "Today" button
+          cy.findByRole("button", {
+            name: `Change Date, ${adapter.format(today, "dddd DD MMMM YYYY")}`,
+          }).click();
+          // Verify that today's date button has `aria-current=date`
+          cy.findByRole("button", {
+            name: adapter.format(today, "dddd D MMMM YYYY"),
+          }).should("have.attr", "aria-current", "date");
+        });
+
+        it("SHOULD render custom day", () => {
+          cy.mount(<CustomDayRendering defaultVisibleMonth={testDate} />);
+          // Verify that the button contains the text "01"
+          cy.contains("button", /^1$/).should("exist");
+          // Verify that there is a span with the class name "x" inside the button
+          cy.contains("button", /^1$/).find("span.dot").should("exist");
+        });
+
+        it("SHOULD support multi-calendar selection", () => {
+          const startDate = testDate;
+          const endDate = adapter.add(testDate, { months: 1 });
+          cy.mount(
+            <TwinCalendars
+              selectionVariant={"range"}
+              defaultVisibleMonth={startDate}
+              defaultSelectedDate={{ startDate, endDate }}
+            />,
+          );
+          // Verify that the start and end date buttons are selected
+          const startOfMonth = adapter.startOf(testDate, "month");
+          const endOfMonth = adapter.endOf(endDate, "month");
+          cy.findByRole("button", {
+            name: `Start new range: ${adapter.format(startOfMonth, "dddd D MMMM YYYY")}`,
+          }).should("exist");
+          cy.findByRole("button", {
+            name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
+          }).should("exist");
+          cy.findByRole("button", {
+            name: `End range: ${adapter.format(endDate, "dddd D MMMM YYYY")}, selected`,
+          }).should("exist");
+          cy.findByRole("button", {
+            name: adapter.format(endOfMonth, "dddd D MMMM YYYY"),
+          }).should("exist");
+        });
+
+        it("SHOULD render different locales", () => {
+          const visibleMonth = adapter.parse("01/08/2024", "DD/MM/YYYY").date;
+          cy.mount(<WithLocale defaultVisibleMonth={visibleMonth} />);
+          // Verify that the month dropdown is rendered in the specified locale
+          cy.findByLabelText("Month Dropdown").should("have.text", "ago");
+        });
+      });
+
+      describe("Min/Max", () => {
+        it("SHOULD be selectable between min/max dates", () => {
+          const startOfMonth = adapter.startOf(testDate, "month");
+          const endOfMonth = adapter.endOf(testDate, "month");
+          const minDate = adapter.add(startOfMonth, { days: 1 });
+          const maxDate = adapter.subtract(endOfMonth, { days: 1 });
+
+          cy.mount(
+            <Calendar
+              selectionVariant={"single"}
+              defaultVisibleMonth={startOfMonth}
+              minDate={minDate}
+              maxDate={maxDate}
+            >
+              <CalendarNavigation />
+              <CalendarGrid />
+            </Calendar>,
+          );
+          // Verify the initial month in the dropdown
+          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+            "have.text",
+            adapter.format(testDate, "MMM"),
+          );
+          // Simulate selecting a different month from the month dropdown
+          cy.findByRole("combobox", {
+            name: "Month Dropdown",
+          }).realClick();
+          // Verify that only the current Month is selectable in Month Dropdown
+          for (let monthIndex = 1; monthIndex <= 12; monthIndex++) {
+            let startMonth = adapter.clone(testDate);
+            startMonth = adapter.set(startMonth, { month: monthIndex });
+            if (adapter.getMonth(startOfMonth) !== monthIndex) {
+              cy.findByRole("option", {
+                name: adapter.format(startMonth, "MMMM"),
+              }).should("have.attr", "aria-disabled", "true");
+            } else {
+              cy.findByRole("option", {
+                name: adapter.format(startMonth, "MMMM"),
+              }).should("not.have.attr", "aria-disabled", "true");
+            }
+          }
+          // Verify only the current year is selectable
+          cy.findByRole("combobox", {
+            name: "Year Dropdown",
+          }).realClick();
+          cy.findAllByRole("option").should("have.length", 1);
+          // Verify out of range dates are disabled
+          cy.findByRole("button", {
+            name: adapter.format(startOfMonth, "dddd D MMMM YYYY"),
+          }).should("have.attr", "aria-disabled", "true");
+          cy.findByRole("button", {
+            name: adapter.format(endOfMonth, "dddd D MMMM YYYY"),
+          }).should("have.attr", "aria-disabled", "true");
+          // Verify in range dates are enabled
+          cy.findByRole("button", {
+            name: adapter.format(minDate, "dddd D MMMM YYYY"),
+          }).should("not.have.attr", "aria-disabled", "true");
+          cy.findByRole("button", {
+            name: adapter.format(maxDate, "dddd D MMMM YYYY"),
+          }).should("not.have.attr", "aria-disabled", "true");
+        });
+
+        it("SHOULD be selectable between min/max dates when the year changes", () => {
+          const minDate = adapter.parse("01/12/2024", "DD/MM/YYYY").date;
+          const maxDate = adapter.add(minDate, { years: 1 });
+          const defaultVisibleMonth = adapter.add(minDate, { months: 6 });
+
+          cy.mount(
+            <Calendar
+              selectionVariant={"single"}
+              defaultVisibleMonth={defaultVisibleMonth}
+              minDate={minDate}
+              maxDate={maxDate}
+            >
+              <CalendarNavigation />
+              <CalendarGrid />
+            </Calendar>,
+          );
+          // Verify the initial month in the dropdown
+          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+            "have.text",
+            adapter.format(defaultVisibleMonth, "MMM"),
+          );
+          // Simulate selecting an out of range date by changing the year to the previous year
+          cy.findByRole("combobox", {
+            name: "Year Dropdown",
+          }).realClick();
+          cy.findByRole("option", { name: adapter.format(minDate, "YYYY") })
+            .realHover()
+            .realClick();
+          // Verify that the calendar navigates to the previous year
+          cy.findByRole("combobox", { name: "Year Dropdown" }).should(
+            "have.text",
+            adapter.format(minDate, "YYYY"),
+          );
+          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+            "have.text",
+            adapter.format(minDate, "MMM"),
+          );
+          // Verify that only months on or after the minDate are selectable in Month Dropdown
+          cy.findByRole("combobox", {
+            name: "Month Dropdown",
+          }).realClick();
+          const minMonth = adapter.getMonth(minDate);
+          for (let monthIndex = 1; monthIndex <= 12; monthIndex++) {
+            let testMonth = adapter.clone(minDate);
+            testMonth = adapter.set(testMonth, { month: monthIndex });
+
+            if (monthIndex < minMonth) {
+              cy.findByRole("option", {
+                name: adapter.format(testMonth, "MMMM"),
+              }).should("have.attr", "aria-disabled", "true");
+            } else {
+              cy.findByRole("option", {
+                name: adapter.format(testMonth, "MMMM"),
+              }).should("not.have.attr", "aria-disabled", "true");
+            }
+          }
+          // Verify each year in the range is present and enabled
+          cy.findByRole("combobox", {
+            name: "Year Dropdown",
+          }).realClick();
+          cy.findAllByRole("option").should("have.length", 2);
+          cy.findByRole("option", {
+            name: adapter.format(minDate, "YYYY"),
+          }).should("not.have.attr", "aria-disabled", "true");
+          cy.findByRole("option", {
+            name: adapter.format(maxDate, "YYYY"),
+          }).should("not.have.attr", "aria-disabled", "true");
+        });
+      });
+
+      describe("Selection", () => {
+        it("SHOULD allow selection of dates", () => {
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <Calendar
+              defaultVisibleMonth={testDate}
+              selectionVariant={"single"}
+              onSelectionChange={selectionChangeSpy}
+            >
+              <CalendarNavigation />
+              <CalendarGrid />
+            </Calendar>,
+          );
+
+          cy.get("@selectionChangeSpy").should("not.have.been.called");
+          cy.findByRole("button", { name: "Saturday 2 March 2024" })
+            .realHover()
+            .realClick();
+
+          // biome-ignore lint/suspicious/noExplicitAny: spy
+          cy.get("@selectionChangeSpy").should((spy: any) => {
+            const [_event, date] = spy.lastCall.args;
+            expect(adapter.isValid(date)).to.be.true;
+            expect(adapter.format(date, "dddd D MMMM YYYY")).to.equal(
+              "Saturday 2 March 2024",
+            );
+          });
+        });
+
+        it("SHOULD not allow selection of un-selectable dates", () => {
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <UnselectableDates
+              defaultVisibleMonth={testDate}
+              onSelectionChange={selectionChangeSpy}
+            />,
+          );
+
+          // Define the weekend dates in March 2024
+          const weekendDates = [
+            "Saturday 2 March 2024",
+            "Sunday 3 March 2024",
+            "Saturday 9 March 2024",
+            "Sunday 10 March 2024",
+            "Saturday 16 March 2024",
+            "Sunday 17 March 2024",
+            "Saturday 23 March 2024",
+            "Sunday 24 March 2024",
+            "Saturday 30 March 2024",
+            "Sunday 31 March 2024",
+          ];
+
+          // Check each weekend date to ensure it is disabled
+          weekendDates.forEach((date) => {
+            cy.findByRole("button", { name: date }).and(
+              "have.attr",
+              "aria-disabled",
+              "true",
+            );
+            cy.findByRole("button", { name: date }).realHover();
+            cy.findByRole("button", { name: date }).then(($el) => {
+              const describedById = $el.attr("aria-describedby");
+              cy.get(`[id="${describedById}"]`)
+                .should("have.attr", "role", "tooltip")
+                .find(".saltTooltip-content")
+                .should("have.text", "weekends are un-selectable");
+            });
+          });
+          cy.get("@selectionChangeSpy").should("not.have.been.called");
+        });
+
+        it("SHOULD navigate to an un-selectable date and then to a selectable date using keyboard", () => {
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          cy.mount(
+            <UnselectableDates
+              defaultVisibleMonth={testDate}
+              onSelectionChange={selectionChangeSpy}
+            />,
+          );
+
+          // Focus on the day before the first unselectable date
+          cy.findByRole("button", { name: "Friday 1 March 2024" }).focus();
+
+          cy.focused().type("{rightarrow}");
+
+          // Check that the date is unselectable and has the correct tooltip
+          cy.focused().should("have.attr", "aria-disabled", "true");
+          cy.focused().realHover();
+          cy.focused().then(($el) => {
+            const describedById = $el.attr("aria-describedby");
+            cy.get(`[id="${describedById}"]`)
+              .should("have.attr", "role", "tooltip")
+              .find(".saltTooltip-content")
+              .should("have.text", "weekends are un-selectable");
+          });
+
+          // Arrow right again to the next unselectable date
+          cy.focused().type("{rightarrow}");
+          // Check that the date is unselectable
+          cy.focused().should("have.attr", "aria-disabled", "true");
+
+          // Arrow right again to a selectable date
+          cy.focused().type("{rightarrow}");
+          // Check that the 4th March is selectable
+          cy.focused().should("not.have.attr", "aria-disabled", "true");
+        });
+      });
+    });
+  });
+});

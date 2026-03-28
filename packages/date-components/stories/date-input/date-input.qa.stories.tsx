@@ -1,11 +1,11 @@
 import { withDateMock } from ".storybook/decorators/withDateMock";
-import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
+import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/date-components";
 import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Date Input/QA",
+  title: "Date Components/Date Input/QA",
   component: DateInputSingle,
   decorators: [withDateMock],
 };
@@ -206,33 +206,33 @@ const renderQAContainer = () => {
   );
 };
 
-export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () =>
+export const DateInputWithMoment: StoryFn<QAContainerProps> = () =>
   renderQAContainer();
-AllExamplesWithMoment.parameters = {
+DateInputWithMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "moment",
 };
 
-export const AllExamplesWithDateFns: StoryFn<QAContainerProps> = () =>
+export const DateInputWithDateFns: StoryFn<QAContainerProps> = () =>
   renderQAContainer();
-AllExamplesWithDateFns.parameters = {
+DateInputWithDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEnUs,
   dateAdapter: "date-fns",
 };
 
-export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () =>
+export const DateInputWithDayjs: StoryFn<QAContainerProps> = () =>
   renderQAContainer();
-AllExamplesWithDayjs.parameters = {
+DateInputWithDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "en",
   dateAdapter: "dayjs",
 };
 
-export const AllExamplesWithLuxon: StoryFn<QAContainerProps> = () =>
+export const DateInputWithLuxon: StoryFn<QAContainerProps> = () =>
   renderQAContainer();
-AllExamplesWithLuxon.parameters = {
+DateInputWithLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "luxon",

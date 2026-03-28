@@ -6,7 +6,7 @@ import {
   type DatePickerSingleProps,
   DatePickerTrigger,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs, es as dateFnsEs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -18,7 +18,7 @@ import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
 
 export default {
-  title: "Lab/Date Picker/QA",
+  title: "Date Components/Date Picker/QA",
   component: DatePicker,
   decorators: [withDateMock],
 };

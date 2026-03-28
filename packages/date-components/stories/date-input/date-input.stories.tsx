@@ -24,13 +24,13 @@ import {
   type DateRangeSelection,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { fn } from "storybook/test";
 
 export default {
-  title: "Lab/Date Input",
+  title: "Date Components/Date Input",
   component: DateInputSingle,
   decorators: [withDateMock],
 } as Meta<typeof DateInputSingle>;

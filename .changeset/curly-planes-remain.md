@@ -1,6 +1,9 @@
 ---
-"@salt-ds/lab": patch
+"@salt-ds/date-components": patch
 ---
+
+New package `@salt-ds/date-components` has been added to contain shared date-related components such as `Calendar`, `CalendarNavigation`, and `DateInput`.
+To avoid a breaking change, `@salt-ds/lab` still re-exports these components for now (and logs a deprecation warning in development). New code should import from `@salt-ds/date-components`.
 
 Calendar updates
 

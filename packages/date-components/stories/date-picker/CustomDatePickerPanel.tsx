@@ -17,7 +17,7 @@ import {
   type SingleDatePickerState,
   useDatePickerContext,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { forwardRef } from "react";
 
 const tenorOptions = [
@@ -33,7 +33,7 @@ interface CustomDatePickerPanelProps {
 }
 
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
-// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/date-components/src/date-picker/useDatePicker.ts to create your own
 export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
   CustomDatePickerPanelProps

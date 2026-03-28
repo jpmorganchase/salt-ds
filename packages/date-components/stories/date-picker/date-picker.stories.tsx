@@ -49,7 +49,7 @@ import {
   type SingleDateSelection,
   useDatePickerContext,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { clsx } from "clsx";
 import {
@@ -62,7 +62,7 @@ import {
   useState,
 } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
-// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/date-components/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";
@@ -76,7 +76,7 @@ import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
 
 export default {
-  title: "Lab/Date Picker",
+  title: "Date Components/Date Picker",
   component: DatePicker,
   decorators: [withDateMock],
 } as Meta<typeof DatePicker>;

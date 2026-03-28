@@ -27,7 +27,7 @@ import {
   type renderCalendarDayProps,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { clsx } from "clsx";
 import {
@@ -48,7 +48,7 @@ import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
 
 export default {
-  title: "Lab/Calendar",
+  title: "Date Components/Calendar",
   component: Calendar,
   decorators: [withDateMock],
   parameters: {
