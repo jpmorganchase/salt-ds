@@ -439,7 +439,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
         return false;
       });
     },
-    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
+    [dateAdapter, selectionVariant, selectedDate],
   );
 
   const isSelectedStart = useCallback(

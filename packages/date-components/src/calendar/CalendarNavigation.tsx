@@ -154,7 +154,7 @@ function useCalendarNavigation() {
       }
       setVisibleMonth(event, newMonth);
     },
-    [dateAdapter, isOutsideAllowedMonths, setVisibleMonth, visibleMonth],
+    [dateAdapter, isOutsideAllowedMonths, setVisibleMonth, minDate],
   );
 
   const months: DateFrameworkType[] = useMemo(

@@ -14,10 +14,6 @@
   flex-grow: 1;
 }
 
-.saltDatePickerActions-action {
-  /* No margin needed here */
-}
-
 .saltDatePickerActions-action + .saltDatePickerActions-action {
   margin-left: var(--salt-spacing-100);
 }

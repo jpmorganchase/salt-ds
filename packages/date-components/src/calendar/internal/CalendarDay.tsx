@@ -84,6 +84,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       status;
     const buttonRef = useForkRef(ref, focusedDateRef);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: ignore `focusedDateRef.current`
     useIsomorphicLayoutEffect(() => {
       if (focused) {
         focusedDateRef?.current?.focus({ preventScroll: true });
@@ -127,8 +128,9 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       <button {...defaultButtonProps} />
     );
 
-    const tooltipContent = unselectableReason || highlightedReason;
-    if (tooltipContent && tooltipContent?.length) {
+    const tooltipContent: string | false | undefined =
+      unselectableReason || highlightedReason;
+    if (tooltipContent && tooltipContent?.length > 0) {
       return (
         <Tooltip
           hideIcon

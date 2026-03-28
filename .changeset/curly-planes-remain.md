@@ -23,9 +23,9 @@ import type { CreateAnnouncement } from "@salt-ds/lab";
 const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announcementType, state, dateAdapter) => {
   switch (minFocusableDateExceeded) {
     case "dateSelected":
-      return `Minimum date exceeded ${dateAdapter.format(state.selectedDate, )}`;
+      return `Minimum date exceeded ${dateAdapter.format(state.selectedDate)}`;
     case "maxFocusableDateExceeded":
-      return `Maximum date exceeded ${dateAdapter.format(state.selectedDate, )}`;
+      return `Maximum date exceeded ${dateAdapter.format(state.selectedDate)}`;
     case "dateSelected":
       return `You selected ${dateAdapter.format(state.selectedDate, "longDate")}`;
     case "visibleMonthChanged":

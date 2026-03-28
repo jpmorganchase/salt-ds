@@ -223,7 +223,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           warnedOnce = true;
         }
       }
-    }, [multiselect, warnedOnce, selectionVariant]);
+    }, [multiselect, selectionVariant]);
 
     let timezone: Timezone = "default";
     if (timezoneProp) {

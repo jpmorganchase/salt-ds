@@ -201,8 +201,8 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         endDate: "",
       },
       onChange,
-      onClick,
       onDateValueChange,
+      onMouseDown,
       emptyReadOnlyMarker = "—",
       endAdornment,
       startInputProps = {},
@@ -513,13 +513,16 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       endInputPropsOnKeyDown?.(event);
     };
 
-    const handleWrapperClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    const handleWrapperMouseDown: MouseEventHandler<HTMLDivElement> = (
+      event,
+    ) => {
       if (event.target === wrapperRef.current) {
+        event.preventDefault();
         const input = startInputRef.current;
         input?.focus();
         input?.setSelectionRange(input.value.length, input.value.length);
       }
-      onClick?.(event);
+      onMouseDown?.(event);
     };
 
     return (
@@ -537,7 +540,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           className,
         )}
         ref={handleWrapperRef}
-        onClick={handleWrapperClick}
+        onMouseDown={handleWrapperMouseDown}
         {...rest}
       >
         <input

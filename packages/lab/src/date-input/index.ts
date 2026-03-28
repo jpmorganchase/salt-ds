@@ -6,13 +6,12 @@ warnOnce({
     "@salt-ds/lab 'date-input' exports are deprecated and will be removed in a future release. Import from @salt-ds/date-components instead.",
 });
 
-export { DateInputRange, DateInputSingle } from "@salt-ds/date-components";
-
 export type {
+  DateInputRangeDetails,
   DateInputRangeProps,
   DateInputRangeValue,
-  DateInputRangeDetails,
-  DateParserField,
-  DateInputSingleProps,
   DateInputSingleDetails,
+  DateInputSingleProps,
+  DateParserField,
 } from "@salt-ds/date-components";
+export { DateInputRange, DateInputSingle } from "@salt-ds/date-components";

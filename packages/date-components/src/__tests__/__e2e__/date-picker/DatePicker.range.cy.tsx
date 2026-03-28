@@ -12,8 +12,7 @@ import {
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
-} from "@salt-ds/lab";
-
+} from "@salt-ds/date-components";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
@@ -194,6 +193,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     });
   });
 
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
@@ -540,6 +540,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Clear end date
         cy.findByLabelText("End date").clear();
         cy.realPress("Tab");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(date.startDate).to.be.null;
@@ -572,7 +573,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(<RangeWithFormField />);
         // Verify the helper text is visible on the page
         cy.get('[id^="helperText-"]')
-          .filter((index, element) => {
+          .filter((_index, element) => {
             return !Cypress.$(element).closest("[data-floating-ui-portal]")
               .length;
           })
@@ -583,14 +584,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByRole("application").should("have.length", 2);
         // Verify the helper text is not visible on the page
         cy.get('[id^="helperText-"]')
-          .filter((index, element) => {
+          .filter((_index, element) => {
             return !Cypress.$(element).closest("[data-floating-ui-portal]")
               .length;
           })
           .should("not.be.visible");
         // Verify the helper text has moved to the dialog panel
         cy.get('[id^="helperText-"]')
-          .filter((index, element) => {
+          .filter((_index, element) => {
             return Cypress.$(element).closest('[role="dialog"]').length > 0;
           })
           .should("be.visible");

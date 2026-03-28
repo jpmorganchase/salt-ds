@@ -9,10 +9,8 @@ import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
-import { DateInputSingle } from "@salt-ds/lab";
-
+import { DateInputSingle } from "@salt-ds/date-components";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
-
 import { es as dateFnsEs } from "date-fns/locale";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
@@ -21,7 +19,6 @@ import "dayjs/locale/es";
 const {
   // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
   SingleWithTimezone,
-  Single,
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = dateInputStories as any;
 
@@ -95,6 +92,7 @@ function assertDateChange(
 }
 
 describe("GIVEN a DateInputSingle", () => {
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

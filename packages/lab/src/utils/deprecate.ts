@@ -18,4 +18,3 @@ export const warnOnce = ({ key, message }: DeprecationOptions) => {
   // eslint-disable-next-line no-console
   console.warn(message);
 };
-

@@ -14,10 +14,8 @@ import {
   type DateInputRangeDetails,
   type DateParserField,
   type DateRangeSelection,
-} from "@salt-ds/lab";
-
+} from "@salt-ds/date-components";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
-
 import { es as dateFnsEs } from "date-fns/locale";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
@@ -26,7 +24,6 @@ import "dayjs/locale/es";
 const {
   // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
   RangeWithTimezone,
-  Range,
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = dateInputStories as any;
 
@@ -72,6 +69,7 @@ function assertDateChange(
     startDate: DateFrameworkType | null | undefined;
     endDate: DateFrameworkType | null | undefined;
   },
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapter: SaltDateAdapter<any>,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];

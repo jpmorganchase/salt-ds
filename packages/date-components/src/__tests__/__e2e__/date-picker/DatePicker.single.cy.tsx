@@ -12,7 +12,7 @@ import {
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
@@ -194,6 +194,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
   });
 
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
@@ -432,7 +433,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.mount(<SingleWithFormField />);
         // Verify the helper text is visible on the page
         cy.get('[id^="helperText-"]')
-          .filter((index, element) => {
+          .filter((_index, element) => {
             return !Cypress.$(element).closest("[data-floating-ui-portal]")
               .length;
           })

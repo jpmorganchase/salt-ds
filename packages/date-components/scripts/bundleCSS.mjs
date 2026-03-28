@@ -7,7 +7,10 @@ import esbuild from "esbuild";
 import glob from "fast-glob";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildFolder = path.join(__dirname, "../../../dist/salt-ds-date-components/css");
+const buildFolder = path.join(
+  __dirname,
+  "../../../dist/salt-ds-date-components/css",
+);
 const absWorkingDir = path.resolve(__dirname, "..");
 const outfileName = "salt-date-components.css";
 const entryFile = `src/${crypto.randomUUID()}.css`;

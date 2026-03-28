@@ -11,7 +11,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   type SingleDateSelection,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 
 import * as dateInputStories from "@stories/calendar/calendar.stories";
 
@@ -22,14 +22,16 @@ const {
 } = dateInputStories as any;
 
 // Initialize adapters
-const adapterDateFns = new AdapterDateFns();
-const adapterDayjs = new AdapterDayjs();
-const adapterLuxon = new AdapterLuxon();
-const adapterMoment = new AdapterMoment();
 
-const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+const adapters = [
+  new AdapterDateFns(),
+  new AdapterDayjs(),
+  new AdapterLuxon(),
+  new AdapterMoment(),
+];
 
 describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
+  // biome-ignore lint/suspicious/noExplicitAny: tests run with multiple adapters / date frameworks
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
@@ -426,6 +428,7 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
 });
 
 describe('GIVEN a Calendar with `selectionVariant="single" and `multiselect`', () => {
+  // biome-ignore lint/suspicious/noExplicitAny: tests run with multiple adapters / date frameworks
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

@@ -160,7 +160,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       defaultValue = "",
       id,
       onChange,
-      onClick,
+      onMouseDown,
       emptyReadOnlyMarker = "—",
       endAdornment,
       inputProps = {},
@@ -333,11 +333,12 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       inputPropsOnKeyDown?.(event);
     };
 
-    const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
       if (event.target === wrapperRef.current) {
-        innerInputRef?.current?.focus();
+        event.preventDefault();
+        innerInputRef.current?.focus();
       }
-      onClick?.(event);
+      onMouseDown?.(event);
     };
 
     return (
@@ -355,7 +356,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           className,
         )}
         ref={handleWrapperRef}
-        onClick={handleClick}
+        onMouseDown={handleMouseDown}
         {...rest}
       >
         {startAdornment && (

@@ -61,7 +61,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
 
     const {
       helpers: { setFocusedDate, setHoveredDate },
-      state: { visibleMonth, multiselect, numberOfVisibleMonths = 1 },
+      state: { visibleMonth, numberOfVisibleMonths = 1 },
     } = useCalendarContext();
     const calendarGridRef = useRef<HTMLDivElement>(null);
     const containerRef = useForkRef(ref, calendarGridRef);

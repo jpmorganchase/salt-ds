@@ -3,7 +3,11 @@ import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
-import { Calendar, CalendarGrid, CalendarNavigation } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarGrid,
+  CalendarNavigation,
+} from "@salt-ds/date-components";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import "moment/dist/locale/es";
 
@@ -45,6 +49,7 @@ const {
 } = calendarStories as any;
 
 describe("GIVEN a Calendar", () => {
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

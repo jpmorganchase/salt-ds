@@ -69,9 +69,7 @@ export const DatePickerOverlay = forwardRef<
           })
         : rest)}
     >
-      <>
-        <AriaAnnouncerProvider>{children}</AriaAnnouncerProvider>
-      </>
+      <AriaAnnouncerProvider>{children}</AriaAnnouncerProvider>
     </FloatingComponent>
   );
 });

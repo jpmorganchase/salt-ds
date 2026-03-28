@@ -6,13 +6,23 @@ warnOnce({
     "@salt-ds/lab 'date-picker' exports are deprecated and will be removed in a future release. Import from @salt-ds/date-components instead.",
 });
 
+export type {
+  DatePickerActionsProps,
+  DatePickerOpenChangeReason,
+  DatePickerProps,
+  DatePickerRangeGridPanelProps,
+  DatePickerSingleGridPanelProps,
+  DatePickerState,
+  RangeDatePickerState,
+  SingleDatePickerState,
+  UseDatePickerContextProps,
+} from "@salt-ds/date-components";
 export {
   DatePicker,
   DatePickerActions,
   DatePickerHelperText,
   DatePickerOverlay,
   DatePickerOverlayProvider,
-  useDatePickerOverlay,
   DatePickerRangeGridPanel,
   DatePickerRangeInput,
   DatePickerRangePanel,
@@ -20,28 +30,8 @@ export {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   DatePickerTrigger,
-  SingleDateSelectionContext,
   DateRangeSelectionContext,
+  SingleDateSelectionContext,
   useDatePickerContext,
+  useDatePickerOverlay,
 } from "@salt-ds/date-components";
-
-export type {
-  DatePickerProps,
-  DatePickerActionsProps,
-  DatePickerOpenChangeReason,
-  DatePickerRangeGridPanelProps,
-  DatePickerSingleGridPanelProps,
-  DatePickerState,
-  SingleDatePickerState,
-  RangeDatePickerState,
-  UseDatePickerContextProps,
-} from "@salt-ds/date-components";
-
-
-
-
-
-
-
-
-

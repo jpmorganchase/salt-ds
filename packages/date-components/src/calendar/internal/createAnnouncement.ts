@@ -9,8 +9,7 @@ export type AnnouncementType =
   | "dateSelected"
   | "visibleMonthChanged";
 
-// State types for each announcement
-export type AnnouncerMinMaxFocusState = {}; // No state needed
+export type AnnouncerMinMaxFocusState = Record<string, never>;
 
 export interface AnnouncerVisibleMonthState {
   startVisibleMonth: DateFrameworkType;
@@ -38,10 +37,7 @@ export type DateSelectionAnnouncerState =
 
 export function createSingleSelectionAnnouncement(
   announcementType: AnnouncementType,
-  state:
-    | AnnouncerSingleDateSelectedState
-    | AnnouncerVisibleMonthState
-    | AnnouncerMinMaxFocusState,
+  state: DateSelectionAnnouncerState,
   dateAdapter: SaltDateAdapter,
 ): string | undefined {
   switch (announcementType) {
@@ -86,10 +82,7 @@ export function createSingleSelectionAnnouncement(
 
 export function createRangeSelectionAnnouncement(
   announcementType: AnnouncementType,
-  state:
-    | AnnouncerRangeDateSelectedState
-    | AnnouncerVisibleMonthState
-    | AnnouncerMinMaxFocusState,
+  state: DateSelectionAnnouncerState,
   dateAdapter: SaltDateAdapter,
 ): string | undefined {
   switch (announcementType) {
@@ -106,8 +99,8 @@ export function createRangeSelectionAnnouncement(
       ) {
         return "cleared date selection";
       }
-      let startDate: DateFrameworkType | undefined;
-      let endDate: DateFrameworkType | undefined;
+      let startDate: DateFrameworkType | null | undefined;
+      let endDate: DateFrameworkType | null | undefined;
       if (multiselect && Array.isArray(selectedDate)) {
         const last = selectedDate[selectedDate.length - 1];
         startDate = last.startDate;
@@ -117,8 +110,12 @@ export function createRangeSelectionAnnouncement(
         selectedDate &&
         typeof selectedDate === "object"
       ) {
-        startDate = (selectedDate as any).startDate;
-        endDate = (selectedDate as any).endDate;
+        const range = selectedDate as {
+          startDate?: DateFrameworkType | null;
+          endDate?: DateFrameworkType | null;
+        };
+        startDate = range.startDate;
+        endDate = range.endDate;
       }
       if (startDate && !endDate) {
         return `Selected start date ${dateAdapter.format(startDate, "dddd D MMMM YYYY")}`;

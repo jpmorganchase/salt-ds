@@ -11,7 +11,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   type DateRangeSelection,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
@@ -36,6 +36,7 @@ function getAllDatesInRange(
 }
 
 describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
@@ -52,7 +53,7 @@ describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
 
       it("SHOULD allow a defined range to be selected", () => {
         const endDateOffset = (date: DateFrameworkType) =>
-          adapter.add(date as any, { days: 4 });
+          adapter.add(date, { days: 4 });
         const offsetDate = endDateOffset(testDate);
         const datesInRange = getAllDatesInRange(
           adapter as SaltDateAdapter,
@@ -257,6 +258,7 @@ function assertRangeSelected(
 }
 
 describe('GIVEN a Calendar with `selectionVariant="offset" and `multiselect`', () => {
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

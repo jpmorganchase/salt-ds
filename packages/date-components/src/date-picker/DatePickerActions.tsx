@@ -1,4 +1,6 @@
 import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -9,16 +11,13 @@ import {
   useEffect,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import { useLocalization } from "../localization-provider";
+import datePickerActions from "./DatePickerActions.css";
 import {
   type RangeDatePickerState,
   type SingleDatePickerState,
   useDatePickerContext,
 } from "./DatePickerContext";
-import "./DatePickerActions.css";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { useLocalization } from "../localization-provider";
-import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");
 

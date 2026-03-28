@@ -11,7 +11,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   type DateRangeSelection,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 
 import * as dateInputStories from "@stories/calendar/calendar.stories";
 
@@ -30,6 +30,7 @@ const adapterMoment = new AdapterMoment();
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
@@ -502,6 +503,7 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
 });
 
 describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', () => {
+  // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

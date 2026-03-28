@@ -76,8 +76,11 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
           data-testid="CalendarGrid"
           className={clsx(withBaseName("grid"), withBaseName(selectionVariant))}
         >
-          {weeks.map((week, index) => (
-            <div key={`row-${index}`} className={withBaseName("week")}>
+          {weeks.map((week) => (
+            <div
+              key={`row-${dateAdapter.format(week[0], "DD MMM YYYY")}`}
+              className={withBaseName("week")}
+            >
               {week.map((day) => (
                 <CalendarDay
                   {...CalendarDayProps}

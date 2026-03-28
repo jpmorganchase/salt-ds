@@ -233,12 +233,12 @@ export function useDatePicker(
     (event: SyntheticEvent, date: SingleDateSelection | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
-      announce("dateSelected", { selectedDate: date });
+      announce("dateSelected", { multiselect: false, selectedDate: date });
       if (selectionVariant === "single") {
         onApply?.(event, date);
       }
     },
-    [selectionVariant, setOpen, onApply],
+    [announce, selectionVariant, setOpen, onApply],
   );
 
   const checkAndAddError = useCallback(
@@ -297,12 +297,20 @@ export function useDatePicker(
     (event: SyntheticEvent, date: DateRangeSelection | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
-      announce("dateSelected", { selectedDate: date });
+      announce("dateSelected", {
+        multiselect: false,
+        selectedDate: date
+          ? {
+              startDate: date.startDate ?? undefined,
+              endDate: date.endDate ?? undefined,
+            }
+          : null,
+      });
       if (selectionVariant === "range") {
         onApply?.(event, date);
       }
     },
-    [onApply, setOpen, selectionVariant],
+    [announce, onApply, setOpen, selectionVariant],
   );
 
   const selectRange = useCallback(

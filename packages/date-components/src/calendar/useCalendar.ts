@@ -501,7 +501,7 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
         visibleMonthProp
           ? dateAdapter.startOf(visibleMonthProp, "month")
           : undefined,
-      [visibleMonthProp],
+      [visibleMonthProp, dateAdapter],
     ),
     // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
     default: useMemo(
@@ -642,7 +642,14 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       }
       return false;
     },
-    [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+    [
+      dateAdapter,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      isDaySelectable,
+      startDateOffset,
+    ],
   );
 
   const getDefaultFocusedDate = () => {
@@ -702,7 +709,8 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
 
   const [focusedDate, setFocusedDateState] = useControlled({
     controlled: focusedDateProp,
-    default: useMemo(getDefaultFocusedDate, []),
+    // biome-ignore lint/correctness/useExhaustiveDependencies: initial value only
+    default: useMemo(() => getDefaultFocusedDate(), []),
     name: "Calendar",
     state: "focusedDate",
   });
@@ -815,11 +823,13 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
     },
     [
       dateAdapter,
+      endDateOffset,
       isOutsideAllowedDates,
       selectionVariant,
       selectedDate,
       hoveredDate,
       isDaySelectable,
+      startDateOffset,
     ],
   );
 
@@ -857,7 +867,14 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       }
       return false;
     },
-    [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+    [
+      dateAdapter,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      endDateOffset,
+      isDaySelectable,
+    ],
   );
 
   const defaultCreateAnnouncement =
@@ -928,7 +945,12 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       });
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [onVisibleMonthChange],
+    [
+      announce,
+      dateAdapter,
+      onVisibleMonthChange,
+      responsiveNumberOfVisibleMonths,
+    ],
   );
 
   return useMemo(

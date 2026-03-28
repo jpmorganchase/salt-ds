@@ -65,20 +65,6 @@ export default {
   },
 } as Meta<typeof Calendar>;
 
-const Template: StoryFn<typeof Calendar> = (args) => {
-  const { dateAdapter } = useLocalization();
-  return (
-    <Calendar
-      {...(args as any)}
-      selectionVariant={"single"}
-      defaultSelectedDate={dateAdapter.today()}
-    >
-      <CalendarNavigation />
-      <CalendarGrid />
-    </Calendar>
-  );
-};
-
 export const Single: StoryFn<React.FC<CalendarSingleProps>> = (args) => {
   const { dateAdapter } = useLocalization();
   const selectedDate = dateAdapter.today();
@@ -295,6 +281,7 @@ export const SingleMultiselectControlled: StoryFn<
 
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       selectionVariant={"single"}
       multiselect={true}
