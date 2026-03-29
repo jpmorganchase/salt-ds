@@ -8,7 +8,7 @@ import {
   type DateInputSingleProps,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ReactElement, useState } from "react";
 
 export const SingleControlled = (): ReactElement => {

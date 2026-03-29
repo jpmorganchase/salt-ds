@@ -1,6 +1,9 @@
 ---
-"@salt-ds/lab": patch
+"@salt-ds/date-components": patch
 ---
+
+New package `@salt-ds/date-components` has been added to contain shared date-related components such as `Calendar`, `CalendarNavigation`, and `DateInput`.
+To avoid a breaking change, `@salt-ds/lab` still re-exports these components for now (and logs a deprecation warning in development). New code should import from `@salt-ds/date-components`.
 
 Calendar updates
 
@@ -20,9 +23,9 @@ import type { CreateAnnouncement } from "@salt-ds/lab";
 const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announcementType, state, dateAdapter) => {
   switch (minFocusableDateExceeded) {
     case "dateSelected":
-      return `Minimum date exceeded ${dateAdapter.format(state.selectedDate, )}`;
+      return `Minimum date exceeded ${dateAdapter.format(state.selectedDate)}`;
     case "maxFocusableDateExceeded":
-      return `Maximum date exceeded ${dateAdapter.format(state.selectedDate, )}`;
+      return `Maximum date exceeded ${dateAdapter.format(state.selectedDate)}`;
     case "dateSelected":
       return `You selected ${dateAdapter.format(state.selectedDate, "longDate")}`;
     case "visibleMonthChanged":

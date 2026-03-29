@@ -5,7 +5,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   LocalizationProvider,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { es as dateFnsEs } from "date-fns/locale";
 
 import type { ReactElement } from "react";

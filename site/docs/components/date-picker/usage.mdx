@@ -49,10 +49,10 @@ To improve consistency and simplify your messaging, recommend a single acceptabl
 
 ## Import
 
-To import `DatePicker` from the Salt lab package, use:
+To import `DatePicker` from the Salt date components package, use:
 
 ```js
-import { DatePicker } from "@salt-ds/lab";
+import { DatePicker } from "@salt-ds/date-components";
 ```
 
 ### Setting the date
@@ -65,14 +65,14 @@ Pass a date object from your configured date framework via the `defaultDate` or 
 import { DateTime } from "luxon";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import {
-  DateInputSingle
+  DateInputSingle,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
   DatePickerTrigger,
   LocalizationProvider,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
   <DatePicker
