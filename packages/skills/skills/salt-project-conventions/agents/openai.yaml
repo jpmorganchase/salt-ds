@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salt Project Conventions"
+  short_description: "Create and maintain repo-specific Salt conventions"
+  default_prompt: "Create or update a .salt/team.json conventions file and companion repo instruction snippet for this repo, keeping canonical Salt guidance separate from repo-specific wrappers, patterns, and bans. Only introduce .salt/stack.json if shared upstream layers are needed."

@@ -1,0 +1,21 @@
+export {
+  artifactDescriptorSchema,
+  diagnosticStatusSchema,
+  doctorCheckSchema,
+  doctorResultSchema,
+  parseDoctorResult,
+  parseRuntimeInspectResult,
+  roleSummarySchema,
+  runtimeErrorSchema,
+  runtimeInspectResultSchema,
+  saltPackageDescriptorSchema,
+  type ArtifactDescriptor,
+  type DiagnosticStatus,
+  type DoctorCheck,
+  type DoctorResult,
+  type RoleSummary,
+  type RuntimeErrorRecord,
+  type RuntimeInspectResult,
+  type SaltPackageDescriptor,
+} from "./schemas.js";
+export { runDoctor, type DoctorOptions } from "./doctor.js";

@@ -1,0 +1,49 @@
+{
+  "contract": "project_conventions_v1",
+  "version": "1.0.0",
+  "project": "sample-salt-app",
+  "preferred_components": [
+    {
+      "salt_name": "Button",
+      "prefer": "AppButton",
+      "reason": "Product surfaces use a shared wrapper for analytics, sentiment defaults, and loading behavior.",
+      "docs": ["./docs/app-button.md"]
+    }
+  ],
+  "approved_wrappers": [
+    {
+      "name": "AppButton",
+      "wraps": "Button",
+      "reason": "Adds analytics and approved product defaults without changing the canonical Salt primitive underneath.",
+      "import": {
+        "from": "@/components/AppButton",
+        "name": "AppButton"
+      },
+      "use_when": ["primary product actions", "toolbar actions"],
+      "avoid_when": ["sandbox examples"],
+      "migration_shim": false,
+      "docs": ["./docs/app-button.md"]
+    }
+  ],
+  "pattern_preferences": [
+    {
+      "intent": "workspace shell navigation",
+      "prefer": "WorkspaceShell",
+      "canonical_salt_start": "VerticalNavigation",
+      "reason": "The repo composes the canonical Salt navigation primitives into one approved shell wrapper.",
+      "docs": ["./docs/workspace-shell.md"]
+    }
+  ],
+  "banned_choices": [
+    {
+      "name": "UNSTABLE_SaltProviderNext",
+      "reason": "The repo is standardized on SaltProvider only.",
+      "replacement": "SaltProvider",
+      "docs": ["./docs/platform-conventions.md"]
+    }
+  ],
+  "notes": [
+    "Keep canonical Salt guidance and project conventions separate in final recommendations.",
+    "Do not present project wrappers as if they were part of the official Salt registry."
+  ]
+}

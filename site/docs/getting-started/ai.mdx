@@ -1,0 +1,116 @@
+---
+title: AI with Salt
+description: "Install the salt-ds skill, connect Salt MCP when available, and use the same workflows with CLI fallback when needed."
+layout: DetailTechnical
+sidebar:
+  label: AI with Salt
+---
+
+Salt's AI tooling is experimental.
+
+Start here if you want to use Salt through an AI coding tool.
+
+The public front door is the `salt-ds` skill. Salt MCP is the preferred transport underneath it. The Salt CLI is the fallback when MCP is unavailable.
+
+## What to install
+
+For most teams:
+
+1. install the `salt-ds` skill
+2. connect `@salt-ds/mcp` if your host supports MCP
+3. install `@salt-ds/cli` only if MCP is blocked or you want a manual fallback
+
+Do not treat the MCP and CLI as two separate products to learn. The workflows stay the same.
+
+## Recommended setup
+
+Install the `salt-ds` skill:
+
+```sh
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/mcp/packages/skills --skill salt-ds
+```
+
+If your host supports MCP, add Salt MCP:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "npx",
+      "args": ["@salt-ds/mcp@latest"]
+    }
+  }
+}
+```
+
+This is the main path most teams should use.
+
+## If MCP is unavailable
+
+If MCP is blocked, use the published CLI fallback:
+
+```sh
+npx -y @salt-ds/cli@latest info . --json
+```
+
+Or install it once:
+
+```sh
+npm install -g @salt-ds/cli
+```
+
+Then use the `salt-ds` command directly.
+
+Use the CLI directly mainly when MCP is blocked, your environment needs a local fallback path, or the task is explicitly support or debugging work.
+
+## Main workflows
+
+Use the same workflow names whether the transport is MCP or CLI:
+
+- `salt-ds init`
+  - bootstrap the default `.salt/team.json` plus repo instruction files
+- `salt-ds create`
+  - create new Salt UI in a new or existing repo
+- `salt-ds review`
+  - review existing Salt UI
+- `salt-ds migrate`
+  - migrate non-Salt UI into Salt
+- `salt-ds upgrade`
+  - upgrade Salt usage over time
+- `salt-ds review --url`
+  - attach runtime evidence when source validation alone is not enough
+
+Start repo-aware work by establishing repo context first:
+
+- `salt-ds info --json`
+  - detected repo context such as framework, workspace shape, Salt packages, runtime targets, imports, and repo instruction files
+
+## Repo policy is optional
+
+Use `.salt/team.json` only for repo-specific policy such as approved wrappers, banned choices, and local pattern preferences.
+
+Do not treat `.salt/team.json` as the whole project model, and do not add it before the repo actually needs local Salt policy.
+
+For most teams, `.salt/team.json` is enough. Treat `.salt/stack.json` as an advanced layered path only when the repo genuinely needs shared upstream conventions.
+
+## Use runtime evidence only when needed
+
+Start with canonical Salt guidance and source validation.
+
+Escalate to runtime evidence only when you still need confirmation about:
+
+- rendered structure
+- landmarks and accessible names
+- runtime errors
+- screenshots or layout behavior
+
+Use:
+
+- `salt-ds doctor`
+  - when the runtime target is unclear or policy layering looks wrong
+- `salt-ds review --url`
+  - when source validation and runtime evidence should stay in the same workflow
+- `salt-ds runtime inspect`
+  - when the task is explicitly runtime-only debugging or support work
+
+When the repo state itself is unclear, start with `salt-ds info --json` before escalating to the runtime layer.

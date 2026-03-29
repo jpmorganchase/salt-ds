@@ -1,0 +1,10 @@
+{
+  "name": "salt-consumer-example",
+  "private": true,
+  "dependencies": {
+    "@salt-ds/core": "latest",
+    "@salt-ds/theme": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

@@ -30,6 +30,7 @@ console.log(`Building ${packageName}`);
 
 await fs.mkdirp(outputDir);
 await fs.emptyDir(outputDir);
+await makeTypings(outputDir, path.join(cwd, "src"));
 
 // Define entry points for each adapter
 const entryPoints = {
@@ -42,8 +43,6 @@ const entryPoints = {
 };
 
 for (const [adapterName, inputPath] of Object.entries(entryPoints)) {
-  await makeTypings(outputDir, path.dirname(inputPath));
-
   const bundle = await rollup({
     input: inputPath,
     external: (id) => {

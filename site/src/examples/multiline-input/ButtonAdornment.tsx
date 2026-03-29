@@ -1,11 +1,9 @@
 import { Button, FlowLayout, MultilineInput } from "@salt-ds/core";
 import {
-  BankCheckSolidIcon,
   BookmarkSolidIcon,
   EditSolidIcon,
   HelpSolidIcon,
   SendIcon,
-  UserBadgeIcon,
 } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
@@ -13,17 +11,17 @@ export const ButtonAdornment = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>
     <MultilineInput
       startAdornment={
-        <Button sentiment="accented">
-          <EditSolidIcon />
+        <Button sentiment="accented" aria-label="Edit">
+          <EditSolidIcon aria-hidden />
         </Button>
       }
       endAdornment={
         <>
-          <Button appearance="transparent">
-            <HelpSolidIcon />
+          <Button appearance="transparent" aria-label="Help">
+            <HelpSolidIcon aria-hidden />
           </Button>
-          <Button sentiment="accented">
-            <SendIcon />
+          <Button sentiment="accented" aria-label="Send">
+            <SendIcon aria-hidden />
           </Button>
         </>
       }
@@ -31,8 +29,8 @@ export const ButtonAdornment = (): ReactElement => (
     />
     <MultilineInput
       endAdornment={
-        <Button>
-          <BookmarkSolidIcon />
+        <Button aria-label="Bookmark">
+          <BookmarkSolidIcon aria-hidden />
         </Button>
       }
       defaultValue="Value"
@@ -40,8 +38,8 @@ export const ButtonAdornment = (): ReactElement => (
     <MultilineInput
       disabled
       endAdornment={
-        <Button disabled>
-          <UserBadgeIcon />
+        <Button disabled sentiment="accented" aria-label="Send">
+          <SendIcon aria-hidden />
         </Button>
       }
       defaultValue="Disabled value"
@@ -49,8 +47,8 @@ export const ButtonAdornment = (): ReactElement => (
     <MultilineInput
       readOnly
       endAdornment={
-        <Button appearance="transparent" disabled>
-          <BankCheckSolidIcon />
+        <Button disabled sentiment="accented" aria-label="Send">
+          <SendIcon aria-hidden />
         </Button>
       }
       defaultValue="Readonly value"
