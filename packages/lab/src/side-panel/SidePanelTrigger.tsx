@@ -39,7 +39,7 @@ export const SidePanelTrigger = forwardRef<
     const isActiveTriggerOpen = open && activeTriggerId === triggerId;
 
     if (isActiveTriggerOpen) {
-      setOpen(false);
+      setOpen?.(false);
       return;
     }
 
