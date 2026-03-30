@@ -54,6 +54,7 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
     const {
       openState,
       floatingRootContext,
+      setFloatingContent,
       getFloatingProps,
       setFloating,
       placement,
@@ -64,6 +65,10 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
 
     const arrowRef = useRef<SVGSVGElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const handleContentRef = useForkRef<HTMLDivElement>(
+      contentRef,
+      setFloatingContent,
+    );
     const { y, x, elements, strategy, context } = useFloatingUI({
       rootContext: floatingRootContext,
       placement,
@@ -98,7 +103,7 @@ export const ToggletipPanel = forwardRef<HTMLDivElement, ToggletipPanelProps>(
         }}
       >
         <div
-          ref={contentRef}
+          ref={handleContentRef}
           className={withBaseName("content")}
           tabIndex={0}
           {...getFloatingProps({

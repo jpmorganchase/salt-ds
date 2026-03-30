@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
+  type KeyboardEvent,
   type ReactNode,
   useEffect,
 } from "react";
@@ -22,7 +23,7 @@ export const ToggletipTrigger = forwardRef<
   HTMLButtonElement,
   ToggletipTriggerProps
 >(function ToggletipTrigger(props, ref) {
-  const { children, className, id: idProp, ...rest } = props;
+  const { children, className, id: idProp, onKeyDown, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -31,8 +32,13 @@ export const ToggletipTrigger = forwardRef<
     window: targetWindow,
   });
 
-  const { setReference, getReferenceProps, setTriggerId } =
-    useToggletipContext();
+  const {
+    floatingContent,
+    openState,
+    setReference,
+    getReferenceProps,
+    setTriggerId,
+  } = useToggletipContext();
 
   const handleRef = useForkRef<HTMLButtonElement>(setReference, ref);
 
@@ -44,6 +50,27 @@ export const ToggletipTrigger = forwardRef<
     }
   }, [id, setTriggerId]);
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown?.(event);
+
+    if (
+      !openState ||
+      event.key !== "Tab" ||
+      event.shiftKey ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey
+    ) {
+      return;
+    }
+
+    if (floatingContent) {
+      // React 16 support: explicitly move focus back into the open panel.
+      event.preventDefault();
+      floatingContent.focus();
+    }
+  };
+
   return (
     <button
       type="button"
@@ -51,6 +78,7 @@ export const ToggletipTrigger = forwardRef<
         ref: handleRef,
         className: clsx(withBaseName(), className),
         id,
+        onKeyDown: handleKeyDown,
         ...rest,
       })}
     >

@@ -45,6 +45,9 @@ export const Toggletip = ({
 
   const [reference, setReference] = useState<HTMLButtonElement | null>(null);
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
+  const [floatingContent, setFloatingContent] = useState<HTMLDivElement | null>(
+    null,
+  );
   const [triggerId, setTriggerId] = useState<string | undefined>(undefined);
 
   const floatingRootContext = useFloatingRootContext({
@@ -68,9 +71,11 @@ export const Toggletip = ({
         openState,
         floatingRootContext,
         placement,
+        floatingContent,
         getFloatingProps,
         getReferenceProps,
         setFloating,
+        setFloatingContent,
         setReference,
         setTriggerId,
         triggerId,

@@ -11,6 +11,7 @@ export interface ToggletipContextValue {
   openState: boolean;
   floatingRootContext: FloatingRootContext;
   placement: Placement;
+  floatingContent: HTMLDivElement | null;
   getFloatingProps: (
     userProps?: HTMLProps<HTMLElement> | undefined,
   ) => Record<string, unknown>;
@@ -18,6 +19,7 @@ export interface ToggletipContextValue {
     userProps?: HTMLProps<Element> | undefined,
   ) => Record<string, unknown>;
   setFloating: Dispatch<SetStateAction<HTMLDivElement | null>>;
+  setFloatingContent: Dispatch<SetStateAction<HTMLDivElement | null>>;
   setReference: Dispatch<SetStateAction<HTMLButtonElement | null>>;
   setTriggerId: Dispatch<SetStateAction<string | undefined>>;
   triggerId: string | undefined;
@@ -29,6 +31,7 @@ export const ToggletipContext = createContext<ToggletipContextValue>(
     openState: false,
     floatingRootContext: {} as FloatingRootContext,
     placement: "top",
+    floatingContent: null,
     getFloatingProps() {
       return {} as Record<string, unknown>;
     },
@@ -36,6 +39,7 @@ export const ToggletipContext = createContext<ToggletipContextValue>(
       return {} as Record<string, unknown>;
     },
     setFloating: () => {},
+    setFloatingContent: () => {},
     setReference: () => {},
     setTriggerId: () => {},
     triggerId: undefined,
