@@ -67,49 +67,34 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const targetWindow = useWindow();
     const sidePanelGroup = useContext(SidePanelGroupContext);
 
-    // In grouped mode, use group-provided ID (deterministic, immediate).
-    // In manual/uncontrolled mode, generate and use own ID.
+    useComponentCssInjection({
+      testId: "salt-side-panel",
+      css: sidePanelCss,
+      window: targetWindow,
+    });
+
     const id = useId(idProp || sidePanelGroup?.panelId);
 
+    // Use SidePanelGroup props if available
     const open = sidePanelGroup ? sidePanelGroup.open : openProp;
     const onOpenChange = sidePanelGroup
       ? sidePanelGroup.setOpen
       : onOpenChangeProp;
-
-    // Use grouped trigger ref if available, otherwise use manual trigger ref
-    const effectiveTriggerRef = sidePanelGroup?.triggerRef || manualTriggerRef;
+    const focusReturnTriggerRef =
+      sidePanelGroup?.triggerRef || manualTriggerRef;
 
     const { context, refs } = useFloatingUI({
       open,
       onOpenChange,
     });
     const { setReference, setFloating } = refs;
-
-    // Wire trigger ref to floating reference for deterministic focus return
-    useEffect(() => {
-      if (effectiveTriggerRef?.current) {
-        setReference(effectiveTriggerRef.current);
-      }
-    }, [effectiveTriggerRef, setReference]);
-
-    const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDownCapture?.(event);
-
-      if (event.defaultPrevented || event.key !== "Escape") {
-        return;
-      }
-
-      event.stopPropagation();
-      onOpenChange?.(false);
-    };
-
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
-    useComponentCssInjection({
-      testId: "salt-side-panel",
-      css: sidePanelCss,
-      window: targetWindow,
-    });
+    useEffect(() => {
+      if (focusReturnTriggerRef?.current) {
+        setReference(focusReturnTriggerRef.current);
+      }
+    }, [focusReturnTriggerRef, setReference]);
 
     useEffect(() => {
       if (open) {
@@ -121,6 +106,17 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }, 300); // var(--salt-duration-perceptible)
       return () => clearTimeout(animate);
     }, [open]);
+
+    const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDownCapture?.(event);
+
+      if (event.defaultPrevented || event.key !== "Escape") {
+        return;
+      }
+
+      event.stopPropagation();
+      onOpenChange?.(false);
+    };
 
     if (!showComponent) return null;
 
@@ -153,7 +149,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           context={context}
           modal={false}
           initialFocus={initialFocus}
-          returnFocus
           closeOnFocusOut={false}
           guards={false}
         >
