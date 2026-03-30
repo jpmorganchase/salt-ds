@@ -3,11 +3,11 @@ import { type MutableRefObject, useContext } from "react";
 
 export interface SidePanelGroupContextValue {
   /**
-   * Whether the side panel is currently open. Undefined when used outside SidePanelGroup.
+   * Whether the side panel is currently open.
    */
   open?: boolean;
   /**
-   * Function to set the open state of the panel. Undefined when used outside SidePanelGroup.
+   * Function to set the open state of the panel.
    */
   setOpen?: (open: boolean) => void;
   /**
