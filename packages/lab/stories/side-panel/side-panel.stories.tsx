@@ -119,10 +119,12 @@ export const Right: StoryFn<SidePanelGroupProps> = (args) => {
         <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout align="start" gap={1}>
             <Button
+              appearance="transparent"
+              aria-label="Close"
               onClick={() => setOpen(false)}
               style={{ marginLeft: "auto" }}
             >
-              Close
+              <CloseIcon aria-hidden />
             </Button>
             <H2 id={headingId}>Section Title</H2>
             <Text>
@@ -175,10 +177,12 @@ export const ManualTrigger: StoryFn<SidePanelProps> = (args) => {
         >
           <StackLayout align="start" gap={1}>
             <Button
+              appearance="transparent"
+              aria-label="Close"
               onClick={() => setOpen(false)}
               style={{ marginLeft: "auto" }}
             >
-              Close
+              <CloseIcon aria-hidden />
             </Button>
             <H2 id={headingId}>Manual Trigger Link</H2>
             <Text>
@@ -548,7 +552,7 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
               <Button
-                aria-label="close panel"
+                aria-label="Close"
                 appearance="transparent"
                 onClick={() => setOpen(false)}
                 style={{ marginLeft: "auto" }}
