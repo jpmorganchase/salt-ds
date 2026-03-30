@@ -8,12 +8,11 @@ import {
   forwardRef,
   type KeyboardEvent,
   type MutableRefObject,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import sidePanelCss from "./SidePanel.css";
-import { SidePanelGroupContext } from "./SidePanelGroupContext";
+import { useSidePanelGroup } from "./SidePanelGroupContext";
 
 const withBaseName = makePrefixer("saltSidePanel");
 
@@ -65,7 +64,12 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     } = props;
     const [showComponent, setShowComponent] = useState(false);
     const targetWindow = useWindow();
-    const sidePanelGroup = useContext(SidePanelGroupContext);
+    const {
+      open: groupOpen,
+      setOpen: setGroupOpen,
+      panelId,
+      triggerRef: groupTriggerRef,
+    } = useSidePanelGroup();
 
     useComponentCssInjection({
       testId: "salt-side-panel",
@@ -73,15 +77,12 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       window: targetWindow,
     });
 
-    const id = useId(idProp || sidePanelGroup?.panelId);
+    const id = useId(idProp || panelId);
 
     // Use SidePanelGroup props if available
-    const open = sidePanelGroup ? sidePanelGroup.open : openProp;
-    const onOpenChange = sidePanelGroup
-      ? sidePanelGroup.setOpen
-      : onOpenChangeProp;
-    const focusReturnTriggerRef =
-      sidePanelGroup?.triggerRef || manualTriggerRef;
+    const open = groupOpen ?? openProp;
+    const onOpenChange = setGroupOpen ?? onOpenChangeProp;
+    const focusReturnTriggerRef = groupTriggerRef ?? manualTriggerRef;
 
     const { context, refs } = useFloatingUI({
       open,

@@ -1,5 +1,6 @@
 import {
   Button,
+  FlexItem,
   FlexLayout,
   H2,
   StackLayout,
@@ -13,8 +14,12 @@ import {
   TR,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
-import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
+import {
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelGroup,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
 import { useState } from "react";
 
 interface TeamMember {
@@ -58,31 +63,22 @@ const tableData: TeamMember[] = [
 ];
 
 export const WithTable = () => {
-  const [open, setOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
 
   const handleRowClick = (row: TeamMember) => {
     setSelectedRow(row);
-    setOpen(true);
   };
 
   return (
-    <SidePanelGroup open={open} onOpenChange={setOpen}>
+    <SidePanelGroup>
       <FlexLayout
         style={{
           height: "100%",
         }}
         gap={0}
       >
-        <div
-          style={{
-            flex: 1,
-            padding: "16px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <FlexItem basis={1}>
           <TableContainer>
             <Table>
               <caption>Team Members</caption>
@@ -115,18 +111,11 @@ export const WithTable = () => {
               </TBody>
             </Table>
           </TableContainer>
-        </div>
+        </FlexItem>
 
         <SidePanel position="right" aria-labelledby={panelHeadingId}>
           <StackLayout align="start" gap={3}>
-            <Button
-              appearance="transparent"
-              aria-label="close employee details"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton />
             {selectedRow && (
               <>
                 <H2 id={panelHeadingId}>Employee Details</H2>
