@@ -24,23 +24,11 @@
 .saltSidePanel-right {
   border-left: var(--saltSidePanel-border);
 }
-.saltSidePanel-top {
-  border-bottom: var(--saltSidePanel-border);
-}
-.saltSidePanel-bottom {
-  border-top: var(--saltSidePanel-border);
-}
 
 .saltSidePanel-left,
 .saltSidePanel-right {
   width: var(--saltSidePanel-width);
   height: 100%;
-}
-
-.saltSidePanel-top,
-.saltSidePanel-bottom {
-  height: var(--saltSidePanel-height);
-  width: 100%;
 }
 
 .saltSidePanel-left.saltSidePanel-enterAnimation,
@@ -51,16 +39,6 @@
 .saltSidePanel-left.saltSidePanel-exitAnimation,
 .saltSidePanel-right.saltSidePanel-exitAnimation {
   animation: saltSidePanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
-}
-
-.saltSidePanel-top.saltSidePanel-enterAnimation,
-.saltSidePanel-bottom.saltSidePanel-enterAnimation {
-  animation: saltSidePanel-expandHeight var(--salt-animation-duration) var(--salt-animation-timing-function);
-}
-
-.saltSidePanel-top.saltSidePanel-exitAnimation,
-.saltSidePanel-bottom.saltSidePanel-exitAnimation {
-  animation: saltSidePanel-collapseHeight var(--salt-animation-duration) var(--salt-animation-timing-function) both;
 }
 
 .saltSidePanel-exitAnimation {
@@ -79,12 +57,6 @@
   height: 100%;
 }
 
-.saltSidePanel-top .saltSidePanel-inner,
-.saltSidePanel-bottom .saltSidePanel-inner {
-  height: var(--saltSidePanel-height);
-  width: 100%;
-}
-
 @keyframes saltSidePanel-expandWidth {
   from {
     width: 0;
@@ -95,26 +67,12 @@
     width: 0;
   }
 }
-@keyframes saltSidePanel-expandHeight {
-  from {
-    height: 0;
-  }
-}
-@keyframes saltSidePanel-collapseHeight {
-  to {
-    height: 0;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .saltSidePanel-left.saltSidePanel-enterAnimation,
   .saltSidePanel-right.saltSidePanel-enterAnimation,
   .saltSidePanel-left.saltSidePanel-exitAnimation,
-  .saltSidePanel-right.saltSidePanel-exitAnimation,
-  .saltSidePanel-top.saltSidePanel-enterAnimation,
-  .saltSidePanel-bottom.saltSidePanel-enterAnimation,
-  .saltSidePanel-top.saltSidePanel-exitAnimation,
-  .saltSidePanel-bottom.saltSidePanel-exitAnimation {
+  .saltSidePanel-right.saltSidePanel-exitAnimation {
     animation: none;
   }
 }

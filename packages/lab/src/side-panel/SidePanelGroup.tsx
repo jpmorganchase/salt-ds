@@ -12,8 +12,17 @@ import {
 } from "./SidePanelGroupContext";
 
 export interface SidePanelGroupProps {
+  /**
+   * Whether the panel is open
+   */
   open?: boolean;
+  /**
+   * Default open state when initially rendered
+   */
   defaultOpen?: boolean;
+  /**
+   * Callback when open state should change
+   */
   onOpenChange?: (open: boolean) => void;
   children: ReactNode;
 }
