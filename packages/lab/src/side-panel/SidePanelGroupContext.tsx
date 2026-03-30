@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import type { MutableRefObject } from "react";
+import { type MutableRefObject, useContext } from "react";
 
 export interface SidePanelGroupContextValue {
   /**
@@ -31,8 +31,15 @@ export interface SidePanelGroupContextValue {
   ) => void;
 }
 
-export const SidePanelGroupContext =
-  createContext<SidePanelGroupContextValue | null>(
-    "SidePanelGroupContext",
-    null,
-  );
+export const SidePanelGroupContext = createContext<SidePanelGroupContextValue>(
+  "SidePanelGroupContext",
+  {
+    open: false,
+    setOpen: () => undefined,
+    activateTrigger: () => undefined,
+  },
+);
+
+export function useSidePanelGroup() {
+  return useContext(SidePanelGroupContext);
+}

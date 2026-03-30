@@ -13,6 +13,7 @@ import {
 } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelGroup,
   type SidePanelProps,
   SidePanelTrigger,
@@ -45,6 +46,7 @@ export const Default = () => {
           </FlexItem>
           <SidePanel aria-labelledby={headingId} variant={variant}>
             <StackLayout align="start" gap={1}>
+              <SidePanelCloseButton />
               <H2 id={headingId}>Section Title</H2>
               <Text>Content for the primary side panel</Text>
             </StackLayout>

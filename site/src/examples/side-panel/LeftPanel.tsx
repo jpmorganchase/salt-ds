@@ -13,16 +13,19 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon, SearchIcon } from "@salt-ds/icons";
-import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
-import { useState } from "react";
+import { SearchIcon } from "@salt-ds/icons";
+import {
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelGroup,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
 
 export const LeftPanel = () => {
-  const [open, setOpen] = useState(false);
   const headingId = useId();
 
   return (
-    <SidePanelGroup open={open} onOpenChange={setOpen}>
+    <SidePanelGroup>
       <FlexLayout
         style={{
           height: 300,
@@ -31,14 +34,7 @@ export const LeftPanel = () => {
       >
         <SidePanel aria-labelledby={headingId} position="left">
           <StackLayout>
-            <Button
-              appearance="transparent"
-              aria-label="close panel"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton />
             <H2 id={headingId}>Filters</H2>
             <Input startAdornment={<SearchIcon />} placeholder="Search" />
 
@@ -80,7 +76,7 @@ export const LeftPanel = () => {
         </SidePanel>
         <FlexLayout padding={1}>
           <SidePanelTrigger>
-            <Button>{open ? "Close" : "Open"} Left Panel</Button>
+            <Button>Open Left Panel</Button>
           </SidePanelTrigger>
         </FlexLayout>
       </FlexLayout>
