@@ -4,6 +4,8 @@
   --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
 
   --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);
+  --salt-selectable-borderColor-disabled: var(--salt-palette-neutral-disabled);
+  --salt-selectable-foreground-disabled: var(--salt-palette-neutral-strong-disabled);
 
   --salt-status-static-foreground: var(--salt-palette-foreground-secondary); /* Use --salt-content-secondary-foreground */
 
@@ -14,52 +16,52 @@
   --salt-track-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-sentiment-neutral-track-disabled */
 
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-accent-disabled);
-  --salt-actionable-accented-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-bold-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-accented-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
-  --salt-actionable-accented-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-background-disabled: var(--salt-color-transparent);
   --salt-actionable-accented-borderColor-disabled: var(--salt-palette-accent-disabled);
   --salt-actionable-accented-foreground-disabled: var(--salt-palette-accent-strong-disabled);
-  --salt-actionable-accented-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-accented-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-accented-subtle-background-disabled: var(--salt-color-transparent);
+  --salt-actionable-accented-subtle-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-accented-subtle-foreground-disabled: var(--salt-palette-accent-strong-disabled);
   --salt-actionable-bold-background-disabled: var(--salt-palette-neutral-disabled);
-  --salt-actionable-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-bold-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
-  --salt-actionable-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-background-disabled: var(--salt-color-transparent);
   --salt-actionable-borderColor-disabled: var(--salt-palette-neutral-disabled);
   --salt-actionable-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
-  --salt-actionable-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-subtle-background-disabled: var(--salt-color-transparent);
+  --salt-actionable-subtle-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-subtle-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
   --salt-actionable-negative-bold-background-disabled: var(--salt-palette-negative-disabled);
-  --salt-actionable-negative-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-bold-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-negative-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
-  --salt-actionable-negative-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-background-disabled: var(--salt-color-transparent);
   --salt-actionable-negative-borderColor-disabled: var(--salt-palette-negative-disabled);
   --salt-actionable-negative-foreground-disabled: var(--salt-palette-negative-strong-disabled);
-  --salt-actionable-negative-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-negative-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-negative-subtle-background-disabled: var(--salt-color-transparent);
+  --salt-actionable-negative-subtle-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-negative-subtle-foreground-disabled: var(--salt-palette-negative-strong-disabled);
   --salt-actionable-positive-bold-background-disabled: var(--salt-palette-positive-disabled);
-  --salt-actionable-positive-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-bold-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-positive-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
-  --salt-actionable-positive-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-background-disabled: var(--salt-color-transparent);
   --salt-actionable-positive-borderColor-disabled: var(--salt-palette-positive-disabled);
   --salt-actionable-positive-foreground-disabled: var(--salt-palette-positive-strong-disabled);
-  --salt-actionable-positive-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-positive-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-positive-subtle-background-disabled: var(--salt-color-transparent);
+  --salt-actionable-positive-subtle-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-positive-subtle-foreground-disabled: var(--salt-palette-positive-strong-disabled);
   --salt-actionable-caution-bold-background-disabled: var(--salt-palette-warning-disabled);
-  --salt-actionable-caution-bold-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-bold-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-caution-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
-  --salt-actionable-caution-background-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-background-disabled: var(--salt-color-transparent);
   --salt-actionable-caution-borderColor-disabled: var(--salt-palette-warning-disabled);
   --salt-actionable-caution-foreground-disabled: var(--salt-palette-warning-strong-disabled);
-  --salt-actionable-caution-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-caution-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
+  --salt-actionable-caution-subtle-background-disabled: var(--salt-color-transparent);
+  --salt-actionable-caution-subtle-borderColor-disabled: var(--salt-color-transparent);
   --salt-actionable-caution-subtle-foreground-disabled: var(--salt-palette-warning-strong-disabled);
 
-  --salt-separable-background: var(--salt-palette-alpha-none);
+  --salt-separable-background: var(--salt-color-transparent);
 
   --salt-category-1-bold-foreground: var(--salt-palette-foreground-primary-alt);
   --salt-category-2-bold-foreground: var(--salt-palette-foreground-primary-alt);
@@ -143,6 +145,7 @@
   --salt-category-20-subtle-borderColor: var(--salt-palette-categorical-20);
 
   --salt-accent-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-accent-borderColor-disabled: var(--salt-palette-accent-disabled);
 
   --salt-content-foreground-highlight: var(--salt-palette-accent-weaker);
   --salt-content-foreground-active: var(--salt-palette-accent-stronger);
@@ -150,8 +153,10 @@
 
   --salt-editable-primary-background-active: var(--salt-palette-background-primary);
   --salt-editable-primary-background-hover: var(--salt-palette-background-primary);
-  --salt-editable-primary-background-readonly: var(--salt-palette-alpha-none);
+  --salt-editable-primary-background-readonly: var(--salt-color-transparent);
   --salt-editable-secondary-background-active: var(--salt-palette-background-secondary);
   --salt-editable-secondary-background-hover: var(--salt-palette-background-secondary);
-  --salt-editable-secondary-background-readonly: var(--salt-palette-alpha-none);
+  --salt-editable-secondary-background-readonly: var(--salt-color-transparent);
+
+  --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
 }

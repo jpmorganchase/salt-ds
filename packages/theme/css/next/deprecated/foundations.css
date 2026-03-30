@@ -1,4 +1,6 @@
 .salt-theme.salt-theme-next {
   --salt-color-background-gradientlight-rgb: var(--salt-color-background-titanium-rgb);
   --salt-color-background-gradientlight: var(--salt-color-background-titanium);
+
+  --salt-color-gray-400-40a: rgba(var(--salt-color-gray-400-rgb), 0.4);
 }
