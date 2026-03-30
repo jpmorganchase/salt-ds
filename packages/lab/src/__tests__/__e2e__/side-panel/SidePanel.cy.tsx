@@ -7,15 +7,25 @@ const { Left, Default, ManualTrigger, Variants, WithTable } =
 
 describe("GIVEN a SidePanel component", () => {
   describe("Rendering & Position Variants", () => {
-    it("WHEN Left panel is opened, THEN displays with correct position class", () => {
+    it("WHEN Left panel is opened, THEN displays correctly", () => {
       cy.mount(<Left />);
 
       cy.findByRole("button", { name: "Open Left Panel" }).click();
+      cy.findByRole("button", { name: "Open Left Panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "true",
+      );
 
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region").should("have.class", "saltSidePanel-left");
 
       cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Open Left Panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       cy.findByRole("region").should("not.exist");
     });
@@ -24,12 +34,21 @@ describe("GIVEN a SidePanel component", () => {
       cy.mount(<Default />);
 
       cy.findByRole("button", { name: "Open Default Panel" }).click();
-
+      cy.findByRole("button", { name: "Open Default Panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "true",
+      );
       cy.findByRole("region")
         .should("have.class", "saltSidePanel-right")
         .and("be.visible");
 
       cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Open Default Panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       cy.findByRole("region").should("not.exist");
     });
