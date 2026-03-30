@@ -7,8 +7,12 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
-import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
+import {
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelGroup,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
 import { useState } from "react";
 
 export const Controlled = () => {
@@ -30,14 +34,7 @@ export const Controlled = () => {
           </FlexItem>
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
-              <Button
-                appearance="transparent"
-                aria-label="close panel"
-                style={{ marginLeft: "auto" }}
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton onClick={() => setOpen(false)} />
               <H2 id={headingId}>Section Title</H2>
               <Text>Content for the primary side panel</Text>
             </StackLayout>

@@ -12,13 +12,16 @@ import {
 } from "@salt-ds/core";
 import {
   ChattingIcon,
-  CloseIcon,
   HelpCircleIcon,
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
-import { useState } from "react";
+import {
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelGroup,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
 
 const DesktopAppHeader = () => {
   return (
@@ -66,11 +69,10 @@ const DesktopAppHeader = () => {
 };
 
 export const WithAppHeader = () => {
-  const [open, setOpen] = useState(false);
   const headingId = useId();
 
   return (
-    <SidePanelGroup open={open} onOpenChange={setOpen}>
+    <SidePanelGroup>
       <BorderLayout
         style={{
           position: "relative",
@@ -98,14 +100,7 @@ export const WithAppHeader = () => {
         <BorderItem position="east">
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
-              <Button
-                aria-label="close panel"
-                appearance="transparent"
-                onClick={() => setOpen(false)}
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
               <H2 id={headingId}>Help & support</H2>
               <Text>
                 The content shown here is for illustrative purposes and does not

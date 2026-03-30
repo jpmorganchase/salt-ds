@@ -21,14 +21,10 @@ import {
   TR,
   useId,
 } from "@salt-ds/core";
-import {
-  CloseIcon,
-  GithubIcon,
-  HelpCircleIcon,
-  StackoverflowIcon,
-} from "@salt-ds/icons";
+import { GithubIcon, HelpCircleIcon, StackoverflowIcon } from "@salt-ds/icons";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelGroup,
   type SidePanelGroupProps,
   type SidePanelProps,
@@ -53,12 +49,49 @@ const FormFieldExample = () => (
   </FormField>
 );
 
-export const Left: StoryFn<SidePanelGroupProps> = (args) => {
-  const [open, setOpen] = useState(false);
+export const Default: StoryFn<SidePanelGroupProps> = (args) => {
   const headingId = useId();
 
   return (
-    <SidePanelGroup {...args} open={open} onOpenChange={setOpen}>
+    <SidePanelGroup {...args}>
+      <FlexLayout
+        style={{
+          height: "100vh",
+        }}
+      >
+        <FlexItem grow={1} padding={1}>
+          <SidePanelTrigger>
+            <Button>Open Right Panel</Button>
+          </SidePanelTrigger>
+        </FlexItem>
+        <SidePanel aria-labelledby={headingId}>
+          <StackLayout align="start" gap={1}>
+            <SidePanelCloseButton />
+            <H2 id={headingId}>Section Title</H2>
+            <Text>
+              This placeholder text is provided to illustrate how content will
+              appear within the component. The sentences are intended for
+              demonstration only and do not convey specific information. Generic
+              examples like this help review layout, spacing, and overall
+              design. Adjust the wording as needed to fit your use case or
+              display requirements.
+            </Text>
+            {Array.from({ length: 7 }, (_, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
+              <FormFieldExample key={index} />
+            ))}
+          </StackLayout>
+        </SidePanel>
+      </FlexLayout>
+    </SidePanelGroup>
+  );
+};
+
+export const Left: StoryFn<SidePanelGroupProps> = (args) => {
+  const headingId = useId();
+
+  return (
+    <SidePanelGroup {...args}>
       <FlexLayout
         style={{
           height: "100vh",
@@ -67,14 +100,7 @@ export const Left: StoryFn<SidePanelGroupProps> = (args) => {
       >
         <SidePanel aria-labelledby={headingId} position="left">
           <StackLayout align="start" gap={1}>
-            <Button
-              aria-label="Close"
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton />
             <H2 id={headingId}>Section Title</H2>
             <Text>
               This placeholder text is provided to illustrate how content will
@@ -100,7 +126,7 @@ export const Left: StoryFn<SidePanelGroupProps> = (args) => {
   );
 };
 
-export const Right: StoryFn<SidePanelGroupProps> = (args) => {
+export const Controlled: StoryFn<SidePanelGroupProps> = (args) => {
   const [open, setOpen] = useState(false);
   const headingId = useId();
 
@@ -118,14 +144,7 @@ export const Right: StoryFn<SidePanelGroupProps> = (args) => {
         </FlexItem>
         <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout align="start" gap={1}>
-            <Button
-              appearance="transparent"
-              aria-label="Close"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton onClick={() => setOpen(false)} />
             <H2 id={headingId}>Section Title</H2>
             <Text>
               This placeholder text is provided to illustrate how content will
@@ -176,14 +195,7 @@ export const ManualTrigger: StoryFn<SidePanelProps> = (args) => {
           aria-labelledby={headingId}
         >
           <StackLayout align="start" gap={1}>
-            <Button
-              appearance="transparent"
-              aria-label="Close"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton onClick={() => setOpen(false)} />
             <H2 id={headingId}>Manual Trigger Link</H2>
             <Text>
               This example shows a trigger outside SidePanelGroup. The user
@@ -197,9 +209,6 @@ export const ManualTrigger: StoryFn<SidePanelProps> = (args) => {
 };
 
 export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
-  const [openPrimary, setOpenPrimary] = useState(false);
-  const [openSecondary, setOpenSecondary] = useState(false);
-  const [openTertiary, setOpenTertiary] = useState(false);
   const primaryHeadingId = useId();
   const secondaryHeadingId = useId();
   const tertiaryHeadingId = useId();
@@ -207,24 +216,13 @@ export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
   return (
     <StackLayout gap={2} style={{ padding: "16px" }}>
       <FlexLayout gap={1}>
-        <SidePanelGroup
-          {...args}
-          open={openPrimary}
-          onOpenChange={setOpenPrimary}
-        >
+        <SidePanelGroup {...args}>
           <SidePanelTrigger>
             <Button>Toggle Primary Panel</Button>
           </SidePanelTrigger>
           <SidePanel variant="primary" aria-labelledby={primaryHeadingId}>
             <StackLayout align="start" gap={1}>
-              <Button
-                appearance="transparent"
-                aria-label="Close"
-                onClick={() => setOpenPrimary(false)}
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
               <H2 id={primaryHeadingId}>Primary Variant</H2>
               <Text>
                 This panel uses the primary variant, which is the default
@@ -235,20 +233,13 @@ export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
             </StackLayout>
           </SidePanel>
         </SidePanelGroup>
-        <SidePanelGroup open={openSecondary} onOpenChange={setOpenSecondary}>
+        <SidePanelGroup>
           <SidePanelTrigger>
             <Button>Toggle Secondary Panel</Button>
           </SidePanelTrigger>
           <SidePanel variant="secondary" aria-labelledby={secondaryHeadingId}>
             <StackLayout align="start" gap={1}>
-              <Button
-                appearance="transparent"
-                aria-label="Close"
-                onClick={() => setOpenSecondary(false)}
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
               <H2 id={secondaryHeadingId}>Secondary Variant</H2>
               <Text>
                 This panel uses the secondary variant with a different
@@ -259,20 +250,13 @@ export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
             </StackLayout>
           </SidePanel>
         </SidePanelGroup>
-        <SidePanelGroup open={openTertiary} onOpenChange={setOpenTertiary}>
+        <SidePanelGroup>
           <SidePanelTrigger>
             <Button>Toggle Tertiary Panel</Button>
           </SidePanelTrigger>
           <SidePanel variant="tertiary" aria-labelledby={tertiaryHeadingId}>
             <StackLayout align="start" gap={1}>
-              <Button
-                appearance="transparent"
-                aria-label="Close"
-                onClick={() => setOpenTertiary(false)}
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
               <H2 id={tertiaryHeadingId}>Tertiary Variant</H2>
               <Text>
                 This panel uses the tertiary variant with yet another background
@@ -335,17 +319,15 @@ const tableData: TeamMember[] = [
 ];
 
 export const WithTable: StoryFn<SidePanelGroupProps> = (args) => {
-  const [open, setOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
 
   const handleRowClick = (row: TeamMember) => {
     setSelectedRow(row);
-    setOpen(true);
   };
 
   return (
-    <SidePanelGroup {...args} open={open} onOpenChange={setOpen}>
+    <SidePanelGroup {...args}>
       <FlexLayout
         style={{
           height: "100vh",
@@ -398,14 +380,7 @@ export const WithTable: StoryFn<SidePanelGroupProps> = (args) => {
 
         <SidePanel position="right" aria-labelledby={panelHeadingId}>
           <StackLayout align="start" gap={3}>
-            <Button
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-              aria-label="Close"
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton />
             {selectedRow && (
               <>
                 <H2 id={panelHeadingId}>Employee Details</H2>
@@ -516,11 +491,10 @@ const DesktopAppHeader = ({ items }: { items?: string[] }) => {
 
 export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
   const items = ["Home", "About", "Services", "Contact", "Blog"];
-  const [open, setOpen] = useState(false);
   const headingId = useId();
 
   return (
-    <SidePanelGroup {...args} open={open} onOpenChange={setOpen}>
+    <SidePanelGroup {...args}>
       <BorderLayout>
         <BorderItem position="north">
           <DesktopAppHeader items={items} />
@@ -551,14 +525,7 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
         >
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
-              <Button
-                aria-label="Close"
-                appearance="transparent"
-                onClick={() => setOpen(false)}
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
               <H2 id={headingId}>Help & support</H2>
               <Text>
                 The content shown here is for illustrative purposes and does not

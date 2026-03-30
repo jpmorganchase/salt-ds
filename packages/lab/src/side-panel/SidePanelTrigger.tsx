@@ -6,10 +6,9 @@ import {
   isValidElement,
   type MouseEvent,
   type ReactNode,
-  useContext,
   useRef,
 } from "react";
-import { SidePanelGroupContext } from "./SidePanelGroupContext";
+import { useSidePanelGroup } from "./SidePanelGroupContext";
 
 export interface SidePanelTriggerProps
   extends Omit<
@@ -24,28 +23,27 @@ export const SidePanelTrigger = forwardRef<
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
   const { children, onClick, ...rest } = props;
-  const sidePanelGroup = useContext(SidePanelGroupContext);
+  const { open, activeTriggerId, setOpen, activateTrigger, panelId } =
+    useSidePanelGroup();
   const triggerRef = useRef<HTMLElement | null>(null);
   const triggerId = useId();
   const handleRef = useForkRef(triggerRef, ref);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (sidePanelGroup && triggerRef.current) {
-      // Contextual behavior:
-      // - If this trigger is already active and panel is open => close panel
-      // - If this trigger is inactive or different trigger is active => activate this trigger
-      const isCurrentTrigger =
-        sidePanelGroup.open && sidePanelGroup.activeTriggerId === triggerId;
-
-      if (isCurrentTrigger) {
-        // Same trigger while open => close
-        sidePanelGroup.setOpen(false);
-      } else if (triggerId) {
-        // Different trigger or closed => activate and open
-        sidePanelGroup.activateTrigger(triggerId, triggerRef);
-      }
-    }
     onClick?.(event);
+
+    if (!triggerRef.current || !triggerId) {
+      return;
+    }
+
+    const isActiveTriggerOpen = open && activeTriggerId === triggerId;
+
+    if (isActiveTriggerOpen) {
+      setOpen(false);
+      return;
+    }
+
+    activateTrigger(triggerId, triggerRef);
   };
 
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
@@ -60,11 +58,8 @@ export const SidePanelTrigger = forwardRef<
     children.props,
   );
 
-  if (sidePanelGroup) {
-    mergedProps["aria-expanded"] =
-      sidePanelGroup.open && sidePanelGroup.activeTriggerId === triggerId;
-    mergedProps["aria-controls"] = sidePanelGroup.panelId;
-  }
+  mergedProps["aria-expanded"] = open && activeTriggerId === triggerId;
+  mergedProps["aria-controls"] = panelId;
 
   return cloneElement(children, {
     ...mergedProps,

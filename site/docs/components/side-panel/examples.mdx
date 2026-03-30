@@ -43,3 +43,18 @@ A side panel can be triggered via a page-level utility, for example a control in
 A side panel can be also triggered via a control embedded within the main content area, usually scoped to a specific component or subset of data (e.g., a grid toolbar button, row‑level action, card menu):
 
 <LivePreview componentName="side-panel" exampleName="WithTable" />
+
+## Complex layouts
+
+For complex layouts where you need more control over the panel state and trigger behavior, you can use manual trigger management instead of `SidePanelGroup`. This approach allows you to:
+
+- Place the trigger and panel in different layout areas
+- Manage panel state independently with your own state management
+- Handle multiple panels with custom logic
+- Integrate with other components that control the panel state
+
+When using manual triggers, provide the `open` and `onOpenChange` props directly to `SidePanel`, and set `aria-expanded` and `aria-controls` attributes on your trigger button. Additionally, pass a `triggerRef` to the panel so focus returns to the trigger when the panel closes.
+
+<LivePreview componentName="side-panel" exampleName="ManualTrigger" />
+
+
