@@ -9,9 +9,12 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
-import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
-import { useState } from "react";
+import {
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelGroup,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
 
 const DetailsExample = () => (
   <>
@@ -39,11 +42,10 @@ const DetailsExample = () => (
 );
 
 export const RightPanel = () => {
-  const [open, setOpen] = useState(false);
   const headingId = useId();
 
   return (
-    <SidePanelGroup open={open} onOpenChange={setOpen}>
+    <SidePanelGroup>
       <FlexLayout
         style={{
           height: 300,
@@ -51,19 +53,12 @@ export const RightPanel = () => {
       >
         <FlexItem grow={1} padding={1}>
           <SidePanelTrigger>
-            <Button>{open ? "Close" : "Open"} Right Panel</Button>
+            <Button>Open Right Panel</Button>
           </SidePanelTrigger>
         </FlexItem>
         <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout>
-            <Button
-              appearance="transparent"
-              aria-label="close panel"
-              onClick={() => setOpen(false)}
-              style={{ marginLeft: "auto" }}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
+            <SidePanelCloseButton />
             <H2 id={headingId}>Use case details</H2>
 
             {Array.from({ length: 2 }, (_, index) => (
