@@ -28,7 +28,7 @@ export const SidePanelCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
         return;
       }
 
-      setOpen(false);
+      setOpen?.(false);
     };
 
     return (
