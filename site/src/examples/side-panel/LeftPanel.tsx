@@ -64,11 +64,17 @@ export const LeftPanel = () => {
               </RadioButtonGroup>
               <FormFieldHelperText>Select one that applies</FormFieldHelperText>
             </FormField>
-            <FlexLayout>
-              <Button sentiment="accented" appearance="bordered">
+            <FlexLayout gap={1}>
+              <Button
+                sentiment="accented"
+                appearance="bordered"
+                style={{ width: "100%" }}
+              >
                 Reset
               </Button>
-              <Button sentiment="accented">Update</Button>
+              <Button sentiment="accented" style={{ width: "100%" }}>
+                Update
+              </Button>
             </FlexLayout>
           </StackLayout>
         </SidePanel>
