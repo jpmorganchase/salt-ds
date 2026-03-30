@@ -24,7 +24,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    */
   position?: "right" | "left";
   /**
-   * Which element to focus when the panel opens. Index (0 = first tabbable) or a ref.
+   * Which element to focus when the panel opens.
    * @default 0
    */
   initialFocus?: number | MutableRefObject<HTMLElement | null>;
@@ -33,7 +33,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    */
   open?: boolean;
   /**
-   * Callback when open state should change (e.g. Escape key pressed).
+   * Callback when open state should change
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**

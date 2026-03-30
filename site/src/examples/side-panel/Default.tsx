@@ -11,7 +11,6 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
   SidePanelGroup,
@@ -23,7 +22,6 @@ import { type ChangeEventHandler, useState } from "react";
 const variantOptions = ["primary", "secondary", "tertiary"];
 
 export const Default = () => {
-  const [open, setOpen] = useState(false);
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const headingId = useId();
 
@@ -33,8 +31,8 @@ export const Default = () => {
   };
 
   return (
-    <StackLayout>
-      <SidePanelGroup open={open} onOpenChange={setOpen}>
+    <StackLayout align="center">
+      <SidePanelGroup>
         <FlexLayout
           style={{
             height: 200,
@@ -42,25 +40,18 @@ export const Default = () => {
         >
           <FlexItem grow={1} padding={1}>
             <SidePanelTrigger>
-              <Button>{open ? "Close" : "Open"} side panel</Button>
+              <Button>Toggle side panel</Button>
             </SidePanelTrigger>
           </FlexItem>
           <SidePanel aria-labelledby={headingId} variant={variant}>
             <StackLayout align="start" gap={1}>
-              <Button
-                appearance="transparent"
-                aria-label="close panel"
-                onClick={() => setOpen(false)}
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
               <H2 id={headingId}>Section Title</H2>
               <Text>Content for the primary side panel</Text>
             </StackLayout>
           </SidePanel>
         </FlexLayout>
       </SidePanelGroup>
+
       <StackLayout>
         <FormField>
           <FormFieldLabel>Variant</FormFieldLabel>

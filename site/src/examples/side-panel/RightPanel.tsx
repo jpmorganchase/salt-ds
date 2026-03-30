@@ -70,11 +70,17 @@ export const RightPanel = () => {
               // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
               <DetailsExample key={index} />
             ))}
-            <FlexLayout>
-              <Button appearance="bordered" sentiment="accented">
+            <FlexLayout gap={1}>
+              <Button
+                appearance="bordered"
+                sentiment="accented"
+                style={{ width: "100%" }}
+              >
                 Cancel
               </Button>
-              <Button sentiment="accented">Review</Button>
+              <Button sentiment="accented" style={{ width: "100%" }}>
+                Review
+              </Button>
             </FlexLayout>
           </StackLayout>
         </SidePanel>
