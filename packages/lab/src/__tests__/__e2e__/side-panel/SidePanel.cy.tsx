@@ -122,7 +122,7 @@ describe("GIVEN a SidePanel component", () => {
 
         cy.findByRole("button", { name: "Open Left Panel" }).click();
 
-        cy.focused().should("have.text", "Close");
+        cy.findByRole("button", { name: "Close" }).should("have.focus");
       });
 
       it("AND user tabs through content and presses Escape, THEN panel closes and focus returns to trigger", () => {
@@ -130,7 +130,7 @@ describe("GIVEN a SidePanel component", () => {
 
         cy.findByRole("button", { name: "Open Left Panel" }).click();
 
-        cy.focused().should("have.text", "Close");
+        cy.findByRole("button", { name: "Close" }).should("have.focus");
 
         cy.realPress("Tab");
         cy.findByRole("region").should("be.visible");
@@ -152,7 +152,7 @@ describe("GIVEN a SidePanel component", () => {
 
         cy.findByRole("button", { name: "Open Left Panel" }).click();
 
-        cy.focused().should("have.text", "Close");
+        cy.findByRole("button", { name: "Close" }).should("have.focus");
 
         cy.realPress("Tab");
         cy.realPress("Tab");

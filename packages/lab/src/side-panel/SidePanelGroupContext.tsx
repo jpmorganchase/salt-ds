@@ -2,14 +2,28 @@ import { createContext } from "@salt-ds/core";
 import type { MutableRefObject } from "react";
 
 export interface SidePanelGroupContextValue {
+  /**
+   * Whether the side panel is currently open.
+   */
   open: boolean;
+  /**
+   * Function to set the open state of the panel.
+   */
   setOpen: (open: boolean) => void;
+  /**
+   * ID of the panel.
+   */
   panelId?: string;
+  /**
+   * ID of the active trigger, used to identify which trigger should receive focus when the panel closes.
+   */
   activeTriggerId?: string;
+  /**
+   * DOM reference of the active trigger, used to restore focus when the panel closes.
+   */
   triggerRef?: MutableRefObject<HTMLElement | null>;
   /**
-   * Atomically activate a trigger: sets active trigger ID, keeps panel open,
-   * and registers the trigger's ref for focus management.
+   * Activates a trigger: sets its ID and ref, keeps the panel open, and prepares for focus restoration on close.
    */
   activateTrigger: (
     triggerId: string,
