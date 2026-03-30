@@ -2,7 +2,7 @@ import { SidePanel } from "@salt-ds/lab";
 import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
 
-const { Left, Right, ManualTrigger, Variants, WithTable } =
+const { Left, Default, ManualTrigger, Variants, WithTable } =
   composeStories(sidePanel);
 
 describe("GIVEN a SidePanel component", () => {
@@ -20,10 +20,10 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region").should("not.exist");
     });
 
-    it("WHEN Right panel is opened, THEN displays with correct position class", () => {
-      cy.mount(<Right />);
+    it("WHEN Default panel is opened, THEN displays with correct position class", () => {
+      cy.mount(<Default />);
 
-      cy.findByRole("button", { name: "Open Right Panel" }).click();
+      cy.findByRole("button", { name: "Open Default Panel" }).click();
 
       cy.findByRole("region")
         .should("have.class", "saltSidePanel-right")

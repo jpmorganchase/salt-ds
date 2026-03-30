@@ -61,7 +61,7 @@ export const Default: StoryFn<SidePanelGroupProps> = (args) => {
       >
         <FlexItem grow={1} padding={1}>
           <SidePanelTrigger>
-            <Button>Open Right Panel</Button>
+            <Button>Open Default Panel</Button>
           </SidePanelTrigger>
         </FlexItem>
         <SidePanel aria-labelledby={headingId}>
