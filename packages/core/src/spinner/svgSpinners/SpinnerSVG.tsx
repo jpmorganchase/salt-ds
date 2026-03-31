@@ -75,7 +75,7 @@ export const SpinnerSVG = ({
           d={`M${width - strokeWidth / 2},${
             width / 2
           } a${radius},${radius} 0 1,0 -${width - strokeWidth},0`}
-          stroke="var(--saltSpinner-gradient-color, var(--salt-accent-background)"
+          stroke="var(--saltSpinner-gradient-color, var(--salt-sentiment-accent-background)"
           strokeWidth="var(--spinner-strokeWidth)"
           fill="none"
         />

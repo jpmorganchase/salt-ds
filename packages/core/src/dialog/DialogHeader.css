@@ -50,5 +50,5 @@
   left: 0;
   bottom: var(--salt-spacing-300);
   width: var(--salt-size-bar);
-  background: var(--salt-accent-background);
+  background: var(--salt-sentiment-accent-background);
 }

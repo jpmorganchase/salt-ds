@@ -233,7 +233,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         />
         <CheckboxIcon
           checked={checked}
-          disabled={disabled}
           readOnly={readOnly}
           indeterminate={indeterminate}
           validationStatus={validationStatus}

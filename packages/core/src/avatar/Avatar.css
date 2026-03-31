@@ -31,7 +31,7 @@
 }
 
 .saltAvatar-accent {
-  --avatar-background: var(--salt-accent-background);
+  --avatar-background: var(--salt-sentiment-accent-background);
 }
 
 .saltAvatar-category-1 {
