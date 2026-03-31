@@ -364,6 +364,7 @@ export const WithTable: StoryFn<SidePanelGroupProps> = (args) => {
                     <TD>
                       <SidePanelTrigger>
                         <Button
+                          aria-label={`View details for ${row.name}`}
                           onClick={() => handleRowClick(row)}
                           style={{ minWidth: "auto" }}
                         >
