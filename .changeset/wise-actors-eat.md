@@ -7,7 +7,7 @@
 The `options` prop provides `ariaLive` which can be set to either `polite` or `assertive` depending on the use case.
 
 ```diff
-+ const { announce } = useAriaAnnouncer();
+const { announce } = useAriaAnnouncer();
 - announce("message", 500)
 + announce("message", { ariaLive: "polite" });
 ```
@@ -18,6 +18,6 @@ Messages are queued and remain in the DOM for 300 msecs before being removed, ne
 
 By default using the options prop will default to `polite` announcements.
 
-In addition both `Spinner` and `ContentStatus` have been updated to default to `polite` announcements, to meet firmwide accessibility standards.
+In addition `Spinner`, `Pagination` and `ContentStatus` have been updated to default to `polite` announcements, to meet firmwide accessibility standards.
 
 As part of the refactor, fixed announcements triggered during component unmount/cleanup (e.g. `Spinner` `completionAnnouncement`) being blocked.

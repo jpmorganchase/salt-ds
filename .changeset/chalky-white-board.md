@@ -2,6 +2,8 @@
 "@salt-ds/lab": patch
 ---
 
-A new package has been created for date components and related utilities: `@salt-ds/date-components`. This package is intended to be a long-term/stable home for these components, which will shortly be moved to a non-alpha/stable state.
-To avoid a breaking change, `@salt-ds/lab` still re-exports these components for now (and logs a deprecation warning in development).
-New code should import from `@salt-ds/date-components`.
+Date components and related utilities have been extracted into a new package: `@salt-ds/date-components`. This package is intended to be the long-term home for these components.
+
+To avoid a breaking change while the date components remain in release-candidate status, `@salt-ds/lab` continues to re-export the same APIs for now. Importing these APIs from `@salt-ds/lab` will emit a deprecation warning in development.
+
+New code should import directly from `@salt-ds/date-components`. Once `@salt-ds/date-components` is marked stable, the date component exports will be removed from `@salt-ds/lab`.

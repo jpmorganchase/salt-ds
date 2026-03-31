@@ -2,27 +2,34 @@
 "@salt-ds/date-components": minor
 ---
 
-New package `@salt-ds/date-components` has been added to contain shared date-related components such as `Calendar`, `CalendarNavigation`, and `DateInput`.
-To avoid a breaking change, `@salt-ds/lab` still re-exports these components for now (and logs a deprecation warning in development). New code should import from `@salt-ds/date-components`.
+## New package: `@salt-ds/date-components`
 
-Calendar updates
+A new package, `@salt-ds/date-components`, has been introduced as the long-term home for shared date-related components and utilities (for example `Calendar`, `CalendarNavigation`, and `DateInput`).
 
-- fixed styling issues with selected range border.
-- fix Calendar dropdown spacing that caused an ellipsis to appear at mobile breakpoints.
-- improved screenreader support.
-- type improvements
-  - remove un-used code/types and simplified structure of selection types.
-  - simplify types, generics for usage of date adapters are no longer essentially required unless you are creating a custom date adapter.
-- Calendar provides default screen-reader announcements by default.
-- custom live announcements can be configured through a `createAnnouncement` factory method.
+To avoid a breaking change while these components remain in release-candidate status, `@salt-ds/lab` continues to re-export the same APIs for now and will emit a deprecation warning in development. New code should import directly from `@salt-ds/date-components`.
 
-```
-import { Calendar } from "@salt-ds/lab";
-import type { CreateAnnouncement } from "@salt-ds/lab";
+## Calendar
 
-const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announcementType, state, dateAdapter) => {
-  switch (minFocusableDateExceeded) {
-    case "dateSelected":
+- Fixed styling issues with the selected range border.
+- Fixed Calendar dropdown spacing that caused an ellipsis to appear at mobile breakpoints.
+- Improved screen reader support.
+- Type improvements:
+  - Removed unused code/types and simplified selection type structures.
+  - Simplified adapter generics; consumers typically no longer need to provide generics unless implementing a custom date adapter.
+- Calendar now provides default screen reader announcements.
+- Custom live announcements can be configured via the `createAnnouncement` factory.
+
+```tsx
+import { Calendar } from "@salt-ds/date-components";
+import type { CreateAnnouncement } from "@salt-ds/date-components";
+
+const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (
+  announcementType,
+  state,
+  dateAdapter,
+) => {
+  switch (announcementType) {
+    case "minFocusableDateExceeded":
       return `Minimum date exceeded ${dateAdapter.format(state.selectedDate)}`;
     case "maxFocusableDateExceeded":
       return `Maximum date exceeded ${dateAdapter.format(state.selectedDate)}`;
@@ -35,15 +42,13 @@ const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announc
   }
 };
 
-<Calendar
-  createAnnouncement={customCreateAnnouncement}
-  timezone="UTC"
-/>
+<Calendar createAnnouncement={customCreateAnnouncement} timezone="UTC" />;
 ```
 
-- `CalendarNavigation` has new props `PreviousButtonProps` and `NextButtonProps` to pass props to the navigation buttons.
-  These props can be used in place of `onNavigateNext`, `disableNavigateNext` and `onNavigatePrevious`, `disableNavigatePrevious`.
-- `CalendarNavigation` has removed props `onMonthSelect` and `onYearSelect`, use `MonthDropdownProps` and `YearDropdownProps` instead.
+### `CalendarNavigation` API updates
+
+- Added `PreviousButtonProps` and `NextButtonProps` to pass props to the navigation buttons. These can be used instead of `onNavigateNext`, `disableNavigateNext`, `onNavigatePrevious`, and `disableNavigatePrevious`.
+- Removed `onMonthSelect` and `onYearSelect`. Use `MonthDropdownProps` and `YearDropdownProps` instead.
 
 ```diff
 <CalendarNavigation
@@ -70,5 +75,16 @@ const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (announc
 />
 ```
 
-- `CalendarNavigation` now adds tooltips to out of range dates.
-- when a Calendar has `minDate` or `maxDate` and the user navigates to a month outside of that range, the Calendar will now automatically navigate back to the closest valid month.
+- `CalendarNavigation` now adds tooltips to out-of-range dates.
+- When a Calendar has `minDate` or `maxDate` and the user navigates outside that range, it will automatically navigate back to the closest valid month.
+
+## DateInput
+
+- Accessibility improvements for `DateInputSingle` and `DateInputRange`.
+- Day.js timezone improvements for `DateInputSingle` and `DateInputRange`.
+- Added `aria-invalid` to `DateInputSingle` and `DateInputRange` input elements when an error is present.
+
+## DatePicker
+
+- Fixed a bug where a disabled picker could still open by clicking the input
+- Improved screen reader support
