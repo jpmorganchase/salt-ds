@@ -107,13 +107,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
           if (Date.now() - startTime > announcerTimeout) {
             // The announcer will stop after `announcerTimeout` time
             announce(
-              `${ariaLabel} is still in progress, but will no longer announce.`,
-              { ariaLive: "assertive" },
+              `${ariaLabel} is still in progress, but will no longer announce.`
             );
             interval && clearInterval(interval);
             return;
           }
-          announce(ariaLabel, { ariaLive: "assertive" });
+          announce(ariaLabel);
         }, announcerInterval);
 
       return () => {
@@ -121,7 +120,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
 
         interval && clearInterval(interval);
         if (completionAnnouncement) {
-          announce(completionAnnouncement, { ariaLive: "assertive" });
+          announce(completionAnnouncement);
         }
       };
     }, [
