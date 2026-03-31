@@ -3970,7 +3970,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/date-adapters@workspace:packages/date-adapters":
+"@salt-ds/date-adapters@workspace:^, @salt-ds/date-adapters@workspace:packages/date-adapters":
   version: 0.0.0-use.local
   resolution: "@salt-ds/date-adapters@workspace:packages/date-adapters"
   peerDependencies:
@@ -3992,6 +3992,34 @@ __metadata:
     luxon:
       optional: true
     moment:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/date-components@workspace:*, @salt-ds/date-components@workspace:packages/date-components":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/date-components@workspace:packages/date-components"
+  dependencies:
+    "@date-fns/tz": "npm:^1.4.1"
+    "@floating-ui/react": "npm:^0.26.28"
+    "@salt-ds/core": "workspace:^"
+    "@salt-ds/date-adapters": "workspace:^"
+    "@salt-ds/icons": "workspace:^"
+    "@salt-ds/styles": "workspace:*"
+    "@salt-ds/window": "workspace:*"
+    "@types/luxon": "npm:^3.7.1"
+    clsx: "npm:^2.0.0"
+    date-fns: "npm:^4.1.0"
+    dayjs: "npm:^1.11.20"
+    luxon: "npm:^3.7.2"
+    moment: "npm:^2.30.1"
+    moment-timezone: "npm:^0.6.1"
+  peerDependencies:
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
+  peerDependenciesMeta:
+    "@types/react":
       optional: true
   languageName: unknown
   linkType: soft
@@ -4057,23 +4085,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/lab@workspace:packages/lab"
   dependencies:
-    "@date-fns/tz": "npm:^1.4.1"
     "@floating-ui/react": "npm:^0.26.28"
     "@salt-ds/core": "workspace:^"
+    "@salt-ds/date-components": "workspace:*"
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
-    "@types/luxon": "npm:^3.7.1"
     "@types/react-window": "npm:^1.8.2"
     clipboard-copy: "npm:^4.0.1"
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
-    date-fns: "npm:^4.1.0"
-    dayjs: "npm:^1.11.20"
     deepmerge: "npm:^4.2.2"
-    luxon: "npm:^3.7.2"
-    moment: "npm:^2.30.1"
-    moment-timezone: "npm:^0.6.1"
     react-color: "npm:^2.19.3"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"

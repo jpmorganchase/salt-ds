@@ -8,7 +8,7 @@ import {
   type DateInputRangeDetails,
   type DateRangeSelection,
   LocalizationProvider,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 import {
   type ReactElement,

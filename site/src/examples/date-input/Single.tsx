@@ -2,7 +2,7 @@ import {
   DateInputSingle,
   type DateInputSingleProps,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { ReactElement } from "react";
 
 export const Single = (): ReactElement => {

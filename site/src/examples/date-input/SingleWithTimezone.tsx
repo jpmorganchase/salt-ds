@@ -19,7 +19,7 @@ import {
   type DateInputSingleProps,
   LocalizationProvider,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import {
   type ReactElement,
   type SyntheticEvent,
