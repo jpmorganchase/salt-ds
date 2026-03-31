@@ -460,7 +460,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (timezone === "default") {
       return date;
     }
-    // In Salt Lab, user-typed dates are parsed as *naive* local wall-clock values (no timezone).
+    // In Salt components, user-typed dates are parsed as *naive* local wall-clock values (no timezone).
     // `setTimezone` is then used to reinterpret that wall-clock time in the chosen IANA timezone.
     // Example: user enters "05 Jan 2025" which corresponds to 2025-01-05 00:00 *in the selected
     // timezone*. For America/New_York this must serialize to 2025-01-05T05:00:00.000Z.
