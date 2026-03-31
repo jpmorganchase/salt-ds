@@ -10,7 +10,9 @@ data:
 
 ## Best practices
 
-- Ensure the toggletip's trigger button has a meaningful accessible name so screen reader users understand what it relates to. This can be achieved using aria-label alone or aria-label and aria-labelledby referencing the toggletip's own ID and the associated label's ID to combine them into a descriptive name.
+- Ensure the toggletip's trigger button has a meaningful accessible name so screen reader users understand what it relates to.
+  - Use an `aria-label` when there's no visible label or element whose ID you can reference e.g. `aria-label="More info about email address"`.
+  - Use `aria-labelledby` when there's a visible label or related element already on the page. Pass its ID and the ID of the trigger (you will need to add one) to `aria-labelledby` so the screen reader constructs the name from existing visible text, which also keeps things in sync if that text ever changes.
 - Don't use a timer to automatically dismiss the toggletip.
 - Ensure the toggletip trigger is visually close to the element it describes so users can easily associate them.
 
