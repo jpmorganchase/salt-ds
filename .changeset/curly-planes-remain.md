@@ -1,5 +1,5 @@
 ---
-"@salt-ds/date-components": patch
+"@salt-ds/date-components": minor
 ---
 
 New package `@salt-ds/date-components` has been added to contain shared date-related components such as `Calendar`, `CalendarNavigation`, and `DateInput`.
