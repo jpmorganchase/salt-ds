@@ -13,7 +13,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   LocalizationProvider,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import "dayjs/locale/en";
 import moment from "moment";

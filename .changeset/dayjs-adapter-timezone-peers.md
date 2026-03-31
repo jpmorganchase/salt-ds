@@ -1,9 +1,9 @@
 ---
-"@salt-ds/lab": patch
+"@salt-ds/date-components": patch
 "@salt-ds/date-adapters": patch
 ---
 
-Update date library dependency versions used by date picker/date input stories and tests.
+Update date library dependency versions used by date components and date-adapters.
 
 Package.json dependency range updates:
 

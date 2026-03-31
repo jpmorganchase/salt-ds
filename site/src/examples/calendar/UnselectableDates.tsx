@@ -4,7 +4,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment";

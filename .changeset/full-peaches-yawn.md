@@ -1,5 +1,5 @@
 ---
-"@salt-ds/lab": patch
+"@salt-ds/date-components": patch
 ---
 
 Date picker updates

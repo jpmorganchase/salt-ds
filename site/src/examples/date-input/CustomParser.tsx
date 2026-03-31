@@ -13,7 +13,7 @@ import {
   type DateInputSingleProps,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ReactElement, useCallback, useState } from "react";
 
 export const CustomParser = (): ReactElement => {

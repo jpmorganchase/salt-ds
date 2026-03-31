@@ -11,7 +11,7 @@ import {
   CalendarNavigation,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ReactElement, useState } from "react";
 
 function selectMultiselectSingle(

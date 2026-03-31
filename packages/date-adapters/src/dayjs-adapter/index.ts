@@ -142,7 +142,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     // in the target timezone.
     // Example: 2025-01-05T00:00:00.000Z in America/New_York is 2025-01-04 19:00 (NY)
     // and the epoch should remain 2025-01-05T00:00:00.000Z.
-    if (value && value.endsWith("Z")) {
+    if (value?.endsWith("Z")) {
       if (this.dayjs.utc) {
         return this.dayjs.utc(value).tz(resolvedTimezone);
       }

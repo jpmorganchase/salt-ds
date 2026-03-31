@@ -25,18 +25,18 @@ Avoid using the `DateInputSingle` component if your application requires users t
 
 ### DateInputSingle
 
-To import `DateInputSingle` from the Salt lab package, use:
+To import `DateInputSingle` from the Salt date components package, use:
 
 ```js
-import { DateInputSingle } from "@salt-ds/lab";
+import { DateInputSingle } from "@salt-ds/date-components";
 ```
 
 ### DateInputRange
 
-To import `DateInputRange` from the Salt lab package, use:
+To import `DateInputRange` from the Salt date components package, use:
 
 ```js
-import { DateInputRange } from "@salt-ds/lab";
+import { DateInputRange } from "@salt-ds/date-components";
 ```
 
 ### Setting the date
@@ -50,7 +50,11 @@ Pass a date string (compatible with `new Date()`) via the `defaultValue` or `val
 ```tsx
 import { DateTime } from "luxon";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { LocalizationProvider, DateInputSingle, DateInputRange } from "@salt-ds/lab";
+import {
+  LocalizationProvider,
+  DateInputSingle,
+  DateInputRange,
+} from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
   <DateInputSingle
@@ -67,7 +71,11 @@ Pass a date object from your configured date framework via the `defaultDate` or 
 ```tsx
 import { DateTime } from "luxon";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { LocalizationProvider, DateInputSingle, DateInputRange } from "@salt-ds/lab";
+import {
+  LocalizationProvider,
+  DateInputSingle,
+  DateInputRange,
+} from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
   <DateInputSingle
