@@ -6,6 +6,7 @@ import {
   FlexLayout,
   H2,
   Input,
+  Link,
   StackLayout,
   Text,
   useId,
@@ -85,13 +86,18 @@ export const WithAppHeader = () => {
           <DesktopAppHeader />
         </BorderItem>
         <BorderItem position="center">
+          <FlexLayout padding={3}>
+            <Link href="#">Link 1</Link>
+            <Link href="#">Link 2</Link>
+            <Link href="#">Link 3</Link>
+          </FlexLayout>
           {Array.from({ length: 4 }, (_, index) => (
             <div
               // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
               key={index}
               style={{
-                padding: "var(--salt-spacing-400)",
-                margin: "var(--salt-spacing-400)",
+                padding: "var(--salt-spacing-300)",
+                margin: "var(--salt-spacing-200) var(--salt-spacing-300)",
                 backgroundColor: "var(--salt-container-secondary-background)",
               }}
             />
