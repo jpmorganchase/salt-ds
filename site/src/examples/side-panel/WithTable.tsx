@@ -101,6 +101,7 @@ export const WithTable = () => {
                         <Button
                           onClick={() => handleRowClick(row)}
                           style={{ minWidth: "auto" }}
+                          aria-label={`View details for ${row.name}`}
                         >
                           View Details
                         </Button>
