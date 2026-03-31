@@ -1,5 +1,5 @@
 ---
-"@salt-ds/date-adapters": patch
+"@salt-ds/date-adapters": minor
 ---
 
 - fixed type to allow for date framework based types in userland

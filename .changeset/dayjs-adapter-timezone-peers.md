@@ -1,6 +1,6 @@
 ---
 "@salt-ds/date-components": patch
-"@salt-ds/date-adapters": patch
+"@salt-ds/date-adapters": minor
 ---
 
 Update date library dependency versions used by date components and date-adapters.
