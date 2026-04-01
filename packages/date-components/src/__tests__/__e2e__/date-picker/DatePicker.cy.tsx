@@ -1,4 +1,4 @@
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -8,12 +8,13 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 
 const composedStories = composeStories(datePickerStories);
 
-const adapters: [AdapterDateFns, AdapterDayjs, AdapterLuxon, AdapterMoment] = [
-  new AdapterDateFns(),
-  new AdapterDayjs(),
-  new AdapterLuxon(),
-  new AdapterMoment(),
-];
+const adapters: [AdapterDateFnsTZ, AdapterDayjs, AdapterLuxon, AdapterMoment] =
+  [
+    new AdapterDateFnsTZ(),
+    new AdapterDayjs(),
+    new AdapterLuxon(),
+    new AdapterMoment(),
+  ];
 
 describe("GIVEN a DatePicker", () => {
   adapters.forEach((adapter) => {

@@ -1,5 +1,5 @@
 import type { SaltDateAdapter } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -12,7 +12,7 @@ import * as calendarStories from "@stories/calendar/calendar.stories";
 import "moment/dist/locale/es";
 
 // Initialize adapters
-const adapterDateFns = new AdapterDateFns();
+const adapterDateFnsTZ = new AdapterDateFnsTZ();
 const adapterDayjs = new AdapterDayjs();
 const adapterLuxon = new AdapterLuxon();
 const adapterMoment = new AdapterMoment();
@@ -36,7 +36,7 @@ adapterMoment.moment.updateLocale("es", {
 });
 
 // Create an array of adapters
-const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+const adapters = [adapterDateFnsTZ, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
   // Storybook wraps components in their own LocalizationProvider, so do not compose Stories

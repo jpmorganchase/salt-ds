@@ -107,7 +107,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
           if (Date.now() - startTime > announcerTimeout) {
             // The announcer will stop after `announcerTimeout` time
             announce(
-              `${ariaLabel} is still in progress, but will no longer announce.`
+              `${ariaLabel} is still in progress, but will no longer announce.`,
             );
             interval && clearInterval(interval);
             return;

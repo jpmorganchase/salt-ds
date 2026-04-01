@@ -2684,18 +2684,15 @@ export const SingleWithTimezone: StoryFn<DatePickerSingleProps> = ({
   ...args
 }) => {
   const { dateAdapter } = useLocalization();
-  const timezoneOptions =
-    dateAdapter.lib !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState<string>(defaultHelperText);
@@ -2877,18 +2874,15 @@ export const RangeWithTimezone: StoryFn<DatePickerRangeProps> = ({
   ...args
 }) => {
   const { dateAdapter } = useLocalization();
-  const timezoneOptions =
-    dateAdapter.lib !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
   );

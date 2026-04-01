@@ -2,7 +2,7 @@ import type {
   DateFrameworkType,
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -13,13 +13,12 @@ import {
   type DateRangeSelection,
 } from "@salt-ds/date-components";
 
-// Initialize adapters
-const adapterDateFns = new AdapterDateFns();
-const adapterDayjs = new AdapterDayjs();
-const adapterLuxon = new AdapterLuxon();
-const adapterMoment = new AdapterMoment();
-
-const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+const adapters = [
+  new AdapterDateFnsTZ(),
+  new AdapterDayjs(),
+  new AdapterLuxon(),
+  new AdapterMoment(),
+];
 
 function getAllDatesInRange(
   adapter: SaltDateAdapter,
