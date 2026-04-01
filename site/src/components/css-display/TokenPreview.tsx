@@ -53,7 +53,7 @@ export function TokenPreview({
   }, [swatchVersion, type]);
 
   if (type === "raw") {
-    return <Code>{formatTokenValue(value)}</Code>;
+    return <div className={styles.codeWrapper}><Code>{formatTokenValue(value)}</Code></div>;
   }
 
   return (

@@ -199,7 +199,7 @@ export function AllTokens() {
           </Dropdown>
         </FormField>
         <ToggleButtonGroup
-          style={{ flex: 0.5 }}
+          style={{ flex: 0 }}
           aria-label="Mode"
           value={mode}
           onChange={(event) => setMode(event.currentTarget.value as Mode)}

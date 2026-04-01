@@ -1,6 +1,5 @@
 .container {
-  display: grid;
-  gap: var(--salt-spacing-200);
+
 }
 
 .filterInput {
@@ -14,6 +13,12 @@
 
 .tokenCell {
   min-width: 24rem;
+}
+
+.codeWrapper {
+  min-height: var(--salt-size-base);
+  display: inline-flex;
+  align-items: center;
 }
 
 .tokenRow {
