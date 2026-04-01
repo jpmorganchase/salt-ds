@@ -1,20 +1,28 @@
 import {
   Button,
-  FlexItem,
   FlexLayout,
   H2,
   StackLayout,
   Text,
   useId,
 } from "@salt-ds/core";
-import { SidePanel, SidePanelCloseButton } from "@salt-ds/lab";
-import { useRef, useState } from "react";
+import { SidePanel } from "@salt-ds/lab";
+import { type CSSProperties, useRef, useState } from "react";
+
+const panelStyle = {
+  "--saltSidePanel-width": "150px",
+} as CSSProperties;
 
 export const ManualTrigger = () => {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-  const headingId = useId();
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const [openLeft, setOpenLeft] = useState(false);
+  const [openRight, setOpenRight] = useState(false);
+  const leftPanelId = useId();
+  const rightPanelId = useId();
+  const leftHeadingId = useId();
+  const rightHeadingId = useId();
+
+  const leftTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const rightTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <FlexLayout
@@ -23,31 +31,52 @@ export const ManualTrigger = () => {
       }}
       gap={0}
     >
-      <FlexItem padding={1}>
-        <Button
-          ref={triggerRef}
-          onClick={() => setOpen(!open)}
-          aria-expanded={open}
-          aria-controls={id}
-        >
-          {open ? "Close" : "Open"} Manual Panel
-        </Button>
-      </FlexItem>
       <SidePanel
-        open={open}
-        onOpenChange={setOpen}
-        id={id}
-        aria-labelledby={headingId}
-        triggerRef={triggerRef}
+        open={openLeft}
+        onOpenChange={setOpenLeft}
+        id={leftPanelId}
+        aria-labelledby={leftHeadingId}
+        triggerRef={leftTriggerRef}
+        position="left"
+        style={panelStyle}
+        variant="secondary"
       >
         <StackLayout align="start" gap={1}>
-          <SidePanelCloseButton onClick={() => setOpen(false)} />
-          <H2 id={headingId}>Section title</H2>
-          <Text>
-            This demonstrates manual panel control with the `triggerRef` prop,
-            which ensures focus returns to the trigger button when the panel
-            closes.
-          </Text>
+          <H2 id={leftHeadingId}>Left Panel</H2>
+          <Text>Left panel content.</Text>
+        </StackLayout>
+      </SidePanel>
+
+      <StackLayout gap={2} padding={2}>
+        <Button
+          ref={leftTriggerRef}
+          onClick={() => setOpenLeft(!openLeft)}
+          aria-expanded={openLeft}
+          aria-controls={leftPanelId}
+        >
+          {openLeft ? "Close" : "Open"} Left Panel
+        </Button>
+        <Button
+          ref={rightTriggerRef}
+          onClick={() => setOpenRight(!openRight)}
+          aria-expanded={openRight}
+          aria-controls={rightPanelId}
+        >
+          {openRight ? "Close" : "Open"} Right Panel
+        </Button>
+      </StackLayout>
+      <SidePanel
+        open={openRight}
+        onOpenChange={setOpenRight}
+        id={rightPanelId}
+        aria-labelledby={rightHeadingId}
+        triggerRef={rightTriggerRef}
+        style={panelStyle}
+        variant="tertiary"
+      >
+        <StackLayout align="start" gap={1}>
+          <H2 id={rightHeadingId}>Right Panel</H2>
+          <Text>Right panel content.</Text>
         </StackLayout>
       </SidePanel>
     </FlexLayout>

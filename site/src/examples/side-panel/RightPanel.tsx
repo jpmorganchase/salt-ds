@@ -58,8 +58,10 @@ export const RightPanel = () => {
         </FlexItem>
         <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout>
-            <SidePanelCloseButton />
-            <H2 id={headingId}>Use case details</H2>
+            <FlexLayout align="center">
+              <H2 id={headingId}>Use case details</H2>
+              <SidePanelCloseButton aria-labelledby={headingId} />
+            </FlexLayout>
 
             {Array.from({ length: 2 }, (_, index) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
