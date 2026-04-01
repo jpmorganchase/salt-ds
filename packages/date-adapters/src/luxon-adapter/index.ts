@@ -512,7 +512,13 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param date
    */
   public clone(date: DateTime): DateTime {
-    return DateTime.fromMillis(date.toMillis());
+    // DateTime.fromMillis() uses the system zone by default, which would drop the
+    // original zone. Preserve the *instant* and keep the original zone.
+    // (Do NOT use keepLocalTime here, as that can change the instant and fail equality checks.)
+    return DateTime.fromMillis(date.toMillis(), {
+      zone: date.zone,
+      locale: this.locale,
+    });
   }
 
   public toJSDate = (value: DateTime) => {
