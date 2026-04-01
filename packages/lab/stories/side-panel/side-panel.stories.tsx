@@ -2,6 +2,7 @@ import {
   BorderItem,
   BorderLayout,
   Button,
+  Card,
   FlexItem,
   FlexLayout,
   FormField,
@@ -9,6 +10,7 @@ import {
   FormFieldLabel,
   H2,
   Input,
+  Link,
   NavigationItem,
   StackLayout,
   Table,
@@ -18,10 +20,17 @@ import {
   Text,
   TH,
   THead,
+  ToggleButton,
+  ToggleButtonGroup,
   TR,
   useId,
 } from "@salt-ds/core";
-import { GithubIcon, HelpCircleIcon, StackoverflowIcon } from "@salt-ds/icons";
+import {
+  ChevronRightIcon,
+  GithubIcon,
+  HelpCircleIcon,
+  StackoverflowIcon,
+} from "@salt-ds/icons";
 import {
   SidePanel,
   SidePanelCloseButton,
@@ -525,16 +534,85 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
           position="east"
         >
           <SidePanel aria-labelledby={headingId}>
-            <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton />
-              <H2 id={headingId}>Help & support</H2>
-              <Text>
-                The content shown here is for illustrative purposes and does not
-                contain specific information or advice. Using placeholder text
-                like this helps review formatting, spacing, and overall
-                presentation in the user interface. Adjust the wording as needed
-                to suit your particular requirements or design preferences.
-              </Text>
+            <StackLayout>
+              <FlexLayout>
+                <Text styleAs="h2" id={headingId}>
+                  Help and support
+                </Text>
+                <SidePanelCloseButton />
+              </FlexLayout>
+              <ToggleButtonGroup defaultValue="0">
+                <ToggleButton value="0">Solid</ToggleButton>
+                <ToggleButton value="1">Solid</ToggleButton>
+                <ToggleButton value="2">Solid</ToggleButton>
+              </ToggleButtonGroup>
+              {/* Header */}
+              {/* Content */}
+              <StackLayout>
+                <StackLayout gap={2}>
+                  <Text styleAs="h3">FAQs</Text>
+                  <StackLayout gap={2}>
+                    <Link href="#">FAQ article title/questions</Link>
+                    <Link href="#">FAQ article title/questions</Link>
+                    <Link href="#">FAQ article title/questions</Link>
+                  </StackLayout>
+                </StackLayout>
+
+                <FlexItem align="end">
+                  <Link href="#">
+                    <Text>
+                      <strong>VIEW MORE</strong> <ChevronRightIcon />
+                    </Text>
+                  </Link>
+                </FlexItem>
+
+                <StackLayout gap={2}>
+                  <Text styleAs="h3">Terms</Text>
+                  <StackLayout gap={2}>
+                    <Link href="#">Terms title</Link>
+                    <Text>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Consequatur culpa enim.
+                    </Text>
+                    <Link href="#">Terms title</Link>
+                    <Text>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Consequatur culpa enim.
+                    </Text>
+                    <Link href="#">Terms title</Link>
+                    <Text>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Consequatur culpa enim.
+                    </Text>
+                  </StackLayout>
+                </StackLayout>
+
+                <FlexItem align="end">
+                  <Link href="#">
+                    <Text>
+                      <strong>VIEW MORE</strong> <ChevronRightIcon />
+                    </Text>
+                  </Link>
+                </FlexItem>
+
+                <StackLayout gap={2}>
+                  <Text styleAs="h3">Tours</Text>
+                  <Card style={{ height: "120px" }} />
+                  <Card style={{ height: "120px" }} />
+                  <FlexItem align="end">
+                    <Link href="#">
+                      <Text>
+                        <strong>VIEW MORE</strong> <ChevronRightIcon />
+                      </Text>
+                    </Link>
+                  </FlexItem>
+                </StackLayout>
+                <StackLayout gap={2}>
+                  <Text styleAs="h3">Articles</Text>
+                  <Card style={{ height: "120px" }} />
+                  <Card style={{ height: "120px" }} />
+                </StackLayout>
+              </StackLayout>
             </StackLayout>
           </SidePanel>
         </BorderItem>
