@@ -22,7 +22,7 @@ import { type ChangeEventHandler, useState } from "react";
 
 const variantOptions = ["primary", "secondary", "tertiary"];
 
-export const Default = () => {
+export const Variants = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const headingId = useId();
 
