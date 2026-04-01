@@ -34,7 +34,10 @@ export const Controlled = () => {
           </FlexItem>
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton onClick={() => setOpen(false)} />
+              <SidePanelCloseButton
+                aria-labelledby={headingId}
+                onClick={() => setOpen(false)}
+              />
               <H2 id={headingId}>Section Title</H2>
               <Text>Content for the primary side panel</Text>
             </StackLayout>

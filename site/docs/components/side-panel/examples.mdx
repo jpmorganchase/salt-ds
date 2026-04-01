@@ -8,21 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-## Default
-
-By default, a side panel anchors to right edge of the screen and has `variant=”primary”`. You can place side panel on the `right` or `left` edges using the position prop. Set `variant=”secondary”` for a secondary side panel and `variant=”tertiary”` for a tertiary side panel.
-
-<LivePreview componentName="side-panel" exampleName="Default" />
-
-## Controlled
-
-You can control the open state of the side panel component by using the `open` and `onOpenChange` props. This allows you to programmatically show or hide the content.
-
-<LivePreview componentName="side-panel" exampleName="Controlled" />
-
 ## Right side panel
 
-Consider using a right‑anchored side panel to surface contextual details and secondary tasks related to the current view—such as item details, comments, history, or quick edits. Always set the panel’s width to suit its content and ensure the main page stays visible and focusable while the panel is open.
+By default, a side panel anchors to the right edge of the screen. Consider using a right‑anchored side panel to surface contextual details and secondary tasks related to the current view—such as item details, comments, history, or quick edits. Always set the panel’s width to suit its content and ensure the main page stays visible and focusable while the panel is open.
 
 <LivePreview componentName="side-panel" exampleName="RightPanel" />
 
@@ -32,7 +20,13 @@ Consider using a left‑anchored side panel for structure and exploration—such
 
 <LivePreview componentName="side-panel" exampleName="LeftPanel" />
 
-## Local affordance examples
+## Panel variants
+
+By default the side panel styling uses `variant=”primary”`. Set `variant=”secondary”` for a secondary side panel and `variant=”tertiary”` for a tertiary side panel.
+
+<LivePreview componentName="side-panel" exampleName="Default" />
+
+## In-context triggers
 
 Local affordances are in-context triggers that open side panels for quick tasks, typically placed close to what they affect so settings can be adjusted without losing sight of the primary page.
 
@@ -44,15 +38,27 @@ A side panel can be also triggered via a control embedded within the main conten
 
 <LivePreview componentName="side-panel" exampleName="WithTable" />
 
+## Controlled
+
+You can control the open state of the side panel component by using the `open` and `onOpenChange` props. This allows you to programmatically show or hide the content.
+
+<LivePreview componentName="side-panel" exampleName="Controlled" />
+
 ## Complex layouts
 
-For complex layouts where you need more control over the panel state and trigger behavior, you can use manual trigger management instead of `SidePanelGroup`. This approach allows you to:
+For layouts that need more control over the side panel’s open/close behavior, use manual trigger management instead of SidePanelGroup. This is useful when the trigger and the panel can’t sit together in the component tree, or when open/close behavior needs to be driven by custom logic.
 
-- Place the trigger and panel in different layout areas
-- Manage panel state independently with your own state management
-- Handle multiple panels with custom logic
-- Integrate with other components that control the panel state
+Manual trigger management makes it possible to:
 
-When using manual triggers, provide the `open` and `onOpenChange` props directly to `SidePanel`, and set `aria-expanded` and `aria-controls` attributes on your trigger button. Additionally, pass a `triggerRef` to the panel so focus returns to the trigger when the panel closes.
+- Place the trigger and the panel in different layout areas.
+- Manage the panel’s open state with application state.
+- Handle multiple panels with custom rules.
+- Integrate with other components that control the panel state.
+
+This approach trades convenience for flexibility: it requires more wiring, but enables more control over placement and behavior.
+
+### How to wire it up
+
+When using manual triggers, pass `open` and `onOpenChange` directly to SidePanel, and set `aria-expanded` and `aria-controls` on the trigger button. Additionally, pass `triggerRef` to the panel so focus returns to the trigger when the panel closes.
 
 <LivePreview componentName="side-panel" exampleName="ManualTrigger" />

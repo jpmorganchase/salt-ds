@@ -34,7 +34,7 @@ export const LeftPanel = () => {
       >
         <SidePanel aria-labelledby={headingId} position="left">
           <StackLayout>
-            <SidePanelCloseButton />
+            <SidePanelCloseButton aria-labelledby={headingId} />
             <H2 id={headingId}>Filters</H2>
             <Input startAdornment={<SearchIcon />} placeholder="Search" />
 

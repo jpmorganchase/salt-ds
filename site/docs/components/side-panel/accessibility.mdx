@@ -14,33 +14,26 @@ data:
 
 Use `aria-labelledby` to link to a heading within the panel, or `aria-label` to provide a descriptive name for the `region`.
 
-**Example:**
-
-```jsx
-<SidePanel aria-labelledby="panel-heading">
-  <h2 id="panel-heading">Settings</h2>
-  {/* content */}
-</SidePanel>
-```
-
 ## Keyboard interactions
 
 <KeyboardControls>
-<KeyboardControl keyOrCombos="Enter / Space">
-
-- If focus is on the trigger element, this action activates the element and opens the side panel.
-- If focus is on close button, this action closes the side panel. Focus returns to the trigger element.
-- If focus is on a content element configured to close the side panel when activated, such as a _Submit_ button, this action closes the side panel.
-
-</KeyboardControl>
 <KeyboardControl keyOrCombos="Tab">
 
-Tab moves focus through focusable content elements in the side panel.
+- Tab moves focus through focusable content elements in the panel in reading order.
+- Because the panel is non‑modal, after the last focusable element in the panel, focus continues to the next focusable element that follows the trigger in page order. Focus can leave the panel.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-This action moves focus to previous focusable content element in the side panel.
+- This action moves focus to the previous focusable content element in the panel.
+- From the first focusable element in the panel, focus returns to the trigger (and can continue backward to earlier page elements). Focus can leave the panel.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If focus is on the trigger element, this action activates the element and opens the side panel. Focus moves into the panel (to the container or first focusable element). Panel items appear immediately after the trigger in the tab sequence.
+- If focus is on the Close button, this action closes the panel. Focus returns to the trigger element.
+- If focus is on a content element configured to close the panel (for example, a Submit button), this action closes the panel and returns focus to the trigger.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">

@@ -46,7 +46,7 @@ export const Default = () => {
           </FlexItem>
           <SidePanel aria-labelledby={headingId} variant={variant}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton />
+              <SidePanelCloseButton aria-labelledby={headingId} />
               <H2 id={headingId}>Section Title</H2>
               <Text>Content for the primary side panel</Text>
             </StackLayout>

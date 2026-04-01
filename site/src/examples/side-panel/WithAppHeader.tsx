@@ -41,7 +41,7 @@ const DesktopAppHeader = () => {
         gap={3}
       >
         <FlexItem align="center">
-          <Text styleAs="h2">Logo</Text>
+          <Text styleAs="h2">App name</Text>
         </FlexItem>
         <Input
           startAdornment={<SearchIcon />}
@@ -106,7 +106,7 @@ export const WithAppHeader = () => {
         <BorderItem position="east">
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton />
+              <SidePanelCloseButton aria-labelledby={headingId} />
               <H2 id={headingId}>Help & support</H2>
               <Text>
                 The content shown here is for illustrative purposes and does not
