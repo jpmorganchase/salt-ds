@@ -13,6 +13,19 @@ data:
 - Wrap your application with typically one `LocalizationProvider` to define the date adapter for date based controls.
 - `LocalizationProvider` can be nested with different adapters or locales.
 
+```js
+import { LocalizationProvider } from "@salt-ds/date-components";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+
+const adapter = new AdapterLuxon({ locale: "en-US" });
+
+return (
+  <LocalizationProvider dateAdapter={adapter}>
+    <App />
+  </LocalizationProvider>
+);
+```
+
 ## When to use
 
 - When you use `DatePicker`, `DateInput` or `Calendar` components.
