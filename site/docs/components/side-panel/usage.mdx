@@ -10,21 +10,22 @@ data:
 
 ## Using the component
 
-A side panel covers the entire height of the container it is nested within and is always non-modal. This means that the content beside it is simultaneously interactive when expanded.
+A side panel spans the full height of its container and is always non-modal. This means the content beside it remains interactive when the panel is expanded.
 
-Always set a logical width suitable for the content inside a side panel. Refer to Salt's Forms pattern for information on logical forms width, and the typography foundation for guidance on paragraph text width.
+Always choose a width that suits the content in the side panel. Refer to Salt's Forms pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
 ### When to use
 
-- To provide a persistent, side-by-side workspace that supports ongoing parallel tasks, such as referencing details, inspecting data, filtering results, or editing attributes, while users continue their main task.
-- To keep supporting information and controls visible and accessible, improving accuracy and efficiency by maintaining context.
-- To allow users to view and interact with supplementary information without navigating away from their primary workflow.
-- To facilitate workflows where maintaining visibility of both main content and supporting content is important for productivity.
+- To view supporting details alongside the primary content (e.g., record details, metadata, history, related items) while keeping the main view visible and interactive.
+- To edit or update information in-context (e.g., update attributes, adjust settings, annotate) while referencing the main view for confirmation.
+- To apply and refine filters (e.g., facets, query parameters) while keeping results visible and interactive next to the filtering controls.
+- To support multi-step workflows (e.g., review → decide → update → confirm) where context and supporting controls must remain available across steps.
+- To keep supplementary information and actions persistently available during longer parallel tasks (e.g., compare items, validate fields, cross-check data).
 
 ### When not to use
 
-- For a temporary, focused workspace that lets users handle a small, self-contained action. Instead, use Drawer.
-- For a background that organizes content in an application. Instead, use Panel.
+For a temporary, focused workspace that lets users handle a small, self-contained action. Instead, use [Drawer](/salt/components/drawer).
+For a background that organizes content in an application. Instead, use [Panel](/salt/components/panel).
 
 ## Import
 
