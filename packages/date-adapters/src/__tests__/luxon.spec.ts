@@ -171,4 +171,24 @@ describe("GIVEN a AdapterLuxon", () => {
     expect(clonedDate.equals(date)).toBe(true);
     expect(clonedDate).not.toBe(date); // Ensure it's a different instance
   });
+
+  it("SHOULD clone a Luxon DateTime and preserve timezone", () => {
+    const timezone = "America/New_York";
+    const date = adapter.date("2023-11-01", timezone);
+    const clonedDate = adapter.clone(date);
+    expect(clonedDate.zoneName).toBe(timezone);
+    expect(clonedDate.equals(date)).toBe(true);
+    expect(clonedDate).not.toBe(date);
+  });
+
+  it("SHOULD clone a Luxon DateTime and preserve locale", () => {
+    const frAdapter = new AdapterLuxon({ locale: "fr" });
+    const date = frAdapter.date("2023-11-01", "system");
+    const clonedDate = frAdapter.clone(date);
+
+    // Month name differs by locale; this asserts the clone still formats using French.
+    expect(frAdapter.format(clonedDate, "DD MMMM YYYY")).toBe(
+      "01 novembre 2023",
+    );
+  });
 });

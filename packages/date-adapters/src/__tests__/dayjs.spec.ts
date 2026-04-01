@@ -180,6 +180,26 @@ describe("GIVEN a AdapterDayjs", () => {
     expect(clonedDate).not.toBe(date); // Ensure it's a different instance
   });
 
+  it("SHOULD clone a Dayjs date and preserve timezone", () => {
+    const timezone = "America/New_York";
+    const date = adapter.date("2023-11-01", timezone);
+    const clonedDate = adapter.clone(date);
+    expect(adapter.getTimezone(clonedDate)).toBe(timezone);
+    expect(clonedDate.isSame(date)).toBe(true);
+    expect(clonedDate).not.toBe(date);
+  });
+
+  it("SHOULD clone a Dayjs date and preserve locale", () => {
+    const frAdapter = new AdapterDayjs({ locale: "fr" });
+    const date = frAdapter.date("2023-11-01", "system");
+    const clonedDate = frAdapter.clone(date);
+
+    // In tests we don't load dayjs locale bundles (e.g. "dayjs/locale/fr"), so
+    // assert using numeric output which is locale-agnostic but still validates
+    // cloning doesn't break formatting.
+    expect(frAdapter.format(clonedDate, "DD/MM/YYYY")).toBe("01/11/2023");
+  });
+
   const TIMEZONES = ["America/New_York", "Europe/London"];
   const ISO_UTC = "2025-10-13T03:30:00.000Z";
   const ISO_LOCAL = "2025-10-13T03:30:00";
@@ -469,7 +489,6 @@ describe("GIVEN a AdapterDayjs", () => {
     it("compare: both dates invalid returns 0", () => {
       const dateA = adapter.date("invalid-date", "UTC");
       const dateB = adapter.date("invalid-date", "UTC");
-      // Your implementation may vary; adjust expectation if needed
       expect(adapter.compare(dateA, dateB)).toBe(0);
     });
   });

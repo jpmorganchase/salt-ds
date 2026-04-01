@@ -1,5 +1,5 @@
 import { TZDate } from "@date-fns/tz";
-import { enUS } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import { describe, expect, it } from "vitest";
 import { AdapterDateFnsTZ } from "../date-fns-tz-adapter";
 
@@ -56,9 +56,23 @@ describe("GIVEN an AdapterDateFnsTZ", () => {
   });
 
   it("SHOULD clone a TZDate", () => {
-    const date = new TZDate("2023-11-01T00:00:00Z");
+    const date = new TZDate("2023-11-01T00:00:00Z", "America/New_York");
     const clonedDate = adapter.clone(date);
     expect(clonedDate).toEqual(date);
     expect(clonedDate).not.toBe(date);
+    expect(adapter.getTimezone(clonedDate)).toBe("America/New_York");
+  });
+
+  it("SHOULD clone a TZDate and preserve locale formatting", () => {
+    const frAdapter = new AdapterDateFnsTZ({ locale: fr });
+    // Use local date components to avoid UTC->timezone conversion shifting the day.
+    // (00:00Z is previous day in America/New_York.)
+    const date = new TZDate(2023, 10, 1, "America/New_York");
+    const clonedDate = frAdapter.clone(date);
+
+    // For date-fns-tz the locale is held by the adapter, not the TZDate instance.
+    expect(frAdapter.format(clonedDate, "DD MMMM YYYY")).toBe(
+      "01 novembre 2023",
+    );
   });
 });
