@@ -1,6 +1,13 @@
 import { createContext, useContext } from "react";
 
-export const ListStateContext = createContext();
+interface ListStateContextValue {
+  state: any;
+  helpers: any;
+}
+
+export const ListStateContext = createContext<
+  ListStateContextValue | undefined
+>(undefined);
 
 export const useListStateContext = () => {
   const context = useContext(ListStateContext);

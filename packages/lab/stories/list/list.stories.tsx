@@ -722,7 +722,10 @@ export const DisableTypeToSelect: StoryFn<ListProps> = () => {
 };
 
 export const ExtendedSelection: StoryFn<ListProps> = () => {
-  const handleSelectionChange: SelectionChangeHandler = (evt, selected) => {
+  const handleSelectionChange: SelectionChangeHandler<string, "extended"> = (
+    _evt,
+    selected,
+  ) => {
     console.log({ selected });
   };
   return (
