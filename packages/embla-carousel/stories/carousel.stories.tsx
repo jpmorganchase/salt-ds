@@ -166,3 +166,52 @@ FadePlugin.args = {
   },
   emblaPlugins: [Fade()],
 };
+
+export const FixedWidthSlide: StoryFn<typeof Carousel> = (args) => {
+  const carouselId = useId();
+  const cards = Array.from(Array(10).keys());
+  return (
+    <Carousel
+      aria-labelledby={`${carouselId}-title`}
+      className="fixedWidthCarousel"
+      fixedSlideWidth={550}
+      emblaOptions={{ align: "start", slidesToScroll: 1, containScroll: false }}
+      {...args}
+    >
+      <H2 id={`${carouselId}-title`} className="carouselHeading">
+        Fixed width slide example
+      </H2>
+      <StackLayout gap={1} direction="column-reverse">
+        <FlexLayout gap={1} wrap={true} align={"center"}>
+          <CarouselPreviousButton tabIndex={-1} />
+          <CarouselNextButton tabIndex={-1} />
+          <CarouselProgressLabel />
+        </FlexLayout>
+        <CarouselSlides>
+          {cards.map((index) => {
+            const slideId = `${carouselId}-slide${index}`;
+            return (
+              <div
+                role="group"
+                aria-roledescription="slide"
+                aria-labelledby={`${slideId}-title`}
+                className="carouselSlide"
+                key={slideId}
+              >
+                <div className="carouselNumber">
+                  <Display1
+                    id={`${slideId}-title`}
+                    className="carouselHeading"
+                    aria-label={`Slide ${index + 1}`}
+                  >
+                    {index + 1}
+                  </Display1>
+                </div>
+              </div>
+            );
+          })}
+        </CarouselSlides>
+      </StackLayout>
+    </Carousel>
+  );
+};

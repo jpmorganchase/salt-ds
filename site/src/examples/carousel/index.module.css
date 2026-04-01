@@ -59,3 +59,7 @@
   height: var(--carousel-slide-height);
   user-select: none;
 }
+
+.fullWidth {
+  width: 100%;
+}
