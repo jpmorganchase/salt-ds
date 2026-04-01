@@ -400,19 +400,15 @@ EmptyReadOnlyMarker.args = {
 
 export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
   const { dateAdapter } = useLocalization();
-  const timezoneOptions =
-    dateAdapter.lib !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
-
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
   );
@@ -567,18 +563,15 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
 
 export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
   const { dateAdapter } = useLocalization();
-  const timezoneOptions =
-    dateAdapter.lib !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
 
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],

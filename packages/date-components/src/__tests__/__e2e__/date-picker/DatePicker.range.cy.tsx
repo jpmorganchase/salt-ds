@@ -3,7 +3,7 @@ import {
   type DateFrameworkType,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -19,13 +19,13 @@ import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
 
 // Initialize adapters
-const adapterDateFns = new AdapterDateFns();
+const adapterDateFnsTZ = new AdapterDateFnsTZ();
 const adapterDayjs = new AdapterDayjs();
 const adapterLuxon = new AdapterLuxon();
 const adapterMoment = new AdapterMoment();
 
 // Create an array of adapters
-const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+const adapters = [adapterDateFnsTZ, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
   // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
@@ -43,156 +43,6 @@ const {
 } = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is range", () => {
-  describe("WHEN default state", () => {
-    beforeEach(() => {
-      const today = new Date(2024, 4, 6);
-      cy.clock(today, ["Date"]);
-      cy.setDateAdapter(adapterDateFns);
-    });
-
-    afterEach(() => {
-      cy.clock().then((clock) => clock.restore());
-    });
-
-    it("SHOULD show calendar overlay when click the calendar icon button", () => {
-      cy.mount(<RangeControlled />);
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
-
-      // Simulate opening the calendar
-      cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      // Verify that the calendar is displayed
-      cy.findAllByRole("application").should("have.length", 2);
-      // cy.get used as we query elements which are non-visible when dialog is open
-      cy.get('button[aria-label="Open Calendar"]')
-        .should("exist")
-        .and("have.attr", "aria-expanded", "true");
-    });
-
-    it("SHOULD open calendar overlay when using down arrow", () => {
-      cy.mount(<Range />);
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
-
-      cy.findAllByRole("textbox")
-        .eq(0)
-        .click()
-        .type("{downArrow}", { force: true });
-      // Verify that the calendar is displayed
-      cy.findAllByRole("application").should("have.length", 2);
-      // cy.get used as we query elements which are non-visible when dialog is open
-      cy.get('button[aria-label="Open Calendar"]')
-        .should("exist")
-        .and("have.attr", "aria-expanded", "true");
-    });
-
-    it("SHOULD be able to enable the overlay to open on click", () => {
-      cy.mount(<Range openOnClick />);
-      cy.findByRole("application").should("not.exist");
-      // Simulate opening the calendar on click
-      cy.findByLabelText("Start date").realClick();
-      cy.findAllByRole("application").should("have.length", 2);
-      cy.document().find("body").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.findByLabelText("End date").realClick();
-      cy.findAllByRole("application").should("have.length", 2);
-    });
-
-    it("SHOULD NOT be able to enable the overlay to open on click, if disabled", () => {
-      cy.mount(<Range openOnClick disabled />);
-      cy.findByRole("application").should("not.exist");
-      // Simulate opening the calendar on click
-      cy.findByLabelText("Start date").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.findByLabelText("End date").realClick();
-      cy.findByRole("application").should("not.exist");
-    });
-
-    it("SHOULD hide calendar upon focus out", () => {
-      cy.mount(<Range />);
-
-      // Simulate opening the calendar
-      cy.findAllByRole("textbox")
-        .eq(0)
-        .click()
-        .type("{downArrow}", { force: true });
-      // Verify the overlay opens
-      cy.findAllByRole("application").should("have.length", 2);
-      // Simulate re-focusing the input
-      cy.findByLabelText("Start date").realClick();
-      // Simulate tabbing to end date
-      cy.realPress("Tab");
-      cy.findAllByRole("application").should("have.length", 2);
-      // Simulate tabbing to calendar button
-      cy.realPress("Tab");
-      cy.findAllByRole("application").should("have.length", 2);
-      // Simulate focus out
-      cy.get("body").click(0, 0);
-      // Verify the overlay closes
-      cy.findByRole("application").should("not.exist");
-    });
-  });
-
-  describe("WHEN readOnly", () => {
-    beforeEach(() => {
-      const today = new Date(2024, 4, 6);
-      cy.clock(today, ["Date"]);
-      cy.setDateAdapter(adapterDateFns);
-    });
-
-    afterEach(() => {
-      cy.clock().then((clock) => clock.restore());
-    });
-
-    it("SHOULD not show calendar icon button", () => {
-      cy.mount(<Range readOnly />);
-      cy.findByRole("button", { name: "Open Calendar" }).should("not.exist");
-    });
-
-    it("SHOULD not open overlay when using down arrow", () => {
-      cy.mount(<Range readOnly />);
-      cy.findAllByRole("textbox")
-        .eq(0)
-        .click()
-        .type("{downArrow}", { force: true });
-      cy.findByRole("application").should("not.exist");
-    });
-  });
-
-  describe("WHEN disabled", () => {
-    beforeEach(() => {
-      const today = new Date(2024, 4, 6);
-      cy.clock(today, ["Date"]);
-      cy.setDateAdapter(adapterDateFns);
-    });
-
-    afterEach(() => {
-      cy.clock().then((clock) => clock.restore());
-    });
-
-    it("SHOULD disable calendar button and input", () => {
-      cy.mount(<Range disabled />);
-      cy.findByRole("button", { name: "Open Calendar" }).should(
-        "have.attr",
-        "disabled",
-      );
-      cy.findByRole("textbox", { name: "Start date" }).should(
-        "have.attr",
-        "disabled",
-      );
-      cy.findByRole("textbox", { name: "End date" }).should(
-        "have.attr",
-        "disabled",
-      );
-    });
-  });
-
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
   adapters.forEach((adapter: SaltDateAdapter<any>) => {
     describe(`Tests with ${adapter.lib}`, () => {
@@ -204,6 +54,128 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
       afterEach(() => {
         cy.clock().then((clock) => clock.restore());
+      });
+
+      describe("WHEN default state", () => {
+        it("SHOULD show calendar overlay when click the calendar icon button", () => {
+          cy.mount(<RangeControlled />);
+          cy.findByRole("button", { name: "Open Calendar" }).should(
+            "have.attr",
+            "aria-expanded",
+            "false",
+          );
+
+          // Simulate opening the calendar
+          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          // Verify that the calendar is displayed
+          cy.findAllByRole("application").should("have.length", 2);
+          // cy.get used as we query elements which are non-visible when dialog is open
+          cy.get('button[aria-label="Open Calendar"]')
+            .should("exist")
+            .and("have.attr", "aria-expanded", "true");
+        });
+
+        it("SHOULD open calendar overlay when using down arrow", () => {
+          cy.mount(<Range />);
+          cy.findByRole("button", { name: "Open Calendar" }).should(
+            "have.attr",
+            "aria-expanded",
+            "false",
+          );
+
+          cy.findAllByRole("textbox")
+            .eq(0)
+            .click()
+            .type("{downArrow}", { force: true });
+          // Verify that the calendar is displayed
+          cy.findAllByRole("application").should("have.length", 2);
+          // cy.get used as we query elements which are non-visible when dialog is open
+          cy.get('button[aria-label="Open Calendar"]')
+            .should("exist")
+            .and("have.attr", "aria-expanded", "true");
+        });
+
+        it("SHOULD be able to enable the overlay to open on click", () => {
+          cy.mount(<Range openOnClick />);
+          cy.findByRole("application").should("not.exist");
+          // Simulate opening the calendar on click
+          cy.findByLabelText("Start date").realClick();
+          cy.findAllByRole("application").should("have.length", 2);
+          cy.document().find("body").realClick();
+          cy.findByRole("application").should("not.exist");
+          cy.findByLabelText("End date").realClick();
+          cy.findAllByRole("application").should("have.length", 2);
+        });
+
+        it("SHOULD NOT be able to enable the overlay to open on click, if disabled", () => {
+          cy.mount(<Range openOnClick disabled />);
+          cy.findByRole("application").should("not.exist");
+          // Simulate opening the calendar on click
+          cy.findByLabelText("Start date").realClick();
+          cy.findByRole("application").should("not.exist");
+          cy.findByLabelText("End date").realClick();
+          cy.findByRole("application").should("not.exist");
+        });
+
+        it("SHOULD hide calendar upon focus out", () => {
+          cy.mount(<Range />);
+
+          // Simulate opening the calendar
+          cy.findAllByRole("textbox")
+            .eq(0)
+            .click()
+            .type("{downArrow}", { force: true });
+          // Verify the overlay opens
+          cy.findAllByRole("application").should("have.length", 2);
+          // Simulate re-focusing the input
+          cy.findByLabelText("Start date").realClick();
+          // Simulate tabbing to end date
+          cy.realPress("Tab");
+          cy.findAllByRole("application").should("have.length", 2);
+          // Simulate tabbing to calendar button
+          cy.realPress("Tab");
+          cy.findAllByRole("application").should("have.length", 2);
+          // Simulate focus out
+          cy.get("body").click(0, 0);
+          // Verify the overlay closes
+          cy.findByRole("application").should("not.exist");
+        });
+      });
+
+      describe("WHEN readOnly", () => {
+        it("SHOULD not show calendar icon button", () => {
+          cy.mount(<Range readOnly />);
+          cy.findByRole("button", { name: "Open Calendar" }).should(
+            "not.exist",
+          );
+        });
+
+        it("SHOULD not open overlay when using down arrow", () => {
+          cy.mount(<Range readOnly />);
+          cy.findAllByRole("textbox")
+            .eq(0)
+            .click()
+            .type("{downArrow}", { force: true });
+          cy.findByRole("application").should("not.exist");
+        });
+      });
+
+      describe("WHEN disabled", () => {
+        it("SHOULD disable calendar button and input", () => {
+          cy.mount(<Range disabled />);
+          cy.findByRole("button", { name: "Open Calendar" }).should(
+            "have.attr",
+            "disabled",
+          );
+          cy.findByRole("textbox", { name: "Start date" }).should(
+            "have.attr",
+            "disabled",
+          );
+          cy.findByRole("textbox", { name: "End date" }).should(
+            "have.attr",
+            "disabled",
+          );
+        });
       });
 
       const initialRangeDateValue = {
@@ -879,9 +851,6 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             },
           },
         ].forEach(({ timezone, expectedResult }) => {
-          if (adapter.lib === "date-fns" && timezone !== "default") {
-            return;
-          }
           it(`SHOULD render date in the ${timezone} timezone`, () => {
             cy.mount(<RangeWithTimezone />);
             // Simulate selecting timezone

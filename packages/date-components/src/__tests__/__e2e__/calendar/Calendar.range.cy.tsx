@@ -2,7 +2,7 @@ import type {
   DateFrameworkType,
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -21,13 +21,12 @@ const {
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = dateInputStories as any;
 
-// Initialize adapters
-const adapterDateFns = new AdapterDateFns();
-const adapterDayjs = new AdapterDayjs();
-const adapterLuxon = new AdapterLuxon();
-const adapterMoment = new AdapterMoment();
-
-const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+const adapters = [
+  new AdapterDateFnsTZ(),
+  new AdapterDayjs(),
+  new AdapterLuxon(),
+  new AdapterMoment(),
+];
 
 describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
   // biome-ignore lint/suspicious/noExplicitAny: multiple adapters
@@ -461,10 +460,6 @@ describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
             },
           },
         ].forEach(({ timezone, expectedResult }) => {
-          if (adapter.lib === "date-fns" && timezone !== "default") {
-            return;
-          }
-
           it(`SHOULD render date in the ${timezone} timezone`, () => {
             cy.mount(
               <RangeWithTimezone

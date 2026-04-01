@@ -2,7 +2,7 @@ import type {
   DateFrameworkType,
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -24,7 +24,7 @@ const {
 // Initialize adapters
 
 const adapters = [
-  new AdapterDateFns(),
+  new AdapterDateFnsTZ(),
   new AdapterDayjs(),
   new AdapterLuxon(),
   new AdapterMoment(),
@@ -393,9 +393,6 @@ describe('GIVEN a Calendar with `selectionVariant="single"`', () => {
             expectedResult: "2025-01-04T18:30:00.000Z",
           },
         ].forEach(({ timezone, expectedResult }) => {
-          if (adapter.lib === "date-fns" && timezone !== "default") {
-            return;
-          }
           it(`SHOULD render date in the ${timezone} timezone`, () => {
             cy.mount(
               <SingleWithTimezone

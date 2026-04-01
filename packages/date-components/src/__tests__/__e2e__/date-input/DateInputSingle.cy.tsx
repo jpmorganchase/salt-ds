@@ -5,7 +5,7 @@ import {
   type ParserResult,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -23,7 +23,7 @@ const {
 } = dateInputStories as any;
 
 // Initialize adapters
-const adapterDateFns = new AdapterDateFns();
+const adapterDateFnsTZ = new AdapterDateFnsTZ();
 const adapterDayjs = new AdapterDayjs();
 const adapterLuxon = new AdapterLuxon();
 const adapterMoment = new AdapterMoment();
@@ -47,7 +47,7 @@ adapterMoment.moment.updateLocale("es", {
 });
 
 // Create an array of adapters
-const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+const adapters = [adapterDateFnsTZ, adapterDayjs, adapterLuxon, adapterMoment];
 
 /**
  * Validate change helper
@@ -291,9 +291,6 @@ describe("GIVEN a DateInputSingle", () => {
             expectedResult: "2025-01-04T18:30:00.000Z",
           },
         ].forEach(({ timezone, expectedResult }) => {
-          if (adapter.lib === "date-fns" && timezone !== "default") {
-            return;
-          }
           it(`SHOULD render date in the ${timezone} timezone`, () => {
             cy.mount(<SingleWithTimezone />);
             // Simulate selection of date
