@@ -21,8 +21,8 @@ export const MinMax = (): ReactElement => {
   // Create a 3 month range of selectable dates
   // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
   const dateAdapter = new AdapterDateFns(dateFnsEnUs as any);
-  const defaultMinDate = dateAdapter.parse("01 Jan 1900", "DD MMM YYYY").date;
-  const defaultMaxDate = dateAdapter.parse("01 Jan 2100", "DD MMM YYYY").date;
+  const defaultMinDate = dateAdapter.parse("01 Jan 2026", "DD MMM YYYY").date;
+  const defaultMaxDate = dateAdapter.parse("31 Mar 2026", "DD MMM YYYY").date;
   const defaultHelperText =
     "Define the Calendar Min/Max date in DD MMM YYYY format";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
@@ -86,7 +86,7 @@ export const MinMax = (): ReactElement => {
         <DateInputRange date={selectedDate} onDateChange={handleDateChange} />
         <FormFieldHelperText>{helperText}</FormFieldHelperText>
       </FormField>
-      <Calendar selectionVariant="single">
+      <Calendar selectionVariant="single" defaultVisibleMonth={defaultMinDate}>
         <CalendarNavigation />
         <CalendarGrid />
       </Calendar>
