@@ -9,9 +9,11 @@ import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   DatePicker,
+  DatePickerActions,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
+  DatePickerTrigger,
 } from "@salt-ds/date-components";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
@@ -405,6 +407,125 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
       });
 
+      it("SHOULD navigate to minDate month and call onVisibleMonthChange when a date before minDate is entered", () => {
+        const visibleMonthChangeSpy = cy.stub().as("visibleMonthChangeSpy");
+        const minDate = adapter.parse("15/01/2030", "DD/MM/YYYY").date;
+        const maxDate = adapter.parse("15/01/2031", "DD/MM/YYYY").date;
+        const defaultVisibleMonth = adapter.parse(
+          "01/06/2030",
+          "DD/MM/YYYY",
+        ).date;
+        cy.mount(
+          <DatePicker
+            selectionVariant="single"
+            minDate={minDate}
+            maxDate={maxDate}
+          >
+            <DatePickerTrigger>
+              <DatePickerSingleInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerSingleGridPanel
+                defaultVisibleMonth={defaultVisibleMonth}
+                onVisibleMonthChange={visibleMonthChangeSpy}
+              >
+                <DatePickerActions selectionVariant="single" />
+              </DatePickerSingleGridPanel>
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+        // Open the calendar first
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        cy.findByRole("application").should("exist");
+        // Enter a date before minDate while the calendar is open (minDate is 15 Jan 2030)
+        cy.document().find("input").clear().type("01 Jan 2020");
+        cy.realPress("Tab");
+        // Verify the visible month is January 2030 (minDate's month), not January 2020
+        cy.findByRole("button", {
+          name: "Tuesday 15 January 2030",
+        }).should("exist");
+        // Verify Previous Month is disabled (can't go before minDate's month)
+        cy.findByLabelText("Past dates are out of range").should(
+          "have.attr",
+          "aria-disabled",
+          "true",
+        );
+        // Verify onVisibleMonthChange was called with the clamped month
+        cy.get("@visibleMonthChangeSpy").should("have.been.called");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
+        cy.get("@visibleMonthChangeSpy").should((spy: any) => {
+          const [_event, visibleMonth] = spy.lastCall.args;
+          expect(adapter.format(visibleMonth, "DD MMM YYYY")).to.equal(
+            "01 Jan 2030",
+          );
+        });
+      });
+
+      it("SHOULD navigate to maxDate month and call onVisibleMonthChange when a date after maxDate is entered", () => {
+        const visibleMonthChangeSpy = cy.stub().as("visibleMonthChangeSpy");
+        const minDate = adapter.parse("15/01/2030", "DD/MM/YYYY").date;
+        const maxDate = adapter.parse("15/01/2031", "DD/MM/YYYY").date;
+        cy.mount(
+          <DatePicker
+            selectionVariant="single"
+            minDate={minDate}
+            maxDate={maxDate}
+          >
+            <DatePickerTrigger>
+              <DatePickerSingleInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerSingleGridPanel
+                onVisibleMonthChange={visibleMonthChangeSpy}
+              >
+                <DatePickerActions selectionVariant="single" />
+              </DatePickerSingleGridPanel>
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+        // Open the calendar first
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        cy.findByRole("application").should("exist");
+        // Enter a date after maxDate while the calendar is open (maxDate is 15 Jan 2031)
+        cy.document().find("input").clear().type("01 Jan 2040");
+        cy.realPress("Tab");
+        // Verify the visible month is January 2031 (maxDate's month), not January 2040
+        cy.findByRole("button", {
+          name: "Wednesday 15 January 2031",
+        }).should("exist");
+        // Verify Next Month is disabled (can't go past maxDate's month)
+        cy.findByLabelText("Future dates are out of range").should(
+          "have.attr",
+          "aria-disabled",
+          "true",
+        );
+        // Verify onVisibleMonthChange was called with the clamped month
+        cy.get("@visibleMonthChangeSpy").should("have.been.called");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
+        cy.get("@visibleMonthChangeSpy").should((spy: any) => {
+          const [_event, visibleMonth] = spy.lastCall.args;
+          expect(adapter.format(visibleMonth, "DD MMM YYYY")).to.equal(
+            "01 Jan 2031",
+          );
+        });
+      });
+
+      it("SHOULD default to today's month when opening with no date set", () => {
+        cy.mount(<Single />);
+        // Open the calendar without entering any date
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify the calendar is displayed
+        cy.findByRole("application").should("exist");
+        // Verify the visible month is May 2024 (today's month, clock is set to 2024-05-06)
+        cy.findByRole("button", {
+          name: "Monday 6 May 2024",
+        }).should("exist");
+        // Verify today is focused
+        cy.findByRole("button", {
+          name: "Monday 6 May 2024",
+        }).should("be.focused");
+      });
+
       it("SHOULD render helper text in the panel when opened ", () => {
         cy.mount(<SingleWithFormField />);
         // Verify the helper text is visible on the page
@@ -647,9 +768,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       });
 
       describe("timezone", () => {
+        // For "default" and "system" timezones, the expected ISO result depends
+        // on the machine's local timezone, so compute it dynamically.
+        const systemExpectedResult = new Date(2025, 0, 5).toISOString();
         [
-          { timezone: "default", expectedResult: "2025-01-05T00:00:00.000Z" },
-          { timezone: "system", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "default", expectedResult: systemExpectedResult },
+          { timezone: "system", expectedResult: systemExpectedResult },
           { timezone: "UTC", expectedResult: "2025-01-05T00:00:00.000Z" },
           {
             timezone: "America/New_York",

@@ -60,8 +60,6 @@ export const SingleWithMinMaxDate = (): ReactElement => {
     dateAdapter.parse("15/01/2030", "DD/MM/YYYY").date ?? undefined;
   const maxDate =
     dateAdapter.parse("15/01/2031", "DD/MM/YYYY").date ?? undefined;
-  const defaultVisibleMonth =
-    dateAdapter.parse("01/01/2030", "DD/MM/YYYY").date ?? undefined;
 
   const labelId = useId();
 
@@ -78,10 +76,7 @@ export const SingleWithMinMaxDate = (): ReactElement => {
           <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSingleGridPanel
-            defaultVisibleMonth={defaultVisibleMonth}
-            helperText={helperText}
-          />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>

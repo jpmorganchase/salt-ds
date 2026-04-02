@@ -83,10 +83,6 @@ export const RangeWithMinMaxDate = (): ReactElement => {
     dateAdapter.parse("15/01/2030", "DD/MM/YYYY").date ?? undefined;
   const maxDate =
     dateAdapter.parse("15/01/2031", "DD/MM/YYYY").date ?? undefined;
-  const defaultStartVisibleMonth =
-    dateAdapter.parse("01/01/2030", "DD/MM/YYYY").date ?? undefined;
-  const defaultEndVisibleMonth =
-    dateAdapter.parse("01/01/2031", "DD/MM/YYYY").date ?? undefined;
 
   const labelId = useId();
 
@@ -103,11 +99,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
           <DatePickerRangeInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangePanel
-            defaultStartVisibleMonth={defaultStartVisibleMonth}
-            defaultEndVisibleMonth={defaultEndVisibleMonth}
-            helperText={helperText}
-          />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
