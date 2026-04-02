@@ -28,7 +28,6 @@ export {
   DatePickerRangePanel,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   DateRangeSelectionContext,
   SingleDateSelectionContext,
