@@ -187,10 +187,34 @@ export const DatePickerSingleGridPanel = forwardRef(
     );
 
     const [uncontrolledDefaultVisibleMonth] = useState(() => {
-      const validDate = dateAdapter.isValid(selectedDate)
-        ? selectedDate
-        : dateAdapter.today(timezone);
-      return defaultVisibleMonth || dateAdapter.startOf(validDate, "month");
+      if (defaultVisibleMonth) {
+        return defaultVisibleMonth;
+      }
+      // Determine the initial visible month from selectedDate, today, or minDate
+      let targetMonth: DateFrameworkType;
+      if (dateAdapter.isValid(selectedDate)) {
+        targetMonth = dateAdapter.startOf(selectedDate, "month");
+      } else {
+        // When no date is set, prefer today if it falls within the min/max range,
+        // otherwise default to minDate's month
+        const today = dateAdapter.today(timezone);
+        const isTodayInRange =
+          dateAdapter.compare(today, minDate) >= 0 &&
+          dateAdapter.compare(today, maxDate) <= 0;
+        targetMonth = isTodayInRange
+          ? dateAdapter.startOf(today, "month")
+          : dateAdapter.startOf(minDate, "month");
+      }
+      // Clamp to min/max range
+      const startOfMinMonth = dateAdapter.startOf(minDate, "month");
+      const startOfMaxMonth = dateAdapter.startOf(maxDate, "month");
+      if (dateAdapter.compare(targetMonth, startOfMinMonth) < 0) {
+        return startOfMinMonth;
+      }
+      if (dateAdapter.compare(targetMonth, startOfMaxMonth) > 0) {
+        return startOfMaxMonth;
+      }
+      return targetMonth;
     });
     const [visibleMonth, setVisibleMonth] = useControlled({
       controlled: visibleMonthProp,
@@ -359,7 +383,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       timezone,
     ]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus/min/max date changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies: only run when overlay focus changes
     useIsomorphicLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
       if (focused && !calendarGridFocused.current) {
@@ -372,6 +396,44 @@ export const DatePickerSingleGridPanel = forwardRef(
       }
       calendarGridFocused.current = focused;
     }, [focused]);
+
+    // Adjust visibleMonth when selectedDate changes (e.g. user types in the input)
+    // Clamps to min/max so the calendar always shows a valid month.
+    // Uses handleVisibleMonthChange so onVisibleMonthChange fires for userland.
+    // biome-ignore lint/correctness/useExhaustiveDependencies: only respond to selectedDate changes
+    useIsomorphicLayoutEffect(() => {
+      if (!selectedDate || !dateAdapter.isValid(selectedDate)) {
+        return;
+      }
+      let targetMonth = dateAdapter.startOf(selectedDate, "month");
+
+      // Clamp to min/max date range
+      const startOfMinMonth = dateAdapter.startOf(minDate, "month");
+      const startOfMaxMonth = dateAdapter.startOf(maxDate, "month");
+      if (dateAdapter.compare(targetMonth, startOfMinMonth) < 0) {
+        targetMonth = startOfMinMonth;
+      } else if (dateAdapter.compare(targetMonth, startOfMaxMonth) > 0) {
+        targetMonth = startOfMaxMonth;
+      }
+
+      const lastVisibleMonth = dateAdapter.add(visibleMonth, {
+        months: responsiveNumberOfVisibleMonths - 1,
+      });
+
+      const isBeforeVisibleMonth =
+        dateAdapter.compare(targetMonth, visibleMonth) < 0;
+      const isAfterLastVisibleMonth =
+        dateAdapter.compare(targetMonth, lastVisibleMonth) > 0;
+
+      if (isBeforeVisibleMonth) {
+        handleVisibleMonthChange(null, targetMonth);
+      } else if (isAfterLastVisibleMonth) {
+        const newVisibleMonth = dateAdapter.subtract(targetMonth, {
+          months: responsiveNumberOfVisibleMonths - 1,
+        });
+        handleVisibleMonthChange(null, newVisibleMonth);
+      }
+    }, [selectedDate]);
 
     const calendarProps = {
       visibleMonth,

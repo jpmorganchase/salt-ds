@@ -180,6 +180,8 @@ export interface DatePickerRangePanelProps
 function getFallbackVisibleMonths(
   dateAdapter: SaltDateAdapter,
   selectedDate: DateRangeSelection | null,
+  minDate: DateFrameworkType,
+  maxDate: DateFrameworkType,
   timezone: Timezone = "default",
 ) {
   function createConsecutiveRange(date: DateFrameworkType) {
@@ -188,24 +190,42 @@ function getFallbackVisibleMonths(
     return [startDate, endDate];
   }
 
+  function clampMonth(month: DateFrameworkType) {
+    const startOfMinMonth = dateAdapter.startOf(minDate, "month");
+    const startOfMaxMonth = dateAdapter.startOf(maxDate, "month");
+    if (dateAdapter.compare(month, startOfMinMonth) < 0) {
+      return startOfMinMonth;
+    }
+    if (dateAdapter.compare(month, startOfMaxMonth) > 0) {
+      return startOfMaxMonth;
+    }
+    return month;
+  }
+
   if (selectedDate && dateAdapter.isValid(selectedDate?.startDate)) {
     const { startDate, endDate } = selectedDate;
     if (dateAdapter.isValid(endDate)) {
-      return dateAdapter.isSame(startDate, endDate, "month")
-        ? createConsecutiveRange(startDate)
-        : [
-            dateAdapter.startOf(startDate, "month"),
-            dateAdapter.startOf(endDate, "month"),
-          ];
+      const clampedStart = clampMonth(dateAdapter.startOf(startDate, "month"));
+      const clampedEnd = clampMonth(dateAdapter.startOf(endDate, "month"));
+      return dateAdapter.isSame(clampedStart, clampedEnd, "month")
+        ? createConsecutiveRange(clampedStart)
+        : [clampedStart, clampedEnd];
     }
-    return createConsecutiveRange(startDate);
+    return createConsecutiveRange(
+      clampMonth(dateAdapter.startOf(startDate, "month")),
+    );
   }
 
-  const currentMonth = dateAdapter.startOf(
-    dateAdapter.today(timezone),
-    "month",
-  );
-  return [currentMonth, dateAdapter.add(currentMonth, { months: 1 })];
+  // When no date is set, prefer today if it falls within the min/max range,
+  // otherwise default to minDate's month
+  const today = dateAdapter.today(timezone);
+  const isTodayInRange =
+    dateAdapter.compare(today, minDate) >= 0 &&
+    dateAdapter.compare(today, maxDate) <= 0;
+  const baseMonth = isTodayInRange
+    ? dateAdapter.startOf(today, "month")
+    : dateAdapter.startOf(minDate, "month");
+  return createConsecutiveRange(baseMonth);
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -268,7 +288,13 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
   );
 
   const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
-    getFallbackVisibleMonths(dateAdapter, selectedDate, timezone),
+    getFallbackVisibleMonths(
+      dateAdapter,
+      selectedDate,
+      minDate,
+      maxDate,
+      timezone,
+    ),
   );
 
   const [startVisibleMonth, setStartVisibleMonth] = useControlled({
@@ -532,6 +558,59 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
       });
     }
   }, [dateAdapter, minDate, maxDate, focused]);
+
+  // Adjust visible months when selectedDate changes (e.g. user types in the input).
+  // Clamps to min/max so the calendars always show a valid month.
+  // Uses handleStartVisibleMonthChange / handleEndVisibleMonthChange so the
+  // corresponding callbacks fire and the coupled start↔end logic stays in sync.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only respond to selectedDate changes
+  useIsomorphicLayoutEffect(() => {
+    const startOfMinMonth = dateAdapter.startOf(minDate, "month");
+    const startOfMaxMonth = dateAdapter.startOf(maxDate, "month");
+
+    const clampMonth = (month: DateFrameworkType) => {
+      if (dateAdapter.compare(month, startOfMinMonth) < 0) {
+        return startOfMinMonth;
+      }
+      if (dateAdapter.compare(month, startOfMaxMonth) > 0) {
+        return startOfMaxMonth;
+      }
+      return month;
+    };
+
+    // Handle start date changes — navigate the start calendar
+    if (
+      selectedDate?.startDate &&
+      dateAdapter.isValid(selectedDate.startDate)
+    ) {
+      const targetMonth = clampMonth(
+        dateAdapter.startOf(selectedDate.startDate, "month"),
+      );
+      const isBeforeStart =
+        dateAdapter.compare(targetMonth, startVisibleMonth) < 0;
+      const isAfterEnd = dateAdapter.compare(targetMonth, endVisibleMonth) > 0;
+
+      if (isBeforeStart || isAfterEnd) {
+        handleStartVisibleMonthChange(null, targetMonth);
+      }
+    }
+
+    // Handle end date changes — navigate the end calendar
+    if (selectedDate?.endDate && dateAdapter.isValid(selectedDate.endDate)) {
+      const targetMonth = clampMonth(
+        dateAdapter.startOf(selectedDate.endDate, "month"),
+      );
+      const isBeforeStart =
+        dateAdapter.compare(targetMonth, startVisibleMonth) < 0;
+      const isAfterEnd = dateAdapter.compare(targetMonth, endVisibleMonth) > 0;
+
+      if (isAfterEnd) {
+        handleEndVisibleMonthChange(null, targetMonth);
+      } else if (isBeforeStart) {
+        handleStartVisibleMonthChange(null, targetMonth);
+      }
+    }
+  }, [selectedDate]);
 
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
