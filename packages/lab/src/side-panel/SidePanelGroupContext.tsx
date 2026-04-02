@@ -29,6 +29,10 @@ export interface SidePanelGroupContextValue {
     triggerId: string,
     triggerElement: MutableRefObject<HTMLElement | null>,
   ) => void;
+  /**
+   * Counter incremented on each trigger activation; used to drive focus movement into panel.
+   */
+  activationCount?: number;
 }
 
 export const SidePanelGroupContext = createContext<SidePanelGroupContextValue>(

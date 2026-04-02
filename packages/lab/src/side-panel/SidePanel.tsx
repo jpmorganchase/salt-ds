@@ -1,5 +1,11 @@
 import { FloatingFocusManager } from "@floating-ui/react";
-import { makePrefixer, useFloatingUI, useForkRef, useId } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useFloatingUI,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,6 +15,7 @@ import {
   type KeyboardEvent,
   type MutableRefObject,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import sidePanelCss from "./SidePanel.css";
@@ -68,6 +75,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       open: groupOpen,
       setOpen: setGroupOpen,
       panelId,
+      activationCount,
       triggerRef: groupTriggerRef,
     } = useSidePanelGroup();
 
@@ -90,12 +98,59 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     });
     const { setReference, setFloating } = refs;
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
+    const previousActivationCount = useRef(0);
 
     useEffect(() => {
       if (focusReturnTriggerRef?.current) {
         setReference(focusReturnTriggerRef.current);
       }
     }, [focusReturnTriggerRef, setReference]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (!open || activationCount === undefined) {
+        previousActivationCount.current = activationCount ?? 0;
+        return;
+      }
+
+      // Focus moves into panel whenever activation count increments
+      if (activationCount > previousActivationCount.current) {
+        previousActivationCount.current = activationCount;
+
+        // Use setTimeout to ensure focus happens after click event fully completes
+        const timeoutId = targetWindow?.setTimeout(() => {
+          // Get focus target: use initialFocus if it's a ref, otherwise find first focusable
+          let focusTarget: HTMLElement | null = null;
+
+          if (
+            initialFocus &&
+            typeof initialFocus === "object" &&
+            "current" in initialFocus
+          ) {
+            focusTarget = initialFocus.current;
+          } else if (typeof initialFocus === "number" && initialFocus === 0) {
+            // Find first focusable element in panel
+            const panel = refs.floating.current;
+            if (panel) {
+              const focusableSelector =
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+              focusTarget = panel.querySelector(
+                focusableSelector,
+              ) as HTMLElement;
+            }
+          }
+
+          focusTarget?.focus();
+        }, 0);
+
+        return () => {
+          if (timeoutId) {
+            targetWindow?.clearTimeout(timeoutId);
+          }
+        };
+      }
+
+      previousActivationCount.current = activationCount;
+    }, [activationCount, initialFocus, open, refs.floating, targetWindow]);
 
     useEffect(() => {
       if (open) {

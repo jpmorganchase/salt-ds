@@ -37,6 +37,7 @@ export function SidePanelGroup(props: SidePanelGroupProps) {
   const [triggerRef, setTriggerRef] = useState<
     MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
+  const [activationCount, setActivationCount] = useState(0);
 
   const { children, open: openProp, defaultOpen, onOpenChange } = props;
 
@@ -71,6 +72,7 @@ export function SidePanelGroup(props: SidePanelGroupProps) {
     ) => {
       setActiveTriggerId(triggerId);
       setTriggerRef(triggerElement);
+      setActivationCount((count) => count + 1);
       setOpen(true);
     },
     [setOpen],
@@ -84,8 +86,17 @@ export function SidePanelGroup(props: SidePanelGroupProps) {
       activeTriggerId,
       triggerRef,
       activateTrigger,
+      activationCount,
     }),
-    [open, setOpen, panelId, activeTriggerId, triggerRef, activateTrigger],
+    [
+      open,
+      setOpen,
+      panelId,
+      activeTriggerId,
+      triggerRef,
+      activateTrigger,
+      activationCount,
+    ],
   );
 
   return (
