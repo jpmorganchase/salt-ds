@@ -151,7 +151,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    */
   public format(
     date: Date | null | undefined,
-    format: RecommendedFormats = "dd MMM yyyy",
+    format: RecommendedFormats = "DD MMM YYYY",
   ): string {
     if (this.isValid(date)) {
       const dateFnsFormat = this.mapToDateFnsFormat(format);

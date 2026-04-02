@@ -23,3 +23,5 @@ These dependency updates do not introduce any Salt component API changes.
 - Fixed adapter types to allow for date framework based types in userland
 - Added default generics, to simplify usage with Salt's default `DateFrameworkType`
 - Removed unused `getDayOfWeek`, if required, use the date framework directly
+- Correct default format for luxon and date-fns to DD/MM/YYYY
+- Fixed dayjs day of week name should return a single character for `narrow`
