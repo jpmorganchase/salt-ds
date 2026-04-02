@@ -1,4 +1,5 @@
 import { TZDate } from "@date-fns/tz";
+import { parseISO } from "date-fns";
 import { AdapterDateFns } from "../date-fns-adapter";
 import type { Timezone } from "../types";
 
@@ -24,7 +25,17 @@ export class AdapterDateFnsTZ extends AdapterDateFns {
     if (!value || !super.isValidDateString(value)) {
       return new TZDate(Number.NaN);
     }
-    return new TZDate(value, newTimezone);
+    const parsedDate = parseISO(value);
+    return new TZDate(
+      parsedDate.getFullYear(),
+      parsedDate.getMonth(),
+      parsedDate.getDate(),
+      parsedDate.getHours(),
+      parsedDate.getMinutes(),
+      parsedDate.getSeconds(),
+      parsedDate.getMilliseconds(),
+      newTimezone,
+    );
   };
 
   /**

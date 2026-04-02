@@ -139,7 +139,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
     if (!value || !this.isValidDateString(value)) {
       return new Date(Number.NaN);
     }
-    return new Date(value);
+    return parseISO(value);
   };
 
   /**
@@ -151,7 +151,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    */
   public format(
     date: Date | null | undefined,
-    format: RecommendedFormats = "dd MMM yyyy",
+    format: RecommendedFormats = "DD MMM YYYY",
   ): string {
     if (this.isValid(date)) {
       const dateFnsFormat = this.mapToDateFnsFormat(format);

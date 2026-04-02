@@ -165,7 +165,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    */
   public format(
     date: DateTime | null | undefined,
-    format: RecommendedFormats = "dd MMM yyyy",
+    format: RecommendedFormats = "DD MMM YYYY",
   ): string {
     if (this.isValid(date)) {
       const luxonFormat = this.mapToLuxonFormat(format);

@@ -581,9 +581,9 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     format: "long" | "short" | "narrow",
   ): string {
     const date = this.dayjs().locale(this.locale).weekday(dow);
-    const formatString =
-      format === "long" ? "dddd" : format === "short" ? "ddd" : "dd";
-    return date.format(formatString);
+    const jsDate = date.toDate();
+    const weekday: Intl.DateTimeFormatOptions["weekday"] = format;
+    return new Intl.DateTimeFormat(this.locale, { weekday }).format(jsDate);
   }
 
   /**
