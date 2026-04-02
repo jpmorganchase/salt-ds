@@ -10,7 +10,7 @@ Added `SidePanel`.
 <SidePanelGroup>
   <SidePanelTrigger />
   <SidePanel>
-    <SidePanelCloseButton />
+    <SidePanelCloseTrigger />
   </SidePanel>
 </SidePanelGroup>
 ```

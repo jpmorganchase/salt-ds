@@ -13,10 +13,10 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import { SearchIcon } from "@salt-ds/icons";
+import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseButton,
+  SidePanelCloseTrigger,
   SidePanelGroup,
   SidePanelTrigger,
 } from "@salt-ds/lab";
@@ -34,7 +34,15 @@ export const LeftPanel = () => {
       >
         <SidePanel aria-labelledby={headingId} position="left">
           <StackLayout>
-            <SidePanelCloseButton aria-labelledby={headingId} />
+            <SidePanelCloseTrigger>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                style={{ marginLeft: "auto" }}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             <H2 id={headingId}>Filters</H2>
             <Input startAdornment={<SearchIcon />} placeholder="Search" />
 
