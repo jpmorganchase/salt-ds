@@ -13,13 +13,14 @@ import {
 } from "@salt-ds/core";
 import {
   ChattingIcon,
+  CloseIcon,
   HelpCircleIcon,
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseButton,
+  SidePanelCloseTrigger,
   SidePanelGroup,
   SidePanelTrigger,
 } from "@salt-ds/lab";
@@ -106,7 +107,15 @@ export const WithAppHeader = () => {
         <BorderItem position="east">
           <SidePanel aria-labelledby={headingId}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton aria-labelledby={headingId} />
+              <SidePanelCloseTrigger>
+                <Button
+                  aria-label="Close"
+                  appearance="transparent"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              </SidePanelCloseTrigger>
               <H2 id={headingId}>Help & support</H2>
               <Text>
                 The content shown here is for illustrative purposes and does not
