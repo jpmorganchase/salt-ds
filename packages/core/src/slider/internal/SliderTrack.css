@@ -1,6 +1,6 @@
 .saltSliderTrack {
   --slider-track-background: var(--salt-sentiment-neutral-track);
-  --slider-track-fill: var(--salt-accent-borderColor);
+  --slider-track-fill: var(--salt-sentiment-accent-borderColor);
   --slider-progressPercentage: 0%;
   --slider-tick-height: calc((var(--salt-size-selectable) - var(--salt-size-bar)) / 2);
   /* For range */

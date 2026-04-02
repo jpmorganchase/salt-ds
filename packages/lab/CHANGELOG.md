@@ -1,5 +1,35 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.88
+
+### Patch Changes
+
+- cfc1591: Simplify disabled styling across the system. This affected the following components:
+
+  ## Core
+
+  - Checkbox
+  - Combo box
+  - Dropdown
+  - List box
+  - Radio button
+  - Slider
+  - Switch
+
+  ## Lab
+
+  - Tree
+
+- 89429e2: Updated accent token usage, to align to the recent theme change.
+- Updated dependencies [5c36edc]
+- Updated dependencies [cfc1591]
+- Updated dependencies [89429e2]
+- Updated dependencies [0a08ae0]
+- Updated dependencies [49b3486]
+- Updated dependencies [5c36edc]
+  - @salt-ds/core@1.59.0
+  - @salt-ds/icons@1.18.0
+
 ## 1.0.0-alpha.87
 
 ### Minor Changes
