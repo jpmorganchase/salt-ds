@@ -9,6 +9,4 @@ export * from "./DatePickerRangeInput";
 export * from "./DatePickerRangePanel";
 export * from "./DatePickerSingleGridPanel";
 export * from "./DatePickerSingleInput";
-// DatePickerSinglePanel will be deleted when datepicker moves to core
-export * from "./DatePickerSinglePanel";
 export * from "./DatePickerTrigger";
