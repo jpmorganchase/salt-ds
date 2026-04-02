@@ -28,6 +28,8 @@ import {
 } from "@salt-ds/core";
 import {
   ArrowRightIcon,
+  CloseIcon,
+  DoubleChevronRightIcon,
   GithubIcon,
   GuideClosedIcon,
   HelpCircleIcon,
@@ -37,7 +39,7 @@ import {
 } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseButton,
+  SidePanelCloseTrigger,
   SidePanelGroup,
   type SidePanelGroupProps,
   type SidePanelProps,
@@ -83,7 +85,15 @@ export const Default: StoryFn<SidePanelGroupProps> = (args) => {
         </FlexItem>
         <SidePanel aria-labelledby={headingId}>
           <StackLayout align="start" gap={1}>
-            <SidePanelCloseButton />
+            <SidePanelCloseTrigger>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                style={{ marginLeft: "auto" }}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             <H2 id={headingId}>Section Title</H2>
             <Text>
               This placeholder text is provided to illustrate how content will
@@ -117,7 +127,15 @@ export const Left: StoryFn<SidePanelGroupProps> = (args) => {
       >
         <SidePanel aria-labelledby={headingId} position="left">
           <StackLayout align="start" gap={1}>
-            <SidePanelCloseButton />
+            <SidePanelCloseTrigger>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                style={{ marginLeft: "auto" }}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             <H2 id={headingId}>Section Title</H2>
             <Text>
               This placeholder text is provided to illustrate how content will
@@ -161,7 +179,15 @@ export const Controlled: StoryFn<SidePanelGroupProps> = (args) => {
         </FlexItem>
         <SidePanel position="right" aria-labelledby={headingId}>
           <StackLayout align="start" gap={1}>
-            <SidePanelCloseButton onClick={() => setOpen(false)} />
+            <SidePanelCloseTrigger onClick={() => setOpen(false)}>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                style={{ marginLeft: "auto" }}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             <H2 id={headingId}>Section Title</H2>
             <Text>
               This placeholder text is provided to illustrate how content will
@@ -212,7 +238,14 @@ export const ManualTrigger: StoryFn<SidePanelProps> = (args) => {
           aria-labelledby={headingId}
         >
           <StackLayout align="start" gap={1}>
-            <SidePanelCloseButton onClick={() => setOpen(false)} />
+            <SidePanelCloseTrigger
+              onClick={() => setOpen(false)}
+              style={{ marginLeft: "auto" }}
+            >
+              <Button aria-label="Close" appearance="transparent">
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             <H2 id={headingId}>Manual Trigger Link</H2>
             <Text>
               This example shows a trigger outside SidePanelGroup. The user
@@ -239,7 +272,15 @@ export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
           </SidePanelTrigger>
           <SidePanel variant="primary" aria-labelledby={primaryHeadingId}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton />
+              <SidePanelCloseTrigger>
+                <Button
+                  aria-label="Close"
+                  appearance="transparent"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              </SidePanelCloseTrigger>
               <H2 id={primaryHeadingId}>Primary Variant</H2>
               <Text>
                 This panel uses the primary variant, which is the default
@@ -256,7 +297,15 @@ export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
           </SidePanelTrigger>
           <SidePanel variant="secondary" aria-labelledby={secondaryHeadingId}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton />
+              <SidePanelCloseTrigger>
+                <Button
+                  aria-label="Close"
+                  appearance="transparent"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              </SidePanelCloseTrigger>
               <H2 id={secondaryHeadingId}>Secondary Variant</H2>
               <Text>
                 This panel uses the secondary variant with a different
@@ -273,7 +322,15 @@ export const Variants: StoryFn<SidePanelGroupProps> = (args) => {
           </SidePanelTrigger>
           <SidePanel variant="tertiary" aria-labelledby={tertiaryHeadingId}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton />
+              <SidePanelCloseTrigger>
+                <Button
+                  aria-label="Close"
+                  appearance="transparent"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              </SidePanelCloseTrigger>
               <H2 id={tertiaryHeadingId}>Tertiary Variant</H2>
               <Text>
                 This panel uses the tertiary variant with yet another background
@@ -381,7 +438,6 @@ export const WithTable: StoryFn<SidePanelGroupProps> = (args) => {
                     <TD>
                       <SidePanelTrigger>
                         <Button
-                          aria-label={`View details for ${row.name}`}
                           onClick={() => handleRowClick(row)}
                           style={{ minWidth: "auto" }}
                         >
@@ -398,7 +454,15 @@ export const WithTable: StoryFn<SidePanelGroupProps> = (args) => {
 
         <SidePanel position="right" aria-labelledby={panelHeadingId}>
           <StackLayout align="start" gap={3}>
-            <SidePanelCloseButton />
+            <SidePanelCloseTrigger>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                style={{ marginLeft: "auto" }}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             {selectedRow && (
               <>
                 <H2 id={panelHeadingId}>Employee Details</H2>
@@ -512,7 +576,7 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
   const headingId = useId();
 
   return (
-    <SidePanelGroup {...args} open>
+    <SidePanelGroup {...args}>
       <BorderLayout>
         <BorderItem position="north">
           <DesktopAppHeader items={items} />
@@ -543,11 +607,19 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
         >
           <SidePanel aria-labelledby={headingId}>
             <StackLayout>
-              <FlexLayout>
+              <FlexLayout align="center">
                 <Text styleAs="h2" id={headingId}>
                   Help and support
                 </Text>
-                <SidePanelCloseButton />
+                <SidePanelCloseTrigger>
+                  <Button
+                    aria-label="Close"
+                    appearance="transparent"
+                    style={{ marginLeft: "auto" }}
+                  >
+                    <DoubleChevronRightIcon aria-hidden />
+                  </Button>
+                </SidePanelCloseTrigger>
               </FlexLayout>
               <ToggleButtonGroup defaultValue="0">
                 <ToggleButton value="0">toggle</ToggleButton>
