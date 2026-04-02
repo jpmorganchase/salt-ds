@@ -3,6 +3,7 @@ import {
   BorderLayout,
   Button,
   Card,
+  Divider,
   FlexItem,
   FlexLayout,
   FormField,
@@ -26,10 +27,13 @@ import {
   useId,
 } from "@salt-ds/core";
 import {
-  ChevronRightIcon,
+  ArrowRightIcon,
   GithubIcon,
+  GuideClosedIcon,
   HelpCircleIcon,
+  MapIcon,
   StackoverflowIcon,
+  TextUnorderedListIcon,
 } from "@salt-ds/icons";
 import {
   SidePanel,
@@ -41,6 +45,10 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
+import Article1 from "./images/article1.png";
+import Article2 from "./images/article2.png";
+import CardImg from "./images/card.png";
+import PhoneImg from "./images/mobile.png";
 
 export default {
   title: "Lab/Side Panel",
@@ -504,7 +512,7 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
   const headingId = useId();
 
   return (
-    <SidePanelGroup {...args}>
+    <SidePanelGroup {...args} open>
       <BorderLayout>
         <BorderItem position="north">
           <DesktopAppHeader items={items} />
@@ -542,15 +550,18 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
                 <SidePanelCloseButton />
               </FlexLayout>
               <ToggleButtonGroup defaultValue="0">
-                <ToggleButton value="0">Solid</ToggleButton>
-                <ToggleButton value="1">Solid</ToggleButton>
-                <ToggleButton value="2">Solid</ToggleButton>
+                <ToggleButton value="0">toggle</ToggleButton>
+                <ToggleButton value="1">toggle</ToggleButton>
+                <ToggleButton value="2">toggle</ToggleButton>
               </ToggleButtonGroup>
               {/* Header */}
               {/* Content */}
               <StackLayout>
                 <StackLayout gap={2}>
-                  <Text styleAs="h3">FAQs</Text>
+                  <FlexLayout gap={1} align="center">
+                    <TextUnorderedListIcon aria-hidden />
+                    <Text styleAs="h3">FAQs</Text>
+                  </FlexLayout>
                   <StackLayout gap={2}>
                     <Link href="#">FAQ article title/questions</Link>
                     <Link href="#">FAQ article title/questions</Link>
@@ -559,15 +570,17 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
                 </StackLayout>
 
                 <FlexItem align="end">
-                  <Link href="#">
-                    <Text>
-                      <strong>VIEW MORE</strong> <ChevronRightIcon />
-                    </Text>
-                  </Link>
+                  <Button appearance="transparent">
+                    VIEW MORE <ArrowRightIcon aria-hidden />
+                  </Button>
                 </FlexItem>
+                <Divider />
 
                 <StackLayout gap={2}>
-                  <Text styleAs="h3">Terms</Text>
+                  <FlexLayout gap={1} align="center">
+                    <GuideClosedIcon aria-hidden />
+                    <Text styleAs="h3">Terms</Text>
+                  </FlexLayout>
                   <StackLayout gap={2}>
                     <Link href="#">Terms title</Link>
                     <Text>
@@ -588,29 +601,97 @@ export const WithAppHeader: StoryFn<SidePanelGroupProps> = (args) => {
                 </StackLayout>
 
                 <FlexItem align="end">
-                  <Link href="#">
-                    <Text>
-                      <strong>VIEW MORE</strong> <ChevronRightIcon />
-                    </Text>
-                  </Link>
+                  <Button appearance="transparent">
+                    VIEW MORE <ArrowRightIcon aria-hidden />
+                  </Button>
                 </FlexItem>
 
+                <Divider />
+
                 <StackLayout gap={2}>
-                  <Text styleAs="h3">Tours</Text>
-                  <Card style={{ height: "120px" }} />
-                  <Card style={{ height: "120px" }} />
+                  <FlexLayout gap={1} align="center">
+                    <MapIcon aria-hidden />
+                    <Text styleAs="h3">Tours</Text>
+                  </FlexLayout>
+
+                  <Card>
+                    <StackLayout gap={1}>
+                      <FlexLayout gap={1}>
+                        <img
+                          src={PhoneImg}
+                          alt="phone"
+                          height={72}
+                          width={72}
+                        />
+                        <FlexItem>
+                          <Text>Title</Text>
+                          <Text color="secondary">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing
+                            elit. In in nunc.
+                          </Text>
+                        </FlexItem>
+                      </FlexLayout>
+                    </StackLayout>
+                  </Card>
+                  <Card>
+                    <StackLayout gap={1}>
+                      <FlexLayout gap={1}>
+                        <img src={CardImg} alt="card" height={72} width={72} />
+                        <FlexItem>
+                          <Text>Title</Text>
+                          <Text color="secondary">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing
+                            elit. In in nunc.
+                          </Text>
+                        </FlexItem>
+                      </FlexLayout>
+                    </StackLayout>
+                  </Card>
+
                   <FlexItem align="end">
-                    <Link href="#">
-                      <Text>
-                        <strong>VIEW MORE</strong> <ChevronRightIcon />
-                      </Text>
-                    </Link>
+                    <Button appearance="transparent">
+                      VIEW MORE <ArrowRightIcon aria-hidden />
+                    </Button>
                   </FlexItem>
                 </StackLayout>
+
+                <Divider />
+
                 <StackLayout gap={2}>
-                  <Text styleAs="h3">Articles</Text>
-                  <Card style={{ height: "120px" }} />
-                  <Card style={{ height: "120px" }} />
+                  <FlexLayout gap={1} align="center">
+                    <TextUnorderedListIcon aria-hidden />
+                    <Text styleAs="h3">Articles</Text>
+                  </FlexLayout>
+                  <Card>
+                    <img
+                      src={Article1}
+                      alt="article"
+                      height={72}
+                      style={{
+                        borderRadius: "var(--salt-palette-corner-weak)",
+                      }}
+                    />
+                    <Link href="#">Article title</Link>
+                    <Text color="secondary">
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      In in nunc.
+                    </Text>
+                  </Card>
+                  <Card>
+                    <img
+                      src={Article2}
+                      alt="article"
+                      height={72}
+                      style={{
+                        borderRadius: "var(--salt-palette-corner-weak)",
+                      }}
+                    />
+                    <Link href="#">Article title</Link>
+                    <Text color="secondary">
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      In in nunc.
+                    </Text>
+                  </Card>
                 </StackLayout>
               </StackLayout>
             </StackLayout>
