@@ -11,9 +11,10 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseButton,
+  SidePanelCloseTrigger,
   SidePanelGroup,
   type SidePanelProps,
   SidePanelTrigger,
@@ -46,7 +47,15 @@ export const Variants = () => {
           </FlexItem>
           <SidePanel aria-labelledby={headingId} variant={variant}>
             <StackLayout align="start" gap={1}>
-              <SidePanelCloseButton aria-labelledby={headingId} />
+              <SidePanelCloseTrigger>
+                <Button
+                  aria-label="Close"
+                  appearance="transparent"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              </SidePanelCloseTrigger>
               <H2 id={headingId}>Section Title</H2>
               <Text>Content for the primary side panel</Text>
             </StackLayout>

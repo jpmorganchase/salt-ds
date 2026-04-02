@@ -16,9 +16,10 @@ import {
   TR,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseButton,
+  SidePanelCloseTrigger,
   SidePanelGroup,
   SidePanelTrigger,
 } from "@salt-ds/lab";
@@ -120,7 +121,15 @@ export const WithTable = () => {
 
         <SidePanel position="right" aria-labelledby={panelHeadingId}>
           <StackLayout align="start" gap={3}>
-            <SidePanelCloseButton aria-labelledby={panelHeadingId} />
+            <SidePanelCloseTrigger>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                style={{ marginLeft: "auto" }}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelCloseTrigger>
             {selectedRow && (
               <StackLayout style={{ width: "100%" }}>
                 <H2 id={panelHeadingId}>Employee Details</H2>

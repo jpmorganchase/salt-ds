@@ -9,9 +9,10 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseButton,
+  SidePanelCloseTrigger,
   SidePanelGroup,
   SidePanelTrigger,
 } from "@salt-ds/lab";
@@ -60,7 +61,15 @@ export const RightPanel = () => {
           <StackLayout>
             <FlexLayout align="center">
               <H2 id={headingId}>Use case details</H2>
-              <SidePanelCloseButton aria-labelledby={headingId} />
+              <SidePanelCloseTrigger>
+                <Button
+                  aria-label="Close"
+                  appearance="transparent"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              </SidePanelCloseTrigger>
             </FlexLayout>
 
             {Array.from({ length: 2 }, (_, index) => (
