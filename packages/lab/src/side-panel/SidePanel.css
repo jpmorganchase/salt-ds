@@ -2,7 +2,6 @@
   overflow: hidden;
   background-color: var(--saltSidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
-  --saltSidePanel-height: 300px;
   --saltSidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
 }
 
