@@ -25,3 +25,4 @@ These dependency updates do not introduce any Salt component API changes.
 - Removed unused `getDayOfWeek`, if required, use the date framework directly
 - Correct default format for luxon and date-fns to DD/MM/YYYY
 - Fixed dayjs day of week name should return a single character for `narrow`
+- Fixed moment adapter `setTimezone` for UTC to preserve wall-clock time, consistent with all other adapters. Previously, converting a local date to UTC would shift the instant instead of reinterpreting the wall-clock time in UTC.
