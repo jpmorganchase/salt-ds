@@ -5,8 +5,8 @@ import {
   DatePicker,
   DatePickerHelperText,
   DatePickerOverlay,
-  DatePickerRangeGridPanel,
   DatePickerRangeInput,
+  DatePickerRangePanel,
   DatePickerTrigger,
   type DateRangeSelection,
   useLocalization,
@@ -117,7 +117,7 @@ export const RangeWithUnselectableDates = (): ReactElement => {
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangeGridPanel helperText={helperText} />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
