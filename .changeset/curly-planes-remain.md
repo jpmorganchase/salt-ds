@@ -89,3 +89,4 @@ const customCreateAnnouncement: CreateAnnouncement<DateFrameworkType> = (
 - Fixed a bug where a disabled picker could still open by clicking the input
 - Improved screen reader support
 - Fix DatePicker calendar visible month when user enters out of range date in the input and opens the calendar. The calendar will now open to the closest valid month instead of the current month.
+- Fix the error type for `defaultRangeValidator` in `DatePickerRangeInput` (contributed by @VAIBHAVHATISKAR21)

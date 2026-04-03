@@ -133,7 +133,7 @@ export function defaultRangeValidator(
     details.endDate = details.endDate || {};
     details.endDate.errors = details.endDate.errors || [];
     details.endDate.errors.push({
-      type: "max-date",
+      type: "min-date",
       message: "is before min date",
     });
   }
