@@ -396,7 +396,11 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     }
 
     if (timezone === "UTC") {
-      return date.clone().utc();
+      // Preserve the wall-clock time when switching to UTC, consistent with
+      // the other adapters (date-fns-tz, dayjs, luxon) which all keep local
+      // time.  `utcOffset(0, true)` sets the offset to 0 while keeping the
+      // same year/month/day/hour/minute/second values.
+      return date.clone().utcOffset(0, true);
     }
 
     if (timezone === "system") {
