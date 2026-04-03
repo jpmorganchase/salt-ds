@@ -16,8 +16,7 @@ export const FixedWidth = (): ReactElement => {
   return (
     <Carousel
       aria-labelledby={`${carouselId}-title`}
-      className={styles.fullWidth}
-      fixedSlideWidth={550}
+      className={styles.fixedWidth}
       emblaOptions={{ align: "start", slidesToScroll: 1, containScroll: false }}
     >
       <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>

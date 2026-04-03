@@ -62,4 +62,5 @@
 
 .fixedWidthCarousel {
   width: 100%;
+  --carousel-slide-size: 550px;
 }

@@ -60,6 +60,7 @@
   user-select: none;
 }
 
-.fullWidth {
+.fixedWidth:global(.saltCarousel) {
   width: 100%;
+  --carousel-slide-size: 550px;
 }
