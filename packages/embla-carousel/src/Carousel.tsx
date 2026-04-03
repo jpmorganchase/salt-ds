@@ -7,7 +7,6 @@ import useEmblaCarousel, {
 } from "embla-carousel-react";
 import {
   type ComponentPropsWithoutRef,
-  type CSSProperties,
   forwardRef,
   useEffect,
   useState,
@@ -52,11 +51,6 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"section"> {
    * Disable screenreader announcing slide updates, defaults to false.
    */
   disableSlideAnnouncements?: boolean;
-  /**
-   * Fixed width for each slide(e.g. "300px", "20rem")
-   * When not set, the default responsive behavior is preserved.
-   */
-  fixedSlideWidth?: string | number;
 }
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
@@ -67,10 +61,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       disableSlideAnnouncements,
       emblaOptions = {},
       emblaPlugins = [],
-      fixedSlideWidth,
       getEmblaApi,
       id,
-      style,
       ...rest
     },
     ref,
@@ -101,20 +93,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       CarouselAnnouncementTrigger | undefined
     >(undefined);
 
-    const fixedWidthValue =
-      fixedSlideWidth !== undefined
-        ? typeof fixedSlideWidth === "number"
-          ? `${fixedSlideWidth}px`
-          : fixedSlideWidth
-        : undefined;
-
-    const carouselStyle = fixedWidthValue
-      ? {
-          ...style,
-          "--carousel-slide-size": fixedWidthValue,
-        }
-      : style;
-
     return (
       <CarouselContext.Provider
         value={{
@@ -134,7 +112,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           role="region"
           className={clsx(withBaseName(), className)}
           ref={ref}
-          style={carouselStyle as CSSProperties}
           {...rest}
         >
           {children}
