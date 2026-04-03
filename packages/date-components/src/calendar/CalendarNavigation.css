@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: min-content auto min-content;
   padding-bottom: var(--salt-spacing-100);
-  grid-gap: var(--salt-spacing-25);
+  grid-gap: var(--salt-spacing-fixed-200);
   align-items: center;
   box-sizing: border-box;
 }
@@ -19,5 +19,5 @@
 .saltCalendarNavigation-dropdowns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: var(--salt-spacing-50);
+  grid-gap: var(--salt-spacing-fixed-400);
 }
