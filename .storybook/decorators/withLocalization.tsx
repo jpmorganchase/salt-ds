@@ -4,7 +4,7 @@ import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
-import { LocalizationProvider } from "@salt-ds/lab";
+import { LocalizationProvider } from "@salt-ds/date-components";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 
 // biome-ignore lint/suspicious/noExplicitAny: Date framework adapter

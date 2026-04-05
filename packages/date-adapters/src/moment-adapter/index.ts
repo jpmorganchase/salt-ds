@@ -396,7 +396,11 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     }
 
     if (timezone === "UTC") {
-      return date.clone().utc();
+      // Preserve the wall-clock time when switching to UTC, consistent with
+      // the other adapters (date-fns-tz, dayjs, luxon) which all keep local
+      // time.  `utcOffset(0, true)` sets the offset to 0 while keeping the
+      // same year/month/day/hour/minute/second values.
+      return date.clone().utcOffset(0, true);
     }
 
     if (timezone === "system") {
@@ -509,15 +513,6 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   }
 
   /**
-   * Gets the day of the week for a Moment.js date object.
-   * @param date - The Moment.js date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  public getDayOfWeek(date: Moment): number {
-    return date.day();
-  }
-
-  /**
    * Gets the day of the month for a Moment.js date object.
    * @param date - The Moment.js date object.
    * @returns The day of the month as a number (1-31).
@@ -574,4 +569,8 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   public clone(date: Moment): Moment {
     return date.clone();
   }
+
+  public toJSDate = (value: Moment) => {
+    return value.toDate();
+  };
 }

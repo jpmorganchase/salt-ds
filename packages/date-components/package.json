@@ -1,0 +1,54 @@
+{
+  "name": "@salt-ds/date-components",
+  "version": "0.1.0-alpha.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/date-components"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "files": [
+    "css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@floating-ui/react": "^0.26.28",
+    "@salt-ds/core": "workspace:^",
+    "@salt-ds/date-adapters": "workspace:^",
+    "@salt-ds/icons": "workspace:^",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
+    "clsx": "^2.0.0"
+  },
+  "devDependencies": {
+    "@date-fns/tz": "^1.4.1",
+    "@types/luxon": "^3.7.1",
+    "date-fns": "^4.1.0",
+    "dayjs": "^1.11.20",
+    "luxon": "^3.7.2",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.6.1"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.14.0",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-date-components",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs",
+    "bundle:css": "yarn node ./scripts/bundleCSS.mjs"
+  }
+}

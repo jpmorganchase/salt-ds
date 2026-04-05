@@ -10,7 +10,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -25,9 +25,7 @@ import {
   LocalizationProvider,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
-import type { DateTime } from "luxon";
-import type { Moment } from "moment/moment";
+} from "@salt-ds/date-components";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -57,7 +55,7 @@ const Single = ({
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      selection: SingleDateSelection<DateFrameworkType> | null,
+      selection: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -89,7 +87,8 @@ const Single = ({
           : undefined;
 
       const formatDate = (date: DateFrameworkType) => {
-        const iso = date.toISOString();
+        const jsDate = dateAdapter.toJSDate(date);
+        const iso = jsDate.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
           year: "numeric",
@@ -99,7 +98,7 @@ const Single = ({
           minute: "numeric",
           second: "numeric",
           hour12: true,
-        }).format(date);
+        }).format(jsDate);
         const formatted = new Intl.DateTimeFormat(undefined, {
           timeZone: ianaTimezone,
           year: "numeric",
@@ -109,23 +108,16 @@ const Single = ({
           minute: "numeric",
           second: "numeric",
           hour12: true,
-        }).format(date);
+        }).format(jsDate);
         return { iso, locale, formatted };
       };
 
-      const jsDate =
-        dateAdapter.lib === "luxon"
-          ? (selection as DateTime).toJSDate()
-          : dateAdapter.lib === "moment"
-            ? (selection as Moment).toDate()
-            : selection;
-      const formattedDate = formatDate(jsDate);
+      setCurrentTimezone(selection ? dateAdapter.getTimezone(selection) : "");
 
-      setCurrentTimezone(dateAdapter.getTimezone(selection));
-
-      setIso8601String(formattedDate.iso);
-      setLocaleDateString(formattedDate.locale);
-      setDateString(formattedDate.formatted);
+      const formattedDate = selection ? formatDate(selection) : null;
+      setIso8601String(formattedDate?.iso ?? "");
+      setLocaleDateString(formattedDate?.locale ?? "");
+      setDateString(formattedDate?.formatted ?? "");
     },
     [selectedTimezone, dateAdapter],
   );
@@ -200,25 +192,21 @@ export const SingleWithTimezone = (): ReactElement => {
   const dateAdapterMap: Record<string, any> = {
     moment: AdapterMoment,
     dayjs: AdapterDayjs,
-    "date-fns": AdapterDateFns,
+    "date-fns": AdapterDateFnsTZ,
     luxon: AdapterLuxon,
   };
   const validAdapters = Object.keys(dateAdapterMap);
   const [dateAdapterName, setDateAdapterName] = useState<string>("luxon");
 
-  const timezoneOptions =
-    dateAdapterName !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
-
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
   );
@@ -264,7 +252,10 @@ export const SingleWithTimezone = (): ReactElement => {
           </Dropdown>
         </FormField>
       </StackLayout>
-      <LocalizationProvider DateAdapter={dateAdapterMap[dateAdapterName]}>
+      <LocalizationProvider
+        key={dateAdapterName}
+        DateAdapter={dateAdapterMap[dateAdapterName]}
+      >
         <Single key={dateAdapterName} selectedTimezone={selectedTimezone} />
       </LocalizationProvider>
     </StackLayout>

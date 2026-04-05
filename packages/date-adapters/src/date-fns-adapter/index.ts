@@ -8,7 +8,6 @@ import {
   endOfWeek,
   endOfYear,
   format as formatDateFns,
-  getDay,
   getHours,
   getMilliseconds,
   getMinutes,
@@ -152,7 +151,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    */
   public format(
     date: Date | null | undefined,
-    format: RecommendedFormats = "dd MMM yyyy",
+    format: RecommendedFormats = "DD MMM YYYY",
   ): string {
     if (this.isValid(date)) {
       const dateFnsFormat = this.mapToDateFnsFormat(format);
@@ -447,15 +446,6 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   }
 
   /**
-   * Gets the day of the week for a Date object.
-   * @param date - The Date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  public getDayOfWeek(date: Date): number {
-    return getDay(date);
-  }
-
-  /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
@@ -535,4 +525,8 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   public clone(date: Date): Date {
     return new Date(date.getTime());
   }
+
+  public toJSDate = (value: Date) => {
+    return value;
+  };
 }

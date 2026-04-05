@@ -132,9 +132,32 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (!this.dayjs.tz) {
       throw new Error("Salt Day.js adapter: missing timezone plugin");
     }
-    const keepLocalTime = value !== undefined && !value.endsWith("Z");
     const resolvedTimezone = this.resolveTimezone(timezone);
-    return this.dayjs(value).tz(resolvedTimezone, keepLocalTime);
+
+    if (!resolvedTimezone) {
+      return this.dayjs(value);
+    }
+
+    // If the value is a UTC instant (trailing 'Z'), keep the instant and just view it
+    // in the target timezone.
+    // Example: 2025-01-05T00:00:00.000Z in America/New_York is 2025-01-04 19:00 (NY)
+    // and the epoch should remain 2025-01-05T00:00:00.000Z.
+    if (value?.endsWith("Z")) {
+      if (this.dayjs.utc) {
+        return this.dayjs.utc(value).tz(resolvedTimezone);
+      }
+      // Should be unreachable in normal builds (utc plugin is extended by default), but
+      // keep a safe fallback.
+      return this.dayjs(value).tz(resolvedTimezone);
+    }
+
+    // When an explicit IANA timezone is provided, interpret the input string as local time
+    // in that timezone (e.g. "2025-01-05T00:00:00" in Asia/Shanghai should resolve to
+    // 2025-01-04T16:00:00.000Z).
+    //
+    // Using `dayjs(value).tz(zone, keepLocalTime)` can keep the original instant (often UTC/system)
+    // and results in ISO strings staying at 00:00Z across zones for date-only values.
+    return this.dayjs.tz(value, resolvedTimezone);
   };
 
   /**
@@ -437,6 +460,12 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (timezone === "default") {
       return date;
     }
+    // In Salt components, user-typed dates are parsed as *naive* local wall-clock values (no timezone).
+    // `setTimezone` is then used to reinterpret that wall-clock time in the chosen IANA timezone.
+    // Example: user enters "05 Jan 2025" which corresponds to 2025-01-05 00:00 *in the selected
+    // timezone*. For America/New_York this must serialize to 2025-01-05T05:00:00.000Z.
+    //
+    // Therefore we must keep the local time when assigning an IANA zone.
     return date.tz(this.resolveTimezone(timezone), true);
   };
 
@@ -446,11 +475,12 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     }
     const timezone = this.getTimezone(date);
     if (timezone !== "UTC") {
-      const fixedValue = date.tz(this.resolveTimezone(timezone), true);
-      // Change only what is needed to avoid creating a new object with unwanted data
-      // Especially important when used in an environment where utc or timezone dates are used only in some places
+      // Ensure the internal offset is consistent for the date's timezone.
+      // We must NOT use keepLocalTime=true here as it can change the represented instant.
+      const fixedValue = date.tz(this.resolveTimezone(timezone));
+      // Change only what is needed to avoid creating a new object with unwanted data.
       // Reference: https://github.com/mui/mui-x/issues/13290
-      // @ts-expect-error
+      // @ts-expect-error - Dayjs internal field
       date.$offset = fixedValue.$offset;
     }
 
@@ -541,15 +571,6 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   }
 
   /**
-   * Gets the day of the week for a Day.js date object.
-   * @param date - The Day.js date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  public getDayOfWeek(date: Dayjs): number {
-    return date.day();
-  }
-
-  /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
@@ -560,9 +581,9 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     format: "long" | "short" | "narrow",
   ): string {
     const date = this.dayjs().locale(this.locale).weekday(dow);
-    const formatString =
-      format === "long" ? "dddd" : format === "short" ? "ddd" : "dd";
-    return date.format(formatString);
+    const jsDate = date.toDate();
+    const weekday: Intl.DateTimeFormatOptions["weekday"] = format;
+    return new Intl.DateTimeFormat(this.locale, { weekday }).format(jsDate);
   }
 
   /**
@@ -623,4 +644,11 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   public clone(date: Dayjs): Dayjs {
     return date.clone();
   }
+
+  public toJSDate = (value: Dayjs) => {
+    // Dayjs timezone instances can lose the intended offset when converted via `toDate()`
+    // in certain environments/bundlers because `toDate()` relies on internal Date parsing.
+    // Using the epoch milliseconds is the most robust way to preserve the exact instant.
+    return new Date(value.valueOf());
+  };
 }

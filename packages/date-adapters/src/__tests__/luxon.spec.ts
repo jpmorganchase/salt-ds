@@ -136,11 +136,6 @@ describe("GIVEN a AdapterLuxon", () => {
     expect(now.day).toBe(current.day);
   });
 
-  it("SHOULD get the day of the week", () => {
-    const date = DateTime.fromISO("2023-11-01"); // November 1, 2023 is a Wednesday
-    expect(adapter.getDayOfWeek(date)).toBe(3); // 1 = Monday, 3 = Wednesday
-  });
-
   it("SHOULD get the name of the day of the week", () => {
     const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
@@ -175,5 +170,25 @@ describe("GIVEN a AdapterLuxon", () => {
     const clonedDate = adapter.clone(date);
     expect(clonedDate.equals(date)).toBe(true);
     expect(clonedDate).not.toBe(date); // Ensure it's a different instance
+  });
+
+  it("SHOULD clone a Luxon DateTime and preserve timezone", () => {
+    const timezone = "America/New_York";
+    const date = adapter.date("2023-11-01", timezone);
+    const clonedDate = adapter.clone(date);
+    expect(clonedDate.zoneName).toBe(timezone);
+    expect(clonedDate.equals(date)).toBe(true);
+    expect(clonedDate).not.toBe(date);
+  });
+
+  it("SHOULD clone a Luxon DateTime and preserve locale", () => {
+    const frAdapter = new AdapterLuxon({ locale: "fr" });
+    const date = frAdapter.date("2023-11-01", "system");
+    const clonedDate = frAdapter.clone(date);
+
+    // Month name differs by locale; this asserts the clone still formats using French.
+    expect(frAdapter.format(clonedDate, "DD MMMM YYYY")).toBe(
+      "01 novembre 2023",
+    );
   });
 });

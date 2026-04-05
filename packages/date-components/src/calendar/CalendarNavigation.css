@@ -1,0 +1,23 @@
+.saltCalendarNavigation {
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+  padding-bottom: var(--salt-spacing-100);
+  grid-gap: var(--salt-spacing-fixed-200);
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.saltCalendarNavigation-yearDropdown {
+  min-width: 4.3em;
+}
+
+.saltCalendarNavigation-hideYearDropdown {
+  grid-template-columns: min-content auto min-content;
+  grid-gap: var(--salt-spacing-300);
+}
+
+.saltCalendarNavigation-dropdowns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: var(--salt-spacing-fixed-400);
+}

@@ -1,5 +1,5 @@
 import { isValid } from "date-fns";
-import { enUS } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import { describe, expect, it } from "vitest";
 import { AdapterDateFns } from "../date-fns-adapter";
 import { DateDetailError } from "../index";
@@ -117,11 +117,6 @@ describe("GIVEN a AdapterDateFns", () => {
     expect(now.getDate()).toBe(current.getDate());
   });
 
-  it("SHOULD get the day of the week", () => {
-    const date = new Date(2023, 10, 1); // November 1, 2023 is a Wednesday
-    expect(adapter.getDayOfWeek(date)).toBe(3); // 0 = Sunday, 3 = Wednesday
-  });
-
   it("SHOULD get the name of the day of the week", () => {
     const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
@@ -156,5 +151,17 @@ describe("GIVEN a AdapterDateFns", () => {
     const clonedDate = adapter.clone(date);
     expect(clonedDate).toEqual(date);
     expect(clonedDate).not.toBe(date); // Ensure it's a different instance
+  });
+
+  it("SHOULD clone a date and preserve locale formatting", () => {
+    const frAdapter = new AdapterDateFns({ locale: fr });
+    const date = new Date(2023, 10, 1);
+    const clonedDate = frAdapter.clone(date);
+
+    // For date-fns the locale is held by the adapter, not the Date instance.
+    // This asserts a cloned date still formats using French output.
+    expect(frAdapter.format(clonedDate, "DD MMMM YYYY")).toBe(
+      "01 novembre 2023",
+    );
   });
 });
