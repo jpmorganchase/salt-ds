@@ -20,7 +20,7 @@ type SupportedDensity = (typeof SupportedDensityValues)[number];
 
 Cypress.Commands.add("setMode", (mode: SupportedThemeMode) => {
   if (SupportedThemeModeValues.includes(mode)) {
-    Cypress.env("mode", mode);
+    Cypress.expose("mode", mode);
   } else {
     cy.log("Unsupported mode", mode);
   }
@@ -28,7 +28,7 @@ Cypress.Commands.add("setMode", (mode: SupportedThemeMode) => {
 
 Cypress.Commands.add("setDensity", (density: SupportedDensity) => {
   if (SupportedDensityValues.includes(density)) {
-    Cypress.env("density", density);
+    Cypress.expose("density", density);
   } else {
     cy.log("Unsupported density", density);
   }
@@ -38,12 +38,12 @@ Cypress.Commands.add(
   "setDateAdapter",
   // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
   (adapter: SaltDateAdapter<DateFrameworkType, any>) => {
-    Cypress.env("dateAdapter", adapter);
+    Cypress.expose("dateAdapter", adapter);
   },
 );
 // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
 Cypress.Commands.add("setDateLocale", (locale: any) => {
-  Cypress.env("dateLocale", locale);
+  Cypress.expose("dateLocale", locale);
 });
 
 Cypress.Commands.add(
@@ -79,12 +79,12 @@ Cypress.Commands.add(
     };
 
     const density: "mobile" | "touch" | "low" | "medium" | "high" | undefined =
-      Cypress.env("density");
-    const mode: "light" | "dark" | undefined = Cypress.env("mode");
+      Cypress.expose("density");
+    const mode: "light" | "dark" | undefined = Cypress.expose("mode");
     const dateAdapter: SaltDateAdapter<DateFrameworkType> | undefined =
-      Cypress.env("dateAdapter");
+      Cypress.expose("dateAdapter");
     // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
-    const dateLocale: any = Cypress.env("dateLocale");
+    const dateLocale: any = Cypress.expose("dateLocale");
 
     if (!SupportedDensityValues.includes(density as SupportedDensity)) {
       throw new Error(`Invalid density value: ${density}`);
@@ -172,7 +172,7 @@ Cypress.on("uncaught:exception", (err) => {
 const defaultDensity: SupportedDensity = "medium";
 const defaultMode: SupportedThemeMode = "light";
 before(() => {
-  Cypress.env("density", defaultDensity);
-  Cypress.env("mode", defaultMode);
-  Cypress.env("dateLocale", undefined);
+  Cypress.expose("density", defaultDensity);
+  Cypress.expose("mode", defaultMode);
+  Cypress.expose("dateLocale", undefined);
 });
