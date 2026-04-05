@@ -103,6 +103,7 @@
   },
   "resolutions": {
     "@changesets/assemble-release-plan@npm:^6.0.9": "patch:@changesets/assemble-release-plan@npm%3A6.0.9#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.9-e01af97ef4.patch",
+    "@floating-ui/react": "^0.27.19",
     "@salt-ds/lab": "workspace:*",
     "next": "^16.0.0",
     "whatwg-url": "^16.0.0",
