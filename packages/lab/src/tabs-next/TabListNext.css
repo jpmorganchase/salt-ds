@@ -9,7 +9,6 @@
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   gap: var(--salt-spacing-100);
   max-width: 100%;
-  width: 100%;
   min-width: 0;
 }
 
@@ -31,8 +30,4 @@
 
 .saltTabListNext-activeColorTertiary {
   --saltTabListNext-activeColor: var(--salt-container-tertiary-background);
-}
-
-.saltTabListNext-overflowWarning {
-  display: none;
 }

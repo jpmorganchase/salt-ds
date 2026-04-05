@@ -34,7 +34,7 @@ export const WithIcon = (): ReactElement => {
             return (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>
-                  <Icon /> {label}
+                  <Icon aria-hidden /> {label}
                 </TabNextTrigger>
               </TabNext>
             );

@@ -1,3 +1,10 @@
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import * as tabsStories from "@stories/tabs-next/tabs-next.stories";
 import { composeStories } from "@storybook/react-vite";
 
@@ -6,12 +13,57 @@ const {
   DisabledTabs,
   Overflow,
   AddTabs,
-  Closable,
+  Dismissible,
   AddWithDialog,
-  CloseWithConfirmation,
+  DismissWithConfirmation,
   WithInteractiveElementInPanel,
   Controlled,
+  AsyncDismissibleTabs,
 } = composeStories(tabsStories);
+
+const selectorSafeTabs = [
+  "Home",
+  "Transactions",
+  'Loan "A"',
+  "Checks",
+  "Liquidity",
+];
+
+function OverflowWithSelectorSafeValues() {
+  return (
+    <TabsNext defaultValue={selectorSafeTabs[0]}>
+      <TabBar inset divider>
+        <TabListNext style={{ margin: "auto", maxWidth: 150 }}>
+          {selectorSafeTabs.map((label) => (
+            <TabNext key={label} value={label}>
+              <TabNextTrigger>{label}</TabNextTrigger>
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabBar>
+    </TabsNext>
+  );
+}
+
+function clickOverflowTab(name: string) {
+  cy.findByRole("dialog", { name: "Overflow Menu" })
+    .should("be.visible")
+    .within(() => {
+      cy.findByRole("tab", { name }).click();
+    });
+
+  cy.findByRole("tab", { name: "Overflow" }).should(
+    "have.attr",
+    "aria-expanded",
+    "false",
+  );
+}
+
+function assertSelectedMainTab(name: string) {
+  cy.findByRole("tablist").within(() => {
+    cy.findByRole("tab", { name, selected: true }).should("be.visible");
+  });
+}
 
 describe("Given a Tabstrip", () => {
   it("should render with tablist and tab roles", () => {
@@ -100,23 +152,25 @@ describe("Given a Tabstrip", () => {
   it("should allow keyboard navigation into the overflow menu", () => {
     cy.mount(<Overflow />);
 
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab").should("have.length", 5);
 
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
     cy.realPress("ArrowLeft");
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 17);
-    cy.findByRole("tab", { name: "Screens" }).should("be.focused");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
 
-    cy.realPress("ArrowUp");
-    cy.findByRole("tab", { name: "Larger" }).should("be.focused");
+    cy.realPress("Enter");
 
-    cy.realPress("ArrowLeft");
-    cy.findByRole("tab", { name: "On" }).should("be.focused");
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
 
     cy.realPress("ArrowDown");
-    cy.findByRole("tab", { name: "Larger" }).should("be.focused");
+    cy.findByRole("tab", { name: "With" }).should("be.focused");
+
+    cy.realPress("Escape");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
   });
 
   it("should allow tabs to be disabled", () => {
@@ -139,10 +193,8 @@ describe("Given a Tabstrip", () => {
 
   it("should overflow into a menu when there is not enough space to show all tabs", () => {
     cy.mount(<Overflow />);
-    cy.findAllByRole("tab").should("have.length", 17);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
-    cy.findAllByRole("tab").filter(":not(:visible)").should("have.length", 13);
-    cy.get("[data-overflowbutton]").should("be.visible");
+    cy.findAllByRole("tab").should("have.length", 5);
+    cy.findByRole("tab", { name: "Overflow" }).should("be.visible");
   });
 
   it("should allow keyboard navigation in the menu", () => {
@@ -152,67 +204,132 @@ describe("Given a Tabstrip", () => {
         <button>end</button>
       </>,
     );
-    cy.get("[data-overflowbutton]").realClick();
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
     cy.realPress("ArrowDown");
     cy.findByRole("tab", { name: "With" }).should("be.focused");
     cy.realPress("End");
     cy.findByRole("tab", { name: "Screens" }).should("be.focused");
     cy.realPress("Escape");
-    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
+    cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
     cy.realPress("Tab");
     cy.findByRole("button", { name: "end" }).should("be.focused");
   });
 
-  it("should close the overflow menu when a click is detected outside", () => {
+  it("should dismiss the overflow menu when a click is detected outside", () => {
     cy.mount(<Overflow />);
 
-    cy.get("[data-overflowbutton]").realClick();
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 17);
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
 
-    cy.wait(500);
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    cy.findAllByRole("tab").should("have.length", 13);
 
     cy.get("body").click(0, 0);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab").should("have.length", 5);
   });
 
   it("should allow selection in the menu", () => {
     cy.mount(<Overflow />);
 
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab").should("have.length", 5);
 
-    cy.get("[data-overflowbutton]").realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
+
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
-
     cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
 
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab").should("have.length", 5);
 
-    cy.get("[data-overflowbutton]").realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
+
     cy.realPress("Enter");
     cy.findByRole("tab", { name: "Checks" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
   });
 
+  it("should announce when a selected overflow tab moves to the main list", () => {
+    cy.mount(<Overflow />);
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    clickOverflowTab("Liquidity");
+    assertSelectedMainTab("Liquidity");
+    cy.get("[aria-live]", { timeout: 8000 }).should(
+      "contain.text",
+      "Liquidity moved to main tab list",
+    );
+  });
+
   it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tablist").invoke("css", "max-width", 140);
-    cy.wait(500);
 
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
 
-    cy.get("[data-overflowbutton]").realClick();
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 14); // overflow menu shown
-    cy.findByRole("tab", { name: "Liquidity" }).realClick();
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 1); // overflow menu hidden
+    cy.findAllByRole("tab").should("have.length", 2);
 
-    cy.findByRole("tab", { name: "Liquidity" })
-      .should("have.attr", "aria-selected", "true")
-      .should("be.focused");
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findAllByRole("tab").should("have.length", 16); // overflow menu shown
+
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+
+    clickOverflowTab("Liquidity");
+
+    cy.findAllByRole("tab").should("have.length", 2); // overflow menu hidden
+
+    cy.findByRole("tab", { name: "Liquidity", selected: true }).should(
+      "be.focused",
+    );
+  });
+
+  it("should allow overflow selection when values contain selector characters", () => {
+    cy.mount(<OverflowWithSelectorSafeValues />);
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    clickOverflowTab('Loan "A"');
+
+    cy.findByRole("tab", { name: 'Loan "A"', selected: true }).should(
+      "be.focused",
+    );
+  });
+
+  it("should keep a pinned overflow tab visible when selection moves to an already visible tab", () => {
+    cy.mount(<Overflow />);
+
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    clickOverflowTab("Liquidity");
+    assertSelectedMainTab("Liquidity");
+
+    cy.findByRole("tab", { name: "Transactions" }).realClick();
+    assertSelectedMainTab("Transactions");
+    cy.findByRole("tab", { name: "Liquidity" }).should("be.visible");
   });
 
   it("should support adding tabs", () => {
@@ -260,13 +377,13 @@ describe("Given a Tabstrip", () => {
   });
 
   it("should add the correct aria when tab actions are used", () => {
-    cy.mount(<Closable />);
+    cy.mount(<Dismissible />);
 
     // TODO: enable when aria-actions is supported in browsers.
     // cy.findByRole("tab", { name: "Home" })
     //   .invoke("attr", "aria-actions")
     //   .then((actionId) => {
-    //     cy.findByRole("button", { name: "Home Close tab" }).should(
+    //     cy.findByRole("button", { name: "Home Dismiss tab" }).should(
     //       "have.attr",
     //       "id",
     //       actionId,
@@ -280,7 +397,7 @@ describe("Given a Tabstrip", () => {
   });
 
   it("should support closing tabs with a mouse", () => {
-    cy.mount(<Closable />);
+    cy.mount(<Dismissible />);
 
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -289,7 +406,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findAllByRole("tab").should("have.length", 5);
 
-    cy.findByRole("button", { name: "Liquidity Close tab" }).realClick();
+    cy.findByRole("button", { name: "Liquidity Dismiss tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 4);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -298,7 +415,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
-    cy.findByRole("button", { name: "Loans Close tab" }).realClick();
+    cy.findByRole("button", { name: "Loans Dismiss tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 3);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -307,7 +424,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
-    cy.findByRole("button", { name: "Home Close tab" }).realClick();
+    cy.findByRole("button", { name: "Home Dismiss tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 2);
     cy.findByRole("tab", { name: "Transactions" }).should(
       "have.attr",
@@ -317,21 +434,43 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
   });
 
+  it("should restore focus when selected tab removal is async", () => {
+    cy.mount(<AsyncDismissibleTabs />);
+
+    cy.findByRole("button", { name: "Home Dismiss tab" }).realClick();
+    cy.findByRole("tab", { name: "Transactions" })
+      .should("have.attr", "aria-selected", "true")
+      .and("be.focused");
+  });
+
+  it("should call onChange with null when selection moves automatically after removal", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<Dismissible onChange={changeSpy} />);
+
+    cy.findByRole("button", { name: "Home Dismiss tab" }).realClick();
+
+    cy.findByRole("tab", { name: "Transactions" })
+      .should("have.attr", "aria-selected", "true")
+      .and("be.focused");
+
+    cy.get("@changeSpy").should("have.been.calledWith", null, "Transactions");
+  });
+
   it("should support closing with a keyboard", () => {
-    cy.mount(<Closable />);
+    cy.mount(<Dismissible />);
     cy.findAllByRole("tab").should("have.length", 5);
 
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Dismiss tab" }).should("be.focused");
 
     cy.realPress("ArrowRight");
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Transactions Close tab" }).should(
+    cy.findByRole("button", { name: "Transactions Dismiss tab" }).should(
       "be.focused",
     );
 
@@ -339,7 +478,7 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.realPress(["Shift", "Tab"]);
-    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Dismiss tab" }).should("be.focused");
 
     cy.realPress("Enter");
 
@@ -353,17 +492,17 @@ describe("Given a Tabstrip", () => {
   });
 
   it("should support closing with confirmation", () => {
-    cy.mount(<CloseWithConfirmation />);
+    cy.mount(<DismissWithConfirmation />);
     cy.findAllByRole("tab").should("have.length", 3);
 
-    cy.findAllByRole("button", { name: "Home Close tab" }).realClick();
+    cy.findAllByRole("button", { name: "Home Dismiss tab" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("button", { name: "No" }).realClick();
     cy.findByRole("dialog").should("not.to.exist");
-    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Dismiss tab" }).should("be.focused");
 
-    cy.findAllByRole("button", { name: "Home Close tab" }).realClick();
+    cy.findAllByRole("button", { name: "Home Dismiss tab" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("button", { name: "Yes" }).realClick();
@@ -395,15 +534,13 @@ describe("Given a Tabstrip", () => {
 
   it("should dynamically overflow tabs", () => {
     cy.mount(<Overflow />);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab").should("have.length", 5);
 
     cy.findByRole("tablist").invoke("css", "max-width", 500);
-    cy.wait(500);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 6);
+    cy.findAllByRole("tab").should("have.length", 7);
 
     cy.findByRole("tablist").invoke("css", "max-width", 200);
-    cy.wait(500);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
+    cy.findAllByRole("tab").should("have.length", 3);
   });
 
   it("should support a controlled API", () => {
@@ -422,37 +559,25 @@ describe("Given a Tabstrip", () => {
       "true",
     );
 
-    cy.get("[data-overflowbutton]").realClick();
+    cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+    cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
+
+    cy.findByRole("tab", { name: "Loans" }).should("be.focused");
+
     cy.findByRole("tab", { name: "Lots" }).realClick();
+    cy.findByRole("tab", { name: "Lots" }).should("be.focused");
     cy.findByRole("tab", { name: "Lots" }).should(
       "have.attr",
       "aria-selected",
       "true",
     );
 
-    cy.findByRole("button", { name: "Lots Close tab" }).realClick();
-    cy.findByRole("tab", { name: "More" })
+    cy.findByRole("button", { name: "Lots Dismiss tab" }).realClick();
+    cy.findByRole("tab", { name: "Transactions" })
       .should("have.attr", "aria-selected", "true")
       .and("be.focused");
   });
-
-  it(
-    "should not cause page overflow when overflow menu is not visible",
-    { viewportWidth: 280, viewportHeight: 280 },
-    () => {
-      cy.get("body").invoke("css", "display", "block");
-
-      cy.mount(<Overflow />);
-      cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
-
-      // no horizontal overflow
-      cy.get("html").then((body) => {
-        console.log(body[0]);
-        const { clientWidth, scrollWidth } = body[0];
-        expect(clientWidth).to.equal(scrollWidth);
-      });
-    },
-  );
 
   it(
     "should flip overflow menu placement if there is enough space",
@@ -461,14 +586,14 @@ describe("Given a Tabstrip", () => {
       cy.get("body").invoke("css", "display", "block");
 
       cy.mount(<Overflow />);
-      cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+      cy.findAllByRole("tab").should("have.length", 5);
 
-      cy.get("[data-overflowbutton]").realClick();
-      cy.wait(500);
+      cy.findByRole("tab", { name: "Overflow" }).realClick();
+
+      cy.findByRole("dialog", { name: "Overflow Menu" }).should("be.visible");
 
       // no horizontal overflow, menu should flip in horizontally
       cy.get("html").then((body) => {
-        console.log(body[0]);
         const { clientWidth, scrollWidth } = body[0];
         expect(clientWidth).to.equal(scrollWidth);
       });

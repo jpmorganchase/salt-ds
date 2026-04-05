@@ -1,0 +1,15 @@
+import { createContext } from "@salt-ds/core";
+import { useContext } from "react";
+
+export interface TabOverflowContextValue {
+  activeIndex: number | null;
+}
+
+export const TabOverflowContext = createContext<TabOverflowContextValue | null>(
+  "TabOverflowContext",
+  null,
+);
+
+export function useTabOverflow() {
+  return useContext(TabOverflowContext);
+}
