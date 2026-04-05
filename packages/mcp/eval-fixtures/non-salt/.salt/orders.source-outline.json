@@ -1,0 +1,9 @@
+{
+  "regions": ["header", "filters", "summary", "results-table", "empty-state"],
+  "actions": ["Create order", "Refresh"],
+  "states": ["loading", "empty"],
+  "notes": [
+    "Keep the primary action in the top-right header area.",
+    "Preserve keyboard flow between filters and the results table."
+  ]
+}

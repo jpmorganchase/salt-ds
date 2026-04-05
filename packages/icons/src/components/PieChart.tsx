@@ -6,7 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type PieChartIconProps = IconProps;
 
-/** @deprecated - Use `ChartPieIcon` instead. */
+/** @deprecated since 1.16.0. Use `ChartPieIcon` instead. */
 export const PieChartIcon = forwardRef<SVGSVGElement, PieChartIconProps>(
   function PieChartIcon(props: PieChartIconProps, ref) {
     return (

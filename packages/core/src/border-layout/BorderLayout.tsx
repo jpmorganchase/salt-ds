@@ -71,21 +71,44 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
       (child) => isValidElement(child) && child.props.position,
     ) as BorderPosition[];
 
-    const topSection = borderAreas.includes("north")
-      ? "north ".repeat(numberOfColumns)
-      : "none ".repeat(numberOfColumns);
+    const hasNorth = borderAreas.includes("north");
+    const hasWest = borderAreas.includes("west");
+    const hasEast = borderAreas.includes("east");
+    const hasSouth = borderAreas.includes("south");
 
-    const leftSection = borderAreas.includes("west") ? "west" : "center";
+    const middleColumns = [
+      hasWest ? "west" : undefined,
+      "center",
+      hasEast ? "east" : undefined,
+    ].filter(Boolean) as BorderPosition[];
 
-    const rightSection = borderAreas.includes("east") ? "east" : "center";
+    const gridTemplateColumns = [
+      hasWest ? "min-content" : undefined,
+      "1fr",
+      hasEast ? "min-content" : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-    const midSection = `${leftSection} center ${rightSection}`;
+    const gridTemplateRows = [
+      hasNorth ? "min-content" : undefined,
+      "1fr",
+      hasSouth ? "min-content" : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-    const bottomSection = borderAreas.includes("south")
-      ? "south ".repeat(numberOfColumns)
-      : "none ".repeat(numberOfColumns);
+    const gridTemplateSections = [
+      hasNorth
+        ? `"${"north ".repeat(middleColumns.length).trimEnd()}"`
+        : undefined,
+      `"${middleColumns.join(" ")}"`,
+      hasSouth
+        ? `"${"south ".repeat(middleColumns.length).trimEnd()}"`
+        : undefined,
+    ].filter(Boolean);
 
-    const gridTemplateAreas = `"${topSection}" "${midSection}" "${bottomSection}"`;
+    const gridTemplateAreas = gridTemplateSections.join(" ");
 
     const hasMainSection = borderAreas.includes("center");
 
@@ -102,6 +125,8 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
     const borderLayoutStyles = {
       ...style,
       "--gridLayout-gridTemplate": gridTemplateAreas,
+      "--gridLayout-areaColumns": gridTemplateColumns,
+      "--gridLayout-areaRows": gridTemplateRows,
     };
 
     return (

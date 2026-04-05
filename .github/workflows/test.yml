@@ -92,16 +92,29 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
+      - name: Generate site snapshot inputs
+        run: yarn workspace @salt-ds/site gen:snapshot
       - run: yarn run test
+  consumer-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Consumer smoke test
+        run: yarn smoke:consumer
   cypress-tests:
     strategy:
       fail-fast: false
       matrix:
         react: [16, 17, 18]
     runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
-      options: --user 1001
     steps:
       - name: Checkout
         uses: actions/checkout@v6

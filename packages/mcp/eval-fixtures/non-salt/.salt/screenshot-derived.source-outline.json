@@ -1,0 +1,9 @@
+{
+  "regions": ["header", "sidebar", "toolbar", "content", "empty-state"],
+  "actions": ["Save", "Refresh"],
+  "states": ["loading", "empty"],
+  "notes": [
+    "This outline was derived from a screenshot adapter and should be treated as supporting evidence only.",
+    "Keep the navigation grouping and empty-state hierarchy familiar."
+  ]
+}

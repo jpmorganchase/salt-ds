@@ -72,7 +72,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableScrim?: boolean;
   /**
-   * @deprecated IDs are now auto-generated internally for proper ARIA labeling.
+   * @deprecated since 1.58.0. IDs are now auto-generated internally for proper ARIA labeling.
    *
    * Optional id prop
    * Used for accessibility purposes to announce the title and subtitle when using a screen reader

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-patterns.schema.json",
+  "type": "object",
+  "required": ["generated_at", "version", "patterns"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "summary",
+          "status",
+          "when_to_use",
+          "when_not_to_use",
+          "composed_of",
+          "related_docs",
+          "last_verified_at"
+        ]
+      }
+    }
+  }
+}

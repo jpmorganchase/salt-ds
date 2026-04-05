@@ -1,0 +1,81 @@
+{
+  "contract": "project_conventions_v1",
+  "version": "1.0.0",
+  "project": "consumer-example-app",
+  "preferred_components": [
+    {
+      "salt_name": "Button",
+      "prefer": "AppButton",
+      "reason": "Primary product actions use AppButton for analytics and approved defaults.",
+      "docs": ["./docs/app-button.md"]
+    }
+  ],
+  "approved_wrappers": [
+    {
+      "name": "AppButton",
+      "wraps": "Button",
+      "reason": "Adds analytics and product defaults without changing the underlying Salt primitive.",
+      "import": {
+        "from": "@/components/AppButton",
+        "name": "AppButton"
+      },
+      "use_when": ["primary product actions", "toolbar actions"],
+      "avoid_when": ["sandbox examples"],
+      "migration_shim": false,
+      "docs": ["./docs/app-button.md"]
+    }
+  ],
+  "token_aliases": [
+    {
+      "salt_name": "--salt-container-primary-borderColor",
+      "prefer": "--consumer-border-default",
+      "reason": "Product surfaces use the local border alias so repo theming stays centralized.",
+      "docs": ["./docs/token-aliases.md"]
+    }
+  ],
+  "theme_defaults": {
+    "provider": "ConsumerBrandProvider",
+    "provider_import": {
+      "from": "@/theme/ConsumerBrandProvider",
+      "name": "ConsumerBrandProvider"
+    },
+    "imports": ["@/theme/consumer-brand.css"],
+    "props": [
+      {
+        "name": "density",
+        "value": "high"
+      }
+    ],
+    "reason": "The app wraps canonical Salt theme defaults in one repo-level provider.",
+    "docs": ["./docs/platform-conventions.md"]
+  },
+  "token_family_policies": [
+    {
+      "family": "container",
+      "mode": "prefer-local-aliases",
+      "reason": "Container roles should route through the repo token aliases.",
+      "docs": ["./docs/token-aliases.md"]
+    }
+  ],
+  "pattern_preferences": [
+    {
+      "intent": "workspace shell navigation",
+      "prefer": "WorkspaceShell",
+      "canonical_salt_start": "VerticalNavigation",
+      "reason": "The app wraps canonical Salt navigation inside one approved shell component.",
+      "docs": ["./docs/workspace-shell.md"]
+    }
+  ],
+  "banned_choices": [
+    {
+      "name": "UNSTABLE_SaltProviderNext",
+      "reason": "The app is standardized on SaltProvider only.",
+      "replacement": "SaltProvider",
+      "docs": ["./docs/platform-conventions.md"]
+    }
+  ],
+  "notes": [
+    "Keep canonical Salt guidance and project conventions separate in final recommendations.",
+    "Do not present repo wrappers as if they were part of the official Salt registry."
+  ]
+}

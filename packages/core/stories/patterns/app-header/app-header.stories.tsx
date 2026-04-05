@@ -8,6 +8,7 @@ import {
   NavigationItem,
   StackLayout,
   Text,
+  Tooltip,
   useResponsiveProp,
 } from "@salt-ds/core";
 import {
@@ -28,7 +29,8 @@ export default {
 const DesktopAppHeader: FC<{
   items?: string[];
   utilities?: { icon: ReactNode; key: string }[];
-}> = ({ items, utilities }) => {
+  showNavigation?: boolean;
+}> = ({ items, utilities, showNavigation = true }) => {
   const [active, setActive] = useState(items?.[0]);
   const [offset, setOffset] = useState(0);
   useEffect(() => {
@@ -46,6 +48,7 @@ const DesktopAppHeader: FC<{
     <header>
       <FlexLayout
         style={{
+          minHeight: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
           paddingLeft: "var(--salt-spacing-300)",
           paddingRight: "var(--salt-spacing-300)",
           backgroundColor: "var(--salt-container-primary-background)",
@@ -60,43 +63,58 @@ const DesktopAppHeader: FC<{
         gap={3}
       >
         <FlexItem align="center">
-          <img
-            alt="logo"
-            src={logo}
-            style={{
-              display: "block",
-              height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
-            }}
-          />
+          <StackLayout direction="row" gap={2} align="center">
+            <img
+              alt="logo"
+              src={logo}
+              style={{
+                display: "block",
+                height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
+              }}
+            />
+            <Text style={{ fontWeight: "var(--salt-text-fontWeight-strong)" }}>
+              Atlas
+            </Text>
+          </StackLayout>
         </FlexItem>
-        <nav>
-          <ul
-            style={{
-              display: "flex",
-              listStyle: "none",
-              padding: "0",
-              margin: "0",
-            }}
-          >
-            {items?.map((item) => (
-              <li key={item}>
-                <NavigationItem
-                  active={active === item}
-                  href="#"
-                  onClick={() => setActive(item)}
-                >
-                  {item}
-                </NavigationItem>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {showNavigation ? (
+          <nav aria-label="Primary">
+            <ul
+              style={{
+                display: "flex",
+                listStyle: "none",
+                padding: "0",
+                margin: "0",
+              }}
+            >
+              {items?.map((item) => (
+                <li key={item}>
+                  <NavigationItem
+                    active={active === item}
+                    href="#"
+                    onClick={() => setActive(item)}
+                  >
+                    {item}
+                  </NavigationItem>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ) : (
+          <FlexItem />
+        )}
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
             {utilities?.map((utility) => (
-              <Button key={utility.key} appearance="transparent">
-                {utility.icon}
-              </Button>
+              <Tooltip
+                key={utility.key}
+                content={utility.key}
+                placement="bottom"
+              >
+                <Button appearance="transparent" aria-label={utility.key}>
+                  {utility.icon}
+                </Button>
+              </Tooltip>
             ))}
           </StackLayout>
         </FlexItem>
@@ -157,8 +175,9 @@ const MobileAppHeader: FC<{
               onClick={() => setDrawerOpen(true)}
               style={{ alignSelf: "center" }}
               appearance="transparent"
+              aria-label="Open navigation menu"
             >
-              <MenuIcon />
+              <MenuIcon aria-hidden />
             </Button>
           )}
           {drawerOpen && (
@@ -166,20 +185,26 @@ const MobileAppHeader: FC<{
               onClick={() => setDrawerOpen(false)}
               style={{ alignSelf: "center" }}
               appearance="transparent"
+              aria-label="Close navigation menu"
             >
-              <CloseIcon />
+              <CloseIcon aria-hidden />
             </Button>
           )}
         </FlexItem>
         <FlexItem align="center">
-          <img
-            alt="logo"
-            src={logo}
-            style={{
-              display: "block",
-              height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
-            }}
-          />
+          <StackLayout direction="row" gap={2} align="center">
+            <img
+              alt="logo"
+              src={logo}
+              style={{
+                display: "block",
+                height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
+              }}
+            />
+            <Text style={{ fontWeight: "var(--salt-text-fontWeight-strong)" }}>
+              Atlas
+            </Text>
+          </StackLayout>
         </FlexItem>
       </StackLayout>
       <Drawer
@@ -194,7 +219,7 @@ const MobileAppHeader: FC<{
           }
         }}
       >
-        <nav>
+        <nav aria-label="Primary">
           <ul style={{ listStyle: "none", padding: "0" }}>
             {items?.map((item) => (
               <li key={item}>
@@ -238,15 +263,15 @@ export const AppHeader = () => {
 
   const utilities = [
     {
-      icon: <SymphonyIcon />,
+      icon: <SymphonyIcon aria-hidden />,
       key: "Symphony",
     },
     {
-      icon: <StackoverflowIcon />,
+      icon: <StackoverflowIcon aria-hidden />,
       key: "Stack Overflow",
     },
     {
-      icon: <GithubIcon />,
+      icon: <GithubIcon aria-hidden />,
       key: "GitHub",
     },
   ];
@@ -294,5 +319,119 @@ export const AppHeader = () => {
 };
 
 AppHeader.parameters = {
+  layout: "fullscreen",
+};
+
+export const HeaderOnly = () => {
+  const items = ["Home", "About", "Services", "Contact"];
+  const utilities = [
+    { icon: <SymphonyIcon aria-hidden />, key: "Symphony" },
+    { icon: <GithubIcon aria-hidden />, key: "GitHub" },
+  ];
+
+  return (
+    <BorderLayout>
+      <BorderItem position="north">
+        <DesktopAppHeader items={items} utilities={utilities} />
+      </BorderItem>
+      <BorderItem
+        style={{
+          marginTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+        }}
+        position="center"
+      >
+        {Array.from({ length: 8 }, (_, index) => (
+          <div
+            key={index}
+            style={{
+              padding: "var(--salt-spacing-400)",
+              margin: "var(--salt-spacing-400)",
+              backgroundColor: "var(--salt-container-secondary-background)",
+            }}
+          />
+        ))}
+      </BorderItem>
+    </BorderLayout>
+  );
+};
+
+HeaderOnly.parameters = {
+  layout: "fullscreen",
+};
+
+export const HeaderWithVerticalNavigation = () => {
+  const items = ["Home", "About", "Services", "Contact"];
+  const utilities = [
+    { icon: <StackoverflowIcon aria-hidden />, key: "Stack Overflow" },
+    { icon: <GithubIcon aria-hidden />, key: "GitHub" },
+  ];
+  const navItems = ["Overview", "Data analysis", "Reports", "Settings"];
+  const [active, setActive] = useState(navItems[0]);
+
+  return (
+    <BorderLayout>
+      <BorderItem position="north">
+        <DesktopAppHeader
+          items={items}
+          utilities={utilities}
+          showNavigation={false}
+        />
+      </BorderItem>
+      <BorderItem
+        position="west"
+        style={{
+          marginTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+          width: "240px",
+          padding: "var(--salt-spacing-200)",
+        }}
+      >
+        <aside>
+          <nav aria-label="Primary">
+            <StackLayout
+              as="ul"
+              gap="var(--salt-spacing-fixed-100)"
+              style={{ listStyle: "none", margin: 0, padding: 0 }}
+            >
+              {navItems.map((item) => (
+                <li key={item} style={{ listStyle: "none" }}>
+                  <NavigationItem
+                    active={active === item}
+                    href="#"
+                    orientation="vertical"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setActive(item);
+                    }}
+                  >
+                    {item}
+                  </NavigationItem>
+                </li>
+              ))}
+            </StackLayout>
+          </nav>
+        </aside>
+      </BorderItem>
+      <BorderItem
+        position="center"
+        style={{
+          marginTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+        }}
+      >
+        {Array.from({ length: 8 }, (_, index) => (
+          <div
+            key={index}
+            style={{
+              padding: "var(--salt-spacing-400)",
+              margin: "var(--salt-spacing-400)",
+              backgroundColor: "var(--salt-container-secondary-background)",
+            }}
+          />
+        ))}
+      </BorderItem>
+    </BorderLayout>
+  );
+};
+
+HeaderWithVerticalNavigation.parameters = {
   layout: "fullscreen",
 };

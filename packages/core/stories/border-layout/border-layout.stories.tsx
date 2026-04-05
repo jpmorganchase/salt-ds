@@ -166,6 +166,36 @@ const NoHeaderTemplate: StoryFn<typeof BorderLayout> = (args) => {
 export const NoHeader = NoHeaderTemplate.bind({});
 NoHeader.args = {};
 
+const NoHeaderOrFooterTemplate: StoryFn<typeof BorderLayout> = (args) => {
+  return (
+    <BorderLayout {...args}>
+      <BorderItem position="west">
+        <div className="border-item border-left">
+          <p>West</p>
+        </div>
+      </BorderItem>
+      <BorderItem position="center">
+        <div
+          className="border-item border-main"
+          style={{
+            minWidth: 100,
+          }}
+        >
+          <p>Center</p>
+        </div>
+      </BorderItem>
+      <BorderItem position="east">
+        <div className="border-item border-right">
+          <p>East</p>
+        </div>
+      </BorderItem>
+    </BorderLayout>
+  );
+};
+
+export const NoHeaderOrFooter = NoHeaderOrFooterTemplate.bind({});
+NoHeaderOrFooter.args = {};
+
 const FixedPanelsTemplate: StoryFn<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args} style={{ width: "60vw" }}>

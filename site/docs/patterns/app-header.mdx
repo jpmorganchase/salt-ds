@@ -13,6 +13,20 @@ data:
     ]
   components: ["Navigation item", "Button"]
   relatedPatterns: ["Navigation", "Vertical navigation"]
+  ai:
+    starterScaffold:
+      sourceUrls: ["/salt/patterns/app-header"]
+      template: "app-header"
+      semantics:
+        regions: ["branding", "primary-navigation", "utility-actions"]
+        optionalRegions: ["primary-navigation"]
+        buildAround: ["Branding", "Navigation", "Utilities"]
+        preserveConstraints:
+          [
+            "Always place your logo on the top-left corner of the application.",
+            "Link the logo to the app home page.",
+            "Navigation items sit on top of the utility actions if they collapse into a drawer.",
+          ]
 ---
 
   <Diagram

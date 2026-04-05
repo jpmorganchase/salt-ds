@@ -13,6 +13,28 @@ data:
     ]
   components: ["Navigation item"]
   relatedPatterns: ["Navigation"]
+  ai:
+    aliases:
+      ["sidebar navigation", "navigation pane", "left-hand navigation", "nested navigation"]
+    starterScaffold:
+      sourceUrls: ["/salt/patterns/vertical-navigation"]
+      template: "vertical-navigation"
+      semantics:
+        regions: ["navigation-pane", "nested-navigation", "content-context"]
+        requiredRegions: ["navigation-pane"]
+        optionalRegions: ["nested-navigation"]
+        buildAround:
+          [
+            "Default navigation item",
+            "Parent navigation item",
+            "Content context",
+          ]
+        preserveConstraints:
+          [
+            "Maintain a wide and flat hierarchy instead of one that is deep and overwhelming.",
+            "Clicking a parent item won't navigate the user but expand the group.",
+            "If an overview page is necessary it should be the first in the group.",
+          ]
 ---
 
 <Diagram
