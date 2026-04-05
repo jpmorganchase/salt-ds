@@ -361,6 +361,17 @@ describe("Given a Dropdown", () => {
       .should("exist");
   });
 
+  it("should clear hover state when moving from an option to an adjacent group header", () => {
+    cy.mount(<Grouped />);
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "New York" }).realHover();
+    cy.findByRole("option", { name: "New York" }).should("be.activeDescendant");
+    cy.get(".saltOptionGroup-label").contains("GB").realHover();
+    cy.findByRole("option", { name: "New York" }).should(
+      "not.be.activeDescendant",
+    );
+  });
+
   it("should support complex options", () => {
     cy.mount(<ComplexOption />);
     cy.findByRole("combobox").realClick();
