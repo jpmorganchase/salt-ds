@@ -1,0 +1,81 @@
+---
+title: Experience Customization
+description: "Experience Customization is a guided configuration process that allows users to initialize their application settings—including regional, visual, and functional preferences—to ensure the interface is fully optimized for their specific workflow on first use."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/experience-customization
+data:
+  components: ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
+  relatedPatterns: ["Button bar", "Selectable card", "Wizard"]
+  resources:
+    [
+      { href: "/salt/patterns/wizard", label: "Wizard pattern guidance", internal: true },
+      { href: "/salt/patterns/selectable-card", label: "Selectable card pattern guidance", internal: true },
+    ]
+---
+
+
+<Diagram
+  src="/img/patterns/wizard/wizard-pattern-example.png"
+  srcDark="/img/patterns/wizard/wizard-pattern-example-dark.png"
+  alt="Example of a multi-step wizard workflow with stepper navigation"
+  border
+  background="secondary"
+/>
+
+## When to use
+
+Use Experience Customization to establish the foundational settings that align how a user interacts with the application:
+
+- **Localization & standards**: Setting language, time zone, and regional formats for currency and numbers.
+- **Visual accessibility**: Configuring high-contrast modes, display density, and specific UI treatments (like date formatting or name display) to meet regulatory and power-user requirements.
+- **Role-based personalization**: Tailoring the interface and feature set based on specific job responsibilities.
+- **Governance & privacy**: Establishing data-sharing levels, security permissions, and communication preferences.
+- **Communications**: Selecting notification channels and where alerts appear on screen.
+- **Workspace structure**: Initializing team spaces, naming conventions, and project templates from the start.
+
+## How to build
+
+### Anatomy
+
+This pattern is built on the [Wizard](/salt/patterns/wizard) structure:
+
+1. **Header**: Contains the workflow title and a Stepper to show progress. The stepper is hidden for single-step configurations.
+2. **Content**: area: The space for selection controls and real-time previews of changes.
+
+
+## UI pattern guidance
+
+The level of visual engagement for each step is determined by the complexity of the choice:
+
+### Form controls
+
+Standard components like [Toggle button](/salt/components/toggle-button), [Radio button](/salt/components/radio-button), [Switch](/salt/components/switch), or Dropdown. Use these for functional changes where the outcome is already understood, and when visual selection elements aren’t needed or provided—enabling a simple, efficient choice.
+
+### Visual selection
+
+Use Selectable card to provide a clear representation of a final state, such as a specific page layout or notification position.
+
+### Dynamic live preview
+
+A split-view layout where a visual preview container take up 50% of the width. This dynamic container updates in real-time to reflect the user’s choice. 
+
+## Use cases
+
+### Localization & standards
+
+This example focuses on functional changes. Use a searchable Dropdown for “Choose a time zone (region)” or “Choose a language,” as the search functionality is essential for navigation extensive list efficiently. For binary settings, use a Switch to provide a clear on/off state.
+
+### Accessibility consensus
+
+This example shows a progressive disclosure + reset pattern: if a user changes display density away from the business‑recommended baseline, a “Reset to recommended” action appears. When the user selects a density that may reduce accessibility (e.g., High density), show a non-blocking warning that explains the impact and offers a one-click reset back to the recommended setting. The reset action should only appear after a change, and the button label should be specific to the setting (e.g., “Reset to medium density”).
+
+### Governance & privacy
+
+This example shows a required pattern where the user must select governance settings—such as a security tier and data‑sharing level—before setup can be finalized. 
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  Communicate the requirement up front in the header description. If the user attempts to continue without making a selection, keep “Next”/“Finish” enabled but display a Banner at the top of the content area to move focus to the missing requirement immediately and prevent setup from being finalized until the selection is made.
+</GuidanceCallout>
