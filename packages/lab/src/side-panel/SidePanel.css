@@ -1,0 +1,77 @@
+.saltSidePanel {
+  overflow: hidden;
+  background-color: var(--saltSidePanel-background, var(--salt-container-primary-background));
+  --saltSidePanel-width: 300px;
+  --saltSidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+}
+
+.saltSidePanel-primary {
+  --saltSidePanel-background: var(--salt-container-primary-background);
+}
+
+.saltSidePanel-secondary {
+  --saltSidePanel-background: var(--salt-container-secondary-background);
+}
+
+.saltSidePanel-tertiary {
+  --saltSidePanel-background: var(--salt-container-tertiary-background);
+}
+
+.saltSidePanel-left {
+  border-right: var(--saltSidePanel-border);
+}
+.saltSidePanel-right {
+  border-left: var(--saltSidePanel-border);
+}
+
+.saltSidePanel-left,
+.saltSidePanel-right {
+  width: var(--saltSidePanel-width);
+  height: 100%;
+}
+
+.saltSidePanel-left.saltSidePanel-enterAnimation,
+.saltSidePanel-right.saltSidePanel-enterAnimation {
+  animation: saltSidePanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
+}
+
+.saltSidePanel-left.saltSidePanel-exitAnimation,
+.saltSidePanel-right.saltSidePanel-exitAnimation {
+  animation: saltSidePanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
+}
+
+.saltSidePanel-exitAnimation {
+  pointer-events: none;
+}
+
+.saltSidePanel-inner {
+  box-sizing: border-box;
+  overflow: auto;
+  padding: var(--salt-spacing-300);
+}
+
+.saltSidePanel-left .saltSidePanel-inner,
+.saltSidePanel-right .saltSidePanel-inner {
+  width: var(--saltSidePanel-width);
+  height: 100%;
+}
+
+@keyframes saltSidePanel-expandWidth {
+  from {
+    width: 0;
+  }
+}
+@keyframes saltSidePanel-collapseWidth {
+  to {
+    width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saltSidePanel-left.saltSidePanel-enterAnimation,
+  .saltSidePanel-right.saltSidePanel-enterAnimation,
+  .saltSidePanel-left.saltSidePanel-exitAnimation,
+  .saltSidePanel-right.saltSidePanel-exitAnimation {
+    animation: none;
+  }
+}

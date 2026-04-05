@@ -1,0 +1,48 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+A side panel spans the full height of its container and is always non-modal. This means the content beside it remains interactive when the panel is expanded.
+
+Always choose a width that suits the content in the side panel. Refer to Salt's Forms pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
+
+### When to use
+
+- To view supporting details alongside the primary content (e.g., record details, metadata, history, related items) while keeping the main view visible and interactive.
+- To edit or update information in-context (e.g., update attributes, adjust settings, annotate) while referencing the main view for confirmation.
+- To apply and refine filters (e.g., facets, query parameters) while keeping results visible and interactive next to the filtering controls.
+- To support multi-step workflows (e.g., review → decide → update → confirm) where context and supporting controls must remain available across steps.
+- To keep supplementary information and actions persistently available during longer parallel tasks (e.g., compare items, validate fields, cross-check data).
+
+### When not to use
+
+For a temporary, focused workspace that lets users handle a small, self-contained action. Instead, use [Drawer](/salt/components/drawer).
+For a background that organizes content in an application. Instead, use [Panel](/salt/components/panel).
+
+## Import
+
+To import `SidePanel`, `SidePanelCloseTrigger`, `SidePanelGroup` and `SidePanelTrigger` from the lab Salt package, use:
+
+```js
+import {
+  SidePanel,
+  SidePanelCloseTrigger,
+  SidePanelGroup,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="SidePanel" />
+<PropsTable packageName="lab" componentName="SidePanelCloseTrigger" />
+<PropsTable packageName="lab" componentName="SidePanelGroup" />
+<PropsTable packageName="lab" componentName="SidePanelTrigger" />
