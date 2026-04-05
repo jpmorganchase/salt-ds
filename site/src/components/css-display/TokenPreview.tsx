@@ -1,0 +1,90 @@
+import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { useEffect, useRef, useState } from "react";
+import { Code } from "../mdx/code";
+import styles from "./AllTokens.module.css";
+import { formatTokenValue } from "./formatTokenValue";
+import { getPreviewType, getSwatchStyle } from "./tokenPreviewUtils";
+
+export function TokenPreview({
+  name,
+  value,
+  mode,
+  themeKey,
+  theme,
+}: {
+  name: string;
+  value: string;
+  mode: "light" | "dark";
+  themeKey: string;
+  theme: "next" | "legacy";
+}) {
+  const type = getPreviewType(name, value);
+  const [isTransparent, setIsTransparent] = useState(false);
+  const swatchRef = useRef<HTMLDivElement | null>(null);
+  const ThemeProvider = theme === "next" ? SaltProviderNext : SaltProvider;
+  const swatchVersion = `${themeKey}:${value}`;
+
+  useEffect(() => {
+    if (type !== "color") {
+      setIsTransparent(false);
+      return;
+    }
+
+    const node = swatchRef.current;
+    if (!node) {
+      return;
+    }
+
+    if (node.dataset.swatchVersion !== swatchVersion) {
+      return;
+    }
+
+    const normalized = window
+      .getComputedStyle(node)
+      .backgroundColor.replaceAll(" ", "")
+      .toLowerCase();
+
+    setIsTransparent(
+      normalized === "transparent" ||
+        normalized.includes("rgba(0,0,0,0)") ||
+        normalized.endsWith(",0)"),
+    );
+  }, [swatchVersion, type]);
+
+  if (type === "raw") {
+    return <div className={styles.codeWrapper}><Code>{formatTokenValue(value)}</Code></div>;
+  }
+
+  return (
+    <div className={styles.swatch}>
+      <ThemeProvider theme="" mode={mode} applyClassesTo="child">
+        <div
+          ref={swatchRef}
+          data-swatch-version={swatchVersion}
+          className={clsx(styles.swatchInner, getSwatchClassName(type), {
+            [styles.checkerboard]: type === "color" && isTransparent,
+          })}
+          style={getSwatchStyle(type, value)}
+        />
+      </ThemeProvider>
+    </div>
+  );
+}
+
+function getSwatchClassName(
+  type: Exclude<ReturnType<typeof getPreviewType>, "raw">,
+) {
+  switch (type) {
+    case "color":
+      return styles.swatchColor;
+    case "shadow":
+      return styles.swatchShadow;
+    case "borderStyle":
+      return styles.swatchBorderStyle;
+    case "borderWidth":
+      return styles.swatchBorderWidth;
+    case "outline":
+      return styles.swatchOutline;
+  }
+}

@@ -13,6 +13,7 @@ import {
 } from "@salt-ds/core";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
+import { formatTokenValue } from "./formatTokenValue";
 import { ColorBlock } from "./style-blocks/ColorBlock";
 
 type CssVariableData = Record<string, string>;
@@ -86,7 +87,7 @@ const ColorTable = ({
                 </FlowLayout>
               </TD>
               <TD>
-                <Text styleAs="code">{value}</Text>
+                <Text styleAs="code">{formatTokenValue(value)}</Text>
               </TD>
             </TR>
           ))}
