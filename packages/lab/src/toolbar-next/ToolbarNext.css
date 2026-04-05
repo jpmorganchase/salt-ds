@@ -1,0 +1,34 @@
+.saltToolbarNext {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-width: 0;
+}
+
+.saltToolbarNext-layout {
+  display: grid;
+  align-items: center;
+  column-gap: var(--salt-spacing-100);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.saltToolbarNext-fallback {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltToolbarNext-layout > * {
+  min-width: 0;
+}
+
+.saltToolbarNext-bordered {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+  padding: var(--salt-spacing-100);
+}
+
+.saltToolbarNext-transparent {
+  border: none;
+  padding: 0;
+}
