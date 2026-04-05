@@ -28,7 +28,7 @@ export const WithIcon = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar divider inset>
-        <TabListNext>
+        <TabListNext aria-label="Example tablist">
           {tabs.map((label) => {
             const Icon = tabToIcon[label];
             return (

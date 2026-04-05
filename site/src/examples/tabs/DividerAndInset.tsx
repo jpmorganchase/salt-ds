@@ -18,7 +18,7 @@ export const DividerAndInset = (): ReactElement => {
     <StackLayout>
       <TabsNext defaultValue={tabs[0]}>
         <TabBar divider={divider} inset={inset}>
-          <TabListNext appearance="bordered">
+          <TabListNext appearance="bordered" aria-label="Example tablist">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>

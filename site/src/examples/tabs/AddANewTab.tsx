@@ -18,7 +18,7 @@ export const AddANewTab = (): ReactElement => {
   return (
     <TabsNext value={value} onChange={(_event, newValue) => setValue(newValue)}>
       <TabBar inset divider>
-        <TabListNext>
+        <TabListNext aria-label="Example tablist">
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
               <TabNextTrigger>{label}</TabNextTrigger>

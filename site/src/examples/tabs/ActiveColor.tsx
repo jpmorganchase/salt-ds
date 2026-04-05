@@ -32,7 +32,7 @@ export const ActiveColor = (): ReactElement => {
       <div>
         <TabsNext defaultValue={tabs[0]}>
           <TabBar divider>
-            <TabListNext activeColor={variant}>
+            <TabListNext activeColor={variant} aria-label="Example tablist">
               {tabs.map((label) => (
                 <TabNext value={label} key={label}>
                   <TabNextTrigger>{label}</TabNextTrigger>
