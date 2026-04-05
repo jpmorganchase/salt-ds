@@ -1,5 +1,6 @@
 .carousel {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
 }
 .carouselImagePlaceholder {
   height: 250px;
@@ -57,4 +58,9 @@
 /** Do not make off-screen slides focusable */
 .saltCarouselCard:not(.carouselSlideIsSnapped) a {
   visibility: hidden;
+}
+
+.fixedWidthCarousel {
+  width: 100%;
+  --carousel-slide-size: 550px;
 }

@@ -166,3 +166,9 @@ FadePlugin.args = {
   },
   emblaPlugins: [Fade()],
 };
+
+export const FixedWidthSlide = CarouselNumberExample.bind({});
+FixedWidthSlide.args = {
+  className: "fixedWidthCarousel",
+  emblaOptions: { align: "start", slidesToScroll: 1, containScroll: false },
+};
