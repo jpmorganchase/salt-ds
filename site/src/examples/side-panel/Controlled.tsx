@@ -1,55 +1,72 @@
 import {
   Button,
-  FlexItem,
   FlexLayout,
   H2,
   StackLayout,
   Text,
+  useIcon,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseTrigger,
-  SidePanelGroup,
+  SidePanelProvider,
   SidePanelTrigger,
+  useSidePanelContext,
 } from "@salt-ds/lab";
-import { useState } from "react";
 
-export const Controlled = () => {
-  const [open, setOpen] = useState(false);
+const SidePanelExample = () => {
+  const { openState, setOpen } = useSidePanelContext();
   const headingId = useId();
-
+  const { CloseIcon } = useIcon();
   return (
-    <StackLayout align="center">
-      <SidePanelGroup open={open} onOpenChange={setOpen}>
-        <FlexLayout
-          style={{
-            height: 200,
-          }}
-        >
-          <FlexItem grow={1} padding={1}>
-            <SidePanelTrigger>
-              <Button>Toggle side panel</Button>
-            </SidePanelTrigger>
-          </FlexItem>
-          <SidePanel aria-labelledby={headingId}>
-            <StackLayout align="start" gap={1}>
-              <SidePanelCloseTrigger onClick={() => setOpen(false)}>
-                <Button
-                  aria-label="Close"
-                  appearance="transparent"
-                  style={{ marginLeft: "auto" }}
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              </SidePanelCloseTrigger>
-              <H2 id={headingId}>Section Title</H2>
-              <Text>Content for the primary side panel</Text>
-            </StackLayout>
-          </SidePanel>
-        </FlexLayout>
-      </SidePanelGroup>
-    </StackLayout>
+    <>
+      <SidePanel position="left" aria-labelledby={headingId}>
+        <StackLayout>
+          <FlexLayout align="center">
+            <H2 id={headingId} style={{ flex: 1 }}>
+              Section Title
+            </H2>
+            <Button
+              aria-label="Close"
+              appearance="transparent"
+              onClick={() => setOpen(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          </FlexLayout>
+          <Text>Side panel content goes here.</Text>
+        </StackLayout>
+      </SidePanel>
+
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "var(--salt-spacing-300)",
+        }}
+      >
+        <SidePanelTrigger>
+          <Button>{openState ? "Close" : "Open"} side panel</Button>
+        </SidePanelTrigger>
+      </div>
+    </>
   );
 };
+
+export const Controlled = () => (
+  <SidePanelProvider>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <SidePanelExample />
+    </FlexLayout>
+  </SidePanelProvider>
+);

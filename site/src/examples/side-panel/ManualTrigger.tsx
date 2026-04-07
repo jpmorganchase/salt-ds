@@ -4,81 +4,124 @@ import {
   H2,
   StackLayout,
   Text,
+  useIcon,
   useId,
 } from "@salt-ds/core";
-import { SidePanel } from "@salt-ds/lab";
-import { type CSSProperties, useRef, useState } from "react";
+import { CloseIcon } from "@salt-ds/icons";
+import {
+  SidePanel,
+  SidePanelProvider,
+  SidePanelTrigger,
+  useSidePanelContext,
+} from "@salt-ds/lab";
+import type { CSSProperties } from "react";
 
 const panelStyle = {
-  "--saltSidePanel-width": "150px",
+  "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-export const ManualTrigger = () => {
-  const [openLeft, setOpenLeft] = useState(false);
-  const [openRight, setOpenRight] = useState(false);
-  const leftPanelId = useId();
-  const rightPanelId = useId();
-  const leftHeadingId = useId();
-  const rightHeadingId = useId();
-
-  const leftTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const rightTriggerRef = useRef<HTMLButtonElement | null>(null);
-
+const RightPanel = () => {
+  const headingId = useId();
+  const { CloseIcon } = useIcon();
+  const { setOpen } = useSidePanelContext();
   return (
-    <FlexLayout
-      style={{
-        height: 230,
-      }}
-      gap={0}
+    <SidePanel
+      aria-labelledby={headingId}
+      style={panelStyle}
+      variant="secondary"
     >
-      <SidePanel
-        open={openLeft}
-        onOpenChange={setOpenLeft}
-        id={leftPanelId}
-        aria-labelledby={leftHeadingId}
-        triggerRef={leftTriggerRef}
-        position="left"
-        style={panelStyle}
-        variant="secondary"
-      >
-        <StackLayout align="start" gap={1}>
-          <H2 id={leftHeadingId}>Left Panel</H2>
-          <Text>Left panel content.</Text>
-        </StackLayout>
-      </SidePanel>
-
-      <StackLayout gap={2} padding={2}>
-        <Button
-          ref={leftTriggerRef}
-          onClick={() => setOpenLeft(!openLeft)}
-          aria-expanded={openLeft}
-          aria-controls={leftPanelId}
-        >
-          {openLeft ? "Close" : "Open"} Left Panel
-        </Button>
-        <Button
-          ref={rightTriggerRef}
-          onClick={() => setOpenRight(!openRight)}
-          aria-expanded={openRight}
-          aria-controls={rightPanelId}
-        >
-          {openRight ? "Close" : "Open"} Right Panel
-        </Button>
+      <StackLayout gap={1}>
+        <FlexLayout align="center">
+          <H2 id={headingId} style={{ flex: 1 }}>
+            Right Panel
+          </H2>
+          <Button
+            aria-label="Close"
+            appearance="transparent"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        </FlexLayout>
+        <Text>Right panel content.</Text>
       </StackLayout>
-      <SidePanel
-        open={openRight}
-        onOpenChange={setOpenRight}
-        id={rightPanelId}
-        aria-labelledby={rightHeadingId}
-        triggerRef={rightTriggerRef}
-        style={panelStyle}
-        variant="tertiary"
-      >
-        <StackLayout align="start" gap={1}>
-          <H2 id={rightHeadingId}>Right Panel</H2>
-          <Text>Right panel content.</Text>
-        </StackLayout>
-      </SidePanel>
-    </FlexLayout>
+    </SidePanel>
   );
 };
+
+const LeftPanel = () => {
+  const headingId = useId();
+  const { setOpen } = useSidePanelContext();
+  return (
+    <SidePanel
+      position="left"
+      aria-labelledby={headingId}
+      style={panelStyle}
+      variant="secondary"
+    >
+      <StackLayout gap={1}>
+        <FlexLayout align="center">
+          <H2 id={headingId} style={{ flex: 1 }}>
+            Left Panel
+          </H2>
+          <Button
+            aria-label="Close"
+            appearance="transparent"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        </FlexLayout>
+        <Text>Left panel content.</Text>
+      </StackLayout>
+    </SidePanel>
+  );
+};
+
+export const ManualTrigger = () => (
+  <div
+    style={{
+      width: "100%",
+      height: 300,
+      display: "flex",
+      border:
+        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+      borderRadius: "var(--salt-palette-corner-weak)",
+      overflow: "hidden",
+    }}
+  >
+    <SidePanelProvider>
+      <LeftPanel />
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "var(--salt-spacing-200)",
+        }}
+      >
+        <SidePanelTrigger>
+          <Button style={{ whiteSpace: "nowrap" }}>Toggle left panel</Button>
+        </SidePanelTrigger>
+      </div>
+    </SidePanelProvider>
+
+    <SidePanelProvider>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          padding: "var(--salt-spacing-200)",
+        }}
+      >
+        <SidePanelTrigger>
+          <Button style={{ whiteSpace: "nowrap" }}>Toggle right panel</Button>
+        </SidePanelTrigger>
+      </div>
+      <RightPanel />
+    </SidePanelProvider>
+  </div>
+);
