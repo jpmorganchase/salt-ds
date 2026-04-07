@@ -21,7 +21,13 @@ const CandlestickChart: FC<CandlestickChartProps> = ({
     fillPatterns,
   });
 
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />;
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
+  );
 };
 
 export default CandlestickChart;

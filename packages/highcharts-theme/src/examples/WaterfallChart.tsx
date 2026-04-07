@@ -18,7 +18,13 @@ const WaterfallChart: FC<WaterfallChartProps> = ({
     fillPatterns,
   });
 
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />;
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
+  );
 };
 
 export default WaterfallChart;

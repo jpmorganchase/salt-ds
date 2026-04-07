@@ -124,8 +124,7 @@ const COLOR_TOKENS = {
   sentimentNeutralDataviz: "--salt-sentiment-neutral-dataviz",
 } as const;
 
-const getTokenFallback = (tokenName: string) =>
-  `var(${tokenName})`;
+const getTokenFallback = (tokenName: string) => `var(${tokenName})`;
 
 const getResolvedStringToken = (
   tokenValues: Record<string, string | undefined>,
@@ -187,10 +186,13 @@ export const getDensityTokenMap = (
   );
   const categoryDatavizColors = CATEGORY_DATAVIZ_TOKENS.reduce<
     Record<(typeof CATEGORY_DATAVIZ_TOKENS)[number], string>
-  >((accumulator, tokenName) => {
-    accumulator[tokenName] = getTokenFallback(tokenName);
-    return accumulator;
-  }, {} as Record<(typeof CATEGORY_DATAVIZ_TOKENS)[number], string>);
+  >(
+    (accumulator, tokenName) => {
+      accumulator[tokenName] = getTokenFallback(tokenName);
+      return accumulator;
+    },
+    {} as Record<(typeof CATEGORY_DATAVIZ_TOKENS)[number], string>,
+  );
 
   if (hostElement) {
     const requestedTokens = [
@@ -208,13 +210,15 @@ export const getDensityTokenMap = (
 
     baseSpacing =
       getNumericCSSToken(tokenValues, SPACING_TOKENS.spacing100) ?? baseSpacing;
-    iconSize = getNumericCSSToken(tokenValues, SIZE_TOKENS.sizeIcon) ?? iconSize;
+    iconSize =
+      getNumericCSSToken(tokenValues, SIZE_TOKENS.sizeIcon) ?? iconSize;
     sizeFixed100 =
       getNumericCSSToken(tokenValues, SIZE_TOKENS.sizeFixed100) ?? sizeFixed100;
     sizeFixed200 =
       getNumericCSSToken(tokenValues, SIZE_TOKENS.sizeFixed200) ?? sizeFixed200;
     cornerWeaker =
-      getNumericCSSToken(tokenValues, CORNER_TOKENS.cornerWeaker) ?? cornerWeaker;
+      getNumericCSSToken(tokenValues, CORNER_TOKENS.cornerWeaker) ??
+      cornerWeaker;
     chartFontFamily = getResolvedStringToken(
       tokenValues,
       TYPOGRAPHY_TOKENS.chartFontFamily,
@@ -321,8 +325,7 @@ export const getDensityTokenMap = (
     "--salt-text-label-fontFamily": labelFontFamily,
     "--salt-content-primary-foreground": primaryForeground,
     "--salt-content-secondary-foreground": secondaryForeground,
-    "--salt-content-secondary-foreground-disabled":
-      secondaryForegroundDisabled,
+    "--salt-content-secondary-foreground-disabled": secondaryForegroundDisabled,
     "--salt-content-bold-foreground": boldForeground,
     "--salt-container-primary-background": containerPrimaryBackground,
     "--salt-separable-primary-borderColor": separablePrimaryBorderColor,

@@ -13,7 +13,13 @@ const LineChart: FC<LineChartProps> = ({ options = lineOptions }) => {
 
   const chartOptions = useChart(chartRef, options);
 
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />;
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
+  );
 };
 
 export default LineChart;

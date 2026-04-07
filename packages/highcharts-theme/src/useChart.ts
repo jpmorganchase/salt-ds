@@ -4,7 +4,13 @@ import type { Options } from "highcharts";
 import Highcharts from "highcharts";
 import patternFillModule from "highcharts/modules/pattern-fill";
 import type HighchartsReact from "highcharts-react-official";
-import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { getDefaultOptions } from "./default-options";
 import { applyFillPatternOverrides } from "./fill-patterns";
 

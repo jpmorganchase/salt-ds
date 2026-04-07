@@ -19,7 +19,11 @@ const ColumnChart: FC<ColumnChartProps> = ({
   });
 
   return (
-    <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
   );
 };
 

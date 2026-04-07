@@ -21,7 +21,13 @@ const BoxPlotChart: FC<BoxPlotChartProps> = ({
     fillPatterns,
   });
 
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />;
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
+  );
 };
 
 export default BoxPlotChart;

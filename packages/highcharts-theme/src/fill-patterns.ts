@@ -3,7 +3,9 @@ import type { Options } from "highcharts";
 import { getDensityTokenMap } from "./density-token-map";
 import { getSentimentPatternColors } from "./patterns";
 
-type FillPatternColor = ReturnType<typeof getSentimentPatternColors>["positive"];
+type FillPatternColor = ReturnType<
+  typeof getSentimentPatternColors
+>["positive"];
 type SentimentColor = FillPatternColor | string;
 type SentimentColors = {
   negative: SentimentColor;
@@ -38,9 +40,7 @@ const getSentimentColors = (
       };
 };
 
-const isPointOptionsObject = (
-  point: unknown,
-): point is FillPatternPoint =>
+const isPointOptionsObject = (point: unknown): point is FillPatternPoint =>
   typeof point === "object" && point !== null && !Array.isArray(point);
 
 const applyWaterfallPointColors = (
@@ -62,7 +62,8 @@ const applyWaterfallPointColors = (
     if (typeof point.y === "number") {
       return {
         ...point,
-        color: point.y < 0 ? sentimentColors.negative : sentimentColors.positive,
+        color:
+          point.y < 0 ? sentimentColors.negative : sentimentColors.positive,
       };
     }
 
