@@ -1,4 +1,4 @@
 export * from "./SidePanel";
-export * from "./SidePanelCloseTrigger";
-export * from "./SidePanelGroup";
+export * from "./SidePanelContext";
+export * from "./SidePanelProvider";
 export * from "./SidePanelTrigger";

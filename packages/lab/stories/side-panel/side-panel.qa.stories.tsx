@@ -1,5 +1,9 @@
 import { H2, StackLayout, Text } from "@salt-ds/core";
-import { SidePanel, SidePanelGroup, type SidePanelProps } from "@salt-ds/lab";
+import {
+  SidePanel,
+  type SidePanelProps,
+  SidePanelProvider,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import type { ReactNode } from "react";
@@ -19,11 +23,11 @@ function FakeSidePanel({
   position?: SidePanelProps["position"];
 }) {
   return (
-    <SidePanelGroup open>
+    <SidePanelProvider open>
       <SidePanel variant={variant} position={position}>
         {children}
       </SidePanel>
-    </SidePanelGroup>
+    </SidePanelProvider>
   );
 }
 
@@ -48,17 +52,7 @@ const SidePanelTemplate: StoryFn<SidePanelProps> = ({
   );
 };
 
-export const SidePanelExamples: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
-
-  return (
-    <QAContainer height={2000} itemPadding={20} width={1000} {...rest}>
-      <SidePanelTemplate />
-    </QAContainer>
-  );
-};
-
-export const SidePanelVariants: StoryFn<QAContainerProps> = (props) => {
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
 
   return (
@@ -70,10 +64,7 @@ export const SidePanelVariants: StoryFn<QAContainerProps> = (props) => {
   );
 };
 
-SidePanelExamples.parameters = {
+ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-SidePanelVariants.parameters = {
-  chromatic: { disableSnapshot: false },
+  actions: { disable: true },
 };
