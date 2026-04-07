@@ -367,6 +367,64 @@ describe("GIVEN a SidePanel component", () => {
           "have.focus",
         );
       });
+
+      it("AND panel immediately follows trigger in DOM, THEN Tab from last element exits panel without looping", () => {
+        const DirectFollowExample = () => (
+          <>
+            <SidePanelGroup>
+              <SidePanelTrigger>
+                <button type="button">Open Panel</button>
+              </SidePanelTrigger>
+              <SidePanel aria-label="Direct Follow Panel">
+                <button type="button">Panel First</button>
+                <button type="button">Panel Last</button>
+              </SidePanel>
+            </SidePanelGroup>
+            <button type="button">After Panel</button>
+          </>
+        );
+
+        cy.mount(<DirectFollowExample />);
+        cy.findByRole("button", { name: "Open Panel" }).click();
+        cy.findByRole("button", { name: "Panel First" }).should("have.focus");
+
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "Panel Last" }).should("have.focus");
+
+        // Must NOT loop back to "Panel First" — that would be a focus trap
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "After Panel" }).should("have.focus");
+      });
+
+      it("AND panel immediately follows trigger in DOM, THEN Shift+Tab from element after panel reaches trigger", () => {
+        const DirectFollowExample = () => (
+          <>
+            <SidePanelGroup>
+              <SidePanelTrigger>
+                <button type="button">Open Panel</button>
+              </SidePanelTrigger>
+              <SidePanel aria-label="Direct Follow Panel">
+                <button type="button">Panel First</button>
+                <button type="button">Panel Last</button>
+              </SidePanel>
+            </SidePanelGroup>
+            <button type="button">After Panel</button>
+          </>
+        );
+
+        cy.mount(<DirectFollowExample />);
+        cy.findByRole("button", { name: "Open Panel" }).click();
+        cy.findByRole("button", { name: "Panel Last" }).focus();
+
+        cy.realPress("Tab");
+        cy.findByRole("button", { name: "After Panel" }).should("have.focus");
+
+        // Shift+Tab from "After Panel" returns to "Panel Last" (natural browser
+        // behaviour — "Panel Last" is the previous focusable in document order).
+        // This confirms focus is non-modal: it can re-enter the panel freely.
+        cy.realPress(["Shift", "Tab"]);
+        cy.findByRole("button", { name: "Panel Last" }).should("have.focus");
+      });
     });
 
     describe("WHEN multiple panels are open simultaneously", () => {

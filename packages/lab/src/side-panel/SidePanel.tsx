@@ -81,7 +81,10 @@ function getFocusableElements(container: HTMLElement): HTMLElement[] {
  * Note: TreeWalker does not descend into shadow roots. If shadow DOM support
  * is ever needed here, see findAllTabbableElements in focus-manager/internal.
  */
-function getNextFocusableAfter(trigger: HTMLElement): HTMLElement | null {
+function getNextFocusableAfter(
+  trigger: HTMLElement,
+  skip?: HTMLElement | null,
+): HTMLElement | null {
   const doc = trigger.ownerDocument;
   const walker = doc.createTreeWalker(
     doc.documentElement,
@@ -89,6 +92,12 @@ function getNextFocusableAfter(trigger: HTMLElement): HTMLElement | null {
     {
       acceptNode(node) {
         const el = node as HTMLElement;
+        // FILTER_REJECT skips the node and its entire subtree in a TreeWalker.
+        // This prevents the walker from re-entering the panel when searching
+        // for the next focusable element after the trigger.
+        if (skip && el === skip) {
+          return NodeFilter.FILTER_REJECT;
+        }
         return el.matches(FOCUSABLE_SELECTOR) && isVisible(el)
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_SKIP;
@@ -242,9 +251,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           } else {
             // Tab: move to next element or forward to next element after trigger
             if (activeElement === lastPanelFocusable && trigger) {
-              // From last panel element, move to next focusable after trigger
-              event.preventDefault();
-              getNextFocusableAfter(trigger)?.focus();
+              // From last panel element, move to next focusable after trigger,
+              // skipping the panel itself to avoid looping back in.
+              const nextElement = getNextFocusableAfter(trigger, panelElement);
+              if (nextElement) {
+                event.preventDefault();
+                nextElement.focus();
+              }
+              // else: let the browser handle Tab naturally
             }
           }
         }
