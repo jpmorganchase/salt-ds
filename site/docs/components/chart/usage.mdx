@@ -57,7 +57,9 @@ import HighchartsReact from "highcharts-react-official";
 const chartRef = useRef(null);
 const options = useChart(chartRef, yourChartSpecificOptions);
 
-return <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />;
+return (
+  <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />
+);
 ```
 
 The `useChart` hook takes:
