@@ -1,3 +1,24 @@
-.highcharts-theme-salt .highcharts-legend-item:hover text {
+/* Residual DOM-level selectors that are still easier to keep in CSS. */
+
+.highcharts-legend-item:hover text {
   fill: var(--salt-content-secondary-foreground);
+}
+
+.highcharts-tooltip .highcharts-tracker {
+  opacity: 0;
+}
+
+.highcharts-scatter-series .highcharts-point,
+.highcharts-bubble-series .highcharts-point {
+  fill-opacity: 0.75;
+}
+
+.highcharts-boxplot-box {
+  fill-opacity: 0.75;
+}
+
+.highcharts-waterfall-series .highcharts-point.highcharts-sum,
+.highcharts-waterfall-series .highcharts-point.highcharts-intermediate-sum {
+  fill: var(--salt-sentiment-neutral-dataviz);
+  stroke: var(--salt-sentiment-neutral-dataviz);
 }

@@ -1,6 +1,5 @@
 import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
@@ -62,7 +61,9 @@ export const PieChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, pieChartOptions);
+  const chartOptions = useChart(chartRef, pieChartOptions, {
+    fillPatterns: patterns,
+  });
 
   return (
     <div className={styles.chartContainer}>
@@ -73,18 +74,12 @@ export const PieChart = () => {
           onChange={(e) => setPatterns(e.target.checked)}
         />
       </div>
-      <div
-        className={clsx("highcharts-theme-salt", {
-          "salt-fill-patterns": patterns,
-        })}
-      >
-        <HighchartsReact
-          className={styles.chart}
-          highcharts={Highcharts}
-          options={chartOptions}
-          ref={chartRef}
-        />
-      </div>
+      <HighchartsReact
+        className={styles.chart}
+        highcharts={Highcharts}
+        options={chartOptions}
+        ref={chartRef}
+      />
     </div>
   );
 };

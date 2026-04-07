@@ -1,6 +1,5 @@
 import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
@@ -40,7 +39,7 @@ const columnChartOptions: Options = {
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
+      '<span>{series.name}: </span><span class="value">&#36;{point.y}M</span>',
   },
   series: [
     {
@@ -55,7 +54,9 @@ export const ColumnChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, columnChartOptions);
+  const chartOptions = useChart(chartRef, columnChartOptions, {
+    fillPatterns: patterns,
+  });
 
   return (
     <div className={styles.chartContainer}>
@@ -66,18 +67,12 @@ export const ColumnChart = () => {
           onChange={(e) => setPatterns(e.target.checked)}
         />
       </div>
-      <div
-        className={clsx("highcharts-theme-salt", {
-          "salt-fill-patterns": patterns,
-        })}
-      >
-        <HighchartsReact
-          className={styles.chart}
-          highcharts={Highcharts}
-          options={chartOptions}
-          ref={chartRef}
-        />
-      </div>
+      <HighchartsReact
+        className={styles.chart}
+        highcharts={Highcharts}
+        options={chartOptions}
+        ref={chartRef}
+      />
     </div>
   );
 };

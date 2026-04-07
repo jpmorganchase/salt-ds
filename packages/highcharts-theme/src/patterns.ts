@@ -1,4 +1,22 @@
-const fillPatterns = [
+import type { PatternObject } from "highcharts";
+import {
+  CATEGORY_DATAVIZ_TOKENS,
+  type SaltChartTokenMap,
+} from "./density-token-map";
+
+type FillPatternChild = {
+  d: string;
+  tagName: "path";
+};
+
+type FillPatternDefinition = {
+  children: FillPatternChild[];
+  id: string;
+};
+
+const PATTERN_TILE_SIZE = 10;
+
+const fillPatterns: FillPatternDefinition[] = [
   {
     id: "diagonal-up",
     children: [
@@ -257,75 +275,53 @@ const fillPatterns = [
   },
 ];
 
-export const saltPatternDef = {
-  ...fillPatterns.reduce<Record<string, object>>((prev, curr, index) => {
-    prev[curr.id] = {
-      ...curr,
-      tagName: "pattern",
-      patternUnits: "userSpaceOnUse",
-      width: 10,
-      height: 10,
-      children: [
-        {
-          tagName: "rect",
-          width: 10,
-          height: 10,
-          style: { fill: `var(--salt-category-${index + 1}-dataviz)` },
-        },
-        ...curr.children,
-      ],
-    };
-    return prev;
-  }, {}),
-  "positive-sentiment": {
-    ...fillPatterns[0],
-    id: "positive-sentiment",
-    tagName: "pattern",
-    patternUnits: "userSpaceOnUse",
-    width: 10,
-    height: 10,
-    children: [
-      {
-        tagName: "rect",
-        width: 10,
-        height: 10,
-        style: { fill: "var(--salt-sentiment-positive-dataviz)" },
-      },
-      ...fillPatterns[0].children,
-    ],
+const toPatternPath = ({ children }: FillPatternDefinition) =>
+  children.map(({ d }) => d).join(" ");
+
+const buildPatternObject = (
+  pattern: FillPatternDefinition,
+  backgroundColor: string,
+  foregroundColor: string,
+): PatternObject => ({
+  pattern: {
+    backgroundColor,
+    height: PATTERN_TILE_SIZE,
+    path: {
+      d: toPatternPath(pattern),
+      fill: foregroundColor,
+      stroke: "none",
+      strokeWidth: 0,
+    },
+    width: PATTERN_TILE_SIZE,
   },
-  "negative-sentiment": {
-    ...fillPatterns[1],
-    id: "negative-sentiment",
-    tagName: "pattern",
-    patternUnits: "userSpaceOnUse",
-    width: 10,
-    height: 10,
-    children: [
-      {
-        tagName: "rect",
-        width: 10,
-        height: 10,
-        style: { fill: "var(--salt-sentiment-negative-dataviz)" },
-      },
-      ...fillPatterns[1].children,
-    ],
-  },
-  "neutral-sentiment": {
-    ...fillPatterns[2],
-    id: "neutral-sentiment",
-    tagName: "pattern",
-    patternUnits: "userSpaceOnUse",
-    width: 10,
-    height: 10,
-    children: [
-      {
-        tagName: "rect",
-        width: 10,
-        height: 10,
-        style: { fill: "var(--salt-sentiment-neutral-dataviz)" },
-      },
-      ...fillPatterns[2].children,
-    ],
-  },
-};
+});
+
+export const getFillPatternColors = (
+  tokens: SaltChartTokenMap,
+  count = fillPatterns.length,
+): PatternObject[] =>
+  Array.from({ length: count }, (_, index) =>
+    buildPatternObject(
+      fillPatterns[index % fillPatterns.length],
+      tokens[CATEGORY_DATAVIZ_TOKENS[index % CATEGORY_DATAVIZ_TOKENS.length]],
+      tokens["--salt-content-primary-foreground"],
+    ),
+  );
+
+export const getSentimentPatternColors = (tokens: SaltChartTokenMap) => ({
+  negative: buildPatternObject(
+    fillPatterns[1],
+    tokens["--salt-sentiment-negative-dataviz"],
+    tokens["--salt-content-primary-foreground"],
+  ),
+  neutral: buildPatternObject(
+    fillPatterns[2],
+    tokens["--salt-sentiment-neutral-dataviz"],
+    tokens["--salt-content-primary-foreground"],
+  ),
+  positive: buildPatternObject(
+    fillPatterns[0],
+    tokens["--salt-sentiment-positive-dataviz"],
+    tokens["--salt-content-primary-foreground"],
+  ),
+});

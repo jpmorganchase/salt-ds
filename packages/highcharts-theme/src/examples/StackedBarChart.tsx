@@ -1,36 +1,24 @@
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { stackedBarOptions } from "./dependencies";
 
 export interface StackedBarChartProps {
-  patterns?: boolean;
+  fillPatterns?: boolean;
   options: Options;
 }
 
 const StackedBarChart: FC<StackedBarChartProps> = ({
-  patterns = false,
+  fillPatterns = false,
   options = stackedBarOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
+  const chartOptions = useChart(chartRef, options, {
+    fillPatterns,
+  });
 
-  const chartOptions = useChart(chartRef, options);
-
-  return (
-    <div
-      className={clsx("highcharts-theme-salt", {
-        "salt-fill-patterns": patterns,
-      })}
-    >
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        ref={chartRef}
-      />
-    </div>
-  );
+  return <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />;
 };
 
 export default StackedBarChart;

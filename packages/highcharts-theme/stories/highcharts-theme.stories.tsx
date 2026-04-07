@@ -35,7 +35,7 @@ import {
 accessibility(Highcharts);
 
 interface ChartStoryArgs {
-  patterns?: boolean;
+  fillPatterns?: boolean;
   options: Options;
 }
 
@@ -48,9 +48,9 @@ export default {
     },
   },
   argTypes: {
-    patterns: {
+    fillPatterns: {
       control: "boolean",
-      description: "Toggle fill/line patterns for better accessibility",
+      description: "Toggle fill patterns for better accessibility",
       defaultValue: false,
     },
     options: {
@@ -63,7 +63,6 @@ export default {
 export const LineChart = {
   render: (args: ChartStoryArgs) => <LineChartComponent {...args} />,
   args: {
-    patterns: false,
     options: lineOptions,
   },
 };
@@ -71,7 +70,7 @@ export const LineChart = {
 export const AreaChart = {
   render: (args: ChartStoryArgs) => <AreaChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: areaOptions,
   },
 };
@@ -79,7 +78,7 @@ export const AreaChart = {
 export const DonutChart = {
   render: (args: ChartStoryArgs) => <DonutChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: donutOptions,
   },
 };
@@ -87,7 +86,7 @@ export const DonutChart = {
 export const PieChart = {
   render: (args: ChartStoryArgs) => <PieChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: pieOptions,
   },
 };
@@ -95,7 +94,7 @@ export const PieChart = {
 export const BubbleChart = {
   render: (args: ChartStoryArgs) => <BubbleChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: bubbleOptions,
   },
 };
@@ -103,7 +102,7 @@ export const BubbleChart = {
 export const CandlestickChart = {
   render: (args: ChartStoryArgs) => <CandlestickChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: candlestickOptions,
   },
 };
@@ -111,7 +110,7 @@ export const CandlestickChart = {
 export const StackedBarChart = {
   render: (args: ChartStoryArgs) => <StackedBarChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: stackedBarOptions,
   },
 };
@@ -119,7 +118,7 @@ export const StackedBarChart = {
 export const BoxPlotChart = {
   render: (args: ChartStoryArgs) => <BoxPlotChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: boxPlotOptions,
   },
 };
@@ -127,7 +126,7 @@ export const BoxPlotChart = {
 export const BulletChart = {
   render: (args: ChartStoryArgs) => <BulletChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: bulletOptions,
   },
 };
@@ -135,7 +134,7 @@ export const BulletChart = {
 export const BarChart = {
   render: (args: ChartStoryArgs) => <BarChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: barOptions,
   },
 };
@@ -143,7 +142,7 @@ export const BarChart = {
 export const ColumnChart = {
   render: (args: ChartStoryArgs) => <ColumnChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: columnOptions,
   },
 };
@@ -151,7 +150,7 @@ export const ColumnChart = {
 export const ScatterChart = {
   render: (args: ChartStoryArgs) => <ScatterChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: scatterOptions,
   },
 };
@@ -159,7 +158,7 @@ export const ScatterChart = {
 export const WaterfallChart = {
   render: (args: ChartStoryArgs) => <WaterfallChartComponent {...args} />,
   args: {
-    patterns: false,
+    fillPatterns: false,
     options: waterfallOptions,
   },
 };

@@ -1,5 +1,4 @@
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import highchartsMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
@@ -9,31 +8,20 @@ import { boxPlotOptions } from "./dependencies";
 highchartsMore(Highcharts);
 
 export interface BoxPlotChartProps {
-  patterns?: boolean;
+  fillPatterns?: boolean;
   options: Options;
 }
 
 const BoxPlotChart: FC<BoxPlotChartProps> = ({
-  patterns = false,
+  fillPatterns = false,
   options = boxPlotOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
+  const chartOptions = useChart(chartRef, options, {
+    fillPatterns,
+  });
 
-  const chartOptions = useChart(chartRef, options);
-
-  return (
-    <div
-      className={clsx("highcharts-theme-salt", {
-        "salt-fill-patterns": patterns,
-      })}
-    >
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        ref={chartRef}
-      />
-    </div>
-  );
+  return <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />;
 };
 
 export default BoxPlotChart;

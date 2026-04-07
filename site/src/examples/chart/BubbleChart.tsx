@@ -1,6 +1,5 @@
 import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import highchartsMore from "highcharts/highcharts-more";
 import accessibility from "highcharts/modules/accessibility";
@@ -105,7 +104,9 @@ export const BubbleChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, bubbleChartOptions);
+  const chartOptions = useChart(chartRef, bubbleChartOptions, {
+    fillPatterns: patterns,
+  });
 
   return (
     <div className={styles.chartContainer}>
@@ -116,18 +117,12 @@ export const BubbleChart = () => {
           onChange={(e) => setPatterns(e.target.checked)}
         />
       </div>
-      <div
-        className={clsx("highcharts-theme-salt", "axes-grid-lines", {
-          "salt-fill-patterns": patterns,
-        })}
-      >
-        <HighchartsReact
-          className={styles.chart}
-          highcharts={Highcharts}
-          options={chartOptions}
-          ref={chartRef}
-        />
-      </div>
+      <HighchartsReact
+        className={styles.chart}
+        highcharts={Highcharts}
+        options={chartOptions}
+        ref={chartRef}
+      />
     </div>
   );
 };

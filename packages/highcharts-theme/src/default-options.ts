@@ -1,86 +1,40 @@
 import type { Density } from "@salt-ds/core";
 import type { Options } from "highcharts";
 import { getDensityTokenMap } from "./density-token-map";
-import { saltPatternDef } from "./patterns";
+import { getFillPatternColors } from "./patterns";
+import {
+  buildAxisOptions,
+  buildChartOptions,
+  buildLegendOptions,
+  buildPlotOptions,
+  buildSeriesPalette,
+  buildTextOptions,
+  buildTooltipOptions,
+} from "./theme-option-builders";
 import type { HighchartsOptionsCompat } from "./types";
 
 export const getDefaultOptions = (
   density: Density,
+  chartOptions: Options,
   hostElement?: Element | null,
+  fillPatterns = false,
 ): Options => {
   const tokens = getDensityTokenMap(density, hostElement ?? undefined);
+  const textOptions = buildTextOptions(tokens);
+  const axisOptions = buildAxisOptions(tokens, chartOptions);
 
   const defaultOptions: HighchartsOptionsCompat = {
-    chart: {
-      styledMode: true,
-      colorCount: 20,
-    },
-    defs: saltPatternDef,
-    title: {
-      margin: tokens["--salt-spacing-200"],
-    },
-    yAxis: {
-      title: {
-        margin: tokens["--salt-spacing-200"],
-      },
-    },
-    xAxis: {
-      title: {
-        margin: tokens["--salt-spacing-200"],
-      },
-      tickLength: 0,
-    },
-    legend: {
-      layout: "vertical",
-      align: "right",
-      verticalAlign: "top",
-      symbolWidth: tokens["--salt-size-icon"],
-      symbolHeight: tokens["--salt-size-icon"],
-      symbolRadius: tokens["--salt-palette-corner-weaker"],
-      itemMarginBottom: tokens["--salt-spacing-150"],
-      margin: tokens["--salt-spacing-150"],
-      y: tokens["--salt-spacing-200"] + tokens["--salt-size-icon"],
-    },
-    tooltip: {
-      stickOnContact: true,
-    },
-    plotOptions: {
-      line: {
-        marker: {
-          enabled: false,
-        },
-      },
-      area: {
-        legendSymbol: "rectangle",
-      },
-      pie: {
-        borderRadius: 0,
-        dataLabels: {
-          distance: 6,
-          format:
-            '{point.name} <span class="value">{point.percentage:.1f}%</span>',
-          enabled: true,
-        },
-      },
-      bar: {
-        borderRadius: 0,
-      },
-      column: {
-        borderRadius: 0,
-      },
-      bullet: {
-        borderRadius: 0,
-      },
-      waterfall: {
-        borderRadius: 0,
-      },
-      scatter: {
-        marker: {
-          // Agreed in design set value
-          radius: 4,
-        },
-      },
-    },
+    chart: buildChartOptions(tokens),
+    colors: fillPatterns
+      ? getFillPatternColors(tokens)
+      : buildSeriesPalette(tokens).colors,
+    legend: buildLegendOptions(tokens),
+    plotOptions: buildPlotOptions(tokens),
+    subtitle: textOptions.subtitle,
+    title: textOptions.title,
+    tooltip: buildTooltipOptions(tokens),
+    xAxis: axisOptions.xAxis,
+    yAxis: axisOptions.yAxis,
   };
 
   return defaultOptions;

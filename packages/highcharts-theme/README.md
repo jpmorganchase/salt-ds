@@ -37,27 +37,23 @@ import "@salt-ds/highcharts-theme/index.css";
 
 export function MyChart({ chartOptions }) {
   const chartRef = useRef(null);
-  const options = useChart(chartRef, chartOptions);
+  const options = useChart(chartRef, chartOptions, { fillPatterns: true });
 
   return (
-    <div className="highcharts-theme-salt">
-      <HighchartsReact
-        ref={chartRef}
-        highcharts={Highcharts}
-        options={options}
-      />
-    </div>
+    <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />
   );
 }
 ```
 
-## Optional container classes
+## Fill patterns
 
 See [Chart usage](https://www.saltdesignsystem.com/salt/components/chart/usage) for details.
 
-- `salt-line-patterns`
-- `salt-fill-patterns`
-- `axes-grid-lines`
+Enable fill patterns through the hook options when you need a non-color cue in classic mode:
+
+```jsx
+const options = useChart(chartRef, chartOptions, { fillPatterns: true });
+```
 
 ## Accessibility
 
