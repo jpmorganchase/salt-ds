@@ -665,20 +665,20 @@ describe("GIVEN a SidePanel component", () => {
       .invoke("attr", "id")
       .as("employeePanelId");
 
-    cy.findByText("Alice Johnson").should("be.visible");
+    cy.get("@employeePanel").findByText("Alice Johnson").should("be.visible");
     cy.findByRole("button", { name: "Close" }).should("have.focus");
 
     cy.findAllByRole("button", { name: "View Details" }).eq(2).click();
 
     cy.get("@employeePanel").should("be.visible");
-    cy.get<string>("@employeePanelId").then((panelId) => {
+    cy.get("@employeePanelId").then((panelId) => {
       cy.findByRole("region", { name: "Employee Details" }).should(
         "have.attr",
         "id",
         panelId,
       );
     });
-    cy.findByText("Carol Williams").should("be.visible");
+    cy.get("@employeePanel").findByText("Carol Williams").should("be.visible");
     cy.findByRole("button", { name: "Close" }).should("have.focus");
   });
 
