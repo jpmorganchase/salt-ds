@@ -1,93 +1,73 @@
 import {
   Button,
-  Dropdown,
   FlexLayout,
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
   H2,
-  Input,
-  Option,
-  RadioButton,
-  RadioButtonGroup,
   StackLayout,
+  Text,
+  useIcon,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseTrigger,
-  SidePanelGroup,
+  SidePanelProvider,
   SidePanelTrigger,
+  useSidePanelContext,
 } from "@salt-ds/lab";
 
-export const LeftPanel = () => {
+const SidePanelExample = () => {
   const headingId = useId();
+  const { CloseIcon } = useIcon();
+  const { openState, setOpen } = useSidePanelContext();
 
   return (
-    <SidePanelGroup>
-      <FlexLayout
+    <>
+      <SidePanel position="left" aria-labelledby={headingId}>
+        <StackLayout>
+          <FlexLayout align="center">
+            <H2 id={headingId} style={{ flex: 1 }}>
+              Section Title
+            </H2>
+            <Button
+              aria-label="Close"
+              appearance="transparent"
+              onClick={() => setOpen(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          </FlexLayout>
+          <Text>Side panel content goes here.</Text>
+        </StackLayout>
+      </SidePanel>
+
+      <div
         style={{
-          height: 300,
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "var(--salt-spacing-300)",
         }}
-        gap={0}
       >
-        <SidePanel aria-labelledby={headingId} position="left">
-          <StackLayout>
-            <SidePanelCloseTrigger>
-              <Button
-                aria-label="Close"
-                appearance="transparent"
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
-            </SidePanelCloseTrigger>
-            <H2 id={headingId}>Filters</H2>
-            <Input startAdornment={<SearchIcon />} placeholder="Search" />
-
-            <FormField>
-              <FormFieldLabel>Color</FormFieldLabel>
-              <Dropdown>
-                <Option value="red" />
-                <Option value="blue" />
-                <Option value="green" />
-                <Option value="yellow" />
-                <Option value="purple" />
-                <Option value="orange" />
-              </Dropdown>
-              <FormFieldHelperText>Pick a color</FormFieldHelperText>
-            </FormField>
-
-            <FormField>
-              <FormFieldLabel>Location</FormFieldLabel>
-              <RadioButtonGroup>
-                <RadioButton label="NAMR" value="namr" />
-                <RadioButton label="APAC" value="apac" />
-                <RadioButton label="EMEA" value="emea" />
-              </RadioButtonGroup>
-              <FormFieldHelperText>Select one that applies</FormFieldHelperText>
-            </FormField>
-            <FlexLayout gap={1}>
-              <Button
-                sentiment="accented"
-                appearance="bordered"
-                style={{ width: "100%" }}
-              >
-                Reset
-              </Button>
-              <Button sentiment="accented" style={{ width: "100%" }}>
-                Update
-              </Button>
-            </FlexLayout>
-          </StackLayout>
-        </SidePanel>
-        <FlexLayout padding={1}>
-          <SidePanelTrigger>
-            <Button>Open Left Panel</Button>
-          </SidePanelTrigger>
-        </FlexLayout>
-      </FlexLayout>
-    </SidePanelGroup>
+        <SidePanelTrigger>
+          <Button>{openState ? "Close" : "Open"} left panel</Button>
+        </SidePanelTrigger>
+      </div>
+    </>
   );
 };
+
+export const LeftPanel = () => (
+  <SidePanelProvider>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <SidePanelExample />
+    </FlexLayout>
+  </SidePanelProvider>
+);

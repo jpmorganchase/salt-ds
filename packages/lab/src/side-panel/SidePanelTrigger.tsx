@@ -1,20 +1,15 @@
-import { mergeProps, useForkRef, useId } from "@salt-ds/core";
+import { mergeProps, useForkRef } from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
   cloneElement,
   forwardRef,
   isValidElement,
-  type MouseEvent,
   type ReactNode,
-  useRef,
 } from "react";
-import { useSidePanelGroup } from "./SidePanelGroupContext";
+import { useSidePanelContext } from "./SidePanelContext";
 
 export interface SidePanelTriggerProps
-  extends Omit<
-    ComponentPropsWithoutRef<"button">,
-    "aria-controls" | "aria-expanded"
-  > {
+  extends ComponentPropsWithoutRef<"button"> {
   children: ReactNode;
 }
 
@@ -22,44 +17,22 @@ export const SidePanelTrigger = forwardRef<
   HTMLButtonElement,
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
-  const { children, onClick, ...rest } = props;
-  const { open, activeTriggerId, setOpen, activateTrigger, panelId } =
-    useSidePanelGroup();
-  const triggerRef = useRef<HTMLElement | null>(null);
-  const triggerId = useId();
-  const handleRef = useForkRef(triggerRef, ref);
+  const { children, ...rest } = props;
+  const { setReference, getReferenceProps, panelId } = useSidePanelContext();
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onClick?.(event);
-
-    if (!triggerRef.current || !triggerId) {
-      return;
-    }
-
-    const isActiveTriggerOpen = open && activeTriggerId === triggerId;
-
-    if (isActiveTriggerOpen) {
-      setOpen?.(false);
-      return;
-    }
-
-    activateTrigger(triggerId, triggerRef);
-  };
+  const handleRef = useForkRef(setReference, ref);
 
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;
   }
 
   const mergedProps = mergeProps(
-    {
-      onClick: handleClick,
+    getReferenceProps({
+      "aria-controls": panelId,
       ...rest,
-    },
+    }) as Record<string, unknown>,
     children.props,
   );
-
-  mergedProps["aria-expanded"] = open && activeTriggerId === triggerId;
-  mergedProps["aria-controls"] = panelId;
 
   return cloneElement(children, {
     ...mergedProps,

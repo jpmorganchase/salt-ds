@@ -46,7 +46,7 @@ You can control the open state of the side panel component by using the `open` a
 
 ## Complex layouts
 
-For layouts that need more control over the side panel’s open/close behavior, use manual trigger management instead of SidePanelGroup. This is useful when the trigger and the panel can’t sit together in the component tree, or when open/close behavior needs to be driven by custom logic.
+For layouts that need more control over the side panel’s open/close behavior, use manual trigger management instead of SidePanelProvider. This is useful when the trigger and the panel can’t sit together in the component tree, or when open/close behavior needs to be driven by custom logic.
 
 Manual trigger management makes it possible to:
 
@@ -57,8 +57,8 @@ Manual trigger management makes it possible to:
 
 This approach trades convenience for flexibility: it requires more wiring, but enables more control over placement and behavior.
 
-### How to wire it up
-
-When using manual triggers, pass `open` and `onOpenChange` directly to SidePanel, and set `aria-expanded` and `aria-controls` on the trigger button. Additionally, pass `triggerRef` to the panel so focus returns to the trigger when the panel closes.
-
 <LivePreview componentName="side-panel" exampleName="ManualTrigger" />
+
+Side Panels can also be nested within each other to create multi-level drill-in experiences. When nesting, ensure that each panel has a clear purpose and that the navigation between panels is intuitive.
+
+<LivePreview componentName="side-panel" exampleName="Nested" />
