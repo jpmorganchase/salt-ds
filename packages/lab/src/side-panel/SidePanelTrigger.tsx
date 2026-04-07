@@ -1,4 +1,4 @@
-import { mergeProps, useForkRef, useId } from "@salt-ds/core";
+import { mergeProps, useForkRef } from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
   cloneElement,
@@ -23,34 +23,30 @@ export const SidePanelTrigger = forwardRef<
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
   const { children, onClick, ...rest } = props;
-  const { open, activeTriggerId, setOpen, activateTrigger, panelId } =
+  const { open, triggerRef: groupTriggerRef, setOpen, activateTrigger, panelId } =
     useSidePanelGroup();
   const triggerRef = useRef<HTMLElement | null>(null);
-  const triggerId = useId();
   const handleRef = useForkRef(triggerRef, ref);
+  const isActive = open && groupTriggerRef?.current === triggerRef.current;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
 
-    if (!triggerRef.current || !triggerId) {
+    if (!triggerRef.current) {
       return;
     }
 
-    const isActiveTriggerOpen = open && activeTriggerId === triggerId;
-
-    if (isActiveTriggerOpen) {
+    if (isActive) {
       setOpen?.(false);
       return;
     }
 
-    activateTrigger(triggerId, triggerRef);
+    activateTrigger(triggerRef);
   };
 
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;
   }
-
-  const isExpanded = open && activeTriggerId === triggerId;
   const mergedProps = mergeProps(
     {
       onClick: handleClick,
@@ -60,7 +56,7 @@ export const SidePanelTrigger = forwardRef<
   );
 
   // Set aria attributes
-  mergedProps["aria-expanded"] = isExpanded;
+  mergedProps["aria-expanded"] = isActive;
   mergedProps["aria-controls"] = panelId;
 
   return cloneElement(children, {

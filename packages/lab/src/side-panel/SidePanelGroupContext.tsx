@@ -15,18 +15,14 @@ export interface SidePanelGroupContextValue {
    */
   panelId?: string;
   /**
-   * ID of the active trigger, used to identify which trigger should receive focus when the panel closes.
-   */
-  activeTriggerId?: string;
-  /**
-   * DOM reference of the active trigger, used to restore focus when the panel closes.
+   * DOM reference of the active trigger, used to restore focus when the panel closes and
+   * to identify which trigger is active (compared against each trigger's own ref).
    */
   triggerRef?: MutableRefObject<HTMLElement | null>;
   /**
-   * Activates a trigger: sets its ID and ref, keeps the panel open, and prepares for focus restoration on close.
+   * Activates a trigger: sets its ref, keeps the panel open, and prepares for focus restoration on close.
    */
   activateTrigger: (
-    triggerId: string,
     triggerElement: MutableRefObject<HTMLElement | null>,
   ) => void;
   /**

@@ -4,6 +4,7 @@ import {
   type ReactNode,
   useCallback,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -31,12 +32,7 @@ export interface SidePanelGroupProps {
 }
 
 export function SidePanelGroup(props: SidePanelGroupProps) {
-  const [activeTriggerId, setActiveTriggerId] = useState<string | undefined>(
-    undefined,
-  );
-  const [triggerRef, setTriggerRef] = useState<
-    MutableRefObject<HTMLElement | null> | undefined
-  >(undefined);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const [activationCount, setActivationCount] = useState(0);
 
   const { children, open: openProp, defaultOpen, onOpenChange } = props;
@@ -57,21 +53,14 @@ export function SidePanelGroup(props: SidePanelGroupProps) {
       }
 
       setOpenState(newOpen);
-      if (!newOpen) {
-        setActiveTriggerId(undefined);
-      }
       onOpenChange?.(newOpen);
     },
-    [open, onOpenChange],
+    [open, onOpenChange, setOpenState],
   );
 
   const activateTrigger = useCallback(
-    (
-      triggerId: string,
-      triggerElement: MutableRefObject<HTMLElement | null>,
-    ) => {
-      setActiveTriggerId(triggerId);
-      setTriggerRef(triggerElement);
+    (triggerElement: MutableRefObject<HTMLElement | null>) => {
+      triggerRef.current = triggerElement.current;
       setActivationCount((count) => count + 1);
       setOpen(true);
     },
@@ -83,20 +72,11 @@ export function SidePanelGroup(props: SidePanelGroupProps) {
       open,
       setOpen,
       panelId,
-      activeTriggerId,
       triggerRef,
       activateTrigger,
       activationCount,
     }),
-    [
-      open,
-      setOpen,
-      panelId,
-      activeTriggerId,
-      triggerRef,
-      activateTrigger,
-      activationCount,
-    ],
+    [open, setOpen, panelId, activateTrigger, activationCount],
   );
 
   return (

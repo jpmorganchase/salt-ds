@@ -46,12 +46,8 @@ export const SidePanelCloseTrigger = forwardRef<
     children.props,
   );
 
-  return (
-    <>
-      {cloneElement(children, {
-        ...mergedProps,
-        ref: handleRef,
-      })}
-    </>
-  );
+  return cloneElement(children, {
+    ...mergedProps,
+    ref: handleRef,
+  });
 });
