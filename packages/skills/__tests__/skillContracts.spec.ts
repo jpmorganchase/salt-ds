@@ -93,6 +93,9 @@ describe("Salt skill contracts", () => {
       "implementation_gate with follow-through required",
     );
     expect(openAiMetadata).toContain(
+      "Preserve concrete user nouns like chart, table, filter, and metric in follow-up create calls",
+    );
+    expect(openAiMetadata).toContain(
       "Do not use this skill for generic React/CSS work that does not require Salt.",
     );
     expect(primarySkill).toContain("## Trigger Boundary");
@@ -127,6 +130,12 @@ describe("Salt skill contracts", () => {
     );
     expect(primarySkill.split("\n").slice(0, 130).join("\n")).toContain(
       "When `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, the canonical step is not complete for those named sub-surfaces.",
+    );
+    expect(primarySkill).toContain(
+      "Do not rewrite `chart`, `table`, `filter`, `metric`, or similar concrete asks into abstract taxonomy prompts",
+    );
+    expect(primarySkill).toContain(
+      "use that exact name or verified alias in the next create step instead of paraphrasing it",
     );
     expect(primarySkill).toContain(
       "Do not select Salt components, patterns, props, tokens, plans, or code until the canonical Salt step has completed successfully.",
@@ -180,6 +189,12 @@ describe("Salt skill contracts", () => {
     expect(createRules).toContain("create-verify-named-salt-details");
     expect(createRules).toContain(
       "if a broad `create` result returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through",
+    );
+    expect(createRules).toContain(
+      "do not translate concrete follow-up asks into abstract category prose",
+    );
+    expect(createRules).toContain(
+      "if an exact Salt target name is already known",
     );
     expect(createRules).toContain(
       "0. Obtain canonical Salt guidance via MCP (`create_salt_ui`) or CLI (`salt-ds create`) and do not proceed until it succeeds.",

@@ -7,6 +7,24 @@ import type {
 } from "../types.js";
 import { tokenize, unique } from "./utils.js";
 
+const QUERY_TOKEN_STOPWORDS = new Set([
+  "component",
+  "components",
+  "control",
+  "controls",
+  "element",
+  "elements",
+  "for",
+  "from",
+  "into",
+  "of",
+  "the",
+  "to",
+  "ui",
+  "uis",
+  "with",
+]);
+
 export interface QueryField {
   key: string;
   value: string;
@@ -71,7 +89,9 @@ export function scoreQueryFields(
     return { score: 0, matched_terms: [], match_reasons: [] };
   }
 
-  const queryTokens = tokenize(query);
+  const queryTokens = tokenize(query).filter(
+    (token) => !QUERY_TOKEN_STOPWORDS.has(token),
+  );
   const matchedTerms = new Set<string>();
   const matchReasons = new Set<string>();
   let score = 0;
@@ -353,6 +373,12 @@ export function getComponentQueryFields(
       value: component.summary,
       phrase_weight: 8,
       token_weight: 3,
+    },
+    {
+      key: "aliases",
+      value: component.aliases.join(" "),
+      phrase_weight: 8,
+      token_weight: 4,
     },
     {
       key: "when_to_use",
