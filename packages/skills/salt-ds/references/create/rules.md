@@ -19,6 +19,8 @@ Use this file only for `create` work after project context is known.
 
 - obtain canonical Salt guidance through MCP or CLI before choosing components, patterns, props, tokens, or writing Salt-specific code
 - if the user asks for a dashboard, page, screen, workspace, overview, or another multi-region surface, preserve that page-level wording in the first Salt create call instead of collapsing it into a single widget or sub-pattern
+- for targeted follow-up on a named sub-surface, preserve the user's concrete noun phrase such as `chart`, `table`, `metric`, or `filter` and add slot or pattern context only as supporting detail
+- do not translate concrete follow-up asks into abstract category prose such as `data visualization component for dashboard analytical body`
 - choose one composition direction before writing code
 - prefer Salt patterns and compositions before custom UI structure
 - keep the first scaffold centered on the main task, not on optional embellishment
@@ -28,6 +30,7 @@ Use this file only for `create` work after project context is known.
 - use workflow confidence to decide whether to proceed or ask a follow-up question
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
 - if a broad `create` result returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through before implementing the matching sub-surface
+- if an exact Salt target name is already known from `required_follow_through`, `expected_patterns`, `expected_components`, or a resolved MCP result, use that exact name or verified alias in the next create call instead of paraphrasing it
 - do not implement named contract items from general React, CSS, HTML, or copied repo code before that Salt follow-through completes
 
 ## Stable Rule IDs
@@ -60,8 +63,10 @@ Use this file only for `create` work after project context is known.
 4. State the Salt pattern or component choice.
 5. State whether the work should use the default-new-work bootstrap from `references/shared/theme.md` or an explicit compatibility exception.
 6. Verify any explicit Salt token or API names you plan to mention.
-7. If `composition_contract.expected_patterns` or `composition_contract.expected_components` are present, run targeted Salt follow-up for each unresolved named item before writing that part of the code.
-8. Only then move into code or starter guidance.
+7. If a targeted follow-up is needed, keep the concrete user noun phrase visible and add slot or page context without turning it into taxonomy-style wording.
+8. If `composition_contract.expected_patterns` or `composition_contract.expected_components` are present, run targeted Salt follow-up for each unresolved named item before writing that part of the code.
+9. If the exact Salt target name is already known, use it directly in the follow-up instead of paraphrasing it.
+10. Only then move into code or starter guidance.
 
 ## Ask Instead Of Guess
 

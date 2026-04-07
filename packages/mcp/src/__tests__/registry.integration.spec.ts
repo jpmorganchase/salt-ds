@@ -10,6 +10,7 @@ import {
   getIcon,
   getPage,
   getPattern,
+  recommendComponent,
   searchSaltDocs,
   validateSaltUsage,
 } from "@salt-ds/semantic-core";
@@ -333,6 +334,68 @@ describe("registry integration", () => {
         "pattern-docs",
         "usage-callouts",
       ]),
+    });
+  });
+
+  it("prefers Chart for chart-focused component recommendation prompts", () => {
+    const result = recommendComponent(registry, {
+      task: "chart of data visualization component for dashboard analytical body",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Chart",
+      component: {
+        package: "@salt-ds/highcharts-theme",
+      },
+    });
+  });
+
+  it("matches Chart through its Highcharts alias during component recommendation", () => {
+    const result = recommendComponent(registry, {
+      task: "highcharts data visualization component",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Chart",
+      component: {
+        package: "@salt-ds/highcharts-theme",
+      },
+    });
+  });
+
+  it.each([
+    [
+      "Table component with custom cell rendering and column definitions",
+      "Table",
+      "@salt-ds/core",
+    ],
+    ["table in analytical dashboard main body", "Table", "@salt-ds/core"],
+    [
+      "use the table in the analytical dashboard body",
+      "Table",
+      "@salt-ds/core",
+    ],
+    [
+      "data grid with custom cell rendering and column definitions",
+      "Data grid",
+      "@salt-ds/ag-grid-theme",
+    ],
+  ])("returns %s for tabular component recommendation prompts", (task, expectedName, expectedPackage) => {
+    const result = recommendComponent(registry, {
+      task,
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: expectedName,
+      component: {
+        package: expectedPackage,
+      },
     });
   });
 

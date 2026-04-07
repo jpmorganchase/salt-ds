@@ -54,7 +54,7 @@
 - If starting from partial code, simplify before adding more wrappers or overrides.
 - If you started from non-Salt code, verify that the implemented result still matches the translated source regions and redesign hotspots.
 - After the required follow-through and the first scaffold pass, run `review_salt_ui` on the result when updated code is available.
-- If source-level validation is still not enough and the Salt CLI is available, run `salt-ds doctor` when runtime target confidence is low and `salt-ds review <file-or-dir> --url <url>` on the relevant running page or Storybook URL.
+- If source-level validation is still not enough and the Salt CLI is available, use `references/shared/transport.md` to choose between `salt-ds doctor` and `salt-ds review <file-or-dir> --url <url>`.
 - Prefer browser-session evidence when available, and treat `fetched-html` fallback output as narrower evidence for structure, landmarks, and accessible names.
 
 ## 7. return the result
@@ -63,34 +63,3 @@
 - Then show the scaffold handoff: what to start with, what grouped structure to build around, and what to validate after the first pass.
 - For new Salt-native work, state the default theme bootstrap explicitly when it affects the scaffold by referencing the exact default-new-work or compatibility path from `references/shared/theme.md`.
 - Then summarize the implementation plan, list the chosen building blocks, surface assumptions, include Salt compliance checks, and include starter code when it will accelerate implementation.
-
-## runtime-assisted examples
-
-### MCP-unavailable fallback example
-
-- If Salt MCP is unavailable but the Salt CLI is available, keep the same workflow shape with the CLI fallback underneath.
-- Complete the same stages:
-  - canonical Salt selection
-  - source-level validation through `salt-ds review <file-or-dir>`
-  - any workflow-directed grounding follow-up the create or migrate result still recommends
-- Only after that, if rendered behavior is still uncertain, use `salt-ds doctor` and `salt-ds review <file-or-dir> --url <url>` as local evidence.
-- In the final response, state clearly that canonical Salt guidance came from the fallback path because MCP was unavailable, and keep runtime findings separate.
-
-### browser-session example
-
-- After the first scaffold pass, `review_salt_ui` is clean enough that the remaining uncertainty is about rendered labeling and runtime behavior.
-- Run `salt-ds doctor` if the target URL is unclear, then run `salt-ds review <file-or-dir> --url <url>`.
-- If the result is `browser-session`, use:
-  - console and page errors to catch runtime breakage
-  - screenshot artifacts to confirm the rendered structure you expect
-  - hydrated roles and landmarks to refine accessibility fixes
-- Return the implementation plan with the runtime findings separated from canonical Salt guidance.
-
-### fetched-html fallback example
-
-- If browser-session inspection is unavailable and `salt-ds review <file-or-dir> --url <url>` falls back to `fetched-html`, keep the claims narrow.
-- Use the fallback output only for:
-  - title or status confirmation
-  - basic landmark and role summaries
-  - coarse structure checks
-- If the remaining issue depends on client-side execution, focus behavior, or a risky cleanup decision, ask for browser-session inspection or manual validation instead of overcommitting.
