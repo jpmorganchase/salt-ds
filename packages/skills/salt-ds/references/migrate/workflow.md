@@ -43,38 +43,9 @@
 - After the first migration pass, run `review_salt_ui` again on the migrated Salt code when updated code is available.
 - Confirm whether deprecated usage is gone and note any remaining primitive, composition, token, or styling issues.
 - If CSS overrides remain, state whether they still appear justified or should be removed.
-- If rendered structure or remaining overrides are still uncertain and the Salt CLI is available, run `salt-ds doctor` when runtime target confidence is low and `salt-ds review <file-or-dir> --url <url>` on the relevant before URL, after URL, or both.
+- If rendered structure or remaining overrides are still uncertain and the Salt CLI is available, use `references/shared/transport.md` to choose `salt-ds doctor`, `salt-ds review <file-or-dir> --url <url>`, `salt-ds migrate <query> --url <url>`, or `salt-ds migrate [query] --source-outline <path>`.
 - Prefer browser-session evidence when available, and treat `fetched-html` fallback output as narrower evidence for structure, landmarks, and accessible names.
 
 ## 7. return the result
 
 - Summarize the migration, enumerate affected apis or patterns, recommend the next actions, note the main risks, and include the post-migration validation outcome.
-
-## runtime-assisted examples
-
-### MCP-unavailable fallback example
-
-- If Salt MCP is unavailable but the Salt CLI is available, keep the same upgrade workflow and let the CLI provide fallback canonical guidance underneath.
-- Establish the version boundary first, inspect the current code, make the migration changes, then run `salt-ds review <file-or-dir>` on the updated code.
-- Only if rendered structure, landmarks, or leftover cleanup are still uncertain, use `salt-ds doctor` and `salt-ds review <file-or-dir> --url <url>` before deciding whether risky overrides or shims can be removed.
-- In the final response, state clearly that canonical Salt guidance came from the fallback path because MCP was unavailable, and keep runtime evidence separate from that canonical guidance.
-
-### before-and-after browser-session example
-
-- Run `salt-ds review <file-or-dir> --url <before-url>` before the migration when you need baseline evidence for rendered structure or runtime failures.
-- Make the migration changes and re-run `review_salt_ui`.
-- Run `salt-ds review <file-or-dir> --url <after-url>` on the migrated page.
-- If both inspections use `browser-session`, compare:
-  - runtime/page errors
-  - screenshots or rendered structure summaries
-  - landmarks, roles, and accessible names
-- Use that evidence to decide whether remaining CSS overrides or shims still appear necessary.
-
-### fetched-html fallback example
-
-- If either pass falls back to `fetched-html`, do not treat the result as full proof that a CSS override or shim is safe to delete.
-- Use fallback output only for narrower claims about:
-  - page title or load status
-  - landmark and role summaries
-  - coarse structure differences before and after the migration
-- If the cleanup decision is risky, ask for browser-session inspection or wider manual validation before removing the override or shim.

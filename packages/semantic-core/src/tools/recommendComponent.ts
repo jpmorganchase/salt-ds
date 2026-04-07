@@ -23,7 +23,11 @@ import {
   createComponentStarterCode,
   type StarterCodeSnippet,
 } from "./starterCode.js";
-import { isComponentAllowedByDocsPolicy, normalizeQuery } from "./utils.js";
+import {
+  isComponentAllowedByDocsPolicy,
+  normalizeQuery,
+  tokenize,
+} from "./utils.js";
 
 export interface RecommendComponentInput {
   task: string;
@@ -169,6 +173,87 @@ function getNavigationIntentAdjustment(
   return adjustment;
 }
 
+function getExplicitNameMatchAdjustment(
+  task: string,
+  component: SaltRegistry["components"][number],
+): {
+  score: number;
+  matched_terms: string[];
+  match_reasons: string[];
+} {
+  const query = normalizeQuery(task);
+  const queryTokens = new Set(tokenize(task));
+  const matchedTerms = new Set<string>();
+  const matchReasons = new Set<string>();
+  let score = 0;
+
+  const nameTokens = tokenize(component.name);
+  const matchedNameTokens = nameTokens.filter((token) =>
+    queryTokens.has(token),
+  );
+  if (matchedNameTokens.length > 0) {
+    matchedNameTokens.forEach((token) => {
+      matchedTerms.add(token);
+    });
+    matchReasons.add("name_explicit");
+
+    if (normalizeQuery(component.name) === query) {
+      score += 20;
+      matchReasons.add("name_exact");
+    } else if (nameTokens.length === 1) {
+      score += 20;
+    } else if (matchedNameTokens.length === nameTokens.length) {
+      score += 18 + (nameTokens.length - 1) * 4;
+    } else {
+      score += matchedNameTokens.length * 4;
+    }
+  }
+
+  let bestAliasScore = 0;
+  let bestAliasTokens: string[] = [];
+  for (const alias of component.aliases) {
+    const aliasTokens = tokenize(alias);
+    const matchedAliasTokens = aliasTokens.filter((token) =>
+      queryTokens.has(token),
+    );
+    if (matchedAliasTokens.length === 0) {
+      continue;
+    }
+
+    let aliasScore = 0;
+    if (normalizeQuery(alias) === query) {
+      aliasScore = 16;
+    } else if (aliasTokens.length === 1) {
+      aliasScore = 12;
+    } else if (matchedAliasTokens.length === aliasTokens.length) {
+      aliasScore = 12 + (aliasTokens.length - 1) * 3;
+    }
+
+    if (aliasScore > bestAliasScore) {
+      bestAliasScore = aliasScore;
+      bestAliasTokens = matchedAliasTokens;
+    }
+  }
+
+  if (bestAliasScore > 0) {
+    bestAliasTokens.forEach((token) => {
+      matchedTerms.add(token);
+    });
+    matchReasons.add("aliases_explicit");
+    score += bestAliasScore;
+  }
+
+  return {
+    score,
+    matched_terms: [...matchedTerms].sort((left, right) =>
+      left.localeCompare(right),
+    ),
+    match_reasons: [...matchReasons].sort((left, right) =>
+      left.localeCompare(right),
+    ),
+  };
+}
+
 export function recommendComponent(
   registry: SaltRegistry,
   input: RecommendComponentInput,
@@ -197,6 +282,7 @@ export function recommendComponent(
         task,
         getComponentQueryFields(component),
       );
+      const explicitNameScore = getExplicitNameMatchAdjustment(task, component);
       const semanticsScore = scoreUsageSemantics(
         task,
         getEffectiveUsageSemantics(component),
@@ -207,16 +293,21 @@ export function recommendComponent(
         component,
         capabilities: inferComponentCapabilities(component),
         score:
-          queryScore.score + semanticsScore.score_adjustment + intentAdjustment,
+          queryScore.score +
+          explicitNameScore.score +
+          semanticsScore.score_adjustment +
+          intentAdjustment,
         matched_terms: [
           ...new Set([
             ...queryScore.matched_terms,
+            ...explicitNameScore.matched_terms,
             ...semanticsScore.matched_terms,
           ]),
         ].sort((left, right) => left.localeCompare(right)),
         match_reasons: [
           ...new Set([
             ...queryScore.match_reasons,
+            ...explicitNameScore.match_reasons,
             ...semanticsScore.match_reasons,
           ]),
         ].sort((left, right) => left.localeCompare(right)),

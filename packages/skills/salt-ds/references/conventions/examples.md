@@ -9,7 +9,7 @@
 - [Banned Choice](#banned-choice)
 - [Keep It Small](#keep-it-small)
 
-Use the bundled template first. Then add only the rule sections the repo actually needs.
+Use the bundled template first, then add only the rule sections the repo actually needs.
 
 If your organization has both line-of-business and team conventions, keep them in separate files that both use `project_conventions_v1`. The LoB file should carry shared defaults; the team file should only add or override what is local to that repo.
 
@@ -33,10 +33,7 @@ Layered upgrade:
 
 ## Repo Instruction Snippet
 
-When bootstrapping a simple repo, pair `.salt/team.json` with a short repo instruction block:
-
-- create or update `AGENTS.md` by default when the repo has no established repo-local instruction file
-- if the repo already uses `CLAUDE.md` or another repo-local instruction file, update that file instead of creating a second one
+When bootstrapping a simple repo, pair `.salt/team.json` with a short repo instruction block. Create or update `AGENTS.md` by default when the repo has no established repo-local instruction file. If the repo already uses `CLAUDE.md` or another repo-local instruction file, update that file instead of creating a second one.
 
 ```md
 Use the Salt MCP for canonical Salt guidance.
