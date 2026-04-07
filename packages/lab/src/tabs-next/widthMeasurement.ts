@@ -9,6 +9,17 @@ export function getMeasuredWidth(element: HTMLElement | null | undefined) {
   return width || element.clientWidth || 0;
 }
 
+export function getIntrinsicMeasuredWidth(
+  element: HTMLElement | null | undefined,
+) {
+  if (!element) {
+    return 0;
+  }
+
+  const borderWidth = element.offsetWidth - element.clientWidth;
+  return Math.max(getMeasuredWidth(element), element.scrollWidth + borderWidth);
+}
+
 export function getGapValue(styles: CSSStyleDeclaration) {
   return Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
 }

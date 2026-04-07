@@ -1,9 +1,14 @@
+import { ownerWindow, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
-  ownerWindow,
-  useEventCallback,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
-import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
+  type MutableRefObject,
+  type RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { isHTMLElement } from "../domUtils";
 import type { RenderedTab } from "../TabsNextContext";
 import {
   getGapValue,
@@ -11,6 +16,11 @@ import {
   seedWidthMap,
   updateWidthMap,
 } from "../widthMeasurement";
+import {
+  calculateVisibleCount,
+  MIN_TRUSTED_TAB_WIDTH,
+  partitionVisibleValues,
+} from "./overflowMath";
 
 interface UseOverflowProps {
   container: RefObject<HTMLElement>;
@@ -21,7 +31,8 @@ interface UseOverflowProps {
 }
 
 function getTabWidth(tab: RenderedTab) {
-  return tab.width || getMeasuredWidth(tab.root);
+  const width = tab.width || getMeasuredWidth(tab.root);
+  return width > MIN_TRUSTED_TAB_WIDTH ? width : null;
 }
 
 function getAvailableWidth(element: HTMLElement) {
@@ -35,7 +46,7 @@ function getAvailableWidth(element: HTMLElement) {
   const parentGap = getGapValue(parentStyles);
   const siblings = Array.from(parent.children).filter(
     (child): child is HTMLElement => {
-      if (!(child instanceof HTMLElement) || child === element) {
+      if (!isHTMLElement(child) || child === element) {
         return false;
       }
 
@@ -54,6 +65,21 @@ function getAvailableWidth(element: HTMLElement) {
   return availableWidth;
 }
 
+function isSelectedValueHidden(
+  selected: string | undefined,
+  hiddenValues: string[],
+) {
+  return selected !== undefined && hiddenValues.includes(selected);
+}
+
+function getPinnedSelectionValue(
+  selected: string | undefined,
+  selectedIsHidden: boolean,
+  pinnedSelectionRef: MutableRefObject<string | undefined>,
+) {
+  return selectedIsHidden ? selected : pinnedSelectionRef.current;
+}
+
 export function useOverflow({
   container,
   overflowButton,
@@ -62,95 +88,88 @@ export function useOverflow({
   menuOpen,
 }: UseOverflowProps) {
   const orderedValues = useMemo(() => tabs.map((tab) => tab.value), [tabs]);
-  const orderedValuesKey = orderedValues.join("\0");
-  const widthSignature = useMemo(() => {
+  const measurementInputKey = useMemo(() => {
     return tabs.map((tab) => `${tab.value}:${tab.width.toFixed(2)}`).join("\0");
   }, [tabs]);
   const [visibleCount, setVisibleCount] = useState(0);
   const [isMeasuring, setIsMeasuring] = useState(true);
+  const [measureRetryVersion, setMeasureRetryVersion] = useState(0);
   const pinnedSelectionRef = useRef(selected);
-  const previousOrderedValuesKeyRef = useRef(orderedValuesKey);
-  const previousWidthSignatureRef = useRef(widthSignature);
-  const baseVisibleValues = orderedValues.slice(0, visibleCount);
+  const previousOverflowButtonWidthRef = useRef(0);
+  const previousMeasurementInputKeyRef = useRef(measurementInputKey);
+  const previousMenuOpenRef = useRef(menuOpen);
+  const measureRetryFrameRef = useRef<number | null>(null);
+  const measureRetryCountRef = useRef(0);
   const baseHiddenValues = orderedValues.slice(visibleCount);
-  const selectedIsHidden = selected
-    ? baseHiddenValues.includes(selected)
-    : false;
-  const pinnedValue = selectedIsHidden ? selected : pinnedSelectionRef.current;
+  const selectedIsHidden = isSelectedValueHidden(selected, baseHiddenValues);
+  const pinnedValue = getPinnedSelectionValue(
+    selected,
+    selectedIsHidden,
+    pinnedSelectionRef,
+  );
+  const getCurrentPinnedValue = useCallback(() => {
+    return getPinnedSelectionValue(
+      selected,
+      selectedIsHidden,
+      pinnedSelectionRef,
+    );
+  }, [selected, selectedIsHidden]);
+  const markMeasurementStale = useCallback(() => {
+    setIsMeasuring(true);
+  }, []);
 
-  const measureVisibleCount = useEventCallback((pinnedValue?: string) => {
+  const measureVisibleCount = useCallback(
+    (pinnedValue?: string) => {
+      const element = container.current;
+      if (!element) {
+        return null;
+      }
+
+      const maxWidth = getAvailableWidth(element);
+      const styles = ownerWindow(element).getComputedStyle(element);
+      const gap = getGapValue(styles);
+      const overflowWidth = overflowButton.current
+        ? overflowButton.current.offsetWidth + gap
+        : 0;
+      const measuredTabs = tabs.map((tab) => ({
+        value: tab.value,
+        width: getTabWidth(tab),
+      }));
+
+      return calculateVisibleCount({
+        gap,
+        maxWidth,
+        overflowWidth,
+        pinnedValue,
+        tabs: measuredTabs,
+      });
+    },
+    [container, overflowButton, tabs],
+  );
+  const clearMeasureRetry = useCallback(() => {
     const element = container.current;
-    if (!element) {
-      return tabs.length;
+    const frame = measureRetryFrameRef.current;
+
+    if (element && frame != null) {
+      ownerWindow(element).cancelAnimationFrame(frame);
     }
 
-    let maxWidth = getAvailableWidth(element);
-    const styles = ownerWindow(element).getComputedStyle(element);
-    const gap = getGapValue(styles);
+    measureRetryFrameRef.current = null;
+    measureRetryCountRef.current = 0;
+  }, [container]);
 
-    let currentWidth = 0;
-    let nextVisibleCount = 0;
-    const visibleItems: RenderedTab[] = [];
-
-    while (nextVisibleCount < tabs.length) {
-      const item = tabs[nextVisibleCount];
-      if (!item) {
-        break;
-      }
-
-      const itemWidth = getTabWidth(item) + gap;
-      if (currentWidth + itemWidth > maxWidth) {
-        break;
-      }
-
-      currentWidth += itemWidth;
-      visibleItems.push(item);
-      nextVisibleCount += 1;
-    }
-
-    const overflowWidth = overflowButton.current
-      ? overflowButton.current.offsetWidth + gap
-      : 0;
-    const allTabsFit = nextVisibleCount >= tabs.length;
-    if (allTabsFit) {
-      return nextVisibleCount;
-    }
-
-    maxWidth -= overflowWidth;
-
-    while (currentWidth > maxWidth) {
-      const removed = visibleItems.pop();
-      if (!removed) {
-        break;
-      }
-      currentWidth -= getTabWidth(removed) + gap;
-      nextVisibleCount -= 1;
-    }
-
-    const pinnedItem =
-      pinnedValue == null
-        ? null
-        : (tabs.find((item) => item.value === pinnedValue) ?? null);
-
-    if (pinnedItem && !visibleItems.includes(pinnedItem)) {
-      const pinnedWidth = getTabWidth(pinnedItem) + gap;
-      while (currentWidth + pinnedWidth > maxWidth) {
-        const removed = visibleItems.pop();
-        if (!removed) {
-          break;
-        }
-        currentWidth -= getTabWidth(removed) + gap;
-        nextVisibleCount -= 1;
-      }
-    }
-
-    return Math.max(0, nextVisibleCount);
-  });
+  useEffect(() => {
+    return clearMeasureRetry;
+  }, [clearMeasureRetry]);
 
   useIsomorphicLayoutEffect(() => {
-    if (selected && selectedIsHidden) {
+    if (selected !== undefined && selectedIsHidden) {
       pinnedSelectionRef.current = selected;
       const nextVisibleCount = measureVisibleCount(selected);
+      if (nextVisibleCount == null) {
+        markMeasurementStale();
+        return;
+      }
       if (nextVisibleCount !== visibleCount) {
         setVisibleCount(nextVisibleCount);
       }
@@ -160,6 +179,7 @@ export function useOverflow({
     }
   }, [
     isMeasuring,
+    markMeasurementStale,
     measureVisibleCount,
     selected,
     selectedIsHidden,
@@ -177,24 +197,36 @@ export function useOverflow({
     if (parent) {
       observedElements.push(parent);
       for (const child of Array.from(parent.children)) {
-        if (child instanceof HTMLElement && child !== element) {
+        if (isHTMLElement(child) && child !== element) {
           observedElements.push(child);
         }
       }
     }
 
     const widths = seedWidthMap(observedElements);
+    const resizeObserverCtor = ownerWindow(element).ResizeObserver;
+    if (!resizeObserverCtor) {
+      return;
+    }
 
-    const resizeObserver = new (ownerWindow(element).ResizeObserver)(
+    const resizeObserver = new resizeObserverCtor(
       (entries: ResizeObserverEntry[]) => {
         for (const entry of entries) {
-          if (!(entry.target instanceof HTMLElement)) {
+          if (!isHTMLElement(entry.target)) {
             continue;
           }
 
           const nextWidth = entry.contentRect.width;
           if (updateWidthMap(widths, entry.target, nextWidth)) {
-            setIsMeasuring(true);
+            const nextVisibleCount = measureVisibleCount(
+              getCurrentPinnedValue(),
+            );
+
+            if (nextVisibleCount != null && nextVisibleCount === visibleCount) {
+              continue;
+            }
+
+            markMeasurementStale();
             return;
           }
         }
@@ -208,50 +240,99 @@ export function useOverflow({
     return () => {
       resizeObserver.disconnect();
     };
-  }, [container, isMeasuring, menuOpen]);
+  }, [
+    container,
+    getCurrentPinnedValue,
+    isMeasuring,
+    markMeasurementStale,
+    measureVisibleCount,
+    menuOpen,
+    visibleCount,
+  ]);
 
   useIsomorphicLayoutEffect(() => {
-    if (previousOrderedValuesKeyRef.current !== orderedValuesKey) {
-      previousOrderedValuesKeyRef.current = orderedValuesKey;
-      setIsMeasuring(true);
+    if (previousMenuOpenRef.current && !menuOpen) {
+      markMeasurementStale();
     }
-  }, [orderedValuesKey]);
+
+    previousMenuOpenRef.current = menuOpen;
+  }, [markMeasurementStale, menuOpen]);
 
   useIsomorphicLayoutEffect(() => {
-    if (previousWidthSignatureRef.current !== widthSignature) {
-      previousWidthSignatureRef.current = widthSignature;
-      setIsMeasuring(true);
+    const nextOverflowButtonWidth = overflowButton.current?.offsetWidth ?? 0;
+    if (previousOverflowButtonWidthRef.current === nextOverflowButtonWidth) {
+      return;
     }
-  }, [widthSignature]);
+
+    previousOverflowButtonWidthRef.current = nextOverflowButtonWidth;
+    if (visibleCount < tabs.length) {
+      markMeasurementStale();
+    }
+  });
 
   useIsomorphicLayoutEffect(() => {
+    if (previousMeasurementInputKeyRef.current !== measurementInputKey) {
+      previousMeasurementInputKeyRef.current = measurementInputKey;
+      markMeasurementStale();
+    }
+  }, [markMeasurementStale, measurementInputKey]);
+
+  useIsomorphicLayoutEffect(() => {
+    // A content-only tab width update can briefly leave a tab without a
+    // trustworthy measured width after it moves through the portal slots.
+    // Retry on the next frame instead of leaving overflow stuck measuring.
+    void measureRetryVersion;
+
     if (!isMeasuring || menuOpen) {
       return;
     }
 
-    setVisibleCount(
-      measureVisibleCount(
-        selectedIsHidden ? selected : pinnedSelectionRef.current,
-      ),
-    );
-    setIsMeasuring(false);
-  }, [isMeasuring, measureVisibleCount, menuOpen, selected, selectedIsHidden]);
+    const nextVisibleCount = measureVisibleCount(getCurrentPinnedValue());
 
-  let visibleValues = baseVisibleValues;
-  let hiddenValues = baseHiddenValues;
+    if (nextVisibleCount == null) {
+      if (measureRetryFrameRef.current != null) {
+        return;
+      }
 
-  const hiddenPinnedIndex =
-    pinnedValue != null ? hiddenValues.indexOf(pinnedValue) : -1;
+      const element = container.current;
+      if (!element || getMeasuredWidth(element) <= MIN_TRUSTED_TAB_WIDTH) {
+        measureRetryCountRef.current = 0;
+        return;
+      }
 
-  if (hiddenPinnedIndex !== -1) {
-    const pinnedValue = hiddenValues[hiddenPinnedIndex];
-    hiddenValues = hiddenValues.filter(
-      (_, index) => index !== hiddenPinnedIndex,
-    );
-    if (pinnedValue !== undefined) {
-      visibleValues = [...visibleValues, pinnedValue];
+      if (measureRetryCountRef.current >= 5) {
+        return;
+      }
+
+      measureRetryCountRef.current += 1;
+      measureRetryFrameRef.current = ownerWindow(element).requestAnimationFrame(
+        () => {
+          measureRetryFrameRef.current = null;
+          setMeasureRetryVersion((currentVersion) => currentVersion + 1);
+        },
+      );
+      return;
     }
-  }
+
+    clearMeasureRetry();
+
+    setVisibleCount(nextVisibleCount);
+    setIsMeasuring(false);
+  }, [
+    clearMeasureRetry,
+    container.current,
+    getCurrentPinnedValue,
+    isMeasuring,
+    measureRetryVersion,
+    measureVisibleCount,
+    menuOpen,
+  ]);
+
+  const { visibleValues, hiddenValues } = partitionVisibleValues(
+    orderedValues,
+    visibleCount,
+    pinnedValue,
+  );
 
   return [visibleValues, hiddenValues, isMeasuring] as const;
 }

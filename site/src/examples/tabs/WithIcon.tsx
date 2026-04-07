@@ -26,21 +26,23 @@ const tabToIcon: Record<string, ComponentType> = {
 
 export const WithIcon = (): ReactElement => {
   return (
-    <TabsNext defaultValue={tabs[0]}>
-      <TabBar divider inset>
-        <TabListNext aria-label="Example tablist">
-          {tabs.map((label) => {
-            const Icon = tabToIcon[label];
-            return (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>
-                  <Icon aria-hidden /> {label}
-                </TabNextTrigger>
-              </TabNext>
-            );
-          })}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar divider inset>
+          <TabListNext aria-label="Example tablist">
+            {tabs.map((label) => {
+              const Icon = tabToIcon[label];
+              return (
+                <TabNext value={label} key={label}>
+                  <TabNextTrigger>
+                    <Icon aria-hidden /> {label}
+                  </TabNextTrigger>
+                </TabNext>
+              );
+            })}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
   );
 };

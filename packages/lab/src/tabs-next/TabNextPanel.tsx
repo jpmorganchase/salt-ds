@@ -45,7 +45,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     const handleRef = useForkRef(panelRef, ref);
 
     useIsomorphicLayoutEffect(() => {
-      if (value && id) {
+      if (id) {
         return registerPanel(id, value);
       }
     }, [value, id, registerPanel]);
@@ -53,6 +53,11 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     const [hasFocusableChildren, setHasFocusableChildren] = useState(false);
     useEffect(() => {
       const element = panelRef.current;
+      const mutationObserverCtor = (
+        targetWindow as
+          | (Window & { MutationObserver?: typeof MutationObserver })
+          | undefined
+      )?.MutationObserver;
       if (!element || hidden) return;
 
       let rafId: number | null = null;
@@ -69,31 +74,39 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
       };
 
       const scheduleDetectFocusableChildren = () => {
-        if (rafId != null) {
-          cancelAnimationFrame(rafId);
+        if (rafId != null && targetWindow) {
+          targetWindow.cancelAnimationFrame(rafId);
         }
-        rafId = requestAnimationFrame(detectFocusableChildren);
+
+        if (!targetWindow?.requestAnimationFrame) {
+          detectFocusableChildren();
+          return;
+        }
+
+        rafId = targetWindow.requestAnimationFrame(detectFocusableChildren);
       };
 
-      const observer = new MutationObserver(() => {
-        scheduleDetectFocusableChildren();
-      });
+      const observer = mutationObserverCtor
+        ? new mutationObserverCtor(() => {
+            scheduleDetectFocusableChildren();
+          })
+        : null;
 
       scheduleDetectFocusableChildren();
 
-      observer.observe(element, {
+      observer?.observe(element, {
         childList: true,
         subtree: true,
         attributes: true,
       });
 
       return () => {
-        observer.disconnect();
-        if (rafId != null) {
-          cancelAnimationFrame(rafId);
+        observer?.disconnect();
+        if (rafId != null && targetWindow) {
+          targetWindow.cancelAnimationFrame(rafId);
         }
       };
-    }, [hidden]);
+    }, [hidden, targetWindow]);
 
     const tabId = getTabId(value);
 

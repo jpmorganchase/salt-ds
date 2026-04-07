@@ -59,8 +59,11 @@ export const TabNextTrigger = forwardRef<
     updateRenderedTab,
     getRenderedTabOrder,
     getPanelId,
+    getTabId,
+    selected: selectedValue,
     activeTab,
     menuOpen,
+    setMenuOpen,
   } = useTabsNext();
   const { selected, value, focused, disabled, tabId, actions } = useTabNext();
   const tabListLayout = useTabListLayout();
@@ -68,6 +71,7 @@ export const TabNextTrigger = forwardRef<
   const tabRef = useRef<HTMLButtonElement>(null);
 
   const location = tabListLayout?.getLocation(value) ?? "main";
+  const selectionSource = location === "overflow" ? "overflow" : "main";
   const hidden = location === "hidden";
   const overflowOpen = location === "overflow" && menuOpen;
   const renderOrder = getRenderedTabOrder(value);
@@ -78,7 +82,7 @@ export const TabNextTrigger = forwardRef<
   const id = tabId;
 
   useIsomorphicLayoutEffect(() => {
-    if (value && id && tabRef.current) {
+    if (id && tabRef.current) {
       const item = {
         id,
         value,
@@ -120,11 +124,30 @@ export const TabNextTrigger = forwardRef<
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
 
-    setSelected(event, value, location === "overflow" ? "overflow" : "main");
+    setSelected(event, value, selectionSource);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
+
+    if (location === "overflow" && event.key === "Tab" && event.shiftKey) {
+      event.preventDefault();
+      setMenuOpen(false);
+
+      const doc = event.currentTarget.ownerDocument;
+      const overflowTrigger = doc.querySelector<HTMLElement>(
+        "[data-overflowbutton]",
+      );
+      const scheduleFocus = targetWindow?.requestAnimationFrame;
+
+      if (scheduleFocus) {
+        scheduleFocus(() => overflowTrigger?.focus({ preventScroll: true }));
+      } else {
+        queueMicrotask(() => overflowTrigger?.focus({ preventScroll: true }));
+      }
+
+      return;
+    }
 
     if (
       location === "overflow" &&
@@ -141,16 +164,23 @@ export const TabNextTrigger = forwardRef<
       }
     }
 
+    if (disabled) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+      }
+      return;
+    }
+
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      setSelected(event, value, location === "overflow" ? "overflow" : "main");
+      setSelected(event, value, selectionSource);
     }
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
     onFocus?.(event);
 
-    if (value && id) {
+    if (id) {
       activeTab.current = { value, id };
     }
 
@@ -177,6 +207,12 @@ export const TabNextTrigger = forwardRef<
 
   const active =
     location === "overflow" && tabListLayout?.overflowActiveValue === value;
+  const hasSelectedTab =
+    selectedValue !== undefined && getTabId(selectedValue) != null;
+  const fallbackTabStop = !hasSelectedTab && location === "main" && order === 0;
+  const isTabStop =
+    !hidden && (focused || selected || active || fallbackTabStop);
+  const shouldHandleKeyDown = location === "overflow" || !disabled;
 
   return (
     <button
@@ -185,11 +221,11 @@ export const TabNextTrigger = forwardRef<
       aria-controls={panelId}
       {...ariaActionsProps}
       aria-description={getAriaDescription(actions.length)}
-      tabIndex={hidden ? -1 : focused || selected || active ? 0 : -1}
+      tabIndex={isTabStop ? 0 : -1}
       role="tab"
       type="button"
       onClick={!disabled ? handleClick : undefined}
-      onKeyDown={!disabled ? handleKeyDown : undefined}
+      onKeyDown={shouldHandleKeyDown ? handleKeyDown : undefined}
       onFocus={handleFocus}
       className={withBaseName()}
       id={id}

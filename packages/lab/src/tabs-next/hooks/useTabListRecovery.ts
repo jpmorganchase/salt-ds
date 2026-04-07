@@ -1,4 +1,5 @@
 import { type MutableRefObject, type RefObject, useEffect } from "react";
+import { isHTMLElement } from "../domUtils";
 
 interface UseTabListRecoveryArgs {
   removalVersion: number;
@@ -27,18 +28,21 @@ export function useTabListRecovery({
     pendingRemovalRecoveryRef.current = true;
     pendingRemovalRecoveryRetriesRef.current = 0;
 
-    const raf = requestAnimationFrame(() => {
+    const raf = targetWindow?.requestAnimationFrame(() => {
       handleTabRemoval();
     });
 
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf != null) {
+        targetWindow?.cancelAnimationFrame(raf);
+      }
     };
   }, [
     handleTabRemoval,
     pendingRemovalRecoveryRef,
     pendingRemovalRecoveryRetriesRef,
     removalVersion,
+    targetWindow,
   ]);
 
   useEffect(() => {
@@ -59,13 +63,16 @@ export function useTabListRecovery({
       }
 
       const wasInTabList =
-        event.target instanceof HTMLElement && isInTabList(event.target);
+        isHTMLElement(event.target) && isInTabList(event.target);
       const stillInTabList =
-        event.relatedTarget instanceof HTMLElement &&
-        isInTabList(event.relatedTarget);
+        isHTMLElement(event.relatedTarget) && isInTabList(event.relatedTarget);
 
       if (wasInTabList && !stillInTabList) {
-        requestAnimationFrame(() => handleTabRemoval());
+        if (targetWindow?.requestAnimationFrame) {
+          targetWindow.requestAnimationFrame(() => handleTabRemoval());
+        } else {
+          queueMicrotask(() => handleTabRemoval());
+        }
       }
     };
 

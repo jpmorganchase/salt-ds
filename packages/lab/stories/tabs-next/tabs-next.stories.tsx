@@ -117,13 +117,15 @@ export const Inline: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div className="container">
       <TabsNext {...args}>
-        <TabListNext appearance="transparent">
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
-            </TabNext>
-          ))}
-        </TabListNext>
+        <TabBar>
+          <TabListNext appearance="transparent">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
 
         {tabs.map((label) => (
           <TabNextPanel value={label} key={label}>
@@ -208,8 +210,8 @@ WithBadge.args = {
 export const Overflow: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div
+      className="container overflowContainer"
       data-testid="tabs-next-overflow-boundary"
-      style={{ width: 408, maxWidth: "100%", margin: "0 auto" }}
     >
       <TabsNext {...args}>
         <TabBar inset divider>
@@ -247,7 +249,7 @@ export const Dismissible: StoryFn<typeof TabsNext> = (args) => {
   };
 
   return (
-    <div style={{ width: 700, minWidth: 0, maxWidth: "100%" }}>
+    <div className="container">
       <TabsNext {...args}>
         <TabBar inset divider>
           <TabListNext>
@@ -255,7 +257,7 @@ export const Dismissible: StoryFn<typeof TabsNext> = (args) => {
               <TabNext value={label} key={label}>
                 <TabNextTrigger
                   onKeyDown={(event) => {
-                    if (event.key === "Delete") {
+                    if (event.key === "Delete" && tabs.length > 1) {
                       handleDismissTab(label);
                     }
                   }}
@@ -320,13 +322,13 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
   const { announce } = useAriaAnnouncer();
 
   return (
-    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+    <div className="container">
       <TabsNext
         {...args}
         value={value}
         onChange={(_event, newValue) => setValue(newValue)}
       >
-        <TabBar inset divider style={{ width: 500 }}>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -364,7 +366,7 @@ export const Backgrounds = (): ReactElement => {
 
   return (
     <StackLayout gap={6}>
-      <div style={{ alignItems: "center", width: "40vw" }}>
+      <div className="container">
         <TabsNext defaultValue={tabs[0]}>
           <TabBar divider>
             <TabListNext activeColor={variant} appearance="bordered">
@@ -567,7 +569,7 @@ export const DismissWithConfirmation = () => {
               <TabNext value={label} key={label}>
                 <TabNextTrigger
                   onKeyDown={(event) => {
-                    if (event.key === "Delete") {
+                    if (event.key === "Delete" && tabs.length > 1) {
                       handleDismissTab(label);
                     }
                   }}
@@ -646,7 +648,7 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
   const [pinned, setPinned] = useState<string[]>([]);
 
   return (
-    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+    <div className="container">
       <TabsNext {...args}>
         <TabBar inset divider>
           <TabListNext>
@@ -715,7 +717,7 @@ export const Controlled: StoryFn = () => {
   };
 
   return (
-    <div style={{ width: 398, maxWidth: "100%", margin: "0 auto" }}>
+    <div className="container">
       <TabsNext value={value} onChange={handleChange}>
         <TabBar inset divider>
           <TabListNext>
@@ -723,7 +725,7 @@ export const Controlled: StoryFn = () => {
               <TabNext value={label} key={label}>
                 <TabNextTrigger
                   onKeyDown={(event) => {
-                    if (event.key === "Delete") {
+                    if (event.key === "Delete" && tabs.length > 1) {
                       handleDismissTab(label);
                     }
                   }}
@@ -793,30 +795,32 @@ export const AsyncDismissibleTabs: StoryFn = () => {
   };
 
   return (
-    <TabsNext value={value} onChange={handleChange}>
-      <TabBar inset divider>
-        <TabListNext>
-          {tabs.map((label) => (
-            <TabNext key={label} value={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
-              {tabs.length > 1 ? (
-                <TabNextAction
-                  aria-label="Dismiss tab"
-                  onClick={() => {
-                    handleDismiss(label);
-                  }}
-                >
-                  {closingTabs.includes(label) ? (
-                    <Spinner size="small" aria-hidden disableAnnouncer />
-                  ) : (
-                    <CloseIcon aria-hidden />
-                  )}
-                </TabNextAction>
-              ) : null}
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <div className="container">
+      <TabsNext value={value} onChange={handleChange}>
+        <TabBar inset divider>
+          <TabListNext>
+            {tabs.map((label) => (
+              <TabNext key={label} value={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+                {tabs.length > 1 ? (
+                  <TabNextAction
+                    aria-label="Dismiss tab"
+                    onClick={() => {
+                      handleDismiss(label);
+                    }}
+                  >
+                    {closingTabs.includes(label) ? (
+                      <Spinner size="small" aria-hidden disableAnnouncer />
+                    ) : (
+                      <CloseIcon aria-hidden />
+                    )}
+                  </TabNextAction>
+                ) : null}
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
   );
 };

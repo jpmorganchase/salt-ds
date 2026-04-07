@@ -22,39 +22,41 @@ export const DismissibleTabs = (): ReactElement => {
   const { announce } = useAriaAnnouncer();
 
   const handleDismissTab = (value: string) => {
-    setTabs(tabs.filter((tab) => tab !== value));
+    setTabs((oldTabs) => oldTabs.filter((tab) => tab !== value));
     announce(`${value} tab has been removed`, 150);
   };
 
   return (
-    <TabsNext defaultValue={tabs[0]}>
-      <TabBar inset divider>
-        <TabListNext aria-label="Example tablist">
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger
-                onKeyDown={(event) => {
-                  if (event.key === "Delete") {
-                    handleDismissTab(label);
-                  }
-                }}
-              >
-                {label}
-              </TabNextTrigger>
-              {tabs.length > 1 && (
-                <TabNextAction
-                  onClick={() => {
-                    handleDismissTab(label);
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar inset divider>
+          <TabListNext aria-label="Example tablist">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger
+                  onKeyDown={(event) => {
+                    if (event.key === "Delete" && tabs.length > 1) {
+                      handleDismissTab(label);
+                    }
                   }}
-                  aria-label="Dismiss tab"
                 >
-                  <CloseIcon aria-hidden />
-                </TabNextAction>
-              )}
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+                  {label}
+                </TabNextTrigger>
+                {tabs.length > 1 && (
+                  <TabNextAction
+                    onClick={() => {
+                      handleDismissTab(label);
+                    }}
+                    aria-label="Dismiss tab"
+                  >
+                    <CloseIcon aria-hidden />
+                  </TabNextAction>
+                )}
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
   );
 };

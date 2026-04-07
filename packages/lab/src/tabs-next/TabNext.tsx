@@ -14,17 +14,17 @@ import {
   type MouseEvent,
   type ReactElement,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
 
+import { useRenderedTabWidth } from "./hooks/useRenderedTabWidth";
 import tabCss from "./TabNext.css";
 import { TabNextContext } from "./TabNextContext";
 import { useTabsNext } from "./TabsNextContext";
-import { getMeasuredWidth } from "./widthMeasurement";
+import { getIntrinsicMeasuredWidth } from "./widthMeasurement";
 
 const withBaseName = makePrefixer("saltTabNext");
 
@@ -60,8 +60,15 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       window: targetWindow,
     });
 
-    const { selected, activeTab, registerRenderedTab, updateRenderedTab } =
-      useTabsNext();
+    const {
+      selected,
+      activeTab,
+      renderMode,
+      registerBootstrapTab,
+      setBootstrapTabReady,
+      registerRenderedTab,
+      updateRenderedTab,
+    } = useTabsNext();
 
     const disabled = !!disabledProp;
 
@@ -70,19 +77,13 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const wasMouseDown = useRef(false);
     const [focusVisible, setFocusVisible] = useState(false);
     const [focused, setFocused] = useState(false);
+    const [hostElement, setHostElement] = useState<HTMLDivElement | null>(null);
     const markerRef = useRef<HTMLSpanElement>(null);
     const tabRootRef = useRef<HTMLDivElement>(null);
-    const hostRef = useRef<HTMLDivElement | null>(null);
-
-    if (!hostRef.current && targetWindow?.document) {
-      hostRef.current = targetWindow.document.createElement("div");
-      hostRef.current.dataset.tabHost = value;
-      hostRef.current.style.display = "contents";
-    }
 
     const handleFocusCapture = (event: FocusEvent<HTMLDivElement>) => {
       onFocusCapture?.(event);
-      if (value && id) {
+      if (id) {
         activeTab.current = { value, id };
       }
     };
@@ -110,7 +111,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       onMouseDown?.(event);
-      if (value && id) {
+      if (id) {
         activeTab.current = { value, id };
       }
       wasMouseDown.current = true;
@@ -158,67 +159,82 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     );
 
     useIsomorphicLayoutEffect(() => {
-      if (!hostRef.current || !id) {
+      const doc = targetWindow?.document;
+      if (!doc) {
+        return;
+      }
+
+      const host = doc.createElement("div");
+      host.dataset.tabHost = value;
+      host.role = "presentation";
+      host.style.display = "contents";
+      setHostElement(host);
+
+      return () => {
+        host.remove();
+      };
+    }, [targetWindow, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (renderMode !== "inline") {
+        return;
+      }
+
+      return registerBootstrapTab(value);
+    }, [registerBootstrapTab, renderMode, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      setBootstrapTabReady(value, hostElement != null);
+
+      return () => {
+        setBootstrapTabReady(value, false);
+      };
+    }, [hostElement, setBootstrapTabReady, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (!hostElement || !id) {
         return;
       }
 
       return registerRenderedTab({
-        host: hostRef.current,
+        host: hostElement,
         id,
         marker: markerRef.current,
         root: tabRootRef.current,
         trigger: null,
         value,
-        width: 0,
+        width: getIntrinsicMeasuredWidth(tabRootRef.current),
       });
-    }, [id, registerRenderedTab, value]);
+    }, [hostElement, id, registerRenderedTab, value]);
 
     useIsomorphicLayoutEffect(() => {
-      updateRenderedTab(value, {
+      const updates = {
         marker: markerRef.current,
         root: tabRootRef.current,
-      });
-    }, [updateRenderedTab, value]);
+      } as Partial<{
+        host: HTMLDivElement;
+        id: string;
+        marker: HTMLElement | null;
+        root: HTMLElement | null;
+        trigger: HTMLButtonElement | null;
+        width: number;
+      }>;
 
-    useEffect(() => {
-      const element = tabRootRef.current;
-      const resizeObserverCtor = (
-        targetWindow as
-          | (Window & { ResizeObserver?: typeof ResizeObserver })
-          | undefined
-      )?.ResizeObserver;
-      if (!element || !resizeObserverCtor) {
-        return;
+      if (renderMode === "inline") {
+        updates.width = getIntrinsicMeasuredWidth(tabRootRef.current);
       }
 
-      const updateWidth = () => {
-        // Preserve the strip width while a tab is rendered in the overflow menu.
-        // Overflow items stretch to the menu width, and hidden measurement tabs
-        // can collapse to a different intrinsic size. Neither width is suitable
-        // for deciding whether the tab fits back in the main strip.
-        if (
-          element.closest(".saltTabOverflow-list") ||
-          element.closest(".saltTabListNext-measureContainer")
-        ) {
-          return;
-        }
+      updateRenderedTab(value, updates);
+    }, [renderMode, updateRenderedTab, value]);
 
-        updateRenderedTab(value, {
-          width: getMeasuredWidth(element),
-        });
-      };
-
-      updateWidth();
-
-      const observer = new resizeObserverCtor(() => {
-        updateWidth();
-      });
-
-      observer.observe(element);
-      return () => {
-        observer.disconnect();
-      };
-    }, [targetWindow, updateRenderedTab, value]);
+    useRenderedTabWidth({
+      hostElement,
+      renderMode,
+      tabRootRef,
+      targetWindow,
+      updateRenderedTab,
+      value,
+    });
 
     const handleTabRootRef = useForkRef(tabRootRef, ref);
 
@@ -251,8 +267,17 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     return (
       <>
-        <span data-tabnext-marker="" hidden ref={markerRef} />
-        {hostRef.current ? createPortal(tabMarkup, hostRef.current) : null}
+        <span
+          role="presentation"
+          data-tabnext-marker=""
+          hidden
+          ref={markerRef}
+        />
+        {renderMode === "inline"
+          ? tabMarkup
+          : hostElement
+            ? createPortal(tabMarkup, hostElement)
+            : null}
       </>
     );
   },

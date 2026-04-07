@@ -61,10 +61,11 @@ function sortBasedOnDOMPosition(items: Item[]): Item[] {
 }
 
 interface UseCollectionProps {
+  targetWindow: Window | null | undefined;
   wrap: boolean;
 }
 
-export function useCollection({ wrap }: UseCollectionProps) {
+export function useCollection({ wrap, targetWindow }: UseCollectionProps) {
   const itemsRef = useRef<Item[]>([]);
   const itemMap = useRef<Map<string, Item>>(new Map());
   const removedItems = useRef<Map<string, StaleItem>>(new Map());
@@ -98,12 +99,20 @@ export function useCollection({ wrap }: UseCollectionProps) {
   const rafId = useRef<number | null>(null);
 
   const scheduleSort = useCallback(() => {
-    if (rafId.current != null) cancelAnimationFrame(rafId.current);
-    rafId.current = requestAnimationFrame(() => {
+    if (!targetWindow?.requestAnimationFrame) {
+      sortItems();
+      return;
+    }
+
+    if (rafId.current != null) {
+      targetWindow.cancelAnimationFrame(rafId.current);
+    }
+
+    rafId.current = targetWindow.requestAnimationFrame(() => {
       rafId.current = null;
       sortItems();
     });
-  }, [sortItems]);
+  }, [sortItems, targetWindow]);
 
   const registerItem = useCallback(
     (item: Item) => {
@@ -166,9 +175,11 @@ export function useCollection({ wrap }: UseCollectionProps) {
 
   useEffect(() => {
     return () => {
-      if (rafId.current != null) cancelAnimationFrame(rafId.current);
+      if (rafId.current != null && targetWindow) {
+        targetWindow.cancelAnimationFrame(rafId.current);
+      }
     };
-  }, []);
+  }, [targetWindow]);
 
   return {
     registerItem,

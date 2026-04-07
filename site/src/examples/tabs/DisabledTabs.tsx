@@ -11,18 +11,20 @@ const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
 export const DisabledTabs = (): ReactElement => {
   return (
-    <TabsNext defaultValue={tabs[0]}>
-      <TabBar inset divider>
-        <TabListNext aria-label="Example tablist">
-          {tabs.map((label) => {
-            return (
-              <TabNext disabled={label === "Loans"} value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
-            );
-          })}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar inset divider>
+          <TabListNext aria-label="Example tablist">
+            {tabs.map((label) => {
+              return (
+                <TabNext disabled={label === "Loans"} value={label} key={label}>
+                  <TabNextTrigger>{label}</TabNextTrigger>
+                </TabNext>
+              );
+            })}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
   );
 };

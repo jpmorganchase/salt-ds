@@ -26,11 +26,17 @@ export interface RenderedTab {
   width: number;
 }
 
+export type TabsNextRenderMode = "inline" | "portal";
+
 export interface TabsNextContextValue
   extends Omit<
     ReturnType<typeof useCollection>,
     "registerItem" | "updateItem"
   > {
+  renderMode: TabsNextRenderMode;
+  registerBootstrapTab: (value: string) => () => void;
+  setBootstrapTabReady: (value: string, ready: boolean) => void;
+  setBootstrapOverflowReady: (ready: boolean) => void;
   registerTab: (item: Item) => () => void;
   updateTab: (id: string, updates: Partial<Omit<Item, "id" | "value">>) => void;
   registerRenderedTab: (tab: RenderedTab) => () => void;
@@ -51,7 +57,7 @@ export interface TabsNextContextValue
     source?: "main" | "overflow",
   ) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
-  selectionFromOverflowRef: MutableRefObject<boolean>;
+  selectionFromOverflowValueRef: MutableRefObject<string | null>;
   menuOpen: boolean;
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -67,6 +73,10 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getIndex: () => -1,
     itemAt: () => null,
     sortItems: () => undefined,
+    renderMode: "inline",
+    registerBootstrapTab: () => () => undefined,
+    setBootstrapTabReady: () => undefined,
+    setBootstrapOverflowReady: () => undefined,
     selected: undefined,
     registerTab: () => () => undefined,
     updateTab: () => undefined,
@@ -80,7 +90,7 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getTabId: () => undefined,
     setSelected: () => undefined,
     activeTab: { current: undefined },
-    selectionFromOverflowRef: { current: false },
+    selectionFromOverflowValueRef: { current: null },
     menuOpen: false,
     setMenuOpen: () => undefined,
     removalVersion: 0,

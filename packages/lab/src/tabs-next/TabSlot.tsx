@@ -17,6 +17,7 @@ export function TabSlot({ slotId, value, ...rest }: TabSlotProps) {
 
   return (
     <div
+      role="presentation"
       data-tabslot=""
       data-slotid={slotId}
       data-value={value}

@@ -13,12 +13,10 @@ import {
   useState,
 } from "react";
 import { useCollection } from "./hooks/useCollection";
+import { useOverflowSelectionState } from "./hooks/useOverflowSelectionState";
+import { useRenderedTabsRegistry } from "./hooks/useRenderedTabsRegistry";
 import tabsNextCss from "./TabsNext.css";
-import {
-  type Item,
-  type RenderedTab,
-  TabsNextContext,
-} from "./TabsNextContext";
+import { type Item, TabsNextContext } from "./TabsNextContext";
 
 export interface TabsNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
@@ -40,6 +38,34 @@ export interface TabsNextProps
 
 const withBaseName = makePrefixer("saltTabsNext");
 
+function setValueIdMapEntry(
+  map: Map<string, string>,
+  value: string,
+  id: string,
+) {
+  if (map.get(value) === id) {
+    return map;
+  }
+
+  const next = new Map(map);
+  next.set(value, id);
+  return next;
+}
+
+function removeValueIdMapEntry(
+  map: Map<string, string>,
+  value: string,
+  id: string,
+) {
+  if (map.get(value) !== id) {
+    return map;
+  }
+
+  const next = new Map(map);
+  next.delete(value);
+  return next;
+}
+
 export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
   function TabsNext(props, ref) {
     const { className, children, value, defaultValue, onChange, ...rest } =
@@ -57,9 +83,17 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     const [valueToPanelIdMap, setValueToPanelIdMap] = useState(
       () => new Map<string, string>(),
     );
-    const [renderedTabMap, setRenderedTabMap] = useState(
-      () => new Map<string, RenderedTab>(),
-    );
+    const {
+      renderMode,
+      registerBootstrapTab,
+      setBootstrapTabReady,
+      setBootstrapOverflowReady,
+      registerRenderedTab,
+      updateRenderedTab,
+      getRenderedTab,
+      getRenderedTabOrder,
+      renderedTabs,
+    } = useRenderedTabsRegistry();
 
     const {
       registerItem,
@@ -74,10 +108,9 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       sortItems,
       removalVersion,
       getRemovedItems,
-    } = useCollection({ wrap: true });
+    } = useCollection({ targetWindow, wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
-    const selectionFromOverflowRef = useRef(false);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -88,173 +121,40 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       state: "selected",
     });
 
-    const sortRenderedTabs = useCallback((tabs: RenderedTab[]) => {
-      return tabs.toSorted((tabA, tabB) => {
-        if (tabA.marker === tabB.marker) {
-          return 0;
-        }
-        if (!tabA.marker || !tabB.marker) {
-          return 0;
-        }
-
-        const position = tabA.marker.compareDocumentPosition(tabB.marker);
-        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
-          return -1;
-        }
-        if (position & Node.DOCUMENT_POSITION_PRECEDING) {
-          return 1;
-        }
-        return 0;
-      });
-    }, []);
-
-    const registerRenderedTab = useCallback((tab: RenderedTab) => {
-      setRenderedTabMap((map) => {
-        const existing = map.get(tab.value);
-        if (
-          process.env.NODE_ENV !== "production" &&
-          existing &&
-          existing.id !== tab.id
-        ) {
-          console.warn(
-            `TabsNext received duplicate tab value "${tab.value}". Tab values must be unique within a TabsNext instance.`,
-          );
-        }
-
-        if (existing === tab) {
-          return map;
-        }
-
-        const next = new Map(map);
-        next.set(tab.value, tab);
-        return next;
-      });
-
-      return () => {
-        setRenderedTabMap((map) => {
-          const existing = map.get(tab.value);
-          if (!existing || existing.id !== tab.id) {
-            return map;
-          }
-
-          const next = new Map(map);
-          next.delete(tab.value);
-          return next;
-        });
-      };
-    }, []);
-
-    const updateRenderedTab = useCallback(
-      (value: string, updates: Partial<Omit<RenderedTab, "value">>) => {
-        setRenderedTabMap((map) => {
-          const existing = map.get(value);
-          if (!existing) {
-            return map;
-          }
-
-          let changed = false;
-          const nextRecord = { ...existing };
-          for (const [key, nextValue] of Object.entries(updates)) {
-            const typedKey = key as keyof Omit<RenderedTab, "value">;
-            if (nextRecord[typedKey] !== nextValue) {
-              changed = true;
-              nextRecord[typedKey] = nextValue as never;
-            }
-          }
-
-          if (!changed) {
-            return map;
-          }
-
-          const next = new Map(map);
-          next.set(value, nextRecord);
-          return next;
-        });
-      },
-      [],
-    );
-
-    const getRenderedTab = useCallback(
-      (value: string) => {
-        return renderedTabMap.get(value);
-      },
-      [renderedTabMap],
-    );
-
-    const renderedTabs = useMemo(() => {
-      return sortRenderedTabs(Array.from(renderedTabMap.values()));
-    }, [renderedTabMap, sortRenderedTabs]);
-    const renderedTabOrderMap = useMemo(() => {
-      return new Map(
-        renderedTabs.map((tab, index) => [tab.value, index] as const),
-      );
-    }, [renderedTabs]);
-    const getRenderedTabOrder = useCallback(
-      (value: string) => {
-        return renderedTabOrderMap.get(value) ?? -1;
-      },
-      [renderedTabOrderMap],
-    );
-
-    const setSelected = useCallback(
-      (
-        event: SyntheticEvent | null,
-        value: string,
-        source: "main" | "overflow" = "main",
-      ) => {
-        selectionFromOverflowRef.current = source === "overflow";
-        setMenuOpen(false);
+    const commitSelection = useCallback(
+      (event: SyntheticEvent | null, value: string) => {
         setSelectedState(value);
         onChange?.(event, value);
       },
       [onChange],
     );
+    const { selectionFromOverflowValueRef, setSelected } =
+      useOverflowSelectionState({
+        commitSelection,
+        menuOpen,
+        selected,
+        setMenuOpen,
+      });
 
     const registerTab = useCallback(
       (tab: Item) => {
         const cleanup = registerItem(tab);
-        setValueToIdMap((map) => {
-          if (map.get(tab.value) === tab.id) {
-            return map;
-          }
-          const next = new Map(map);
-          next.set(tab.value, tab.id);
-          return next;
-        });
+        setValueToIdMap((map) => setValueIdMapEntry(map, tab.value, tab.id));
 
         return () => {
           cleanup();
-          setValueToIdMap((map) => {
-            if (map.get(tab.value) !== tab.id) {
-              return map;
-            }
-            const next = new Map(map);
-            next.delete(tab.value);
-            return next;
-          });
+          setValueToIdMap((map) =>
+            removeValueIdMapEntry(map, tab.value, tab.id),
+          );
         };
       },
       [registerItem],
     );
 
     const registerPanel = useCallback((id: string, value: string) => {
-      setValueToPanelIdMap((map) => {
-        if (map.get(value) === id) {
-          return map;
-        }
-        const next = new Map(map);
-        next.set(value, id);
-        return next;
-      });
+      setValueToPanelIdMap((map) => setValueIdMapEntry(map, value, id));
       return () => {
-        setValueToPanelIdMap((map) => {
-          if (map.get(value) !== id) {
-            return map;
-          }
-          const next = new Map(map);
-          next.delete(value);
-          return next;
-        });
+        setValueToPanelIdMap((map) => removeValueIdMapEntry(map, value, id));
       };
     }, []);
 
@@ -274,6 +174,10 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
     const context = useMemo(
       () => ({
+        renderMode,
+        registerBootstrapTab,
+        setBootstrapTabReady,
+        setBootstrapOverflowReady,
         registerTab,
         updateTab: updateItem,
         registerRenderedTab,
@@ -292,7 +196,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getFirst,
         getLast,
         activeTab,
-        selectionFromOverflowRef,
+        selectionFromOverflowValueRef,
         menuOpen,
         setMenuOpen,
         itemAt,
@@ -302,6 +206,10 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getRemovedItems,
       }),
       [
+        renderMode,
+        registerBootstrapTab,
+        setBootstrapTabReady,
+        setBootstrapOverflowReady,
         registerPanel,
         registerTab,
         updateItem,
@@ -325,6 +233,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         sortItems,
         removalVersion,
         getRemovedItems,
+        selectionFromOverflowValueRef,
       ],
     );
 

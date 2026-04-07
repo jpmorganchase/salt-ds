@@ -32,7 +32,7 @@ export const TabNextAction = forwardRef<HTMLButtonElement, TabNextActionProps>(
     }, [registerAction, id]);
 
     const setActiveTab = () => {
-      if (tabId && value) {
+      if (tabId) {
         activeTab.current = { id: tabId, value };
       }
     };

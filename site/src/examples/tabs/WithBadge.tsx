@@ -15,30 +15,34 @@ const notifications: Record<(typeof tabs)[number], number> = {
   Checks: 6,
 };
 
+function getNotificationLabel(label: string) {
+  const count = notifications[label];
+
+  if (count === 0 || count === undefined) return "";
+
+  return `, ${count} update${count > 1 ? "s" : ""}`;
+}
 export const WithBadge = (): ReactElement => {
   return (
-    <TabsNext defaultValue={tabs[0]}>
-      <TabBar divider inset>
-        <TabListNext aria-label="Example tablist">
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger>
-                {label}
-                {notifications[label] > 0 ? (
-                  <Badge
-                    value={notifications[label]}
-                    aria-label={
-                      notifications[label] > 1
-                        ? `${notifications[label]} updates`
-                        : `${notifications[label]} update`
-                    }
-                  />
-                ) : undefined}
-              </TabNextTrigger>
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar divider inset>
+          <TabListNext aria-label="Example tablist">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger
+                  aria-label={`${label}${getNotificationLabel(label)}`}
+                >
+                  <span aria-hidden>{label}</span>
+                  {notifications[label] > 0 ? (
+                    <Badge value={notifications[label]} aria-hidden />
+                  ) : undefined}
+                </TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
   );
 };

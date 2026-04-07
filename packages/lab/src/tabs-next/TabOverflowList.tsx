@@ -24,11 +24,13 @@ import {
   type ComponentPropsWithoutRef,
   type Dispatch,
   forwardRef,
+  type KeyboardEvent,
   type Ref,
   type SetStateAction,
   useEffect,
   useRef,
 } from "react";
+import { isHTMLElement } from "./domUtils";
 import tabOverflowListCss from "./TabOverflowList.css";
 import { TabSlot } from "./TabSlot";
 import { useTabsNext } from "./TabsNextContext";
@@ -41,7 +43,6 @@ import {
 interface TabOverflowListProps extends ComponentPropsWithoutRef<"button"> {
   buttonRef?: Ref<HTMLButtonElement>;
   hiddenValues: string[];
-  isMeasuring?: boolean;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   order: number;
@@ -55,7 +56,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       buttonRef,
       className,
       hiddenValues,
-      isMeasuring,
       order,
       open,
       setOpen,
@@ -125,6 +125,29 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       }
     };
 
+    const handleFloatingKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      if (event.shiftKey) {
+        event.preventDefault();
+        setOpen(false);
+        const scheduleFocus = targetWindow?.requestAnimationFrame;
+        if (scheduleFocus) {
+          scheduleFocus(() =>
+            overflowRef.current?.focus({ preventScroll: true }),
+          );
+          return;
+        }
+
+        queueMicrotask(() =>
+          overflowRef.current?.focus({ preventScroll: true }),
+        );
+        return;
+      }
+    };
+
     const overflowItemCount = hiddenValues.length;
     const hasOverflowItems = overflowItemCount > 0;
     const initialOrderRef = useRef(order);
@@ -148,7 +171,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       const resizeObserver = new resizeObserverCtor(
         (entries: ResizeObserverEntry[]) => {
           for (const entry of entries) {
-            if (!(entry.target instanceof HTMLElement)) {
+            if (!isHTMLElement(entry.target)) {
               continue;
             }
 
@@ -211,7 +234,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       });
     }, [hasOverflowItems, order, overflowId, updateTab]);
 
-    if (!hasOverflowItems && !isMeasuring) return null;
+    if (!hasOverflowItems) return null;
 
     return (
       <>
@@ -225,7 +248,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
           })}
           ref={handleRef}
           aria-label="Overflow"
-          aria-haspopup
           aria-expanded={open}
           aria-controls={overlayId}
           role="tab"
@@ -237,18 +259,17 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
         <FloatingComponent
           ref={handleListRef}
           {...getFloatingProps({
-            "aria-modal": true,
-            role: "dialog",
             id: overlayId,
+            onKeyDown: handleFloatingKeyDown,
           })}
-          aria-label="Overflow Menu"
           focusManagerProps={
             context
               ? {
                   context,
-                  initialFocus: -1,
+                  initialFocus: 0,
                   returnFocus: false,
-                  modal: true,
+                  modal: false,
+                  closeOnFocusOut: true,
                 }
               : undefined
           }
@@ -264,6 +285,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             role="tablist"
             aria-orientation="vertical"
             className={withBaseName("listContainer")}
+            aria-label="Overflow tab options"
           >
             {hiddenValues.map((value) => (
               <TabSlot key={value} slotId={`overflow:${value}`} value={value} />
