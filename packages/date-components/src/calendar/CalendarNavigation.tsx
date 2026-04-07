@@ -107,7 +107,13 @@ function generateYearsBetweenRange(
 
 function useCalendarNavigation() {
   const {
-    state: { visibleMonth, timezone, minDate, maxDate },
+    state: {
+      visibleMonth,
+      timezone,
+      minDate,
+      maxDate,
+      numberOfVisibleMonths = 1,
+    },
     helpers: { setVisibleMonth, isDayVisible, isOutsideAllowedMonths },
   } = useCalendarContext();
 
@@ -200,6 +206,7 @@ function useCalendarNavigation() {
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
+      numberOfVisibleMonths,
     }),
     [
       months,
@@ -213,6 +220,7 @@ function useCalendarNavigation() {
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
+      numberOfVisibleMonths,
     ],
   );
 }
@@ -282,6 +290,7 @@ export const CalendarNavigation = forwardRef<
     selectedYear,
     isOutsideAllowedMonths,
     visibleMonth,
+    numberOfVisibleMonths,
   } = useCalendarNavigation();
 
   const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> =
@@ -342,6 +351,16 @@ export const CalendarNavigation = forwardRef<
     PreviousButtonProps?.disabled || disableNavigatePrevious;
   const isNextMonthDisabled = NextButtonProps?.disabled || disableNavigateNext;
 
+  // Constrain to a max of 2 calendar widths + gap when showing multiple months
+  const navStyle =
+    numberOfVisibleMonths >= 2
+      ? ({
+          "--calendarNavigation-maxWidth":
+            "calc(var(--calendarNavigation-calendarWidth) * 2 + var(--salt-spacing-100))",
+          ...rest.style,
+        } as React.CSSProperties)
+      : rest.style;
+
   return (
     <div
       className={clsx(
@@ -351,6 +370,7 @@ export const CalendarNavigation = forwardRef<
       )}
       ref={ref}
       {...rest}
+      style={navStyle}
     >
       <ConditionalTooltip
         placement="top"
