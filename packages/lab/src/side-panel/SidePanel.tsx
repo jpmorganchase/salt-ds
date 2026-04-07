@@ -1,7 +1,5 @@
-import { FloatingFocusManager } from "@floating-ui/react";
 import {
   makePrefixer,
-  useFloatingUI,
   useForkRef,
   useId,
   useIsomorphicLayoutEffect,
@@ -14,14 +12,19 @@ import {
   forwardRef,
   type KeyboardEvent,
   type MutableRefObject,
+  useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
+import { FocusManager } from "../focus-manager";
 import sidePanelCss from "./SidePanel.css";
 import { useSidePanelGroup } from "./SidePanelGroupContext";
 
 const withBaseName = makePrefixer("saltSidePanel");
+
+const FOCUSABLE_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
@@ -54,6 +57,21 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   triggerRef?: MutableRefObject<HTMLElement | null>;
 }
 
+/**
+ * Get all focusable elements within a container
+ */
+function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.from(container.querySelectorAll(FOCUSABLE_SELECTOR));
+}
+
+/**
+ * Get all focusable elements in the document, starting from a reference element
+ */
+function getAllFocusableElements(referenceElement: HTMLElement): HTMLElement[] {
+  const root = referenceElement.ownerDocument.documentElement;
+  return Array.from(root.querySelectorAll(FOCUSABLE_SELECTOR));
+}
+
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
     const {
@@ -67,6 +85,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       id: idProp,
       onKeyDownCapture,
       triggerRef: manualTriggerRef,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
       ...rest
     } = props;
     const [showComponent, setShowComponent] = useState(false);
@@ -87,24 +107,45 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const id = useId(idProp || panelId);
 
+    // Warn if neither aria-label nor aria-labelledby is provided
+    useEffect(() => {
+      if (
+        !ariaLabel &&
+        !ariaLabelledby &&
+        process.env.NODE_ENV === "development"
+      ) {
+        console.warn(
+          `SidePanel with id "${id}" is missing an accessible name. Either provide an "aria-label" or "aria-labelledby" prop.`,
+        );
+      }
+    }, [id, ariaLabel, ariaLabelledby]);
+
     // Use SidePanelGroup props if available
     const open = groupOpen ?? openProp;
     const onOpenChange = setGroupOpen ?? onOpenChangeProp;
     const focusReturnTriggerRef = groupTriggerRef ?? manualTriggerRef;
 
-    const { context, refs } = useFloatingUI({
-      open,
-      onOpenChange,
-    });
-    const { setReference, setFloating } = refs;
-    const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
+    const panelRef = useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef<HTMLDivElement>(panelRef, ref);
     const previousActivationCount = useRef(0);
 
-    useEffect(() => {
-      if (focusReturnTriggerRef?.current) {
-        setReference(focusReturnTriggerRef.current);
+    const getFocusTarget = useCallback(() => {
+      let focusTarget: HTMLElement | null = null;
+
+      if (
+        initialFocus &&
+        typeof initialFocus === "object" &&
+        "current" in initialFocus
+      ) {
+        focusTarget = initialFocus.current;
+      } else if (typeof initialFocus === "number" && initialFocus === 0) {
+        focusTarget = panelRef.current?.querySelector(
+          FOCUSABLE_SELECTOR,
+        ) as HTMLElement;
       }
-    }, [focusReturnTriggerRef, setReference]);
+
+      return focusTarget || panelRef.current;
+    }, [initialFocus]);
 
     useIsomorphicLayoutEffect(() => {
       if (!open || activationCount === undefined) {
@@ -118,28 +159,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
         // Use setTimeout to ensure focus happens after click event fully completes
         const timeoutId = targetWindow?.setTimeout(() => {
-          // Get focus target: use initialFocus if it's a ref, otherwise find first focusable
-          let focusTarget: HTMLElement | null = null;
-
-          if (
-            initialFocus &&
-            typeof initialFocus === "object" &&
-            "current" in initialFocus
-          ) {
-            focusTarget = initialFocus.current;
-          } else if (typeof initialFocus === "number" && initialFocus === 0) {
-            // Find first focusable element in panel
-            const panel = refs.floating.current;
-            if (panel) {
-              const focusableSelector =
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-              focusTarget = panel.querySelector(
-                focusableSelector,
-              ) as HTMLElement;
-            }
-          }
-
-          focusTarget?.focus();
+          getFocusTarget()?.focus();
         }, 0);
 
         return () => {
@@ -150,7 +170,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
 
       previousActivationCount.current = activationCount;
-    }, [activationCount, initialFocus, open, refs.floating, targetWindow]);
+    }, [activationCount, getFocusTarget, open, targetWindow]);
 
     useEffect(() => {
       if (open) {
@@ -159,20 +179,79 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
       const animate = setTimeout(() => {
         setShowComponent(false);
+        if (focusReturnTriggerRef?.current) {
+          focusReturnTriggerRef.current.focus();
+        }
       }, 300); // var(--salt-duration-perceptible)
       return () => clearTimeout(animate);
-    }, [open]);
+    }, [open, focusReturnTriggerRef]);
 
-    const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDownCapture?.(event);
+    const handleKeyDownCapture = useCallback(
+      (event: KeyboardEvent<HTMLDivElement>) => {
+        onKeyDownCapture?.(event);
 
-      if (event.defaultPrevented || event.key !== "Escape") {
-        return;
-      }
+        if (event.defaultPrevented) {
+          return;
+        }
 
-      event.stopPropagation();
-      onOpenChange?.(false);
-    };
+        const panelElement = panelRef.current;
+        if (!panelElement) return;
+
+        // Handle Escape key to close panel
+        if (event.key === "Escape") {
+          event.stopPropagation();
+          onOpenChange?.(false);
+          return;
+        }
+
+        // Handle Tab key for focus management
+        if (event.key === "Tab") {
+          const panelFocusables = getFocusableElements(panelElement);
+
+          if (panelFocusables.length === 0) {
+            // No focusable elements in panel: keep non-modal behavior and allow native tab navigation
+            return;
+          }
+
+          const activeElement = targetWindow?.document
+            .activeElement as HTMLElement;
+          const firstPanelFocusable = panelFocusables[0];
+          const lastPanelFocusable =
+            panelFocusables[panelFocusables.length - 1];
+          const trigger = focusReturnTriggerRef?.current;
+
+          if (event.shiftKey) {
+            // Shift+Tab: move to previous element or back to trigger
+            if (activeElement === firstPanelFocusable) {
+              // From first panel element, move focus back to trigger
+              event.preventDefault();
+              trigger?.focus();
+            }
+          } else {
+            // Tab: move to next element or forward to next element after trigger
+            if (activeElement === lastPanelFocusable) {
+              // From last panel element, move to next focusable after trigger
+              event.preventDefault();
+
+              if (trigger) {
+                const allFocusables = getAllFocusableElements(panelElement);
+                const triggerIndex = allFocusables.indexOf(trigger);
+
+                if (
+                  triggerIndex >= 0 &&
+                  triggerIndex < allFocusables.length - 1
+                ) {
+                  // Find next focusable after the trigger
+                  const nextFocusable = allFocusables[triggerIndex + 1];
+                  nextFocusable?.focus();
+                }
+              }
+            }
+          }
+        }
+      },
+      [onOpenChange, targetWindow, onKeyDownCapture, focusReturnTriggerRef],
+    );
 
     if (!showComponent) return null;
 
@@ -192,6 +271,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         tabIndex={-1}
         role="region"
         id={id}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledby}
         onKeyDownCapture={handleKeyDownCapture}
         {...rest}
       >
@@ -201,15 +282,19 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (open) {
       return (
-        <FloatingFocusManager
-          context={context}
-          modal={false}
-          initialFocus={initialFocus}
-          closeOnFocusOut={false}
-          guards={false}
+        <FocusManager
+          active={open}
+          autoFocusRef={
+            typeof initialFocus === "object" && "current" in initialFocus
+              ? initialFocus
+              : undefined
+          }
+          fallbackFocusRef={panelRef}
+          disableFocusTrap
+          disableReturnFocus
         >
           {panelDiv}
-        </FloatingFocusManager>
+        </FocusManager>
       );
     }
 

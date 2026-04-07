@@ -50,6 +50,7 @@ export const SidePanelTrigger = forwardRef<
     return <>{children}</>;
   }
 
+  const isExpanded = open && activeTriggerId === triggerId;
   const mergedProps = mergeProps(
     {
       onClick: handleClick,
@@ -58,7 +59,8 @@ export const SidePanelTrigger = forwardRef<
     children.props,
   );
 
-  mergedProps["aria-expanded"] = open && activeTriggerId === triggerId;
+  // Set aria attributes
+  mergedProps["aria-expanded"] = isExpanded;
   mergedProps["aria-controls"] = panelId;
 
   return cloneElement(children, {
