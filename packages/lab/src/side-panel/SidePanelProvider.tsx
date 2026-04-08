@@ -1,5 +1,4 @@
 import {
-  useClick,
   useDismiss,
   useFloatingRootContext,
   useInteractions,
@@ -58,7 +57,6 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useRole(floatingRootContext, { role: "dialog" }),
-    useClick(floatingRootContext),
     useDismiss(floatingRootContext, { escapeKey: true, outsidePress: false }),
   ]);
 
