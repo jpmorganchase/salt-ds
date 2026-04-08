@@ -59,6 +59,57 @@ describe("Given an Avatar", () => {
     cy.findByTestId("UserGroupSolidIcon").should("exist");
   });
 
+  it("should preserve native button semantics when rendered as a button", () => {
+    cy.mount(
+      <Default name="Juanito Jones" render={<button type="button" />} />,
+    );
+
+    cy.findByRole("button", { name: "Juanito Jones" }).should(
+      "have.class",
+      "saltAvatar",
+    );
+    cy.findByRole("img").should("not.exist");
+  });
+
+  it("WHEN `render` is passed a render function, THEN should call `render` to create the element", () => {
+    const testId = "avatar-testid";
+    const mockRender = cy
+      .stub()
+      .as("render")
+      .returns(
+        <button type="button" data-testid={testId}>
+          JJ
+        </button>,
+      );
+
+    cy.mount(<Default name="Juanito Jones" render={mockRender} />);
+
+    cy.findByTestId(testId).should("exist");
+    cy.get("@render").should("have.been.calledWithMatch", {
+      className: Cypress.sinon.match.string,
+      children: Cypress.sinon.match.any,
+      style: Cypress.sinon.match.object,
+      "aria-label": "Juanito Jones",
+    });
+  });
+
+  it("WHEN `render` is given a JSX element, THEN should merge the props and render the JSX element", () => {
+    const testId = "avatar-testid";
+
+    cy.mount(
+      <Default
+        name="Juanito Jones"
+        render={<button type="button" data-testid={testId} />}
+      />,
+    );
+
+    cy.findByRole("button", { name: "Juanito Jones" }).should(
+      "have.attr",
+      "data-testid",
+      testId,
+    );
+  });
+
   it("should not have a role or aria-label if name is not provided", () => {
     cy.mount(<Default />);
     cy.findByRole("img").should("not.exist");

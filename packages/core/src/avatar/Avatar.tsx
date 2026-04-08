@@ -1,9 +1,14 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type HTMLAttributes,
+  type ReactNode,
+} from "react";
 import { useIcon } from "../semantic-icon-provider";
-import { makePrefixer } from "../utils";
+import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
 import avatarCss from "./Avatar.css";
 import { useAvatarImage } from "./useAvatarImage";
 
@@ -56,10 +61,24 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
     | "category-18"
     | "category-19"
     | "category-20";
+  /**
+   * Render prop to enable customization of the avatar root element.
+   */
+  render?: RenderPropsType["render"];
 }
 
 const withBaseName = makePrefixer("saltAvatar");
 const DEFAULT_AVATAR_SIZE = 2; // medium
+
+interface AvatarActionProps extends ComponentPropsWithoutRef<"div"> {
+  render?: RenderPropsType["render"];
+}
+
+const AvatarAction = forwardRef<HTMLDivElement, AvatarActionProps>(
+  function AvatarAction(props, ref) {
+    return renderProps("div", { ...props, ref });
+  },
+);
 
 const defaultNameToInitials = (name?: string) =>
   name
@@ -80,6 +99,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
     fallbackIcon: fallbackIconProp,
+    render,
     ...rest
   },
   ref,
@@ -118,15 +138,20 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const avatarInitials = nameToInitials(name);
 
   const ariaProps = name
-    ? {
-        role: "img",
-        "aria-label": name,
-      }
+    ? render
+      ? {
+          "aria-label": name,
+        }
+      : {
+          role: "img",
+          "aria-label": name,
+        }
     : {};
 
   return (
-    <div
+    <AvatarAction
       ref={ref}
+      render={render}
       style={style}
       className={clsx(
         withBaseName(),
@@ -140,6 +165,6 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}
-    </div>
+    </AvatarAction>
   );
 });
