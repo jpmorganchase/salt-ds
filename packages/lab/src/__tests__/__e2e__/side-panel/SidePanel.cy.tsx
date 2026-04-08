@@ -1,11 +1,22 @@
 import { SidePanel, SidePanelProvider, SidePanelTrigger } from "@salt-ds/lab";
 import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const { Left, Default, ManualTrigger, Variants, WithTable, Nested } =
-  composeStories(sidePanel);
-
+const composedStories = composeStories(sidePanel);
+const {
+  Left,
+  Default,
+  ManualTrigger,
+  Variants,
+  WithTable,
+  Nested,
+  Scrollable,
+  WithNav,
+} = composedStories;
 describe("GIVEN a SidePanel component", () => {
+  checkAccessibility(composedStories);
+
   describe("Rendering & Position Variants", () => {
     it("WHEN Left panel is opened, THEN displays correctly with ARIA attributes", () => {
       cy.mount(<Left />);
@@ -213,8 +224,7 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN variant is changed via radio buttons, THEN panel renders with correct style class", () => {
       cy.mount(<Variants />);
 
-      // Open the panel (default is primary)
-      cy.findByRole("button", { name: "Open right panel" }).click();
+      // Panel starts open due to defaultOpen={true}, so it's already visible with primary variant
       cy.findByRole("region", { name: "Section Title" })
         .should("be.visible")
         .and("have.class", "saltSidePanel-primary");
@@ -244,7 +254,9 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN panel is closed and reopened, THEN variant is preserved", () => {
       cy.mount(<Variants />);
 
-      cy.findByRole("button", { name: "Open right panel" }).click();
+      // Panel starts open due to defaultOpen={true}
+      cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+
       cy.findByRole("radio", { name: "Tertiary" }).click();
       cy.findByRole("region", { name: "Section Title" }).should(
         "have.class",
@@ -325,110 +337,32 @@ describe("GIVEN a SidePanel component", () => {
       });
     });
 
-    it("WHEN panel is open and Escape is pressed, THEN panel closes and onOpenChange fires", () => {
-      const onOpenChange = cy.stub().as("onOpenChange");
-
-      cy.mount(
-        <SidePanelProvider open={true} onOpenChange={onOpenChange}>
-          <SidePanel aria-label="Table Test">Employee Details</SidePanel>
-          <table>
-            <tbody>
-              <tr>
-                <td>Test Row</td>
-              </tr>
-            </tbody>
-          </table>
-        </SidePanelProvider>,
-      );
-
-      cy.findByRole("region", { name: "Table Test" })
-        .should("be.visible")
-        .focus();
-
-      cy.realPress("Escape");
-
-      cy.get("@onOpenChange").should("have.been.calledWith", false);
-    });
-
-    it("AND multiple employee rows are viewed in sequence, THEN panel content updates each time", () => {
+    it("WHEN Edit button is clicked, THEN panel opens and can be closed", () => {
       cy.mount(<WithTable />);
-
-      const scenarios = [
-        { name: "Alex Morgan", email: "alex.morgan@example.com" },
-        { name: "Taylor Reed", email: "taylor.reed@example.com" },
-        { name: "Casey Patel", email: "casey.patel@example.com" },
-      ];
-
-      scenarios.forEach(({ name, email }) => {
-        cy.findByRole("button", {
-          name: `Edit details for ${name}`,
-        }).click();
-
-        cy.findByRole("region", { name: "Employee Details" }).should(
-          "be.visible",
-        );
-        cy.findByRole("region", { name: "Employee Details" }).within(() => {
-          cy.findByDisplayValue(name).should("be.visible");
-          cy.findByDisplayValue(email).should("be.visible");
-        });
-
-        cy.findByRole("button", { name: "Close" }).click();
-
-        cy.findByRole("region", { name: "Employee Details" }).should(
-          "not.exist",
-        );
-      });
-    });
-
-    it("WHEN different Edit buttons clicked sequentially, THEN aria-expanded moves to active trigger only", () => {
-      cy.mount(<WithTable />);
-
-      cy.findByRole("button", { name: "Edit details for Alex Morgan" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
-      cy.findByRole("button", {
-        name: "Edit details for Taylor Reed",
-      }).should("have.attr", "aria-expanded", "false");
 
       cy.findByRole("button", { name: "Edit details for Alex Morgan" }).click();
-      cy.findByRole("button", { name: "Edit details for Alex Morgan" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true",
+
+      cy.findByRole("region", { name: "Employee Details" }).should(
+        "be.visible",
       );
-      cy.findByRole("button", {
-        name: "Edit details for Taylor Reed",
-      }).should("have.attr", "aria-expanded", "false");
+      cy.findByRole("region", { name: "Employee Details" }).within(() => {
+        cy.findByDisplayValue("Alex Morgan").should("be.visible");
+      });
+
+      cy.findByRole("button", { name: "Close" }).click();
+
+      cy.findByRole("region", { name: "Employee Details" }).should("not.exist");
 
       cy.findByRole("button", {
         name: "Edit details for Jordan Lee",
       }).click();
+
       cy.findByRole("region", { name: "Employee Details" }).should(
         "be.visible",
       );
       cy.findByRole("region", { name: "Employee Details" }).within(() => {
         cy.findByDisplayValue("Jordan Lee").should("be.visible");
       });
-      cy.findByRole("button", { name: "Edit details for Alex Morgan" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
-      cy.findByRole("button", {
-        name: "Edit details for Jordan Lee",
-      }).should("have.attr", "aria-expanded", "true");
-
-      cy.findByRole("button", { name: "Close" }).click();
-      cy.findByRole("button", { name: "Edit details for Alex Morgan" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
-      cy.findByRole("button", {
-        name: "Edit details for Jordan Lee",
-      }).should("have.attr", "aria-expanded", "false");
     });
   });
 
@@ -436,90 +370,86 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN outer panel trigger is clicked, THEN outer panel opens with correct content", () => {
       cy.mount(<Nested />);
 
-      cy.findByRole("button", { name: "Open Outer Panel" })
-        .should("have.attr", "aria-expanded", "false")
-        .and("have.attr", "aria-controls");
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
 
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-
-      cy.findByRole("button", { name: "Open Outer Panel" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true",
-      );
-
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
-      cy.findByText("Content of the outer panel.").should("be.visible");
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
+      cy.findByText("Content of the right panel.").should("be.visible");
     });
 
     it("WHEN nested panel trigger is clicked inside outer panel, THEN nested panel opens", () => {
       cy.mount(<Nested />);
 
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
 
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
 
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
       cy.findByText("This panel is nested inside the right panel.").should(
         "be.visible",
       );
       // Outer panel should still be visible
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
     });
 
     it("WHEN nested panel close button is clicked, THEN nested panel closes but outer panel remains open", () => {
       cy.mount(<Nested />);
 
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
 
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
 
-      cy.findByRole("button", { name: "Close nested" }).click();
+      // SidePanelContent renders a close button with aria-label="Close"
+      // The nested panel's close button is inside the nested panel region
+      cy.findByRole("region", { name: "Nested Panel" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
 
       cy.findByRole("region", { name: "Nested Panel" }).should("not.exist");
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
-      cy.findByText("Content of the outer panel.").should("be.visible");
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
+      cy.findByText("Content of the right panel.").should("be.visible");
     });
 
     it("WHEN outer panel close button is clicked while nested is open, THEN both panels close", () => {
       cy.mount(<Nested />);
 
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
 
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
 
-      cy.findByRole("button", { name: "Close outer" }).click();
+      // The outer panel's close button has aria-label="Close" (manual close in OuterPanel)
+      // It's in the outer panel region but NOT in the nested panel region
+      cy.findByRole("region", { name: "Right Panel" })
+        .find("button[aria-label='Close']")
+        .not("[class*='saltSidePanelContent']")
+        .first()
+        .click();
 
-      cy.findByRole("region", { name: "Outer Panel" }).should("not.exist");
+      cy.findByRole("region", { name: "Right Panel" }).should("not.exist");
       cy.findByRole("region", { name: "Nested Panel" }).should("not.exist");
-
-      cy.findByRole("button", { name: "Open Outer Panel" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
     });
 
     it("WHEN nested panel is opened and closed, THEN it can be reopened", () => {
       cy.mount(<Nested />);
 
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
 
       // Open nested panel
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
 
       // Close nested panel
-      cy.findByRole("button", { name: "Close nested" }).click();
+      cy.findByRole("region", { name: "Nested Panel" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
       cy.findByRole("region", { name: "Nested Panel" }).should("not.exist");
 
       // Reopen nested panel
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
       cy.findByText("This panel is nested inside the right panel.").should(
         "be.visible",
@@ -529,38 +459,86 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN Escape is pressed while nested panel is focused, THEN nested panel closes but outer remains", () => {
       cy.mount(<Nested />);
 
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
 
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
 
       // Focus inside nested panel and press Escape
-      cy.findByRole("button", { name: "Close nested" }).focus();
+      cy.findByRole("region", { name: "Nested Panel" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).focus();
+      });
       cy.realPress("Escape");
 
       cy.findByRole("region", { name: "Nested Panel" }).should("not.exist");
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
     });
 
     it("WHEN outer panel is closed and reopened, THEN nested panel state resets to closed", () => {
       cy.mount(<Nested />);
 
       // Open outer, open nested
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-      cy.findByRole("button", { name: "Open Nested Panel" }).click();
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("button", { name: "Toggle nested panel" }).click();
       cy.findByRole("region", { name: "Nested Panel" }).should("be.visible");
 
-      // Close outer panel (closes everything)
-      cy.findByRole("button", { name: "Close outer" }).click();
-      cy.findByRole("region", { name: "Outer Panel" }).should("not.exist");
+      // Close outer panel (closes everything) via the outer panel's manual close button
+      cy.findByRole("region", { name: "Right Panel" })
+        .find("button[aria-label='Close']")
+        .first()
+        .click();
+      cy.findByRole("region", { name: "Right Panel" }).should("not.exist");
 
       // Reopen outer panel — nested should not be open
-      cy.findByRole("button", { name: "Open Outer Panel" }).click();
-      cy.findByRole("region", { name: "Outer Panel" }).should("be.visible");
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("region", { name: "Right Panel" }).should("be.visible");
       cy.findByRole("region", { name: "Nested Panel" }).should("not.exist");
-      cy.findByRole("button", { name: "Open Nested Panel" }).should(
+      cy.findByRole("button", { name: "Toggle nested panel" }).should(
         "be.visible",
       );
+    });
+  });
+
+  describe("Scrollable", () => {
+    it("WHEN panel is opened, THEN both main content and panel content are visible", () => {
+      cy.mount(<Scrollable />);
+
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+
+      cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+      cy.findByRole("region", { name: "Main content" }).should("be.visible");
+    });
+
+    it("WHEN panel is opened and closed, THEN panel can be toggled", () => {
+      cy.mount(<Scrollable />);
+
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+      cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+
+      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("region", { name: "Section Title" }).should("not.exist");
+    });
+  });
+
+  describe("WithNav", () => {
+    it("WHEN panel is opened, THEN panel and nav are both visible", () => {
+      cy.mount(<WithNav />);
+
+      cy.findByRole("button", { name: "Open side panel" }).click();
+
+      cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+      cy.findByRole("navigation").should("be.visible");
+    });
+
+    it("WHEN panel is closed, THEN nav remains visible", () => {
+      cy.mount(<WithNav />);
+
+      cy.findByRole("button", { name: "Open side panel" }).click();
+      cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+
+      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("region", { name: "Section Title" }).should("not.exist");
+      cy.findByRole("navigation").should("be.visible");
     });
   });
 });

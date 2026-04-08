@@ -1,14 +1,7 @@
-import {
-  Button,
-  FlexLayout,
-  H2,
-  StackLayout,
-  Text,
-  useIcon,
-  useId,
-} from "@salt-ds/core";
+import { Button, FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelContent,
   SidePanelProvider,
   useSidePanelContext,
 } from "@salt-ds/lab";
@@ -21,37 +14,21 @@ const panelStyle = {
 
 const RightPanel = () => {
   const headingId = useId();
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
   return (
     <SidePanel
       aria-labelledby={headingId}
       style={panelStyle}
       variant="secondary"
     >
-      <StackLayout gap={1}>
-        <FlexLayout align="center">
-          <H2 id={headingId} style={{ flex: 1 }}>
-            Right Panel
-          </H2>
-          <Button
-            aria-label="Close"
-            appearance="transparent"
-            onClick={() => setOpen(false)}
-          >
-            <CloseIcon aria-hidden />
-          </Button>
-        </FlexLayout>
+      <SidePanelContent header={<H2 id={headingId}>Right Panel</H2>}>
         <Text>Right panel content.</Text>
-      </StackLayout>
+      </SidePanelContent>
     </SidePanel>
   );
 };
 
 const LeftPanel = () => {
   const headingId = useId();
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
   return (
     <SidePanel
       position="left"
@@ -59,37 +36,26 @@ const LeftPanel = () => {
       style={panelStyle}
       variant="secondary"
     >
-      <StackLayout gap={1}>
-        <FlexLayout align="center">
-          <H2 id={headingId} style={{ flex: 1 }}>
-            Left Panel
-          </H2>
-          <Button
-            aria-label="Close"
-            appearance="transparent"
-            onClick={() => setOpen(false)}
-          >
-            <CloseIcon aria-hidden />
-          </Button>
-        </FlexLayout>
+      <SidePanelContent header={<H2 id={headingId}>Left Panel</H2>}>
         <Text>Left panel content.</Text>
-      </StackLayout>
+      </SidePanelContent>
     </SidePanel>
   );
 };
 
-const ManualTriggerButton = ({
-  children,
-}: {
-  children: string;
-}) => {
-  const { openState, setOpen, getReferenceProps, setReference, panelId } =
-    useSidePanelContext();
+const ManualTriggerButton = ({ children }: { children: string }) => {
+  const {
+    openState,
+    setOpen,
+    getFloatingProps,
+    getReferenceProps,
+    setReference,
+  } = useSidePanelContext();
 
   return (
     <Button
       {...(getReferenceProps({
-        "aria-controls": panelId,
+        "aria-controls": getFloatingProps().id as string,
         onClick: () => setOpen(!openState),
       }) as Record<string, unknown>)}
       ref={setReference as React.Ref<HTMLButtonElement>}
@@ -109,7 +75,7 @@ const ContentArea = () => {
         <FlexLayout gap={1} justify="space-between">
           <Button
             {...(leftCtx.getReferenceProps({
-              "aria-controls": leftCtx.panelId,
+              "aria-controls": leftCtx.getFloatingProps().id as string,
               onClick: () => leftCtx.setOpen(!leftCtx.openState),
             }) as Record<string, unknown>)}
             ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}

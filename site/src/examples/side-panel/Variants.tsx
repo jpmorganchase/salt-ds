@@ -8,11 +8,11 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
-  useIcon,
   useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelContent,
   type SidePanelProps,
   SidePanelProvider,
   SidePanelTrigger,
@@ -26,8 +26,7 @@ const variantOptions = ["primary", "secondary", "tertiary"];
 const SidePanelExample = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const headingId = useId();
-  const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState } = useSidePanelContext();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setVariant(event.target.value as SidePanelProps["variant"]);
@@ -64,28 +63,16 @@ const SidePanelExample = () => {
       </ContentExample>
 
       <SidePanel position="right" aria-labelledby={headingId} variant={variant}>
-        <StackLayout>
-          <FlexLayout align="center">
-            <H2 id={headingId} style={{ flex: 1 }}>
-              Section Title
-            </H2>
-            <Button
-              aria-label="Close"
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          </FlexLayout>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
           <Text>Side panel content goes here.</Text>
-        </StackLayout>
+        </SidePanelContent>
       </SidePanel>
     </>
   );
 };
 
 export const Variants = () => (
-  <SidePanelProvider>
+  <SidePanelProvider defaultOpen={true}>
     <FlexLayout
       style={{
         width: "100%",

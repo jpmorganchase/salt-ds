@@ -8,9 +8,9 @@ import {
   Input,
   Link,
   StackLayout,
-  Text, Tooltip,
-  useIcon,
-  useId
+  Text,
+  Tooltip,
+  useId,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -20,9 +20,9 @@ import {
 } from "@salt-ds/icons";
 import {
   SidePanel,
+  SidePanelContent,
   SidePanelProvider,
   SidePanelTrigger,
-  useSidePanelContext,
 } from "@salt-ds/lab";
 import { ContentExample } from "src/examples/side-panel/ContentExample";
 
@@ -54,21 +54,21 @@ const DesktopAppHeader = () => {
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
             <Tooltip content="Toggle help panel" hideArrow>
-            <SidePanelTrigger>
-              <Button appearance="transparent" aria-label="open help panel">
-                <HelpCircleIcon aria-hidden />
-              </Button>
-            </SidePanelTrigger>
+              <SidePanelTrigger>
+                <Button appearance="transparent" aria-label="open help panel">
+                  <HelpCircleIcon aria-hidden />
+                </Button>
+              </SidePanelTrigger>
             </Tooltip>
             <Tooltip content="Show notifications" hideArrow>
               <Button appearance="transparent">
-              <NotificationIcon aria-hidden />
-            </Button>
+                <NotificationIcon aria-hidden />
+              </Button>
             </Tooltip>
             <Tooltip content="Open chat" hideArrow>
-            <Button appearance="transparent">
-              <ChattingIcon aria-hidden />
-            </Button>
+              <Button appearance="transparent">
+                <ChattingIcon aria-hidden />
+              </Button>
             </Tooltip>
           </StackLayout>
         </FlexItem>
@@ -79,8 +79,6 @@ const DesktopAppHeader = () => {
 
 const SidePanelExample = () => {
   const headingId = useId();
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
 
   return (
     <BorderLayout
@@ -100,20 +98,11 @@ const SidePanelExample = () => {
           <Link href="#">Link 2</Link>
           <Link href="#">Link 3</Link>
         </FlexLayout>
-        <ContentExample/>
+        <ContentExample />
       </BorderItem>
       <BorderItem position="east">
         <SidePanel aria-labelledby={headingId}>
-          <StackLayout align="start" gap={1}>
-            <Button
-              style={{ marginLeft: "auto" }}
-              aria-label="Close"
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-            <H2 id={headingId}>Help & support</H2>
+          <SidePanelContent header={<H2 id={headingId}>Help & support</H2>}>
             <Text>
               The content shown here is for illustrative purposes and does not
               contain specific information or advice. Using placeholder text
@@ -121,7 +110,7 @@ const SidePanelExample = () => {
               presentation in the user interface. Adjust the wording as needed
               to suit your particular requirements or design preferences.
             </Text>
-          </StackLayout>
+          </SidePanelContent>
         </SidePanel>
       </BorderItem>
     </BorderLayout>
