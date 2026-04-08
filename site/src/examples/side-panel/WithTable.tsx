@@ -19,9 +19,9 @@ import {
 import {
   SidePanel,
   SidePanelProvider,
-  SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import type React from "react";
 import { useState } from "react";
 
 interface TeamMember {
@@ -68,11 +68,23 @@ const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen, setReference, getReferenceProps, panelId } =
+    useSidePanelContext();
 
-  const handleRowClick = (row: TeamMember) => {
+  const handleRowClick = (row: TeamMember, target: HTMLElement) => {
     setSelectedRow(row);
+    setReference(target);
+    setOpen(true);
   };
+
+  const getTriggerProps = (row: TeamMember) =>
+    getReferenceProps({
+      "aria-controls": panelId,
+      "aria-label": `Edit details for ${row.name}`,
+      onClick: (e: React.MouseEvent<HTMLElement>) => {
+        handleRowClick(row, e.currentTarget);
+      },
+    }) as Record<string, unknown>;
 
   return (
     <FlexLayout
@@ -102,15 +114,12 @@ const SidePanelExample = () => {
                   <TD>{row.name}</TD>
                   <TD>{row.email}</TD>
                   <TD>
-                    <SidePanelTrigger>
-                      <Button
-                        onClick={() => handleRowClick(row)}
-                        style={{ minWidth: "auto" }}
-                        aria-label={`Edit details for ${row.name}`}
-                      >
-                        Edit
-                      </Button>
-                    </SidePanelTrigger>
+                    <Button
+                      {...getTriggerProps(row)}
+                      style={{ minWidth: "auto" }}
+                    >
+                      Edit
+                    </Button>
                   </TD>
                 </TR>
               ))}
@@ -130,7 +139,7 @@ const SidePanelExample = () => {
             <CloseIcon aria-hidden />
           </Button>
           {selectedRow && (
-            <StackLayout style={{ width: "100%" }}>
+            <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
               <H2 id={panelHeadingId}>Employee Details</H2>
               <FormField>
                 <FormFieldLabel>Name</FormFieldLabel>

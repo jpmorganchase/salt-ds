@@ -19,6 +19,7 @@ import {
   useSidePanelContext,
 } from "@salt-ds/lab";
 import { type ChangeEventHandler, useState } from "react";
+import { ContentExample } from "./ContentExample";
 
 const variantOptions = ["primary", "secondary", "tertiary"];
 
@@ -34,34 +35,33 @@ const SidePanelExample = () => {
 
   return (
     <>
-      <StackLayout
-        direction={"column"}
-        style={{ flex: 1, padding: "var(--salt-spacing-300)" }}
-      >
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-            {openState ? "Close" : "Open"} right panel
-          </Button>
-        </SidePanelTrigger>
-        <FormField>
-          <FormFieldLabel>Variant</FormFieldLabel>
-          <RadioButtonGroup
-            direction="horizontal"
-            aria-label="Variant Controls"
-            name="variant"
-            onChange={handleVariantChange}
-            value={variant}
-          >
-            {variantOptions.map((option) => (
-              <RadioButton
-                key={option}
-                label={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-                value={option}
-              />
-            ))}
-          </RadioButtonGroup>
-        </FormField>
-      </StackLayout>
+      <ContentExample>
+        <StackLayout direction="column" gap={1}>
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
+              {openState ? "Close" : "Open"} right panel
+            </Button>
+          </SidePanelTrigger>
+          <FormField>
+            <FormFieldLabel>Variant</FormFieldLabel>
+            <RadioButtonGroup
+              direction="horizontal"
+              aria-label="Variant Controls"
+              name="variant"
+              onChange={handleVariantChange}
+              value={variant}
+            >
+              {variantOptions.map((option) => (
+                <RadioButton
+                  key={option}
+                  label={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                  value={option}
+                />
+              ))}
+            </RadioButtonGroup>
+          </FormField>
+        </StackLayout>
+      </ContentExample>
 
       <SidePanel position="right" aria-labelledby={headingId} variant={variant}>
         <StackLayout>
@@ -89,7 +89,7 @@ export const Variants = () => (
     <FlexLayout
       style={{
         width: "100%",
-        height: 300,
+        height: 320,
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
         borderRadius: "var(--salt-palette-corner-weak)",

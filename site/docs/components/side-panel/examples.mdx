@@ -44,7 +44,7 @@ You can control the open state of the side panel component by using the `open` a
 
 <LivePreview componentName="side-panel" exampleName="Controlled" />
 
-## Complex layouts
+## Manual Trigger
 
 For layouts that need more control over the side panel’s open/close behavior, use manual trigger management instead of SidePanelProvider. This is useful when the trigger and the panel can’t sit together in the component tree, or when open/close behavior needs to be driven by custom logic.
 
@@ -59,6 +59,26 @@ This approach trades convenience for flexibility: it requires more wiring, but e
 
 <LivePreview componentName="side-panel" exampleName="ManualTrigger" />
 
+## Side panels between content
+
+Side Panels can sit between content areas to create a multi-panel layout. When using multiple panels, ensure that the layout remains clear and that users can easily distinguish between different panels and their purposes.
+
+<LivePreview componentName="side-panel" exampleName="WithNav" />
+
 Side Panels can also be nested within each other to create multi-level drill-in experiences. When nesting, ensure that each panel has a clear purpose and that the navigation between panels is intuitive.
 
+## Nexted Side panels
+
 <LivePreview componentName="side-panel" exampleName="Nested" />
+
+## Scrollable content within panels
+
+Side Panels can contains scrollable content and still keep the main page visible and interactive. When using scrollable content within a panel, ensure the title and close button remain visible and accessible to users.
+
+<LivePreview componentName="side-panel" exampleName="Scrollable" />
+
+## Resizable
+
+When composed with a [../splitter](Splitter) component, side-panels are resizable.
+
+<LivePreview componentName="side-panel" exampleName="Resizable" />
