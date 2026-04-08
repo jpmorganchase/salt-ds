@@ -7,14 +7,13 @@ import {
   useIcon,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
   SidePanelProvider,
-  SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
 import type { CSSProperties } from "react";
+import { ContentExample } from "./ContentExample";
 
 const panelStyle = {
   "--saltSidePanel-width": "200px",
@@ -51,6 +50,7 @@ const RightPanel = () => {
 
 const LeftPanel = () => {
   const headingId = useId();
+  const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanelContext();
   return (
     <SidePanel
@@ -78,50 +78,70 @@ const LeftPanel = () => {
   );
 };
 
-export const ManualTrigger = () => (
-  <div
-    style={{
-      width: "100%",
-      height: 300,
-      display: "flex",
-      border:
-        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-      borderRadius: "var(--salt-palette-corner-weak)",
-      overflow: "hidden",
-    }}
-  >
-    <SidePanelProvider>
-      <LeftPanel />
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          padding: "var(--salt-spacing-200)",
-        }}
-      >
-        <SidePanelTrigger>
-          <Button style={{ whiteSpace: "nowrap" }}>Toggle left panel</Button>
-        </SidePanelTrigger>
-      </div>
-    </SidePanelProvider>
+const ManualTriggerButton = ({
+  children,
+}: {
+  children: string;
+}) => {
+  const { openState, setOpen, getReferenceProps, setReference, panelId } =
+    useSidePanelContext();
 
+  return (
+    <Button
+      {...(getReferenceProps({
+        "aria-controls": panelId,
+        onClick: () => setOpen(!openState),
+      }) as Record<string, unknown>)}
+      ref={setReference as React.Ref<HTMLButtonElement>}
+      style={{ width: "fit-content", whiteSpace: "nowrap" }}
+    >
+      {children}
+    </Button>
+  );
+};
+
+const ContentArea = () => {
+  const leftCtx = useSidePanelContext();
+
+  return (
     <SidePanelProvider>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          padding: "var(--salt-spacing-200)",
-        }}
-      >
-        <SidePanelTrigger>
-          <Button style={{ whiteSpace: "nowrap" }}>Toggle right panel</Button>
-        </SidePanelTrigger>
-      </div>
+      <ContentExample>
+        <FlexLayout gap={1} justify="space-between">
+          <Button
+            {...(leftCtx.getReferenceProps({
+              "aria-controls": leftCtx.panelId,
+              onClick: () => leftCtx.setOpen(!leftCtx.openState),
+            }) as Record<string, unknown>)}
+            ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}
+            style={{ width: "fit-content", whiteSpace: "nowrap" }}
+          >
+            Toggle left panel
+          </Button>
+          <ManualTriggerButton>Toggle right panel</ManualTriggerButton>
+        </FlexLayout>
+      </ContentExample>
       <RightPanel />
     </SidePanelProvider>
-  </div>
-);
+  );
+};
+
+export const ManualTrigger = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: 300,
+        display: "flex",
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+        overflow: "hidden",
+      }}
+    >
+      <SidePanelProvider>
+        <LeftPanel />
+        <ContentArea />
+      </SidePanelProvider>
+    </div>
+  );
+};

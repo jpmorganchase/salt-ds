@@ -13,6 +13,7 @@ import {
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import { ContentExample } from "./ContentExample";
 
 const SidePanelExample = () => {
   const { openState, setOpen } = useSidePanelContext();
@@ -38,18 +39,13 @@ const SidePanelExample = () => {
         </StackLayout>
       </SidePanel>
 
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: "var(--salt-spacing-300)",
-        }}
-      >
+      <ContentExample>
         <SidePanelTrigger>
-          <Button>{openState ? "Close" : "Open"} side panel</Button>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} side panel
+          </Button>
         </SidePanelTrigger>
-      </div>
+      </ContentExample>
     </>
   );
 };

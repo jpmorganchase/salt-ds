@@ -8,9 +8,9 @@ import {
   Input,
   Link,
   StackLayout,
-  Text,
+  Text, Tooltip,
   useIcon,
-  useId,
+  useId
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -24,6 +24,7 @@ import {
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import { ContentExample } from "src/examples/side-panel/ContentExample";
 
 const DesktopAppHeader = () => {
   return (
@@ -52,17 +53,23 @@ const DesktopAppHeader = () => {
 
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
+            <Tooltip content="Toggle help panel" hideArrow>
             <SidePanelTrigger>
               <Button appearance="transparent" aria-label="open help panel">
                 <HelpCircleIcon aria-hidden />
               </Button>
             </SidePanelTrigger>
-            <Button appearance="transparent">
+            </Tooltip>
+            <Tooltip content="Show notifications" hideArrow>
+              <Button appearance="transparent">
               <NotificationIcon aria-hidden />
             </Button>
+            </Tooltip>
+            <Tooltip content="Open chat" hideArrow>
             <Button appearance="transparent">
               <ChattingIcon aria-hidden />
             </Button>
+            </Tooltip>
           </StackLayout>
         </FlexItem>
       </FlexLayout>
@@ -93,17 +100,7 @@ const SidePanelExample = () => {
           <Link href="#">Link 2</Link>
           <Link href="#">Link 3</Link>
         </FlexLayout>
-        {Array.from({ length: 4 }, (_, index) => (
-          <div
-            // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-            key={index}
-            style={{
-              padding: "var(--salt-spacing-300)",
-              margin: "var(--salt-spacing-200) var(--salt-spacing-300)",
-              backgroundColor: "var(--salt-container-secondary-background)",
-            }}
-          />
-        ))}
+        <ContentExample/>
       </BorderItem>
       <BorderItem position="east">
         <SidePanel aria-labelledby={headingId}>
@@ -132,7 +129,7 @@ const SidePanelExample = () => {
 };
 
 export const WithAppHeader = () => (
-  <SidePanelProvider>
+  <SidePanelProvider defaultOpen={true}>
     <SidePanelExample />
   </SidePanelProvider>
 );
