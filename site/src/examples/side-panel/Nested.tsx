@@ -14,6 +14,7 @@ import {
   useSidePanelContext,
 } from "@salt-ds/lab";
 import type { CSSProperties } from "react";
+import { ContentExample } from "./ContentExample";
 
 const OUTER_PANEL_WIDTH = 500;
 const INNER_PANEL_WIDTH = 200;
@@ -125,19 +126,15 @@ export const Nested = () => (
     }}
   >
     <SidePanelProvider>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "start",
-          padding: "var(--salt-spacing-200)",
-        }}
-      >
-        <SidePanelTrigger>
-          <Button style={{ whiteSpace: "nowrap" }}>Toggle right panel</Button>
-        </SidePanelTrigger>
-      </div>
+      <ContentExample>
+        <FlexLayout justify="end">
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
+              Toggle right panel
+            </Button>
+          </SidePanelTrigger>
+        </FlexLayout>
+      </ContentExample>
       <OuterPanel />
     </SidePanelProvider>
   </div>

@@ -15,21 +15,37 @@ import {
 } from "@salt-ds/lab";
 import { ContentExample } from "./ContentExample";
 
+const Nav = () => (
+  <nav
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--salt-spacing-100)",
+      padding: "var(--salt-spacing-200)",
+      borderRight:
+        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+      backgroundColor: "var(--salt-container-secondary-background)",
+      whiteSpace: "nowrap",
+    }}
+  >
+    <Text styleAs="label" style={{ fontWeight: "bold" }}>
+      Nav
+    </Text>
+    <Text>Item 1</Text>
+    <Text>Item 2</Text>
+    <Text>Item 3</Text>
+  </nav>
+);
+
 const SidePanelExample = () => {
   const headingId = useId();
   const { CloseIcon } = useIcon();
   const { openState, setOpen } = useSidePanelContext();
+
   return (
     <>
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} right panel
-          </Button>
-        </SidePanelTrigger>
-      </ContentExample>
-
-      <SidePanel position="right" aria-labelledby={headingId}>
+      <Nav />
+      <SidePanel position="left" aria-labelledby={headingId}>
         <StackLayout>
           <FlexLayout align="center">
             <H2 id={headingId} style={{ flex: 1 }}>
@@ -46,11 +62,18 @@ const SidePanelExample = () => {
           <Text>Side panel content goes here.</Text>
         </StackLayout>
       </SidePanel>
+      <ContentExample>
+        <SidePanelTrigger>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} side panel
+          </Button>
+        </SidePanelTrigger>
+      </ContentExample>
     </>
   );
 };
 
-export const RightPanel = () => (
+export const WithNav = () => (
   <SidePanelProvider>
     <FlexLayout
       style={{
@@ -66,3 +89,4 @@ export const RightPanel = () => (
     </FlexLayout>
   </SidePanelProvider>
 );
+
