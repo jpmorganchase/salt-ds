@@ -1,0 +1,39 @@
+.saltMegaMenuItem {
+  display: flex;
+  padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
+  align-items: center;
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  cursor: var(--salt-cursor-hover);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  box-sizing: border-box;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  list-style: none;
+}
+
+.saltMegaMenuItem:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+  border-radius: var(--salt-palette-corner-weak);
+}
+
+.saltMegaMenuItem:hover {
+  outline: none;
+  border-radius: var(--salt-palette-corner-weak);
+  background: var(--salt-navigable-background-hover);
+}
+
+.saltMegaMenuItem:active {
+  border-radius: var(--salt-palette-corner-weak);
+  outline: var(--salt-size-fixed-100) solid var(--salt-navigable-accent-borderColor-active);
+  background: var(--salt-navigable-accent-background-active);
+}
+
+.saltMegaMenuItem .saltIcon {
+  min-height: var(--salt-text-lineHeight);
+}
