@@ -1,11 +1,6 @@
-import type { FloatingRootContext } from "@floating-ui/react";
+import type { FloatingRootContext, useInteractions } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
-import {
-  type Dispatch,
-  type HTMLProps,
-  type SetStateAction,
-  useContext,
-} from "react";
+import { type Dispatch, type SetStateAction, useContext } from "react";
 
 export interface SidePanelContextValue {
   /**
@@ -21,16 +16,12 @@ export interface SidePanelContextValue {
    * Props getter for the floating (panel) element.
    * Spreads ARIA attributes and event handlers onto the panel.
    */
-  getFloatingProps: (
-    userProps?: HTMLProps<HTMLElement> | undefined,
-  ) => Record<string, unknown>;
+  getFloatingProps: ReturnType<typeof useInteractions>["getFloatingProps"];
   /**
    * Props getter for the reference (trigger) element.
    * Spreads aria-expanded, aria-controls, click handler, etc. onto the trigger.
    */
-  getReferenceProps: (
-    userProps?: HTMLProps<Element> | undefined,
-  ) => Record<string, unknown>;
+  getReferenceProps: ReturnType<typeof useInteractions>["getReferenceProps"];
   /**
    * Ref setter for the panel element.
    * Registers the panel DOM node with floating-ui.
@@ -46,10 +37,6 @@ export interface SidePanelContextValue {
    * Called by SidePanelCloseTrigger or any consumer that needs to close the panel.
    */
   setOpen: (open: boolean) => void;
-  /**
-   * Auto-generated ID for the panel element, used to link trigger and panel via aria-controls.
-   */
-  panelId: string | undefined;
 }
 
 export const SidePanelContext = createContext<SidePanelContextValue>(
@@ -62,7 +49,6 @@ export const SidePanelContext = createContext<SidePanelContextValue>(
     setFloating: () => {},
     setReference: () => {},
     setOpen: () => {},
-    panelId: undefined,
   },
 );
 

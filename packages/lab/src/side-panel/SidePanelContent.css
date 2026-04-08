@@ -1,0 +1,22 @@
+.saltSidePanelContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.saltSidePanelContent-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--salt-spacing-100);
+}
+
+.saltSidePanelContent-header > *:first-child {
+  flex: 1;
+}
+
+.saltSidePanelContent-body {
+  flex: 1;
+  overflow: auto;
+  padding-top: var(--salt-spacing-100);
+}

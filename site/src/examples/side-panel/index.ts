@@ -2,7 +2,6 @@ export * from "./ContentExample";
 export * from "./Controlled";
 export * from "./LeftPanel";
 export * from "./ManualTrigger";
-export * from "./Nested";
 export * from "./Resizable";
 export * from "./RightPanel";
 export * from "./Scrollable";

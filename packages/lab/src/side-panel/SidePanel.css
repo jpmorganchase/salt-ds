@@ -2,7 +2,7 @@
   overflow: hidden;
   background-color: var(--saltSidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
-  --saltSidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  --saltSidePanel-internal-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
 }
 
 .saltSidePanel-primary {
@@ -18,10 +18,10 @@
 }
 
 .saltSidePanel-left {
-  border-right: var(--saltSidePanel-border);
+  border-right: var(--saltSidePanel-internal-border);
 }
 .saltSidePanel-right {
-  border-left: var(--saltSidePanel-border);
+  border-left: var(--saltSidePanel-internal-border);
 }
 
 .saltSidePanel-left,

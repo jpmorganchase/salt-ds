@@ -1,4 +1,3 @@
-import { Text } from "@salt-ds/core";
 import type { ReactNode } from "react";
 
 export const ContentExample = ({ children }: { children?: ReactNode }) => (
@@ -23,12 +22,13 @@ export const ContentExample = ({ children }: { children?: ReactNode }) => (
     >
       {Array.from({ length: 6 }, (_, i) => (
         <div
-          key={i}
+          // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+          key={`content-${i}`}
           style={{
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) dashed var(--salt-container-primary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -39,4 +39,3 @@ export const ContentExample = ({ children }: { children?: ReactNode }) => (
     </div>
   </div>
 );
-
