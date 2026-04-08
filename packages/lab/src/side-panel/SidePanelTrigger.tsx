@@ -4,7 +4,9 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
+  type MouseEvent,
   type ReactNode,
+  useCallback,
 } from "react";
 import { useSidePanelContext } from "./SidePanelContext";
 
@@ -17,11 +19,26 @@ export const SidePanelTrigger = forwardRef<
   HTMLButtonElement,
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
-  const { children, ...rest } = props;
-  const { setReference, getReferenceProps, panelId, openState, setOpen } =
-    useSidePanelContext();
+  const { children, onClick, ...rest } = props;
+  const {
+    setReference,
+    getReferenceProps,
+    getFloatingProps,
+    openState,
+    setOpen,
+  } = useSidePanelContext();
 
   const handleRef = useForkRef(setReference, ref);
+
+  const handleClick = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event);
+      if (!event.defaultPrevented) {
+        setOpen(!openState);
+      }
+    },
+    [onClick, openState, setOpen],
+  );
 
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;
@@ -29,9 +46,9 @@ export const SidePanelTrigger = forwardRef<
 
   const mergedProps = mergeProps(
     getReferenceProps({
-      "aria-controls": panelId,
-      onClick: () => setOpen(!openState),
+      "aria-controls": getFloatingProps().id as string,
       ...rest,
+      onClick: handleClick,
     }) as Record<string, unknown>,
     children.props,
   );

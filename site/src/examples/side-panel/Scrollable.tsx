@@ -4,18 +4,20 @@ import {
   H2,
   StackLayout,
   Text,
-  useIcon,
   useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelContent,
   SidePanelProvider,
   SidePanelTrigger,
-  useSidePanelContext,
 } from "@salt-ds/lab";
 
 const ScrollableContent = () => (
   <div
+    role="region"
+    aria-label="Main content"
+    tabIndex={0}
     style={{
       flex: 1,
       display: "flex",
@@ -26,7 +28,9 @@ const ScrollableContent = () => (
     }}
   >
     <SidePanelTrigger>
-      <Button style={{ width: "fit-content" }}>Toggle right panel</Button>
+      <Button style={{ width: "fit-content", flexShrink: 0 }}>
+        Toggle right panel
+      </Button>
     </SidePanelTrigger>
     <div
       style={{
@@ -37,7 +41,8 @@ const ScrollableContent = () => (
     >
       {Array.from({ length: 12 }, (_, i) => (
         <div
-          key={`grid-item-${i}`}
+          // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+          key={`content-${i}`}
           style={{
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
@@ -56,53 +61,25 @@ const ScrollableContent = () => (
 
 const SidePanelExample = () => {
   const headingId = useId();
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
 
   return (
     <>
       <ScrollableContent />
       <SidePanel position="right" aria-labelledby={headingId}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-          }}
+        <SidePanelContent
+          header={<H2 id={headingId}>Section Title</H2>}
+          aria-label="Side panel content"
         >
-          <FlexLayout
-            align="center"
-            style={{
-              flexShrink: 0,
-            }}
-          >
-            <H2 id={headingId} style={{ flex: 1 }}>
-              Section Title
-            </H2>
-            <Button
-              aria-label="Close"
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          </FlexLayout>
-          <div
-            style={{
-              flex: 1,
-              overflow: "auto",
-            }}
-          >
-            <StackLayout>
-              {Array.from({ length: 10 }, (_, i) => (
-                <Text key={`panel-item-${i}`}>
-                  Panel item — This is scrollable content inside the
-                  side panel that demonstrates independent scrolling.
-                </Text>
-              ))}
-            </StackLayout>
-          </div>
-        </div>
+          <StackLayout>
+            {Array.from({ length: 10 }, (_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: Static list of identical placeholder items
+              <Text key={`panel-item-${i}`}>
+                Panel item — This is scrollable content inside the side panel
+                that demonstrates independent scrolling.
+              </Text>
+            ))}
+          </StackLayout>
+        </SidePanelContent>
       </SidePanel>
     </>
   );
@@ -124,10 +101,3 @@ export const Scrollable = () => (
     </FlexLayout>
   </SidePanelProvider>
 );
-
-
-
-
-
-
-

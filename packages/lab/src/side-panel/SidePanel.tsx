@@ -1,12 +1,12 @@
 import { FloatingFocusManager } from "@floating-ui/react";
-import { makePrefixer, useFloatingUI, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
-  type MutableRefObject,
   useEffect,
   useState,
 } from "react";
@@ -26,7 +26,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    * Pass a number for the tabbable element index (0 = first), or a ref to a specific element.
    * @default 0
    */
-  initialFocus?: number | MutableRefObject<HTMLElement | null>;
+  initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
   /**
    * Change background color palette.
    * @default "primary"
@@ -42,28 +42,20 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       variant = "primary",
       children,
       className,
-      id: idProp,
       ...rest
     } = props;
 
     const [showComponent, setShowComponent] = useState(false);
     const targetWindow = useWindow();
 
-    const {
-      openState,
-      floatingRootContext,
-      setFloating,
-      getFloatingProps,
-      panelId,
-    } = useSidePanelContext();
+    const { openState, floatingRootContext, setFloating, getFloatingProps } =
+      useSidePanelContext();
 
     useComponentCssInjection({
       testId: "salt-side-panel",
       css: sidePanelCss,
       window: targetWindow,
     });
-
-    const id = useId(idProp || panelId);
 
     const { context } = useFloatingUI({
       rootContext: floatingRootContext,
@@ -86,6 +78,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const panelDiv = (
       <div
+        aria-expanded={showComponent ? "true" : "false"}
         ref={handleRef}
         className={clsx(
           withBaseName(),
@@ -97,8 +90,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           },
           className,
         )}
-        id={id}
         {...getFloatingProps(rest)}
+        role={"region"}
       >
         <div className={withBaseName("inner")}>{children}</div>
       </div>

@@ -7,13 +7,13 @@ import {
   useIcon,
   useId,
 } from "@salt-ds/core";
+import { useCallback, useRef, useState } from "react";
 import {
   type ImperativePanelHandle,
   Panel,
   PanelGroup,
   PanelResizeHandle,
 } from "react-resizable-panels";
-import { useCallback, useRef, useState } from "react";
 import { ContentExample } from "./ContentExample";
 
 const ANIMATION_DURATION = 300;
@@ -41,7 +41,10 @@ export const Resizable = () => {
         panelRef.current?.resize(0);
       }
     });
-    timerRef.current = setTimeout(() => setAnimating(false), ANIMATION_DURATION);
+    timerRef.current = setTimeout(
+      () => setAnimating(false),
+      ANIMATION_DURATION,
+    );
   }, [expanded]);
 
   const panelTransition = animating
@@ -63,10 +66,7 @@ export const Resizable = () => {
       <PanelGroup direction="horizontal">
         <Panel style={{ transition: panelTransition }}>
           <ContentExample>
-            <Button
-              style={{ width: "fit-content" }}
-              onClick={toggle}
-            >
+            <Button style={{ width: "fit-content" }} onClick={toggle}>
               {expanded ? "Close" : "Open"} right panel
             </Button>
           </ContentExample>
@@ -83,8 +83,8 @@ export const Resizable = () => {
         <Panel
           ref={panelRef}
           defaultSize={0}
-          minSize={expanded && !animating ? 15 : 0}
-          maxSize={expanded || animating ? 50 : 0}
+          minSize={expanded && !animating ? 50 : 0}
+          maxSize={expanded || animating ? 75 : 0}
           style={{
             backgroundColor: "var(--salt-container-primary-background)",
             borderLeft: expanded
@@ -124,4 +124,3 @@ export const Resizable = () => {
     </div>
   );
 };
-

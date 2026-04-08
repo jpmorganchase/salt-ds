@@ -13,16 +13,15 @@ import {
   TH,
   THead,
   TR,
-  useIcon,
   useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelContent,
   SidePanelProvider,
   useSidePanelContext,
 } from "@salt-ds/lab";
-import type React from "react";
-import { useState } from "react";
+import React, { type CSSProperties, useState } from "react";
 
 interface TeamMember {
   id: string;
@@ -64,11 +63,14 @@ const tableData: TeamMember[] = [
   },
 ];
 
+const panelStyle = {
+  "--saltSidePanel-width": "250px",
+} as CSSProperties;
+
 const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
-  const { CloseIcon } = useIcon();
-  const { setOpen, setReference, getReferenceProps, panelId } =
+  const { setOpen, setReference, getFloatingProps, getReferenceProps } =
     useSidePanelContext();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
@@ -79,7 +81,7 @@ const SidePanelExample = () => {
 
   const getTriggerProps = (row: TeamMember) =>
     getReferenceProps({
-      "aria-controls": panelId,
+      "aria-controls": getFloatingProps().id as string,
       "aria-label": `Edit details for ${row.name}`,
       onClick: (e: React.MouseEvent<HTMLElement>) => {
         handleRowClick(row, e.currentTarget);
@@ -105,6 +107,7 @@ const SidePanelExample = () => {
               <TR>
                 <TH>Name</TH>
                 <TH>Email</TH>
+                <TH>Phone</TH>
                 <TH>Action</TH>
               </TR>
             </THead>
@@ -113,6 +116,7 @@ const SidePanelExample = () => {
                 <TR key={row.id}>
                   <TD>{row.name}</TD>
                   <TD>{row.email}</TD>
+                  <TD>{row.phone}</TD>
                   <TD>
                     <Button
                       {...getTriggerProps(row)}
@@ -128,19 +132,16 @@ const SidePanelExample = () => {
         </TableContainer>
       </div>
 
-      <SidePanel position="right" aria-labelledby={panelHeadingId}>
-        <StackLayout align="start" gap={3}>
-          <Button
-            style={{ marginLeft: "auto" }}
-            aria-label="Close"
-            appearance="transparent"
-            onClick={() => setOpen(false)}
+      <SidePanel
+        position="right"
+        aria-labelledby={panelHeadingId}
+        style={panelStyle}
+      >
+        {selectedRow && (
+          <SidePanelContent
+            header={<H2 id={panelHeadingId}>Employee Details</H2>}
           >
-            <CloseIcon aria-hidden />
-          </Button>
-          {selectedRow && (
             <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
-              <H2 id={panelHeadingId}>Employee Details</H2>
               <FormField>
                 <FormFieldLabel>Name</FormFieldLabel>
                 <Input defaultValue={selectedRow.name} />
@@ -171,8 +172,8 @@ const SidePanelExample = () => {
                 </Button>
               </FlexLayout>
             </StackLayout>
-          )}
-        </StackLayout>
+          </SidePanelContent>
+        )}
       </SidePanel>
     </FlexLayout>
   );
