@@ -13,6 +13,7 @@ import { bootstrapSaltRepo } from "./bootstrapRepo.js";
 import {
   buildSaltProjectContextId,
   collectSaltProjectContextData,
+  isSaltProjectContextReadyForRepoAwareWork,
   type SaltProjectContextData,
   toSaltProjectContextResult,
 } from "./projectContext.js";
@@ -39,7 +40,7 @@ const SEARCH_AREAS = [
   "changes",
 ] as const;
 const STATUSES = ["stable", "beta", "lab", "deprecated"] as const;
-const VIEWS = ["compact", "full"] as const;
+const VIEWS = ["compact", "full", "agent"] as const;
 const CHANGE_KINDS = [
   "added",
   "changed",
@@ -70,6 +71,12 @@ const CONTEXT_NEXT_TOOL_IDS = [
   "upgrade_salt_ui",
 ] as const;
 
+function normalizeWorkflowView(
+  view: (typeof VIEWS)[number] | undefined,
+): "compact" | "full" {
+  return view === "full" ? "full" : "compact";
+}
+
 type ToolSchema = Record<string, z.ZodType> | z.ZodType;
 
 interface ToolAnnotations {
@@ -94,12 +101,31 @@ export interface ToolDefinition {
 
 export interface ToolExecutionRuntime {
   projectContexts: Map<string, SaltProjectContextData>;
+  lastProjectContextId: string | null;
 }
 
 export function createToolExecutionRuntime(): ToolExecutionRuntime {
   return {
     projectContexts: new Map(),
+    lastProjectContextId: null,
   };
+}
+
+function cacheProjectContext(
+  runtime: ToolExecutionRuntime | undefined,
+  context: SaltProjectContextData,
+): string {
+  const contextId = buildSaltProjectContextId(context.root_dir);
+  if (runtime) {
+    if (context.resolution.status === "resolved") {
+      runtime.projectContexts.set(contextId, context);
+      runtime.lastProjectContextId = contextId;
+    } else {
+      runtime.lastProjectContextId = null;
+    }
+  }
+
+  return contextId;
 }
 
 function resolveProjectContext(
@@ -119,18 +145,30 @@ function resolveProjectContext(
 async function resolveOrCollectProjectContext(
   registry: SaltRegistry,
   runtime: ToolExecutionRuntime | undefined,
-  contextId?: string,
+  options: { contextId?: string; rootDir?: string } = {},
 ): Promise<SaltProjectContextData> {
-  if (contextId) {
-    return resolveProjectContext(runtime, contextId);
+  if (options.contextId) {
+    return resolveProjectContext(runtime, options.contextId);
+  }
+
+  if (options.rootDir) {
+    const context = await collectSaltProjectContextData(registry, {
+      root_dir: options.rootDir,
+    });
+    cacheProjectContext(runtime, context);
+    return context;
+  }
+
+  const lastProjectContextId = runtime?.lastProjectContextId;
+  if (lastProjectContextId && runtime?.projectContexts.size === 1) {
+    const cachedContext = runtime?.projectContexts.get(lastProjectContextId);
+    if (cachedContext && cachedContext.resolution.status === "resolved") {
+      return cachedContext;
+    }
   }
 
   const context = await collectSaltProjectContextData(registry, {});
-  const generatedContextId = buildSaltProjectContextId(context.root_dir);
-  if (runtime) {
-    runtime.projectContexts.set(generatedContextId, context);
-  }
-
+  cacheProjectContext(runtime, context);
   return context;
 }
 
@@ -182,6 +220,14 @@ const TOOL_SUGGESTED_FOLLOW_UP_SCHEMA = z.object({
   workflow: z.enum(PUBLIC_WORKFLOW_TOOL_IDS),
   reason: z.string(),
   args: z.record(z.string(), z.unknown()),
+  follow_up_mode: z
+    .enum([
+      "exact_name",
+      "compare_named",
+      "broad_query",
+      "stop_and_fix_context",
+    ])
+    .optional(),
 });
 
 const TOOL_GUIDE_REFERENCE_SCHEMA = z.object({
@@ -850,6 +896,17 @@ const CONTEXT_POLICY_COMPATIBILITY_SCHEMA = z.object({
 const CONTEXT_RESULT_SCHEMA = z.object({
   context_id: z.string(),
   root_dir: z.string(),
+  resolution: z.object({
+    status: z.enum([
+      "resolved",
+      "fallback",
+      "needs_explicit_root",
+      "mismatch",
+    ]),
+    root_source: z.enum(["explicit_input", "process_cwd"]),
+    quality: z.enum(["ready", "needs_explicit_root"]),
+    reason: z.string().nullable(),
+  }),
   package_json_path: z.string().nullable(),
   environment: z.object({
     os: z.string(),
@@ -1067,7 +1124,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   defineTool<{ root_dir?: string; include_policy_diagnostics?: boolean }>({
     name: "get_salt_project_context",
     description:
-      "Inspect repo context for advanced Salt workflow debugging or explicit context reuse. Detect the local framework, workspace shape, Salt package usage, repo instructions, declared project policy, and likely runtime targets. The main create, review, and migrate workflows can auto-collect this context when context_id is omitted.",
+      "Inspect repo context for advanced Salt workflow debugging or explicit context reuse. Detect the local framework, workspace shape, Salt package usage, repo instructions, declared project policy, and likely runtime targets. The main create, review, migrate, and upgrade workflows can auto-collect this context when context_id is omitted.",
     inputSchema: {
       root_dir: z
         .string()
@@ -1086,10 +1143,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: async (registry, args, runtime) => {
       const context = await collectSaltProjectContextData(registry, args);
-      const contextId = buildSaltProjectContextId(context.root_dir);
-      if (runtime) {
-        runtime.projectContexts.set(contextId, context);
-      }
+      const contextId = cacheProjectContext(runtime, context);
       return toSaltProjectContextResult(context, contextId);
     },
   }),
@@ -1214,7 +1268,12 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     },
     execute: discoverSalt,
   }),
-  defineTool<Parameters<typeof migrateToSalt>[1] & { context_id?: string }>({
+  defineTool<
+    Parameters<typeof migrateToSalt>[1] & {
+      context_id?: string;
+      root_dir?: string;
+    }
+  >({
     name: "migrate_to_salt",
     description:
       "Primary fit for the salt-ds migrate workflow. Use this when the input is non-Salt UI code, external UI, native/custom React UI, or a rough interface description that needs to be translated into Salt primitives, patterns, and migration steps. It returns canonical Salt migration guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
@@ -1269,30 +1328,47 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Optional repo context id returned by get_salt_project_context. If omitted, the MCP collects repo context automatically for the current working directory.",
         ),
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo root to inspect when context_id is not available. Prefer context_id for repeated workflow calls in the same repo.",
+        ),
     },
     outputSchema: TRANSLATE_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: async (registry, args, runtime) => {
-      const { context_id, ...workflowArgs } = args;
+      const { context_id, root_dir, ...workflowArgs } = args;
       const projectContext = await resolveOrCollectProjectContext(
         registry,
         runtime,
-        context_id,
+        { contextId: context_id, rootDir: root_dir },
       );
+      const semanticView = normalizeWorkflowView(workflowArgs.view);
 
       return withTranslateWorkflowGuidance(
         registry,
-        migrateToSalt(registry, workflowArgs),
+        migrateToSalt(registry, {
+          ...workflowArgs,
+          view: semanticView,
+        }),
         {
           source_outline: workflowArgs.source_outline,
-          context_checked: true,
+          context_checked:
+            isSaltProjectContextReadyForRepoAwareWork(projectContext),
           project_policy:
             await loadWorkflowProjectPolicyArtifactForContext(projectContext),
+          view: workflowArgs.view,
         },
       );
     },
   }),
-  defineTool<Parameters<typeof createSaltUi>[1] & { context_id?: string }>({
+  defineTool<
+    Parameters<typeof createSaltUi>[1] & {
+      context_id?: string;
+      root_dir?: string;
+    }
+  >({
     name: "create_salt_ui",
     description:
       "Primary fit for the salt-ds create workflow. Use this for Salt recommendation or side-by-side comparison. If names is present, comparison mode wins; otherwise query drives recommendation mode. It returns canonical Salt guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
@@ -1350,25 +1426,37 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Optional repo context id returned by get_salt_project_context. If omitted, the MCP collects repo context automatically for the current working directory.",
         ),
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo root to inspect when context_id is not available. Prefer context_id for repeated workflow calls in the same repo.",
+        ),
     },
     outputSchema: CHOOSE_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: async (registry, args, runtime) => {
-      const { context_id, ...workflowArgs } = args;
+      const { context_id, root_dir, ...workflowArgs } = args;
       const projectContext = await resolveOrCollectProjectContext(
         registry,
         runtime,
-        context_id,
+        { contextId: context_id, rootDir: root_dir },
       );
+      const semanticView = normalizeWorkflowView(workflowArgs.view);
 
       return withChooseWorkflowGuidance(
         registry,
-        createSaltUi(registry, workflowArgs),
+        createSaltUi(registry, {
+          ...workflowArgs,
+          view: semanticView,
+        }),
         {
           query: workflowArgs.query,
-          context_checked: true,
+          context_checked:
+            isSaltProjectContextReadyForRepoAwareWork(projectContext),
           project_policy:
             await loadWorkflowProjectPolicyArtifactForContext(projectContext),
+          view: workflowArgs.view,
         },
       );
     },
@@ -1482,7 +1570,12 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     },
     execute: getSaltExamples,
   }),
-  defineTool<Parameters<typeof reviewSaltUi>[1] & { context_id?: string }>({
+  defineTool<
+    Parameters<typeof reviewSaltUi>[1] & {
+      context_id?: string;
+      root_dir?: string;
+    }
+  >({
     name: "review_salt_ui",
     description:
       "Primary fit for the salt-ds review workflow, and also used inside upgrade flows. Analyze existing React and Salt code. Validate usage, detect deprecated APIs and patterns, suggest fixes, and surface migration guidance. If context_id is omitted, the MCP collects repo context automatically before continuing.",
@@ -1518,25 +1611,44 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Optional repo context id returned by get_salt_project_context. If omitted, the MCP collects repo context automatically for the current working directory.",
         ),
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo root to inspect when context_id is not available. Prefer context_id for repeated workflow calls in the same repo.",
+        ),
     },
     outputSchema: ANALYZE_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: async (registry, args, runtime) => {
-      const { context_id, ...workflowArgs } = args;
+      const { context_id, root_dir, ...workflowArgs } = args;
       const projectContext = await resolveOrCollectProjectContext(
         registry,
         runtime,
-        context_id,
+        { contextId: context_id, rootDir: root_dir },
       );
+      const semanticView = normalizeWorkflowView(workflowArgs.view);
 
-      return withAnalyzeWorkflowGuidance(reviewSaltUi(registry, workflowArgs), {
-        code: workflowArgs.code,
-        project_policy:
-          await loadWorkflowProjectPolicyArtifactForContext(projectContext),
-      });
+      return withAnalyzeWorkflowGuidance(
+        reviewSaltUi(registry, {
+          ...workflowArgs,
+          view: semanticView,
+        }),
+        {
+          code: workflowArgs.code,
+          project_policy:
+            await loadWorkflowProjectPolicyArtifactForContext(projectContext),
+          view: workflowArgs.view,
+        },
+      );
     },
   }),
-  defineTool<Parameters<typeof upgradeSaltUi>[1]>({
+  defineTool<
+    Parameters<typeof upgradeSaltUi>[1] & {
+      context_id?: string;
+      root_dir?: string;
+    }
+  >({
     name: "upgrade_salt_ui",
     description:
       "Primary fit for the salt-ds upgrade workflow after project context is known. Explain Salt upgrade impact between versions, highlight breaking changes, and suggest the next migration actions.",
@@ -1559,11 +1671,42 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Use full to include the filtered change and deprecation records.",
         ),
+      context_id: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo context id returned by get_salt_project_context. If omitted, the MCP can collect repo context automatically for the current working directory.",
+        ),
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo root to inspect when context_id is not available. Prefer context_id for repeated workflow calls in the same repo.",
+        ),
     },
     outputSchema: COMPARE_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: (registry, args) =>
-      withCompareWorkflowGuidance(upgradeSaltUi(registry, args)),
+    execute: async (registry, args, runtime) => {
+      const { context_id, root_dir, ...workflowArgs } = args;
+      const projectContext = await resolveOrCollectProjectContext(
+        registry,
+        runtime,
+        { contextId: context_id, rootDir: root_dir },
+      );
+      const semanticView = normalizeWorkflowView(workflowArgs.view);
+
+      return withCompareWorkflowGuidance(
+        upgradeSaltUi(registry, {
+          ...workflowArgs,
+          view: semanticView,
+        }),
+        {
+          project_policy:
+            await loadWorkflowProjectPolicyArtifactForContext(projectContext),
+          view: workflowArgs.view,
+        },
+      );
+    },
   }),
 ];
 

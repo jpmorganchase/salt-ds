@@ -857,6 +857,7 @@ export function buildSuggestedFollowUps(
         target_name: targetName,
         max_results: 5,
       },
+      follow_up_mode: "exact_name",
     });
     followUps.push({
       workflow: "get_salt_entity",
@@ -866,6 +867,7 @@ export function buildSuggestedFollowUps(
         name: targetName,
         view: "full",
       },
+      follow_up_mode: "exact_name",
     });
   }
 
@@ -883,6 +885,7 @@ export function buildSuggestedFollowUps(
         include_starter_code: true,
         view: "full",
       },
+      follow_up_mode: "broad_query",
     });
   }
 
@@ -898,6 +901,7 @@ export function buildSuggestedFollowUps(
         ...(input.prefer_stable ? { prefer_stable: input.prefer_stable } : {}),
         view: "full",
       },
+      follow_up_mode: "broad_query",
     });
   }
 

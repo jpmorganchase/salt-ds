@@ -15,6 +15,10 @@ Use this folder by audience:
     - internal quality standard and product lessons from strong public design-system AI offerings
   - [`ai-top-tier-design-system-plan.md`](./ai-top-tier-design-system-plan.md)
     - handoff plan for the top-tier design-system productization pass
+  - [`ai-tooling-hardening-backlog.md`](./ai-tooling-hardening-backlog.md)
+    - detailed implementation backlog for Salt AI reliability, ranking, token efficiency, and host integration hardening
+  - [`live-eval-harness.md`](./live-eval-harness.md)
+    - checked-in live and replay workflow eval harness docs
 
 Consumer-facing guidance lives in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
 Keep current-state maintainer docs in this folder. Delete superseded planning docs once their guidance is folded into the active docs.

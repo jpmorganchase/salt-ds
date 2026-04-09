@@ -3,6 +3,60 @@ import { inspectUrl } from "@salt-ds/runtime-inspector-core";
 import { writeJsonFile } from "../lib/common.js";
 import type { RequiredCliIo } from "../types.js";
 
+type RuntimeInspectResult = Awaited<ReturnType<typeof inspectUrl>>;
+
+function toAgentRuntimeInspectJson(
+  result: RuntimeInspectResult,
+): Record<string, unknown> {
+  return {
+    target: {
+      url: result.target.url,
+    },
+    inspectionMode: result.inspectionMode,
+    page: {
+      title: result.page.title,
+      statusCode: result.page.statusCode,
+      loadState: result.page.loadState,
+      contentType: result.page.contentType,
+    },
+    errors: result.errors.slice(0, 5).map((error) => ({
+      kind: error.kind,
+      level: error.level ?? null,
+      message: error.message,
+    })),
+    accessibility: {
+      roles: result.accessibility.roles.slice(0, 5).map((entry) => ({
+        role: entry.role,
+        name: entry.name ?? null,
+        count: entry.count ?? null,
+      })),
+      landmarks: result.accessibility.landmarks.slice(0, 5).map((entry) => ({
+        role: entry.role,
+        name: entry.name ?? null,
+      })),
+    },
+    layout: {
+      available: result.layout.available,
+      nodeCount: result.layout.nodes.length,
+      hints: result.layout.hints.slice(0, 4),
+      nodes: result.layout.nodes.slice(0, 3).map((node) => ({
+        label: node.label,
+        selector: node.selector,
+        box: node.box,
+        display: node.computedStyle.display,
+        justifyContent: node.computedStyle.justifyContent,
+        alignItems: node.computedStyle.alignItems,
+      })),
+    },
+    notes: result.notes.slice(0, 5),
+    artifacts: result.artifacts.slice(0, 5).map((artifact) => ({
+      kind: artifact.kind,
+      path: artifact.path,
+      label: artifact.label ?? null,
+    })),
+  };
+}
+
 function formatLayoutNode(
   node: Awaited<ReturnType<typeof inspectUrl>>["layout"]["nodes"][number],
 ): string {
@@ -134,24 +188,30 @@ export async function runRuntimeInspectCommand(
   const outputPath = flags.output
     ? path.resolve(io.cwd, flags.output)
     : undefined;
-  const wantsJson = flags.json === "true";
+  const wantsAgentJson = flags["agent-json"] === "true";
+  const wantsJson = flags.json === "true" || wantsAgentJson;
+  const resultWithArtifacts = outputPath
+    ? {
+        ...result,
+        artifacts: [
+          ...result.artifacts,
+          {
+            kind: "json",
+            path: outputPath,
+            label: "runtime-report",
+          },
+        ],
+      }
+    : result;
+  const jsonResult = wantsAgentJson
+    ? toAgentRuntimeInspectJson(resultWithArtifacts)
+    : resultWithArtifacts;
 
   if (outputPath) {
-    const resultWithArtifacts = {
-      ...result,
-      artifacts: [
-        ...result.artifacts,
-        {
-          kind: "json",
-          path: outputPath,
-          label: "runtime-report",
-        },
-      ],
-    };
-    await writeJsonFile(outputPath, resultWithArtifacts);
+    await writeJsonFile(outputPath, jsonResult);
 
     if (wantsJson) {
-      io.writeStdout(`${JSON.stringify(resultWithArtifacts, null, 2)}\n`);
+      io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
     } else {
       io.writeStdout(formatRuntimeInspectReport(resultWithArtifacts));
       io.writeStdout(`Wrote JSON report to ${outputPath}\n`);
@@ -161,7 +221,7 @@ export async function runRuntimeInspectCommand(
   }
 
   if (wantsJson) {
-    io.writeStdout(`${JSON.stringify(result, null, 2)}\n`);
+    io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
   } else {
     io.writeStdout(formatRuntimeInspectReport(result));
   }

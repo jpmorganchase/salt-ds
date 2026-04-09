@@ -31,7 +31,12 @@ data:
         requiredRegions: ["main-body"]
         optionalRegions: ["dashboard-header", "key-metrics", "fixed-panel"]
         buildAround:
-          ["Main body region", "Header region", "Key metrics", "Fixed panel"]
+          [
+            "Dashboard header",
+            "Key metrics",
+            "Fixed controls or filters",
+            "Main analytical body",
+          ]
         preserveConstraints:
           [
             "Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.",
@@ -55,9 +60,11 @@ data:
 
 ## When to use
 
-Use an analytical dashboard to visually represent data that provide insights and analysis of key metrics and performance indicators. Combine various data sources and present information in a concise and interactive format using charts, graphs, tables and other visual elements.
+Use an analytical dashboard when the page needs a top-level dashboard shell with a clear main body region and supporting regions for metrics, controls, and persistent panels.
 
-Using an analytical dashboard helps present complex data in a visually organized and intuitive manner, enabling users to view and analyze trends, patterns and metrics effectively. This is useful where data-driven decision making is crucial, such as:
+Use it to visually present data that provides insight and analysis of key metrics and performance indicators. Combine multiple data sources and present information in a concise, interactive format using charts, graphs, tables, and other visual elements.
+
+Use the pattern when the user needs to:
 
 - Data-intensive environments.
 - Performance tracking.
@@ -65,22 +72,28 @@ Using an analytical dashboard helps present complex data in a visually organized
 - Investment analysis.
 - Client reporting.
 
+## When not to use
+
+- When the page is a simple presentation surface without a dashboard shell or main body region, use a smaller pattern instead.
+- When the content is mostly a single simple metric, use [Metric](../metric).
+- When the content is primarily a simple table or interactive grid, use [Table](/salt/components/table) or [Data grid](/salt/components/ag-grid-theme).
+
 ## How to build
 
 ### Anatomy
 
-Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain an effective visual hierarchy.
+An analytical dashboard is easiest to build when the named regions are explicit and the shell layout is separated from the main content area.
 
-1. **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](/salt/components/card) and should effectively represent the data and provide users with insights at a glance.
-2. **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, dropdown menus, checkboxes and search bars.
-3. **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
-4. **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
+1. **Dashboard header**: The top region introduces the context of the dashboard and can contain branding, status, or summary actions.
+2. **Key metrics**: A compact strip of metric cards or metrics highlights the most important values first.
+3. **Fixed controls or filters**: Persistent controls sit outside the main body so the user can refine the data without losing context.
+4. **Main analytical body**: The main content area contains charts, tables, or other widgets that provide the detailed analysis.
 
 Other features typically found in an analytical dashboard include:
 
-- **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
+- **Data grid or table**: Provide tabular views of data for more detailed analysis. Use a simple table for structured read-only data and Data grid when the table needs interaction.
 - **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
-- **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
+- **Text**: Clearly display information about the data sources, update frequency, and any disclaimers related to data accuracy.
 
 <Diagram
   src="/img/patterns/dashboards/analytical-dashboard/dashboard_anatomy.png"
@@ -106,7 +119,7 @@ The following examples use a desktop screen size of 1440 x 1024px and a large, e
   border
 />
 
-Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
+Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls and main analytical body.
 
 <Diagram
   src="/img/patterns/dashboards/analytical-dashboard/f-pattern_reading_order.png"
@@ -114,22 +127,19 @@ Use the F-shaped pattern to guide the user’s focus through the most important 
   border
 />
 
-When considering the visual hierarchy of an analytical dashboard, ensure the most important widgets on the page draw the user's attention. This varies per dashboard but can include the following:
+When considering the visual hierarchy of an analytical dashboard, ensure the most important widgets on the page draw the user's attention. This usually follows this order:
 
-1. Header
+1. Dashboard header
 2. Key metrics
-3. Charts and graphs
-4. Data grids or tables
+3. Fixed controls or filters
+4. Charts, graphs, tables, or data grids in the main analytical body
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 
-- Use [`Drawer`](/salt/components/drawer) to display an expandable panel
-  overlaid above a region of your dashboard rather than embedded within the
-  existing layout. Users can view additional content without going to a
-  different screen.
-- Persistently displayed panels should use the west region
-  of the border layout instead of a drawer, which can hinder the dashboard user
-  experience by hiding key interactive components.
+- Use [`Drawer`](/salt/components/drawer) for temporary overlays that do not own the dashboard layout.
+- Keep persistently displayed panels in the west region of the border layout so they stay visible without hiding the main analytical body.
+- Use `BorderLayout` for the top-level shell and `GridLayout` for the main analytical body.
+- Keep metrics visually compact and keep the main analytical body focused on analysis, not navigation.
 
 </GuidanceCallout>
 
@@ -208,7 +218,9 @@ From a high-level overview, the main content regions of an analytical dashboard 
 
 ### Main body region
 
-The main body region contains dashboard modules/widgets and their content.
+The main body region contains the dashboard modules, widgets, and detailed analysis content.
+
+It is the region that `GridLayout` should manage. Keep `BorderLayout` for the outer shell and use the main body region for the modules that change with the data.
 
 <Diagram
   src="/img/patterns/dashboards/analytical-dashboard/main_body_region.png"
@@ -230,7 +242,7 @@ The dashboard header sits at the top of the dashboard body, and its content can 
 
 ### Fixed panel
 
-The fixed panel typically contains functionality for user actions that need to be easily accessible. This varies per dashboard but can include components such as filters, toggles and controls. These allow the user to manage the data displayed within the main body or go to multiple dashboard pages.
+The fixed panel typically contains functionality for user actions that need to be easily accessible. This varies per dashboard but can include components such as filters, toggles, and controls. These allow the user to manage the data displayed within the main body or go to multiple dashboard pages.
 
 You can place fixed panels vertically or horizontally within a dashboard, depending on the context.
 

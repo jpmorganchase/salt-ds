@@ -82,6 +82,7 @@ describe("createSaltMcpServer", () => {
       "include_starter_code",
       "view",
       "context_id",
+      "root_dir",
     ]);
     expect(Object.keys(translateTool?.inputSchema ?? {})).toEqual([
       "code",
@@ -94,6 +95,7 @@ describe("createSaltMcpServer", () => {
       "include_starter_code",
       "view",
       "context_id",
+      "root_dir",
     ]);
     expect(Object.keys(translateTool?.inputSchema ?? {})).not.toContain(
       "mockup",
@@ -132,6 +134,9 @@ describe("createSaltMcpServer", () => {
     const migrateTool = TOOL_DEFINITIONS.find(
       (definition) => definition.name === "migrate_to_salt",
     );
+    const upgradeTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "upgrade_salt_ui",
+    );
 
     const chooseSchema = z.object(
       chooseTool?.inputSchema as Record<string, z.ZodType>,
@@ -142,10 +147,19 @@ describe("createSaltMcpServer", () => {
     const migrateSchema = z.object(
       migrateTool?.inputSchema as Record<string, z.ZodType>,
     );
+    const upgradeSchema = z.object(
+      upgradeTool?.inputSchema as Record<string, z.ZodType>,
+    );
 
     expect(
       chooseSchema.safeParse({
         query: "navigate to another route",
+      }).success,
+    ).toBe(true);
+    expect(
+      chooseSchema.safeParse({
+        query: "navigate to another route",
+        view: "agent",
       }).success,
     ).toBe(true);
     expect(
@@ -156,6 +170,19 @@ describe("createSaltMcpServer", () => {
     expect(
       migrateSchema.safeParse({
         query: "toolbar layout",
+      }).success,
+    ).toBe(true);
+    expect(
+      upgradeSchema.safeParse({
+        from_version: "1.0.0",
+        root_dir: "/repo",
+      }).success,
+    ).toBe(true);
+    expect(
+      upgradeSchema.safeParse({
+        from_version: "1.0.0",
+        root_dir: "/repo",
+        view: "agent",
       }).success,
     ).toBe(true);
   });
@@ -171,9 +198,15 @@ describe("createSaltMcpServer", () => {
         workflow: {
           id: "get_salt_project_context",
         },
-        result: {
-          context_id: "repo:example",
-          root_dir: "/repo",
+          result: {
+            context_id: "repo:example",
+            root_dir: "/repo",
+            resolution: {
+              status: "resolved",
+              root_source: "explicit_input",
+              quality: "ready",
+              reason: null,
+            },
           package_json_path: "/repo/package.json",
           environment: {
             os: "win32",
@@ -1007,6 +1040,143 @@ describe("createSaltMcpServer", () => {
     );
   }, 20000);
 
+  it("accepts explicit root_dir on create_salt_ui without a separate context lookup", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-create-root-dir");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "root-dir-create",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "AppLink",
+                  wraps: "Link",
+                  reason: "Use AppLink in this repo.",
+                  import: {
+                    from: "@/AppLink",
+                    name: "AppLink",
+                  },
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = await chooseTool?.execute(
+          registry,
+          {
+            query: "navigate to another route",
+            root_dir: rootDir,
+          },
+          runtime,
+        );
+
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              context_requirement: expect.objectContaining({
+                status: "context_checked",
+              }),
+            }),
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "AppLink",
+                source: "project_policy",
+              }),
+            }),
+          }),
+        );
+        expect(runtime.lastProjectContextId).toBeTruthy();
+      },
+    );
+  }, 20000);
+
+  it("returns a slimmer agent view for create_salt_ui", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-create-agent-view");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "agent-view",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "create a dashboard",
+            root_dir: rootDir,
+            view: "agent",
+          },
+          runtime,
+        )) as {
+          result: Record<string, unknown>;
+          artifacts: Record<string, unknown>;
+        };
+
+        expect(chooseResult.result).not.toHaveProperty("recommended");
+        expect(chooseResult.result).toHaveProperty("final_decision");
+        expect(chooseResult.artifacts).not.toHaveProperty("starter_code");
+        expect(chooseResult.artifacts).not.toHaveProperty("related_guides");
+        expect(chooseResult.artifacts).toHaveProperty("suggested_follow_ups");
+      },
+    );
+  }, 20000);
+
   it("keeps repo context isolated by explicit context_id across multiple repos", async () => {
     await withRegistryDir(
       async (registryDir) => {
@@ -1120,6 +1290,253 @@ describe("createSaltMcpServer", () => {
       },
     );
   }, 30000);
+
+  it("reuses the last explicit project context when context_id is omitted on a follow-up create call", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const rootDir = await createTempDir("salt-mcp-cached-context");
+
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "cached-context",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "CachedLink",
+                  wraps: "Link",
+                  reason: "Use CachedLink in this repo.",
+                  import: {
+                    from: "@/CachedLink",
+                    name: "CachedLink",
+                  },
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        await contextTool?.execute(
+          registry,
+          { root_dir: rootDir },
+          runtime,
+        );
+
+        const chooseResult = await chooseTool?.execute(
+          registry,
+          {
+            query: "navigate to another route",
+          },
+          runtime,
+        );
+
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "CachedLink",
+                source: "project_policy",
+              }),
+            }),
+          }),
+        );
+      },
+    );
+  }, 20000);
+
+  it("does not reuse a prior explicit context after a wrong explicit root_dir", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const goodRoot = await createTempDir("salt-mcp-good-context");
+        const wrongRoot = await createTempDir("salt-mcp-wrong-context");
+        const previousCwd = process.cwd();
+
+        await fs.mkdir(path.join(goodRoot, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(goodRoot, "package.json"),
+          JSON.stringify(
+            {
+              name: "good-context",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(goodRoot, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "GoodLink",
+                  wraps: "Link",
+                  reason: "Use GoodLink in this repo.",
+                  import: {
+                    from: "@/GoodLink",
+                    name: "GoodLink",
+                  },
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        await contextTool?.execute(
+          registry,
+          { root_dir: goodRoot },
+          runtime,
+        );
+
+        process.chdir(wrongRoot);
+        try {
+          const wrongContext = await contextTool?.execute(
+            registry,
+            { root_dir: wrongRoot },
+            runtime,
+          );
+
+          expect(runtime.lastProjectContextId).toBeNull();
+          expect(wrongContext).toEqual(
+            expect.objectContaining({
+              result: expect.objectContaining({
+                resolution: expect.objectContaining({
+                  status: "mismatch",
+                }),
+              }),
+            }),
+          );
+
+          const chooseResult = await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+            },
+            runtime,
+          );
+
+          expect(chooseResult).toEqual(
+            expect.objectContaining({
+              workflow: expect.objectContaining({
+                context_requirement: expect.objectContaining({
+                  status: "context_required",
+                }),
+              }),
+            }),
+          );
+          expect(chooseResult).not.toEqual(
+            expect.objectContaining({
+              result: expect.objectContaining({
+                final_decision: expect.objectContaining({
+                  name: "GoodLink",
+                }),
+              }),
+            }),
+          );
+        } finally {
+          process.chdir(previousCwd);
+        }
+      },
+    );
+  }, 20000);
+
+  it("marks auto-collected create context as unresolved when cwd is not a repo", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const tempRoot = await createTempDir("salt-mcp-unresolved-create");
+        const previousCwd = process.cwd();
+
+        process.chdir(tempRoot);
+        try {
+          const chooseResult = await chooseTool?.execute(
+            registry,
+            {
+              query: "create a simple dashboard",
+            },
+            runtime,
+          );
+
+          expect(chooseResult).toEqual(
+            expect.objectContaining({
+              workflow: expect.objectContaining({
+                context_requirement: expect.objectContaining({
+                  status: "context_required",
+                  suggested_follow_up_tool: "get_salt_project_context",
+                }),
+              }),
+            }),
+          );
+        } finally {
+          process.chdir(previousCwd);
+        }
+      },
+    );
+  }, 20000);
 
   it("keeps the final decision canonical when repo wrapper policy is not actionable", async () => {
     await withRegistryDir(

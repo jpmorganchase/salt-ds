@@ -1,6 +1,6 @@
 ---
 title: Content status
-description: "A content status provides information about content in a container component of an application. It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance."
+description: "A content status communicates loading, empty, warning, error, and success states inside a container component. Use it to keep state messaging attached to the content the user is already working with."
 layout: DetailPattern
 tags:
   - pattern
@@ -22,11 +22,18 @@ data:
 
 ## When to use
 
-Use this pattern in a container component:
+Use this pattern in a container component when the state belongs to the content area itself:
+
 - When content is loading.
-- To share information with users.
-- To let users know there’s an error.
-- When the user has successfully submitted content.
+- When a container has no data to show and you need an empty-state message.
+- To share information, warnings, or errors with users that relate to the current content area.
+- When the user has successfully submitted content or completed an action.
+
+## When not to use
+
+- When the message should reach across the app, use Banner or Toast instead.
+- When the state requires a full workflow interruption or a decision, use Dialog or the owning form pattern instead.
+- When the state is not tied to a container, use inline text or another component instead.
 
 ## How to build
 
@@ -91,7 +98,7 @@ We've used a [spinner](/salt/components/spinner) component to reassure users in 
 
 ## Info message
 
-Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate that message to let users know why they can't see any content.
+Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate an empty-state message and let users know why they can't see any content.
 
 <Diagram
   src="/img/patterns/content-status/content-status-info.png"

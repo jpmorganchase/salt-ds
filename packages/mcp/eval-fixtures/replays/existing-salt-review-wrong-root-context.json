@@ -1,0 +1,141 @@
+{
+  "scenario": {
+    "id": "existing-salt-review-wrong-root-context",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "review", "context"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-review-wrong-root",
+      "description": "Saved replay fixture for a review transcript that should have stopped for an explicit root_dir."
+    },
+    "task": {
+      "workflow": "review",
+      "prompt": "Use salt-ds to review this toolbar file. The host started from the wrong repo root, so insist on an explicit root before proceeding."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "code": "import { Button, FlexLayout } from \"@salt-ds/core\";\n\nexport function ToolbarAction() {\n  return (\n    <FlexLayout align=\"center\" gap={1}>\n      <Button href=\"/orders\">Orders</Button>\n      <Button appearance=\"secondary\">Refresh</Button>\n    </FlexLayout>\n  );\n}",
+        "framework": "react",
+        "package_version": "2.0.0"
+      },
+      "cli": {
+        "argv": [
+          "review",
+          "packages/mcp/eval-fixtures/replays/existing-salt-review-wrong-root/src/ToolbarAction.tsx"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "review_salt_ui"
+      },
+      "summary_first": true,
+      "require_verify": true,
+      "required_fragments": [
+        "needs_explicit_root",
+        "retry_with.root_dir"
+      ],
+      "banned_fragments": [
+        "context_checked"
+      ]
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-review-wrong-root-context",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": {
+        "id": "review_salt_ui",
+        "transport_used": "mcp",
+        "confidence": {
+          "level": "medium",
+          "reasons": ["Loaded from transcript replay."]
+        },
+        "readiness": {
+          "status": "starter_needs_attention",
+          "implementation_ready": false,
+          "reason": "Saved replay fixture."
+        },
+        "contextRequirement": {
+          "status": "context_checked",
+          "repoSpecificEditsReady": true,
+          "reason": "Saved replay fixture.",
+          "satisfiedBy": "salt-ds info"
+        },
+        "projectConventionsCheck": null,
+        "provenance": {
+          "canonical_source_urls": ["/salt/components/button/usage"],
+          "related_guide_urls": [],
+          "project_conventions_contract": "project_conventions_v1"
+        }
+      },
+      "result": {
+        "summary": {
+          "status": "needs_attention",
+          "filesNeedingAttention": 1,
+          "cleanFiles": 0,
+          "runtimeIssues": 0,
+          "runtimeMode": null,
+          "fixCandidateCount": 1,
+          "deterministicFixCandidateCount": 1,
+          "manualReviewFixCandidateCount": 0,
+          "nextStep": "Rerun salt-ds review on the touched toolbar file."
+        },
+        "ide_summary": {
+          "recommended_direction": "Start over from the wrong-root context.",
+          "bounded_scope": [
+            "Context should have been marked unsafe before any repo-aware edit planning."
+          ],
+          "starter_plan": [
+            "Call get_salt_project_context again with an explicit root_dir."
+          ],
+          "verify": [
+            "Rerun the review after the context root is corrected."
+          ]
+        },
+        "sourceValidation": {
+          "files": [
+            {
+              "relativePath": "src/ToolbarAction.tsx",
+              "issues": [
+                {
+                  "id": "component-choice.navigation",
+                  "summary": "Toolbar action should use Link."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "transcript": [
+      "Use salt-ds to review this toolbar file. The host started from the wrong repo root, so insist on an explicit root before proceeding.",
+      "The project context fallback resolved to the user home directory instead of the workspace.",
+      "The workflow continued anyway even though repo-aware edits were not safe."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-review-wrong-root"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

@@ -25,6 +25,7 @@
     "test": "vitest",
     "eval:deterministic": "vitest run packages/mcp/src/__tests__/agenticEvals.spec.ts packages/mcp/src/__tests__/createServer.spec.ts packages/mcp/src/__tests__/hostAttachmentEval.spec.ts",
     "eval:live": "yarn workspace @salt-ds/mcp build && node packages/mcp/scripts/runWorkflowEval.mjs",
+    "eval:replay": "yarn workspace @salt-ds/mcp build && node packages/mcp/scripts/runWorkflowEvalReplay.mjs",
     "eval:live:test": "vitest run packages/mcp/src/__tests__/liveEvalHarness.spec.ts",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",

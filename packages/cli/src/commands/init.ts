@@ -41,6 +41,47 @@ interface InitWorkflowResult {
   notes: string[];
 }
 
+function toAgentInitJson(result: InitWorkflowResult): Record<string, unknown> {
+  return {
+    workflow: result.workflow,
+    rootDir: result.rootDir,
+    projectName: result.projectName,
+    context: {
+      rootDir: result.context.rootDir,
+      workspace: {
+        kind: result.context.workspace.kind,
+        workspaceRoot: result.context.workspace.workspaceRoot,
+      },
+      policy: {
+        mode: result.context.policy.mode,
+        teamConfigPath: result.context.policy.teamConfigPath,
+        stackConfigPath: result.context.policy.stackConfigPath,
+      },
+      saltPackages: result.context.salt.packages.slice(0, 5).map((pkg) => ({
+        name: pkg.name,
+        version: pkg.version,
+      })),
+      repoInstructions: {
+        filename: result.context.repoInstructions.filename,
+        path: result.context.repoInstructions.path,
+      },
+    },
+    policy: {
+      path: result.policy.path,
+      action: result.policy.action,
+      mode: result.policy.mode,
+    },
+    stack: {
+      path: result.stack.path,
+      action: result.stack.action,
+      conventionsPackSource: result.stack.conventionsPackSource,
+    },
+    repoInstructions: result.repoInstructions,
+    summary: result.summary,
+    notes: result.notes.slice(0, 5),
+  };
+}
+
 function toPosix(inputPath: string): string {
   return inputPath.split(path.sep).join("/");
 }
@@ -648,12 +689,14 @@ export async function runInitCommand(
     const outputPath = flags.output
       ? path.resolve(io.cwd, flags.output)
       : undefined;
+    const wantsAgentJson = flags["agent-json"] === "true";
+    const jsonResult = wantsAgentJson ? toAgentInitJson(result) : result;
     if (outputPath) {
-      await writeJsonFile(outputPath, result);
+      await writeJsonFile(outputPath, jsonResult);
     }
 
-    if (flags.json === "true") {
-      io.writeStdout(`${JSON.stringify(result, null, 2)}\n`);
+    if (flags.json === "true" || wantsAgentJson) {
+      io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
     } else {
       io.writeStdout(formatInitReport(result));
       if (outputPath) {
