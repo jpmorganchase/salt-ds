@@ -58,7 +58,24 @@ export interface WorkflowEvalScenario {
     final_choice?: string | null;
     required_fragments?: string[];
     banned_fragments?: string[];
+    metrics?: {
+      max_transcript_bytes?: number;
+      max_workflow_result_bytes?: number;
+      max_logs_bytes?: number;
+      max_payload_bytes?: number;
+      max_duration_ms?: number;
+    };
   };
+}
+
+export interface WorkflowEvalMetrics {
+  transcript_line_count: number;
+  transcript_bytes: number;
+  workflow_result_bytes: number;
+  logs_bytes: number;
+  payload_bytes: number;
+  approx_prompt_tokens: number;
+  duration_ms: number;
 }
 
 export interface WorkflowEvalTrace {
@@ -72,6 +89,7 @@ export interface WorkflowEvalTrace {
   }>;
   workflow_result: unknown | null;
   transcript: string[];
+  metrics: WorkflowEvalMetrics;
   artifacts: {
     files?: string[];
     logs?: string[];
@@ -115,6 +133,7 @@ export interface WorkflowEvalReport {
   requested_runner_ids: string[];
   requested_scenario_ids: string[];
   passed: boolean;
+  metrics: WorkflowEvalMetrics;
   entries: WorkflowEvalReportEntry[];
 }
 
@@ -175,6 +194,86 @@ function uniqueStrings(values: Array<string | null | undefined>): string[] {
 function compactStrings(values: Array<string | null | undefined>): string[] {
   return values.filter(
     (value): value is string => typeof value === "string" && value.length > 0,
+  );
+}
+
+function byteLength(value: string): number {
+  return Buffer.byteLength(value, "utf8");
+}
+
+function estimatePromptTokensFromBytes(bytes: number): number {
+  return Math.max(1, Math.ceil(bytes / 4));
+}
+
+function buildWorkflowEvalMetrics(input: {
+  transcript: string[];
+  workflow_result: unknown | null;
+  logs?: string[];
+  duration_ms: number;
+}): WorkflowEvalMetrics {
+  const transcriptText = input.transcript.join("\n");
+  const workflowResultText = serializeTraceResult(input.workflow_result);
+  const logsText = (input.logs ?? []).join("\n");
+  const transcriptBytes = byteLength(transcriptText);
+  const workflowResultBytes = byteLength(workflowResultText);
+  const logsBytes = byteLength(logsText);
+  const payloadBytes = transcriptBytes + workflowResultBytes + logsBytes;
+
+  return {
+    transcript_line_count: input.transcript.length,
+    transcript_bytes: transcriptBytes,
+    workflow_result_bytes: workflowResultBytes,
+    logs_bytes: logsBytes,
+    payload_bytes: payloadBytes,
+    approx_prompt_tokens: estimatePromptTokensFromBytes(
+      transcriptBytes + logsBytes,
+    ),
+    duration_ms: Math.max(0, Math.round(input.duration_ms)),
+  };
+}
+
+function attachWorkflowEvalMetrics<
+  T extends Omit<WorkflowEvalTrace, "metrics">,
+>(
+  trace: T,
+  startedAtMs: number,
+): T & { metrics: WorkflowEvalMetrics } {
+  return {
+    ...trace,
+    metrics: buildWorkflowEvalMetrics({
+      transcript: trace.transcript,
+      workflow_result: trace.workflow_result,
+      logs: trace.artifacts.logs ?? [],
+      duration_ms: Date.now() - startedAtMs,
+    }),
+  };
+}
+
+function aggregateWorkflowEvalMetrics(
+  traces: WorkflowEvalTrace[],
+): WorkflowEvalMetrics {
+  return traces.reduce<WorkflowEvalMetrics>(
+    (summary, trace) => ({
+      transcript_line_count:
+        summary.transcript_line_count + trace.metrics.transcript_line_count,
+      transcript_bytes: summary.transcript_bytes + trace.metrics.transcript_bytes,
+      workflow_result_bytes:
+        summary.workflow_result_bytes + trace.metrics.workflow_result_bytes,
+      logs_bytes: summary.logs_bytes + trace.metrics.logs_bytes,
+      payload_bytes: summary.payload_bytes + trace.metrics.payload_bytes,
+      approx_prompt_tokens:
+        summary.approx_prompt_tokens + trace.metrics.approx_prompt_tokens,
+      duration_ms: summary.duration_ms + trace.metrics.duration_ms,
+    }),
+    {
+      transcript_line_count: 0,
+      transcript_bytes: 0,
+      workflow_result_bytes: 0,
+      logs_bytes: 0,
+      payload_bytes: 0,
+      approx_prompt_tokens: 0,
+      duration_ms: 0,
+    },
   );
 }
 
@@ -1030,6 +1129,51 @@ export function judgeWorkflowEvalScenario(
     }
   }
 
+  if (scenario.expected.metrics) {
+    const metrics = trace.metrics;
+    const limits = scenario.expected.metrics;
+    if (
+      typeof limits.max_transcript_bytes === "number" &&
+      metrics.transcript_bytes > limits.max_transcript_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the transcript byte budget ${limits.max_transcript_bytes}.`,
+      );
+    }
+    if (
+      typeof limits.max_workflow_result_bytes === "number" &&
+      metrics.workflow_result_bytes > limits.max_workflow_result_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the workflow result byte budget ${limits.max_workflow_result_bytes}.`,
+      );
+    }
+    if (
+      typeof limits.max_logs_bytes === "number" &&
+      metrics.logs_bytes > limits.max_logs_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the logs byte budget ${limits.max_logs_bytes}.`,
+      );
+    }
+    if (
+      typeof limits.max_payload_bytes === "number" &&
+      metrics.payload_bytes > limits.max_payload_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the payload byte budget ${limits.max_payload_bytes}.`,
+      );
+    }
+    if (
+      typeof limits.max_duration_ms === "number" &&
+      metrics.duration_ms > limits.max_duration_ms
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the duration budget ${limits.max_duration_ms}ms.`,
+      );
+    }
+  }
+
   return {
     status: failures.length > 0 ? "failed" : "passed",
     reasons:
@@ -1046,6 +1190,7 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
   transport: "cli",
   supports: (scenario) => scenario.capabilities.cli === true,
   run: async (scenario, context) => {
+    const startedAt = Date.now();
     try {
       const executable = await resolveExecutableScript(
         "cli",
@@ -1070,7 +1215,8 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
       );
 
       if (result.exit_code !== 0 && result.exit_code !== 2) {
-        return {
+        return attachWorkflowEvalMetrics(
+          {
           scenario_id: scenario.id,
           runner_id: "cli-local",
           status: "failed",
@@ -1087,12 +1233,15 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
             files: [scenario.fixture.root_dir],
             logs: [result.stderr.trim(), result.stdout.trim()].filter(Boolean),
           },
-        };
+          },
+          startedAt,
+        );
       }
 
       const raw = safeJsonParse(result.stdout);
       const workflowResult = await normalizeCliWorkflowResult(scenario, raw);
-      return {
+      return attachWorkflowEvalMetrics(
+        {
         scenario_id: scenario.id,
         runner_id: "cli-local",
         status: "passed",
@@ -1115,9 +1264,12 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
             result.stderr.trim(),
           ]),
         },
-      };
+        },
+        startedAt,
+      );
     } catch (error) {
-      return {
+      return attachWorkflowEvalMetrics(
+        {
         scenario_id: scenario.id,
         runner_id: "cli-local",
         status: "failed",
@@ -1131,17 +1283,19 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
                 : "CLI runner failed unexpectedly.",
           },
         ],
-        workflow_result: null,
-        transcript: [scenario.task.prompt, "CLI runner failed."],
-        artifacts: {
-          files: [scenario.fixture.root_dir],
-          logs: [
+          workflow_result: null,
+          transcript: [scenario.task.prompt, "CLI runner failed."],
+          artifacts: {
+            files: [scenario.fixture.root_dir],
+            logs: [
             error instanceof Error
               ? (error.stack ?? error.message)
               : String(error),
           ],
         },
-      };
+        },
+        startedAt,
+      );
     }
   },
 };
@@ -1151,6 +1305,7 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
   transport: "mcp",
   supports: (scenario) => scenario.capabilities.mcp === true,
   run: async (scenario, context) => {
+    const startedAt = Date.now();
     const attemptLogs: string[] = [];
     const transportTrace: WorkflowEvalTrace["transport_trace"] = [];
     const maxAttempts = 2;
@@ -1256,7 +1411,8 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
           detail: `Executed ${toWorkflowToolId(scenario.task.workflow)} through the MCP stdio protocol.`,
         });
 
-        return {
+        return attachWorkflowEvalMetrics(
+          {
           scenario_id: scenario.id,
           runner_id: "mcp-local",
           status: "passed",
@@ -1273,7 +1429,9 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
               ...stderrLogs.filter((entry) => entry.trim().length > 0),
             ]),
           },
-        };
+          },
+          startedAt,
+        );
       } finally {
         if (client) {
           await client.close().catch(() => undefined);
@@ -1292,7 +1450,8 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
             ? `Recovered after MCP startup retry ${attempt - 1} for ${scenario.id}.`
             : null;
 
-        return {
+        return attachWorkflowEvalMetrics(
+          {
           ...trace,
           transport_trace: retryDetail
             ? [
@@ -1312,7 +1471,9 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
               ...attemptLogs,
             ]),
           },
-        };
+          },
+          startedAt,
+        );
       } catch (error) {
         const detail =
           error instanceof Error
@@ -1334,18 +1495,21 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
       }
     }
 
-    return {
-      scenario_id: scenario.id,
-      runner_id: "mcp-local",
-      status: "failed",
-      transport_trace: transportTrace,
-      workflow_result: null,
+        return attachWorkflowEvalMetrics(
+          {
+          scenario_id: scenario.id,
+          runner_id: "mcp-local",
+          status: "failed",
+          transport_trace: transportTrace,
+          workflow_result: null,
       transcript: [scenario.task.prompt, "MCP runner failed."],
-      artifacts: {
-        files: [scenario.fixture.root_dir],
-        logs: attemptLogs,
-      },
-    };
+        artifacts: {
+          files: [scenario.fixture.root_dir],
+          logs: attemptLogs,
+        },
+        },
+          startedAt,
+        );
   },
 };
 
@@ -1384,12 +1548,13 @@ export async function runWorkflowEvalScenario(
     context: WorkflowEvalRunnerContext;
   },
 ): Promise<WorkflowEvalTrace> {
+  const startedAt = Date.now();
   const runners = options.runners ?? WORKFLOW_LOCAL_EVAL_RUNNERS;
   const enabledTransports = new Set(
     options.enabled_transports ?? ["mcp", "cli"],
   );
   const orderedTransports = orderScenarioTransports(scenario);
-  const combinedTrace: WorkflowEvalTrace = {
+  const combinedTrace: Omit<WorkflowEvalTrace, "metrics"> = {
     scenario_id: scenario.id,
     runner_id: "eval-harness",
     status: "failed",
@@ -1433,10 +1598,13 @@ export async function runWorkflowEvalScenario(
     combinedTrace.workflow_result = trace.workflow_result;
 
     if (trace.status === "passed") {
-      return {
+      return attachWorkflowEvalMetrics(
+        {
         ...combinedTrace,
         status: "passed",
-      };
+        },
+        startedAt,
+      );
     }
   }
 
@@ -1446,7 +1614,7 @@ export async function runWorkflowEvalScenario(
     );
   }
 
-  return combinedTrace;
+  return attachWorkflowEvalMetrics(combinedTrace, startedAt);
 }
 
 export async function runWorkflowEvalScenarios(
@@ -1479,6 +1647,7 @@ export async function runWorkflowEvalScenarios(
     ),
     requested_scenario_ids: scenarios.map((scenario) => scenario.id),
     passed: entries.every((entry) => entry.judgment.status === "passed"),
+    metrics: aggregateWorkflowEvalMetrics(entries.map((entry) => entry.trace)),
     entries,
   };
 }

@@ -399,6 +399,284 @@ describe("registry integration", () => {
     });
   });
 
+  it("extracts explicit usage boundaries for Table, Data grid, and Chart", () => {
+    const table = registry.components.find(
+      (component) => component.name === "Table",
+    );
+    const dataGrid = registry.components.find(
+      (component) => component.name === "Data grid",
+    );
+    const chart = registry.components.find(
+      (component) => component.name === "Chart",
+    );
+
+    expect(table?.summary).toContain("simple, structured tabular data");
+    expect(table?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("simple data in a structured, tabular format"),
+      ]),
+    );
+    expect(table?.when_not_to_use).toEqual(
+      expect.arrayContaining([expect.stringContaining("Data grid")]),
+    );
+
+    expect(dataGrid?.summary).toContain("complex or high-volume data");
+    expect(dataGrid?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("complex or high-volume data"),
+      ]),
+    );
+    expect(dataGrid?.when_not_to_use).toEqual(
+      expect.arrayContaining([expect.stringContaining("Table")]),
+    );
+
+    expect(chart?.summary).toContain("Highcharts-backed visualization surface");
+    expect(chart?.when_to_use).toEqual(
+      expect.arrayContaining([expect.stringContaining("visualize trends")]),
+    );
+    expect(chart?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("inspect exact values"),
+        expect.stringContaining("edit, filter, or select rows"),
+      ]),
+    );
+  });
+
+  it("extracts explicit usage guidance for Search, Button bar, and Forms", () => {
+    const searchPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Search",
+    );
+    const buttonBarPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Button bar",
+    );
+    const formsPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Forms",
+    );
+
+    expect(searchPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Locate information in applications with large amounts of data",
+        ),
+        expect.stringContaining("Look through a catalog of items"),
+        expect.stringContaining("Navigate to a page or resource"),
+      ]),
+    );
+    expect(searchPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("link, button, or navigation item"),
+        expect.stringContaining("filtering a visible data set in place"),
+        expect.stringContaining("small, fixed set of options"),
+      ]),
+    );
+
+    expect(buttonBarPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Navigating to previous or next steps"),
+        expect.stringContaining("Submitting a form"),
+        expect.stringContaining("Acknowledging or canceling changes"),
+      ]),
+    );
+    expect(buttonBarPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("toolbar or another action surface"),
+        expect.stringContaining("single primary action"),
+        expect.stringContaining("navigation rather than task-completion actions"),
+      ]),
+    );
+
+    expect(formsPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("enter, edit, or confirm structured information"),
+        expect.stringContaining("labels, helper text, and validation"),
+        expect.stringContaining("clear action area at the end of the form"),
+      ]),
+    );
+    expect(formsPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("When the task is only a single action"),
+        expect.stringContaining("dashboard, table, or Data grid"),
+        expect.stringContaining("short, bounded decision"),
+        expect.stringContaining("Dialog or smaller overlay pattern"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Preferences dialog and Announcement dialog", () => {
+    const preferencesDialogPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Preferences dialog",
+    );
+    const announcementDialogPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Announcement dialog",
+    );
+
+    expect(preferencesDialogPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("centralize application or window settings"),
+        expect.stringContaining("navigate between related settings panels"),
+        expect.stringContaining("relevant settings panel"),
+        expect.stringContaining("apply/cancel action area"),
+      ]),
+    );
+    expect(preferencesDialogPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single, short confirmation or alert"),
+        expect.stringContaining("page-based settings surface"),
+        expect.stringContaining("simpler form or overlay pattern"),
+      ]),
+    );
+
+    expect(announcementDialogPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("new product features or the highlights of a recent release"),
+        expect.stringContaining("follow-up action"),
+        expect.stringContaining("modal interruption"),
+        expect.stringContaining("concise announcement or informational notice"),
+      ]),
+    );
+    expect(announcementDialogPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Preferences dialog"),
+        expect.stringContaining("Toast or Banner"),
+        expect.stringContaining("page section or card"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Content status", () => {
+    const contentStatusPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Content status",
+    );
+
+    expect(contentStatusPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("content is loading"),
+        expect.stringContaining("empty-state message"),
+        expect.stringContaining("information, warnings, or errors"),
+        expect.stringContaining("successfully submitted content or completed an action"),
+      ]),
+    );
+    expect(contentStatusPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("reach across the app"),
+        expect.stringContaining("full workflow interruption"),
+        expect.stringContaining("inline text or another component"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for List filtering", () => {
+    const listFilteringPattern = registry.patterns.find(
+      (pattern) => pattern.name === "List filtering",
+    );
+
+    expect(listFilteringPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Use filtering when you have a lengthy list that users have to scroll to view all available options",
+        ),
+        expect.stringContaining(
+          "pattern typically comprises input and list based components",
+        ),
+      ]),
+    );
+    expect(listFilteringPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "search across broader content or pages",
+        ),
+        expect.stringContaining(
+          "dashboard or table shell",
+        ),
+        expect.stringContaining("Dropdown or another selection control"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for List builder", () => {
+    const listBuilderPattern = registry.patterns.find(
+      (pattern) => pattern.name === "List builder",
+    );
+
+    expect(listBuilderPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Use this pattern when users need to customize a list from a selection of options"),
+        expect.stringContaining("distinguish selected items from a larger list of available items"),
+        expect.stringContaining("two lists side-by-side"),
+      ]),
+    );
+    expect(listBuilderPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single selection"),
+        expect.stringContaining("List filtering"),
+        expect.stringContaining("simple reorderable list"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Wizard", () => {
+    const wizardPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Wizard",
+    );
+
+    expect(wizardPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("guide users through a series of steps or tasks in a specific, linear order"),
+        expect.stringContaining("Users must complete each step in order before moving on to the next"),
+      ]),
+    );
+    expect(wizardPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single form or short dialog"),
+        expect.stringContaining("Tabs or Vertical navigation"),
+        expect.stringContaining("dashboard, table, or list-based pattern"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Header block", () => {
+    const headerBlockPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Header block",
+    );
+
+    expect(headerBlockPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Display a combination of headings, pre-headers and descriptions within container components such as Dialog, Drawer and Overlay"),
+        expect.stringContaining("Maintain a visually consistent layout and presentation for headers"),
+        expect.stringContaining("Display headings with status icons"),
+      ]),
+    );
+    expect(headerBlockPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("App header"),
+        expect.stringContaining("Navigation or Vertical navigation"),
+        expect.stringContaining("Heading or Text"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Navigation", () => {
+    const navigationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Navigation",
+    );
+
+    expect(navigationPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Display navigation in websites or applications with two or more pages"),
+        expect.stringContaining("content hierarchy and help users orient themselves"),
+        expect.stringContaining("Simplify your hierarchy"),
+        expect.stringContaining("Label effectively"),
+      ]),
+    );
+    expect(navigationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Forms, Wizard, or Dialog"),
+        expect.stringContaining("Tabs or segmented controls"),
+        expect.stringContaining("Button bar or toolbar"),
+      ]),
+    );
+  });
+
   it("preserves canonical scaffold metadata for the priority patterns", () => {
     const metricPattern = registry.patterns.find(
       (pattern) => pattern.name === "Metric",
@@ -419,8 +697,9 @@ describe("registry integration", () => {
         required_regions: [],
         optional_regions: ["metric-supporting-context"],
         build_around: expect.arrayContaining([
+          "Metric title",
           "Metric value",
-          "Subtitles and subvalues",
+          "Metric supporting context",
         ]),
         preserve_constraints: expect.arrayContaining([
           expect.stringContaining("Never leave the user guessing"),
@@ -441,6 +720,18 @@ describe("registry integration", () => {
         expect.stringContaining("Portfolio value"),
       ]),
     });
+    expect(metricPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single key measurement"),
+        expect.stringContaining("dashboard building block"),
+      ]),
+    );
+    expect(metricPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("full dashboard shell"),
+        expect.stringContaining("charts or tables"),
+      ]),
+    );
     expect(appHeaderPattern?.starter_scaffold).toMatchObject({
       fidelity: "hybrid",
       semantics: {
@@ -468,6 +759,20 @@ describe("registry integration", () => {
       ]),
       jsx_lines: expect.arrayContaining([expect.stringContaining("<header>")]),
     });
+    expect(appHeaderPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("top-level, globally persistent shell element"),
+        expect.stringContaining("persistent branding area"),
+        expect.stringContaining("application-wide navigation or utility actions"),
+      ]),
+    );
+    expect(appHeaderPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("not globally persistent"),
+        expect.stringContaining("multiple levels"),
+        expect.stringContaining("brand lockup"),
+      ]),
+    );
     expect(analyticalDashboardPattern?.starter_scaffold).toMatchObject({
       fidelity: "hybrid",
       semantics: {
@@ -478,16 +783,32 @@ describe("registry integration", () => {
           "fixed-panel",
         ]),
         build_around: expect.arrayContaining([
-          "Main body region",
-          "Header region",
+          "Dashboard header",
           "Key metrics",
-          "Fixed panel",
+          "Fixed controls or filters",
+          "Main analytical body",
         ]),
       },
       source_urls: expect.arrayContaining([
         "/salt/patterns/analytical-dashboard",
       ]),
     });
+    expect(analyticalDashboardPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("top-level dashboard shell"),
+        expect.stringContaining("charts, graphs, tables, and other visual elements"),
+        expect.stringContaining("Data-intensive environments"),
+        expect.stringContaining("Performance tracking"),
+      ]),
+    );
+    expect(analyticalDashboardPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("simple presentation surface"),
+        expect.stringContaining("Metric"),
+        expect.stringContaining("Table"),
+        expect.stringContaining("Data grid"),
+      ]),
+    );
     expect(
       analyticalDashboardPattern?.starter_scaffold?.template,
     ).toMatchObject({
@@ -537,6 +858,20 @@ describe("registry integration", () => {
         "/salt/patterns/vertical-navigation",
       ]),
     });
+    expect(verticalNavigationPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("persistent navigation pane"),
+        expect.stringContaining("multiple top-level categories"),
+        expect.stringContaining("information architecture is complex"),
+      ]),
+    );
+    expect(verticalNavigationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("small number of top-level destinations"),
+        expect.stringContaining("secondary or page-local"),
+        expect.stringContaining("modal or task-oriented"),
+      ]),
+    );
   });
 
   it("adds route-slug aliases to built pattern records", () => {

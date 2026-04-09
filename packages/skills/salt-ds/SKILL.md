@@ -26,8 +26,10 @@ Keep the product story on one workflow surface: `init`, `create`, `review`, `mig
 ## Project Context First
 
 - Prefer MCP project context when Salt MCP is available.
+- If the host already knows the active workspace path, pass it as `root_dir` on `get_salt_project_context` or the repo-aware workflow call instead of relying on MCP server cwd inference.
 - Use `salt-ds info --json` as the CLI equivalent when MCP is blocked.
 - Treat repo context as the first pass for framework, package, import, runtime-target, and policy detection.
+- If MCP project context returns `resolution.status = needs_explicit_root` or `mismatch`, or it resolves a root without `package.json` in a repo that should have one, stop and retry with explicit `root_dir` or reuse a known `context_id`.
 - Skip this only for clearly Salt-agnostic exploration where repo shape does not affect the answer.
 
 ## Fast Reference Routing

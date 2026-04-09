@@ -48,24 +48,25 @@ Use this order unless the task is explicitly narrower:
 2. If Salt MCP is unavailable, keep the same workflow and let the environment fall back to the Salt CLI.
 3. Do not select Salt components, patterns, props, tokens, plans, or code until the canonical Salt step succeeds through MCP or CLI.
 4. If both MCP and CLI fail, resolve the blocker or ask the user before proceeding. Do not silently skip the canonical Salt step.
-5. When MCP transport is used, let `create_salt_ui`, `review_salt_ui`, and `migrate_to_salt` auto-collect repo context by default. Use `get_salt_project_context` for repo diagnostics or when a host wants to reuse explicit context across multiple workflow calls.
-6. If both `.salt/team.json` and `.salt/stack.json` are missing, keep the first result canonical-only and recommend bootstrap only when durable repo policy or the managed repo instruction block would materially improve future Salt answers.
-7. When CLI transport is used, start from `salt-ds info --json` only when the workflow needs explicit repo diagnostics or context inspection.
-8. If Salt-managed repo instructions or host adapter files may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks instead of hand-rewriting them.
-9. Keep the public CLI story workflow-first: `salt-ds init`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, `salt-ds upgrade`. Use `salt-ds init --create-stack --conventions-pack [<package[#export]>]` only when a selected repo needs starter stack scaffolding for a shared conventions pack.
-10. Read workflow `confidence` and `raiseConfidence` before deciding whether to edit, ask follow-up questions, or add runtime evidence.
-11. Use structured `fixCandidates` from `salt-ds review --json` when the agent should apply deterministic remediation; read `fixCandidates` before editing, prefer deterministic candidates first, and rerun `salt-ds review` after edits.
-12. When `salt-ds migrate --json` returns a familiarity contract, migration checkpoints, delta categories, and `migrationScope`, use them to preserve the important experience anchors while still moving the result toward canonical Salt, and answer `migrationScope.questions` before the first migration scaffold is treated as final.
-13. When a saved migration report is available, use `salt-ds review --url <url> --migration-report <path>` to verify preserved intent against the migrated result.
-14. Keep `salt-ds doctor` and `salt-ds runtime inspect` in the runtime-evidence layer, not as the default workflow surface.
-15. Use `salt-ds review <path> --url <url>` when source validation and runtime evidence should stay in the same workflow pass.
-16. Use `salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup, screenshot notes, or a rough design outline that should be turned into structured regions, actions, states, and notes before translation.
-17. If mockups or screenshots are available as raw attachments, normalize them into the published `migrate_visual_evidence_v1` contract or an equivalent `source_outline` payload before the canonical Salt migrate step runs.
-18. Do not send raw screenshot or mockup attachments directly to Salt MCP. MCP stays on structured migrate inputs until raw attachment support is explicitly added.
-19. When CLI transport uses `--mockup` or `--screenshot`, require a configured visual adapter first. If the adapter is missing or returns weak output, fail closed to `--source-outline` instead of guessing.
-20. Use `salt-ds migrate <query> --url <url>` when migration scoping needs current landmarks, action hierarchy, structure, or state visibility from the running experience.
-21. Use both `--source-outline` and `--url` together when the migration needs to reconcile mockup-style intent with the current live UI before coding starts.
-22. Do not add a second manual CLI vocabulary for canonical lookup. Keep the restricted-environment story on the same workflow commands.
+5. When MCP transport is used, let `create_salt_ui`, `review_salt_ui`, and `migrate_to_salt` auto-collect repo context by default only when the MCP server cwd is already the active repo. If the host knows the workspace path, pass it as `root_dir` on the workflow tool or on `get_salt_project_context`, then reuse the returned `context_id` across follow-up calls.
+6. If MCP project context returns `resolution.status = needs_explicit_root` or `mismatch`, or resolves a root without the expected repo manifest, stop and retry with explicit `root_dir` instead of continuing with repo-specific guidance.
+7. If both `.salt/team.json` and `.salt/stack.json` are missing, keep the first result canonical-only and recommend bootstrap only when durable repo policy or the managed repo instruction block would materially improve future Salt answers.
+8. When CLI transport is used, start from `salt-ds info --json` only when the workflow needs explicit repo diagnostics or context inspection.
+9. If Salt-managed repo instructions or host adapter files may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks instead of hand-rewriting them.
+10. Keep the public CLI story workflow-first: `salt-ds init`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, `salt-ds upgrade`. Use `salt-ds init --create-stack --conventions-pack [<package[#export]>]` only when a selected repo needs starter stack scaffolding for a shared conventions pack.
+11. Read workflow `confidence` and `raiseConfidence` before deciding whether to edit, ask follow-up questions, or add runtime evidence.
+12. Use structured `fixCandidates` from `salt-ds review --json` when the agent should apply deterministic remediation; read `fixCandidates` before editing, prefer deterministic candidates first, and rerun `salt-ds review` after edits.
+13. When `salt-ds migrate --json` returns a familiarity contract, migration checkpoints, delta categories, and `migrationScope`, use them to preserve the important experience anchors while still moving the result toward canonical Salt, and answer `migrationScope.questions` before the first migration scaffold is treated as final.
+14. When a saved migration report is available, use `salt-ds review --url <url> --migration-report <path>` to verify preserved intent against the migrated result.
+15. Keep `salt-ds doctor` and `salt-ds runtime inspect` in the runtime-evidence layer, not as the default workflow surface.
+16. Use `salt-ds review <path> --url <url>` when source validation and runtime evidence should stay in the same workflow pass.
+17. Use `salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup, screenshot notes, or a rough design outline that should be turned into structured regions, actions, states, and notes before translation.
+18. If mockups or screenshots are available as raw attachments, normalize them into the published `migrate_visual_evidence_v1` contract or an equivalent `source_outline` payload before the canonical Salt migrate step runs.
+19. Do not send raw screenshot or mockup attachments directly to Salt MCP. MCP stays on structured migrate inputs until raw attachment support is explicitly added.
+20. When CLI transport uses `--mockup` or `--screenshot`, require a configured visual adapter first. If the adapter is missing or returns weak output, fail closed to `--source-outline` instead of guessing.
+21. Use `salt-ds migrate <query> --url <url>` when migration scoping needs current landmarks, action hierarchy, structure, or state visibility from the running experience.
+22. Use both `--source-outline` and `--url` together when the migration needs to reconcile mockup-style intent with the current live UI before coding starts.
+23. Do not add a second manual CLI vocabulary for canonical lookup. Keep the restricted-environment story on the same workflow commands.
 
 ## Workflow Map
 

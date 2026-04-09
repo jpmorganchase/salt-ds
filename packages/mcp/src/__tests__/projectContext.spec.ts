@@ -6,6 +6,7 @@ import { getSaltProjectContext } from "../server/projectContext.js";
 import { CODE_ANALYSIS_REGISTRY } from "./fixtures/codeAnalysisRegistry.js";
 
 const tempDirs: string[] = [];
+const originalCwd = process.cwd();
 
 async function createTempDir(name: string): Promise<string> {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), `${name}-`));
@@ -14,6 +15,7 @@ async function createTempDir(name: string): Promise<string> {
 }
 
 afterEach(async () => {
+  process.chdir(originalCwd);
   await Promise.all(
     tempDirs
       .splice(0, tempDirs.length)
@@ -22,6 +24,95 @@ afterEach(async () => {
 });
 
 describe("getSaltProjectContext", () => {
+  it("flags cwd-based context as weak when no repo root can be inferred", async () => {
+    const rootDir = await createTempDir("salt-mcp-project-context-unresolved");
+    process.chdir(rootDir);
+
+    const result = await getSaltProjectContext(CODE_ANALYSIS_REGISTRY);
+
+    expect(result.result).toMatchObject({
+      root_dir: rootDir.replace(/\\/g, "/"),
+      package_json_path: null,
+      resolution: {
+        root_source: "process_cwd",
+        status: "needs_explicit_root",
+        quality: "needs_explicit_root",
+      },
+    });
+    expect(result.artifacts.summary).toMatchObject({
+      recommended_next_tool: null,
+      bootstrap_requirement: {
+        status: "not_required",
+        next_tool_after_bootstrap: null,
+      },
+    });
+    expect(result.artifacts.summary.reasons).toEqual(
+      expect.arrayContaining([expect.stringContaining("explicit root_dir")]),
+    );
+    expect(result.artifacts.notes).toEqual(
+      expect.arrayContaining([expect.stringContaining("explicit root_dir")]),
+    );
+  });
+
+  it("marks cwd-based repo context as fallback when repo signals are present", async () => {
+    const rootDir = await createTempDir("salt-mcp-project-context-fallback");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          name: "fallback-repo",
+          private: true,
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    process.chdir(rootDir);
+
+    const result = await getSaltProjectContext(CODE_ANALYSIS_REGISTRY);
+
+    expect(result.result.resolution).toMatchObject({
+      root_source: "process_cwd",
+      status: "fallback",
+      quality: "ready",
+    });
+    expect(result.artifacts.summary.recommended_next_tool).toBeNull();
+    expect(result.artifacts.summary.reasons).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Salt packages are already present"),
+      ]),
+    );
+    expect(result.artifacts.notes).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Pass root_dir or reuse context_id"),
+      ]),
+    );
+  });
+
+  it("flags an explicit wrong root as a mismatch", async () => {
+    const rootDir = await createTempDir("salt-mcp-project-context-mismatch");
+
+    const result = await getSaltProjectContext(CODE_ANALYSIS_REGISTRY, {
+      root_dir: rootDir,
+    });
+
+    expect(result.result.resolution).toMatchObject({
+      root_source: "explicit_input",
+      status: "mismatch",
+      quality: "needs_explicit_root",
+    });
+    expect(result.artifacts.summary.recommended_next_tool).toBeNull();
+    expect(result.artifacts.summary.reasons).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("explicit root_dir did not expose"),
+      ]),
+    );
+  });
+
   it("surfaces installed Salt version drift in project context", async () => {
     const rootDir = await createTempDir("salt-mcp-project-context");
     await fs.mkdir(path.join(rootDir, "node_modules", "@salt-ds", "core"), {

@@ -1670,9 +1670,11 @@ describe("getComponent", () => {
       expect.arrayContaining([
         expect.objectContaining({
           workflow: "get_salt_examples",
+          follow_up_mode: "exact_name",
         }),
         expect.objectContaining({
           workflow: "create_salt_ui",
+          follow_up_mode: "compare_named",
         }),
       ]),
     );
@@ -1826,9 +1828,11 @@ describe("getPattern", () => {
       expect.arrayContaining([
         expect.objectContaining({
           workflow: "get_salt_examples",
+          follow_up_mode: "exact_name",
         }),
         expect.objectContaining({
           workflow: "create_salt_ui",
+          follow_up_mode: "compare_named",
         }),
       ]),
     );
@@ -2007,6 +2011,7 @@ describe("getFoundation", () => {
       expect.arrayContaining([
         expect.objectContaining({
           workflow: "discover_salt",
+          follow_up_mode: "broad_query",
         }),
       ]),
     );
@@ -2597,9 +2602,11 @@ describe("consumer tools", () => {
       expect.arrayContaining([
         expect.objectContaining({
           workflow: "get_salt_examples",
+          follow_up_mode: "exact_name",
         }),
         expect.objectContaining({
           workflow: "get_salt_entity",
+          follow_up_mode: "exact_name",
         }),
       ]),
     );

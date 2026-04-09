@@ -335,6 +335,30 @@ describe("salt cli", () => {
     );
   });
 
+  it("prints slim info agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-info-agent-json");
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(["info", ".", "--agent-json"], {
+      cwd: rootDir,
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+
+    expect(exitCode).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload).toHaveProperty("rootDir");
+    expect(payload.salt.packages).toBeDefined();
+    expect(payload).not.toHaveProperty("imports");
+    expect(payload.notes.length).toBeLessThanOrEqual(5);
+  });
+
   it("surfaces installed Salt version drift in info output", async () => {
     const rootDir = await createTempDir("salt-cli-info-version-drift");
     await fs.mkdir(path.join(rootDir, "node_modules", "@salt-ds", "core"), {
@@ -798,6 +822,47 @@ describe("salt cli", () => {
         expect.stringContaining("ui:verify"),
       ]),
     );
+  });
+
+  it("prints slim init agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-init-agent-json");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          name: "salt-cli-init-agent-json",
+          packageManager: "pnpm@9.1.0",
+          dependencies: {
+            react: "^18.3.1",
+            vite: "^7.1.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(withRegistry(["init", ".", "--agent-json"]), {
+      cwd: rootDir,
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+
+    expect(exitCode).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload.workflow).toBe("init");
+    expect(payload.projectName).toBe("salt-cli-init-agent-json");
+    expect(payload.context.policy.mode).toBe("team");
+    expect(payload.context).not.toHaveProperty("imports");
+    expect(payload.notes.length).toBeLessThanOrEqual(5);
   });
 
   it("can scaffold a conventions-pack stack during init", async () => {
@@ -2233,6 +2298,42 @@ describe("salt cli", () => {
     );
   });
 
+  it("prints slim doctor agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-doctor-agent-json");
+    await fs.mkdir(path.join(rootDir, ".storybook"));
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          packageManager: "yarn@4.10.3",
+          dependencies: {
+            "@salt-ds/core": "^1.2.3",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(["doctor", ".", "--agent-json"], {
+      cwd: rootDir,
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: () => {},
+    });
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    expect(payload.environment.packageManager).toBe("yarn");
+    expect(payload.repoSignals.storybookDetected).toBe(true);
+    expect(payload.salt.packages[0].name).toBe("@salt-ds/core");
+    expect(payload).not.toHaveProperty("saltPackages");
+    expect(payload).not.toHaveProperty("saltInstallation");
+  });
+
   it("validates layered policy sources through doctor", async () => {
     const rootDir = await createTempDir("salt-cli-doctor-policy");
     await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
@@ -2545,6 +2646,50 @@ describe("salt cli", () => {
     );
   });
 
+  it("prints slim create agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-create-agent-json");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "link to another page from a toolbar action",
+        "--agent-json",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload.workflow.id).toBe("create");
+    expect(payload.result).toHaveProperty("recommendation");
+    expect(payload.artifacts).toHaveProperty("context");
+    expect(payload.artifacts).not.toHaveProperty("starterCode");
+  });
+
   it("returns structured fix candidates for deterministic prop migrations", async () => {
     const rootDir = await createTempDir("salt-cli-review-fix");
     await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
@@ -2562,12 +2707,12 @@ describe("salt cli", () => {
       "utf8",
     );
     await fs.writeFile(
-      path.join(rootDir, "src", "Deprecated.tsx"),
+      path.join(rootDir, "src", "App.tsx"),
       [
         'import { Button } from "@salt-ds/core";',
         "",
-        "export function Deprecated() {",
-        '  return <Button variant="cta">Go</Button>;',
+        "export function App() {",
+        '  return <Button href="/next">Go</Button>;',
         "}",
         "",
       ].join("\n"),
@@ -2625,6 +2770,56 @@ describe("salt cli", () => {
       "utf8",
     );
     expect(originalSource).toContain('variant="cta"');
+  });
+
+  it("prints slim review agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-review-agent-json");
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "src", "Deprecated.tsx"),
+      [
+        'import { Button } from "@salt-ds/core";',
+        "",
+        "export function Deprecated() {",
+        '  return <Button variant="cta">Go</Button>;',
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--agent-json"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(2);
+    const payload = JSON.parse(stdout);
+    expect(payload.workflow.id).toBe("review");
+    expect(payload.result.summary.status).toBe("needs_attention");
+    expect(payload.artifacts.fixCandidates.totalCount).toBeGreaterThan(0);
+    expect(payload.artifacts.context).toHaveProperty("rootDir");
+    expect(payload).not.toHaveProperty("sourceValidation");
   });
 
   it("treats repo-policy-only review guidance as needs_attention", async () => {
@@ -2910,6 +3105,43 @@ describe("salt cli", () => {
         }),
       ]),
     );
+  });
+
+  it("prints slim migrate agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-migrate-agent-json");
+    const query = (
+      await readVisualMigrationFixture("legacy-orders.query.txt")
+    ).trim();
+
+    let stdout = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "migrate",
+        query,
+        "--agent-json",
+        "--include-starter-code",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(2);
+    const payload = JSON.parse(stdout);
+    expect(payload.workflow.id).toBe("migrate");
+    expect(payload.result.summary.translationCount).toBeGreaterThan(0);
+    expect(payload.result.sourceProfile).toEqual(
+      expect.objectContaining({
+        codeProvided: false,
+        queryProvided: true,
+      }),
+    );
+    expect(payload.artifacts.context).toHaveProperty("rootDir");
+    expect(payload).not.toHaveProperty("translation");
   });
 
   it("returns a non-zero exit code when migrate starter output is blocked by repo theme policy", async () => {
@@ -3530,6 +3762,43 @@ describe("salt cli", () => {
     );
   });
 
+  it("prints slim upgrade agent json output", async () => {
+    const rootDir = await createTempDir("salt-cli-upgrade-agent-json");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^1.1.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(
+      withRegistry(["upgrade", "--include-deprecations", "--agent-json"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    expect(payload.workflow.id).toBe("upgrade");
+    expect(payload.result.summary.target).toBe("@salt-ds/core");
+    expect(payload.result.comparison.fromVersion).toBe("1.1.0");
+    expect(payload.artifacts.context).toHaveProperty("rootDir");
+    expect(payload).not.toHaveProperty("comparison.decision");
+  });
+
   it("reviews Salt source and optionally attaches runtime evidence through --url", async () => {
     const rootDir = await createTempDir("salt-cli-review-runtime");
     const verifyUrl = await startServer(`
@@ -3875,6 +4144,37 @@ describe("salt cli", () => {
       ),
     ).toBe(true);
     expect(payload.layout.available).toBe(false);
+  });
+
+  it("prints slim runtime inspect agent json output", async () => {
+    const url = await startServer(`
+      <!doctype html>
+      <html>
+        <head><title>Inspect Me</title></head>
+        <body>
+          <main><button>Save</button></main>
+        </body>
+      </html>
+    `);
+
+    let stdout = "";
+    const exitCode = await runCli(
+      ["runtime", "inspect", url, "--agent-json", "--mode", "fetched-html"],
+      {
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    expect(payload.target.url).toBe(url);
+    expect(payload.page.title).toBe("Inspect Me");
+    expect(payload.layout.nodeCount).toBe(0);
+    expect(payload).not.toHaveProperty("structure");
+    expect(payload.layout.nodes).toHaveLength(0);
   });
 
   it("prints browser-session runtime inspect output with screenshot artifacts", async (context) => {

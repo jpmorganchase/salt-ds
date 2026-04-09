@@ -292,6 +292,7 @@ export function recommendComponent(
       return {
         component,
         capabilities: inferComponentCapabilities(component),
+        hasExplicitNameMatch: explicitNameScore.score > 0,
         score:
           queryScore.score +
           explicitNameScore.score +
@@ -315,6 +316,9 @@ export function recommendComponent(
     })
     .filter((candidate) => candidate.score > 0)
     .sort((left, right) => {
+      if (left.hasExplicitNameMatch !== right.hasExplicitNameMatch) {
+        return left.hasExplicitNameMatch ? -1 : 1;
+      }
       if (left.score !== right.score) {
         return right.score - left.score;
       }

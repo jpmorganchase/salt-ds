@@ -35,6 +35,13 @@ type WorkspaceKind =
   | "workspace-package"
   | "unknown";
 type StackLayerScope = "line_of_business" | "team" | "repo" | "other";
+type ProjectContextResolutionSource = "explicit_input" | "process_cwd";
+type ProjectContextResolutionStatus =
+  | "resolved"
+  | "fallback"
+  | "needs_explicit_root"
+  | "mismatch";
+type ProjectContextResolutionQuality = "ready" | "needs_explicit_root";
 
 interface SaltProjectContextSource {
   original: string;
@@ -44,6 +51,12 @@ interface SaltProjectContextSource {
 
 export interface SaltProjectContextData {
   root_dir: string;
+  resolution: {
+    status: ProjectContextResolutionStatus;
+    root_source: ProjectContextResolutionSource;
+    quality: ProjectContextResolutionQuality;
+    reason: string | null;
+  };
   package_json_path: string | null;
   environment: {
     os: string;
@@ -833,7 +846,28 @@ function buildSummary(input: {
   policyMode: "none" | "team" | "stack";
   repoInstructionPath: string | null;
   runtimeTargets: Array<{ label: "storybook" | "app-runtime"; url: string }>;
+  resolution: SaltProjectContextData["resolution"];
 }): SaltProjectContextData["summary"] {
+  if (
+    input.resolution.status === "needs_explicit_root" ||
+    input.resolution.status === "mismatch"
+  ) {
+    return {
+      recommended_next_tool: null,
+      bootstrap_requirement: {
+        status: "not_required",
+        tool: "bootstrap_salt_repo",
+        cli_command: "salt-ds init",
+        reason: null,
+        next_tool_after_bootstrap: null,
+      },
+      reasons: [
+        input.resolution.reason ??
+          "Project context could not confidently resolve the repo root. Re-run get_salt_project_context with an explicit root_dir before relying on repo-aware workflow guidance.",
+      ],
+    };
+  }
+
   const workflowAvailability = buildRepoAwareSaltWorkflowAvailability(
     input.blockingWorkflows,
   );
@@ -917,6 +951,65 @@ function buildSummary(input: {
       "No existing Salt usage was detected, and the repo context looks ready for new Salt UI creation.",
     ],
   };
+}
+
+function buildProjectContextResolution(input: {
+  rootDirProvided: boolean;
+  packageJsonPath: string | null;
+  workspaceKind: WorkspaceKind;
+  saltPackages: Array<{ name: string; version: string }>;
+  repoInstructionPath: string | null;
+  policyMode: "none" | "team" | "stack";
+}): SaltProjectContextData["resolution"] {
+  const hasRepoSignals =
+    input.packageJsonPath !== null ||
+    input.workspaceKind !== "unknown" ||
+    input.saltPackages.length > 0 ||
+    input.repoInstructionPath !== null ||
+    input.policyMode !== "none";
+
+  if (input.rootDirProvided && hasRepoSignals) {
+    return {
+      status: "resolved",
+      root_source: "explicit_input",
+      quality: "ready",
+      reason: null,
+    };
+  }
+
+  if (input.rootDirProvided && !hasRepoSignals) {
+    return {
+      status: "mismatch",
+      root_source: "explicit_input",
+      quality: "needs_explicit_root",
+      reason:
+        "The explicit root_dir did not expose recognizable repo signals for Salt-aware workflow guidance. Re-run get_salt_project_context with the actual repo root before relying on repo-specific guidance.",
+    };
+  }
+
+  if (hasRepoSignals) {
+    return {
+      status: "fallback",
+      root_source: "process_cwd",
+      quality: "ready",
+      reason:
+        "Repo signals were inferred from the current working directory. Pass root_dir or reuse context_id before relying on repo-specific guidance.",
+    };
+  }
+
+  return {
+    status: "needs_explicit_root",
+    root_source: "process_cwd",
+    quality: "needs_explicit_root",
+    reason:
+      "Project context could not identify a repo root from the current MCP working directory. Re-run get_salt_project_context with an explicit root_dir, or pass root_dir/context_id to the repo-aware workflow tool before relying on repo-specific guidance.",
+  };
+}
+
+export function isSaltProjectContextReadyForRepoAwareWork(
+  context: SaltProjectContextData,
+): boolean {
+  return context.resolution.status === "resolved";
 }
 
 export async function getSaltProjectContext(
@@ -1003,6 +1096,15 @@ export async function collectSaltProjectContextData(
   const workflowAvailability = buildRepoAwareSaltWorkflowAvailability(
     saltInstallation.health_summary.blocking_workflows,
   );
+  const normalizedPackageJsonPath = toPosix(packageJsonPath);
+  const resolution = buildProjectContextResolution({
+    rootDirProvided: typeof args.root_dir === "string" && args.root_dir.length > 0,
+    packageJsonPath: normalizedPackageJsonPath,
+    workspaceKind: workspace.kind,
+    saltPackages,
+    repoInstructionPath: repoInstructions.path,
+    policyMode: policy.mode,
+  });
 
   if (!policy.team_config_path && !policy.stack_config_path) {
     notes.push(
@@ -1049,8 +1151,11 @@ export async function collectSaltProjectContextData(
       `Duplicate Salt installs detected for ${saltInstallation.duplicate_packages.map((saltPackage: { name: string }) => saltPackage.name).join(", ")}.`,
     );
   }
+  if (resolution.reason) {
+    notes.push(resolution.reason);
+  }
   const sources = buildContextSources({
-    packageJsonPath: toPosix(packageJsonPath),
+    packageJsonPath: normalizedPackageJsonPath,
     repoInstructionsPath: repoInstructions.path,
     teamConfigPath: policy.team_config_path,
     stackConfigPath: policy.stack_config_path,
@@ -1060,7 +1165,8 @@ export async function collectSaltProjectContextData(
 
   return {
     root_dir: toPosix(rootDir) ?? rootDir,
-    package_json_path: toPosix(packageJsonPath),
+    resolution,
+    package_json_path: normalizedPackageJsonPath,
     environment: {
       os: os.platform(),
       node_version: process.version,
@@ -1099,6 +1205,7 @@ export async function collectSaltProjectContextData(
       policyMode: policy.mode,
       repoInstructionPath: repoInstructions.path,
       runtimeTargets,
+      resolution,
     }),
     notes,
     sources,
