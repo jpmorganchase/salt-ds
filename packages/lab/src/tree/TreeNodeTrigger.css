@@ -59,7 +59,3 @@
   flex-shrink: 0;
   color: var(--salt-content-primary-foreground);
 }
-
-.saltTreeNode-disabled .saltTreeNodeTrigger > .saltIcon {
-  color: var(--salt-content-primary-foreground-disabled);
-}
