@@ -23,8 +23,13 @@ export const SidePanelTrigger = forwardRef<
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
   const { children, onClick, ...rest } = props;
-  const { open, triggerRef: groupTriggerRef, setOpen, activateTrigger, panelId } =
-    useSidePanelGroup();
+  const {
+    open,
+    triggerRef: groupTriggerRef,
+    setOpen,
+    activateTrigger,
+    panelId,
+  } = useSidePanelGroup();
   const triggerRef = useRef<HTMLElement | null>(null);
   const handleRef = useForkRef(triggerRef, ref);
   const isActive = open && groupTriggerRef?.current === triggerRef.current;
