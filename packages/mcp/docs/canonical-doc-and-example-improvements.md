@@ -24,6 +24,49 @@ Current status:
 - `App header`: partly addressed in docs; named regions are clearer and the variants better explain when navigation is present
 - `Vertical navigation`: partly addressed in docs; nested groups and variant usage are clearer, while the numbered anatomy list remains diagram-driven
 
+Recently addressed in this backlog slice:
+
+- `Search`: clearer discovery-only guidance and non-use cases
+- `Button bar`: explicit task-boundary guidance and extractable action-area language
+- `Forms`: clearer workflow ownership and non-use cases
+- `Preferences dialog`: clearer task-vs-settings boundary and action-region naming
+- `Announcement dialog`: clearer notification-vs-task boundary
+- `Content status`: explicit loading, empty, error, and success ownership guidance
+- `List filtering`: clearer list-vs-page ownership and non-use cases
+- `List builder`: clearer task-first composition, ownership regions, and non-use cases
+- `Wizard`: clearer linear-flow guidance and non-use cases
+- `Header block`: clearer container-shell ownership and non-use cases
+- `Navigation`: clearer hierarchy/wayfinding guidance and non-use cases
+
+## Remaining Canonical Doc Items
+
+The next open canonical-doc tasks are:
+
+- `Metric`
+  - add a truly minimal, anatomy-first example
+  - make the single-orientation rule explicit for multi-metric views
+  - add a canonical positive or negative indicator example if indicators remain canonical
+- `Analytical dashboard`
+  - make the fixed controls or filters more structurally explicit
+  - add one example that clearly shows header, metrics strip, fixed side controls, and a grid-based module area
+  - make the relationship to `Metric` explicit instead of leaving metrics as generic cards
+- `App header`
+  - add one example that shows the shell with named regions called out directly
+  - move skip-link guidance into the explicit header structure if it is canonically important
+- `Vertical navigation`
+  - add one example that shows the pane-based shell more directly
+  - clarify the surrounding content relationship without overcommitting the pattern docs
+  - clarify whether component relationships are canonical, optional, or only one implementation path
+- `BorderLayout`
+  - keep `BorderItem` usage explicit and prominent
+  - make top-level shell regions only more explicit
+  - add one example that clearly maps named regions to `BorderItem` positions
+- `GridLayout`
+  - add one example that reads as a dashboard-module grid rather than generic layout
+  - make it easier to extract main-dashboard-body guidance from canonical docs
+- `Supporting states`
+  - keep tightening loading, empty, error, and success states as part of the owning workflow instead of generic placeholders
+
 ## Additional Gaps Found During The Top-Tier DS Pass
 
 These gaps matter because Salt now has stronger consumer docs and skill references for common surfaces and design judgment.
@@ -200,13 +243,12 @@ Avoid relying only on:
 
 ## Next Candidates After The Current Priority Set
 
-Consider these only after the current priority patterns are stronger:
+Consider these only after the current priority patterns and dialog/form guidance are stronger:
 
-- `Search`
-- `Button bar`
-- `Forms`
+- `Supporting states`
+  - loading, empty, error, and success states as part of the owning workflow instead of generic placeholders
 
-These should only move up once the canonical docs are explicit enough to support structured extraction without adding another hand-maintained AI layer.
+The Search, Button bar, Forms, Preferences dialog, and Announcement dialog pages are now partly addressed in docs, but they still benefit from more canonical examples and structure work before we treat them as fully closed.
 
 ## What This Unblocks
 

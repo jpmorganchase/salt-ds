@@ -24,15 +24,21 @@ data:
 
 ## When to use
 
-Use this pattern when users need to customize a list from a selection of options. 
+Use this pattern when users need to customize a list from a selection of options.
 
 List builders are useful when you want to distinguish selected items from a larger list of available items. This is particularly useful when the initial list is so large that it's difficult to see which items the user has selected. With the two lists side-by-side, users can easily view or compare selected and available options.
 
 Typical use cases for using a list builder include:
 - Choosing visible columns or chart series from a dataset.
-- Customizing a client, account or research list in a CRM (customer relationship management system).
+- Customizing a client, account, or research list in a CRM (customer relationship management system).
 - Creating a distribution list.
 - Creating a list of accounts for use in transactions.
+
+## When not to use
+
+- When the task is only single selection, use List box, Combo box, or Dropdown instead.
+- When users only need to filter a list, use List filtering instead.
+- When the list is very small, use a simple reorderable list or another lighter pattern instead.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 - Apply a consistent logic to the order of displayed items. Display pick list items chronologically or in alphabetical order, provided there are no pre-defined requirements.
@@ -127,7 +133,7 @@ If users don’t need to reorder items in the new list, remove this feature.
 
 ## Empty state message
 
-Display a message to prompt or instruct the user when a list is empty. You can customize this message. Make sure that the text is concise, descriptive and clearly understood. Use the [content status pattern](/salt/patterns/content-status) to display empty state messages.
+Display a message to prompt or instruct the user when a list is empty. You can customize this message. Make sure that the text is concise, descriptive and clearly understood. Use the [content status pattern](/salt/patterns/content-status) to display empty state messages owned by the list-builder workflow.
 
   <Diagram
     src="/img/patterns/list-builder/empty-list.png"

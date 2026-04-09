@@ -1759,6 +1759,186 @@ function formatUpgradeReport(result: UpgradeWorkflowResult): string {
     .concat("\n");
 }
 
+function toAgentContextSummary(context: SaltInfoResult): Record<string, unknown> {
+  return {
+    rootDir: context.rootDir,
+    framework: {
+      name: context.framework.name,
+      evidence: context.framework.evidence.slice(0, 3),
+    },
+    workspace: {
+      kind: context.workspace.kind,
+      workspaceRoot: context.workspace.workspaceRoot,
+    },
+    packageManager: context.environment.packageManager,
+    saltPackages: context.salt.packages.slice(0, 5),
+    installation: {
+      healthSummary: {
+        health: context.salt.installation.healthSummary.health,
+        recommendedAction:
+          context.salt.installation.healthSummary.recommendedAction,
+        blockingWorkflows:
+          context.salt.installation.healthSummary.blockingWorkflows,
+      },
+    },
+    registry: {
+      available: context.registry.available,
+      source: context.registry.source,
+    },
+    policyMode: context.policy.mode,
+    runtimeTargets: context.runtime.detectedTargets.map((target) => ({
+      label: target.label,
+      url: target.url,
+    })),
+    notes: context.notes.slice(0, 5),
+  };
+}
+
+function toAgentWorkflowJson(
+  result:
+    | CreateWorkflowResult
+    | ReviewWorkflowResult
+    | MigrateWorkflowResult
+    | UpgradeWorkflowResult,
+): Record<string, unknown> {
+  switch (result.workflow.id) {
+    case "create":
+      return {
+        workflow: {
+          id: result.workflow.id,
+          confidence: result.workflow.confidence,
+          readiness: result.workflow.readiness,
+          contextRequirement: result.workflow.contextRequirement,
+          implementationGate: result.workflow.implementationGate,
+        },
+        result: {
+          intent: result.result.intent,
+          summary: {
+            ...result.result.summary,
+            suggestedFollowUps: result.result.summary.suggestedFollowUps.slice(
+              0,
+              2,
+            ),
+          },
+          recommendation: {
+            decision: result.result.recommendation.decision,
+            finalDecision: result.result.recommendation.final_decision,
+            nextStep:
+              result.result.recommendation.next_step ??
+              result.result.summary.nextStep,
+            compositionContract:
+              result.result.recommendation.composition_contract ?? null,
+            openQuestions: result.result.recommendation.open_questions ?? [],
+          },
+        },
+        artifacts: {
+          context: toAgentContextSummary(result.artifacts.context),
+          notes: result.artifacts.notes.slice(0, 5),
+        },
+      };
+    case "review":
+      return {
+        workflow: {
+          id: result.workflow.id,
+          confidence: result.workflow.confidence,
+          projectConventionsCheck: result.workflow.projectConventionsCheck,
+          provenance: result.workflow.provenance,
+        },
+        result: {
+          summary: result.result.summary,
+          nextStep: result.result.summary.nextStep,
+        },
+        artifacts: {
+          context: toAgentContextSummary(result.artifacts.context),
+          fixCandidates: {
+            totalCount: result.artifacts.fixCandidates.totalCount,
+            deterministicCount:
+              result.artifacts.fixCandidates.deterministicCount,
+            manualReviewCount: result.artifacts.fixCandidates.manualReviewCount,
+            candidates: (result.artifacts.fixCandidates.candidates ?? []).slice(
+              0,
+              2,
+            ),
+            notes: (result.artifacts.fixCandidates.notes ?? []).slice(0, 2),
+          },
+          ruleIds: result.artifacts.ruleIds.slice(0, 5),
+          notes: result.artifacts.notes.slice(0, 5),
+        },
+      };
+    case "migrate":
+      return {
+        workflow: {
+          id: result.workflow.id,
+          confidence: result.workflow.confidence,
+          readiness: result.workflow.readiness,
+          contextRequirement: result.workflow.contextRequirement,
+          projectConventionsCheck: result.workflow.projectConventionsCheck,
+          provenance: result.workflow.provenance,
+        },
+        result: {
+          summary: result.result.summary,
+          sourceProfile: {
+            codeProvided: result.result.translation.source_profile.code_provided,
+            queryProvided:
+              result.result.translation.source_profile.query_provided,
+            uiFlavor: result.result.translation.source_profile.ui_flavor,
+          },
+          migrationScope: {
+            questions: result.result.migrationScope.questions.slice(0, 3),
+            preserveFocus: result.result.migrationScope.preserveFocus.slice(
+              0,
+              3,
+            ),
+            allowSaltChanges:
+              result.result.migrationScope.allowSaltChanges.slice(0, 3),
+            confirmationTriggers:
+              result.result.migrationScope.confirmationTriggers.slice(0, 3),
+            currentExperienceCaptured:
+              result.result.migrationScope.currentExperienceCaptured,
+            runtimeRecommended:
+              result.result.migrationScope.runtimeRecommended,
+          },
+          nextStep: result.result.summary.nextStep,
+        },
+        artifacts: {
+          context: toAgentContextSummary(result.artifacts.context),
+          starterValidation: result.artifacts.starterValidation,
+          ruleIds: result.artifacts.ruleIds.slice(0, 5),
+          postMigrationVerification: result.artifacts.postMigrationVerification,
+          visualEvidenceContract: result.artifacts.visualEvidenceContract,
+          notes: result.artifacts.notes.slice(0, 5),
+        },
+      };
+    case "upgrade":
+      return {
+        workflow: {
+          id: result.workflow.id,
+          confidence: result.workflow.confidence,
+          projectConventionsCheck: result.workflow.projectConventionsCheck,
+          provenance: result.workflow.provenance,
+        },
+        result: {
+          summary: result.result.summary,
+          comparison: {
+            target: result.result.comparison.decision.target,
+            fromVersion: result.result.comparison.decision.from_version,
+            toVersion: result.result.comparison.decision.to_version,
+            why: result.result.comparison.decision.why,
+          },
+          nextStep: result.result.summary.nextStep,
+          breaking: result.result.comparison.breaking?.slice(0, 3),
+          important: result.result.comparison.important?.slice(0, 3),
+          niceToKnow: result.result.comparison.nice_to_know?.slice(0, 3),
+        },
+        artifacts: {
+          context: toAgentContextSummary(result.artifacts.context),
+          ruleIds: result.artifacts.ruleIds.slice(0, 5),
+          notes: result.artifacts.notes.slice(0, 5),
+        },
+      };
+  }
+}
+
 async function writeWorkflowOutput<
   T extends
     | CreateWorkflowResult
@@ -1774,12 +1954,14 @@ async function writeWorkflowOutput<
   const outputPath = flags.output
     ? path.resolve(io.cwd, flags.output)
     : undefined;
+  const agentJson = flags["agent-json"] === "true";
+  const jsonResult = agentJson ? toAgentWorkflowJson(result) : result;
   if (outputPath) {
-    await writeJsonFile(outputPath, result);
+    await writeJsonFile(outputPath, jsonResult);
   }
 
-  if (flags.json === "true") {
-    io.writeStdout(`${JSON.stringify(result, null, 2)}\n`);
+  if (flags.json === "true" || agentJson) {
+    io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
   } else {
     io.writeStdout(formatter(result));
     if (outputPath) {

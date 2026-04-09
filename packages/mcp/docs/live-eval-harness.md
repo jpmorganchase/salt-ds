@@ -11,6 +11,7 @@ Checked-in harness code:
 - `packages/mcp/src/evals/workflowEvalHarness.ts`
 - `packages/mcp/src/evals/workflowEvalScenarios.ts`
 - `packages/mcp/src/evals/runWorkflowEval.ts`
+- `packages/mcp/src/evals/runWorkflowEvalReplay.ts`
 - `packages/mcp/src/evals/hostAttachmentEval.ts`
 
 Checked-in fixtures:
@@ -19,21 +20,25 @@ Checked-in fixtures:
 - `packages/mcp/eval-fixtures/existing-salt-policy`
 - `packages/mcp/eval-fixtures/non-salt`
 - `packages/mcp/eval-fixtures/new-project`
+- `packages/mcp/eval-fixtures/replays`
 
 Checked-in tests:
 
 - `packages/mcp/src/__tests__/liveEvalHarness.spec.ts`
 - `packages/mcp/src/__tests__/hostAttachmentEval.spec.ts`
 - `packages/mcp/src/__tests__/agenticEvals.spec.ts`
+- `packages/mcp/src/__tests__/workflowEvalReplay.spec.ts`
 - `packages/mcp/src/__tests__/createServer.spec.ts`
 
 Commands:
 
 - `yarn eval:deterministic`
 - `yarn eval:live`
+- `yarn eval:replay`
 - `yarn eval:live:test`
 - `yarn eval:live --runner mcp-local --scenario existing-salt-review-toolbar`
 - `yarn eval:live --runner cli-local --scenario existing-salt-review-toolbar --json-out .salt-eval-cache/live-report-cli.json`
+- `yarn eval:replay --json-out .salt-eval-cache/replay-report.json`
 
 ## Goal
 
@@ -141,6 +146,34 @@ Focused harness regression:
 
 The live suite builds `@salt-ds/mcp` first, then runs the checked-in scenario pack through the selected runners.
 
+## Transcript Replay
+
+Saved transcript replay fixtures live in `packages/mcp/eval-fixtures/replays`.
+
+The replay helper module is:
+
+- `packages/mcp/src/evals/workflowEvalReplay.ts`
+
+It can load a saved scenario/trace pair, recompute the trace metrics, and judge the replay with the same deterministic rubric used by the live harness.
+
+Use replay fixtures for:
+
+- failing transcript-shaped sessions
+- summary-first regressions
+- transport follow-through regressions
+- token-cost and payload-size comparisons on saved traces
+
+The replay runner reads every `*.json` fixture in `packages/mcp/eval-fixtures/replays` by default. Pass `--replay <file>` repeatedly when you want to target a specific saved transcript.
+
+Current replay fixtures cover:
+
+- missing `result.ide_summary`
+- chart follow-up drift
+- table follow-up drift
+- wrong-root context collection
+- unnecessary `view: "full"` explanation turns
+- repeated cached artifact reads
+
 ## JSON Reports
 
 `yarn eval:live` can emit machine-readable reports with `--json-out`.
@@ -150,6 +183,7 @@ The report includes:
 - requested runner ids
 - requested scenario ids
 - overall pass or fail
+- aggregated trace metrics for transcript size, payload size, logs size, approximate prompt tokens, and duration
 - per-scenario runner id
 - deterministic judgment
 - normalized transport trace

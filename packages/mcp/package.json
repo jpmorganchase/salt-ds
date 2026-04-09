@@ -38,7 +38,8 @@
     "@salt-ds/semantic-core"
   ],
   "publishAdditionalEntryPaths": [
-    "src/evals/runWorkflowEval.ts"
+    "src/evals/runWorkflowEval.ts",
+    "src/evals/runWorkflowEvalReplay.ts"
   ],
   "bin": {
     "salt-mcp": "bin/salt-mcp.js"

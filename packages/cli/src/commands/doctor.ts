@@ -7,6 +7,77 @@ import {
 } from "../lib/common.js";
 import type { RequiredCliIo } from "../types.js";
 
+type DoctorCommandResult = Awaited<ReturnType<typeof runDoctor>>;
+
+function toAgentDoctorJson(result: DoctorCommandResult): Record<string, unknown> {
+  return {
+    rootDir: result.rootDir,
+    environment: {
+      os: result.environment.os,
+      nodeVersion: result.environment.nodeVersion,
+      packageManager: result.environment.packageManager,
+    },
+    repoSignals: {
+      storybookDetected: result.repoSignals.storybookDetected,
+      appRuntimeDetected: result.repoSignals.appRuntimeDetected,
+      saltTeamConfigFound: result.repoSignals.saltTeamConfigFound,
+      saltStackConfigFound: result.repoSignals.saltStackConfigFound,
+    },
+    salt: {
+      packages: result.saltPackages.slice(0, 5).map((pkg) => ({
+        name: pkg.name,
+        version: pkg.version,
+      })),
+      installation: {
+        healthSummary: {
+          health: result.saltInstallation.healthSummary.health,
+          recommendedAction:
+            result.saltInstallation.healthSummary.recommendedAction,
+          blockingWorkflows:
+            result.saltInstallation.healthSummary.blockingWorkflows.slice(
+              0,
+              5,
+            ),
+        },
+      },
+    },
+    policyLayers: {
+      teamConfigPath: result.policyLayers.teamConfigPath,
+      stackConfigPath: result.policyLayers.stackConfigPath,
+      layers: result.policyLayers.layers.slice(0, 5).map((layer) => ({
+        id: layer.id,
+        status: layer.status,
+        sourceType: layer.sourceType,
+        source: layer.source,
+        resolvedPath: layer.resolvedPath,
+        packageName: layer.packageName,
+        packId: layer.packId,
+        reason: layer.reason,
+      })),
+    },
+    runtimeTargets: result.runtimeTargets.slice(0, 5).map((target) => ({
+      label: target.label,
+      url: target.url,
+      source: target.source,
+      reachable: target.reachable,
+      statusCode: target.statusCode ?? null,
+      error: target.error ?? null,
+    })),
+    checks: result.checks.slice(0, 8).map((check) => ({
+      id: check.id,
+      status: check.status,
+      summary: check.summary,
+      details: check.details ?? null,
+    })),
+    notes: (result.notes ?? []).slice(0, 5),
+    artifacts: (result.artifacts ?? []).slice(0, 5).map((artifact) => ({
+      kind: artifact.kind,
+      path: artifact.path,
+      label: artifact.label ?? null,
+    })),
+  };
+}
+
 function formatDoctorReport(
   result: Awaited<ReturnType<typeof runDoctor>>,
 ): string {
@@ -210,7 +281,8 @@ export async function runDoctorCommand(
   const outputPath = flags.output
     ? path.resolve(io.cwd, flags.output)
     : undefined;
-  const wantsJson = flags.json === "true";
+  const wantsAgentJson = flags["agent-json"] === "true";
+  const wantsJson = flags.json === "true" || wantsAgentJson;
   const resultWithArtifacts =
     outputPath &&
     !result.artifacts.some((artifact) => artifact.path === outputPath)
@@ -226,13 +298,16 @@ export async function runDoctorCommand(
           ],
         }
       : result;
+  const jsonResult = wantsAgentJson
+    ? toAgentDoctorJson(resultWithArtifacts)
+    : resultWithArtifacts;
 
   if (outputPath) {
-    await writeJsonFile(outputPath, resultWithArtifacts);
+    await writeJsonFile(outputPath, jsonResult);
   }
 
   if (wantsJson) {
-    io.writeStdout(`${JSON.stringify(resultWithArtifacts, null, 2)}\n`);
+    io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
   } else {
     io.writeStdout(formatDoctorReport(resultWithArtifacts));
     if (outputPath) {

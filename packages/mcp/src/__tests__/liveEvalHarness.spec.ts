@@ -163,10 +163,53 @@ describe("live eval harness", () => {
     const parsed = JSON.parse(buildWorkflowEvalJsonReport(report)) as {
       passed: boolean;
       entries: Array<{ scenario_id: string; judgment: { status: string } }>;
+      metrics: {
+        transcript_bytes: number;
+        workflow_result_bytes: number;
+        payload_bytes: number;
+        approx_prompt_tokens: number;
+        duration_ms: number;
+      };
     };
     expect(parsed.passed).toBe(true);
     expect(parsed.entries).toHaveLength(2);
     expect(parsed.entries[0]?.judgment.status).toBe("passed");
+    expect(parsed.metrics.transcript_bytes).toBeGreaterThan(0);
+    expect(parsed.metrics.payload_bytes).toBeGreaterThan(0);
+    expect(parsed.metrics.duration_ms).toBeGreaterThanOrEqual(0);
+  }, 180000);
+
+  it("fails when workflow trace metrics exceed a declared budget", async () => {
+    const [scenario] = filterWorkflowEvalScenarios(scenarios, {
+      scenario_ids: ["existing-salt-review-toolbar"],
+    });
+    if (!scenario) {
+      throw new Error("Expected at least one workflow eval scenario.");
+    }
+
+    const trace = await MCP_LOCAL_EVAL_RUNNER.run(scenario, {
+      registry_dir: registryDir,
+      repo_root: REPO_ROOT,
+    });
+
+    const budgetedScenario: WorkflowEvalScenario = {
+      ...scenario,
+      expected: {
+        ...scenario.expected,
+        metrics: {
+          max_transcript_bytes: 1,
+        },
+      },
+    };
+
+    expect(judgeWorkflowEvalScenario(budgetedScenario, trace)).toEqual(
+      expect.objectContaining({
+        status: "failed",
+        reasons: expect.arrayContaining([
+          expect.stringContaining("transcript byte budget"),
+        ]),
+      }),
+    );
   }, 180000);
 
   it("fails when a workflow trace drops the summary-first contract", async () => {

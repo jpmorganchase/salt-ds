@@ -3,6 +3,44 @@ import { writeJsonFile } from "../lib/common.js";
 import { collectSaltInfo } from "../lib/infoContext.js";
 import type { RequiredCliIo, SaltInfoResult } from "../types.js";
 
+function toAgentInfoResult(result: SaltInfoResult): Record<string, unknown> {
+  return {
+    rootDir: result.rootDir,
+    framework: {
+      name: result.framework.name,
+      evidence: result.framework.evidence.slice(0, 3),
+    },
+    workspace: {
+      kind: result.workspace.kind,
+      workspaceRoot: result.workspace.workspaceRoot,
+    },
+    packageManager: result.environment.packageManager,
+    salt: {
+      packages: result.salt.packages.slice(0, 5),
+      healthSummary: {
+        health: result.salt.installation.healthSummary.health,
+        recommendedAction:
+          result.salt.installation.healthSummary.recommendedAction,
+        blockingWorkflows:
+          result.salt.installation.healthSummary.blockingWorkflows,
+      },
+    },
+    registry: {
+      available: result.registry.available,
+      source: result.registry.source,
+    },
+    policy: {
+      mode: result.policy.mode,
+      sharedConventions: result.policy.sharedConventions.enabled,
+    },
+    runtimeTargets: result.runtime.detectedTargets.map((target) => ({
+      label: target.label,
+      url: target.url,
+    })),
+    notes: result.notes.slice(0, 5),
+  };
+}
+
 function formatInfoReport(result: SaltInfoResult): string {
   const lines = [
     "Salt DS Info",
@@ -131,16 +169,18 @@ export async function runInfoCommand(
   const result = await collectSaltInfo(rootDir, flags["registry-dir"], {
     policyDetail: "resolved",
   });
+  const agentJson = flags["agent-json"] === "true";
   const outputPath = flags.output
     ? path.resolve(io.cwd, flags.output)
     : undefined;
+  const jsonResult = agentJson ? toAgentInfoResult(result) : result;
 
   if (outputPath) {
-    await writeJsonFile(outputPath, result);
+    await writeJsonFile(outputPath, jsonResult);
   }
 
-  if (flags.json === "true") {
-    io.writeStdout(`${JSON.stringify(result, null, 2)}\n`);
+  if (flags.json === "true" || agentJson) {
+    io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
   } else {
     io.writeStdout(formatInfoReport(result));
     if (outputPath) {

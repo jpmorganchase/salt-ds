@@ -12,6 +12,8 @@ Use this plan alongside:
   - long-range product direction
 - [`./ai-v1-implementation-backlog.md`](./ai-v1-implementation-backlog.md)
   - active execution tracker
+- [`./ai-tooling-hardening-backlog.md`](./ai-tooling-hardening-backlog.md)
+  - detailed implementation backlog for transcript-driven hardening, host safety, and token-efficiency work
 - [`./ai-design-system-quality-standard.md`](./ai-design-system-quality-standard.md)
   - internal quality standard and positioning lessons
 - [`./maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)

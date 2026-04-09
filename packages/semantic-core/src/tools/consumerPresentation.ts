@@ -26,6 +26,11 @@ export interface SuggestedFollowUp {
   workflow: string;
   reason: string;
   args: Record<string, unknown>;
+  follow_up_mode?:
+    | "exact_name"
+    | "compare_named"
+    | "broad_query"
+    | "stop_and_fix_context";
 }
 
 export function getFoundationSuggestedFollowUpsByTitle(
@@ -38,6 +43,7 @@ export function getFoundationSuggestedFollowUpsByTitle(
       args: {
         query: title,
       },
+      follow_up_mode: "broad_query",
     },
     {
       workflow: "discover_salt",
@@ -45,6 +51,7 @@ export function getFoundationSuggestedFollowUpsByTitle(
       args: {
         query: `${title} for a component or layout`,
       },
+      follow_up_mode: "broad_query",
     },
   ];
 }
@@ -207,6 +214,7 @@ export function getComponentSuggestedFollowUps(
         target_name: component.name,
         max_results: 5,
       },
+      follow_up_mode: "exact_name",
     });
   }
 
@@ -218,6 +226,7 @@ export function getComponentSuggestedFollowUps(
         entity_type: "component",
         name: component.name,
       },
+      follow_up_mode: "exact_name",
     });
   }
 
@@ -229,6 +238,7 @@ export function getComponentSuggestedFollowUps(
         solution_type: "component",
         names: [component.name, alternatives[0]],
       },
+      follow_up_mode: "compare_named",
     });
   }
 
@@ -250,6 +260,7 @@ export function getPatternSuggestedFollowUps(
         target_name: pattern.name,
         max_results: 5,
       },
+      follow_up_mode: "exact_name",
     },
   ];
   const includeLookup = options.include_lookup ?? true;
@@ -262,6 +273,7 @@ export function getPatternSuggestedFollowUps(
         entity_type: "pattern",
         name: pattern.name,
       },
+      follow_up_mode: "exact_name",
     });
   }
 
@@ -273,6 +285,7 @@ export function getPatternSuggestedFollowUps(
         solution_type: "pattern",
         names: [pattern.name, pattern.related_patterns[0]],
       },
+      follow_up_mode: "compare_named",
     });
   }
 
