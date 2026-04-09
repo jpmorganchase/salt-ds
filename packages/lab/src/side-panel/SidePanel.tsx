@@ -17,7 +17,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { FocusManager } from "../focus-manager";
 import sidePanelCss from "./SidePanel.css";
 import { useSidePanelGroup } from "./SidePanelGroupContext";
 
@@ -268,7 +267,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
-    const panelDiv = (
+    return (
       <div
         ref={handleRef}
         className={clsx(
@@ -290,24 +289,5 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         <div className={clsx(withBaseName("inner"))}>{children}</div>
       </div>
     );
-
-    if (open) {
-      return (
-        <FocusManager
-          active={open}
-          // Auto-focus is handled by the activationCount-driven
-          // useIsomorphicLayoutEffect above; disabling here prevents a
-          // synchronous tryFocus() racing with the deferred manual focus.
-          disableAutoFocus
-          fallbackFocusRef={panelRef}
-          disableFocusTrap
-          disableReturnFocus
-        >
-          {panelDiv}
-        </FocusManager>
-      );
-    }
-
-    return panelDiv;
   },
 );

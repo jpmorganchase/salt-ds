@@ -427,6 +427,56 @@ describe("GIVEN a SidePanel component", () => {
       });
     });
 
+    describe("WHEN panel is open on initial page load (no user trigger)", () => {
+      it("THEN focus should NOT move to any element inside the panel", () => {
+        cy.mount(
+          <>
+            <button type="button">Outside Button</button>
+            <SidePanel
+              open={true}
+              onOpenChange={() => {}}
+              aria-label="Initially Open Panel"
+            >
+              <button type="button">First Panel Button</button>
+              <button type="button">Last Panel Button</button>
+            </SidePanel>
+          </>,
+        );
+
+        cy.findByRole("region", { name: "Initially Open Panel" }).should(
+          "be.visible",
+        );
+
+        cy.focused().should("not.exist");
+
+        cy.findByRole("button", { name: "First Panel Button" }).should(
+          "not.have.focus",
+        );
+        cy.findByRole("button", { name: "Last Panel Button" }).should(
+          "not.have.focus",
+        );
+      });
+
+      it("AND panel is open with no interactive content, THEN focus does NOT move to panel on page load", () => {
+        cy.mount(
+          <SidePanel
+            open={true}
+            onOpenChange={() => {}}
+            aria-label="Read Only Initially Open"
+          >
+            <p>Static content only</p>
+          </SidePanel>,
+        );
+
+        cy.findByRole("region", { name: "Read Only Initially Open" }).should(
+          "be.visible",
+        );
+        cy.findByRole("region", { name: "Read Only Initially Open" }).should(
+          "not.have.focus",
+        );
+      });
+    });
+
     describe("WHEN multiple panels are open simultaneously", () => {
       it("AND Escape is pressed in each panel sequentially, THEN each closes and focus returns to its trigger", () => {
         cy.mount(<Variants />);
