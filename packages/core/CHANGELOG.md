@@ -1,5 +1,51 @@
 # @salt-ds/core
 
+## 1.59.0
+
+### Minor Changes
+
+- 5c36edc: Added `Toggletip`.
+
+  `Toggletip` shows a user supplementary information on click.
+
+  ```tsx
+  <Toggletip>
+    <ToggletipTrigger aria-label="More info about locked content">
+      <HelpCircleIcon aria-hidden />
+    </ToggletipTrigger>
+    <ToggletipPanel>
+      <Text>
+        This setting is managed at a project level. Contact your administrator
+        for assistance.
+      </Text>
+    </ToggletipPanel>
+  </Toggletip>
+  ```
+
+### Patch Changes
+
+- cfc1591: Simplify disabled styling across the system. This affected the following components:
+
+  ## Core
+
+  - Checkbox
+  - Combo box
+  - Dropdown
+  - List box
+  - Radio button
+  - Slider
+  - Switch
+
+  ## Lab
+
+  - Tree
+
+- 89429e2: Updated accent token usage, to align to the recent theme change.
+- 0a08ae0: Fixed `SaltProvider` and `SaltProviderNext` not applying inherited themes.
+- 5c36edc: Update Overlay and Tooltip arrow sizes.
+- Updated dependencies [49b3486]
+  - @salt-ds/icons@1.18.0
+
 ## 1.58.0
 
 ### Minor Changes

@@ -222,7 +222,7 @@ function InternalSaltProvider({
                   theme={clsx(
                     DEFAULT_THEME_NAME,
                     { [DEFAULT_THEME_NAME_NEXT]: themeNext },
-                    themeProp,
+                    themeName,
                   )}
                   mode={mode}
                   accent={themeNext ? accent : undefined}

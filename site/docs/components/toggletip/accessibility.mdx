@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Ensure the toggletip's trigger button has a meaningful accessible name so screen reader users understand what it relates to.
+  - Use an `aria-label` when there's no visible label or element whose ID you can reference e.g. `aria-label="More info about email address"`.
+  - Use `aria-labelledby` when there's a visible label or related element already on the page. Pass its ID and the ID of the trigger (you will need to add one) to `aria-labelledby` so the screen reader constructs the name from existing visible text, which also keeps things in sync if that text ever changes.
+- Don't use a timer to automatically dismiss the toggletip.
+- Ensure the toggletip trigger is visually close to the element it describes so users can easily associate them.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is before the toggletip trigger, Tab moves focus onto the trigger.
+- If the trigger has focus, Tab moves focus onto the next interactive element in the tab order.
+- When the toggletip panel is open and focused, Tab moves focus to the next interactive element in the panel.
+  - If the panel only contains text or focus is on the last interactive element in the panel, Tab closes the panel and moves focus to the next interactive element in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is on an interactive element immediately after the toggletip trigger, this action moves focus onto the trigger.
+- If the trigger has focus, this action moves focus onto the previous interactive element in the tab order.
+- When the toggletip panel is open and focus is on an interactive element in the panel, this action moves focus to the previous interactive element in the panel.
+  - If there is no previous interactive element in the panel, focus moves to the panel.
+  - If the panel has focus, this action moves focus back to the trigger but doesn't close the panel.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- When focus is on the toggletip trigger, this action opens the panel and moves focus to the panel.
+- When the panel is open and focus is on an interactive element in the panel, this action activates it.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+- When focus is on or inside the toggletip trigger or panel, Escape closes the panel and keeps/moves focus back to the toggletip trigger.
+
+</KeyboardControl>
+</KeyboardControls>
+
+## Resources
+
+- [ARIA Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)
+- [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus)

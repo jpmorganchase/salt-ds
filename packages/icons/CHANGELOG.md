@@ -1,5 +1,12 @@
 # @salt-ds/icons
 
+## 1.18.0
+
+### Minor Changes
+
+- 49b3486: - Added `HelpCircleIcon` and `HelpCircleSolidIcon`.
+  - Deprecated `HelpIcon` and `HelpSolidIcon`. `HelpCircleIcon` and `HelpCircleSolidIcon` should be used instead.
+
 ## 1.17.1
 
 ### Patch Changes

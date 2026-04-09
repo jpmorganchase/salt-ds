@@ -10,6 +10,10 @@ export function isDataNode(node) {
 }
 
 const isNumber = (fieldData) => typeof fieldData === "number";
+const sidebarNameCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: "base",
+});
 
 function doSort(a, b) {
   if (isNumber(a) && isNumber(b)) {
@@ -46,6 +50,10 @@ function sortBySharedSortConfig(nodeA, nodeB) {
   );
 }
 
+function sortByDisplayName(nodeA, nodeB) {
+  return sidebarNameCollator.compare(nodeA.name ?? "", nodeB.name ?? "");
+}
+
 function sortSidebarData(sidebarData) {
   const pagesByPriority = sidebarData.map((group) => {
     if (!isGroupNode(group)) {
@@ -55,7 +63,8 @@ function sortSidebarData(sidebarData) {
       const sortedChildNodes = group.childNodes.sort(
         (pageA, pageB) =>
           (pageB.priority ?? -1) - (pageA.priority ?? -1) ||
-          sortBySharedSortConfig(pageA, pageB),
+          sortBySharedSortConfig(pageA, pageB) ||
+          sortByDisplayName(pageA, pageB),
       );
       sortSidebarData(group.childNodes);
       return { ...group, childNodes: sortedChildNodes };
@@ -332,7 +341,9 @@ const SidebarPlugin = {
     );
 
     sidebar = sidebar.sort(
-      (pageA, pageB) => (pageB.priority ?? -1) - (pageA.priority ?? -1),
+      (pageA, pageB) =>
+        (pageB.priority ?? -1) - (pageA.priority ?? -1) ||
+        sortByDisplayName(pageA, pageB),
     );
 
     if (sidebar.length > 0) {

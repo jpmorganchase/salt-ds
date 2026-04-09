@@ -202,6 +202,19 @@ describe("Given a SaltProvider", () => {
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-announcer", "true");
     });
+
+    it("should inherit themes", () => {
+      mount(
+        <SaltProvider theme="testTheme">
+          <div />
+          <SaltProvider>
+            <div />
+          </SaltProvider>
+        </SaltProvider>,
+      );
+
+      cy.get(".testTheme").should("have.length", 2);
+    });
   });
 
   describe("when child is passed to applyClassesTo", () => {
@@ -525,6 +538,19 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-unstable-heading-font", "Open Sans")
         .and("have.attr", "data-unstable-action-font", "Open Sans")
         .and("have.attr", "data-announcer", "true");
+    });
+
+    it("should inherit themes", () => {
+      mount(
+        <SaltProviderNext theme="testTheme">
+          <div />
+          <SaltProviderNext>
+            <div />
+          </SaltProviderNext>
+        </SaltProviderNext>,
+      );
+
+      cy.get(".testTheme").should("have.length", 2);
     });
   });
 });

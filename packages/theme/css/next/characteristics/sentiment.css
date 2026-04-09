@@ -6,11 +6,14 @@
   --salt-sentiment-positive-foreground-decorative: var(--salt-palette-positive);
 
   --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
-  --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
 
   --salt-sentiment-caution-dataviz: var(--salt-palette-warning);
   --salt-sentiment-negative-dataviz: var(--salt-palette-negative);
   --salt-sentiment-positive-dataviz: var(--salt-palette-positive);
   --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral);
   --salt-sentiment-accent-dataviz: var(--salt-palette-accent);
+
+  --salt-sentiment-accent-background: var(--salt-palette-accent);
+  --salt-sentiment-accent-background-disabled: var(--salt-palette-accent-disabled);
+  --salt-sentiment-accent-borderColor: var(--salt-palette-accent);
 }

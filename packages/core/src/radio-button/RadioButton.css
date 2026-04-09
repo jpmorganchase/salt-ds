@@ -16,8 +16,10 @@
 
 /* Styles applied when RadioButton is disabled */
 .saltRadioButton-disabled {
-  color: var(--salt-content-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground);
+
   cursor: var(--salt-cursor-disabled);
+  opacity: 0.4;
 }
 
 /* Styles applied to root component if `readOnly={true}` */

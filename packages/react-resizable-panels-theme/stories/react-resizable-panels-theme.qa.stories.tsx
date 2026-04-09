@@ -64,7 +64,7 @@ export function Variants() {
           boxSizing: "border-box",
           border: "1px solid lightgrey",
           // Background color to test transparent panels
-          backgroundColor: "var(--salt-accent-background)",
+          backgroundColor: "var(--salt-sentiment-accent-background)",
         }}
       >
         <Panel className="resizable-panel-salt-variant-primary">

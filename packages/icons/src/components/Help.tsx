@@ -6,6 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type HelpIconProps = IconProps;
 
+/** @deprecated - Use `HelpCircleIcon` instead. */
 export const HelpIcon = forwardRef<SVGSVGElement, HelpIconProps>(
   function HelpIcon(props: HelpIconProps, ref) {
     return (

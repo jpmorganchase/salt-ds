@@ -147,6 +147,8 @@ const DEPRECATED_ICONS = [
   ["PieChart", "ChartPie"],
   ["LineChart", "ChartLine"],
   ["ErrorExecute", "NotAllowed"],
+  ["Help", "HelpCircle"],
+  ["HelpSolid", "HelpCircleSolid"],
 ];
 const deprecatedIconMap = new Map(DEPRECATED_ICONS);
 

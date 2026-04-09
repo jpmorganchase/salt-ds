@@ -35,13 +35,13 @@
   box-sizing: border-box;
 }
 .saltCircularProgress-bar {
-  border-color: var(--salt-accent-background);
+  border-color: var(--salt-sentiment-accent-background);
   border-style: var(--salt-borderStyle-solid);
   border-width: var(--salt-size-bar-strong);
 }
 .saltCircularProgress-bufferBorder {
-  border: solid var(--salt-size-fixed-100) var(--salt-accent-background);
-  outline: solid var(--salt-size-fixed-100) var(--salt-accent-background);
+  border: solid var(--salt-size-fixed-100) var(--salt-sentiment-accent-background);
+  outline: solid var(--salt-size-fixed-100) var(--salt-sentiment-accent-background);
   outline-offset: calc(var(--salt-size-bar-strong) * -1);
 }
 
@@ -98,7 +98,7 @@
 .saltCircularProgress-bufferOverlayRight:before,
 .saltCircularProgress-bufferSubOverlay:before {
   content: "";
-  background: var(--salt-accent-background);
+  background: var(--salt-sentiment-accent-background);
   position: absolute;
   right: 0;
   width: var(--salt-size-fixed-100);

@@ -9,7 +9,7 @@
   box-sizing: border-box;
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
   overflow: hidden;
-  --card-accent-color: var(--salt-accent-background);
+  --card-accent-color: var(--salt-sentiment-accent-background);
 }
 
 .saltCard-primary {

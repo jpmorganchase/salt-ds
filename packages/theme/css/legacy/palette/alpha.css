@@ -18,8 +18,6 @@
   --salt-palette-alpha-contrast-low: var(--salt-color-black-15a);
   --salt-palette-alpha-contrast-lower: var(--salt-color-black-10a);
   --salt-palette-alpha-contrast-lowest: var(--salt-color-black-5a);
-
-  --salt-palette-alpha-none: transparent;
 }
 
 .salt-theme[data-mode="dark"] {
@@ -42,6 +40,4 @@
   --salt-palette-alpha-contrast-low: var(--salt-color-white-15a);
   --salt-palette-alpha-contrast-lower: var(--salt-color-white-10a);
   --salt-palette-alpha-contrast-lowest: var(--salt-color-white-5a);
-
-  --salt-palette-alpha-none: transparent;
 }

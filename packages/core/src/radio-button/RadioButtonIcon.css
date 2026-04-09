@@ -30,15 +30,17 @@
 
 .saltRadioButtonIcon-disabled,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled {
-  border-color: var(--salt-selectable-borderColor-disabled);
-  background: var(--salt-container-primary-background-disabled);
-  color: var(--salt-selectable-foreground-disabled);
+  opacity: 0.4;
+
+  border-color: var(--salt-selectable-borderColor);
+  background: var(--salt-container-primary-background);
+  color: var(--salt-selectable-foreground);
 }
 
 .saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled,
 .saltRadioButton:hover .saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled {
-  border-color: var(--salt-selectable-borderColor-selectedDisabled);
-  color: var(--salt-selectable-foreground-selectedDisabled);
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
 }
 
 .saltRadioButtonIcon-error,

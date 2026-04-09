@@ -10,7 +10,6 @@
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
     "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build && yarn workspace @salt-ds/highcharts-theme build && yarn gen:css && next build --webpack",
-    "deploy": "",
     "dev": "next dev --webpack",
     "start": "next start",
     "gen:snapshot": "yarn gen:props && yarn gen:css && yarn mosaic build --out snapshots --name latest --config mosaic.config.mjs",

@@ -1,5 +1,5 @@
 .saltDropIndicator {
-  background: var(--salt-accent-background);
+  background: var(--salt-sentiment-accent-background);
   cursor: move;
   position: absolute;
   transform: translate(-4px, 0);

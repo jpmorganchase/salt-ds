@@ -206,7 +206,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         />
         <RadioButtonIcon
           checked={checked}
-          disabled={disabled}
           readOnly={readOnly}
           validationStatus={validationStatus}
           error={error}

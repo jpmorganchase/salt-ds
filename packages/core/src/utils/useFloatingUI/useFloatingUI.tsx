@@ -138,7 +138,12 @@ export function useFloatingComponent() {
 export interface UseFloatingUIProps
   extends Pick<
     UseFloatingOptions,
-    "placement" | "strategy" | "open" | "onOpenChange" | "nodeId"
+    | "placement"
+    | "strategy"
+    | "open"
+    | "onOpenChange"
+    | "nodeId"
+    | "rootContext"
   > {
   /**
    * Function to update the default middleware used to extend or replace it

@@ -205,6 +205,8 @@ export * from "./HeadphonesDisabled";
 export * from "./HeadphonesDisabledSolid";
 export * from "./HeadphonesSolid";
 export * from "./Help";
+export * from "./HelpCircle";
+export * from "./HelpCircleSolid";
 export * from "./HelpSolid";
 export * from "./Hidden";
 export * from "./HiddenSolid";

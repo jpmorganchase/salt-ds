@@ -1,6 +1,6 @@
 .saltSliderThumb {
   align-items: center;
-  background: var(--salt-accent-borderColor);
+  background: var(--salt-sentiment-accent-borderColor);
   cursor: var(--salt-cursor-grab);
   display: flex;
   height: var(--salt-size-selectable);
@@ -13,7 +13,6 @@
 }
 
 .saltSliderThumb-disabled {
-  background: var(--salt-accent-borderColor-disabled);
   cursor: var(--salt-cursor-disabled);
   pointer-events: none;
 }

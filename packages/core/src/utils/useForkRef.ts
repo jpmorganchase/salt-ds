@@ -14,7 +14,7 @@ export function useForkRef<Instance>(
     if (refA == null && refB == null) {
       return () => null;
     }
-    return (refValue) => {
+    return (refValue: Instance | null) => {
       setRef(refA, refValue);
       setRef(refB, refValue);
     };

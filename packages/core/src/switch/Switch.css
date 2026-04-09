@@ -13,8 +13,10 @@
 }
 
 .saltSwitch-disabled {
-  color: var(--salt-content-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground);
+
   cursor: var(--salt-cursor-disabled);
+  opacity: 0.4;
 }
 
 .saltSwitch-track {
@@ -56,15 +58,15 @@
 
 .saltSwitch-disabled .saltSwitch-track,
 .saltSwitch-disabled:hover .saltSwitch-track {
-  border-color: var(--salt-selectable-borderColor-disabled);
-  color: var(--salt-selectable-foreground-disabled);
-  background: var(--salt-container-primary-background-disabled);
+  border-color: var(--salt-selectable-borderColor);
+  color: var(--salt-selectable-foreground);
+  background: var(--salt-container-primary-background);
 }
 
 .saltSwitch-checked.saltSwitch-disabled .saltSwitch-track,
 .saltSwitch-checked.saltSwitch-disabled:hover .saltSwitch-track {
-  border-color: var(--salt-selectable-borderColor-selectedDisabled);
-  color: var(--salt-selectable-foreground-selectedDisabled);
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
 }
 
 .saltSwitch-thumb {

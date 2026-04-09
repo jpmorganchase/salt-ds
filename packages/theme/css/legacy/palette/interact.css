@@ -11,7 +11,6 @@
   --salt-palette-interact-foreground: var(--salt-color-gray-200);
   --salt-palette-interact-foreground-active: var(--salt-color-blue-600);
   --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-600-40a);
-  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-40a);
   --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   --salt-palette-interact-outline: var(--salt-color-blue-600);
 
@@ -50,7 +49,6 @@
   --salt-palette-interact-foreground: var(--salt-color-gray-90);
   --salt-palette-interact-foreground-active: var(--salt-color-blue-100);
   --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-100-40a);
-  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-40a);
   --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   --salt-palette-interact-outline: var(--salt-color-blue-100);
 

@@ -70,6 +70,7 @@ export * from "./theme";
 export * from "./toast";
 export * from "./toggle-button";
 export * from "./toggle-button-group";
+export * from "./toggletip";
 export * from "./tooltip";
 export * from "./types";
 export * from "./utils";

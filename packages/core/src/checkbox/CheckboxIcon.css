@@ -37,15 +37,17 @@
 .saltCheckbox:hover .saltCheckboxIcon-disabled,
 .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate,
 .saltCheckbox:hover .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
-  border-color: var(--salt-selectable-borderColor-disabled);
-  background: var(--salt-container-primary-background-disabled);
-  color: var(--salt-selectable-foreground-disabled);
+  opacity: 0.4;
+
+  border-color: var(--salt-selectable-borderColor);
+  background: var(--salt-container-primary-background);
+  color: var(--salt-selectable-foreground);
 }
 
 .saltCheckboxIcon-checked.saltCheckboxIcon-disabled,
 .saltCheckbox:hover .saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
-  border-color: var(--salt-selectable-borderColor-selectedDisabled);
-  color: var(--salt-selectable-foreground-selectedDisabled);
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
 }
 
 .saltCheckboxIcon-indeterminate::before {
