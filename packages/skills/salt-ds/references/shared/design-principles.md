@@ -57,3 +57,10 @@ These principles should guide both `create` and `review`.
 - ask when the choice changes workflow structure, major layout ownership, or migration familiarity
 - do not invent a Salt answer just because the host expects momentum
 - use runtime evidence only when the source pass still leaves an important gap
+
+
+## Stable Before Experimental
+
+- prefer stable core Salt directions before lab, rc, or custom composition
+- if a recommendation is noisy, provisional, or transport-dependent, say so instead of presenting it as settled guidance
+- do not reach for decorative novelty or custom art direction when a quieter stable Salt solution already fits

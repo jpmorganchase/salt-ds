@@ -24,8 +24,7 @@ Use this file only for `create` work after project context is known.
 - choose one composition direction before writing code
 - prefer Salt patterns and compositions before custom UI structure
 - keep the first scaffold centered on the main task, not on optional embellishment
-- for new Salt work, default to the shared default-new-work bootstrap described in `references/shared/theme.md` unless migration compatibility or repo policy explicitly requires the compatibility path
-- when you use `SaltProviderNext` for default new work, include the full default-new-work bootstrap from `references/shared/theme.md` rather than naming the provider alone unless an explicit exception applies
+- when provider or theme bootstrap matters, use `references/shared/theme.md`; prefer the shared new-work path only when repo policy does not override it and the required assets are available
 - keep visual choices Salt-native; do not chase novelty outside the design system
 - use workflow confidence to decide whether to proceed or ask a follow-up question
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
@@ -43,10 +42,8 @@ Use this file only for `create` work after project context is known.
   - commit to one Salt composition direction before writing code
 - `create-canonical-before-custom`
   - resolve the nearest Salt pattern, component, or foundation before inventing custom structure
-- `create-default-brand-theme-for-new-work`
-  - use the default-new-work bootstrap from `references/shared/theme.md` by default for new Salt work unless compatibility or repo policy says otherwise
-- `create-complete-brand-bootstrap`
-  - when using `SaltProviderNext` for default new work, include the full bootstrap from `references/shared/theme.md` rather than naming the provider alone
+- `create-theme-bootstrap-only-when-grounded`
+  - use shared theme guidance only when the task actually needs bootstrap guidance and repo policy does not override it
 - `create-apply-conventions-after-canonical`
   - apply wrappers and local policy only after the canonical Salt direction is clear
 - `create-runtime-evidence-only-for-gaps`
@@ -56,12 +53,12 @@ Use this file only for `create` work after project context is known.
 
 ## Intent-First Loop
 
-0. Obtain canonical Salt guidance via MCP (`create_salt_ui`) or CLI (`salt-ds create`) and do not proceed until it succeeds.
+0. Obtain canonical Salt guidance via MCP (`create_salt_ui`) or CLI (`salt-ds create`) and do not proceed until the result is complete enough for the regions you plan to implement.
 1. State the user task, preserving page-level nouns like dashboard, page, screen, workspace, or overview when the request is multi-region.
 2. State the key interaction or decision point.
 3. State the composition direction.
 4. State the Salt pattern or component choice.
-5. State whether the work should use the default-new-work bootstrap from `references/shared/theme.md` or an explicit compatibility exception.
+5. State whether theme bootstrap guidance matters for this task and, if so, which path from `references/shared/theme.md` applies or remains pending.
 6. Verify any explicit Salt token or API names you plan to mention.
 7. If a targeted follow-up is needed, keep the concrete user noun phrase visible and add slot or page context without turning it into taxonomy-style wording.
 8. If `composition_contract.expected_patterns` or `composition_contract.expected_components` are present, run targeted Salt follow-up for each unresolved named item before writing that part of the code.
@@ -74,3 +71,11 @@ Use this file only for `create` work after project context is known.
 - the key interaction is unclear
 - the repo policy could materially change the chosen component or wrapper
 - confidence is low and the workflow output says more evidence is needed
+
+## Noisy-Result Safety
+
+- if canonical create output is partial, semantically off-target, truncated, or repeated-conflict noise, stop before implementation and use `references/shared/degraded-tooling.md`
+- after two noisy follow-up attempts for the same required item, do not keep fishing for a better result while coding around the gap
+- for page-level work, do not treat one valid anchor such as `Analytical dashboard` as permission to improvise unresolved peer regions such as header, navigation, chart, or table surfaces
+- if a concrete region remains unresolved, either keep that region pending or ask instead of inventing a bespoke composition
+- do not let successful TypeScript build or generic rendering override an incomplete Salt create contract

@@ -3,8 +3,18 @@
 Use this file when the task is not only "which component" but "what kind of Salt surface is this?"
 
 Keep the user task visible first.
+These surface classes matter for create, review, migrate, and upgrade work.
 
 Do not reduce a page-level ask into a smaller local component before the top-level direction is grounded.
+
+## Contents
+
+- [Dashboard Or Overview Page](#dashboard-or-overview-page)
+- [Table Plus Filters](#table-plus-filters)
+- [Form Page](#form-page)
+- [Dialog Workflow](#dialog-workflow)
+- [Navigation Shell](#navigation-shell)
+- [Loading, Empty, Error, And Success States](#loading-empty-error-and-success-states)
 
 ## Dashboard Or Overview Page
 

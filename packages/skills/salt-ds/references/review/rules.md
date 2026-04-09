@@ -1,6 +1,8 @@
 # Review Rules
 
-Use this file only for `review` work after project context is known.
+Use this file only for `review` work.
+For deep or repo-spanning review, project context should already be known.
+For quick-check, you may start from the current file, selection, or smallest affected region and add project context when feasibility or safety requires it.
 
 ## Priority Order
 
@@ -37,6 +39,8 @@ Do not lead with style nits when a more important issue exists.
 5. Rerun `review`.
 6. Add `review --url` only if the source pass still leaves an important gap.
 
+If structured fields such as `fixCandidates`, `confidence`, or `raiseConfidence` are missing, keep the same order and derive the next step from the canonical findings rather than stalling or skipping the review contract.
+
 ## Critical Rules
 
 - do not propose Salt-specific fixes, replacements, or code until canonical Salt guidance has been obtained via MCP or CLI
@@ -45,3 +49,19 @@ Do not lead with style nits when a more important issue exists.
 - keep canonical Salt guidance separate from repo conventions in the explanation
 - use runtime evidence to answer unresolved questions, not as the first step
 - when multiple findings exist, order them by user impact and regression risk
+
+## Accessibility Audit Rule
+
+Treat Salt-specific accessibility audits as `review` work, not generic accessibility commentary.
+Ground the audit in canonical Salt guidance first, then use the rubric to assess semantics, keyboard flow, labeling, focus visibility, contrast-sensitive states, and recovery states.
+Do not skip Salt source validation just because the request mentions accessibility.
+
+
+## Quick-Check Mode
+
+Use quick-check mode when the user wants a gut-check, pre-commit sanity review, or the safest next fix.
+
+- stay close to the current file, current selection, or smallest affected region
+- still obtain canonical Salt guidance when feasible, but avoid broad repo sweeps unless the issue clearly requires them
+- return the top issues, the safest next fix, and the most important confidence gap
+- if the review becomes structurally ambiguous, say that a deep review is the safer next step

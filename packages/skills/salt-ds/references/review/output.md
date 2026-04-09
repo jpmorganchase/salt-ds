@@ -24,7 +24,7 @@
 
 ## salt compliance checks
 
-- State whether the response used broad review mode or narrow debug/fix mode.
+- State whether the response used quick-check mode, broad review mode, or narrow debug/fix mode.
 - Note which Salt primitives, patterns, or foundations were checked when judging component choice.
 - State whether the review findings were validated against canonical Salt guidance.
 - State which source-level validation surface was used when code was available:
@@ -59,3 +59,16 @@ Example debug/fix phrasing:
 - `Debug/fix mode: the metric row drift looks structural rather than cosmetic; the cards are being laid out with generic wrappers instead of the intended Salt composition, so the fix starts with the layout owner before touching individual card styles.`
 
 If there are no material findings, say so explicitly and note any residual testing gaps or assumptions.
+
+
+## blocked or partial review states
+
+- if canonical review guidance stayed partial or noisy, state that clearly before giving recommendations
+- separate “grounded finding” from “likely but not fully grounded”
+- if runtime evidence came from fetched-html fallback only, keep claims narrower than full browser-session validation
+
+
+Example quick-check phrasing:
+
+- `Quick-check mode: the form structure is broadly reasonable, but the validation feedback is detached from the affected fields; the safest next fix is to move the status and helper text back under field ownership before touching spacing.`
+- `Quick-check mode: I see one likely Salt composition issue and one confidence gap. Fix the layout owner first; if the problem persists, escalate to a deep review.`

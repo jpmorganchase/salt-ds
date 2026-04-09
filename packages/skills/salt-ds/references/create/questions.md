@@ -22,3 +22,13 @@ Ask only the few questions that change the Salt structure or package choice.
 - Long questionnaires.
 - Questions that do not change the chosen primitives or structure.
 - Asking for pixel-perfect detail when a reasonable Salt-first default is already clear.
+
+
+## blocker-question mode
+
+When one unresolved decision blocks the Salt direction:
+
+- ask one question at a time
+- say why it changes the structure or pattern choice
+- provide your recommended default answer when possible
+- if the codebase or repo context can answer it, inspect that first instead of asking the user
