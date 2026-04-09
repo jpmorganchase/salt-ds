@@ -29,14 +29,123 @@ For a background that organizes content in an application. Instead, use [Panel](
 
 ## Import
 
-To import `SidePanel`, `SidePanelTrigger` and `SidePanelProvider` from the lab Salt package, use:
+To import `SidePanel`, `SidePanelContent`, `SidePanelProvider` and `SidePanelTrigger` from the lab Salt package, use:
 
 ```js
-import { SidePanel, SidePanelProvider, SidePanelTrigger } from "@salt-ds/lab";
+import {
+  SidePanel,
+  SidePanelContent,
+  SidePanelProvider,
+  SidePanelTrigger,
+} from "@salt-ds/lab";
+```
+
+### `SidePanelProvider`
+
+`SidePanelProvider` wraps both the trigger and the panel. It manages the open/closed state and coordinates ARIA attributes, focus management and keyboard dismissal between them. Place it around every group of trigger and panel elements that should share state.
+
+```jsx
+<SidePanelProvider>{/* trigger and panel go here */}</SidePanelProvider>
+```
+
+Use the `defaultOpen` prop to render the panel open on first mount, or pass `open` and `onOpenChange` for fully controlled state.
+
+### `SidePanelTrigger`
+
+`SidePanelTrigger` wraps the element that opens and closes the panel. It accepts a single child element (typically a `Button`) and automatically applies `aria-expanded`, `aria-controls`, and a click handler to toggle the panel.
+
+```jsx
+<SidePanelTrigger>
+  <Button>Toggle panel</Button>
+</SidePanelTrigger>
+```
+
+`SidePanelTrigger` does not render a wrapper element. It clones its child and merges the required props onto it, so your button remains the direct flex or layout child.
+
+### `SidePanel`
+
+`SidePanel` is the panel surface itself. It renders as a `region` landmark, manages its enter/exit animation, and moves focus into the panel when it opens. Use the `position` prop to anchor the panel to the `"left"` or `"right"` edge of its container (defaults to `"right"`), and the `variant` prop to set its background color (`"primary"`, `"secondary"`, or `"tertiary"`).
+
+You must provide an accessible name via `aria-labelledby` (pointing to a heading inside the panel) or `aria-label`.
+
+```jsx
+<SidePanel position="right" aria-labelledby={headingId}>
+  {/* panel content */}
+</SidePanel>
+```
+
+### `SidePanelContent`
+
+`SidePanelContent` is an optional layout helper that provides a standard panel structure: a header row with a close button and a scrollable body. Pass a heading element to the `header` prop and your content as children.
+
+```jsx
+<SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+  <Text>Panel body content goes here.</Text>
+</SidePanelContent>
+```
+
+`SidePanelContent` renders a close button automatically. If you need a custom header layout or close behavior, you can skip `SidePanelContent` and compose your own header using `useSidePanelContext` to call `setOpen(false)`.
+
+### Putting it together
+
+A minimal side panel combines all four parts inside a flex container:
+
+```jsx
+<SidePanelProvider>
+  <FlexLayout>
+
+    <StackLayout style={{ flex: 1 }}>
+      <SidePanelTrigger>
+        <Button style={{width: "fit-content"}}>Toggle panel</Button>
+      </SidePanelTrigger>
+    </StackLayout>
+
+    <SidePanel position="right" aria-labelledby={"heading id"}>
+      <Text>Side panel content goes here.</Text>
+      <SidePanelContent header={<H2 id={"heading id"}>Details</H2>}>
+        <Text>Side panel content goes here.</Text>
+      </SidePanelContent>
+    </SidePanel>
+
+  </FlexLayout>
+</SidePanelProvider>);
+```
+
+### Custom triggers
+
+When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a custom trigger using `useSidePanelContext`. Call `setOpen`, `setReference`, and spread `getReferenceProps` onto your element to maintain the correct ARIA attributes and focus return behavior.
+
+```jsx
+const { setOpen, setReference, getReferenceProps, getFloatingProps } =
+  useSidePanelContext();
+
+<Button
+  {...getReferenceProps({
+    "aria-controls": getFloatingProps().id,
+    onClick: () => {
+      setReference(event.currentTarget);
+      setOpen(true);
+    },
+  })}
+>
+  Edit
+</Button>;
 ```
 
 ## Props
 
+### `SidePanel`
+
 <PropsTable packageName="lab" componentName="SidePanel" />
+
+### `SidePanelProvider`
+
 <PropsTable packageName="lab" componentName="SidePanelProvider" />
+
+### `SidePanelTrigger`
+
 <PropsTable packageName="lab" componentName="SidePanelTrigger" />
+
+### `SidePanelContent`
+
+<PropsTable packageName="lab" componentName="SidePanelContent" />
