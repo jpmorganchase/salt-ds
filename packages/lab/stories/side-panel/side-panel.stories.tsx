@@ -1080,3 +1080,24 @@ export const WithNav: StoryFn = () => (
     </FlexLayout>
   </SidePanelProvider>
 );
+
+export const xx = () => {
+  return (
+
+
+  <SidePanelProvider>
+    <FlexLayout>
+      <StackLayout style={{ flex: 1 }}>
+        <SidePanelTrigger>
+          <Button style={{width: "fit-content"}}>Toggle panel</Button>
+        </SidePanelTrigger>
+      </StackLayout>
+
+      <SidePanel position="right">
+        <SidePanelContent header={<H2>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    </FlexLayout>
+  </SidePanelProvider>);
+}
