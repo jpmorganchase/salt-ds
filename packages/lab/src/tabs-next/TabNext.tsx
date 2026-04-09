@@ -1,4 +1,9 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,14 +14,17 @@ import {
   type MouseEvent,
   type ReactElement,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 import tabCss from "./TabNext.css";
 import { TabNextContext } from "./TabNextContext";
 import { useTabsNext } from "./TabsNextContext";
+import { getMeasuredWidth } from "./widthMeasurement";
 
 const withBaseName = makePrefixer("saltTabNext");
 
@@ -26,7 +34,7 @@ export interface TabNextProps extends ComponentPropsWithoutRef<"div"> {
    */
   disabled?: boolean;
   /**
-   * The value of the tab.
+   * The value of the tab. This must be unique within a `TabsNext` instance.
    */
   value: string;
 }
@@ -52,7 +60,8 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       window: targetWindow,
     });
 
-    const { selected, activeTab } = useTabsNext();
+    const { selected, activeTab, registerRenderedTab, updateRenderedTab } =
+      useTabsNext();
 
     const disabled = !!disabledProp;
 
@@ -61,6 +70,15 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const wasMouseDown = useRef(false);
     const [focusVisible, setFocusVisible] = useState(false);
     const [focused, setFocused] = useState(false);
+    const markerRef = useRef<HTMLSpanElement>(null);
+    const tabRootRef = useRef<HTMLDivElement>(null);
+    const hostRef = useRef<HTMLDivElement | null>(null);
+
+    if (!hostRef.current && targetWindow?.document) {
+      hostRef.current = targetWindow.document.createElement("div");
+      hostRef.current.dataset.tabHost = value;
+      hostRef.current.style.display = "contents";
+    }
 
     const handleFocusCapture = (event: FocusEvent<HTMLDivElement>) => {
       onFocusCapture?.(event);
@@ -92,18 +110,39 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       onMouseDown?.(event);
+      if (value && id) {
+        activeTab.current = { value, id };
+      }
       wasMouseDown.current = true;
     };
 
-    const [actions, setActions] = useState<string[]>([]);
+    const [actionIds, setActionIds] = useState(() => new Set<string>());
 
     const registerAction = useCallback((id: string) => {
-      setActions((old) => old.concat(id));
+      setActionIds((old) => {
+        if (old.has(id)) {
+          return old;
+        }
+
+        const next = new Set(old);
+        next.add(id);
+        return next;
+      });
 
       return () => {
-        setActions((old) => old.filter((action) => action !== id));
+        setActionIds((old) => {
+          if (!old.has(id)) {
+            return old;
+          }
+
+          const next = new Set(old);
+          next.delete(id);
+          return next;
+        });
       };
     }, []);
+
+    const actions = useMemo(() => Array.from(actionIds), [actionIds]);
 
     const context = useMemo(
       () => ({
@@ -118,7 +157,72 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       [id, selected, value, focused, disabled, actions, registerAction],
     );
 
-    return (
+    useIsomorphicLayoutEffect(() => {
+      if (!hostRef.current || !id) {
+        return;
+      }
+
+      return registerRenderedTab({
+        host: hostRef.current,
+        id,
+        marker: markerRef.current,
+        root: tabRootRef.current,
+        trigger: null,
+        value,
+        width: 0,
+      });
+    }, [id, registerRenderedTab, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      updateRenderedTab(value, {
+        marker: markerRef.current,
+        root: tabRootRef.current,
+      });
+    }, [updateRenderedTab, value]);
+
+    useEffect(() => {
+      const element = tabRootRef.current;
+      const resizeObserverCtor = (
+        targetWindow as
+          | (Window & { ResizeObserver?: typeof ResizeObserver })
+          | undefined
+      )?.ResizeObserver;
+      if (!element || !resizeObserverCtor) {
+        return;
+      }
+
+      const updateWidth = () => {
+        // Preserve the strip width while a tab is rendered in the overflow menu.
+        // Overflow items stretch to the menu width, and hidden measurement tabs
+        // can collapse to a different intrinsic size. Neither width is suitable
+        // for deciding whether the tab fits back in the main strip.
+        if (
+          element.closest(".saltTabOverflow-list") ||
+          element.closest(".saltTabListNext-measureContainer")
+        ) {
+          return;
+        }
+
+        updateRenderedTab(value, {
+          width: getMeasuredWidth(element),
+        });
+      };
+
+      updateWidth();
+
+      const observer = new resizeObserverCtor(() => {
+        updateWidth();
+      });
+
+      observer.observe(element);
+      return () => {
+        observer.disconnect();
+      };
+    }, [targetWindow, updateRenderedTab, value]);
+
+    const handleTabRootRef = useForkRef(tabRootRef, ref);
+
+    const tabMarkup = (
       <TabNextContext.Provider value={context}>
         <div
           className={clsx(
@@ -131,7 +235,8 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
             className,
           )}
           data-overflowitem="true"
-          ref={ref}
+          data-value={value}
+          ref={handleTabRootRef}
           onMouseDown={handleMouseDown}
           onFocusCapture={handleFocusCapture}
           onFocus={handleFocus}
@@ -142,6 +247,13 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           {children}
         </div>
       </TabNextContext.Provider>
+    );
+
+    return (
+      <>
+        <span data-tabnext-marker="" hidden ref={markerRef} />
+        {hostRef.current ? createPortal(tabMarkup, hostRef.current) : null}
+      </>
     );
   },
 );

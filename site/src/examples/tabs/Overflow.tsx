@@ -31,7 +31,10 @@ export const Overflow = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar inset divider>
-        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
+        <TabListNext
+          aria-label="Example tablist"
+          style={{ maxWidth: 350, margin: "auto" }}
+        >
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
               <TabNextTrigger>{label}</TabNextTrigger>

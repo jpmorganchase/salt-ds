@@ -20,7 +20,8 @@ import { useTabsNext } from "./TabsNextContext";
 
 export interface TabNextPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The value of the panel, this should map to the corresponding tab.
+   * The value of the panel. This should map to the corresponding tab and must
+   * be unique within a `TabsNext` instance.
    */
   value: string;
 }
@@ -38,6 +39,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     });
     const id = useId(idProp);
     const { registerPanel, getTabId, selected } = useTabsNext();
+    const hidden = selected !== value;
 
     const panelRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(panelRef, ref);
@@ -50,25 +52,36 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
 
     const [hasFocusableChildren, setHasFocusableChildren] = useState(false);
     useEffect(() => {
-      if (!panelRef.current) return;
+      const element = panelRef.current;
+      if (!element || hidden) return;
+
+      let rafId: number | null = null;
 
       const detectFocusableChildren = () => {
-        requestAnimationFrame(() => {
-          if (!panelRef.current) return;
-          const elements = tabbable(panelRef.current);
-          setHasFocusableChildren(elements.length > 0);
+        rafId = null;
+        const elements = tabbable(element);
+        const nextHasFocusableChildren = elements.length > 0;
+        setHasFocusableChildren((prev) => {
+          return prev === nextHasFocusableChildren
+            ? prev
+            : nextHasFocusableChildren;
         });
       };
 
+      const scheduleDetectFocusableChildren = () => {
+        if (rafId != null) {
+          cancelAnimationFrame(rafId);
+        }
+        rafId = requestAnimationFrame(detectFocusableChildren);
+      };
+
       const observer = new MutationObserver(() => {
-        detectFocusableChildren();
+        scheduleDetectFocusableChildren();
       });
 
-      requestAnimationFrame(() => {
-        detectFocusableChildren();
-      });
+      scheduleDetectFocusableChildren();
 
-      observer.observe(panelRef.current, {
+      observer.observe(element, {
         childList: true,
         subtree: true,
         attributes: true,
@@ -76,10 +89,12 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
 
       return () => {
         observer.disconnect();
+        if (rafId != null) {
+          cancelAnimationFrame(rafId);
+        }
       };
-    }, []);
+    }, [hidden]);
 
-    const hidden = selected !== value;
     const tabId = getTabId(value);
 
     return (

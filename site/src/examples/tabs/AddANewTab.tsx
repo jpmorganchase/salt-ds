@@ -17,8 +17,8 @@ export const AddANewTab = (): ReactElement => {
 
   return (
     <TabsNext value={value} onChange={(_event, newValue) => setValue(newValue)}>
-      <TabBar inset divider style={{ width: 500 }}>
-        <TabListNext>
+      <TabBar inset divider>
+        <TabListNext aria-label="Example tablist">
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
               <TabNextTrigger>{label}</TabNextTrigger>
@@ -33,6 +33,7 @@ export const AddANewTab = (): ReactElement => {
             newCount.current += 1;
 
             setTabs((old) => old.concat(newTab));
+            setValue(newTab);
             announce(`${newTab} tab added`, 150);
           }}
         >

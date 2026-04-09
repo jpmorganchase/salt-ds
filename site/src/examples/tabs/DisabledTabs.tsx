@@ -13,7 +13,7 @@ export const DisabledTabs = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar inset divider>
-        <TabListNext>
+        <TabListNext aria-label="Example tablist">
           {tabs.map((label) => {
             return (
               <TabNext disabled={label === "Loans"} value={label} key={label}>

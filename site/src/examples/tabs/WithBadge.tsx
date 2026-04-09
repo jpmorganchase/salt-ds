@@ -19,7 +19,7 @@ export const WithBadge = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar divider inset>
-        <TabListNext>
+        <TabListNext aria-label="Example tablist">
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
               <TabNextTrigger>
@@ -27,7 +27,11 @@ export const WithBadge = (): ReactElement => {
                 {notifications[label] > 0 ? (
                   <Badge
                     value={notifications[label]}
-                    aria-label={`${notifications[label]} updates`}
+                    aria-label={
+                      notifications[label] > 1
+                        ? `${notifications[label]} updates`
+                        : `${notifications[label]} update`
+                    }
                   />
                 ) : undefined}
               </TabNextTrigger>

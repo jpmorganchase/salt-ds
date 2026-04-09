@@ -2,240 +2,256 @@ import {
   ownerWindow,
   useEventCallback,
   useIsomorphicLayoutEffect,
-  useValueEffect,
 } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
+import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
+import type { RenderedTab } from "../TabsNextContext";
 import {
-  Children,
-  isValidElement,
-  type ReactNode,
-  type RefObject,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
-import type { TabNextProps } from "../TabNext";
-import type { Item } from "./useCollection";
+  getGapValue,
+  getMeasuredWidth,
+  seedWidthMap,
+  updateWidthMap,
+} from "../widthMeasurement";
 
 interface UseOverflowProps {
   container: RefObject<HTMLElement>;
   selected?: string;
-  children: ReactNode;
-  tabs: Item[];
+  tabs: RenderedTab[];
   overflowButton: RefObject<HTMLButtonElement>;
+  menuOpen: boolean;
 }
 
-function getTabWidth(element: HTMLElement) {
-  const { width } = element.getBoundingClientRect();
-  return Math.ceil(width);
+function getTabWidth(tab: RenderedTab) {
+  return tab.width || getMeasuredWidth(tab.root);
+}
+
+function getAvailableWidth(element: HTMLElement) {
+  const parent = element.parentElement;
+  if (!parent) {
+    return getMeasuredWidth(element);
+  }
+
+  const parentWidth = getMeasuredWidth(parent);
+  const parentStyles = ownerWindow(parent).getComputedStyle(parent);
+  const parentGap = getGapValue(parentStyles);
+  const siblings = Array.from(parent.children).filter(
+    (child): child is HTMLElement => {
+      if (!(child instanceof HTMLElement) || child === element) {
+        return false;
+      }
+
+      return ownerWindow(child).getComputedStyle(child).display !== "none";
+    },
+  );
+
+  const siblingWidth = siblings.reduce((width, sibling) => {
+    return width + getMeasuredWidth(sibling);
+  }, 0);
+  const gapCount = siblings.length > 0 ? siblings.length : 0;
+  const availableWidth = Math.max(
+    0,
+    parentWidth - siblingWidth - gapCount * parentGap,
+  );
+  return availableWidth;
 }
 
 export function useOverflow({
-  tabs,
   container,
   overflowButton,
-  children,
+  tabs,
   selected,
+  menuOpen,
 }: UseOverflowProps) {
-  /**
-   * `visibleCount` doesn't include newly selected tab from overflow menu, which is removed in `computeVisible`
-   */
-  const [{ visibleCount, isMeasuring }, setVisibleItems] = useValueEffect({
-    visibleCount: tabs.length,
-    isMeasuring: false,
-  });
-  const targetWindow = useWindow();
-  const realSelectedIndex = useRef<number>(-1);
+  const orderedValues = useMemo(() => tabs.map((tab) => tab.value), [tabs]);
+  const orderedValuesKey = orderedValues.join("\0");
+  const widthSignature = useMemo(() => {
+    return tabs.map((tab) => `${tab.value}:${tab.width.toFixed(2)}`).join("\0");
+  }, [tabs]);
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [isMeasuring, setIsMeasuring] = useState(true);
+  const pinnedSelectionRef = useRef(selected);
+  const previousOrderedValuesKeyRef = useRef(orderedValuesKey);
+  const previousWidthSignatureRef = useRef(widthSignature);
+  const baseVisibleValues = orderedValues.slice(0, visibleCount);
+  const baseHiddenValues = orderedValues.slice(visibleCount);
+  const selectedIsHidden = selected
+    ? baseHiddenValues.includes(selected)
+    : false;
+  const pinnedValue = selectedIsHidden ? selected : pinnedSelectionRef.current;
 
-  const updateOverflow = useEventCallback(() => {
-    const computeVisible = (visibleCount: number) => {
-      if (container.current && targetWindow) {
-        const items = Array.from(
-          container.current.querySelectorAll<HTMLElement>(
-            "[data-overflowitem]",
-          ),
-        );
-        const selectedTab = container.current.querySelector<HTMLElement>(
-          "[role=tab][aria-selected=true]",
-        )?.parentElement;
+  const measureVisibleCount = useEventCallback((pinnedValue?: string) => {
+    const element = container.current;
+    if (!element) {
+      return tabs.length;
+    }
 
-        let maxWidth = container.current.clientWidth ?? 0;
+    let maxWidth = getAvailableWidth(element);
+    const styles = ownerWindow(element).getComputedStyle(element);
+    const gap = getGapValue(styles);
 
-        const containerStyles = targetWindow.getComputedStyle(
-          container.current,
-        );
-        const gap = Number.parseInt(containerStyles.gap || "0", 10);
+    let currentWidth = 0;
+    let nextVisibleCount = 0;
+    const visibleItems: RenderedTab[] = [];
 
-        let currentWidth = 0;
-        let newVisibleCount = 0;
-
-        const visible = [];
-
-        while (newVisibleCount < items.length) {
-          const element = items[newVisibleCount];
-          if (element) {
-            if (currentWidth + getTabWidth(element) + gap > maxWidth) {
-              break;
-            }
-            currentWidth += getTabWidth(element) + gap;
-            visible.push(element);
-          }
-          newVisibleCount++;
-        }
-
-        if (newVisibleCount >= items.length) {
-          return newVisibleCount;
-        }
-
-        const overflowButtonWidth = overflowButton.current
-          ? overflowButton.current.offsetWidth + gap
-          : 0;
-        maxWidth -= overflowButtonWidth;
-
-        while (currentWidth > maxWidth) {
-          const removed = visible.pop();
-          if (!removed) break;
-          currentWidth -= getTabWidth(removed) + gap;
-          newVisibleCount--;
-        }
-
-        if (selectedTab && !visible.includes(selectedTab)) {
-          const selectedTabWidth = getTabWidth(selectedTab) + gap;
-          while (currentWidth + selectedTabWidth > maxWidth) {
-            const removed = visible.pop();
-            if (!removed) break;
-            currentWidth -= getTabWidth(removed) + gap;
-            newVisibleCount--;
-          }
-        }
-
-        // minimal count should be 0, if there is no space for any tab apart from selected tab from the overflow menu
-        return Math.max(0, newVisibleCount);
+    while (nextVisibleCount < tabs.length) {
+      const item = tabs[nextVisibleCount];
+      if (!item) {
+        break;
       }
-      return visibleCount;
-    };
 
-    setVisibleItems(function* () {
-      // Show all
-      yield {
-        visibleCount: tabs.length,
-        isMeasuring: true,
-      };
+      const itemWidth = getTabWidth(item) + gap;
+      if (currentWidth + itemWidth > maxWidth) {
+        break;
+      }
 
-      // Measure the visible count
-      const newVisibleCount = computeVisible(tabs.length);
-      const isMeasuring = newVisibleCount < tabs.length && newVisibleCount > 0;
-      yield {
-        visibleCount: newVisibleCount,
-        isMeasuring,
-      };
+      currentWidth += itemWidth;
+      visibleItems.push(item);
+      nextVisibleCount += 1;
+    }
 
-      // ensure the visible count is correct
+    const overflowWidth = overflowButton.current
+      ? overflowButton.current.offsetWidth + gap
+      : 0;
+    const allTabsFit = nextVisibleCount >= tabs.length;
+    if (allTabsFit) {
+      return nextVisibleCount;
+    }
+
+    maxWidth -= overflowWidth;
+
+    while (currentWidth > maxWidth) {
+      const removed = visibleItems.pop();
+      if (!removed) {
+        break;
+      }
+      currentWidth -= getTabWidth(removed) + gap;
+      nextVisibleCount -= 1;
+    }
+
+    const pinnedItem =
+      pinnedValue == null
+        ? null
+        : (tabs.find((item) => item.value === pinnedValue) ?? null);
+
+    if (pinnedItem && !visibleItems.includes(pinnedItem)) {
+      const pinnedWidth = getTabWidth(pinnedItem) + gap;
+      while (currentWidth + pinnedWidth > maxWidth) {
+        const removed = visibleItems.pop();
+        if (!removed) {
+          break;
+        }
+        currentWidth -= getTabWidth(removed) + gap;
+        nextVisibleCount -= 1;
+      }
+    }
+
+    return Math.max(0, nextVisibleCount);
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    if (selected && selectedIsHidden) {
+      pinnedSelectionRef.current = selected;
+      const nextVisibleCount = measureVisibleCount(selected);
+      if (nextVisibleCount !== visibleCount) {
+        setVisibleCount(nextVisibleCount);
+      }
       if (isMeasuring) {
-        yield {
-          visibleCount: computeVisible(newVisibleCount),
-          isMeasuring: false,
-        };
+        setIsMeasuring(false);
       }
-    });
-  });
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to update when selected changes.
-  useIsomorphicLayoutEffect(() => {
-    updateOverflow();
-  }, [selected]);
-
-  useEffect(() => {
-    const handleWindowResize = () => {
-      updateOverflow();
-    };
-
-    targetWindow?.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      targetWindow?.removeEventListener("resize", handleWindowResize);
-    };
-  }, [updateOverflow, targetWindow]);
+    }
+  }, [
+    isMeasuring,
+    measureVisibleCount,
+    selected,
+    selectedIsHidden,
+    visibleCount,
+  ]);
 
   useEffect(() => {
-    const element = container?.current;
-    if (!element) return;
+    const element = container.current;
+    if (!element || menuOpen || isMeasuring) {
+      return;
+    }
 
-    const win = ownerWindow(element);
+    const observedElements = [element];
+    const parent = element.parentElement;
+    if (parent) {
+      observedElements.push(parent);
+      for (const child of Array.from(parent.children)) {
+        if (child instanceof HTMLElement && child !== element) {
+          observedElements.push(child);
+        }
+      }
+    }
 
-    const resizeObserver = new win.ResizeObserver((entries) => {
-      requestAnimationFrame(() => {
-        if (entries.length === 0) return;
+    const widths = seedWidthMap(observedElements);
 
-        updateOverflow();
-      });
-    });
-    resizeObserver.observe(element);
-    if (element.parentElement) {
-      resizeObserver.observe(element.parentElement);
+    const resizeObserver = new (ownerWindow(element).ResizeObserver)(
+      (entries: ResizeObserverEntry[]) => {
+        for (const entry of entries) {
+          if (!(entry.target instanceof HTMLElement)) {
+            continue;
+          }
+
+          const nextWidth = entry.contentRect.width;
+          if (updateWidthMap(widths, entry.target, nextWidth)) {
+            setIsMeasuring(true);
+            return;
+          }
+        }
+      },
+    );
+
+    for (const observedElement of observedElements) {
+      resizeObserver.observe(observedElement);
     }
 
     return () => {
-      if (element) {
-        resizeObserver.unobserve(element);
-      }
+      resizeObserver.disconnect();
     };
-  }, [container, updateOverflow]);
-
-  useEffect(() => {
-    const element = container?.current;
-    if (!element || isMeasuring) return;
-
-    const win = ownerWindow(element);
-
-    const mutationObserver = new win.MutationObserver(() => {
-      requestAnimationFrame(() => {
-        updateOverflow();
-      });
-    });
-
-    mutationObserver.observe(element, {
-      childList: true,
-    });
-
-    return () => {
-      mutationObserver.disconnect();
-    };
-  }, [container, updateOverflow, isMeasuring]);
-
-  const childArray = useMemo(() => Children.toArray(children), [children]);
-  const visible = useMemo(
-    () => childArray.slice(0, visibleCount),
-    [visibleCount, childArray],
-  );
-  const hidden = useMemo(
-    () => childArray.slice(visibleCount),
-    [childArray, visibleCount],
-  );
-
-  const hiddenSelectedIndex = hidden.findIndex(
-    (child) =>
-      isValidElement<TabNextProps>(child) && child?.props?.value === selected,
-  );
+  }, [container, isMeasuring, menuOpen]);
 
   useIsomorphicLayoutEffect(() => {
-    if (visibleCount === childArray.length) {
-      realSelectedIndex.current = childArray.findIndex(
-        (child) =>
-          isValidElement<TabNextProps>(child) &&
-          child?.props?.value === selected,
-      );
+    if (previousOrderedValuesKeyRef.current !== orderedValuesKey) {
+      previousOrderedValuesKeyRef.current = orderedValuesKey;
+      setIsMeasuring(true);
     }
-  }, [visibleCount, childArray, selected]);
+  }, [orderedValuesKey]);
 
-  if (selected && hiddenSelectedIndex !== -1) {
-    const removed = hidden.splice(hiddenSelectedIndex, 1);
-    visible.push(removed[0]);
+  useIsomorphicLayoutEffect(() => {
+    if (previousWidthSignatureRef.current !== widthSignature) {
+      previousWidthSignatureRef.current = widthSignature;
+      setIsMeasuring(true);
+    }
+  }, [widthSignature]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!isMeasuring || menuOpen) {
+      return;
+    }
+
+    setVisibleCount(
+      measureVisibleCount(
+        selectedIsHidden ? selected : pinnedSelectionRef.current,
+      ),
+    );
+    setIsMeasuring(false);
+  }, [isMeasuring, measureVisibleCount, menuOpen, selected, selectedIsHidden]);
+
+  let visibleValues = baseVisibleValues;
+  let hiddenValues = baseHiddenValues;
+
+  const hiddenPinnedIndex =
+    pinnedValue != null ? hiddenValues.indexOf(pinnedValue) : -1;
+
+  if (hiddenPinnedIndex !== -1) {
+    const pinnedValue = hiddenValues[hiddenPinnedIndex];
+    hiddenValues = hiddenValues.filter(
+      (_, index) => index !== hiddenPinnedIndex,
+    );
+    if (pinnedValue !== undefined) {
+      visibleValues = [...visibleValues, pinnedValue];
+    }
   }
 
-  if (isMeasuring) {
-    return [childArray, [], isMeasuring, realSelectedIndex] as const;
-  }
-
-  return [visible, hidden, isMeasuring, realSelectedIndex] as const;
+  return [visibleValues, hiddenValues, isMeasuring] as const;
 }

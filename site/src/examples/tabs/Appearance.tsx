@@ -15,7 +15,7 @@ export const Appearance = (): ReactElement => {
     <StackLayout>
       <TabsNext defaultValue={tabs[0]}>
         <TabBar>
-          <TabListNext appearance="bordered">
+          <TabListNext appearance="bordered" aria-label="Example tablist">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>

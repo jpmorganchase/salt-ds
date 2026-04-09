@@ -11,19 +11,47 @@ import type { useCollection } from "./hooks/useCollection";
 export interface Item {
   id: string;
   value: string;
-  element: HTMLElement;
+  element: HTMLElement | null;
+  location?: "hidden" | "main" | "overflow";
+  order?: number;
+}
+
+export interface RenderedTab {
+  host: HTMLDivElement;
+  id: string;
+  marker: HTMLElement | null;
+  root: HTMLElement | null;
+  trigger: HTMLButtonElement | null;
+  value: string;
+  width: number;
 }
 
 export interface TabsNextContextValue
-  extends Omit<ReturnType<typeof useCollection>, "registerItem"> {
+  extends Omit<
+    ReturnType<typeof useCollection>,
+    "registerItem" | "updateItem"
+  > {
   registerTab: (item: Item) => () => void;
+  updateTab: (id: string, updates: Partial<Omit<Item, "id" | "value">>) => void;
+  registerRenderedTab: (tab: RenderedTab) => () => void;
+  updateRenderedTab: (
+    value: string,
+    updates: Partial<Omit<RenderedTab, "value">>,
+  ) => void;
+  getRenderedTab: (value: string) => RenderedTab | undefined;
+  getRenderedTabOrder: (value: string) => number;
+  renderedTabs: RenderedTab[];
   registerPanel: (id: string, value: string) => () => void;
   getPanelId: (value: string) => string | undefined;
   getTabId: (value: string) => string | undefined;
   selected?: string;
-  setSelected: (event: SyntheticEvent, value: string) => void;
+  setSelected: (
+    event: SyntheticEvent | null,
+    value: string,
+    source?: "main" | "overflow",
+  ) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
-  removedActiveTabRef: MutableRefObject<string | undefined>;
+  selectionFromOverflowRef: MutableRefObject<boolean>;
   menuOpen: boolean;
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -36,17 +64,27 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getNext: () => null,
     getPrevious: () => null,
     item: () => null,
-    items: [],
+    getIndex: () => -1,
+    itemAt: () => null,
+    sortItems: () => undefined,
     selected: undefined,
     registerTab: () => () => undefined,
+    updateTab: () => undefined,
+    registerRenderedTab: () => () => undefined,
+    updateRenderedTab: () => undefined,
+    getRenderedTab: () => undefined,
+    getRenderedTabOrder: () => -1,
+    renderedTabs: [],
     registerPanel: () => () => undefined,
     getPanelId: () => undefined,
     getTabId: () => undefined,
     setSelected: () => undefined,
     activeTab: { current: undefined },
-    removedActiveTabRef: { current: undefined },
+    selectionFromOverflowRef: { current: false },
     menuOpen: false,
     setMenuOpen: () => undefined,
+    removalVersion: 0,
+    getRemovedItems: () => new Map(),
   },
 );
 
