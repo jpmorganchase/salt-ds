@@ -21,3 +21,6 @@ Use this only when a consumer application repo has wrappers, page patterns, shel
   - `migration-shims`
 - If project conventions are unavailable, say the answer is a canonical Salt starter direction that still needs consumer-repo alignment.
 - Do not present repo conventions as if they were part of the official Salt registry.
+
+
+- If the repo has repeated accepted deviations or host/tool constraints that do not fit cleanly in `.salt/team.json`, keep a small working agreement using `assets/salt-working-agreement.template.md` instead of scattering those decisions through chat history.

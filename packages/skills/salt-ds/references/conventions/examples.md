@@ -115,3 +115,8 @@ Use when a repo bans one canonical choice:
 - Prefer a small file with clear reasons over a large catalog of implementation details.
 - Bootstrap with `.salt/team.json` plus a small repo instruction snippet before introducing `.salt/stack.json`.
 - For a repo with no existing instruction file, that bootstrap companion should normally be `AGENTS.md`.
+
+
+## Optional Working Agreement
+
+If repeated accepted deviations or host/tool constraints keep resurfacing, pair the conventions files with a short working agreement generated from `assets/salt-working-agreement.template.md`. Keep it short and decision-oriented.

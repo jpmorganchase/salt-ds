@@ -50,3 +50,8 @@ Use this file only for `migrate` work after project context is known.
 - critical states are not obvious from source alone
 - runtime scoping is needed to understand landmarks, structure, or state visibility
 - repo policy could force a wrapper or shell that changes the final implementation path
+
+
+## Degraded-Transport Rule
+
+If migrate tooling is partial or noisy, preserve the familiarity contract and visible task-flow anchors, but do not finalize the migrated Salt structure until the unresolved canonical questions are answered.

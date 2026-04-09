@@ -1,123 +1,184 @@
 ---
 name: salt-ds
-description: Salt Design System workflow for consumer repos. Use when Codex needs Salt-specific create, review, migrate, upgrade, or bootstrap guidance for UI work in repos that already use @salt-ds packages, .salt/team.json, .salt/stack.json, Salt MCP, or salt-ds CLI, or when the user explicitly asks to adopt Salt. Covers dashboards, navigation, forms, dialogs, tables, layouts, alignment, and repo-local Salt conventions. Example asks include reviewing a Salt dialog layout, creating a Salt-native dashboard page, migrating a non-Salt screen to Salt, or upgrading older Salt usage. Do not use for generic React/CSS advice or non-UI work that does not require Salt.
+description: salt design system workflow for consumer repos. use when chatgpt, codex, or copilot needs salt-specific quick checks, create, review, migrate, upgrade, bootstrap, accessibility-audit, or option-exploration guidance for ui work in repos that already use @salt-ds packages, .salt/team.json, .salt/stack.json, salt mcp, or the salt-ds cli, or when the user explicitly asks to adopt salt. use for salt-specific structure, composition, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, migration, version upgrades, and repo conventions in salt consumer repos. do not use for generic react/css advice or non-ui work that does not require salt.
 ---
 
 # Salt DS
 
-Salt's public skill for repo-aware design-system work in external consumer repos.
-Keep the product story on one workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`; do not make the user choose between separate builder, reviewer, migration, upgrade, or conventions skills.
+Salt's public orchestrator skill for repo-aware design-system work in consumer repos.
+Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.
+Do not make the user choose between separate builder, reviewer, migration, accessibility, or conventions skills.
 
 ## Example Triggers
 
-- `Review this Salt dialog layout and tell me the safest next fix.`
+- `Quick-check this Salt form before I commit.`
 - `Create a Salt-native dashboard page for this feature.`
-- `Migrate this non-Salt screen into Salt without changing the task flow.`
-- `Upgrade this feature from older Salt usage and separate required changes from cleanup.`
-
-## What Salt Handles Best
-
-- `review`: existing Salt UI, Salt-specific bugs, or validation of a changed Salt implementation.
-- `upgrade`: version moves, deprecations, and Salt-native modernization where the source is already Salt-based.
-- `migrate`: non-Salt UI, foreign component libraries, screenshots, or mockups that should become Salt while preserving important user experience anchors.
-- `create`: bounded new Salt-native work such as a dashboard page, summary region, form workflow, dialog, navigation shell, or supporting state surface.
-- `init`: repo policy bootstrap and managed instruction refresh.
-
-## Project Context First
-
-- Prefer MCP project context when Salt MCP is available.
-- If the host already knows the active workspace path, pass it as `root_dir` on `get_salt_project_context` or the repo-aware workflow call instead of relying on MCP server cwd inference.
-- Use `salt-ds info --json` as the CLI equivalent when MCP is blocked.
-- Treat repo context as the first pass for framework, package, import, runtime-target, and policy detection.
-- If MCP project context returns `resolution.status = needs_explicit_root` or `mismatch`, or it resolves a root without `package.json` in a repo that should have one, stop and retry with explicit `root_dir` or reuse a known `context_id`.
-- Skip this only for clearly Salt-agnostic exploration where repo shape does not affect the answer.
-
-## Fast Reference Routing
-
-- Load `references/shared/surfaces.md` for common product surfaces such as dashboards, table-and-filters views, form pages, dialog workflows, navigation shells, and supporting states.
-- Load `references/shared/design-principles.md` for design-system judgment about hierarchy, density, layout ownership, and bounded customization, then use `references/shared/transport.md` for the shared transport and evidence contract.
-- Load workflow-specific references only after the workflow is chosen.
-
-## Trigger Boundary
-
-- Use this skill when the repo already shows Salt signals such as `@salt-ds/*` packages, `.salt/team.json`, `.salt/stack.json`, Salt MCP workflows, or the `salt-ds` CLI.
-- Also use this skill when the user explicitly asks to adopt Salt, migrate non-Salt UI into Salt, or bootstrap Salt repo policy.
-- Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.
-- Do not use for generic React/CSS advice or non-UI work that does not require Salt.
-- If the repo clearly uses Salt and the task touches UI structure, layout, navigation, forms, dialogs, tables, dashboards, or alignment, treat it as a Salt UI task unless the user explicitly asks for Salt-agnostic exploration.
+- `Show me two Salt-valid directions for this workspace shell.`
+- `Review this Salt dialog and tell me the safest next fix.`
+- `Audit this screen for Salt-specific accessibility and hierarchy issues.`
+- `Migrate this MUI page into Salt without changing the task flow.`
+- `Upgrade this older Salt usage and separate required fixes from cleanup.`
+- `Bootstrap Salt repo policy for this consumer app.`
 
 ## Workflow Selection
 
 Route by user job, not by IDE presence:
 
-- `review`: review existing Salt UI, diagnose a Salt bug, check Salt alignment, or validate a changed Salt implementation.
-- `upgrade`: handle Salt version moves, deprecation cleanup, package/API upgrades, or Salt-native modernization where the UI is already Salt-based.
-- `migrate`: replace non-Salt UI, foreign component libraries, or mockup-defined experiences with Salt while preserving task flow and critical states.
-- `create`: build new Salt-native components, panels, pages, screens, workspaces, dashboards, or bounded extensions to an existing Salt surface.
-- `init`: bootstrap `.salt/team.json`, `.salt/stack.json`, repo instructions, or starter conventions when the immediate job is repo policy setup.
-  Ask instead of guess when the task reasonably spans more than one workflow. Split the work into phases only when the user goal actually requires it.
+- `create`: new Salt-native components, panels, pages, screens, dashboards, shells, or bounded extensions to an existing Salt surface.
+- `review`: existing Salt UI, Salt-specific bugs, accessibility audits, alignment/layout issues, or validation of changed Salt code.
+- `migrate`: non-Salt UI, foreign component libraries, screenshots, mockups, or rough source experiences that should become Salt while preserving task flow and critical states.
+- `upgrade`: Salt version moves, deprecations, package/API upgrades, and Salt-native modernization where the starting point is already Salt-based.
+- `init`: repo-policy bootstrap and managed-instruction refresh.
 
-## Shared Workflow Rules
+Ask instead of guessing when the task genuinely spans more than one workflow.
+Split into phases only when the user goal requires it.
 
-For repo-aware Salt work, obtain canonical Salt guidance before making Salt-specific choices.
+## Mode Selection
 
-- MCP: `create_salt_ui`, `review_salt_ui`, `migrate_to_salt`, `upgrade_salt_ui`; use `get_salt_project_context` only when repo diagnostics or explicit context reuse are needed.
-- CLI: `salt-ds init`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, `salt-ds upgrade`; use `salt-ds info --json` when repo diagnostics or explicit context inspection are needed.
-  Do not select Salt components, patterns, props, tokens, plans, or code until the canonical Salt step has completed successfully.
-  If the user asks for a dashboard, page, screen, workspace, overview, or another multi-region surface, preserve that page-level intent in the first Salt create call. Do not rewrite the initial create query into a single widget, card, metric, or other sub-pattern before Salt returns the top-level direction.
-  When `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, the canonical step is not complete for those named sub-surfaces. Run targeted Salt create follow-up for each unresolved named item before writing that region.
-  For targeted create follow-up, preserve the user's concrete noun phrase and append parent-pattern or slot context only as supporting detail. Do not rewrite `chart`, `table`, `filter`, `metric`, or similar concrete asks into abstract taxonomy prompts such as `data visualization component for dashboard analytical body`.
-  If a canonical Salt target name is already known from `required_follow_through`, `expected_patterns`, `expected_components`, or an exact MCP result, use that exact name or verified alias in the next create step instead of paraphrasing it.
-  If `create` returns `open_questions`, ask those before committing to the unresolved Salt choice.
-- If both `.salt/team.json` and `.salt/stack.json` are missing, continue with canonical Salt guidance first.
-- keep the result canonical-only and recommend bootstrap only when durable repo policy or managed repo instructions would materially improve future Salt answers
-- If the repo already has Salt-managed instruction files and they may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks instead of hand-rewriting them.
-- Treat `.salt/team.json` and `.salt/stack.json` as declared policy, not detected repo context.
-- do not select Salt components, patterns, props, tokens, or write Salt-specific code until canonical Salt guidance has been obtained via MCP or CLI
-- if `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through
-- do not invent Salt APIs, props, components, or token names; ground named Salt details against canonical Salt guidance before suggesting them
-- Keep source reasoning first and add runtime evidence only when the source pass is still insufficient.
-- treat screenshots and mockups as supporting migration evidence only; if they are used, require normalization into structured outline evidence before the canonical Salt step
-- do not send raw screenshot or mockup attachments directly to Salt MCP; preprocess them into `source_outline`-style evidence first, or fall back to `--source-outline`
-- Read workflow `fixCandidates`, `confidence`, and `raiseConfidence` before editing or escalating.
-- When a workflow result includes `result.ide_summary`, present that compact summary first and use the rest of the payload as expandable detail.
-- Do not present repo-local wrappers, migration shims, or shared conventions packs as canonical Salt guidance.
-- Keep `salt-ds doctor` and `salt-ds runtime inspect` in the support/evidence layer unless the task is explicitly diagnostic.
-  When the user is working in an IDE, bias toward the current file, current selection, current feature folder, and nearby imports before broad repo sweeps unless the task clearly needs wider coverage.
-  If MCP is unavailable, use the CLI fallback. If both MCP and CLI fail, resolve the blocker or ask the user before proceeding. Do not silently continue with guessed Salt guidance.
-- Bootstrap with `bootstrap_salt_repo`, `salt-ds init`, or `salt-ds init --create-stack --conventions-pack [<package[#export]>]` only when a selected repo needs starter layered policy for a shared conventions pack.
+Choose the lightest mode that still preserves Salt correctness.
+Load `references/shared/modes.md` before acting when the user intent is not obvious.
 
-## Non-Salt Repo Bootstrap
+- `quick-check`: fast gut-checks, current-file sanity reviews, current-diff feedback, or a short accessibility/composition pass before commit.
+- `deep`: the default for implementation, comprehensive review, migration, upgrade, bootstrap, and any task that needs canonical completion.
+- `explore-options`: only when the user explicitly asks for alternatives, options, comparisons, or “design it twice”.
+- `clarify-blockers`: when canonical progress is blocked by one or two structural decisions; ask focused questions one at a time and provide a recommended default answer.
 
-- no Salt usage yet and the immediate job is to bootstrap repo policy or instructions: use `init`.
-- replacing existing non-Salt UI with Salt: use `migrate`.
-- adding a new Salt-native screen or feature in a repo that happens to contain non-Salt UI elsewhere: use `create`.
-  Do not treat every non-Salt repo as a migration by default. Choose the workflow based on the user job.
+`quick-check` may start from the current file, selection, or diff when the answer is clearly bounded.
+Escalate to `deep` when the issue is structurally ambiguous, a canonical mismatch is likely, repo policy clearly matters, or transport/tooling must be consulted to answer safely.
+Do not force `explore-options` or `clarify-blockers` when the user wants straightforward execution.
+Do not let `quick-check` quietly turn into a full migration or deep redesign without saying so.
 
-## Scope Boundaries
+## Project Context First
 
-- canonical Salt guidance: what Salt recommends.
-- detected repo context: framework, imports, packages, runtime targets, repo instructions.
-- repo conventions: `.salt/team.json`, `.salt/stack.json`, shared conventions packs.
-- runtime evidence: local confirmation used only after source-grounded workflow reasoning.
-- Keep the user-visible story workflow-first: explain what job Salt is handling, name whether the work is `init`, `create`, `review`, `migrate`, or `upgrade`, state what canonical Salt guidance was used, say whether repo conventions changed the outcome, say whether the result stayed canonical-only because no repo policy was declared, say whether runtime evidence was needed, and state the safest next step in the IDE workflow.
+For deep or repo-spanning Salt work, start from project context before choosing Salt-specific structure.
+In `quick-check`, you may start from the current file, selection, or diff when the answer is clearly bounded, then add project context when feasibility or safety requires it.
 
-## Reference Loading
+When repo-aware guidance needs project context:
 
-- Start with the workflow `rules.md`, then load deeper files only when needed.
-- Shared contract: `references/shared/transport.md`, `references/shared/theme.md`, `references/shared/surfaces.md`, `references/shared/design-principles.md`.
-- Create: start with `references/create/rules.md`; load `references/create/workflow.md`, `references/create/questions.md`, `references/create/gotchas.md`, and `references/create/output.md` only when needed.
-- Review: start with `references/review/rules.md`; load `references/review/rubric.md`, `references/review/debug.md`, `references/review/gotchas.md`, and `references/review/output.md` only when needed.
-- Migrate and upgrade: use `references/migrate/rules.md`, `references/migrate/workflow.md`, `references/migrate/gotchas.md`, and `references/migrate/output.md`.
-- Conventions: load `references/conventions/rules.md`, `references/conventions/contract.md`, `references/conventions/examples.md`, and `references/conventions/review-checklist.md`; use `assets/project-conventions.template.json`, `assets/project-conventions-stack.template.json`, and `assets/repo-instructions.template.md` only when bootstrapping or editing conventions artifacts.
+- prefer Salt MCP project context when available
+- if the host already knows the active workspace path, pass it as `root_dir` on `get_salt_project_context` or the repo-aware workflow call instead of relying on cwd inference
+- use `salt-ds info --json` as the CLI equivalent when MCP is blocked or unavailable
+- treat repo context as the first pass for framework, package, import, runtime-target, and policy detection
+- if project-context resolution returns `needs_explicit_root`, `mismatch`, or resolves a root without the expected manifest, stop and retry with explicit `root_dir` or a known `context_id`
+- skip project context only for clearly Salt-agnostic exploration where repo shape does not affect the answer
 
-## Ask Instead Of Guess
+## Project Memory
 
-- the task could reasonably fit more than one workflow
-- `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components` and one of those named sub-surfaces is still unresolved
-- `create` returns `open_questions` or a `confirmation_needed` composition choice
-- an upgrade needs to separate required changes from optional cleanup
-- migration familiarity constraints are unclear
-- repo policy conflicts with canonical Salt guidance, or the repo has no declared policy yet and local wrappers/bans would materially change the final answer
-- confidence is low and `raiseConfidence` points to missing evidence
-- the runtime target itself is unclear and `salt-ds doctor` is the cheaper next step
+Load `references/shared/project-memory.md` when the repo already has local Salt policy, accepted deviations, or recurring host/tool constraints.
+Prefer existing durable sources first:
+
+- `.salt/team.json`
+- `.salt/stack.json`
+- repo instruction files such as `AGENTS.md`
+- ADRs, architecture notes, or repo docs that capture repeated Salt decisions
+- an optional repo-local working agreement created from `assets/salt-working-agreement.template.md`
+
+Treat project memory as downstream context that reduces repeat friction.
+Do not present it as canonical Salt guidance.
+
+## Reference Routing
+
+Load the minimum shared references needed for the chosen mode.
+
+- `quick-check`: start with `references/shared/modes.md`; add `references/shared/transport.md` when canonical validation or transport handling is needed; add other shared references only when the bounded check depends on them.
+- `deep`, `explore-options`, and `clarify-blockers`: load the shared references that match the task before acting.
+
+Shared references:
+
+- `references/shared/transport.md` for the workflow and transport contract.
+- `references/shared/degraded-tooling.md` when MCP or CLI output is noisy, partial, truncated, misrouted, or unavailable.
+- `references/shared/modes.md` for quick-vs-deep behavior, option exploration, and blocker questions.
+- `references/shared/project-memory.md` when repo-local decisions or accepted deviations may change the final answer.
+- `references/shared/surfaces.md` for dashboards, table-and-filters views, forms, dialogs, navigation shells, and supporting states.
+- `references/shared/surface-resolution.md` for preserving page-, region-, and concrete-surface nouns without over-collapsing the task.
+- `references/shared/design-principles.md` for hierarchy, layout ownership, density, stable-first choices, and bounded customization.
+- `references/shared/theme.md` when create or migrate work touches provider/theme bootstrap.
+- `references/shared/copilot-hosts.md` for VS Code / IntelliJ Copilot host behavior and repo-scoping rules.
+- `references/shared/anti-patterns.md` for behaviors that commonly derail otherwise-correct Salt answers.
+
+Then load workflow-specific references:
+
+- `create`: `references/create/rules.md`, `references/create/workflow.md`, `references/create/gotchas.md`, `references/create/output.md`, `references/create/questions.md`
+- `create` + `explore-options`: also load `references/create/explore-options.md`
+- `review`: `references/review/rules.md`, `references/review/rubric.md`, `references/review/debug.md`, `references/review/gotchas.md`, `references/review/output.md`
+- `migrate`: `references/migrate/rules.md`, `references/migrate/workflow.md`, `references/migrate/gotchas.md`, `references/migrate/output.md`
+- `upgrade`: `references/upgrade/rules.md`, `references/upgrade/workflow.md`, `references/upgrade/gotchas.md`, `references/upgrade/output.md`
+- `init` / conventions-sensitive work: `references/conventions/rules.md`, `references/conventions/contract.md`, `references/conventions/examples.md`, `references/conventions/review-checklist.md`
+
+## Trigger Boundary
+
+Use this skill when:
+
+- the repo already shows Salt signals such as `@salt-ds/*` packages, `.salt/team.json`, `.salt/stack.json`, Salt MCP workflows, or the `salt-ds` CLI
+- the user explicitly asks to adopt Salt, migrate non-Salt UI into Salt, or bootstrap Salt repo policy
+- the task touches Salt-specific UI structure, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, accessibility, migration, or upgrades in a Salt consumer repo
+
+Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.
+
+## Shared Workflow Contract
+
+Follow these rules for every Salt workflow:
+
+1. Obtain canonical Salt guidance through MCP or CLI before making Salt-specific choices.
+2. Keep the user task and page-level framing intact in the first canonical step.
+3. Treat repo conventions and project memory as later refinements, not as canonical Salt guidance.
+4. Validate the source result before treating the work as done.
+5. Add runtime evidence only when the source pass still leaves an important gap.
+
+### Canonical Completion Rules
+
+Do not treat the canonical step as complete until all of the following are true:
+
+- the top-level surface is grounded
+- any named `expected_patterns`, `expected_components`, `required_follow_through`, `implementation_gate`, or equivalent follow-through items are resolved for the regions you plan to implement or finalize
+- unresolved `open_questions`, `confirmation_needed`, or compatibility questions that would change the structure have been answered or explicitly left pending
+- named Salt tokens, props, APIs, and theme bootstrap choices you plan to mention have been verified against canonical Salt guidance
+
+For multi-region asks such as dashboards, pages, workspaces, overviews, shells, and complex forms, do not silently continue from only a partial subset of named sub-patterns.
+If an essential region is unresolved, stop or return only a clearly-labeled partial scaffold with the unresolved region marked as pending.
+
+### Degraded Tooling Rules
+
+Use `references/shared/degraded-tooling.md` whenever tooling is noisy.
+The critical rules are:
+
+- if MCP is unavailable, explicitly switch to CLI fallback instead of acting as though canonical guidance succeeded
+- if CLI or MCP returns useful output with a non-success status, treat it as **partial**, not as approval to implement
+- if output is truncated, malformed, semantically off-target, or repeatedly misroutes to unrelated patterns, fail closed
+- after two noisy or conflicting follow-up attempts for the same required sub-surface, stop and report the blocker instead of continuing with guessed Salt structure
+- do not hide transport ambiguity behind a confident implementation
+- in `quick-check` mode, you may still return bounded provisional observations, but label them as provisional and do not overstate canonical completion
+
+### Concrete-Noun Follow-Through
+
+When a workflow returns named sub-surfaces, preserve concrete user nouns such as `chart`, `table`, `filter`, `metric`, `header`, or `navigation` in follow-up create calls.
+Add slot or page context only as supporting detail.
+Do not paraphrase concrete follow-up asks into abstract taxonomy prompts.
+If an exact Salt target name is already known from canonical output, use that exact name or verified alias in the next call.
+
+### Stable-First Rule
+
+Prefer stable production-ready Salt directions first.
+Do not reach for custom UI, lab/experimental usage, or decorative styling until the nearest canonical Salt pattern, primitive, composition, and foundation have been ruled out.
+If the transport or validation warns that a recommendation is unstable, noisy, or needs attention, do not finalize it as the main answer without saying so.
+
+## Copilot Host Behavior
+
+Consumers usually use this skill in VS Code or IntelliJ Copilot.
+In those environments:
+
+- bias toward the current file, current selection, active feature folder, and nearby imports before broad repo sweeps
+- confirm tool availability before promising a workflow step
+- if the host lacks MCP, say so and switch to CLI
+- if CLI output is machine-noisy, keep parsing/inspection separate from implementation and use the degraded-tooling rules
+- do not claim a Salt workflow completed merely because the host emitted a large payload
+
+## Output Posture
+
+Keep results decision-first.
+When blocked, say exactly what is blocked, what succeeded, and what remains unresolved.
+In `quick-check` mode, keep the answer short and action-oriented: top issues, safest next fix, and any confidence gap.
+In `deep` mode, explain the chosen Salt direction, the validation completed, and any remaining evidence gaps.
+In `explore-options` mode, compare two Salt-valid directions by default, describe the trade-offs in prose, and recommend one default continuation path.
+Only exceed two directions when the user explicitly asks for more.
+When a task includes code generation, prefer the shortest valid Salt-native scaffold that preserves the grounded structure.
