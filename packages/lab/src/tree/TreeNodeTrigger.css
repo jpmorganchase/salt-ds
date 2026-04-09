@@ -15,6 +15,9 @@
    Level-1 nodes get no extra indent; level-2 gets 1 step, level-3 gets 2, etc.
    */
   --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-100));
+  /* Icons clamp to 12px minimum in Icon, so align against the rendered size. */
+  --saltTreeNodeTrigger-iconOffsetY: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2);
+  --saltTreeNodeTrigger-directIconInsetX: max(0px, calc((var(--salt-size-selectable) - max(var(--salt-size-icon), 12px)) / 2));
   padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
   background: var(--salt-selectable-background);
   color: var(--salt-content-primary-foreground);
@@ -52,10 +55,19 @@
   color: var(--salt-content-primary-foreground);
 }
 
+.saltTreeNodeTrigger > .saltTreeNode-checkbox {
+  margin-block: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+}
+
+.saltTreeNodeTrigger > .saltTreeNodeExpansionIcon > .saltTreeNodeExpansionIcon-icon,
+.saltTreeNodeTrigger > .saltTreeNode-icon > .saltIcon {
+  --saltIcon-margin: var(--saltTreeNodeTrigger-iconOffsetY) 0 0 0;
+}
+
 .saltTreeNodeTrigger > .saltIcon {
-  width: var(--salt-size-selectable);
-  height: var(--salt-size-selectable);
-  min-width: var(--salt-size-selectable);
+  --saltIcon-margin: var(--saltTreeNodeTrigger-iconOffsetY) 0 0 0;
+  box-sizing: content-box;
+  padding-inline: var(--saltTreeNodeTrigger-directIconInsetX);
   flex-shrink: 0;
   color: var(--salt-content-primary-foreground);
 }
