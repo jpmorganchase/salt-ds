@@ -16,13 +16,13 @@
 ## implementation plan
 
 - Outline the shortest sensible path from structure choice to implementation.
-- If the task is new Salt-native work, include the default theme bootstrap decision explicitly instead of leaving the provider choice implicit.
-- If the output includes `SaltProviderNext`, include or explicitly preserve the full default-new-work bootstrap from `references/shared/theme.md` rather than naming the provider alone, unless a compatibility or repo-policy exception is stated.
+- If provider or theme bootstrap matters, name the chosen path from `references/shared/theme.md` or state that the theme decision remains pending.
+- If some regions are grounded and others are not, return a clearly-labeled partial scaffold only for the grounded regions.
 
 ## chosen Salt building blocks
 
 - List the selected primitives, patterns, foundations, and tokens with a brief reason for each.
-- Include the theme bootstrap when it matters to the scaffold by naming the exact default-new-work or compatibility path from `references/shared/theme.md`.
+- Include the theme bootstrap only when it materially affects the scaffold or code handoff.
 
 ## assumptions
 
@@ -40,7 +40,7 @@
 - Note the canonical Salt guidance source consulted when it materially affected the decision.
 - State whether every named `composition_contract.expected_patterns` and `composition_contract.expected_components` item was grounded before the matching sub-surface was implemented, or call out what is still pending.
 - If you named any Salt token, prop, or API explicitly, note that the exact name was verified against canonical Salt guidance.
-- If you named `SaltProviderNext`, note that the full bootstrap from `references/shared/theme.md` was also checked instead of assuming the provider name was enough.
+- If provider or theme bootstrap was recommended, note whether repo policy and asset availability were confirmed, still pending, or explicitly overridden.
 - State which source-level validation surface was used after the first scaffold pass:
   - `review_salt_ui`
   - `salt-ds review`
@@ -55,3 +55,13 @@
 // Include starter code only when it materially helps the task move forward
 // and follows the chosen Salt structure.
 ```
+
+
+## option exploration
+
+Only include this section when the user explicitly asked for alternatives.
+
+- Default to two Salt-valid directions.
+- Exceed two only when the user explicitly asks for more.
+- For each direction, say what stays invariant, what changes, and the main trade-off.
+- End by recommending one default continuation path.

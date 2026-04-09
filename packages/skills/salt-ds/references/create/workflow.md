@@ -11,11 +11,12 @@
 
 ## 2. choose the structure first
 
+- For pages with multiple regions or concrete sub-surfaces, also consult `references/shared/surface-resolution.md` before choosing local implementation details.
+
 - Pick the page, panel, form, navigation, or content pattern that best matches the job.
 - If the user asks for a dashboard, page, screen, workspace, overview, or another multi-region surface, keep that page-level framing in the first Salt create call instead of paraphrasing it into a single metric, card, or other sub-pattern.
 - For greenfield dashboards, metric cards, navigation shells, and layout fixes, treat the request as Salt UI by default instead of starting from generic React/CSS composition.
-- For new Salt-native work, treat the default visual shell as the default-new-work bootstrap described in `references/shared/theme.md`. Only fall back to the compatibility path from that same reference when migration compatibility or explicit repo policy requires it.
-- If you name or scaffold `SaltProviderNext`, include the full default-new-work bootstrap from `references/shared/theme.md` instead of naming the provider alone unless an explicit compatibility or repo-policy exception applies.
+- For new Salt-native work, consult `references/shared/theme.md` when provider or theme bootstrap is part of the task. Prefer the shared new-work path only when repo policy does not override it and the required assets are available.
 - Before changing centering, spacing, or alignment on existing Salt UI, confirm the intended Salt primitive or pattern first instead of guessing with local CSS.
 - Prefer the most constrained primitive or pattern that can carry the interaction.
 - Before creating a custom component, wrapper, or layout helper, check whether an existing Salt primitive, pattern, or foundation already covers the need.
@@ -28,7 +29,15 @@
 ## 3. clarify only when it changes the structure
 
 - Ask a small number of high-value questions when package choice, layout pattern, responsiveness, or interaction model is unclear.
+- In blocker-question mode, ask one focused question at a time and provide a recommended default answer.
 - If the ambiguity does not block a good first implementation, state an assumption instead of stopping.
+
+## 3b. branch into options only when requested
+
+- If the user explicitly wants alternatives, load `references/create/explore-options.md` after the top-level surface is grounded.
+- Default to two Salt-valid directions: one conservative default and one more opinionated but still bounded direction.
+- Exceed two directions only when the user explicitly asks for more.
+- Keep shared invariants visible and recommend a default continuation path.
 
 ## 4. compose the ui
 
@@ -61,5 +70,14 @@
 
 - For non-Salt inputs, start with a short translation checkpoint that names the detected source regions, grouped workstreams, direct swaps, pattern rewrites, and manual review points.
 - Then show the scaffold handoff: what to start with, what grouped structure to build around, and what to validate after the first pass.
-- For new Salt-native work, state the default theme bootstrap explicitly when it affects the scaffold by referencing the exact default-new-work or compatibility path from `references/shared/theme.md`.
+- For new Salt-native work, state the theme/bootstrap decision explicitly only when it affects the scaffold or implementation plan.
 - Then summarize the implementation plan, list the chosen building blocks, surface assumptions, include Salt compliance checks, and include starter code when it will accelerate implementation.
+
+
+## 8. prove completion before finalizing
+
+- confirm the top-level surface is grounded
+- confirm every required named sub-surface for the regions you implemented is grounded
+- confirm any explicit token, prop, API, and theme bootstrap names you mention were verified
+- if the transport stayed partial or noisy, do not convert a plausible scaffold into a “finished Salt answer”
+- when code was written, run source-level Salt validation before finalizing
