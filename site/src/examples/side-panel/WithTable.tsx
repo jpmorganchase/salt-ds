@@ -92,7 +92,6 @@ const SidePanelExample = () => {
     <FlexLayout
       style={{
         width: "100%",
-        minHeight: 450,
         height: "100%",
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",

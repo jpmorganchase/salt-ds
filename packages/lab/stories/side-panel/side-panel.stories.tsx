@@ -2,6 +2,7 @@ import {
   BorderItem,
   BorderLayout,
   Button,
+  Card,
   FlexItem,
   FlexLayout,
   FormField,
@@ -26,6 +27,7 @@ import {
 } from "@salt-ds/core";
 import {
   ChattingIcon,
+  DoubleChevronRightIcon,
   HelpCircleIcon,
   NotificationIcon,
   SearchIcon,
@@ -190,62 +192,6 @@ export const Left: StoryFn = () => (
       gap={0}
     >
       <LeftPanelContent />
-    </FlexLayout>
-  </SidePanelProvider>
-);
-
-// ---------------------------------------------------------------------------
-// Controlled
-// ---------------------------------------------------------------------------
-
-const ControlledPanelContent = () => {
-  const { openState, setOpen } = useSidePanelContext();
-  const headingId = useId();
-  const { CloseIcon } = useIcon();
-  return (
-    <>
-      <SidePanel position="left" aria-labelledby={headingId}>
-        <StackLayout>
-          <FlexLayout align="center">
-            <H2 id={headingId} style={{ flex: 1 }}>
-              Section Title
-            </H2>
-            <Button
-              aria-label="Close"
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          </FlexLayout>
-          <Text>Side panel content goes here.</Text>
-        </StackLayout>
-      </SidePanel>
-
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} side panel
-          </Button>
-        </SidePanelTrigger>
-      </ContentExample>
-    </>
-  );
-};
-
-export const Controlled: StoryFn = () => (
-  <SidePanelProvider>
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <ControlledPanelContent />
     </FlexLayout>
   </SidePanelProvider>
 );
@@ -500,7 +446,6 @@ const WithTableContent = () => {
     <FlexLayout
       style={{
         width: "100%",
-        minHeight: 450,
         height: "100%",
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
@@ -598,6 +543,7 @@ export const WithTable: StoryFn = () => (
 // ---------------------------------------------------------------------------
 
 const DesktopAppHeader = () => {
+  const { openState } = useSidePanelContext();
   return (
     <header>
       <FlexLayout
@@ -626,7 +572,12 @@ const DesktopAppHeader = () => {
           <StackLayout direction="row" gap={1}>
             <Tooltip content="Toggle help panel" hideArrow>
               <SidePanelTrigger>
-                <Button appearance="transparent" aria-label="open help panel">
+                <Button
+                  appearance="transparent"
+                  aria-label={
+                    openState ? "Close help panel" : "Open help panel"
+                  }
+                >
                   <HelpCircleIcon aria-hidden />
                 </Button>
               </SidePanelTrigger>
@@ -826,6 +777,7 @@ const ScrollableContent = () => (
       flexDirection: "column",
       gap: "var(--salt-spacing-200)",
       padding: "var(--salt-spacing-300)",
+      overscrollBehavior: "contain",
       overflow: "auto",
     }}
   >
@@ -868,10 +820,7 @@ const ScrollablePanelContent = () => {
     <>
       <ScrollableContent />
       <SidePanel position="right" aria-labelledby={headingId}>
-        <SidePanelContent
-          header={<H2 id={headingId}>Section Title</H2>}
-          aria-label="Side panel content"
-        >
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
           <StackLayout>
             {Array.from({ length: 10 }, (_, i) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
@@ -905,16 +854,20 @@ export const Scrollable: StoryFn = () => (
 );
 
 // ---------------------------------------------------------------------------
-// Resizable
+// Shared helpers for resizable side-panel stories
 // ---------------------------------------------------------------------------
 
-const ANIMATION_DURATION = 300;
-
-export const Resizable: StoryFn = () => {
-  const headingId = useId();
-  const { CloseIcon } = useIcon();
+/** State, refs, toggle logic and CSS transition for animating a
+ *  react-resizable-panels Panel as a SidePanel. */
+function useResizableSidePanel({
+  defaultExpanded = false,
+  expandedSize = 25,
+}: {
+  defaultExpanded?: boolean;
+  expandedSize?: number;
+} = {}) {
   const panelRef = useRef<ImperativePanelHandle>(null);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const [animating, setAnimating] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -922,96 +875,131 @@ export const Resizable: StoryFn = () => {
     if (!panelRef.current) return;
     clearTimeout(timerRef.current);
     const willExpand = !expanded;
+    const duration =
+      Number.parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          "--salt-duration-perceptible",
+        ),
+      ) || 300; // var(--salt-duration-perceptible)
     setAnimating(true);
     setExpanded(willExpand);
     requestAnimationFrame(() => {
-      if (willExpand) {
-        panelRef.current?.resize(30);
-      } else {
-        panelRef.current?.resize(0);
-      }
+      panelRef.current?.resize(willExpand ? expandedSize : 0);
     });
-    timerRef.current = setTimeout(
-      () => setAnimating(false),
-      ANIMATION_DURATION,
-    );
-  }, [expanded]);
+    timerRef.current = setTimeout(() => setAnimating(false), duration);
+  }, [expanded, expandedSize]);
 
   const panelTransition = animating
-    ? `flex-grow ${ANIMATION_DURATION}ms ease-in-out`
+    ? "flex-grow var(--salt-duration-perceptible) var(--salt-animation-timing-function)"
     : undefined;
 
+  const handleOpenChange = useCallback((_open: boolean) => toggle(), [toggle]);
+
+  return {
+    panelRef,
+    expanded,
+    animating,
+    toggle,
+    panelTransition,
+    handleOpenChange,
+  };
+}
+
+/** Style overrides for a SidePanel inside a resizable Panel (the Panel itself
+ *  controls width so the SidePanel's own width and border are disabled). */
+const resizableSidePanelStyle = {
+  "--saltSidePanel-width": "100%",
+  "--saltSidePanel-internal-border": "0",
+} as CSSProperties;
+
+// ---------------------------------------------------------------------------
+// Resizable
+// ---------------------------------------------------------------------------
+
+export const Resizable: StoryFn = () => {
+  const { panelRef, expanded, animating, panelTransition, handleOpenChange } =
+    useResizableSidePanel({ expandedSize: 30 });
+
   return (
-    <div
-      className="react-resizable-panels-theme-salt"
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-        overflow: "hidden",
-      }}
-    >
-      <PanelGroup direction="horizontal">
-        <Panel style={{ transition: panelTransition }}>
-          <ContentExample>
-            <Button style={{ width: "fit-content" }} onClick={toggle}>
+    <SidePanelProvider open={expanded} onOpenChange={handleOpenChange}>
+      <div
+        className="react-resizable-panels-theme-salt"
+        style={{
+          width: "100%",
+          height: 300,
+          border:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+          borderRadius: "var(--salt-palette-corner-weak)",
+          overflow: "hidden",
+        }}
+      >
+        <ResizableContent
+          expanded={expanded}
+          animating={animating}
+          panelTransition={panelTransition}
+          panelRef={panelRef}
+        />
+      </div>
+    </SidePanelProvider>
+  );
+};
+
+/** Inner content for the Resizable story — must live inside SidePanelProvider. */
+const ResizableContent = ({
+  expanded,
+  animating,
+  panelTransition,
+  panelRef,
+}: {
+  expanded: boolean;
+  animating: boolean;
+  panelTransition: string | undefined;
+  panelRef: React.Ref<ImperativePanelHandle>;
+}) => {
+  const headingId = useId();
+
+  return (
+    <PanelGroup direction="horizontal">
+      <Panel style={{ transition: panelTransition }}>
+        <ContentExample>
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content" }}>
               {expanded ? "Close" : "Open"} right panel
             </Button>
-          </ContentExample>
-        </Panel>
-        <PanelResizeHandle
-          aria-label="Resize panel"
-          className="resize-handle-salt-border-left"
-          disabled={animating || !expanded}
-          style={{
-            width: expanded || animating ? undefined : 0,
-            visibility: expanded || animating ? "visible" : "hidden",
-          }}
-        />
-        <Panel
-          ref={panelRef}
-          defaultSize={0}
-          minSize={expanded && !animating ? 15 : 0}
-          maxSize={expanded || animating ? 50 : 0}
-          style={{
-            backgroundColor: "var(--salt-container-primary-background)",
-            borderLeft: expanded
-              ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)"
-              : undefined,
-            overflow: "hidden",
-            transition: panelTransition,
-          }}
+          </SidePanelTrigger>
+        </ContentExample>
+      </Panel>
+      <PanelResizeHandle
+        aria-label="Resize panel"
+        className="resize-handle-salt-border-left"
+        disabled={animating || !expanded}
+        style={{
+          width: expanded || animating ? undefined : 0,
+          visibility: expanded || animating ? "visible" : "hidden",
+        }}
+      />
+      <Panel
+        ref={panelRef}
+        defaultSize={0}
+        minSize={expanded && !animating ? 15 : 0}
+        maxSize={expanded || animating ? 50 : 0}
+        style={{ overflow: "hidden", transition: panelTransition }}
+      >
+        <SidePanel
+          animated={false}
+          aria-labelledby={headingId}
+          style={resizableSidePanelStyle}
+          variant="primary"
         >
-          <div
-            style={{
-              padding: "var(--salt-spacing-300)",
-              height: "100%",
-              boxSizing: "border-box",
-              overflow: "auto",
-              minWidth: "max-content",
-            }}
+          <SidePanelContent
+            header={<H2 id={headingId}>Section Title</H2>}
+            style={{ minWidth: 300 }}
           >
-            <StackLayout>
-              <FlexLayout align="center">
-                <H2 id={headingId} style={{ flex: 1 }}>
-                  Section Title
-                </H2>
-                <Button
-                  aria-label="Close"
-                  appearance="transparent"
-                  onClick={toggle}
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              </FlexLayout>
-              <Text>Side panel content goes here.</Text>
-            </StackLayout>
-          </div>
-        </Panel>
-      </PanelGroup>
-    </div>
+            <Text>Side panel content goes here.</Text>
+          </SidePanelContent>
+        </SidePanel>
+      </Panel>
+    </PanelGroup>
   );
 };
 
@@ -1081,23 +1069,286 @@ export const WithNav: StoryFn = () => (
   </SidePanelProvider>
 );
 
-export const xx = () => {
+// ---------------------------------------------------------------------------
+// With Cards (shared header)
+// ---------------------------------------------------------------------------
+
+const CardsAppHeader = () => {
   return (
+    <header>
+      <FlexLayout
+        style={{
+          padding: "var(--salt-spacing-100) var(--salt-spacing-300)",
+          position: "sticky",
+          top: 0,
+          width: "100%",
+          zIndex: 1,
+          borderBottom:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        }}
+        justify="space-between"
+        gap={3}
+      >
+        <FlexItem align="center">
+          <Text styleAs="h2">App name</Text>
+        </FlexItem>
+        <Input
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 200 }}
+        />
+        <FlexItem align="center">
+          <StackLayout direction="row" gap={1}>
+            <Tooltip content="Toggle help panel" hideArrow>
+              <SidePanelTrigger>
+                <Button appearance="transparent" aria-label="open help panel">
+                  <HelpCircleIcon aria-hidden />
+                </Button>
+              </SidePanelTrigger>
+            </Tooltip>
+            <Tooltip content="Show notifications" hideArrow>
+              <Button appearance="transparent" aria-label="open notifications">
+                <NotificationIcon aria-hidden />
+              </Button>
+            </Tooltip>
+            <Tooltip content="Open chat" hideArrow>
+              <Button appearance="transparent" aria-label="open chat">
+                <ChattingIcon aria-hidden />
+              </Button>
+            </Tooltip>
+          </StackLayout>
+        </FlexItem>
+      </FlexLayout>
+    </header>
+  );
+};
 
+// ---------------------------------------------------------------------------
+// With Cards (non-resizable, uses SidePanel)
+// ---------------------------------------------------------------------------
 
-  <SidePanelProvider>
-    <FlexLayout>
-      <StackLayout style={{ flex: 1 }}>
-        <SidePanelTrigger>
-          <Button style={{width: "fit-content"}}>Toggle panel</Button>
-        </SidePanelTrigger>
-      </StackLayout>
-
-      <SidePanel position="right">
-        <SidePanelContent header={<H2>Section Title</H2>}>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
+const HelpPanelCard = ({
+  headingId,
+  open,
+  onToggle,
+  style,
+}: {
+  headingId: string | undefined;
+  open: boolean;
+  onToggle: () => void;
+  style?: CSSProperties;
+}) => (
+  <Card
+    variant="tertiary"
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden",
+      ...style,
+    }}
+  >
+    <FlexLayout align="center" gap={1}>
+      <Button
+        appearance="transparent"
+        aria-label={open ? "Close panel" : "Open panel"}
+        onClick={onToggle}
+      >
+        <DoubleChevronRightIcon aria-hidden />
+      </Button>
+      <H2 id={headingId} style={{ flex: 1 }}>
+        Help &amp; support
+      </H2>
     </FlexLayout>
-  </SidePanelProvider>);
-}
+    <FlexItem
+      role="region"
+      aria-label="Help and support content"
+      tabIndex={0}
+      grow={1}
+      style={{
+        overflow: "auto",
+        overscrollBehavior: "contain",
+        paddingTop: "var(--salt-spacing-100)",
+        marginRight: "calc(-1 * var(--salt-spacing-200))",
+        paddingRight: "var(--salt-spacing-200)",
+      }}
+    >
+      <StackLayout gap={2}>
+        {Array.from({ length: 15 }, (_, i) => (
+          <Text key={`panel-item-${i}`}>
+            Panel item {i + 1} — The content shown here is for illustrative
+            purposes and does not contain specific information or advice.
+          </Text>
+        ))}
+      </StackLayout>
+    </FlexItem>
+  </Card>
+);
+
+const CardsContent = () => {
+  const headingId = useId();
+  const { openState, setOpen } = useSidePanelContext();
+
+  return (
+    <>
+      <CardsAppHeader />
+
+      <FlexLayout
+        gap={2}
+        padding={2}
+        style={{
+          flex: 1,
+          overflow: "auto",
+        }}
+      >
+        <FlexItem grow={1}>
+          <StackLayout gap={2}>
+            {Array.from({ length: 20 }, (_, i) => (
+              <Card key={`content-card-${i}`}>
+                <Text>
+                  Content card {i + 1} — This card is part of the main
+                  scrollable content area. It demonstrates how content can
+                  overflow and scroll independently within the layout.
+                </Text>
+              </Card>
+            ))}
+          </StackLayout>
+        </FlexItem>
+
+        <SidePanel
+          aria-labelledby={headingId}
+          style={
+            {
+              "--saltSidePanel-internal-border": "0",
+              position: "sticky",
+              top: 0,
+              alignSelf: "flex-start",
+              maxHeight: "100%",
+            } as CSSProperties
+          }
+          variant="primary"
+        >
+          <HelpPanelCard
+            headingId={headingId}
+            open={openState}
+            onToggle={() => setOpen(!openState)}
+            style={{ flex: 1 }}
+          />
+        </SidePanel>
+      </FlexLayout>
+    </>
+  );
+};
+
+export const Cards: StoryFn = () => (
+  <SidePanelProvider defaultOpen={true}>
+    <FlexLayout
+      direction="column"
+      style={{
+        width: "100%",
+        height: "100vh",
+      }}
+      gap={0}
+    >
+      <CardsContent />
+    </FlexLayout>
+  </SidePanelProvider>
+);
+
+// ---------------------------------------------------------------------------
+// With Resizable Cards (uses SidePanel + react-resizable-panels)
+// ---------------------------------------------------------------------------
+
+export const ResizableCards: StoryFn = () => (
+  <FlexLayout
+    direction="column"
+    style={{ width: "100%", height: "100vh" }}
+    gap={0}
+  >
+    <ResizableCardsContent />
+  </FlexLayout>
+);
+
+/** Inner content for the WithResizableCards story. */
+const ResizableCardsContent = () => {
+  const {
+    panelRef,
+    expanded,
+    animating,
+    toggle,
+    panelTransition,
+    handleOpenChange,
+  } = useResizableSidePanel({ defaultExpanded: true });
+
+  const headingId = useId();
+
+  return (
+    <SidePanelProvider open={expanded} onOpenChange={handleOpenChange}>
+      <CardsAppHeader />
+
+      <div
+        className="react-resizable-panels-theme-salt"
+        style={{ flex: 1, overflow: "hidden" }}
+      >
+        <PanelGroup direction="horizontal">
+          <Panel
+            tabIndex={0}
+            role="region"
+            aria-label="Main content"
+            style={{
+              overflow: "auto",
+              padding: "var(--salt-spacing-200)",
+              transition: panelTransition,
+            }}
+          >
+            <StackLayout gap={2}>
+              {Array.from({ length: 20 }, (_, i) => (
+                <Card key={`content-card-${i}`}>
+                  <Text>
+                    Content card {i + 1} — This card is part of the main
+                    scrollable content area.
+                  </Text>
+                </Card>
+              ))}
+            </StackLayout>
+          </Panel>
+
+          <PanelResizeHandle
+            aria-label="Resize side panel"
+            className="resize-handle-salt-border-left"
+            disabled={animating || !expanded}
+            style={{
+              width: expanded || animating ? undefined : 0,
+              visibility: expanded || animating ? "visible" : "hidden",
+            }}
+          />
+
+          <Panel
+            ref={panelRef}
+            defaultSize={25}
+            minSize={expanded && !animating ? 15 : 0}
+            maxSize={expanded || animating ? 50 : 0}
+            style={{ overflow: "hidden", transition: panelTransition }}
+          >
+            <SidePanel
+              animated={false}
+              aria-labelledby={headingId}
+              style={resizableSidePanelStyle}
+              variant="primary"
+            >
+              <HelpPanelCard
+                headingId={headingId}
+                open={expanded}
+                onToggle={toggle}
+                style={{
+                  height: "100%",
+                  boxSizing: "border-box",
+                  minWidth: 300,
+                }}
+              />
+            </SidePanel>
+          </Panel>
+        </PanelGroup>
+      </div>
+    </SidePanelProvider>
+  );
+};

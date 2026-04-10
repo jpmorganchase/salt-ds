@@ -13,24 +13,13 @@ export interface SidePanelContentProps extends ComponentPropsWithRef<"div"> {
    * Content rendered in the header area next to the close button.
    */
   header?: ReactNode;
-  /**
-   * Accessible label for the scrollable body region.
-   * If provided, the body is rendered as an accessible `role="region"` with `aria-label`.
-   */
-  "aria-label"?: string;
 }
 
 export const SidePanelContent = forwardRef<
   HTMLDivElement,
   SidePanelContentProps
 >(function SidePanelContent(props, ref) {
-  const {
-    header,
-    children,
-    className,
-    "aria-label": ariaLabel,
-    ...rest
-  } = props;
+  const { header, children, className, ...rest } = props;
 
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanelContext();
@@ -54,12 +43,7 @@ export const SidePanelContent = forwardRef<
           <CloseIcon aria-hidden />
         </Button>
       </div>
-      <div
-        className={withBaseName("body")}
-        role={ariaLabel ? "region" : undefined}
-        aria-label={ariaLabel}
-        tabIndex={ariaLabel ? 0 : undefined}
-      >
+      <div className={withBaseName("body")} tabIndex={0}>
         {children}
       </div>
     </div>
