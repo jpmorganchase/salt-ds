@@ -1,6 +1,6 @@
 .saltMegaMenuItem {
   display: flex;
-  padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
   align-items: center;
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);

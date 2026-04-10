@@ -1,9 +1,20 @@
-import { makePrefixer } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useFloatingComponent,
+  useFloatingUI,
+  useForkRef,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  forwardRef,
+  type HTMLAttributes,
+  type ReactNode,
+  useContext,
+} from "react";
 import megaMenuContainerCss from "./MegaMenuContainer.css";
+import { MegaMenuContext } from "./MegaMenuContext";
 
 const withBaseName = makePrefixer("saltMegaMenuContainer");
 
@@ -25,9 +36,46 @@ export const MegaMenuContainer = forwardRef<
     window: targetWindow,
   });
 
+  const { Component: FloatingComponent } = useFloatingComponent();
+  const megaMenu = useContext(MegaMenuContext);
+
+  if (!megaMenu) {
+    throw new Error("MegaMenuContainer must be used within a MegaMenu");
+  }
+
+  const floatingUIResult = useFloatingUI({
+    rootContext: megaMenu.floatingRootContext,
+    placement: megaMenu.placement,
+  });
+
+  const handleRef = useForkRef<HTMLElement>(ref, megaMenu.setFloating);
+
+  const isOpen = megaMenu.openState;
+  const floatingProps = megaMenu.getFloatingProps;
+
   return (
-    <nav className={clsx(withBaseName(), className)} ref={ref} {...rest}>
-      {children}
-    </nav>
+    <FloatingComponent
+      open={isOpen}
+      focusManagerProps={{
+        context: floatingUIResult.context,
+        modal: false,
+      }}
+    >
+      <nav
+        className={clsx(withBaseName(), className)}
+        ref={handleRef}
+        {...floatingProps({
+          ...rest,
+          style: {
+            ...rest.style,
+            position: floatingUIResult.strategy,
+            top: floatingUIResult.y ?? 0,
+            left: floatingUIResult.x ?? 0,
+          },
+        })}
+      >
+        {children}
+      </nav>
+    </FloatingComponent>
   );
 });
