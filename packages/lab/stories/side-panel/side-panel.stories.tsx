@@ -2,6 +2,7 @@ import {
   BorderItem,
   BorderLayout,
   Button,
+  Card,
   FlexItem,
   FlexLayout,
   FormField,
@@ -26,6 +27,7 @@ import {
 } from "@salt-ds/core";
 import {
   ChattingIcon,
+  DoubleChevronRightIcon,
   HelpCircleIcon,
   NotificationIcon,
   SearchIcon,
@@ -190,62 +192,6 @@ export const Left: StoryFn = () => (
       gap={0}
     >
       <LeftPanelContent />
-    </FlexLayout>
-  </SidePanelProvider>
-);
-
-// ---------------------------------------------------------------------------
-// Controlled
-// ---------------------------------------------------------------------------
-
-const ControlledPanelContent = () => {
-  const { openState, setOpen } = useSidePanelContext();
-  const headingId = useId();
-  const { CloseIcon } = useIcon();
-  return (
-    <>
-      <SidePanel position="left" aria-labelledby={headingId}>
-        <StackLayout>
-          <FlexLayout align="center">
-            <H2 id={headingId} style={{ flex: 1 }}>
-              Section Title
-            </H2>
-            <Button
-              aria-label="Close"
-              appearance="transparent"
-              onClick={() => setOpen(false)}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          </FlexLayout>
-          <Text>Side panel content goes here.</Text>
-        </StackLayout>
-      </SidePanel>
-
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} side panel
-          </Button>
-        </SidePanelTrigger>
-      </ContentExample>
-    </>
-  );
-};
-
-export const Controlled: StoryFn = () => (
-  <SidePanelProvider>
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <ControlledPanelContent />
     </FlexLayout>
   </SidePanelProvider>
 );
@@ -500,7 +446,6 @@ const WithTableContent = () => {
     <FlexLayout
       style={{
         width: "100%",
-        minHeight: 450,
         height: "100%",
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
@@ -598,6 +543,7 @@ export const WithTable: StoryFn = () => (
 // ---------------------------------------------------------------------------
 
 const DesktopAppHeader = () => {
+  const { openState } = useSidePanelContext();
   return (
     <header>
       <FlexLayout
@@ -626,7 +572,12 @@ const DesktopAppHeader = () => {
           <StackLayout direction="row" gap={1}>
             <Tooltip content="Toggle help panel" hideArrow>
               <SidePanelTrigger>
-                <Button appearance="transparent" aria-label="open help panel">
+                <Button
+                  appearance="transparent"
+                  aria-label={
+                    openState ? "Close help panel" : "Open help panel"
+                  }
+                >
                   <HelpCircleIcon aria-hidden />
                 </Button>
               </SidePanelTrigger>
@@ -826,6 +777,7 @@ const ScrollableContent = () => (
       flexDirection: "column",
       gap: "var(--salt-spacing-200)",
       padding: "var(--salt-spacing-300)",
+      overscrollBehavior: "contain",
       overflow: "auto",
     }}
   >
@@ -1081,23 +1033,165 @@ export const WithNav: StoryFn = () => (
   </SidePanelProvider>
 );
 
-export const xx = () => {
+// ---------------------------------------------------------------------------
+// With Cards
+// ---------------------------------------------------------------------------
+
+const CardsAppHeader = () => {
   return (
+    <header>
+      <FlexLayout
+        style={{
+          padding: "var(--salt-spacing-100) var(--salt-spacing-300)",
+          position: "sticky",
+          top: 0,
+          width: "100%",
+          zIndex: 1,
+          borderBottom:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        }}
+        justify="space-between"
+        gap={3}
+      >
+        <FlexItem align="center">
+          <Text styleAs="h2">App name</Text>
+        </FlexItem>
+        <Input
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 200 }}
+        />
+        <FlexItem align="center">
+          <StackLayout direction="row" gap={1}>
+            <Tooltip content="Toggle help panel" hideArrow>
+              <SidePanelTrigger>
+                <Button appearance="transparent" aria-label="open help panel">
+                  <HelpCircleIcon aria-hidden />
+                </Button>
+              </SidePanelTrigger>
+            </Tooltip>
+            <Tooltip content="Show notifications" hideArrow>
+              <Button appearance="transparent" aria-label="open notifications">
+                <NotificationIcon aria-hidden />
+              </Button>
+            </Tooltip>
+            <Tooltip content="Open chat" hideArrow>
+              <Button appearance="transparent" aria-label="open chat">
+                <ChattingIcon aria-hidden />
+              </Button>
+            </Tooltip>
+          </StackLayout>
+        </FlexItem>
+      </FlexLayout>
+    </header>
+  );
+};
 
+const WithCardsInner = () => {
+  const headingId = useId();
+  const { openState, setOpen } = useSidePanelContext();
 
-  <SidePanelProvider>
-    <FlexLayout>
-      <StackLayout style={{ flex: 1 }}>
-        <SidePanelTrigger>
-          <Button style={{width: "fit-content"}}>Toggle panel</Button>
-        </SidePanelTrigger>
-      </StackLayout>
+  return (
+    <FlexLayout
+      direction="column"
+      style={{
+        width: "100%",
+        height: "100vh",
+      }}
+      gap={0}
+    >
+      <CardsAppHeader />
 
-      <SidePanel position="right">
-        <SidePanelContent header={<H2>Section Title</H2>}>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
+      <FlexLayout
+        gap={2}
+        padding={2}
+        style={{
+          flex: 1,
+          overflow: "auto",
+        }}
+      >
+        <FlexItem grow={1}>
+          <StackLayout gap={2}>
+            {Array.from({ length: 20 }, (_, i) => (
+              <Card key={`content-card-${i}`}>
+                <Text>
+                  Content card {i + 1} — This card is part of the main
+                  scrollable content area. It demonstrates how content can
+                  overflow and scroll independently within the layout.
+                </Text>
+              </Card>
+            ))}
+          </StackLayout>
+        </FlexItem>
+
+        <SidePanel
+          aria-labelledby={headingId}
+          style={
+            {
+              "--saltSidePanel-internal-border": "0",
+              position: "sticky",
+              top: 0,
+              alignSelf: "flex-start",
+              maxHeight: "100%",
+            } as CSSProperties
+          }
+          variant="primary"
+        >
+          <Card
+            variant="tertiary"
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            <FlexLayout align="center" gap={1}>
+              <Button
+                appearance="transparent"
+                aria-label={openState ? "Close panel" : "Open panel"}
+                onClick={() => setOpen(!openState)}
+              >
+                <DoubleChevronRightIcon aria-hidden />
+              </Button>
+              <H2 id={headingId} style={{ flex: 1 }}>
+                Help &amp; support
+              </H2>
+            </FlexLayout>
+            <FlexItem
+              role="region"
+              aria-label="Help and support content"
+              tabIndex={0}
+              grow={1}
+              style={{
+                overflow: "auto",
+                overscrollBehavior: "contain",
+                paddingTop: "var(--salt-spacing-100)",
+                marginRight: "calc(-1 * var(--salt-spacing-200))",
+                paddingRight: "var(--salt-spacing-200)",
+              }}
+            >
+              <StackLayout gap={2}>
+                {Array.from({ length: 15 }, (_, i) => (
+                  <Text key={`panel-item-${i}`}>
+                    Panel item {i + 1} — The content shown here is for
+                    illustrative purposes and does not contain specific
+                    information or advice. Using placeholder text like this
+                    helps review formatting, spacing, and overall presentation
+                    in the user interface.
+                  </Text>
+                ))}
+              </StackLayout>
+            </FlexItem>
+          </Card>
+        </SidePanel>
+      </FlexLayout>
     </FlexLayout>
-  </SidePanelProvider>);
-}
+  );
+};
+
+export const WithCards: StoryFn = () => (
+  <SidePanelProvider defaultOpen={true}>
+    <WithCardsInner />
+  </SidePanelProvider>
+);

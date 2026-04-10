@@ -7,6 +7,7 @@ import {
   type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -46,6 +47,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     } = props;
 
     const [showComponent, setShowComponent] = useState(false);
+    const [animating, setAnimating] = useState(false);
     const targetWindow = useWindow();
 
     const { openState, floatingRootContext, setFloating, getFloatingProps } =
@@ -63,16 +65,31 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
+    const handleAnimationEnd = useCallback(() => {
+      setAnimating(false);
+      if (!openState) {
+        setShowComponent(false);
+      }
+    }, [openState]);
+
     useEffect(() => {
+      const prefersReducedMotion = targetWindow?.matchMedia?.(
+        "(prefers-reduced-motion: reduce)",
+      )?.matches;
+
       if (openState) {
         setShowComponent(true);
-        return;
       }
-      const animate = setTimeout(() => {
-        setShowComponent(false);
-      }, 300); // var(--salt-duration-perceptible)
-      return () => clearTimeout(animate);
-    }, [openState]);
+
+      if (prefersReducedMotion) {
+        setAnimating(false);
+        if (!openState) {
+          setShowComponent(false);
+        }
+      } else {
+        setAnimating(true);
+      }
+    }, [openState, targetWindow]);
 
     if (!showComponent) return null;
 
@@ -85,11 +102,12 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           {
             [withBaseName(position)]: position,
             [withBaseName(variant)]: variant,
-            [withBaseName("enterAnimation")]: openState,
-            [withBaseName("exitAnimation")]: !openState,
+            [withBaseName("enterAnimation")]: openState && animating,
+            [withBaseName("exitAnimation")]: !openState && animating,
           },
           className,
         )}
+        onAnimationEnd={handleAnimationEnd}
         {...getFloatingProps(rest)}
         role={"region"}
       >

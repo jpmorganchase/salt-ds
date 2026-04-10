@@ -1,5 +1,4 @@
 export * from "./ContentExample";
-export * from "./Controlled";
 export * from "./LeftPanel";
 export * from "./ManualTrigger";
 export * from "./Resizable";

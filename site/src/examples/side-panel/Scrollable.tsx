@@ -24,6 +24,7 @@ const ScrollableContent = () => (
       flexDirection: "column",
       gap: "var(--salt-spacing-200)",
       padding: "var(--salt-spacing-300)",
+      overscrollBehavior: "contain",
       overflow: "auto",
     }}
   >
