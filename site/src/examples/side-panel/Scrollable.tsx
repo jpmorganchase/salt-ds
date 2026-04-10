@@ -24,6 +24,7 @@ const ScrollableContent = () => (
       flexDirection: "column",
       gap: "var(--salt-spacing-200)",
       padding: "var(--salt-spacing-300)",
+      overscrollBehavior: "contain",
       overflow: "auto",
     }}
   >
@@ -66,10 +67,7 @@ const SidePanelExample = () => {
     <>
       <ScrollableContent />
       <SidePanel position="right" aria-labelledby={headingId}>
-        <SidePanelContent
-          header={<H2 id={headingId}>Section Title</H2>}
-          aria-label="Side panel content"
-        >
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
           <StackLayout>
             {Array.from({ length: 10 }, (_, i) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: Static list of identical placeholder items

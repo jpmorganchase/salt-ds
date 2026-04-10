@@ -40,7 +40,7 @@ import {
 } from "@salt-ds/lab";
 ```
 
-### `SidePanelProvider`
+### SidePanelProvider
 
 `SidePanelProvider` wraps both the trigger and the panel. It manages the open/closed state and coordinates ARIA attributes, focus management and keyboard dismissal between them. Place it around every group of trigger and panel elements that should share state.
 
@@ -50,7 +50,7 @@ import {
 
 Use the `defaultOpen` prop to render the panel open on first mount, or pass `open` and `onOpenChange` for fully controlled state.
 
-### `SidePanelTrigger`
+### SidePanelTrigger
 
 `SidePanelTrigger` wraps the element that opens and closes the panel. It accepts a single child element (typically a `Button`) and automatically applies `aria-expanded`, `aria-controls`, and a click handler to toggle the panel.
 
@@ -62,7 +62,7 @@ Use the `defaultOpen` prop to render the panel open on first mount, or pass `ope
 
 `SidePanelTrigger` does not render a wrapper element. It clones its child and merges the required props onto it, so your button remains the direct flex or layout child.
 
-### `SidePanel`
+### SidePanel
 
 `SidePanel` is the panel surface itself. It renders as a `region` landmark, manages its enter/exit animation, and moves focus into the panel when it opens. Use the `position` prop to anchor the panel to the `"left"` or `"right"` edge of its container (defaults to `"right"`), and the `variant` prop to set its background color (`"primary"`, `"secondary"`, or `"tertiary"`).
 
@@ -74,7 +74,7 @@ You must provide an accessible name via `aria-labelledby` (pointing to a heading
 </SidePanel>
 ```
 
-### `SidePanelContent`
+### SidePanelContent
 
 `SidePanelContent` is an optional layout helper that provides a standard panel structure: a header row with a close button and a scrollable body. Pass a heading element to the `header` prop and your content as children.
 
@@ -134,18 +134,18 @@ const { setOpen, setReference, getReferenceProps, getFloatingProps } =
 
 ## Props
 
-### `SidePanel`
+### SidePanel
 
 <PropsTable packageName="lab" componentName="SidePanel" />
 
-### `SidePanelProvider`
+### SidePanelProvider
 
 <PropsTable packageName="lab" componentName="SidePanelProvider" />
 
-### `SidePanelTrigger`
+### SidePanelTrigger
 
 <PropsTable packageName="lab" componentName="SidePanelTrigger" />
 
-### `SidePanelContent`
+### SidePanelContent
 
 <PropsTable packageName="lab" componentName="SidePanelContent" />
