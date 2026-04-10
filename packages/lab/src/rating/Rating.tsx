@@ -63,7 +63,7 @@ export interface RatingProps
    * Can be "top", "right", "bottom", or "left".
    * @default "right"
    */
-  labelPlacement?: "top" | "right" | "bottom" | "left";
+  labelPlacement?: "right" | "bottom";
   /**
    * The name to be set on each radio button within the group. If not set, then one will be generated for you.
    */
@@ -138,20 +138,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     onChange?.(event, itemValue);
   };
 
-  const isTopLeft = labelPlacement === "top" || labelPlacement === "left";
-
-  const displayLabel = getVisibleLabel && (
-    <div
-      className={clsx(
-        withBaseName("label"),
-        withBaseName(`label-${labelPlacement}`),
-      )}
-      aria-hidden
-    >
-      {getVisibleLabel(hoveredValue || selected, max)}
-    </div>
-  );
-
   return (
     <div
       ref={ref}
@@ -162,7 +148,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       )}
       {...restProps}
     >
-      {isTopLeft && displayLabel}
       <div
         role="radiogroup"
         className={withBaseName("container")}
@@ -201,7 +186,17 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
           );
         })}
       </div>
-      {!isTopLeft && displayLabel}
+      {getVisibleLabel && (
+        <div
+          className={clsx(
+            withBaseName("label"),
+            withBaseName(`label-${labelPlacement}`),
+          )}
+          aria-hidden
+        >
+          {getVisibleLabel(hoveredValue || selected, max)}
+        </div>
+      )}
     </div>
   );
 });
