@@ -120,7 +120,7 @@ describe("Salt skill contracts", () => {
       "## Reference Routing",
     );
     expect(primarySkill).toContain(
-      "Read compact workflow output from top-level fields first:",
+      "Read compact workflow output from stable top-level workflow signals first, such as:",
     );
     expect(primarySkill).toContain(
       "Do not paraphrase concrete follow-up asks into abstract taxonomy prompts.",
@@ -135,7 +135,7 @@ describe("Salt skill contracts", () => {
       "if output is truncated, malformed, semantically off-target, or repeatedly misroutes to unrelated patterns, fail closed",
     );
     expect(primarySkill).toContain(
-      "If compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.",
+      "If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned next step before implementing the blocked region.",
     );
     expect(primarySkill).toContain(
       "do not claim a Salt workflow completed merely because the host emitted a large payload",

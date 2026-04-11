@@ -1,5 +1,7 @@
 # Alpha Visual Migration Packet
 
+Archived historical planning doc. Keep for context only.
+
 This packet is the first checked-in evaluation set for the Alpha 2 visual-grounding experiment.
 
 Use it to compare the same migration task across four evidence variants:

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { SaltRegistry } from "../../types.js";
 import type { CreateSaltUiResult } from "../createSaltUi.js";
+import type { ReviewSaltUiResult } from "../reviewSaltUi.js";
 import {
   assertValidPublicContractV2,
   buildCreatePublicContractV2,
@@ -12,6 +13,8 @@ import {
   type PublicContractV2Input,
   type PublicNextStep,
 } from "../publicContractV2.js";
+import type { MigrateToSaltResult } from "../translation/sourceUiTypes.js";
+import type { UpgradeSaltUiResult } from "../upgradeSaltUi.js";
 import type {
   CreateSaltUiWorkflowContract,
   MigrateToSaltWorkflowContract,
@@ -200,6 +203,12 @@ function buildCreateWorkflowContract(
   overrides: Partial<CreateSaltUiWorkflowContract> = {},
 ): CreateSaltUiWorkflowContract {
   return {
+    confidence: {
+      level: "high",
+      reasons: ["Fixture confidence is sufficient for v2 derivation tests."],
+      ask_before_proceeding: false,
+      raise_confidence: [],
+    },
     readiness: {
       status: "starter_validated",
       implementation_ready: true,
@@ -231,14 +240,255 @@ function buildCreateWorkflowContract(
       source_urls: [],
     },
     ide_summary: {
-      recommended_direction: null,
+      recommended_direction: "Use the canonical Salt direction.",
       bounded_scope: [],
       open_question: null,
       starter_plan: [],
       verify: [],
     },
+    intent: {
+      user_task: "Create the requested Salt UI.",
+      key_interaction: "Present the requested Salt surface.",
+      composition_direction: "Use the canonical Salt composition.",
+      canonical_choice: "Metric",
+      rule_ids: [],
+    },
+    repo_refinement: null,
+    project_conventions_check: {
+      supported: true,
+      contract: "project_conventions_v1",
+      check_recommended: false,
+      topics: [],
+      reason: "Project conventions are not required for this fixture.",
+      canonical_only: true,
+      declared_policy_status: "none-declared",
+      policy_paths: [".salt/team.json", ".salt/stack.json"],
+      suggested_follow_up_tool: "get_salt_project_context",
+      suggested_follow_up_cli: "salt-ds info --json",
+      next_step: "Continue with canonical Salt guidance.",
+    },
+    provenance: {
+      canonical_source_urls: [],
+      related_guide_urls: [],
+      starter_source_urls: [],
+      source_urls: [],
+      guidance_signals: [],
+      project_conventions_contract: "project_conventions_v1",
+    },
     ...overrides,
-  } as CreateSaltUiWorkflowContract;
+  };
+}
+
+function buildReviewWorkflowContract(
+  overrides: Partial<ReviewSaltUiWorkflowContract> = {},
+): ReviewSaltUiWorkflowContract {
+  return {
+    confidence: {
+      level: "high",
+      reasons: ["Fixture confidence is sufficient for review v2 tests."],
+      ask_before_proceeding: false,
+      raise_confidence: [],
+    },
+    ide_summary: {
+      verdict: {
+        level: "clean",
+        summary: "No blocking issues remain.",
+      },
+      top_findings: [],
+      safest_next_fix: null,
+      verify: [],
+    },
+    decision: {
+      status: "clean",
+      why: "No blocking review issues remain.",
+    },
+    fix_candidates: {
+      total_count: 0,
+      deterministic_count: 0,
+      manual_review_count: 0,
+      candidates: [],
+      notes: [],
+    },
+    issue_classes: [],
+    project_conventions_check: {
+      supported: true,
+      contract: "project_conventions_v1",
+      check_recommended: false,
+      topics: [],
+      reason: "Project conventions are not required for this fixture.",
+      canonical_only: true,
+      declared_policy_status: "none-declared",
+      policy_paths: [".salt/team.json", ".salt/stack.json"],
+      suggested_follow_up_tool: "get_salt_project_context",
+      suggested_follow_up_cli: "salt-ds info --json",
+      next_step: "Continue with canonical Salt guidance.",
+    },
+    rule_ids: [],
+    provenance: {
+      canonical_source_urls: [],
+      related_guide_urls: [],
+      starter_source_urls: [],
+      source_urls: [],
+      guidance_signals: [],
+      project_conventions_contract: "project_conventions_v1",
+    },
+    ...overrides,
+  };
+}
+
+function buildMigrateWorkflowContract(
+  overrides: Partial<MigrateToSaltWorkflowContract> = {},
+): MigrateToSaltWorkflowContract {
+  return {
+    confidence: {
+      level: "high",
+      reasons: ["Fixture confidence is sufficient for migrate v2 tests."],
+      ask_before_proceeding: false,
+      raise_confidence: [],
+    },
+    ide_summary: {
+      screen_map: [],
+      preserve: [],
+      needs_confirmation: [],
+      recommended_direction: [],
+      first_scaffold: [],
+      verify: [],
+    },
+    readiness: {
+      status: "starter_validated",
+      implementation_ready: true,
+      reason: "Starter code validated.",
+    },
+    context_requirement: {
+      status: "context_checked",
+      repo_specific_edits_ready: true,
+      reason: "Context is ready.",
+      satisfied_by: "salt-ds info",
+    },
+    starter_validation: {
+      status: "clean",
+      snippets_checked: 1,
+      errors: 0,
+      warnings: 0,
+      infos: 0,
+      fix_count: 0,
+      migration_count: 0,
+      top_issue: null,
+      next_step: null,
+      source_urls: [],
+    },
+    project_conventions_check: {
+      supported: true,
+      contract: "project_conventions_v1",
+      check_recommended: false,
+      topics: [],
+      reason: "Project conventions are not required for this fixture.",
+      canonical_only: true,
+      declared_policy_status: "none-declared",
+      policy_paths: [".salt/team.json", ".salt/stack.json"],
+      suggested_follow_up_tool: "get_salt_project_context",
+      suggested_follow_up_cli: "salt-ds info --json",
+      next_step: "Continue with canonical Salt guidance.",
+    },
+    rule_ids: [],
+    post_migration_verification: {
+      source_checks: [],
+      runtime_checks: [],
+      preserve_checks: [],
+      confirmation_checks: [],
+      suggested_workflow: "review_salt_ui",
+      suggested_command: "salt-ds review <changed-path>",
+    },
+    visual_evidence_contract: {
+      role: "supporting-evidence",
+      not_canonical_source_of_truth: true,
+      supported_inputs: [],
+      interpretation_owner: "agent-or-adapter",
+      normalization_required: true,
+      normalization_contract: "migrate_visual_evidence_v1",
+      structured_outputs: [],
+      source_outline_provided: false,
+      source_outline_signal_counts: {
+        regions: 0,
+        actions: 0,
+        states: 0,
+        notes: 0,
+      },
+      derived_outline_available: false,
+      derived_outline_signal_counts: {
+        regions: 0,
+        actions: 0,
+        states: 0,
+        notes: 0,
+      },
+      visual_input_count: 0,
+      visual_input_kinds: [],
+      visual_input_sources: [],
+      runtime_capture: {
+        supported_via_cli: true,
+        command: "salt-ds migrate --url <url>",
+        purpose: "Capture supporting runtime evidence when needed.",
+      },
+      confidence_impact: {
+        level: "none",
+        reasons: [],
+      },
+    },
+    provenance: {
+      canonical_source_urls: [],
+      related_guide_urls: [],
+      starter_source_urls: [],
+      source_urls: [],
+      guidance_signals: [],
+      project_conventions_contract: "project_conventions_v1",
+    },
+    ...overrides,
+  };
+}
+
+function buildUpgradeWorkflowContract(
+  overrides: Partial<UpgradeSaltUiWorkflowContract> = {},
+): UpgradeSaltUiWorkflowContract {
+  return {
+    confidence: {
+      level: "high",
+      reasons: ["Fixture confidence is sufficient for upgrade v2 tests."],
+      ask_before_proceeding: false,
+      raise_confidence: [],
+    },
+    ide_summary: {
+      target: null,
+      from_version: null,
+      to_version: null,
+      required_changes: [],
+      optional_cleanup: [],
+      suggested_order: [],
+      verify: [],
+    },
+    project_conventions_check: {
+      supported: true,
+      contract: "project_conventions_v1",
+      check_recommended: false,
+      topics: [],
+      reason: "Project conventions are not required for this fixture.",
+      canonical_only: true,
+      declared_policy_status: "none-declared",
+      policy_paths: [".salt/team.json", ".salt/stack.json"],
+      suggested_follow_up_tool: "get_salt_project_context",
+      suggested_follow_up_cli: "salt-ds info --json",
+      next_step: "Continue with canonical Salt guidance.",
+    },
+    rule_ids: [],
+    provenance: {
+      canonical_source_urls: [],
+      related_guide_urls: [],
+      starter_source_urls: [],
+      source_urls: [],
+      guidance_signals: [],
+      project_conventions_contract: "project_conventions_v1",
+    },
+    ...overrides,
+  };
 }
 
 describe("publicContractV2", () => {
@@ -279,6 +529,7 @@ describe("publicContractV2", () => {
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
+          hard_blocked: false,
           context_ready: true,
           usable_guidance_present: true,
           transport_failed: false,
@@ -317,6 +568,7 @@ describe("publicContractV2", () => {
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
+          hard_blocked: false,
           context_ready: true,
           usable_guidance_present: true,
           transport_failed: false,
@@ -362,6 +614,7 @@ describe("publicContractV2", () => {
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
+          hard_blocked: false,
           context_ready: true,
           usable_guidance_present: true,
           transport_failed: false,
@@ -397,6 +650,7 @@ describe("publicContractV2", () => {
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
+          hard_blocked: false,
           context_ready: false,
           usable_guidance_present: true,
           transport_failed: false,
@@ -441,6 +695,7 @@ describe("publicContractV2", () => {
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
+          hard_blocked: false,
           context_ready: true,
           usable_guidance_present: true,
           transport_failed: false,
@@ -525,37 +780,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
       next_step: "Implement Metric.",
     } as unknown as CreateSaltUiResult;
-    const contract = {
-      readiness: {
-        status: "starter_validated",
-        implementation_ready: true,
-        reason: "Starter code validated.",
-      },
-      implementation_gate: {
-        status: "clear",
-        reason: "No follow-through remains.",
-        required_follow_through: [],
-        blocking_questions: [],
-        next_step: null,
-      },
-      context_requirement: {
-        status: "context_checked",
-        repo_specific_edits_ready: true,
-        reason: "Context is ready.",
-        satisfied_by: "salt-ds info",
-      },
-      starter_validation: {
-        status: "clean",
-        snippets_checked: 1,
-        errors: 0,
-        warnings: 0,
-        infos: 0,
-        fix_count: 0,
-        migration_count: 0,
-        top_issue: null,
-        next_step: null,
-        source_urls: [],
-      },
+    const contract = buildCreateWorkflowContract({
       ide_summary: {
         recommended_direction: "Use Metric.",
         bounded_scope: [],
@@ -563,7 +788,7 @@ describe("publicContractV2 workflow adapters", () => {
         starter_plan: [],
         verify: [],
       },
-    } as CreateSaltUiWorkflowContract;
+    });
 
     const compact = buildCreatePublicContractV2(result, contract, {
       transport_used: "mcp",
@@ -694,37 +919,7 @@ describe("publicContractV2 workflow adapters", () => {
         why: "List filtering scored highest.",
       },
     } as unknown as CreateSaltUiResult;
-    const contract = {
-      readiness: {
-        status: "starter_validated",
-        implementation_ready: true,
-        reason: "Starter code validated.",
-      },
-      implementation_gate: {
-        status: "clear",
-        reason: "No follow-through remains.",
-        required_follow_through: [],
-        blocking_questions: [],
-        next_step: null,
-      },
-      context_requirement: {
-        status: "context_checked",
-        repo_specific_edits_ready: true,
-        reason: "Context is ready.",
-        satisfied_by: "salt-ds info",
-      },
-      starter_validation: {
-        status: "clean",
-        snippets_checked: 1,
-        errors: 0,
-        warnings: 0,
-        infos: 0,
-        fix_count: 0,
-        migration_count: 0,
-        top_issue: null,
-        next_step: null,
-        source_urls: [],
-      },
+    const contract = buildCreateWorkflowContract({
       ide_summary: {
         recommended_direction: "Use List filtering.",
         bounded_scope: [],
@@ -732,7 +927,7 @@ describe("publicContractV2 workflow adapters", () => {
         starter_plan: [],
         verify: [],
       },
-    } as CreateSaltUiWorkflowContract;
+    });
 
     const compact = buildCreatePublicContractV2(result, contract, {
       transport_used: "mcp",
@@ -828,37 +1023,7 @@ describe("publicContractV2 workflow adapters", () => {
         why: "Keyboard shortcuts is the canonical pattern.",
       },
     } as unknown as CreateSaltUiResult;
-    const contract = {
-      readiness: {
-        status: "starter_validated",
-        implementation_ready: true,
-        reason: "Starter code validated.",
-      },
-      implementation_gate: {
-        status: "clear",
-        reason: "No follow-through remains.",
-        required_follow_through: [],
-        blocking_questions: [],
-        next_step: null,
-      },
-      context_requirement: {
-        status: "context_checked",
-        repo_specific_edits_ready: true,
-        reason: "Context is ready.",
-        satisfied_by: "salt-ds info",
-      },
-      starter_validation: {
-        status: "clean",
-        snippets_checked: 1,
-        errors: 0,
-        warnings: 0,
-        infos: 0,
-        fix_count: 0,
-        migration_count: 0,
-        top_issue: null,
-        next_step: null,
-        source_urls: [],
-      },
+    const contract = buildCreateWorkflowContract({
       ide_summary: {
         recommended_direction: "Use Keyboard shortcuts.",
         bounded_scope: [],
@@ -866,7 +1031,7 @@ describe("publicContractV2 workflow adapters", () => {
         starter_plan: [],
         verify: [],
       },
-    } as CreateSaltUiWorkflowContract;
+    });
 
     const compact = buildCreatePublicContractV2(result, contract, {
       transport_used: "mcp",
@@ -898,45 +1063,15 @@ describe("publicContractV2 workflow adapters", () => {
         why: "No close pattern match was found.",
       },
     } as unknown as CreateSaltUiResult;
-    const contract = {
-      readiness: {
-        status: "starter_validated",
-        implementation_ready: true,
-        reason: "Starter code validated.",
-      },
-      implementation_gate: {
-        status: "clear",
-        reason: "No follow-through remains.",
-        required_follow_through: [],
-        blocking_questions: [],
-        next_step: null,
-      },
-      context_requirement: {
-        status: "context_checked",
-        repo_specific_edits_ready: true,
-        reason: "Context is ready.",
-        satisfied_by: "salt-ds info",
-      },
-      starter_validation: {
-        status: "clean",
-        snippets_checked: 1,
-        errors: 0,
-        warnings: 0,
-        infos: 0,
-        fix_count: 0,
-        migration_count: 0,
-        top_issue: null,
-        next_step: null,
-        source_urls: [],
-      },
+    const contract = buildCreateWorkflowContract({
       ide_summary: {
-        recommended_direction: null,
+        recommended_direction: "Clarify the canonical Salt direction.",
         bounded_scope: [],
         open_question: null,
         starter_plan: [],
         verify: [],
       },
-    } as CreateSaltUiWorkflowContract;
+    });
 
     const compact = buildCreatePublicContractV2(result, contract, {
       transport_used: "mcp",
@@ -975,8 +1110,8 @@ describe("publicContractV2 workflow adapters", () => {
         why: "The request describes a dashboard workflow with summary metrics.",
       },
       next_step: "Follow up on App header.",
-    } as const;
-    const contract = {
+    } as unknown as CreateSaltUiResult;
+    const contract = buildCreateWorkflowContract({
       readiness: {
         status: "starter_needs_attention",
         implementation_ready: false,
@@ -988,12 +1123,6 @@ describe("publicContractV2 workflow adapters", () => {
         required_follow_through: ["App header", "Metric"],
         blocking_questions: [],
         next_step: "Run targeted Salt create follow-up.",
-      },
-      context_requirement: {
-        status: "context_checked",
-        repo_specific_edits_ready: true,
-        reason: "Context is ready.",
-        satisfied_by: "salt-ds info",
       },
       starter_validation: {
         status: "needs_attention",
@@ -1014,7 +1143,7 @@ describe("publicContractV2 workflow adapters", () => {
         starter_plan: [],
         verify: [],
       },
-    } as CreateSaltUiWorkflowContract;
+    });
 
     const compact = buildCreatePublicContractV2(result, contract, {
       transport_used: "mcp",
@@ -1043,14 +1172,28 @@ describe("publicContractV2 workflow adapters", () => {
 
   it("derives review v2 output from the shared review workflow contract", () => {
     const result = {
+      guidance_boundary: {
+        workflow: "review_salt_ui",
+      },
       decision: {
         status: "needs_attention",
         why: "Canonical Salt validation found issues.",
       },
+      summary: {
+        errors: 1,
+        warnings: 0,
+        infos: 0,
+        fix_count: 1,
+        migration_count: 0,
+      },
+      fixes: [],
+      issues: [],
+      migrations: [],
       next_step: "Fix the remaining review issues and rerun review.",
       missing_data: [],
-    } as const;
-    const contract = {
+      source_urls: [],
+    } as unknown as ReviewSaltUiResult;
+    const contract = buildReviewWorkflowContract({
       decision: result.decision,
       ide_summary: {
         verdict: {
@@ -1084,7 +1227,7 @@ describe("publicContractV2 workflow adapters", () => {
         ],
         notes: [],
       },
-    } as ReviewSaltUiWorkflowContract;
+    });
 
     const compact = buildReviewPublicContractV2(result, contract, {
       transport_used: "mcp",
@@ -1107,12 +1250,8 @@ describe("publicContractV2 workflow adapters", () => {
       translations: [{}],
       migration_plan: ["Start with the main shell."],
       clarifying_questions: ["Should the table use Data grid or Table?"],
-    } as unknown as {
-      translations: unknown[];
-      migration_plan: string[];
-      clarifying_questions: string[];
-    };
-    const contract = {
+    } as unknown as MigrateToSaltResult;
+    const contract = buildMigrateWorkflowContract({
       readiness: {
         status: "starter_validated",
         implementation_ready: true,
@@ -1145,7 +1284,7 @@ describe("publicContractV2 workflow adapters", () => {
         suggested_workflow: "review_salt_ui",
         suggested_command: "salt-ds review <changed-path>",
       },
-    } as MigrateToSaltWorkflowContract;
+    });
 
     const compact = buildMigratePublicContractV2(
       result as unknown as never,
@@ -1189,18 +1328,8 @@ describe("publicContractV2 workflow adapters", () => {
       },
       did_you_mean: ["@salt-ds/core", "@salt-ds/lab"],
       breaking: ["Replace deprecated API usage."],
-    } as unknown as {
-      decision: {
-        target: string;
-        from_version: string;
-        to_version: string;
-        why: string;
-      };
-      ambiguity: Record<string, unknown>;
-      did_you_mean: string[];
-      breaking: string[];
-    };
-    const contract = {
+    } as unknown as UpgradeSaltUiResult;
+    const contract = buildUpgradeWorkflowContract({
       ide_summary: {
         target: "@salt-ds/core",
         from_version: "1.0.0",
@@ -1210,7 +1339,7 @@ describe("publicContractV2 workflow adapters", () => {
         suggested_order: [],
         verify: [],
       },
-    } as UpgradeSaltUiWorkflowContract;
+    });
 
     const compact = buildUpgradePublicContractV2(
       result as unknown as never,

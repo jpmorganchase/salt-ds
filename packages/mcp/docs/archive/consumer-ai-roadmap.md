@@ -1,5 +1,7 @@
 # Consumer AI Roadmap
 
+Archived historical planning doc. Keep for context only.
+
 This file is the short strategic roadmap for the Salt consumer AI product.
 
 It is not the execution checklist.
