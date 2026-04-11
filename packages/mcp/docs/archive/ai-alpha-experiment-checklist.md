@@ -1,5 +1,7 @@
 # Alpha Experiment Checklist
 
+Archived historical planning doc. Keep for context only.
+
 This file turns Alpha 2 of [`ai-product-roadmap.md`](./ai-product-roadmap.md) into a concrete implementation checklist.
 
 Alpha 2 is the focused experiment slice before any broader beta hardening work. It tests two likely high-value demands:

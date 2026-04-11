@@ -8,6 +8,7 @@ import {
   getSaltEntity,
   loadRegistry,
   migrateToSalt,
+  type PublicContractV2,
   reviewSaltUi,
 } from "@salt-ds/semantic-core";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
@@ -26,12 +27,25 @@ const BUILT_AT = "2026-03-10T00:00:00Z";
 let registry: SaltRegistry;
 let registryDir: string;
 
+type CreateWorkflowFullResult = Exclude<
+  ReturnType<typeof withChooseWorkflowGuidance>,
+  PublicContractV2
+>;
+type ReviewWorkflowFullResult = Exclude<
+  ReturnType<typeof withAnalyzeWorkflowGuidance>,
+  PublicContractV2
+>;
+type MigrateWorkflowFullResult = Exclude<
+  ReturnType<typeof withTranslateWorkflowGuidance>,
+  PublicContractV2
+>;
+
 function runCreateWorkflowFull(input: {
   query: string;
   includeStarterCode?: boolean;
   contextChecked?: boolean;
   projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
-}) {
+}): CreateWorkflowFullResult {
   return withChooseWorkflowGuidance(
     registry,
     createSaltUi(registry, {
@@ -44,14 +58,14 @@ function runCreateWorkflowFull(input: {
       project_policy: input.projectPolicy,
       view: "full",
     },
-  );
+  ) as CreateWorkflowFullResult;
 }
 
 function runReviewWorkflowFull(input: {
   code: string;
   projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
   expectedTargets?: Parameters<typeof reviewSaltUi>[1]["expected_targets"];
-}) {
+}): ReviewWorkflowFullResult {
   return withAnalyzeWorkflowGuidance(
     reviewSaltUi(registry, {
       framework: "react",
@@ -64,7 +78,7 @@ function runReviewWorkflowFull(input: {
       project_policy: input.projectPolicy,
       view: "full",
     },
-  );
+  ) as ReviewWorkflowFullResult;
 }
 
 function runMigrateWorkflowFull(input: {
@@ -74,7 +88,7 @@ function runMigrateWorkflowFull(input: {
     states: string[];
     notes: string[];
   };
-}) {
+}): MigrateWorkflowFullResult {
   return withTranslateWorkflowGuidance(
     registry,
     migrateToSalt(registry, {
@@ -85,7 +99,7 @@ function runMigrateWorkflowFull(input: {
       source_outline: input.sourceOutline,
       view: "full",
     },
-  );
+  ) as MigrateWorkflowFullResult;
 }
 
 beforeAll(async () => {

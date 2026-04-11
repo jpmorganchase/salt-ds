@@ -1794,6 +1794,7 @@ function formatUpgradeReport(result: UpgradeWorkflowResult): string {
 
 function toCreateAgentWorkflowJson(
   result: CreateWorkflowResult,
+  contract: CreateSaltUiWorkflowContract,
   options: {
     registry: Awaited<ReturnType<typeof resolveSemanticRegistry>>["registry"];
     query: string;
@@ -1802,39 +1803,7 @@ function toCreateAgentWorkflowJson(
 ): PublicContractV2 {
   return buildCreatePublicContractV2(
     result.result.recommendation,
-    {
-      readiness: {
-        status: result.workflow.readiness.status,
-        implementation_ready: result.workflow.readiness.implementationReady,
-        reason: result.workflow.readiness.reason,
-      },
-      implementation_gate: result.workflow.implementationGate,
-      context_requirement: {
-        status: result.workflow.contextRequirement.status,
-        repo_specific_edits_ready:
-          result.workflow.contextRequirement.repoSpecificEditsReady,
-        reason: result.workflow.contextRequirement.reason,
-        ...(result.workflow.contextRequirement.satisfiedBy
-          ? {
-              satisfied_by: result.workflow.contextRequirement.satisfiedBy,
-            }
-          : {
-              suggested_follow_up_tool: "get_salt_project_context",
-              suggested_follow_up_cli: "salt-ds info --json",
-            }),
-      },
-      starter_validation: result.artifacts.starterValidation,
-      ide_summary: {
-        recommended_direction:
-          result.result.recommendation.decision.name ??
-          result.result.intent.compositionDirection,
-        bounded_scope: [result.result.intent.userTask],
-        open_question:
-          result.result.recommendation.open_questions?.[0]?.prompt ?? null,
-        starter_plan: [],
-        verify: [],
-      },
-    } as CreateSaltUiWorkflowContract,
+    contract,
     {
       transport_used: "cli",
       registry: options.registry,
@@ -1845,28 +1814,20 @@ function toCreateAgentWorkflowJson(
 }
 
 function toReviewAgentWorkflowJson(
-  result: ReviewWorkflowResult,
+  result: ReviewSaltUiResult,
   contract: ReviewSaltUiWorkflowContract,
 ): PublicContractV2 {
-  return buildReviewPublicContractV2(
-    {
-      decision: contract.decision,
-      next_step: contract.next_step ?? result.result.summary.nextStep,
-      missing_data: contract.missing_data ?? [],
-    } as ReviewSaltUiResult,
-    contract,
-    {
-      transport_used: "cli",
-    },
-  );
+  return buildReviewPublicContractV2(result, contract, {
+    transport_used: "cli",
+  });
 }
 
 function toMigrateAgentWorkflowJson(
-  result: MigrateWorkflowResult,
+  result: MigrateToSaltResult,
   contract: MigrateToSaltWorkflowContract,
 ): PublicContractV2 {
   return buildMigratePublicContractV2(
-    result.result.translation as MigrateToSaltResult,
+    result,
     contract,
     {
       transport_used: "cli",
@@ -1875,10 +1836,10 @@ function toMigrateAgentWorkflowJson(
 }
 
 function toUpgradeAgentWorkflowJson(
-  result: UpgradeWorkflowResult,
+  result: UpgradeSaltUiResult,
   contract: UpgradeSaltUiWorkflowContract,
 ): PublicContractV2 {
-  return buildUpgradePublicContractV2(result.result.comparison, contract, {
+  return buildUpgradePublicContractV2(result, contract, {
     transport_used: "cli",
   });
 }
@@ -2288,7 +2249,7 @@ export async function runCreateCommand(
       },
     };
 
-    const compactJson = toCreateAgentWorkflowJson(result, {
+    const compactJson = toCreateAgentWorkflowJson(result, canonicalContract, {
       registry,
       query,
       packageName: flags.package,
@@ -2569,7 +2530,10 @@ export async function runMigrateCommand(
       },
     };
 
-    const compactJson = toMigrateAgentWorkflowJson(result, canonicalContract);
+    const compactJson = toMigrateAgentWorkflowJson(
+      policyTranslation as MigrateToSaltResult,
+      canonicalContract,
+    );
     await writeWorkflowOutput(
       result,
       flags,
@@ -2699,7 +2663,7 @@ export async function runUpgradeCommand(
       },
     };
 
-    const compactJson = toUpgradeAgentWorkflowJson(result, upgradeContract);
+    const compactJson = toUpgradeAgentWorkflowJson(comparison, upgradeContract);
     await writeWorkflowOutput(result, flags, io, formatUpgradeReport, {
       compactJsonOverride: compactJson,
     });
@@ -3026,7 +2990,46 @@ async function runReviewLikeCommand(
       },
     };
 
-    const compactJson = toReviewAgentWorkflowJson(result, reviewContract);
+    const compactJson = toReviewAgentWorkflowJson(
+      {
+        guidance_boundary: sourceValidation.files[0]?.guidanceBoundary ?? {
+          guidance_source: "canonical_salt",
+          scope: "official_salt_only",
+          project_conventions: {
+            supported: true,
+            contract: "project_conventions_v1",
+            check_recommended: projectConventionsCheck?.checkRecommended ?? false,
+            reason: "Repo policy may still refine the final remediation choice.",
+            topics: projectConventionsCheck?.topics ?? [],
+          },
+        },
+        decision: {
+          status: canonicalNeedsAttention ? "needs_attention" : "clean",
+          why:
+            topMergedIssue ??
+            sourceValidation.files[0]?.decision.why ??
+            "Review results are available.",
+        },
+        summary: {
+          errors: mergedIssueSummary.errors,
+          warnings: mergedIssueSummary.warnings,
+          infos: mergedIssueSummary.infos,
+          fix_count: sourceValidation.summary.fixCount,
+          migration_count: sourceValidation.summary.migrationCount,
+        },
+        fixes: sourceValidation.files.flatMap((file) => file.fixes ?? []),
+        issues: mergedIssues,
+        migrations: sourceValidation.files.flatMap((file) => file.migrations ?? []),
+        missing_data: sourceValidation.files.flatMap((file) => file.missingData),
+        next_step:
+          sourceValidation.files[0]?.nextStep ??
+          (loadedCreateReviewTargets
+            ? "Follow the saved create report's canonical Salt direction, then rerun salt-ds review."
+            : undefined),
+        source_urls: mergedSourceUrls,
+      },
+      reviewContract,
+    );
     await writeWorkflowOutput(result, flags, io, formatReviewReport, {
       compactJsonOverride: compactJson,
     });

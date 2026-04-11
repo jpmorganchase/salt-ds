@@ -1,5 +1,13 @@
 # Salt AI Tooling Hardening Backlog
 
+## Status Note
+
+This backlog predates the compact public contract `v2` cutover.
+
+Treat items about temporary agent-only workflow views, `--agent-json`, or hypothetical `slim` rollout modes as superseded by the shipped compact-default contract unless they are explicitly restated below in current `compact` / `full` terms.
+
+Use this document for post-`v2` hardening work, not as the canonical description of what is already shipped.
+
 This document is a detailed implementation backlog for improving Salt AI tooling quality across:
 
 - MCP
@@ -13,10 +21,9 @@ Use it as a handoff document for another agent or maintainer who needs a concret
 
 It is intended to supplement, not replace:
 
-- [`./ai-v1-implementation-backlog.md`](./ai-v1-implementation-backlog.md)
 - [`./ai-product-roadmap.md`](./ai-product-roadmap.md)
-- [`./ai-top-tier-design-system-plan.md`](./ai-top-tier-design-system-plan.md)
 - [`./maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)
+- [`./archive/README.md`](./archive/README.md) for historical alpha, V1, and productization planning context
 
 ## Contents
 
@@ -28,7 +35,7 @@ It is intended to supplement, not replace:
 - [P0: Recommendation Quality And Exact-Name Robustness](#p0-recommendation-quality-and-exact-name-robustness)
 - [P0: Follow-Through Contract And Host Safety](#p0-follow-through-contract-and-host-safety)
 - [P0: Transcript-Derived Regression Coverage](#p0-transcript-derived-regression-coverage)
-- [P1: Token Efficiency And Response Shaping](#p1-token-efficiency-and-response-shaping)
+- [P1: Payload Efficiency And Response Shaping](#p1-payload-efficiency-and-response-shaping)
 - [P1: CLI Agent Ergonomics](#p1-cli-agent-ergonomics)
 - [P1: Skill And Host Guidance](#p1-skill-and-host-guidance)
 - [P1: Evaluation And Benchmark Discipline](#p1-evaluation-and-benchmark-discipline)
@@ -223,7 +230,7 @@ Backlog items:
 9. Add golden diffs for high-value transcript regressions.
 10. Add release gates that block shipping when core transcript scenarios regress.
 
-## P1: Token Efficiency And Response Shaping
+## P1: Payload Efficiency And Response Shaping
 
 Primary repo targets:
 
@@ -234,21 +241,20 @@ Primary repo targets:
 
 Backlog items:
 
-1. Add a true slim agent-oriented response mode for MCP.
-2. Add a matching slim agent-oriented JSON mode for the CLI.
-3. Make slim mode return only:
-   - decision
-   - why
-   - confidence
+1. Tighten compact `v2` payload budgets for MCP default workflow responses.
+2. Tighten compact `v2` payload budgets for CLI workflow `--json`.
+3. Keep compact output focused on:
+   - workflow state
+   - exact-request safety
    - context status
-   - next step
-   - minimal follow-ups
-4. Move starter code behind explicit request flags in slim mode.
-5. Move long alternative lists behind explicit request flags in slim mode.
-6. Move raw debug data behind explicit request flags in slim mode.
-7. Move long guide lists behind explicit request flags in slim mode.
+   - next-step guidance
+   - minimal branchable blockers
+4. Move starter code behind explicit `full` output or expansion requests.
+5. Move long alternative lists behind explicit `full` output or expansion requests.
+6. Move raw debug data behind explicit `full` output or debug requests.
+7. Move long guide lists behind explicit `full` output or expansion requests.
 8. Deduplicate repeated source URLs, notes, and policy fragments.
-9. Add payload-size budgets and tests for slim mode.
+9. Add payload-size budgets and tests for compact default output.
 10. Add payload-size budgets and tests for full mode so it does not grow without limit.
 11. Add `ask_for_more` markers instead of dumping all attached evidence by default.
 12. Add a reusable compact `summary` block that hosts can cache safely.
@@ -256,7 +262,7 @@ Backlog items:
 14. Add a compact summary specifically optimized for explanation turns.
 15. Add a compact summary specifically optimized for implementation turns.
 16. Stop including starter code by default on ranking-only or explanation-only turns.
-17. Add tests that verify slim mode is materially smaller than existing compact/full outputs.
+17. Add tests that verify compact default output is materially smaller than rich/full outputs.
 18. Add token-cost tracking to evaluation output.
 
 ## P1: CLI Agent Ergonomics
@@ -272,15 +278,15 @@ Backlog items:
 
 1. Replace the generic no-arg help with a short task-oriented workflow chooser.
 2. Make unknown-command handling suggest the nearest workflow verb.
-3. Add slim JSON output for `info`.
-4. Add slim JSON output for `create`.
-5. Add slim JSON output for `review`.
-6. Add slim JSON output for `migrate`.
-7. Add slim JSON output for `upgrade`.
+3. Add compact machine-clean JSON output for `info`.
+4. Add compact machine-clean JSON output for `doctor`.
+5. Keep workflow `--json` compact and summary-first across `create`, `review`, `migrate`, and `upgrade`.
+6. Align support-command JSON shaping with the workflow contract philosophy where practical.
+7. Add examples showing when to use default compact workflow output versus explicit `--full`.
 8. Keep text mode summary-first and align JSON mode with the same philosophy.
 9. Add exact-name compare examples to the CLI docs.
 10. Add explicit context reuse guidance to CLI docs where relevant.
-11. Add examples showing when to use full debug output versus slim output.
+11. Add examples showing when to use full debug output versus compact output.
 12. Add a stable support bundle format for failed agent sessions.
 
 ## P1: Skill And Host Guidance
@@ -300,7 +306,7 @@ Backlog items:
 3. Add explicit bad-prompt versus good-prompt examples.
 4. Add a visible rule that once Salt knows the canonical component, the host must switch to exact-name follow-through.
 5. Add explicit root-dir and context-id handling guidance.
-6. Add explicit guidance for slim mode versus full mode.
+6. Add explicit guidance for compact default output versus `full`.
 7. Add troubleshooting for stale skill copies.
 8. Add troubleshooting for stale MCP builds.
 9. Add troubleshooting for wrong-root context.
@@ -411,7 +417,7 @@ These items are required for strong real-world outcomes but are not fully owned 
 1. Pass explicit `root_dir` on the first Salt call.
 2. Reuse `context_id` on later Salt calls.
 3. Stop continuing when context returns `needs_explicit_root` or `mismatch`.
-4. Default to slim response modes on explanation and triage turns.
+4. Default to compact responses on explanation and triage turns; request `full` only when the compact contract points to deeper artifacts.
 5. Use exact-name follow-up once Salt has identified `Table`, `Chart`, or another concrete canonical target.
 6. Stop rereading cached `content.json` artifacts unless the original tool result is unavailable.
 7. Refresh the deployed skill copy the host actually reads.
@@ -424,7 +430,7 @@ These items are required for strong real-world outcomes but are not fully owned 
 2. Harden context resolution and repo-aware stop conditions.
 3. Harden exact-name and alias-based recommendation scoring.
 4. Add strict follow-up metadata so hosts get an exact next call.
-5. Add slim payload modes for MCP and CLI.
+5. Tighten compact payload budgets for MCP and CLI.
 6. Tighten skill and host guidance around exact-name follow-through and context reuse.
 7. Add token-cost and transcript-replay evals.
 8. Expand runtime-evidence and docs-derived hardening after the core failures are fixed.
@@ -436,6 +442,6 @@ The backlog is complete when all of the following are true:
 - wrong-root context no longer silently passes
 - explicit table/chart prompts do not drift to unrelated components
 - hosts receive a concrete exact-name follow-up path after canonical resolution
-- slim modes are materially smaller than current payloads
+- compact defaults are materially smaller than rich/full outputs
 - transcript replay shows fewer wrong turns and lower token cost
 - live hosts use the updated skill copy and updated MCP build

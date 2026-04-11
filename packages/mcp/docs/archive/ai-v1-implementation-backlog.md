@@ -1,5 +1,7 @@
 # AI V1 Implementation Backlog
 
+Archived historical planning doc. Keep for context only.
+
 This document turns the current Salt AI direction into an execution backlog.
 
 This is the sole active execution backlog for the consumer AI product.
