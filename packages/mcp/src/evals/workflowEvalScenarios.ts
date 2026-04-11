@@ -111,10 +111,15 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "review_salt_ui",
         },
-        summary_first: true,
-        require_verify: true,
-        max_blocking_questions: 0,
-        required_fragments: ["ide_summary", "safest_next_fix", "verify"],
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: true,
+          safe_to_implement_exact_request: false,
+          next_step: {
+            kind: "ask_user",
+          },
+          summary_includes: ["still need attention"],
+        },
       },
     },
     {
@@ -151,14 +156,16 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "upgrade_salt_ui",
         },
-        summary_first: true,
-        require_verify: true,
-        max_blocking_questions: 0,
-        required_fragments: [
-          "required_changes",
-          "optional_cleanup",
-          "suggested_order",
-        ],
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: true,
+          safe_to_implement_exact_request: false,
+          next_step: {
+            kind: "review",
+            tool: "review_salt_ui",
+          },
+          summary_includes: ["upgrade guidance"],
+        },
       },
     },
     {
@@ -210,15 +217,15 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "migrate_to_salt",
         },
-        summary_first: true,
-        require_verify: true,
-        required_fragments: [
-          "screen_map",
-          "preserve",
-          "recommended_direction",
-          "first_scaffold",
-        ],
-        banned_fragments: ["raw_attachment_passthrough"],
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: false,
+          safe_to_implement_exact_request: false,
+          next_step: {
+            kind: "ask_user",
+          },
+          summary_includes: ["migration direction"],
+        },
       },
     },
     {
@@ -252,17 +259,22 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "create_salt_ui",
         },
-        summary_first: true,
-        require_verify: true,
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: false,
+          safe_to_implement_exact_request: false,
+          resolved_entity: "Analytical dashboard",
+          match_status: "misrouted",
+          next_step: {
+            kind: "tool_call",
+            tool: "create_salt_ui",
+            mode: "exact_name",
+            query: "Data grid",
+          },
+          summary_includes: ["Salt resolved Analytical dashboard"],
+        },
         canonical_choice: "Analytical dashboard",
         final_choice: "Analytical dashboard",
-        max_blocking_questions: 1,
-        required_fragments: [
-          "recommended_direction",
-          "bounded_scope",
-          "starter_plan",
-          "open_question",
-        ],
       },
     },
     {
@@ -297,16 +309,22 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "create_salt_ui",
         },
-        summary_first: true,
-        require_verify: true,
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: false,
+          safe_to_implement_exact_request: false,
+          resolved_entity: "Analytical dashboard",
+          match_status: "broadened",
+          next_step: {
+            kind: "tool_call",
+            tool: "create_salt_ui",
+            mode: "exact_name",
+            query: "Analytical dashboard",
+          },
+          summary_includes: ["broader Salt entity Analytical dashboard"],
+        },
         canonical_choice: "Analytical dashboard",
         final_choice: "Analytical dashboard",
-        max_blocking_questions: 1,
-        required_fragments: [
-          "recommended_direction",
-          "bounded_scope",
-          "starter_plan",
-        ],
       },
     },
     {
@@ -352,15 +370,15 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "migrate_to_salt",
         },
-        summary_first: true,
-        require_verify: true,
-        required_fragments: [
-          "screen_map",
-          "preserve",
-          "recommended_direction",
-          "first_scaffold",
-        ],
-        banned_fragments: ["raw_attachment_passthrough"],
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: false,
+          safe_to_implement_exact_request: false,
+          next_step: {
+            kind: "ask_user",
+          },
+          summary_includes: ["migration direction"],
+        },
       },
     },
     {
@@ -401,9 +419,15 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "review_salt_ui",
         },
-        summary_first: true,
-        require_verify: true,
-        max_blocking_questions: 0,
+        public_contract_v2: {
+          workflow_status: "blocked",
+          canonical_complete: true,
+          safe_to_implement_exact_request: false,
+          next_step: {
+            kind: "ask_user",
+          },
+          summary_includes: ["still need attention"],
+        },
       },
     },
     {

@@ -322,7 +322,7 @@ describe("registry integration", () => {
         "usage-callouts",
       ]),
       preferred_for: expect.arrayContaining([
-        "To display multiple top-level categories that represent the main sections of your website or application. This improves discoverability.",
+        "Use vertical navigation when the page needs a persistent navigation pane that organizes multiple sections of an application into a vertical hierarchy.",
       ]),
     });
 
@@ -481,13 +481,17 @@ describe("registry integration", () => {
       expect.arrayContaining([
         expect.stringContaining("toolbar or another action surface"),
         expect.stringContaining("single primary action"),
-        expect.stringContaining("navigation rather than task-completion actions"),
+        expect.stringContaining(
+          "navigation rather than task-completion actions",
+        ),
       ]),
     );
 
     expect(formsPattern?.when_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("enter, edit, or confirm structured information"),
+        expect.stringContaining(
+          "enter, edit, or confirm structured information",
+        ),
         expect.stringContaining("labels, helper text, and validation"),
         expect.stringContaining("clear action area at the end of the form"),
       ]),
@@ -528,7 +532,9 @@ describe("registry integration", () => {
 
     expect(announcementDialogPattern?.when_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("new product features or the highlights of a recent release"),
+        expect.stringContaining(
+          "new product features or the highlights of a recent release",
+        ),
         expect.stringContaining("follow-up action"),
         expect.stringContaining("modal interruption"),
         expect.stringContaining("concise announcement or informational notice"),
@@ -553,7 +559,9 @@ describe("registry integration", () => {
         expect.stringContaining("content is loading"),
         expect.stringContaining("empty-state message"),
         expect.stringContaining("information, warnings, or errors"),
-        expect.stringContaining("successfully submitted content or completed an action"),
+        expect.stringContaining(
+          "successfully submitted content or completed an action",
+        ),
       ]),
     );
     expect(contentStatusPattern?.when_not_to_use).toEqual(
@@ -582,12 +590,8 @@ describe("registry integration", () => {
     );
     expect(listFilteringPattern?.when_not_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining(
-          "search across broader content or pages",
-        ),
-        expect.stringContaining(
-          "dashboard or table shell",
-        ),
+        expect.stringContaining("search across broader content or pages"),
+        expect.stringContaining("dashboard or table shell"),
         expect.stringContaining("Dropdown or another selection control"),
       ]),
     );
@@ -600,8 +604,12 @@ describe("registry integration", () => {
 
     expect(listBuilderPattern?.when_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Use this pattern when users need to customize a list from a selection of options"),
-        expect.stringContaining("distinguish selected items from a larger list of available items"),
+        expect.stringContaining(
+          "Use this pattern when users need to customize a list from a selection of options",
+        ),
+        expect.stringContaining(
+          "distinguish selected items from a larger list of available items",
+        ),
         expect.stringContaining("two lists side-by-side"),
       ]),
     );
@@ -621,8 +629,12 @@ describe("registry integration", () => {
 
     expect(wizardPattern?.when_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("guide users through a series of steps or tasks in a specific, linear order"),
-        expect.stringContaining("Users must complete each step in order before moving on to the next"),
+        expect.stringContaining(
+          "guide users through a series of steps or tasks in a specific, linear order",
+        ),
+        expect.stringContaining(
+          "Users must complete each step in order before moving on to the next",
+        ),
       ]),
     );
     expect(wizardPattern?.when_not_to_use).toEqual(
@@ -641,8 +653,12 @@ describe("registry integration", () => {
 
     expect(headerBlockPattern?.when_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Display a combination of headings, pre-headers and descriptions within container components such as Dialog, Drawer and Overlay"),
-        expect.stringContaining("Maintain a visually consistent layout and presentation for headers"),
+        expect.stringContaining(
+          "Display a combination of headings, pre-headers and descriptions within container components such as Dialog, Drawer and Overlay",
+        ),
+        expect.stringContaining(
+          "Maintain a visually consistent layout and presentation for headers",
+        ),
         expect.stringContaining("Display headings with status icons"),
       ]),
     );
@@ -662,8 +678,12 @@ describe("registry integration", () => {
 
     expect(navigationPattern?.when_to_use).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Display navigation in websites or applications with two or more pages"),
-        expect.stringContaining("content hierarchy and help users orient themselves"),
+        expect.stringContaining(
+          "Display navigation in websites or applications with two or more pages",
+        ),
+        expect.stringContaining(
+          "content hierarchy and help users orient themselves",
+        ),
         expect.stringContaining("Simplify your hierarchy"),
         expect.stringContaining("Label effectively"),
       ]),
@@ -763,7 +783,9 @@ describe("registry integration", () => {
       expect.arrayContaining([
         expect.stringContaining("top-level, globally persistent shell element"),
         expect.stringContaining("persistent branding area"),
-        expect.stringContaining("application-wide navigation or utility actions"),
+        expect.stringContaining(
+          "application-wide navigation or utility actions",
+        ),
       ]),
     );
     expect(appHeaderPattern?.when_not_to_use).toEqual(
@@ -796,7 +818,9 @@ describe("registry integration", () => {
     expect(analyticalDashboardPattern?.when_to_use).toEqual(
       expect.arrayContaining([
         expect.stringContaining("top-level dashboard shell"),
-        expect.stringContaining("charts, graphs, tables, and other visual elements"),
+        expect.stringContaining(
+          "charts, graphs, tables, and other visual elements",
+        ),
         expect.stringContaining("Data-intensive environments"),
         expect.stringContaining("Performance tracking"),
       ]),

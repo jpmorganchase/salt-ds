@@ -84,12 +84,14 @@ function normalizeReplayTrace(
 ): WorkflowEvalTrace {
   const transcript = Array.isArray(trace.transcript)
     ? trace.transcript.filter(
-        (entry): entry is string => typeof entry === "string" && entry.length > 0,
+        (entry): entry is string =>
+          typeof entry === "string" && entry.length > 0,
       )
     : [];
   const logs = Array.isArray(trace.artifacts?.logs)
     ? trace.artifacts.logs.filter(
-        (entry): entry is string => typeof entry === "string" && entry.length > 0,
+        (entry): entry is string =>
+          typeof entry === "string" && entry.length > 0,
       )
     : [];
   const metrics = trace.metrics ?? {};
@@ -162,14 +164,16 @@ export async function runWorkflowEvalReplayReport(
     metrics: entries.reduce<WorkflowEvalMetrics>(
       (summary, entry) => ({
         transcript_line_count:
-          summary.transcript_line_count + entry.trace.metrics.transcript_line_count,
+          summary.transcript_line_count +
+          entry.trace.metrics.transcript_line_count,
         transcript_bytes:
           summary.transcript_bytes + entry.trace.metrics.transcript_bytes,
         workflow_result_bytes:
           summary.workflow_result_bytes +
           entry.trace.metrics.workflow_result_bytes,
         logs_bytes: summary.logs_bytes + entry.trace.metrics.logs_bytes,
-        payload_bytes: summary.payload_bytes + entry.trace.metrics.payload_bytes,
+        payload_bytes:
+          summary.payload_bytes + entry.trace.metrics.payload_bytes,
         approx_prompt_tokens:
           summary.approx_prompt_tokens +
           entry.trace.metrics.approx_prompt_tokens,

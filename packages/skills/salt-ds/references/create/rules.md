@@ -28,8 +28,8 @@ Use this file only for `create` work after project context is known.
 - keep visual choices Salt-native; do not chase novelty outside the design system
 - use workflow confidence to decide whether to proceed or ask a follow-up question
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
-- if a broad `create` result returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through before implementing the matching sub-surface
-- if an exact Salt target name is already known from `required_follow_through`, `expected_patterns`, `expected_components`, or a resolved MCP result, use that exact name or verified alias in the next create call instead of paraphrasing it
+- if compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before implementing the blocked sub-surface
+- if an exact Salt target name is already known from `required_follow_through`, `requested_entity`, `resolved_entity`, or a resolved MCP result, use that exact name or verified alias in the next create call instead of paraphrasing it
 - do not implement named contract items from general React, CSS, HTML, or copied repo code before that Salt follow-through completes
 
 ## Stable Rule IDs
@@ -61,7 +61,7 @@ Use this file only for `create` work after project context is known.
 5. State whether theme bootstrap guidance matters for this task and, if so, which path from `references/shared/theme.md` applies or remains pending.
 6. Verify any explicit Salt token or API names you plan to mention.
 7. If a targeted follow-up is needed, keep the concrete user noun phrase visible and add slot or page context without turning it into taxonomy-style wording.
-8. If `composition_contract.expected_patterns` or `composition_contract.expected_components` are present, run targeted Salt follow-up for each unresolved named item before writing that part of the code.
+8. If compact `create` output is not safe to implement, follow the returned `next_step` before writing the blocked region.
 9. If the exact Salt target name is already known, use it directly in the follow-up instead of paraphrasing it.
 10. Only then move into code or starter guidance.
 

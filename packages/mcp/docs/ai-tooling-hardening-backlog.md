@@ -150,11 +150,13 @@ Backlog items:
 17. Add regressions for fuzzy follow-up prompts after a known canonical answer.
 18. Add regressions for explicit component asks embedded inside longer noun phrases.
 19. Add regressions for the main common surfaces:
-   - dashboard
-   - table plus filters
-   - form page
-   - dialog workflow
-   - navigation shell
+
+- dashboard
+- table plus filters
+- form page
+- dialog workflow
+- navigation shell
+
 20. Add a rule that broad layout components should not outrank exact component asks unless the prompt is genuinely layout-first.
 
 ## P0: Follow-Through Contract And Host Safety
@@ -186,10 +188,12 @@ Backlog items:
 12. Add host-facing metadata that explicitly says when free-text re-querying is discouraged.
 13. Add a compact summary of blocked reasons when implementation is not yet safe.
 14. Add distinct next-step guidance for:
-   - fix context
-   - compare two known options
-   - implement the known canonical target
-   - bootstrap repo policy
+
+- fix context
+- compare two known options
+- implement the known canonical target
+- bootstrap repo policy
+
 15. Add deterministic rule IDs for follow-through states so hosts can branch on stable identifiers.
 
 ## P0: Transcript-Derived Regression Coverage

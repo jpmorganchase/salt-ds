@@ -66,11 +66,20 @@ Use this order unless the task is explicitly narrower:
 ## Completion Gates
 
 The canonical step is not complete until the transport result is both relevant and complete enough for the intended output.
+Read compact workflow output from top-level fields first:
+
+- `workflow_status`
+- `safe_to_implement_exact_request`
+- `blocking_reasons`
+- `next_step`
+- `summary`
 
 Treat these as blocking items when they affect the regions you plan to implement or review:
 
-- `composition_contract.expected_patterns`
-- `composition_contract.expected_components`
+- `workflow_status != "success"`
+- `safe_to_implement_exact_request = false`
+- `blocking_reasons`
+- `next_step`
 - `required_follow_through`
 - `implementation_gate` or equivalent follow-through markers
 - `open_questions`
@@ -79,6 +88,7 @@ Treat these as blocking items when they affect the regions you plan to implement
 
 For page-level and multi-region work, do not treat one valid sub-pattern as permission to skip unresolved peer regions.
 If a required sub-surface is still unresolved, either keep that region pending or stop before final implementation.
+Request or inspect `full` workflow output only when the blocking signal points to deeper artifacts such as composition details, starter snippets, or validation internals.
 
 ## Noisy Or Partial Results
 
@@ -99,7 +109,7 @@ When MCP is the transport:
 
 - `init`: bootstrap repo-local `.salt/team.json` and the managed root instruction block locally by default; add host adapters and `ui:verify` only when explicitly requested.
 - `context`: use `get_salt_project_context` for repo diagnostics, policy inspection, or explicit context reuse.
-- `create`: start with `create_salt_ui`; read returned workflow `confidence` and `raise_confidence`; treat returned `composition_contract` as an implementation checklist, not a summary; if `composition_contract` includes `expected_patterns` or `expected_components`, run the matching Salt create follow-up for each unresolved pattern or component before implementing that sub-surface; ask on `open_questions`; use returned logical follow-ups before editing when the recommendation still needs stronger evidence.
+- `create`: start with `create_salt_ui`; read `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary` first; if compact output blocks implementation, follow `next_step` before editing the blocked region; for exact named follow-up, use `requested_entity`, `resolved_entity`, and `match_status`; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 - `review`: start with `review_salt_ui`; read returned `confidence` and `fix_candidates`; add runtime evidence only if the source pass is still not enough.
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.

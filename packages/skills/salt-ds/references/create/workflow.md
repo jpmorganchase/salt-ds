@@ -23,7 +23,8 @@
 - Decide where foundations and tokens should handle spacing, density, typography, and color.
 - For non-Salt starts, use the translation step to lock the Salt building blocks first, then choose the JSX composition that fits them cleanly.
 - Use the translated workstreams and scaffold handoff to decide what gets built first instead of inventing a new implementation order.
-- If a broad create result returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat them as an implementation checklist and run the matching Salt follow-up for each unresolved named item before building that region.
+- If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before building the blocked region.
+- Request `full` output only when `next_step` or `blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 - If the canonical Salt result recommends a project conventions check, confirm repo-specific wrappers or local patterns before you commit to the final structure.
 
 ## 3. clarify only when it changes the structure
@@ -72,7 +73,6 @@
 - Then show the scaffold handoff: what to start with, what grouped structure to build around, and what to validate after the first pass.
 - For new Salt-native work, state the theme/bootstrap decision explicitly only when it affects the scaffold or implementation plan.
 - Then summarize the implementation plan, list the chosen building blocks, surface assumptions, include Salt compliance checks, and include starter code when it will accelerate implementation.
-
 
 ## 8. prove completion before finalizing
 
