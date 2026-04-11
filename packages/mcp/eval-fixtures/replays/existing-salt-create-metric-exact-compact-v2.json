@@ -1,0 +1,97 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-metric-exact-compact-v2",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "exact-name", "compact-v2"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-metric-exact",
+      "description": "Saved replay fixture for a compact v2 exact-name create result that correctly grounds Metric through the default public contract."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a metric."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "Metric",
+        "view": "compact"
+      },
+      "cli": {
+        "argv": ["create", "Metric", "--json"]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "public_contract_v2": {
+        "workflow_status": "success",
+        "canonical_complete": true,
+        "safe_to_implement_exact_request": true,
+        "requested_entity": "Metric",
+        "resolved_entity": "Metric",
+        "match_status": "exact",
+        "next_step": {
+          "kind": "implement"
+        },
+        "summary_includes": ["exact requested entity Metric"]
+      },
+      "canonical_choice": "Metric",
+      "final_choice": "Metric",
+      "required_fragments": [
+        "\"requested_entity\":\"Metric\"",
+        "\"resolved_entity\":\"Metric\"",
+        "\"match_status\":\"exact\""
+      ]
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-metric-exact-compact-v2",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved compact-v2 transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "success",
+      "canonical_complete": true,
+      "safe_to_implement_exact_request": true,
+      "requested_entity": "Metric",
+      "resolved_entity": "Metric",
+      "match_status": "exact",
+      "blocking_reasons": [],
+      "next_step": {
+        "kind": "implement",
+        "scope": "exact_request"
+      },
+      "summary": "Salt grounded the exact requested entity Metric."
+    },
+    "transcript": [
+      "Use salt-ds to add a metric.",
+      "The host requested an exact named follow-up and Salt grounded Metric directly."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-metric-exact"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

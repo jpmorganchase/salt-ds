@@ -84,88 +84,61 @@ describe("Salt skill contracts", () => {
     expect(agents).not.toContain("`salt-project-conventions`");
     expect(openAiMetadata).toContain('display_name: "Salt DS"');
     expect(openAiMetadata).toContain(
-      'short_description: "Salt design system workflow for review, upgrade, migrate, create, and bootstrap"',
+      'short_description: "salt design system workflow for quick checks, create, review, migrate, upgrade, bootstrap, and accessibility audits"',
     );
     expect(openAiMetadata).toContain(
-      "If both .salt/team.json and .salt/stack.json are missing, keep the first result canonical-only",
+      "Start deep or repo-spanning work from project context through Salt MCP or salt-ds info --json before choosing Salt-specific structure.",
     );
     expect(openAiMetadata).toContain(
-      "implementation_gate with follow-through required",
+      "When create or review returns expected_patterns, expected_components, required_follow_through, implementation_gate, or open questions, resolve that follow-through before finalizing those regions.",
     );
     expect(openAiMetadata).toContain(
-      "Preserve concrete user nouns like chart, table, filter, and metric in follow-up create calls",
+      "Preserve concrete user nouns in follow-up create calls.",
     );
     expect(openAiMetadata).toContain(
-      "Do not use this skill for generic React/CSS work that does not require Salt.",
+      "Only use explore-options when the user explicitly wants alternatives.",
     );
     expect(primarySkill).toContain("## Trigger Boundary");
     expect(primarySkill).toContain("## Example Triggers");
-    expect(primarySkill).toContain("## What Salt Handles Best");
     expect(primarySkill).toContain("## Project Context First");
     expect(primarySkill).toContain("Route by user job, not by IDE presence:");
     expect(primarySkill).not.toContain("## IDE-First Job Order");
     expect(primarySkill).toContain(
-      "Do not use for generic React/CSS advice or non-UI work that does not require Salt.",
+      "Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.",
     );
     expect(primarySkill).toContain(
-      "Review this Salt dialog layout and tell me the safest next fix.",
+      "Review this Salt dialog and tell me the safest next fix.",
     );
     expect(primarySkill).toContain(
       "Create a Salt-native dashboard page for this feature.",
     );
-    expect(primarySkill).toContain("## Reference Loading");
-    expect(primarySkill).toContain("## Non-Salt Repo Bootstrap");
-    expect(primarySkill).toContain("## Scope Boundaries");
-    expect(primarySkill).toContain("use `init`");
-    expect(primarySkill).toContain("use `migrate`");
-    expect(primarySkill).toContain("use `create`");
-    expect(primarySkill.split("\n").slice(0, 100).join("\n")).toContain(
-      "## Fast Reference Routing",
+    expect(primarySkill).toContain("## Reference Routing");
+    expect(primarySkill).toContain(
+      "Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.",
     );
-    expect(primarySkill.split("\n").slice(0, 100).join("\n")).toContain(
-      "Load `references/shared/surfaces.md`",
-    );
-    expect(primarySkill.split("\n").slice(0, 100).join("\n")).toContain(
-      "Load `references/shared/design-principles.md`",
-    );
-    expect(primarySkill.split("\n").slice(0, 130).join("\n")).toContain(
-      "When `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, the canonical step is not complete for those named sub-surfaces.",
+    expect(primarySkill.split("\n").slice(0, 120).join("\n")).toContain(
+      "## Reference Routing",
     );
     expect(primarySkill).toContain(
-      "Do not rewrite `chart`, `table`, `filter`, `metric`, or similar concrete asks into abstract taxonomy prompts",
+      "Read compact workflow output from top-level fields first:",
     );
     expect(primarySkill).toContain(
-      "use that exact name or verified alias in the next create step instead of paraphrasing it",
+      "Do not paraphrase concrete follow-up asks into abstract taxonomy prompts.",
     );
     expect(primarySkill).toContain(
-      "Do not select Salt components, patterns, props, tokens, plans, or code until the canonical Salt step has completed successfully.",
+      "If an exact Salt target name is already known from canonical output, use that exact name or verified alias in the next call.",
     );
     expect(primarySkill).toContain(
-      "If MCP is unavailable, use the CLI fallback. If both MCP and CLI fail, resolve the blocker or ask the user before proceeding.",
+      "if MCP is unavailable, explicitly switch to CLI fallback instead of acting as though canonical guidance succeeded",
     );
     expect(primarySkill).toContain(
-      "If both `.salt/team.json` and `.salt/stack.json` are missing, continue with canonical Salt guidance first.",
+      "if output is truncated, malformed, semantically off-target, or repeatedly misroutes to unrelated patterns, fail closed",
     );
     expect(primarySkill).toContain(
-      "If the repo already has Salt-managed instruction files and they may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks",
+      "If compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.",
     );
     expect(primarySkill).toContain(
-      "keep the result canonical-only and recommend bootstrap only when durable repo policy or managed repo instructions would materially improve future Salt answers",
-    );
-    expect(primarySkill).toContain(
-      "do not select Salt components, patterns, props, tokens, or write Salt-specific code until canonical Salt guidance has been obtained via MCP or CLI",
-    );
-    expect(primarySkill).toContain(
-      "if `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through",
-    );
-    expect(primarySkill).toContain(
-      "do not invent Salt APIs, props, components, or token names",
-    );
-    expect(primarySkill).toContain(
-      "treat screenshots and mockups as supporting migration evidence only",
-    );
-    expect(primarySkill).toContain(
-      "do not send raw screenshot or mockup attachments directly to Salt MCP",
+      "do not claim a Salt workflow completed merely because the host emitted a large payload",
     );
     expect(primarySkill).toContain("references/shared/transport.md");
     expect(primarySkill).toContain("references/shared/theme.md");
@@ -188,7 +161,7 @@ describe("Salt skill contracts", () => {
     expect(createRules).toContain("create-task-first");
     expect(createRules).toContain("create-verify-named-salt-details");
     expect(createRules).toContain(
-      "if a broad `create` result returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through",
+      "if compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before implementing the blocked sub-surface",
     );
     expect(createRules).toContain(
       "do not translate concrete follow-up asks into abstract category prose",
@@ -197,27 +170,24 @@ describe("Salt skill contracts", () => {
       "if an exact Salt target name is already known",
     );
     expect(createRules).toContain(
-      "0. Obtain canonical Salt guidance via MCP (`create_salt_ui`) or CLI (`salt-ds create`) and do not proceed until it succeeds.",
+      "0. Obtain canonical Salt guidance via MCP (`create_salt_ui`) or CLI (`salt-ds create`) and do not proceed until the result is complete enough for the regions you plan to implement.",
     );
     expect(createWorkflow).toContain("workflow-directed grounding follow-ups");
     expect(createWorkflow).toContain(
-      "treat them as an implementation checklist and run the matching Salt follow-up for each unresolved named item before building that region.",
+      "follow the returned top-level `next_step` before building the blocked region.",
     );
     expect(createWorkflow).toContain(
-      "verify that the exact name exists in canonical Salt guidance",
-    );
-    expect(createWorkflow).toContain(
-      "If you name or scaffold `SaltProviderNext`, include the full default-new-work bootstrap from `references/shared/theme.md`",
+      "Request `full` output only when `next_step` or `blocking_reasons` indicate you need deeper artifacts",
     );
     const createOutput = await readSkill("salt-ds/references/create/output.md");
     expect(createOutput).toContain(
       "the exact name was verified against canonical Salt guidance",
     );
     expect(createOutput).toContain(
-      "If the output includes `SaltProviderNext`, include or explicitly preserve the full default-new-work bootstrap from `references/shared/theme.md`",
+      "If provider or theme bootstrap was recommended, note whether repo policy and asset availability were confirmed, still pending, or explicitly overridden.",
     );
     expect(createOutput).toContain(
-      "If you named `SaltProviderNext`, note that the full bootstrap from `references/shared/theme.md` was also checked instead of assuming the provider name was enough.",
+      "If you needed `full` workflow output, note which deeper artifacts were inspected and why the compact contract was not sufficient on its own.",
     );
     expect(normalizeLineEndings(sharedTheme).trim()).toBe(
       normalizeLineEndings(buildThemeReferenceMarkdown()).trim(),
@@ -260,18 +230,17 @@ describe("Salt skill contracts", () => {
     expect(designPrinciples).toContain("## Layout Ownership");
     expect(designPrinciples).toContain("## Ask Instead Of Guess");
     expect(transport).toContain("Salt MCP");
-    expect(transport).toContain("Do not add a second manual CLI vocabulary");
     expect(transport).toContain(
-      "treat returned `composition_contract` as an implementation checklist, not a summary",
+      "Read compact workflow output from top-level fields first:",
     );
     expect(transport).toContain(
-      "run the matching Salt create follow-up for each unresolved pattern or component before implementing that sub-surface",
+      "read `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary` first",
     );
     expect(transport).toContain(
-      "normalize them into the published `migrate_visual_evidence_v1` contract",
+      "`salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup or rough design outline that should be converted into structured evidence before translation",
     );
     expect(transport).toContain(
-      "Do not send raw screenshot or mockup attachments directly to Salt MCP.",
+      "raw image attachments only after the host or adapter has normalized them into structured migration evidence",
     );
     expect(transport).toContain(
       "If Salt-managed repo instructions or host adapter files may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks instead of hand-rewriting them.",
@@ -290,7 +259,10 @@ describe("Salt skill contracts", () => {
       "a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
     );
     expect(repoInstructionsTemplate).toContain(
-      "if a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
+    );
+    expect(repoInstructionsTemplate).toContain(
+      "use the compact Salt contract first: `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary`",
     );
     expect(repoInstructionsTemplate).toContain(
       "Do not send raw image attachments directly to Salt MCP.",
@@ -300,7 +272,7 @@ describe("Salt skill contracts", () => {
     );
     expect(repoInstructionsTemplate).not.toContain("entity-grounding step");
     expect(bootstrapScaffolding).toContain(
-      "if a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
     );
   });
 

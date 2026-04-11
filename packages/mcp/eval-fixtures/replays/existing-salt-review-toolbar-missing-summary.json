@@ -41,11 +41,7 @@
       "summary_first": true,
       "require_verify": true,
       "max_blocking_questions": 0,
-      "required_fragments": [
-        "ide_summary",
-        "safest_next_fix",
-        "verify"
-      ]
+      "required_fragments": ["ide_summary", "safest_next_fix", "verify"]
     }
   },
   "trace": {
@@ -65,9 +61,7 @@
         "transport_used": "mcp",
         "confidence": {
           "level": "medium",
-          "reasons": [
-            "Loaded from transcript replay."
-          ]
+          "reasons": ["Loaded from transcript replay."]
         },
         "readiness": {
           "status": "starter_needs_attention",
@@ -82,9 +76,7 @@
         },
         "projectConventionsCheck": null,
         "provenance": {
-          "canonical_source_urls": [
-            "/salt/components/button/usage"
-          ],
+          "canonical_source_urls": ["/salt/components/button/usage"],
           "related_guide_urls": [],
           "project_conventions_contract": "project_conventions_v1"
         }

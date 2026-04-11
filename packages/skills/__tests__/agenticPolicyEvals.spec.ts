@@ -33,7 +33,7 @@ describe("deterministic agentic policy evals", () => {
     );
 
     expect(skill).toContain(
-      "If MCP is unavailable, use the CLI fallback. If both MCP and CLI fail, resolve the blocker or ask the user before proceeding.",
+      "if MCP is unavailable, explicitly switch to CLI fallback instead of acting as though canonical guidance succeeded",
     );
     expect(transport).toContain("Prefer Salt MCP when it is available.");
     expect(transport).toContain(
@@ -43,10 +43,10 @@ describe("deterministic agentic policy evals", () => {
       "If both MCP and CLI fail, resolve the blocker or ask the user before proceeding.",
     );
     expect(transport).toContain(
-      "Do not send raw screenshot or mockup attachments directly to Salt MCP.",
+      "raw image attachments only after the host or adapter has normalized them into structured migration evidence",
     );
     expect(transport).toContain(
-      "normalize them into the published `migrate_visual_evidence_v1` contract",
+      "`salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup or rough design outline",
     );
     expect(repoInstructions).toContain(
       "- a canonical Salt selection step through Salt MCP or the Salt CLI fallback",
@@ -77,14 +77,14 @@ describe("deterministic agentic policy evals", () => {
     );
     expect(consumerAgents).toContain("keep the first result canonical-only");
     expect(consumerCopilotInstructions).toContain(
-      "If a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.",
     );
     expect(consumerSaltUiAgent).toContain(
-      "If a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.",
     );
   });
 
-  it("keeps composition-contract follow-through aligned across the skill, transport contract, repo instructions, and consumer examples", async () => {
+  it("keeps compact workflow follow-through aligned across the skill, transport contract, repo instructions, and consumer examples", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
     const transport = await readSkill("salt-ds/references/shared/transport.md");
     const repoInstructions = await readSkill(
@@ -100,23 +100,21 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
     );
 
-    expect(skill).toContain(
-      "if `create` returns `composition_contract.expected_patterns` or `composition_contract.expected_components`, treat those named items as required Salt follow-through",
-    );
+    expect(skill).toContain("## Compact Contract First");
     expect(transport).toContain(
-      "if `composition_contract` includes `expected_patterns` or `expected_components`, run the matching Salt create follow-up for each unresolved pattern or component before implementing that sub-surface",
+      "read `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary` first",
     );
     expect(repoInstructions).toContain(
-      "if a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
     );
     expect(consumerAgents).toContain(
-      "if a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
     );
     expect(consumerCopilotInstructions).toContain(
-      "If a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "When Salt returns compact workflow output, read `summary`, `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, and `next_step` first.",
     );
     expect(consumerSaltUiAgent).toContain(
-      "If a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through",
+      "When Salt returns compact workflow output, read `summary`, `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, and `next_step` first.",
     );
   });
 });

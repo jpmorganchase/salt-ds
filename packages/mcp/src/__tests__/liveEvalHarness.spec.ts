@@ -212,7 +212,7 @@ describe("live eval harness", () => {
     );
   }, 180000);
 
-  it("fails when a workflow trace drops the summary-first contract", async () => {
+  it("fails when a compact v2 workflow trace drops the required top-level summary", async () => {
     const [scenario] = filterWorkflowEvalScenarios(scenarios, {
       scenario_ids: ["existing-salt-review-toolbar"],
     });
@@ -224,18 +224,14 @@ describe("live eval harness", () => {
       registry_dir: registryDir,
       repo_root: REPO_ROOT,
     })) as WorkflowEvalTrace & {
-      workflow_result: {
-        result: Record<string, unknown>;
-      };
+      workflow_result: Record<string, unknown>;
     };
-    delete trace.workflow_result.result.ide_summary;
+    delete trace.workflow_result.summary;
 
     expect(judgeWorkflowEvalScenario(scenario, trace)).toEqual(
       expect.objectContaining({
         status: "failed",
-        reasons: expect.arrayContaining([
-          expect.stringContaining("result.ide_summary"),
-        ]),
+        reasons: expect.arrayContaining([expect.stringContaining("summary")]),
       }),
     );
   }, 180000);

@@ -1,25 +1,28 @@
 ---
 title: AI with Salt
-description: "Repo-aware AI workflows for reviewing, migrating, upgrading, and creating Salt UI."
+description: "Repo-aware AI workflows for reviewing, migrating, upgrading, and creating Salt UI in real repos."
 layout: DetailTechnical
 sidebar:
   label: AI with Salt
 ---
 
-Salt's AI tooling is experimental, but the product model is already stable:
+Salt gives AI hosts a specialist workflow for applying the Salt design system inside real repos.
+
+Salt's AI tooling is experimental, but the product model is stable:
 
 - one public skill: `salt-ds`
-- one public CLI: `salt-ds`
-- one preferred transport: `@salt-ds/mcp`
-- one fallback transport: `salt-ds` CLI
 - one workflow vocabulary:
   - `init`
   - `create`
   - `review`
   - `migrate`
   - `upgrade`
+- one preferred transport: MCP
+- one fallback transport: CLI
 
-Use Salt when you want a specialist system for applying the Salt design system inside a real repo.
+For most consumers, the transport should stay in the background.
+
+Use Salt when you want design-system-aware help inside an existing codebase.
 
 Do not use Salt when you want:
 
@@ -31,32 +34,32 @@ Do not use Salt when you want:
 
 Salt is strongest when the job is clearly one of these:
 
-- `review`
+- **Review**
   - review existing Salt UI, diagnose a Salt-specific bug, or validate recent implementation changes
-- `upgrade`
+- **Upgrade**
   - separate required Salt version changes from optional cleanup
-- `migrate`
-  - replace non-Salt UI with Salt while preserving task flow, critical states, and important interaction anchors
-- `create`
+- **Migrate**
+  - replace non-Salt UI with Salt while preserving task flow, critical states, and interaction anchors
+- **Create**
   - add new Salt-native UI in an existing repo, especially bounded regions, screens, and workflow surfaces
-- `init`
+- **Init**
   - bootstrap repo policy and the managed instruction block after the first successful result
 
-`review` is still the best first trust loop for many teams, but choose the workflow by job, not by a fixed IDE order.
+`review` is often the best first trust loop, but choose the workflow by job, not by a fixed IDE order.
 
-## Why Salt Instead Of A Generic Prompt
+## Why Use Salt Instead Of A Generic Prompt
 
-Salt is designed to answer questions that general-purpose coding agents usually handle poorly:
+Salt is designed for questions that general-purpose coding agents usually handle poorly:
 
 - which Salt primitive, pattern, or foundation should own this UI
 - whether the repo already has policy that changes the correct answer
-- whether the task is really create, review, migrate, or upgrade
+- whether the task is really `create`, `review`, `migrate`, or `upgrade`
 - whether a migration preserved the important parts of the existing experience
 - whether runtime evidence is actually needed or the source pass is enough
 
 Salt should feel like design-system intelligence inside your host, not like a second product you have to learn.
 
-## What Salt Knows
+## How Salt Works
 
 Salt combines four layers in a fixed order:
 
@@ -67,14 +70,10 @@ Salt combines four layers in a fixed order:
 
 That means:
 
-- canonical Salt guidance answers:
-  - what Salt recommends
-- detected repo context answers:
-  - what this repo is using right now
-- declared repo policy answers:
-  - how this repo wants Salt applied
-- runtime evidence answers:
-  - what the rendered app is doing right now
+- **canonical Salt guidance** answers what Salt recommends
+- **detected repo context** answers what this repo is using right now
+- **declared repo policy** answers how this repo wants Salt applied
+- **runtime evidence** answers what the rendered app is doing right now
 
 Salt knows about:
 
@@ -87,29 +86,35 @@ Salt knows about:
 
 Do not push repo-local wrappers or local patterns into the canonical Salt step.
 
-## How Salt Starts
+## Typical Experience
 
-For repo-aware work, Salt should start from project context before it makes Salt-specific choices.
+For most teams, the experience should be simple:
 
-Use:
+1. install the `salt-ds` skill
+2. tell the host to use `salt-ds`
+3. name the job clearly: `review`, `upgrade`, `migrate`, `create`, or `init`
+4. keep the scope to the active file, folder, region, or screen when possible
 
-- MCP project context when your host supports MCP
-- `salt-ds info --json` when MCP is blocked or unavailable
+When MCP is available, Salt should prefer it.
+When MCP is unavailable, Salt should fall back to the CLI.
 
-This context should establish:
+Consumers should not need to think much about that distinction unless they are setting up the host or troubleshooting.
 
-- framework and workspace shape
-- installed Salt packages and versions
-- nearby imports and conventions
-- repo instruction files
-- runtime targets when detectable
-- whether `.salt/team.json` or `.salt/stack.json` exists
+## What Good Salt Output Looks Like
 
-That context is what makes Salt more useful than a generic prompt.
+A good Salt answer should:
+
+- identify the job clearly
+- stay grounded in canonical Salt guidance
+- use repo context before making Salt-specific choices
+- respect declared repo policy when it exists
+- ask only the minimum blocking question when safe progress is unclear
+- show the Salt summary before the raw workflow details when available
+- make the safest next step obvious
 
 ## Common Surfaces
 
-These are the highest-value consumer asks for Salt.
+These are high-value consumer asks for Salt.
 
 ### Dashboard Or Overview Page
 
@@ -121,11 +126,6 @@ Keep the main task obvious, preserve the table as the primary detail region, and
 ```
 
 Salt should keep the request page-level first. It should not collapse the initial ask into a single metric card or widget before the top-level direction is grounded.
-
-See the canonical patterns:
-
-- [`Analytical dashboard`](../patterns/analytical-dashboard)
-- [`Metric`](../patterns/metric)
 
 ### Table Plus Filters
 
@@ -145,10 +145,6 @@ Use salt-ds to create a Salt-native form page for this workflow.
 Recommend the structure first, keep validation and status feedback clear, and only ask a question if the layout choice is genuinely blocked.
 ```
 
-See the canonical pattern:
-
-- [`Forms`](../patterns/forms)
-
 ### Dialog Workflow
 
 Use when the task is confirmation, announcement, preferences, or bounded decision-making.
@@ -157,11 +153,6 @@ Use when the task is confirmation, announcement, preferences, or bounded decisio
 Use salt-ds to review this dialog workflow.
 Check whether the current primitive choice, action ordering, and supporting content fit canonical Salt guidance.
 ```
-
-See the canonical patterns:
-
-- [`Announcement dialog`](../patterns/announcement-dialog)
-- [`Preferences dialog`](../patterns/preferences-dialog)
 
 ### Navigation Shell
 
@@ -172,49 +163,16 @@ Use salt-ds to migrate this screen into a Salt-native navigation shell.
 Preserve task flow and landmarks, but move the structure toward canonical Salt patterns instead of cloning the old UI.
 ```
 
-See the canonical patterns:
+### Supporting States
 
-- [`Navigation`](../patterns/navigation)
-- [`Vertical navigation`](../patterns/vertical-navigation)
-- [`App header`](../patterns/app-header)
-
-### Loading, Empty, Error, And Success States
-
-Use when the quality of supporting states matters as much as the steady-state layout.
+Use when loading, empty, error, and success states matter as much as the steady-state layout.
 
 ```text
 Use salt-ds to review the loading, empty, and error states for this screen.
 Focus on hierarchy, action clarity, and whether the states still feel like the same workflow.
 ```
 
-See the canonical pattern:
-
-- [`Content status`](../patterns/content-status)
-
-## Design Language
-
-Salt is not only an API surface. It also has a design language.
-
-Good Salt results usually have these traits:
-
-- task-first composition
-  - the main user job is obvious before secondary detail
-- quiet hierarchy
-  - emphasis is earned, not sprayed across every region
-- shallow structure
-  - do not add wrappers or layout helpers unless they own a real responsibility
-- clear layout ownership
-  - one region owns the shell, one region owns the main task, and supporting UI stays subordinate
-- foundation discipline
-  - prefer Salt patterns, primitives, and tokens before raw CSS values
-- bounded customization
-  - customize only when canonical Salt options do not already cover the need
-
-Salt should not produce visually noisy, wrapper-heavy, or novelty-driven UI just because a generic model would.
-
-## Try These Prompts
-
-These prompts are intended to be copied directly into Copilot, Cursor, Claude, Codex, or another host.
+## Prompt Starters
 
 ### Review
 
@@ -223,26 +181,12 @@ Use salt-ds to review this file.
 Focus on primitive choice, layout ownership, deprecated Salt usage, and the safest next fix.
 ```
 
-Expected shape:
-
-- `result.ide_summary.verdict`
-- `result.ide_summary.top_findings`
-- `result.ide_summary.safest_next_fix`
-- `result.ide_summary.verify`
-
 ### Upgrade
 
 ```text
 Use salt-ds to upgrade this feature from Salt 1.x to 2.x.
 Separate required changes from optional cleanup and keep the scope to this feature folder.
 ```
-
-Expected shape:
-
-- `result.ide_summary.required_changes`
-- `result.ide_summary.optional_cleanup`
-- `result.ide_summary.suggested_order`
-- `result.ide_summary.verify`
 
 ### Migrate
 
@@ -251,15 +195,6 @@ Use salt-ds to migrate this attached screen into Salt.
 Preserve action order, empty-state behavior, and keyboard flow.
 ```
 
-Expected shape:
-
-- `result.ide_summary.screen_map`
-- `result.ide_summary.preserve`
-- `result.ide_summary.needs_confirmation`
-- `result.ide_summary.recommended_direction`
-- `result.ide_summary.first_scaffold`
-- `result.ide_summary.verify`
-
 ### Create
 
 ```text
@@ -267,25 +202,71 @@ Use salt-ds to add a dashboard summary area above this table.
 Keep the current filters and table as the primary detail region.
 ```
 
-Expected shape:
+### Explore Options
 
-- `result.ide_summary.recommended_direction`
-- `result.ide_summary.bounded_scope`
-- `result.ide_summary.open_question`
-- `result.ide_summary.starter_plan`
-- `result.ide_summary.verify`
+```text
+Use salt-ds to show me two Salt-valid directions for this workflow surface.
+Compare the safer default direction with one more opinionated direction, then explain the trade-offs.
+```
 
-## Quick Start
+## Repo Policy
 
-For most teams:
+Use the workflow directly for first-run value.
 
-1. install the `salt-ds` skill
-2. connect Salt MCP if your host supports MCP
-3. use the Salt CLI only if MCP is blocked or you need a manual fallback
+Use `salt-ds init` when you want to add durable Salt policy and the managed root instruction block after the first successful result.
+
+For most teams, `.salt/team.json` is enough.
+
+Recommended repo shape:
+
+```text
+consumer-app/
+├── AGENTS.md
+└── .salt/
+    └── team.json
+```
+
+Use `.salt/stack.json` only when the repo genuinely needs layering.
+
+## Visual Inputs
+
+Salt can help with attached screens and mockups, but today it works best when the host turns those inputs into structured migration evidence first.
+
+A good host-side flow is:
+
+1. inspect the screenshot or mockup
+2. reduce it to regions, actions, states, and ambiguity notes
+3. pass that structured outline into the Salt migrate workflow
+4. show the Salt summary first
+
+## Runtime Evidence
+
+Do not start with runtime inspection.
+
+Start with canonical Salt guidance and source validation.
+
+Escalate to runtime evidence only when you still need confirmation about:
+
+- rendered structure
+- landmarks and accessible names
+- runtime errors
+- screenshots or layout behavior
+
+Runtime evidence is evidence, not policy.
+
+Do not use runtime inspection to decide canonical Salt component or pattern choice.
+
+## Setup And Troubleshooting
+
+Most consumers should only need to know:
+
+- use the `salt-ds` skill
+- prefer Salt MCP when the host supports it
+- fall back to the Salt CLI when MCP is unavailable
+
+Keep transport details in the background unless you are setting up the host or troubleshooting.
 
 ### Install The Skill
-
-The current public install story is still branch-backed while Salt's wider distribution path is being hardened.
 
 Use the current verified source:
 
@@ -311,7 +292,7 @@ If your host supports MCP, add Salt MCP:
 
 ### CLI Fallback
 
-If MCP is blocked, use the published CLI fallback:
+If MCP is blocked, use the CLI fallback:
 
 ```sh
 npx -y @salt-ds/cli@latest info . --json
@@ -323,202 +304,18 @@ Or install it once:
 npm install -g @salt-ds/cli
 ```
 
-Then use the `salt-ds` command directly.
-
 ### Verify Setup
 
 Use this quick check after install:
 
 1. run `salt-ds info --json` in a repo and confirm it returns context instead of a setup error
 2. if MCP is configured, ask the host to use `salt-ds` on an active file
-3. confirm the first answer is a Salt workflow response, not generic React/CSS advice
-4. check that `result.ide_summary` is surfaced before raw workflow details
+3. confirm the first answer is a Salt workflow response, not generic React or CSS advice
+4. confirm the Salt summary is shown before raw workflow details when available
 
-## How Salt Behaves
+### Common Problems
 
-Salt should keep the product model simple:
-
-- `salt-ds`
-  - the public front door
-- MCP
-  - the preferred transport when your host supports it
-- CLI
-  - the fallback when MCP is blocked or you need a manual local path
-
-Do not treat MCP and CLI as two separate products to learn.
-
-The workflows stay the same.
-
-## When Salt Should Ask Questions
-
-Salt should ask before proceeding when:
-
-- `create` returns `workflow.implementation_gate.status = "follow_through_required"`
-- migration familiarity constraints are unclear
-- an upgrade changes workflow order or critical interaction behavior
-- project conventions could change the final answer
-- confidence is low and stronger evidence is needed
-
-The goal is one blocking question when needed, not a long planning interview.
-
-For `create` specifically:
-
-- do not treat the first broad scaffold as implementation-ready when `workflow.implementation_gate.status` is `follow_through_required`
-- use `workflow.implementation_gate.required_follow_through` to ground unresolved sub-surfaces before coding them
-- ask any `workflow.implementation_gate.blocking_questions` before guessing the unresolved Salt choice
-
-## Visual Inputs
-
-From the user's point of view, Salt should be able to help with attached screens and mockups.
-
-Under the hood, Salt still expects structured migration evidence today.
-
-- hosts or adapters can normalize screenshots and mockups into structured evidence
-- Salt uses that structured result for canonical migration reasoning
-- low-confidence interpretation should stay visible
-
-Do not pass raw images directly into Salt workflow tools.
-
-Keep image inspection in the host, then reduce the result into structured migrate evidence such as `source_outline`.
-
-Use host-side prompts like these:
-
-### Attachment flow
-
-```text
-Inspect this screenshot, reduce it to regions, actions, states, and ambiguity notes, then use salt-ds to migrate it into Salt.
-Preserve action order, empty-state hierarchy, and keyboard flow.
-Show the Salt summary first.
-```
-
-Shared reduction rule:
-
-- attachment or mockup
-- host-side interpretation
-- structured outline
-- Salt migrate workflow
-- `result.ide_summary` first
-
-## Repo Policy
-
-Use the workflow directly for first-run value.
-
-Use `salt-ds init` when you want to add durable Salt policy and the managed root instruction block after the first successful result:
-
-```sh
-salt-ds init
-```
-
-Use detected context and declared policy for different jobs:
-
-- `salt-ds info --json`
-  - detected repo context such as framework, workspace shape, Salt packages, imports, repo instructions, runtime targets, and policy detection
-- `.salt/team.json`
-  - declared repo policy such as approved wrappers, banned choices, local pattern preferences, token aliases, and theme defaults
-- `.salt/stack.json`
-  - optional advanced layered policy for local file-backed layers or shared package-backed conventions packs
-
-These files declare repo policy.
-
-You normally do not implement the merge logic yourself; repo-aware Salt workflows apply the declared policy after bootstrap.
-
-If they do not exist yet, Salt can still return canonical-only answers first.
-
-For most teams, `.salt/team.json` is enough.
-
-Recommended repo shape:
-
-```text
-consumer-app/
-├── AGENTS.md
-└── .salt/
-    └── team.json
-```
-
-### Minimal `.salt/team.json`
-
-```json
-{
-  "contract": "project_conventions_v1",
-  "version": "1.0.0",
-  "project": "consumer-app",
-  "approved_wrappers": [
-    {
-      "name": "AppButton",
-      "wraps": "Button",
-      "reason": "Product buttons must include analytics and default sizing.",
-      "import": {
-        "from": "@/components/AppButton",
-        "name": "AppButton"
-      }
-    }
-  ],
-  "banned_choices": [
-    {
-      "name": "VerticalNavigation",
-      "reason": "This app uses a custom workspace rail built from approved Salt primitives."
-    }
-  ]
-}
-```
-
-Use `.salt/stack.json` only when the repo genuinely needs layering.
-
-## Runtime Evidence
-
-Do not start with runtime inspection.
-
-Start with canonical Salt guidance and source validation.
-
-Escalate to runtime evidence only when you still need confirmation about:
-
-- rendered structure
-- landmarks and accessible names
-- runtime errors
-- screenshots or layout behavior
-
-Use runtime evidence like this:
-
-- `salt-ds doctor`
-  - when the runtime target is unclear or policy layering looks wrong
-- `salt-ds review <path> --url <url>`
-  - when source validation and runtime evidence should stay in the same workflow pass
-- `salt-ds runtime inspect <url>`
-  - when the task is explicitly runtime-only debugging or support work
-
-Keep the evidence levels clear:
-
-- `browser-session`
-  - stronger evidence for runtime errors, screenshots, hydrated output, and rendered structure
-- `fetched-html`
-  - narrower evidence for title, status, landmarks, and coarse structure
-
-Runtime evidence is evidence, not policy.
-
-Do not use runtime inspection to decide canonical Salt component or pattern choice.
-
-## Host Notes
-
-When your team mainly works inside the IDE, use the host you already have.
-
-Keep the Salt invocation simple:
-
-- tell the host to use `salt-ds`
-- name the job clearly: review, upgrade, migrate, create, or init
-- keep the scope to the active file, folder, region, or screen when possible
-- show `result.ide_summary` first
-
-If your host supports named task modes or custom agents, prefer a Salt UI mode for asks such as:
-
-- `review this file`
-- `upgrade this feature`
-- `migrate this screen`
-- `add this toolbar`
-- `fix this layout`
-
-## Troubleshooting
-
-### The agent picked the wrong workflow
+**The agent picked the wrong workflow**
 
 Be explicit about the job:
 
@@ -529,7 +326,7 @@ Be explicit about the job:
 
 Scope the request to one file, one region, one feature folder, or one screen when possible.
 
-### The answer ignored repo wrappers or local rules
+**The answer ignored repo wrappers or local rules**
 
 Check these first:
 
@@ -538,47 +335,19 @@ Check these first:
 3. whether `.salt/stack.json` exists for advanced layering
 4. whether the task actually recommends checking project conventions
 
-Keep detected context and declared policy separate.
-
-Do not push repo-local rules into the canonical Salt step.
-
-### Create started coding too soon
+**Create started coding too soon**
 
 If a broad `create` result starts implementing custom sub-surfaces before it grounds the expected Salt patterns:
 
-1. check whether the result started with `result.ide_summary`
-2. check whether `workflow.implementation_gate.status` is `follow_through_required`
-3. complete `workflow.implementation_gate.required_follow_through` before coding unresolved sub-surfaces
-4. ask any `workflow.implementation_gate.blocking_questions` before guessing
+1. check whether the answer starts with the Salt summary
+2. check whether follow-through is still required
+3. complete required follow-through before coding unresolved sub-surfaces
+4. ask blocking questions before guessing
 5. run `salt-ds review` after the grounded first pass
 
-### MCP is unavailable
+**MCP is unavailable**
 
-Stay on the same workflow model and use the CLI fallback:
-
-```sh
-salt-ds info --json
-salt-ds review src/App.tsx
-salt-ds review src/App.tsx --url http://127.0.0.1:3000/
-```
-
-If you later regain MCP access, prefer MCP again for structured canonical reasoning.
-
-### Source-level guidance is not enough
-
-Use this escalation order:
-
-1. `salt-ds info --json`
-2. `salt-ds doctor` if runtime targets or policy layering still look unclear
-3. `salt-ds review`
-4. `salt-ds review --url <url>` if the source pass still leaves open questions
-5. `salt-ds runtime inspect <url>` only for explicit runtime debugging or support work
-
-### The install story looks inconsistent
-
-Use the exact skill install source shown on this page.
-
-Do not invent alternate GitHub subtree paths or local install wording for consumers.
+Stay on the same workflow model and use the CLI fallback.
 
 ## What Salt Does Not Do
 
@@ -590,10 +359,3 @@ Treat these as future or experimental rather than current product behavior:
 - visual-first `create` as the default product path
 
 Salt should remain a specialist workflow product for real repos.
-
-## Examples
-
-If you need a checked-in repo shape later, use:
-
-- `workflow-examples/consumer-repo/`
-- `workflow-examples/project-conventions/`

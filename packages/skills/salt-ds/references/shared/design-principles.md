@@ -58,7 +58,6 @@ These principles should guide both `create` and `review`.
 - do not invent a Salt answer just because the host expects momentum
 - use runtime evidence only when the source pass still leaves an important gap
 
-
 ## Stable Before Experimental
 
 - prefer stable core Salt directions before lab, rc, or custom composition

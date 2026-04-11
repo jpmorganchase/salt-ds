@@ -221,7 +221,18 @@ function getPatternSourceKindBonus(
     .join(" ")
     .toLowerCase();
 
-  return matchSurface.includes(sourceLabel) ? 10 : 0;
+  if (!matchSurface.includes(sourceLabel)) {
+    return 0;
+  }
+
+  if (
+    source.kind === "vertical-navigation" &&
+    source.scope === "app-structure"
+  ) {
+    return 24;
+  }
+
+  return 10;
 }
 
 export function scorePatternAlignment(

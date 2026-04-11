@@ -231,6 +231,7 @@ describe("consumer workflow scenarios", () => {
         "link to another page from a toolbar action",
         "--include-starter-code",
         "--json",
+        "--full",
       ]),
       {
         cwd: rootDir,
@@ -241,7 +242,7 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(createExitCode).toBe(0);
+    expect(createExitCode).toBe(20);
     const payload = JSON.parse(createStdout);
     expect(payload.workflow.id).toBe("create");
     expect(payload.result.intent).toEqual(
@@ -309,7 +310,7 @@ describe("consumer workflow scenarios", () => {
 
     let stdout = "";
     const exitCode = await runCli(
-      withRegistry(["create", "navigate to another route", "--json"]),
+      withRegistry(["create", "navigate to another route", "--json", "--full"]),
       {
         cwd: rootDir,
         writeStdout: (message) => {
@@ -484,7 +485,7 @@ describe("consumer workflow scenarios", () => {
 
     let stdout = "";
     const exitCode = await runCli(
-      withRegistry(["create", "navigate to another route", "--json"]),
+      withRegistry(["create", "navigate to another route", "--json", "--full"]),
       {
         cwd: rootDir,
         writeStdout: (message) => {
@@ -660,7 +661,7 @@ describe("consumer workflow scenarios", () => {
 
     let stdout = "";
     const exitCode = await runCli(
-      withRegistry(["create", "navigate to another route", "--json"]),
+      withRegistry(["create", "navigate to another route", "--json", "--full"]),
       {
         cwd: rootDir,
         writeStdout: (message) => {
@@ -701,15 +702,17 @@ describe("consumer workflow scenarios", () => {
     const rootDir = await createExistingSaltRepo("salt-cli-review-workflow-");
 
     let stdout = "";
-    const exitCode = await runCli(withRegistry(["review", "src", "--json"]), {
-      cwd: rootDir,
-      writeStdout: (message) => {
-        stdout += message;
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--json", "--full"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
       },
-      writeStderr: () => {},
-    });
-
-    expect(exitCode).toBe(2);
+    );
+    expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.issueClasses).toEqual(
@@ -771,15 +774,17 @@ describe("consumer workflow scenarios", () => {
     );
 
     let stdout = "";
-    const exitCode = await runCli(withRegistry(["review", "src", "--json"]), {
-      cwd: rootDir,
-      writeStdout: (message) => {
-        stdout += message;
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--json", "--full"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
       },
-      writeStderr: () => {},
-    });
-
-    expect(exitCode).toBe(2);
+    );
+    expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.fixCandidates).toEqual(
@@ -854,15 +859,17 @@ describe("consumer workflow scenarios", () => {
     );
 
     let stdout = "";
-    const exitCode = await runCli(withRegistry(["review", "src", "--json"]), {
-      cwd: rootDir,
-      writeStdout: (message) => {
-        stdout += message;
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--json", "--full"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
       },
-      writeStderr: () => {},
-    });
-
-    expect(exitCode).toBe(2);
+    );
+    expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.ruleIds).toEqual(
@@ -900,6 +907,7 @@ describe("consumer workflow scenarios", () => {
         "migrate",
         "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
         "--json",
+        "--full",
       ]),
       {
         cwd: rootDir,
@@ -910,7 +918,7 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(2);
+    expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.artifacts.ruleIds).toEqual(
@@ -1059,6 +1067,7 @@ describe("consumer workflow scenarios", () => {
         "migrate",
         "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
         "--json",
+        "--full",
       ]),
       {
         cwd: rootDir,
@@ -1069,7 +1078,7 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(2);
+    expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.workflow.projectConventionsCheck).toEqual(
@@ -1118,7 +1127,7 @@ describe("consumer workflow scenarios", () => {
 
     let stdout = "";
     const exitCode = await runCli(
-      withRegistry(["upgrade", "--include-deprecations", "--json"]),
+      withRegistry(["upgrade", "--include-deprecations", "--json", "--full"]),
       {
         cwd: rootDir,
         writeStdout: (message) => {
@@ -1128,7 +1137,7 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
+    expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload.workflow.id).toBe("upgrade");
     expect(payload.artifacts.ruleIds).toEqual(["upgrade-review-version-risks"]);

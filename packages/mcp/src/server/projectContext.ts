@@ -1098,7 +1098,8 @@ export async function collectSaltProjectContextData(
   );
   const normalizedPackageJsonPath = toPosix(packageJsonPath);
   const resolution = buildProjectContextResolution({
-    rootDirProvided: typeof args.root_dir === "string" && args.root_dir.length > 0,
+    rootDirProvided:
+      typeof args.root_dir === "string" && args.root_dir.length > 0,
     packageJsonPath: normalizedPackageJsonPath,
     workspaceKind: workspace.kind,
     saltPackages,

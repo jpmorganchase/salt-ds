@@ -5,9 +5,9 @@
 Follow the repo root `AGENTS.md` as the primary Salt workflow contract.
 
 - In the IDE, prefer Salt jobs in this order: review, upgrade, migrate, then create.
-- When Salt returns `result.ide_summary`, render that compact summary first and use the rest of the workflow payload as supporting detail.
+- When Salt returns compact workflow output, read `summary`, `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, and `next_step` first.
 - For broad prompts such as `create a dashboard`, `add tabs`, `add a table`, or `fix this layout`, use the Salt workflow before editing.
-- If a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through and run the matching Salt create follow-up before implementing those regions.
+- If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.
 - Start from the active file, selection, nearby imports, or current feature folder before broad repo sweeps unless the task clearly needs wider repo context.
 - If both `.salt/team.json` and `.salt/stack.json` are missing, keep the first answer canonical-only and recommend the Salt bootstrap workflow or `salt-ds init` only when durable repo policy or the managed repo instruction block would materially improve future Salt answers.
 - Prefer the repo Salt UI agent in `.github/agents/salt-ui.agent.md` for those broad Salt UI tasks when your host supports custom agents.

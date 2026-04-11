@@ -26,6 +26,68 @@ const BUILT_AT = "2026-03-10T00:00:00Z";
 let registry: SaltRegistry;
 let registryDir: string;
 
+function runCreateWorkflowFull(input: {
+  query: string;
+  includeStarterCode?: boolean;
+  contextChecked?: boolean;
+  projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
+}) {
+  return withChooseWorkflowGuidance(
+    registry,
+    createSaltUi(registry, {
+      query: input.query,
+      include_starter_code: input.includeStarterCode ?? true,
+    }),
+    {
+      query: input.query,
+      context_checked: input.contextChecked,
+      project_policy: input.projectPolicy,
+      view: "full",
+    },
+  );
+}
+
+function runReviewWorkflowFull(input: {
+  code: string;
+  projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
+  expectedTargets?: Parameters<typeof reviewSaltUi>[1]["expected_targets"];
+}) {
+  return withAnalyzeWorkflowGuidance(
+    reviewSaltUi(registry, {
+      framework: "react",
+      view: "full",
+      code: input.code,
+      expected_targets: input.expectedTargets,
+    }),
+    {
+      code: input.code,
+      project_policy: input.projectPolicy,
+      view: "full",
+    },
+  );
+}
+
+function runMigrateWorkflowFull(input: {
+  sourceOutline: {
+    regions: string[];
+    actions: string[];
+    states: string[];
+    notes: string[];
+  };
+}) {
+  return withTranslateWorkflowGuidance(
+    registry,
+    migrateToSalt(registry, {
+      source_outline: input.sourceOutline,
+      include_starter_code: true,
+    }),
+    {
+      source_outline: input.sourceOutline,
+      view: "full",
+    },
+  );
+}
+
 beforeAll(async () => {
   registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "salt-agentic-evals-"));
   await buildRegistry({
@@ -46,22 +108,8 @@ describe("deterministic agentic evals", () => {
   it("keeps single-destination navigation queries on Link instead of pagination or unrelated patterns", () => {
     const routeQuery = "navigate to another route";
     const toolbarQuery = "link to another page from a toolbar action";
-    const routeResult = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query: routeQuery,
-        include_starter_code: true,
-      }),
-      { query: routeQuery },
-    );
-    const toolbarResult = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query: toolbarQuery,
-        include_starter_code: true,
-      }),
-      { query: toolbarQuery },
-    );
+    const routeResult = runCreateWorkflowFull({ query: routeQuery });
+    const toolbarResult = runCreateWorkflowFull({ query: toolbarQuery });
 
     expect(routeResult.result).toMatchObject({
       solution_type: "component",
@@ -84,14 +132,7 @@ describe("deterministic agentic evals", () => {
   it("keeps dashboard create output grounded in the branded analytical dashboard scaffold", () => {
     const query =
       "Can you help me create a metric dashboard, I don't have any test data but it should be finance themed.";
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query,
-        include_starter_code: true,
-      }),
-      { query },
-    );
+    const result = runCreateWorkflowFull({ query });
 
     expect(result.workflow.id).toBe("create_salt_ui");
     expect(result.workflow.readiness.status).toMatch(
@@ -178,14 +219,7 @@ describe("deterministic agentic evals", () => {
   it("keeps paraphrased finance dashboard create prompts on the analytical dashboard pattern", () => {
     const query =
       "Finance-themed metric dashboard with key financial metrics like revenue, expenses, profit margin, and portfolio performance";
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query,
-        include_starter_code: true,
-      }),
-      { query },
-    );
+    const result = runCreateWorkflowFull({ query });
 
     expect(result.result).toMatchObject({
       solution_type: "pattern",
@@ -203,14 +237,7 @@ describe("deterministic agentic evals", () => {
 
   it("keeps large metric create output grounded in the metric pattern anatomy", () => {
     const query = "create a large metric";
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query,
-        include_starter_code: true,
-      }),
-      { query },
-    );
+    const result = runCreateWorkflowFull({ query });
 
     expect(result.workflow.readiness).toMatchObject({
       status: expect.stringMatching(
@@ -236,14 +263,7 @@ describe("deterministic agentic evals", () => {
 
   it("keeps narrow single-metric prompts on the metric pattern", () => {
     const query = "Create a metric card for revenue with a trend indicator";
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query,
-        include_starter_code: true,
-      }),
-      { query },
-    );
+    const result = runCreateWorkflowFull({ query });
 
     expect(result.result).toMatchObject({
       solution_type: "pattern",
@@ -255,14 +275,10 @@ describe("deterministic agentic evals", () => {
 
   it("treats starter-code opt-out as planning-only output instead of implementation-ready guidance", () => {
     const query = "link to another page from a toolbar action";
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query,
-        include_starter_code: false,
-      }),
-      { query },
-    );
+    const result = runCreateWorkflowFull({
+      query,
+      includeStarterCode: false,
+    });
 
     expect(result.workflow.readiness).toEqual(
       expect.objectContaining({
@@ -275,11 +291,8 @@ describe("deterministic agentic evals", () => {
   });
 
   it("flags invented canonical-looking tokens and hard-coded colors in review output", () => {
-    const result = withAnalyzeWorkflowGuidance(
-      reviewSaltUi(registry, {
-        framework: "react",
-        view: "full",
-        code: `
+    const result = runReviewWorkflowFull({
+      code: `
           import { Button } from "@salt-ds/core";
 
           export function Demo() {
@@ -295,8 +308,7 @@ describe("deterministic agentic evals", () => {
             );
           }
         `,
-      }),
-    );
+    });
 
     expect(result.workflow.id).toBe("review_salt_ui");
     expect(result.result.decision).toMatchObject({
@@ -371,53 +383,49 @@ describe("deterministic agentic evals", () => {
       }
     `;
 
-    const result = withAnalyzeWorkflowGuidance(
-      reviewSaltUi(registry, {
-        framework: "react",
-        view: "full",
-        code,
-        expected_targets: {
-          components: ["Data grid", "Table"],
-          patterns: ["Metric"],
-          composition_contract: {
-            primary_target: {
-              solution_type: "pattern",
-              name: "Analytical dashboard",
-            },
-            expected_patterns: ["Metric"],
-            expected_components: ["Data grid", "Table"],
-            slots: [
-              {
-                id: "key-metrics",
-                label: "Key metrics",
-                certainty: "strongly_implied",
-                preferred_patterns: ["Metric"],
-                preferred_components: [],
-                reason: "Metrics were explicitly requested.",
-                source_urls: ["/salt/patterns/metric"],
-                notes: [],
-              },
-              {
-                id: "main-body",
-                label: "Main body",
-                certainty: "confirmation_needed",
-                preferred_patterns: [],
-                preferred_components: ["Data grid", "Table"],
-                reason: "A tabular data surface was explicitly requested.",
-                source_urls: [
-                  "/salt/components/table",
-                  "/salt/components/ag-grid-theme",
-                ],
-                notes: [],
-              },
-            ],
-            avoid: [],
-            source_urls: ["/salt/patterns/analytical-dashboard"],
+    const result = runReviewWorkflowFull({
+      code,
+      expectedTargets: {
+        components: ["Data grid", "Table"],
+        patterns: ["Metric"],
+        composition_contract: {
+          primary_target: {
+            solution_type: "pattern",
+            name: "Analytical dashboard",
           },
-          source: "create_report",
+          expected_patterns: ["Metric"],
+          expected_components: ["Data grid", "Table"],
+          slots: [
+            {
+              id: "key-metrics",
+              label: "Key metrics",
+              certainty: "strongly_implied",
+              preferred_patterns: ["Metric"],
+              preferred_components: [],
+              reason: "Metrics were explicitly requested.",
+              source_urls: ["/salt/patterns/metric"],
+              notes: [],
+            },
+            {
+              id: "main-body",
+              label: "Main body",
+              certainty: "confirmation_needed",
+              preferred_patterns: [],
+              preferred_components: ["Data grid", "Table"],
+              reason: "A tabular data surface was explicitly requested.",
+              source_urls: [
+                "/salt/components/table",
+                "/salt/components/ag-grid-theme",
+              ],
+              notes: [],
+            },
+          ],
+          avoid: [],
+          source_urls: ["/salt/patterns/analytical-dashboard"],
         },
-      }),
-    );
+        source: "create_report",
+      },
+    });
 
     expect(result.result.decision).toMatchObject({
       status: "needs_attention",
@@ -502,17 +510,10 @@ describe("deterministic agentic evals", () => {
         );
       }
     `;
-    const result = withAnalyzeWorkflowGuidance(
-      reviewSaltUi(registry, {
-        framework: "react",
-        view: "full",
-        code,
-      }),
-      {
-        code,
-        project_policy: projectPolicy,
-      },
-    );
+    const result = runReviewWorkflowFull({
+      code,
+      projectPolicy,
+    });
 
     expect(result.artifacts.fix_candidates.candidates).toEqual(
       expect.arrayContaining([
@@ -566,17 +567,10 @@ describe("deterministic agentic evals", () => {
         );
       }
     `;
-    const result = withAnalyzeWorkflowGuidance(
-      reviewSaltUi(registry, {
-        framework: "react",
-        view: "full",
-        code,
-      }),
-      {
-        code,
-        project_policy: projectPolicy,
-      },
-    );
+    const result = runReviewWorkflowFull({
+      code,
+      projectPolicy,
+    });
 
     expect(result.artifacts.fix_candidates.candidates).toEqual(
       expect.arrayContaining([
@@ -656,18 +650,11 @@ describe("deterministic agentic evals", () => {
       },
     });
 
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query: "navigate to another route",
-        include_starter_code: true,
-      }),
-      {
-        query: "navigate to another route",
-        project_policy: projectPolicy,
-        context_checked: true,
-      },
-    );
+    const result = runCreateWorkflowFull({
+      query: "navigate to another route",
+      projectPolicy,
+      contextChecked: true,
+    });
 
     expect(result.workflow.readiness).toEqual(
       expect.objectContaining({
@@ -688,14 +675,9 @@ describe("deterministic agentic evals", () => {
       states: ["loading", "validation"],
       notes: ["This screen has a confirmation dialog."],
     };
-    const result = withTranslateWorkflowGuidance(
-      registry,
-      migrateToSalt(registry, {
-        source_outline: sourceOutline,
-        include_starter_code: true,
-      }),
-      { source_outline: sourceOutline },
-    );
+    const result = runMigrateWorkflowFull({
+      sourceOutline,
+    });
 
     expect(result.workflow).toMatchObject({
       id: "migrate_to_salt",
@@ -744,14 +726,9 @@ describe("deterministic agentic evals", () => {
   });
 
   it("keeps the canonical Salt choice visible when project conventions override the final repo answer", () => {
-    const workflow = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query: "link to another page from a toolbar action",
-        include_starter_code: true,
-      }),
-      { query: "link to another page from a toolbar action" },
-    );
+    const workflow = runCreateWorkflowFull({
+      query: "link to another page from a toolbar action",
+    });
     const linkEntity = getSaltEntity(registry, {
       entity_type: "component",
       name: "Link",
@@ -829,14 +806,7 @@ describe("deterministic agentic evals", () => {
   it("returns a composition contract and open questions for broad dashboard prompts", () => {
     const query =
       "create a finance metric dashboard with KPI cards, sparklines, and a data grid table";
-    const result = withChooseWorkflowGuidance(
-      registry,
-      createSaltUi(registry, {
-        query,
-        include_starter_code: true,
-      }),
-      { query },
-    );
+    const result = runCreateWorkflowFull({ query });
 
     expect(result.result).toMatchObject({
       decision: {

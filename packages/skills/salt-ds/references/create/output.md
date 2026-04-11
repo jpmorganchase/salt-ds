@@ -9,7 +9,7 @@
 
 - State what to scaffold first from the translated plan.
 - Name the grouped region or pattern the implementation should build around.
-- If `composition_contract` named expected patterns or components, list which ones still require targeted Salt follow-through before implementation.
+- If compact create output is not yet implementation-safe, list the `blocking_reasons` and the returned `next_step` before implementation.
 - State what must be validated immediately after the first scaffold pass.
 - If runtime validation is still needed and a runnable URL exists, note whether `salt-ds doctor` or `salt-ds review <file-or-dir> --url <url>` should be used as local evidence after the first scaffold pass.
 
@@ -33,12 +33,18 @@
 - State whether the task was treated as a Salt UI task and why.
 - Summarize the required stages completed:
   - selection
-  - entity grounding
+  - safe-to-implement check
   - validation
+- State the compact workflow fields you relied on first:
+  - `workflow_status`
+  - `safe_to_implement_exact_request`
+  - `blocking_reasons`
+  - `next_step`
+  - `summary`
 - List the Salt primitives, patterns, or foundations that were checked before settling on the solution.
 - State whether the implementation uses a standard Salt option; if not, justify the custom composition briefly.
 - Note the canonical Salt guidance source consulted when it materially affected the decision.
-- State whether every named `composition_contract.expected_patterns` and `composition_contract.expected_components` item was grounded before the matching sub-surface was implemented, or call out what is still pending.
+- If you needed `full` workflow output, note which deeper artifacts were inspected and why the compact contract was not sufficient on its own.
 - If you named any Salt token, prop, or API explicitly, note that the exact name was verified against canonical Salt guidance.
 - If provider or theme bootstrap was recommended, note whether repo policy and asset availability were confirmed, still pending, or explicitly overridden.
 - State which source-level validation surface was used after the first scaffold pass:
@@ -55,7 +61,6 @@
 // Include starter code only when it materially helps the task move forward
 // and follows the chosen Salt structure.
 ```
-
 
 ## option exploration
 
