@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 import sidePanelCss from "./SidePanel.css";
-import { useSidePanelGroup } from "./SidePanelGroupContext";
+import { useSidePanelContext } from "./SidePanelContext";
 
 const withBaseName = makePrefixer("saltSidePanel");
 
@@ -52,7 +52,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   variant?: "primary" | "secondary" | "tertiary";
   /**
    * Reference to the trigger element for manual mode. Used to return focus when panel closes.
-   * When inside SidePanelGroup, this is automatically managed via SidePanelTrigger.
+   * When inside SidePanelProvider, this is automatically managed via SidePanelTrigger.
    */
   triggerRef?: MutableRefObject<HTMLElement | null>;
 }
@@ -150,15 +150,17 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       triggerRef: manualTriggerRef,
       ...rest
     } = props;
+
     const [showComponent, setShowComponent] = useState(false);
+    const [animating, setAnimating] = useState(false);
     const targetWindow = useWindow();
     const {
-      open: groupOpen,
+      openState: groupOpen,
       setOpen: setGroupOpen,
       panelId,
       activationCount,
       triggerRef: groupTriggerRef,
-    } = useSidePanelGroup();
+    } = useSidePanelContext();
 
     useComponentCssInjection({
       testId: "salt-side-panel",
@@ -168,7 +170,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const id = useId(idProp || panelId);
 
-    // Use SidePanelGroup props if available
+    // Use SidePanelContext props if available
     const open = groupOpen ?? openProp;
     const onOpenChange = setGroupOpen ?? onOpenChangeProp;
     const focusReturnTriggerRef = groupTriggerRef ?? manualTriggerRef;
@@ -215,21 +217,48 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       return () => targetWindow?.clearTimeout(timeoutId);
     }, [activationCount, getFocusTarget, open, targetWindow]);
 
+    const handleAnimationEnd = useCallback(() => {
+      setAnimating(false);
+      if (!open) {
+        setShowComponent(false);
+      }
+    }, [open]);
+
     useEffect(() => {
+      const prefersReducedMotion = targetWindow?.matchMedia?.(
+        "(prefers-reduced-motion: reduce)",
+      )?.matches;
+
       if (open) {
         setShowComponent(true);
         wasOpenRef.current = true;
+
+        if (!prefersReducedMotion) {
+          setAnimating(true);
+        }
         return;
       }
+
       // Capture whether the panel was previously open so we only return focus
       // on a genuine open→close transition, not on the initial mount when
       // `focusReturnTriggerRef.current` may already be set (manual trigger case).
       const shouldReturnFocus = wasOpenRef.current;
       wasOpenRef.current = false;
 
-      // If open flips back to true before the animation completes, React runs
-      // the cleanup below (clearTimeout) before the new effect, so the pending
-      // setShowComponent(false) and focus-return are correctly cancelled.
+      if (prefersReducedMotion) {
+        setShowComponent(false);
+        if (shouldReturnFocus && focusReturnTriggerRef?.current) {
+          focusReturnTriggerRef.current.focus();
+        }
+        return;
+      }
+
+      // Animation: wait for exit animation to complete before unmounting.
+      // handleAnimationEnd will call setShowComponent(false).
+      setAnimating(true);
+
+      // Fallback: if the animation never fires (e.g. display:none prevents it),
+      // unmount after the animation duration and return focus.
       const animate = targetWindow?.setTimeout(() => {
         setShowComponent(false);
         if (shouldReturnFocus && focusReturnTriggerRef?.current) {
@@ -361,8 +390,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           {
             [withBaseName(position)]: position,
             [withBaseName(variant)]: variant,
-            [withBaseName("enterAnimation")]: open,
-            [withBaseName("exitAnimation")]: !open,
+            [withBaseName("enterAnimation")]: open && animating,
+            [withBaseName("exitAnimation")]: !open && animating,
           },
           className,
         )}
@@ -371,6 +400,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         id={id}
         onFocus={handleFocus}
         onKeyDownCapture={handleKeyDownCapture}
+        onAnimationEnd={handleAnimationEnd}
         {...rest}
       >
         <div className={clsx(withBaseName("inner"))}>{children}</div>

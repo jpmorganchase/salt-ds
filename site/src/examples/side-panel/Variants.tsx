@@ -1,6 +1,5 @@
 import {
   Button,
-  FlexItem,
   FlexLayout,
   FormField,
   FormFieldLabel,
@@ -11,80 +10,80 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseTrigger,
-  SidePanelGroup,
+  SidePanelContent,
   type SidePanelProps,
+  SidePanelProvider,
   SidePanelTrigger,
+  useSidePanelContext,
 } from "@salt-ds/lab";
 import { type ChangeEventHandler, useState } from "react";
+import { ContentExample } from "./ContentExample";
 
 const variantOptions = ["primary", "secondary", "tertiary"];
 
-export const Variants = () => {
+const SidePanelExample = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const headingId = useId();
+  const { openState } = useSidePanelContext();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target;
-    setVariant(value as SidePanelProps["variant"]);
+    setVariant(event.target.value as SidePanelProps["variant"]);
   };
 
   return (
-    <StackLayout align="center">
-      <SidePanelGroup>
-        <FlexLayout
-          style={{
-            height: 200,
-          }}
-        >
-          <FlexItem grow={1} padding={1}>
-            <SidePanelTrigger>
-              <Button>Toggle side panel</Button>
-            </SidePanelTrigger>
-          </FlexItem>
-          <SidePanel aria-labelledby={headingId} variant={variant}>
-            <StackLayout align="start" gap={1}>
-              <SidePanelCloseTrigger>
-                <Button
-                  aria-label="Close"
-                  appearance="transparent"
-                  style={{ marginLeft: "auto" }}
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              </SidePanelCloseTrigger>
-              <H2 id={headingId}>Section Title</H2>
-              <Text>Content for the primary side panel</Text>
-            </StackLayout>
-          </SidePanel>
-        </FlexLayout>
-      </SidePanelGroup>
+    <>
+      <ContentExample>
+        <StackLayout direction="column" gap={1}>
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
+              {openState ? "Close" : "Open"} right panel
+            </Button>
+          </SidePanelTrigger>
+          <FormField>
+            <FormFieldLabel>Variant</FormFieldLabel>
+            <RadioButtonGroup
+              direction="horizontal"
+              aria-label="Variant Controls"
+              name="variant"
+              onChange={handleVariantChange}
+              value={variant}
+            >
+              {variantOptions.map((option) => (
+                <RadioButton
+                  key={option}
+                  label={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                  value={option}
+                />
+              ))}
+            </RadioButtonGroup>
+          </FormField>
+        </StackLayout>
+      </ContentExample>
 
-      <StackLayout>
-        <FormField>
-          <FormFieldLabel>Variant</FormFieldLabel>
-          <RadioButtonGroup
-            direction="horizontal"
-            aria-label="Variant Controls"
-            name="variant"
-            onChange={handleVariantChange}
-            value={variant}
-          >
-            {variantOptions.map((alignment) => (
-              <RadioButton
-                key={alignment}
-                label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1,
-                )}`}
-                value={alignment}
-              />
-            ))}
-          </RadioButtonGroup>
-        </FormField>
-      </StackLayout>
-    </StackLayout>
+      <SidePanel position="right" aria-labelledby={headingId} variant={variant}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    </>
   );
 };
+
+export const Variants = () => (
+  <SidePanelProvider defaultOpen={true}>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 320,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <SidePanelExample />
+    </FlexLayout>
+  </SidePanelProvider>
+);

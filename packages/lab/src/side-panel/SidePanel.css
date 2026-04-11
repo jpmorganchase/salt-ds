@@ -1,43 +1,51 @@
 .saltSidePanel {
-  overflow: hidden;
   background-color: var(--saltSidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
-  --saltSidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  --saltSidePanel-internal-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--saltSidePanel-borderColor, var(--salt-container-primary-borderColor));
 }
 
 .saltSidePanel-primary {
   --saltSidePanel-background: var(--salt-container-primary-background);
+  --saltSidePanel-borderColor: var(--salt-container-primary-borderColor);
 }
 
 .saltSidePanel-secondary {
   --saltSidePanel-background: var(--salt-container-secondary-background);
+  --saltSidePanel-borderColor: var(--salt-container-secondary-borderColor);
 }
 
 .saltSidePanel-tertiary {
   --saltSidePanel-background: var(--salt-container-tertiary-background);
+  --saltSidePanel-borderColor: var(--salt-container-tertiary-borderColor);
 }
 
 .saltSidePanel-left {
-  border-right: var(--saltSidePanel-border);
+  border-right: var(--saltSidePanel-internal-border);
 }
 .saltSidePanel-right {
-  border-left: var(--saltSidePanel-border);
+  border-left: var(--saltSidePanel-internal-border);
 }
 
 .saltSidePanel-left,
 .saltSidePanel-right {
   width: var(--saltSidePanel-width);
   height: 100%;
+  min-height: 0;
+}
+
+.saltSidePanel-enterAnimation,
+.saltSidePanel-exitAnimation {
+  overflow: hidden;
 }
 
 .saltSidePanel-left.saltSidePanel-enterAnimation,
 .saltSidePanel-right.saltSidePanel-enterAnimation {
-  animation: saltSidePanel-expandWidth var(--salt-animation-duration) var(--salt-animation-timing-function);
+  animation: saltSidePanel-expandWidth var(--salt-duration-perceptible) var(--salt-animation-timing-function);
 }
 
 .saltSidePanel-left.saltSidePanel-exitAnimation,
 .saltSidePanel-right.saltSidePanel-exitAnimation {
-  animation: saltSidePanel-collapseWidth var(--salt-animation-duration) var(--salt-animation-timing-function) both;
+  animation: saltSidePanel-collapseWidth var(--salt-duration-perceptible) var(--salt-animation-timing-function) both;
 }
 
 .saltSidePanel-exitAnimation {
@@ -46,8 +54,9 @@
 
 .saltSidePanel-inner {
   box-sizing: border-box;
-  overflow: auto;
-  padding: var(--salt-spacing-300);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .saltSidePanel-left .saltSidePanel-inner,

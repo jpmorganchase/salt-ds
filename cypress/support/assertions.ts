@@ -307,23 +307,22 @@ chai.use(isInTheViewport);
  */
 const isActiveDescendant: ChaiPlugin = (_chai) => {
   function assertIsActiveDescendant(this: AssertionStatic) {
-    // make sure it's an Element
-    const root = this._obj.get(0);
-    // make sure it's an Element
-    new _chai.Assertion(
-      root.nodeType,
-      `Expected an Element but got '${String(root)}'`,
-    ).to.equal(1);
+    const subject = this._obj[0];
 
-    const id = root.id;
-    cy.focused({ log: false }).then(($focused) => {
-      this.assert(
-        $focused.attr("aria-activedescendant") === id,
-        "expected #{this} to be #{exp}",
-        "expected #{this} not to be #{exp}",
-        "active descendant",
-      );
-    });
+    new chai.Assertion(subject).to.exist;
+
+    const focused = subject.ownerDocument.activeElement;
+    new chai.Assertion(focused).to.exist;
+
+    const activeDescendantId = focused.getAttribute("aria-activedescendant");
+
+    this.assert(
+      activeDescendantId === subject.id,
+      'expected element id "#{exp}" to equal focused element aria-activedescendant "#{act}"',
+      "expected element id not to equal focused element aria-activedescendant",
+      subject.id,
+      activeDescendantId,
+    );
   }
 
   _chai.Assertion.addMethod("activeDescendant", assertIsActiveDescendant);

@@ -1,96 +1,48 @@
-import {
-  Button,
-  Divider,
-  FlexItem,
-  FlexLayout,
-  H2,
-  H3,
-  StackLayout,
-  Text,
-  useId,
-} from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
+import { Button, FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
   SidePanel,
-  SidePanelCloseTrigger,
-  SidePanelGroup,
+  SidePanelContent,
+  SidePanelProvider,
   SidePanelTrigger,
+  useSidePanelContext,
 } from "@salt-ds/lab";
+import { ContentExample } from "./ContentExample";
 
-const DetailsExample = () => (
-  <>
-    <H3>Metadata</H3>
-    <FlexLayout justify="space-between">
-      <Text>Use case name</Text>
-      <Text>
-        <strong>lorem ipsum</strong>
-      </Text>
-    </FlexLayout>
-    <FlexLayout justify="space-between">
-      <Text>Account</Text>
-      <Text>
-        <strong>lorem ipsum</strong>
-      </Text>
-    </FlexLayout>
-    <FlexLayout justify="space-between">
-      <Text>Payment type</Text>
-      <Text>
-        <strong>lorem ipsum</strong>
-      </Text>
-    </FlexLayout>
-    <Divider />
-  </>
-);
-
-export const RightPanel = () => {
+const SidePanelExample = () => {
   const headingId = useId();
-
+  const { openState } = useSidePanelContext();
   return (
-    <SidePanelGroup>
-      <FlexLayout
-        style={{
-          height: 300,
-        }}
-      >
-        <FlexItem grow={1} padding={1}>
-          <SidePanelTrigger>
-            <Button>Open Right Panel</Button>
-          </SidePanelTrigger>
-        </FlexItem>
-        <SidePanel position="right" aria-labelledby={headingId}>
-          <StackLayout>
-            <FlexLayout align="center">
-              <H2 id={headingId}>Use case details</H2>
-              <SidePanelCloseTrigger>
-                <Button
-                  aria-label="Close"
-                  appearance="transparent"
-                  style={{ marginLeft: "auto" }}
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              </SidePanelCloseTrigger>
-            </FlexLayout>
+    <>
+      <ContentExample>
+        <SidePanelTrigger>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} right panel
+          </Button>
+        </SidePanelTrigger>
+      </ContentExample>
 
-            {Array.from({ length: 2 }, (_, index) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: Acceptable in this case since content is static and not re-orderable
-              <DetailsExample key={index} />
-            ))}
-            <FlexLayout gap={1}>
-              <Button
-                appearance="bordered"
-                sentiment="accented"
-                style={{ width: "100%" }}
-              >
-                Cancel
-              </Button>
-              <Button sentiment="accented" style={{ width: "100%" }}>
-                Review
-              </Button>
-            </FlexLayout>
-          </StackLayout>
-        </SidePanel>
-      </FlexLayout>
-    </SidePanelGroup>
+      <SidePanel position="right" aria-labelledby={headingId}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    </>
   );
 };
+
+export const RightPanel = () => (
+  <SidePanelProvider>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <SidePanelExample />
+    </FlexLayout>
+  </SidePanelProvider>
+);

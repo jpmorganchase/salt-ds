@@ -12,37 +12,140 @@ data:
 
 A side panel spans the full height of its container and is always non-modal. This means the content beside it remains interactive when the panel is expanded.
 
-Always choose a width that suits the content in the side panel. Refer to Salt's Forms pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
+Always choose a width that suits the content in the side panel. Refer to Salt's Forms pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
 ### When to use
 
-- To view supporting details alongside the primary content (e.g., record details, metadata, history, related items) while keeping the main view visible and interactive.
-- To edit or update information in-context (e.g., update attributes, adjust settings, annotate) while referencing the main view for confirmation.
-- To apply and refine filters (e.g., facets, query parameters) while keeping results visible and interactive next to the filtering controls.
-- To support multi-step workflows (e.g., review → decide → update → confirm) where context and supporting controls must remain available across steps.
-- To keep supplementary information and actions persistently available during longer parallel tasks (e.g., compare items, validate fields, cross-check data).
+- To view supporting details alongside the primary content (e.g., record details, metadata, history, related items) while keeping the main view visible and interactive.
+- To edit or update information in-context (e.g., update attributes, adjust settings, annotate) while referencing the main view for confirmation.
+- To apply and refine filters (e.g., facets, query parameters) while keeping results visible and interactive next to the filtering controls.
+- To support multi-step workflows (e.g., review → decide → update → confirm) where context and supporting controls must remain available across steps.
+- To keep supplementary information and actions persistently available during longer parallel tasks (e.g., compare items, validate fields, cross-check data).
 
 ### When not to use
 
-For a temporary, focused workspace that lets users handle a small, self-contained action. Instead, use [Drawer](/salt/components/drawer).
-For a background that organizes content in an application. Instead, use [Panel](/salt/components/panel).
+For a temporary, focused workspace that lets users handle a small, self-contained action. Instead, use [Drawer](/salt/components/drawer).
+For a background that organizes content in an application. Instead, use [Panel](/salt/components/panel).
 
 ## Import
 
-To import `SidePanel`, `SidePanelCloseTrigger`, `SidePanelGroup` and `SidePanelTrigger` from the lab Salt package, use:
+To import `SidePanel`, `SidePanelContent`, `SidePanelProvider` and `SidePanelTrigger` from the lab Salt package, use:
 
 ```js
 import {
   SidePanel,
-  SidePanelCloseTrigger,
-  SidePanelGroup,
+  SidePanelContent,
+  SidePanelProvider,
   SidePanelTrigger,
 } from "@salt-ds/lab";
 ```
 
+### SidePanelProvider
+
+`SidePanelProvider` wraps both the trigger and the panel. It manages the open/closed state and coordinates ARIA attributes, focus management and keyboard dismissal between them. Place it around every group of trigger and panel elements that should share state.
+
+```jsx
+<SidePanelProvider>{/* trigger and panel go here */}</SidePanelProvider>
+```
+
+Use the `defaultOpen` prop to render the panel open on first mount, or pass `open` and `onOpenChange` for fully controlled state.
+
+### SidePanelTrigger
+
+`SidePanelTrigger` wraps the element that opens and closes the panel. It accepts a single child element (typically a `Button`) and automatically applies `aria-expanded`, `aria-controls`, and a click handler to toggle the panel.
+
+```jsx
+<SidePanelTrigger>
+  <Button>Toggle panel</Button>
+</SidePanelTrigger>
+```
+
+`SidePanelTrigger` does not render a wrapper element. It clones its child and merges the required props onto it, so your button remains the direct flex or layout child.
+
+### SidePanel
+
+`SidePanel` is the panel surface itself. It renders as a `region` landmark, manages its enter/exit animation, and moves focus into the panel when it opens. Use the `position` prop to anchor the panel to the `"left"` or `"right"` edge of its container (defaults to `"right"`), and the `variant` prop to set its background color (`"primary"`, `"secondary"`, or `"tertiary"`).
+
+You must provide an accessible name via `aria-labelledby` (pointing to a heading inside the panel) or `aria-label`.
+
+```jsx
+<SidePanel position="right" aria-labelledby={headingId}>
+  {/* panel content */}
+</SidePanel>
+```
+
+### SidePanelContent
+
+`SidePanelContent` is an optional layout helper that provides a standard panel structure: a header row with a close button and a scrollable body. Pass a heading element to the `header` prop and your content as children.
+
+```jsx
+<SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+  <Text>Panel body content goes here.</Text>
+</SidePanelContent>
+```
+
+`SidePanelContent` renders a close button automatically. If you need a custom header layout or close behavior, you can skip `SidePanelContent` and compose your own header using `useSidePanelContext` to call `setOpen(false)`.
+
+### Putting it together
+
+A minimal side panel combines all four parts inside a flex container:
+
+```jsx
+<SidePanelProvider>
+  <FlexLayout>
+
+    <StackLayout style={{ flex: 1 }}>
+      <SidePanelTrigger>
+        <Button style={{width: "fit-content"}}>Toggle panel</Button>
+      </SidePanelTrigger>
+    </StackLayout>
+
+    <SidePanel position="right" aria-labelledby={"heading id"}>
+      <Text>Side panel content goes here.</Text>
+      <SidePanelContent header={<H2 id={"heading id"}>Details</H2>}>
+        <Text>Side panel content goes here.</Text>
+      </SidePanelContent>
+    </SidePanel>
+
+  </FlexLayout>
+</SidePanelProvider>);
+```
+
+### Custom triggers
+
+When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a custom trigger using `useSidePanelContext`. Call `setOpen`, `setReference`, and spread `getReferenceProps` onto your element to maintain the correct ARIA attributes and focus return behavior.
+
+```jsx
+const { setOpen, setReference, getReferenceProps, getFloatingProps } =
+  useSidePanelContext();
+
+<Button
+  {...getReferenceProps({
+    "aria-controls": getFloatingProps().id,
+    onClick: () => {
+      setReference(event.currentTarget);
+      setOpen(true);
+    },
+  })}
+>
+  Edit
+</Button>;
+```
+
 ## Props
 
+### SidePanel
+
 <PropsTable packageName="lab" componentName="SidePanel" />
-<PropsTable packageName="lab" componentName="SidePanelCloseTrigger" />
-<PropsTable packageName="lab" componentName="SidePanelGroup" />
+
+### SidePanelProvider
+
+<PropsTable packageName="lab" componentName="SidePanelProvider" />
+
+### SidePanelTrigger
+
 <PropsTable packageName="lab" componentName="SidePanelTrigger" />
+
+### SidePanelContent
+
+<PropsTable packageName="lab" componentName="SidePanelContent" />

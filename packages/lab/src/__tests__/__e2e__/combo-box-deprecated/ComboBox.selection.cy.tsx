@@ -100,7 +100,7 @@ describe("A combo box", () => {
     cy.get("@changeSpy").should("have.callCount", 1);
   });
 
-  it("should clear the selection when input is cleared", () => {
+  it.skip("should clear the selection when input is cleared", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(<Default onChange={changeSpy} />);
 

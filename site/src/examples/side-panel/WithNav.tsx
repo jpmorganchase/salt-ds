@@ -8,22 +8,44 @@ import {
 } from "@salt-ds/lab";
 import { ContentExample } from "./ContentExample";
 
+const Nav = () => (
+  <nav
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--salt-spacing-100)",
+      padding: "var(--salt-spacing-200)",
+      borderRight:
+        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+      backgroundColor: "var(--salt-container-secondary-background)",
+      whiteSpace: "nowrap",
+    }}
+  >
+    <Text styleAs="label" style={{ fontWeight: "bold" }}>
+      Nav
+    </Text>
+    <Text>Item 1</Text>
+    <Text>Item 2</Text>
+    <Text>Item 3</Text>
+  </nav>
+);
+
 const SidePanelExample = () => {
   const headingId = useId();
   const { openState } = useSidePanelContext();
 
   return (
     <>
+      <Nav />
       <SidePanel position="left" aria-labelledby={headingId}>
         <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
           <Text>Side panel content goes here.</Text>
         </SidePanelContent>
       </SidePanel>
-
       <ContentExample>
         <SidePanelTrigger>
           <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} left panel
+            {openState ? "Close" : "Open"} side panel
           </Button>
         </SidePanelTrigger>
       </ContentExample>
@@ -31,7 +53,7 @@ const SidePanelExample = () => {
   );
 };
 
-export const LeftPanel = () => (
+export const WithNav = () => (
   <SidePanelProvider>
     <FlexLayout
       style={{

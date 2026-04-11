@@ -1,0 +1,25 @@
+.saltSidePanelContent {
+  display: flex;
+  flex-direction: column;
+  padding: var(--salt-spacing-300) 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.saltSidePanelContent-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-300);
+}
+
+.saltSidePanelContent-header > *:first-child {
+  flex: 1;
+}
+
+.saltSidePanelContent-body {
+  flex: 1;
+  overflow: auto;
+  padding-right: var(--salt-spacing-300);
+}

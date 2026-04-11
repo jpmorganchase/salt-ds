@@ -1,84 +1,113 @@
+import { Button, FlexLayout, H2, Text, useId } from "@salt-ds/core";
 import {
-  Button,
-  FlexLayout,
-  H2,
-  StackLayout,
-  Text,
-  useId,
-} from "@salt-ds/core";
-import { SidePanel } from "@salt-ds/lab";
-import { type CSSProperties, useRef, useState } from "react";
+  SidePanel,
+  SidePanelContent,
+  SidePanelProvider,
+  useSidePanelContext,
+} from "@salt-ds/lab";
+import type { CSSProperties } from "react";
+import { ContentExample } from "./ContentExample";
 
 const panelStyle = {
-  "--saltSidePanel-width": "150px",
+  "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-export const ManualTrigger = () => {
-  const [openLeft, setOpenLeft] = useState(false);
-  const [openRight, setOpenRight] = useState(false);
-  const leftPanelId = useId();
-  const rightPanelId = useId();
-  const leftHeadingId = useId();
-  const rightHeadingId = useId();
+const RightPanel = () => {
+  const headingId = useId();
+  return (
+    <SidePanel
+      aria-labelledby={headingId}
+      style={panelStyle}
+      variant="secondary"
+    >
+      <SidePanelContent header={<H2 id={headingId}>Right Panel</H2>}>
+        <Text>Right panel content.</Text>
+      </SidePanelContent>
+    </SidePanel>
+  );
+};
 
-  const leftTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const rightTriggerRef = useRef<HTMLButtonElement | null>(null);
+const LeftPanel = () => {
+  const headingId = useId();
+  return (
+    <SidePanel
+      position="left"
+      aria-labelledby={headingId}
+      style={panelStyle}
+      variant="secondary"
+    >
+      <SidePanelContent header={<H2 id={headingId}>Left Panel</H2>}>
+        <Text>Left panel content.</Text>
+      </SidePanelContent>
+    </SidePanel>
+  );
+};
+
+const ManualTriggerButton = ({ children }: { children: string }) => {
+  const {
+    openState,
+    setOpen,
+    getFloatingProps,
+    getReferenceProps,
+    setReference,
+  } = useSidePanelContext();
 
   return (
-    <FlexLayout
-      style={{
-        height: 230,
-      }}
-      gap={0}
+    <Button
+      {...(getReferenceProps({
+        "aria-controls": getFloatingProps().id as string,
+        onClick: () => setOpen(!openState),
+      }) as Record<string, unknown>)}
+      ref={setReference as React.Ref<HTMLButtonElement>}
+      style={{ width: "fit-content", whiteSpace: "nowrap" }}
     >
-      <SidePanel
-        open={openLeft}
-        onOpenChange={setOpenLeft}
-        id={leftPanelId}
-        aria-labelledby={leftHeadingId}
-        triggerRef={leftTriggerRef}
-        position="left"
-        style={panelStyle}
-        variant="secondary"
-      >
-        <StackLayout align="start" gap={1}>
-          <H2 id={leftHeadingId}>Left Panel</H2>
-          <Text>Left panel content.</Text>
-        </StackLayout>
-      </SidePanel>
+      {children}
+    </Button>
+  );
+};
 
-      <StackLayout gap={2} padding={2}>
-        <Button
-          ref={leftTriggerRef}
-          onClick={() => setOpenLeft(!openLeft)}
-          aria-expanded={openLeft}
-          aria-controls={leftPanelId}
-        >
-          {openLeft ? "Close" : "Open"} Left Panel
-        </Button>
-        <Button
-          ref={rightTriggerRef}
-          onClick={() => setOpenRight(!openRight)}
-          aria-expanded={openRight}
-          aria-controls={rightPanelId}
-        >
-          {openRight ? "Close" : "Open"} Right Panel
-        </Button>
-      </StackLayout>
-      <SidePanel
-        open={openRight}
-        onOpenChange={setOpenRight}
-        id={rightPanelId}
-        aria-labelledby={rightHeadingId}
-        triggerRef={rightTriggerRef}
-        style={panelStyle}
-        variant="tertiary"
-      >
-        <StackLayout align="start" gap={1}>
-          <H2 id={rightHeadingId}>Right Panel</H2>
-          <Text>Right panel content.</Text>
-        </StackLayout>
-      </SidePanel>
-    </FlexLayout>
+const ContentArea = () => {
+  const leftCtx = useSidePanelContext();
+
+  return (
+    <SidePanelProvider>
+      <ContentExample>
+        <FlexLayout gap={1} justify="space-between">
+          <Button
+            {...(leftCtx.getReferenceProps({
+              "aria-controls": leftCtx.getFloatingProps().id as string,
+              onClick: () => leftCtx.setOpen(!leftCtx.openState),
+            }) as Record<string, unknown>)}
+            ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}
+            style={{ width: "fit-content", whiteSpace: "nowrap" }}
+          >
+            Toggle left panel
+          </Button>
+          <ManualTriggerButton>Toggle right panel</ManualTriggerButton>
+        </FlexLayout>
+      </ContentExample>
+      <RightPanel />
+    </SidePanelProvider>
+  );
+};
+
+export const ManualTrigger = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: 300,
+        display: "flex",
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+        overflow: "hidden",
+      }}
+    >
+      <SidePanelProvider>
+        <LeftPanel />
+        <ContentArea />
+      </SidePanelProvider>
+    </div>
   );
 };

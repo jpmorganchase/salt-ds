@@ -8,7 +8,7 @@ import {
   type ReactNode,
   useRef,
 } from "react";
-import { useSidePanelGroup } from "./SidePanelGroupContext";
+import { useSidePanelContext } from "./SidePanelContext";
 
 export interface SidePanelTriggerProps
   extends Omit<
@@ -24,15 +24,15 @@ export const SidePanelTrigger = forwardRef<
 >(function SidePanelTrigger(props, ref) {
   const { children, onClick, ...rest } = props;
   const {
-    open,
+    openState,
     triggerRef: groupTriggerRef,
     setOpen,
     activateTrigger,
     panelId,
-  } = useSidePanelGroup();
+  } = useSidePanelContext();
   const triggerRef = useRef<HTMLElement | null>(null);
   const handleRef = useForkRef(triggerRef, ref);
-  const isActive = open && groupTriggerRef?.current === triggerRef.current;
+  const isActive = openState && groupTriggerRef?.current === triggerRef.current;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
@@ -47,6 +47,7 @@ export const SidePanelTrigger = forwardRef<
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;
   }
+
   const mergedProps = mergeProps(
     {
       onClick: handleClick,

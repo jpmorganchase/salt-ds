@@ -10,7 +10,7 @@ import {
   isValidElement,
   type ReactNode,
 } from "react";
-import { useSidePanelGroup } from "./SidePanelGroupContext";
+import { useSidePanelContext } from "./SidePanelContext";
 
 export interface SidePanelCloseButtonProps extends ButtonProps {
   children: ReactNode;
@@ -20,7 +20,7 @@ export const SidePanelCloseTrigger = forwardRef<
   HTMLElement,
   SidePanelCloseButtonProps
 >(function SidePanelCloseTrigger({ children, onClick, ...rest }, ref) {
-  const { setOpen } = useSidePanelGroup();
+  const { setOpen } = useSidePanelContext();
 
   const handleClick: ButtonProps["onClick"] = (event) => {
     onClick?.(event);
@@ -29,7 +29,7 @@ export const SidePanelCloseTrigger = forwardRef<
       return;
     }
 
-    setOpen?.(false);
+    setOpen(false);
   };
 
   const handleRef = useForkRef(getRefFromChildren(children), ref);

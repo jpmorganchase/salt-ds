@@ -1,6 +1,5 @@
 import {
   Button,
-  FlexItem,
   FlexLayout,
   FormField,
   FormFieldLabel,
@@ -16,14 +15,13 @@ import {
   TR,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
   SidePanel,
-  SidePanelCloseTrigger,
-  SidePanelGroup,
-  SidePanelTrigger,
+  SidePanelContent,
+  SidePanelProvider,
+  useSidePanelContext,
 } from "@salt-ds/lab";
-import { useState } from "react";
+import React, { type CSSProperties, useState } from "react";
 
 interface TeamMember {
   id: string;
@@ -65,111 +63,123 @@ const tableData: TeamMember[] = [
   },
 ];
 
-export const WithTable = () => {
+const panelStyle = {
+  "--saltSidePanel-width": "250px",
+} as CSSProperties;
+
+const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
-  const [open, setOpen] = useState(false);
   const panelHeadingId = useId();
+  const { setOpen, setReference, getFloatingProps, getReferenceProps } =
+    useSidePanelContext();
 
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    if (!newOpen) {
-      setSelectedRow(null);
-    }
-  };
-
-  const handleRowClick = (row: TeamMember) => {
+  const handleRowClick = (row: TeamMember, target: HTMLElement) => {
     setSelectedRow(row);
+    setReference(target);
+    setOpen(true);
   };
+
+  const getTriggerProps = (row: TeamMember) =>
+    getReferenceProps({
+      "aria-controls": getFloatingProps().id as string,
+      "aria-label": `Edit details for ${row.name}`,
+      onClick: (e: React.MouseEvent<HTMLElement>) => {
+        handleRowClick(row, e.currentTarget);
+      },
+    }) as Record<string, unknown>;
 
   return (
-    <SidePanelGroup open={open} onOpenChange={handleOpenChange}>
-      <FlexLayout
-        style={{
-          minHeight: 450,
-          height: "100%",
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-        }}
-        gap={0}
-        align="center"
-      >
-        <FlexItem basis={1} padding={3}>
-          <TableContainer>
-            <Table>
-              <caption>Users</caption>
-              <THead>
-                <TR>
-                  <TH>Name</TH>
-                  <TH>Email</TH>
-                  <TH>Action</TH>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: "100%",
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+      }}
+      gap={0}
+    >
+      <div style={{ flex: 1, minWidth: 0, padding: "var(--salt-spacing-300)" }}>
+        <TableContainer>
+          <Table>
+            <caption>Users</caption>
+            <THead>
+              <TR>
+                <TH>Name</TH>
+                <TH>Email</TH>
+                <TH>Phone</TH>
+                <TH>Action</TH>
+              </TR>
+            </THead>
+            <TBody>
+              {tableData.map((row) => (
+                <TR key={row.id}>
+                  <TD>{row.name}</TD>
+                  <TD>{row.email}</TD>
+                  <TD>{row.phone}</TD>
+                  <TD>
+                    <Button
+                      {...getTriggerProps(row)}
+                      style={{ minWidth: "auto" }}
+                    >
+                      Edit
+                    </Button>
+                  </TD>
                 </TR>
-              </THead>
-              <TBody>
-                {tableData.map((row) => (
-                  <TR key={row.id}>
-                    <TD>{row.name}</TD>
-                    <TD>{row.email}</TD>
-                    <TD>
-                      <SidePanelTrigger>
-                        <Button
-                          onClick={() => handleRowClick(row)}
-                          style={{ minWidth: "auto" }}
-                          aria-label={`Edit details for ${row.name}`}
-                        >
-                          Edit
-                        </Button>
-                      </SidePanelTrigger>
-                    </TD>
-                  </TR>
-                ))}
-              </TBody>
-            </Table>
-          </TableContainer>
-        </FlexItem>
+              ))}
+            </TBody>
+          </Table>
+        </TableContainer>
+      </div>
 
-        <SidePanel position="right" aria-labelledby={panelHeadingId}>
-          <StackLayout align="start" gap={3}>
-            <SidePanelCloseTrigger>
-              <Button
-                aria-label="Close"
-                appearance="transparent"
-                style={{ marginLeft: "auto" }}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
-            </SidePanelCloseTrigger>
-            {selectedRow && (
-              <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
-                <H2 id={panelHeadingId}>Employee Details</H2>
-                <FormField>
-                  <FormFieldLabel>Name</FormFieldLabel>
-                  <Input defaultValue={selectedRow.name} />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Email</FormFieldLabel>
-                  <Input defaultValue={selectedRow.email} />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Phone</FormFieldLabel>
-                  <Input defaultValue={selectedRow.phone} />
-                </FormField>
-                <FlexLayout gap={1}>
-                  <Button
-                    sentiment="accented"
-                    appearance="bordered"
-                    style={{ width: "100%" }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button sentiment="accented" style={{ width: "100%" }}>
-                    Save
-                  </Button>
-                </FlexLayout>
-              </StackLayout>
-            )}
-          </StackLayout>
-        </SidePanel>
-      </FlexLayout>
-    </SidePanelGroup>
+      <SidePanel
+        position="right"
+        aria-labelledby={panelHeadingId}
+        style={panelStyle}
+      >
+        {selectedRow && (
+          <SidePanelContent
+            header={<H2 id={panelHeadingId}>Employee Details</H2>}
+          >
+            <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
+              <FormField>
+                <FormFieldLabel>Name</FormFieldLabel>
+                <Input defaultValue={selectedRow.name} />
+              </FormField>
+              <FormField>
+                <FormFieldLabel>Email</FormFieldLabel>
+                <Input defaultValue={selectedRow.email} />
+              </FormField>
+              <FormField>
+                <FormFieldLabel>Phone</FormFieldLabel>
+                <Input defaultValue={selectedRow.phone} />
+              </FormField>
+              <FlexLayout gap={1}>
+                <Button
+                  sentiment="accented"
+                  appearance="bordered"
+                  style={{ width: "100%" }}
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  sentiment="accented"
+                  style={{ width: "100%" }}
+                  onClick={() => setOpen(false)}
+                >
+                  Save
+                </Button>
+              </FlexLayout>
+            </StackLayout>
+          </SidePanelContent>
+        )}
+      </SidePanel>
+    </FlexLayout>
   );
 };
+
+export const WithTable = () => (
+  <SidePanelProvider>
+    <SidePanelExample />
+  </SidePanelProvider>
+);

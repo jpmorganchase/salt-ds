@@ -13,9 +13,9 @@ import { AccordionContext } from "./AccordionContext";
 export interface AccordionProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onToggle"> {
   /**
-   * AccordionGroup value.
+   * Optional value used by controlled group patterns.
    */
-  value: string;
+  value?: string;
   /**
    * Whether the accordion is expanded.
    */
