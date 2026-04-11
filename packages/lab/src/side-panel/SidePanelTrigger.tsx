@@ -41,11 +41,6 @@ export const SidePanelTrigger = forwardRef<
       return;
     }
 
-    if (isActive) {
-      setOpen?.(false);
-      return;
-    }
-
     activateTrigger(triggerRef);
   };
 

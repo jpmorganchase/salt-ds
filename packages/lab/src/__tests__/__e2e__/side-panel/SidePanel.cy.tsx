@@ -1,7 +1,7 @@
 import { SidePanel, SidePanelGroup, SidePanelTrigger } from "@salt-ds/lab";
 import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const { Left, Default, ManualTrigger, Variants, WithTable } =
   composeStories(sidePanel);
@@ -103,7 +103,7 @@ describe("GIVEN a SidePanel component", () => {
         cy.findByRole("region").should("have.attr", "role", "region");
       });
 
-      it("AND trigger is activated by keyboard, THEN it toggles open and close", () => {
+      it("AND trigger is activated by keyboard while panel is open, THEN focus moves into panel", () => {
         cy.mount(<Left />);
 
         cy.findByRole("button", { name: "Open Left Panel" }).focus();
@@ -116,15 +116,17 @@ describe("GIVEN a SidePanel component", () => {
           "true",
         );
 
+        // Shift+Tab returns focus to trigger — re-activating moves focus back in
         cy.findByRole("button", { name: "Open Left Panel" }).focus();
         cy.realPress("Enter");
 
-        cy.findByRole("region", { name: "Section Title" }).should("not.exist");
+        cy.findByRole("region", { name: "Section Title" }).should("be.visible");
         cy.findByRole("button", { name: "Open Left Panel" }).should(
           "have.attr",
           "aria-expanded",
-          "false",
+          "true",
         );
+        cy.findByRole("button", { name: "Close" }).should("have.focus");
       });
     });
 
@@ -396,7 +398,7 @@ describe("GIVEN a SidePanel component", () => {
         cy.findByRole("button", { name: "After Panel" }).should("have.focus");
       });
 
-      it("AND panel immediately follows trigger in DOM, THEN Shift+Tab from element after panel reaches trigger", () => {
+      it("AND panel immediately follows trigger in DOM, THEN Shift+Tab from element after panel skips panel and returns to trigger", () => {
         const DirectFollowExample = () => (
           <>
             <SidePanelGroup>
@@ -419,11 +421,11 @@ describe("GIVEN a SidePanel component", () => {
         cy.realPress("Tab");
         cy.findByRole("button", { name: "After Panel" }).should("have.focus");
 
-        // Shift+Tab from "After Panel" returns to "Panel Last" (natural browser
-        // behaviour — "Panel Last" is the previous focusable in document order).
-        // This confirms focus is non-modal: it can re-enter the panel freely.
+        // Shift+Tab from "After Panel" skips the panel entirely and returns
+        // focus to the trigger. The panel is only reachable via trigger
+        // activation, not via natural Tab/Shift+Tab navigation.
         cy.realPress(["Shift", "Tab"]);
-        cy.findByRole("button", { name: "Panel Last" }).should("have.focus");
+        cy.findByRole("button", { name: "Open Panel" }).should("have.focus");
       });
     });
 
@@ -472,6 +474,41 @@ describe("GIVEN a SidePanel component", () => {
           "be.visible",
         );
         cy.findByRole("region", { name: "Read Only Initially Open" }).should(
+          "not.have.focus",
+        );
+      });
+
+      it("AND SidePanel has a manual triggerRef but starts closed, THEN focus should NOT move to trigger on page load", () => {
+        const ManualTriggerClosedExample = () => {
+          const [open, setOpen] = useState(false);
+          const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+          return (
+            <>
+              <button
+                ref={triggerRef}
+                type="button"
+                onClick={() => setOpen(true)}
+              >
+                Open Panel
+              </button>
+              <SidePanel
+                open={open}
+                onOpenChange={setOpen}
+                aria-label="Manual Trigger Panel"
+                triggerRef={triggerRef}
+              >
+                <button type="button">Panel Content</button>
+              </SidePanel>
+            </>
+          );
+        };
+
+        cy.mount(<ManualTriggerClosedExample />);
+
+        cy.findByRole("region").should("not.exist");
+        cy.focused().should("not.exist");
+        cy.findByRole("button", { name: "Open Panel" }).should(
           "not.have.focus",
         );
       });
@@ -532,7 +569,7 @@ describe("GIVEN a SidePanel component", () => {
         cy.focused().should("have.text", "Toggle Tertiary Panel");
       });
 
-      it("AND trigger is clicked while another panel focused, THEN focus returns to its trigger", () => {
+      it("AND trigger is clicked while another panel focused, THEN focus moves into that panel", () => {
         cy.mount(<Variants />);
 
         cy.findByRole("button", { name: "Toggle Primary Panel" }).click();
@@ -551,14 +588,16 @@ describe("GIVEN a SidePanel component", () => {
 
         cy.findByRole("button", { name: "Toggle Secondary Panel" }).click();
 
+        // Panel stays open; focus moves back to first element in the panel
         cy.findByRole("region", { name: "Secondary Variant" }).should(
-          "not.exist",
+          "be.visible",
         );
         cy.findByRole("region", { name: "Primary Variant" }).should(
           "be.visible",
         );
-
-        cy.focused().should("have.text", "Toggle Secondary Panel");
+        cy.findByRole("region", { name: "Secondary Variant" }).within(() => {
+          cy.findByRole("button", { name: "Close" }).should("have.focus");
+        });
       });
     });
   });
@@ -571,14 +610,18 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Primary Variant" })
         .should("be.visible")
         .and("have.class", "saltSidePanel-primary");
-      cy.findByRole("button", { name: "Toggle Primary Panel" }).click();
+      cy.findByRole("region", { name: "Primary Variant" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
       cy.findByRole("region", { name: "Primary Variant" }).should("not.exist");
 
       cy.findByRole("button", { name: "Toggle Secondary Panel" }).click();
       cy.findByRole("region", { name: "Secondary Variant" })
         .should("be.visible")
         .and("have.class", "saltSidePanel-secondary");
-      cy.findByRole("button", { name: "Toggle Secondary Panel" }).click();
+      cy.findByRole("region", { name: "Secondary Variant" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
       cy.findByRole("region", { name: "Secondary Variant" }).should(
         "not.exist",
       );
@@ -587,11 +630,13 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Tertiary Variant" })
         .should("be.visible")
         .and("have.class", "saltSidePanel-tertiary");
-      cy.findByRole("button", { name: "Toggle Tertiary Panel" }).click();
+      cy.findByRole("region", { name: "Tertiary Variant" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
       cy.findByRole("region", { name: "Tertiary Variant" }).should("not.exist");
     });
 
-    it("AND all variants are toggled sequentially, THEN each maintains independent state", () => {
+    it("AND all variants are closed via close button, THEN each maintains independent state", () => {
       cy.mount(<Variants />);
 
       cy.findByRole("button", { name: "Toggle Primary Panel" }).click();
@@ -606,7 +651,9 @@ describe("GIVEN a SidePanel component", () => {
         "be.visible",
       );
 
-      cy.findByRole("button", { name: "Toggle Secondary Panel" }).click();
+      cy.findByRole("region", { name: "Secondary Variant" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
 
       cy.findByRole("region", { name: "Secondary Variant" }).should(
         "not.exist",
@@ -616,14 +663,18 @@ describe("GIVEN a SidePanel component", () => {
         "be.visible",
       );
 
-      cy.findByRole("button", { name: "Toggle Primary Panel" }).click();
+      cy.findByRole("region", { name: "Primary Variant" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
 
       cy.findByRole("region", { name: "Primary Variant" }).should("not.exist");
       cy.findByRole("region", { name: "Tertiary Variant" }).should(
         "be.visible",
       );
 
-      cy.findByRole("button", { name: "Toggle Tertiary Panel" }).click();
+      cy.findByRole("region", { name: "Tertiary Variant" }).within(() => {
+        cy.findByRole("button", { name: "Close" }).click();
+      });
 
       cy.findByRole("region", { name: "Tertiary Variant" }).should("not.exist");
     });
@@ -790,7 +841,7 @@ describe("GIVEN a SidePanel component", () => {
     cy.findByRole("button", { name: "Close" }).should("have.focus");
   });
 
-  it("AND same row trigger is clicked again while open, THEN panel closes as toggle behavior", () => {
+  it("AND same row trigger is clicked again while open, THEN focus moves into panel without closing", () => {
     cy.mount(<WithTable />);
 
     cy.findAllByRole("button", { name: "View Details" }).eq(0).click();
@@ -798,10 +849,10 @@ describe("GIVEN a SidePanel component", () => {
 
     cy.findAllByRole("button", { name: "View Details" }).eq(0).click();
 
-    cy.findByRole("region", { name: "Employee Details" }).should("not.exist");
+    cy.findByRole("region", { name: "Employee Details" }).should("be.visible");
     cy.findAllByRole("button", { name: "View Details" })
       .eq(0)
-      .should("have.attr", "aria-expanded", "false")
-      .and("have.focus");
+      .should("have.attr", "aria-expanded", "true");
+    cy.findByRole("button", { name: "Close" }).should("have.focus");
   });
 });

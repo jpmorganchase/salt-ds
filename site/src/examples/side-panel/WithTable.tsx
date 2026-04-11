@@ -67,14 +67,22 @@ const tableData: TeamMember[] = [
 
 export const WithTable = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
+  const [open, setOpen] = useState(false);
   const panelHeadingId = useId();
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (!newOpen) {
+      setSelectedRow(null);
+    }
+  };
 
   const handleRowClick = (row: TeamMember) => {
     setSelectedRow(row);
   };
 
   return (
-    <SidePanelGroup>
+    <SidePanelGroup open={open} onOpenChange={handleOpenChange}>
       <FlexLayout
         style={{
           minHeight: 450,
@@ -131,7 +139,7 @@ export const WithTable = () => {
               </Button>
             </SidePanelCloseTrigger>
             {selectedRow && (
-              <StackLayout style={{ width: "100%" }}>
+              <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
                 <H2 id={panelHeadingId}>Employee Details</H2>
                 <FormField>
                   <FormFieldLabel>Name</FormFieldLabel>

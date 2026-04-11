@@ -10,6 +10,7 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
   forwardRef,
+  type FocusEvent as ReactFocusEvent,
   type KeyboardEvent,
   type MutableRefObject,
   useCallback,
@@ -112,6 +113,28 @@ function getNextFocusableAfter(
   return null;
 }
 
+/**
+ * Find the first focusable element in document order that comes after
+ * `panel` and is not inside it. Used to skip the panel during natural
+ * Tab navigation when the panel should only receive focus via its trigger.
+ */
+function getNextFocusableAfterPanel(panel: HTMLElement): HTMLElement | null {
+  const doc = panel.ownerDocument;
+  const allFocusables = Array.from(
+    doc.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+  );
+  for (const el of allFocusables) {
+    if (
+      !panel.contains(el) &&
+      isVisible(el) &&
+      panel.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING
+    ) {
+      return el;
+    }
+  }
+  return null;
+}
+
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
     const {
@@ -153,6 +176,9 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const panelRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef<HTMLDivElement>(panelRef, ref);
     const previousActivationCount = useRef(0);
+    const wasOpenRef = useRef(false);
+    const tabDirectionRef = useRef<"forward" | "backward">("forward");
+    const tabJustPressedRef = useRef(false);
 
     const getFocusTarget = useCallback(() => {
       let focusTarget: HTMLElement | null = null;
@@ -192,19 +218,79 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     useEffect(() => {
       if (open) {
         setShowComponent(true);
+        wasOpenRef.current = true;
         return;
       }
+      // Capture whether the panel was previously open so we only return focus
+      // on a genuine open→close transition, not on the initial mount when
+      // `focusReturnTriggerRef.current` may already be set (manual trigger case).
+      const shouldReturnFocus = wasOpenRef.current;
+      wasOpenRef.current = false;
+
       // If open flips back to true before the animation completes, React runs
       // the cleanup below (clearTimeout) before the new effect, so the pending
       // setShowComponent(false) and focus-return are correctly cancelled.
       const animate = targetWindow?.setTimeout(() => {
         setShowComponent(false);
-        if (focusReturnTriggerRef?.current) {
+        if (shouldReturnFocus && focusReturnTriggerRef?.current) {
           focusReturnTriggerRef.current.focus();
         }
       }, 300); // var(--salt-duration-perceptible)
       return () => targetWindow?.clearTimeout(animate);
     }, [open, focusReturnTriggerRef, targetWindow]);
+
+    // Track Tab direction so handleFocus knows which way focus was moving
+    useEffect(() => {
+      const doc = targetWindow?.document;
+      if (!doc) return;
+      const onKeyDown = (e: globalThis.KeyboardEvent) => {
+        if (e.key === "Tab") {
+          tabDirectionRef.current = e.shiftKey ? "backward" : "forward";
+          tabJustPressedRef.current = true;
+        }
+      };
+      doc.addEventListener("keydown", onKeyDown, true);
+      return () => doc.removeEventListener("keydown", onKeyDown, true);
+    }, [targetWindow]);
+
+    // Redirect focus when natural Tab/Shift+Tab would enter the panel.
+    // The panel should only receive focus via trigger activation, not by
+    // tabbing through the page.
+    const handleFocus = useCallback(
+      (event: ReactFocusEvent<HTMLDivElement>) => {
+        const panel = panelRef.current;
+        if (!panel) return;
+
+        // Consume the flag immediately — only the focus event directly following
+        // a Tab keydown should be treated as natural tab navigation.
+        const wasTabNavigation = tabJustPressedRef.current;
+        tabJustPressedRef.current = false;
+
+        const relatedTarget = event.relatedTarget as HTMLElement | null;
+
+        // Focus moved within the panel — normal internal tabbing, allow it
+        if (relatedTarget && panel.contains(relatedTarget)) return;
+
+        // Focus came from the trigger — programmatic open, allow it
+        const trigger = focusReturnTriggerRef?.current;
+        if (relatedTarget === trigger) return;
+
+        // Programmatic .focus() call (e.g. from outside code or mouse click)
+        // — not Tab navigation, allow it
+        if (!wasTabNavigation) return;
+
+        // Natural tab navigation reached the panel — redirect away
+        if (tabDirectionRef.current === "forward") {
+          const nextEl = getNextFocusableAfterPanel(panel);
+          nextEl?.focus();
+          // No next element: let the browser wrap to the top naturally
+        } else {
+          // Shift+Tab backward into panel — return to trigger
+          trigger?.focus();
+        }
+      },
+      [focusReturnTriggerRef],
+    );
 
     const handleKeyDownCapture = useCallback(
       (event: KeyboardEvent<HTMLDivElement>) => {
@@ -283,6 +369,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         tabIndex={-1}
         role="region"
         id={id}
+        onFocus={handleFocus}
         onKeyDownCapture={handleKeyDownCapture}
         {...rest}
       >
