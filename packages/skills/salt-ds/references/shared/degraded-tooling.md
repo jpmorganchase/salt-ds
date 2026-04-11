@@ -69,7 +69,6 @@ Good phrasing:
 - `The payload was truncated before the completion contract, so I could not safely treat the canonical step as complete.`
 - `I can return a bounded partial scaffold for the grounded regions, but the chart region is still pending canonical Salt follow-through.`
 
-
 ## Quick-Check Under Degraded Tooling
 
 If the user asked for a quick-check and the transport is degraded:

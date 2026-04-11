@@ -77,7 +77,6 @@ That companion snippet should:
 - mention `.salt/stack.json` only as the layered upgrade path, not the default
 - keep the canonical Salt answer visible when a repo rule changes the final choice
 
-
 ## Optional Working Agreement
 
 If the repo has recurring accepted deviations, host/tool constraints, or validation defaults that are too narrative for `.salt/team.json`, keep them in a short working agreement using `assets/salt-working-agreement.template.md`. Treat that file as downstream context, not as canonical Salt policy.

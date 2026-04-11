@@ -1,0 +1,110 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-dashboard-broadened-compact-v2",
+    "audience": "existing-salt-team",
+    "tags": [
+      "replay",
+      "create",
+      "descriptive-query",
+      "broadened",
+      "compact-v2"
+    ],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-dashboard-broadened",
+      "description": "Saved replay fixture for a compact v2 descriptive create result that broadens dashboard summary area to Analytical dashboard through the default public contract."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a dashboard summary area."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "dashboard summary area",
+        "view": "compact"
+      },
+      "cli": {
+        "argv": ["create", "dashboard summary area", "--json"]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "public_contract_v2": {
+        "workflow_status": "partial",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "dashboard summary area",
+        "resolved_entity": "Analytical dashboard",
+        "match_status": "broadened",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Analytical dashboard"
+        },
+        "summary_includes": ["broader Salt entity Analytical dashboard"]
+      },
+      "canonical_choice": "Analytical dashboard",
+      "final_choice": "Analytical dashboard",
+      "required_fragments": [
+        "\"requested_entity\":\"dashboard summary area\"",
+        "\"resolved_entity\":\"Analytical dashboard\"",
+        "\"match_status\":\"broadened\""
+      ]
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-dashboard-broadened-compact-v2",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved compact-v2 transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "partial",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "dashboard summary area",
+      "resolved_entity": "Analytical dashboard",
+      "match_status": "broadened",
+      "blocking_reasons": [],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Analytical dashboard"
+        }
+      },
+      "summary": "Salt interpreted dashboard summary area as the broader Salt entity Analytical dashboard."
+    },
+    "transcript": [
+      "Use salt-ds to add a dashboard summary area.",
+      "The host kept the descriptive request visible and pinned the broader canonical Salt direction instead of silently treating it as implementation-safe."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-dashboard-broadened"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

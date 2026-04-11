@@ -81,6 +81,16 @@ function normalizeLookup(value: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+function getFieldTokenSet(value: string): Set<string> {
+  const expandedValue = value.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+  const splitTokens = expandedValue
+    .toLowerCase()
+    .split(/[^a-z0-9]+/g)
+    .filter((token) => token.length > 1);
+
+  return new Set([...tokenize(value), ...splitTokens]);
+}
+
 export function scoreQueryFields(
   query: string,
   fields: QueryField[],
@@ -101,6 +111,7 @@ export function scoreQueryFields(
     if (!normalizedValue) {
       continue;
     }
+    const fieldTokens = getFieldTokenSet(field.value);
 
     if (field.exact_weight && normalizedValue === query) {
       score += field.exact_weight;
@@ -111,7 +122,7 @@ export function scoreQueryFields(
     }
 
     for (const token of queryTokens) {
-      if (!normalizedValue.includes(token)) {
+      if (!fieldTokens.has(token)) {
         continue;
       }
 

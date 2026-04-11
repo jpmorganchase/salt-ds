@@ -40,13 +40,8 @@
       },
       "summary_first": true,
       "require_verify": true,
-      "required_fragments": [
-        "needs_explicit_root",
-        "retry_with.root_dir"
-      ],
-      "banned_fragments": [
-        "context_checked"
-      ]
+      "required_fragments": ["needs_explicit_root", "retry_with.root_dir"],
+      "banned_fragments": ["context_checked"]
     }
   },
   "trace": {
@@ -106,9 +101,7 @@
           "starter_plan": [
             "Call get_salt_project_context again with an explicit root_dir."
           ],
-          "verify": [
-            "Rerun the review after the context root is corrected."
-          ]
+          "verify": ["Rerun the review after the context root is corrected."]
         },
         "sourceValidation": {
           "files": [

@@ -58,6 +58,27 @@ export interface WorkflowEvalScenario {
     final_choice?: string | null;
     required_fragments?: string[];
     banned_fragments?: string[];
+    public_contract_v2?: {
+      workflow_status?: "success" | "partial" | "blocked" | "failed";
+      canonical_complete?: boolean;
+      safe_to_implement_exact_request?: boolean;
+      requested_entity?: string | null;
+      resolved_entity?: string | null;
+      match_status?:
+        | "exact"
+        | "alias"
+        | "broadened"
+        | "misrouted"
+        | "no_match"
+        | null;
+      next_step?: {
+        kind?: string;
+        tool?: string;
+        mode?: string;
+        query?: string;
+      };
+      summary_includes?: string[];
+    };
     metrics?: {
       max_transcript_bytes?: number;
       max_workflow_result_bytes?: number;
@@ -234,10 +255,7 @@ function buildWorkflowEvalMetrics(input: {
 
 function attachWorkflowEvalMetrics<
   T extends Omit<WorkflowEvalTrace, "metrics">,
->(
-  trace: T,
-  startedAtMs: number,
-): T & { metrics: WorkflowEvalMetrics } {
+>(trace: T, startedAtMs: number): T & { metrics: WorkflowEvalMetrics } {
   return {
     ...trace,
     metrics: buildWorkflowEvalMetrics({
@@ -256,7 +274,8 @@ function aggregateWorkflowEvalMetrics(
     (summary, trace) => ({
       transcript_line_count:
         summary.transcript_line_count + trace.metrics.transcript_line_count,
-      transcript_bytes: summary.transcript_bytes + trace.metrics.transcript_bytes,
+      transcript_bytes:
+        summary.transcript_bytes + trace.metrics.transcript_bytes,
       workflow_result_bytes:
         summary.workflow_result_bytes + trace.metrics.workflow_result_bytes,
       logs_bytes: summary.logs_bytes + trace.metrics.logs_bytes,
@@ -306,11 +325,42 @@ function toPublicWorkflowId(rawId: string | null): string | null {
 }
 
 function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
-  return isRecord(value) && isRecord(value.workflow) ? value.workflow : null;
+  if (isRecord(value) && isRecord(value.workflow)) {
+    return value.workflow;
+  }
+
+  if (isRecord(value) && typeof value.workflow === "string") {
+    return {
+      id: toPublicWorkflowId(value.workflow),
+      workflow_status: value.workflow_status,
+      canonical_complete: value.canonical_complete,
+      safe_to_implement_exact_request: value.safe_to_implement_exact_request,
+    };
+  }
+
+  return null;
 }
 
 function extractResultObject(value: unknown): Record<string, unknown> | null {
-  return isRecord(value) && isRecord(value.result) ? value.result : null;
+  if (isRecord(value) && isRecord(value.result)) {
+    return value.result;
+  }
+
+  if (isRecord(value) && typeof value.workflow === "string") {
+    return value;
+  }
+
+  return null;
+}
+
+function extractPublicContractV2(
+  value: unknown,
+): Record<string, unknown> | null {
+  if (isRecord(value) && typeof value.workflow === "string") {
+    return value;
+  }
+
+  return null;
 }
 
 function countBlockingQuestions(
@@ -359,6 +409,10 @@ function extractCanonicalChoice(
     return result.decision.target;
   }
 
+  if (typeof result.resolved_entity === "string") {
+    return result.resolved_entity;
+  }
+
   return null;
 }
 
@@ -374,6 +428,10 @@ function extractFinalChoice(
     typeof result.final_decision.name === "string"
   ) {
     return result.final_decision.name;
+  }
+
+  if (typeof result.resolved_entity === "string") {
+    return result.resolved_entity;
   }
 
   return extractCanonicalChoice(result);
@@ -633,9 +691,7 @@ async function loadSourceOutlineFromScenario(
   }
 
   const cliArgs = scenario.args.cli?.argv ?? [];
-  const outlineFlagIndex = cliArgs.findIndex(
-    (token) => token === "--source-outline",
-  );
+  const outlineFlagIndex = cliArgs.indexOf("--source-outline");
   if (outlineFlagIndex === -1) {
     return null;
   }
@@ -906,6 +962,14 @@ async function normalizeCliWorkflowResult(
     throw new Error("CLI did not return a JSON object.");
   }
 
+  if (typeof raw.workflow === "string") {
+    return {
+      ...raw,
+      transport_used:
+        typeof raw.transport_used === "string" ? raw.transport_used : "cli",
+    };
+  }
+
   const workflowId = toPublicWorkflowId(
     isRecord(raw.workflow) ? readString(raw.workflow, "id") : null,
   );
@@ -991,6 +1055,7 @@ export function judgeWorkflowEvalScenario(
   const failures: string[] = [];
   const workflow = extractWorkflowObject(trace.workflow_result);
   const result = extractResultObject(trace.workflow_result);
+  const publicContractV2 = extractPublicContractV2(trace.workflow_result);
   const serialized = serializeTraceResult(trace.workflow_result);
   const successfulTransport =
     trace.transport_trace.find((entry) => entry.status === "succeeded")
@@ -1113,6 +1178,139 @@ export function judgeWorkflowEvalScenario(
     );
   }
 
+  if (scenario.expected.public_contract_v2) {
+    if (!publicContractV2) {
+      failures.push(
+        `Workflow result for ${scenario.id} did not expose a compact public contract v2 payload.`,
+      );
+    } else {
+      const expectedPublicContractV2 = scenario.expected.public_contract_v2;
+
+      if (
+        expectedPublicContractV2.workflow_status &&
+        publicContractV2.workflow_status !==
+          expectedPublicContractV2.workflow_status
+      ) {
+        failures.push(
+          `workflow_status ${String(publicContractV2.workflow_status)} did not match expected ${expectedPublicContractV2.workflow_status}.`,
+        );
+      }
+
+      if (
+        typeof expectedPublicContractV2.canonical_complete === "boolean" &&
+        publicContractV2.canonical_complete !==
+          expectedPublicContractV2.canonical_complete
+      ) {
+        failures.push(
+          `canonical_complete ${String(publicContractV2.canonical_complete)} did not match expected ${String(expectedPublicContractV2.canonical_complete)}.`,
+        );
+      }
+
+      if (
+        typeof expectedPublicContractV2.safe_to_implement_exact_request ===
+          "boolean" &&
+        publicContractV2.safe_to_implement_exact_request !==
+          expectedPublicContractV2.safe_to_implement_exact_request
+      ) {
+        failures.push(
+          `safe_to_implement_exact_request ${String(publicContractV2.safe_to_implement_exact_request)} did not match expected ${String(expectedPublicContractV2.safe_to_implement_exact_request)}.`,
+        );
+      }
+
+      if (
+        Object.hasOwn(expectedPublicContractV2, "requested_entity") &&
+        (typeof publicContractV2.requested_entity === "string"
+          ? publicContractV2.requested_entity
+          : null) !== expectedPublicContractV2.requested_entity
+      ) {
+        failures.push(
+          `requested_entity ${String(publicContractV2.requested_entity)} did not match expected ${String(expectedPublicContractV2.requested_entity)}.`,
+        );
+      }
+
+      if (
+        Object.hasOwn(expectedPublicContractV2, "resolved_entity") &&
+        (typeof publicContractV2.resolved_entity === "string"
+          ? publicContractV2.resolved_entity
+          : null) !== expectedPublicContractV2.resolved_entity
+      ) {
+        failures.push(
+          `resolved_entity ${String(publicContractV2.resolved_entity)} did not match expected ${String(expectedPublicContractV2.resolved_entity)}.`,
+        );
+      }
+
+      if (
+        Object.hasOwn(expectedPublicContractV2, "match_status") &&
+        (typeof publicContractV2.match_status === "string"
+          ? publicContractV2.match_status
+          : null) !== expectedPublicContractV2.match_status
+      ) {
+        failures.push(
+          `match_status ${String(publicContractV2.match_status)} did not match expected ${String(expectedPublicContractV2.match_status)}.`,
+        );
+      }
+
+      if (expectedPublicContractV2.next_step) {
+        const nextStep = isRecord(publicContractV2.next_step)
+          ? publicContractV2.next_step
+          : null;
+
+        if (!nextStep) {
+          failures.push(
+            `Workflow result for ${scenario.id} did not expose a compact next_step object.`,
+          );
+        } else {
+          if (
+            expectedPublicContractV2.next_step.kind &&
+            nextStep.kind !== expectedPublicContractV2.next_step.kind
+          ) {
+            failures.push(
+              `next_step.kind ${String(nextStep.kind)} did not match expected ${expectedPublicContractV2.next_step.kind}.`,
+            );
+          }
+          if (
+            expectedPublicContractV2.next_step.tool &&
+            nextStep.tool !== expectedPublicContractV2.next_step.tool
+          ) {
+            failures.push(
+              `next_step.tool ${String(nextStep.tool)} did not match expected ${expectedPublicContractV2.next_step.tool}.`,
+            );
+          }
+          if (
+            expectedPublicContractV2.next_step.mode &&
+            nextStep.mode !== expectedPublicContractV2.next_step.mode
+          ) {
+            failures.push(
+              `next_step.mode ${String(nextStep.mode)} did not match expected ${expectedPublicContractV2.next_step.mode}.`,
+            );
+          }
+          if (Object.hasOwn(expectedPublicContractV2.next_step, "query")) {
+            const actualNextQuery =
+              isRecord(nextStep.args) && typeof nextStep.args.query === "string"
+                ? nextStep.args.query
+                : null;
+            if (actualNextQuery !== expectedPublicContractV2.next_step.query) {
+              failures.push(
+                `next_step.args.query ${String(actualNextQuery)} did not match expected ${String(expectedPublicContractV2.next_step.query)}.`,
+              );
+            }
+          }
+        }
+      }
+
+      for (const fragment of expectedPublicContractV2.summary_includes ?? []) {
+        if (
+          typeof publicContractV2.summary !== "string" ||
+          !publicContractV2.summary.includes(fragment)
+        ) {
+          failures.push(
+            `summary ${String(publicContractV2.summary)} did not include expected fragment ${fragment}.`,
+          );
+        }
+      }
+    }
+  }
+
   for (const fragment of scenario.expected.required_fragments ?? []) {
     if (!serialized.includes(fragment)) {
       failures.push(
@@ -1214,9 +1412,95 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
         },
       );
 
-      if (result.exit_code !== 0 && result.exit_code !== 2) {
+      const acceptedWorkflowExitCodes = new Set([0, 10, 20, 30]);
+      const raw = safeJsonParse(result.stdout);
+
+      if (!acceptedWorkflowExitCodes.has(result.exit_code ?? -1)) {
         return attachWorkflowEvalMetrics(
           {
+            scenario_id: scenario.id,
+            runner_id: "cli-local",
+            status: "failed",
+            transport_trace: [
+              {
+                transport: "cli",
+                status: "failed",
+                detail: `CLI exited with code ${String(result.exit_code)}.`,
+              },
+            ],
+            workflow_result: null,
+            transcript: [scenario.task.prompt, "CLI process failed."],
+            artifacts: {
+              files: [scenario.fixture.root_dir],
+              logs: [result.stderr.trim(), result.stdout.trim()].filter(
+                Boolean,
+              ),
+            },
+          },
+          startedAt,
+        );
+      }
+
+      if (!raw) {
+        return attachWorkflowEvalMetrics(
+          {
+            scenario_id: scenario.id,
+            runner_id: "cli-local",
+            status: "failed",
+            transport_trace: [
+              {
+                transport: "cli",
+                status: "failed",
+                detail: `CLI exited with code ${String(result.exit_code)} but did not emit parseable JSON.`,
+              },
+            ],
+            workflow_result: null,
+            transcript: [
+              scenario.task.prompt,
+              "CLI JSON output was not parseable.",
+            ],
+            artifacts: {
+              files: [scenario.fixture.root_dir],
+              logs: [result.stderr.trim(), result.stdout.trim()].filter(
+                Boolean,
+              ),
+            },
+          },
+          startedAt,
+        );
+      }
+
+      const workflowResult = await normalizeCliWorkflowResult(scenario, raw);
+      return attachWorkflowEvalMetrics(
+        {
+          scenario_id: scenario.id,
+          runner_id: "cli-local",
+          status: "passed",
+          transport_trace: [
+            {
+              transport: "cli",
+              status: "succeeded",
+              detail: `Executed ${scenario.task.workflow} through the real salt-ds CLI process (${executable.source}).`,
+            },
+          ],
+          workflow_result: workflowResult,
+          transcript: [
+            scenario.task.prompt,
+            `Used the real CLI runner for ${scenario.task.workflow}.`,
+          ],
+          artifacts: {
+            files: [scenario.fixture.root_dir],
+            logs: compactStrings([
+              executable.build_error?.trim(),
+              result.stderr.trim(),
+            ]),
+          },
+        },
+        startedAt,
+      );
+    } catch (error) {
+      return attachWorkflowEvalMetrics(
+        {
           scenario_id: scenario.id,
           runner_id: "cli-local",
           status: "failed",
@@ -1224,75 +1508,22 @@ export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
             {
               transport: "cli",
               status: "failed",
-              detail: `CLI exited with code ${String(result.exit_code)}.`,
+              detail:
+                error instanceof Error
+                  ? error.message
+                  : "CLI runner failed unexpectedly.",
             },
           ],
-          workflow_result: null,
-          transcript: [scenario.task.prompt, "CLI process failed."],
-          artifacts: {
-            files: [scenario.fixture.root_dir],
-            logs: [result.stderr.trim(), result.stdout.trim()].filter(Boolean),
-          },
-          },
-          startedAt,
-        );
-      }
-
-      const raw = safeJsonParse(result.stdout);
-      const workflowResult = await normalizeCliWorkflowResult(scenario, raw);
-      return attachWorkflowEvalMetrics(
-        {
-        scenario_id: scenario.id,
-        runner_id: "cli-local",
-        status: "passed",
-        transport_trace: [
-          {
-            transport: "cli",
-            status: "succeeded",
-            detail: `Executed ${scenario.task.workflow} through the real salt-ds CLI process (${executable.source}).`,
-          },
-        ],
-        workflow_result: workflowResult,
-        transcript: [
-          scenario.task.prompt,
-          `Used the real CLI runner for ${scenario.task.workflow}.`,
-        ],
-        artifacts: {
-          files: [scenario.fixture.root_dir],
-          logs: compactStrings([
-            executable.build_error?.trim(),
-            result.stderr.trim(),
-          ]),
-        },
-        },
-        startedAt,
-      );
-    } catch (error) {
-      return attachWorkflowEvalMetrics(
-        {
-        scenario_id: scenario.id,
-        runner_id: "cli-local",
-        status: "failed",
-        transport_trace: [
-          {
-            transport: "cli",
-            status: "failed",
-            detail:
-              error instanceof Error
-                ? error.message
-                : "CLI runner failed unexpectedly.",
-          },
-        ],
           workflow_result: null,
           transcript: [scenario.task.prompt, "CLI runner failed."],
           artifacts: {
             files: [scenario.fixture.root_dir],
             logs: [
-            error instanceof Error
-              ? (error.stack ?? error.message)
-              : String(error),
-          ],
-        },
+              error instanceof Error
+                ? (error.stack ?? error.message)
+                : String(error),
+            ],
+          },
         },
         startedAt,
       );
@@ -1413,22 +1644,22 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
 
         return attachWorkflowEvalMetrics(
           {
-          scenario_id: scenario.id,
-          runner_id: "mcp-local",
-          status: "passed",
-          transport_trace: attemptTrace,
-          workflow_result: workflowResult,
-          transcript: [
-            scenario.task.prompt,
-            `Used ${toWorkflowToolId(scenario.task.workflow)} through the real MCP stdio runner.`,
-          ],
-          artifacts: {
-            files: [scenario.fixture.root_dir],
-            logs: compactStrings([
-              executable.build_error?.trim(),
-              ...stderrLogs.filter((entry) => entry.trim().length > 0),
-            ]),
-          },
+            scenario_id: scenario.id,
+            runner_id: "mcp-local",
+            status: "passed",
+            transport_trace: attemptTrace,
+            workflow_result: workflowResult,
+            transcript: [
+              scenario.task.prompt,
+              `Used ${toWorkflowToolId(scenario.task.workflow)} through the real MCP stdio runner.`,
+            ],
+            artifacts: {
+              files: [scenario.fixture.root_dir],
+              logs: compactStrings([
+                executable.build_error?.trim(),
+                ...stderrLogs.filter((entry) => entry.trim().length > 0),
+              ]),
+            },
           },
           startedAt,
         );
@@ -1452,25 +1683,25 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
 
         return attachWorkflowEvalMetrics(
           {
-          ...trace,
-          transport_trace: retryDetail
-            ? [
-                ...transportTrace,
-                {
-                  transport: "mcp",
-                  status: "succeeded",
-                  detail: retryDetail,
-                },
-                ...trace.transport_trace,
-              ]
-            : [...transportTrace, ...trace.transport_trace],
-          artifacts: {
-            ...trace.artifacts,
-            logs: compactStrings([
-              ...(trace.artifacts.logs ?? []),
-              ...attemptLogs,
-            ]),
-          },
+            ...trace,
+            transport_trace: retryDetail
+              ? [
+                  ...transportTrace,
+                  {
+                    transport: "mcp",
+                    status: "succeeded",
+                    detail: retryDetail,
+                  },
+                  ...trace.transport_trace,
+                ]
+              : [...transportTrace, ...trace.transport_trace],
+            artifacts: {
+              ...trace.artifacts,
+              logs: compactStrings([
+                ...(trace.artifacts.logs ?? []),
+                ...attemptLogs,
+              ]),
+            },
           },
           startedAt,
         );
@@ -1495,21 +1726,21 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
       }
     }
 
-        return attachWorkflowEvalMetrics(
-          {
-          scenario_id: scenario.id,
-          runner_id: "mcp-local",
-          status: "failed",
-          transport_trace: transportTrace,
-          workflow_result: null,
-      transcript: [scenario.task.prompt, "MCP runner failed."],
+    return attachWorkflowEvalMetrics(
+      {
+        scenario_id: scenario.id,
+        runner_id: "mcp-local",
+        status: "failed",
+        transport_trace: transportTrace,
+        workflow_result: null,
+        transcript: [scenario.task.prompt, "MCP runner failed."],
         artifacts: {
           files: [scenario.fixture.root_dir],
           logs: attemptLogs,
         },
-        },
-          startedAt,
-        );
+      },
+      startedAt,
+    );
   },
 };
 
@@ -1600,8 +1831,8 @@ export async function runWorkflowEvalScenario(
     if (trace.status === "passed") {
       return attachWorkflowEvalMetrics(
         {
-        ...combinedTrace,
-        status: "passed",
+          ...combinedTrace,
+          status: "passed",
         },
         startedAt,
       );

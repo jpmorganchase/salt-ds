@@ -60,13 +60,11 @@ Example debug/fix phrasing:
 
 If there are no material findings, say so explicitly and note any residual testing gaps or assumptions.
 
-
 ## blocked or partial review states
 
 - if canonical review guidance stayed partial or noisy, state that clearly before giving recommendations
 - separate “grounded finding” from “likely but not fully grounded”
 - if runtime evidence came from fetched-html fallback only, keep claims narrower than full browser-session validation
-
 
 Example quick-check phrasing:
 

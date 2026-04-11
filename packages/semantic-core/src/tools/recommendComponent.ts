@@ -29,6 +29,46 @@ import {
   tokenize,
 } from "./utils.js";
 
+const WEAK_SINGLE_TOKEN_ALIASES = new Set([
+  "body",
+  "content",
+  "dashboard",
+  "grid",
+  "header",
+  "layout",
+  "main",
+  "panel",
+  "screen",
+  "shell",
+]);
+
+function containsTokenSequence(
+  queryTokens: string[],
+  candidateTokens: string[],
+): boolean {
+  if (
+    candidateTokens.length === 0 ||
+    queryTokens.length < candidateTokens.length
+  ) {
+    return false;
+  }
+
+  for (
+    let index = 0;
+    index <= queryTokens.length - candidateTokens.length;
+    index += 1
+  ) {
+    const matchesSequence = candidateTokens.every(
+      (token, offset) => queryTokens[index + offset] === token,
+    );
+    if (matchesSequence) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export interface RecommendComponentInput {
   task: string;
   package?: string;
@@ -182,30 +222,35 @@ function getExplicitNameMatchAdjustment(
   match_reasons: string[];
 } {
   const query = normalizeQuery(task);
-  const queryTokens = new Set(tokenize(task));
+  const queryTokenList = tokenize(task);
+  const queryTokens = new Set(queryTokenList);
   const matchedTerms = new Set<string>();
   const matchReasons = new Set<string>();
   let score = 0;
 
   const nameTokens = tokenize(component.name);
+  const hasFullNamePhrase = containsTokenSequence(queryTokenList, nameTokens);
   const matchedNameTokens = nameTokens.filter((token) =>
     queryTokens.has(token),
   );
   if (matchedNameTokens.length > 0) {
-    matchedNameTokens.forEach((token) => {
+    for (const token of matchedNameTokens) {
       matchedTerms.add(token);
-    });
+    }
     matchReasons.add("name_explicit");
 
     if (normalizeQuery(component.name) === query) {
-      score += 20;
+      score += 32;
       matchReasons.add("name_exact");
+    } else if (hasFullNamePhrase) {
+      score += 40;
+      matchReasons.add("name_phrase");
     } else if (nameTokens.length === 1) {
-      score += 20;
+      score += 28;
     } else if (matchedNameTokens.length === nameTokens.length) {
-      score += 18 + (nameTokens.length - 1) * 4;
+      score += 24 + (nameTokens.length - 1) * 4;
     } else {
-      score += matchedNameTokens.length * 4;
+      score += matchedNameTokens.length * 5;
     }
   }
 
@@ -213,6 +258,10 @@ function getExplicitNameMatchAdjustment(
   let bestAliasTokens: string[] = [];
   for (const alias of component.aliases) {
     const aliasTokens = tokenize(alias);
+    const hasFullAliasPhrase = containsTokenSequence(
+      queryTokenList,
+      aliasTokens,
+    );
     const matchedAliasTokens = aliasTokens.filter((token) =>
       queryTokens.has(token),
     );
@@ -222,11 +271,17 @@ function getExplicitNameMatchAdjustment(
 
     let aliasScore = 0;
     if (normalizeQuery(alias) === query) {
-      aliasScore = 16;
+      aliasScore = 26;
+    } else if (hasFullAliasPhrase) {
+      aliasScore =
+        aliasTokens.length === 1 &&
+        WEAK_SINGLE_TOKEN_ALIASES.has(aliasTokens[0])
+          ? 0
+          : 30;
     } else if (aliasTokens.length === 1) {
-      aliasScore = 12;
+      aliasScore = WEAK_SINGLE_TOKEN_ALIASES.has(aliasTokens[0]) ? 0 : 24;
     } else if (matchedAliasTokens.length === aliasTokens.length) {
-      aliasScore = 12 + (aliasTokens.length - 1) * 3;
+      aliasScore = 18 + (aliasTokens.length - 1) * 3;
     }
 
     if (aliasScore > bestAliasScore) {
@@ -236,9 +291,9 @@ function getExplicitNameMatchAdjustment(
   }
 
   if (bestAliasScore > 0) {
-    bestAliasTokens.forEach((token) => {
+    for (const token of bestAliasTokens) {
       matchedTerms.add(token);
-    });
+    }
     matchReasons.add("aliases_explicit");
     score += bestAliasScore;
   }
@@ -292,7 +347,6 @@ export function recommendComponent(
       return {
         component,
         capabilities: inferComponentCapabilities(component),
-        hasExplicitNameMatch: explicitNameScore.score > 0,
         score:
           queryScore.score +
           explicitNameScore.score +
@@ -316,9 +370,6 @@ export function recommendComponent(
     })
     .filter((candidate) => candidate.score > 0)
     .sort((left, right) => {
-      if (left.hasExplicitNameMatch !== right.hasExplicitNameMatch) {
-        return left.hasExplicitNameMatch ? -1 : 1;
-      }
       if (left.score !== right.score) {
         return right.score - left.score;
       }

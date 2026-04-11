@@ -23,7 +23,6 @@ Ask only the few questions that change the Salt structure or package choice.
 - Questions that do not change the chosen primitives or structure.
 - Asking for pixel-perfect detail when a reasonable Salt-first default is already clear.
 
-
 ## blocker-question mode
 
 When one unresolved decision blocks the Salt direction:

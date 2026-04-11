@@ -159,7 +159,7 @@ describe("createSaltMcpServer", () => {
     expect(
       chooseSchema.safeParse({
         query: "navigate to another route",
-        view: "agent",
+        view: "compact",
       }).success,
     ).toBe(true);
     expect(
@@ -182,7 +182,7 @@ describe("createSaltMcpServer", () => {
       upgradeSchema.safeParse({
         from_version: "1.0.0",
         root_dir: "/repo",
-        view: "agent",
+        view: "compact",
       }).success,
     ).toBe(true);
   });
@@ -198,15 +198,15 @@ describe("createSaltMcpServer", () => {
         workflow: {
           id: "get_salt_project_context",
         },
-          result: {
-            context_id: "repo:example",
-            root_dir: "/repo",
-            resolution: {
-              status: "resolved",
-              root_source: "explicit_input",
-              quality: "ready",
-              reason: null,
-            },
+        result: {
+          context_id: "repo:example",
+          root_dir: "/repo",
+          resolution: {
+            status: "resolved",
+            root_source: "explicit_input",
+            quality: "ready",
+            reason: null,
+          },
           package_json_path: "/repo/package.json",
           environment: {
             os: "win32",
@@ -573,6 +573,7 @@ describe("createSaltMcpServer", () => {
           {
             query: "link to another route from a toolbar action",
             include_starter_code: true,
+            view: "full",
           },
           runtime,
         );
@@ -594,6 +595,7 @@ describe("createSaltMcpServer", () => {
             query: "link to another page from a toolbar action",
             include_starter_code: true,
             context_id: contextResult.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -682,6 +684,7 @@ describe("createSaltMcpServer", () => {
             query: "link to another page from a toolbar action",
             include_starter_code: false,
             context_id: contextResult.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -716,6 +719,7 @@ describe("createSaltMcpServer", () => {
             framework: "react",
             package_version: "2.0.0",
             context_id: contextResult.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -773,6 +777,7 @@ describe("createSaltMcpServer", () => {
               states: ["loading"],
             },
             context_id: contextResult.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -849,6 +854,7 @@ describe("createSaltMcpServer", () => {
             package: "@salt-ds/core",
             from_version: "1.1.0",
             include_deprecations: true,
+            view: "full",
           },
           runtime,
         );
@@ -981,6 +987,7 @@ describe("createSaltMcpServer", () => {
             query: "navigate to another route",
             include_starter_code: true,
             context_id: contextResult.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -1099,6 +1106,7 @@ describe("createSaltMcpServer", () => {
           {
             query: "navigate to another route",
             root_dir: rootDir,
+            view: "full",
           },
           runtime,
         );
@@ -1123,7 +1131,7 @@ describe("createSaltMcpServer", () => {
     );
   }, 20000);
 
-  it("returns a slimmer agent view for create_salt_ui", async () => {
+  it("returns a slimmer compact view for create_salt_ui", async () => {
     await withRegistryDir(
       async (registryDir) => {
         await buildRegistry({
@@ -1139,7 +1147,7 @@ describe("createSaltMcpServer", () => {
           path.join(rootDir, "package.json"),
           JSON.stringify(
             {
-              name: "agent-view",
+              name: "compact-view",
               private: true,
               dependencies: {
                 "@salt-ds/core": "^2.0.0",
@@ -1160,22 +1168,305 @@ describe("createSaltMcpServer", () => {
           {
             query: "create a dashboard",
             root_dir: rootDir,
-            view: "agent",
+            view: "compact",
           },
           runtime,
-        )) as {
-          result: Record<string, unknown>;
-          artifacts: Record<string, unknown>;
-        };
+        )) as Record<string, unknown>;
 
-        expect(chooseResult.result).not.toHaveProperty("recommended");
-        expect(chooseResult.result).toHaveProperty("final_decision");
-        expect(chooseResult.artifacts).not.toHaveProperty("starter_code");
-        expect(chooseResult.artifacts).not.toHaveProperty("related_guides");
-        expect(chooseResult.artifacts).toHaveProperty("suggested_follow_ups");
+        expect(chooseResult).toMatchObject({
+          workflow: "create",
+          transport_used: "mcp",
+          workflow_status: expect.stringMatching(
+            /^(success|partial|blocked|failed)$/,
+          ),
+          canonical_complete: expect.any(Boolean),
+          safe_to_implement_exact_request: expect.any(Boolean),
+          blocking_reasons: expect.any(Array),
+          next_step: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(chooseResult).not.toHaveProperty("result");
+        expect(chooseResult).not.toHaveProperty("artifacts");
+
+        const chooseSchema = chooseTool?.outputSchema as z.ZodType;
+        expect(
+          chooseSchema.safeParse({
+            ...chooseResult,
+            sources: [],
+          }).success,
+        ).toBe(true);
       },
     );
   }, 20000);
+
+  it("surfaces semantic-match metadata for an exact named create query in compact view", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir(
+          "salt-mcp-create-exact-compact-view",
+        );
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "exact-compact-view",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "Metric",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          workflow: "create",
+          requested_entity: "Metric",
+          resolved_entity: "Metric",
+          match_status: "exact",
+        });
+      },
+    );
+  }, 20000);
+
+  it("surfaces broadened semantic-match metadata for a descriptive create query in compact view", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir(
+          "salt-mcp-create-broadened-compact-view",
+        );
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "broadened-compact-view",
+              private: true,
+              dependencies: {
+                react: "^18.3.1",
+                vite: "^7.1.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "analytical dashboard body",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          workflow: "create",
+          requested_entity: "analytical dashboard body",
+          resolved_entity: "Analytical dashboard",
+          match_status: "broadened",
+          next_step: {
+            kind: "tool_call",
+            tool: "create_salt_ui",
+            mode: "exact_name",
+            args: {
+              query: "Analytical dashboard",
+            },
+          },
+        });
+      },
+    );
+  }, 20000);
+
+  it("returns compact v2 views for review, migrate, and upgrade workflows", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-other-agent-views");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "other-agent-views",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+        const registry = await loadRegistry({ registryDir });
+        const reviewTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "review_salt_ui",
+        );
+        const migrateTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "migrate_to_salt",
+        );
+        const upgradeTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "upgrade_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const reviewResult = (await reviewTool?.execute(
+          registry,
+          {
+            code: [
+              'import { Button } from "@salt-ds/core";',
+              "",
+              "export function Demo() {",
+              '  return <Button href="/next">Go</Button>;',
+              "}",
+            ].join("\n"),
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(reviewResult).toMatchObject({
+          workflow: "review",
+          transport_used: "mcp",
+          workflow_status: expect.stringMatching(
+            /^(success|partial|blocked|failed)$/,
+          ),
+          canonical_complete: expect.any(Boolean),
+          safe_to_implement_exact_request: expect.any(Boolean),
+          blocking_reasons: expect.any(Array),
+          next_step: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(reviewResult).not.toHaveProperty("result");
+        expect(reviewResult).not.toHaveProperty("artifacts");
+        const reviewSchema = reviewTool?.outputSchema as z.ZodType;
+        expect(
+          reviewSchema.safeParse({
+            ...reviewResult,
+            sources: [],
+          }).success,
+        ).toBe(true);
+
+        const migrateResult = (await migrateTool?.execute(
+          registry,
+          {
+            query:
+              "Build a sidebar with vertical navigation and a main content area.",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(migrateResult).toMatchObject({
+          workflow: "migrate",
+          transport_used: "mcp",
+          workflow_status: expect.stringMatching(
+            /^(success|partial|blocked|failed)$/,
+          ),
+          canonical_complete: expect.any(Boolean),
+          safe_to_implement_exact_request: expect.any(Boolean),
+          blocking_reasons: expect.any(Array),
+          next_step: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(migrateResult).not.toHaveProperty("result");
+        expect(migrateResult).not.toHaveProperty("artifacts");
+        const migrateSchema = migrateTool?.outputSchema as z.ZodType;
+        expect(
+          migrateSchema.safeParse({
+            ...migrateResult,
+            sources: [],
+          }).success,
+        ).toBe(true);
+
+        const upgradeResult = (await upgradeTool?.execute(
+          registry,
+          {
+            package: "@salt-ds/core",
+            from_version: "1.1.0",
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(upgradeResult).toMatchObject({
+          workflow: "upgrade",
+          transport_used: "mcp",
+          workflow_status: expect.stringMatching(
+            /^(success|partial|blocked|failed)$/,
+          ),
+          canonical_complete: expect.any(Boolean),
+          safe_to_implement_exact_request: expect.any(Boolean),
+          blocking_reasons: expect.any(Array),
+          next_step: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(upgradeResult).not.toHaveProperty("result");
+        expect(upgradeResult).not.toHaveProperty("artifacts");
+        const upgradeSchema = upgradeTool?.outputSchema as z.ZodType;
+        expect(
+          upgradeSchema.safeParse({
+            ...upgradeResult,
+            sources: [],
+          }).success,
+        ).toBe(true);
+      },
+    );
+  }, 30000);
 
   it("keeps repo context isolated by explicit context_id across multiple repos", async () => {
     await withRegistryDir(
@@ -1257,6 +1548,7 @@ describe("createSaltMcpServer", () => {
           {
             query: "navigate to another route",
             context_id: contextOne.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -1265,6 +1557,7 @@ describe("createSaltMcpServer", () => {
           {
             query: "navigate to another route",
             context_id: contextTwo.result.context_id,
+            view: "full",
           },
           runtime,
         );
@@ -1348,16 +1641,13 @@ describe("createSaltMcpServer", () => {
           ),
         );
 
-        await contextTool?.execute(
-          registry,
-          { root_dir: rootDir },
-          runtime,
-        );
+        await contextTool?.execute(registry, { root_dir: rootDir }, runtime);
 
         const chooseResult = await chooseTool?.execute(
           registry,
           {
             query: "navigate to another route",
+            view: "full",
           },
           runtime,
         );
@@ -1435,11 +1725,7 @@ describe("createSaltMcpServer", () => {
           ),
         );
 
-        await contextTool?.execute(
-          registry,
-          { root_dir: goodRoot },
-          runtime,
-        );
+        await contextTool?.execute(registry, { root_dir: goodRoot }, runtime);
 
         process.chdir(wrongRoot);
         try {
@@ -1464,6 +1750,7 @@ describe("createSaltMcpServer", () => {
             registry,
             {
               query: "navigate to another route",
+              view: "full",
             },
             runtime,
           );
@@ -1517,6 +1804,7 @@ describe("createSaltMcpServer", () => {
             registry,
             {
               query: "create a simple dashboard",
+              view: "full",
             },
             runtime,
           );
@@ -1603,6 +1891,7 @@ describe("createSaltMcpServer", () => {
             query: "navigate to another route",
             include_starter_code: true,
             context_id: contextResult.result.context_id,
+            view: "full",
           },
           runtime,
         );

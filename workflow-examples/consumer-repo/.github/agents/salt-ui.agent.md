@@ -13,9 +13,9 @@ Use this agent when the task touches dashboards, tabs, tables, metrics, navigati
 Required workflow:
 
 1. In the IDE, prefer Salt jobs in this order: review, upgrade, migrate, then create.
-2. When Salt returns `result.ide_summary`, render that compact summary first and keep the raw workflow fields as supporting detail.
+2. When Salt returns compact workflow output, read `summary`, `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, and `next_step` first.
 3. For broad asks such as `create a dashboard`, `add tabs`, `add a table`, or `fix this layout`, keep the task in Salt workflow mode instead of falling back to generic React/CSS/HTML.
-4. If a broad create result includes `composition_contract.expected_patterns` or `expected_components`, treat those named items as required Salt follow-through and run the matching Salt create follow-up before implementing those regions.
+4. If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.
 5. Start from the active file, selection, nearby imports, or current feature folder before broad repo sweeps unless the task clearly needs wider repo context.
 6. Ground the task in canonical Salt guidance first through Salt MCP, or the Salt CLI fallback if MCP is unavailable.
 7. Apply repo conventions only after the canonical Salt choice is clear.

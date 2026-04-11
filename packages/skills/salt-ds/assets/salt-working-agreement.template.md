@@ -12,6 +12,7 @@ Do not duplicate canonical Salt docs here.
 ## Durable Repo Decisions
 
 ### Approved wrappers
+
 - wrapper name
 - what canonical Salt primitive it wraps
 - when to use it
@@ -19,29 +20,35 @@ Do not duplicate canonical Salt docs here.
 - source docs or code links
 
 ### Accepted deviations
+
 - what differs from canonical Salt guidance
 - why it is intentional
 - when to revisit it
 
 ### Host and tooling constraints
+
 - MCP availability
 - CLI quirks
 - runtime validation constraints
 - IDE-specific limitations
 
 ### Validation defaults
+
 - when to run review after create
 - when runtime evidence is required
 - what counts as enough validation for this repo
 
 ### Known migration debt
+
 - temporary shims or compatibility decisions that are already understood
 - what is mandatory now vs later
 
 ## Non-goals
+
 - things intentionally out of scope for now
 
 ## Revisit triggers
+
 - version upgrade
 - platform migration
 - new product surface

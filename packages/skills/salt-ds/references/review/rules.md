@@ -56,7 +56,6 @@ Treat Salt-specific accessibility audits as `review` work, not generic accessibi
 Ground the audit in canonical Salt guidance first, then use the rubric to assess semantics, keyboard flow, labeling, focus visibility, contrast-sensitive states, and recovery states.
 Do not skip Salt source validation just because the request mentions accessibility.
 
-
 ## Quick-Check Mode
 
 Use quick-check mode when the user wants a gut-check, pre-commit sanity review, or the safest next fix.

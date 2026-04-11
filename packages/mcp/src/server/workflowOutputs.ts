@@ -1,5 +1,11 @@
 import type { CreateSaltUiResult } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { MigrateToSaltResult } from "@salt-ds/semantic-core/tools/migrateToSalt";
+import {
+  buildCreatePublicContractV2,
+  buildMigratePublicContractV2,
+  buildReviewPublicContractV2,
+  buildUpgradePublicContractV2,
+} from "@salt-ds/semantic-core/tools/publicContractV2";
 import type { ReviewSaltUiResult } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 import type {
   NormalizedVisualEvidenceInput,
@@ -62,12 +68,8 @@ const PUBLIC_MCP_WORKFLOWS = new Set([
   "upgrade_salt_ui",
 ]);
 
-function isAgentView(view?: "compact" | "full" | "agent"): boolean {
-  return view === "agent";
-}
-
-function limitArray<T>(values: T[] | undefined, max: number): T[] | undefined {
-  return values ? values.slice(0, max) : values;
+function isFullView(view?: "compact" | "full"): boolean {
+  return view === "full";
 }
 
 function toPublicMcpSuggestedFollowUps(
@@ -102,9 +104,10 @@ function buildCreateWorkflowEnvelope(
   result: CreateSaltUiResult,
   input: {
     query?: string;
+    package?: string;
     context_checked?: boolean;
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   const starter_code = applyProjectPolicyToStarterCodeSnippets(
@@ -130,7 +133,14 @@ function buildCreateWorkflowEnvelope(
     ...domainResult
   } = result;
 
-  const agentView = isAgentView(input.view);
+  if (!isFullView(input.view)) {
+    return buildCreatePublicContractV2(result, contract, {
+      transport_used: "mcp",
+      registry,
+      query: input.query,
+      package: input.package,
+    });
+  }
 
   return {
     workflow: {
@@ -139,43 +149,23 @@ function buildCreateWorkflowEnvelope(
       implementation_gate,
       ...workflow,
     },
-    result: agentView
-      ? {
-          mode: domainResult.mode,
-          solution_type: domainResult.solution_type,
-          guidance_boundary: domainResult.guidance_boundary,
-          ide_summary,
-          decision: domainResult.decision,
-          final_decision: {
-            name: repo_refinement?.final_name ?? result.decision.name,
-            source: repo_refinement?.source ?? "canonical_salt",
-          },
-          composition_contract: domainResult.composition_contract,
-          open_questions: domainResult.open_questions,
-          next_step: domainResult.next_step,
-        }
-      : {
-          ...domainResult,
-          ide_summary,
-          final_decision: {
-            name: repo_refinement?.final_name ?? result.decision.name,
-            source: repo_refinement?.source ?? "canonical_salt",
-          },
-        },
-    artifacts: agentView
-      ? {
-          suggested_follow_ups:
-            toPublicMcpSuggestedFollowUps(suggested_follow_ups)?.slice(0, 2),
-        }
-      : {
-          starter_code,
-          starter_validation,
-          project_policy: input.project_policy ?? null,
-          repo_refinement,
-          suggested_follow_ups: toPublicMcpSuggestedFollowUps(suggested_follow_ups),
-          related_guides,
-          raw,
-        },
+    result: {
+      ...domainResult,
+      ide_summary,
+      final_decision: {
+        name: repo_refinement?.final_name ?? result.decision.name,
+        source: repo_refinement?.source ?? "canonical_salt",
+      },
+    },
+    artifacts: {
+      starter_code,
+      starter_validation,
+      project_policy: input.project_policy ?? null,
+      repo_refinement,
+      suggested_follow_ups: toPublicMcpSuggestedFollowUps(suggested_follow_ups),
+      related_guides,
+      raw,
+    },
   };
 }
 
@@ -184,7 +174,7 @@ function buildReviewWorkflowEnvelope(
   input: {
     code?: string;
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   const contract = buildReviewSaltUiWorkflowContract(result, {
@@ -204,7 +194,11 @@ function buildReviewWorkflowEnvelope(
     (candidate) => candidate.category === "project-policy",
   ).length;
 
-  const agentView = isAgentView(input.view);
+  if (!isFullView(input.view)) {
+    return buildReviewPublicContractV2(result, contract, {
+      transport_used: "mcp",
+    });
+  }
 
   return {
     workflow: {
@@ -212,45 +206,22 @@ function buildReviewWorkflowEnvelope(
       transport_used: "mcp" as const,
       ...workflow,
     },
-    result: agentView
-      ? {
-          guidance_boundary: domainResult.guidance_boundary,
-          ide_summary,
-          decision,
-          summary: {
-            ...domainResult.summary,
-            fix_count: domainResult.summary.fix_count + projectPolicyFixCount,
-          },
-          missing_data: domainResult.missing_data,
-          next_step: domainResult.next_step,
-          source_urls: domainResult.source_urls,
-        }
-      : {
-          ...domainResult,
-          ide_summary,
-          decision,
-          summary: {
-            ...domainResult.summary,
-            fix_count: domainResult.summary.fix_count + projectPolicyFixCount,
-          },
-        },
-    artifacts: agentView
-      ? {
-          fix_candidates: {
-            ...fix_candidates,
-            candidates: fix_candidates.candidates.slice(0, 2),
-            notes: fix_candidates.notes.slice(0, 2),
-          },
-          issue_classes: issue_classes.slice(0, 2),
-          rule_ids,
-        }
-      : {
-          project_policy: input.project_policy ?? null,
-          fix_candidates,
-          issue_classes,
-          rule_ids,
-          raw,
-        },
+    result: {
+      ...domainResult,
+      ide_summary,
+      decision,
+      summary: {
+        ...domainResult.summary,
+        fix_count: domainResult.summary.fix_count + projectPolicyFixCount,
+      },
+    },
+    artifacts: {
+      project_policy: input.project_policy ?? null,
+      fix_candidates,
+      issue_classes,
+      rule_ids,
+      raw,
+    },
   };
 }
 
@@ -262,7 +233,7 @@ function buildMigrateWorkflowEnvelope(
     visual_evidence?: NormalizedVisualEvidenceInput[];
     context_checked?: boolean;
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   const starter_code = applyProjectPolicyToStarterCodeSnippets(
@@ -294,7 +265,11 @@ function buildMigrateWorkflowEnvelope(
     ...domainResult
   } = result;
 
-  const agentView = isAgentView(input.view);
+  if (!isFullView(input.view)) {
+    return buildMigratePublicContractV2(result, contract, {
+      transport_used: "mcp",
+    });
+  }
 
   return {
     workflow: {
@@ -302,44 +277,22 @@ function buildMigrateWorkflowEnvelope(
       transport_used: "mcp" as const,
       ...workflow,
     },
-    result: agentView
-      ? {
-          guidance_boundary: domainResult.guidance_boundary,
-          ide_summary,
-          source_profile: domainResult.source_profile,
-          summary: domainResult.summary,
-          translations: limitArray(domainResult.translations, 3) ?? [],
-          migration_plan: limitArray(domainResult.migration_plan, 3) ?? [],
-          migration_checkpoints:
-            limitArray(domainResult.migration_checkpoints, 3) ?? [],
-          next_step: domainResult.next_step,
-          source_urls: domainResult.source_urls,
-        }
-      : {
-          ...domainResult,
-          ide_summary,
-        },
-    artifacts: agentView
-      ? {
-          starter_validation,
-          rule_ids,
-          post_migration_verification,
-          visual_evidence_contract,
-          suggested_follow_ups:
-            toPublicMcpSuggestedFollowUps(suggested_follow_ups)?.slice(0, 2),
-        }
-      : {
-          starter_code,
-          combined_scaffold,
-          starter_validation,
-          project_policy: input.project_policy ?? null,
-          rule_ids,
-          post_migration_verification,
-          visual_evidence_contract,
-          suggested_follow_ups: toPublicMcpSuggestedFollowUps(suggested_follow_ups),
-          related_guides,
-          raw,
-        },
+    result: {
+      ...domainResult,
+      ide_summary,
+    },
+    artifacts: {
+      starter_code,
+      combined_scaffold,
+      starter_validation,
+      project_policy: input.project_policy ?? null,
+      rule_ids,
+      post_migration_verification,
+      visual_evidence_contract,
+      suggested_follow_ups: toPublicMcpSuggestedFollowUps(suggested_follow_ups),
+      related_guides,
+      raw,
+    },
   };
 }
 
@@ -347,13 +300,17 @@ function buildUpgradeWorkflowEnvelope(
   result: UpgradeSaltUiResult,
   input: {
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   const contract = buildUpgradeSaltUiWorkflowContract(result, input);
   const { ide_summary, rule_ids, ...workflow } = contract;
   const { raw, ...domainResult } = result;
-  const agentView = isAgentView(input.view);
+  if (!isFullView(input.view)) {
+    return buildUpgradePublicContractV2(result, contract, {
+      transport_used: "mcp",
+    });
+  }
 
   return {
     workflow: {
@@ -361,31 +318,14 @@ function buildUpgradeWorkflowEnvelope(
       transport_used: "mcp" as const,
       ...workflow,
     },
-    result: agentView
-      ? {
-          mode: domainResult.mode,
-          guidance_boundary: domainResult.guidance_boundary,
-          decision: domainResult.decision,
-          ide_summary,
-          breaking: limitArray(domainResult.breaking, 3),
-          important: limitArray(domainResult.important, 3),
-          nice_to_know: limitArray(domainResult.nice_to_know, 3),
-          next_steps: limitArray(domainResult.next_steps, 3),
-          next_step: domainResult.next_step,
-          docs: limitArray(domainResult.docs, 3),
-        }
-      : {
-          ...domainResult,
-          ide_summary,
-        },
-    artifacts: agentView
-      ? {
-          rule_ids,
-        }
-      : {
-          rule_ids,
-          raw,
-        },
+    result: {
+      ...domainResult,
+      ide_summary,
+    },
+    artifacts: {
+      rule_ids,
+      raw,
+    },
   };
 }
 
@@ -394,9 +334,10 @@ export function withChooseWorkflowGuidance(
   result: CreateSaltUiResult,
   input: {
     query?: string;
+    package?: string;
     context_checked?: boolean;
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   return buildCreateWorkflowEnvelope(registry, result, input);
@@ -407,7 +348,7 @@ export function withAnalyzeWorkflowGuidance(
   input: {
     code?: string;
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   return buildReviewWorkflowEnvelope(result, input);
@@ -421,7 +362,7 @@ export function withTranslateWorkflowGuidance(
     visual_evidence?: NormalizedVisualEvidenceInput[];
     context_checked?: boolean;
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   return buildMigrateWorkflowEnvelope(registry, result, input);
@@ -431,7 +372,7 @@ export function withCompareWorkflowGuidance(
   result: UpgradeSaltUiResult,
   input: {
     project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full" | "agent";
+    view?: "compact" | "full";
   } = {},
 ) {
   return buildUpgradeWorkflowEnvelope(result, input);

@@ -10,8 +10,17 @@ import {
   migrateToSalt,
 } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import {
+  buildCreatePublicContractV2,
+  buildMigratePublicContractV2,
+  buildReviewPublicContractV2,
+  buildUpgradePublicContractV2,
+  type PublicContractV2,
+  type PublicWorkflowStatus,
+} from "@salt-ds/semantic-core/tools/publicContractV2";
+import {
   isWorkflowExpectedReviewIssueId,
   type ReviewExpectedTargets,
+  type ReviewSaltUiResult,
   reviewSaltUi,
 } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 import {
@@ -30,6 +39,9 @@ import {
   type WorkflowContextRequirement as CoreWorkflowContextRequirement,
   type WorkflowReadiness as CoreWorkflowReadiness,
   type CreateSaltUiWorkflowContract,
+  type MigrateToSaltWorkflowContract,
+  type ReviewSaltUiWorkflowContract,
+  type UpgradeSaltUiWorkflowContract,
   type WorkflowCreateImplementationGate,
   type WorkflowProvenance,
   type WorkflowStarterValidation,
@@ -496,6 +508,8 @@ interface UpgradeWorkflowResult {
   };
 }
 
+type WorkflowExitCode = 0 | 10 | 20 | 30;
+
 function normalizeVersion(
   rawVersion: string | null | undefined,
 ): string | null {
@@ -894,8 +908,27 @@ function buildCliWorkflowSummaryNextStep(input: {
     : input.defaultNextStep;
 }
 
-function shouldFailWorkflowReadiness(readiness: WorkflowReadiness): boolean {
-  return readiness.status === "starter_needs_attention";
+function workflowStatusToExitCode(
+  workflowStatus: PublicWorkflowStatus,
+): WorkflowExitCode {
+  switch (workflowStatus) {
+    case "success":
+      return 0;
+    case "partial":
+      return 10;
+    case "blocked":
+      return 20;
+    case "failed":
+      return 30;
+  }
+}
+
+function getWorkflowExitCode(contract: PublicContractV2): WorkflowExitCode {
+  return workflowStatusToExitCode(contract.workflow_status);
+}
+
+function shouldEmitCompactWorkflowJson(flags: Record<string, string>): boolean {
+  return flags.json === "true" && flags.full !== "true";
 }
 
 function toActionableProjectConventionsRepoRefinement(
@@ -1759,184 +1792,95 @@ function formatUpgradeReport(result: UpgradeWorkflowResult): string {
     .concat("\n");
 }
 
-function toAgentContextSummary(context: SaltInfoResult): Record<string, unknown> {
-  return {
-    rootDir: context.rootDir,
-    framework: {
-      name: context.framework.name,
-      evidence: context.framework.evidence.slice(0, 3),
-    },
-    workspace: {
-      kind: context.workspace.kind,
-      workspaceRoot: context.workspace.workspaceRoot,
-    },
-    packageManager: context.environment.packageManager,
-    saltPackages: context.salt.packages.slice(0, 5),
-    installation: {
-      healthSummary: {
-        health: context.salt.installation.healthSummary.health,
-        recommendedAction:
-          context.salt.installation.healthSummary.recommendedAction,
-        blockingWorkflows:
-          context.salt.installation.healthSummary.blockingWorkflows,
+function toCreateAgentWorkflowJson(
+  result: CreateWorkflowResult,
+  options: {
+    registry: Awaited<ReturnType<typeof resolveSemanticRegistry>>["registry"];
+    query: string;
+    packageName?: string;
+  },
+): PublicContractV2 {
+  return buildCreatePublicContractV2(
+    result.result.recommendation,
+    {
+      readiness: {
+        status: result.workflow.readiness.status,
+        implementation_ready: result.workflow.readiness.implementationReady,
+        reason: result.workflow.readiness.reason,
       },
+      implementation_gate: result.workflow.implementationGate,
+      context_requirement: {
+        status: result.workflow.contextRequirement.status,
+        repo_specific_edits_ready:
+          result.workflow.contextRequirement.repoSpecificEditsReady,
+        reason: result.workflow.contextRequirement.reason,
+        ...(result.workflow.contextRequirement.satisfiedBy
+          ? {
+              satisfied_by: result.workflow.contextRequirement.satisfiedBy,
+            }
+          : {
+              suggested_follow_up_tool: "get_salt_project_context",
+              suggested_follow_up_cli: "salt-ds info --json",
+            }),
+      },
+      starter_validation: result.artifacts.starterValidation,
+      ide_summary: {
+        recommended_direction:
+          result.result.recommendation.decision.name ??
+          result.result.intent.compositionDirection,
+        bounded_scope: [result.result.intent.userTask],
+        open_question:
+          result.result.recommendation.open_questions?.[0]?.prompt ?? null,
+        starter_plan: [],
+        verify: [],
+      },
+    } as CreateSaltUiWorkflowContract,
+    {
+      transport_used: "cli",
+      registry: options.registry,
+      query: options.query,
+      package: options.packageName,
     },
-    registry: {
-      available: context.registry.available,
-      source: context.registry.source,
-    },
-    policyMode: context.policy.mode,
-    runtimeTargets: context.runtime.detectedTargets.map((target) => ({
-      label: target.label,
-      url: target.url,
-    })),
-    notes: context.notes.slice(0, 5),
-  };
+  );
 }
 
-function toAgentWorkflowJson(
-  result:
-    | CreateWorkflowResult
-    | ReviewWorkflowResult
-    | MigrateWorkflowResult
-    | UpgradeWorkflowResult,
-): Record<string, unknown> {
-  switch (result.workflow.id) {
-    case "create":
-      return {
-        workflow: {
-          id: result.workflow.id,
-          confidence: result.workflow.confidence,
-          readiness: result.workflow.readiness,
-          contextRequirement: result.workflow.contextRequirement,
-          implementationGate: result.workflow.implementationGate,
-        },
-        result: {
-          intent: result.result.intent,
-          summary: {
-            ...result.result.summary,
-            suggestedFollowUps: result.result.summary.suggestedFollowUps.slice(
-              0,
-              2,
-            ),
-          },
-          recommendation: {
-            decision: result.result.recommendation.decision,
-            finalDecision: result.result.recommendation.final_decision,
-            nextStep:
-              result.result.recommendation.next_step ??
-              result.result.summary.nextStep,
-            compositionContract:
-              result.result.recommendation.composition_contract ?? null,
-            openQuestions: result.result.recommendation.open_questions ?? [],
-          },
-        },
-        artifacts: {
-          context: toAgentContextSummary(result.artifacts.context),
-          notes: result.artifacts.notes.slice(0, 5),
-        },
-      };
-    case "review":
-      return {
-        workflow: {
-          id: result.workflow.id,
-          confidence: result.workflow.confidence,
-          projectConventionsCheck: result.workflow.projectConventionsCheck,
-          provenance: result.workflow.provenance,
-        },
-        result: {
-          summary: result.result.summary,
-          nextStep: result.result.summary.nextStep,
-        },
-        artifacts: {
-          context: toAgentContextSummary(result.artifacts.context),
-          fixCandidates: {
-            totalCount: result.artifacts.fixCandidates.totalCount,
-            deterministicCount:
-              result.artifacts.fixCandidates.deterministicCount,
-            manualReviewCount: result.artifacts.fixCandidates.manualReviewCount,
-            candidates: (result.artifacts.fixCandidates.candidates ?? []).slice(
-              0,
-              2,
-            ),
-            notes: (result.artifacts.fixCandidates.notes ?? []).slice(0, 2),
-          },
-          ruleIds: result.artifacts.ruleIds.slice(0, 5),
-          notes: result.artifacts.notes.slice(0, 5),
-        },
-      };
-    case "migrate":
-      return {
-        workflow: {
-          id: result.workflow.id,
-          confidence: result.workflow.confidence,
-          readiness: result.workflow.readiness,
-          contextRequirement: result.workflow.contextRequirement,
-          projectConventionsCheck: result.workflow.projectConventionsCheck,
-          provenance: result.workflow.provenance,
-        },
-        result: {
-          summary: result.result.summary,
-          sourceProfile: {
-            codeProvided: result.result.translation.source_profile.code_provided,
-            queryProvided:
-              result.result.translation.source_profile.query_provided,
-            uiFlavor: result.result.translation.source_profile.ui_flavor,
-          },
-          migrationScope: {
-            questions: result.result.migrationScope.questions.slice(0, 3),
-            preserveFocus: result.result.migrationScope.preserveFocus.slice(
-              0,
-              3,
-            ),
-            allowSaltChanges:
-              result.result.migrationScope.allowSaltChanges.slice(0, 3),
-            confirmationTriggers:
-              result.result.migrationScope.confirmationTriggers.slice(0, 3),
-            currentExperienceCaptured:
-              result.result.migrationScope.currentExperienceCaptured,
-            runtimeRecommended:
-              result.result.migrationScope.runtimeRecommended,
-          },
-          nextStep: result.result.summary.nextStep,
-        },
-        artifacts: {
-          context: toAgentContextSummary(result.artifacts.context),
-          starterValidation: result.artifacts.starterValidation,
-          ruleIds: result.artifacts.ruleIds.slice(0, 5),
-          postMigrationVerification: result.artifacts.postMigrationVerification,
-          visualEvidenceContract: result.artifacts.visualEvidenceContract,
-          notes: result.artifacts.notes.slice(0, 5),
-        },
-      };
-    case "upgrade":
-      return {
-        workflow: {
-          id: result.workflow.id,
-          confidence: result.workflow.confidence,
-          projectConventionsCheck: result.workflow.projectConventionsCheck,
-          provenance: result.workflow.provenance,
-        },
-        result: {
-          summary: result.result.summary,
-          comparison: {
-            target: result.result.comparison.decision.target,
-            fromVersion: result.result.comparison.decision.from_version,
-            toVersion: result.result.comparison.decision.to_version,
-            why: result.result.comparison.decision.why,
-          },
-          nextStep: result.result.summary.nextStep,
-          breaking: result.result.comparison.breaking?.slice(0, 3),
-          important: result.result.comparison.important?.slice(0, 3),
-          niceToKnow: result.result.comparison.nice_to_know?.slice(0, 3),
-        },
-        artifacts: {
-          context: toAgentContextSummary(result.artifacts.context),
-          ruleIds: result.artifacts.ruleIds.slice(0, 5),
-          notes: result.artifacts.notes.slice(0, 5),
-        },
-      };
-  }
+function toReviewAgentWorkflowJson(
+  result: ReviewWorkflowResult,
+  contract: ReviewSaltUiWorkflowContract,
+): PublicContractV2 {
+  return buildReviewPublicContractV2(
+    {
+      decision: contract.decision,
+      next_step: contract.next_step ?? result.result.summary.nextStep,
+      missing_data: contract.missing_data ?? [],
+    } as ReviewSaltUiResult,
+    contract,
+    {
+      transport_used: "cli",
+    },
+  );
+}
+
+function toMigrateAgentWorkflowJson(
+  result: MigrateWorkflowResult,
+  contract: MigrateToSaltWorkflowContract,
+): PublicContractV2 {
+  return buildMigratePublicContractV2(
+    result.result.translation as MigrateToSaltResult,
+    contract,
+    {
+      transport_used: "cli",
+    },
+  );
+}
+
+function toUpgradeAgentWorkflowJson(
+  result: UpgradeWorkflowResult,
+  contract: UpgradeSaltUiWorkflowContract,
+): PublicContractV2 {
+  return buildUpgradePublicContractV2(result.result.comparison, contract, {
+    transport_used: "cli",
+  });
 }
 
 async function writeWorkflowOutput<
@@ -1950,17 +1894,21 @@ async function writeWorkflowOutput<
   flags: Record<string, string>,
   io: RequiredCliIo,
   formatter: (result: T) => string,
+  options: {
+    compactJsonOverride: PublicContractV2;
+  },
 ): Promise<void> {
-  const outputPath = flags.output
-    ? path.resolve(io.cwd, flags.output)
+  const jsonOutputPath = flags["json-file"] ?? flags.output;
+  const outputPath = jsonOutputPath
+    ? path.resolve(io.cwd, jsonOutputPath)
     : undefined;
-  const agentJson = flags["agent-json"] === "true";
-  const jsonResult = agentJson ? toAgentWorkflowJson(result) : result;
+  const compactJson = shouldEmitCompactWorkflowJson(flags);
+  const jsonResult = compactJson ? options.compactJsonOverride : result;
   if (outputPath) {
     await writeJsonFile(outputPath, jsonResult);
   }
 
-  if (flags.json === "true" || agentJson) {
+  if (flags.json === "true") {
     io.writeStdout(`${JSON.stringify(jsonResult, null, 2)}\n`);
   } else {
     io.writeStdout(formatter(result));
@@ -2114,7 +2062,7 @@ export async function runCreateCommand(
   const query = positionals.join(" ").trim();
   if (!query) {
     io.writeStderr("Missing query. Usage: salt-ds create <query>\n");
-    return 1;
+    return 30;
   }
 
   try {
@@ -2340,19 +2288,20 @@ export async function runCreateCommand(
       },
     };
 
-    await writeWorkflowOutput(result, flags, io, formatCreateReport);
-    if (
-      !recommendation.decision.name ||
-      shouldFailWorkflowReadiness(workflowReadiness)
-    ) {
-      return 2;
-    }
-    return 0;
+    const compactJson = toCreateAgentWorkflowJson(result, {
+      registry,
+      query,
+      packageName: flags.package,
+    });
+    await writeWorkflowOutput(result, flags, io, formatCreateReport, {
+      compactJsonOverride: compactJson,
+    });
+    return getWorkflowExitCode(compactJson);
   } catch (error) {
     io.writeStderr(
       `${error instanceof Error ? error.message : "Failed to plan the Salt UI creation."}\n`,
     );
-    return 1;
+    return 30;
   }
 }
 
@@ -2384,7 +2333,7 @@ export async function runMigrateCommand(
       io.writeStderr(
         "Missing query. Usage: salt-ds migrate [query] [--source-outline <path>] [--mockup <path-or-url>] [--screenshot <path-or-url>]\n",
       );
-      return 1;
+      return 30;
     }
 
     const context = await collectSaltInfo(io.cwd, flags["registry-dir"]);
@@ -2620,15 +2569,22 @@ export async function runMigrateCommand(
       },
     };
 
-    await writeWorkflowOutput(result, flags, io, (payload) =>
-      formatMigrateReport(payload, query),
+    const compactJson = toMigrateAgentWorkflowJson(result, canonicalContract);
+    await writeWorkflowOutput(
+      result,
+      flags,
+      io,
+      (payload) => formatMigrateReport(payload, query),
+      {
+        compactJsonOverride: compactJson,
+      },
     );
-    return shouldFailWorkflowReadiness(workflowReadiness) ? 2 : 0;
+    return getWorkflowExitCode(compactJson);
   } catch (error) {
     io.writeStderr(
       `${error instanceof Error ? error.message : "Failed to plan the Salt migration."}\n`,
     );
-    return 1;
+    return 30;
   }
 }
 
@@ -2641,7 +2597,7 @@ export async function runUpgradeCommand(
     io.writeStderr(
       "Upgrade does not accept positional arguments. Use flags instead.\n",
     );
-    return 1;
+    return 30;
   }
 
   try {
@@ -2658,14 +2614,14 @@ export async function runUpgradeCommand(
       io.writeStderr(
         "Missing target. Provide --package or --component, or run the command from a repo with a detected Salt package.\n",
       );
-      return 1;
+      return 30;
     }
 
     if (!inferredFromVersion) {
       io.writeStderr(
         "Missing --from-version and no installed Salt package version could be inferred.\n",
       );
-      return 1;
+      return 30;
     }
 
     const { registry } = await resolveSemanticRegistry(
@@ -2693,6 +2649,7 @@ export async function runUpgradeCommand(
       inferredPackage ??
       flags.component ??
       "unknown";
+    const upgradeContract = buildUpgradeSaltUiWorkflowContract(comparison);
     const result: UpgradeWorkflowResult = {
       workflow: {
         id: "upgrade",
@@ -2702,7 +2659,7 @@ export async function runUpgradeCommand(
           fromVersionWasInferred,
           projectConventionsCheck,
         ),
-        provenance: buildUpgradeSaltUiWorkflowContract(comparison).provenance,
+        provenance: upgradeContract.provenance,
         projectConventionsCheck,
       },
       result: {
@@ -2742,13 +2699,16 @@ export async function runUpgradeCommand(
       },
     };
 
-    await writeWorkflowOutput(result, flags, io, formatUpgradeReport);
-    return 0;
+    const compactJson = toUpgradeAgentWorkflowJson(result, upgradeContract);
+    await writeWorkflowOutput(result, flags, io, formatUpgradeReport, {
+      compactJsonOverride: compactJson,
+    });
+    return getWorkflowExitCode(compactJson);
   } catch (error) {
     io.writeStderr(
       `${error instanceof Error ? error.message : "Failed to plan the Salt upgrade."}\n`,
     );
-    return 1;
+    return 30;
   }
 }
 
@@ -2761,7 +2721,7 @@ async function runReviewLikeCommand(
     io.writeStderr(
       "salt-ds review no longer writes files directly. Use --json and apply the returned fixCandidates through the agent workflow.\n",
     );
-    return 1;
+    return 30;
   }
 
   try {
@@ -3066,12 +3026,15 @@ async function runReviewLikeCommand(
       },
     };
 
-    await writeWorkflowOutput(result, flags, io, formatReviewReport);
-    return needsAttention ? 2 : 0;
+    const compactJson = toReviewAgentWorkflowJson(result, reviewContract);
+    await writeWorkflowOutput(result, flags, io, formatReviewReport, {
+      compactJsonOverride: compactJson,
+    });
+    return getWorkflowExitCode(compactJson);
   } catch (error) {
     io.writeStderr(
       `${error instanceof Error ? error.message : "Failed to review the Salt targets."}\n`,
     );
-    return 1;
+    return 30;
   }
 }
