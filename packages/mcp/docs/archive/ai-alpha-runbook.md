@@ -1,5 +1,7 @@
 # AI Alpha Runbook
 
+Archived historical planning doc. Keep for context only.
+
 Use this runbook when you are collecting real task evidence from the current Salt AI alpha.
 
 This sits on top of:

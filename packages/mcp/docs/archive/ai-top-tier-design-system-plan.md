@@ -1,5 +1,7 @@
 # Salt AI Top-Tier Design System Plan
 
+Archived historical planning doc. Keep for context only.
+
 This document is a handoff plan for turning Salt into a top-tier AI-native design system product.
 
 It is intended to be shared with another agent or maintainer who will execute the work.

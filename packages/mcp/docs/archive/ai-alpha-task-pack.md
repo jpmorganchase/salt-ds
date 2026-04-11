@@ -1,5 +1,7 @@
 # AI Alpha Task Pack
 
+Archived historical planning doc. Keep for context only.
+
 Use these tasks for alpha sessions instead of inventing new prompts in the room.
 
 Each task maps cleanly to one workflow and one audience bucket.

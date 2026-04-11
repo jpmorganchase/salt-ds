@@ -9,6 +9,16 @@ For the shared install-diagnostics behavior across `doctor`, `info`, and MCP con
 For doc and example improvements that would let Salt AI rely less on hand-authored scaffolds, see [`./canonical-doc-and-example-improvements.md`](./canonical-doc-and-example-improvements.md).
 For the recommended adapter-based live evaluation model that sits on top of the deterministic eval suite, see [`./live-eval-harness.md`](./live-eval-harness.md).
 
+## Current Public Workflow Contract
+
+The current default public workflow contract is the compact `v2` shape.
+
+- MCP compact workflow responses return compact `v2` by default.
+- CLI workflow `--json` returns compact `v2` by default.
+- Rich workflow output is explicit-only behind MCP `view: "full"` and CLI `--full`.
+- Top-level workflow state is authoritative for agent action; nested artifacts are secondary.
+- Skills and hosts should branch on compact top-level workflow signals first rather than inspecting nested `implementation_gate`, `readiness`, or similar rich-only detail.
+
 ## Core Rule
 
 Keep the source of truth outside the MCP runtime wherever possible.

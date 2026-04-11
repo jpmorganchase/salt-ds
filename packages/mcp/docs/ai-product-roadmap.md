@@ -4,11 +4,11 @@ This file is the ordered roadmap for the remaining Salt AI work after the curren
 
 It combines:
 
-- the remaining V1 items from [`ai-v1-implementation-backlog.md`](./ai-v1-implementation-backlog.md)
-- the strategic direction from [`consumer-ai-roadmap.md`](./consumer-ai-roadmap.md)
-- the architectural boundary rules from [`maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)
+- the current architectural boundary rules from [`maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)
 - the canonical AI entity model from [`ai-domain-model.md`](./ai-domain-model.md)
+- the current hardening backlog from [`ai-tooling-hardening-backlog.md`](./ai-tooling-hardening-backlog.md)
 - product lessons from current external AI tooling
+- archived alpha and V1 planning context when historical rationale still matters
 
 Use this document to answer:
 
@@ -19,7 +19,7 @@ Use this document to answer:
 
 For the current design-system quality standard and the product lessons Salt should apply from it, see [`./ai-design-system-quality-standard.md`](./ai-design-system-quality-standard.md).
 
-Do not use this file as a line-by-line status tracker. The V1 backlog remains the execution tracker for the current implementation slice.
+Do not use this file as a line-by-line status tracker. Use [`ai-tooling-hardening-backlog.md`](./ai-tooling-hardening-backlog.md) for active implementation backlog work.
 
 ## Product Position
 
@@ -177,7 +177,7 @@ Test the two strongest likely areas of demand without broadening the product too
 - guidance layering for teams and line-of-business owners
 - visual grounding for migration-first workflows
 
-Detailed execution checklist: [`ai-alpha-experiment-checklist.md`](./ai-alpha-experiment-checklist.md)
+Historical alpha execution checklist: [`archive/ai-alpha-experiment-checklist.md`](./archive/ai-alpha-experiment-checklist.md)
 
 ### Owners
 

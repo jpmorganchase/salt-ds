@@ -110,6 +110,7 @@ A good Salt answer should:
 - respect declared repo policy when it exists
 - ask only the minimum blocking question when safe progress is unclear
 - show the Salt summary before the raw workflow details when available
+- prefer compact workflow state first and use richer detail only when deeper artifacts are actually needed
 - make the safest next step obvious
 
 ## Common Surfaces
@@ -275,6 +276,9 @@ npx skills add https://github.com/jpmorganchase/salt-ds/tree/mcp/packages/skills
 npx skills add https://github.com/jpmorganchase/salt-ds/tree/mcp/packages/skills --skill salt-ds
 ```
 
+These commands install the skill, not the CLI binary.
+If you want to run the CLI without installing it globally, use `npx -y @salt-ds/cli@latest ...`.
+
 ### Connect Salt MCP
 
 If your host supports MCP, add Salt MCP:
@@ -292,10 +296,12 @@ If your host supports MCP, add Salt MCP:
 
 ### CLI Fallback
 
-If MCP is blocked, use the CLI fallback:
+If MCP is blocked, stay on the same workflow model through the CLI.
+Use `info` to confirm repo context, then run the matching workflow command in compact JSON mode:
 
 ```sh
 npx -y @salt-ds/cli@latest info . --json
+npx -y @salt-ds/cli@latest review src --json
 ```
 
 Or install it once:
@@ -308,10 +314,10 @@ npm install -g @salt-ds/cli
 
 Use this quick check after install:
 
-1. run `salt-ds info --json` in a repo and confirm it returns context instead of a setup error
+1. run `npx -y @salt-ds/cli@latest info . --json` in a repo and confirm it returns context instead of a setup error
 2. if MCP is configured, ask the host to use `salt-ds` on an active file
 3. confirm the first answer is a Salt workflow response, not generic React or CSS advice
-4. confirm the Salt summary is shown before raw workflow details when available
+4. confirm the Salt response leads with compact workflow state and summary rather than rich raw detail
 
 ### Common Problems
 
@@ -330,7 +336,7 @@ Scope the request to one file, one region, one feature folder, or one screen whe
 
 Check these first:
 
-1. `salt-ds info --json`
+1. `npx -y @salt-ds/cli@latest info . --json` or `salt-ds info . --json` if the CLI is installed globally
 2. whether `.salt/team.json` exists
 3. whether `.salt/stack.json` exists for advanced layering
 4. whether the task actually recommends checking project conventions

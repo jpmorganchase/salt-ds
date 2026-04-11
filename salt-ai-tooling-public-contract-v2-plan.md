@@ -1,5 +1,17 @@
 # Salt AI Tooling Public Contract V2 Plan
 
+## Status
+
+Completed.
+
+This document now serves as the implementation record for the `v2` public contract rollout.
+The migration phases below are preserved as a historical plan, but the shipped state is already:
+
+- compact `v2` as the default public workflow contract for MCP compact responses
+- compact `v2` as the default public workflow contract for CLI workflow `--json`
+- rich workflow output explicit-only behind `full`
+- no long-lived public compact compatibility layer
+
 ## Decision
 
 Rewrite the default public contract consumed by agents.
@@ -8,12 +20,12 @@ Do not start with a ground-up rewrite of the internal workflow builders.
 
 Use the current internal workflow logic as the source material, then derive a smaller, stricter, safety-first `v2` envelope for:
 
-- MCP default agent-facing responses
+- MCP default compact workflow responses
 - CLI JSON mode
 
 Keep the current richer output only as `full` debugging output.
 
-Do not keep a long-lived compatibility contract for old compact or agent-facing schemas.
+Do not keep a long-lived compatibility contract for old compact or other temporary public schemas.
 
 ---
 
@@ -67,8 +79,8 @@ Existing replay and eval assets that should drive the work:
 - CLI machine-clean JSON
 - compact-by-default output behavior
 - replay-driven regression coverage
-- short validation path from current `agent` and `agent-json` views to new defaults
-- deletion of old compact and old agent-facing public schemas after cutover
+- short validation path from temporary non-default workflow surfaces to new defaults
+- deletion of old compact and other temporary public schemas after cutover
 
 ### Out of scope
 
@@ -180,12 +192,12 @@ Apply precedence in this order:
 
 Use this decision table:
 
-| Condition | `workflow_status` |
-|----------|-------------------|
-| transport or workflow failure and no usable guidance | `failed` |
-| semantic mismatch, no-match, missing required context, unresolved blocker question, or implementation blocker for the exact request | `blocked` |
-| exact request is grounded and safe now | `success` |
-| useful guidance exists but exact implementation is not yet safe | `partial` |
+| Condition                                                                                                                           | `workflow_status` |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| transport or workflow failure and no usable guidance                                                                                | `failed`          |
+| semantic mismatch, no-match, missing required context, unresolved blocker question, or implementation blocker for the exact request | `blocked`         |
+| exact request is grounded and safe now                                                                                              | `success`         |
+| useful guidance exists but exact implementation is not yet safe                                                                     | `partial`         |
 
 ### `canonical_complete`
 
@@ -404,10 +416,7 @@ But in `v2` compact output they are secondary, not authoritative.
 
 ### Stage 1
 
-Ship `v2` first through the existing agent-oriented views:
-
-- MCP `view: "agent"`
-- CLI compact `--json`
+During rollout, validate `v2` through temporary non-default workflow surfaces before flipping the defaults.
 
 This stage exists only to validate `v2` before default cutover. It is not a promise to support dual public contracts long term.
 
@@ -420,7 +429,7 @@ After replay gates pass:
 
 ### Stage 3
 
-Delete old compact and old agent-facing public schemas.
+Delete old compact and other temporary public schemas.
 
 Keep only rich debugging output behind:
 
@@ -436,6 +445,8 @@ Do not keep:
 ---
 
 ## Phase Plan
+
+All phases below are complete and retained as a build record.
 
 ## Phase 0 - Replay Corpus And Evaluation Rubric
 
@@ -543,11 +554,7 @@ export type PublicWorkflowId =
 
 export type PublicTransportUsed = "cli" | "mcp";
 
-export type PublicWorkflowStatus =
-  | "success"
-  | "partial"
-  | "blocked"
-  | "failed";
+export type PublicWorkflowStatus = "success" | "partial" | "blocked" | "failed";
 
 export type PublicMatchStatus =
   | "exact"
@@ -769,7 +776,7 @@ Make named follow-through safe by default.
   - `misrouted`
   - `no_match`
 - emit one structured `next_step`
-- expose compact `v2` in MCP `view: "agent"` first
+- expose compact `v2` through the temporary non-default MCP validation surface first
 
 ### Suggested file targets
 
@@ -838,7 +845,7 @@ Make CLI JSON transport-clean and compact by default.
 
 ### Goal
 
-Promote `v2` from agent-only mode to the default compact public contract.
+Promote `v2` from temporary validation surfaces to the default compact public contract.
 
 ### Work
 
@@ -846,7 +853,7 @@ Promote `v2` from agent-only mode to the default compact public contract.
 - switch CLI `--json` to `v2`
 - keep rich output behind `full`
 - update host-facing docs and examples after the cutover decision
-- remove old agent-facing compact schema branches immediately after cutover validation passes
+- remove old temporary compact schema branches immediately after cutover validation passes
 
 ### Acceptance
 
@@ -873,7 +880,7 @@ Remove duplicated legacy branching once the new contract is stable.
 - delete dead compatibility code
 - reduce duplicate schemas
 - update snapshots and examples
-- delete old compact and old agent-facing public schema builders
+- delete old compact and other temporary public schema builders
 - keep only `full` as the rich debugging surface
 
 ### Acceptance
@@ -1011,4 +1018,4 @@ At that point the work becomes implementation and test wiring, not open-ended de
 
 ## Short Implementation Summary
 
-Rewrite the public contract first, not the whole engine. Derive a compact `v2` envelope from existing workflow logic. Harden MCP semantic matching before CLI cleanup. Use replay fixtures as the source of truth for what counts as better. Flip defaults once `v2` passes replay gates, then delete the old compact and old agent-facing public schema paths. Keep only `full` as the rich debugging mode.
+Rewrite the public contract first, not the whole engine. Derive a compact `v2` envelope from existing workflow logic. Harden MCP semantic matching before CLI cleanup. Use replay fixtures as the source of truth for what counts as better. Flip defaults once `v2` passes replay gates, then delete the old compact and other temporary public schema paths. Keep only `full` as the rich debugging mode.

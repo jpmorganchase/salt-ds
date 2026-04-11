@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted for the current rollout scope.
+Accepted and shipped.
 
 The compact public contract is now the default compact shape for:
 
@@ -13,6 +13,8 @@ Rich workflow output remains explicit-only behind:
 
 - MCP `view: "full"`
 - CLI `--full`
+
+The temporary non-default workflow validation surfaces used during rollout have been removed.
 
 ## Evidence
 
@@ -81,4 +83,4 @@ yarn biome check packages/mcp/src/server/toolDefinitions.ts packages/mcp/src/eva
 
 - The MCP stdio runner required a transport-layer schema cleanup. Workflow tool `outputSchema` is now permissive at the SDK boundary so compact and rich outputs can both travel without breaking `structuredContent`.
 - Replay assets were renamed from `*-agent-v2.json` to `*-compact-v2.json` to remove transitional naming from the acceptance corpus.
-- Workflow CLI help now advertises `--json` as the compact contract path for workflow commands. Support-command `--agent-json` behavior was not part of this rollout.
+- Workflow CLI help now advertises `--json` as the compact contract path for workflow commands and `--full` as the explicit rich-output path.

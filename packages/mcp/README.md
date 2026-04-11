@@ -137,9 +137,9 @@ Consumer start path:
 See:
 
 - [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx)
-- [`docs/maintainers/ai-v1-implementation-backlog.md`](./docs/maintainers/ai-v1-implementation-backlog.md)
-- [`docs/maintainers/consumer-ai-roadmap.md`](./docs/maintainers/consumer-ai-roadmap.md)
-- [`docs/maintainers/maintaining-salt-ai-tooling.md`](./docs/maintainers/maintaining-salt-ai-tooling.md)
+- [`./docs/ai-product-roadmap.md`](./docs/ai-product-roadmap.md)
+- [`./docs/ai-tooling-hardening-backlog.md`](./docs/ai-tooling-hardening-backlog.md)
+- [`./docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md)
 - [`../skills/README.md`](../skills/README.md)
 
 ## Notes
