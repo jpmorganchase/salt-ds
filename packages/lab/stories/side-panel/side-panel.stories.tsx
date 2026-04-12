@@ -424,13 +424,12 @@ const withTablePanelStyle = {
 const WithTableContent = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
-  const { setOpen, setReference, getFloatingProps, getReferenceProps } =
+  const { setOpen, activateTrigger, getFloatingProps, getReferenceProps } =
     useSidePanelContext();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
     setSelectedRow(row);
-    setReference(target);
-    setOpen(true);
+    activateTrigger({ current: target });
   };
 
   const getTriggerProps = (row: TeamMember) =>

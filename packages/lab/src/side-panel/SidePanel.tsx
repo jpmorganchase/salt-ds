@@ -10,9 +10,9 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
   forwardRef,
-  type FocusEvent as ReactFocusEvent,
   type KeyboardEvent,
   type MutableRefObject,
+  type FocusEvent as ReactFocusEvent,
   useCallback,
   useEffect,
   useRef,
@@ -282,6 +282,28 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       return () => doc.removeEventListener("keydown", onKeyDown, true);
     }, [targetWindow]);
 
+    // Close the panel when Escape is pressed while focus is on the trigger.
+    // The panel's onKeyDown only covers elements inside the panel, so we
+    // use a document-level capture listener that checks activeElement.
+    // Capture phase fires before React synthetic events, and using
+    // activeElement avoids the fragility of targeting a specific DOM node.
+    useEffect(() => {
+      if (!open) return;
+      const doc = targetWindow?.document;
+      if (!doc) return;
+
+      const handleDocKeyDown = (e: globalThis.KeyboardEvent) => {
+        if (e.key !== "Escape") return;
+        const trigger = focusReturnTriggerRef?.current;
+        if (!trigger || (e.target as Node) !== trigger) return;
+        onOpenChange?.(false);
+      };
+
+      doc.addEventListener("keydown", handleDocKeyDown, true);
+      return () => doc.removeEventListener("keydown", handleDocKeyDown, true);
+      // biome-ignore lint/correctness/useExhaustiveDependencies: focusReturnTriggerRef is a stable ref object; .current is read inside the handler
+    }, [open, onOpenChange, targetWindow]);
+
     // Redirect focus when natural Tab/Shift+Tab would enter the panel.
     // The panel should only receive focus via trigger activation, not by
     // tabbing through the page.
@@ -321,6 +343,21 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       [focusReturnTriggerRef],
     );
 
+    // Handle Escape via bubbling (onKeyDown) so that in nested panels the
+    // innermost panel's handler fires first. The parent's handler is prevented
+    // from firing by event.stopPropagation() on the synthetic event.
+    const handleKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.defaultPrevented) return;
+
+        if (event.key === "Escape") {
+          event.stopPropagation();
+          onOpenChange?.(false);
+        }
+      },
+      [onOpenChange],
+    );
+
     const handleKeyDownCapture = useCallback(
       (event: KeyboardEvent<HTMLDivElement>) => {
         onKeyDownCapture?.(event);
@@ -331,13 +368,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
         const panelElement = panelRef.current;
         if (!panelElement) return;
-
-        // Handle Escape key to close panel
-        if (event.key === "Escape") {
-          event.stopPropagation();
-          onOpenChange?.(false);
-          return;
-        }
 
         // Handle Tab key for focus management
         if (event.key === "Tab") {
@@ -377,7 +407,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           }
         }
       },
-      [onOpenChange, targetWindow, onKeyDownCapture, focusReturnTriggerRef],
+      [targetWindow, onKeyDownCapture, focusReturnTriggerRef],
     );
 
     if (!showComponent) return null;
@@ -399,6 +429,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         role="region"
         id={id}
         onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
         onKeyDownCapture={handleKeyDownCapture}
         onAnimationEnd={handleAnimationEnd}
         {...rest}

@@ -4,6 +4,7 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
+  type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
   useRef,
@@ -44,6 +45,13 @@ export const SidePanelTrigger = forwardRef<
     activateTrigger(triggerRef);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Escape" && openState) {
+      event.stopPropagation();
+      setOpen(false);
+    }
+  };
+
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;
   }
@@ -51,6 +59,7 @@ export const SidePanelTrigger = forwardRef<
   const mergedProps = mergeProps(
     {
       onClick: handleClick,
+      onKeyDown: handleKeyDown,
       ...rest,
     },
     children.props,
