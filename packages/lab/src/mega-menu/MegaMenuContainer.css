@@ -9,5 +9,5 @@
   border-radius: var(--salt-palette-corner);
   border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor);
   background: var(--salt-container-primary-background);
-  box-shadow: var(--shadow-medium-x-axis, 0) var(--shadow-medium-y-axis, 12px) var(--shadow-medium-blur, 40px) 0 var(--shared-shadow-medium, rgba(0, 0, 0, 0.3));
+  box-shadow: var(--salt-overlayable-shadow-popout);
 }
