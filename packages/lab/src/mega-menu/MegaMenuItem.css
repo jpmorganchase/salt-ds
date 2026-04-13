@@ -28,7 +28,8 @@
   background: var(--salt-navigable-background-hover);
 }
 
-.saltMegaMenuItem:active {
+.saltMegaMenuItem:active,
+.saltMegaMenuItem-active {
   border-radius: var(--salt-palette-corner-weak);
   outline: var(--salt-size-fixed-100) solid var(--salt-navigable-accent-borderColor-active);
   background: var(--salt-navigable-accent-background-active);

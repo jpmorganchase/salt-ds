@@ -3,6 +3,7 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
+  type KeyboardEvent,
   type ReactNode,
   type Ref,
   useContext,
@@ -22,7 +23,19 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
       throw new Error("MegaMenuTrigger must be used within a MegaMenu");
     }
 
-    const { getReferenceProps, setReference, setOpen } = megaMenu;
+    const { getReferenceProps, setReference, setOpen, openState } = megaMenu;
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+      if (event.key === "Tab" && !event.shiftKey && openState) {
+        event.preventDefault();
+        const firstItem = document.querySelector(
+          '[role="region"] .saltMegaMenuItem',
+        ) as HTMLElement | null;
+        if (firstItem) {
+          firstItem.focus();
+        }
+      }
+    };
 
     const handleFloatingRef = useForkRef(
       getRefFromChildren(children),
@@ -41,6 +54,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
             setReference(event.currentTarget as HTMLElement);
             setOpen(true);
           },
+          onKeyDown: handleKeyDown,
           ...rest,
         }),
         children.props,

@@ -19,6 +19,8 @@ export interface MegaMenuContextValue {
   setFloating: Dispatch<SetStateAction<HTMLElement | null>>;
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
   setOpen: (open: boolean) => void;
+  selectedItem: string | undefined;
+  setSelectedItem: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const MegaMenuContext = createContext<MegaMenuContextValue | undefined>(
