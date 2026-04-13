@@ -1,14 +1,14 @@
-# Salt AI Tooling Public Contract V2 Plan
+# Salt AI Tooling Public Contract Plan
 
 ## Status
 
 Completed.
 
-This document now serves as the implementation record for the `v2` public contract rollout.
+This document now serves as the implementation record for the compact public contract rollout.
 The migration phases below are preserved as a historical plan, but the shipped state is already:
 
-- compact `v2` as the default public workflow contract for MCP compact responses
-- compact `v2` as the default public workflow contract for CLI workflow `--json`
+- compact as the default public workflow contract for MCP compact responses
+- compact as the default public workflow contract for CLI workflow `--json`
 - rich workflow output explicit-only behind `full`
 - no long-lived public compact compatibility layer
 
@@ -18,7 +18,7 @@ Rewrite the default public contract consumed by agents.
 
 Do not start with a ground-up rewrite of the internal workflow builders.
 
-Use the current internal workflow logic as the source material, then derive a smaller, stricter, safety-first `v2` envelope for:
+Use the current internal workflow logic as the source material, then derive a smaller, stricter, safety-first compact envelope for:
 
 - MCP default compact workflow responses
 - CLI JSON mode
@@ -40,7 +40,7 @@ The current failure modes are:
 - MCP results can look structurally valid even when the semantic target is wrong
 - agents can misread combinations like `implementation_gate`, `readiness`, and starter or policy warnings
 
-The design goal for `v2` is:
+The design goal for compact is:
 
 An agent should be able to answer, from top-level fields alone, whether it is safe to code the exact requested region.
 
@@ -73,7 +73,7 @@ Existing replay and eval assets that should drive the work:
 
 ### In scope
 
-- new compact public `v2` contract
+- new compact public compact contract
 - shared derivation rules for agent-safe top-level fields
 - MCP semantic-match contract for named follow-through
 - CLI machine-clean JSON
@@ -92,7 +92,7 @@ Existing replay and eval assets that should drive the work:
 
 ---
 
-## Public Contract V2
+## Public Contract
 
 ### Default top-level fields
 
@@ -153,7 +153,7 @@ The default compact payload must be enough for safe agent action without reading
 
 ### Authoritative-field rule
 
-In `v2`, these top-level fields are authoritative for agent action:
+In compact, these top-level fields are authoritative for agent action:
 
 - `workflow_status`
 - `canonical_complete`
@@ -298,7 +298,7 @@ Common reason families:
 
 ### Contradiction rule
 
-These states are illegal in `v2`:
+These states are illegal in compact:
 
 - `workflow_status: "success"` with `safe_to_implement_exact_request: false`
 - `match_status: "misrouted"` with `safe_to_implement_exact_request: true`
@@ -385,7 +385,7 @@ Replace free-form next-step ambiguity with one structured object.
 
 ## Banned Public Contract Patterns
 
-The `v2` compact contract must not do any of the following:
+The compact compact contract must not do any of the following:
 
 - expose multiple overlapping top-level status systems that agents have to reconcile manually
 - require agents to infer workflow meaning from exit codes alone
@@ -408,7 +408,7 @@ The `v2` compact contract must not do any of the following:
 - related guides
 - raw payloads
 
-But in `v2` compact output they are secondary, not authoritative.
+But in compact compact output they are secondary, not authoritative.
 
 ---
 
@@ -416,16 +416,16 @@ But in `v2` compact output they are secondary, not authoritative.
 
 ### Stage 1
 
-During rollout, validate `v2` through temporary non-default workflow surfaces before flipping the defaults.
+During rollout, validate compact through temporary non-default workflow surfaces before flipping the defaults.
 
-This stage exists only to validate `v2` before default cutover. It is not a promise to support dual public contracts long term.
+This stage exists only to validate compact before default cutover. It is not a promise to support dual public contracts long term.
 
 ### Stage 2
 
 After replay gates pass:
 
-- make MCP default compact output return `v2`
-- make CLI `--json` return `v2`
+- make MCP default compact output return compact
+- make CLI `--json` return compact
 
 ### Stage 3
 
@@ -487,7 +487,7 @@ Turn the known failures into deterministic replay fixtures and an explicit judgi
 
 ---
 
-## Phase 1 - Public Contract V2 Spec
+## Phase 1 - Public Contract Spec
 
 ### Goal
 
@@ -495,7 +495,7 @@ Lock down the default compact envelope and the derivation rules before implement
 
 ### Work
 
-- define the compact `v2` schema
+- define the compact schema
 - define derivation rules for:
   - `workflow_status`
   - `canonical_complete`
@@ -530,7 +530,7 @@ Ship Phase 1 as a design-and-types milestone before wiring any transport behavio
 
 #### Deliverables
 
-- one frozen `v2` schema section in this plan
+- one frozen compact schema section in this plan
 - one TypeScript type surface for the compact contract
 - one golden fixture set for compact outputs
 - one contradiction test matrix
@@ -540,7 +540,7 @@ Ship Phase 1 as a design-and-types milestone before wiring any transport behavio
 
 Create these in a new shared file:
 
-- `packages/semantic-core/src/tools/publicContractV2.ts`
+- `packages/semantic-core/src/tools/publicContract.ts`
 
 Suggested type surface:
 
@@ -611,7 +611,7 @@ export type PublicNextStep =
   | PublicReviewStep
   | PublicFixContextStep;
 
-export interface PublicContractV2 {
+export interface PublicContract {
   workflow: PublicWorkflowId;
   transport_used: PublicTransportUsed;
   workflow_status: PublicWorkflowStatus;
@@ -631,12 +631,12 @@ export interface PublicContractV2 {
 
 #### Proposed derivation inputs
 
-Do not derive `v2` directly from raw workflow results if a richer shared workflow contract already exists.
+Do not derive compact directly from raw workflow results if a richer shared workflow contract already exists.
 
 Use a small internal derivation input shape such as:
 
 ```ts
-export interface PublicContractV2Input {
+export interface PublicContractInput {
   workflow: PublicWorkflowId;
   transport_used: PublicTransportUsed;
   exact_request: {
@@ -675,7 +675,7 @@ Create these fixtures as TypeScript or JSON snapshots:
 
 Suggested location:
 
-- `packages/semantic-core/src/tools/__tests__/fixtures/publicContractV2/`
+- `packages/semantic-core/src/tools/__tests__/fixtures/publicContract/`
 
 #### Contradiction test matrix
 
@@ -689,9 +689,9 @@ Add explicit negative tests for:
 
 #### File-by-file Phase 1 changes
 
-`packages/semantic-core/src/tools/publicContractV2.ts`
+`packages/semantic-core/src/tools/publicContract.ts`
 
-- add the public `v2` types
+- add the public compact types
 - add derivation helpers
 - add contradiction guards
 
@@ -702,7 +702,7 @@ Add explicit negative tests for:
 
 `packages/mcp/src/server/toolDefinitions.ts`
 
-- add provisional `v2` schema definitions for agent-mode output
+- add provisional compact schema definitions for agent-mode output
 - keep them unused until Phase 3 wiring starts
 
 `packages/mcp/src/server/workflowOutputs.ts`
@@ -723,7 +723,7 @@ Add explicit negative tests for:
 
 Phase 1 is complete when:
 
-- the compact `v2` type surface is frozen
+- the compact type surface is frozen
 - the derivation rules are encoded in tests
 - illegal state combinations fail deterministically
 - the team can start Phase 2 without reopening contract design debates
@@ -734,24 +734,24 @@ Phase 1 is complete when:
 
 ### Goal
 
-Implement a single shared builder that derives `v2` fields from existing internal workflow outputs.
+Implement a single shared builder that derives compact fields from existing internal workflow outputs.
 
 ### Work
 
-- add a shared `publicContractV2` builder in `semantic-core`
-- derive `v2` from existing workflow contracts rather than duplicating logic
+- add a shared `publicContract` builder in `semantic-core`
+- derive compact from existing workflow contracts rather than duplicating logic
 - keep current rich workflow contracts intact for now
 - add shared tests for the derivation rules
 
 ### Suggested file targets
 
 - `packages/semantic-core/src/tools/workflowContracts.ts`
-- `packages/semantic-core/src/tools/publicContractV2.ts`
+- `packages/semantic-core/src/tools/publicContract.ts`
 - `packages/semantic-core/src/tools/__tests__/`
 
 ### Acceptance
 
-- both CLI and MCP can consume the same derived `v2` object
+- both CLI and MCP can consume the same derived compact object
 - `workflow_status`, `canonical_complete`, and `safe_to_implement_exact_request` are not hand-built separately per transport
 
 ### Model suggestion
@@ -776,7 +776,7 @@ Make named follow-through safe by default.
   - `misrouted`
   - `no_match`
 - emit one structured `next_step`
-- expose compact `v2` through the temporary non-default MCP validation surface first
+- expose compact through the temporary non-default MCP validation surface first
 
 ### Suggested file targets
 
@@ -809,7 +809,7 @@ Make CLI JSON transport-clean and compact by default.
 
 ### Work
 
-- make workflow `--json` output `v2` compact JSON only on stdout
+- make workflow `--json` output compact compact JSON only on stdout
 - add `--json-file <path>`
 - add truncation metadata when needed
 - keep logs and progress on stderr only
@@ -845,12 +845,12 @@ Make CLI JSON transport-clean and compact by default.
 
 ### Goal
 
-Promote `v2` from temporary validation surfaces to the default compact public contract.
+Promote compact from temporary validation surfaces to the default compact public contract.
 
 ### Work
 
-- switch MCP default compact output to `v2`
-- switch CLI `--json` to `v2`
+- switch MCP default compact output to compact
+- switch CLI `--json` to compact
 - keep rich output behind `full`
 - update host-facing docs and examples after the cutover decision
 - remove old temporary compact schema branches immediately after cutover validation passes
@@ -860,7 +860,7 @@ Promote `v2` from temporary validation surfaces to the default compact public co
 - replay suite passes
 - default outputs are smaller than current defaults
 - host and eval consumers no longer need to read rich artifacts for basic safety decisions
-- no supported public compact schema remains besides `v2`
+- no supported public compact schema remains besides compact
 
 ### Model suggestion
 
@@ -921,14 +921,14 @@ Remove duplicated legacy branching once the new contract is stable.
 ### Replay tests
 
 - known bad traces are preserved as fixtures
-- `v2` reduces wrong-turn rate vs current compact output
-- `v2` reduces default token size and output bytes
+- compact reduces wrong-turn rate vs current compact output
+- compact reduces default token size and output bytes
 
 ### Agentic-eval loop
 
 Use a simple loop for contract hardening:
 
-1. generate `v2` output from fixture
+1. generate compact output from fixture
 2. score it with rubric
 3. inspect failures
 4. tighten derivation rule or schema
@@ -970,7 +970,7 @@ Do not cut over defaults until all of the following are true:
 
 ### Do not use older codex-specific models as the primary implementation model
 
-They are useful only as a baseline comparison if you want to measure whether `v2` helps weaker agents too.
+They are useful only as a baseline comparison if you want to measure whether compact helps weaker agents too.
 
 ---
 
@@ -987,7 +987,7 @@ Use this as the practical handoff rule during implementation.
 
 ### Swap down to `gpt-5.4 high` when
 
-- the `v2` field list is frozen
+- the compact field list is frozen
 - each field has one authoritative meaning
 - the contradiction rules are written down
 - the golden fixtures are accepted by the team
@@ -1018,4 +1018,4 @@ At that point the work becomes implementation and test wiring, not open-ended de
 
 ## Short Implementation Summary
 
-Rewrite the public contract first, not the whole engine. Derive a compact `v2` envelope from existing workflow logic. Harden MCP semantic matching before CLI cleanup. Use replay fixtures as the source of truth for what counts as better. Flip defaults once `v2` passes replay gates, then delete the old compact and other temporary public schema paths. Keep only `full` as the rich debugging mode.
+Rewrite the public contract first, not the whole engine. Derive a compact envelope from existing workflow logic. Harden MCP semantic matching before CLI cleanup. Use replay fixtures as the source of truth for what counts as better. Flip defaults once compact passes replay gates, then delete the old compact and other temporary public schema paths. Keep only `full` as the rich debugging mode.

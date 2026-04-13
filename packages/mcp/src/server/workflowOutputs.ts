@@ -1,11 +1,11 @@
 import type { CreateSaltUiResult } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { MigrateToSaltResult } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import {
-  buildCreatePublicContractV2,
-  buildMigratePublicContractV2,
-  buildReviewPublicContractV2,
-  buildUpgradePublicContractV2,
-} from "@salt-ds/semantic-core/tools/publicContractV2";
+  buildCreatePublicContract,
+  buildMigratePublicContract,
+  buildReviewPublicContract,
+  buildUpgradePublicContract,
+} from "@salt-ds/semantic-core/tools/publicContract";
 import type { ReviewSaltUiResult } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 import type {
   NormalizedVisualEvidenceInput,
@@ -134,7 +134,7 @@ function buildCreateWorkflowEnvelope(
   } = result;
 
   if (!isFullView(input.view)) {
-    return buildCreatePublicContractV2(result, contract, {
+    return buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: input.query,
@@ -195,7 +195,7 @@ function buildReviewWorkflowEnvelope(
   ).length;
 
   if (!isFullView(input.view)) {
-    return buildReviewPublicContractV2(result, contract, {
+    return buildReviewPublicContract(result, contract, {
       transport_used: "mcp",
     });
   }
@@ -266,7 +266,7 @@ function buildMigrateWorkflowEnvelope(
   } = result;
 
   if (!isFullView(input.view)) {
-    return buildMigratePublicContractV2(result, contract, {
+    return buildMigratePublicContract(result, contract, {
       transport_used: "mcp",
     });
   }
@@ -307,7 +307,7 @@ function buildUpgradeWorkflowEnvelope(
   const { ide_summary, rule_ids, ...workflow } = contract;
   const { raw, ...domainResult } = result;
   if (!isFullView(input.view)) {
-    return buildUpgradePublicContractV2(result, contract, {
+    return buildUpgradePublicContract(result, contract, {
       transport_used: "mcp",
     });
   }

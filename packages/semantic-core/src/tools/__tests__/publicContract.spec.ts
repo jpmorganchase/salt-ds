@@ -3,16 +3,16 @@ import type { SaltRegistry } from "../../types.js";
 import type { CreateSaltUiResult } from "../createSaltUi.js";
 import type { ReviewSaltUiResult } from "../reviewSaltUi.js";
 import {
-  assertValidPublicContractV2,
-  buildCreatePublicContractV2,
-  buildMigratePublicContractV2,
-  buildPublicContractV2,
-  buildReviewPublicContractV2,
-  buildUpgradePublicContractV2,
-  getPublicContractV2ValidationErrors,
-  type PublicContractV2Input,
+  assertValidPublicContract,
+  buildCreatePublicContract,
+  buildMigratePublicContract,
+  buildPublicContract,
+  buildReviewPublicContract,
+  buildUpgradePublicContract,
+  getPublicContractValidationErrors,
+  type PublicContractInput,
   type PublicNextStep,
-} from "../publicContractV2.js";
+} from "../publicContract.js";
 import type { MigrateToSaltResult } from "../translation/sourceUiTypes.js";
 import type { UpgradeSaltUiResult } from "../upgradeSaltUi.js";
 import type {
@@ -32,8 +32,8 @@ const exactNameStep: PublicNextStep = {
 };
 
 function buildInput(
-  overrides: Partial<PublicContractV2Input> = {},
-): PublicContractV2Input {
+  overrides: Partial<PublicContractInput> = {},
+): PublicContractInput {
   return {
     workflow: "create",
     transport_used: "mcp",
@@ -205,7 +205,7 @@ function buildCreateWorkflowContract(
   return {
     confidence: {
       level: "high",
-      reasons: ["Fixture confidence is sufficient for v2 derivation tests."],
+      reasons: ["Fixture confidence is sufficient for contract derivation tests."],
       ask_before_proceeding: false,
       raise_confidence: [],
     },
@@ -285,7 +285,7 @@ function buildReviewWorkflowContract(
   return {
     confidence: {
       level: "high",
-      reasons: ["Fixture confidence is sufficient for review v2 tests."],
+      reasons: ["Fixture confidence is sufficient for review contract tests."],
       ask_before_proceeding: false,
       raise_confidence: [],
     },
@@ -342,7 +342,7 @@ function buildMigrateWorkflowContract(
   return {
     confidence: {
       level: "high",
-      reasons: ["Fixture confidence is sufficient for migrate v2 tests."],
+      reasons: ["Fixture confidence is sufficient for migrate contract tests."],
       ask_before_proceeding: false,
       raise_confidence: [],
     },
@@ -452,7 +452,7 @@ function buildUpgradeWorkflowContract(
   return {
     confidence: {
       level: "high",
-      reasons: ["Fixture confidence is sufficient for upgrade v2 tests."],
+      reasons: ["Fixture confidence is sufficient for upgrade contract tests."],
       ask_before_proceeding: false,
       raise_confidence: [],
     },
@@ -491,9 +491,9 @@ function buildUpgradeWorkflowContract(
   };
 }
 
-describe("publicContractV2", () => {
+describe("publicContract", () => {
   it("builds a success contract for an exact safe request", () => {
-    const contract = buildPublicContractV2(buildInput());
+    const contract = buildPublicContract(buildInput());
 
     expect(contract).toEqual(
       expect.objectContaining({
@@ -515,7 +515,7 @@ describe("publicContractV2", () => {
   });
 
   it("builds a partial contract when follow-through still remains", () => {
-    const contract = buildPublicContractV2(
+    const contract = buildPublicContract(
       buildInput({
         exact_request: {
           requested_entity: "dashboard summary area",
@@ -554,7 +554,7 @@ describe("publicContractV2", () => {
   });
 
   it("blocks an exact request when the resolver is misrouted", () => {
-    const contract = buildPublicContractV2(
+    const contract = buildPublicContract(
       buildInput({
         exact_request: {
           requested_entity: "Header block",
@@ -600,7 +600,7 @@ describe("publicContractV2", () => {
   });
 
   it("blocks an exact request when no match is found", () => {
-    const contract = buildPublicContractV2(
+    const contract = buildPublicContract(
       buildInput({
         exact_request: {
           requested_entity: "Unknown Thing",
@@ -642,7 +642,7 @@ describe("publicContractV2", () => {
   });
 
   it("blocks when repo-specific context is still missing", () => {
-    const contract = buildPublicContractV2(
+    const contract = buildPublicContract(
       buildInput({
         state: {
           implementation_ready: false,
@@ -681,7 +681,7 @@ describe("publicContractV2", () => {
   });
 
   it("treats strict broadened exact-follow-through as blocked", () => {
-    const contract = buildPublicContractV2(
+    const contract = buildPublicContract(
       buildInput({
         exact_request: {
           requested_entity: "Header block",
@@ -725,7 +725,7 @@ describe("publicContractV2", () => {
   });
 
   it("flags contradiction states through validation helpers", () => {
-    const errors = getPublicContractV2ValidationErrors({
+    const errors = getPublicContractValidationErrors({
       workflow: "create",
       transport_used: "mcp",
       workflow_status: "success",
@@ -748,7 +748,7 @@ describe("publicContractV2", () => {
 
   it("throws when a contract violates core contradiction rules", () => {
     expect(() =>
-      assertValidPublicContractV2({
+      assertValidPublicContract({
         workflow: "create",
         transport_used: "mcp",
         workflow_status: "blocked",
@@ -764,11 +764,11 @@ describe("publicContractV2", () => {
         },
         summary: "This contract is invalid.",
       }),
-    ).toThrow(/Invalid PublicContractV2/);
+    ).toThrow(/Invalid PublicContract/);
   });
 });
 
-describe("publicContractV2 workflow adapters", () => {
+describe("publicContract workflow adapters", () => {
   it("derives exact semantic-match metadata for an exact named create query", () => {
     const registry = buildRegistryFixture();
     const result = {
@@ -790,7 +790,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: "Metric",
@@ -829,7 +829,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: "dashboard summary area",
@@ -878,7 +878,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: "Header block",
@@ -929,7 +929,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: "Header block",
@@ -980,7 +980,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query:
@@ -1033,7 +1033,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: "Hotkeys",
@@ -1073,7 +1073,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
       registry,
       query: "Metric",
@@ -1103,7 +1103,7 @@ describe("publicContractV2 workflow adapters", () => {
     );
   });
 
-  it("derives create v2 output from the shared create workflow contract", () => {
+  it("derives create contract output from the shared create workflow contract", () => {
     const result = {
       decision: {
         name: "Analytical dashboard",
@@ -1145,7 +1145,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildCreatePublicContractV2(result, contract, {
+    const compact = buildCreatePublicContract(result, contract, {
       transport_used: "mcp",
     });
 
@@ -1170,7 +1170,7 @@ describe("publicContractV2 workflow adapters", () => {
     );
   });
 
-  it("derives review v2 output from the shared review workflow contract", () => {
+  it("derives review contract output from the shared review workflow contract", () => {
     const result = {
       guidance_boundary: {
         workflow: "review_salt_ui",
@@ -1229,7 +1229,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildReviewPublicContractV2(result, contract, {
+    const compact = buildReviewPublicContract(result, contract, {
       transport_used: "mcp",
     });
 
@@ -1245,7 +1245,7 @@ describe("publicContractV2 workflow adapters", () => {
     );
   });
 
-  it("derives migrate v2 output from the shared migrate workflow contract", () => {
+  it("derives migrate contract output from the shared migrate workflow contract", () => {
     const result = {
       translations: [{}],
       migration_plan: ["Start with the main shell."],
@@ -1286,7 +1286,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildMigratePublicContractV2(
+    const compact = buildMigratePublicContract(
       result as unknown as never,
       contract,
       {
@@ -1315,7 +1315,7 @@ describe("publicContractV2 workflow adapters", () => {
     );
   });
 
-  it("derives upgrade v2 output from the shared upgrade workflow contract", () => {
+  it("derives upgrade contract output from the shared upgrade workflow contract", () => {
     const result = {
       decision: {
         target: "@salt-ds/core",
@@ -1341,7 +1341,7 @@ describe("publicContractV2 workflow adapters", () => {
       },
     });
 
-    const compact = buildUpgradePublicContractV2(
+    const compact = buildUpgradePublicContract(
       result as unknown as never,
       contract,
       {

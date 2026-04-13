@@ -1,4 +1,4 @@
-# Salt AI Tooling Public Contract V2 Acceptance
+# Salt AI Tooling Public Contract Acceptance
 
 ## Status
 
@@ -82,5 +82,5 @@ yarn biome check packages/mcp/src/server/toolDefinitions.ts packages/mcp/src/eva
 ## Notes
 
 - The MCP stdio runner required a transport-layer schema cleanup. Workflow tool `outputSchema` is now permissive at the SDK boundary so compact and rich outputs can both travel without breaking `structuredContent`.
-- Replay assets were renamed from `*-agent-v2.json` to `*-compact-v2.json` to remove transitional naming from the acceptance corpus.
+- Replay assets were renamed from `*-compact.json` to `*-compact.json` to remove transitional naming from the acceptance corpus.
 - Workflow CLI help now advertises `--json` as the compact contract path for workflow commands and `--full` as the explicit rich-output path.

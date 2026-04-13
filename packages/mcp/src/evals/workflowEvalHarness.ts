@@ -58,7 +58,7 @@ export interface WorkflowEvalScenario {
     final_choice?: string | null;
     required_fragments?: string[];
     banned_fragments?: string[];
-    public_contract_v2?: {
+    public_contract?: {
       workflow_status?: "success" | "partial" | "blocked" | "failed";
       canonical_complete?: boolean;
       safe_to_implement_exact_request?: boolean;
@@ -353,7 +353,7 @@ function extractResultObject(value: unknown): Record<string, unknown> | null {
   return null;
 }
 
-function extractPublicContractV2(
+function extractPublicContract(
   value: unknown,
 ): Record<string, unknown> | null {
   if (isRecord(value) && typeof value.workflow === "string") {
@@ -1055,7 +1055,7 @@ export function judgeWorkflowEvalScenario(
   const failures: string[] = [];
   const workflow = extractWorkflowObject(trace.workflow_result);
   const result = extractResultObject(trace.workflow_result);
-  const publicContractV2 = extractPublicContractV2(trace.workflow_result);
+  const publicContract = extractPublicContract(trace.workflow_result);
   const serialized = serializeTraceResult(trace.workflow_result);
   const successfulTransport =
     trace.transport_trace.find((entry) => entry.status === "succeeded")
@@ -1178,81 +1178,81 @@ export function judgeWorkflowEvalScenario(
     );
   }
 
-  if (scenario.expected.public_contract_v2) {
-    if (!publicContractV2) {
+  if (scenario.expected.public_contract) {
+    if (!publicContract) {
       failures.push(
-        `Workflow result for ${scenario.id} did not expose a compact public contract v2 payload.`,
+        `Workflow result for ${scenario.id} did not expose a compact public contract payload.`,
       );
     } else {
-      const expectedPublicContractV2 = scenario.expected.public_contract_v2;
+      const expectedPublicContract = scenario.expected.public_contract;
 
       if (
-        expectedPublicContractV2.workflow_status &&
-        publicContractV2.workflow_status !==
-          expectedPublicContractV2.workflow_status
+        expectedPublicContract.workflow_status &&
+        publicContract.workflow_status !==
+          expectedPublicContract.workflow_status
       ) {
         failures.push(
-          `workflow_status ${String(publicContractV2.workflow_status)} did not match expected ${expectedPublicContractV2.workflow_status}.`,
+          `workflow_status ${String(publicContract.workflow_status)} did not match expected ${expectedPublicContract.workflow_status}.`,
         );
       }
 
       if (
-        typeof expectedPublicContractV2.canonical_complete === "boolean" &&
-        publicContractV2.canonical_complete !==
-          expectedPublicContractV2.canonical_complete
+        typeof expectedPublicContract.canonical_complete === "boolean" &&
+        publicContract.canonical_complete !==
+          expectedPublicContract.canonical_complete
       ) {
         failures.push(
-          `canonical_complete ${String(publicContractV2.canonical_complete)} did not match expected ${String(expectedPublicContractV2.canonical_complete)}.`,
+          `canonical_complete ${String(publicContract.canonical_complete)} did not match expected ${String(expectedPublicContract.canonical_complete)}.`,
         );
       }
 
       if (
-        typeof expectedPublicContractV2.safe_to_implement_exact_request ===
+        typeof expectedPublicContract.safe_to_implement_exact_request ===
           "boolean" &&
-        publicContractV2.safe_to_implement_exact_request !==
-          expectedPublicContractV2.safe_to_implement_exact_request
+        publicContract.safe_to_implement_exact_request !==
+          expectedPublicContract.safe_to_implement_exact_request
       ) {
         failures.push(
-          `safe_to_implement_exact_request ${String(publicContractV2.safe_to_implement_exact_request)} did not match expected ${String(expectedPublicContractV2.safe_to_implement_exact_request)}.`,
+          `safe_to_implement_exact_request ${String(publicContract.safe_to_implement_exact_request)} did not match expected ${String(expectedPublicContract.safe_to_implement_exact_request)}.`,
         );
       }
 
       if (
-        Object.hasOwn(expectedPublicContractV2, "requested_entity") &&
-        (typeof publicContractV2.requested_entity === "string"
-          ? publicContractV2.requested_entity
-          : null) !== expectedPublicContractV2.requested_entity
+        Object.hasOwn(expectedPublicContract, "requested_entity") &&
+        (typeof publicContract.requested_entity === "string"
+          ? publicContract.requested_entity
+          : null) !== expectedPublicContract.requested_entity
       ) {
         failures.push(
-          `requested_entity ${String(publicContractV2.requested_entity)} did not match expected ${String(expectedPublicContractV2.requested_entity)}.`,
+          `requested_entity ${String(publicContract.requested_entity)} did not match expected ${String(expectedPublicContract.requested_entity)}.`,
         );
       }
 
       if (
-        Object.hasOwn(expectedPublicContractV2, "resolved_entity") &&
-        (typeof publicContractV2.resolved_entity === "string"
-          ? publicContractV2.resolved_entity
-          : null) !== expectedPublicContractV2.resolved_entity
+        Object.hasOwn(expectedPublicContract, "resolved_entity") &&
+        (typeof publicContract.resolved_entity === "string"
+          ? publicContract.resolved_entity
+          : null) !== expectedPublicContract.resolved_entity
       ) {
         failures.push(
-          `resolved_entity ${String(publicContractV2.resolved_entity)} did not match expected ${String(expectedPublicContractV2.resolved_entity)}.`,
+          `resolved_entity ${String(publicContract.resolved_entity)} did not match expected ${String(expectedPublicContract.resolved_entity)}.`,
         );
       }
 
       if (
-        Object.hasOwn(expectedPublicContractV2, "match_status") &&
-        (typeof publicContractV2.match_status === "string"
-          ? publicContractV2.match_status
-          : null) !== expectedPublicContractV2.match_status
+        Object.hasOwn(expectedPublicContract, "match_status") &&
+        (typeof publicContract.match_status === "string"
+          ? publicContract.match_status
+          : null) !== expectedPublicContract.match_status
       ) {
         failures.push(
-          `match_status ${String(publicContractV2.match_status)} did not match expected ${String(expectedPublicContractV2.match_status)}.`,
+          `match_status ${String(publicContract.match_status)} did not match expected ${String(expectedPublicContract.match_status)}.`,
         );
       }
 
-      if (expectedPublicContractV2.next_step) {
-        const nextStep = isRecord(publicContractV2.next_step)
-          ? publicContractV2.next_step
+      if (expectedPublicContract.next_step) {
+        const nextStep = isRecord(publicContract.next_step)
+          ? publicContract.next_step
           : null;
 
         if (!nextStep) {
@@ -1261,50 +1261,50 @@ export function judgeWorkflowEvalScenario(
           );
         } else {
           if (
-            expectedPublicContractV2.next_step.kind &&
-            nextStep.kind !== expectedPublicContractV2.next_step.kind
+            expectedPublicContract.next_step.kind &&
+            nextStep.kind !== expectedPublicContract.next_step.kind
           ) {
             failures.push(
-              `next_step.kind ${String(nextStep.kind)} did not match expected ${expectedPublicContractV2.next_step.kind}.`,
+              `next_step.kind ${String(nextStep.kind)} did not match expected ${expectedPublicContract.next_step.kind}.`,
             );
           }
           if (
-            expectedPublicContractV2.next_step.tool &&
-            nextStep.tool !== expectedPublicContractV2.next_step.tool
+            expectedPublicContract.next_step.tool &&
+            nextStep.tool !== expectedPublicContract.next_step.tool
           ) {
             failures.push(
-              `next_step.tool ${String(nextStep.tool)} did not match expected ${expectedPublicContractV2.next_step.tool}.`,
+              `next_step.tool ${String(nextStep.tool)} did not match expected ${expectedPublicContract.next_step.tool}.`,
             );
           }
           if (
-            expectedPublicContractV2.next_step.mode &&
-            nextStep.mode !== expectedPublicContractV2.next_step.mode
+            expectedPublicContract.next_step.mode &&
+            nextStep.mode !== expectedPublicContract.next_step.mode
           ) {
             failures.push(
-              `next_step.mode ${String(nextStep.mode)} did not match expected ${expectedPublicContractV2.next_step.mode}.`,
+              `next_step.mode ${String(nextStep.mode)} did not match expected ${expectedPublicContract.next_step.mode}.`,
             );
           }
-          if (Object.hasOwn(expectedPublicContractV2.next_step, "query")) {
+          if (Object.hasOwn(expectedPublicContract.next_step, "query")) {
             const actualNextQuery =
               isRecord(nextStep.args) && typeof nextStep.args.query === "string"
                 ? nextStep.args.query
                 : null;
-            if (actualNextQuery !== expectedPublicContractV2.next_step.query) {
+            if (actualNextQuery !== expectedPublicContract.next_step.query) {
               failures.push(
-                `next_step.args.query ${String(actualNextQuery)} did not match expected ${String(expectedPublicContractV2.next_step.query)}.`,
+                `next_step.args.query ${String(actualNextQuery)} did not match expected ${String(expectedPublicContract.next_step.query)}.`,
               );
             }
           }
         }
       }
 
-      for (const fragment of expectedPublicContractV2.summary_includes ?? []) {
+      for (const fragment of expectedPublicContract.summary_includes ?? []) {
         if (
-          typeof publicContractV2.summary !== "string" ||
-          !publicContractV2.summary.includes(fragment)
+          typeof publicContract.summary !== "string" ||
+          !publicContract.summary.includes(fragment)
         ) {
           failures.push(
-            `summary ${String(publicContractV2.summary)} did not include expected fragment ${fragment}.`,
+            `summary ${String(publicContract.summary)} did not include expected fragment ${fragment}.`,
           );
         }
       }
