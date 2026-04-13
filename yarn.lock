@@ -4022,6 +4022,7 @@ __metadata:
   resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"
   dependencies:
     "@salt-ds/core": "workspace:^"
+    "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:^"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"

@@ -1,4 +1,5 @@
 import { useDensity, useTheme } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type { Options } from "highcharts";
 import Highcharts from "highcharts";
@@ -11,7 +12,12 @@ import {
   useRef,
   useState,
 } from "react";
+import highchartsThemeCss from "../index.css";
 import { getDefaultOptions } from "./default-options";
+import {
+  getDensityTokenMap,
+  type SaltChartTokenMap,
+} from "./density-token-map";
 import { applyFillPatternOverrides } from "./fill-patterns";
 
 if (typeof patternFillModule === "function") {
@@ -31,20 +37,28 @@ export const useChart = (
   const { mode } = useTheme();
   const targetWindow = useWindow();
 
+  useComponentCssInjection({
+    testId: "salt-highcharts-theme",
+    css: highchartsThemeCss,
+    window: targetWindow,
+  });
+
   const hostElementRef = useRef<Element | null>(null);
 
   const getMergedOptions = useCallback(
     (hostElement?: Element | null): Options => {
+      const tokens: SaltChartTokenMap = getDensityTokenMap(
+        density,
+        hostElement ?? undefined,
+      );
       const resolvedChartOptions = applyFillPatternOverrides(
         chartOptions,
-        density,
-        hostElement,
+        tokens,
         fillPatterns,
       );
       const defaults = getDefaultOptions(
-        density,
         resolvedChartOptions,
-        hostElement,
+        tokens,
         fillPatterns,
       );
 

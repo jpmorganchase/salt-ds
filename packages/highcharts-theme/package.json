@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@salt-ds/core": "workspace:^",
+    "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:^"
   },
   "peerDependencies": {

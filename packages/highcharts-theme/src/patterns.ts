@@ -282,10 +282,12 @@ const buildPatternObject = (
   pattern: FillPatternDefinition,
   backgroundColor: string,
   foregroundColor: string,
+  opacity?: number,
 ): PatternObject => ({
   pattern: {
     backgroundColor,
     height: PATTERN_TILE_SIZE,
+    ...(opacity !== undefined ? { opacity } : {}),
     path: {
       d: toPatternPath(pattern),
       fill: foregroundColor,
@@ -296,32 +298,40 @@ const buildPatternObject = (
   },
 });
 
+export const getFillPatternColor = (
+  tokens: SaltChartTokenMap,
+  index: number,
+  opacity?: number,
+): PatternObject =>
+  buildPatternObject(
+    fillPatterns[index % fillPatterns.length],
+    tokens[CATEGORY_DATAVIZ_TOKENS[index % CATEGORY_DATAVIZ_TOKENS.length]],
+    tokens["--salt-color-black"],
+    opacity,
+  );
+
 export const getFillPatternColors = (
   tokens: SaltChartTokenMap,
   count = fillPatterns.length,
 ): PatternObject[] =>
   Array.from({ length: count }, (_, index) =>
-    buildPatternObject(
-      fillPatterns[index % fillPatterns.length],
-      tokens[CATEGORY_DATAVIZ_TOKENS[index % CATEGORY_DATAVIZ_TOKENS.length]],
-      tokens["--salt-content-primary-foreground"],
-    ),
+    getFillPatternColor(tokens, index),
   );
 
 export const getSentimentPatternColors = (tokens: SaltChartTokenMap) => ({
   negative: buildPatternObject(
     fillPatterns[1],
     tokens["--salt-sentiment-negative-dataviz"],
-    tokens["--salt-content-primary-foreground"],
+    tokens["--salt-color-black"],
   ),
   neutral: buildPatternObject(
     fillPatterns[2],
     tokens["--salt-sentiment-neutral-dataviz"],
-    tokens["--salt-content-primary-foreground"],
+    tokens["--salt-color-black"],
   ),
   positive: buildPatternObject(
     fillPatterns[0],
     tokens["--salt-sentiment-positive-dataviz"],
-    tokens["--salt-content-primary-foreground"],
+    tokens["--salt-color-black"],
   ),
 });

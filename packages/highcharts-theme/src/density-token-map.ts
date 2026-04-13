@@ -63,6 +63,7 @@ export type SaltChartTokenMap = {
   "--salt-sentiment-positive-dataviz": string;
   "--salt-sentiment-negative-dataviz": string;
   "--salt-sentiment-neutral-dataviz": string;
+  "--salt-color-black": string;
 } & {
   [K in (typeof CATEGORY_DATAVIZ_TOKENS)[number]]: string;
 };
@@ -116,6 +117,7 @@ const TYPOGRAPHY_TOKENS = {
 } as const;
 
 const COLOR_TOKENS = {
+  colorBlack: "--salt-color-black",
   containerPrimaryBackground: "--salt-container-primary-background",
   separablePrimaryBorderColor: "--salt-separable-primary-borderColor",
   separableTertiaryBorderColor: "--salt-separable-tertiary-borderColor",
@@ -184,6 +186,7 @@ export const getDensityTokenMap = (
   let sentimentNeutralDataviz = getTokenFallback(
     COLOR_TOKENS.sentimentNeutralDataviz,
   );
+  let colorBlack = getTokenFallback(COLOR_TOKENS.colorBlack);
   const categoryDatavizColors = CATEGORY_DATAVIZ_TOKENS.reduce<
     Record<(typeof CATEGORY_DATAVIZ_TOKENS)[number], string>
   >(
@@ -299,6 +302,7 @@ export const getDensityTokenMap = (
       tokenValues,
       COLOR_TOKENS.sentimentNeutralDataviz,
     );
+    colorBlack = getResolvedStringToken(tokenValues, COLOR_TOKENS.colorBlack);
     for (const tokenName of CATEGORY_DATAVIZ_TOKENS) {
       categoryDatavizColors[tokenName] =
         tokenValues[tokenName] ?? getTokenFallback(tokenName);
@@ -333,6 +337,7 @@ export const getDensityTokenMap = (
     "--salt-sentiment-positive-dataviz": sentimentPositiveDataviz,
     "--salt-sentiment-negative-dataviz": sentimentNegativeDataviz,
     "--salt-sentiment-neutral-dataviz": sentimentNeutralDataviz,
+    "--salt-color-black": colorBlack,
     ...categoryDatavizColors,
   };
 };

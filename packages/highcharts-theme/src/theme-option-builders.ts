@@ -1,5 +1,9 @@
 import type { Options } from "highcharts";
-import type { SaltChartTokenMap } from "./density-token-map";
+import { TRANSLUCENT_FILL_OPACITY } from "./constants";
+import {
+  CATEGORY_DATAVIZ_TOKENS,
+  type SaltChartTokenMap,
+} from "./density-token-map";
 import type { HighchartsOptionsCompat } from "./types";
 
 const AXES_GRID_LINE_SERIES_TYPES = new Set(["bubble", "scatter"]);
@@ -113,15 +117,6 @@ export const buildLegendOptions = (
   tokens: SaltChartTokenMap,
 ): NonNullable<HighchartsOptionsCompat["legend"]> => ({
   align: "right",
-  itemHiddenStyle: {
-    color: tokens["--salt-content-secondary-foreground"],
-    fontFamily: tokens["--salt-text-label-fontFamily"],
-    fontSize: tokens["--salt-text-label-fontSize"],
-    fontWeight: tokens["--salt-text-label-fontWeight"],
-    lineHeight: tokens["--salt-text-label-lineHeight"],
-    opacity: 0.2,
-    textDecoration: "none",
-  },
   itemHoverStyle: {
     color: tokens["--salt-content-secondary-foreground"],
   },
@@ -153,215 +148,213 @@ export const buildLegendOptions = (
   y: tokens["--salt-spacing-200"] + tokens["--salt-size-icon"],
 });
 
-export const buildTooltipOptions = (
-  tokens: SaltChartTokenMap,
-): NonNullable<HighchartsOptionsCompat["tooltip"]> => ({
-  backgroundColor: tokens["--salt-container-primary-background"],
-  borderColor: tokens["--salt-container-primary-background"],
-  borderRadius: tokens["--salt-palette-corner-weaker"],
-  shadow: false,
+// For consistency, despite being able to in-line this
+export const buildTooltipOptions = (): NonNullable<
+  HighchartsOptionsCompat["tooltip"]
+> => ({
   stickOnContact: true,
-  style: {
-    color: tokens["--salt-content-primary-foreground"],
-    fontFamily: tokens["--salt-text-label-fontFamily"],
-    fontSize: tokens["--salt-text-label-fontSize"],
-    fontWeight: tokens["--salt-text-label-fontWeight"],
-    lineHeight: tokens["--salt-text-label-lineHeight"],
-  },
 });
 
 export const buildPlotOptions = (
   tokens: SaltChartTokenMap,
-): NonNullable<HighchartsOptionsCompat["plotOptions"]> => ({
-  area: {
-    dataLabels: {
-      style: {
-        color: tokens["--salt-content-secondary-foreground"],
-        fontFamily: tokens["--salt-text-label-fontFamily"],
-        fontSize: tokens["--salt-text-label-fontSize"],
-        fontWeight: tokens["--salt-text-label-fontWeight"],
-        lineHeight: tokens["--salt-text-label-lineHeight"],
-      },
-    },
-    legendSymbol: "rectangle",
-    marker: {
-      lineColor: tokens["--salt-content-bold-foreground"],
-    },
-    states: {
-      hover: {
-        halo: {
-          size: 0,
+  fillPatterns = false,
+): NonNullable<HighchartsOptionsCompat["plotOptions"]> => {
+  /* 
+    Highcharts doesn’t apply dataLabels.style.textOutline through its normal SVG/CSS styling path -
+    internally, SVGElement.css() strips out textOutline and then SVGElement.applyTextOutline() parses the string and writes the
+    outline color directly onto cloned SVG <tspan> nodes as fill/stroke attributes. This means our CSS variable references do
+    not resolve here properly.
+
+    The `contrast` value returns #000000 just so happens to match the value we want
+  */
+  const textOutline = fillPatterns
+    ? `${tokens["--salt-size-fixed-100"]}px contrast`
+    : "none";
+
+  return {
+    area: {
+      dataLabels: {
+        style: {
+          color: tokens["--salt-content-secondary-foreground"],
+          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
         },
       },
-    },
-  },
-  bar: {
-    borderColor: tokens["--salt-container-primary-background"],
-    borderRadius: 0,
-    borderWidth: tokens["--salt-size-fixed-100"],
-  },
-  boxplot: {
-    lineWidth: tokens["--salt-size-fixed-200"],
-    medianColor: tokens["--salt-content-primary-foreground"],
-  },
-  bubble: {
-    dataLabels: {
-      style: {
-        color: tokens["--salt-content-bold-foreground"],
-        fontFamily: tokens["--salt-text-label-fontFamily"],
-        fontSize: tokens["--salt-text-label-fontSize"],
-        fontWeight: tokens["--salt-text-label-fontWeight-strong"],
-        lineHeight: tokens["--salt-text-label-lineHeight"],
-        textOutline: "none",
+      legendSymbol: "rectangle",
+      marker: {
+        lineColor: tokens["--salt-content-bold-foreground"],
       },
-    },
-    marker: {
-      fillOpacity: 0.75,
-      lineWidth: 1,
       states: {
         hover: {
-          lineWidthPlus: 0,
+          halo: {
+            size: 0,
+          },
         },
       },
     },
-    states: {
-      hover: {
-        halo: {
-          size: 0,
+    bar: {
+      borderColor: tokens["--salt-container-primary-background"],
+      borderRadius: 0,
+      borderWidth: tokens["--salt-size-fixed-100"],
+    },
+    boxplot: {
+      lineWidth: tokens["--salt-size-fixed-200"],
+      medianColor: tokens["--salt-content-primary-foreground"],
+    },
+    bubble: {
+      dataLabels: {
+        style: {
+          color: tokens["--salt-content-bold-foreground"],
+          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+          textOutline,
+        },
+      },
+      marker: {
+        fillOpacity: TRANSLUCENT_FILL_OPACITY,
+        lineWidth: 1,
+        states: {
+          hover: {
+            lineWidthPlus: 0,
+          },
+        },
+      },
+      states: {
+        hover: {
+          halo: {
+            size: 0,
+          },
         },
       },
     },
-  },
-  bullet: {
-    borderRadius: 0,
-    borderWidth: 0,
-  },
-  candlestick: {
-    color: tokens["--salt-sentiment-negative-dataviz"],
-    lineWidth: tokens["--salt-size-fixed-100"],
-    lineColor: tokens["--salt-sentiment-negative-dataviz"],
-    states: {
-      hover: {
-        lineWidth: tokens["--salt-size-fixed-100"],
+    bullet: {
+      borderRadius: 0,
+      borderWidth: 0,
+    },
+    candlestick: {
+      color: tokens["--salt-sentiment-negative-dataviz"],
+      lineWidth: tokens["--salt-size-fixed-100"],
+      lineColor: tokens["--salt-sentiment-negative-dataviz"],
+      states: {
+        hover: {
+          lineWidth: tokens["--salt-size-fixed-100"],
+        },
       },
+      upColor: tokens["--salt-sentiment-positive-dataviz"],
+      upLineColor: tokens["--salt-sentiment-positive-dataviz"],
     },
-    upColor: tokens["--salt-sentiment-positive-dataviz"],
-    upLineColor: tokens["--salt-sentiment-positive-dataviz"],
-  },
-  column: {
-    borderColor: tokens["--salt-container-primary-background"],
-    borderRadius: 0,
-    borderWidth: tokens["--salt-size-fixed-100"],
-    states: {
-      hover: {
-        brightness: 0,
-      },
-    },
-  },
-  line: {
-    marker: {
-      enabled: false,
-    },
-    states: {
-      hover: {
-        halo: {
-          size: 0,
+    column: {
+      borderColor: tokens["--salt-container-primary-background"],
+      borderRadius: 0,
+      borderWidth: tokens["--salt-size-fixed-100"],
+      states: {
+        hover: {
+          brightness: 0,
         },
       },
     },
-  },
-  pie: {
-    borderColor: tokens["--salt-container-primary-background"],
-    borderRadius: 0,
-    borderWidth: tokens["--salt-size-fixed-100"],
-    dataLabels: {
-      distance: 6,
-      enabled: true,
-      format: '{point.name} <span class="value">{point.percentage:.1f}%</span>',
-      style: {
-        color: tokens["--salt-content-secondary-foreground"],
-        fontFamily: tokens["--salt-text-label-fontFamily"],
-        fontSize: tokens["--salt-text-label-fontSize"],
-        fontWeight: tokens["--salt-text-label-fontWeight"],
-        lineHeight: tokens["--salt-text-label-lineHeight"],
-      },
-    },
-    states: {
-      hover: {
-        brightness: 0,
-        halo: {
-          size: 0,
-        },
-      },
-      inactive: {
-        opacity: 0.2,
-      },
-    },
-  },
-  scatter: {
-    marker: {
-      radius: 4,
-    },
-  },
-  series: {
-    dataLabels: {
-      style: {
-        color: tokens["--salt-content-secondary-foreground"],
-        fontFamily: tokens["--salt-text-label-fontFamily"],
-        fontSize: tokens["--salt-text-label-fontSize"],
-        fontWeight: tokens["--salt-text-label-fontWeight"],
-        lineHeight: tokens["--salt-text-label-lineHeight"],
-      },
-    },
-  },
-  waterfall: {
-    borderWidth: 0,
-    borderRadius: 0,
-    color: tokens["--salt-sentiment-negative-dataviz"],
-    dataLabels: {
-      style: {
-        color: tokens["--salt-content-bold-foreground"],
-        fontFamily: tokens["--salt-text-label-fontFamily"],
-        fontSize: tokens["--salt-text-label-fontSize"],
-        fontWeight: tokens["--salt-text-label-fontWeight-strong"],
-        lineHeight: tokens["--salt-text-label-lineHeight"],
-        textOutline: "none",
-      },
-    },
-    lineColor: tokens["--salt-content-primary-foreground"],
-    lineWidth: tokens["--salt-size-fixed-100"],
-    states: {
-      hover: {
+    line: {
+      marker: {
         enabled: false,
       },
+      states: {
+        hover: {
+          halo: {
+            size: 0,
+          },
+        },
+      },
     },
-    upColor: tokens["--salt-sentiment-positive-dataviz"],
-  },
-});
+    pie: {
+      borderColor: tokens["--salt-container-primary-background"],
+      borderRadius: 0,
+      borderWidth: tokens["--salt-size-fixed-100"],
+      dataLabels: {
+        distance: 6,
+        enabled: true,
+        format:
+          '{point.name} <span class="value">{point.percentage:.1f}%</span>',
+        style: {
+          color: tokens["--salt-content-secondary-foreground"],
+          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+        },
+      },
+      states: {
+        hover: {
+          brightness: 0,
+          halo: {
+            size: 0,
+          },
+        },
+        inactive: {
+          opacity: 0.2,
+        },
+      },
+    },
+    scatter: {
+      marker: {
+        radius: 4,
+        lineWidth: 1,
+        states: {
+          hover: {
+            lineWidthPlus: 0,
+          },
+        },
+      },
+      states: {
+        hover: {
+          halo: {
+            size: 0,
+          },
+        },
+      },
+    },
+    series: {
+      dataLabels: {
+        style: {
+          color: tokens["--salt-content-secondary-foreground"],
+          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+        },
+      },
+    },
+    waterfall: {
+      borderWidth: 0,
+      borderRadius: 0,
+      color: tokens["--salt-sentiment-negative-dataviz"],
+      dataLabels: {
+        style: {
+          color: tokens["--salt-content-bold-foreground"],
+          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+          textOutline,
+        },
+      },
+      lineColor: tokens["--salt-content-primary-foreground"],
+      lineWidth: tokens["--salt-size-fixed-100"],
+      states: {
+        hover: {
+          enabled: false,
+        },
+      },
+      upColor: tokens["--salt-sentiment-positive-dataviz"],
+    },
+  };
+};
 
 export const buildSeriesPalette = (
   tokens: SaltChartTokenMap,
 ): Pick<HighchartsOptionsCompat, "colors"> => ({
-  colors: [
-    tokens["--salt-category-1-dataviz"],
-    tokens["--salt-category-2-dataviz"],
-    tokens["--salt-category-3-dataviz"],
-    tokens["--salt-category-4-dataviz"],
-    tokens["--salt-category-5-dataviz"],
-    tokens["--salt-category-6-dataviz"],
-    tokens["--salt-category-7-dataviz"],
-    tokens["--salt-category-8-dataviz"],
-    tokens["--salt-category-9-dataviz"],
-    tokens["--salt-category-10-dataviz"],
-    tokens["--salt-category-11-dataviz"],
-    tokens["--salt-category-12-dataviz"],
-    tokens["--salt-category-13-dataviz"],
-    tokens["--salt-category-14-dataviz"],
-    tokens["--salt-category-15-dataviz"],
-    tokens["--salt-category-16-dataviz"],
-    tokens["--salt-category-17-dataviz"],
-    tokens["--salt-category-18-dataviz"],
-    tokens["--salt-category-19-dataviz"],
-    tokens["--salt-category-20-dataviz"],
-  ],
+  colors: CATEGORY_DATAVIZ_TOKENS.map((tokenName) => tokens[tokenName]),
 });
