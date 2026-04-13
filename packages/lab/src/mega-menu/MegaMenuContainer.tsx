@@ -59,11 +59,15 @@ export const MegaMenuContainer = forwardRef<
       focusManagerProps={{
         context: floatingUIResult.context,
         modal: false,
+        initialFocus: -1,
+        returnFocus: true,
+        closeOnFocusOut: false,
       }}
     >
       <nav
         className={clsx(withBaseName(), className)}
         ref={handleRef}
+        role="region"
         {...floatingProps({
           ...rest,
           style: {

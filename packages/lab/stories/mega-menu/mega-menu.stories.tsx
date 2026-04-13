@@ -161,75 +161,149 @@ const WithIconsTemplate: StoryFn = () => {
 export const WithIcons = WithIconsTemplate.bind({});
 
 const WithNavigationItemsTemplate: StoryFn = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+
+  const handleOpenChange = (menu: string) => (open: boolean) => {
+    setOpenMenu(open ? menu : null);
+  };
 
   return (
-    <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
-      <nav>
-        <StackLayout as="ul" direction="row" gap={1}>
-          <li>
+    <nav>
+      <StackLayout as="ul" direction="row" gap={1}>
+        <li>
+          <MegaMenu
+            open={openMenu === "solutions"}
+            onOpenChange={handleOpenChange("solutions")}
+          >
             <MegaMenuTrigger>
               <NavigationItem
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setIsOpen(true);
-                }}
-              >
-                Products
-              </NavigationItem>
-            </MegaMenuTrigger>
-          </li>
-          <li>
-            <MegaMenuTrigger>
-              <NavigationItem
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
-                  setIsOpen(true);
+                  setOpenMenu("solutions");
                 }}
               >
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-          </li>
-          <li>
+
+            <MegaMenuContainer>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Analytics</MegaMenuHeader>
+                <MegaMenuItem>Data Insights</MegaMenuItem>
+                <MegaMenuItem>Business Intelligence</MegaMenuItem>
+                <MegaMenuItem>Reporting Tools</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Integration</MegaMenuHeader>
+                <MegaMenuItem>API Gateway</MegaMenuItem>
+                <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                <MegaMenuItem>Event Streaming</MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+        <li>
+          <MegaMenu
+            open={openMenu === "services"}
+            onOpenChange={handleOpenChange("services")}
+          >
             <MegaMenuTrigger>
               <NavigationItem
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setIsOpen(true);
+                  setOpenMenu("services");
+                }}
+              >
+                Services
+              </NavigationItem>
+            </MegaMenuTrigger>
+
+            <MegaMenuContainer>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Consulting</MegaMenuHeader>
+                <MegaMenuItem>Strategy</MegaMenuItem>
+                <MegaMenuItem>Implementation</MegaMenuItem>
+                <MegaMenuItem>Migration</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Support</MegaMenuHeader>
+                <MegaMenuItem>Enterprise Support</MegaMenuItem>
+                <MegaMenuItem>Training</MegaMenuItem>
+                <MegaMenuItem>Managed Services</MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+        <li>
+          <MegaMenu
+            open={openMenu === "resources"}
+            onOpenChange={handleOpenChange("resources")}
+          >
+            <MegaMenuTrigger>
+              <NavigationItem
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setOpenMenu("resources");
                 }}
               >
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-          </li>
-        </StackLayout>
-      </nav>
 
-      <MegaMenuContainer>
-        <MegaMenuGroup>
-          <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-          <MegaMenuItem>Mega menu item 1</MegaMenuItem>
-          <MegaMenuItem>Mega menu item 2</MegaMenuItem>
-          <MegaMenuItem>Mega menu item 3</MegaMenuItem>
-        </MegaMenuGroup>
-        <MegaMenuGroup>
-          <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-          <MegaMenuItem>Mega menu item 4</MegaMenuItem>
-          <MegaMenuItem>Mega menu item 5</MegaMenuItem>
-          <MegaMenuItem>Mega menu item 6</MegaMenuItem>
-        </MegaMenuGroup>
-        <MegaMenuGroup>
-          <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-          <MegaMenuItem>Mega menu item 7</MegaMenuItem>
-          <MegaMenuItem>Mega menu item 8</MegaMenuItem>
-          <MegaMenuItem>Mega menu item 9</MegaMenuItem>
-        </MegaMenuGroup>
-      </MegaMenuContainer>
-    </MegaMenu>
+            <MegaMenuContainer>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Learn</MegaMenuHeader>
+                <MegaMenuItem>Documentation</MegaMenuItem>
+                <MegaMenuItem>Tutorials</MegaMenuItem>
+                <MegaMenuItem>Webinars</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Community</MegaMenuHeader>
+                <MegaMenuItem>Blog</MegaMenuItem>
+                <MegaMenuItem>Forum</MegaMenuItem>
+                <MegaMenuItem>Open Source</MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+        <li>
+          <MegaMenu
+            open={openMenu === "company"}
+            onOpenChange={handleOpenChange("company")}
+          >
+            <MegaMenuTrigger>
+              <NavigationItem
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setOpenMenu("company");
+                }}
+              >
+                Company
+              </NavigationItem>
+            </MegaMenuTrigger>
+
+            <MegaMenuContainer>
+              <MegaMenuGroup>
+                <MegaMenuHeader>About</MegaMenuHeader>
+                <MegaMenuItem>Our Story</MegaMenuItem>
+                <MegaMenuItem>Leadership</MegaMenuItem>
+                <MegaMenuItem>Careers</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Contact</MegaMenuHeader>
+                <MegaMenuItem>Sales</MegaMenuItem>
+                <MegaMenuItem>Partners</MegaMenuItem>
+                <MegaMenuItem>Press</MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+      </StackLayout>
+    </nav>
   );
 };
 
@@ -376,3 +450,109 @@ export const FullWidthContainer = FullWidthContainerTemplate.bind({});
 FullWidthContainer.parameters = {
   layout: "fullscreen",
 };
+
+const TabNavigationTemplate: StoryFn = () => {
+  return (
+    <div style={{ padding: "20px" }}>
+      <Button>Button Before Menu</Button>
+      <div style={{ marginTop: "20px" }}>
+        <MegaMenu>
+          <div style={{ width: "100%" }}>
+            <MegaMenuTrigger>
+              <Button>Open Mega Menu (Test Tab Navigation)</Button>
+            </MegaMenuTrigger>
+
+            <MegaMenuContainer>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Products</MegaMenuHeader>
+                <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                <MegaMenuItem>AI Assistant</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Solutions</MegaMenuHeader>
+                <MegaMenuItem>Enterprise</MegaMenuItem>
+                <MegaMenuItem>Startups</MegaMenuItem>
+                <MegaMenuItem>Agencies</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Resources</MegaMenuHeader>
+                <MegaMenuItem>Documentation</MegaMenuItem>
+                <MegaMenuItem>Guides</MegaMenuItem>
+                <MegaMenuItem>API Reference</MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuContainer>
+          </div>
+        </MegaMenu>
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <Button>Button After Menu</Button>
+      </div>
+      <div
+        style={{
+          marginTop: "20px",
+          padding: "10px",
+          backgroundColor: "#f5f5f5",
+          borderRadius: "4px",
+        }}
+      >
+        <p>
+          <strong>Tab Navigation Instructions:</strong>
+        </p>
+        <ul>
+          <li>Click "Open Mega Menu" to open the menu</li>
+          <li>Press Tab to focus the first menu item</li>
+          <li>Press Tab again to move through items sequentially</li>
+          <li>
+            Tab moves through items within a group, then to the first item of
+            the next group
+          </li>
+          <li>
+            After the last item, pressing Tab closes the menu and focuses the
+            button below
+          </li>
+          <li>Use Shift+Tab to move backwards through items</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export const TabNavigation = TabNavigationTemplate.bind({});
+
+const SelectedItemTemplate: StoryFn = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
+      <div style={{ width: "100%" }}>
+        <MegaMenuTrigger>
+          <Button onClick={() => setIsOpen(true)}>Open Mega Menu</Button>
+        </MegaMenuTrigger>
+
+        <MegaMenuContainer>
+          <MegaMenuGroup>
+            <MegaMenuHeader>Products</MegaMenuHeader>
+            <MegaMenuItem>Analytics Platform</MegaMenuItem>
+            <MegaMenuItem>Data Pipeline</MegaMenuItem>
+            <MegaMenuItem>AI Assistant</MegaMenuItem>
+          </MegaMenuGroup>
+          <MegaMenuGroup>
+            <MegaMenuHeader>Solutions</MegaMenuHeader>
+            <MegaMenuItem>Enterprise</MegaMenuItem>
+            <MegaMenuItem>Startups</MegaMenuItem>
+            <MegaMenuItem>Agencies</MegaMenuItem>
+          </MegaMenuGroup>
+          <MegaMenuGroup>
+            <MegaMenuHeader>Resources</MegaMenuHeader>
+            <MegaMenuItem>Documentation</MegaMenuItem>
+            <MegaMenuItem>Guides</MegaMenuItem>
+            <MegaMenuItem>API Reference</MegaMenuItem>
+          </MegaMenuGroup>
+        </MegaMenuContainer>
+      </div>
+    </MegaMenu>
+  );
+};
+
+export const SelectedItem = SelectedItemTemplate.bind({});

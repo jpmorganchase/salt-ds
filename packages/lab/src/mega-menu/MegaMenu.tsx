@@ -34,6 +34,9 @@ export const MegaMenu = ({
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | undefined>(
+    undefined,
+  );
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
@@ -57,7 +60,7 @@ export const MegaMenu = ({
       ? interactions(floatingRootContext)
       : [
           // biome-ignore lint/correctness/useHookAtTopLevel: useDismiss is not a React hook
-          useDismiss(floatingRootContext),
+          useDismiss(floatingRootContext, { bubbles: true }),
         ],
   );
 
@@ -71,6 +74,8 @@ export const MegaMenu = ({
       setFloating,
       setReference,
       setOpen,
+      selectedItem,
+      setSelectedItem,
     }),
     [
       openState,
@@ -79,6 +84,7 @@ export const MegaMenu = ({
       getFloatingProps,
       getReferenceProps,
       setOpen,
+      selectedItem,
     ],
   );
 
