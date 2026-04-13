@@ -8,7 +8,7 @@ import {
   getSaltEntity,
   loadRegistry,
   migrateToSalt,
-  type PublicContractV2,
+  type PublicContract,
   reviewSaltUi,
 } from "@salt-ds/semantic-core";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
@@ -29,15 +29,15 @@ let registryDir: string;
 
 type CreateWorkflowFullResult = Exclude<
   ReturnType<typeof withChooseWorkflowGuidance>,
-  PublicContractV2
+  PublicContract
 >;
 type ReviewWorkflowFullResult = Exclude<
   ReturnType<typeof withAnalyzeWorkflowGuidance>,
-  PublicContractV2
+  PublicContract
 >;
 type MigrateWorkflowFullResult = Exclude<
   ReturnType<typeof withTranslateWorkflowGuidance>,
-  PublicContractV2
+  PublicContract
 >;
 
 function runCreateWorkflowFull(input: {

@@ -10,8 +10,9 @@ const originalCwd = process.cwd();
 
 async function createTempDir(name: string): Promise<string> {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), `${name}-`));
-  tempDirs.push(tempDir);
-  return tempDir;
+  const resolvedDir = await fs.realpath(tempDir);
+  tempDirs.push(resolvedDir);
+  return resolvedDir;
 }
 
 afterEach(async () => {

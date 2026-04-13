@@ -28,7 +28,7 @@ const REPLAY_FIXTURE_PATHS = [
     "mcp",
     "eval-fixtures",
     "replays",
-    "existing-salt-create-metric-exact-compact-v2.json",
+    "existing-salt-create-metric-exact-compact.json",
   ),
   path.join(
     REPO_ROOT,
@@ -36,7 +36,7 @@ const REPLAY_FIXTURE_PATHS = [
     "mcp",
     "eval-fixtures",
     "replays",
-    "existing-salt-create-header-block-misroute-compact-v2.json",
+    "existing-salt-create-header-block-misroute-compact.json",
   ),
   path.join(
     REPO_ROOT,
@@ -44,7 +44,7 @@ const REPLAY_FIXTURE_PATHS = [
     "mcp",
     "eval-fixtures",
     "replays",
-    "existing-salt-create-dashboard-broadened-compact-v2.json",
+    "existing-salt-create-dashboard-broadened-compact.json",
   ),
   path.join(
     REPO_ROOT,
@@ -52,7 +52,7 @@ const REPLAY_FIXTURE_PATHS = [
     "mcp",
     "eval-fixtures",
     "replays",
-    "existing-salt-create-chart-cross-family-compact-v2.json",
+    "existing-salt-create-chart-cross-family-compact.json",
   ),
   path.join(
     REPO_ROOT,
@@ -108,20 +108,20 @@ describe("workflow eval replay", () => {
     expect(entry.trace.metrics.payload_bytes).toBeGreaterThan(0);
   });
 
-  it("accepts compact v2 replay fixtures for exact-name create success", async () => {
+  it("accepts compact replay fixtures for exact-name create success", async () => {
     const fixturePath = path.join(
       REPO_ROOT,
       "packages",
       "mcp",
       "eval-fixtures",
       "replays",
-      "existing-salt-create-metric-exact-compact-v2.json",
+      "existing-salt-create-metric-exact-compact.json",
     );
     const fixture = await loadWorkflowEvalReplayFixture(fixturePath);
     const entry = replayWorkflowEvalFixture(fixture, fixturePath);
 
     expect(entry.scenario_id).toBe(
-      "existing-salt-create-metric-exact-compact-v2",
+      "existing-salt-create-metric-exact-compact",
     );
     expect(entry.judgment).toEqual(
       expect.objectContaining({
@@ -137,20 +137,20 @@ describe("workflow eval replay", () => {
     );
   });
 
-  it("accepts compact v2 replay fixtures for descriptive broadened create results", async () => {
+  it("accepts compact replay fixtures for descriptive broadened create results", async () => {
     const fixturePath = path.join(
       REPO_ROOT,
       "packages",
       "mcp",
       "eval-fixtures",
       "replays",
-      "existing-salt-create-dashboard-broadened-compact-v2.json",
+      "existing-salt-create-dashboard-broadened-compact.json",
     );
     const fixture = await loadWorkflowEvalReplayFixture(fixturePath);
     const entry = replayWorkflowEvalFixture(fixture, fixturePath);
 
     expect(entry.scenario_id).toBe(
-      "existing-salt-create-dashboard-broadened-compact-v2",
+      "existing-salt-create-dashboard-broadened-compact",
     );
     expect(entry.judgment).toEqual(
       expect.objectContaining({
@@ -166,16 +166,16 @@ describe("workflow eval replay", () => {
     );
   });
 
-  it("proves compact v2 create drift stays unsafe and smaller than the legacy rich create shape", async () => {
+  it("proves compact create drift stays unsafe and smaller than the legacy rich create shape", async () => {
     const report = await runWorkflowEvalReplayReport(REPLAY_FIXTURE_PATHS);
     const entriesById = new Map(
       report.entries.map((entry) => [entry.scenario_id, entry] as const),
     );
     const compactCreateEntries = [
-      "existing-salt-create-metric-exact-compact-v2",
-      "existing-salt-create-header-block-misroute-compact-v2",
-      "existing-salt-create-dashboard-broadened-compact-v2",
-      "existing-salt-create-chart-cross-family-compact-v2",
+      "existing-salt-create-metric-exact-compact",
+      "existing-salt-create-header-block-misroute-compact",
+      "existing-salt-create-dashboard-broadened-compact",
+      "existing-salt-create-chart-cross-family-compact",
     ].map((id) => entriesById.get(id));
     const legacyRichCreateEntries = [
       "existing-salt-create-table-follow-up-drift",
@@ -251,14 +251,14 @@ describe("workflow eval replay", () => {
     expect(
       parsed.entries.find(
         (entry) =>
-          entry.scenario_id === "existing-salt-create-metric-exact-compact-v2",
+          entry.scenario_id === "existing-salt-create-metric-exact-compact",
       )?.judgment.status,
     ).toBe("passed");
     expect(
       parsed.entries.find(
         (entry) =>
           entry.scenario_id ===
-          "existing-salt-create-header-block-misroute-compact-v2",
+          "existing-salt-create-header-block-misroute-compact",
       )?.judgment.reasons,
     ).toEqual(
       expect.arrayContaining([expect.stringContaining("Canonical choice")]),
@@ -267,14 +267,14 @@ describe("workflow eval replay", () => {
       parsed.entries.find(
         (entry) =>
           entry.scenario_id ===
-          "existing-salt-create-dashboard-broadened-compact-v2",
+          "existing-salt-create-dashboard-broadened-compact",
       )?.judgment.status,
     ).toBe("passed");
     expect(
       parsed.entries.find(
         (entry) =>
           entry.scenario_id ===
-          "existing-salt-create-chart-cross-family-compact-v2",
+          "existing-salt-create-chart-cross-family-compact",
       )?.judgment.reasons,
     ).toEqual(
       expect.arrayContaining([expect.stringContaining("Canonical choice")]),

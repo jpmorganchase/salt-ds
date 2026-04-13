@@ -212,7 +212,7 @@ describe("live eval harness", () => {
     );
   }, 180000);
 
-  it("fails when a compact v2 workflow trace drops the required top-level summary", async () => {
+  it("fails when a compact workflow trace drops the required top-level summary", async () => {
     const [scenario] = filterWorkflowEvalScenarios(scenarios, {
       scenario_ids: ["existing-salt-review-toolbar"],
     });

@@ -1318,7 +1318,7 @@ describe("createSaltMcpServer", () => {
     );
   }, 20000);
 
-  it("returns compact v2 views for review, migrate, and upgrade workflows", async () => {
+  it("returns compact views for review, migrate, and upgrade workflows", async () => {
     await withRegistryDir(
       async (registryDir) => {
         await buildRegistry({

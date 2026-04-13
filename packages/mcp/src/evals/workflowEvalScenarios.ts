@@ -111,7 +111,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "review_salt_ui",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: true,
           safe_to_implement_exact_request: false,
@@ -156,7 +156,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "upgrade_salt_ui",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: true,
           safe_to_implement_exact_request: false,
@@ -217,7 +217,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "migrate_to_salt",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: false,
           safe_to_implement_exact_request: false,
@@ -259,7 +259,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "create_salt_ui",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: false,
           safe_to_implement_exact_request: false,
@@ -309,7 +309,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "create_salt_ui",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: false,
           safe_to_implement_exact_request: false,
@@ -370,7 +370,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "migrate_to_salt",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: false,
           safe_to_implement_exact_request: false,
@@ -419,7 +419,7 @@ export function buildDefaultWorkflowEvalScenarios(
         workflow: {
           id: "review_salt_ui",
         },
-        public_contract_v2: {
+        public_contract: {
           workflow_status: "blocked",
           canonical_complete: true,
           safe_to_implement_exact_request: false,

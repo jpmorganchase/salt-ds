@@ -1,18 +1,18 @@
 {
   "scenario": {
-    "id": "existing-salt-create-header-block-misroute-compact-v2",
+    "id": "existing-salt-create-header-block-misroute-compact",
     "audience": "existing-salt-team",
     "tags": [
       "replay",
       "create",
       "exact-name",
       "semantic-misroute",
-      "compact-v2"
+      "compact"
     ],
     "fixture": {
       "kind": "repo",
       "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-header-block-misroute",
-      "description": "Saved replay fixture for a compact v2 exact-name create result that misroutes Header block to List filtering through the default public contract."
+      "description": "Saved replay fixture for a compact exact-name create result that misroutes Header block to List filtering through the default public contract."
     },
     "task": {
       "workflow": "create",
@@ -40,7 +40,7 @@
       "workflow": {
         "id": "create_salt_ui"
       },
-      "public_contract_v2": {
+      "public_contract": {
         "workflow_status": "blocked",
         "canonical_complete": false,
         "safe_to_implement_exact_request": false,
@@ -65,14 +65,14 @@
     }
   },
   "trace": {
-    "scenario_id": "existing-salt-create-header-block-misroute-compact-v2",
+    "scenario_id": "existing-salt-create-header-block-misroute-compact",
     "runner_id": "replay-fixture",
     "status": "failed",
     "transport_trace": [
       {
         "transport": "mcp",
         "status": "succeeded",
-        "detail": "Loaded from a saved compact-v2 transcript replay fixture."
+        "detail": "Loaded from a saved compact transcript replay fixture."
       }
     ],
     "workflow_result": {

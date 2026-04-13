@@ -1,3 +1,7 @@
+import {
+  ENGLISH_FUNCTION_WORDS,
+  REGISTRY_META_WORDS,
+} from "../search/englishFunctionWords.js";
 import type { ComponentRecord, PatternRecord, SaltRegistry } from "../types.js";
 import { resolveComponentTarget } from "./componentLookup.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
@@ -81,7 +85,7 @@ export type PublicNextStep =
   | PublicReviewStep
   | PublicFixContextStep;
 
-export interface PublicContractV2 {
+export interface PublicContract {
   workflow: PublicWorkflowId;
   transport_used: PublicTransportUsed;
   workflow_status: PublicWorkflowStatus;
@@ -98,14 +102,14 @@ export interface PublicContractV2 {
   full_output_bytes?: number;
 }
 
-export interface PublicContractV2ExactRequest {
+export interface PublicContractExactRequest {
   requested_entity?: string;
   resolved_entity?: string | null;
   match_status?: PublicMatchStatus;
   exact_match_required?: boolean;
 }
 
-export interface PublicContractV2State {
+export interface PublicContractState {
   implementation_ready: boolean;
   required_follow_through: string[];
   blocking_questions: string[];
@@ -117,11 +121,11 @@ export interface PublicContractV2State {
   transport_failed: boolean;
 }
 
-export interface PublicContractV2Input {
+export interface PublicContractInput {
   workflow: PublicWorkflowId;
   transport_used: PublicTransportUsed;
-  exact_request?: PublicContractV2ExactRequest;
-  state: PublicContractV2State;
+  exact_request?: PublicContractExactRequest;
+  state: PublicContractState;
   summary: string;
   next_step: PublicNextStep;
   blocking_reasons?: string[];
@@ -130,9 +134,9 @@ export interface PublicContractV2Input {
   full_output_bytes?: number;
 }
 
-export interface PublicContractV2BuildOptions {
+export interface PublicContractBuildOptions {
   transport_used: PublicTransportUsed;
-  exact_request?: PublicContractV2ExactRequest;
+  exact_request?: PublicContractExactRequest;
   blocking_reasons?: string[];
   next_step?: PublicNextStep;
   registry?: SaltRegistry;
@@ -154,8 +158,8 @@ function uniqueNonEmptyStrings(
 }
 
 function hasExactRequest(
-  exactRequest: PublicContractV2ExactRequest | undefined,
-): exactRequest is PublicContractV2ExactRequest & { requested_entity: string } {
+  exactRequest: PublicContractExactRequest | undefined,
+): exactRequest is PublicContractExactRequest & { requested_entity: string } {
   return Boolean(exactRequest?.requested_entity?.trim());
 }
 
@@ -168,7 +172,7 @@ function isMatchSafe(matchStatus: PublicMatchStatus | undefined): boolean {
 }
 
 function shouldBlockOnSemanticMismatch(
-  exactRequest: PublicContractV2ExactRequest | undefined,
+  exactRequest: PublicContractExactRequest | undefined,
 ): boolean {
   const matchStatus = exactRequest?.match_status;
   if (!matchStatus) {
@@ -184,7 +188,7 @@ function shouldBlockOnSemanticMismatch(
   );
 }
 
-function deriveBlockingReasons(input: PublicContractV2Input): string[] {
+function deriveBlockingReasons(input: PublicContractInput): string[] {
   const state = input.state;
   const exactRequest = input.exact_request;
   const requiredFollowThrough =
@@ -223,7 +227,7 @@ function deriveBlockingReasons(input: PublicContractV2Input): string[] {
 }
 
 export function derivePublicCanonicalComplete(
-  input: PublicContractV2Input,
+  input: PublicContractInput,
 ): boolean {
   const state = input.state;
   const exactRequest = input.exact_request;
@@ -256,7 +260,7 @@ export function derivePublicCanonicalComplete(
 }
 
 export function derivePublicSafeToImplementExactRequest(
-  input: PublicContractV2Input,
+  input: PublicContractInput,
 ): boolean {
   const state = input.state;
   const exactRequest = input.exact_request;
@@ -283,7 +287,7 @@ export function derivePublicSafeToImplementExactRequest(
   return state.usable_guidance_present;
 }
 
-function shouldBlock(input: PublicContractV2Input): boolean {
+function shouldBlock(input: PublicContractInput): boolean {
   const state = input.state;
 
   return (
@@ -297,7 +301,7 @@ function shouldBlock(input: PublicContractV2Input): boolean {
 }
 
 export function derivePublicWorkflowStatus(
-  input: PublicContractV2Input,
+  input: PublicContractInput,
 ): PublicWorkflowStatus {
   const safeToImplementExactRequest =
     derivePublicSafeToImplementExactRequest(input);
@@ -321,8 +325,8 @@ export function derivePublicWorkflowStatus(
   return "failed";
 }
 
-export function getPublicContractV2ValidationErrors(
-  contract: PublicContractV2,
+export function getPublicContractValidationErrors(
+  contract: PublicContract,
 ): string[] {
   const errors: string[] = [];
   const hasRequestedEntity = Boolean(contract.requested_entity?.trim());
@@ -392,7 +396,7 @@ export function getPublicContractV2ValidationErrors(
     contract.match_status === undefined
   ) {
     errors.push(
-      "requested_entity or resolved_entity requires match_status in compact v2 output",
+      "requested_entity or resolved_entity requires match_status in compact output",
     );
   }
 
@@ -408,20 +412,20 @@ export function getPublicContractV2ValidationErrors(
   return uniqueNonEmptyStrings(errors);
 }
 
-export function assertValidPublicContractV2(
-  contract: PublicContractV2,
-): asserts contract is PublicContractV2 {
-  const errors = getPublicContractV2ValidationErrors(contract);
+export function assertValidPublicContract(
+  contract: PublicContract,
+): asserts contract is PublicContract {
+  const errors = getPublicContractValidationErrors(contract);
   if (errors.length === 0) {
     return;
   }
 
-  throw new Error(`Invalid PublicContractV2: ${errors.join("; ")}`);
+  throw new Error(`Invalid PublicContract: ${errors.join("; ")}`);
 }
 
-export function buildPublicContractV2(
-  input: PublicContractV2Input,
-): PublicContractV2 {
+export function buildPublicContract(
+  input: PublicContractInput,
+): PublicContract {
   const canonicalComplete = derivePublicCanonicalComplete(input);
   const safeToImplementExactRequest =
     derivePublicSafeToImplementExactRequest(input);
@@ -432,7 +436,7 @@ export function buildPublicContractV2(
     input.exact_request?.resolved_entity === null
       ? null
       : input.exact_request?.resolved_entity?.trim();
-  const contract: PublicContractV2 = {
+  const contract: PublicContract = {
     workflow: input.workflow,
     transport_used: input.transport_used,
     workflow_status: workflowStatus,
@@ -457,7 +461,7 @@ export function buildPublicContractV2(
       : {}),
   };
 
-  assertValidPublicContractV2(contract);
+  assertValidPublicContract(contract);
   return contract;
 }
 
@@ -520,33 +524,29 @@ type CreateTargetReference = {
   reference_kind: CreateTargetReferenceKind;
 };
 
-const CREATE_QUERY_STOP_WORDS = new Set([
-  "a",
-  "an",
-  "and",
-  "area",
-  "body",
-  "component",
-  "components",
-  "create",
-  "for",
-  "in",
-  "into",
-  "of",
-  "on",
-  "or",
-  "pattern",
-  "patterns",
-  "region",
-  "salt",
-  "section",
-  "surface",
-  "the",
-  "to",
-  "ui",
-  "use",
-  "with",
-]);
+/**
+ * Filter tokens to only those carrying meaningful information.
+ *
+ * Uses shared static sets to remove:
+ * 1. English function words (a, an, the, etc.)
+ * 2. Registry meta words (component, pattern, salt, etc.)
+ */
+function getMeaningfulTokens(value: string): string[] {
+  return uniqueNonEmptyStrings(
+    tokenize(value).flatMap((token) => token.split("-")),
+  ).filter((token) => {
+    if (token.length <= 2) {
+      return false;
+    }
+    if (ENGLISH_FUNCTION_WORDS.has(token)) {
+      return false;
+    }
+    if (REGISTRY_META_WORDS.has(token)) {
+      return false;
+    }
+    return true;
+  });
+}
 
 function getPatternRouteSlug(route: string | null): string | null {
   if (!route) {
@@ -565,11 +565,6 @@ function normalizeCreateLookupKey(value: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-function getMeaningfulTokens(value: string): string[] {
-  return uniqueNonEmptyStrings(
-    tokenize(value).flatMap((token) => token.split("-")),
-  ).filter((token) => token.length > 2 && !CREATE_QUERY_STOP_WORDS.has(token));
-}
 
 function containsLookupKey(queryKey: string, lookupKey: string): boolean {
   if (!queryKey || !lookupKey) {
@@ -673,8 +668,8 @@ function inferDescriptiveCreateTarget(
       const hasCanonicalPhraseMatch = containsLookupKey(queryKey, canonicalKey);
       const aliasPhraseMatchKey =
         aliasKeys.find((entry) => containsLookupKey(queryKey, entry)) ?? null;
-      const matchedTokens = getMeaningfulTokens(target.name).filter((token) =>
-        queryTokenPositions.has(token),
+      const matchedTokens = getMeaningfulTokens(target.name).filter(
+        (token) => queryTokenPositions.has(token),
       );
 
       if (
@@ -794,7 +789,7 @@ function classifyCreateTargetMatch(
 
 function deriveCreateTargetReference(
   result: CreateSaltUiResult,
-  options: PublicContractV2BuildOptions,
+  options: PublicContractBuildOptions,
 ): CreateTargetReference | undefined {
   if (result.mode !== "recommend" || !options.registry) {
     return undefined;
@@ -881,8 +876,8 @@ function resolveCreateNamedTarget(
 function deriveCreateExactRequest(
   result: CreateSaltUiResult,
   reference: CreateTargetReference | undefined,
-  options: PublicContractV2BuildOptions,
-): PublicContractV2ExactRequest | undefined {
+  options: PublicContractBuildOptions,
+): PublicContractExactRequest | undefined {
   if (options.exact_request) {
     return options.exact_request;
   }
@@ -916,7 +911,7 @@ function deriveCreateExactRequest(
 
 function buildCreateNextStep(
   contract: CreateSaltUiWorkflowContract,
-  exactRequest?: PublicContractV2ExactRequest,
+  exactRequest?: PublicContractExactRequest,
   reference?: CreateTargetReference,
 ): PublicNextStep {
   if (!contract.context_requirement.repo_specific_edits_ready) {
@@ -1073,7 +1068,7 @@ function buildUpgradeNextStep(result: UpgradeSaltUiResult): PublicNextStep {
 
 function buildCreateSummary(
   result: CreateSaltUiResult,
-  exactRequest: PublicContractV2ExactRequest | undefined,
+  exactRequest: PublicContractExactRequest | undefined,
 ): string {
   if (exactRequest?.requested_entity && exactRequest.match_status) {
     if (
@@ -1165,11 +1160,11 @@ function countProjectPolicyFixCandidates(
   ).length;
 }
 
-export function buildCreatePublicContractV2(
+export function buildCreatePublicContract(
   result: CreateSaltUiResult,
   contract: CreateSaltUiWorkflowContract,
-  options: PublicContractV2BuildOptions,
-): PublicContractV2 {
+  options: PublicContractBuildOptions,
+): PublicContract {
   const reference = deriveCreateTargetReference(result, options);
   const exactRequest = deriveCreateExactRequest(result, reference, options);
   const starterBlockers = buildStarterBlockers(contract.starter_validation);
@@ -1179,7 +1174,7 @@ export function buildCreatePublicContractV2(
     starter_blockers: starterBlockers,
   });
 
-  return buildPublicContractV2({
+  return buildPublicContract({
     workflow: "create",
     transport_used: options.transport_used,
     exact_request: exactRequest,
@@ -1205,12 +1200,12 @@ export function buildCreatePublicContractV2(
   });
 }
 
-export function buildReviewPublicContractV2(
+export function buildReviewPublicContract(
   result: ReviewSaltUiResult,
   contract: ReviewSaltUiWorkflowContract,
-  options: PublicContractV2BuildOptions,
-): PublicContractV2 {
-  return buildPublicContractV2({
+  options: PublicContractBuildOptions,
+): PublicContract {
+  return buildPublicContract({
     workflow: "review",
     transport_used: options.transport_used,
     exact_request: options.exact_request,
@@ -1238,11 +1233,11 @@ export function buildReviewPublicContractV2(
   });
 }
 
-export function buildMigratePublicContractV2(
+export function buildMigratePublicContract(
   result: MigrateToSaltResult,
   contract: MigrateToSaltWorkflowContract,
-  options: PublicContractV2BuildOptions,
-): PublicContractV2 {
+  options: PublicContractBuildOptions,
+): PublicContract {
   const starterBlockers = buildStarterBlockers(contract.starter_validation);
   const projectPolicyBlockers = buildProjectPolicyBlockers({
     implementation_ready: contract.readiness.implementation_ready,
@@ -1250,7 +1245,7 @@ export function buildMigratePublicContractV2(
     starter_blockers: starterBlockers,
   });
 
-  return buildPublicContractV2({
+  return buildPublicContract({
     workflow: "migrate",
     transport_used: options.transport_used,
     exact_request: options.exact_request,
@@ -1282,11 +1277,11 @@ export function buildMigratePublicContractV2(
   });
 }
 
-export function buildUpgradePublicContractV2(
+export function buildUpgradePublicContract(
   result: UpgradeSaltUiResult,
   contract: UpgradeSaltUiWorkflowContract,
-  options: PublicContractV2BuildOptions,
-): PublicContractV2 {
+  options: PublicContractBuildOptions,
+): PublicContract {
   const hasBlockingAmbiguity = Boolean(
     result.ambiguity || result.did_you_mean?.length,
   );
@@ -1296,7 +1291,7 @@ export function buildUpgradePublicContractV2(
       (result.nice_to_know?.length ?? 0) >
     0;
 
-  return buildPublicContractV2({
+  return buildPublicContract({
     workflow: "upgrade",
     transport_used: options.transport_used,
     exact_request: options.exact_request,

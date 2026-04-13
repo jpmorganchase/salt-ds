@@ -1,12 +1,12 @@
 {
   "scenario": {
-    "id": "existing-salt-create-metric-exact-compact-v2",
+    "id": "existing-salt-create-metric-exact-compact",
     "audience": "existing-salt-team",
-    "tags": ["replay", "create", "exact-name", "compact-v2"],
+    "tags": ["replay", "create", "exact-name", "compact"],
     "fixture": {
       "kind": "repo",
       "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-metric-exact",
-      "description": "Saved replay fixture for a compact v2 exact-name create result that correctly grounds Metric through the default public contract."
+      "description": "Saved replay fixture for a compact exact-name create result that correctly grounds Metric through the default public contract."
     },
     "task": {
       "workflow": "create",
@@ -34,7 +34,7 @@
       "workflow": {
         "id": "create_salt_ui"
       },
-      "public_contract_v2": {
+      "public_contract": {
         "workflow_status": "success",
         "canonical_complete": true,
         "safe_to_implement_exact_request": true,
@@ -56,14 +56,14 @@
     }
   },
   "trace": {
-    "scenario_id": "existing-salt-create-metric-exact-compact-v2",
+    "scenario_id": "existing-salt-create-metric-exact-compact",
     "runner_id": "replay-fixture",
     "status": "passed",
     "transport_trace": [
       {
         "transport": "mcp",
         "status": "succeeded",
-        "detail": "Loaded from a saved compact-v2 transcript replay fixture."
+        "detail": "Loaded from a saved compact transcript replay fixture."
       }
     ],
     "workflow_result": {
