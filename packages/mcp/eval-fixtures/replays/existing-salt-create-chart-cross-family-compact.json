@@ -1,18 +1,18 @@
 {
   "scenario": {
-    "id": "existing-salt-create-chart-cross-family-compact-v2",
+    "id": "existing-salt-create-chart-cross-family-compact",
     "audience": "existing-salt-team",
     "tags": [
       "replay",
       "create",
       "descriptive-query",
       "semantic-misroute",
-      "compact-v2"
+      "compact"
     ],
     "fixture": {
       "kind": "repo",
       "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-chart-cross-family",
-      "description": "Saved replay fixture for a compact v2 descriptive create result that misroutes a chart request to Stack layout through the default public contract."
+      "description": "Saved replay fixture for a compact descriptive create result that misroutes a chart request to Stack layout through the default public contract."
     },
     "task": {
       "workflow": "create",
@@ -44,7 +44,7 @@
       "workflow": {
         "id": "create_salt_ui"
       },
-      "public_contract_v2": {
+      "public_contract": {
         "workflow_status": "blocked",
         "canonical_complete": false,
         "safe_to_implement_exact_request": false,
@@ -69,14 +69,14 @@
     }
   },
   "trace": {
-    "scenario_id": "existing-salt-create-chart-cross-family-compact-v2",
+    "scenario_id": "existing-salt-create-chart-cross-family-compact",
     "runner_id": "replay-fixture",
     "status": "failed",
     "transport_trace": [
       {
         "transport": "mcp",
         "status": "succeeded",
-        "detail": "Loaded from a saved compact-v2 transcript replay fixture."
+        "detail": "Loaded from a saved compact transcript replay fixture."
       }
     ],
     "workflow_result": {

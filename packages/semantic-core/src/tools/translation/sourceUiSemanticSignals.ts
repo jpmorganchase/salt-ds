@@ -1,3 +1,4 @@
+import { ENGLISH_FUNCTION_WORDS } from "../../search/englishFunctionWords.js";
 import { unique } from "../utils.js";
 import type { TranslationSemanticIndex } from "./sourceUiSemanticMatching.js";
 import type {
@@ -20,10 +21,14 @@ export interface GuidanceSignals {
   accessibility: string[];
 }
 
-const SOURCE_TOKEN_STOPWORDS = new Set([
-  "a",
-  "an",
-  "and",
+/**
+ * Domain-specific tokens that appear so frequently in source UI
+ * descriptions that they carry no discriminative signal for
+ * translation/migration matching.
+ *
+ * Basic English function words are handled by ENGLISH_FUNCTION_WORDS.
+ */
+const SOURCE_DOMAIN_STOPWORDS = new Set([
   "another",
   "app",
   "application",
@@ -34,13 +39,10 @@ const SOURCE_TOKEN_STOPWORDS = new Set([
   "content",
   "control",
   "current",
-  "for",
   "form",
   "group",
   "header",
-  "in",
   "inside",
-  "into",
   "item",
   "items",
   "layout",
@@ -48,9 +50,6 @@ const SOURCE_TOKEN_STOPWORDS = new Set([
   "mode",
   "multiple",
   "new",
-  "of",
-  "on",
-  "or",
   "page",
   "part",
   "parts",
@@ -60,14 +59,11 @@ const SOURCE_TOKEN_STOPWORDS = new Set([
   "section",
   "sections",
   "single",
-  "the",
-  "to",
   "use",
   "user",
   "using",
   "view",
   "views",
-  "with",
   "workflow",
 ]);
 
@@ -95,7 +91,12 @@ export function tokenizeText(value: string): string[] {
   return value
     .toLowerCase()
     .split(/[^a-z0-9]+/g)
-    .filter((token) => token.length > 2 && !SOURCE_TOKEN_STOPWORDS.has(token));
+    .filter(
+      (token) =>
+        token.length > 2 &&
+        !ENGLISH_FUNCTION_WORDS.has(token) &&
+        !SOURCE_DOMAIN_STOPWORDS.has(token),
+    );
 }
 
 function uniquePhrases(values: Array<string | null | undefined>): string[] {

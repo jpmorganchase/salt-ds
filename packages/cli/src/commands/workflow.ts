@@ -10,13 +10,13 @@ import {
   migrateToSalt,
 } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import {
-  buildCreatePublicContractV2,
-  buildMigratePublicContractV2,
-  buildReviewPublicContractV2,
-  buildUpgradePublicContractV2,
-  type PublicContractV2,
+  buildCreatePublicContract,
+  buildMigratePublicContract,
+  buildReviewPublicContract,
+  buildUpgradePublicContract,
+  type PublicContract,
   type PublicWorkflowStatus,
-} from "@salt-ds/semantic-core/tools/publicContractV2";
+} from "@salt-ds/semantic-core/tools/publicContract";
 import {
   isWorkflowExpectedReviewIssueId,
   type ReviewExpectedTargets,
@@ -923,7 +923,7 @@ function workflowStatusToExitCode(
   }
 }
 
-function getWorkflowExitCode(contract: PublicContractV2): WorkflowExitCode {
+function getWorkflowExitCode(contract: PublicContract): WorkflowExitCode {
   return workflowStatusToExitCode(contract.workflow_status);
 }
 
@@ -1800,8 +1800,8 @@ function toCreateAgentWorkflowJson(
     query: string;
     packageName?: string;
   },
-): PublicContractV2 {
-  return buildCreatePublicContractV2(
+): PublicContract {
+  return buildCreatePublicContract(
     result.result.recommendation,
     contract,
     {
@@ -1816,8 +1816,8 @@ function toCreateAgentWorkflowJson(
 function toReviewAgentWorkflowJson(
   result: ReviewSaltUiResult,
   contract: ReviewSaltUiWorkflowContract,
-): PublicContractV2 {
-  return buildReviewPublicContractV2(result, contract, {
+): PublicContract {
+  return buildReviewPublicContract(result, contract, {
     transport_used: "cli",
   });
 }
@@ -1825,8 +1825,8 @@ function toReviewAgentWorkflowJson(
 function toMigrateAgentWorkflowJson(
   result: MigrateToSaltResult,
   contract: MigrateToSaltWorkflowContract,
-): PublicContractV2 {
-  return buildMigratePublicContractV2(
+): PublicContract {
+  return buildMigratePublicContract(
     result,
     contract,
     {
@@ -1838,8 +1838,8 @@ function toMigrateAgentWorkflowJson(
 function toUpgradeAgentWorkflowJson(
   result: UpgradeSaltUiResult,
   contract: UpgradeSaltUiWorkflowContract,
-): PublicContractV2 {
-  return buildUpgradePublicContractV2(result, contract, {
+): PublicContract {
+  return buildUpgradePublicContract(result, contract, {
     transport_used: "cli",
   });
 }
@@ -1856,7 +1856,7 @@ async function writeWorkflowOutput<
   io: RequiredCliIo,
   formatter: (result: T) => string,
   options: {
-    compactJsonOverride: PublicContractV2;
+    compactJsonOverride: PublicContract;
   },
 ): Promise<void> {
   const jsonOutputPath = flags["json-file"] ?? flags.output;

@@ -1,3 +1,4 @@
+import { ENGLISH_FUNCTION_WORDS } from "../search/englishFunctionWords.js";
 import type { GuideRecord } from "../types.js";
 import { resolveLookup } from "./lookupResolver.js";
 
@@ -61,25 +62,10 @@ export function findGuideByIdentifier(
   );
 }
 
-const GUIDE_LOOKUP_STOP_WORDS = new Set([
-  "a",
-  "an",
-  "and",
-  "for",
-  "in",
-  "of",
-  "on",
-  "or",
-  "the",
-  "to",
-  "vs",
-  "with",
-]);
-
 function tokenizeGuideLookup(value: string): string[] {
   return normalizeGuideLookup(value)
     .split("-")
-    .filter((token) => token.length > 1 && !GUIDE_LOOKUP_STOP_WORDS.has(token));
+    .filter((token) => token.length > 1 && !ENGLISH_FUNCTION_WORDS.has(token));
 }
 
 function collectGuideSearchFields(guide: GuideRecord) {
