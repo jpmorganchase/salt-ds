@@ -1,11 +1,13 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import Highcharts, { type Options } from "highcharts";
 import highchartsMore from "highcharts/highcharts-more";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { boxPlotOptions } from "./dependencies";
 
 highchartsMore(Highcharts);
+patternFill(Highcharts);
 
 export interface BoxPlotChartProps {
   fillPatterns?: boolean;

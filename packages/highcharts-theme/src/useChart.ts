@@ -3,7 +3,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type { Options } from "highcharts";
 import Highcharts from "highcharts";
-import patternFillModule from "highcharts/modules/pattern-fill";
 import type HighchartsReact from "highcharts-react-official";
 import {
   type RefObject,
@@ -19,10 +18,6 @@ import {
   type SaltChartTokenMap,
 } from "./density-token-map";
 import { applyFillPatternOverrides } from "./fill-patterns";
-
-if (typeof patternFillModule === "function") {
-  patternFillModule(Highcharts);
-}
 
 export interface UseChartConfig {
   fillPatterns?: boolean;

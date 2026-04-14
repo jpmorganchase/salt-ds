@@ -45,11 +45,29 @@ To import the Salt Highcharts theme, use:
 import "@salt-ds/highcharts-theme/index.css";
 ```
 
+### Enable the pattern-fill module
+
+When using fill patterns with Highcharts v10.2.0 and 11.x, import and initialize the module with your Highcharts instance before rendering charts:
+
+```js
+import Highcharts from "highcharts";
+import patternFill from "highcharts/modules/pattern-fill";
+
+patternFill(Highcharts);
+```
+
+From Highcharts v12 onwards, the module auto-initializes upon import:
+
+```js
+import "highcharts/modules/pattern-fill";
+```
+
 ## useChart hook
 
 Use the `useChart` hook to apply the Salt theme to your Highcharts. The hook merges your chart options with the default Salt theme options and handles density changes automatically.
 
 ```jsx
+import Highcharts from "highcharts";
 import { useRef } from "react";
 import { useChart } from "@salt-ds/highcharts-theme";
 import HighchartsReact from "highcharts-react-official";
@@ -76,7 +94,7 @@ The Salt Highcharts theme provides patterns and fills that can be applied to cre
 
 ### Fill patterns
 
-Enable accessibility patterns through `useChart` when you need a non-color cue in classic mode. Filled series receive pattern fills, while line charts stay on the standard Salt data-viz colours and use the predefined Salt dash-pattern sequence:
+After enabling the Highcharts `pattern-fill` module, turn on accessibility patterns through `useChart` when you need a non-color cue in classic mode. Filled series receive pattern fills, while line charts stay on the standard Salt data-viz colours and use the predefined Salt dash-pattern sequence:
 
 ```jsx
 const options = useChart(chartRef, yourChartSpecificOptions, {

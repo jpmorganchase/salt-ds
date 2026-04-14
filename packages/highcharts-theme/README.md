@@ -29,11 +29,14 @@ Import Highcharts CSS **before** the Salt theme CSS (see Highcharts docs: [Style
 
 ```jsx
 import Highcharts from "highcharts";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { useRef } from "react";
 import { useChart } from "@salt-ds/highcharts-theme";
 
 import "@salt-ds/highcharts-theme/index.css";
+
+patternFill(Highcharts);
 
 export function MyChart({ chartOptions }) {
   const chartRef = useRef(null);
@@ -45,11 +48,13 @@ export function MyChart({ chartOptions }) {
 }
 ```
 
+If you are using Highcharts v12+, import `highcharts/modules/pattern-fill` for its side effect instead of calling it with the `Highcharts` instance.
+
 ## Fill patterns
 
 See [Chart usage](https://www.saltdesignsystem.com/salt/components/chart/usage) for details.
 
-Enable accessibility patterns through the hook options when you need a non-color cue in classic mode. Filled series receive pattern fills, while line charts stay on the standard Salt data-viz colours and use the predefined Salt dash-pattern sequence:
+After enabling the Highcharts `pattern-fill` module, turn on accessibility patterns through the hook options when you need a non-color cue in classic mode. Filled series receive pattern fills, while line charts stay on the standard Salt data-viz colours and use the predefined Salt dash-pattern sequence:
 
 ```jsx
 const options = useChart(chartRef, chartOptions, { fillPatterns: true });
@@ -57,4 +62,4 @@ const options = useChart(chartRef, chartOptions, { fillPatterns: true });
 
 ## Accessibility
 
-Enable the Highcharts accessibility module (v10 requires initialization; v11+ auto-initializes). See [Chart accessibility](https://www.saltdesignsystem.com/salt/components/chart/accessibility).
+Enable the Highcharts accessibility module. For consistent behavior in Highcharts v10 and v11, initialize it with your `Highcharts` instance; in Highcharts v12+ it auto-initializes on import. See [Chart accessibility](https://www.saltdesignsystem.com/salt/components/chart/accessibility).

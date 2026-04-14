@@ -1,8 +1,11 @@
 import { useChart } from "@salt-ds/highcharts-theme";
 import Highcharts, { type Options } from "highcharts";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { barOptions } from "./dependencies";
+
+patternFill(Highcharts);
 
 export interface BarChartProps {
   fillPatterns?: boolean;
