@@ -2,6 +2,7 @@
   "name": "@salt-ds/data-grid",
   "version": "1.0.40",
   "license": "Apache-2.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
