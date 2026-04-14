@@ -18,9 +18,9 @@ data:
 
 
 <Diagram
-  src="/img/patterns/wizard/wizard-pattern-example.png"
-  srcDark="/img/patterns/wizard/wizard-pattern-example-dark.png"
-  alt="Example of a multi-step wizard workflow with stepper navigation"
+  src="/img/patterns/experience-customization/experience-customization-pattern.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-dark.png"
+  alt="Example of an experience customization pattern"
   border
   background="secondary"
 />
@@ -42,40 +42,121 @@ Use Experience Customization to establish the foundational settings that align h
 
 This pattern is built on the [Wizard](/salt/patterns/wizard) structure:
 
-1. **Header**: Contains the workflow title and a Stepper to show progress. The stepper is hidden for single-step configurations.
-2. **Content**: area: The space for selection controls and real-time previews of changes.
+1. **Workflow title**: A clear title that frames the guided setup (e.g., “Customize your experience”) and remains consistent across steps to maintain context.
+2. **Step title**: A concise label for the current preference category (e.g., Regional settings, Display preferences, Governance & privacy).
+3. **Stepper (optional)**: Shows progress across categories; hide the stepper for single-step configurations. 
+4. **Content area**: The selection controls for the step and, when needed, real-time previews of changes. For “Dynamic live preview,” use a split view where the preview container takes ~50% width and updates in real time.
+5. **Button bar**: pPrimary navigation/actions (Cancel, Previous, Next, Finish). Keep actions consistent to support a predictable setup flow.
 
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-anatomy.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-anatomy-dark.png"
+  alt="Anatomy of an experience customization pattern showing workflow title, step title, stepper, content area, and button bar"
+  border
+  background="secondary"
+/>
 
-## UI pattern guidance
+## Visual engagement for selections
 
-The level of visual engagement for each step is determined by the complexity of the choice:
+There are three ways to present choices, depending on the number of options available and how much visual guidance the user needs to make a decision:
 
-### Form controls
+### Standard form controls
 
-Standard components like [Toggle button](/salt/components/toggle-button), [Radio button](/salt/components/radio-button), [Switch](/salt/components/switch), or Dropdown. Use these for functional changes where the outcome is already understood, and when visual selection elements aren’t needed or provided—enabling a simple, efficient choice.
+Use components like [Toggle button](/salt/components/toggle-button), [Radio button](/salt/components/radio-button), [Switch](/salt/components/switch), or [Dropdown](/salt/components/dropdown) for functional changes where the outcome is already understood. This pattern is essential when dealing with a large volume of options or high-density layouts where space is a priority. For example, when there are more than five selections, a [Dropdown](/salt/components/dropdown) or [Combo box](/salt/components/combo-box) component is preferred to keep the interface organized and prevent the user from being overwhelmed by too many visible choices.
 
-### Visual selection
+### Card selection
 
-Use Selectable card to provide a clear representation of a final state, such as a specific page layout or notification position.
+[Selectable card](/salt/patterns/selectable-card) to provide a clear representation of a final state, such as a specific page layout or notification position style. This pattern is ideal when the product goal is to help users visualize the difference between choices through images or icons. Because cards occupy significant screen real estate, consider this pattern only when there are limited number of options—typically between two and four selections. If the list grows larger, it is often better to revert to a standard form control to maintain usability.
 
 ### Dynamic live preview
 
-A split-view layout where a visual preview container take up 50% of the width. This dynamic container updates in real-time to reflect the user’s choice. 
+For high-impact choices that require the most significant visual validation, use a split-view layout where a visual preview container takes up 50% of the screen width. This container updates in real-time to reflect the user’s choice as they make it. This approach is best for complex configurations where the user needs to see the immediate effect of their selection on the overall environment before committing to the change.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-visual-engagement-for-selections.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-visual-engagement-for-selections-dark.png"
+  alt="Visual engagement for selections for an experience customization pattern"
+  border
+  background="secondary"
+/>
 
 ## Use cases
 
-### Localization & standards
+This following examples demonstrate how selection patterns are applied to specific user workflows, ranging from functional settings to high-impact configurations.
 
-This example focuses on functional changes. Use a searchable Dropdown for “Choose a time zone (region)” or “Choose a language,” as the search functionality is essential for navigation extensive list efficiently. For binary settings, use a Switch to provide a clear on/off state.
+### Localization & standards (Standard controls)
 
-### Accessibility consensus
+This example handles global settings like language selection, time zone, and currency formats to ensure the interface meets regional requirements. These controls help user quickly align their workspace with their local environment.
 
-This example shows a progressive disclosure + reset pattern: if a user changes display density away from the business‑recommended baseline, a “Reset to recommended” action appears. When the user selects a density that may reduce accessibility (e.g., High density), show a non-blocking warning that explains the impact and offers a one-click reset back to the recommended setting. The reset action should only appear after a change, and the button label should be specific to the setting (e.g., “Reset to medium density”).
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-localization-pattern-example.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-localization-pattern-example-dark.png"
+  alt="An example for standard controls for an experience customization pattern"
+  border
+  background="secondary"
+/>
 
-### Governance & privacy
+This implementation focuses on functional efficiency for settings with many options. Using the Combo box allows users to filter large lists, while a Switch is used for simple on/off actions like “Automatic translation.” These controls are ideal here because they are compact and familiar to suers who need to make quick, functional changes.
 
-This example shows a required pattern where the user must select governance settings—such as a security tier and data‑sharing level—before setup can be finalized. 
+### Visual experience setting (Card selection)
+
+This example allows users to select their preferred notification position, but this card selection style can also be used for density changes, high-contrast modes, notification positions, and data table treatments like “zebra mode.” Using cards here is effective because it helps users visualize the impact of these changes on the UI layout before they are applied.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-notification-example.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-notification-example-dark.png"
+  alt="An example for card selection for an experience customization pattern"
+  border
+  background="secondary"
+/>
+
+### Data format (Dynamic live preview)
+
+This example is for choosing how numbers and currencies are displayed, such as switching between abbreviated or standard formats. It allows users to see exactly how their data will look before they save the changes.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-dynamic-example.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-dynamic-example-dark.png"
+  alt="An example for dynamic live preview for an experience customization pattern"
+  border
+  background="secondary"
+/>
+
+This layout uses a split-view where selecting an option on the left immediately updates a preview card on the right. This provides visual certainty, ensuring the user is confident in the final output and reducing the need to go back and fix formatting later.
+
+### Accessibility guidance & recovery
+
+This example shows when a user chooses a selection that isn’t recommended by the business accessibility standards. This pattern utilizes cards for high-impact visual decisions but provides active guidance when those choices depart from the recommended baseline.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-accessibility-guidance-recovery.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-accessibility-guidance-recovery-dark.png"
+  alt="An example for accessibility guidance and recovery for an experience customization pattern"
+  border
+  background="secondary"
+/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Communicate the requirement up front in the header description. If the user attempts to continue without making a selection, keep “Next”/“Finish” enabled but display a Banner at the top of the content area to move focus to the missing requirement immediately and prevent setup from being finalized until the selection is made.
+  - **The accessibility alignment banner**: If a user selects an option that isn’t recommended, show a banner with a direct link to WCAG guidelines. This serves as a “check” between the user’s preference and the business standard, ensuring they are informed of the potential impact on readability without being blocked from their choice.
+  - **Reset to default**: This is a progressive action that only appears after a non-recommended option is selected. To provide maximum clarity, the label should be explicit about what the user is reverting to—for example, “Reset to medium density” or “Reset to standard mode.” This allows the user to easily return to a safe, supported state with a single click.
+</GuidanceCallout>
+
+### Mandatory preference
+
+This pattern is used for critical choices—like establishing security tires or data-sharing levels—where a selection is mandatory to proceed. Card are used here to give these distinct categories more prominence, ensuring the user makes an intentional choice based on clear, descriptive information rather than a simple list item.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-accessibility-guidance-recovery.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-accessibility-guidance-recovery-dark.png"
+  alt="An example for accessibility guidance and recovery for an experience customization pattern"
+  border
+  background="secondary"
+/>
+
+This setup ensure that mandatory requirements are met without stalling the user’s progress or using unresponsive components. By avoiding disabled state and hidden interactions, the interface remains fully navigable and transparent for all users.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - **Upfront guidance**: Clearly communicate selection requirements in the header description so users know what is expected before they begin.
+  - **No mouse-hover or tooltips**: This is a progressive action that only appears after a non-recommended option is selected. To provide maximum clarity, the label should be explicit about what the user is reverting to—for example, “Reset to medium density” or “Reset to standard mode.” This allows the user to easily return to a safe, supported state with a single click.
+  - **The requirement banner**: To maintain high accessibility standards, do not use mouse-hover tooltips or “not-allowed” cursors to communicate requirements. These patterns are inaccessible to keyboard users and provide no value to screen readers.
 </GuidanceCallout>
