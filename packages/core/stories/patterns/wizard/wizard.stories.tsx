@@ -152,7 +152,7 @@ interface YupValidationErrorShape {
   message?: string;
 }
 
-function mapYupErrors(
+export function mapYupErrors(
   err: YupValidationErrorShape,
 ): StepValidationResult["fields"] {
   const out: StepValidationResult["fields"] = {};
@@ -174,7 +174,7 @@ function mapYupErrors(
 }
 
 // Validate a single wizard step given current form data; returns fields map
-async function validateStep(
+export async function validateStep(
   stepId: string,
   // biome-ignore lint/suspicious/noExplicitAny: This is acceptable for an example.
   data: any,
@@ -189,7 +189,7 @@ async function validateStep(
   }
 }
 
-const getStepStage = (index: number, activeStepIndex: number) => {
+export const getStepStage = (index: number, activeStepIndex: number) => {
   if (index === activeStepIndex) return "active";
   if (index < activeStepIndex) return "completed";
   return "pending";
