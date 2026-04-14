@@ -390,6 +390,7 @@ Backlog items:
 6. Expand extraction so more recommendation semantics come from docs rather than runtime heuristics.
 7. Prefer real example harvesting over hand-maintained fallback templates where possible.
 8. Add tests that confirm docs-derived semantics improve recommendation quality.
+9. Investigate adding structured component-tree hierarchy to pattern docs and `starter_scaffold` metadata. Currently pattern anatomy describes named regions (e.g., "Metric title", "Metric value") but not the expected component nesting (e.g., indicator icon as a child of `Display`, not a sibling). A `hierarchy` field in the pattern frontmatter could make composition structure machine-readable, flow through the CLI, and enable `salt-ds review` to validate pattern-level structural fidelity. The Metric "Indicators" pattern is a concrete first candidate — see the chat transcript in `chat.json` for the observed failure where the agent rearranged the nesting despite having the correct example.
 
 ## P2: Productization And Operations
 

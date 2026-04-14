@@ -353,9 +353,7 @@ function extractResultObject(value: unknown): Record<string, unknown> | null {
   return null;
 }
 
-function extractPublicContract(
-  value: unknown,
-): Record<string, unknown> | null {
+function extractPublicContract(value: unknown): Record<string, unknown> | null {
   if (isRecord(value) && typeof value.workflow === "string") {
     return value;
   }

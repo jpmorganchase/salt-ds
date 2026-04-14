@@ -7,7 +7,7 @@ import type {
 } from "../types.js";
 import { searchPages } from "./pageSearch.js";
 import { filterSearchEntries } from "./searchCommon.js";
-import { normalizeQuery, tokenize } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery, tokenize } from "./utils.js";
 
 export interface SearchSaltDocsInput {
   query: string;
@@ -110,9 +110,10 @@ function scoreContentBlock(
   queryTokens: string[],
 ) {
   const normalizedBlock = block.toLowerCase();
-  const phraseScore = normalizedBlock.includes(query) ? 6 : 0;
+  const phraseScore = containsWholeWordPhrase(normalizedBlock, query) ? 6 : 0;
   const tokenScore = queryTokens.reduce(
-    (sum, token) => sum + (normalizedBlock.includes(token) ? 1 : 0),
+    (sum, token) =>
+      sum + (containsWholeWordPhrase(normalizedBlock, token) ? 1 : 0),
     0,
   );
 
@@ -188,30 +189,34 @@ function scoreEntry(
 
   if (normalizedName === query) {
     scoreBreakdown.name_exact = 30;
-  } else if (normalizedName.includes(query)) {
+  } else if (containsWholeWordPhrase(normalizedName, query)) {
     scoreBreakdown.name_phrase = 8;
   }
 
-  if (normalizedSummary.includes(query)) {
+  if (containsWholeWordPhrase(normalizedSummary, query)) {
     scoreBreakdown.summary_phrase = 5;
   }
-  if (normalizedContent.some((block) => block.includes(query))) {
+  if (
+    normalizedContent.some((block) => containsWholeWordPhrase(block, query))
+  ) {
     scoreBreakdown.content_phrase = 6;
   }
 
   for (const token of queryTokens) {
-    if (normalizedName.includes(token)) {
+    if (containsWholeWordPhrase(normalizedName, token)) {
       scoreBreakdown.name_tokens += 4;
     }
-    if (normalizedSummary.includes(token)) {
+    if (containsWholeWordPhrase(normalizedSummary, token)) {
       scoreBreakdown.summary_tokens += 2;
     }
-    if (normalizedContent.some((block) => block.includes(token))) {
+    if (
+      normalizedContent.some((block) => containsWholeWordPhrase(block, token))
+    ) {
       scoreBreakdown.content_tokens += contentTokenWeight;
     }
 
     const keywordMatches = keywords.filter((keyword) =>
-      keyword.includes(token),
+      containsWholeWordPhrase(keyword, token),
     );
     if (keywordMatches.length > 0) {
       scoreBreakdown.keyword_tokens += 1;

@@ -1,5 +1,5 @@
 import type { PageRecord, SaltRegistry } from "../types.js";
-import { normalizeQuery, tokenize } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery, tokenize } from "./utils.js";
 
 export interface ListFoundationsInput {
   query?: string;
@@ -41,34 +41,34 @@ function scoreFoundation(page: PageRecord, query: string): number {
 
   if (title === query) {
     score += 18;
-  } else if (title.includes(query)) {
+  } else if (containsWholeWordPhrase(title, query)) {
     score += 10;
   }
 
-  if (summary.includes(query)) {
+  if (containsWholeWordPhrase(summary, query)) {
     score += 6;
   }
-  if (headings.some((heading) => heading.includes(query))) {
+  if (headings.some((heading) => containsWholeWordPhrase(heading, query))) {
     score += 6;
   }
-  if (content.some((block) => block.includes(query))) {
+  if (content.some((block) => containsWholeWordPhrase(block, query))) {
     score += 4;
   }
 
   for (const token of queryTokens) {
-    if (title.includes(token)) {
+    if (containsWholeWordPhrase(title, token)) {
       score += 4;
     }
-    if (summary.includes(token)) {
+    if (containsWholeWordPhrase(summary, token)) {
       score += 2;
     }
-    if (keywords.some((keyword) => keyword.includes(token))) {
+    if (keywords.some((keyword) => containsWholeWordPhrase(keyword, token))) {
       score += 2;
     }
-    if (headings.some((heading) => heading.includes(token))) {
+    if (headings.some((heading) => containsWholeWordPhrase(heading, token))) {
       score += 2;
     }
-    if (content.some((block) => block.includes(token))) {
+    if (content.some((block) => containsWholeWordPhrase(block, token))) {
       score += 1;
     }
   }

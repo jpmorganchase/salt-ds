@@ -1,5 +1,6 @@
 import type { ComponentProp, SaltRegistry, SaltStatus } from "../types.js";
 import {
+  containsWholeWordPhrase,
   isComponentAllowedByDocsPolicy,
   normalizeQuery,
   tokenize,
@@ -118,54 +119,54 @@ function scoreProp(
   if (propName === query) {
     score += 20;
     matchReasons.push("prop_name_exact");
-  } else if (propName.includes(query)) {
+  } else if (containsWholeWordPhrase(propName, query)) {
     score += 10;
     matchReasons.push("prop_name_phrase");
   }
 
-  if (normalizedComponentName.includes(query)) {
+  if (containsWholeWordPhrase(normalizedComponentName, query)) {
     score += 6;
     matchReasons.push("component_name_phrase");
   }
-  if (type.includes(query)) {
+  if (containsWholeWordPhrase(type, query)) {
     score += 5;
     matchReasons.push("type_phrase");
   }
-  if (description.includes(query)) {
+  if (containsWholeWordPhrase(description, query)) {
     score += 4;
     matchReasons.push("description_phrase");
   }
-  if (allowedValues.some((value) => value.includes(query))) {
+  if (allowedValues.some((value) => containsWholeWordPhrase(value, query))) {
     score += 4;
     matchReasons.push("allowed_value_phrase");
   }
 
   for (const token of queryTokens) {
-    if (propName.includes(token)) {
+    if (containsWholeWordPhrase(propName, token)) {
       score += 4;
       if (!matchReasons.includes("prop_name_tokens")) {
         matchReasons.push("prop_name_tokens");
       }
     }
-    if (normalizedComponentName.includes(token)) {
+    if (containsWholeWordPhrase(normalizedComponentName, token)) {
       score += 2;
       if (!matchReasons.includes("component_name_tokens")) {
         matchReasons.push("component_name_tokens");
       }
     }
-    if (type.includes(token)) {
+    if (containsWholeWordPhrase(type, token)) {
       score += 2;
       if (!matchReasons.includes("type_tokens")) {
         matchReasons.push("type_tokens");
       }
     }
-    if (description.includes(token)) {
+    if (containsWholeWordPhrase(description, token)) {
       score += 1;
       if (!matchReasons.includes("description_tokens")) {
         matchReasons.push("description_tokens");
       }
     }
-    if (allowedValues.some((value) => value.includes(token))) {
+    if (allowedValues.some((value) => containsWholeWordPhrase(value, token))) {
       score += 1;
       if (!matchReasons.includes("allowed_value_tokens")) {
         matchReasons.push("allowed_value_tokens");

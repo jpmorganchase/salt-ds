@@ -300,20 +300,18 @@ export async function runPublicCliWorkflowCoverage(
     "salt-ds info did not report create capability for the new-project repo.",
   );
 
-  const createPayload = (
-    await runSaltJson(
-      newProjectRoot,
-      [
-        "create",
-        "link to another page from a toolbar action",
-        "--include-starter-code",
-      ],
-      {
-        acceptableExitCodes: [0, 10, 20, 30],
-        cliBin: installedCliBin,
-        registryDir,
-      },
-    )
+  const createPayload = await runSaltJson(
+    newProjectRoot,
+    [
+      "create",
+      "link to another page from a toolbar action",
+      "--include-starter-code",
+    ],
+    {
+      acceptableExitCodes: [0, 10, 20, 30],
+      cliBin: installedCliBin,
+      registryDir,
+    },
   );
   assertCompactCliWorkflowPayload(
     createPayload.payload,
@@ -395,19 +393,17 @@ export async function runPublicCliWorkflowCoverage(
     "salt-ds review should return fix candidates without mutating the source file directly.",
   );
 
-  const translatePayload = (
-    await runSaltJson(
-      nonSaltRoot,
-      [
-        "migrate",
-        "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
-      ],
-      {
-        acceptableExitCodes: [0, 10, 20, 30],
-        cliBin: installedCliBin,
-        registryDir,
-      },
-    )
+  const translatePayload = await runSaltJson(
+    nonSaltRoot,
+    [
+      "migrate",
+      "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
+    ],
+    {
+      acceptableExitCodes: [0, 10, 20, 30],
+      cliBin: installedCliBin,
+      registryDir,
+    },
   );
   assertCompactCliWorkflowPayload(
     translatePayload.payload,
@@ -416,12 +412,14 @@ export async function runPublicCliWorkflowCoverage(
     "salt-ds migrate did not return the shipped compact workflow contract.",
   );
 
-  const comparePayload = (
-    await runSaltJson(existingSaltRoot, ["upgrade", "--include-deprecations"], {
+  const comparePayload = await runSaltJson(
+    existingSaltRoot,
+    ["upgrade", "--include-deprecations"],
+    {
       acceptableExitCodes: [0, 10, 20, 30],
       cliBin: installedCliBin,
       registryDir,
-    })
+    },
   );
   assertCompactCliWorkflowPayload(
     comparePayload.payload,

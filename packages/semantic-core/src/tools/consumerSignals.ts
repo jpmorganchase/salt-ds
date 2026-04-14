@@ -5,24 +5,35 @@ import type {
   TokenRecord,
   UsageSemanticsRecord,
 } from "../types.js";
-import { tokenize, unique } from "./utils.js";
+import { containsWholeWordPhrase, stemToken, tokenize, unique } from "./utils.js";
 
-const QUERY_TOKEN_STOPWORDS = new Set([
-  "component",
-  "components",
-  "control",
-  "controls",
-  "element",
-  "elements",
+/**
+ * Hard stopwords are always removed (prepositions, articles).
+ */
+const HARD_STOPWORDS = new Set([
   "for",
   "from",
   "into",
   "of",
   "the",
   "to",
+  "with",
+]);
+
+/**
+ * Soft stopwords are domain-generic terms that are only removed when
+ * at least one non-soft token survives.  This prevents all-stopword
+ * queries like "ui component" from degrading to phrase-only matching.
+ */
+const SOFT_STOPWORDS = new Set([
+  "component",
+  "components",
+  "control",
+  "controls",
+  "element",
+  "elements",
   "ui",
   "uis",
-  "with",
 ]);
 
 export interface QueryField {
@@ -86,7 +97,8 @@ function getFieldTokenSet(value: string): Set<string> {
   const splitTokens = expandedValue
     .toLowerCase()
     .split(/[^a-z0-9]+/g)
-    .filter((token) => token.length > 1);
+    .filter((token) => token.length > 1)
+    .map(stemToken);
 
   return new Set([...tokenize(value), ...splitTokens]);
 }
@@ -99,9 +111,16 @@ export function scoreQueryFields(
     return { score: 0, matched_terms: [], match_reasons: [] };
   }
 
-  const queryTokens = tokenize(query).filter(
-    (token) => !QUERY_TOKEN_STOPWORDS.has(token),
+  // B5: First remove hard stopwords, then try removing soft stopwords.
+  // If all tokens would be removed, keep the soft-stopword tokens.
+  const allTokens = tokenize(query).filter(
+    (token) => !HARD_STOPWORDS.has(token),
   );
+  const withoutSoft = allTokens.filter(
+    (token) => !SOFT_STOPWORDS.has(token),
+  );
+  const queryTokens = withoutSoft.length > 0 ? withoutSoft : allTokens;
+
   const matchedTerms = new Set<string>();
   const matchReasons = new Set<string>();
   let score = 0;
@@ -113,22 +132,24 @@ export function scoreQueryFields(
     }
     const fieldTokens = getFieldTokenSet(field.value);
 
+    // B1: Phrase/exact and token scoring are mutually exclusive per field
+    // to prevent inflating scores on single-token queries.
     if (field.exact_weight && normalizedValue === query) {
       score += field.exact_weight;
       matchReasons.add(`${field.key}_exact`);
-    } else if (normalizedValue.includes(query)) {
+    } else if (containsWholeWordPhrase(normalizedValue, query)) {
       score += field.phrase_weight;
       matchReasons.add(`${field.key}_phrase`);
-    }
+    } else {
+      for (const token of queryTokens) {
+        if (!fieldTokens.has(token)) {
+          continue;
+        }
 
-    for (const token of queryTokens) {
-      if (!fieldTokens.has(token)) {
-        continue;
+        score += field.token_weight;
+        matchedTerms.add(token);
+        matchReasons.add(`${field.key}_tokens`);
       }
-
-      score += field.token_weight;
-      matchedTerms.add(token);
-      matchReasons.add(`${field.key}_tokens`);
     }
   }
 
@@ -369,7 +390,6 @@ export function getComponentQueryFields(
   component: ComponentRecord,
 ): QueryField[] {
   const capabilities = inferComponentCapabilities(component).join(" ");
-  const semantics = component.semantics;
 
   return [
     {
@@ -434,24 +454,10 @@ export function getComponentQueryFields(
       phrase_weight: 6,
       token_weight: 3,
     },
-    {
-      key: "semantics_preferred_for",
-      value: semantics?.preferred_for.join(" ") ?? "",
-      phrase_weight: 10,
-      token_weight: 4,
-    },
-    {
-      key: "semantics_category",
-      value: semantics?.category.join(" ") ?? "",
-      phrase_weight: 7,
-      token_weight: 3,
-    },
   ];
 }
 
 export function getPatternQueryFields(pattern: PatternRecord): QueryField[] {
-  const semantics = pattern.semantics;
-
   return [
     {
       key: "name",
@@ -523,18 +529,6 @@ export function getPatternQueryFields(pattern: PatternRecord): QueryField[] {
       value: pattern.related_docs.overview ?? "",
       phrase_weight: 4,
       token_weight: 2,
-    },
-    {
-      key: "semantics_preferred_for",
-      value: semantics?.preferred_for.join(" ") ?? "",
-      phrase_weight: 10,
-      token_weight: 4,
-    },
-    {
-      key: "semantics_category",
-      value: semantics?.category.join(" ") ?? "",
-      phrase_weight: 7,
-      token_weight: 3,
     },
   ];
 }
