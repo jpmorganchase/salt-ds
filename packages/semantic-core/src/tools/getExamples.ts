@@ -260,6 +260,10 @@ function toCompactExample(
     tags: inferExampleScenarioTags(example),
   };
 
+  if (example.description) {
+    compact.description = example.description;
+  }
+
   if (includeCode) {
     compact.code = example.code;
   }
@@ -274,6 +278,7 @@ function toFullExample(
   const full: Record<string, unknown> = {
     id: example.id,
     title: example.title,
+    description: example.description,
     intent: example.intent,
     complexity: example.complexity,
     package: example.package,
@@ -333,6 +338,7 @@ function getExampleScore(
   let score = 0;
   const combined = [
     example.title,
+    example.description,
     example.code,
     example.source_url,
     ...example.intent,

@@ -372,6 +372,8 @@ export function buildPatternRecipe(
     category: pattern.category ?? [],
     recipe_type: "pattern",
     summary: pattern.summary,
+    when_to_use: pattern.when_to_use,
+    when_not_to_use: pattern.when_not_to_use,
     score,
     matched_terms: matchedTerms,
     match_reasons: matchReasons,

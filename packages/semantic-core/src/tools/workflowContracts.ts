@@ -205,6 +205,7 @@ export interface WorkflowReviewIdeSummary {
   top_findings: string[];
   safest_next_fix: string | null;
   verify: string[];
+  top_source_urls: string[];
 }
 
 export interface WorkflowUpgradeIdeSummary {
@@ -215,6 +216,7 @@ export interface WorkflowUpgradeIdeSummary {
   optional_cleanup: string[];
   suggested_order: string[];
   verify: string[];
+  top_source_urls: string[];
 }
 
 export interface WorkflowCreateIdeSummary {
@@ -223,12 +225,20 @@ export interface WorkflowCreateIdeSummary {
   open_question: string | null;
   starter_plan: string[];
   verify: string[];
+  top_source_urls: string[];
+}
+
+export interface FollowThroughItem {
+  /** Semantic region ID from the scaffold slot (e.g. "data-table", "allocation-bars"). */
+  region: string;
+  /** Salt entity that must be resolved for this region (e.g. "Table", "LinearProgress"). */
+  entity: string;
 }
 
 export interface WorkflowCreateImplementationGate {
   status: "clear" | "follow_through_required";
   reason: string;
-  required_follow_through: string[];
+  required_follow_through: FollowThroughItem[];
   blocking_questions: string[];
   next_step: string | null;
 }
@@ -240,6 +250,7 @@ export interface WorkflowMigrateIdeSummary {
   recommended_direction: string[];
   first_scaffold: string[];
   verify: string[];
+  top_source_urls: string[];
 }
 
 export interface CreateSaltUiWorkflowContract {
@@ -414,7 +425,7 @@ function buildWorkflowReadiness(
 function getCreateFollowThroughTargets(
   result: CreateSaltUiResult,
   query?: string,
-): string[] {
+): FollowThroughItem[] {
   const primaryTarget =
     result.composition_contract?.primary_target.name ?? null;
   const slots =
@@ -432,6 +443,8 @@ function getCreateFollowThroughTargets(
     );
   const frequency = new Map<string, number>();
 
+  // Build a map from entity name → region (slot id) for region-level binding
+  const entityToRegion = new Map<string, string>();
   for (const slot of slots) {
     for (const name of [
       ...slot.preferred_patterns,
@@ -441,6 +454,10 @@ function getCreateFollowThroughTargets(
         continue;
       }
       frequency.set(name, (frequency.get(name) ?? 0) + 1);
+      // First slot wins — entity is bound to its primary region
+      if (!entityToRegion.has(name)) {
+        entityToRegion.set(name, slot.id);
+      }
     }
   }
 
@@ -479,6 +496,7 @@ function getCreateFollowThroughTargets(
 
       return {
         name,
+        region: entityToRegion.get(name) ?? "top-level",
         score:
           (frequency.get(name) ?? 0) * 10 +
           overlapScore +
@@ -493,7 +511,9 @@ function getCreateFollowThroughTargets(
       return left.name.localeCompare(right.name);
     });
 
-  return scoredTargets.slice(0, 4).map((entry) => entry.name);
+  return scoredTargets
+    .slice(0, 4)
+    .map((entry) => ({ region: entry.region, entity: entry.name }));
 }
 
 function buildCreateImplementationGate(
@@ -974,8 +994,9 @@ function buildCreateIdeSummary(input: {
   intent: WorkflowIntent;
   starterValidation: WorkflowStarterValidation | null;
   projectConventionsCheck: WorkflowProjectConventionsCheck;
+  provenance: WorkflowProvenance;
 }): WorkflowCreateIdeSummary {
-  const { result, query, intent, starterValidation, projectConventionsCheck } =
+  const { result, query, intent, starterValidation, projectConventionsCheck, provenance } =
     input;
   const implementationGate = buildCreateImplementationGate(result, query);
   const requiredSlots =
@@ -1030,6 +1051,10 @@ function buildCreateIdeSummary(input: {
       ],
       3,
     ),
+    top_source_urls: [
+      ...provenance.canonical_source_urls,
+      ...provenance.related_guide_urls,
+    ].slice(0, 3),
   };
 }
 
@@ -1038,8 +1063,9 @@ function buildReviewIdeSummary(input: {
   decision: ReviewSaltUiResult["decision"];
   fixCandidates: WorkflowFixCandidates;
   projectConventionsCheck: WorkflowProjectConventionsCheck;
+  provenance: WorkflowProvenance;
 }): WorkflowReviewIdeSummary {
-  const { result, decision, fixCandidates, projectConventionsCheck } = input;
+  const { result, decision, fixCandidates, projectConventionsCheck, provenance } = input;
   const deterministicCandidate =
     fixCandidates.candidates.find(
       (candidate) => candidate.safety === "deterministic",
@@ -1089,6 +1115,10 @@ function buildReviewIdeSummary(input: {
       ],
       3,
     ),
+    top_source_urls: [
+      ...provenance.canonical_source_urls,
+      ...provenance.related_guide_urls,
+    ].slice(0, 3),
   };
 }
 
@@ -1290,8 +1320,9 @@ function buildMigrateIdeSummary(input: {
   result: MigrateToSaltResult;
   postMigrationVerification: WorkflowPostMigrationVerification;
   projectConventionsCheck: WorkflowProjectConventionsCheck;
+  provenance: WorkflowProvenance;
 }): WorkflowMigrateIdeSummary {
-  const { result, postMigrationVerification, projectConventionsCheck } = input;
+  const { result, postMigrationVerification, projectConventionsCheck, provenance } = input;
 
   return {
     screen_map: takeFirstUnique(
@@ -1342,6 +1373,10 @@ function buildMigrateIdeSummary(input: {
       ],
       5,
     ),
+    top_source_urls: [
+      ...provenance.canonical_source_urls,
+      ...provenance.related_guide_urls,
+    ].slice(0, 3),
   };
 }
 
@@ -1386,6 +1421,7 @@ function buildUpgradeConfidence(
 function buildUpgradeIdeSummary(
   result: UpgradeSaltUiResult,
   projectConventionsCheck: WorkflowProjectConventionsCheck,
+  provenance: WorkflowProvenance,
 ): WorkflowUpgradeIdeSummary {
   const requiredChanges = takeFirstUnique(
     [...(result.next_steps ?? []), ...(result.breaking ?? [])],
@@ -1433,6 +1469,10 @@ function buildUpgradeIdeSummary(
       ],
       3,
     ),
+    top_source_urls: [
+      ...provenance.canonical_source_urls,
+      ...provenance.related_guide_urls,
+    ].slice(0, 3),
   };
 }
 
@@ -1714,6 +1754,8 @@ export function buildCreateSaltUiWorkflowContract(
   );
   const implementationGate = buildCreateImplementationGate(result, input.query);
 
+  const provenance = buildCreateProvenance(result, starterValidation);
+
   return {
     confidence: buildCreateConfidence(
       result,
@@ -1726,6 +1768,7 @@ export function buildCreateSaltUiWorkflowContract(
       intent,
       starterValidation,
       projectConventionsCheck,
+      provenance,
     }),
     implementation_gate: implementationGate,
     intent,
@@ -1736,7 +1779,7 @@ export function buildCreateSaltUiWorkflowContract(
     starter_validation: starterValidation,
     repo_refinement: repoRefinement,
     project_conventions_check: projectConventionsCheck,
-    provenance: buildCreateProvenance(result, starterValidation),
+    provenance,
   };
 }
 
@@ -1755,6 +1798,8 @@ export function buildReviewSaltUiWorkflowContract(
     input.project_policy,
   );
 
+  const provenance = buildReviewProvenance(result);
+
   return {
     confidence: buildReviewConfidence(result, fixCandidates),
     ide_summary: buildReviewIdeSummary({
@@ -1762,6 +1807,7 @@ export function buildReviewSaltUiWorkflowContract(
       decision,
       fixCandidates,
       projectConventionsCheck,
+      provenance,
     }),
     decision,
     fix_candidates: fixCandidates,
@@ -1777,7 +1823,7 @@ export function buildReviewSaltUiWorkflowContract(
         semanticRules: entry.semantic_rules,
       })),
     ),
-    provenance: buildReviewProvenance(result),
+    provenance,
   };
 }
 
@@ -1807,6 +1853,7 @@ export function buildMigrateToSaltWorkflowContract(
     input.project_policy,
   );
   const postMigrationVerification = buildPostMigrationVerification(result);
+  const provenance = buildMigrateProvenance(result, starterValidation);
 
   return {
     confidence: buildMigrateConfidence(
@@ -1818,6 +1865,7 @@ export function buildMigrateToSaltWorkflowContract(
       result,
       postMigrationVerification,
       projectConventionsCheck,
+      provenance,
     }),
     readiness: buildWorkflowReadiness(starterValidation, input.project_policy),
     context_requirement: input.context_checked
@@ -1833,7 +1881,7 @@ export function buildMigrateToSaltWorkflowContract(
     }),
     post_migration_verification: postMigrationVerification,
     visual_evidence_contract: buildTranslateVisualEvidenceContract(input),
-    provenance: buildMigrateProvenance(result, starterValidation),
+    provenance,
   };
 }
 
@@ -1848,11 +1896,13 @@ export function buildUpgradeSaltUiWorkflowContract(
     input.project_policy,
   );
 
+  const provenance = buildUpgradeProvenance(result);
+
   return {
     confidence: buildUpgradeConfidence(result),
-    ide_summary: buildUpgradeIdeSummary(result, projectConventionsCheck),
+    ide_summary: buildUpgradeIdeSummary(result, projectConventionsCheck, provenance),
     project_conventions_check: projectConventionsCheck,
     rule_ids: getUpgradeRuleIds(),
-    provenance: buildUpgradeProvenance(result),
+    provenance,
   };
 }

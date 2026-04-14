@@ -1913,7 +1913,7 @@ function formatCreateReport(result: CreateWorkflowResult): string {
   if (result.workflow.implementationGate.status === "follow_through_required") {
     lines.push(
       `Implementation gate reason: ${result.workflow.implementationGate.reason}`,
-      `Required follow-through: ${result.workflow.implementationGate.required_follow_through.join(", ")}`,
+      `Required follow-through: ${result.workflow.implementationGate.required_follow_through.map((item) => `${item.entity} (${item.region})`).join(", ")}`,
     );
   }
 

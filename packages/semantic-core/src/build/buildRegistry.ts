@@ -57,13 +57,11 @@ export async function buildRegistry(
       : path.join(packageRoot, "generated");
   const generatedAt = options.timestamp ?? new Date().toISOString();
   const version = options.version ?? REGISTRY_VERSION;
-  const buildInfo = await buildRegistryBuildInfo(sourceRoot);
-
-  const packages = await extractPackages(
-    sourceRoot,
-    EXCLUDED_REGISTRY_PACKAGES,
-  );
-  const propMetadata = await loadPropMetadata(sourceRoot);
+  const [buildInfo, packages, propMetadata] = await Promise.all([
+    buildRegistryBuildInfo(sourceRoot),
+    extractPackages(sourceRoot, EXCLUDED_REGISTRY_PACKAGES),
+    loadPropMetadata(sourceRoot),
+  ]);
   const packageByName = new Map(packages.map((pkg) => [pkg.name, pkg]));
   const components = await extractComponents(
     sourceRoot,

@@ -526,6 +526,7 @@ export {
   type WorkflowContextRequirement,
   type WorkflowFixCandidate,
   type WorkflowFixCandidates,
+  type FollowThroughItem,
   type WorkflowIntent,
   type WorkflowIssueClass,
   type WorkflowPostMigrationVerification,

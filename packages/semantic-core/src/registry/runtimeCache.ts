@@ -84,6 +84,17 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
         component,
       );
     }
+    // Index sub-component export names as aliases so that lookups for
+    // e.g. "DialogHeader" or "AccordionPanel" resolve to the parent.
+    if (component.sub_components) {
+      for (const sub of component.sub_components) {
+        appendIndexedValue(
+          componentsByNormalizedAlias,
+          normalizeRegistryLookupKey(sub.export_name),
+          component,
+        );
+      }
+    }
   }
 
   const changesByPackage = new Map<string, ChangeRecord[]>();

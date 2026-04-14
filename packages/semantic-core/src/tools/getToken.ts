@@ -23,11 +23,16 @@ function toCompactToken(token: TokenRecord): Record<string, unknown> {
   return {
     name: token.name,
     category: token.category,
+    type: token.type,
+    value: token.value,
     semantic_intent: token.semantic_intent,
     guidance: token.guidance,
+    applies_to: token.applies_to,
+    ...(token.aliases.length > 0 ? { aliases: token.aliases } : {}),
     docs: [...new Set([TOKEN_DOCS_SOURCE_URL, ...(token.policy?.docs ?? [])])],
     policy: token.policy ?? null,
     themes: token.themes,
+    ...(token.densities.length > 0 ? { densities: token.densities } : {}),
     deprecated: token.deprecated,
   };
 }

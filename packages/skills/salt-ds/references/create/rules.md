@@ -28,6 +28,7 @@ Use this file only for `create` work after project context is known.
 - keep visual choices Salt-native; do not chase novelty outside the design system
 - use workflow confidence to decide whether to proceed or ask a follow-up question
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
+- for compound components, check `sub_component_names` and `composition` from the canonical output to use the correct child components and structure instead of guessing the JSX nesting
 - if compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before implementing the blocked sub-surface
 - if an exact Salt target name is already known from `required_follow_through`, `requested_entity`, `resolved_entity`, or a resolved MCP result, use that exact name or verified alias in the next create call instead of paraphrasing it
 - do not implement named contract items from general React, CSS, HTML, or copied repo code before that Salt follow-through completes
@@ -50,6 +51,8 @@ Use this file only for `create` work after project context is known.
   - use runtime evidence only when source-grounded create guidance still leaves important uncertainty
 - `create-verify-named-salt-details`
   - verify named Salt tokens, props, and APIs against canonical Salt guidance before suggesting them
+- `create-check-compound-composition`
+  - for compound components, check sub_component_names and composition from the canonical output to use the correct child components and JSX structure
 
 ## Intent-First Loop
 

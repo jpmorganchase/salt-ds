@@ -1,5 +1,5 @@
 import type { SaltRegistry, SearchArea, SearchIndexEntry } from "../types.js";
-import { getComponent } from "./getComponent.js";
+import { getComponent, type GetComponentInput } from "./getComponent.js";
 import { getCountrySymbol } from "./getCountrySymbol.js";
 import { getCountrySymbols } from "./getCountrySymbols.js";
 import { getFoundation } from "./getFoundation.js";
@@ -284,12 +284,11 @@ function resolveComponentEntity(
           [
             "examples",
             "props",
-            "tokens",
             "accessibility",
             "deprecations",
             "changes",
           ].includes(item),
-        ) as typeof input.include,
+        ) as GetComponentInput["include"],
       })
     : ({ component: null } as ReturnType<typeof getComponent>);
 
