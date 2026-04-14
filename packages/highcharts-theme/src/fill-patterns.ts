@@ -242,16 +242,15 @@ const hasAreaLineColorOverride = (chartOptions: Options): boolean => {
 const hasLineColorOverride = (chartOptions: Options): boolean => {
   const plotOptions = getPlotOptions(chartOptions);
 
-  return (
-    plotOptions?.line?.color != null || plotOptions?.series?.color != null
-  );
+  return plotOptions?.line?.color != null || plotOptions?.series?.color != null;
 };
 
 const hasLineDashStyleOverride = (chartOptions: Options): boolean => {
   const plotOptions = getPlotOptions(chartOptions);
 
   return (
-    plotOptions?.line?.dashStyle != null || plotOptions?.series?.dashStyle != null
+    plotOptions?.line?.dashStyle != null ||
+    plotOptions?.series?.dashStyle != null
   );
 };
 
@@ -412,7 +411,9 @@ export const applyFillPatternOverrides = (
       ) {
         nextLineSeries.color =
           tokens[
-            CATEGORY_DATAVIZ_TOKENS[seriesIndex % CATEGORY_DATAVIZ_TOKENS.length]
+            CATEGORY_DATAVIZ_TOKENS[
+              seriesIndex % CATEGORY_DATAVIZ_TOKENS.length
+            ]
           ];
       }
 
@@ -423,6 +424,14 @@ export const applyFillPatternOverrides = (
         !hasLineDashStyleOverride(chartOptions)
       ) {
         nextLineSeries.dashStyle = dashStyle;
+      }
+
+      if (
+        !fillPatterns &&
+        nextLineSeries.dashStyle == null &&
+        !hasLineDashStyleOverride(chartOptions)
+      ) {
+        nextLineSeries.dashStyle = "Solid";
       }
 
       return nextLineSeries;
