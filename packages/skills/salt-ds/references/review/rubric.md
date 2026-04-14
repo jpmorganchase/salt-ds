@@ -22,6 +22,7 @@ Use this rubric to judge impact, not to generate comment volume.
 ## composition
 
 - Prefer flat, readable hierarchy with obvious ownership of layout, semantics, and state.
+- For compound components, verify that the required sub-components from `composition.required_children` are present and that optional sub-components are used correctly.
 - Flag wrapper stacks, pass-through components, duplicated structure, and prop plumbing that hide the real UI intent.
 - Ask whether the same outcome can be achieved with fewer layout nodes or a clearer pattern.
 

@@ -156,8 +156,8 @@ describe("deterministic agentic evals", () => {
       expect.objectContaining({
         status: "follow_through_required",
         required_follow_through: expect.arrayContaining([
-          "App header",
-          "Metric",
+          expect.objectContaining({ entity: "App header" }),
+          expect.objectContaining({ entity: "Metric" }),
         ]),
         next_step: expect.stringContaining(
           "Run targeted Salt create follow-up",
@@ -165,7 +165,9 @@ describe("deterministic agentic evals", () => {
       }),
     );
     expect(
-      result.workflow.implementation_gate.required_follow_through,
+      result.workflow.implementation_gate.required_follow_through.map(
+        (item: { entity: string }) => item.entity,
+      ),
     ).not.toEqual(expect.arrayContaining(["Announcement dialog"]));
     expect(result.workflow.context_requirement).toMatchObject({
       status: "context_required",
@@ -244,7 +246,9 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: expect.arrayContaining(["Metric"]),
+        required_follow_through: expect.arrayContaining([
+          expect.objectContaining({ entity: "Metric" }),
+        ]),
       }),
     );
   });
@@ -877,7 +881,9 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: expect.arrayContaining(["Metric"]),
+        required_follow_through: expect.arrayContaining([
+          expect.objectContaining({ entity: "Metric" }),
+        ]),
       }),
     );
   });

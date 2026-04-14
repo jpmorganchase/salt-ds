@@ -169,6 +169,9 @@ function scoreEntry(
   }
 
   const normalizedName = entry.name.toLowerCase();
+  const expandedName = entry.name
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .toLowerCase();
   const normalizedSummary = entry.summary.toLowerCase();
   const keywords = entry.keywords.map((keyword) => keyword.toLowerCase());
   const contentBlocks = getEntryContent(registry, entry);
@@ -189,7 +192,10 @@ function scoreEntry(
 
   if (normalizedName === query) {
     scoreBreakdown.name_exact = 30;
-  } else if (containsWholeWordPhrase(normalizedName, query)) {
+  } else if (
+    containsWholeWordPhrase(normalizedName, query) ||
+    containsWholeWordPhrase(expandedName, query)
+  ) {
     scoreBreakdown.name_phrase = 8;
   }
 
@@ -203,7 +209,10 @@ function scoreEntry(
   }
 
   for (const token of queryTokens) {
-    if (containsWholeWordPhrase(normalizedName, token)) {
+    if (
+      containsWholeWordPhrase(normalizedName, token) ||
+      containsWholeWordPhrase(expandedName, token)
+    ) {
       scoreBreakdown.name_tokens += 4;
     }
     if (containsWholeWordPhrase(normalizedSummary, token)) {

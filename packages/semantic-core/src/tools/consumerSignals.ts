@@ -215,6 +215,7 @@ export function scoreUsageSemantics(
 export function inferExampleScenarioTags(example: ExampleRecord): string[] {
   const combined = [
     example.title,
+    example.description,
     example.source_url,
     example.code,
     ...example.intent,
@@ -372,9 +373,6 @@ export function inferComponentCapabilities(
     component.deprecations.length > 0
   ) {
     capabilities.add("deprecations");
-  }
-  if (component.tokens.length > 0) {
-    capabilities.add("theming");
   }
   if (component.examples.length > 0) {
     capabilities.add("examples");

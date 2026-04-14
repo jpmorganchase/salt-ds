@@ -1,5 +1,9 @@
 import path from "node:path";
-import type { ComponentDocgenInference, ComponentProp } from "../types.js";
+import type {
+  ComponentDocgenInference,
+  ComponentProp,
+  ComponentSubComponent,
+} from "../types.js";
 import {
   asString,
   cleanMarkdownText,
@@ -18,8 +22,6 @@ const DOCGEN_PACKAGE_FILE_MAP: Record<string, string> = {
   "icons-props.json": "@salt-ds/icons",
   "lab-props.json": "@salt-ds/lab",
   "react-resizable-panel-theme-props.json":
-    "@salt-ds/react-resizable-panels-theme",
-  "react-resziable-panel-theme-props.json":
     "@salt-ds/react-resizable-panels-theme",
 };
 
@@ -79,7 +81,7 @@ function parseDocgenDefaultValue(value: unknown): string | null {
 
 function parsePrimitiveValue(raw: string): string | number | boolean | null {
   const value = raw.trim();
-  if (value === "null") {
+  if (value === "null" || value === "undefined") {
     return null;
   }
   if (value === "true") {
@@ -170,6 +172,25 @@ function parseDocgenType(typeShape: DocgenTypeShape | undefined): string {
   if (!typeName) {
     return "unknown";
   }
+
+  // When shouldExtractLiteralValuesFromEnum is enabled, react-docgen-typescript
+  // sets type.name to "enum" and puts individual values in type.value[].
+  // Reconstruct a readable union string from those values.
+  if (typeName === "enum" && Array.isArray(typeShape?.value)) {
+    const values = (typeShape.value as DocgenTypeValue[])
+      .map((v) => {
+        if (typeof v === "string") return v;
+        if (typeof v === "object" && v !== null && "value" in v) {
+          return String((v as { value?: unknown }).value ?? "");
+        }
+        return "";
+      })
+      .filter((v) => v.length > 0 && v !== "undefined");
+    if (values.length > 0) {
+      return values.join(" | ");
+    }
+  }
+
   return typeName.replace(/\s+/g, " ").trim();
 }
 
@@ -291,6 +312,7 @@ export function selectDocgenComponent(
   componentName: string,
   aliases: string[],
   routeSuffix: string,
+  sourceRepoPath?: string | null,
 ): DocgenSelection {
   const packageEntries = propMetadata.byPackage.get(packageName);
   if (!packageEntries) {
@@ -306,12 +328,25 @@ export function selectDocgenComponent(
   }
 
   const routeLeaf = routeSuffix.split("/").at(-1) ?? routeSuffix;
+
+  // Derive additional candidate names from the source repo path.
+  // For example, if sourceRepoPath is "packages/lab/src/tabs-next",
+  // the leaf "tabs-next" produces PascalCase "TabsNext" as a candidate.
+  const sourcePathNames: string[] = [];
+  if (sourceRepoPath) {
+    const sourceLeaf = sourceRepoPath.replace(/\\/g, "/").split("/").at(-1);
+    if (sourceLeaf) {
+      sourcePathNames.push(toPascalCase(sourceLeaf));
+    }
+  }
+
   const candidateNames = uniqueStrings([
     componentName,
     ...aliases,
     toPascalCase(componentName),
     toPascalCase(routeLeaf),
     componentName.replace(/\s+/g, ""),
+    ...sourcePathNames,
   ]).map((name) => toMatchKey(name));
 
   const candidateSet = new Set<DocgenComponentShape>();
@@ -337,11 +372,24 @@ export function selectDocgenComponent(
     };
   }
 
+  // Build match keys from source-path-derived names for a stronger signal.
+  const sourcePathMatchKeys = new Set(
+    sourcePathNames.map((name) => toMatchKey(name)),
+  );
+
   const scored = candidates
     .map((candidate) => {
       const displayName = asString(candidate.displayName) ?? "";
       const normalizedDisplayName = toMatchKey(displayName);
       const exactMatch = candidateNames.includes(normalizedDisplayName) ? 2 : 0;
+      // Give a strong bonus when the candidate display name matches a name
+      // derived from the authoritative source repo path. This ensures that
+      // when the site points at e.g. "packages/lab/src/tabs-next", we
+      // prefer "TabsNext" over legacy "Tabstrip" even if "Tabstrip" is
+      // listed as an alias with more props.
+      const sourcePathBonus = sourcePathMatchKeys.has(normalizedDisplayName)
+        ? 4
+        : 0;
       const propCount =
         candidate.props && typeof candidate.props === "object"
           ? Object.keys(candidate.props as Record<string, unknown>).length
@@ -349,7 +397,7 @@ export function selectDocgenComponent(
 
       return {
         candidate,
-        score: exactMatch + Math.min(propCount, 30) / 100,
+        score: sourcePathBonus + exactMatch + Math.min(propCount, 30) / 100,
       };
     })
     .sort((left, right) => right.score - left.score);
@@ -370,3 +418,87 @@ export function selectDocgenComponent(
     },
   };
 }
+
+/**
+ * Find sub-components for a compound component by scanning docgen entries
+ * in the same package that share the root component's PascalCase name prefix.
+ * For example, if the root is "Dialog", this finds "DialogActions",
+ * "DialogContent", "DialogHeader", etc.
+ */
+export function selectSubComponents(
+  propMetadata: PropMetadata,
+  packageName: string,
+  rootDisplayName: string,
+): ComponentSubComponent[] {
+  const packageEntries = propMetadata.byPackage.get(packageName);
+  if (!packageEntries) {
+    return [];
+  }
+
+  // Derive the PascalCase prefix from the selected root display name.
+  const rootPrefix = rootDisplayName;
+  if (!rootPrefix || rootPrefix.length < 2) {
+    return [];
+  }
+
+  // Exclude display names that are coincidental prefix matches rather than
+  // real sub-components. For example, "LinkCard" is not a sub-component of
+  // "Link" — it's documented as a standalone component.
+  const EXCLUDED_SUB_COMPONENT_NAMES = new Set([
+    // Standalone documented components that happen to share a prefix.
+    "LinkCard",
+    "SaltProviderNext",
+    "UNSTABLE_SaltProviderNext",
+    "TextAction",
+    "TextNotation",
+    "IconFigmaIcon",
+  ]);
+
+  // Suffixes that indicate a value constant or internal helper, not a
+  // renderable sub-component.
+  const NON_COMPONENT_SUFFIX_PATTERN = /^(?:SizeValues|Values|Constants)$/;
+
+  const subComponents: ComponentSubComponent[] = [];
+
+  for (const candidates of packageEntries.values()) {
+    for (const candidate of candidates) {
+      const displayName = asString(candidate.displayName);
+      if (!displayName) {
+        continue;
+      }
+
+      // Must start with root prefix, must be longer than root, and
+      // the character after the prefix must be uppercase (PascalCase boundary).
+      if (
+        displayName.length <= rootPrefix.length ||
+        !displayName.startsWith(rootPrefix) ||
+        !/^[A-Z]/.test(displayName.slice(rootPrefix.length))
+      ) {
+        continue;
+      }
+
+      if (EXCLUDED_SUB_COMPONENT_NAMES.has(displayName)) {
+        continue;
+      }
+
+      const suffix = displayName.slice(rootPrefix.length);
+      if (NON_COMPONENT_SUFFIX_PATTERN.test(suffix)) {
+        continue;
+      }
+
+      const props = toComponentProps(candidate.props);
+      subComponents.push({
+        name: suffix,
+        export_name: displayName,
+        props,
+      });
+    }
+  }
+
+  return subComponents.sort((left, right) =>
+    left.export_name.localeCompare(right.export_name),
+  );
+}
+
+
+

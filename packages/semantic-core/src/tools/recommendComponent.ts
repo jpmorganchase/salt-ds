@@ -129,6 +129,20 @@ function toCompactRecommendation(
     ...presentation,
     caveats,
     ship_check: getComponentShipCheck(candidate.component),
+    ...(candidate.component.props.length > 0
+      ? {
+          key_props: candidate.component.props
+            .filter((prop) => !prop.deprecated)
+            .slice(0, 5)
+            .map((prop) => ({
+              name: prop.name,
+              type: prop.type,
+              ...(prop.description ? { description: prop.description } : {}),
+              ...(prop.required ? { required: true } : {}),
+            })),
+          prop_count: candidate.component.props.length,
+        }
+      : {}),
     ...(candidate.component.status !== "stable"
       ? {
           status: candidate.component.status,

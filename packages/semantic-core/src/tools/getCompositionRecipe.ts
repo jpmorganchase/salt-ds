@@ -289,6 +289,8 @@ export function getCompositionRecipe(
     category: Array.isArray(recipe.category) ? recipe.category : [],
     type: recipe.recipe_type,
     summary: recipe.summary,
+    when_to_use: recipe.when_to_use ?? [],
+    when_not_to_use: recipe.when_not_to_use ?? [],
     steps: recipe.steps,
     components: recipe.components,
     examples: recipe.supporting_examples ?? [],

@@ -437,6 +437,23 @@ const VALIDATION_ISSUE_CATALOG: Record<string, ValidationIssueDescriptor> = {
       ],
     }),
   },
+  "composition.missing-expected-primitive": {
+    ...createCompositionDescriptor({
+      rule: "scaffold-expected-primitive-not-imported",
+      severity: "warning",
+      title: "Expected Salt primitive not found in code",
+      message:
+        "The scaffold expected a specific Salt primitive for a dashboard region, but no corresponding Salt import was found. Custom markup may be duplicating an existing Salt component.",
+      suggested_fix:
+        "Run a targeted create follow-up for the missing primitive and replace custom markup with the canonical Salt component.",
+      confidence: 0.82,
+      extra_steps: [
+        "Check the scaffold's required_follow_through for the region-entity binding.",
+        "Run salt-ds create with the entity name to get canonical guidance.",
+        "Replace custom HTML or CSS with the resolved Salt primitive.",
+      ],
+    }),
+  },
   "composition.pass-through-wrapper": {
     ...createCompositionDescriptor({
       rule: "avoid-pass-through-wrapper-over-salt-primitive",

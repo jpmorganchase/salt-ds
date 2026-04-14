@@ -79,5 +79,5 @@
 - confirm the top-level surface is grounded
 - confirm every required named sub-surface for the regions you implemented is grounded
 - confirm any explicit token, prop, API, and theme bootstrap names you mention were verified
-- if the transport stayed partial or noisy, do not convert a plausible scaffold into a “finished Salt answer”
+- if the transport stayed partial or noisy, do not convert a plausible scaffold into a "finished Salt answer"
 - when code was written, run source-level Salt validation before finalizing

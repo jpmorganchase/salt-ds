@@ -83,6 +83,18 @@ export interface ComponentProp {
   deprecation_note?: string | null;
 }
 
+export interface ComponentSubComponent {
+  name: string;
+  export_name: string;
+  props: ComponentProp[];
+}
+
+export interface ComponentComposition {
+  required_children?: string[];
+  optional_children?: string[];
+  typical_parent?: string;
+}
+
 export interface AccessibilityRule {
   id: string;
   severity: "info" | "warning" | "error";
@@ -96,14 +108,6 @@ export interface ComponentDocgenInference {
   selected_score: number | null;
 }
 
-export interface ComponentTokenInference {
-  source: "repo_scan" | "none";
-  discovered_count: number;
-  returned_count: number;
-  max_returned: number;
-  truncated: boolean;
-}
-
 export interface ComponentDeprecationInference {
   matched_count: number;
   inferred_component_count: number;
@@ -112,7 +116,6 @@ export interface ComponentDeprecationInference {
 
 export interface ComponentInference {
   docgen?: ComponentDocgenInference;
-  tokens?: ComponentTokenInference;
   deprecations?: ComponentDeprecationInference;
 }
 
@@ -133,6 +136,7 @@ export interface UsageSemanticsRecord {
 export interface ExampleRecord {
   id: string;
   title: string;
+  description: string;
   intent: string[];
   complexity: "basic" | "intermediate" | "advanced";
   code: string;
@@ -159,15 +163,12 @@ export interface ComponentRecord {
   when_not_to_use: string[];
   alternatives: ComponentAlternative[];
   props: ComponentProp[];
+  sub_components?: ComponentSubComponent[];
+  composition?: ComponentComposition;
   accessibility: {
     summary: string[];
     rules: AccessibilityRule[];
   };
-  tokens: Array<{
-    name: string;
-    category: string;
-    semantic_intent: string | null;
-  }>;
   patterns: string[];
   examples: ExampleRecord[];
   related_docs: {

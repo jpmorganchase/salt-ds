@@ -512,6 +512,10 @@ describe("publicContract", () => {
           kind: "implement",
           scope: "exact_request",
         },
+        required_post_step: {
+          kind: "review",
+          tool: "review_salt_ui",
+        },
       }),
     );
   });
@@ -527,7 +531,10 @@ describe("publicContract", () => {
         },
         state: {
           implementation_ready: false,
-          required_follow_through: ["App header", "Metric"],
+          required_follow_through: [
+            { region: "header", entity: "App header" },
+            { region: "key-metrics", entity: "Metric" },
+          ],
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
@@ -768,6 +775,100 @@ describe("publicContract", () => {
       }),
     ).toThrow(/Invalid PublicContract/);
   });
+
+  it("sets required_post_step to salt-ds review for CLI transport", () => {
+    const contract = buildPublicContract(
+      buildInput({
+        transport_used: "cli",
+      }),
+    );
+
+    expect(contract.required_post_step).toEqual({
+      kind: "review",
+      tool: "salt-ds review",
+    });
+  });
+
+  it("does not set required_post_step when workflow is review", () => {
+    const contract = buildPublicContract(
+      buildInput({
+        workflow: "review",
+        next_step: {
+          kind: "implement",
+          scope: "exact_request",
+        },
+      }),
+    );
+
+    expect(contract.required_post_step).toBeUndefined();
+  });
+
+  it("does not set required_post_step when next_step is not implement", () => {
+    const contract = buildPublicContract(
+      buildInput({
+        state: {
+          implementation_ready: false,
+          required_follow_through: [
+            { region: "header", entity: "App header" },
+          ],
+          blocking_questions: [],
+          starter_blockers: [],
+          project_policy_blockers: [],
+          hard_blocked: false,
+          context_ready: true,
+          usable_guidance_present: true,
+          transport_failed: false,
+        },
+        next_step: exactNameStep,
+      }),
+    );
+
+    expect(contract.required_post_step).toBeUndefined();
+  });
+
+  it("flags missing required_post_step when next_step is implement on a non-review workflow", () => {
+    const errors = getPublicContractValidationErrors({
+      workflow: "create",
+      transport_used: "mcp",
+      workflow_status: "success",
+      canonical_complete: true,
+      safe_to_implement_exact_request: true,
+      requested_entity: "Metric",
+      resolved_entity: "Metric",
+      match_status: "exact",
+      blocking_reasons: [],
+      next_step: {
+        kind: "implement",
+        scope: "exact_request",
+      },
+      summary: "Salt grounded the exact requested entity Metric.",
+    });
+
+    expect(errors).toContain(
+      "next_step.kind=implement requires required_post_step when workflow is not review",
+    );
+  });
+
+  it("flags required_post_step present when next_step is not implement", () => {
+    const errors = getPublicContractValidationErrors({
+      workflow: "create",
+      transport_used: "mcp",
+      workflow_status: "partial",
+      canonical_complete: false,
+      safe_to_implement_exact_request: false,
+      blocking_reasons: ["follow-through remains"],
+      next_step: exactNameStep,
+      required_post_step: {
+        kind: "review",
+        tool: "review_salt_ui",
+      },
+      summary: "Salt still needs follow-through.",
+    });
+
+    expect(errors).toContain(
+      "required_post_step must only appear when next_step.kind=implement",
+    );
+  });
 });
 
 describe("publicContract workflow adapters", () => {
@@ -807,6 +908,10 @@ describe("publicContract workflow adapters", () => {
         resolved_entity: "Metric",
         match_status: "exact",
         summary: "Salt grounded the exact requested entity Metric.",
+        required_post_step: {
+          kind: "review",
+          tool: "review_salt_ui",
+        },
       }),
     );
   });
@@ -1051,6 +1156,10 @@ describe("publicContract workflow adapters", () => {
         match_status: "alias",
         summary:
           "Salt grounded Hotkeys to the canonical entity Keyboard shortcuts.",
+        required_post_step: {
+          kind: "review",
+          tool: "review_salt_ui",
+        },
       }),
     );
   });
@@ -1122,7 +1231,10 @@ describe("publicContract workflow adapters", () => {
       implementation_gate: {
         status: "follow_through_required",
         reason: "More grounding is required.",
-        required_follow_through: ["App header", "Metric"],
+        required_follow_through: [
+          { region: "header", entity: "App header" },
+          { region: "key-metrics", entity: "Metric" },
+        ],
         blocking_questions: [],
         next_step: "Run targeted Salt create follow-up.",
       },

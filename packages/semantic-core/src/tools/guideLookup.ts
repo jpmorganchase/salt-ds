@@ -1,7 +1,7 @@
 import { ENGLISH_FUNCTION_WORDS } from "../search/englishFunctionWords.js";
 import type { GuideRecord } from "../types.js";
 import { resolveLookup } from "./lookupResolver.js";
-import { containsWholeWordPhrase } from "./utils.js";
+import { containsWholeWordPhrase, stemToken } from "./utils.js";
 
 export interface GuideLookupAmbiguity {
   query: string;
@@ -94,64 +94,78 @@ function scoreGuideContentMatch(
     ...fields.stepTitles,
     ...fields.stepStatements,
   ].join(" ");
+  const stemmedAllText = allText
+    .toLowerCase()
+    .split(/[^a-z0-9-]+/)
+    .map(stemToken)
+    .join(" ");
 
   if (
     queryTokens.length > 0 &&
-    queryTokens.some((token) => !containsWholeWordPhrase(allText, token))
+    queryTokens.some(
+      (token) =>
+        !containsWholeWordPhrase(allText, token) &&
+        !containsWholeWordPhrase(stemmedAllText, token),
+    )
   ) {
     return 0;
   }
 
   let score = 0;
 
-  if (containsWholeWordPhrase(fields.name, normalizedQuery)) {
+  const stemField = (text: string): string =>
+    text
+      .toLowerCase()
+      .split(/[^a-z0-9-]+/)
+      .map(stemToken)
+      .join(" ");
+
+  const matchesPhrase = (text: string, phrase: string): boolean =>
+    containsWholeWordPhrase(text, phrase) ||
+    containsWholeWordPhrase(stemField(text), phrase);
+
+  if (matchesPhrase(fields.name, normalizedQuery)) {
     score += 24;
   }
-  if (
-    fields.aliases.some((alias) =>
-      containsWholeWordPhrase(alias, normalizedQuery),
-    )
-  ) {
+  if (fields.aliases.some((alias) => matchesPhrase(alias, normalizedQuery))) {
     score += 18;
   }
   if (
     fields.stepTitles.some((stepTitle) =>
-      containsWholeWordPhrase(stepTitle, normalizedQuery),
+      matchesPhrase(stepTitle, normalizedQuery),
     )
   ) {
     score += 16;
   }
-  if (containsWholeWordPhrase(fields.summary, normalizedQuery)) {
+  if (matchesPhrase(fields.summary, normalizedQuery)) {
     score += 12;
   }
   if (
     fields.stepStatements.some((statement) =>
-      containsWholeWordPhrase(statement, normalizedQuery),
+      matchesPhrase(statement, normalizedQuery),
     )
   ) {
     score += 8;
   }
 
   for (const token of queryTokens) {
-    if (containsWholeWordPhrase(fields.name, token)) {
+    if (matchesPhrase(fields.name, token)) {
       score += 5;
     }
-    if (fields.aliases.some((alias) => containsWholeWordPhrase(alias, token))) {
+    if (fields.aliases.some((alias) => matchesPhrase(alias, token))) {
       score += 4;
     }
     if (
-      fields.stepTitles.some((stepTitle) =>
-        containsWholeWordPhrase(stepTitle, token),
-      )
+      fields.stepTitles.some((stepTitle) => matchesPhrase(stepTitle, token))
     ) {
       score += 4;
     }
-    if (containsWholeWordPhrase(fields.summary, token)) {
+    if (matchesPhrase(fields.summary, token)) {
       score += 3;
     }
     if (
       fields.stepStatements.some((statement) =>
-        containsWholeWordPhrase(statement, token),
+        matchesPhrase(statement, token),
       )
     ) {
       score += 1;

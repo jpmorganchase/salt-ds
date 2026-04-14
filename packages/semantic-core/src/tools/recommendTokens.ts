@@ -31,12 +31,20 @@ function toCompactTokenRecommendation(candidate: {
     name: candidate.token.name,
     category: candidate.token.category,
     semantic_intent: candidate.token.semantic_intent,
+    value: candidate.token.value,
+    type: candidate.token.type,
     why:
       candidate.token.policy?.notes[0] ??
       candidate.token.guidance[0] ??
       candidate.token.semantic_intent ??
       "Matches the requested styling need.",
     applies_to: candidate.token.applies_to,
+    ...(candidate.token.themes.length > 0
+      ? { themes: candidate.token.themes }
+      : {}),
+    ...(candidate.token.densities.length > 0
+      ? { densities: candidate.token.densities }
+      : {}),
     docs: [
       ...new Set([
         TOKEN_DOCS_SOURCE_URL,

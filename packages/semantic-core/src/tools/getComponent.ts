@@ -28,7 +28,6 @@ export interface GetComponentInput {
   include?: Array<
     | "examples"
     | "props"
-    | "tokens"
     | "accessibility"
     | "deprecations"
     | "changes"
@@ -95,6 +94,35 @@ function toCompactComponent(
     next_step: getComponentNextStep(component),
   };
 
+  const activeProps = component.props.filter((prop) => !prop.deprecated);
+  if (activeProps.length > 0) {
+    compact.key_props = activeProps.slice(0, 5).map((prop) => ({
+      name: prop.name,
+      type: prop.type,
+      ...(prop.description ? { description: prop.description } : {}),
+      ...(prop.required ? { required: true } : {}),
+    }));
+    compact.prop_count = component.props.length;
+  }
+
+  const deprecatedPropCount = component.props.filter(
+    (prop) => prop.deprecated,
+  ).length;
+  if (deprecatedPropCount > 0) {
+    compact.deprecated_prop_count = deprecatedPropCount;
+  }
+
+  // Surface sub-component names and composition rules in compact view so
+  // agents know the component is compound without needing the full record.
+  if (component.sub_components && component.sub_components.length > 0) {
+    compact.sub_component_names = component.sub_components.map(
+      (sub) => sub.export_name,
+    );
+  }
+  if (component.composition) {
+    compact.composition = component.composition;
+  }
+
   if (component.package.name !== "@salt-ds/core") {
     compact.package = component.package.name;
   }
@@ -109,15 +137,20 @@ function toCompactComponent(
   if (include.includes("props")) {
     compact.props = component.props;
   }
-  if (include.includes("tokens")) {
-    compact.tokens = component.tokens;
-  }
   if (include.includes("examples")) {
     compact.examples = component.examples;
   }
   if (include.includes("deprecations")) {
     compact.deprecations = component.deprecations;
     compact.deprecation_records = getDeprecationRecords(registry, component);
+  }
+  if (include.includes("props")) {
+    compact.props = component.props;
+    // When props are explicitly requested, also include full sub-component
+    // details so the agent has the complete API surface.
+    if (component.sub_components && component.sub_components.length > 0) {
+      compact.sub_components = component.sub_components;
+    }
   }
   if (include.includes("changes")) {
     compact.changes = sortChangesNewestFirst(
