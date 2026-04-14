@@ -2,13 +2,7 @@
   "scenario": {
     "id": "existing-salt-create-header-block-misroute-compact",
     "audience": "existing-salt-team",
-    "tags": [
-      "replay",
-      "create",
-      "exact-name",
-      "semantic-misroute",
-      "compact"
-    ],
+    "tags": ["replay", "create", "exact-name", "semantic-misroute", "compact"],
     "fixture": {
       "kind": "repo",
       "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-header-block-misroute",

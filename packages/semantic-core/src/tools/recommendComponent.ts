@@ -29,6 +29,23 @@ import {
   tokenize,
 } from "./utils.js";
 
+/**
+ * Single-token aliases that are too generic to justify a strong name-match
+ * bonus.  When a query is just "layout" or "grid", the alias scoring branch
+ * awards 0 instead of the full 24–30 points.
+ *
+ * **Scope limitation:** This suppression only applies to the alias scoring
+ * branch in {@link getExplicitNameMatchAdjustment}.  It does NOT suppress:
+ *  - Component **name** matching (unlikely to be an issue since no component
+ *    names are this generic today).
+ *  - Field-level scoring in {@link scoreQueryFields} — fields such as summary,
+ *    when_to_use, or tags containing these words will still contribute scores.
+ *  - Semantics scoring via {@link scoreUsageSemantics}.
+ *
+ * If future tuning requires broader suppression, consider introducing a
+ * `WEAK_QUERY_TOKENS` constant in `consumerSignals.ts` that reduces
+ * `token_weight` contributions for these terms.
+ */
 const WEAK_SINGLE_TOKEN_ALIASES = new Set([
   "body",
   "content",

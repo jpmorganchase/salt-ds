@@ -1,5 +1,5 @@
 import type { IconRecord, SaltRegistry, SaltStatus } from "../types.js";
-import { normalizeQuery, tokenize } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery, tokenize } from "./utils.js";
 
 export interface GetIconsInput {
   query?: string;
@@ -42,24 +42,24 @@ function scoreIcon(icon: IconRecord, query: string): number {
 
   if (names.some((value) => value === query)) {
     score += 12;
-  } else if (names.some((value) => value.includes(query))) {
+  } else if (names.some((value) => containsWholeWordPhrase(value, query))) {
     score += 8;
   }
 
-  if (icon.summary.toLowerCase().includes(query)) {
+  if (containsWholeWordPhrase(icon.summary.toLowerCase(), query)) {
     score += 5;
   }
 
   for (const token of queryTokens) {
-    if (names.some((value) => value.includes(token))) {
+    if (names.some((value) => containsWholeWordPhrase(value, token))) {
       score += 4;
     }
-    if (icon.summary.toLowerCase().includes(token)) {
+    if (containsWholeWordPhrase(icon.summary.toLowerCase(), token)) {
       score += 2;
     }
     if (
       [...icon.aliases, ...icon.synonyms, icon.category].some((value) =>
-        value.toLowerCase().includes(token),
+        containsWholeWordPhrase(value.toLowerCase(), token),
       )
     ) {
       score += 1;
@@ -79,7 +79,9 @@ export function getIcons(
 
   const icons = registry.icons
     .filter((icon) =>
-      category ? icon.category.toLowerCase().includes(category) : true,
+      category
+        ? containsWholeWordPhrase(icon.category.toLowerCase(), category)
+        : true,
     )
     .filter((icon) => (input.variant ? icon.variant === input.variant : true))
     .filter((icon) => (input.status ? icon.status === input.status : true))

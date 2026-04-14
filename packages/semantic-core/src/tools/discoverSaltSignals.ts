@@ -1,4 +1,4 @@
-import { tokenize } from "./utils.js";
+import { containsWholeWordPhrase, tokenize } from "./utils.js";
 
 export const FOUNDATION_DISCOVERY_KEYWORDS = [
   "breakpoint",
@@ -65,16 +65,11 @@ export function scoreDiscoveryKeywordIntent(
   keywords: readonly string[],
 ): number {
   const queryTokens = new Set(tokenize(query));
-  const tokenScore = keywords.reduce(
-    (score, keyword) => score + (queryTokens.has(keyword) ? 1 : 0),
-    0,
-  );
-  const phraseScore = keywords.reduce(
-    (score, keyword) => score + (query.includes(keyword) ? 1 : 0),
-    0,
-  );
-
-  return tokenScore + phraseScore;
+  return keywords.reduce((score, keyword) => {
+    const tokenMatch = queryTokens.has(keyword) ? 1 : 0;
+    const phraseMatch = containsWholeWordPhrase(query, keyword) ? 1 : 0;
+    return score + Math.max(tokenMatch, phraseMatch);
+  }, 0);
 }
 
 export function inferDiscoveryPreferences(query: string): DiscoveryPreferences {

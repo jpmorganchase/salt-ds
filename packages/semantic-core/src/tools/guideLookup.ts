@@ -1,6 +1,7 @@
 import { ENGLISH_FUNCTION_WORDS } from "../search/englishFunctionWords.js";
 import type { GuideRecord } from "../types.js";
 import { resolveLookup } from "./lookupResolver.js";
+import { containsWholeWordPhrase } from "./utils.js";
 
 export interface GuideLookupAmbiguity {
   query: string;
@@ -96,49 +97,63 @@ function scoreGuideContentMatch(
 
   if (
     queryTokens.length > 0 &&
-    queryTokens.some((token) => !allText.includes(token))
+    queryTokens.some((token) => !containsWholeWordPhrase(allText, token))
   ) {
     return 0;
   }
 
   let score = 0;
 
-  if (fields.name.includes(normalizedQuery)) {
+  if (containsWholeWordPhrase(fields.name, normalizedQuery)) {
     score += 24;
   }
-  if (fields.aliases.some((alias) => alias.includes(normalizedQuery))) {
+  if (
+    fields.aliases.some((alias) =>
+      containsWholeWordPhrase(alias, normalizedQuery),
+    )
+  ) {
     score += 18;
   }
   if (
-    fields.stepTitles.some((stepTitle) => stepTitle.includes(normalizedQuery))
+    fields.stepTitles.some((stepTitle) =>
+      containsWholeWordPhrase(stepTitle, normalizedQuery),
+    )
   ) {
     score += 16;
   }
-  if (fields.summary.includes(normalizedQuery)) {
+  if (containsWholeWordPhrase(fields.summary, normalizedQuery)) {
     score += 12;
   }
   if (
     fields.stepStatements.some((statement) =>
-      statement.includes(normalizedQuery),
+      containsWholeWordPhrase(statement, normalizedQuery),
     )
   ) {
     score += 8;
   }
 
   for (const token of queryTokens) {
-    if (fields.name.includes(token)) {
+    if (containsWholeWordPhrase(fields.name, token)) {
       score += 5;
     }
-    if (fields.aliases.some((alias) => alias.includes(token))) {
+    if (fields.aliases.some((alias) => containsWholeWordPhrase(alias, token))) {
       score += 4;
     }
-    if (fields.stepTitles.some((stepTitle) => stepTitle.includes(token))) {
+    if (
+      fields.stepTitles.some((stepTitle) =>
+        containsWholeWordPhrase(stepTitle, token),
+      )
+    ) {
       score += 4;
     }
-    if (fields.summary.includes(token)) {
+    if (containsWholeWordPhrase(fields.summary, token)) {
       score += 3;
     }
-    if (fields.stepStatements.some((statement) => statement.includes(token))) {
+    if (
+      fields.stepStatements.some((statement) =>
+        containsWholeWordPhrase(statement, token),
+      )
+    ) {
       score += 1;
     }
   }

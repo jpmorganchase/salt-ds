@@ -120,9 +120,7 @@ describe("workflow eval replay", () => {
     const fixture = await loadWorkflowEvalReplayFixture(fixturePath);
     const entry = replayWorkflowEvalFixture(fixture, fixturePath);
 
-    expect(entry.scenario_id).toBe(
-      "existing-salt-create-metric-exact-compact",
-    );
+    expect(entry.scenario_id).toBe("existing-salt-create-metric-exact-compact");
     expect(entry.judgment).toEqual(
       expect.objectContaining({
         status: "passed",

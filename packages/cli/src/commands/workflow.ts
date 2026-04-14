@@ -1801,16 +1801,12 @@ function toCreateAgentWorkflowJson(
     packageName?: string;
   },
 ): PublicContract {
-  return buildCreatePublicContract(
-    result.result.recommendation,
-    contract,
-    {
-      transport_used: "cli",
-      registry: options.registry,
-      query: options.query,
-      package: options.packageName,
-    },
-  );
+  return buildCreatePublicContract(result.result.recommendation, contract, {
+    transport_used: "cli",
+    registry: options.registry,
+    query: options.query,
+    package: options.packageName,
+  });
 }
 
 function toReviewAgentWorkflowJson(
@@ -1826,13 +1822,9 @@ function toMigrateAgentWorkflowJson(
   result: MigrateToSaltResult,
   contract: MigrateToSaltWorkflowContract,
 ): PublicContract {
-  return buildMigratePublicContract(
-    result,
-    contract,
-    {
-      transport_used: "cli",
-    },
-  );
+  return buildMigratePublicContract(result, contract, {
+    transport_used: "cli",
+  });
 }
 
 function toUpgradeAgentWorkflowJson(
@@ -2998,8 +2990,10 @@ async function runReviewLikeCommand(
           project_conventions: {
             supported: true,
             contract: "project_conventions_v1",
-            check_recommended: projectConventionsCheck?.checkRecommended ?? false,
-            reason: "Repo policy may still refine the final remediation choice.",
+            check_recommended:
+              projectConventionsCheck?.checkRecommended ?? false,
+            reason:
+              "Repo policy may still refine the final remediation choice.",
             topics: projectConventionsCheck?.topics ?? [],
           },
         },
@@ -3019,8 +3013,12 @@ async function runReviewLikeCommand(
         },
         fixes: sourceValidation.files.flatMap((file) => file.fixes ?? []),
         issues: mergedIssues,
-        migrations: sourceValidation.files.flatMap((file) => file.migrations ?? []),
-        missing_data: sourceValidation.files.flatMap((file) => file.missingData),
+        migrations: sourceValidation.files.flatMap(
+          (file) => file.migrations ?? [],
+        ),
+        missing_data: sourceValidation.files.flatMap(
+          (file) => file.missingData,
+        ),
         next_step:
           sourceValidation.files[0]?.nextStep ??
           (loadedCreateReviewTargets

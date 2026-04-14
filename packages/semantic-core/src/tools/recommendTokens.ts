@@ -1,7 +1,7 @@
 import type { SaltRegistry } from "../types.js";
 import { getTokenQueryFields, scoreQueryFields } from "./consumerSignals.js";
 import { getTokenNextStep } from "./getToken.js";
-import { normalizeQuery } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery } from "./utils.js";
 
 const TOKEN_DOCS_SOURCE_URL = "/salt/themes/design-tokens/index";
 
@@ -64,12 +64,14 @@ export function recommendTokens(
   const rankedCandidates = registry.tokens
     .filter((token) => (includeDeprecated ? true : !token.deprecated))
     .filter((token) =>
-      category ? token.category.toLowerCase().includes(category) : true,
+      category
+        ? containsWholeWordPhrase(token.category.toLowerCase(), category)
+        : true,
     )
     .filter((token) =>
       componentName
         ? token.applies_to.some((value) =>
-            value.toLowerCase().includes(componentName),
+            containsWholeWordPhrase(value.toLowerCase(), componentName),
           )
         : true,
     )

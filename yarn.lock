@@ -4270,7 +4270,7 @@ __metadata:
     chromatic: "npm:^16.0.0"
     ci-info: "npm:^4.0.0"
     clsx: "npm:^2.0.0"
-    cypress: "npm:^15.13.0"
+    cypress: "npm:^15.0.0"
     cypress-axe: "npm:^1.7.0"
     cypress-real-events: "npm:^1.15.0"
     deepmerge: "npm:^4.2.2"
@@ -8441,9 +8441,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^15.13.0":
-  version: 15.13.0
-  resolution: "cypress@npm:15.13.0"
+"cypress@npm:^15.0.0":
+  version: 15.10.0
+  resolution: "cypress@npm:15.10.0"
   dependencies:
     "@cypress/request": "npm:^3.0.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -8482,15 +8482,14 @@ __metadata:
     proxy-from-env: "npm:1.0.0"
     request-progress: "npm:^3.0.0"
     supports-color: "npm:^8.1.1"
-    systeminformation: "npm:^5.31.1"
+    systeminformation: "npm:^5.27.14"
     tmp: "npm:~0.2.4"
     tree-kill: "npm:1.2.2"
-    tslib: "npm:1.14.1"
     untildify: "npm:^4.0.0"
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/c0ad6c3d70a960d6c4cc71e38029fcf9a01569f8b9d33a36eea187b05861bc8cda7aa144eef81cbd7d6499e084b7b65637014eb74da0196b21d0f17c5fdfc487
+  checksum: 10/b1e9726a7c386118b461be89a4b46ff544b10be23d0c7c03f98a9c4bc9b0a85c0282b7c3dc4a86cacbad293706b387af5985645fa119d3f88080577ee677d42b
   languageName: node
   linkType: hard
 
@@ -16801,7 +16800,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.31.1":
+"systeminformation@npm:^5.27.14":
   version: 5.31.5
   resolution: "systeminformation@npm:5.31.5"
   bin:

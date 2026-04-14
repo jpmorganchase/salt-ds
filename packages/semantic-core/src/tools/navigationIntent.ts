@@ -14,6 +14,8 @@ const STRUCTURED_NAVIGATION_HINT =
   /\b(sidebar|vertical navigation|navigation pane|nested|submenu|sections?|app shell|wizard|stepper|pagination|breadcrumbs|tabs?|menu button)\b/;
 const PAGED_COLLECTION_HINT =
   /\b(pagination|page numbers?|rows per page|page size|previous page|next page|search results?|results pages?|paged results?|grid pages?|table pages?)\b/;
+const MULTI_DESTINATION_HINT =
+  /\b(multiple|several|links|many|all|various|every)\b/;
 
 export function hasSingleDestinationNavigationIntent(input: string): boolean {
   const query = normalizeQuery(input);
@@ -24,7 +26,8 @@ export function hasSingleDestinationNavigationIntent(input: string): boolean {
 
   if (
     PAGED_COLLECTION_HINT.test(query) ||
-    STRUCTURED_NAVIGATION_HINT.test(query)
+    STRUCTURED_NAVIGATION_HINT.test(query) ||
+    MULTI_DESTINATION_HINT.test(query)
   ) {
     return false;
   }

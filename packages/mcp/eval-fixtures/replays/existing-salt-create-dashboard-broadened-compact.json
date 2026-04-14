@@ -2,13 +2,7 @@
   "scenario": {
     "id": "existing-salt-create-dashboard-broadened-compact",
     "audience": "existing-salt-team",
-    "tags": [
-      "replay",
-      "create",
-      "descriptive-query",
-      "broadened",
-      "compact"
-    ],
+    "tags": ["replay", "create", "descriptive-query", "broadened", "compact"],
     "fixture": {
       "kind": "repo",
       "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-dashboard-broadened",

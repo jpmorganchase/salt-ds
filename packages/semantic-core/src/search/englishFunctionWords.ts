@@ -58,5 +58,3 @@ export const REGISTRY_META_WORDS: ReadonlySet<string> = new Set([
   "ui",
   "uis",
 ]);
-
-

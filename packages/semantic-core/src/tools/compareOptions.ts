@@ -142,7 +142,7 @@ export function compareOptions(
     if (unresolvedNames.length > 0) {
       return {
         option_type: "pattern",
-        compared: [],
+        compared,
         unresolved_names: unresolvedNames,
         next_step: getNoComparisonNextStep("pattern"),
       };
@@ -284,7 +284,7 @@ export function compareOptions(
   if (unresolvedNames.length > 0) {
     return {
       option_type: "component",
-      compared: [],
+      compared,
       unresolved_names: unresolvedNames,
       next_step: getNoComparisonNextStep("component"),
     };

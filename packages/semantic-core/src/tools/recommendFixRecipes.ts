@@ -14,7 +14,12 @@ import { getRelevantGuides } from "./guideAwareness.js";
 import { findGuideByIdentifier } from "./guideLookup.js";
 import { recommendTokens } from "./recommendTokens.js";
 import { suggestMigration } from "./suggestMigration.js";
-import { isExampleAllowedByDocsPolicy, tokenize, unique } from "./utils.js";
+import {
+  containsWholeWordPhrase,
+  isExampleAllowedByDocsPolicy,
+  tokenize,
+  unique,
+} from "./utils.js";
 import { validateSaltUsage } from "./validateSaltUsage.js";
 import {
   CHOOSING_PRIMITIVE_GUIDE_LOOKUP,
@@ -264,7 +269,7 @@ function scoreMigrationForIssue(
     .toLowerCase();
 
   return issueTokens.reduce((score, token) => {
-    return migrationText.includes(token) ? score + 1 : score;
+    return containsWholeWordPhrase(migrationText, token) ? score + 1 : score;
   }, 0);
 }
 
