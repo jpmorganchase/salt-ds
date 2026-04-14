@@ -68,14 +68,16 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         aria-labelledby={ariaLabelledby}
       >
         <div {...rest}> {children} </div>
-        <FloatingArrow
-          {...arrowProps}
-          strokeWidth={1}
-          fill="var(--overlay-background)"
-          stroke="var(--overlay-borderColor)"
-          height={6}
-          width={12}
-        />
+        {arrowProps && (
+          <FloatingArrow
+            {...arrowProps}
+            strokeWidth={1}
+            fill="var(--overlay-background)"
+            stroke="var(--overlay-borderColor)"
+            height={6}
+            width={12}
+          />
+        )}
       </FloatingComponent>
     );
   },
