@@ -60,6 +60,27 @@ Right.args = {
   placement: "right",
 };
 
+export const HideArrow: StoryFn<OverlayProps> = ({ ...args }) => {
+  const id = useId();
+
+  return (
+    <Overlay placement="bottom" hideArrow {...args}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelContent>
+          <h3 id={id} className="content-heading">
+            Title
+          </h3>
+          <div>Content of Overlay</div>
+        </OverlayPanelContent>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
 const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
   const [open, setOpen] = useState(false);
 
