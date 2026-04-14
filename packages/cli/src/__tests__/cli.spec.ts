@@ -1801,7 +1801,9 @@ describe("salt cli", () => {
     expect(payload.workflow.implementationGate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: expect.arrayContaining(["Metric"]),
+        required_follow_through: expect.arrayContaining([
+          expect.objectContaining({ entity: "Metric" }),
+        ]),
       }),
     );
   });

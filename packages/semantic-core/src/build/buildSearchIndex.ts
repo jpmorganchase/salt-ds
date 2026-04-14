@@ -32,7 +32,12 @@ export function buildSearchIndex(
         component.name,
         ...component.aliases,
         ...component.tags,
+        ...(component.category ?? []),
         ...component.when_to_use,
+        ...component.props.slice(0, 10).map((prop) => prop.name),
+        ...component.accessibility.summary.slice(0, 3),
+        ...component.patterns,
+        ...(component.semantics?.preferred_for ?? []),
       ]),
     });
   }
@@ -109,11 +114,14 @@ export function buildSearchIndex(
       keywords: uniqueStrings([
         pattern.name,
         ...pattern.aliases,
+        ...(pattern.category ?? []),
         ...pattern.when_to_use,
+        ...pattern.when_not_to_use,
         ...pattern.related_patterns,
         ...pattern.composed_of.map((item) => item.component),
         ...pattern.how_to_build,
         ...pattern.how_it_works,
+        ...pattern.accessibility.summary.slice(0, 3),
       ]),
     });
   }
@@ -155,6 +163,11 @@ export function buildSearchIndex(
         token.name,
         token.category,
         ...(token.semantic_intent ? [token.semantic_intent] : []),
+        ...token.aliases,
+        ...token.applies_to,
+        ...token.guidance.slice(0, 3),
+        ...(token.policy?.preferred_for ?? []).slice(0, 3),
+        ...(token.policy?.avoid_for ?? []).slice(0, 2),
       ]),
     });
   }
@@ -166,7 +179,9 @@ export function buildSearchIndex(
       name: example.title,
       package: example.package,
       status: null,
-      summary: `Example for ${example.target_type} ${example.target_name}`,
+      summary:
+        example.description ||
+        `Example for ${example.target_type} ${example.target_name}`,
       source_url: example.source_url,
       keywords: uniqueStrings([
         example.title,

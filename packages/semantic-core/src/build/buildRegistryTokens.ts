@@ -4,7 +4,6 @@ import fg from "fast-glob";
 import { toPosixPath } from "../registry/paths.js";
 import type {
   ComponentRecord,
-  ComponentTokenInference,
   TokenRecord,
 } from "../types.js";
 import {
@@ -13,8 +12,6 @@ import {
   readFileOrNull,
 } from "./buildRegistryShared.js";
 import { getTokenPolicy } from "./buildRegistryTokenPolicy.js";
-
-const MAX_COMPONENT_TOKENS = 40;
 
 function inferTokenType(tokenValue: string): string {
   if (/^#[a-f0-9]{3,8}$/i.test(tokenValue) || /^rgb/i.test(tokenValue)) {
@@ -225,29 +222,12 @@ export async function linkTokensToComponents(
   components: ComponentRecord[];
   tokens: TokenRecord[];
 }> {
-  const tokenByName = new Map(tokens.map((token) => [token.name, token]));
   const tokenNameSet = new Set(tokens.map((token) => token.name));
   const componentNamesByToken = new Map<string, Set<string>>();
   const tokenScanCache = new Map<string, Map<string, number>>();
 
-  const updatedComponents: ComponentRecord[] = [];
   for (const component of components) {
     if (!component.source.repo_path) {
-      const tokenInference: ComponentTokenInference = {
-        source: "none",
-        discovered_count: 0,
-        returned_count: 0,
-        max_returned: MAX_COMPONENT_TOKENS,
-        truncated: false,
-      };
-      updatedComponents.push({
-        ...component,
-        tokens: [],
-        inference: {
-          ...component.inference,
-          tokens: tokenInference,
-        },
-      });
       continue;
     }
 
@@ -257,47 +237,12 @@ export async function linkTokensToComponents(
       tokenNameSet,
       tokenScanCache,
     );
-    const tokenNames = [...tokenCounts.entries()]
-      .sort((left, right) => {
-        if (left[1] !== right[1]) {
-          return right[1] - left[1];
-        }
-        return left[0].localeCompare(right[0]);
-      })
-      .slice(0, MAX_COMPONENT_TOKENS)
-      .map(([tokenName]) => tokenName);
 
-    const componentTokens = tokenNames
-      .map((tokenName) => tokenByName.get(tokenName))
-      .filter((token): token is TokenRecord => token != null)
-      .map((token) => ({
-        name: token.name,
-        category: token.category,
-        semantic_intent: token.semantic_intent,
-      }));
-
-    const tokenInference: ComponentTokenInference = {
-      source: "repo_scan",
-      discovered_count: tokenCounts.size,
-      returned_count: componentTokens.length,
-      max_returned: MAX_COMPONENT_TOKENS,
-      truncated: tokenCounts.size > MAX_COMPONENT_TOKENS,
-    };
-
-    for (const tokenName of tokenNames) {
+    for (const tokenName of tokenCounts.keys()) {
       const names = componentNamesByToken.get(tokenName) ?? new Set<string>();
       names.add(component.name);
       componentNamesByToken.set(tokenName, names);
     }
-
-    updatedComponents.push({
-      ...component,
-      tokens: componentTokens,
-      inference: {
-        ...component.inference,
-        tokens: tokenInference,
-      },
-    });
   }
 
   const updatedTokens = tokens.map((token) => ({
@@ -307,5 +252,5 @@ export async function linkTokensToComponents(
     ].sort((left, right) => left.localeCompare(right)),
   }));
 
-  return { components: updatedComponents, tokens: updatedTokens };
+  return { components, tokens: updatedTokens };
 }

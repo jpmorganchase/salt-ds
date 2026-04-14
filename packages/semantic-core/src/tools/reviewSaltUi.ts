@@ -344,6 +344,63 @@ function buildExpectedTargetIssues(
     );
   }
 
+  // Generalized primitive coverage check: for each slot-bound expected
+  // component, verify that a matching Salt import exists. This catches cases
+  // like LinearProgress, where the scaffold expects the primitive but the
+  // agent used custom CSS instead.
+  const compositionSlots =
+    expectedTargets.composition_contract?.slots.filter(
+      (slot) => slot.certainty !== "optional",
+    ) ?? [];
+  const importedSaltNames = new Set(
+    [...(input.analysis?.directImportByLocal.values() ?? [])].map((sym) =>
+      normalizeTargetName(sym.imported),
+    ),
+  );
+
+  for (const slot of compositionSlots) {
+    for (const expectedComponent of slot.preferred_components) {
+      const normalized = normalizeTargetName(expectedComponent);
+      // Skip components already covered by the specific checks above
+      if (normalized === "table" || normalized === "datagrid") {
+        continue;
+      }
+      if (!importedSaltNames.has(normalized)) {
+        issues.push({
+          id: `workflow-expected.missing-primitive.${normalized}`,
+          category: "composition",
+          rule: "scaffold-expected-primitive-not-imported",
+          severity: "warning",
+          title: `Expected Salt primitive ${expectedComponent} not found`,
+          message: `The scaffold expected ${expectedComponent} for the "${slot.label || slot.id}" region, but no corresponding Salt import was found. Custom markup may be duplicating an existing Salt component.`,
+          evidence: [
+            ...buildEvidence(
+              `Scaffold slot "${slot.id}" expected ${expectedComponent}`,
+              1,
+            ),
+            `No import of ${expectedComponent} from a @salt-ds/* package was detected.`,
+          ],
+          canonical_source: null,
+          suggested_fix: `Run a targeted create follow-up for ${expectedComponent} and replace custom markup with the canonical Salt component.`,
+          confidence: 0.82,
+          source_urls: componentDocUrls(registry, expectedComponent, [
+            "overview",
+            "usage",
+          ]),
+          matches: 1,
+          fix_hints: {
+            guide_lookups: [],
+            related_components: [expectedComponent],
+            extra_steps: [
+              `Run salt-ds create "${expectedComponent}" to get canonical guidance.`,
+              `Replace custom HTML or CSS in the "${slot.label || slot.id}" region with the resolved Salt primitive.`,
+            ],
+          },
+        });
+      }
+    }
+  }
+
   return issues;
 }
 

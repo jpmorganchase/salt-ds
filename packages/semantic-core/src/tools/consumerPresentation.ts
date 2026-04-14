@@ -141,10 +141,20 @@ export function getComponentCaveats(component: ComponentRecord): string[] {
     component.deprecations.length > 0 ||
     component.props.some((prop) => prop.deprecated)
   ) {
-    caveats.push(
-      `${component.name} includes deprecated APIs; review upgrade guidance before adopting new usage.`,
-    );
+    const deprecatedPropNames = component.props
+      .filter((prop) => prop.deprecated)
+      .map((prop) => prop.name);
+    if (deprecatedPropNames.length > 0 && deprecatedPropNames.length <= 5) {
+      caveats.push(
+        `${component.name} has deprecated props (${deprecatedPropNames.join(", ")}); review upgrade guidance before adopting new usage.`,
+      );
+    } else {
+      caveats.push(
+        `${component.name} includes deprecated APIs; review upgrade guidance before adopting new usage.`,
+      );
+    }
   }
+
 
   return caveats;
 }

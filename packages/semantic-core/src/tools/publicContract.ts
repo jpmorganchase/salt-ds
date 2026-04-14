@@ -12,6 +12,7 @@ import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
 import { isComponentAllowedByDocsPolicy, tokenize } from "./utils.js";
 import type {
   CreateSaltUiWorkflowContract,
+  FollowThroughItem,
   MigrateToSaltWorkflowContract,
   ReviewSaltUiWorkflowContract,
   UpgradeSaltUiWorkflowContract,
@@ -96,6 +97,7 @@ export interface PublicContract {
   match_status?: PublicMatchStatus;
   blocking_reasons: string[];
   next_step: PublicNextStep;
+  required_post_step?: PublicReviewStep;
   summary: string;
   truncated?: boolean;
   available_expansions?: string[];
@@ -111,7 +113,7 @@ export interface PublicContractExactRequest {
 
 export interface PublicContractState {
   implementation_ready: boolean;
-  required_follow_through: string[];
+  required_follow_through: FollowThroughItem[];
   blocking_questions: string[];
   starter_blockers: string[];
   project_policy_blockers: string[];
@@ -193,7 +195,7 @@ function deriveBlockingReasons(input: PublicContractInput): string[] {
   const exactRequest = input.exact_request;
   const requiredFollowThrough =
     state.required_follow_through.length > 0
-      ? `required follow-through remains: ${state.required_follow_through.join(", ")}`
+      ? `required follow-through remains: ${state.required_follow_through.map((item) => item.entity).join(", ")}`
       : null;
   const blockingQuestions =
     state.blocking_questions.length > 0 ? "blocking questions remain" : null;
@@ -409,6 +411,25 @@ export function getPublicContractValidationErrors(
     );
   }
 
+  if (
+    contract.next_step.kind === "implement" &&
+    contract.workflow !== "review" &&
+    !contract.required_post_step
+  ) {
+    errors.push(
+      "next_step.kind=implement requires required_post_step when workflow is not review",
+    );
+  }
+
+  if (
+    contract.next_step.kind !== "implement" &&
+    contract.required_post_step
+  ) {
+    errors.push(
+      "required_post_step must only appear when next_step.kind=implement",
+    );
+  }
+
   return uniqueNonEmptyStrings(errors);
 }
 
@@ -436,6 +457,17 @@ export function buildPublicContract(
     input.exact_request?.resolved_entity === null
       ? null
       : input.exact_request?.resolved_entity?.trim();
+  const requiredPostStep: PublicReviewStep | undefined =
+    input.next_step.kind === "implement" && input.workflow !== "review"
+      ? {
+          kind: "review",
+          tool:
+            input.transport_used === "cli"
+              ? "salt-ds review"
+              : "review_salt_ui",
+        }
+      : undefined;
+
   const contract: PublicContract = {
     workflow: input.workflow,
     transport_used: input.transport_used,
@@ -451,6 +483,7 @@ export function buildPublicContract(
       : {}),
     blocking_reasons: blockingReasons,
     next_step: input.next_step,
+    ...(requiredPostStep ? { required_post_step: requiredPostStep } : {}),
     summary: input.summary.trim(),
     ...(input.truncated ? { truncated: true } : {}),
     ...(input.available_expansions?.length
@@ -955,7 +988,7 @@ function buildCreateNextStep(
       tool: "create_salt_ui",
       mode: "exact_name",
       args: {
-        query: contract.implementation_gate.required_follow_through[0],
+        query: contract.implementation_gate.required_follow_through[0].entity,
       },
     };
   }

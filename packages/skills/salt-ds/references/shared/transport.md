@@ -74,6 +74,10 @@ Read compact workflow output from top-level fields first:
 - `next_step`
 - `summary`
 
+When citing canonical Salt guidance in an answer, use `top_source_urls` from `ide_summary` as the grounding links instead of fabricating documentation URLs.
+When evaluating component fit, use `key_props` from compact component output to check prop availability without requesting the full prop list.
+When a component is compound (e.g., Dialog, Accordion, Form field), compact output includes `sub_component_names` listing the child exports and `composition` with `required_children` and `optional_children`. Request `include: ["props"]` on `get_salt_entity` to get full props for both the root component and its sub-components.
+
 Treat these as blocking items when they affect the regions you plan to implement or review:
 
 - `workflow_status != "success"`

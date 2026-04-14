@@ -23,6 +23,8 @@ const componentFiles = componentPackages.map((pkg) =>
 const options = {
   propFilter: (prop) =>
     !/@types[\\/]react[\\/]/.test(prop.parent?.fileName || ""),
+  shouldExtractLiteralValuesFromEnum: true,
+  shouldRemoveUndefinedFromOptional: true,
 };
 
 const components = componentFiles.map((component) =>

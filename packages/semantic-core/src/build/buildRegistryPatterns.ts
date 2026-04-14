@@ -107,6 +107,141 @@ function extractListLabels(content: string): string[] {
 
   return uniqueStrings(labels);
 }
+
+function inferComponentRoles(
+  content: string,
+  componentNames: string[],
+): Map<string, string> {
+  const roles = new Map<string, string>();
+  if (componentNames.length === 0) {
+    return roles;
+  }
+
+  // Collect content from all sections that commonly describe component usage.
+  const howToBuild = findSectionContent(content, 2, "How to build");
+  const anatomyContent = findSectionContent(howToBuild, 3, "Anatomy");
+  const layoutContent = findSectionContent(howToBuild, 3, "Layout");
+  const dashboardLayout = findSectionContent(howToBuild, 3, "Dashboard layout");
+  const dashboardRegions = findSectionContent(content, 2, "Dashboard regions");
+  const combinedContent = [
+    anatomyContent,
+    layoutContent,
+    dashboardLayout,
+    dashboardRegions,
+    // Fall back to the full How to build and root content for any remaining
+    // unmatched components, but give priority to the targeted sections above.
+    howToBuild,
+    content,
+  ].join("\n");
+
+  // Build match variants for each component: display name ("Border layout"),
+  // PascalCase without spaces ("BorderLayout"), and lowercase no-space form.
+  const componentVariants = new Map<
+    string,
+    { original: string; patterns: string[] }
+  >();
+  for (const name of componentNames) {
+    const pascalCase = name.replace(/\s+/g, "");
+    const lowerNoSpace = pascalCase.toLowerCase();
+    const lowerWithSpace = name.toLowerCase();
+    componentVariants.set(name, {
+      original: name,
+      patterns: uniqueStrings([lowerWithSpace, lowerNoSpace]),
+    });
+  }
+
+  for (const line of combinedContent.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      continue;
+    }
+
+    const lineLower = trimmed.toLowerCase();
+
+    for (const [, { original, patterns }] of componentVariants) {
+      if (roles.has(original)) {
+        continue;
+      }
+
+      const matched = patterns.some((pattern) => {
+        if (lineLower.includes(pattern)) {
+          return true;
+        }
+        // Also check backtick and link patterns case-insensitively.
+        const backtickRe = new RegExp(`\`${pattern}\``, "i");
+        const linkRe = new RegExp(
+          `\\[\\s*\`?${pattern}\`?\\s*\\]\\(`,
+          "i",
+        );
+        return backtickRe.test(trimmed) || linkRe.test(trimmed);
+      });
+
+      if (matched) {
+        const cleaned = cleanMarkdownText(trimmed)
+          .replace(/^(?:[-*]|\d+\.)\s+/, "")
+          .replace(/^\*\*[^*]+\*\*[:\s]*/g, "")
+          .trim();
+
+        if (cleaned.length > 0 && cleaned.length <= 300) {
+          roles.set(original, cleaned);
+        }
+      }
+    }
+  }
+
+  return roles;
+}
+
+function deriveStoryExampleIntent(exportName: string): string[] {
+  const expanded = exportName
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2")
+    .toLowerCase()
+    .trim();
+
+  const intents = [expanded];
+
+  const words = expanded
+    .split(/\s+/)
+    .filter((word) => word.length >= 3);
+
+  if (words.length > 1) {
+    intents.push(...words);
+  }
+
+  intents.push("pattern example");
+
+  return uniqueStrings(intents);
+}
+
+function inferStoryComplexity(
+  code: string,
+): ExampleRecord["complexity"] {
+  if (!code) {
+    return "intermediate";
+  }
+
+  const lines = code.split(/\r?\n/).filter((line) => line.trim().length > 0);
+  const importCount = lines.filter((line) =>
+    /^\s*import\b/.test(line),
+  ).length;
+  const hasState = /\buseState\b/.test(code);
+  const hasEffect = /\buseEffect\b/.test(code);
+  const hasRef = /\buseRef\b/.test(code);
+  const hookCount =
+    (hasState ? 1 : 0) + (hasEffect ? 1 : 0) + (hasRef ? 1 : 0);
+
+  if (lines.length > 80 || importCount > 8 || hookCount >= 3) {
+    return "advanced";
+  }
+
+  if (lines.length > 20 || importCount > 3 || hookCount >= 1) {
+    return "intermediate";
+  }
+
+  return "basic";
+}
+
 type PatternStarterTemplateKind =
   | "metric"
   | "app-header"
@@ -617,9 +752,7 @@ async function loadPatternCategoryMap(repoRoot: string): Promise<
     const categoryLabels = [
       entry.category,
       ...(entry.secondaryCategories ?? []),
-    ].filter(
-      (value): value is string => typeof value === "string" && value.length > 0,
-    );
+    ].filter((value) => value.length > 0);
 
     byRoute.set(normalizePatternDocsRoute(entry.route), {
       categoryIds: [
@@ -677,16 +810,18 @@ export async function extractPatternExamplesFromStories(
             continue;
           }
 
+          const storyCode = buildPatternStoryExampleCode(
+            source,
+            sourceFile,
+            statementIndex,
+          );
           examples.push({
             id: `pattern-story.${toKebabCase(relativePath)}.${toKebabCase(declaration.name.text)}`,
             title: declaration.name.text,
-            intent: ["pattern example"],
-            complexity: "intermediate",
-            code: buildPatternStoryExampleCode(
-              source,
-              sourceFile,
-              statementIndex,
-            ),
+            description: "",
+            intent: deriveStoryExampleIntent(declaration.name.text),
+            complexity: inferStoryComplexity(storyCode),
+            code: storyCode,
             source_url: relativePath,
             package: packageName,
             target_type: "pattern",
@@ -695,16 +830,18 @@ export async function extractPatternExamplesFromStories(
         }
       }
       if (ts.isFunctionDeclaration(statement) && statement.name) {
+        const storyCode = buildPatternStoryExampleCode(
+          source,
+          sourceFile,
+          statementIndex,
+        );
         examples.push({
           id: `pattern-story.${toKebabCase(relativePath)}.${toKebabCase(statement.name.text)}`,
           title: statement.name.text,
-          intent: ["pattern example"],
-          complexity: "intermediate",
-          code: buildPatternStoryExampleCode(
-            source,
-            sourceFile,
-            statementIndex,
-          ),
+          description: "",
+          intent: deriveStoryExampleIntent(statement.name.text),
+          complexity: inferStoryComplexity(storyCode),
+          code: storyCode,
           source_url: relativePath,
           package: packageName,
           target_type: "pattern",
@@ -811,6 +948,7 @@ export async function extractPatterns(
     );
     const structuredGuidance = parseStructuredGuidanceCallouts(parsed.content);
     const topicSignals = extractPatternTopicSignals(title, parsed.content);
+    const componentRoles = inferComponentRoles(parsed.content, components);
     const semantics = buildUsageSemantics({
       category: categoryRecord.categoryIds,
       preferred_for: [
@@ -851,6 +989,7 @@ export async function extractPatterns(
       examples.push({
         id: `pattern.${toKebabCase(title)}.resource.${index + 1}`,
         title: label,
+        description: "",
         intent: ["pattern resource"],
         complexity: "basic",
         code: `// Linked resource: ${href}`,
@@ -872,7 +1011,7 @@ export async function extractPatterns(
       when_not_to_use: whenNotToUse,
       composed_of: components.map((componentName) => ({
         component: componentName,
-        role: null,
+        role: componentRoles.get(componentName) ?? null,
       })),
       related_patterns: relatedPatterns,
       how_to_build: parseSectionStatements(parsed.content, "How to build"),

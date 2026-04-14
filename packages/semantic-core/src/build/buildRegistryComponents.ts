@@ -4,7 +4,9 @@ import matter from "gray-matter";
 import { toPosixPath } from "../registry/paths.js";
 import type {
   AccessibilityRule,
+  ComponentComposition,
   ComponentRecord,
+  ComponentSubComponent,
   ExampleRecord,
   PackageRecord,
   SaltStatus,
@@ -12,6 +14,7 @@ import type {
 import {
   type PropMetadata,
   selectDocgenComponent,
+  selectSubComponents,
   toComponentProps,
 } from "./buildRegistryDocgen.js";
 import {
@@ -26,16 +29,13 @@ import {
   cleanMarkdownText,
   readFileOrNull,
   toKebabCase,
+  toPascalCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
   if (name === "@salt-ds/lab") {
     return "lab";
-  }
-
-  if (/deprecated/i.test(version)) {
-    return "deprecated";
   }
 
   if (/(alpha|beta|rc)/i.test(version)) {
@@ -54,7 +54,6 @@ function inferDocsRoot(packageName: string): string | null {
     packageName === "@salt-ds/core" ||
     packageName === "@salt-ds/lab" ||
     packageName === "@salt-ds/countries" ||
-    packageName === "@salt-ds/data-grid" ||
     packageName === "@salt-ds/icons" ||
     packageName === "@salt-ds/ag-grid-theme" ||
     packageName === "@salt-ds/highcharts-theme" ||
@@ -97,15 +96,22 @@ function parsePackageNameFromRepoPath(repoPath: string | null): string | null {
 
 function parseLivePreviewTags(
   mdx: string,
-): Array<{ componentName: string; exampleName: string; title: string }> {
+): Array<{
+  componentName: string;
+  exampleName: string;
+  title: string;
+  description: string;
+}> {
   const lines = mdx.split(/\r?\n/);
   const examples: Array<{
     componentName: string;
     exampleName: string;
     title: string;
+    description: string;
   }> = [];
   let currentHeading = "";
   let livePreviewBuffer: string[] | null = null;
+  let descriptionLines: string[] = [];
 
   const flushLivePreviewBuffer = (): void => {
     if (!livePreviewBuffer) {
@@ -118,39 +124,52 @@ function parseLivePreviewTags(
     const componentNameMatch = livePreviewTag.match(/componentName="([^"]+)"/);
     const exampleNameMatch = livePreviewTag.match(/exampleName="([^"]+)"/);
     if (!componentNameMatch || !exampleNameMatch) {
+      descriptionLines = [];
       return;
     }
 
     const displayNameMatch = livePreviewTag.match(/displayName="([^"]+)"/);
+    const rawDescription = descriptionLines.join(" ");
+    const description = cleanMarkdownText(rawDescription).slice(0, 500);
+    descriptionLines = [];
     examples.push({
       componentName: componentNameMatch[1],
       exampleName: exampleNameMatch[1],
       title: displayNameMatch?.[1] ?? (currentHeading || exampleNameMatch[1]),
+      description,
     });
   };
 
   for (const line of lines) {
-    const headingMatch = line.trim().match(/^#{2,4}\s+(.+)$/);
-    if (headingMatch) {
-      flushLivePreviewBuffer();
-      currentHeading = cleanMarkdownText(headingMatch[1]);
-      continue;
-    }
-
     if (livePreviewBuffer) {
       livePreviewBuffer.push(line.trim());
-      if (line.includes("/>")) {
+      if (/\/>\s*$/.test(line)) {
         flushLivePreviewBuffer();
       }
       continue;
     }
 
+    const headingMatch = line.trim().match(/^#{2,4}\s+(.+)$/);
+    if (headingMatch) {
+      currentHeading = cleanMarkdownText(headingMatch[1]);
+      descriptionLines = [];
+      continue;
+    }
+
     if (!line.includes("<LivePreview")) {
+      const trimmed = line.trim();
+      if (
+        trimmed.length > 0 &&
+        !trimmed.startsWith("```") &&
+        !trimmed.startsWith("{/*")
+      ) {
+        descriptionLines.push(trimmed);
+      }
       continue;
     }
 
     livePreviewBuffer = [line.trim()];
-    if (line.includes("/>")) {
+    if (/\/>\s*$/.test(line)) {
       flushLivePreviewBuffer();
     }
   }
@@ -217,6 +236,111 @@ export async function extractPackages(
   return packages.sort((left, right) => left.name.localeCompare(right.name));
 }
 
+const INTENT_STOPWORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "by",
+  "can",
+  "for",
+  "from",
+  "has",
+  "have",
+  "if",
+  "in",
+  "is",
+  "it",
+  "its",
+  "of",
+  "on",
+  "or",
+  "such",
+  "that",
+  "the",
+  "this",
+  "to",
+  "use",
+  "was",
+  "when",
+  "will",
+  "with",
+  "you",
+  "your",
+]);
+
+function deriveExampleIntent(title: string, description: string): string[] {
+  const intents = [title.toLowerCase()];
+
+  if (!description) {
+    return uniqueStrings(intents);
+  }
+
+  const propMatches = [
+    ...description.matchAll(/`([a-zA-Z][a-zA-Z0-9]*(?:=[{"][^`]*)?)`/g),
+  ]
+    .map((match) => match[1].split("=")[0].trim().toLowerCase())
+    .filter((prop) => prop.length >= 2);
+
+  intents.push(...propMatches);
+
+  const words = description
+    .toLowerCase()
+    .replace(/`[^`]*`/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .split(/\s+/)
+    .filter((word) => word.length >= 4 && !INTENT_STOPWORDS.has(word));
+
+  const wordFrequency = new Map<string, number>();
+  for (const word of words) {
+    wordFrequency.set(word, (wordFrequency.get(word) ?? 0) + 1);
+  }
+
+  const topWords = [...wordFrequency.entries()]
+    .sort((left, right) => right[1] - left[1])
+    .slice(0, 8)
+    .map(([word]) => word);
+
+  intents.push(...topWords);
+
+  return uniqueStrings(intents).slice(0, 15);
+}
+
+function inferExampleComplexity(
+  code: string,
+): ExampleRecord["complexity"] {
+  if (!code) {
+    return "basic";
+  }
+
+  const lines = code.split(/\r?\n/).filter((line) => line.trim().length > 0);
+  const importCount = lines.filter((line) =>
+    /^\s*import\b/.test(line),
+  ).length;
+  const hasState = /\buseState\b/.test(code);
+  const hasEffect = /\buseEffect\b/.test(code);
+  const hasRef = /\buseRef\b/.test(code);
+  const hasCallback = /\buseCallback\b|\buseMemo\b/.test(code);
+  const hookCount =
+    (hasState ? 1 : 0) +
+    (hasEffect ? 1 : 0) +
+    (hasRef ? 1 : 0) +
+    (hasCallback ? 1 : 0);
+
+  if (lines.length > 80 || importCount > 8 || hookCount >= 3) {
+    return "advanced";
+  }
+
+  if (lines.length > 30 || importCount > 4 || hookCount >= 1) {
+    return "intermediate";
+  }
+
+  return "basic";
+}
+
 async function extractComponentExamples(
   repoRoot: string,
   componentRoute: string,
@@ -243,8 +367,9 @@ async function extractComponentExamples(
     examples.push({
       id: `${preview.componentName}.${toKebabCase(preview.exampleName)}`,
       title: preview.title,
-      intent: [preview.title.toLowerCase()],
-      complexity: "basic",
+      description: preview.description,
+      intent: deriveExampleIntent(preview.title, preview.description),
+      complexity: inferExampleComplexity(sourceCode ?? ""),
       code: sourceCode ?? "",
       source_url: `${componentRoute}/examples`,
       package: packageName,
@@ -304,9 +429,7 @@ async function loadComponentCategoryMap(repoRoot: string): Promise<
     const categoryLabels = [
       entry.category,
       ...(entry.secondaryCategories ?? []),
-    ].filter(
-      (value): value is string => typeof value === "string" && value.length > 0,
-    );
+    ].filter((value) => value.length > 0);
 
     byRoute.set(normalizeComponentDocsRoute(entry.route), {
       categoryIds: uniqueStrings(
@@ -317,6 +440,100 @@ async function loadComponentCategoryMap(repoRoot: string): Promise<
   }
 
   return byRoute;
+}
+
+/**
+ * Suffixes that indicate a parent/wrapper component rather than a child.
+ * These components wrap or group instances of the root component, so they
+ * belong in `typical_parent` rather than `required_children`/`optional_children`.
+ */
+const PARENT_WRAPPER_SUFFIXES = /^(Group|Container|Provider|OverlayProvider)$/;
+
+/**
+ * Derive composition rules for a compound component from its sub-components
+ * and example code. Sub-components whose names suggest structural roles
+ * (Content, Panel, Body) are marked as required; Group/Container/Provider
+ * entries are classified as typical parents instead of children.
+ */
+function deriveComposition(
+  subComponents: ComponentSubComponent[],
+  exampleRecords: ExampleRecord[],
+): ComponentComposition | undefined {
+  if (subComponents.length === 0) {
+    return undefined;
+  }
+
+  // Separate parent wrappers from actual children.
+  const parentWrappers: string[] = [];
+  const childSubs: ComponentSubComponent[] = [];
+  for (const sub of subComponents) {
+    if (PARENT_WRAPPER_SUFFIXES.test(sub.name)) {
+      parentWrappers.push(sub.export_name);
+    } else {
+      childSubs.push(sub);
+    }
+  }
+
+  // If every sub-component is a parent wrapper, there are no children to compose.
+  if (childSubs.length === 0) {
+    return {
+      typical_parent: parentWrappers.length === 1 ? parentWrappers[0] : undefined,
+    };
+  }
+
+  // Names that strongly imply required structural children.
+  const requiredSuffixes = new Set([
+    "Content",
+    "Panel",
+    "Body",
+  ]);
+
+  // Use the default/first example to check which child sub-components actually appear.
+  const defaultExample = exampleRecords.find(
+    (example) => example.title === "Default",
+  );
+  const exampleCode = defaultExample?.code ?? "";
+
+  const requiredChildren: string[] = [];
+  const optionalChildren: string[] = [];
+
+  for (const sub of childSubs) {
+    const appearsInDefault = exampleCode.includes(`<${sub.export_name}`);
+    const isStructural = requiredSuffixes.has(sub.name);
+
+    if (isStructural || appearsInDefault) {
+      requiredChildren.push(sub.export_name);
+    } else {
+      optionalChildren.push(sub.export_name);
+    }
+  }
+
+  // If nothing ended up required, promote everything that appears in
+  // any example to required, rest to optional.
+  if (requiredChildren.length === 0 && optionalChildren.length > 0) {
+    const anyExampleCode = exampleRecords.map((e) => e.code).join("\n");
+    for (const sub of childSubs) {
+      if (anyExampleCode.includes(`<${sub.export_name}`)) {
+        requiredChildren.push(sub.export_name);
+      } else {
+        optionalChildren.push(sub.export_name);
+      }
+    }
+    optionalChildren.length = 0;
+    for (const sub of childSubs) {
+      if (!requiredChildren.includes(sub.export_name)) {
+        optionalChildren.push(sub.export_name);
+      }
+    }
+  }
+
+  return {
+    required_children:
+      requiredChildren.length > 0 ? requiredChildren : undefined,
+    optional_children:
+      optionalChildren.length > 0 ? optionalChildren : undefined,
+    typical_parent: parentWrappers.length === 1 ? parentWrappers[0] : undefined,
+  };
 }
 
 export async function extractComponents(
@@ -408,6 +625,7 @@ export async function extractComponents(
       title,
       aliases,
       routeSuffix,
+      sourceRepoPath,
     );
     const props = toComponentProps(docgenSelection.candidate?.props);
     const exampleRecords = await extractComponentExamples(
@@ -417,6 +635,17 @@ export async function extractComponents(
       packageName,
       title,
     );
+
+    // Extract sub-components and derive composition rules for compound components.
+    const rootDisplayName =
+      docgenSelection.inference.selected_display_name ?? toPascalCase(title);
+    const subComponents = selectSubComponents(
+      propMetadata,
+      packageName,
+      rootDisplayName,
+    );
+    const composition = deriveComposition(subComponents, exampleRecords);
+
     const relatedPatterns = asStringArray(data?.relatedPatterns);
     const whenToUse = parseSectionStatements(usageContent, "When to use");
     const whenNotToUse = parseSectionStatements(
@@ -456,14 +685,16 @@ export async function extractComponents(
       })
       .filter((item): item is { use: string; reason: string } => item !== null);
 
-    const accessibilityRules: AccessibilityRule[] = parseSectionStatements(
+    const accessibilityBestPractices = parseSectionStatements(
       accessibilityContent,
       "Best practices",
-    ).map((ruleText, index) => ({
-      id: `${toKebabCase(title)}-a11y-${index + 1}`,
-      severity: "warning",
-      rule: ruleText,
-    }));
+    );
+    const accessibilityRules: AccessibilityRule[] =
+      accessibilityBestPractices.map((ruleText, index) => ({
+        id: `${toKebabCase(title)}-a11y-${index + 1}`,
+        severity: "warning",
+        rule: ruleText,
+      }));
 
     components.push({
       id: `component.${toKebabCase(title)}`,
@@ -471,13 +702,11 @@ export async function extractComponents(
       aliases,
       package: {
         name: packageName,
-        status:
-          packageRecord?.status ?? inferStatusFromPackage(packageName, "0.0.0"),
-        since: packageRecord?.version ?? null,
+        status: packageRecord.status,
+        since: packageRecord.version,
       },
       summary: cleanMarkdownText(description),
-      status:
-        packageRecord?.status ?? inferStatusFromPackage(packageName, "0.0.0"),
+      status: packageRecord.status,
       category: categoryRecord.categoryIds,
       tags: uniqueStrings([
         ...aliases.map((alias) => alias.toLowerCase()),
@@ -488,11 +717,12 @@ export async function extractComponents(
       when_not_to_use: whenNotToUse,
       alternatives,
       props,
+      sub_components: subComponents.length > 0 ? subComponents : undefined,
+      composition,
       accessibility: {
-        summary: parseSectionStatements(accessibilityContent, "Best practices"),
+        summary: accessibilityBestPractices,
         rules: accessibilityRules,
       },
-      tokens: [],
       patterns: relatedPatterns,
       deprecations: [],
       examples: exampleRecords,

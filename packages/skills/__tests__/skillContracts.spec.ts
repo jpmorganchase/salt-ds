@@ -33,7 +33,7 @@ describe("Salt skill contracts", () => {
         .filter(
           (entry) =>
             entry.isDirectory() &&
-            !["__tests__"].includes(entry.name) &&
+            !["__tests__", "node_modules"].includes(entry.name) &&
             !entry.name.startsWith("."),
         )
         .map((entry) => entry.name)

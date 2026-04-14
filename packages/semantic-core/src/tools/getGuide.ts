@@ -21,7 +21,19 @@ export interface GetGuideResult {
 }
 
 function toCompactGuide(guide: GuideRecord): Record<string, unknown> {
-  return {
+  const totalSnippets = guide.steps.reduce(
+    (sum, step) => sum + step.snippets.length,
+    0,
+  );
+  const snippetLanguages = [
+    ...new Set(
+      guide.steps.flatMap((step) =>
+        step.snippets.map((snippet) => snippet.language),
+      ),
+    ),
+  ].sort();
+
+  const compact: Record<string, unknown> = {
     id: guide.id,
     name: guide.name,
     kind: guide.kind,
@@ -30,9 +42,19 @@ function toCompactGuide(guide: GuideRecord): Record<string, unknown> {
     steps: guide.steps.map((step) => ({
       title: step.title,
       statements: step.statements,
+      ...(step.snippets.length > 0
+        ? { snippet_count: step.snippets.length }
+        : {}),
     })),
     related_docs: guide.related_docs,
   };
+
+  if (totalSnippets > 0) {
+    compact.snippet_count = totalSnippets;
+    compact.snippet_languages = snippetLanguages;
+  }
+
+  return compact;
 }
 
 export function getGuide(
