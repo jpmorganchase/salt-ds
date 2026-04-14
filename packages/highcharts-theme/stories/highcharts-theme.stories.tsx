@@ -63,6 +63,7 @@ export default {
 export const LineChart = {
   render: (args: ChartStoryArgs) => <LineChartComponent {...args} />,
   args: {
+    fillPatterns: false,
     options: lineOptions,
   },
 };

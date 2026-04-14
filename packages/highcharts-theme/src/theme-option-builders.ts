@@ -258,6 +258,12 @@ export const buildPlotOptions = (
       },
     },
     line: {
+      ...(fillPatterns
+        ? {
+            lineWidth: tokens["--salt-size-fixed-200"],
+            linecap: "butt" as const,
+          }
+        : {}),
       marker: {
         enabled: false,
       },

@@ -39,8 +39,10 @@ type FillPatternPoint = Record<string, unknown> & {
 
 type FillPatternSeries = NonNullable<Options["series"]>[number] & {
   data?: Array<unknown>;
+  dashStyle?: string;
   fillColor?: SeriesColor;
   lineColor?: SeriesColor;
+  lineWidth?: number;
   marker?: ScatterMarkerOptions;
   upColor?: SentimentColor;
   color?: SentimentColor | string;
@@ -62,16 +64,43 @@ type FillPatternPlotOptions = NonNullable<Options["plotOptions"]> & {
   bubble?: Record<string, unknown> & {
     marker?: ScatterMarkerOptions;
   };
+  line?: Record<string, unknown> & {
+    color?: SeriesColor;
+    dashStyle?: FillPatternSeries["dashStyle"];
+    lineWidth?: number;
+  };
   scatter?: Record<string, unknown> & {
     marker?: ScatterMarkerOptions;
   };
   series?: Record<string, unknown> & {
     color?: SeriesColor;
+    dashStyle?: FillPatternSeries["dashStyle"];
     fillColor?: SeriesColor;
     lineColor?: SeriesColor;
     marker?: ScatterMarkerOptions;
   };
 };
+
+const SALT_LINE_DASH_PATTERNS = [
+  "2,2",
+  "8,8",
+  "8,2,2,2",
+  "16,8",
+  "16,2,2,2,2,2",
+  "8,8,2,8,2,8",
+  "8,2",
+  "2,16",
+  "16,2,8,2",
+  "16,2,2,2,2,2,2",
+  "16,8,8,8,8,8",
+  "8,2,2,2,2,2",
+  "8,8,2,8,2,8,2,8",
+  "16,2",
+  "16,8,8,8",
+  "8,2,2,2,2,2,2,2",
+  "16,8,8,8,8,8,8",
+  "16,2,2,2",
+] as const;
 
 const getSentimentColors = (
   tokens: SaltChartTokenMap,
@@ -184,6 +213,14 @@ const getPlotOptions = (
 ): FillPatternPlotOptions | undefined =>
   chartOptions.plotOptions as FillPatternPlotOptions | undefined;
 
+const formatDashSegment = (value: number): string => {
+  const roundedValue = Number(value.toFixed(4));
+
+  return Number.isInteger(roundedValue)
+    ? String(roundedValue)
+    : String(roundedValue);
+};
+
 const hasAreaFillColorOverride = (chartOptions: Options): boolean => {
   const plotOptions = getPlotOptions(chartOptions);
 
@@ -199,6 +236,22 @@ const hasAreaLineColorOverride = (chartOptions: Options): boolean => {
   return (
     plotOptions?.area?.lineColor != null ||
     plotOptions?.series?.lineColor != null
+  );
+};
+
+const hasLineColorOverride = (chartOptions: Options): boolean => {
+  const plotOptions = getPlotOptions(chartOptions);
+
+  return (
+    plotOptions?.line?.color != null || plotOptions?.series?.color != null
+  );
+};
+
+const hasLineDashStyleOverride = (chartOptions: Options): boolean => {
+  const plotOptions = getPlotOptions(chartOptions);
+
+  return (
+    plotOptions?.line?.dashStyle != null || plotOptions?.series?.dashStyle != null
   );
 };
 
@@ -277,6 +330,24 @@ const hasSeriesMarkerLineColorOverride = (
   );
 };
 
+const getLineDashStyle = (
+  seriesIndex: number,
+  defaultLineWidth: number,
+): FillPatternSeries["dashStyle"] | undefined => {
+  const patternIndex = seriesIndex % (SALT_LINE_DASH_PATTERNS.length + 1);
+
+  if (patternIndex === 0) {
+    return undefined;
+  }
+
+  return SALT_LINE_DASH_PATTERNS[patternIndex - 1]
+    .split(",")
+    .map((segment) =>
+      formatDashSegment(Number(segment.trim()) / defaultLineWidth),
+    )
+    .join(",");
+};
+
 export const applyFillPatternOverrides = (
   chartOptions: Options,
   tokens: SaltChartTokenMap,
@@ -325,6 +396,36 @@ export const applyFillPatternOverrides = (
       }
 
       return nextAreaSeries;
+    }
+
+    if (seriesType === "line") {
+      const nextLineSeries = { ...series } as FillPatternSeries;
+      const dashStyle = getLineDashStyle(
+        seriesIndex,
+        tokens["--salt-size-fixed-200"],
+      );
+
+      if (
+        fillPatterns &&
+        nextLineSeries.color == null &&
+        !hasLineColorOverride(chartOptions)
+      ) {
+        nextLineSeries.color =
+          tokens[
+            CATEGORY_DATAVIZ_TOKENS[seriesIndex % CATEGORY_DATAVIZ_TOKENS.length]
+          ];
+      }
+
+      if (
+        fillPatterns &&
+        dashStyle !== undefined &&
+        nextLineSeries.dashStyle == null &&
+        !hasLineDashStyleOverride(chartOptions)
+      ) {
+        nextLineSeries.dashStyle = dashStyle;
+      }
+
+      return nextLineSeries;
     }
 
     if (seriesType === "boxplot") {

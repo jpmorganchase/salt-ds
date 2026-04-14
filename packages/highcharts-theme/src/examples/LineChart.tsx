@@ -5,13 +5,17 @@ import { type FC, useRef } from "react";
 import { lineOptions } from "./dependencies";
 
 export interface LineChartProps {
+  fillPatterns?: boolean;
   options: Options;
 }
 
-const LineChart: FC<LineChartProps> = ({ options = lineOptions }) => {
+const LineChart: FC<LineChartProps> = ({
+  fillPatterns = false,
+  options = lineOptions,
+}) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, options, { fillPatterns });
 
   return (
     <HighchartsReact

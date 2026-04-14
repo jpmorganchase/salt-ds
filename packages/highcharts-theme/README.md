@@ -49,7 +49,7 @@ export function MyChart({ chartOptions }) {
 
 See [Chart usage](https://www.saltdesignsystem.com/salt/components/chart/usage) for details.
 
-Enable fill patterns through the hook options when you need a non-color cue in classic mode:
+Enable accessibility patterns through the hook options when you need a non-color cue in classic mode. Filled series receive pattern fills, while line charts stay on the standard Salt data-viz colours and use the predefined Salt dash-pattern sequence:
 
 ```jsx
 const options = useChart(chartRef, chartOptions, { fillPatterns: true });
