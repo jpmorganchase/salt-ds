@@ -10,6 +10,7 @@ import {
   inferExampleScenarioTags,
 } from "./consumerSignals.js";
 import {
+  containsWholeWordPhrase,
   isComponentAllowedByDocsPolicy,
   isExampleAllowedByDocsPolicy,
 } from "./utils.js";
@@ -346,14 +347,14 @@ function getExampleScore(
       if (normalizedIntent === intent) {
         score += 8;
       } else if (
-        normalizedIntent.includes(intent) ||
-        intent.includes(normalizedIntent)
+        containsWholeWordPhrase(normalizedIntent, intent) ||
+        containsWholeWordPhrase(intent, normalizedIntent)
       ) {
         score += 5;
       }
     }
 
-    if (combined.includes(intent)) {
+    if (containsWholeWordPhrase(combined, intent)) {
       score += 3;
     }
   }
@@ -402,7 +403,7 @@ function getWhyThisExample(
 
   if (intent) {
     const matchingIntent = bestExample.intent.find((exampleIntent) =>
-      exampleIntent.toLowerCase().includes(intent),
+      containsWholeWordPhrase(exampleIntent.toLowerCase(), intent),
     );
     if (matchingIntent) {
       reasons.push(`it covers intent like "${matchingIntent}"`);
@@ -468,7 +469,7 @@ export function getExamples(
     .filter((example) =>
       intent
         ? example.intent.some((exampleIntent) =>
-            exampleIntent.toLowerCase().includes(intent),
+            containsWholeWordPhrase(exampleIntent.toLowerCase(), intent),
           )
         : true,
     )

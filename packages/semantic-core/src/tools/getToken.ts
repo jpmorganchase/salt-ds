@@ -1,4 +1,5 @@
 import type { SaltRegistry, TokenRecord } from "../types.js";
+import { containsWholeWordPhrase } from "./utils.js";
 
 const TOKEN_DOCS_SOURCE_URL = "/salt/themes/design-tokens/index";
 
@@ -69,7 +70,10 @@ export function getToken(
     .filter((token) =>
       semanticIntent
         ? semanticIntentMatch === "contains"
-          ? (token.semantic_intent ?? "").toLowerCase().includes(semanticIntent)
+          ? containsWholeWordPhrase(
+              (token.semantic_intent ?? "").toLowerCase(),
+              semanticIntent,
+            )
           : (token.semantic_intent ?? "").toLowerCase() === semanticIntent
         : true,
     );

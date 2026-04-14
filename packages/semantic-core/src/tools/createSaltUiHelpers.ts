@@ -10,7 +10,7 @@ import {
 } from "./guideAwareness.js";
 import { hasSingleDestinationNavigationIntent } from "./navigationIntent.js";
 import { getStructuralPatternIntent } from "./patternIntent.js";
-import { normalizeQuery, tokenize } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery, tokenize } from "./utils.js";
 
 const FOUNDATION_KEYWORDS = [
   "breakpoint",
@@ -70,11 +70,9 @@ export function getCreateSaltUiRelatedGuides(
 function scoreIntent(query: string, keywords: readonly string[]): number {
   const queryTokens = new Set(tokenize(query));
   return keywords.reduce((score, keyword) => {
-    return (
-      score +
-      (queryTokens.has(keyword) ? 2 : 0) +
-      (query.includes(keyword) ? 1 : 0)
-    );
+    const tokenMatch = queryTokens.has(keyword) ? 2 : 0;
+    const phraseMatch = containsWholeWordPhrase(query, keyword) ? 1 : 0;
+    return score + Math.max(tokenMatch, phraseMatch);
   }, 0);
 }
 
@@ -105,15 +103,24 @@ export function resolveSolutionType(
 
   if (
     foundationScore > 0 &&
-    foundationScore >= tokenScore &&
+    foundationScore > tokenScore &&
     foundationScore > patternScore
   ) {
     return "foundation";
   }
   if (
     tokenScore > 0 &&
-    tokenScore >= foundationScore &&
+    tokenScore > foundationScore &&
     tokenScore > patternScore
+  ) {
+    return "token";
+  }
+  // Explicit tie-break: when foundation and token scores are equal and
+  // positive, prefer "token" because token queries are more specific.
+  if (
+    foundationScore > 0 &&
+    foundationScore === tokenScore &&
+    foundationScore > patternScore
   ) {
     return "token";
   }
@@ -287,7 +294,8 @@ export function scoreFoundationComparison(
     .toLowerCase();
 
   return tokenize(query).reduce(
-    (score, token) => score + (haystack.includes(token) ? 1 : 0),
+    (score, token) =>
+      score + (containsWholeWordPhrase(haystack, token) ? 1 : 0),
     0,
   );
 }

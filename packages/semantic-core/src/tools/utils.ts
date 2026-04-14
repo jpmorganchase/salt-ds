@@ -13,7 +13,33 @@ import type {
 const SITE_COMPONENT_DOCS_PREFIX = "/salt/components/";
 
 export function normalizeQuery(input: string): string {
-  return input.trim().toLowerCase();
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Lightweight plural normalisation — strips trailing "s" / "es" to
+ * collapse common plural forms.  Guards against very short words and
+ * avoids over-stemming irregular forms.
+ */
+export function stemToken(token: string): string {
+  if (token.length <= 3) {
+    return token;
+  }
+  if (/(?:shes|ches|xes|zes|ses)$/.test(token)) {
+    return token.slice(0, -2);
+  }
+  if (token.endsWith("ies") && token.length > 4) {
+    return `${token.slice(0, -3)}y`;
+  }
+  if (token.endsWith("s") && !token.endsWith("ss")) {
+    return token.slice(0, -1);
+  }
+  return token;
 }
 
 export function tokenize(input: string): string[] {
@@ -21,11 +47,32 @@ export function tokenize(input: string): string[] {
     .toLowerCase()
     .split(/[^a-z0-9-]+/)
     .map((token) => token.trim())
-    .filter((token) => token.length > 1);
+    .filter((token) => token.length > 1)
+    .map(stemToken);
 }
 
 export function unique<T>(values: T[]): T[] {
   return [...new Set(values)];
+}
+
+/**
+ * Check whether `phrase` appears as a whole-word sequence inside `text`.
+ * Both arguments must already be lowercased.
+ * Uses negative look-around for alphanumeric characters so that e.g.
+ * "table" does NOT match inside "interactable" or "selectable".
+ *
+ * Compiled regexes are cached by phrase to avoid repeated compilation.
+ */
+const phraseRegexCache = new Map<string, RegExp>();
+
+export function containsWholeWordPhrase(text: string, phrase: string): boolean {
+  let regex = phraseRegexCache.get(phrase);
+  if (!regex) {
+    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    regex = new RegExp(`(?<![a-z0-9])${escaped}(?![a-z0-9])`);
+    phraseRegexCache.set(phrase, regex);
+  }
+  return regex.test(text);
 }
 
 export function hasSiteComponentDocumentation(

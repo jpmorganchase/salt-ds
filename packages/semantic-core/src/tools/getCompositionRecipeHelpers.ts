@@ -59,7 +59,10 @@ import {
   type TranslationSemanticIndex,
 } from "./translation/sourceUiSemanticMatching.js";
 import type { SourceUiNode } from "./translation/sourceUiTypes.js";
-import { isComponentAllowedByDocsPolicy } from "./utils.js";
+import {
+  containsWholeWordPhrase,
+  isComponentAllowedByDocsPolicy,
+} from "./utils.js";
 
 export function mergeUniqueStrings(...valueSets: string[][]): string[] {
   return [...new Set(valueSets.flat())];
@@ -221,7 +224,7 @@ function getPatternSourceKindBonus(
     .join(" ")
     .toLowerCase();
 
-  if (!matchSurface.includes(sourceLabel)) {
+  if (!containsWholeWordPhrase(matchSurface, sourceLabel)) {
     return 0;
   }
 

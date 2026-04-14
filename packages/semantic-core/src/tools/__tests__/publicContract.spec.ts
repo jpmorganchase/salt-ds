@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { SaltRegistry } from "../../types.js";
 import type { CreateSaltUiResult } from "../createSaltUi.js";
-import type { ReviewSaltUiResult } from "../reviewSaltUi.js";
 import {
   assertValidPublicContract,
   buildCreatePublicContract,
@@ -13,6 +12,7 @@ import {
   type PublicContractInput,
   type PublicNextStep,
 } from "../publicContract.js";
+import type { ReviewSaltUiResult } from "../reviewSaltUi.js";
 import type { MigrateToSaltResult } from "../translation/sourceUiTypes.js";
 import type { UpgradeSaltUiResult } from "../upgradeSaltUi.js";
 import type {
@@ -205,7 +205,9 @@ function buildCreateWorkflowContract(
   return {
     confidence: {
       level: "high",
-      reasons: ["Fixture confidence is sufficient for contract derivation tests."],
+      reasons: [
+        "Fixture confidence is sufficient for contract derivation tests.",
+      ],
       ask_before_proceeding: false,
       raise_confidence: [],
     },

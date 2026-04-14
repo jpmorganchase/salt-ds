@@ -1,5 +1,6 @@
 # build gotchas
 
+- Do not rearrange the internal composition of a canonical pattern example. If the canonical example nests a child component inside a parent (e.g., an indicator icon inside a `Display` component), preserve that exact nesting in your implementation. Do not pull nested children out into siblings or wrap them in extra layout containers unless the user explicitly asks for a different structure.
 - Do not jump straight to code without choosing primitives and structure first.
 - Do not skip the translation map when the source starts outside Salt. Separate direct swaps, pattern rewrites, and manual review points before coding.
 - Do not ignore low-confidence translation output. Resolve the blocking clarifying question before you scaffold the wrong structure.

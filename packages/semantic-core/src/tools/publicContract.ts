@@ -565,7 +565,6 @@ function normalizeCreateLookupKey(value: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-
 function containsLookupKey(queryKey: string, lookupKey: string): boolean {
   if (!queryKey || !lookupKey) {
     return false;
@@ -668,8 +667,8 @@ function inferDescriptiveCreateTarget(
       const hasCanonicalPhraseMatch = containsLookupKey(queryKey, canonicalKey);
       const aliasPhraseMatchKey =
         aliasKeys.find((entry) => containsLookupKey(queryKey, entry)) ?? null;
-      const matchedTokens = getMeaningfulTokens(target.name).filter(
-        (token) => queryTokenPositions.has(token),
+      const matchedTokens = getMeaningfulTokens(target.name).filter((token) =>
+        queryTokenPositions.has(token),
       );
 
       if (

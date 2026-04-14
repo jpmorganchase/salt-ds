@@ -1,5 +1,5 @@
 import type { CountrySymbolRecord } from "../types.js";
-import { normalizeQuery, tokenize } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery, tokenize } from "./utils.js";
 
 export function toCountrySymbolMatchKey(value: string): string {
   return value
@@ -47,24 +47,24 @@ export function scoreCountrySymbol(
 
   if (exactTerms.some((term) => term === queryKey)) {
     score += 20;
-  } else if (names.some((value) => value.includes(query))) {
+  } else if (names.some((value) => containsWholeWordPhrase(value, query))) {
     score += 8;
-  } else if (aliases.some((value) => value.includes(query))) {
+  } else if (aliases.some((value) => containsWholeWordPhrase(value, query))) {
     score += 5;
   }
 
-  if (summary.includes(query)) {
+  if (containsWholeWordPhrase(summary, query)) {
     score += 3;
   }
 
   for (const token of queryTokens) {
-    if (names.some((value) => value.includes(token))) {
+    if (names.some((value) => containsWholeWordPhrase(value, token))) {
       score += 4;
     }
-    if (aliases.some((value) => value.includes(token))) {
+    if (aliases.some((value) => containsWholeWordPhrase(value, token))) {
       score += 2;
     }
-    if (summary.includes(token)) {
+    if (containsWholeWordPhrase(summary, token)) {
       score += 1;
     }
   }
