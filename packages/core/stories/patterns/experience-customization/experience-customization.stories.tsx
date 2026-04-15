@@ -2,20 +2,28 @@ import {
   Button,
   FlexItem,
   FlexLayout,
+  SplitLayout,
   StackLayout,
   Step,
   Stepper,
   Text,
 } from "@salt-ds/core";
 import type { Meta } from "@storybook/react-vite";
-import { useEffect, useRef } from "react";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type ReactElement,
+  useEffect,
+  useRef,
+} from "react";
 import { ContentOverflow } from "../wizard/ContentOverflow";
-import { useWizardForm } from "../wizard/useWizardForm";
-import { getStepStage, validateStep } from "../wizard/wizard.stories";
+import { type FieldValidation, useWizardForm } from "../wizard/useWizardForm";
+import { getStepStage, validateStep } from "../wizard/utils";
 import { DataFormatContent } from "./DataFormatContent";
 import { DisplayModeContent } from "./DisplayModeContent";
 import { NotificationsContent } from "./NotificationsContent";
 import { RegionalSettingsContent } from "./RegionalSettingsContent";
+import "../wizard/ContentOverflow.css";
 
 export default {
   title: "Patterns/Experience Customization",
@@ -23,6 +31,29 @@ export default {
     layout: "padded",
   },
 } as Meta;
+
+export interface ECFormData {
+  language: string;
+  timezone: string;
+  autoTranslate: boolean;
+  position: string;
+  displayMode: string;
+  displayDensity: string;
+  currency: string;
+  currencyFormat: string;
+}
+
+export interface FormContentProps {
+  formData: ECFormData;
+  handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleCheckboxChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  stepFieldValidation: Record<string, FieldValidation>;
+  handleSelectChange?: (value: string, name: string) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const DEFAULT_NOTIFICATION_POSITION = "top-right";
 
 const wizardSteps = [
   { id: "region", label: "Regional settings" },
@@ -38,11 +69,26 @@ const wizardSteps = [
   },
   {
     id: "dataFormat",
-    label: "Data format",
+    label: "Data format preferences",
     description: "Configure how data is visualized across your dashboards.",
   },
 ] as const;
 const stepIds = wizardSteps.map((s) => s.id);
+
+const initialFormData = {
+  // Regional settings
+  language: "",
+  timezone: "",
+  autoTranslate: false,
+  // Notification settings
+  position: DEFAULT_NOTIFICATION_POSITION,
+  // Display preferences
+  displayMode: "light",
+  displayDensity: "high",
+  // Data format preferences
+  currency: "usd",
+  currencyFormat: "standard",
+};
 
 export const Default = () => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -60,11 +106,10 @@ export const Default = () => {
     steps: stepIds,
     initialState: {
       activeStepIndex: 0,
-      // formData: initialFormData,
-      formData: {},
+      formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep,
+    validateStep: (stepId, data) => validateStep({}, stepId, data),
   });
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
@@ -89,6 +134,23 @@ export const Default = () => {
   const handlePrevious = () => {
     navigatedRef.current = true;
     previous();
+  };
+
+  const sharedFormProps: FormContentProps = {
+    formData: formData as FormContentProps["formData"],
+    handleInputChange: (e) => updateField(e.target.name, e.target.value),
+    handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
+    handleSelectChange: (value: string, name: string) =>
+      updateField(name, value),
+    handleRadioChange: (e) => updateField(e.target.name, e.target.value),
+    stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
+  };
+
+  const contentByStep: Record<string, ReactElement> = {
+    region: <RegionalSettingsContent {...sharedFormProps} />,
+    notifications: <NotificationsContent {...sharedFormProps} />,
+    displayMode: <DisplayModeContent {...sharedFormProps} />,
+    dataFormat: <DataFormatContent {...sharedFormProps} />,
   };
 
   const renderDescription = (step: (typeof wizardSteps)[number]) => {
@@ -120,7 +182,7 @@ export const Default = () => {
             <Step
               key={step.id}
               label={step.label}
-              //   status={validationsByStep[step.id]?.status}
+              status={validationsByStep[step.id]?.status}
               stage={getStepStage(index, activeStepIndex)}
             />
           ))}
@@ -129,8 +191,8 @@ export const Default = () => {
     </FlexLayout>
   );
 
-  const footer = (
-    <FlexLayout gap={1} justify="end" padding={3}>
+  const endFooter = (
+    <FlexLayout gap={1}>
       <Button sentiment="accented" appearance="transparent" onClick={reset}>
         Cancel
       </Button>
@@ -144,17 +206,26 @@ export const Default = () => {
         </Button>
       )}
       <Button sentiment="accented" onClick={handleNext}>
-        {isLastStep ? "Create" : "Next"}
+        {isLastStep ? "Finish" : "Next"}
       </Button>
     </FlexLayout>
   );
 
-  const contentByStep: Record<string, React.ReactElement> = {
-    region: <RegionalSettingsContent />,
-    notifications: <NotificationsContent />,
-    displayMode: <DisplayModeContent />,
-    dataFormat: <DataFormatContent />,
-  };
+  const startFooter =
+    formData.position !== DEFAULT_NOTIFICATION_POSITION &&
+    activeStepIndex === 1 ? (
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={() => updateField("position", DEFAULT_NOTIFICATION_POSITION)}
+      >
+        Reset to top right
+      </Button>
+    ) : null;
+
+  const footer = (
+    <SplitLayout padding={3} startItem={startFooter} endItem={endFooter} />
+  );
 
   return (
     <StackLayout

@@ -31,7 +31,7 @@ export interface WizardFormState {
 }
 
 export type WizardFormAction =
-  | { type: "UPDATE_FIELD"; name: string; value: string } // Update a specific field in the form data
+  | { type: "UPDATE_FIELD"; name: string; value: unknown } // Update a specific field in the form data
   | {
       type: "SET_VALIDATION"; // Set validation results for a step
       stepId: string; // The ID of the step being validated
@@ -136,7 +136,7 @@ export function useWizardForm({
 
   // Updates a specific field in the form data and revalidates the step
   const updateField = useCallback(
-    (name: string, value: string) => {
+    (name: string, value: unknown) => {
       dispatch({ type: "UPDATE_FIELD", name, value });
       runValidationAndStore({ ...state.formData, [name]: value });
     },

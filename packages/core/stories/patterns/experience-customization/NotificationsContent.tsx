@@ -3,12 +3,11 @@ import {
   GridLayout,
   InteractableCard,
   InteractableCardGroup,
-  type InteractableCardValue,
   RadioButtonIcon,
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { useState } from "react";
+import type { FormContentProps } from "./experience-customization.stories";
 
 const NOTIFICATION_POSITIONS = [
   {
@@ -60,13 +59,14 @@ const NotificationPosition = ({ position }: { position: string }) => {
   );
 };
 
-export const NotificationsContent = () => {
-  const [selected, setSelected] = useState<InteractableCardValue>();
-
+export const NotificationsContent = ({
+  formData,
+  handleSelectChange,
+}: FormContentProps) => {
   return (
     <InteractableCardGroup
       onChange={(_event, value) => {
-        setSelected(value);
+        handleSelectChange?.(value as string, "position");
       }}
     >
       <GridLayout
@@ -85,7 +85,10 @@ export const NotificationsContent = () => {
                   <NotificationPosition position={value} />
                 </StackLayout>
                 <StackLayout direction="row" gap={1}>
-                  <RadioButtonIcon aria-hidden checked={selected === value} />
+                  <RadioButtonIcon
+                    aria-hidden
+                    checked={formData.position === value}
+                  />
                   <Text>{label}</Text>
                 </StackLayout>
               </StackLayout>

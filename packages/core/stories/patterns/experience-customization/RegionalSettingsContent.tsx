@@ -8,8 +8,13 @@ import {
   Switch,
 } from "@salt-ds/core";
 import { LocationIcon, SearchIcon } from "@salt-ds/icons";
+import type { FormContentProps } from "./experience-customization.stories";
 
-export const RegionalSettingsContent = () => {
+export const RegionalSettingsContent = ({
+  formData,
+  handleCheckboxChange,
+  handleSelectChange,
+}: FormContentProps) => {
   return (
     <StackLayout style={{ width: "50%" }}>
       <FormField>
@@ -18,11 +23,16 @@ export const RegionalSettingsContent = () => {
           startAdornment={<SearchIcon />}
           bordered
           placeholder="Select language"
+          name="language"
+          value={formData.language}
+          onSelectionChange={(_e, value) =>
+            handleSelectChange?.(value[0], "language")
+          }
         >
-          <Option value="english">English</Option>
-          <Option value="spanish">Spanish</Option>
-          <Option value="french">French</Option>
-          <Option value="german">German</Option>
+          <Option value="English">English</Option>
+          <Option value="Spanish">Spanish</Option>
+          <Option value="French">French</Option>
+          <Option value="German">German</Option>
         </Dropdown>
         <FormFieldHelperText>
           Selecting a language sets the default interface text for your
@@ -35,6 +45,11 @@ export const RegionalSettingsContent = () => {
           startAdornment={<LocationIcon />}
           bordered
           placeholder="Select time zone"
+          name="timezone"
+          value={formData.timezone}
+          onSelectionChange={(_e, value) =>
+            handleSelectChange?.(value[0], "timezone")
+          }
         >
           <Option value="Pacific/Midway">(UTC-11:00) Pacific/Midway</Option>
           <Option value="Pacific/Honolulu">(UTC-10:00) Hawaii</Option>
@@ -73,7 +88,12 @@ export const RegionalSettingsContent = () => {
       </FormField>
       <FormField>
         <FormFieldLabel>Automatic translation</FormFieldLabel>
-        <Switch label="Automatically translate descriptions and reviews to English." />
+        <Switch
+          label="Automatically translate descriptions and reviews to English."
+          name="autoTranslate"
+          checked={formData.autoTranslate}
+          onChange={handleCheckboxChange}
+        />
       </FormField>
     </StackLayout>
   );
