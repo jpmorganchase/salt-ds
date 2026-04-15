@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -1021,6 +1022,24 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             />,
           );
           cy.findByRole("textbox").should("have.value", "2025-01-05");
+        });
+
+        it("SHOULD have accessible name via aria-labelledby when wrapped in a FormField", () => {
+          cy.mount(
+            <FormField>
+              <FormFieldLabel>Select a date</FormFieldLabel>
+              <DatePicker defaultSelectedDate={initialDate}>
+                <DatePickerSingleInput />
+                <DatePickerOverlay>
+                  <DatePickerSingleGridPanel />
+                </DatePickerOverlay>
+              </DatePicker>
+            </FormField>,
+          );
+
+          cy.findByRole("textbox")
+            .should("have.attr", "aria-labelledby")
+            .and("not.be.empty");
         });
       });
     });

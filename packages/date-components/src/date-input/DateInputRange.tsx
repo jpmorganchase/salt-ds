@@ -188,6 +188,8 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const { dateAdapter } = useLocalization();
     const {
       "aria-label": ariaLabel,
+      "aria-labelledby": restAriaLabelledBy,
+      "aria-describedby": restAriaDescribedBy,
       bordered = false,
       className,
       disabled,
@@ -383,13 +385,26 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     } = endInputProps;
 
     const startAriaLabelledBy =
-      clsx(formFieldLabelledBy, startInputPropsLabelledBy) || undefined;
+      clsx(
+        formFieldLabelledBy,
+        startInputPropsLabelledBy,
+        restAriaLabelledBy,
+      ) || undefined;
     const endAriaLabelledBy =
-      clsx(formFieldLabelledBy, endInputPropsLabelledBy) || undefined;
+      clsx(formFieldLabelledBy, endInputPropsLabelledBy, restAriaLabelledBy) ||
+      undefined;
     const startAriaDescribedBy =
-      clsx(formFieldDescribedBy, startInputPropsDescribedBy) || undefined;
+      clsx(
+        formFieldDescribedBy,
+        startInputPropsDescribedBy,
+        restAriaDescribedBy,
+      ) || undefined;
     const endAriaDescribedBy =
-      clsx(formFieldDescribedBy, endInputPropsDescribedBy) || undefined;
+      clsx(
+        formFieldDescribedBy,
+        endInputPropsDescribedBy,
+        restAriaDescribedBy,
+      ) || undefined;
 
     const startAriaLabel = ariaLabel ? `Start date ${ariaLabel}` : "Start date";
 

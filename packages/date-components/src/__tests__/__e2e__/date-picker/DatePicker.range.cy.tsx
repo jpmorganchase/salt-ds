@@ -16,6 +16,7 @@ import {
   DatePickerRangePanel,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
@@ -1376,6 +1377,30 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Verify that the selected dates are displayed
         cy.findByLabelText("Start date").should("have.value", "2025-01-05");
         cy.findByLabelText("End date").should("have.value", "2025-01-06");
+      });
+
+      it("SHOULD have accessible names via aria-labelledby when wrapped in a FormField", () => {
+        cy.mount(
+          <FormField>
+            <FormFieldLabel>Select a date range</FormFieldLabel>
+            <DatePicker defaultSelectedDate={initialRangeDate}>
+              <DatePickerRangeInput />
+              <DatePickerOverlay>
+                <DatePickerRangePanel />
+              </DatePickerOverlay>
+            </DatePicker>
+          </FormField>,
+        );
+
+        // Check start date input has aria-labelledby
+        cy.findByLabelText("Start date")
+          .should("have.attr", "aria-labelledby")
+          .and("not.be.empty");
+
+        // Check end date input has aria-labelledby
+        cy.findByLabelText("End date")
+          .should("have.attr", "aria-labelledby")
+          .and("not.be.empty");
       });
     });
   });

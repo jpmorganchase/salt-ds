@@ -1002,4 +1002,30 @@ describe("GIVEN a DateInputRange", () => {
       });
     });
   });
+
+  describe("Accessibility", () => {
+    it("SHOULD have accessible names via aria-labelledby when wrapped in a FormField", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Date Range</FormFieldLabel>
+          <DateInputRange
+            defaultValue={{
+              startDate: "05 Jan 2025",
+              endDate: "15 Jan 2025",
+            }}
+          />
+        </FormField>,
+      );
+
+      // Check start date input has aria-labelledby
+      cy.findByLabelText("Start date")
+        .should("have.attr", "aria-labelledby")
+        .and("not.be.empty");
+
+      // Check end date input has aria-labelledby
+      cy.findByLabelText("End date")
+        .should("have.attr", "aria-labelledby")
+        .and("not.be.empty");
+    });
+  });
 });

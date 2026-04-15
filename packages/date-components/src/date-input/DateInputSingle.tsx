@@ -152,6 +152,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       className,
       disabled,
       "aria-label": ariaLabel,
+      "aria-labelledby": restAriaLabelledBy,
+      "aria-describedby": restAriaDescribedBy,
       date: dateProp,
       defaultDate,
       onDateChange,
@@ -269,9 +271,11 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     } = inputProps;
 
     const inputAriaLabelledBy =
-      clsx(formFieldLabelledBy, dateInputLabelledBy) || undefined;
+      clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
+      undefined;
     const inputAriaDescribedBy =
-      clsx(formFieldDescribedBy, dateInputDescribedBy) || undefined;
+      clsx(formFieldDescribedBy, dateInputDescribedBy, restAriaDescribedBy) ||
+      undefined;
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
