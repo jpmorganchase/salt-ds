@@ -27,6 +27,7 @@ import {
 import {
   MegaMenu,
   MegaMenuContainer,
+  MegaMenuCustomRegion,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
@@ -818,229 +819,177 @@ FullWidthContainer.parameters = {
   layout: "fullscreen",
 };
 
-const CustomRegionRightTemplate: StoryFn = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const WithCustomRegionTemplate: StoryFn = () => {
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
-    <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
-      <div style={{ width: "100%" }}>
-        <MegaMenuTrigger>
-          <Button onClick={() => setIsOpen(true)}>Custom Region (Right)</Button>
-        </MegaMenuTrigger>
-        <MegaMenuContainer style={{ flexWrap: "nowrap" }}>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "var(--salt-spacing-300)",
-              flex: 1,
-            }}
-          >
-            <MegaMenuGroup>
-              <MegaMenuHeader>Products</MegaMenuHeader>
-              <MegaMenuItem>Analytics Platform</MegaMenuItem>
-              <MegaMenuItem>Data Pipeline</MegaMenuItem>
-              <MegaMenuItem>AI Assistant</MegaMenuItem>
-              <MegaMenuItem>Workflow Studio</MegaMenuItem>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Solutions</MegaMenuHeader>
-              <MegaMenuItem>Enterprise</MegaMenuItem>
-              <MegaMenuItem>Startups</MegaMenuItem>
-              <MegaMenuItem>Financial Services</MegaMenuItem>
-              <MegaMenuItem>Healthcare</MegaMenuItem>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Resources</MegaMenuHeader>
-              <MegaMenuItem>Documentation</MegaMenuItem>
-              <MegaMenuItem>Guides</MegaMenuItem>
-              <MegaMenuItem>API Reference</MegaMenuItem>
-            </MegaMenuGroup>
-          </div>
-          <div
-            style={{
-              padding: "var(--salt-spacing-200)",
-              background: "var(--salt-container-secondary-background)",
-              borderRadius: "var(--salt-palette-corner-weak)",
-              minWidth: 200,
-            }}
-          >
-            <h4 style={{ margin: "0 0 8px" }}>Featured</h4>
-            <p style={{ margin: 0, fontSize: "var(--salt-text-fontSize)" }}>
-              Check out our latest product launch and upcoming webinars.
-            </p>
-            <Button style={{ marginTop: 12 }}>Learn More</Button>
-          </div>
-        </MegaMenuContainer>
-      </div>
-    </MegaMenu>
+    <StackLayout direction="column" gap={2}>
+      <MegaMenu
+        open={openMenu === "right"}
+        onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
+      >
+        <div className="customRegionWrapper">
+          <MegaMenuTrigger>
+            <Button onClick={() => setOpenMenu("right")}>Custom Region (Right)</Button>
+          </MegaMenuTrigger>
+          <MegaMenuContainer>
+            <div className="customRegionGroups">
+              <MegaMenuGroup>
+                <MegaMenuHeader>Products</MegaMenuHeader>
+                <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                <MegaMenuItem>AI Assistant</MegaMenuItem>
+                <MegaMenuItem>Workflow Studio</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Solutions</MegaMenuHeader>
+                <MegaMenuItem>Enterprise</MegaMenuItem>
+                <MegaMenuItem>Startups</MegaMenuItem>
+                <MegaMenuItem>Financial Services</MegaMenuItem>
+                <MegaMenuItem>Healthcare</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Resources</MegaMenuHeader>
+                <MegaMenuItem>Documentation</MegaMenuItem>
+                <MegaMenuItem>Guides</MegaMenuItem>
+                <MegaMenuItem>API Reference</MegaMenuItem>
+              </MegaMenuGroup>
+            </div>
+            <MegaMenuCustomRegion className="customRegionFeatured customRegionFeaturedMinWidth">
+              <h4 className="customRegionFeaturedTitle">Featured</h4>
+              <p className="customRegionFeaturedText">
+                Check out our latest product launch and upcoming webinars.
+              </p>
+              <div className="customRegionActions">
+                <Button>Learn More</Button>
+                <Button>View Docs</Button>
+              </div>
+            </MegaMenuCustomRegion>
+          </MegaMenuContainer>
+        </div>
+      </MegaMenu>
+
+      <MegaMenu
+        open={openMenu === "left"}
+        onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
+      >
+        <div className="customRegionWrapper">
+          <MegaMenuTrigger>
+            <Button onClick={() => setOpenMenu("left")}>Custom Region (Left)</Button>
+          </MegaMenuTrigger>
+
+          <MegaMenuContainer>
+            <MegaMenuCustomRegion className="customRegionFeatured customRegionFeaturedMinWidth">
+              <h4 className="customRegionFeaturedTitle">Featured</h4>
+              <p className="customRegionFeaturedText">
+                Check out our latest product launch and upcoming webinars.
+              </p>
+              <div className="customRegionActions">
+                <Button>Learn More</Button>
+                <Button>View Docs</Button>
+              </div>
+            </MegaMenuCustomRegion>
+            <div className="customRegionGroups">
+              <MegaMenuGroup>
+                <MegaMenuHeader>Products</MegaMenuHeader>
+                <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                <MegaMenuItem>AI Assistant</MegaMenuItem>
+                <MegaMenuItem>Workflow Studio</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Solutions</MegaMenuHeader>
+                <MegaMenuItem>Enterprise</MegaMenuItem>
+                <MegaMenuItem>Startups</MegaMenuItem>
+                <MegaMenuItem>Financial Services</MegaMenuItem>
+                <MegaMenuItem>Healthcare</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Resources</MegaMenuHeader>
+                <MegaMenuItem>Documentation</MegaMenuItem>
+                <MegaMenuItem>Guides</MegaMenuItem>
+                <MegaMenuItem>API Reference</MegaMenuItem>
+              </MegaMenuGroup>
+            </div>
+          </MegaMenuContainer>
+        </div>
+      </MegaMenu>
+
+      <MegaMenu
+        open={openMenu === "top"}
+        onOpenChange={(open) => setOpenMenu(open ? "top" : null)}
+      >
+        <div className="customRegionWrapper">
+          <MegaMenuTrigger>
+            <Button onClick={() => setOpenMenu("top")}>Custom Region (Top)</Button>
+          </MegaMenuTrigger>
+
+          <MegaMenuContainer className="customRegionContainerColumn">
+            <MegaMenuCustomRegion className="customRegionFeatured">
+              <h4 className="customRegionFeaturedTitle">Featured</h4>
+              <p className="customRegionFeaturedText">
+                Check out our latest product launch and upcoming webinars.
+              </p>
+              <div className="customRegionActions">
+                <Button>Learn More</Button>
+                <Button>View Docs</Button>
+              </div>
+            </MegaMenuCustomRegion>
+            <div className="customRegionTopBottomGroups">
+              <MegaMenuGroup>
+                <MegaMenuHeader>Products</MegaMenuHeader>
+                <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                <MegaMenuItem>AI Assistant</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Solutions</MegaMenuHeader>
+                <MegaMenuItem>Enterprise</MegaMenuItem>
+                <MegaMenuItem>Startups</MegaMenuItem>
+              </MegaMenuGroup>
+            </div>
+          </MegaMenuContainer>
+        </div>
+      </MegaMenu>
+
+      <MegaMenu
+        open={openMenu === "bottom"}
+        onOpenChange={(open) => setOpenMenu(open ? "bottom" : null)}
+      >
+        <div className="customRegionWrapper">
+          <MegaMenuTrigger>
+            <Button onClick={() => setOpenMenu("bottom")}>Custom Region (Bottom)</Button>
+          </MegaMenuTrigger>
+
+          <MegaMenuContainer className="customRegionContainerColumn">
+            <div className="customRegionTopBottomGroups">
+              <MegaMenuGroup>
+                <MegaMenuHeader>Products</MegaMenuHeader>
+                <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                <MegaMenuItem>AI Assistant</MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Solutions</MegaMenuHeader>
+                <MegaMenuItem>Enterprise</MegaMenuItem>
+                <MegaMenuItem>Startups</MegaMenuItem>
+              </MegaMenuGroup>
+            </div>
+            <MegaMenuCustomRegion className="customRegionFeatured">
+              <h4 className="customRegionFeaturedTitle">Featured</h4>
+              <p className="customRegionFeaturedText">
+                Check out our latest product launch and upcoming webinars.
+              </p>
+              <div className="customRegionActions">
+                <Button>Learn More</Button>
+                <Button>View Docs</Button>
+              </div>
+            </MegaMenuCustomRegion>
+          </MegaMenuContainer>
+        </div>
+      </MegaMenu>
+    </StackLayout>
   );
 };
 
-export const CustomRegionRight = CustomRegionRightTemplate.bind({});
-
-const CustomRegionLeftTemplate: StoryFn = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
-      <div style={{ width: "100%" }}>
-        <MegaMenuTrigger>
-          <Button onClick={() => setIsOpen(true)}>Custom Region (Left)</Button>
-        </MegaMenuTrigger>
-
-        <MegaMenuContainer style={{ flexWrap: "nowrap" }}>
-          <div
-            style={{
-              padding: "var(--salt-spacing-200)",
-              background: "var(--salt-container-secondary-background)",
-              borderRadius: "var(--salt-palette-corner-weak)",
-              minWidth: 200,
-            }}
-          >
-            <h4 style={{ margin: "0 0 8px" }}>Featured</h4>
-            <p style={{ margin: 0, fontSize: "var(--salt-text-fontSize)" }}>
-              Check out our latest product launch and upcoming webinars.
-            </p>
-            <Button style={{ marginTop: 12 }}>Learn More</Button>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "var(--salt-spacing-300)",
-              flex: 1,
-            }}
-          >
-            <MegaMenuGroup>
-              <MegaMenuHeader>Products</MegaMenuHeader>
-              <MegaMenuItem>Analytics Platform</MegaMenuItem>
-              <MegaMenuItem>Data Pipeline</MegaMenuItem>
-              <MegaMenuItem>AI Assistant</MegaMenuItem>
-              <MegaMenuItem>Workflow Studio</MegaMenuItem>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Solutions</MegaMenuHeader>
-              <MegaMenuItem>Enterprise</MegaMenuItem>
-              <MegaMenuItem>Startups</MegaMenuItem>
-              <MegaMenuItem>Financial Services</MegaMenuItem>
-              <MegaMenuItem>Healthcare</MegaMenuItem>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Resources</MegaMenuHeader>
-              <MegaMenuItem>Documentation</MegaMenuItem>
-              <MegaMenuItem>Guides</MegaMenuItem>
-              <MegaMenuItem>API Reference</MegaMenuItem>
-            </MegaMenuGroup>
-          </div>
-        </MegaMenuContainer>
-      </div>
-    </MegaMenu>
-  );
-};
-
-export const CustomRegionLeft = CustomRegionLeftTemplate.bind({});
-
-const CustomRegionTopTemplate: StoryFn = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
-      <div style={{ width: "100%" }}>
-        <MegaMenuTrigger>
-          <Button onClick={() => setIsOpen(true)}>Custom Region (Top)</Button>
-        </MegaMenuTrigger>
-
-        <MegaMenuContainer style={{ flexDirection: "column" }}>
-          <div
-            style={{
-              padding: "var(--salt-spacing-200)",
-              background: "var(--salt-container-secondary-background)",
-              borderRadius: "var(--salt-palette-corner-weak)",
-            }}
-          >
-            <h4 style={{ margin: "0 0 8px" }}>Featured</h4>
-            <p style={{ margin: 0, fontSize: "var(--salt-text-fontSize)" }}>
-              Check out our latest product launch and upcoming webinars.
-            </p>
-            <Button style={{ marginTop: 12 }}>Learn More</Button>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "var(--salt-spacing-300)",
-            }}
-          >
-            <MegaMenuGroup>
-              <MegaMenuHeader>Products</MegaMenuHeader>
-              <MegaMenuItem>Analytics Platform</MegaMenuItem>
-              <MegaMenuItem>Data Pipeline</MegaMenuItem>
-              <MegaMenuItem>AI Assistant</MegaMenuItem>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Solutions</MegaMenuHeader>
-              <MegaMenuItem>Enterprise</MegaMenuItem>
-              <MegaMenuItem>Startups</MegaMenuItem>
-            </MegaMenuGroup>
-          </div>
-        </MegaMenuContainer>
-      </div>
-    </MegaMenu>
-  );
-};
-
-export const CustomRegionTop = CustomRegionTopTemplate.bind({});
-
-const CustomRegionBottomTemplate: StoryFn = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
-      <div style={{ width: "100%" }}>
-        <MegaMenuTrigger>
-          <Button onClick={() => setIsOpen(true)}>
-            Custom Region (Bottom)
-          </Button>
-        </MegaMenuTrigger>
-
-        <MegaMenuContainer style={{ flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "var(--salt-spacing-300)",
-            }}
-          >
-            <MegaMenuGroup>
-              <MegaMenuHeader>Products</MegaMenuHeader>
-              <MegaMenuItem>Analytics Platform</MegaMenuItem>
-              <MegaMenuItem>Data Pipeline</MegaMenuItem>
-              <MegaMenuItem>AI Assistant</MegaMenuItem>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Solutions</MegaMenuHeader>
-              <MegaMenuItem>Enterprise</MegaMenuItem>
-              <MegaMenuItem>Startups</MegaMenuItem>
-            </MegaMenuGroup>
-          </div>
-          <div
-            style={{
-              padding: "var(--salt-spacing-200)",
-              background: "var(--salt-container-secondary-background)",
-              borderRadius: "var(--salt-palette-corner-weak)",
-            }}
-          >
-            <h4 style={{ margin: "0 0 8px" }}>Featured</h4>
-            <p style={{ margin: 0, fontSize: "var(--salt-text-fontSize)" }}>
-              Check out our latest product launch and upcoming webinars.
-            </p>
-            <Button style={{ marginTop: 12 }}>Learn More</Button>
-          </div>
-        </MegaMenuContainer>
-      </div>
-    </MegaMenu>
-  );
-};
-
-export const CustomRegionBottom = CustomRegionBottomTemplate.bind({});
+export const WithCustomRegion = WithCustomRegionTemplate.bind({});
