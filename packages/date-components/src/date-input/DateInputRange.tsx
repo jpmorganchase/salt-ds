@@ -234,6 +234,8 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const startInputID = useId(startInputProps.id);
     const endInputID = useId(endInputProps.id);
+    const startDateLabelId = useId();
+    const endDateLabelId = useId();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -387,12 +389,17 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const startAriaLabelledBy =
       clsx(
         formFieldLabelledBy,
+        startDateLabelId,
         startInputPropsLabelledBy,
         restAriaLabelledBy,
       ) || undefined;
     const endAriaLabelledBy =
-      clsx(formFieldLabelledBy, endInputPropsLabelledBy, restAriaLabelledBy) ||
-      undefined;
+      clsx(
+        formFieldLabelledBy,
+        endDateLabelId,
+        endInputPropsLabelledBy,
+        restAriaLabelledBy,
+      ) || undefined;
     const startAriaDescribedBy =
       clsx(
         formFieldDescribedBy,
@@ -620,6 +627,8 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           {endAdornment}
         </div>
         <div className={withBaseName("activationIndicator")} />
+        <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>Start date</span>
+        <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>End date</span>
       </div>
     );
   },

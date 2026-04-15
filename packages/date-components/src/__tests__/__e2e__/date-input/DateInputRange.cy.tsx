@@ -1027,5 +1027,44 @@ describe("GIVEN a DateInputRange", () => {
         .should("have.attr", "aria-labelledby")
         .and("not.be.empty");
     });
+
+    it("SHOULD differentiate start and end inputs with different aria-labelledby values when wrapped in a FormField", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Date Range</FormFieldLabel>
+          <DateInputRange
+            defaultValue={{
+              startDate: "05 Jan 2025",
+              endDate: "15 Jan 2025",
+            }}
+          />
+        </FormField>,
+      );
+
+      // Get aria-labelledby values for both inputs
+      let startAriaLabelledBy: string;
+      let endAriaLabelledBy: string;
+
+      cy.findByLabelText("Start date")
+        .invoke("attr", "aria-labelledby")
+        .then((value) => {
+          startAriaLabelledBy = value!;
+        });
+
+      cy.findByLabelText("End date")
+        .invoke("attr", "aria-labelledby")
+        .then((value) => {
+          endAriaLabelledBy = value!;
+          // Verify they are different (not the same)
+          expect(startAriaLabelledBy).not.to.equal(endAriaLabelledBy);
+          // Both should contain the FormField label ID
+          expect(startAriaLabelledBy).to.include(
+            cy.findByText("Date Range").then((el) => el.attr("id")),
+          );
+          expect(endAriaLabelledBy).to.include(
+            cy.findByText("Date Range").then((el) => el.attr("id")),
+          );
+        });
+    });
   });
 });

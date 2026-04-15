@@ -245,3 +245,13 @@
 .saltDateInput-dash {
   margin: 0 var(--salt-spacing-50);
 }
+
+/* Visually hidden but still announced by screen readers */
+.saltDateInput-visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
