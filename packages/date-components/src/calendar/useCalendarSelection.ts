@@ -602,7 +602,7 @@ export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
       ariaLabel = `${ariaLabel}, selected`;
     }
   } else if (selectedStart) {
-    ariaLabel = `Start range: ${formattedDate}, selected`;
+    ariaLabel = `Start date: ${formattedDate}, selected`;
   } else if (selectedEnd) {
     ariaLabel = `End range: ${formattedDate}, selected`;
   } else if (selectedSpan) {
@@ -610,7 +610,7 @@ export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
   } else if (hoveredStart) {
     ariaLabel = `Start new range: ${formattedDate}`;
   } else if (hoveredEnd) {
-    ariaLabel = `Complete new range: ${formattedDate}`;
+    ariaLabel = `${formattedDate}, select as end date`;
   } else {
     if (dateAdapter.isSame(minDate, date, "day")) {
       ariaLabel = `${formattedDate}, minimum date`;
