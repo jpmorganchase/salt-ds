@@ -91,7 +91,7 @@ const initialFormData = {
   currencyFormat: "standard",
 };
 
-export const Default = () => {
+export const MultiStep = () => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -106,7 +106,7 @@ export const Default = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 0,
+      activeStepIndex: 2,
       formData: initialFormData,
       validationsByStep: {},
     },
