@@ -1,8 +1,10 @@
 import {
   type Placement,
+  useClick,
   useDismiss,
   useFloatingRootContext,
   useInteractions,
+  useRole,
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useState } from "react";

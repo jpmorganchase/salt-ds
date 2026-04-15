@@ -2,3 +2,32 @@ nav > ul {
   list-style: none;
   padding: 0;
 }
+
+.triggerPositionGrid {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+.triggerPositionLeft {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 12px;
+}
+
+.triggerPositionCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.triggerPositionOffset {
+  display: flex;
+  justify-content: center;
+  padding-left: 180px;
+}
+
+.triggerPositionRight {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
