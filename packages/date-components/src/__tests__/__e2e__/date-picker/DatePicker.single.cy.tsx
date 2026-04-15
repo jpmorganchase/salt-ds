@@ -1028,7 +1028,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.mount(
             <FormField>
               <FormFieldLabel>Select a date</FormFieldLabel>
-              <DatePicker defaultSelectedDate={initialDate}>
+              <DatePicker
+                defaultSelectedDate={initialDate}
+                selectionVariant="single"
+              >
                 <DatePickerSingleInput />
                 <DatePickerOverlay>
                   <DatePickerSingleGridPanel />

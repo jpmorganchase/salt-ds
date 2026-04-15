@@ -72,10 +72,9 @@ export function createSingleSelectionAnnouncement(
         "month",
       );
       if (isSingleMonth) {
-        return `Visible month starts from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")}`;
+        return `${dateAdapter.format(startVisibleMonth, "MMMM YYYY")}.`;
       }
-      const endOfMonth = dateAdapter.endOf(endVisibleMonth, "month");
-      return `Visible months are from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")} to ${dateAdapter.format(endOfMonth, "dddd D MMMM YYYY")}`;
+      return `${dateAdapter.format(startVisibleMonth, "MMMM YYYY")} and ${dateAdapter.format(endVisibleMonth, "MMMM YYYY")}.`;
     }
   }
 }
@@ -141,10 +140,9 @@ export function createRangeSelectionAnnouncement(
         "month",
       );
       if (isSingleMonth) {
-        return `Visible month starts from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")}`;
+        return `${dateAdapter.format(startVisibleMonth, "MMMM YYYY")}.`;
       }
-      const endOfMonth = dateAdapter.endOf(endVisibleMonth, "month");
-      return `Visible months are from ${dateAdapter.format(startVisibleMonth, "dddd D MMMM YYYY")} to ${dateAdapter.format(endOfMonth, "dddd D MMMM YYYY")}`;
+      return `${dateAdapter.format(startVisibleMonth, "MMMM YYYY")} and ${dateAdapter.format(endVisibleMonth, "MMMM YYYY")}.`;
     }
   }
 }
