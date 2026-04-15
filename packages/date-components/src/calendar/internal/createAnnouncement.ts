@@ -118,7 +118,7 @@ export function createRangeSelectionAnnouncement(
         endDate = range.endDate;
       }
       if (startDate && !endDate) {
-        return `Selected start date ${dateAdapter.format(startDate, "dddd D MMMM YYYY")}`;
+        return `Start date ${dateAdapter.format(startDate, "dddd D MMMM YYYY")} selected. Select end date.`;
       }
       if (!startDate && endDate) {
         return `${dateAdapter.format(endDate, "dddd D MMMM YYYY")}, selected as end date`;
