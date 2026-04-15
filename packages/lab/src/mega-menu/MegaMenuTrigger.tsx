@@ -10,6 +10,9 @@ import {
 } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export interface MegaMenuTriggerProps {
   children?: ReactNode;
 }
@@ -27,12 +30,15 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
 
     const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
       if (event.key === "Tab" && !event.shiftKey && openState) {
-        event.preventDefault();
-        const firstItem = document.querySelector(
-          '[role="region"] .saltMegaMenuItem',
-        ) as HTMLElement | null;
-        if (firstItem) {
-          firstItem.focus();
+        const floating = megaMenu.floatingRootContext.elements
+          .floating as HTMLElement | null;
+        if (floating) {
+          const firstFocusable =
+            floating.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+          if (firstFocusable) {
+            event.preventDefault();
+            firstFocusable.focus();
+          }
         }
       }
     };
@@ -50,10 +56,6 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     return cloneElement(children, {
       ...mergeProps(
         getReferenceProps({
-          onClick: (event) => {
-            setReference(event.currentTarget as HTMLElement);
-            setOpen(true);
-          },
           onKeyDown: handleKeyDown,
           ...rest,
         }),

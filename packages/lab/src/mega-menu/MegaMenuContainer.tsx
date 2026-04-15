@@ -10,13 +10,27 @@ import { clsx } from "clsx";
 import {
   forwardRef,
   type HTMLAttributes,
+  type KeyboardEvent,
   type ReactNode,
+  useCallback,
   useContext,
 } from "react";
 import megaMenuContainerCss from "./MegaMenuContainer.css";
 import { MegaMenuContext } from "./MegaMenuContext";
 
 const withBaseName = makePrefixer("saltMegaMenuContainer");
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const GROUP_SELECTOR = ".saltMegaMenuGroup";
+const ITEM_SELECTOR = ".saltMegaMenuItem";
+
+const getFocusableElements = (root: ParentNode): HTMLElement[] =>
+  Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+
+const getReferenceFocusable = (
+  reference: HTMLElement | null,
+): HTMLElement | null =>
+  reference?.querySelector<HTMLElement>("a, button, [tabindex]") ?? reference;
 
 export interface MegaMenuContainerProps extends HTMLAttributes<HTMLElement> {
   /**
@@ -53,6 +67,175 @@ export const MegaMenuContainer = forwardRef<
   const isOpen = megaMenu.openState;
   const floatingProps = megaMenu.getFloatingProps;
 
+  const focusReference = useCallback(() => {
+    const reference = megaMenu.floatingRootContext.elements
+      .reference as HTMLElement | null;
+    getReferenceFocusable(reference)?.focus();
+  }, [megaMenu]);
+
+  const closeAndFocusNextAfterReference = useCallback(
+    (container: HTMLElement) => {
+      const reference = megaMenu.floatingRootContext.elements
+        .reference as HTMLElement | null;
+      const referenceFocusable = getReferenceFocusable(reference);
+
+      const nextFromSibling = referenceFocusable
+        ?.closest("li")
+        ?.nextElementSibling?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+
+      const nextOutsideMenu =
+        nextFromSibling ||
+        (() => {
+          const outsideFocusable = getFocusableElements(
+            container.ownerDocument,
+          ).filter((el) => !container.contains(el));
+          const index = referenceFocusable
+            ? outsideFocusable.indexOf(referenceFocusable)
+            : -1;
+          return index >= 0 ? outsideFocusable[index + 1] : undefined;
+        })();
+
+      megaMenu.setOpen(false);
+
+      if (nextOutsideMenu) {
+        const view = container.ownerDocument.defaultView;
+        view?.requestAnimationFrame(() => {
+          view?.requestAnimationFrame(() => {
+            nextOutsideMenu.focus();
+          });
+        });
+      }
+    },
+    [megaMenu],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLElement>) => {
+      const isArrowUp = event.key === "ArrowUp";
+      const isArrowDown = event.key === "ArrowDown";
+      const isArrowLeft = event.key === "ArrowLeft";
+      const isArrowRight = event.key === "ArrowRight";
+      const isForwardTab = event.key === "Tab" && !event.shiftKey;
+      const isBackwardTab = event.key === "Tab" && event.shiftKey;
+
+      const target = event.target as HTMLElement;
+      const container = event.currentTarget;
+
+      if (isArrowUp || isArrowDown || isArrowLeft || isArrowRight) {
+        const focusedItem = target.closest(ITEM_SELECTOR) as HTMLElement | null;
+        if (!focusedItem) return;
+
+        const groups = Array.from(
+          container.querySelectorAll<HTMLElement>(GROUP_SELECTOR),
+        );
+        const groupItems = groups
+          .map((group) =>
+            Array.from(group.querySelectorAll<HTMLElement>(ITEM_SELECTOR)),
+          )
+          .filter((items) => items.length > 0);
+
+        const flatItems = groupItems.flat();
+        const flatIndex = flatItems.indexOf(focusedItem);
+        if (flatIndex === -1) return;
+
+        const currentGroupIndex = groupItems.findIndex((items) =>
+          items.includes(focusedItem),
+        );
+        if (currentGroupIndex === -1) return;
+
+        const currentItems = groupItems[currentGroupIndex];
+        const itemIndex = currentItems.indexOf(focusedItem);
+        const isFirstItem = flatIndex === 0;
+        const isLastItem = flatIndex === flatItems.length - 1;
+
+        // Left/Up on first item: focus trigger and keep menu open.
+        if ((isArrowLeft || isArrowUp) && isFirstItem) {
+          event.preventDefault();
+          focusReference();
+          return;
+        }
+
+        // Right/Down on last item: focus trigger and collapse menu.
+        if ((isArrowRight || isArrowDown) && isLastItem) {
+          event.preventDefault();
+          focusReference();
+          megaMenu.setOpen(false);
+          return;
+        }
+
+        if (isArrowUp) {
+          if (itemIndex > 0) {
+            event.preventDefault();
+            currentItems[itemIndex - 1]?.focus();
+          }
+          return;
+        }
+
+        if (isArrowDown) {
+          if (itemIndex < currentItems.length - 1) {
+            event.preventDefault();
+            currentItems[itemIndex + 1]?.focus();
+          }
+          return;
+        }
+
+        if (isArrowLeft) {
+          const previousGroup = groupItems[currentGroupIndex - 1];
+          if (previousGroup && previousGroup.length > 0) {
+            event.preventDefault();
+            previousGroup[0]?.focus();
+          }
+          return;
+        }
+
+        if (isArrowRight) {
+          const nextGroup = groupItems[currentGroupIndex + 1];
+          if (nextGroup && nextGroup.length > 0) {
+            event.preventDefault();
+            nextGroup[0]?.focus();
+          }
+          return;
+        }
+      }
+
+      const dir = isBackwardTab ? -1 : isForwardTab ? 1 : 0;
+      if (!dir) return;
+
+      const allFocusable = getFocusableElements(container);
+      const focusTarget = target.closest(
+        FOCUSABLE_SELECTOR,
+      ) as HTMLElement | null;
+      const i = focusTarget ? allFocusable.indexOf(focusTarget) : -1;
+      if (i === -1) return;
+
+      // First item + backward: focus trigger
+      if (dir === -1 && i === 0) {
+        event.preventDefault();
+        focusReference();
+        return;
+      }
+
+      // Last item + forward: close and move to the next page interactive element.
+      // Arrow Down/Right keeps existing behavior (focus trigger + close).
+      if (dir === 1 && i === allFocusable.length - 1) {
+        event.preventDefault();
+        if (isForwardTab) {
+          closeAndFocusNextAfterReference(container);
+          return;
+        }
+
+        focusReference();
+        megaMenu.setOpen(false);
+        return;
+      }
+
+      // Move to next/prev focusable
+      event.preventDefault();
+      allFocusable[i + dir]?.focus();
+    },
+    [closeAndFocusNextAfterReference, focusReference, megaMenu],
+  );
+
   return (
     <FloatingComponent
       open={isOpen}
@@ -60,8 +243,9 @@ export const MegaMenuContainer = forwardRef<
         context: floatingUIResult.context,
         modal: false,
         initialFocus: -1,
-        returnFocus: true,
+        returnFocus: false,
         closeOnFocusOut: false,
+        guards: false,
       }}
     >
       <nav
@@ -70,6 +254,7 @@ export const MegaMenuContainer = forwardRef<
         role="region"
         {...floatingProps({
           ...rest,
+          onKeyDown: handleKeyDown,
           style: {
             ...rest.style,
             position: floatingUIResult.strategy,

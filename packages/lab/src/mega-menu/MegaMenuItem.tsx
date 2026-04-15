@@ -63,49 +63,6 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
         });
         return;
       }
-
-      if (event.key === "Tab" && !event.shiftKey) {
-        const items = Array.from(
-          event.currentTarget
-            .closest('[role="region"]')
-            ?.querySelectorAll<HTMLElement>(".saltMegaMenuItem") ?? [],
-        );
-        const i = items.indexOf(event.currentTarget);
-        if (i === items.length - 1) {
-          megaMenu?.setOpen(false);
-        }
-      }
-
-      const dir =
-        event.key === "ArrowUp" || event.key === "ArrowLeft"
-          ? -1
-          : event.key === "ArrowDown" || event.key === "ArrowRight"
-            ? 1
-            : 0;
-
-      if (dir) {
-        event.preventDefault();
-        const items = Array.from(
-          event.currentTarget
-            .closest('[role="region"]')
-            ?.querySelectorAll<HTMLElement>(".saltMegaMenuItem") ?? [],
-        );
-        const i = items.indexOf(event.currentTarget);
-
-        if (dir === -1 && i === 0) {
-          const reference = megaMenu?.floatingRootContext.elements
-            .reference as HTMLElement | null;
-          if (reference) {
-            const focusable =
-              reference.querySelector<HTMLElement>("a, button, [tabindex]") ??
-              reference;
-            focusable.focus();
-          }
-          return;
-        }
-
-        items[(i + dir + items.length) % items.length]?.focus();
-      }
     };
 
     return (
