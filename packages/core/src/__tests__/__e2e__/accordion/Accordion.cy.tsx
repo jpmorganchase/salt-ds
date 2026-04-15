@@ -40,7 +40,7 @@ const AccordionExample = ({
   onUpdated,
 }: AccordionExampleProps) => {
   return (
-    <Accordion onToggle={onToggle} value="example">
+    <Accordion onToggle={onToggle}>
       <AccordionHeader>Summary Text</AccordionHeader>
       <AccordionPanel>
         <DetailsSpy

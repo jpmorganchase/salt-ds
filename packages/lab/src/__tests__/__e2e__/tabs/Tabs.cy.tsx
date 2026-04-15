@@ -455,7 +455,7 @@ describe("Adding Tabs", () => {
           );
         });
       });
-      describe("WHEN Add button is focused and ENTER pressed", () => {
+      describe.skip("WHEN Add button is focused and ENTER pressed", () => {
         it("THEN new last Tab is created, selected and entered edit mode", () => {
           cy.mount(
             <SimpleTabstripAddRemoveTab

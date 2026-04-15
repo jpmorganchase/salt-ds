@@ -23,7 +23,7 @@ async function getViteConfig(config: UserConfig) {
       },
     },
     build: {
-      sourcemap: true,
+      sourcemap: !isCI,
     },
     resolve: {
       alias: {
@@ -70,6 +70,7 @@ async function getViteConfig(config: UserConfig) {
 }
 
 export default defineConfig({
+  allowCypressEnv: false,
   viewportWidth: 1280,
   viewportHeight: 1024,
   video: false,
