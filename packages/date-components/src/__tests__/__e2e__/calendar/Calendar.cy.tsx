@@ -514,7 +514,7 @@ describe("GIVEN a Calendar", () => {
             name: `Start new range: ${adapter.format(startOfMonth, "dddd D MMMM YYYY")}`,
           }).should("exist");
           cy.findByRole("button", {
-            name: `Start range: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
+            name: `Start date: ${adapter.format(startDate, "dddd D MMMM YYYY")}, selected`,
           }).should("exist");
           cy.findByRole("button", {
             name: `End range: ${adapter.format(endDate, "dddd D MMMM YYYY")}, selected`,

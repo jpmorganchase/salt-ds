@@ -216,7 +216,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByRole("application").should("have.length", 2);
         // Verify the first element focused in the first calendar is the start date
         cy.findByRole("button", {
-          name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
+          name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
         }).should("be.focused");
         // Simulate tabbing to the next calendar
         cy.realPress("Tab");
@@ -288,7 +288,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.realPress("Tab");
         // Verify focus returns to the first focused element in the first calendar
         cy.findByRole("button", {
-          name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
+          name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
         }).should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
@@ -336,8 +336,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByLabelText(/Previous Month/)
           .eq(0)
           .should("not.have.attr", "aria-disabled", "true");
-        cy.findAllByLabelText(/Future dates are out of range/)
-          .eq(0)
+        cy.findAllByRole("button", { name: /^Next Month/ })
+          .eq(1)
           .should("have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
@@ -832,7 +832,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Verify that the calendar is displayed
         cy.findAllByRole("application").should("have.length", 2);
         // Simulate selecting a tenor option
-        cy.findByRole("button", {
+        cy.findByRole("option", {
           name: "15 years",
         })
           .realHover()
@@ -1148,11 +1148,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
           cy.findByRole("button", {
-            name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
+            name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
           }).should("be.focused");
           // Verify that the default selected dates are highlighted in the calendar
           cy.findByRole("button", {
-            name: "Start range: Sunday 5 January 2025, selected",
+            name: "Start date: Sunday 5 January 2025, selected",
           }).should("exist");
           cy.findByRole("button", {
             name: "End range: Monday 6 January 2025, selected",
@@ -1205,7 +1205,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
             if (
               adapter.isSame(currentDate, initialRangeDate.startDate, "day")
             ) {
-              formattedDate = `Start range: ${adapter.format(currentDate, "dddd D MMMM YYYY")}, selected`;
+              formattedDate = `Start date: ${adapter.format(currentDate, "dddd D MMMM YYYY")}, selected`;
             } else if (
               adapter.isSame(currentDate, initialRangeDate.endDate, "day")
             ) {
@@ -1284,11 +1284,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
           cy.findByRole("button", {
-            name: `Start range: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
+            name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
           }).should("be.focused");
           // Verify that the selected dates are highlighted in the calendar
           cy.findByRole("button", {
-            name: "Start range: Sunday 5 January 2025, selected",
+            name: "Start date: Sunday 5 January 2025, selected",
           }).should("exist");
           cy.findByRole("button", {
             name: "End range: Monday 6 January 2025, selected",
@@ -1360,8 +1360,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
       it("SHOULD preserve original time during date selection", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
-        const defaultStartDate = adapter.date("2024-12-11T00:09:30Z", "UTC");
-        const defaultEndDate = adapter.date("2024-12-11T00:10:33Z", "UTC");
+        const defaultStartDate = adapter.parse(
+          "11 Dec 2024 00:09:30",
+          "DD MMM YYYY HH:mm:ss",
+        ).date;
+        const defaultEndDate = adapter.parse(
+          "11 Dec 2024 00:10:33",
+          "DD MMM YYYY HH:mm:ss",
+        ).date;
         cy.mount(
           <DatePicker
             defaultSelectedDate={{

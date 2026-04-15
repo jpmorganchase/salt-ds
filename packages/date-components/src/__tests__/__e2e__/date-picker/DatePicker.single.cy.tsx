@@ -565,7 +565,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is displayed
         cy.findByRole("application").should("exist");
         // Simulate selecting a tenor option
-        cy.findByRole("button", {
+        cy.findByRole("option", {
           name: "15 years",
         })
           .realHover()

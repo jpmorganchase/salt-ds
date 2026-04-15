@@ -61,7 +61,7 @@ async function getViteConfig(config: UserConfig) {
       optimizeDeps: {
         include: [
           "@salt-ds/core",
-          "@salt-ds/data-components",
+          "@salt-ds/date-components",
           "@salt-ds/data-grid",
           "@salt-ds/lab",
           "@salt-ds/icons",

@@ -513,19 +513,22 @@ describe("GIVEN a DateInputRange", () => {
       });
 
       describe("timezone", () => {
+        const localMidnightStartIso = new Date(2025, 0, 5).toISOString();
+        const localMidnightEndIso = new Date(2026, 1, 6).toISOString();
+
         [
           {
             timezone: "default",
             expectedResult: {
-              startDate: "2025-01-05T00:00:00.000Z",
-              endDate: "2026-02-06T00:00:00.000Z",
+              startDate: localMidnightStartIso,
+              endDate: localMidnightEndIso,
             },
           },
           {
             timezone: "system",
             expectedResult: {
-              startDate: "2025-01-05T00:00:00.000Z",
-              endDate: "2026-02-06T00:00:00.000Z",
+              startDate: localMidnightStartIso,
+              endDate: localMidnightEndIso,
             },
           },
           {
@@ -1041,29 +1044,28 @@ describe("GIVEN a DateInputRange", () => {
         </FormField>,
       );
 
-      // Get aria-labelledby values for both inputs
-      let startAriaLabelledBy: string;
-      let endAriaLabelledBy: string;
+      cy.findByText("Date Range")
+        .invoke("attr", "id")
+        .then((labelId) => {
+          expect(labelId, "FormField label id").to.be.a("string").and.not.be
+            .empty;
 
-      cy.findByLabelText("Start date")
-        .invoke("attr", "aria-labelledby")
-        .then((value) => {
-          startAriaLabelledBy = value!;
-        });
+          cy.findByLabelText("Start date")
+            .invoke("attr", "aria-labelledby")
+            .then((startAriaLabelledBy) => {
+              expect(startAriaLabelledBy)
+                .to.be.a("string")
+                .and.include(labelId as string);
 
-      cy.findByLabelText("End date")
-        .invoke("attr", "aria-labelledby")
-        .then((value) => {
-          endAriaLabelledBy = value!;
-          // Verify they are different (not the same)
-          expect(startAriaLabelledBy).not.to.equal(endAriaLabelledBy);
-          // Both should contain the FormField label ID
-          expect(startAriaLabelledBy).to.include(
-            cy.findByText("Date Range").then((el) => el.attr("id")),
-          );
-          expect(endAriaLabelledBy).to.include(
-            cy.findByText("Date Range").then((el) => el.attr("id")),
-          );
+              cy.findByLabelText("End date")
+                .invoke("attr", "aria-labelledby")
+                .then((endAriaLabelledBy) => {
+                  expect(endAriaLabelledBy)
+                    .to.be.a("string")
+                    .and.include(labelId as string);
+                  expect(startAriaLabelledBy).not.to.equal(endAriaLabelledBy);
+                });
+            });
         });
     });
   });
