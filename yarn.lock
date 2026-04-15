@@ -4132,20 +4132,21 @@ __metadata:
     "@types/react-color": "npm:^3.0.6"
     "@types/react-dom": "npm:^18.3.7"
     "@types/tinycolor2": "npm:^1.4.3"
+    "@typescript/native-preview": "npm:7.0.0-dev.20260330.1"
     "@vitejs/plugin-react": "npm:^5.0.3"
     ag-grid-community: "npm:^32.0.0"
     ag-grid-enterprise: "npm:^32.0.0"
     ag-grid-react: "npm:^32.0.0"
-    axe-core: "npm:^4.9.0"
+    axe-core: "npm:^4.11.2"
     browserslist-to-esbuild: "npm:^2.1.1"
     chromatic: "npm:^16.0.0"
     ci-info: "npm:^4.0.0"
     clsx: "npm:^2.0.0"
-    cypress: "npm:^15.8.2"
-    cypress-axe: "npm:^1.5.0"
-    cypress-real-events: "npm:^1.13.0"
+    cypress: "npm:^15.13.0"
+    cypress-axe: "npm:^1.7.0"
+    cypress-real-events: "npm:^1.15.0"
     deepmerge: "npm:^4.2.2"
-    dom-accessibility-api: "npm:^0.7.0"
+    dom-accessibility-api: "npm:^0.7.1"
     execa: "npm:^9.0.0"
     get-tsconfig: "npm:^4.7.5"
     highcharts: "npm:10.3.3"
@@ -6294,6 +6295,87 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript/native-preview-darwin-arm64@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-darwin-arm64@npm:7.0.0-dev.20260330.1"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview-darwin-x64@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-darwin-x64@npm:7.0.0-dev.20260330.1"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview-linux-arm64@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-linux-arm64@npm:7.0.0-dev.20260330.1"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview-linux-arm@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-linux-arm@npm:7.0.0-dev.20260330.1"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview-linux-x64@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-linux-x64@npm:7.0.0-dev.20260330.1"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview-win32-arm64@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-win32-arm64@npm:7.0.0-dev.20260330.1"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview-win32-x64@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview-win32-x64@npm:7.0.0-dev.20260330.1"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@typescript/native-preview@npm:7.0.0-dev.20260330.1":
+  version: 7.0.0-dev.20260330.1
+  resolution: "@typescript/native-preview@npm:7.0.0-dev.20260330.1"
+  dependencies:
+    "@typescript/native-preview-darwin-arm64": "npm:7.0.0-dev.20260330.1"
+    "@typescript/native-preview-darwin-x64": "npm:7.0.0-dev.20260330.1"
+    "@typescript/native-preview-linux-arm": "npm:7.0.0-dev.20260330.1"
+    "@typescript/native-preview-linux-arm64": "npm:7.0.0-dev.20260330.1"
+    "@typescript/native-preview-linux-x64": "npm:7.0.0-dev.20260330.1"
+    "@typescript/native-preview-win32-arm64": "npm:7.0.0-dev.20260330.1"
+    "@typescript/native-preview-win32-x64": "npm:7.0.0-dev.20260330.1"
+  dependenciesMeta:
+    "@typescript/native-preview-darwin-arm64":
+      optional: true
+    "@typescript/native-preview-darwin-x64":
+      optional: true
+    "@typescript/native-preview-linux-arm":
+      optional: true
+    "@typescript/native-preview-linux-arm64":
+      optional: true
+    "@typescript/native-preview-linux-x64":
+      optional: true
+    "@typescript/native-preview-win32-arm64":
+      optional: true
+    "@typescript/native-preview-win32-x64":
+      optional: true
+  bin:
+    tsgo: bin/tsgo.js
+  checksum: 10/a595c6f9552117ec52860c318a8eab6cf68213859ffa3f4be78034d9de8cac918dffe7b55fa7b8a7a19bae3458d70323439a83f7c9e8419bd1cdc647a30d713c
+  languageName: node
+  linkType: hard
+
 "@ungap/structured-clone@npm:^1.0.0":
   version: 1.2.0
   resolution: "@ungap/structured-clone@npm:1.2.0"
@@ -6885,21 +6967,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.2.0, axe-core@npm:^4.9.0":
-  version: 4.9.0
-  resolution: "axe-core@npm:4.9.0"
-  checksum: 10/d337c4600e522bb85ed7b242e8eea322892025bc3c951fcda4845a664f9cfb065c509bc17428315c7f8571a4b5c55552d9011d752a6aae8be006bfa54d725a42
+"axe-core@npm:^4.11.2, axe-core@npm:^4.2.0":
+  version: 4.11.2
+  resolution: "axe-core@npm:4.11.2"
+  checksum: 10/495a6baa80a157603e5ea9ebfefb06ef4f947d722f8adcefea3a086c918363437406fa5adf27bd9f759314f7661f023110bd5490b3d13f623c92d3dbdf432298
   languageName: node
   linkType: hard
 
 "axios@npm:^1.12.2":
-  version: 1.13.5
-  resolution: "axios@npm:1.13.5"
+  version: 1.15.0
+  resolution: "axios@npm:1.15.0"
   dependencies:
     follow-redirects: "npm:^1.15.11"
     form-data: "npm:^4.0.5"
-    proxy-from-env: "npm:^1.1.0"
-  checksum: 10/db726d09902565ef9a0632893530028310e2ec2b95b727114eca1b101450b00014133dfc3871cffc87983fb922bca7e4874d7e2826d1550a377a157cdf3f05b6
+    proxy-from-env: "npm:^2.1.0"
+  checksum: 10/d39a2c0ebc7ff4739401b282e726cc2673377949d6c46d60eb619458f8d7a2f7eadbcada7097f4dbc7d5c59abb4d3bf6fac33d474412bc3415d3f5aa7ed45530
   languageName: node
   linkType: hard
 
@@ -8087,28 +8169,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-axe@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "cypress-axe@npm:1.5.0"
+"cypress-axe@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "cypress-axe@npm:1.7.0"
   peerDependencies:
     axe-core: ^3 || ^4
-    cypress: ^10 || ^11 || ^12 || ^13
-  checksum: 10/9e5dde486e352da0597f26134e5afd5b998c4020c1b7292a38d6be72dc46778a1e06fa6b051fac397dd9cf45c7ad7ff93a1a33300590d512d015c622d00a7031
+    cypress: ^10 || ^11 || ^12 || ^13 || ^14 || ^15
+  checksum: 10/f37620c4c17b315d8ec34e1a51d798b91739ecbd868ac7ee1dc1f47bc7e7412d0e0ad942e13e2e25d397f2d4aa487ce485a86d4aa66fc022bf7d1239576f42a1
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "cypress-real-events@npm:1.13.0"
+"cypress-real-events@npm:^1.15.0":
+  version: 1.15.0
+  resolution: "cypress-real-events@npm:1.15.0"
   peerDependencies:
-    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x
-  checksum: 10/085e2e4f456fdf4173fd07fc2602ce44d661256628a5b40e89092e9792533f46b808f97106d9f9ea0272279b5c10db4eef3f0606e3705d3638d552d0999425de
+    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x
+  checksum: 10/a722b69c7b35fce34de6c7a1439c96d08651bfba976878bc7110d1927a89220f9ea23912970f3f7bd47a96fa2022bdf9ea1156fc1f7b09a1d2d7426fc004bf75
   languageName: node
   linkType: hard
 
-"cypress@npm:^15.8.2":
-  version: 15.8.2
-  resolution: "cypress@npm:15.8.2"
+"cypress@npm:^15.13.0":
+  version: 15.13.0
+  resolution: "cypress@npm:15.13.0"
   dependencies:
     "@cypress/request": "npm:^3.0.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -8138,7 +8220,7 @@ __metadata:
     hasha: "npm:5.2.2"
     is-installed-globally: "npm:~0.4.0"
     listr2: "npm:^3.8.3"
-    lodash: "npm:^4.17.21"
+    lodash: "npm:^4.17.23"
     log-symbols: "npm:^4.0.0"
     minimist: "npm:^1.2.8"
     ospath: "npm:^1.2.2"
@@ -8147,14 +8229,15 @@ __metadata:
     proxy-from-env: "npm:1.0.0"
     request-progress: "npm:^3.0.0"
     supports-color: "npm:^8.1.1"
-    systeminformation: "npm:^5.27.14"
+    systeminformation: "npm:^5.31.1"
     tmp: "npm:~0.2.4"
     tree-kill: "npm:1.2.2"
+    tslib: "npm:1.14.1"
     untildify: "npm:^4.0.0"
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/7d8859ed3d16da7b99840b053bb24e71f22da1ec0ef81799e7bc5786d02ce89a7b227f17c9270225dbf8e9dec9a21accfbea0d37fc7aae5aabbea54990c78150
+  checksum: 10/c0ad6c3d70a960d6c4cc71e38029fcf9a01569f8b9d33a36eea187b05861bc8cda7aa144eef81cbd7d6499e084b7b65637014eb74da0196b21d0f17c5fdfc487
   languageName: node
   linkType: hard
 
@@ -8430,10 +8513,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dom-accessibility-api@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "dom-accessibility-api@npm:0.7.0"
-  checksum: 10/ac69d27099bc0650633545c461347a355c2794b330f69b6b67fd98df91be9a48547d85176758747841e10ee041905143b39b6094e72c704c265b0f4f9bb7ab28
+"dom-accessibility-api@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "dom-accessibility-api@npm:0.7.1"
+  checksum: 10/a73267bd53a749bd82e1b4f244c6eda4610a7c1c9eb4a82fc489fca02e7a81974f45506c665790a945b1e612f7ce69e26c74e7e01423e3d716183caf395caf8b
   languageName: node
   linkType: hard
 
@@ -9401,12 +9484,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.15.11":
-  version: 1.15.11
-  resolution: "follow-redirects@npm:1.15.11"
+  version: 1.16.0
+  resolution: "follow-redirects@npm:1.16.0"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10/07372fd74b98c78cf4d417d68d41fdaa0be4dcacafffb9e67b1e3cf090bc4771515e65020651528faab238f10f9b9c0d9707d6c1574a6c0387c5de1042cde9ba
+  checksum: 10/3fbe3d80b3b544c22705d837aa5d4a0d07a740d913534a2620b0a004c610af4148e3b58723536dd099aaa1c9d3a155964bde9665d6e5cb331460809a1fc572fd
   languageName: node
   linkType: hard
 
@@ -11106,9 +11189,9 @@ __metadata:
   linkType: hard
 
 "lodash-es@npm:^4.17.15, lodash-es@npm:^4.17.21, lodash-es@npm:^4.17.23":
-  version: 4.17.23
-  resolution: "lodash-es@npm:4.17.23"
-  checksum: 10/1feae200df22eb0bd93ca86d485e77784b8a9fb1d13e91b66e9baa7a7e5e04be088c12a7e20c2250fc0bd3db1bc0ef0affc7d9e3810b6af2455a3c6bf6dde59e
+  version: 4.18.1
+  resolution: "lodash-es@npm:4.18.1"
+  checksum: 10/8bfad225ef09ef42b04283cdaf7830efcc2ba29ae41b56501c74422155ee1ccaa1f0f6e8319def3451a1fe54dec501c8e4bee622bae2b2d98ac993731e0a5cce
   languageName: node
   linkType: hard
 
@@ -11168,10 +11251,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.0.1, lodash@npm:^4.15.0, lodash@npm:^4.17.15, lodash@npm:^4.17.21":
-  version: 4.17.23
-  resolution: "lodash@npm:4.17.23"
-  checksum: 10/82504c88250f58da7a5a4289f57a4f759c44946c005dd232821c7688b5fcfbf4a6268f6a6cdde4b792c91edd2f3b5398c1d2a0998274432cff76def48735e233
+"lodash@npm:^4.0.1, lodash@npm:^4.15.0, lodash@npm:^4.17.15, lodash@npm:^4.17.21, lodash@npm:^4.17.23":
+  version: 4.18.1
+  resolution: "lodash@npm:4.18.1"
+  checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
   languageName: node
   linkType: hard
 
@@ -13887,10 +13970,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "proxy-from-env@npm:1.1.0"
-  checksum: 10/f0bb4a87cfd18f77bc2fba23ae49c3b378fb35143af16cc478171c623eebe181678f09439707ad80081d340d1593cd54a33a0113f3ccb3f4bc9451488780ee23
+"proxy-from-env@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "proxy-from-env@npm:2.1.0"
+  checksum: 10/fbbaf4dab2a6231dc9e394903a5f66f20475e36b734335790b46feb9da07c37d6b32e2c02e3e2ea4d4b23774c53d8562e5b7cc73282cb43f4a597b7eacaee2ee
   languageName: node
   linkType: hard
 
@@ -15944,12 +16027,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.27.14":
-  version: 5.31.1
-  resolution: "systeminformation@npm:5.31.1"
+"systeminformation@npm:^5.31.1":
+  version: 5.31.5
+  resolution: "systeminformation@npm:5.31.5"
   bin:
     systeminformation: lib/cli.js
-  checksum: 10/1fff0b2827f7de2ec5379385c9bb12896db92186ee1d721cb08791ae7277a02f39fb8f3060df47312b70fe88c5b91a70726e7265ca8e5bab1f87780fb2acb991
+  checksum: 10/6efe04b1873bf3e6488064a9462575dc6d83fc4b509bd8922304c87b658964e3ce598db8e1af123e0fa49d76b2cc85c7211b8f6c8a6b8c69846698f8ce65ca2c
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
@@ -16352,7 +16435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.2, tslib@npm:^2.8.0":
+"tslib@npm:^2.0.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
@@ -16871,10 +16954,10 @@ __metadata:
   linkType: hard
 
 "vite@npm:^6.0.0 || ^7.0.0, vite@npm:^7.1.5":
-  version: 7.1.11
-  resolution: "vite@npm:7.1.11"
+  version: 7.3.2
+  resolution: "vite@npm:7.3.2"
   dependencies:
-    esbuild: "npm:^0.25.0"
+    esbuild: "npm:^0.27.0"
     fdir: "npm:^6.5.0"
     fsevents: "npm:~2.3.3"
     picomatch: "npm:^4.0.3"
@@ -16921,7 +17004,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/b75ce7a38beeba7800751938df4fe2638cfb77509647329ac824332af51831eaed52ab0a0bae1d9162ac41ef59fff1c754e0acf7e1470dfa7d3da51fc3bf0985
+  checksum: 10/c5f7a9a60011c41c836cedf31c8ee7624102aff9b6a7f3aab2ff47639721bba0916f81994c3a3ea6577a16c4f0dfee1e7dbd244e0da8edd5954e3c6d48daaaa2
   languageName: node
   linkType: hard
 
