@@ -31,3 +31,49 @@ nav > ul {
   justify-content: flex-end;
   padding-right: 12px;
 }
+
+.customRegionWrapper {
+  width: 100%;
+}
+
+.customRegionContainerColumn {
+  flex-direction: column;
+}
+
+.customRegionGroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-300);
+  flex: 1;
+}
+
+.customRegionTopBottomGroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-300);
+}
+
+.customRegionFeatured {
+  padding: var(--salt-spacing-200);
+  background: var(--salt-container-secondary-background);
+  border-radius: var(--salt-palette-corner-weak);
+}
+
+.customRegionFeaturedMinWidth {
+  min-width: 200px;
+}
+
+.customRegionFeaturedTitle {
+  margin: 0 0 8px;
+}
+
+.customRegionFeaturedText {
+  margin: 0;
+  font-size: var(--salt-text-fontSize);
+}
+
+.customRegionActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}

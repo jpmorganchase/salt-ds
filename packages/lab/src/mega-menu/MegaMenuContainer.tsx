@@ -21,8 +21,8 @@ import { MegaMenuContext } from "./MegaMenuContext";
 const withBaseName = makePrefixer("saltMegaMenuContainer");
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-const GROUP_SELECTOR = ".saltMegaMenuGroup";
-const ITEM_SELECTOR = ".saltMegaMenuItem";
+const REGION_SELECTOR =
+  '.saltMegaMenuGroup, [data-salt-mega-menu-region="true"]';
 
 const getFocusableElements = (root: ParentNode): HTMLElement[] =>
   Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
@@ -122,28 +122,28 @@ export const MegaMenuContainer = forwardRef<
       const container = event.currentTarget;
 
       if (isArrowUp || isArrowDown || isArrowLeft || isArrowRight) {
-        const focusedItem = target.closest(ITEM_SELECTOR) as HTMLElement | null;
+        const focusedItem = target.closest(
+          FOCUSABLE_SELECTOR,
+        ) as HTMLElement | null;
         if (!focusedItem) return;
 
-        const groups = Array.from(
-          container.querySelectorAll<HTMLElement>(GROUP_SELECTOR),
+        const regions = Array.from(
+          container.querySelectorAll<HTMLElement>(REGION_SELECTOR),
         );
-        const groupItems = groups
-          .map((group) =>
-            Array.from(group.querySelectorAll<HTMLElement>(ITEM_SELECTOR)),
-          )
+        const regionItems = regions
+          .map((region) => getFocusableElements(region))
           .filter((items) => items.length > 0);
 
-        const flatItems = groupItems.flat();
+        const flatItems = regionItems.flat();
         const flatIndex = flatItems.indexOf(focusedItem);
         if (flatIndex === -1) return;
 
-        const currentGroupIndex = groupItems.findIndex((items) =>
+        const currentRegionIndex = regionItems.findIndex((items) =>
           items.includes(focusedItem),
         );
-        if (currentGroupIndex === -1) return;
+        if (currentRegionIndex === -1) return;
 
-        const currentItems = groupItems[currentGroupIndex];
+        const currentItems = regionItems[currentRegionIndex];
         const itemIndex = currentItems.indexOf(focusedItem);
         const isFirstItem = flatIndex === 0;
         const isLastItem = flatIndex === flatItems.length - 1;
@@ -180,19 +180,19 @@ export const MegaMenuContainer = forwardRef<
         }
 
         if (isArrowLeft) {
-          const previousGroup = groupItems[currentGroupIndex - 1];
-          if (previousGroup && previousGroup.length > 0) {
+          const previousRegion = regionItems[currentRegionIndex - 1];
+          if (previousRegion && previousRegion.length > 0) {
             event.preventDefault();
-            previousGroup[0]?.focus();
+            previousRegion[0]?.focus();
           }
           return;
         }
 
         if (isArrowRight) {
-          const nextGroup = groupItems[currentGroupIndex + 1];
-          if (nextGroup && nextGroup.length > 0) {
+          const nextRegion = regionItems[currentRegionIndex + 1];
+          if (nextRegion && nextRegion.length > 0) {
             event.preventDefault();
-            nextGroup[0]?.focus();
+            nextRegion[0]?.focus();
           }
           return;
         }
