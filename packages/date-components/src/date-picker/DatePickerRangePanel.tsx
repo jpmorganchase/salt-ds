@@ -663,6 +663,72 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
     ...EndCalendarPropsProp,
   } as Partial<UseCalendarSelectionRangeProps>;
 
+  const startMonthLabel = dateAdapter.format(startVisibleMonth, "MMMM YYYY");
+  const endMonthLabel = dateAdapter.format(endVisibleMonth, "MMMM YYYY");
+
+  const isStartPreviousDisabled = dateAdapter.isSame(
+    startVisibleMonth,
+    dateAdapter.startOf(minDate, "month"),
+    "month",
+  );
+  const isEndPreviousDisabled = dateAdapter.isSame(
+    endVisibleMonth,
+    dateAdapter.startOf(minDate, "month"),
+    "month",
+  );
+  const isStartNextDisabled = dateAdapter.isSame(
+    startVisibleMonth,
+    dateAdapter.subtract(maxDate, { months: 1 }),
+    "month",
+  );
+  const isEndNextDisabled = dateAdapter.isSame(
+    endVisibleMonth,
+    dateAdapter.add(minDate, { months: 1 }),
+    "month",
+  );
+
+  const {
+    PreviousButtonProps: startPreviousButtonPropsProp,
+    NextButtonProps: startNextButtonPropsProp,
+    ...startCalendarNavigationRest
+  } = StartCalendarNavigationProps ?? {};
+
+  const {
+    PreviousButtonProps: endPreviousButtonPropsProp,
+    NextButtonProps: endNextButtonPropsProp,
+    ...endCalendarNavigationRest
+  } = EndCalendarNavigationProps ?? {};
+
+  const startPreviousButtonProps = {
+    ...(isStartPreviousDisabled
+      ? {}
+      : { "aria-label": `Previous Month, ${startMonthLabel}` }),
+    ...startPreviousButtonPropsProp,
+  };
+
+  const startNextButtonProps = {
+    ...(isStartNextDisabled
+      ? {}
+      : { "aria-label": `Next Month, ${startMonthLabel}` }),
+    disabled: isStartNextDisabled,
+    ...startNextButtonPropsProp,
+  };
+
+  const endPreviousButtonProps = {
+    ...(isEndPreviousDisabled
+      ? {}
+      : { "aria-label": `Previous Month, ${endMonthLabel}` }),
+    ...endPreviousButtonPropsProp,
+  };
+
+  const endNextButtonProps = {
+    ...(isEndNextDisabled
+      ? {}
+      : { "aria-label": `Next Month, ${endMonthLabel}` }),
+    disabled: isEndNextDisabled,
+    ...endNextButtonPropsProp,
+  };
+
   return (
     <StackLayout
       separators
@@ -681,27 +747,17 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation
-              NextButtonProps={{
-                disabled: dateAdapter.isSame(
-                  startVisibleMonth,
-                  dateAdapter.subtract(maxDate, { months: 1 }),
-                  "month",
-                ),
-              }}
-              {...StartCalendarNavigationProps}
+              PreviousButtonProps={startPreviousButtonProps}
+              NextButtonProps={startNextButtonProps}
+              {...startCalendarNavigationRest}
             />
             <CalendarGrid {...StartCalendarGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation
-              NextButtonProps={{
-                disabled: dateAdapter.isSame(
-                  endVisibleMonth,
-                  dateAdapter.add(minDate, { months: 1 }),
-                  "month",
-                ),
-              }}
-              {...EndCalendarNavigationProps}
+              PreviousButtonProps={endPreviousButtonProps}
+              NextButtonProps={endNextButtonProps}
+              {...endCalendarNavigationRest}
             />
             <CalendarGrid {...EndCalendarGridProps} />
           </Calendar>

@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -16,7 +17,6 @@ import {
   DatePickerRangePanel,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import { FormField, FormFieldLabel } from "@salt-ds/core";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
@@ -199,6 +199,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       it("SHOULD be able to tab between all elements", () => {
         cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
 
+        const startMonthLabel = adapter.format(
+          initialRangeDate.startDate,
+          "MMMM YYYY",
+        );
+        const endMonthLabel = adapter.format(
+          adapter.add(initialRangeDate.startDate, { months: 1 }),
+          "MMMM YYYY",
+        );
+
         // Simulate opening the overlay
         cy.findByLabelText("Start date")
           .click()
@@ -212,13 +221,31 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Simulate tabbing to the next calendar
         cy.realPress("Tab");
         // Verify the focused element(s) are the navigation controls
-        cy.findAllByLabelText("Previous Month").eq(1).should("be.focused");
+        cy.findAllByLabelText(/Previous Month/)
+          .eq(1)
+          .should("be.focused");
+        cy.focused().should(
+          "have.attr",
+          "aria-label",
+          `Previous Month, ${endMonthLabel}`,
+        );
         cy.realPress("Tab");
-        cy.findAllByLabelText("Month Dropdown").eq(1).should("be.focused");
+        cy.findAllByLabelText(/Month Dropdown/)
+          .eq(1)
+          .should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Year Dropdown").eq(1).should("be.focused");
+        cy.findAllByLabelText(/Year Dropdown/)
+          .eq(1)
+          .should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month").eq(1).should("be.focused");
+        cy.findAllByLabelText(/Next Month/)
+          .eq(1)
+          .should("be.focused");
+        cy.focused().should(
+          "have.attr",
+          "aria-label",
+          `Next Month, ${endMonthLabel}`,
+        );
         // Simulate tabbing into the second calendar
         cy.realPress("Tab");
         // Verify the first day focused in the second calendar
@@ -232,13 +259,31 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Simulate tabbing back to the first calendar
         cy.realPress("Tab");
         // Verify the focused element(s) are the navigation controls
-        cy.findAllByLabelText("Previous Month").first().should("be.focused");
+        cy.findAllByLabelText(/Previous Month/)
+          .first()
+          .should("be.focused");
+        cy.focused().should(
+          "have.attr",
+          "aria-label",
+          `Previous Month, ${startMonthLabel}`,
+        );
         cy.realPress("Tab");
-        cy.findAllByLabelText("Month Dropdown").first().should("be.focused");
+        cy.findAllByLabelText(/Month Dropdown/)
+          .first()
+          .should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
+        cy.findAllByLabelText(/Year Dropdown/)
+          .first()
+          .should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month").first().should("be.focused");
+        cy.findAllByLabelText(/Next Month/)
+          .first()
+          .should("be.focused");
+        cy.focused().should(
+          "have.attr",
+          "aria-label",
+          `Next Month, ${startMonthLabel}`,
+        );
         // Simulate tabbing into the second calendar
         cy.realPress("Tab");
         // Verify focus returns to the first focused element in the first calendar
@@ -282,16 +327,16 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           name: "Monday 14 January 2030",
         }).should("have.attr", "aria-disabled", "true");
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findAllByLabelText("Past dates are out of range")
+        cy.findAllByLabelText(/Past dates are out of range/)
           .eq(0)
           .should("have.attr", "aria-disabled", "true");
-        cy.findAllByLabelText("Next Month")
+        cy.findAllByLabelText(/Next Month/)
           .eq(0)
           .should("not.have.attr", "aria-disabled", "true");
-        cy.findAllByLabelText("Previous Month")
+        cy.findAllByLabelText(/Previous Month/)
           .eq(0)
           .should("not.have.attr", "aria-disabled", "true");
-        cy.findAllByLabelText("Future dates are out of range")
+        cy.findAllByLabelText(/Future dates are out of range/)
           .eq(0)
           .should("have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
@@ -840,7 +885,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
-          // Simulate selecting an unconfirmed date
+          // Simulate selecting an un-confirmed date
           cy.findByRole("button", {
             name: "Wednesday 15 January 2025",
           }).realClick();
@@ -1259,13 +1304,13 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           cy.findByLabelText("set start date to today").realClick();
           cy.findByLabelText("Start date").should(
             "have.value",
-            adapter.format(adapter.today(), "DD MMMM YYYY"),
+            adapter.format(adapter.today(), "DD MMM YYYY"),
           );
           cy.findByLabelText("set end date to today").realClick();
           const tomorrow = adapter.add(adapter.today(), { days: 1 });
           cy.findByLabelText("End date").should(
             "have.value",
-            adapter.format(tomorrow, "DD MMMM YYYY"),
+            adapter.format(tomorrow, "DD MMM YYYY"),
           );
           cy.findByLabelText("reset start date").realClick();
           cy.findByLabelText("Start date").should("have.value", "");
@@ -1383,7 +1428,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(
           <FormField>
             <FormFieldLabel>Select a date range</FormFieldLabel>
-            <DatePicker defaultSelectedDate={initialRangeDate}>
+            <DatePicker
+              selectionVariant="range"
+              defaultSelectedDate={initialRangeDate}
+            >
               <DatePickerRangeInput />
               <DatePickerOverlay>
                 <DatePickerRangePanel />
@@ -1401,6 +1449,36 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findByLabelText("End date")
           .should("have.attr", "aria-labelledby")
           .and("not.be.empty");
+      });
+
+      it("SHOULD provide unique accessible names for both calendar navigation pairs", () => {
+        cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
+
+        cy.findByLabelText("Start date")
+          .click()
+          .type("{downArrow}", { force: true });
+
+        cy.findAllByRole("application").should("have.length", 2);
+
+        // Enabled nav buttons should include calendar context in the name.
+        cy.findAllByLabelText(/Previous Month, /).should("have.length", 2);
+        cy.findAllByLabelText(/Next Month, /).should("have.length", 2);
+
+        cy.findAllByLabelText(/Previous Month, /)
+          .then(($buttons) =>
+            [...$buttons].map((btn) => btn.getAttribute("aria-label")),
+          )
+          .then((labels) => {
+            expect(labels[0]).not.to.equal(labels[1]);
+          });
+
+        cy.findAllByLabelText(/Next Month, /)
+          .then(($buttons) =>
+            [...$buttons].map((btn) => btn.getAttribute("aria-label")),
+          )
+          .then((labels) => {
+            expect(labels[0]).not.to.equal(labels[1]);
+          });
       });
     });
   });

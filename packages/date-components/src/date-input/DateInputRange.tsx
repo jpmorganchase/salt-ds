@@ -627,8 +627,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           {endAdornment}
         </div>
         <div className={withBaseName("activationIndicator")} />
-        <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>Start date</span>
-        <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>End date</span>
+        <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>
+          Start date
+        </span>
+        <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>
+          End date
+        </span>
       </div>
     );
   },
