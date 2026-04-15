@@ -2,6 +2,7 @@ import {
   Button,
   FlexItem,
   FlexLayout,
+  SaltProviderNext,
   SplitLayout,
   StackLayout,
   Step,
@@ -84,7 +85,7 @@ const initialFormData = {
   position: DEFAULT_NOTIFICATION_POSITION,
   // Display preferences
   displayMode: "light",
-  displayDensity: "high",
+  displayDensity: "medium",
   // Data format preferences
   currency: "usd",
   currencyFormat: "standard",
@@ -228,19 +229,25 @@ export const Default = () => {
   );
 
   return (
-    <StackLayout
-      style={{
-        maxWidth: 730,
-      }}
-      gap={0}
+    <SaltProviderNext
+      mode={formData.displayMode}
+      density={formData.displayDensity}
     >
-      <FlexItem padding={3}>{header}</FlexItem>
-      <FlexItem grow={1}>
-        <ContentOverflow style={{ height: 396 }}>
-          {contentByStep[currentStepId]}
-        </ContentOverflow>
-      </FlexItem>
-      {footer}
-    </StackLayout>
+      <StackLayout
+        style={{
+          maxWidth: 730,
+          backgroundColor: "var(--salt-container-primary-background)",
+        }}
+        gap={0}
+      >
+        <FlexItem padding={3}>{header}</FlexItem>
+        <FlexItem grow={1}>
+          <ContentOverflow style={{ height: 396 }}>
+            {contentByStep[currentStepId]}
+          </ContentOverflow>
+        </FlexItem>
+        {footer}
+      </StackLayout>
+    </SaltProviderNext>
   );
 };
