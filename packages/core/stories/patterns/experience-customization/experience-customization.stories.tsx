@@ -1,7 +1,13 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
   FlexItem,
   FlexLayout,
+  GridItem,
+  GridLayout,
   SaltProviderNext,
   SplitLayout,
   StackLayout,
@@ -9,6 +15,7 @@ import {
   Stepper,
   Text,
 } from "@salt-ds/core";
+import { WarningSolidIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -16,6 +23,7 @@ import {
   type ReactElement,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { ContentOverflow } from "../wizard/ContentOverflow";
 import { type FieldValidation, useWizardForm } from "../wizard/useWizardForm";
@@ -57,20 +65,23 @@ export interface FormContentProps {
 const DEFAULT_NOTIFICATION_POSITION = "top-right";
 
 const wizardSteps = [
-  { id: "region", label: "Regional settings" },
+  { id: "region", label: "Regional settings", stepTitle: "Regional" },
   {
     id: "notifications",
     label: "Notification and settings",
+    stepTitle: "Notifications",
     description: "Define how and where you receive critical system updates.",
   },
   {
     id: "displayMode",
     label: "Display preferences",
+    stepTitle: "Display",
     description: "Configure how data is visualized across your dashboards.",
   },
   {
     id: "dataFormat",
     label: "Data format preferences",
+    stepTitle: "Data format",
     description: "Configure how data is visualized across your dashboards.",
   },
 ] as const;
@@ -182,7 +193,7 @@ export const MultiStep = () => {
           {wizardSteps.map((step, index) => (
             <Step
               key={step.id}
-              label={step.label}
+              label={step.stepTitle}
               status={validationsByStep[step.id]?.status}
               stage={getStepStage(index, activeStepIndex)}
             />
@@ -248,6 +259,355 @@ export const MultiStep = () => {
         </FlexItem>
         {footer}
       </StackLayout>
+    </SaltProviderNext>
+  );
+};
+
+export const Modal = () => {
+  const [open, setOpen] = useState(false);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  const {
+    state: { activeStepIndex, formData, validationsByStep },
+    currentStepId,
+    updateField,
+    next,
+    previous,
+    reset,
+    runValidationAndStore,
+  } = useWizardForm({
+    steps: stepIds,
+    initialState: {
+      activeStepIndex: 0,
+      formData: initialFormData,
+      validationsByStep: {},
+    },
+    validateStep: (stepId, data) => validateStep({}, stepId, data),
+  });
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const openWizard = () => {
+    reset();
+    setOpen(true);
+  };
+
+  const closeWizardAndReset = () => {
+    setOpen(false);
+    setTimeout(() => {
+      reset();
+    }, 300);
+  };
+
+  const handleNext = async () => {
+    const valid = await runValidationAndStore();
+    if (!valid) return;
+    if (isLastStep) {
+      closeWizardAndReset();
+      return;
+    }
+    navigatedRef.current = true;
+    next();
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const sharedFormProps: FormContentProps = {
+    formData: formData as FormContentProps["formData"],
+    handleInputChange: (e) => updateField(e.target.name, e.target.value),
+    handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
+    handleSelectChange: (value: string, name: string) =>
+      updateField(name, value),
+    handleRadioChange: (e) => updateField(e.target.name, e.target.value),
+    stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
+  };
+
+  const contentByStep: Record<string, ReactElement> = {
+    region: <RegionalSettingsContent {...sharedFormProps} />,
+    notifications: <NotificationsContent {...sharedFormProps} />,
+    displayMode: <DisplayModeContent {...sharedFormProps} />,
+    dataFormat: <DataFormatContent {...sharedFormProps} />,
+  };
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={closeWizardAndReset}
+    >
+      Cancel
+    </Button>
+  );
+
+  const nextBtn = (
+    <Button sentiment="accented" onClick={handleNext}>
+      {isLastStep ? "Finish" : "Next"}
+    </Button>
+  );
+
+  const prevBtn = !isFirstStep && (
+    <Button sentiment="accented" appearance="bordered" onClick={handlePrevious}>
+      Previous
+    </Button>
+  );
+
+  const activeStep = wizardSteps[activeStepIndex];
+  const activeStepDescription =
+    "description" in activeStep ? activeStep.description : undefined;
+
+  return (
+    <SaltProviderNext
+      mode={formData.displayMode}
+      density={formData.displayDensity}
+    >
+      <Button onClick={openWizard}>Open experience customization</Button>
+      <Dialog open={open} onOpenChange={setOpen} style={{ height: 588 }}>
+        <DialogHeader
+          header={
+            <span tabIndex={-1} ref={stepHeadingRef}>
+              {wizardSteps[activeStepIndex].label}
+            </span>
+          }
+          description={activeStepDescription}
+          preheader="Customize your experience"
+          actions={
+            <Stepper orientation="horizontal">
+              {wizardSteps.map((step, index) => (
+                <Step
+                  key={step.id}
+                  label={step.stepTitle}
+                  status={validationsByStep[step.id]?.status}
+                  stage={getStepStage(index, activeStepIndex)}
+                />
+              ))}
+            </Stepper>
+          }
+        />
+        <DialogContent>{contentByStep[currentStepId]}</DialogContent>
+        <DialogActions>
+          <FlexLayout gap={1}>
+            {cancel}
+            {prevBtn}
+            {nextBtn}
+          </FlexLayout>
+        </DialogActions>
+      </Dialog>
+    </SaltProviderNext>
+  );
+};
+
+export const ModalWithCancelConfirmation = () => {
+  type WizardState = "form" | "cancel-warning";
+  const [wizardState, setWizardState] = useState<WizardState>("form");
+  const [open, setOpen] = useState(false);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const navigatedRef = useRef(false);
+
+  const {
+    state: { activeStepIndex, formData, validationsByStep },
+    currentStepId,
+    updateField,
+    next,
+    previous,
+    reset,
+    runValidationAndStore,
+  } = useWizardForm({
+    steps: stepIds,
+    initialState: {
+      activeStepIndex: 0,
+      formData: initialFormData,
+      validationsByStep: {},
+    },
+    validateStep: (stepId, data) => validateStep({}, stepId, data),
+  });
+
+  const isLastStep = activeStepIndex === wizardSteps.length - 1;
+  const isFirstStep = activeStepIndex === 0;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
+  useEffect(() => {
+    if (!navigatedRef.current) return;
+    navigatedRef.current = false;
+    stepHeadingRef.current?.focus();
+  }, [activeStepIndex]);
+
+  const openWizard = () => {
+    reset();
+    setWizardState("form");
+    setOpen(true);
+  };
+
+  const closeWizardAndReset = () => {
+    setOpen(false);
+    setTimeout(() => {
+      reset();
+      setWizardState("form");
+    }, 300);
+  };
+
+  const showCancelWarning = () => setWizardState("cancel-warning");
+  const backToForm = () => setWizardState("form");
+
+  const onOpenChange = (value: boolean) => {
+    if (!value && !isLastStep) {
+      showCancelWarning();
+      return;
+    }
+    setOpen(value);
+  };
+
+  const handleNext = async () => {
+    const valid = await runValidationAndStore();
+    if (!valid) return;
+    if (isLastStep) {
+      closeWizardAndReset();
+      return;
+    }
+    navigatedRef.current = true;
+    next();
+  };
+
+  const handlePrevious = () => {
+    navigatedRef.current = true;
+    previous();
+  };
+
+  const sharedFormProps: FormContentProps = {
+    formData: formData as FormContentProps["formData"],
+    handleInputChange: (e) => updateField(e.target.name, e.target.value),
+    handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
+    handleSelectChange: (value: string, name: string) =>
+      updateField(name, value),
+    handleRadioChange: (e) => updateField(e.target.name, e.target.value),
+    stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
+  };
+
+  const contentByStep: Record<string, ReactElement> = {
+    region: <RegionalSettingsContent {...sharedFormProps} />,
+    notifications: <NotificationsContent {...sharedFormProps} />,
+    displayMode: <DisplayModeContent {...sharedFormProps} />,
+    dataFormat: <DataFormatContent {...sharedFormProps} />,
+  };
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={showCancelWarning}
+    >
+      Cancel
+    </Button>
+  );
+
+  const nextBtn = (
+    <Button sentiment="accented" onClick={handleNext}>
+      {isLastStep ? "Finish" : "Next"}
+    </Button>
+  );
+
+  const prevBtn = !isFirstStep && (
+    <Button sentiment="accented" appearance="bordered" onClick={handlePrevious}>
+      Previous
+    </Button>
+  );
+
+  const activeStep = wizardSteps[activeStepIndex];
+  const activeStepDescription =
+    "description" in activeStep ? activeStep.description : undefined;
+
+  return (
+    <SaltProviderNext
+      mode={formData.displayMode}
+      density={formData.displayDensity}
+    >
+      <Button onClick={openWizard}>Open experience customization</Button>
+      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+        {wizardState === "cancel-warning" ? (
+          <>
+            <DialogContent>
+              <GridLayout rows={1} columns={1} style={{ height: "100%" }}>
+                <GridItem
+                  horizontalAlignment="center"
+                  verticalAlignment="center"
+                >
+                  <StackLayout align="center">
+                    <WarningSolidIcon
+                      size={2}
+                      style={{
+                        color:
+                          "var(--salt-status-warning-foreground-decorative)",
+                      }}
+                    />
+                    <Text styleAs="h2">Are you sure you want to cancel?</Text>
+                    <Text>
+                      Any changes you've made will be lost after you confirm
+                      cancelling.
+                    </Text>
+                  </StackLayout>
+                </GridItem>
+              </GridLayout>
+            </DialogContent>
+            <DialogActions>
+              <FlexLayout gap={1}>
+                <Button
+                  appearance="bordered"
+                  sentiment="accented"
+                  onClick={backToForm}
+                >
+                  No
+                </Button>
+                <Button sentiment="accented" onClick={closeWizardAndReset}>
+                  Yes
+                </Button>
+              </FlexLayout>
+            </DialogActions>
+          </>
+        ) : (
+          <>
+            <DialogHeader
+              header={
+                <span tabIndex={-1} ref={stepHeadingRef}>
+                  {wizardSteps[activeStepIndex].label}
+                </span>
+              }
+              description={activeStepDescription}
+              preheader="Customize your experience"
+              actions={
+                <Stepper orientation="horizontal">
+                  {wizardSteps.map((step, index) => (
+                    <Step
+                      key={step.id}
+                      label={step.stepTitle}
+                      status={validationsByStep[step.id]?.status}
+                      stage={getStepStage(index, activeStepIndex)}
+                    />
+                  ))}
+                </Stepper>
+              }
+            />
+            <DialogContent>{contentByStep[currentStepId]}</DialogContent>
+            <DialogActions>
+              <FlexLayout gap={1}>
+                {cancel}
+                {prevBtn}
+                {nextBtn}
+              </FlexLayout>
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
     </SaltProviderNext>
   );
 };
