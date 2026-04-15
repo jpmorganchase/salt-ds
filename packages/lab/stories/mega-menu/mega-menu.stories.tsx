@@ -830,7 +830,9 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu("right")}>Custom Region (Right)</Button>
+            <Button onClick={() => setOpenMenu("right")}>
+              Custom Region (Right)
+            </Button>
           </MegaMenuTrigger>
           <MegaMenuContainer>
             <div className="customRegionGroups">
@@ -875,7 +877,9 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu("left")}>Custom Region (Left)</Button>
+            <Button onClick={() => setOpenMenu("left")}>
+              Custom Region (Left)
+            </Button>
           </MegaMenuTrigger>
 
           <MegaMenuContainer>
@@ -921,7 +925,9 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu("top")}>Custom Region (Top)</Button>
+            <Button onClick={() => setOpenMenu("top")}>
+              Custom Region (Top)
+            </Button>
           </MegaMenuTrigger>
 
           <MegaMenuContainer className="customRegionContainerColumn">
@@ -958,7 +964,9 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu("bottom")}>Custom Region (Bottom)</Button>
+            <Button onClick={() => setOpenMenu("bottom")}>
+              Custom Region (Bottom)
+            </Button>
           </MegaMenuTrigger>
 
           <MegaMenuContainer className="customRegionContainerColumn">

@@ -1,10 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
 const withBaseName = makePrefixer("saltMegaMenuCustomRegion");
 
