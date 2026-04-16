@@ -6,7 +6,7 @@ See the Salt docs for usage, examples, and accessibility guidance: [Chart](https
 
 ## Highcharts support
 
-Compatible with **Highcharts 10.2.0** (specifically) and **Highcharts 11+**.
+Compatible with **Highcharts v10**, **v11**, and **v12**.
 
 ## License
 
@@ -15,9 +15,9 @@ A Highcharts license is required.
 ## Installation
 
 ```bash
-npm install highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme
+npm install highcharts@^10 highcharts-react-official @salt-ds/highcharts-theme
 # or
-yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme
+yarn add highcharts@^10 highcharts-react-official @salt-ds/highcharts-theme
 ```
 
 ## Quick start

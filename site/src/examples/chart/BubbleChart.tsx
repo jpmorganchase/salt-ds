@@ -8,7 +8,7 @@ import HighchartsReact from "highcharts-react-official";
 import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
-// This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
+// This example uses Highcharts v10 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
 highchartsMore(Highcharts);
 patternFill(Highcharts);
 accessibility(Highcharts);
