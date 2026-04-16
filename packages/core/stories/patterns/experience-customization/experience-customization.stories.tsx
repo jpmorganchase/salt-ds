@@ -1,4 +1,6 @@
 import {
+  Banner,
+  BannerContent,
   Button,
   Dialog,
   DialogActions,
@@ -8,6 +10,10 @@ import {
   FlexLayout,
   GridItem,
   GridLayout,
+  InteractableCard,
+  InteractableCardGroup,
+  type InteractableCardValue,
+  RadioButtonIcon,
   SaltProviderNext,
   SplitLayout,
   StackLayout,
@@ -15,7 +21,12 @@ import {
   Stepper,
   Text,
 } from "@salt-ds/core";
-import { WarningSolidIcon } from "@salt-ds/icons";
+import {
+  BuildingIcon,
+  GlobeIcon,
+  LockedIcon,
+  WarningSolidIcon,
+} from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -199,7 +210,7 @@ export const MultiStep = () => {
   };
 
   const header = (
-    <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
+    <FlexLayout justify="space-between">
       <FlexItem style={{ flex: 1 }}>
         <Text>
           Create a new account
@@ -304,7 +315,7 @@ export const Modal = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 2,
+      activeStepIndex: 0,
       formData: initialFormData,
       validationsByStep: {},
     },
@@ -640,35 +651,112 @@ export const ModalWithCancelConfirmation = () => {
 };
 
 export const MandatoryAction = () => {
-  const header = (
-    <div style={{ minHeight: "6rem" }}>
-      <Text>
-        Customize your experience
-        <Text as="h2" style={{ margin: 0 }}>
-          Set governance & privacy standards
-        </Text>
-        A selection is required to proceed
-      </Text>
-    </div>
-  );
-  const footer = (
-    <FlexLayout gap={1} justify="end" padding={3}>
-      <Button sentiment="accented" appearance="bordered">
-        Cancel
-      </Button>
+  const [selected, setSelected] = useState<InteractableCardValue>();
+  const [hasError, setHasError] = useState(false);
 
-      <Button sentiment="accented">Finish</Button>
-    </FlexLayout>
-  );
+  const handleSubmit = () => {
+    if (!selected) {
+      setHasError(true);
+    }
+  };
 
-  // const content = (
-
-  // );
+  const governanceOptions = [
+    {
+      value: "standard",
+      title: "Standard",
+      description: "Business-recommended. Standard access logging.",
+      Icon: BuildingIcon,
+    },
+    {
+      value: "restricted",
+      title: "Credit Card",
+      description: "High compliance, Full data logging and MFA required.",
+      Icon: LockedIcon,
+    },
+    {
+      value: "external",
+      title: "External",
+      description: "Allow controlled access for partners.",
+      Icon: GlobeIcon,
+    },
+  ];
 
   return (
-    <StackLayout>
-      {header}
-      {footer}
+    <StackLayout style={{ maxWidth: 730 }}>
+      <StackLayout padding={3}>
+        <Text>
+          Customize your experience
+          <Text as="h2" style={{ margin: 0 }}>
+            Set governance & privacy standards
+          </Text>
+          A selection is required to proceed
+        </Text>
+      </StackLayout>
+
+      <FlexItem grow={1}>
+        <ContentOverflow style={{ minHeight: 300 }}>
+          <StackLayout>
+            <InteractableCardGroup
+              onChange={(_event, value) => {
+                setHasError(false);
+                setSelected(value);
+              }}
+            >
+              {governanceOptions.map(({ value, title, description, Icon }) => (
+                <InteractableCard
+                  key={value}
+                  value={value}
+                  style={{ width: "180px" }}
+                >
+                  <StackLayout gap={1}>
+                    <StackLayout gap={1} direction="row" align="center">
+                      <Icon aria-hidden size={1} />
+                      <Text style={{ margin: 0 }}>{title}</Text>
+                    </StackLayout>
+                    <StackLayout direction="row" gap={1}>
+                      <RadioButtonIcon
+                        aria-hidden
+                        checked={selected === value}
+                      />
+                      <Text>{description}</Text>
+                    </StackLayout>
+                  </StackLayout>
+                </InteractableCard>
+              ))}
+            </InteractableCardGroup>
+
+            {hasError && (
+              <Banner status="error">
+                <BannerContent>
+                  A selection is required to proceed
+                </BannerContent>
+              </Banner>
+            )}
+          </StackLayout>
+        </ContentOverflow>
+      </FlexItem>
+
+      <FlexLayout gap={1} justify="end" padding={3}>
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={() => {
+            setSelected(undefined);
+            setHasError(false);
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          sentiment="accented"
+          style={{
+            cursor: !selected ? "var(--salt-cursor-disabled)" : "pointer",
+          }}
+          onClick={handleSubmit}
+        >
+          Finish
+        </Button>
+      </FlexLayout>
     </StackLayout>
   );
 };
