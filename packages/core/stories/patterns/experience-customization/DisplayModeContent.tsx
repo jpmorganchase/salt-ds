@@ -43,7 +43,7 @@ export const DisplayModeContent = ({
   ] as const;
 
   return (
-    <StackLayout>
+    <StackLayout aria-live="polite">
       <FormField>
         <FormFieldLabel>Display mode</FormFieldLabel>
         <ToggleButtonGroup
@@ -82,6 +82,7 @@ export const DisplayModeContent = ({
                           width: "100%",
                           objectFit: "contain",
                         }}
+                        aria-hidden
                       />
                       <StackLayout direction="row" gap={1}>
                         <RadioButtonIcon

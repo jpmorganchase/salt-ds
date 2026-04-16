@@ -221,6 +221,9 @@ export const MultiStep = () => {
             style={{ margin: 0 }}
           >
             {wizardSteps[activeStepIndex].label}
+            <span className="salt-visuallyHidden">
+              {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
+            </span>
           </Text>
           {renderDescription(wizardSteps[activeStepIndex])}
         </Text>
@@ -300,7 +303,7 @@ export const MultiStep = () => {
 };
 
 export const Modal = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -415,6 +418,9 @@ export const Modal = () => {
           header={
             <span tabIndex={-1} ref={stepHeadingRef}>
               {wizardSteps[activeStepIndex].label}
+              <span className="salt-visuallyHidden">
+                {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
+              </span>
             </span>
           }
           description={activeStepDescription}
@@ -618,6 +624,9 @@ export const ModalWithCancelConfirmation = () => {
               header={
                 <span tabIndex={-1} ref={stepHeadingRef}>
                   {wizardSteps[activeStepIndex].label}
+                  <span className="salt-visuallyHidden">
+                    {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
+                  </span>
                 </span>
               }
               description={activeStepDescription}
