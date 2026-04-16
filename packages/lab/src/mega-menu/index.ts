@@ -5,4 +5,5 @@ export * from "./MegaMenuGroup";
 export * from "./MegaMenuHeader";
 export * from "./MegaMenuItem";
 export * from "./MegaMenuLinkRow";
+export * from "./MegaMenuSection";
 export * from "./MegaMenuTrigger";
