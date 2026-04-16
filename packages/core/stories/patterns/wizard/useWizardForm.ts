@@ -134,13 +134,21 @@ export function useWizardForm({
     [currentStepId, state.formData, validateStep],
   );
 
-  // Updates a specific field in the form data and revalidates the step
+  // Updates a specific field in the form data and revalidates if there are existing errors
   const updateField = useCallback(
     (name: string, value: unknown) => {
       dispatch({ type: "UPDATE_FIELD", name, value });
-      runValidationAndStore({ ...state.formData, [name]: value });
+      // Only revalidate if there are already validation errors on this step
+      if (state.validationsByStep[currentStepId]) {
+        runValidationAndStore({ ...state.formData, [name]: value });
+      }
     },
-    [state.formData, runValidationAndStore],
+    [
+      state.formData,
+      state.validationsByStep,
+      currentStepId,
+      runValidationAndStore,
+    ],
   );
 
   // Moves to the next step if the current step is valid

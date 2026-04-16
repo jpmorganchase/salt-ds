@@ -76,7 +76,7 @@ export const DisplayModeContent = ({
                             ? option.lightImage
                             : option.darkImage
                         }
-                        alt={option.alt}
+                        alt=""
                         style={{
                           height: 200,
                           width: "100%",
