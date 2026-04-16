@@ -1,9 +1,7 @@
 .saltMegaMenuContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--salt-spacing-300);
-  padding: var(--salt-spacing-300);
-  max-height: calc(100vh - var(--salt-spacing-600));
+  max-height: 90%;
   overflow-y: auto;
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner);

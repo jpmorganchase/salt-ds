@@ -1,0 +1,6 @@
+.saltMegaMenuSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-300);
+  padding: var(--salt-spacing-300);
+}

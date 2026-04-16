@@ -40,6 +40,10 @@ nav > ul {
   flex-direction: column;
 }
 
+.customRegionNoContainerPadding {
+  padding: 0;
+}
+
 .customRegionGroups {
   display: flex;
   flex-wrap: wrap;
@@ -59,27 +63,12 @@ nav > ul {
   gap: var(--salt-spacing-300);
 }
 
-.customRegionFeatured {
-  padding: var(--salt-spacing-200);
-  background: var(--salt-container-secondary-background);
-  border-radius: var(--salt-palette-corner-weak);
+.customRegionRightDescription {
+  max-inline-size: 240px;
 }
 
-.customRegionFeaturedMinWidth {
-  min-width: 200px;
-}
-
-.customRegionFeaturedTitle {
-  margin: 0 0 8px;
-}
-
-.customRegionFeaturedText {
-  margin: 0;
-  font-size: var(--salt-text-fontSize);
-}
-
-.customRegionActions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
+.customRegionImage {
+  width: 100%;
+  height: auto;
+  display: block;
 }
