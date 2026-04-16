@@ -1,10 +1,13 @@
 import {
+  Banner,
+  BannerContent,
   FlexItem,
   FlexLayout,
   FormField,
   FormFieldLabel,
   InteractableCard,
   InteractableCardGroup,
+  Link,
   RadioButtonIcon,
   StackLayout,
   Text,
@@ -13,14 +16,32 @@ import {
 } from "@salt-ds/core";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityDark from "./img/high-dark.png";
-import HighDesityLight from "./img/high-light.png";
+import HighDensityLight from "./img/high-light.png";
 import MediumDensityDark from "./img/medium-dark.png";
 import MediumDensityLight from "./img/medium-light.png";
 
 export const DisplayModeContent = ({
   formData,
   handleSelectChange,
+  stepFieldValidation,
 }: FormContentProps) => {
+  const displayDensityOptions = [
+    {
+      value: "medium",
+      label: "Medium density",
+      lightImage: MediumDensityLight,
+      darkImage: MediumDensityDark,
+      alt: "Medium Density Light",
+    },
+    {
+      value: "high",
+      label: "High density",
+      lightImage: HighDensityLight,
+      darkImage: HighDensityDark,
+      alt: "High Density Light",
+    },
+  ] as const;
+
   return (
     <StackLayout>
       <FormField>
@@ -45,66 +66,48 @@ export const DisplayModeContent = ({
             }}
           >
             <FlexLayout>
-              <FlexItem>
-                <InteractableCard value="medium">
-                  <StackLayout gap={1}>
-                    <StackLayout gap={1} direction="row">
+              {displayDensityOptions.map((option) => (
+                <FlexItem key={option.value}>
+                  <InteractableCard value={option.value}>
+                    <StackLayout gap={1}>
                       <img
                         src={
                           formData.displayMode === "light"
-                            ? MediumDensityLight
-                            : MediumDensityDark
+                            ? option.lightImage
+                            : option.darkImage
                         }
-                        alt="Medium Density Light"
+                        alt={option.alt}
                         style={{
-                          height: "100%",
+                          height: 200,
                           width: "100%",
                           objectFit: "contain",
                         }}
                       />
+                      <StackLayout direction="row" gap={1}>
+                        <RadioButtonIcon
+                          aria-hidden
+                          checked={formData.displayDensity === option.value}
+                        />
+                        <Text>{option.label}</Text>
+                      </StackLayout>
                     </StackLayout>
-                    <StackLayout direction="row" gap={1}>
-                      <RadioButtonIcon
-                        aria-hidden
-                        checked={formData.displayDensity === "medium"}
-                      />
-                      <Text>Medium density</Text>
-                    </StackLayout>
-                  </StackLayout>
-                </InteractableCard>
-              </FlexItem>
-              <FlexItem>
-                <InteractableCard value="high">
-                  <StackLayout gap={1}>
-                    <StackLayout gap={1} direction="row">
-                      <img
-                        src={
-                          formData.displayMode === "light"
-                            ? HighDesityLight
-                            : HighDensityDark
-                        }
-                        alt="High Density Light"
-                        style={{
-                          height: "100%",
-                          width: "100%",
-                          objectFit: "contain",
-                        }}
-                      />
-                    </StackLayout>
-                    <StackLayout direction="row" gap={1}>
-                      <RadioButtonIcon
-                        aria-hidden
-                        checked={formData.displayDensity === "high"}
-                      />
-                      <Text>High density</Text>
-                    </StackLayout>
-                  </StackLayout>
-                </InteractableCard>
-              </FlexItem>
+                  </InteractableCard>
+                </FlexItem>
+              ))}
             </FlexLayout>
           </InteractableCardGroup>
         </FormField>
       </FlexItem>
+
+      {stepFieldValidation.displayDensity?.status && (
+        <Banner status="warning">
+          <BannerContent>
+            High density may reduce readability and make some controls harder to
+            use.{" "}
+            <Link href="#">Read WCAG guidelines for more information.</Link>
+          </BannerContent>
+        </Banner>
+      )}
     </StackLayout>
   );
 };

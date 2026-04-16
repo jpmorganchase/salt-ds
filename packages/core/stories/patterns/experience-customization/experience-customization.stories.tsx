@@ -25,6 +25,7 @@ import {
   useRef,
   useState,
 } from "react";
+import * as Yup from "yup";
 import { ContentOverflow } from "../wizard/ContentOverflow";
 import { type FieldValidation, useWizardForm } from "../wizard/useWizardForm";
 import { getStepStage, validateStep } from "../wizard/utils";
@@ -62,8 +63,6 @@ export interface FormContentProps {
   handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const DEFAULT_NOTIFICATION_POSITION = "top-right";
-
 const wizardSteps = [
   { id: "region", label: "Regional settings", stepTitle: "Regional" },
   {
@@ -93,13 +92,39 @@ const initialFormData = {
   timezone: "",
   autoTranslate: false,
   // Notification settings
-  position: DEFAULT_NOTIFICATION_POSITION,
+  position: "top-right",
   // Display preferences
   displayMode: "light",
   displayDensity: "medium",
   // Data format preferences
   currency: "usd",
   currencyFormat: "standard",
+};
+
+const stepValidationSchemas: Record<
+  string,
+  // biome-ignore lint/suspicious/noExplicitAny: This is acceptable for an example.
+  Yup.ObjectSchema<Record<string, any>>
+> = {
+  region: Yup.object({
+    language: Yup.string().required("Language is required."),
+    timezone: Yup.string().required("Timezone is required."),
+  }),
+  displayMode: Yup.object({
+    displayDensity: Yup.string().test({
+      name: "high-density-warning",
+      message: "warning",
+      test(value, ctx) {
+        if (!value) return true;
+        if (value === "high") {
+          return ctx.createError({
+            params: { severity: "warning" },
+          });
+        }
+        return true;
+      },
+    }),
+  }),
 };
 
 export const MultiStep = () => {
@@ -117,11 +142,12 @@ export const MultiStep = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 2,
+      activeStepIndex: 0,
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep: (stepId, data) => validateStep({}, stepId, data),
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
@@ -224,14 +250,13 @@ export const MultiStep = () => {
   );
 
   const startFooter =
-    formData.position !== DEFAULT_NOTIFICATION_POSITION &&
-    activeStepIndex === 1 ? (
+    formData.displayDensity === "high" && activeStepIndex === 2 ? (
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => updateField("position", DEFAULT_NOTIFICATION_POSITION)}
+        onClick={() => updateField("displayDensity", "medium")}
       >
-        Reset to top right
+        Reset to medium density
       </Button>
     ) : null;
 
@@ -264,7 +289,7 @@ export const MultiStep = () => {
 };
 
 export const Modal = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -279,11 +304,12 @@ export const Modal = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 0,
+      activeStepIndex: 2,
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep: (stepId, data) => validateStep({}, stepId, data),
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
@@ -430,7 +456,8 @@ export const ModalWithCancelConfirmation = () => {
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep: (stepId, data) => validateStep({}, stepId, data),
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
@@ -609,5 +636,39 @@ export const ModalWithCancelConfirmation = () => {
         )}
       </Dialog>
     </SaltProviderNext>
+  );
+};
+
+export const MandatoryAction = () => {
+  const header = (
+    <div style={{ minHeight: "6rem" }}>
+      <Text>
+        Customize your experience
+        <Text as="h2" style={{ margin: 0 }}>
+          Set governance & privacy standards
+        </Text>
+        A selection is required to proceed
+      </Text>
+    </div>
+  );
+  const footer = (
+    <FlexLayout gap={1} justify="end" padding={3}>
+      <Button sentiment="accented" appearance="bordered">
+        Cancel
+      </Button>
+
+      <Button sentiment="accented">Finish</Button>
+    </FlexLayout>
+  );
+
+  // const content = (
+
+  // );
+
+  return (
+    <StackLayout>
+      {header}
+      {footer}
+    </StackLayout>
   );
 };

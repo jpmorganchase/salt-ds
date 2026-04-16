@@ -14,10 +14,14 @@ export const RegionalSettingsContent = ({
   formData,
   handleCheckboxChange,
   handleSelectChange,
+  stepFieldValidation,
 }: FormContentProps) => {
   return (
     <StackLayout style={{ width: "50%" }}>
-      <FormField>
+      <FormField
+        validationStatus={stepFieldValidation.language?.status}
+        necessity="required"
+      >
         <FormFieldLabel>Choose a language</FormFieldLabel>
         <Dropdown
           startAdornment={<SearchIcon />}
@@ -34,13 +38,17 @@ export const RegionalSettingsContent = ({
           <Option value="French">French</Option>
           <Option value="German">German</Option>
         </Dropdown>
-        <FormFieldHelperText>
-          Selecting a language sets the default interface text for your
-          workspace
-        </FormFieldHelperText>
+        {stepFieldValidation.language?.status && (
+          <FormFieldHelperText>
+            {stepFieldValidation.language.message}
+          </FormFieldHelperText>
+        )}
       </FormField>
-      <FormField>
-        <FormFieldLabel>Choose a time zone (regions)</FormFieldLabel>
+      <FormField
+        validationStatus={stepFieldValidation.timezone?.status}
+        necessity="required"
+      >
+        <FormFieldLabel>Choose a time zone</FormFieldLabel>
         <Dropdown
           startAdornment={<LocationIcon />}
           bordered
@@ -81,10 +89,11 @@ export const RegionalSettingsContent = ({
           <Option value="Europe/Paris">(UTC+01:00) Paris</Option>
           <Option value="Europe/Athens">(UTC+02:00) Athens</Option>
         </Dropdown>
-        <FormFieldHelperText>
-          This ensures all activity logs and scheduled tasks align with your
-          local time.
-        </FormFieldHelperText>
+        {stepFieldValidation.timezone?.status && (
+          <FormFieldHelperText>
+            {stepFieldValidation.timezone.message}
+          </FormFieldHelperText>
+        )}
       </FormField>
       <FormField>
         <FormFieldLabel>Automatic translation</FormFieldLabel>
