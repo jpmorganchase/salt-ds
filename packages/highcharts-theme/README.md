@@ -22,19 +22,12 @@ yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme
 
 ## Quick start
 
-Import Highcharts CSS **before** the Salt theme CSS (see Highcharts docs: [Style by CSS](https://www.highcharts.com/docs/chart-design-and-style/style-by-css)).
-
-- Highcharts v10.2.0 CSS: `https://code.highcharts.com/10.2.0/css/highcharts.css`
-- Highcharts v11+ CSS: `https://code.highcharts.com/your-version/css/highcharts.css`
-
 ```jsx
 import Highcharts from "highcharts";
 import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { useRef } from "react";
 import { useChart } from "@salt-ds/highcharts-theme";
-
-import "@salt-ds/highcharts-theme/index.css";
 
 patternFill(Highcharts);
 

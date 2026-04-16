@@ -11,13 +11,13 @@ import {
   useRef,
   useState,
 } from "react";
-import highchartsThemeCss from "../index.css";
 import { getDefaultOptions } from "./default-options";
 import {
   getDensityTokenMap,
   type SaltChartTokenMap,
 } from "./density-token-map";
 import { applyFillPatternOverrides } from "./fill-patterns";
+import highchartsThemeCss from "./highcharts-theme.css";
 
 export interface UseChartConfig {
   fillPatterns?: boolean;
