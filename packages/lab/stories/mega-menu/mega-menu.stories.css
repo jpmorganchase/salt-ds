@@ -47,6 +47,12 @@ nav > ul {
   flex: 1;
 }
 
+.customRegionGroupsColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .customRegionTopBottomGroups {
   display: flex;
   flex-wrap: wrap;

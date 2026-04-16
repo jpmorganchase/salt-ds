@@ -1,4 +1,11 @@
-import { Badge, Button, NavigationItem, StackLayout, Tag } from "@salt-ds/core";
+import {
+  Badge,
+  Button,
+  Link,
+  NavigationItem,
+  StackLayout,
+  Tag,
+} from "@salt-ds/core";
 import {
   ApiIcon,
   CallIcon,
@@ -31,6 +38,7 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuLinkRow,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -831,31 +839,36 @@ const WithCustomRegionTemplate: StoryFn = () => {
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
             <Button onClick={() => setOpenMenu("right")}>
-              Custom Region (Right)
+              Custom Region on Right
             </Button>
           </MegaMenuTrigger>
           <MegaMenuContainer>
-            <div className="customRegionGroups">
-              <MegaMenuGroup>
-                <MegaMenuHeader>Products</MegaMenuHeader>
-                <MegaMenuItem>Analytics Platform</MegaMenuItem>
-                <MegaMenuItem>Data Pipeline</MegaMenuItem>
-                <MegaMenuItem>AI Assistant</MegaMenuItem>
-                <MegaMenuItem>Workflow Studio</MegaMenuItem>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Solutions</MegaMenuHeader>
-                <MegaMenuItem>Enterprise</MegaMenuItem>
-                <MegaMenuItem>Startups</MegaMenuItem>
-                <MegaMenuItem>Financial Services</MegaMenuItem>
-                <MegaMenuItem>Healthcare</MegaMenuItem>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Resources</MegaMenuHeader>
-                <MegaMenuItem>Documentation</MegaMenuItem>
-                <MegaMenuItem>Guides</MegaMenuItem>
-                <MegaMenuItem>API Reference</MegaMenuItem>
-              </MegaMenuGroup>
+            <div className="customRegionGroupsColumn">
+              <div className="customRegionGroups">
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Products</MegaMenuHeader>
+                  <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                  <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                  <MegaMenuItem>AI Assistant</MegaMenuItem>
+                  <MegaMenuItem>Workflow Studio</MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Solutions</MegaMenuHeader>
+                  <MegaMenuItem>Enterprise</MegaMenuItem>
+                  <MegaMenuItem>Startups</MegaMenuItem>
+                  <MegaMenuItem>Financial Services</MegaMenuItem>
+                  <MegaMenuItem>Healthcare</MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Resources</MegaMenuHeader>
+                  <MegaMenuItem>Documentation</MegaMenuItem>
+                  <MegaMenuItem>Guides</MegaMenuItem>
+                  <MegaMenuItem>API Reference</MegaMenuItem>
+                </MegaMenuGroup>
+              </div>
+              <MegaMenuLinkRow className="defaultBottomLinkRow">
+                <Link href="#">Explore details</Link>
+              </MegaMenuLinkRow>
             </div>
             <MegaMenuCustomRegion className="customRegionFeatured customRegionFeaturedMinWidth">
               <h4 className="customRegionFeaturedTitle">Featured</h4>
@@ -878,7 +891,7 @@ const WithCustomRegionTemplate: StoryFn = () => {
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
             <Button onClick={() => setOpenMenu("left")}>
-              Custom Region (Left)
+              Custom Region on Left
             </Button>
           </MegaMenuTrigger>
 
@@ -893,27 +906,32 @@ const WithCustomRegionTemplate: StoryFn = () => {
                 <Button>View Docs</Button>
               </div>
             </MegaMenuCustomRegion>
-            <div className="customRegionGroups">
-              <MegaMenuGroup>
-                <MegaMenuHeader>Products</MegaMenuHeader>
-                <MegaMenuItem>Analytics Platform</MegaMenuItem>
-                <MegaMenuItem>Data Pipeline</MegaMenuItem>
-                <MegaMenuItem>AI Assistant</MegaMenuItem>
-                <MegaMenuItem>Workflow Studio</MegaMenuItem>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Solutions</MegaMenuHeader>
-                <MegaMenuItem>Enterprise</MegaMenuItem>
-                <MegaMenuItem>Startups</MegaMenuItem>
-                <MegaMenuItem>Financial Services</MegaMenuItem>
-                <MegaMenuItem>Healthcare</MegaMenuItem>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Resources</MegaMenuHeader>
-                <MegaMenuItem>Documentation</MegaMenuItem>
-                <MegaMenuItem>Guides</MegaMenuItem>
-                <MegaMenuItem>API Reference</MegaMenuItem>
-              </MegaMenuGroup>
+            <div className="customRegionGroupsColumn">
+              <div className="customRegionGroups">
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Products</MegaMenuHeader>
+                  <MegaMenuItem>Analytics Platform</MegaMenuItem>
+                  <MegaMenuItem>Data Pipeline</MegaMenuItem>
+                  <MegaMenuItem>AI Assistant</MegaMenuItem>
+                  <MegaMenuItem>Workflow Studio</MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Solutions</MegaMenuHeader>
+                  <MegaMenuItem>Enterprise</MegaMenuItem>
+                  <MegaMenuItem>Startups</MegaMenuItem>
+                  <MegaMenuItem>Financial Services</MegaMenuItem>
+                  <MegaMenuItem>Healthcare</MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Resources</MegaMenuHeader>
+                  <MegaMenuItem>Documentation</MegaMenuItem>
+                  <MegaMenuItem>Guides</MegaMenuItem>
+                  <MegaMenuItem>API Reference</MegaMenuItem>
+                </MegaMenuGroup>
+              </div>
+              <MegaMenuLinkRow className="defaultBottomLinkRow">
+                <Link href="#">Explore details</Link>
+              </MegaMenuLinkRow>
             </div>
           </MegaMenuContainer>
         </div>
@@ -926,7 +944,7 @@ const WithCustomRegionTemplate: StoryFn = () => {
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
             <Button onClick={() => setOpenMenu("top")}>
-              Custom Region (Top)
+              Custom Region on Top
             </Button>
           </MegaMenuTrigger>
 
@@ -939,6 +957,7 @@ const WithCustomRegionTemplate: StoryFn = () => {
               <div className="customRegionActions">
                 <Button>Learn More</Button>
                 <Button>View Docs</Button>
+                <Link href="#">Explore details</Link>
               </div>
             </MegaMenuCustomRegion>
             <div className="customRegionTopBottomGroups">
@@ -954,6 +973,9 @@ const WithCustomRegionTemplate: StoryFn = () => {
                 <MegaMenuItem>Startups</MegaMenuItem>
               </MegaMenuGroup>
             </div>
+            <MegaMenuLinkRow className="defaultBottomLinkRow">
+              <Link href="#">Explore details</Link>
+            </MegaMenuLinkRow>
           </MegaMenuContainer>
         </div>
       </MegaMenu>
@@ -965,7 +987,7 @@ const WithCustomRegionTemplate: StoryFn = () => {
         <div className="customRegionWrapper">
           <MegaMenuTrigger>
             <Button onClick={() => setOpenMenu("bottom")}>
-              Custom Region (Bottom)
+              Custom Region on Bottom
             </Button>
           </MegaMenuTrigger>
 
@@ -983,6 +1005,9 @@ const WithCustomRegionTemplate: StoryFn = () => {
                 <MegaMenuItem>Startups</MegaMenuItem>
               </MegaMenuGroup>
             </div>
+            <MegaMenuLinkRow className="defaultBottomLinkRow">
+              <Link href="#">Explore details</Link>
+            </MegaMenuLinkRow>
             <MegaMenuCustomRegion className="customRegionFeatured">
               <h4 className="customRegionFeaturedTitle">Featured</h4>
               <p className="customRegionFeaturedText">
