@@ -10,7 +10,7 @@
 
 .saltCarouselAutoplayIndicatorSVG-bar {
   fill: none;
-  stroke: var(--salt-accent-background);
+  stroke: var(--salt-sentiment-accent-background);
   stroke-dasharray: var(--carousel-svg-circumference);
   stroke-dashoffset: var(--carousel-svg-circumference);
   animation: indicatorAnimation 0.5s linear;

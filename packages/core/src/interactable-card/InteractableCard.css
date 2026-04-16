@@ -10,7 +10,7 @@
   text-align: start;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   overflow: hidden;
-  --card-accent-color: var(--salt-accent-background);
+  --card-accent-color: var(--salt-sentiment-accent-background);
 }
 
 /* Styles applied to InteractableCard when variant="primary" */
@@ -112,7 +112,7 @@
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-cursor-disabled);
   outline: none;
-  --card-accent-color: var(--salt-accent-background-disabled);
+  --card-accent-color: var(--salt-sentiment-accent-background-disabled);
 }
 
 /* Styles applied to InteractableCard primary variant if `disabled={true}` */

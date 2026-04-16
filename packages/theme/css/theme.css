@@ -21,7 +21,6 @@
 @import url(legacy/palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
-@import url(legacy/characteristics/accent.css);
 @import url(legacy/characteristics/actionable.css);
 @import url(legacy/characteristics/category.css);
 @import url(legacy/characteristics/container.css);

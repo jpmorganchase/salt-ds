@@ -1,5 +1,20 @@
 # @salt-ds/data-grid
 
+## 1.0.40
+
+### Patch Changes
+
+- 89429e2: Updated accent token usage, to align to the recent theme change.
+- Updated dependencies [5c36edc]
+- Updated dependencies [cfc1591]
+- Updated dependencies [89429e2]
+- Updated dependencies [0a08ae0]
+- Updated dependencies [49b3486]
+- Updated dependencies [5c36edc]
+  - @salt-ds/core@1.59.0
+  - @salt-ds/lab@1.0.0-alpha.88
+  - @salt-ds/icons@1.18.0
+
 ## 1.0.39
 
 ### Patch Changes

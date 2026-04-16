@@ -2,7 +2,7 @@ import { type SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 
 export interface AccordionContextValue {
-  value: string;
+  value?: string;
   expanded: boolean;
   toggle: (event: SyntheticEvent<HTMLButtonElement>) => void;
   disabled: boolean;

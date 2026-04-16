@@ -73,8 +73,8 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
           strokeWidth={1}
           fill="var(--overlay-background)"
           stroke="var(--overlay-borderColor)"
-          height={5}
-          width={10}
+          height={6}
+          width={12}
         />
       </FloatingComponent>
     );

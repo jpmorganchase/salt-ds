@@ -53,8 +53,8 @@ export const TooltipBase = (props: TooltipBaseProps) => {
           strokeWidth={1}
           fill="var(--salt-container-primary-background)"
           stroke="var(--tooltip-status-borderColor)"
-          height={5}
-          width={10}
+          height={6}
+          width={12}
         />
       )}
     </>
