@@ -1,11 +1,13 @@
+import { Switch } from "@salt-ds/core";
 import { useChart } from "@salt-ds/highcharts-theme";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "./index.module.css";
 
-// This example uses Highcharts v10.2.0 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
+patternFill(Highcharts);
 accessibility(Highcharts);
 
 const lineChartOptions: Options = {
@@ -82,11 +84,21 @@ const lineChartOptions: Options = {
 
 export const LineChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
+  const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, lineChartOptions);
+  const chartOptions = useChart(chartRef, lineChartOptions, {
+    fillPatterns: patterns,
+  });
 
   return (
     <div className={styles.chartContainer}>
+      <div className={styles.controlsRow}>
+        <Switch
+          label="Show patterns"
+          checked={patterns}
+          onChange={(e) => setPatterns(e.target.checked)}
+        />
+      </div>
       <HighchartsReact
         className={styles.chart}
         highcharts={Highcharts}

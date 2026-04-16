@@ -12,11 +12,16 @@ data:
 
 Highcharts provides an [accessibility module](https://www.highcharts.com/docs/accessibility/accessibility-module) that enhances the accessibility of charts.
 
+For general guidance on how Highcharts module loading differs by version, see [Module loading](./usage#module-loading).
+
 ### Highcharts v10 and v11 compatibility
+
+The site examples use `highcharts@10.2.0`. If you are using Highcharts v11, follow the same initialization pattern shown in the examples.
 
 To enable the accessibility module consistently in Highcharts v10 and v11, import and initialize the module with your Highcharts instance:
 
 ```js
+import Highcharts from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 
 accessibility(Highcharts);

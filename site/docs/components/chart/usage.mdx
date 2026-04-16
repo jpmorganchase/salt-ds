@@ -8,13 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-## Using the package
-
-## Import
+## Installation
 
 Install the following dependencies:
 
-- `highcharts` - version 10.2.0 specifically, or version 11+
+- `highcharts` - version 10 or version 11+ to 12
 - `highcharts-react-official`
 - `@salt-ds/highcharts-theme`
 
@@ -24,47 +22,36 @@ npm install highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-them
 yarn add highcharts@10.2.0 highcharts-react-official @salt-ds/highcharts-theme
 ```
 
-### Import Highcharts CSS
+## Module loading
 
-The Salt Highcharts theme overrides the default Highcharts CSS. To ensure the theme is applied correctly, import the Highcharts CSS before the Salt Highcharts theme CSS.
+Highcharts features such as accessibility, pattern fills, and some chart types are provided through optional modules. The way you load those modules depends on the Highcharts major version you are using.
 
-<Callout title="Note">
-  You can download the Highcharts CSS from the official CDN:
-  - [For v10.2.0](https://code.highcharts.com/10.2.0/css/highcharts.css)
-  - For v11+: https://code.highcharts.com/your-version/css/highcharts.css
+### Highcharts v10 and v11
 
-For more information on loading Highcharts CSS, [visit the Highcharts docs](https://www.highcharts.com/docs/chart-design-and-style/style-by-css).
-
-</Callout>
-
-### Import Salt Highcharts theme
-
-To import the Salt Highcharts theme, use:
-
-```js
-import "@salt-ds/highcharts-theme/index.css";
-```
-
-### Enable the pattern-fill module
-
-When using fill patterns with Highcharts v10.2.0 and 11.x, import and initialize the module with your Highcharts instance before rendering charts:
+Import the module and initialize it with your `Highcharts` instance before rendering charts:
 
 ```js
 import Highcharts from "highcharts";
-import patternFill from "highcharts/modules/pattern-fill";
+import accessibility from "highcharts/modules/accessibility";
 
-patternFill(Highcharts);
+accessibility(Highcharts);
 ```
 
-From Highcharts v12 onwards, the module auto-initializes upon import:
+Use the same pattern for other modules such as `pattern-fill`, `highcharts-more`, `stock`, and `bullet`.
+
+### Highcharts v12+
+
+From Highcharts v12 onwards, modules such as `accessibility` and `pattern-fill` auto-initialize upon import:
 
 ```js
-import "highcharts/modules/pattern-fill";
+import "highcharts/modules/accessibility";
 ```
+
+See the [Examples](./examples) page for chart types that require additional Highcharts modules.
 
 ## useChart hook
 
-Use the `useChart` hook to apply the Salt theme to your Highcharts. The hook merges your chart options with the default Salt theme options and handles density changes automatically.
+Use the `useChart` hook to apply the Salt theme to your Highcharts. The hook merges your chart options with the default Salt theme options, and handles density changes automatically.
 
 ```jsx
 import Highcharts from "highcharts";
@@ -90,7 +77,26 @@ See [examples](./examples) and the [Highcharts options](https://www.highcharts.c
 
 ## Patterns and fills
 
-The Salt Highcharts theme provides patterns and fills that can be applied to create visible contrast between series. This is particularly valuable for users with accessibility needs.
+The Salt Highcharts theme provides patterns and fills that can be applied to create visible contrast between series, valuable for users with accessibility needs.
+
+### Enable the `pattern-fill` module
+
+To enable pattern fills, load the Highcharts `pattern-fill` module using the version-appropriate approach.
+
+For Highcharts v10 and v11:
+
+```js
+import Highcharts from "highcharts";
+import patternFill from "highcharts/modules/pattern-fill";
+
+patternFill(Highcharts);
+```
+
+For Highcharts v12+:
+
+```js
+import "highcharts/modules/pattern-fill";
+```
 
 ### Fill patterns
 

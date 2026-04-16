@@ -1,8 +1,3 @@
-import Highcharts from "highcharts";
-import patternFill from "highcharts/modules/pattern-fill";
-
-patternFill(Highcharts);
-
 export * from "./AreaChart";
 export * from "./BarChart";
 export * from "./BoxPlotChart";
