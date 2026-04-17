@@ -11,7 +11,9 @@ const mergeAxisOptions = (
     return defaultAxis;
   }
 
-  const axisDefaults = Array.isArray(defaultAxis) ? defaultAxis[0] : defaultAxis;
+  const axisDefaults = Array.isArray(defaultAxis)
+    ? defaultAxis[0]
+    : defaultAxis;
 
   if (axisDefaults == null) {
     return resolvedAxis;
