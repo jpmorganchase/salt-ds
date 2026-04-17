@@ -4,17 +4,20 @@ import { useCallback, useRef } from "react";
 /**
  * https://github.com/facebook/react/issues/14099#issuecomment-440013892
  */
-export function useEventCallback<Args extends unknown[], Return>(
-  fn: (...args: Args) => Return,
-): (...args: Args) => Return {
-  const ref = useRef(fn);
+export function useEventCallback<const T extends (...args: any[]) => void>(
+  fn: T,
+): T {
+  const ref = useRef<T>(fn);
+
   useIsomorphicLayoutEffect(() => {
     ref.current = fn;
-  });
+  }, [fn]);
+
   return useCallback(
-    (...args: Args) =>
-      // biome-ignore lint/complexity/noCommaOperator: This is a valid use case for the comma operator
-      (void 0, ref.current)(...args),
+    ((...args: any[]) => {
+      const latestFn = ref.current;
+      return latestFn(...args);
+    }) as T,
     [],
   );
 }

@@ -90,6 +90,9 @@
 
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */
+  --salt-accent-background: var(--salt-palette-accent);
+  --salt-accent-background-disabled: var(--salt-palette-accent-disabled);
+  --salt-accent-borderColor: var(--salt-palette-accent);
 
   /* Track */
   --salt-track-borderStyle: solid;

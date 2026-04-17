@@ -7,6 +7,7 @@ on:
       - created
 
 permissions:
+  contents: write
   issues: write
   id-token: write
   pull-requests: write
@@ -22,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Enforce write permissions
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           COMMENT_ID: ${{ github.event.comment.id }}
         with:
@@ -52,7 +53,7 @@ jobs:
               )
             }
       - name: Validate pull request
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         id: pr_data
         env:
           FORK: ${{ github.event.pull_request.head.repo.fork }}
@@ -88,13 +89,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Create and publish snapshot release
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_ID: ${{ github.event.comment.id }}
-          NPM_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
           NPM_CONFIG_PROVENANCE: true
         with:
           script: |

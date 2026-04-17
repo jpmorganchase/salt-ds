@@ -37,7 +37,7 @@
 .saltContactDetails {
   --contactDetails-color: var(--salt-content-primary-foreground);
   --contactDetails-label-color: var(--salt-content-secondary-foreground);
-  --contactDetails-noAvatar-color: var(--salt-accent-background);
+  --contactDetails-noAvatar-color: var(--salt-sentiment-accent-background);
   --contactDetails-noAvatar-indicator-width: 4px;
   --contactDetails-favoriteToggle-fill: var(--contactDetails-deselected-icon-color);
   --contactDetails-favoriteToggle-marginRight: 0px;
@@ -261,7 +261,7 @@
 }
 
 .saltContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--salt-accent-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--salt-sentiment-accent-borderColor);
 }
 
 .saltContactFavoriteToggle-selecting {
