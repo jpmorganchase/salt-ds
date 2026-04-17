@@ -2,7 +2,6 @@ import { useDensity, useTheme } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type { Options } from "highcharts";
-import Highcharts from "highcharts";
 import type HighchartsReact from "highcharts-react-official";
 import {
   type RefObject,
@@ -18,6 +17,7 @@ import {
 } from "./density-token-map";
 import { applyFillPatternOverrides } from "./fill-patterns";
 import highchartsThemeCss from "./highcharts-theme.css";
+import { mergeChartOptions } from "./merge-chart-options";
 
 export interface UseChartConfig {
   fillPatterns?: boolean;
@@ -57,7 +57,7 @@ export const useChart = (
         fillPatterns,
       );
 
-      return Highcharts.merge(defaults, resolvedChartOptions);
+      return mergeChartOptions(defaults, resolvedChartOptions);
     },
     [chartOptions, density, fillPatterns],
   );

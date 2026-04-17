@@ -9,6 +9,7 @@ import {
   BulletChart as BulletChartComponent,
   CandlestickChart as CandlestickChartComponent,
   ColumnChart as ColumnChartComponent,
+  DualAxisChart as DualAxisChartComponent,
   DonutChart as DonutChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
@@ -24,6 +25,7 @@ import {
   bulletOptions,
   candlestickOptions,
   columnOptions,
+  dualAxisOptions,
   donutOptions,
   lineOptions,
   pieOptions,
@@ -65,6 +67,14 @@ export const LineChart = {
   args: {
     fillPatterns: false,
     options: lineOptions,
+  },
+};
+
+export const DualAxisChart = {
+  render: (args: ChartStoryArgs) => <DualAxisChartComponent {...args} />,
+  args: {
+    fillPatterns: false,
+    options: dualAxisOptions,
   },
 };
 

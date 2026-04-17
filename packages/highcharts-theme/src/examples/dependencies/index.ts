@@ -5,6 +5,7 @@ export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
 export { candlestickOptions } from "./candlestickOptions";
 export { columnOptions } from "./columnOptions";
+export { dualAxisOptions } from "./dualAxisOptions";
 export { donutOptions } from "./donutOptions";
 export { lineOptions } from "./lineOptions";
 export { pieOptions } from "./pieOptions";
