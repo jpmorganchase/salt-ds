@@ -40,24 +40,58 @@ type MigrateWorkflowFullResult = Exclude<
   PublicContract
 >;
 
+function readFullWorkflowResult<T>(value: T): T {
+  if (value == null || typeof value !== "object") {
+    return value;
+  }
+
+  const payload = value as Record<string, unknown>;
+  if (payload.contract !== "salt_workflow_v3" || payload.details == null) {
+    return value;
+  }
+
+  expect(payload).toEqual(
+    expect.objectContaining({
+      contract: "salt_workflow_v3",
+      workflow: expect.any(String),
+      transport: expect.any(String),
+      status: expect.any(String),
+      safety: expect.any(Object),
+      action: expect.any(Object),
+      summary: expect.any(String),
+      details: expect.any(Object),
+    }),
+  );
+
+  const details = payload.details as Record<string, unknown>;
+  return {
+    ...payload,
+    workflow: details.workflow,
+    result: details.result,
+    artifacts: details.artifacts,
+  } as T;
+}
+
 function runCreateWorkflowFull(input: {
   query: string;
   includeStarterCode?: boolean;
   contextChecked?: boolean;
   projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
 }): CreateWorkflowFullResult {
-  return withChooseWorkflowGuidance(
-    registry,
-    createSaltUi(registry, {
-      query: input.query,
-      include_starter_code: input.includeStarterCode ?? true,
-    }),
-    {
-      query: input.query,
-      context_checked: input.contextChecked,
-      project_policy: input.projectPolicy,
-      view: "full",
-    },
+  return readFullWorkflowResult(
+    withChooseWorkflowGuidance(
+      registry,
+      createSaltUi(registry, {
+        query: input.query,
+        include_starter_code: input.includeStarterCode ?? true,
+      }),
+      {
+        query: input.query,
+        context_checked: input.contextChecked,
+        project_policy: input.projectPolicy,
+        view: "full",
+      },
+    ),
   ) as CreateWorkflowFullResult;
 }
 
@@ -66,18 +100,20 @@ function runReviewWorkflowFull(input: {
   projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
   expectedTargets?: Parameters<typeof reviewSaltUi>[1]["expected_targets"];
 }): ReviewWorkflowFullResult {
-  return withAnalyzeWorkflowGuidance(
-    reviewSaltUi(registry, {
-      framework: "react",
-      view: "full",
-      code: input.code,
-      expected_targets: input.expectedTargets,
-    }),
-    {
-      code: input.code,
-      project_policy: input.projectPolicy,
-      view: "full",
-    },
+  return readFullWorkflowResult(
+    withAnalyzeWorkflowGuidance(
+      reviewSaltUi(registry, {
+        framework: "react",
+        view: "full",
+        code: input.code,
+        expected_targets: input.expectedTargets,
+      }),
+      {
+        code: input.code,
+        project_policy: input.projectPolicy,
+        view: "full",
+      },
+    ),
   ) as ReviewWorkflowFullResult;
 }
 
@@ -89,16 +125,18 @@ function runMigrateWorkflowFull(input: {
     notes: string[];
   };
 }): MigrateWorkflowFullResult {
-  return withTranslateWorkflowGuidance(
-    registry,
-    migrateToSalt(registry, {
-      source_outline: input.sourceOutline,
-      include_starter_code: true,
-    }),
-    {
-      source_outline: input.sourceOutline,
-      view: "full",
-    },
+  return readFullWorkflowResult(
+    withTranslateWorkflowGuidance(
+      registry,
+      migrateToSalt(registry, {
+        source_outline: input.sourceOutline,
+        include_starter_code: true,
+      }),
+      {
+        source_outline: input.sourceOutline,
+        view: "full",
+      },
+    ),
   ) as MigrateWorkflowFullResult;
 }
 
@@ -249,6 +287,90 @@ describe("deterministic agentic evals", () => {
         required_follow_through: expect.arrayContaining([
           expect.objectContaining({ entity: "Metric" }),
         ]),
+      }),
+    );
+  });
+
+  it("keeps profile surface prompts anchored on Tabs instead of Avatar decoration", () => {
+    const query = "user profile with tabs and avatar";
+    const result = runCreateWorkflowFull({ query });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Tabs",
+      },
+    });
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        status: "clear",
+        required_follow_through: [],
+        next_call: null,
+        rule_ids: [],
+      }),
+    );
+  });
+
+  it("keeps secondary named surfaces on exact follow-through for breadcrumbs plus table prompts", () => {
+    const query = "file manager with breadcrumbs and table";
+    const result = runCreateWorkflowFull({ query });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Table",
+      },
+    });
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        status: "follow_through_required",
+        required_follow_through: expect.arrayContaining([
+          expect.objectContaining({ entity: "Breadcrumbs" }),
+        ]),
+        next_call: {
+          workflow: "create_salt_ui",
+          follow_up_mode: "exact_name",
+          args: {
+            query: "Breadcrumbs",
+          },
+        },
+        rule_ids: ["create-follow-through-required"],
+      }),
+    );
+  });
+
+  it("keeps dashboard follow-through focused on the explicit chart region instead of generic header drift", () => {
+    const query = "chart dashboard with filters and summary";
+    const result = runCreateWorkflowFull({ query });
+
+    expect(result.result).toMatchObject({
+      solution_type: "pattern",
+      decision: {
+        name: "Analytical dashboard",
+      },
+    });
+    expect(
+      result.workflow.implementation_gate.required_follow_through.map(
+        (item: { entity: string }) => item.entity,
+      ),
+    ).toEqual(expect.arrayContaining(["Chart"]));
+    expect(
+      result.workflow.implementation_gate.required_follow_through.map(
+        (item: { entity: string }) => item.entity,
+      ),
+    ).not.toEqual(
+      expect.arrayContaining(["App header", "Header block", "Border layout"]),
+    );
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        next_call: {
+          workflow: "create_salt_ui",
+          follow_up_mode: "exact_name",
+          args: {
+            query: "Chart",
+          },
+        },
+        rule_ids: ["create-follow-through-required"],
       }),
     );
   });

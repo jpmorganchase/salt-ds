@@ -152,6 +152,45 @@ export interface WorkflowEvalReportEntry {
   trace: WorkflowEvalTrace;
 }
 
+export interface WorkflowEvalScorecard {
+  correctness: {
+    passed: number;
+    failed: number;
+    skipped: number;
+    pass_rate: number;
+  };
+  context_safety: {
+    safe_context_stops: number;
+    fix_context_steps: number;
+    retry_contracts_present: number;
+    context_failures: number;
+  };
+  next_step_quality: {
+    branchable_next_steps: number;
+    missing_next_steps: number;
+    exact_name_follow_ups: number;
+    implement_steps: number;
+  };
+  payload_size: {
+    average_workflow_result_bytes: number;
+    max_workflow_result_bytes: number;
+    average_payload_bytes: number;
+    max_payload_bytes: number;
+  };
+  transport_parity: {
+    direct_successes: number;
+    fallback_successes: number;
+    multi_attempt_runs: number;
+    failed_runs: number;
+  };
+  workflow_efficiency: {
+    average_transport_attempts: number;
+    repeated_transport_attempts: number;
+    average_time_to_safe_next_step_ms: number;
+    average_prompt_tokens: number;
+  };
+}
+
 export interface WorkflowEvalReport {
   generated_at: string;
   repo_root: string;
@@ -160,6 +199,7 @@ export interface WorkflowEvalReport {
   requested_scenario_ids: string[];
   passed: boolean;
   metrics: WorkflowEvalMetrics;
+  scorecard: WorkflowEvalScorecard;
   entries: WorkflowEvalReportEntry[];
 }
 
@@ -301,6 +341,193 @@ function aggregateWorkflowEvalMetrics(
   );
 }
 
+function averageMetric(total: number, count: number): number {
+  if (count <= 0) {
+    return 0;
+  }
+
+  return Number((total / count).toFixed(2));
+}
+
+function extractPublicNextStep(
+  value: unknown,
+): Record<string, unknown> | null {
+  const publicContract = extractPublicContract(value);
+  return publicContract && isRecord(publicContract.action)
+    ? publicContract.action
+    : null;
+}
+
+function countTransportAttempts(trace: WorkflowEvalTrace): number {
+  return trace.transport_trace.filter(
+    (entry) => entry.status !== "unavailable",
+  ).length;
+}
+
+function hasFallbackTransport(trace: WorkflowEvalTrace): boolean {
+  return (
+    trace.transport_trace.some((entry) => entry.status === "fallback") ||
+    trace.transport_trace.some((entry, index) => {
+      if (entry.status !== "succeeded") {
+        return false;
+      }
+
+      return trace.transport_trace
+        .slice(0, index)
+        .some((candidate) => candidate.status !== "unavailable");
+    })
+  );
+}
+
+function hasRetryContract(trace: WorkflowEvalTrace): boolean {
+  const serialized = serializeTraceResult(trace.workflow_result);
+  return (
+    serialized.includes("retry_with.root_dir") ||
+    serialized.includes("needs_explicit_root") ||
+    serialized.includes("\"kind\":\"fix_context\"") ||
+    serialized.includes("\"kind\": \"fix_context\"")
+  );
+}
+
+export function buildWorkflowEvalScorecard(
+  entries: Array<{
+    judgment: WorkflowEvalJudgment;
+    trace: WorkflowEvalTrace;
+    tags?: string[];
+  }>,
+): WorkflowEvalScorecard {
+  const entryCount = entries.length;
+  const passed = entries.filter((entry) => entry.judgment.status === "passed");
+  const failed = entries.filter((entry) => entry.judgment.status === "failed");
+  const skipped = entries.filter(
+    (entry) => entry.judgment.status === "skipped",
+  );
+  const branchableNextSteps = entries.filter((entry) =>
+    Boolean(extractPublicNextStep(entry.trace.workflow_result)),
+  );
+  const exactNameFollowUps = branchableNextSteps.filter((entry) => {
+    const nextStep = extractPublicNextStep(entry.trace.workflow_result);
+    return (
+      nextStep?.kind === "tool_call" &&
+      nextStep.mode === "exact_name" &&
+      typeof nextStep.tool === "string"
+    );
+  });
+  const implementSteps = branchableNextSteps.filter((entry) => {
+    const nextStep = extractPublicNextStep(entry.trace.workflow_result);
+    return nextStep?.kind === "implement";
+  });
+  const fixContextSteps = branchableNextSteps.filter((entry) => {
+    const nextStep = extractPublicNextStep(entry.trace.workflow_result);
+    return nextStep?.kind === "fix_context";
+  });
+  const retryContracts = entries.filter((entry) => hasRetryContract(entry.trace));
+  const safeContextStops = entries.filter((entry) => {
+    const tags = entry.tags ?? [];
+    return (
+      retryContracts.includes(entry) ||
+      fixContextSteps.includes(entry) ||
+      (tags.includes("context") && entry.judgment.status === "passed")
+    );
+  });
+  const contextFailures = entries.filter((entry) => {
+    if (entry.judgment.status !== "failed") {
+      return false;
+    }
+
+    const tags = entry.tags ?? [];
+    const reasonText = entry.judgment.reasons.join("\n");
+    return (
+      tags.includes("context") ||
+      reasonText.includes("context") ||
+      reasonText.includes("needs_explicit_root")
+    );
+  });
+  const directSuccesses = passed.filter(
+    (entry) =>
+      !hasFallbackTransport(entry.trace) && countTransportAttempts(entry.trace) <= 1,
+  );
+  const fallbackSuccesses = passed.filter((entry) =>
+    hasFallbackTransport(entry.trace),
+  );
+  const multiAttemptRuns = entries.filter(
+    (entry) => countTransportAttempts(entry.trace) > 1,
+  );
+  const totalWorkflowResultBytes = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.workflow_result_bytes,
+    0,
+  );
+  const totalPayloadBytes = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.payload_bytes,
+    0,
+  );
+  const totalTransportAttempts = entries.reduce(
+    (sum, entry) => sum + countTransportAttempts(entry.trace),
+    0,
+  );
+  const totalDurationMs = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.duration_ms,
+    0,
+  );
+  const totalPromptTokens = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.approx_prompt_tokens,
+    0,
+  );
+
+  return {
+    correctness: {
+      passed: passed.length,
+      failed: failed.length,
+      skipped: skipped.length,
+      pass_rate: averageMetric(passed.length * 100, entryCount),
+    },
+    context_safety: {
+      safe_context_stops: safeContextStops.length,
+      fix_context_steps: fixContextSteps.length,
+      retry_contracts_present: retryContracts.length,
+      context_failures: contextFailures.length,
+    },
+    next_step_quality: {
+      branchable_next_steps: branchableNextSteps.length,
+      missing_next_steps: Math.max(0, entryCount - branchableNextSteps.length),
+      exact_name_follow_ups: exactNameFollowUps.length,
+      implement_steps: implementSteps.length,
+    },
+    payload_size: {
+      average_workflow_result_bytes: averageMetric(
+        totalWorkflowResultBytes,
+        entryCount,
+      ),
+      max_workflow_result_bytes: entries.reduce(
+        (maxBytes, entry) =>
+          Math.max(maxBytes, entry.trace.metrics.workflow_result_bytes),
+        0,
+      ),
+      average_payload_bytes: averageMetric(totalPayloadBytes, entryCount),
+      max_payload_bytes: entries.reduce(
+        (maxBytes, entry) =>
+          Math.max(maxBytes, entry.trace.metrics.payload_bytes),
+        0,
+      ),
+    },
+    transport_parity: {
+      direct_successes: directSuccesses.length,
+      fallback_successes: fallbackSuccesses.length,
+      multi_attempt_runs: multiAttemptRuns.length,
+      failed_runs: failed.length,
+    },
+    workflow_efficiency: {
+      average_transport_attempts: averageMetric(
+        totalTransportAttempts,
+        entryCount,
+      ),
+      repeated_transport_attempts: multiAttemptRuns.length,
+      average_time_to_safe_next_step_ms: averageMetric(totalDurationMs, entryCount),
+      average_prompt_tokens: averageMetric(totalPromptTokens, entryCount),
+    },
+  };
+}
+
 function toWorkflowToolId(workflow: EvalWorkflow): string {
   switch (workflow) {
     case "create":
@@ -330,16 +557,30 @@ function toPublicWorkflowId(rawId: string | null): string | null {
 }
 
 function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
+  if (isRecord(value) && isRecord(value.details) && isRecord(value.details.workflow)) {
+    return value.details.workflow;
+  }
+
   if (isRecord(value) && isRecord(value.workflow)) {
     return value.workflow;
   }
 
   if (isRecord(value) && typeof value.workflow === "string") {
+    const safety = isRecord(value.safety) ? value.safety : null;
     return {
       id: toPublicWorkflowId(value.workflow),
-      workflow_status: value.workflow_status,
-      canonical_complete: value.canonical_complete,
-      safe_to_implement_exact_request: value.safe_to_implement_exact_request,
+      workflow_status:
+        typeof value.status === "string"
+          ? value.status
+          : value.workflow_status,
+      canonical_complete:
+        typeof safety?.canonical_complete === "boolean"
+          ? safety.canonical_complete
+          : value.canonical_complete,
+      safe_to_implement_exact_request:
+        typeof safety?.exact_request_safe === "boolean"
+          ? safety.exact_request_safe
+          : value.safe_to_implement_exact_request,
     };
   }
 
@@ -347,6 +588,10 @@ function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
 }
 
 function extractResultObject(value: unknown): Record<string, unknown> | null {
+  if (isRecord(value) && isRecord(value.details) && isRecord(value.details.result)) {
+    return value.details.result;
+  }
+
   if (isRecord(value) && isRecord(value.result)) {
     return value.result;
   }
@@ -358,12 +603,115 @@ function extractResultObject(value: unknown): Record<string, unknown> | null {
   return null;
 }
 
-function extractPublicContract(value: unknown): Record<string, unknown> | null {
+export function normalizeWorkflowEvalPublicContract(
+  value: unknown,
+): Record<string, unknown> | null {
   if (isRecord(value) && typeof value.workflow === "string") {
-    return value;
+    const request = isRecord(value.request) ? value.request : null;
+    const safety = isRecord(value.safety) ? value.safety : null;
+    const action = isRecord(value.action)
+      ? value.action
+      : isRecord(value.next_step)
+        ? value.next_step
+        : null;
+    const transport =
+      typeof value.transport === "string"
+        ? value.transport
+        : typeof value.transport_used === "string"
+          ? value.transport_used
+          : null;
+    const status =
+      typeof value.status === "string"
+        ? value.status
+        : typeof value.workflow_status === "string"
+          ? value.workflow_status
+          : null;
+    const canonicalComplete =
+      typeof safety?.canonical_complete === "boolean"
+        ? safety.canonical_complete
+        : typeof value.canonical_complete === "boolean"
+          ? value.canonical_complete
+          : null;
+    const exactRequestSafe =
+      typeof safety?.exact_request_safe === "boolean"
+        ? safety.exact_request_safe
+        : typeof value.safe_to_implement_exact_request === "boolean"
+          ? value.safe_to_implement_exact_request
+          : null;
+    const blockingReasons = Array.isArray(safety?.blocking_reasons)
+      ? safety.blocking_reasons
+      : Array.isArray(value.blocking_reasons)
+        ? value.blocking_reasons
+        : [];
+    const requestedEntity =
+      typeof request?.entity === "string"
+        ? request.entity
+        : typeof value.requested_entity === "string"
+          ? value.requested_entity
+          : null;
+    const resolvedEntity =
+      typeof request?.resolved_entity === "string" ||
+      request?.resolved_entity === null
+        ? request.resolved_entity
+        : typeof value.resolved_entity === "string" || value.resolved_entity === null
+          ? value.resolved_entity
+          : null;
+    const matchStatus =
+      typeof request?.match_status === "string"
+        ? request.match_status
+        : typeof value.match_status === "string"
+          ? value.match_status
+          : null;
+    const exactMatchRequired =
+      typeof request?.exact_match_required === "boolean"
+        ? request.exact_match_required
+        : typeof value.exact_match_required === "boolean"
+          ? value.exact_match_required
+          : null;
+
+    return {
+      ...value,
+      ...(transport ? { transport } : {}),
+      ...(status ? { status } : {}),
+      request: {
+        ...(requestedEntity !== null ? { entity: requestedEntity } : {}),
+        ...(resolvedEntity !== null || value.resolved_entity === null
+          ? { resolved_entity: resolvedEntity }
+          : {}),
+        ...(matchStatus !== null ? { match_status: matchStatus } : {}),
+        ...(exactMatchRequired !== null
+          ? { exact_match_required: exactMatchRequired }
+          : {}),
+      },
+      safety: {
+        canonical_complete: canonicalComplete,
+        exact_request_safe: exactRequestSafe,
+        blocking_reasons: blockingReasons,
+      },
+      ...(action ? { action } : {}),
+      ...(transport ? { transport_used: transport } : {}),
+      ...(status ? { workflow_status: status } : {}),
+      ...(canonicalComplete !== null
+        ? { canonical_complete: canonicalComplete }
+        : {}),
+      ...(exactRequestSafe !== null
+        ? { safe_to_implement_exact_request: exactRequestSafe }
+        : {}),
+      ...(requestedEntity !== null ? { requested_entity: requestedEntity } : {}),
+      ...(resolvedEntity !== null || request?.resolved_entity === null
+        ? { resolved_entity: resolvedEntity }
+        : {}),
+      ...(matchStatus !== null ? { match_status: matchStatus } : {}),
+      next_step: action,
+      blocking_reasons: blockingReasons,
+    };
   }
 
   return null;
+}
+
+function extractPublicContract(value: unknown): Record<string, unknown> | null {
+  return normalizeWorkflowEvalPublicContract(value);
 }
 
 function countBlockingQuestions(
@@ -416,6 +764,13 @@ function extractCanonicalChoice(
     return result.resolved_entity;
   }
 
+  if (
+    isRecord(result.request) &&
+    typeof result.request.resolved_entity === "string"
+  ) {
+    return result.request.resolved_entity;
+  }
+
   return null;
 }
 
@@ -435,6 +790,13 @@ function extractFinalChoice(
 
   if (typeof result.resolved_entity === "string") {
     return result.resolved_entity;
+  }
+
+  if (
+    isRecord(result.request) &&
+    typeof result.request.resolved_entity === "string"
+  ) {
+    return result.request.resolved_entity;
   }
 
   return extractCanonicalChoice(result);
@@ -966,10 +1328,16 @@ async function normalizeCliWorkflowResult(
   }
 
   if (typeof raw.workflow === "string") {
+    const transport =
+      typeof raw.transport === "string"
+        ? raw.transport
+        : typeof raw.transport_used === "string"
+          ? raw.transport_used
+          : "cli";
     return {
       ...raw,
-      transport_used:
-        typeof raw.transport_used === "string" ? raw.transport_used : "cli",
+      transport,
+      transport_used: transport,
     };
   }
 
@@ -1886,6 +2254,7 @@ export async function runWorkflowEvalScenarios(
     requested_scenario_ids: scenarios.map((scenario) => scenario.id),
     passed: entries.every((entry) => entry.judgment.status === "passed"),
     metrics: aggregateWorkflowEvalMetrics(entries.map((entry) => entry.trace)),
+    scorecard: buildWorkflowEvalScorecard(entries),
     entries,
   };
 }

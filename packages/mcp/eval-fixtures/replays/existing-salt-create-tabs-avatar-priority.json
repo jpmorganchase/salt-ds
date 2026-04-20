@@ -1,0 +1,104 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-tabs-avatar-priority",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "profile"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-profile",
+      "description": "Saved replay fixture for a profile prompt that must stay anchored on Tabs instead of drifting to Avatar decoration."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a user profile shell with tabs and an avatar."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "user profile with tabs and avatar",
+        "include_starter_code": true
+      },
+      "cli": {
+        "argv": [
+          "create",
+          "user profile with tabs and avatar",
+          "--include-starter-code"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "canonical_choice": "Tabs",
+      "final_choice": "Tabs",
+      "public_contract": {
+        "workflow_status": "success",
+        "canonical_complete": true,
+        "safe_to_implement_exact_request": true,
+        "requested_entity": "user profile with tabs and avatar",
+        "resolved_entity": "Tabs",
+        "match_status": "broadened",
+        "next_step": {
+          "kind": "implement"
+        },
+        "summary_includes": ["broader Salt entity Tabs"]
+      },
+      "metrics": {
+        "max_workflow_result_bytes": 900,
+        "max_payload_bytes": 1400
+      }
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-tabs-avatar-priority",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "success",
+      "canonical_complete": true,
+      "safe_to_implement_exact_request": true,
+      "requested_entity": "user profile with tabs and avatar",
+      "resolved_entity": "Tabs",
+      "match_status": "broadened",
+      "blocking_reasons": [],
+      "next_step": {
+        "kind": "implement",
+        "scope": "exact_request"
+      },
+      "required_post_step": {
+        "kind": "review",
+        "tool": "review_salt_ui"
+      },
+      "summary": "Salt interpreted user profile with tabs and avatar as the broader Salt entity Tabs."
+    },
+    "transcript": [
+      "Use salt-ds to add a user profile shell with tabs and an avatar.",
+      "The host must keep Tabs as the surface owner instead of drifting to Avatar decoration."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-profile"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

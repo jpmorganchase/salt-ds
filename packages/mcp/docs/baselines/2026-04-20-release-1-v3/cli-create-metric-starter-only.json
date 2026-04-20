@@ -1,0 +1,185 @@
+{
+  "workflow": "create",
+  "status": "partial",
+  "decision": {
+    "name": "Metric",
+    "why": "A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value."
+  },
+  "starter_code": [
+    {
+      "label": "Metric starter",
+      "language": "tsx",
+      "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const HorizontalMetric = () => {\r\n  return (\r\n    <StackLayout direction=\"row\" gap={1}>\r\n      <Text style={{ marginTop: \"var(--salt-spacing-150)\" }}>\r\n        <strong>Performance</strong>\r\n      </Text>\r\n      <Display1>801</Display1>\r\n    </StackLayout>\r\n  );\r\n};",
+      "source_urls": [
+        "/salt/patterns/metric",
+        "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
+        "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0"
+      ],
+      "notes": [
+        "Canonical scaffold sources: /salt/patterns/metric",
+        "Supporting example sources: https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric, https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0",
+        "Build around: Metric title; Metric value; Metric supporting context",
+        "Preserve constraints: Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.; Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.; Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information.",
+        "Optional scaffold regions: metric-supporting-context",
+        "Hybrid scaffold semantics were derived from docs/examples, but the fallback template is still hand-authored for implementation speed. Treat the linked docs as the source of truth.",
+        "Replace placeholder structure with the closest production example from the linked docs.",
+        "Starter code is based on the closest extracted pattern story example rather than a private fallback template.",
+        "Use the recommended JPM Brand theme bootstrap for new Salt work. Only fall back to legacy SaltProvider when migration compatibility or repo policy explicitly requires it."
+      ]
+    }
+  ],
+  "composition_contract": {
+    "primary_target": {
+      "solution_type": "pattern",
+      "name": "Metric"
+    },
+    "expected_patterns": [],
+    "expected_components": [
+      "Link",
+      "Stack layout",
+      "Text"
+    ],
+    "slots": [
+      {
+        "id": "metric-title",
+        "label": "Metric Title",
+        "certainty": "strongly_implied",
+        "preferred_patterns": [],
+        "preferred_components": [
+          "Link",
+          "Stack layout"
+        ],
+        "reason": "Metric Title is an optional Salt pattern region that becomes relevant when the task or supporting evidence calls for it. The current request and docs-backed scaffold point to Link, Stack layout here.",
+        "source_urls": [
+          "/salt/patterns/metric",
+          "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
+          "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0",
+          "/salt/components/link",
+          "/salt/components/link/usage",
+          "/salt/components/link/accessibility",
+          "/salt/components/link/examples",
+          "/salt/components/layouts/stack-layout",
+          "/salt/components/layouts/stack-layout/usage",
+          "/salt/components/layouts/stack-layout/accessibility",
+          "/salt/components/layouts/stack-layout/examples"
+        ],
+        "notes": [
+          "Add Metric Title only when it improves the task flow or requested evidence.",
+          "Metric title",
+          "Metric value",
+          "Metric supporting context",
+          "Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.",
+          "Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.",
+          "Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information."
+        ]
+      },
+      {
+        "id": "metric-value",
+        "label": "Metric Value",
+        "certainty": "strongly_implied",
+        "preferred_patterns": [],
+        "preferred_components": [
+          "Link",
+          "Stack layout"
+        ],
+        "reason": "Metric Value is an optional Salt pattern region that becomes relevant when the task or supporting evidence calls for it. The current request and docs-backed scaffold point to Link, Stack layout here.",
+        "source_urls": [
+          "/salt/patterns/metric",
+          "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
+          "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0",
+          "/salt/components/link",
+          "/salt/components/link/usage",
+          "/salt/components/link/accessibility",
+          "/salt/components/link/examples",
+          "/salt/components/layouts/stack-layout",
+          "/salt/components/layouts/stack-layout/usage",
+          "/salt/components/layouts/stack-layout/accessibility",
+          "/salt/components/layouts/stack-layout/examples"
+        ],
+        "notes": [
+          "Add Metric Value only when it improves the task flow or requested evidence.",
+          "Metric title",
+          "Metric value",
+          "Metric supporting context",
+          "Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.",
+          "Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.",
+          "Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information."
+        ]
+      },
+      {
+        "id": "metric-supporting-context",
+        "label": "Metric Supporting Context",
+        "certainty": "strongly_implied",
+        "preferred_patterns": [],
+        "preferred_components": [
+          "Link",
+          "Stack layout",
+          "Text"
+        ],
+        "reason": "Metric Supporting Context is an optional Salt pattern region that becomes relevant when the task or supporting evidence calls for it. The current request and docs-backed scaffold point to Link, Stack layout, Text here.",
+        "source_urls": [
+          "/salt/patterns/metric",
+          "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
+          "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0",
+          "/salt/components/link",
+          "/salt/components/link/usage",
+          "/salt/components/link/accessibility",
+          "/salt/components/link/examples",
+          "/salt/components/layouts/stack-layout",
+          "/salt/components/layouts/stack-layout/usage",
+          "/salt/components/layouts/stack-layout/accessibility",
+          "/salt/components/layouts/stack-layout/examples",
+          "/salt/components/text",
+          "/salt/components/text/usage",
+          "/salt/components/text/accessibility",
+          "/salt/components/text/examples"
+        ],
+        "notes": [
+          "Add Metric Supporting Context only when it improves the task flow or requested evidence.",
+          "Metric title",
+          "Metric value",
+          "Metric supporting context",
+          "Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.",
+          "Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.",
+          "Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information."
+        ]
+      }
+    ],
+    "avoid": [
+      "Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.",
+      "Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.",
+      "Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information."
+    ],
+    "source_urls": [
+      "/salt/patterns/metric",
+      "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
+      "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0"
+    ]
+  },
+  "required_follow_through": [
+    {
+      "region": "metric-title",
+      "entity": "Link"
+    },
+    {
+      "region": "metric-title",
+      "entity": "Stack layout"
+    },
+    {
+      "region": "metric-supporting-context",
+      "entity": "Text"
+    }
+  ],
+  "action": {
+    "kind": "tool_call",
+    "tool": "create_salt_ui",
+    "mode": "exact_name",
+    "args": {
+      "query": "Link"
+    },
+    "rule_ids": [
+      "create-follow-through-required"
+    ],
+    "post_action": null
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-chart-dashboard-focus",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "dashboard"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-dashboard-chart",
+      "description": "Saved replay fixture for a dashboard prompt that must keep follow-through focused on Chart instead of generic header or layout drift."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a chart dashboard with filters and a summary area."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "chart dashboard with filters and summary",
+        "include_starter_code": true
+      },
+      "cli": {
+        "argv": [
+          "create",
+          "chart dashboard with filters and summary",
+          "--include-starter-code"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "canonical_choice": "Analytical dashboard",
+      "final_choice": "Analytical dashboard",
+      "banned_fragments": ["App header", "Header block", "Border layout"],
+      "public_contract": {
+        "workflow_status": "partial",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "chart dashboard with filters and summary",
+        "resolved_entity": "Analytical dashboard",
+        "match_status": "broadened",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Chart"
+        },
+        "summary_includes": ["broader Salt entity Analytical dashboard"]
+      },
+      "metrics": {
+        "max_workflow_result_bytes": 1200,
+        "max_payload_bytes": 1800
+      }
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-chart-dashboard-focus",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "partial",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "chart dashboard with filters and summary",
+      "resolved_entity": "Analytical dashboard",
+      "match_status": "broadened",
+      "blocking_reasons": [
+        "required follow-through remains: Chart"
+      ],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Chart"
+        }
+      },
+      "summary": "Salt interpreted chart dashboard with filters and summary as the broader Salt entity Analytical dashboard."
+    },
+    "transcript": [
+      "Use salt-ds to add a chart dashboard with filters and a summary area.",
+      "The host must keep the follow-through on Chart instead of drifting into generic header or border-layout scaffolds."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-dashboard-chart"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

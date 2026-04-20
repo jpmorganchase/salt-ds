@@ -170,6 +170,11 @@ describe("live eval harness", () => {
         approx_prompt_tokens: number;
         duration_ms: number;
       };
+      scorecard: {
+        correctness: { passed: number };
+        next_step_quality: { branchable_next_steps: number };
+        workflow_efficiency: { average_transport_attempts: number };
+      };
     };
     expect(parsed.passed).toBe(true);
     expect(parsed.entries).toHaveLength(2);
@@ -177,6 +182,11 @@ describe("live eval harness", () => {
     expect(parsed.metrics.transcript_bytes).toBeGreaterThan(0);
     expect(parsed.metrics.payload_bytes).toBeGreaterThan(0);
     expect(parsed.metrics.duration_ms).toBeGreaterThanOrEqual(0);
+    expect(parsed.scorecard.correctness.passed).toBe(2);
+    expect(parsed.scorecard.next_step_quality.branchable_next_steps).toBe(2);
+    expect(parsed.scorecard.workflow_efficiency.average_transport_attempts).toBeGreaterThanOrEqual(
+      1,
+    );
   }, 180000);
 
   it("fails when workflow trace metrics exceed a declared budget", async () => {

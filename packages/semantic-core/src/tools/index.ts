@@ -1,4 +1,14 @@
 export {
+  buildSaltCapabilityManifest,
+  SALT_CAPABILITY_MANIFEST_VERSION,
+  SALT_COMPACT_WORKFLOW_CONTRACT_VERSION,
+  SALT_COMPACT_WORKFLOW_IDS,
+  SALT_PUBLIC_WORKFLOW_VOCABULARY,
+  SALT_SUPPORT_TOOL_IDS,
+  type BuildSaltCapabilityManifestOptions,
+  type SaltCapabilityManifest,
+} from "./capabilityManifest.js";
+export {
   type CompareOptionsInput,
   type CompareOptionsResult,
   compareOptions,

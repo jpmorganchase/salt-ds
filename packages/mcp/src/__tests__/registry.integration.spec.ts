@@ -367,11 +367,41 @@ describe("registry integration", () => {
     });
   });
 
+  it("prefers Dialog over decorative icon matches for confirmation dialog prompts", () => {
+    const result = recommendComponent(registry, {
+      task: "confirmation dialog with warning icon",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Dialog",
+      component: {
+        package: "@salt-ds/core",
+      },
+    });
+  });
+
+  it("prefers Tabs over Avatar when the prompt names both a surface owner and decoration", () => {
+    const result = recommendComponent(registry, {
+      task: "user profile with tabs and avatar",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Tabs",
+      component: {
+        package: "@salt-ds/lab",
+      },
+    });
+  });
+
   it.each([
     [
       "Table component with custom cell rendering and column definitions",
-      "Table",
-      "@salt-ds/core",
+      "Data grid",
+      "@salt-ds/ag-grid-theme",
     ],
     ["table in analytical dashboard main body", "Table", "@salt-ds/core"],
     [

@@ -1,0 +1,952 @@
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { runCli } from "../../../cli/src/cli.js";
+import { loadRegistry } from "../registry/loadRegistry.js";
+import {
+  createToolExecutionRuntime,
+  TOOL_DEFINITIONS,
+} from "../server/toolDefinitions.js";
+import { REPO_ROOT } from "./registryTestUtils.js";
+
+const tempRoots: string[] = [];
+const FIXTURE_DIR = path.join(
+  REPO_ROOT,
+  "packages",
+  "mcp",
+  "src",
+  "__tests__",
+  "fixtures",
+  "public-contract",
+);
+const UPDATE_FIXTURES =
+  process.env.UPDATE_PUBLIC_CONTRACT_FIXTURES === "true";
+let registryDir = "";
+
+const COMPACT_BYTE_BUDGETS = {
+  create: 700,
+  review: 650,
+  migrate: 850,
+  upgrade: 650,
+} as const;
+
+const FULL_BYTE_BUDGETS = {
+  create: 120_000,
+  review: 25_000,
+  migrate: 400_000,
+  upgrade: 60_000,
+} as const;
+
+async function createTempDir(prefix: string) {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
+  tempRoots.push(root);
+  return root;
+}
+
+async function createRepo(
+  prefix: string,
+  packageJson: Record<string, unknown>,
+): Promise<string> {
+  const rootDir = await createTempDir(prefix);
+  await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+  await fs.writeFile(
+    path.join(rootDir, "package.json"),
+    `${JSON.stringify(packageJson, null, 2)}\n`,
+    "utf8",
+  );
+  return rootDir;
+}
+
+function withRegistry(args: string[]): string[] {
+  return [...args, "--registry-dir", registryDir];
+}
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+function readPath(value: unknown, pathSegments: string[]): unknown {
+  let current: unknown = value;
+
+  for (const segment of pathSegments) {
+    const record = asRecord(current);
+    if (!record) {
+      return undefined;
+    }
+
+    current = record[segment];
+  }
+
+  return current;
+}
+
+function readFirst(
+  value: unknown,
+  pathCandidates: string[][],
+): unknown | undefined {
+  for (const pathSegments of pathCandidates) {
+    const candidate = readPath(value, pathSegments);
+    if (candidate !== undefined) {
+      return candidate;
+    }
+  }
+
+  return undefined;
+}
+
+function readString(value: unknown, pathCandidates: string[][]): string | null {
+  const candidate = readFirst(value, pathCandidates);
+  return typeof candidate === "string" && candidate.trim().length > 0
+    ? candidate.trim()
+    : null;
+}
+
+function readBoolean(
+  value: unknown,
+  pathCandidates: string[][],
+): boolean | null {
+  const candidate = readFirst(value, pathCandidates);
+  return typeof candidate === "boolean" ? candidate : null;
+}
+
+function readNumber(value: unknown, pathCandidates: string[][]): number | null {
+  const candidate = readFirst(value, pathCandidates);
+  return typeof candidate === "number" && Number.isFinite(candidate)
+    ? candidate
+    : null;
+}
+
+function readArray(
+  value: unknown,
+  pathCandidates: string[][],
+): unknown[] | null {
+  const candidate = readFirst(value, pathCandidates);
+  return Array.isArray(candidate) ? candidate : null;
+}
+
+function uniqueSortedStrings(values: Array<string | null>): string[] {
+  return [...new Set(values.filter((value): value is string => Boolean(value)))]
+    .map((value) => value.trim())
+    .filter((value) => value.length > 0)
+    .sort((left, right) => left.localeCompare(right));
+}
+
+function normalizeWorkflowId(value: string | null): string | null {
+  switch (value) {
+    case "create_salt_ui":
+      return "create";
+    case "review_salt_ui":
+      return "review";
+    case "migrate_to_salt":
+      return "migrate";
+    case "upgrade_salt_ui":
+      return "upgrade";
+    default:
+      return value;
+  }
+}
+
+function jsonByteLength(value: unknown): number {
+  return Buffer.byteLength(JSON.stringify(value), "utf8");
+}
+
+function expectUniqueStringArrayAtPath(
+  value: unknown,
+  pathCandidates: string[][],
+): void {
+  const entries = readArray(value, pathCandidates);
+  if (!entries) {
+    return;
+  }
+
+  const strings = entries.filter(
+    (entry): entry is string => typeof entry === "string",
+  );
+  expect(new Set(strings).size).toBe(strings.length);
+}
+
+function readFollowUpWorkflows(value: unknown): string[] {
+  const followUps = readArray(value, [
+    ["details", "artifacts", "suggested_follow_ups"],
+    ["details", "result", "recommendation", "suggested_follow_ups"],
+    ["details", "result", "translation", "suggested_follow_ups"],
+    ["artifacts", "suggested_follow_ups"],
+    ["result", "recommendation", "suggested_follow_ups"],
+    ["result", "translation", "suggested_follow_ups"],
+  ]);
+
+  return uniqueSortedStrings(
+    (followUps ?? []).map((followUp) =>
+      normalizeWorkflowId(readString(followUp, [["workflow"]])),
+    ),
+  );
+}
+
+function readRuleIds(value: unknown): string[] {
+  const ruleIds = readArray(value, [
+    ["details", "artifacts", "rule_ids"],
+    ["details", "artifacts", "ruleIds"],
+    ["artifacts", "rule_ids"],
+    ["artifacts", "ruleIds"],
+  ]);
+
+  return uniqueSortedStrings(
+    (ruleIds ?? []).map((entry) =>
+      typeof entry === "string" ? entry : null,
+    ),
+  );
+}
+
+function readIssueClassIds(value: unknown): string[] {
+  const issueClasses = readArray(value, [
+    ["details", "artifacts", "issue_classes"],
+    ["details", "artifacts", "issueClasses"],
+    ["artifacts", "issue_classes"],
+    ["artifacts", "issueClasses"],
+  ]);
+
+  return uniqueSortedStrings(
+    (issueClasses ?? []).map((entry) => {
+      if (typeof entry === "string") {
+        return entry;
+      }
+
+      return readString(entry, [["id"], ["class"], ["label"]]);
+    }),
+  );
+}
+
+function toComparableCompactContract(value: Record<string, unknown>) {
+  const action = asRecord(value.action);
+  const request = asRecord(value.request);
+  const safety = asRecord(value.safety);
+  const postAction = asRecord(action?.post_action ?? null);
+
+  return {
+    contract: value.contract,
+    workflow: value.workflow,
+    status: value.status,
+    request: {
+      entity: typeof request?.entity === "string" ? request.entity : null,
+      resolved_entity:
+        typeof request?.resolved_entity === "string" ||
+        request?.resolved_entity === null
+          ? request.resolved_entity
+          : null,
+      match_status:
+        typeof request?.match_status === "string" ? request.match_status : null,
+      exact_match_required:
+        typeof request?.exact_match_required === "boolean"
+          ? request.exact_match_required
+          : null,
+    },
+    safety: {
+      canonical_complete:
+        typeof safety?.canonical_complete === "boolean"
+          ? safety.canonical_complete
+          : null,
+      exact_request_safe:
+        typeof safety?.exact_request_safe === "boolean"
+          ? safety.exact_request_safe
+          : null,
+      blocking_reasons: Array.isArray(safety?.blocking_reasons)
+        ? safety.blocking_reasons
+        : [],
+    },
+    action: action
+      ? {
+          ...action,
+          rule_ids: Array.isArray(action.rule_ids) ? action.rule_ids : [],
+          post_action: postAction
+            ? {
+                kind: postAction.kind,
+                tool: postAction.tool,
+              }
+            : null,
+        }
+      : null,
+    summary: value.summary,
+  };
+}
+
+function toComparableCreateFull(value: Record<string, unknown>) {
+  return {
+    workflow_id: normalizeWorkflowId(
+      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+    ),
+    confidence_level: readString(value, [
+      ["details", "workflow", "confidence", "level"],
+      ["workflow", "confidence", "level"],
+    ]),
+    readiness_status: readString(value, [
+      ["details", "workflow", "readiness", "status"],
+      ["workflow", "readiness", "status"],
+    ]),
+    context_requirement_status: readString(value, [
+      ["details", "workflow", "context_requirement", "status"],
+      ["details", "workflow", "contextRequirement", "status"],
+      ["workflow", "context_requirement", "status"],
+      ["workflow", "contextRequirement", "status"],
+    ]),
+    final_decision_name: readString(value, [
+      ["details", "result", "final_decision", "name"],
+      ["details", "result", "summary", "finalDecisionName"],
+      ["result", "final_decision", "name"],
+      ["result", "summary", "finalDecisionName"],
+    ]),
+    final_decision_source: readString(value, [
+      ["details", "result", "final_decision", "source"],
+      ["details", "result", "summary", "finalDecisionSource"],
+      ["result", "final_decision", "source"],
+      ["result", "summary", "finalDecisionSource"],
+    ]),
+    starter_validation_status: readString(value, [
+      ["details", "artifacts", "starter_validation", "status"],
+      ["details", "artifacts", "starterValidation", "status"],
+      ["details", "result", "summary", "starterValidationStatus"],
+      ["artifacts", "starter_validation", "status"],
+      ["artifacts", "starterValidation", "status"],
+      ["result", "summary", "starterValidationStatus"],
+    ]),
+    repo_refinement_status: readString(value, [
+      ["details", "artifacts", "repo_refinement", "status"],
+      ["details", "artifacts", "repoRefinement", "status"],
+      ["artifacts", "repo_refinement", "status"],
+      ["artifacts", "repoRefinement", "status"],
+    ]),
+    suggested_follow_up_workflows: readFollowUpWorkflows(value),
+  };
+}
+
+function toComparableReviewFull(value: Record<string, unknown>) {
+  return {
+    workflow_id: normalizeWorkflowId(
+      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+    ),
+    confidence_level: readString(value, [
+      ["details", "workflow", "confidence", "level"],
+      ["workflow", "confidence", "level"],
+    ]),
+    decision_status: readString(value, [
+      ["details", "result", "decision", "status"],
+      ["details", "result", "summary", "status"],
+      ["result", "decision", "status"],
+      ["result", "summary", "status"],
+    ]),
+    rule_ids: readRuleIds(value),
+    issue_class_ids: readIssueClassIds(value),
+    project_policy_present:
+      readFirst(value, [
+        ["details", "artifacts", "project_policy"],
+        ["details", "artifacts", "projectPolicy"],
+        ["artifacts", "project_policy"],
+        ["artifacts", "projectPolicy"],
+      ]) !=
+      null,
+    runtime_evidence_requested:
+      readBoolean(value, [
+        ["details", "artifacts", "runtimeEvidence", "requested"],
+        ["artifacts", "runtimeEvidence", "requested"],
+      ]) ??
+      false,
+  };
+}
+
+function toComparableMigrateFull(value: Record<string, unknown>) {
+  return {
+    workflow_id: normalizeWorkflowId(
+      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+    ),
+    confidence_level: readString(value, [
+      ["details", "workflow", "confidence", "level"],
+      ["workflow", "confidence", "level"],
+    ]),
+    readiness_status: readString(value, [
+      ["details", "workflow", "readiness", "status"],
+      ["workflow", "readiness", "status"],
+    ]),
+    context_requirement_status: readString(value, [
+      ["details", "workflow", "context_requirement", "status"],
+      ["details", "workflow", "contextRequirement", "status"],
+      ["workflow", "context_requirement", "status"],
+      ["workflow", "contextRequirement", "status"],
+    ]),
+    starter_validation_status: readString(value, [
+      ["details", "artifacts", "starter_validation", "status"],
+      ["details", "artifacts", "starterValidation", "status"],
+      ["details", "result", "summary", "starterValidationStatus"],
+      ["artifacts", "starter_validation", "status"],
+      ["artifacts", "starterValidation", "status"],
+      ["result", "summary", "starterValidationStatus"],
+    ]),
+    post_migration_suggested_workflow: normalizeWorkflowId(
+      readString(value, [
+        [
+          "details",
+          "artifacts",
+          "post_migration_verification",
+          "suggested_workflow",
+        ],
+        [
+          "details",
+          "artifacts",
+          "postMigrationVerification",
+          "suggestedWorkflow",
+        ],
+        ["artifacts", "post_migration_verification", "suggested_workflow"],
+        ["artifacts", "postMigrationVerification", "suggestedWorkflow"],
+      ]),
+    ),
+    visual_input_adapter_contract: readString(value, [
+      [
+        "details",
+        "artifacts",
+        "visualEvidence",
+        "contract",
+        "normalizationContract",
+      ],
+      [
+        "details",
+        "artifacts",
+        "visual_evidence_contract",
+        "normalization_contract",
+      ],
+      ["artifacts", "visualEvidence", "contract", "normalizationContract"],
+      ["artifacts", "visual_evidence_contract", "normalization_contract"],
+    ]),
+    suggested_follow_up_workflows: readFollowUpWorkflows(value),
+  };
+}
+
+function toComparableUpgradeFull(value: Record<string, unknown>) {
+  return {
+    workflow_id: normalizeWorkflowId(
+      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+    ),
+    confidence_level: readString(value, [
+      ["details", "workflow", "confidence", "level"],
+      ["workflow", "confidence", "level"],
+    ]),
+    target: readString(value, [
+      ["details", "result", "summary", "target"],
+      ["details", "result", "ide_summary", "target"],
+      ["result", "summary", "target"],
+      ["result", "ide_summary", "target"],
+    ]),
+    from_version: readString(value, [
+      ["details", "result", "summary", "fromVersion"],
+      ["details", "result", "summary", "from_version"],
+      ["details", "result", "ide_summary", "from_version"],
+      ["result", "summary", "fromVersion"],
+      ["result", "summary", "from_version"],
+      ["result", "ide_summary", "from_version"],
+    ]),
+    to_version: readString(value, [
+      ["details", "result", "summary", "toVersion"],
+      ["details", "result", "summary", "to_version"],
+      ["details", "result", "ide_summary", "to_version"],
+      ["result", "summary", "toVersion"],
+      ["result", "summary", "to_version"],
+      ["result", "ide_summary", "to_version"],
+    ]),
+    rule_ids: readRuleIds(value),
+  };
+}
+
+async function assertFixture(
+  fixtureName: string,
+  actual: Record<string, unknown>,
+): Promise<void> {
+  const fixturePath = path.join(FIXTURE_DIR, fixtureName);
+
+  if (UPDATE_FIXTURES) {
+    await fs.mkdir(FIXTURE_DIR, { recursive: true });
+    await fs.writeFile(
+      fixturePath,
+      `${JSON.stringify(actual, null, 2)}\n`,
+      "utf8",
+    );
+  }
+
+  const expected = JSON.parse(
+    await fs.readFile(fixturePath, "utf8"),
+  ) as Record<string, unknown>;
+  expect(actual).toEqual(expected);
+}
+
+async function runCliWorkflow(
+  rootDir: string,
+  argv: string[],
+): Promise<Record<string, unknown>> {
+  let stdout = "";
+  let stderr = "";
+  const exitCode = await runCli(withRegistry(argv), {
+    cwd: rootDir,
+    writeStdout: (message) => {
+      stdout += message;
+    },
+    writeStderr: (message) => {
+      stderr += message;
+    },
+  });
+
+  expect(stderr).toBe("");
+  expect(exitCode).toBeLessThanOrEqual(20);
+  return JSON.parse(stdout) as Record<string, unknown>;
+}
+
+async function runCliCreateCompact(
+  rootDir: string,
+  query: string,
+): Promise<Record<string, unknown>> {
+  return runCliWorkflow(rootDir, ["create", query, "--json"]);
+}
+
+async function runCliCreateFull(
+  rootDir: string,
+  query: string,
+): Promise<Record<string, unknown>> {
+  return runCliWorkflow(rootDir, ["create", query, "--json", "--full"]);
+}
+
+async function runCliWorkflowCompact(
+  rootDir: string,
+  argv: string[],
+): Promise<Record<string, unknown>> {
+  return runCliWorkflow(rootDir, [...argv, "--json"]);
+}
+
+async function runCliWorkflowFull(
+  rootDir: string,
+  argv: string[],
+): Promise<Record<string, unknown>> {
+  return runCliWorkflow(rootDir, [...argv, "--json", "--full"]);
+}
+
+async function runMcpCreate(
+  rootDir: string,
+  query: string,
+  view: "compact" | "full",
+): Promise<Record<string, unknown>> {
+  const registry = await loadRegistry({ registryDir });
+  const chooseTool = TOOL_DEFINITIONS.find(
+    (definition) => definition.name === "create_salt_ui",
+  );
+  const runtime = createToolExecutionRuntime();
+
+  return (await chooseTool?.execute(
+    registry,
+    {
+      query,
+      root_dir: rootDir,
+      view,
+    },
+    runtime,
+  )) as Record<string, unknown>;
+}
+
+async function runMcpWorkflow(
+  toolName: "review_salt_ui" | "migrate_to_salt" | "upgrade_salt_ui",
+  args: Record<string, unknown>,
+  view: "compact" | "full",
+): Promise<Record<string, unknown>> {
+  const registry = await loadRegistry({ registryDir });
+  const tool = TOOL_DEFINITIONS.find((definition) => definition.name === toolName);
+  const runtime = createToolExecutionRuntime();
+
+  return (await tool?.execute(
+    registry,
+    {
+      ...args,
+      view,
+    },
+    runtime,
+  )) as Record<string, unknown>;
+}
+
+beforeAll(async () => {
+  registryDir = await fs.mkdtemp(
+    path.join(os.tmpdir(), "salt-public-contract-parity-"),
+  );
+  await buildRegistry({
+    sourceRoot: REPO_ROOT,
+    outputDir: registryDir,
+    timestamp: "2026-04-20T00:00:00Z",
+  });
+}, 40000);
+
+afterEach(async () => {
+  await Promise.all(
+    tempRoots
+      .splice(0)
+      .map((root) => fs.rm(root, { recursive: true, force: true })),
+  );
+});
+
+afterAll(async () => {
+  if (registryDir) {
+    await fs.rm(registryDir, { recursive: true, force: true });
+  }
+});
+
+describe("public contract parity", () => {
+  it("keeps exact-name create compact semantics aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-exact-", {
+      name: "parity-exact",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+
+    const cliResult = await runCliCreateCompact(rootDir, "Metric");
+    const mcpResult = await runMcpCreate(rootDir, "Metric", "compact");
+    const cliComparable = toComparableCompactContract(cliResult);
+    const mcpComparable = toComparableCompactContract(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.create,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.create,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    expectUniqueStringArrayAtPath(mcpResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    await assertFixture("create-exact.compact.json", cliComparable);
+  });
+
+  it("keeps broadened create compact semantics aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-broadened-", {
+      name: "parity-broadened",
+      private: true,
+      packageManager: "pnpm@9.1.0",
+      dependencies: {
+        react: "^18.3.1",
+        vite: "^7.1.0",
+      },
+    });
+
+    const cliResult = await runCliCreateCompact(
+      rootDir,
+      "analytical dashboard body",
+    );
+    const mcpResult = await runMcpCreate(
+      rootDir,
+      "analytical dashboard body",
+      "compact",
+    );
+    const cliComparable = toComparableCompactContract(cliResult);
+    const mcpComparable = toComparableCompactContract(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.create,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.create,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    expectUniqueStringArrayAtPath(mcpResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    await assertFixture("create-broadened.compact.json", cliComparable);
+  });
+
+  it("keeps review compact semantics aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-review-", {
+      name: "parity-review",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    const code = [
+      'import { Button } from "@salt-ds/core";',
+      "",
+      "export function Demo() {",
+      '  return <Button href="/next">Go</Button>;',
+      "}",
+      "",
+    ].join("\n");
+    const filePath = path.join(rootDir, "src", "Demo.tsx");
+    await fs.writeFile(filePath, code, "utf8");
+
+    const cliResult = await runCliWorkflowCompact(rootDir, ["review", filePath]);
+    const mcpResult = await runMcpWorkflow(
+      "review_salt_ui",
+      {
+        code,
+        root_dir: rootDir,
+      },
+      "compact",
+    );
+    const cliComparable = toComparableCompactContract(cliResult);
+    const mcpComparable = toComparableCompactContract(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.review,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.review,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    expectUniqueStringArrayAtPath(mcpResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    await assertFixture("review.compact.json", cliComparable);
+  });
+
+  it("keeps migrate compact semantics aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-migrate-", {
+      name: "parity-migrate",
+      private: true,
+      packageManager: "pnpm@9.1.0",
+      dependencies: {
+        react: "^18.3.1",
+        vite: "^7.1.0",
+      },
+    });
+
+    const query =
+      "Build a sidebar with vertical navigation and a main content area.";
+    const cliResult = await runCliWorkflowCompact(rootDir, ["migrate", query]);
+    const mcpResult = await runMcpWorkflow(
+      "migrate_to_salt",
+      {
+        query,
+        root_dir: rootDir,
+      },
+      "compact",
+    );
+    const cliComparable = toComparableCompactContract(cliResult);
+    const mcpComparable = toComparableCompactContract(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.migrate,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.migrate,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    expectUniqueStringArrayAtPath(mcpResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    await assertFixture("migrate.compact.json", cliComparable);
+  });
+
+  it("keeps upgrade compact semantics aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-upgrade-", {
+      name: "parity-upgrade",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^1.1.0",
+      },
+    });
+
+    const cliResult = await runCliWorkflowCompact(rootDir, [
+      "upgrade",
+      "--package",
+      "@salt-ds/core",
+      "--from-version",
+      "1.1.0",
+    ]);
+    const mcpResult = await runMcpWorkflow(
+      "upgrade_salt_ui",
+      {
+        package: "@salt-ds/core",
+        from_version: "1.1.0",
+        root_dir: rootDir,
+      },
+      "compact",
+    );
+    const cliComparable = toComparableCompactContract(cliResult);
+    const mcpComparable = toComparableCompactContract(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.upgrade,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      COMPACT_BYTE_BUDGETS.upgrade,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    expectUniqueStringArrayAtPath(mcpResult, [
+      ["safety", "blocking_reasons"],
+      ["blocking_reasons"],
+    ]);
+    await assertFixture("upgrade.compact.json", cliComparable);
+  });
+
+  it("keeps create full semantics aligned where CLI and MCP overlap", async () => {
+    const rootDir = await createRepo("salt-parity-create-full-", {
+      name: "parity-create-full",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+
+    const cliResult = await runCliCreateFull(rootDir, "Metric");
+    const mcpResult = await runMcpCreate(rootDir, "Metric", "full");
+    const cliComparable = toComparableCreateFull(cliResult);
+    const mcpComparable = toComparableCreateFull(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.create,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.create,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [["artifacts", "notes"]]);
+    expectUniqueStringArrayAtPath(cliResult, [["workflow", "provenance", "source_urls"]]);
+    await assertFixture("create-exact.full.json", cliComparable);
+  });
+
+  it("keeps review full semantics aligned where CLI and MCP overlap", async () => {
+    const rootDir = await createRepo("salt-parity-review-full-", {
+      name: "parity-review-full",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    const code = [
+      'import { Button } from "@salt-ds/core";',
+      "",
+      "export function Demo() {",
+      '  return <Button href="/next">Go</Button>;',
+      "}",
+      "",
+    ].join("\n");
+    const filePath = path.join(rootDir, "src", "Demo.tsx");
+    await fs.writeFile(filePath, code, "utf8");
+
+    const cliResult = await runCliWorkflowFull(rootDir, ["review", filePath]);
+    const mcpResult = await runMcpWorkflow(
+      "review_salt_ui",
+      {
+        code,
+        root_dir: rootDir,
+      },
+      "full",
+    );
+    const cliComparable = toComparableReviewFull(cliResult);
+    const mcpComparable = toComparableReviewFull(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.review,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.review,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [["artifacts", "notes"]]);
+    await assertFixture("review.full.json", cliComparable);
+  });
+
+  it("keeps migrate full semantics aligned where CLI and MCP overlap", async () => {
+    const rootDir = await createRepo("salt-parity-migrate-full-", {
+      name: "parity-migrate-full",
+      private: true,
+      packageManager: "pnpm@9.1.0",
+      dependencies: {
+        react: "^18.3.1",
+        vite: "^7.1.0",
+      },
+    });
+
+    const query =
+      "Build a sidebar with vertical navigation and a main content area.";
+    const cliResult = await runCliWorkflowFull(rootDir, ["migrate", query]);
+    const mcpResult = await runMcpWorkflow(
+      "migrate_to_salt",
+      {
+        query,
+        root_dir: rootDir,
+      },
+      "full",
+    );
+    const cliComparable = toComparableMigrateFull(cliResult);
+    const mcpComparable = toComparableMigrateFull(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.migrate,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.migrate,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [["artifacts", "notes"]]);
+    await assertFixture("migrate.full.json", cliComparable);
+  });
+
+  it("keeps upgrade full semantics aligned where CLI and MCP overlap", async () => {
+    const rootDir = await createRepo("salt-parity-upgrade-full-", {
+      name: "parity-upgrade-full",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^1.1.0",
+      },
+    });
+
+    const cliResult = await runCliWorkflowFull(rootDir, [
+      "upgrade",
+      "--package",
+      "@salt-ds/core",
+      "--from-version",
+      "1.1.0",
+    ]);
+    const mcpResult = await runMcpWorkflow(
+      "upgrade_salt_ui",
+      {
+        package: "@salt-ds/core",
+        from_version: "1.1.0",
+        root_dir: rootDir,
+      },
+      "full",
+    );
+    const cliComparable = toComparableUpgradeFull(cliResult);
+    const mcpComparable = toComparableUpgradeFull(mcpResult);
+
+    expect(cliComparable).toEqual(mcpComparable);
+    expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.upgrade,
+    );
+    expect(jsonByteLength(mcpResult)).toBeLessThanOrEqual(
+      FULL_BYTE_BUDGETS.upgrade,
+    );
+    expectUniqueStringArrayAtPath(cliResult, [["artifacts", "notes"]]);
+    await assertFixture("upgrade.full.json", cliComparable);
+  });
+});

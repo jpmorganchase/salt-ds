@@ -29,12 +29,18 @@ Primary workflow commands:
   - supports `--output <path>`
   - supports `--registry-dir <path>`
   - reports detected repo context, declared Salt policy, runtime signals, and workflow capabilities
+  - includes a machine-readable `capabilityManifest` in JSON mode so hosts can inspect the compact contract version, workflow vocabulary, support-tool policy, and runtime metadata without parsing prose
 - `salt-ds create <query>`
   - supports `--json`
   - supports `--output <path>`
   - supports `--registry-dir <path>`
   - supports `--include-starter-code`
+  - supports `--starter-only`
+  - supports `--full`
   - creates Salt-first UI recommendations for new or existing repos without colliding with normal project build commands
+  - `--json` is the compact public contract path for create
+  - `--starter-only` is a create-only advanced JSON artifact path for starter grounding and follow-through
+  - `--full` is the explicit rich-output path
 - `salt-ds review [target ...]`
   - supports `--url <url>`
   - supports `--create-report <path>`
@@ -46,6 +52,7 @@ Primary workflow commands:
   - supports `--mode <auto|browser|fetched-html>`
   - supports `--output-dir <path>`
   - supports `--no-screenshot`
+  - supports `--full`
   - runs source-first Salt review for existing Salt code and can attach runtime evidence in the same pass when `--url` is provided
   - returns structured `confidence`, `raiseConfidence`, and `fixCandidates` in JSON output so the agent can judge whether to edit, inspect further, or ask follow-up questions without the CLI mutating files directly
   - can load a saved create report to check whether the implementation drifted away from the previously chosen canonical Salt direction
@@ -60,6 +67,7 @@ Primary workflow commands:
   - supports `--mode <auto|browser|fetched-html>`
   - supports `--output-dir <path>`
   - supports `--no-screenshot`
+  - supports `--full`
   - translates non-Salt UI intent into Salt-first targets and implementation guidance
   - returns a familiarity contract, migration scope, post-migration verification guidance, delta categories, confidence signals, and optional runtime-scoping evidence so the agent can preserve important experience anchors without cloning the old visual system
 - `salt-ds upgrade`
@@ -71,6 +79,7 @@ Primary workflow commands:
   - supports `--json`
   - supports `--output <path>`
   - supports `--registry-dir <path>`
+  - supports `--full`
   - compares Salt versions and turns the result into upgrade-oriented workflow output
 
 Support commands:
@@ -96,6 +105,17 @@ Support commands:
   - falls back to `fetched-html` mode when browser-session inspection is unavailable, so consumers can still get structure, landmark, and accessible-name evidence even though computed layout evidence is unavailable
 
 Canonical Salt grounding and declared-project-policy application now happen inside the public workflow commands and MCP tools. There is no second manual semantic CLI surface.
+
+Workflow JSON modes:
+
+- `--json`
+  - compact public contract
+- `--full`
+  - explicit rich workflow path: top-level `salt_workflow_v3` plus additive `details`
+- `create --starter-only --json`
+  - create-only narrow artifact contract for starter grounding and required follow-through
+  - requires `--json`
+  - rejects `--full`
 
 The intended model is:
 

@@ -32,6 +32,7 @@ describe("getSaltProjectContext", () => {
     const result = await getSaltProjectContext(CODE_ANALYSIS_REGISTRY);
 
     expect(result.result).toMatchObject({
+      context_id: null,
       root_dir: rootDir.replace(/\\/g, "/"),
       package_json_path: null,
       resolution: {
@@ -42,9 +43,18 @@ describe("getSaltProjectContext", () => {
     });
     expect(result.artifacts.summary).toMatchObject({
       recommended_next_tool: null,
+      context_health: {
+        resolution_status: "needs_explicit_root",
+        trusted: false,
+        repo_specific_workflows_ready: false,
+      },
       bootstrap_requirement: {
         status: "not_required",
         next_tool_after_bootstrap: null,
+      },
+      retry_with: {
+        root_dir: null,
+        context_id: null,
       },
     });
     expect(result.artifacts.summary.reasons).toEqual(
@@ -76,20 +86,32 @@ describe("getSaltProjectContext", () => {
 
     const result = await getSaltProjectContext(CODE_ANALYSIS_REGISTRY);
 
+    expect(result.result.context_id).toBeNull();
     expect(result.result.resolution).toMatchObject({
       root_source: "process_cwd",
       status: "fallback",
-      quality: "ready",
+      quality: "needs_explicit_root",
     });
     expect(result.artifacts.summary.recommended_next_tool).toBeNull();
+    expect(result.artifacts.summary).toMatchObject({
+      context_health: {
+        resolution_status: "fallback",
+        trusted: false,
+        repo_specific_workflows_ready: false,
+      },
+      retry_with: {
+        root_dir: rootDir.replace(/\\/g, "/"),
+        context_id: null,
+      },
+    });
     expect(result.artifacts.summary.reasons).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Salt packages are already present"),
+        expect.stringContaining("root_dir set to"),
       ]),
     );
     expect(result.artifacts.notes).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Pass root_dir or reuse context_id"),
+        expect.stringContaining("root_dir set to"),
       ]),
     );
   });
@@ -106,10 +128,74 @@ describe("getSaltProjectContext", () => {
       status: "mismatch",
       quality: "needs_explicit_root",
     });
+    expect(result.result.context_id).toBeNull();
     expect(result.artifacts.summary.recommended_next_tool).toBeNull();
     expect(result.artifacts.summary.reasons).toEqual(
       expect.arrayContaining([
         expect.stringContaining("explicit root_dir did not expose"),
+      ]),
+    );
+    expect(result.artifacts.summary).toMatchObject({
+      context_health: {
+        resolution_status: "mismatch",
+        trusted: false,
+        repo_specific_workflows_ready: false,
+      },
+      retry_with: {
+        root_dir: null,
+        context_id: null,
+      },
+    });
+  });
+
+  it("flags an explicit nested subdirectory as a mismatch and suggests the repo root", async () => {
+    const rootDir = await createTempDir("salt-mcp-project-context-nested");
+    const nestedDir = path.join(rootDir, "src", "features");
+    await fs.mkdir(nestedDir, { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          name: "nested-context",
+          private: true,
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    const result = await getSaltProjectContext(CODE_ANALYSIS_REGISTRY, {
+      root_dir: nestedDir,
+    });
+
+    expect(result.result).toMatchObject({
+      context_id: null,
+      root_dir: nestedDir.replace(/\\/g, "/"),
+      resolution: {
+        root_source: "explicit_input",
+        status: "mismatch",
+        quality: "needs_explicit_root",
+      },
+    });
+    expect(result.artifacts.summary).toMatchObject({
+      recommended_next_tool: null,
+      context_health: {
+        resolution_status: "mismatch",
+        trusted: false,
+        repo_specific_workflows_ready: false,
+      },
+      retry_with: {
+        root_dir: rootDir.replace(/\\/g, "/"),
+        context_id: null,
+      },
+    });
+    expect(result.artifacts.summary.reasons).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(rootDir.replace(/\\/g, "/")),
       ]),
     );
   });
@@ -212,6 +298,19 @@ describe("getSaltProjectContext", () => {
     const context = result.result;
     const summary = result.artifacts.summary;
     const notes = result.artifacts.notes;
+
+    expect(context.context_id).toEqual(expect.any(String));
+    expect(summary).toMatchObject({
+      context_health: {
+        resolution_status: "resolved",
+        trusted: true,
+        repo_specific_workflows_ready: true,
+      },
+      retry_with: {
+        root_dir: rootDir.replace(/\\/g, "/"),
+        context_id: context.context_id,
+      },
+    });
 
     expect(context.salt.installation.version_health).toEqual(
       expect.objectContaining({

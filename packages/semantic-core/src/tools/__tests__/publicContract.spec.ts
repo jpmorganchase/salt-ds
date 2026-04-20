@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { SaltRegistry } from "../../types.js";
 import type { CreateSaltUiResult } from "../createSaltUi.js";
 import {
+  PUBLIC_WORKFLOW_CONTRACT_VERSION,
   assertValidPublicContract,
   buildCreatePublicContract,
   buildMigratePublicContract,
@@ -9,6 +10,7 @@ import {
   buildReviewPublicContract,
   buildUpgradePublicContract,
   getPublicContractValidationErrors,
+  type PublicContract,
   type PublicContractInput,
   type PublicNextStep,
 } from "../publicContract.js";
@@ -143,6 +145,37 @@ function buildComponent(
   };
 }
 
+function toComparablePublicContract(contract: PublicContract) {
+  const nextStep = { ...contract.action } as Record<string, unknown>;
+  delete nextStep.rule_ids;
+  delete nextStep.post_action;
+
+  return {
+    contract: contract.contract,
+    workflow: contract.workflow,
+    transport: contract.transport,
+    workflow_status: contract.status,
+    canonical_complete: contract.safety.canonical_complete,
+    safe_to_implement_exact_request: contract.safety.exact_request_safe,
+    requested_entity:
+      typeof contract.request.entity === "string"
+        ? contract.request.entity
+        : undefined,
+    resolved_entity:
+      Object.hasOwn(contract.request, "resolved_entity")
+        ? contract.request.resolved_entity
+        : undefined,
+    match_status:
+      typeof contract.request.match_status === "string"
+        ? contract.request.match_status
+        : undefined,
+    blocking_reasons: contract.safety.blocking_reasons,
+    next_step: nextStep,
+    required_post_step: contract.action.post_action ?? undefined,
+    summary: contract.summary,
+  };
+}
+
 function buildRegistryFixture(): SaltRegistry {
   return {
     generated_at: "2026-04-10T00:00:00Z",
@@ -228,6 +261,11 @@ function buildCreateWorkflowContract(
       repo_specific_edits_ready: true,
       reason: "Context is ready.",
       satisfied_by: "salt-ds info",
+      resolution_status: "resolved",
+      retry_with: {
+        root_dir: "/repo",
+        context_id: "repo-context",
+      },
     },
     starter_validation: {
       status: "clean",
@@ -366,6 +404,11 @@ function buildMigrateWorkflowContract(
       repo_specific_edits_ready: true,
       reason: "Context is ready.",
       satisfied_by: "salt-ds info",
+      resolution_status: "resolved",
+      retry_with: {
+        root_dir: "/repo",
+        context_id: "repo-context",
+      },
     },
     starter_validation: {
       status: "clean",
@@ -497,10 +540,11 @@ describe("publicContract", () => {
   it("builds a success contract for an exact safe request", () => {
     const contract = buildPublicContract(buildInput());
 
-    expect(contract).toEqual(
+    expect(toComparablePublicContract(contract)).toEqual(
       expect.objectContaining({
+        contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
         workflow: "create",
-        transport_used: "mcp",
+        transport: "mcp",
         workflow_status: "success",
         canonical_complete: true,
         safe_to_implement_exact_request: true,
@@ -549,7 +593,7 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract).toEqual(
+    expect(toComparablePublicContract(contract)).toEqual(
       expect.objectContaining({
         workflow_status: "partial",
         canonical_complete: false,
@@ -595,7 +639,7 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract).toEqual(
+    expect(toComparablePublicContract(contract)).toEqual(
       expect.objectContaining({
         workflow_status: "blocked",
         canonical_complete: false,
@@ -636,7 +680,7 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract).toEqual(
+    expect(toComparablePublicContract(contract)).toEqual(
       expect.objectContaining({
         workflow_status: "blocked",
         canonical_complete: false,
@@ -671,13 +715,13 @@ describe("publicContract", () => {
           tool: "get_salt_project_context",
           mode: "stop_and_fix_context",
           args: {
-            root_dir: ".",
+            root_dir: "/repo",
           },
         },
       }),
     );
 
-    expect(contract).toEqual(
+    expect(toComparablePublicContract(contract)).toEqual(
       expect.objectContaining({
         workflow_status: "blocked",
         canonical_complete: false,
@@ -722,7 +766,7 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract).toEqual(
+    expect(toComparablePublicContract(contract)).toEqual(
       expect.objectContaining({
         workflow_status: "blocked",
         match_status: "broadened",
@@ -735,22 +779,31 @@ describe("publicContract", () => {
 
   it("flags contradiction states through validation helpers", () => {
     const errors = getPublicContractValidationErrors({
+      contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
       workflow: "create",
-      transport_used: "mcp",
-      workflow_status: "success",
-      canonical_complete: true,
-      safe_to_implement_exact_request: false,
-      requested_entity: "Header block",
-      resolved_entity: "List filtering",
-      match_status: "misrouted",
-      blocking_reasons: [],
-      next_step: exactNameStep,
+      transport: "mcp",
+      status: "success",
+      request: {
+        entity: "Header block",
+        resolved_entity: "List filtering",
+        match_status: "misrouted",
+      },
+      safety: {
+        canonical_complete: true,
+        exact_request_safe: false,
+        blocking_reasons: [],
+      },
+      action: {
+        ...exactNameStep,
+        rule_ids: [],
+        post_action: null,
+      },
       summary: "This contract is intentionally contradictory.",
     });
 
     expect(errors).toEqual(
       expect.arrayContaining([
-        "workflow_status=success requires safe_to_implement_exact_request=true",
+        "status=success requires safety.exact_request_safe=true",
       ]),
     );
   });
@@ -758,18 +811,28 @@ describe("publicContract", () => {
   it("throws when a contract violates core contradiction rules", () => {
     expect(() =>
       assertValidPublicContract({
+        contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
         workflow: "create",
-        transport_used: "mcp",
-        workflow_status: "blocked",
-        canonical_complete: true,
-        safe_to_implement_exact_request: true,
-        requested_entity: "Unknown Thing",
-        resolved_entity: null,
-        match_status: "no_match",
-        blocking_reasons: [],
-        next_step: {
+        transport: "mcp",
+        status: "blocked",
+        request: {
+          entity: "Unknown Thing",
+          resolved_entity: null,
+          match_status: "no_match",
+        },
+        safety: {
+          canonical_complete: true,
+          exact_request_safe: true,
+          blocking_reasons: [],
+        },
+        action: {
           kind: "implement",
           scope: "exact_request",
+          rule_ids: [],
+          post_action: {
+            kind: "review",
+            tool: "review_salt_ui",
+          },
         },
         summary: "This contract is invalid.",
       }),
@@ -783,7 +846,7 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract.required_post_step).toEqual({
+    expect(contract.action.post_action).toEqual({
       kind: "review",
       tool: "salt-ds review",
     });
@@ -800,7 +863,7 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract.required_post_step).toBeUndefined();
+    expect(contract.action.post_action).toBeNull();
   });
 
   it("does not set required_post_step when next_step is not implement", () => {
@@ -821,50 +884,64 @@ describe("publicContract", () => {
       }),
     );
 
-    expect(contract.required_post_step).toBeUndefined();
+    expect(contract.action.post_action).toBeNull();
   });
 
   it("flags missing required_post_step when next_step is implement on a non-review workflow", () => {
     const errors = getPublicContractValidationErrors({
+      contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
       workflow: "create",
-      transport_used: "mcp",
-      workflow_status: "success",
-      canonical_complete: true,
-      safe_to_implement_exact_request: true,
-      requested_entity: "Metric",
-      resolved_entity: "Metric",
-      match_status: "exact",
-      blocking_reasons: [],
-      next_step: {
+      transport: "mcp",
+      status: "success",
+      request: {
+        entity: "Metric",
+        resolved_entity: "Metric",
+        match_status: "exact",
+      },
+      safety: {
+        canonical_complete: true,
+        exact_request_safe: true,
+        blocking_reasons: [],
+      },
+      action: {
         kind: "implement",
         scope: "exact_request",
+        rule_ids: [],
+        post_action: null,
       },
       summary: "Salt grounded the exact requested entity Metric.",
     });
 
     expect(errors).toContain(
-      "next_step.kind=implement requires required_post_step when workflow is not review",
+      "action.kind=implement requires action.post_action.kind=review when workflow is not review",
     );
   });
 
   it("flags required_post_step present when next_step is not implement", () => {
     const errors = getPublicContractValidationErrors({
+      contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
       workflow: "create",
-      transport_used: "mcp",
-      workflow_status: "partial",
-      canonical_complete: false,
-      safe_to_implement_exact_request: false,
-      blocking_reasons: ["follow-through remains"],
-      next_step: exactNameStep,
-      required_post_step: {
-        kind: "review",
-        tool: "review_salt_ui",
+      transport: "mcp",
+      status: "partial",
+      request: {},
+      safety: {
+        canonical_complete: false,
+        exact_request_safe: false,
+        blocking_reasons: ["follow-through remains"],
+      },
+      action: {
+        ...exactNameStep,
+        rule_ids: [],
+        post_action: {
+          kind: "review",
+          tool: "review_salt_ui",
+        },
       },
       summary: "Salt still needs follow-through.",
     });
 
     expect(errors).toContain(
-      "required_post_step must only appear when next_step.kind=implement",
+      "action.post_action must only appear when action.kind=implement",
     );
   });
 });
@@ -897,8 +974,9 @@ describe("publicContract workflow adapters", () => {
       query: "Metric",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
+        contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
         workflow: "create",
         workflow_status: "success",
         safe_to_implement_exact_request: true,
@@ -940,7 +1018,7 @@ describe("publicContract workflow adapters", () => {
       query: "dashboard summary area",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "partial",
@@ -989,7 +1067,7 @@ describe("publicContract workflow adapters", () => {
       query: "Header block",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "blocked",
@@ -1040,7 +1118,7 @@ describe("publicContract workflow adapters", () => {
       query: "Header block",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "blocked",
@@ -1092,7 +1170,7 @@ describe("publicContract workflow adapters", () => {
         "chart of data visualization component for dashboard analytical body",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "blocked",
@@ -1144,7 +1222,7 @@ describe("publicContract workflow adapters", () => {
       query: "Hotkeys",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "success",
@@ -1188,7 +1266,7 @@ describe("publicContract workflow adapters", () => {
       query: "Metric",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "blocked",
@@ -1261,7 +1339,7 @@ describe("publicContract workflow adapters", () => {
       transport_used: "mcp",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
         workflow_status: "blocked",
@@ -1345,13 +1423,13 @@ describe("publicContract workflow adapters", () => {
       transport_used: "mcp",
     });
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "review",
         workflow_status: "blocked",
         safe_to_implement_exact_request: false,
         blocking_reasons: expect.arrayContaining([
-          "Canonical Salt validation found issues.",
+          "Replace the current element with the canonical Salt primitive.",
         ]),
       }),
     );
@@ -1375,6 +1453,11 @@ describe("publicContract workflow adapters", () => {
         reason: "Repo context still needs to be loaded.",
         suggested_follow_up_tool: "get_salt_project_context",
         suggested_follow_up_cli: "salt-ds info --json",
+        resolution_status: "needs_explicit_root",
+        retry_with: {
+          root_dir: "/repo",
+          context_id: null,
+        },
       },
       starter_validation: {
         status: "clean",
@@ -1406,7 +1489,7 @@ describe("publicContract workflow adapters", () => {
       },
     );
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "migrate",
         workflow_status: "blocked",
@@ -1420,7 +1503,7 @@ describe("publicContract workflow adapters", () => {
           tool: "get_salt_project_context",
           mode: "stop_and_fix_context",
           args: {
-            root_dir: ".",
+            root_dir: "/repo",
           },
         },
       }),
@@ -1461,7 +1544,7 @@ describe("publicContract workflow adapters", () => {
       },
     );
 
-    expect(compact).toEqual(
+    expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "upgrade",
         workflow_status: "blocked",

@@ -1,0 +1,32 @@
+{
+  "contract": "salt_workflow_v3",
+  "workflow": "migrate",
+  "status": "blocked",
+  "request": {
+    "entity": null,
+    "resolved_entity": null,
+    "match_status": null,
+    "exact_match_required": null
+  },
+  "safety": {
+    "canonical_complete": false,
+    "exact_request_safe": false,
+    "blocking_reasons": [
+      "Does the repo already have an approved shell or navigation wrapper for this app-level region, or a page layout that should take precedence?",
+      "blocking questions remain"
+    ]
+  },
+  "action": {
+    "kind": "ask_user",
+    "question": "Does the repo already have an approved shell or navigation wrapper for this app-level region, or a page layout that should take precedence?",
+    "rule_ids": [
+      "migrate-preserve-task-flow",
+      "migrate-preserve-interaction-anchors",
+      "migrate-move-toward-canonical-salt",
+      "migrate-apply-conventions-after-canonical",
+      "migrate-confirm-workflow-deltas"
+    ],
+    "post_action": null
+  },
+  "summary": "Salt produced a migration direction for the requested source UI."
+}

@@ -76,6 +76,30 @@ const REPLAY_FIXTURE_PATHS = [
     "mcp",
     "eval-fixtures",
     "replays",
+    "existing-salt-create-tabs-avatar-priority.json",
+  ),
+  path.join(
+    REPO_ROOT,
+    "packages",
+    "mcp",
+    "eval-fixtures",
+    "replays",
+    "existing-salt-create-breadcrumbs-follow-through.json",
+  ),
+  path.join(
+    REPO_ROOT,
+    "packages",
+    "mcp",
+    "eval-fixtures",
+    "replays",
+    "existing-salt-create-chart-dashboard-focus.json",
+  ),
+  path.join(
+    REPO_ROOT,
+    "packages",
+    "mcp",
+    "eval-fixtures",
+    "replays",
     "existing-salt-review-wrong-root-context.json",
   ),
   path.join(
@@ -186,14 +210,14 @@ describe("workflow eval replay", () => {
     const compactDriftEntries = compactCreateEntries.filter((entry) => {
       const workflowResult = entry?.trace.workflow_result as
         | {
-            match_status?: string;
-            safe_to_implement_exact_request?: boolean;
-            workflow_status?: string;
+            request?: { match_status?: string };
+            safety?: { exact_request_safe?: boolean };
+            status?: string;
           }
         | undefined;
       return (
-        workflowResult?.match_status === "broadened" ||
-        workflowResult?.match_status === "misrouted"
+        workflowResult?.request?.match_status === "broadened" ||
+        workflowResult?.request?.match_status === "misrouted"
       );
     });
 
@@ -202,16 +226,16 @@ describe("workflow eval replay", () => {
         (entry) =>
           (
             entry?.trace.workflow_result as {
-              safe_to_implement_exact_request?: boolean;
+              safety?: { exact_request_safe?: boolean };
             }
-          ).safe_to_implement_exact_request === false,
+          ).safety?.exact_request_safe === false,
       ),
     ).toBe(true);
     expect(
       compactDriftEntries.every(
         (entry) =>
-          (entry?.trace.workflow_result as { workflow_status?: string })
-            .workflow_status !== "success",
+          (entry?.trace.workflow_result as { status?: string }).status !==
+          "success",
       ),
     ).toBe(true);
 
@@ -231,12 +255,79 @@ describe("workflow eval replay", () => {
     );
   });
 
+  it("locks the newly fixed create regressions into the replay corpus", async () => {
+    const report = await runWorkflowEvalReplayReport(REPLAY_FIXTURE_PATHS);
+    const entriesById = new Map(
+      report.entries.map((entry) => [entry.scenario_id, entry] as const),
+    );
+
+    expect(
+      entriesById.get("existing-salt-create-tabs-avatar-priority")?.judgment,
+    ).toEqual(
+      expect.objectContaining({
+        status: "passed",
+      }),
+    );
+    expect(
+      entriesById.get("existing-salt-create-tabs-avatar-priority")?.trace
+        .workflow_result,
+    ).toEqual(
+      expect.objectContaining({
+        request: expect.objectContaining({
+          resolved_entity: "Tabs",
+        }),
+        action: expect.objectContaining({
+          kind: "implement",
+        }),
+      }),
+    );
+    expect(
+      entriesById.get("existing-salt-create-breadcrumbs-follow-through")?.trace
+        .workflow_result,
+    ).toEqual(
+      expect.objectContaining({
+        request: expect.objectContaining({
+          resolved_entity: "Table",
+        }),
+        action: expect.objectContaining({
+          kind: "tool_call",
+          mode: "exact_name",
+          args: expect.objectContaining({
+            query: "Breadcrumbs",
+          }),
+        }),
+      }),
+    );
+    expect(
+      entriesById.get("existing-salt-create-chart-dashboard-focus")?.trace
+        .workflow_result,
+    ).toEqual(
+      expect.objectContaining({
+        request: expect.objectContaining({
+          resolved_entity: "Analytical dashboard",
+        }),
+        action: expect.objectContaining({
+          kind: "tool_call",
+          mode: "exact_name",
+          args: expect.objectContaining({
+            query: "Chart",
+          }),
+        }),
+      }),
+    );
+  });
+
   it("emits a machine-readable replay report with aggregate metrics", async () => {
     const report = await runWorkflowEvalReplayReport(REPLAY_FIXTURE_PATHS);
     const parsed = JSON.parse(buildWorkflowEvalReplayJsonReport(report)) as {
       passed: boolean;
       replay_paths: string[];
       metrics: { transcript_bytes: number; payload_bytes: number };
+      scorecard: {
+        context_safety: { safe_context_stops: number; context_failures: number };
+        next_step_quality: { exact_name_follow_ups: number };
+        workflow_efficiency: { average_transport_attempts: number };
+      };
       entries: Array<{
         scenario_id: string;
         judgment: { status: string; reasons: string[] };
@@ -311,6 +402,14 @@ describe("workflow eval replay", () => {
     ).toContain("byte budget");
     expect(parsed.metrics.transcript_bytes).toBeGreaterThan(0);
     expect(parsed.metrics.payload_bytes).toBeGreaterThan(0);
+    expect(
+      parsed.scorecard.context_safety.safe_context_stops +
+        parsed.scorecard.context_safety.context_failures,
+    ).toBeGreaterThan(0);
+    expect(parsed.scorecard.next_step_quality.exact_name_follow_ups).toBeGreaterThan(0);
+    expect(parsed.scorecard.workflow_efficiency.average_transport_attempts).toBeGreaterThanOrEqual(
+      1,
+    );
   });
 
   it("runs the replay CLI against an explicit saved transcript and writes JSON output", async () => {

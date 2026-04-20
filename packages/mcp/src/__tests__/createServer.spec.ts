@@ -9,6 +9,8 @@ import { createSaltMcpServer } from "../server/createServer.js";
 import {
   buildSaltMcpInstructions,
   buildSaltMcpServerInfo,
+  getSaltMcpRuntimeMetadata,
+  SALT_MCP_CAPABILITY_MANIFEST_URI,
 } from "../server/serverMetadata.js";
 import {
   createToolExecutionRuntime,
@@ -42,6 +44,36 @@ const EXPECTED_DEFAULT_TOOL_ORDER = [
 
 async function createTempDir(name: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), `${name}-`));
+}
+
+function readFullWorkflowDetails(value: unknown): Record<string, unknown> & {
+  workflow: Record<string, unknown>;
+  result: Record<string, unknown>;
+  artifacts: Record<string, unknown>;
+} {
+  expect(value).toEqual(
+    expect.objectContaining({
+      contract: "salt_workflow_v3",
+      workflow: expect.any(String),
+      transport: expect.any(String),
+      status: expect.any(String),
+      safety: expect.any(Object),
+      action: expect.any(Object),
+      summary: expect.any(String),
+      details: expect.any(Object),
+    }),
+  );
+
+  const details = (value as { details: unknown }).details as Record<
+    string,
+    unknown
+  >;
+  return {
+    ...(value as Record<string, unknown>),
+    workflow: details.workflow as Record<string, unknown>,
+    result: details.result as Record<string, unknown>,
+    artifacts: details.artifacts as Record<string, unknown>,
+  };
 }
 
 describe("createSaltMcpServer", () => {
@@ -329,6 +361,16 @@ describe("createSaltMcpServer", () => {
               "Bootstrap is optional for first results. Run bootstrap_salt_repo (or salt-ds init when MCP bootstrap is unavailable) when you want durable repo policy and the managed root instruction block for future repo-aware refinement.",
               "No existing Salt usage was detected, and the repo context looks ready for new Salt UI creation.",
             ],
+            context_health: {
+              resolution_status: "resolved",
+              trusted: true,
+              repo_specific_workflows_ready: true,
+              reason: null,
+            },
+            retry_with: {
+              root_dir: "/repo",
+              context_id: "repo:example",
+            },
           },
           notes: [],
         },
@@ -353,6 +395,60 @@ describe("createSaltMcpServer", () => {
         ).sort();
 
         expect(registeredTools).toEqual(EXPECTED_TOOL_NAMES);
+      },
+    );
+  });
+
+  it("registers a machine-readable capability manifest resource", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const registry = await loadRegistry({ registryDir });
+        const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
+        const registeredResources = (
+          server as unknown as {
+            _registeredResources: Record<
+              string,
+              {
+                metadata?: Record<string, unknown>;
+                readCallback: (uri: URL, extra: unknown) => Promise<{
+                  contents: Array<{
+                    uri: string;
+                    mimeType?: string;
+                    text?: string;
+                  }>;
+                }>;
+              }
+            >;
+          }
+        )._registeredResources;
+
+        expect(Object.keys(registeredResources)).toEqual([
+          SALT_MCP_CAPABILITY_MANIFEST_URI,
+        ]);
+        expect(
+          registeredResources[SALT_MCP_CAPABILITY_MANIFEST_URI]?.metadata,
+        ).toEqual(
+          expect.objectContaining({
+            mimeType: "application/json",
+          }),
+        );
+
+        const resourceResult =
+          await registeredResources[
+            SALT_MCP_CAPABILITY_MANIFEST_URI
+          ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {});
+
+        expect(resourceResult.contents).toEqual([
+          expect.objectContaining({
+            uri: SALT_MCP_CAPABILITY_MANIFEST_URI,
+            mimeType: "application/json",
+            text: JSON.stringify(runtimeMetadata.capability_manifest, null, 2),
+          }),
+        ]);
       },
     );
   });
@@ -446,7 +542,11 @@ describe("createSaltMcpServer", () => {
         const internalServer = (
           server as unknown as {
             server: {
-              _serverInfo: { name: string; version: string };
+              _serverInfo: {
+                name: string;
+                version: string;
+                description?: string;
+              };
               _instructions?: string;
             };
           }
@@ -455,6 +555,9 @@ describe("createSaltMcpServer", () => {
         expect(internalServer._serverInfo).toEqual(runtimeInfo);
         expect(internalServer._serverInfo.version).not.toBe(VERSION);
         expect(internalServer._instructions).toBe(instructions);
+        expect(internalServer._instructions).toContain(
+          `Machine-readable capability manifest resource: ${SALT_MCP_CAPABILITY_MANIFEST_URI}.`,
+        );
         expect(internalServer._instructions).toContain(
           "When asked for the MCP version, use the runtime version.",
         );
@@ -475,6 +578,9 @@ describe("createSaltMcpServer", () => {
         );
         expect(internalServer._instructions).toContain(
           "Only call tools that are actually present in the current session tool list.",
+        );
+        expect(internalServer._serverInfo.description).toContain(
+          SALT_MCP_CAPABILITY_MANIFEST_URI,
         );
       },
     );
@@ -543,6 +649,15 @@ describe("createSaltMcpServer", () => {
             artifacts: expect.objectContaining({
               summary: expect.objectContaining({
                 recommended_next_tool: expect.any(String),
+                context_health: expect.objectContaining({
+                  resolution_status: "resolved",
+                  trusted: true,
+                  repo_specific_workflows_ready: true,
+                }),
+                retry_with: expect.objectContaining({
+                  root_dir: expect.any(String),
+                  context_id: expect.any(String),
+                }),
                 bootstrap_requirement: expect.objectContaining({
                   status: "recommended",
                   tool: "bootstrap_salt_repo",
@@ -568,14 +683,16 @@ describe("createSaltMcpServer", () => {
           }),
         );
 
-        const chooseResultWithoutContext = await chooseTool?.execute(
-          registry,
-          {
-            query: "link to another route from a toolbar action",
-            include_starter_code: true,
-            view: "full",
-          },
-          runtime,
+        const chooseResultWithoutContext = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "link to another route from a toolbar action",
+              include_starter_code: true,
+              view: "full",
+            },
+            runtime,
+          ),
         );
         expect(chooseResultWithoutContext).toEqual(
           expect.objectContaining({
@@ -589,15 +706,17 @@ describe("createSaltMcpServer", () => {
           }),
         );
 
-        const chooseResult = await chooseTool?.execute(
-          registry,
-          {
-            query: "link to another page from a toolbar action",
-            include_starter_code: true,
-            context_id: contextResult.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "link to another page from a toolbar action",
+              include_starter_code: true,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
         expect(chooseResult).toEqual(
           expect.objectContaining({
@@ -634,8 +753,13 @@ describe("createSaltMcpServer", () => {
               }),
               context_requirement: expect.objectContaining({
                 status: "context_checked",
+                resolution_status: "resolved",
                 repo_specific_edits_ready: true,
                 satisfied_by: "salt-ds info",
+                retry_with: expect.objectContaining({
+                  root_dir: expect.any(String),
+                  context_id: expect.any(String),
+                }),
               }),
             }),
             result: expect.objectContaining({
@@ -678,15 +802,17 @@ describe("createSaltMcpServer", () => {
           ),
         ).toBe(true);
 
-        const guidanceOnlyChooseResult = await chooseTool?.execute(
-          registry,
-          {
-            query: "link to another page from a toolbar action",
-            include_starter_code: false,
-            context_id: contextResult.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const guidanceOnlyChooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "link to another page from a toolbar action",
+              include_starter_code: false,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
         expect(guidanceOnlyChooseResult).toEqual(
           expect.objectContaining({
@@ -706,22 +832,24 @@ describe("createSaltMcpServer", () => {
           }),
         );
 
-        const analyzeResult = await analyzeTool?.execute(
-          registry,
-          {
-            code: [
-              'import { Button } from "@salt-ds/core";',
-              "",
-              "export function Demo() {",
-              '  return <Button href="/next">Go</Button>;',
-              "}",
-            ].join("\n"),
-            framework: "react",
-            package_version: "2.0.0",
-            context_id: contextResult.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const analyzeResult = readFullWorkflowDetails(
+          await analyzeTool?.execute(
+            registry,
+            {
+              code: [
+                'import { Button } from "@salt-ds/core";',
+                "",
+                "export function Demo() {",
+                '  return <Button href="/next">Go</Button>;',
+                "}",
+              ].join("\n"),
+              framework: "react",
+              package_version: "2.0.0",
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
         expect(analyzeResult).toEqual(
           expect.objectContaining({
@@ -765,21 +893,23 @@ describe("createSaltMcpServer", () => {
           }),
         );
 
-        const translateResult = await translateTool?.execute(
-          registry,
-          {
-            query:
-              "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
-            include_starter_code: true,
-            source_outline: {
-              regions: ["header", "sidebar"],
-              actions: ["primary action"],
-              states: ["loading"],
+        const translateResult = readFullWorkflowDetails(
+          await translateTool?.execute(
+            registry,
+            {
+              query:
+                "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
+              include_starter_code: true,
+              source_outline: {
+                regions: ["header", "sidebar"],
+                actions: ["primary action"],
+                states: ["loading"],
+              },
+              context_id: contextResult.result.context_id,
+              view: "full",
             },
-            context_id: contextResult.result.context_id,
-            view: "full",
-          },
-          runtime,
+            runtime,
+          ),
         );
         expect(translateResult).toEqual(
           expect.objectContaining({
@@ -848,15 +978,17 @@ describe("createSaltMcpServer", () => {
           }),
         );
 
-        const compareResult = await compareTool?.execute(
-          registry,
-          {
-            package: "@salt-ds/core",
-            from_version: "1.1.0",
-            include_deprecations: true,
-            view: "full",
-          },
-          runtime,
+        const compareResult = readFullWorkflowDetails(
+          await compareTool?.execute(
+            registry,
+            {
+              package: "@salt-ds/core",
+              from_version: "1.1.0",
+              include_deprecations: true,
+              view: "full",
+            },
+            runtime,
+          ),
         );
         expect(compareResult).toEqual(
           expect.objectContaining({
@@ -981,15 +1113,17 @@ describe("createSaltMcpServer", () => {
           runtime,
         )) as { result: { context_id: string } };
 
-        const chooseResult = await chooseTool?.execute(
-          registry,
-          {
-            query: "navigate to another route",
-            include_starter_code: true,
-            context_id: contextResult.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              include_starter_code: true,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
 
         expect(chooseResult).toEqual(
@@ -1101,14 +1235,16 @@ describe("createSaltMcpServer", () => {
         );
         const runtime = createToolExecutionRuntime();
 
-        const chooseResult = await chooseTool?.execute(
-          registry,
-          {
-            query: "navigate to another route",
-            root_dir: rootDir,
-            view: "full",
-          },
-          runtime,
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              root_dir: rootDir,
+              view: "full",
+            },
+            runtime,
+          ),
         );
 
         expect(chooseResult).toEqual(
@@ -1174,15 +1310,18 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(chooseResult).toMatchObject({
+          contract: "salt_workflow_v3",
           workflow: "create",
-          transport_used: "mcp",
-          workflow_status: expect.stringMatching(
+          transport: "mcp",
+          status: expect.stringMatching(
             /^(success|partial|blocked|failed)$/,
           ),
-          canonical_complete: expect.any(Boolean),
-          safe_to_implement_exact_request: expect.any(Boolean),
-          blocking_reasons: expect.any(Array),
-          next_step: expect.objectContaining({
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
             kind: expect.any(String),
           }),
           summary: expect.any(String),
@@ -1247,9 +1386,11 @@ describe("createSaltMcpServer", () => {
 
         expect(chooseResult).toMatchObject({
           workflow: "create",
-          requested_entity: "Metric",
-          resolved_entity: "Metric",
-          match_status: "exact",
+          request: {
+            entity: "Metric",
+            resolved_entity: "Metric",
+            match_status: "exact",
+          },
         });
       },
     );
@@ -1302,10 +1443,12 @@ describe("createSaltMcpServer", () => {
 
         expect(chooseResult).toMatchObject({
           workflow: "create",
-          requested_entity: "analytical dashboard body",
-          resolved_entity: "Analytical dashboard",
-          match_status: "broadened",
-          next_step: {
+          request: {
+            entity: "analytical dashboard body",
+            resolved_entity: "Analytical dashboard",
+            match_status: "broadened",
+          },
+          action: {
             kind: "tool_call",
             tool: "create_salt_ui",
             mode: "exact_name",
@@ -1373,15 +1516,18 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(reviewResult).toMatchObject({
+          contract: "salt_workflow_v3",
           workflow: "review",
-          transport_used: "mcp",
-          workflow_status: expect.stringMatching(
+          transport: "mcp",
+          status: expect.stringMatching(
             /^(success|partial|blocked|failed)$/,
           ),
-          canonical_complete: expect.any(Boolean),
-          safe_to_implement_exact_request: expect.any(Boolean),
-          blocking_reasons: expect.any(Array),
-          next_step: expect.objectContaining({
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
             kind: expect.any(String),
           }),
           summary: expect.any(String),
@@ -1408,15 +1554,18 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(migrateResult).toMatchObject({
+          contract: "salt_workflow_v3",
           workflow: "migrate",
-          transport_used: "mcp",
-          workflow_status: expect.stringMatching(
+          transport: "mcp",
+          status: expect.stringMatching(
             /^(success|partial|blocked|failed)$/,
           ),
-          canonical_complete: expect.any(Boolean),
-          safe_to_implement_exact_request: expect.any(Boolean),
-          blocking_reasons: expect.any(Array),
-          next_step: expect.objectContaining({
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
             kind: expect.any(String),
           }),
           summary: expect.any(String),
@@ -1442,15 +1591,18 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(upgradeResult).toMatchObject({
+          contract: "salt_workflow_v3",
           workflow: "upgrade",
-          transport_used: "mcp",
-          workflow_status: expect.stringMatching(
+          transport: "mcp",
+          status: expect.stringMatching(
             /^(success|partial|blocked|failed)$/,
           ),
-          canonical_complete: expect.any(Boolean),
-          safe_to_implement_exact_request: expect.any(Boolean),
-          blocking_reasons: expect.any(Array),
-          next_step: expect.objectContaining({
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
             kind: expect.any(String),
           }),
           summary: expect.any(String),
@@ -1543,23 +1695,27 @@ describe("createSaltMcpServer", () => {
           runtime,
         )) as { result: { context_id: string } };
 
-        const resultOne = await chooseTool?.execute(
-          registry,
-          {
-            query: "navigate to another route",
-            context_id: contextOne.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const resultOne = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              context_id: contextOne.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
-        const resultTwo = await chooseTool?.execute(
-          registry,
-          {
-            query: "navigate to another route",
-            context_id: contextTwo.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const resultTwo = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              context_id: contextTwo.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
 
         expect(resultOne).toEqual(
@@ -1643,13 +1799,15 @@ describe("createSaltMcpServer", () => {
 
         await contextTool?.execute(registry, { root_dir: rootDir }, runtime);
 
-        const chooseResult = await chooseTool?.execute(
-          registry,
-          {
-            query: "navigate to another route",
-            view: "full",
-          },
-          runtime,
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              view: "full",
+            },
+            runtime,
+          ),
         );
 
         expect(chooseResult).toEqual(
@@ -1739,20 +1897,31 @@ describe("createSaltMcpServer", () => {
           expect(wrongContext).toEqual(
             expect.objectContaining({
               result: expect.objectContaining({
+                context_id: null,
                 resolution: expect.objectContaining({
                   status: "mismatch",
+                }),
+              }),
+              artifacts: expect.objectContaining({
+                summary: expect.objectContaining({
+                  retry_with: {
+                    root_dir: null,
+                    context_id: null,
+                  },
                 }),
               }),
             }),
           );
 
-          const chooseResult = await chooseTool?.execute(
-            registry,
-            {
-              query: "navigate to another route",
-              view: "full",
-            },
-            runtime,
+          const chooseResult = readFullWorkflowDetails(
+            await chooseTool?.execute(
+              registry,
+              {
+                query: "navigate to another route",
+                view: "full",
+              },
+              runtime,
+            ),
           );
 
           expect(chooseResult).toEqual(
@@ -1760,6 +1929,9 @@ describe("createSaltMcpServer", () => {
               workflow: expect.objectContaining({
                 context_requirement: expect.objectContaining({
                   status: "context_required",
+                  retry_with: expect.objectContaining({
+                    context_id: null,
+                  }),
                 }),
               }),
             }),
@@ -1800,13 +1972,15 @@ describe("createSaltMcpServer", () => {
 
         process.chdir(tempRoot);
         try {
-          const chooseResult = await chooseTool?.execute(
-            registry,
-            {
-              query: "create a simple dashboard",
-              view: "full",
-            },
-            runtime,
+          const chooseResult = readFullWorkflowDetails(
+            await chooseTool?.execute(
+              registry,
+              {
+                query: "create a simple dashboard",
+                view: "full",
+              },
+              runtime,
+            ),
           );
 
           expect(chooseResult).toEqual(
@@ -1885,15 +2059,17 @@ describe("createSaltMcpServer", () => {
           { root_dir: rootDir },
           runtime,
         )) as { result: { context_id: string } };
-        const chooseResult = await chooseTool?.execute(
-          registry,
-          {
-            query: "navigate to another route",
-            include_starter_code: true,
-            context_id: contextResult.result.context_id,
-            view: "full",
-          },
-          runtime,
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              include_starter_code: true,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
         );
 
         expect(chooseResult).toEqual(
