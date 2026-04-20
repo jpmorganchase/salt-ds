@@ -10,6 +10,7 @@ import {
   migrateToSalt,
 } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import {
+  attachPublicContractDetails,
   buildCreatePublicContract,
   buildMigratePublicContract,
   buildReviewPublicContract,
@@ -924,11 +925,44 @@ function workflowStatusToExitCode(
 }
 
 function getWorkflowExitCode(contract: PublicContract): WorkflowExitCode {
-  return workflowStatusToExitCode(contract.workflow_status);
+  return workflowStatusToExitCode(contract.status);
 }
 
 function shouldEmitCompactWorkflowJson(flags: Record<string, string>): boolean {
   return flags.json === "true" && flags.full !== "true";
+}
+
+function rejectUnsupportedJsonVariant(
+  workflow: "create" | "review" | "migrate" | "upgrade",
+  flags: Record<string, string>,
+  io: RequiredCliIo,
+): WorkflowExitCode | null {
+  if (flags["starter-only"] !== "true") {
+    return null;
+  }
+
+  if (workflow !== "create") {
+    io.writeStderr(
+      "--starter-only is only supported for `salt-ds create --json`.\n",
+    );
+    return 30;
+  }
+
+  if (flags.full === "true") {
+    io.writeStderr(
+      "--starter-only cannot be combined with --full. Use one explicit JSON contract or the other.\n",
+    );
+    return 30;
+  }
+
+  if (flags.json !== "true") {
+    io.writeStderr(
+      "--starter-only is only supported with --json so the narrow create artifact contract stays explicit.\n",
+    );
+    return 30;
+  }
+
+  return null;
 }
 
 function toActionableProjectConventionsRepoRefinement(
@@ -1856,7 +1890,9 @@ async function writeWorkflowOutput<
     ? path.resolve(io.cwd, jsonOutputPath)
     : undefined;
   const compactJson = shouldEmitCompactWorkflowJson(flags);
-  const jsonResult = compactJson ? options.compactJsonOverride : result;
+  const jsonResult = compactJson
+    ? options.compactJsonOverride
+    : attachPublicContractDetails(options.compactJsonOverride, result);
   if (outputPath) {
     await writeJsonFile(outputPath, jsonResult);
   }
@@ -2012,6 +2048,15 @@ export async function runCreateCommand(
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  const invalidJsonVariantExitCode = rejectUnsupportedJsonVariant(
+    "create",
+    flags,
+    io,
+  );
+  if (invalidJsonVariantExitCode != null) {
+    return invalidJsonVariantExitCode;
+  }
+
   const query = positionals.join(" ").trim();
   if (!query) {
     io.writeStderr("Missing query. Usage: salt-ds create <query>\n");
@@ -2141,6 +2186,7 @@ export async function runCreateCommand(
           nextStep: buildCliWorkflowSummaryNextStep({
             readiness: workflowReadiness,
             defaultNextStep:
+              canonicalContract.implementation_gate.next_step ??
               recommendation.next_step ??
               "Use the recommended Salt direction as the first scaffold, then validate the changed code with salt-ds review.",
           }),
@@ -2250,14 +2296,14 @@ export async function runCreateCommand(
     if (flags["starter-only"] === "true" && flags.json === "true") {
       const starterOnlyResult = {
         workflow: "create",
-        workflow_status: compactJson.workflow_status,
+        status: compactJson.status,
         decision: policyRecommendation.decision,
         starter_code: policyRecommendation.starter_code ?? null,
         composition_contract:
           policyRecommendation.composition_contract ?? null,
         required_follow_through:
           canonicalContract.implementation_gate.required_follow_through,
-        next_step: compactJson.next_step,
+        action: compactJson.action,
       };
       const jsonOutputPath = flags["json-file"] ?? flags.output;
       if (jsonOutputPath) {
@@ -2287,6 +2333,15 @@ export async function runReviewCommand(
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  const invalidJsonVariantExitCode = rejectUnsupportedJsonVariant(
+    "review",
+    flags,
+    io,
+  );
+  if (invalidJsonVariantExitCode != null) {
+    return invalidJsonVariantExitCode;
+  }
+
   return runReviewLikeCommand(positionals, flags, io);
 }
 
@@ -2295,6 +2350,15 @@ export async function runMigrateCommand(
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  const invalidJsonVariantExitCode = rejectUnsupportedJsonVariant(
+    "migrate",
+    flags,
+    io,
+  );
+  if (invalidJsonVariantExitCode != null) {
+    return invalidJsonVariantExitCode;
+  }
+
   const query = positionals.join(" ").trim();
   try {
     const visualEvidence = await loadMigrationVisualEvidence({
@@ -2573,6 +2637,15 @@ export async function runUpgradeCommand(
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  const invalidJsonVariantExitCode = rejectUnsupportedJsonVariant(
+    "upgrade",
+    flags,
+    io,
+  );
+  if (invalidJsonVariantExitCode != null) {
+    return invalidJsonVariantExitCode;
+  }
+
   if (positionals.length > 0) {
     io.writeStderr(
       "Upgrade does not accept positional arguments. Use flags instead.\n",

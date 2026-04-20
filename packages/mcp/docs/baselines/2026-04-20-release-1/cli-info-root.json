@@ -1,0 +1,300 @@
+{
+  "toolVersion": "0.0.0",
+  "timestamp": "2026-04-20T18:47:19.960Z",
+  "rootDir": "D:/Work/salt-ds-3",
+  "packageJsonPath": "D:/Work/salt-ds-3/package.json",
+  "environment": {
+    "os": "win32",
+    "nodeVersion": "v24.10.0",
+    "packageManager": "yarn"
+  },
+  "framework": {
+    "name": "vite-react",
+    "evidence": [
+      "dependency:vite",
+      "dependency:react"
+    ]
+  },
+  "workspace": {
+    "kind": "workspace-root",
+    "workspaceRoot": "D:/Work/salt-ds-3"
+  },
+  "salt": {
+    "packages": [],
+    "packageVersion": null,
+    "installation": {
+      "nodeModulesRoots": [
+        "D:/Work/salt-ds-3/node_modules"
+      ],
+      "resolvedPackages": [],
+      "installedPackages": [
+        {
+          "name": "@salt-ds/ag-grid-theme",
+          "version": "2.8.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/ag-grid-theme/package.json"
+        },
+        {
+          "name": "@salt-ds/cli",
+          "version": "0.0.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/cli/package.json"
+        },
+        {
+          "name": "@salt-ds/core",
+          "version": "1.59.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/core/package.json"
+        },
+        {
+          "name": "@salt-ds/countries",
+          "version": "1.5.1",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/countries/package.json"
+        },
+        {
+          "name": "@salt-ds/data-grid",
+          "version": "1.0.40",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/data-grid/package.json"
+        },
+        {
+          "name": "@salt-ds/date-adapters",
+          "version": "0.1.0-alpha.6",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/date-adapters/package.json"
+        },
+        {
+          "name": "@salt-ds/embla-carousel",
+          "version": "1.1.3",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/embla-carousel/package.json"
+        },
+        {
+          "name": "@salt-ds/highcharts-theme",
+          "version": "0.2.2",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/highcharts-theme/package.json"
+        },
+        {
+          "name": "@salt-ds/icons",
+          "version": "1.18.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/icons/package.json"
+        },
+        {
+          "name": "@salt-ds/lab",
+          "version": "1.0.0-alpha.88",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/lab/package.json"
+        },
+        {
+          "name": "@salt-ds/mcp",
+          "version": "0.0.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/mcp/package.json"
+        },
+        {
+          "name": "@salt-ds/react-resizable-panels-theme",
+          "version": "1.0.3",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/react-resizable-panels-theme/package.json"
+        },
+        {
+          "name": "@salt-ds/runtime-inspector-core",
+          "version": "0.0.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/runtime-inspector-core/package.json"
+        },
+        {
+          "name": "@salt-ds/semantic-core",
+          "version": "0.0.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/semantic-core/package.json"
+        },
+        {
+          "name": "@salt-ds/site",
+          "version": "0.1.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/site/package.json"
+        },
+        {
+          "name": "@salt-ds/skills",
+          "version": "0.0.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/skills/package.json"
+        },
+        {
+          "name": "@salt-ds/styles",
+          "version": "0.3.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/styles/package.json"
+        },
+        {
+          "name": "@salt-ds/theme",
+          "version": "1.42.0",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/theme/package.json"
+        },
+        {
+          "name": "@salt-ds/window",
+          "version": "0.1.1",
+          "path": "D:/Work/salt-ds-3/node_modules/@salt-ds/window/package.json"
+        }
+      ],
+      "versionHealth": {
+        "declaredVersions": [],
+        "resolvedVersions": [],
+        "installedVersions": [
+          "0.0.0",
+          "0.1.0",
+          "0.1.0-alpha.6",
+          "0.1.1",
+          "0.2.2",
+          "0.3.0",
+          "1.0.0-alpha.88",
+          "1.0.3",
+          "1.0.40",
+          "1.1.3",
+          "1.18.0",
+          "1.42.0",
+          "1.5.1",
+          "1.59.0",
+          "2.8.0"
+        ],
+        "multipleDeclaredVersions": false,
+        "multipleResolvedVersions": false,
+        "multipleInstalledVersions": false,
+        "mismatchedPackages": [],
+        "issues": [
+          "yarn inspection failed and Salt fell back to the node_modules scan: spawn yarn ENOENT",
+          "Manifest override fields detected: resolutions. Declared Salt ranges may not match the final installed graph."
+        ]
+      },
+      "inspection": {
+        "packageManager": "yarn",
+        "strategy": "package-manager-command",
+        "status": "failed",
+        "listCommand": "yarn list --json --pattern @salt-ds",
+        "discoveredVersions": [],
+        "error": "spawn yarn ENOENT",
+        "packageLayout": "node-modules",
+        "limitations": [
+          "Package-manager inspection failed for yarn; Salt relied on the node_modules scan instead.",
+          "Dependency override fields detected: resolutions."
+        ],
+        "manifestOverrideFields": [
+          "resolutions"
+        ]
+      },
+      "remediation": {
+        "explainCommand": "yarn why @salt-ds/core",
+        "dedupeCommand": "yarn dedupe",
+        "reinstallCommand": "yarn install"
+      },
+      "workspace": {
+        "kind": "workspace-root",
+        "packageRoot": "D:/Work/salt-ds-3",
+        "workspaceRoot": "D:/Work/salt-ds-3",
+        "issueSourceHint": "workspace-root",
+        "workspaceSaltPackages": [],
+        "workspaceIssues": [
+          "yarn inspection failed and Salt fell back to the node_modules scan: spawn yarn ENOENT",
+          "Manifest override fields detected: resolutions. Declared Salt ranges may not match the final installed graph."
+        ]
+      },
+      "duplicatePackages": [],
+      "healthSummary": {
+        "health": "warn",
+        "recommendedAction": "inspect-dependency-drift",
+        "blockingWorkflows": [],
+        "reasons": [
+          "The workspace root reports Salt install issues.",
+          "Dependency override fields were detected in package.json: resolutions. Declared Salt ranges may not match the final installed graph.",
+          "Package-manager inspection failed for yarn; Salt fell back to the node_modules scan."
+        ]
+      }
+    }
+  },
+  "repoSignals": {
+    "storybookDetected": true,
+    "appRuntimeDetected": true,
+    "saltTeamConfigFound": false,
+    "saltStackConfigFound": false
+  },
+  "repoInstructions": {
+    "path": null,
+    "filename": null
+  },
+  "policy": {
+    "teamConfigPath": null,
+    "stackConfigPath": null,
+    "mode": "none",
+    "approvedWrappers": [],
+    "stackLayers": [],
+    "sharedConventions": {
+      "enabled": false,
+      "packCount": 0,
+      "packs": [],
+      "packDetails": []
+    }
+  },
+  "imports": {
+    "tsconfigPath": "D:/Work/salt-ds-3/tsconfig.json",
+    "aliases": [
+      {
+        "alias": ".storybook/*",
+        "targets": [
+          "./.storybook/*"
+        ]
+      },
+      {
+        "alias": "@salt-ds/date-adapters/*",
+        "targets": [
+          "./packages/date-adapters/src/*-adapter/index.ts"
+        ]
+      },
+      {
+        "alias": "@stories/*",
+        "targets": [
+          "./packages/ag-grid-theme/stories/*",
+          "./packages/core/stories/*",
+          "./packages/data-grid/stories/*",
+          "./packages/icons/stories/*",
+          "./packages/lab/stories/*",
+          "./packages/embla-carousel/stories/*",
+          "./packages/theme/stories/*"
+        ]
+      },
+      {
+        "alias": "packages/*",
+        "targets": [
+          "./packages/*"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "storybookDetected": true,
+    "appRuntimeDetected": true,
+    "detectedTargets": [
+      {
+        "label": "storybook",
+        "url": "http://localhost:6006/",
+        "source": "detected-script"
+      },
+      {
+        "label": "app-runtime",
+        "url": "http://localhost:3000/",
+        "source": "detected-default"
+      }
+    ]
+  },
+  "registry": {
+    "available": true,
+    "source": "bundled-cli",
+    "registryDir": "D:/Work/salt-ds-3/dist/salt-ds-cli/generated",
+    "mcpPackageInstalled": false,
+    "canonicalTransport": "cli"
+  },
+  "workflows": {
+    "bootstrapConventions": true,
+    "create": true,
+    "review": true,
+    "migrate": true,
+    "upgrade": true,
+    "runtimeEvidence": true
+  },
+  "notes": [
+    "No declared Salt policy detected (.salt/team.json or .salt/stack.json).",
+    "No repo-local instruction file detected.",
+    "yarn inspection failed and Salt fell back to the node_modules scan: spawn yarn ENOENT",
+    "Manifest override fields detected: resolutions. Declared Salt ranges may not match the final installed graph.",
+    "Salt dependency override fields detected: resolutions.",
+    "Package-manager inspection failed for yarn; Salt relied on the node_modules scan instead.",
+    "Dependency override fields detected: resolutions.",
+    "Salt install issue scope: workspace-root (workspace root D:/Work/salt-ds-3)."
+  ]
+}

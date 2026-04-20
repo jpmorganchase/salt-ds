@@ -1,0 +1,31 @@
+{
+  "contract": "salt_workflow_v3",
+  "workflow": "create",
+  "status": "partial",
+  "request": {
+    "entity": "Metric",
+    "resolved_entity": "Metric",
+    "match_status": "exact",
+    "exact_match_required": true
+  },
+  "safety": {
+    "canonical_complete": false,
+    "exact_request_safe": false,
+    "blocking_reasons": [
+      "required follow-through remains: Link, Stack layout, Text"
+    ]
+  },
+  "action": {
+    "kind": "tool_call",
+    "tool": "create_salt_ui",
+    "mode": "exact_name",
+    "args": {
+      "query": "Link"
+    },
+    "rule_ids": [
+      "create-follow-through-required"
+    ],
+    "post_action": null
+  },
+  "summary": "Salt grounded the exact requested entity Metric."
+}

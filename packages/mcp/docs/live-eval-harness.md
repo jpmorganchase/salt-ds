@@ -49,7 +49,9 @@ Keep deterministic workflow tests as the required baseline, then exercise the sa
 
 The harness should answer:
 
-- does the workflow return the expected `result.ide_summary`
+- does the workflow return the expected compact top-level workflow state and summary
+- does the transport metadata still expose the expected machine-readable capability manifest
+- when the runner normalizes rich/eval detail, does it still preserve the expected `result.ide_summary`
 - does verification stay present
 - does MCP win when available
 - does CLI fallback work when MCP is unavailable
@@ -84,6 +86,7 @@ The deterministic judge checks:
 
 - workflow id
 - summary-first output
+- capability-manifest availability on setup/support surfaces
 - verification presence
 - blocking-question count
 - transport behavior
@@ -102,8 +105,9 @@ The deterministic judge checks:
 `cli-local`
 
 - shells the real `salt-ds` CLI
-- normalizes CLI workflow output back into the same workflow envelope shape
-- preserves `result.ide_summary` as the first-class contract even when the raw CLI payload differs
+- preserves the compact public contract for branching checks
+- normalizes CLI workflow output back into the same workflow envelope shape for eval comparison
+- preserves eval-normalized rich detail such as `result.ide_summary` even when the raw CLI payload is compact by default
 
 ## Current Scenario Pack
 
@@ -167,9 +171,12 @@ The replay runner reads every `*.json` fixture in `packages/mcp/eval-fixtures/re
 
 Current replay fixtures cover:
 
-- missing `result.ide_summary`
+- missing eval-normalized `result.ide_summary`
 - chart follow-up drift
 - table follow-up drift
+- tabs-versus-avatar create priority
+- breadcrumbs exact follow-through after table selection
+- chart-focused dashboard follow-through
 - wrong-root context collection
 - unnecessary `view: "full"` explanation turns
 - repeated cached artifact reads
@@ -184,6 +191,7 @@ The report includes:
 - requested scenario ids
 - overall pass or fail
 - aggregated trace metrics for transcript size, payload size, logs size, approximate prompt tokens, and duration
+- a shared scorecard for correctness, context safety, next-step quality, payload size, transport parity, and workflow efficiency
 - per-scenario runner id
 - deterministic judgment
 - normalized transport trace
@@ -209,5 +217,6 @@ That layer checks that screenshot or mockup evidence:
 
 - do not make required CI depend on signed-in IDE hosts
 - do not treat host transcripts as the only source of truth
-- do not loosen the `result.ide_summary` contract to fit one transport
+- do not loosen the compact public contract to fit one transport
+- do not loosen the eval-normalized `result.ide_summary` checks just because compact transport output is the public branching path
 - do not add host automation before `mcp-local` and `cli-local` stay stable

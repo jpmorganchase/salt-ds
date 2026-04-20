@@ -15,6 +15,10 @@ import { getTsconfig } from "get-tsconfig";
 import type { SaltInfoResult } from "../types.js";
 import { pathExists } from "./common.js";
 import {
+  buildSaltCliCapabilityManifest,
+  getSaltCliRuntimeMetadata,
+} from "./runtimeMetadata.js";
+import {
   detectSaltPackageVersion,
   findAncestorWithChild,
   resolveSemanticRegistry,
@@ -243,6 +247,7 @@ export async function collectSaltInfo(
   explicitRegistryDir?: string,
   options: CollectSaltInfoOptions = {},
 ): Promise<SaltInfoResult> {
+  const cliRuntimeMetadata = getSaltCliRuntimeMetadata();
   const policyDetail = options.policyDetail ?? "summary";
   const doctor = await runDoctor({
     rootDir: cwd,
@@ -276,6 +281,11 @@ export async function collectSaltInfo(
     mcpPackageInstalled: false,
     canonicalTransport: "unavailable",
   };
+  let capabilityManifest = buildSaltCliCapabilityManifest({
+    registry_available: false,
+    registry_version: null,
+    registry_generated_at: null,
+  });
 
   try {
     const resolvedRegistry = await resolveSemanticRegistry(
@@ -289,6 +299,11 @@ export async function collectSaltInfo(
       mcpPackageInstalled: false,
       canonicalTransport: "cli",
     };
+    capabilityManifest = buildSaltCliCapabilityManifest({
+      registry_available: true,
+      registry_version: resolvedRegistry.registry.version,
+      registry_generated_at: resolvedRegistry.registry.generated_at,
+    });
   } catch (error) {
     notes.push(
       error instanceof Error
@@ -335,8 +350,9 @@ export async function collectSaltInfo(
   );
 
   return {
-    toolVersion: "0.0.0",
+    toolVersion: cliRuntimeMetadata.cli_version,
     timestamp: new Date().toISOString(),
+    capabilityManifest,
     rootDir: toPosix(doctor.rootDir) ?? doctor.rootDir,
     packageJsonPath: toPosix(packageJsonPath),
     environment: {

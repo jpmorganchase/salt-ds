@@ -1,10 +1,13 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
+  buildWorkflowEvalScorecard,
   judgeWorkflowEvalScenario,
+  normalizeWorkflowEvalPublicContract,
   type WorkflowEvalJudgment,
   type WorkflowEvalMetrics,
   type WorkflowEvalScenario,
+  type WorkflowEvalScorecard,
   type WorkflowEvalTrace,
 } from "./workflowEvalHarness.js";
 
@@ -18,6 +21,7 @@ export interface WorkflowEvalReplayFixture {
 export interface WorkflowEvalReplayEntry {
   source_path: string;
   scenario_id: string;
+  tags: string[];
   judgment: WorkflowEvalJudgment;
   trace: WorkflowEvalTrace;
 }
@@ -27,6 +31,7 @@ export interface WorkflowEvalReplayReport {
   replay_paths: string[];
   passed: boolean;
   metrics: WorkflowEvalMetrics;
+  scorecard: WorkflowEvalScorecard;
   entries: WorkflowEvalReplayEntry[];
 }
 
@@ -101,7 +106,9 @@ function normalizeReplayTrace(
     runner_id: trace.runner_id,
     status: trace.status,
     transport_trace: trace.transport_trace,
-    workflow_result: trace.workflow_result,
+    workflow_result:
+      normalizeWorkflowEvalPublicContract(trace.workflow_result) ??
+      trace.workflow_result,
     transcript,
     metrics: {
       ...computeReplayMetrics({
@@ -142,6 +149,7 @@ export function replayWorkflowEvalFixture(
   return {
     source_path: sourcePath,
     scenario_id: fixture.scenario.id,
+    tags: fixture.scenario.tags,
     judgment: judgeWorkflowEvalScenario(fixture.scenario, trace),
     trace,
   };
@@ -189,6 +197,7 @@ export async function runWorkflowEvalReplayReport(
         duration_ms: 0,
       },
     ),
+    scorecard: buildWorkflowEvalScorecard(entries),
     entries,
   };
 }

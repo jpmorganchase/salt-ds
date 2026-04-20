@@ -1,5 +1,10 @@
 import type { SaltRegistry } from "../types.js";
 import type { SuggestedFollowUp } from "./consumerPresentation.js";
+import {
+  collectCreateQueryAnchors,
+  isHighPriorityCreateQueryAnchor,
+  toCreateQueryAnchorRegionId,
+} from "./createQueryAnchors.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
 import type { GuidanceBoundary } from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
@@ -51,6 +56,12 @@ export interface WorkflowReadiness {
   reason: string;
 }
 
+export type WorkflowContextResolutionStatus =
+  | "resolved"
+  | "fallback"
+  | "needs_explicit_root"
+  | "mismatch";
+
 export type WorkflowContextRequirement =
   | {
       status: "context_required";
@@ -58,12 +69,22 @@ export type WorkflowContextRequirement =
       reason: string;
       suggested_follow_up_tool: "get_salt_project_context";
       suggested_follow_up_cli: "salt-ds info --json";
+      resolution_status: Exclude<WorkflowContextResolutionStatus, "resolved">;
+      retry_with: {
+        root_dir: string | null;
+        context_id: null;
+      };
     }
   | {
       status: "context_checked";
       repo_specific_edits_ready: true;
       reason: string;
       satisfied_by: "salt-ds info";
+      resolution_status: "resolved";
+      retry_with: {
+        root_dir: string | null;
+        context_id: string | null;
+      };
     };
 
 export interface WorkflowIntent {
@@ -235,11 +256,27 @@ export interface FollowThroughItem {
   entity: string;
 }
 
+export type WorkflowCreateImplementationGateRuleId =
+  | "create-follow-through-required"
+  | "create-blocking-question";
+
+export interface WorkflowNextCall {
+  workflow: "create_salt_ui" | "get_salt_project_context";
+  follow_up_mode:
+    | "exact_name"
+    | "compare_named"
+    | "broad_query"
+    | "stop_and_fix_context";
+  args: Record<string, unknown>;
+}
+
 export interface WorkflowCreateImplementationGate {
   status: "clear" | "follow_through_required";
   reason: string;
   required_follow_through: FollowThroughItem[];
   blocking_questions: string[];
+  next_call: WorkflowNextCall | null;
+  rule_ids: WorkflowCreateImplementationGateRuleId[];
   next_step: string | null;
 }
 
@@ -423,6 +460,7 @@ function buildWorkflowReadiness(
 }
 
 function getCreateFollowThroughTargets(
+  registry: SaltRegistry,
   result: CreateSaltUiResult,
   query?: string,
 ): FollowThroughItem[] {
@@ -441,6 +479,12 @@ function getCreateFollowThroughTargets(
     /\b(dashboard|page|screen|workspace|overview)\b/i.test(
       result.decision.name ?? "",
     );
+  const queryAnchors = collectCreateQueryAnchors(registry, query ?? "")
+    .filter((anchor) => anchor.name !== primaryTarget)
+    .filter(isHighPriorityCreateQueryAnchor);
+  const queryAnchorByName = new Map(
+    queryAnchors.map((anchor) => [anchor.name, anchor] as const),
+  );
   const frequency = new Map<string, number>();
 
   // Build a map from entity name → region (slot id) for region-level binding
@@ -493,37 +537,97 @@ function getCreateFollowThroughTargets(
         )
           ? -10
           : 0;
+      const explicitQueryAnchor = queryAnchorByName.get(name) ?? null;
+      const explicitQueryBonus = explicitQueryAnchor
+        ? 120 +
+          explicitQueryAnchor.structural_weight * 6 -
+          Math.min(explicitQueryAnchor.query_index, 24)
+        : 0;
+      const genericScaffoldPenalty =
+        queryAnchorByName.size > 0 &&
+        !explicitQueryAnchor &&
+        (frequency.get(name) ?? 0) <= 1 &&
+        overlapScore === 0 &&
+        /\b(border layout|app header|header block|stack layout|flow layout)\b/i.test(
+          name,
+        )
+          ? -24
+          : 0;
+      const nonExplicitPenalty =
+        queryAnchorByName.size > 0 &&
+        !explicitQueryAnchor &&
+        (frequency.get(name) ?? 0) <= 1 &&
+        overlapScore === 0
+          ? -10
+          : 0;
 
       return {
-        name,
+        entity: name,
         region: entityToRegion.get(name) ?? "top-level",
         score:
           (frequency.get(name) ?? 0) * 10 +
           overlapScore +
           pageLevelBonus +
-          pageLevelPenalty,
+          pageLevelPenalty +
+          explicitQueryBonus +
+          genericScaffoldPenalty +
+          nonExplicitPenalty,
       };
     })
+    .filter((entry) => entry.score > 0)
     .sort((left, right) => {
       if (left.score !== right.score) {
         return right.score - left.score;
       }
-      return left.name.localeCompare(right.name);
+      return left.entity.localeCompare(right.entity);
     });
 
-  return scoredTargets
+  const exactQueryTargets = queryAnchors.map((anchor) => ({
+    region: toCreateQueryAnchorRegionId(anchor),
+    entity: anchor.name,
+    score:
+      160 +
+      anchor.structural_weight * 8 -
+      Math.min(anchor.query_index, 24),
+  }));
+
+  return [...exactQueryTargets, ...scoredTargets]
+    .sort((left, right) => {
+      if (left.score !== right.score) {
+        return right.score - left.score;
+      }
+      return left.entity.localeCompare(right.entity);
+    })
+    .filter(
+      (entry, index, all) =>
+        all.findIndex((candidate) => candidate.entity === entry.entity) ===
+        index,
+    )
     .slice(0, 4)
-    .map((entry) => ({ region: entry.region, entity: entry.name }));
+    .map((entry) => ({ region: entry.region, entity: entry.entity }));
 }
 
 function buildCreateImplementationGate(
+  registry: SaltRegistry,
   result: CreateSaltUiResult,
   query?: string,
 ): WorkflowCreateImplementationGate {
-  const requiredFollowThrough = getCreateFollowThroughTargets(result, query);
+  const requiredFollowThrough = getCreateFollowThroughTargets(
+    registry,
+    result,
+    query,
+  );
   const blockingQuestions = (result.open_questions ?? []).map(
     (question) => question.prompt,
   );
+  const ruleIds: WorkflowCreateImplementationGateRuleId[] = [];
+
+  if (requiredFollowThrough.length > 0) {
+    ruleIds.push("create-follow-through-required");
+  }
+  if (blockingQuestions.length > 0) {
+    ruleIds.push("create-blocking-question");
+  }
 
   if (requiredFollowThrough.length === 0) {
     return {
@@ -532,6 +636,8 @@ function buildCreateImplementationGate(
         "No additional named Salt follow-through is required before implementation starts.",
       required_follow_through: [],
       blocking_questions: blockingQuestions,
+      next_call: null,
+      rule_ids: ruleIds,
       next_step: blockingQuestions.length
         ? "Resolve the blocking Salt questions before treating the implementation as final."
         : null,
@@ -544,13 +650,24 @@ function buildCreateImplementationGate(
       "This create result names additional Salt patterns or components that must be grounded before those regions are implemented.",
     required_follow_through: requiredFollowThrough,
     blocking_questions: blockingQuestions,
+    next_call: {
+      workflow: "create_salt_ui",
+      follow_up_mode: "exact_name",
+      args: {
+        query: requiredFollowThrough[0].entity,
+      },
+    },
+    rule_ids: ruleIds,
     next_step: blockingQuestions.length
       ? "Run targeted Salt create follow-up for each required item, answer the blocking Salt questions, then implement the scaffold."
       : "Run targeted Salt create follow-up for each required item before implementing those regions.",
   };
 }
 
-export function buildWorkflowContextRequirement(): WorkflowContextRequirement {
+export function buildWorkflowContextRequirement(input: {
+  resolution_status?: Exclude<WorkflowContextResolutionStatus, "resolved">;
+  retry_with_root_dir?: string | null;
+} = {}): WorkflowContextRequirement {
   return {
     status: "context_required",
     repo_specific_edits_ready: false,
@@ -558,16 +675,29 @@ export function buildWorkflowContextRequirement(): WorkflowContextRequirement {
       "This workflow result is canonical Salt guidance only. Repo context was not checked before it was returned, so repo-specific refinement may still be incomplete even though the canonical Salt answer is usable.",
     suggested_follow_up_tool: "get_salt_project_context",
     suggested_follow_up_cli: "salt-ds info --json",
+    resolution_status: input.resolution_status ?? "needs_explicit_root",
+    retry_with: {
+      root_dir: input.retry_with_root_dir ?? null,
+      context_id: null,
+    },
   };
 }
 
-export function buildSatisfiedWorkflowContextRequirement(): WorkflowContextRequirement {
+export function buildSatisfiedWorkflowContextRequirement(input: {
+  retry_with_root_dir?: string | null;
+  context_id?: string | null;
+} = {}): WorkflowContextRequirement {
   return {
     status: "context_checked",
     repo_specific_edits_ready: true,
     reason:
       "Local Salt project context was collected before this workflow result was returned, so repo-specific edits can proceed with framework, package, runtime, and policy context in scope.",
     satisfied_by: "salt-ds info",
+    resolution_status: "resolved",
+    retry_with: {
+      root_dir: input.retry_with_root_dir ?? null,
+      context_id: input.context_id ?? null,
+    },
   };
 }
 
@@ -634,10 +764,10 @@ export function buildProjectConventionsCheck(
 
 function buildCreateConfidence(
   result: CreateSaltUiResult,
+  implementationGate: WorkflowCreateImplementationGate,
   starterValidation: WorkflowStarterValidation | null,
   projectPolicy: WorkflowProjectPolicyArtifact | null | undefined = null,
 ): WorkflowConfidence {
-  const implementationGate = buildCreateImplementationGate(result);
   const reasons: string[] = [];
   const raiseConfidence: string[] = [];
   let level: WorkflowConfidence["level"] = "high";
@@ -990,6 +1120,7 @@ function buildReviewConfidence(
 
 function buildCreateIdeSummary(input: {
   result: CreateSaltUiResult;
+  implementationGate: WorkflowCreateImplementationGate;
   query?: string;
   intent: WorkflowIntent;
   starterValidation: WorkflowStarterValidation | null;
@@ -998,13 +1129,13 @@ function buildCreateIdeSummary(input: {
 }): WorkflowCreateIdeSummary {
   const {
     result,
+    implementationGate,
     query,
     intent,
     starterValidation,
     projectConventionsCheck,
     provenance,
   } = input;
-  const implementationGate = buildCreateImplementationGate(result, query);
   const requiredSlots =
     result.composition_contract?.slots.filter(
       (slot) => slot.certainty !== "optional",
@@ -1746,6 +1877,9 @@ export function buildCreateSaltUiWorkflowContract(
   input: {
     query?: string;
     context_checked?: boolean;
+    context_resolution_status?: WorkflowContextResolutionStatus;
+    context_retry_with_root_dir?: string | null;
+    context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     starter_code?: StarterCodeSnippet[] | undefined;
   } = {},
@@ -1769,18 +1903,24 @@ export function buildCreateSaltUiWorkflowContract(
     result.guidance_boundary,
     input.project_policy,
   );
-  const implementationGate = buildCreateImplementationGate(result, input.query);
+  const implementationGate = buildCreateImplementationGate(
+    registry,
+    result,
+    input.query,
+  );
 
   const provenance = buildCreateProvenance(result, starterValidation);
 
   return {
     confidence: buildCreateConfidence(
       result,
+      implementationGate,
       starterValidation,
       input.project_policy,
     ),
     ide_summary: buildCreateIdeSummary({
       result,
+      implementationGate,
       query: input.query,
       intent,
       starterValidation,
@@ -1791,8 +1931,17 @@ export function buildCreateSaltUiWorkflowContract(
     intent,
     readiness: buildWorkflowReadiness(starterValidation, input.project_policy),
     context_requirement: input.context_checked
-      ? buildSatisfiedWorkflowContextRequirement()
-      : buildWorkflowContextRequirement(),
+      ? buildSatisfiedWorkflowContextRequirement({
+          retry_with_root_dir: input.context_retry_with_root_dir ?? null,
+          context_id: input.context_id ?? null,
+        })
+      : buildWorkflowContextRequirement({
+          resolution_status:
+            input.context_resolution_status === "resolved"
+              ? "fallback"
+              : input.context_resolution_status,
+          retry_with_root_dir: input.context_retry_with_root_dir ?? null,
+        }),
     starter_validation: starterValidation,
     repo_refinement: repoRefinement,
     project_conventions_check: projectConventionsCheck,
@@ -1851,6 +2000,9 @@ export function buildMigrateToSaltWorkflowContract(
     source_outline?: SourceUiOutlineInput;
     visual_evidence?: NormalizedVisualEvidenceInput[];
     context_checked?: boolean;
+    context_resolution_status?: WorkflowContextResolutionStatus;
+    context_retry_with_root_dir?: string | null;
+    context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     starter_code?: StarterCodeSnippet[] | undefined;
   } = {},
@@ -1886,8 +2038,17 @@ export function buildMigrateToSaltWorkflowContract(
     }),
     readiness: buildWorkflowReadiness(starterValidation, input.project_policy),
     context_requirement: input.context_checked
-      ? buildSatisfiedWorkflowContextRequirement()
-      : buildWorkflowContextRequirement(),
+      ? buildSatisfiedWorkflowContextRequirement({
+          retry_with_root_dir: input.context_retry_with_root_dir ?? null,
+          context_id: input.context_id ?? null,
+        })
+      : buildWorkflowContextRequirement({
+          resolution_status:
+            input.context_resolution_status === "resolved"
+              ? "fallback"
+              : input.context_resolution_status,
+          retry_with_root_dir: input.context_retry_with_root_dir ?? null,
+        }),
     starter_validation: starterValidation,
     project_conventions_check: projectConventionsCheck,
     rule_ids: getMigrationRuleIds({

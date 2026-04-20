@@ -269,19 +269,21 @@ Keep transport details in the background unless you are setting up the host or t
 
 ### Install The Skill
 
-Use the current verified source:
+Use the current branch-tracking skill source:
 
 ```sh
-npx skills add https://github.com/jpmorganchase/salt-ds/tree/mcp/packages/skills --list
-npx skills add https://github.com/jpmorganchase/salt-ds/tree/mcp/packages/skills --skill salt-ds
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --list
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --skill salt-ds
 ```
 
 These commands install the skill, not the CLI binary.
+Treat them as branch-tracking instructions rather than version-locked package installs.
+If you are validating a local checkout or non-main branch, keep the skill, MCP, and CLI on the same checkout or branch instead of mixing a branch-pinned skill source with `@latest` packages.
 If you want to run the CLI without installing it globally, use `npx -y @salt-ds/cli@latest ...`.
 
 ### Connect Salt MCP
 
-If your host supports MCP, add Salt MCP:
+If your host supports MCP, add the published Salt MCP package:
 
 ```json
 {
@@ -315,9 +317,10 @@ npm install -g @salt-ds/cli
 Use this quick check after install:
 
 1. run `npx -y @salt-ds/cli@latest info . --json` in a repo and confirm it returns context instead of a setup error
-2. if MCP is configured, ask the host to use `salt-ds` on an active file
-3. confirm the first answer is a Salt workflow response, not generic React or CSS advice
-4. confirm the Salt response leads with compact workflow state and summary rather than rich raw detail
+2. confirm the JSON includes `capabilityManifest` so the host can inspect the compact contract version and workflow vocabulary without parsing docs
+3. if MCP is configured, ask the host to use `salt-ds` on an active file
+4. confirm the first answer is a Salt workflow response, not generic React or CSS advice
+5. confirm the Salt response leads with compact workflow state and summary rather than rich raw detail
 
 ### Common Problems
 
@@ -341,6 +344,13 @@ Check these first:
 3. whether `.salt/stack.json` exists for advanced layering
 4. whether the task actually recommends checking project conventions
 
+If MCP project context is in play, also check:
+
+- `resolution.status` is `resolved`
+- `context_id` is non-null before reusing it on later repo-aware workflow calls
+- `artifacts.summary.context_health.trusted` is `true`
+- `artifacts.summary.retry_with.root_dir` is used when the context came back as `fallback`, `needs_explicit_root`, or `mismatch`
+
 **Create started coding too soon**
 
 If a broad `create` result starts implementing custom sub-surfaces before it grounds the expected Salt patterns:
@@ -350,6 +360,12 @@ If a broad `create` result starts implementing custom sub-surfaces before it gro
 3. complete required follow-through before coding unresolved sub-surfaces
 4. ask blocking questions before guessing
 5. run `salt-ds review` after the grounded first pass
+
+If you are using the CLI artifact path for starter grounding, keep it explicit:
+
+- use `salt-ds create "<query>" --starter-only --json`
+- do not combine `--starter-only` with `--full`
+- do not expect `starter-only` on `review`, `migrate`, or `upgrade`
 
 **MCP is unavailable**
 

@@ -2,11 +2,11 @@
 
 ## Status Note
 
-This backlog predates the compact public contract `v2` cutover.
+This backlog predates the `salt_workflow_v3` cutover.
 
 Treat items about temporary agent-only workflow views, `--agent-json`, or hypothetical `slim` rollout modes as superseded by the shipped compact-default contract unless they are explicitly restated below in current `compact` / `full` terms.
 
-Use this document for post-`v2` hardening work, not as the canonical description of what is already shipped.
+Use this document for post-`v3` hardening work, not as the canonical description of what is already shipped.
 
 This document is a detailed implementation backlog for improving Salt AI tooling quality across:
 
@@ -241,8 +241,8 @@ Primary repo targets:
 
 Backlog items:
 
-1. Tighten compact `v2` payload budgets for MCP default workflow responses.
-2. Tighten compact `v2` payload budgets for CLI workflow `--json`.
+1. Tighten compact `salt_workflow_v3` payload budgets for MCP default workflow responses.
+2. Tighten compact `salt_workflow_v3` payload budgets for CLI workflow `--json`.
 3. Keep compact output focused on:
    - workflow state
    - exact-request safety

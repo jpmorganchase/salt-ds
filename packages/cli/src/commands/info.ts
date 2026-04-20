@@ -7,6 +7,7 @@ function formatInfoReport(result: SaltInfoResult): string {
   const lines = [
     "Salt DS Info",
     `Root: ${result.rootDir}`,
+    `Contract: compact ${result.capabilityManifest.contracts.compact_workflow_contract_version} (${result.capabilityManifest.manifest_version})`,
     `Framework: ${result.framework.name}`,
     `Workspace: ${result.workspace.kind}${result.workspace.workspaceRoot ? ` (${result.workspace.workspaceRoot})` : ""}`,
     `Package manager: ${result.environment.packageManager}`,

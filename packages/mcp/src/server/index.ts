@@ -3,9 +3,11 @@ export {
   getSaltProjectContext,
   type SaltProjectContextResult,
 } from "./projectContext.js";
+export { registerSaltResources } from "./registerResources.js";
 export { registerSaltTools } from "./registerTools.js";
 export {
   buildSaltMcpInstructions,
+  SALT_MCP_CAPABILITY_MANIFEST_URI,
   buildSaltMcpServerInfo,
   getSaltMcpRuntimeMetadata,
   type SaltMcpRuntimeMetadata,

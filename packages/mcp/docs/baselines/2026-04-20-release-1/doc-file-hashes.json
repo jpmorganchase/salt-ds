@@ -1,0 +1,32 @@
+[
+  {
+    "path": "packages/cli/README.md",
+    "sha256": "091903d8b50c59f8c4d366c2d6f435f0c399ca56534cdbad4727e9bac574dcf7",
+    "last_write_time_utc": "2026-04-11T20:48:18.6011244Z"
+  },
+  {
+    "path": "packages/mcp/README.md",
+    "sha256": "7d4e88fd411c1ffda740e3ecec225e8616b90c25dabe913ac70a705a005f6cc4",
+    "last_write_time_utc": "2026-04-11T20:48:27.5051442Z"
+  },
+  {
+    "path": "site/docs/getting-started/ai.mdx",
+    "sha256": "3b69377addd72a0d0d569e4b350924a3e050841001844f06e9bb0fc37ac392c4",
+    "last_write_time_utc": "2026-04-11T20:48:36.7520681Z"
+  },
+  {
+    "path": "packages/mcp/docs/maintaining-salt-ai-tooling.md",
+    "sha256": "96dcca9349f776a43fd403cb239a1f2665714db048c68b2fc74b8710d8e7cf37",
+    "last_write_time_utc": "2026-04-11T20:48:27.3905885Z"
+  },
+  {
+    "path": "packages/mcp/docs/live-eval-harness.md",
+    "sha256": "97576e0e2d59ff5dc824863730c69fb21333c27a84f3047de3663ba111814150",
+    "last_write_time_utc": "2026-04-11T20:48:27.3070936Z"
+  },
+  {
+    "path": ".changeset/mcp-initial-beta.md",
+    "sha256": "68956e0989ad0f069d4b14e262e9d7b8ff26801452b6ab6c4ec57124987b9758",
+    "last_write_time_utc": "2026-04-11T20:48:17.0099816Z"
+  }
+]
