@@ -8,6 +8,8 @@ import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { type SyntheticEvent, useCallback, useEffect, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import {
+  type AnnouncerRangeDateSelectedState,
+  type AnnouncerSingleDateSelectedState,
   createRangeSelectionAnnouncement,
   createSingleSelectionAnnouncement,
 } from "./internal/createAnnouncement";
@@ -887,6 +889,25 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       : createAnnouncement,
     dateAdapter,
   );
+
+  useEffect(() => {
+    const dateSelectionAnnouncementState =
+      selectionVariant === "single"
+        ? {
+            multiselect: multiselect ?? false,
+            selectedDate: (selectedDate ??
+              null) as AnnouncerSingleDateSelectedState["selectedDate"],
+          }
+        : {
+            multiselect: multiselect ?? false,
+            selectedDate: (selectedDate ??
+              null) as AnnouncerRangeDateSelectedState["selectedDate"],
+          };
+
+    announce("dateSelected", {
+      ...dateSelectionAnnouncementState,
+    });
+  }, [announce, selectionVariant, selectedDate, multiselect]);
 
   const setFocusedDate = useCallback(
     (event: SyntheticEvent | null, date: DateFrameworkType | null) => {

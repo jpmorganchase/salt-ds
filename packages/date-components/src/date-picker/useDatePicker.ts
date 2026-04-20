@@ -180,6 +180,7 @@ export function useDatePicker(
   } = props;
 
   const previousSelectedDate = useRef<typeof selectedDateProp>();
+  const incompleteRangeAnnouncementKeyRef = useRef<string | null>(null);
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
 
@@ -336,6 +337,53 @@ export function useDatePicker(
       if (selectionVariant === "range") {
         onSelectionChange?.(event, date, details);
       }
+
+      const hasValidStartDate = dateAdapter.isValid(date?.startDate);
+      const hasValidEndDate = dateAdapter.isValid(date?.endDate);
+      const hasStartDateErrors = Boolean(details?.startDate?.errors?.length);
+      const hasEndDateErrors = Boolean(details?.endDate?.errors?.length);
+
+      let incompleteRangeAnnouncementKey: string | null = null;
+      let incompleteRangeSelection:
+        | { startDate?: DateFrameworkType; endDate?: DateFrameworkType }
+        | undefined;
+
+      if (hasValidStartDate && !hasValidEndDate && !hasStartDateErrors) {
+        incompleteRangeAnnouncementKey = `start:${dateAdapter.format(
+          date?.startDate as DateFrameworkType,
+          "YYYY-MM-DD",
+        )}`;
+        incompleteRangeSelection = {
+          startDate: date?.startDate ?? undefined,
+          endDate: undefined,
+        };
+      } else if (!hasValidStartDate && hasValidEndDate && !hasEndDateErrors) {
+        incompleteRangeAnnouncementKey = `end:${dateAdapter.format(
+          date?.endDate as DateFrameworkType,
+          "YYYY-MM-DD",
+        )}`;
+        incompleteRangeSelection = {
+          startDate: undefined,
+          endDate: date?.endDate ?? undefined,
+        };
+      }
+
+      if (incompleteRangeAnnouncementKey && incompleteRangeSelection) {
+        if (
+          incompleteRangeAnnouncementKeyRef.current !==
+          incompleteRangeAnnouncementKey
+        ) {
+          announce("dateSelected", {
+            multiselect: false,
+            selectedDate: incompleteRangeSelection,
+          });
+          incompleteRangeAnnouncementKeyRef.current =
+            incompleteRangeAnnouncementKey;
+        }
+      } else {
+        incompleteRangeAnnouncementKeyRef.current = null;
+      }
+
       const isAValidRange =
         dateAdapter.isValid(date?.startDate) &&
         dateAdapter.isValid(date?.endDate);
@@ -349,6 +397,7 @@ export function useDatePicker(
     },
     [
       checkAndAddError,
+      announce,
       dateAdapter,
       applyRange,
       isDayUnselectable,
