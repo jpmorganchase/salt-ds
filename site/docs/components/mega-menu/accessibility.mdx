@@ -1,0 +1,43 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Enter / Space / Down arrow">
+
+When focus is on the menu trigger, this action opens the mega menu.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Tab">
+
+When focus is on the trigger and the menu is open, Tab moves focus to the first focusable item in the menu.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Up arrow">
+
+When focus is on the first item in a group, Up arrow moves focus to the last item in the previous group.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Down arrow">
+
+When focus is on the last item in a group, Down arrow moves focus to the first item in the next group.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Escape">
+
+Escape closes the menu and returns focus to the trigger.
+
+</KeyboardControl>
+</KeyboardControls>
