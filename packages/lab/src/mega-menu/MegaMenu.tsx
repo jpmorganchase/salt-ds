@@ -5,7 +5,14 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import {
   MegaMenuContext,
   type MegaMenuCustomInteractions,
@@ -15,6 +22,9 @@ export interface MegaMenuProps extends MegaMenuCustomInteractions {
   children?: ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  selectedItem?: string;
+  defaultSelectedItem?: string;
+  onSelectedItemChange?: (selectedItem: string | undefined) => void;
   placement?: Placement;
 }
 
@@ -22,6 +32,9 @@ export const MegaMenu = ({
   children,
   open,
   onOpenChange,
+  selectedItem: selectedItemProp,
+  defaultSelectedItem,
+  onSelectedItemChange,
   placement = "bottom",
   interactions,
 }: MegaMenuProps) => {
@@ -34,8 +47,28 @@ export const MegaMenu = ({
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
+  const [selectedItem, setSelectedItemState] = useControlled({
+    controlled: selectedItemProp,
+    default: defaultSelectedItem,
+    name: "MegaMenu",
+    state: "selectedItem",
+  });
+
+  const setSelectedItem = useCallback<
+    Dispatch<SetStateAction<string | undefined>>
+  >(
+    (newSelectedItem) => {
+      setSelectedItemState((currentSelectedItem) => {
+        const nextSelectedItem =
+          typeof newSelectedItem === "function"
+            ? newSelectedItem(currentSelectedItem)
+            : newSelectedItem;
+
+        onSelectedItemChange?.(nextSelectedItem);
+        return nextSelectedItem;
+      });
+    },
+    [onSelectedItemChange, setSelectedItemState],
   );
 
   const setOpen = useCallback(

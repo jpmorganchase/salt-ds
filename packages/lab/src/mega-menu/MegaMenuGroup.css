@@ -9,5 +9,6 @@
   padding: 0;
   display: flex;
   gap: var(--salt-spacing-fixed-100);
+  padding-top: var(--salt-size-fixed-100);
   flex-direction: column;
 }

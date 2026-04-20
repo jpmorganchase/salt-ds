@@ -3,72 +3,76 @@ nav > ul {
   padding: 0;
 }
 
-.triggerPositionGrid {
+.trigger-position-grid {
   width: 100%;
   display: grid;
   gap: 1rem;
 }
 
-.triggerPositionLeft {
+.trigger-position-left {
   display: flex;
   justify-content: flex-start;
   padding-left: 12px;
 }
 
-.triggerPositionCenter {
+.trigger-position-center {
   display: flex;
   justify-content: center;
 }
 
-.triggerPositionOffset {
+.trigger-position-offset {
   display: flex;
   justify-content: center;
   padding-left: 180px;
 }
 
-.triggerPositionRight {
+.trigger-position-right {
   display: flex;
   justify-content: flex-end;
   padding-right: 12px;
 }
 
-.customRegionWrapper {
+.custom-region-wrapper {
   width: 100%;
 }
 
-.customRegionContainerColumn {
+.custom-region-container-column {
   flex-direction: column;
 }
 
-.customRegionNoContainerPadding {
+.custom-region-no-container-padding {
   padding: 0;
 }
 
-.customRegionGroups {
+.custom-region-groups {
   display: flex;
   flex-wrap: wrap;
   gap: var(--salt-spacing-300);
   flex: 1;
 }
 
-.customRegionGroupsColumn {
+.custom-region-groups-column {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.customRegionTopBottomGroups {
+.custom-region-top-bottom-groups {
   display: flex;
   flex-wrap: wrap;
   gap: var(--salt-spacing-300);
 }
 
-.customRegionRightDescription {
+.custom-region-right-description {
   max-inline-size: 240px;
 }
 
-.customRegionImage {
+.custom-region-image {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.menu-item-adornment {
+  margin-left: auto;
 }

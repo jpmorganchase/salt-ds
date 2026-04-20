@@ -29,7 +29,20 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     const { getReferenceProps, setReference, setOpen, openState } = megaMenu;
 
     const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-      if (event.key === "Tab" && !event.shiftKey && openState) {
+      const isEnter = event.key === "Enter";
+      const isSpace = event.key === " ";
+      const isArrowDown = event.key === "ArrowDown";
+      const isTab = event.key === "Tab" && !event.shiftKey;
+
+      // Open menu on Enter, Spacebar, or Down arrow
+      if ((isEnter || isSpace || isArrowDown) && !openState) {
+        event.preventDefault();
+        setOpen(true);
+        return;
+      }
+
+      // Tab to first focusable item inside menu when already open
+      if (isTab && openState) {
         const floating = megaMenu.floatingRootContext.elements
           .floating as HTMLElement | null;
         if (floating) {
