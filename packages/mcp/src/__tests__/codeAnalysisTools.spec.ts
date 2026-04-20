@@ -603,7 +603,9 @@ describe("validateSaltUsage", () => {
     expect(issueIds).toContain(
       "deprecated.import.salt-ds-core.unstable-saltprovidernext",
     );
-    expect(issueIds).toContain("component-status.datepicker.lab");
+    // DatePicker is a lab component with site documentation — it's exempt
+    // from prefer-stable-catalog-status.
+    expect(issueIds).not.toContain("component-status.datepicker.lab");
   });
 
   it("flags non-JSX namespace member usage for deprecated and lab components", () => {
@@ -627,7 +629,8 @@ describe("validateSaltUsage", () => {
     expect(issueIds).toContain(
       "deprecated.import.salt-ds-core.unstable-saltprovidernext",
     );
-    expect(issueIds).toContain("component-status.datepicker.lab");
+    // DatePicker is a lab component with site documentation — exempt.
+    expect(issueIds).not.toContain("component-status.datepicker.lab");
   });
 });
 

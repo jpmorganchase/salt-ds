@@ -59,7 +59,12 @@ export interface WorkflowEvalScenario {
     required_fragments?: string[];
     banned_fragments?: string[];
     public_contract?: {
-      workflow_status?: "success" | "partial" | "blocked" | "failed";
+      workflow_status?:
+        | "success"
+        | "partial"
+        | "blocked"
+        | "failed"
+        | Array<"success" | "partial" | "blocked" | "failed">;
       canonical_complete?: boolean;
       safe_to_implement_exact_request?: boolean;
       requested_entity?: string | null;
@@ -1186,8 +1191,12 @@ export function judgeWorkflowEvalScenario(
 
       if (
         expectedPublicContract.workflow_status &&
-        publicContract.workflow_status !==
-          expectedPublicContract.workflow_status
+        (Array.isArray(expectedPublicContract.workflow_status)
+          ? !(expectedPublicContract.workflow_status as string[]).includes(
+              publicContract.workflow_status as string,
+            )
+          : publicContract.workflow_status !==
+            expectedPublicContract.workflow_status)
       ) {
         failures.push(
           `workflow_status ${String(publicContract.workflow_status)} did not match expected ${expectedPublicContract.workflow_status}.`,

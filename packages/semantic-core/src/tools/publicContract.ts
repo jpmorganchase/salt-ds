@@ -421,10 +421,7 @@ export function getPublicContractValidationErrors(
     );
   }
 
-  if (
-    contract.next_step.kind !== "implement" &&
-    contract.required_post_step
-  ) {
+  if (contract.next_step.kind !== "implement" && contract.required_post_step) {
     errors.push(
       "required_post_step must only appear when next_step.kind=implement",
     );

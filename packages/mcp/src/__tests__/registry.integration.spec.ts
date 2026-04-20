@@ -919,11 +919,7 @@ describe("registry integration", () => {
 
     expect(button?.inference?.docgen?.candidate_count).toBeGreaterThan(0);
     expect(button?.inference?.docgen?.selected_display_name).toBeTruthy();
-    expect(button?.inference?.tokens).toMatchObject({
-      source: "repo_scan",
-      max_returned: 40,
-    });
-    expect(typeof button?.inference?.tokens?.truncated).toBe("boolean");
+    // tokens inference was removed when per-component tokens were dropped
     expect(button?.inference?.deprecations?.matched_count).toBeGreaterThan(0);
     expect(
       buttonVariantDeprecation?.inference?.matched_component_names,

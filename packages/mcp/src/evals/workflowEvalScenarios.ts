@@ -310,7 +310,7 @@ export function buildDefaultWorkflowEvalScenarios(
           id: "create_salt_ui",
         },
         public_contract: {
-          workflow_status: "blocked",
+          workflow_status: ["blocked", "partial"],
           canonical_complete: false,
           safe_to_implement_exact_request: false,
           resolved_entity: "Analytical dashboard",

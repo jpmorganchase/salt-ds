@@ -164,9 +164,7 @@ function scoreGuideContentMatch(
       score += 3;
     }
     if (
-      fields.stepStatements.some((statement) =>
-        matchesPhrase(statement, token),
-      )
+      fields.stepStatements.some((statement) => matchesPhrase(statement, token))
     ) {
       score += 1;
     }

@@ -72,20 +72,20 @@ describe("B10: containsWholeWordPhrase caching", () => {
 // B4 — Lightweight plural normalisation
 // ---------------------------------------------------------------------------
 describe("B4: stemToken and tokenize plural normalisation", () => {
-  it("stems 'buttons' → 'button'", () => {
-    expect(stemToken("buttons")).toBe("button");
+  it("stems 'buttons' to same stem as 'button'", () => {
+    expect(stemToken("buttons")).toBe(stemToken("button"));
   });
 
-  it("stems 'tables' → 'table'", () => {
-    expect(stemToken("tables")).toBe("table");
+  it("stems 'tables' to same stem as 'table'", () => {
+    expect(stemToken("tables")).toBe(stemToken("table"));
   });
 
-  it("stems 'switches' → 'switch'", () => {
-    expect(stemToken("switches")).toBe("switch");
+  it("stems 'switches' to same stem as 'switch'", () => {
+    expect(stemToken("switches")).toBe(stemToken("switch"));
   });
 
-  it("stems 'categories' → 'category'", () => {
-    expect(stemToken("categories")).toBe("category");
+  it("stems 'categories' to same stem as 'category'", () => {
+    expect(stemToken("categories")).toBe(stemToken("category"));
   });
 
   it("does not stem short words like 'us'", () => {
@@ -96,10 +96,17 @@ describe("B4: stemToken and tokenize plural normalisation", () => {
     expect(stemToken("glass")).toBe("glass");
   });
 
-  it("tokenize applies stemming", () => {
+  it("stems verb/noun pairs to matching stems", () => {
+    expect(stemToken("navigate")).toBe(stemToken("navigation"));
+    expect(stemToken("collapse")).toBe(stemToken("collapsible"));
+    expect(stemToken("loading")).toBe(stemToken("load"));
+    expect(stemToken("selected")).toBe(stemToken("select"));
+  });
+
+  it("tokenize returns raw tokens (no stemming)", () => {
     const tokens = tokenize("buttons and tables");
-    expect(tokens).toContain("button");
-    expect(tokens).toContain("table");
+    expect(tokens).toContain("buttons");
+    expect(tokens).toContain("tables");
   });
 
   it("tokenize stems query tokens matching field tokens", () => {
@@ -206,9 +213,9 @@ describe("B5: soft stopwords preserved when they are the only tokens", () => {
 // ---------------------------------------------------------------------------
 describe("B8: navigation intent multi-destination guard", () => {
   it("returns false for 'multiple links on pages'", () => {
-    expect(hasSingleDestinationNavigationIntent("multiple links on pages")).toBe(
-      false,
-    );
+    expect(
+      hasSingleDestinationNavigationIntent("multiple links on pages"),
+    ).toBe(false);
   });
 
   it("returns false for 'several links to different destinations'", () => {
@@ -226,15 +233,13 @@ describe("B8: navigation intent multi-destination guard", () => {
   });
 
   it("still returns true for 'link to a page'", () => {
-    expect(
-      hasSingleDestinationNavigationIntent("link to a page"),
-    ).toBe(true);
+    expect(hasSingleDestinationNavigationIntent("link to a page")).toBe(true);
   });
 
   it("returns false for 'link on a page' when 'all' is present", () => {
-    expect(
-      hasSingleDestinationNavigationIntent("all link on a page"),
-    ).toBe(false);
+    expect(hasSingleDestinationNavigationIntent("all link on a page")).toBe(
+      false,
+    );
   });
 });
 
@@ -273,6 +278,3 @@ describe("B11: scoreIntent no double-count (indirect)", () => {
     expect(result).toBe("pattern");
   });
 });
-
-
-

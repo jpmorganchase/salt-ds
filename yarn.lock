@@ -4331,6 +4331,7 @@ __metadata:
     remark-mdx: "npm:^3.1.1"
     remark-parse: "npm:^11.0.0"
     semver: "npm:^7.7.3"
+    stemmer: "npm:^2.0.0"
     typescript: "npm:^6.0.0"
     unified: "npm:^11.0.5"
   languageName: unknown
@@ -16319,6 +16320,15 @@ __metadata:
   version: 3.9.0
   resolution: "std-env@npm:3.9.0"
   checksum: 10/3044b2c54a74be4f460db56725571241ab3ac89a91f39c7709519bc90fa37148784bc4cd7d3a301aa735f43bd174496f263563f76703ce3e81370466ab7c235b
+  languageName: node
+  linkType: hard
+
+"stemmer@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "stemmer@npm:2.0.0"
+  bin:
+    stemmer: cli.js
+  checksum: 10/4a4f1673f62aaa6221b0d696dfd166ad2306249898df13e97cecccfa4abd448226176c9af46480e50e0dcd3ea9ba95b098d0176f09864eaf839f52b6434809d7
   languageName: node
   linkType: hard
 

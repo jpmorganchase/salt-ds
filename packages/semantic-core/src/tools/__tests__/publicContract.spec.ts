@@ -808,9 +808,7 @@ describe("publicContract", () => {
       buildInput({
         state: {
           implementation_ready: false,
-          required_follow_through: [
-            { region: "header", entity: "App header" },
-          ],
+          required_follow_through: [{ region: "header", entity: "App header" }],
           blocking_questions: [],
           starter_blockers: [],
           project_policy_blockers: [],
