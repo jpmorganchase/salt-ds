@@ -739,7 +739,7 @@ export async function extractComponents(
       semantics,
       source: {
         repo_path: sourceRepoPath,
-        export_name: title,
+        export_name: rootDisplayName,
       },
       inference: {
         docgen: docgenSelection.inference,

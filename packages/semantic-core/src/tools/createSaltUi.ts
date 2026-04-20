@@ -1,4 +1,5 @@
 import type { SaltRegistry, SaltStatus } from "../types.js";
+import { resolveComponentTarget } from "./componentLookup.js";
 import { compareOptions } from "./compareOptions.js";
 import {
   buildCreateCompositionGuidance,
@@ -122,7 +123,27 @@ export function createSaltUi(
   const names = [...new Set((input.names ?? []).map((name) => name.trim()))]
     .filter(Boolean)
     .slice(0, 10);
-  const solutionType = resolveSolutionType(input);
+  let solutionType = resolveSolutionType(input);
+
+  // When the keyword-based solution type is not "component" or "pattern",
+  // check whether the query is an exact component or pattern name.  This
+  // prevents misrouting queries like "Data grid" (a component) to the
+  // foundation path just because "grid" is a foundation keyword.
+  if (
+    query &&
+    solutionType !== "component" &&
+    solutionType !== "pattern" &&
+    !comparisonRequested
+  ) {
+    const exactComponent = resolveComponentTarget(
+      registry,
+      query,
+      input.package,
+    );
+    if (exactComponent.candidate && !exactComponent.ambiguity) {
+      solutionType = "component";
+    }
+  }
   const preferredCategories = uniqueNormalized(
     input.preferred_categories ?? [],
   );

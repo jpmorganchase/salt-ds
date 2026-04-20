@@ -52,7 +52,10 @@ const PATTERN_KEYWORDS = [
   "page",
   "pattern",
   "screen",
+  "stepper",
   "toolbar",
+  "upload",
+  "wizard",
 ] as const;
 
 export function getCreateSaltUiRelatedGuides(
