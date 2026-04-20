@@ -2145,6 +2145,71 @@ describe("salt cli", () => {
     );
   });
 
+  it("emits valid JS identifiers in starter code for multi-word component names", async () => {
+    const rootDir = await createTempDir("salt-cli-create-multiword-export");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          packageManager: "pnpm@9.1.0",
+          dependencies: {
+            react: "^18.3.1",
+            vite: "^7.1.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    // Test with "Grid layout" — a multi-word component that previously
+    // emitted `import { Grid layout }` (invalid JS) instead of `import { GridLayout }`.
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "GridLayout",
+        "--include-starter-code",
+        "--json",
+        "--full",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    const starterSnippets =
+      payload.result?.recommendation?.starter_code ?? [];
+    expect(starterSnippets.length).toBeGreaterThan(0);
+
+    // Every import identifier must be a valid JS identifier (no spaces).
+    const importPattern = /import\s*\{([^}]+)\}/g;
+    for (const snippet of starterSnippets) {
+      const code: string = snippet.code ?? "";
+      let match: RegExpExecArray | null;
+      while ((match = importPattern.exec(code)) !== null) {
+        const identifiers = match[1].split(",").map((s: string) => s.trim());
+        for (const id of identifiers) {
+          if (id.length === 0) continue;
+          expect(id).toMatch(
+            /^[A-Za-z_$][A-Za-z0-9_$]*$/,
+          );
+        }
+      }
+    }
+  });
+
   it("routes structured navigation shell create queries to Vertical navigation", async () => {
     const rootDir = await createTempDir("salt-cli-create-vertical-navigation");
     await fs.writeFile(
@@ -2760,6 +2825,73 @@ describe("salt cli", () => {
         },
       },
     });
+  });
+
+  it("prints minimal starter-only create json output for follow-through grounding", async () => {
+    const rootDir = await createTempDir("salt-cli-create-starter-only");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "Table",
+        "--json",
+        "--include-starter-code",
+        "--type",
+        "component",
+        "--starter-only",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBeLessThanOrEqual(20);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload).toMatchObject({
+      workflow: "create",
+      workflow_status: expect.stringMatching(
+        /^(success|partial|blocked|failed)$/,
+      ),
+      decision: expect.objectContaining({
+        name: expect.any(String),
+      }),
+      next_step: expect.anything(),
+    });
+    expect(Object.keys(payload).sort()).toEqual([
+      "composition_contract",
+      "decision",
+      "next_step",
+      "required_follow_through",
+      "starter_code",
+      "workflow",
+      "workflow_status",
+    ]);
+    expect(payload).not.toHaveProperty("result");
+    expect(payload).not.toHaveProperty("artifacts");
+    expect(payload).not.toHaveProperty("canonical_complete");
+    expect(payload).not.toHaveProperty("blocking_reasons");
   });
 
   it("returns structured fix candidates for manual-review navigation cases", async () => {
