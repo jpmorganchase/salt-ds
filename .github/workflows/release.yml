@@ -37,9 +37,6 @@ jobs:
           publish: yarn changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
           NPM_CONFIG_PROVENANCE: true
 
       - name: Run Storybook build
