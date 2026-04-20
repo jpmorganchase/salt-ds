@@ -86,6 +86,7 @@ const Range = (): ReactElement => {
       <DateInputRange
         date={selectedDate}
         format={"DD MMM YYYY"}
+        lang={"es"}
         onDateChange={handleDateChange}
       />
       <FormHelperText>{helperText}</FormHelperText>
