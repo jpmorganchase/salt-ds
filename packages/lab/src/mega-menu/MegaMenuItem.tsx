@@ -22,7 +22,7 @@ export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
   children?: ReactNode;
   /**
    * A unique value identifying this item. Used for tracking the selected item.
-   * Defaults to the children string content if not provided.
+   * When omitted, this item will not participate in selected/active state tracking.
    */
   value?: string;
 }
@@ -38,15 +38,12 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
       window: targetWindow,
     });
 
-    const itemValue =
-      value ?? (typeof children === "string" ? children : undefined);
-    const isSelected =
-      itemValue != null && megaMenu?.selectedItem === itemValue;
+    const isSelected = value != null && megaMenu?.selectedItem === value;
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       rest.onClick?.(event);
-      if (itemValue != null) {
-        megaMenu?.setSelectedItem(itemValue);
+      if (value != null) {
+        megaMenu?.setSelectedItem(value);
       }
       megaMenu?.setOpen(false);
     };

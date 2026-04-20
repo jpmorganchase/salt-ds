@@ -155,8 +155,8 @@ export const MegaMenuContainer = forwardRef<
           return;
         }
 
-        // Right/Down on last item: focus trigger and collapse menu.
-        if ((isArrowRight || isArrowDown) && isLastItem) {
+        // Right on last item: focus trigger and collapse menu.
+        if (isArrowRight && isLastItem) {
           event.preventDefault();
           focusReference();
           megaMenu.setOpen(false);
@@ -165,17 +165,35 @@ export const MegaMenuContainer = forwardRef<
 
         if (isArrowUp) {
           if (itemIndex > 0) {
+            // Move to previous item in same group
             event.preventDefault();
             currentItems[itemIndex - 1]?.focus();
+          } else if (currentRegionIndex > 0) {
+            // On first item of group: move to last item of previous group
+            event.preventDefault();
+            const previousRegion = regionItems[currentRegionIndex - 1];
+            if (previousRegion && previousRegion.length > 0) {
+              previousRegion[previousRegion.length - 1]?.focus();
+            }
           }
+          // else: first item of first group, no effect
           return;
         }
 
         if (isArrowDown) {
           if (itemIndex < currentItems.length - 1) {
+            // Move to next item in same group
             event.preventDefault();
             currentItems[itemIndex + 1]?.focus();
+          } else if (currentRegionIndex < regionItems.length - 1) {
+            // On last item of group: move to first item of next group
+            event.preventDefault();
+            const nextRegion = regionItems[currentRegionIndex + 1];
+            if (nextRegion && nextRegion.length > 0) {
+              nextRegion[0]?.focus();
+            }
           }
+          // else: last item of last group, no effect
           return;
         }
 

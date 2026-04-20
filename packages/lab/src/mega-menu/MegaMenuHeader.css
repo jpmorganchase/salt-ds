@@ -8,4 +8,5 @@
   font-weight: var(--salt-text-fontWeight-strong);
   line-height: var(--salt-text-label-lineHeight);
   min-height: var(--salt-size-base);
+  color: var(--salt-content-secondary-foreground);
 }
