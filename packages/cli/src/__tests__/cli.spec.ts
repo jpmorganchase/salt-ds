@@ -144,6 +144,42 @@ function withRegistry(args: string[]): string[] {
   return registryDir ? [...args, "--registry-dir", registryDir] : args;
 }
 
+function normalizeCliJson(value: unknown): any {
+  if (value == null || typeof value !== "object") {
+    return value;
+  }
+
+  const payload = value as Record<string, unknown>;
+  if (payload.contract !== "salt_workflow_v3" || payload.details == null) {
+    return value;
+  }
+
+  expect(payload).toEqual(
+    expect.objectContaining({
+      contract: "salt_workflow_v3",
+      workflow: expect.any(String),
+      transport: expect.any(String),
+      status: expect.any(String),
+      safety: expect.any(Object),
+      action: expect.any(Object),
+      summary: expect.any(String),
+      details: expect.any(Object),
+    }),
+  );
+
+  const details = payload.details as Record<string, unknown>;
+  return {
+    ...payload,
+    workflow: details.workflow as Record<string, unknown>,
+    result: details.result as Record<string, unknown>,
+    artifacts: details.artifacts as Record<string, unknown>,
+  };
+}
+
+function readCliJson(text: string): any {
+  return normalizeCliJson(JSON.parse(text));
+}
+
 beforeAll(async () => {
   registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "salt-cli-registry-"));
   await buildRegistry({
@@ -254,6 +290,60 @@ describe("salt cli", () => {
     expect(exitCode).toBe(0);
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
+    expect(payload.toolVersion).toBe("0.0.0");
+    expect(payload.capabilityManifest).toEqual(
+      expect.objectContaining({
+        manifest_version: "salt_capability_manifest_v1",
+        transport: "cli",
+        runtime: expect.objectContaining({
+          command_name: "salt-ds",
+          package_name: "@salt-ds/cli",
+          package_version: "0.0.0",
+        }),
+        registry: expect.objectContaining({
+          available: true,
+          version: "0.1.0",
+        }),
+        contracts: expect.objectContaining({
+          compact_workflow_contract_version: "v3",
+          compact_workflow_ids: ["create", "review", "migrate", "upgrade"],
+          setup_contract_ids: ["info", "init"],
+        }),
+        public_surface: expect.objectContaining({
+          default_surface_ids: [
+            "info",
+            "init",
+            "create",
+            "review",
+            "migrate",
+            "upgrade",
+          ],
+          advanced_output_ids: ["full", "starter-only"],
+        }),
+        support_tools: expect.objectContaining({
+          policy: "optional_advanced_host_surface",
+          default_exposed: false,
+          tool_ids: [
+            "discover_salt",
+            "get_salt_entity",
+            "get_salt_examples",
+          ],
+        }),
+        capabilities: expect.objectContaining({
+          review_runtime_url: true,
+          starter_only_create_artifact: true,
+          visual_input: expect.objectContaining({
+            source_outline: true,
+            runtime_capture: true,
+            image_or_mockup_inputs: true,
+            normalized_adapter_contract: "migrate_visual_evidence_v1",
+          }),
+        }),
+        resources: {
+          capability_manifest_uri: null,
+        },
+      }),
+    );
     expect(payload.framework).toEqual(
       expect.objectContaining({
         name: "vite-react",
@@ -322,6 +412,11 @@ describe("salt cli", () => {
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     expect(payload.packageJsonPath).toBeNull();
+    expect(payload.capabilityManifest.registry).toEqual({
+      available: false,
+      version: null,
+      generated_at: null,
+    });
     expect(payload.registry).toEqual(
       expect.objectContaining({
         available: false,
@@ -770,7 +865,7 @@ describe("salt cli", () => {
     expect(agents).toContain("run the repo `ui:verify` script");
     expect(agents).toContain("keep the first result canonical-only");
     expect(agents).toContain(
-      "follow the returned top-level `next_step` before editing",
+      "follow the returned top-level `action` before editing",
     );
     expect(agents).not.toContain("entity-grounding step");
     expect(agents).not.toContain("salt lint");
@@ -1242,7 +1337,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("create");
     expect(payload.workflow.transportUsed).toBe("cli");
     expect(payload.result.intent).toEqual(
@@ -1383,7 +1478,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.readiness).toEqual(
       expect.objectContaining({
         status: "guidance_only",
@@ -1459,7 +1554,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(0);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
         decisionName: "Link",
@@ -1554,7 +1649,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(0);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
         decisionName: "Link",
@@ -1622,7 +1717,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(10);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.recommended.name).toBe(
       "Analytical dashboard",
     );
@@ -1711,7 +1806,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.composition_contract).toEqual(
       expect.objectContaining({
         primary_target: {
@@ -1794,7 +1889,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.decision.name).toBe(
       "Analytical dashboard",
     );
@@ -1849,7 +1944,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(10);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.decision.name).toBe("Metric");
   });
 
@@ -1896,7 +1991,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.decision.name).toBe(
       "Analytical dashboard",
     );
@@ -1966,7 +2061,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(10);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.artifacts.projectPolicy.themeDefaults).toEqual(
       expect.objectContaining({
         provider: "BrandShellProvider",
@@ -2050,7 +2145,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.readiness).toEqual(
       expect.objectContaining({
         status: "starter_needs_attention",
@@ -2119,7 +2214,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(10);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.recommended.name).toBe("Metric");
     expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
       "Performance",
@@ -2188,7 +2283,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(0);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     const starterSnippets =
       payload.result?.recommendation?.starter_code ?? [];
     expect(starterSnippets.length).toBeGreaterThan(0);
@@ -2251,7 +2346,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.recommendation.solution_type).toBe("pattern");
     expect(payload.result.recommendation.recommended.name).toBe(
       "Vertical navigation",
@@ -2269,6 +2364,65 @@ describe("salt cli", () => {
       ]),
     );
     expect(payload.workflow.readiness.status).toBe("starter_needs_attention");
+  });
+
+  it("uses implementation-gate follow-through as the create summary next step in full output", async () => {
+    const rootDir = await createTempDir("salt-cli-create-chart-follow-through");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          packageManager: "pnpm@9.1.0",
+          dependencies: {
+            react: "^18.3.1",
+            vite: "^7.1.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "chart dashboard with filters and summary",
+        "--json",
+        "--full",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(20);
+    expect(stderr).toBe("");
+    const payload = readCliJson(stdout);
+    expect(payload.workflow.implementationGate).toEqual(
+      expect.objectContaining({
+        status: "follow_through_required",
+        next_call: {
+          workflow: "create_salt_ui",
+          follow_up_mode: "exact_name",
+          args: {
+            query: "Chart",
+          },
+        },
+        rule_ids: ["create-follow-through-required"],
+      }),
+    );
+    expect(payload.result.summary.nextStep).toContain(
+      "Run targeted Salt create follow-up",
+    );
   });
 
   it("prints doctor json output and returns success for a valid repo", async () => {
@@ -2591,7 +2745,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("review");
     expect(payload.workflow.transportUsed).toBe("cli");
     expect(payload.artifacts.issueClasses).toEqual(
@@ -2669,15 +2823,18 @@ describe("salt cli", () => {
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
+      contract: "salt_workflow_v3",
       workflow: "create",
-      transport_used: "cli",
-      workflow_status: expect.stringMatching(
+      transport: "cli",
+      status: expect.stringMatching(
         /^(success|partial|blocked|failed)$/,
       ),
-      canonical_complete: expect.any(Boolean),
-      safe_to_implement_exact_request: expect.any(Boolean),
-      blocking_reasons: expect.any(Array),
-      next_step: expect.objectContaining({
+      safety: {
+        canonical_complete: expect.any(Boolean),
+        exact_request_safe: expect.any(Boolean),
+        blocking_reasons: expect.any(Array),
+      },
+      action: expect.objectContaining({
         kind: expect.any(String),
       }),
       summary: expect.any(String),
@@ -2722,9 +2879,11 @@ describe("salt cli", () => {
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
       workflow: "create",
-      requested_entity: "Metric",
-      resolved_entity: "Metric",
-      match_status: "exact",
+      request: {
+        entity: "Metric",
+        resolved_entity: "Metric",
+        match_status: "exact",
+      },
     });
   });
 
@@ -2766,9 +2925,11 @@ describe("salt cli", () => {
     const writtenPayload = JSON.parse(await fs.readFile(reportPath, "utf8"));
     expect(payload).toMatchObject({
       workflow: "create",
-      requested_entity: "Metric",
-      resolved_entity: "Metric",
-      match_status: "exact",
+      request: {
+        entity: "Metric",
+        resolved_entity: "Metric",
+        match_status: "exact",
+      },
     });
     expect(writtenPayload).toEqual(payload);
   });
@@ -2813,10 +2974,12 @@ describe("salt cli", () => {
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
       workflow: "create",
-      requested_entity: "analytical dashboard body",
-      resolved_entity: "Analytical dashboard",
-      match_status: "broadened",
-      next_step: {
+      request: {
+        entity: "analytical dashboard body",
+        resolved_entity: "Analytical dashboard",
+        match_status: "broadened",
+      },
+      action: {
         kind: "tool_call",
         tool: "create_salt_ui",
         mode: "exact_name",
@@ -2871,27 +3034,201 @@ describe("salt cli", () => {
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
       workflow: "create",
-      workflow_status: expect.stringMatching(
+      status: expect.stringMatching(
         /^(success|partial|blocked|failed)$/,
       ),
       decision: expect.objectContaining({
         name: expect.any(String),
       }),
-      next_step: expect.anything(),
+      action: expect.anything(),
     });
     expect(Object.keys(payload).sort()).toEqual([
+      "action",
       "composition_contract",
       "decision",
-      "next_step",
       "required_follow_through",
       "starter_code",
+      "status",
       "workflow",
-      "workflow_status",
     ]);
     expect(payload).not.toHaveProperty("result");
     expect(payload).not.toHaveProperty("artifacts");
-    expect(payload).not.toHaveProperty("canonical_complete");
-    expect(payload).not.toHaveProperty("blocking_reasons");
+    expect(payload).not.toHaveProperty("safety");
+  });
+
+  it("writes starter-only create json to --output without widening to the compact contract", async () => {
+    const rootDir = await createTempDir("salt-cli-create-starter-only-output");
+    const reportPath = path.join(rootDir, "create-starter-only.json");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "Table",
+        "--json",
+        "--include-starter-code",
+        "--type",
+        "component",
+        "--starter-only",
+        "--output",
+        reportPath,
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBeLessThanOrEqual(20);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    const writtenPayload = JSON.parse(await fs.readFile(reportPath, "utf8"));
+    expect(Object.keys(payload).sort()).toEqual([
+      "action",
+      "composition_contract",
+      "decision",
+      "required_follow_through",
+      "starter_code",
+      "status",
+      "workflow",
+    ]);
+    expect(payload).not.toHaveProperty("safety");
+    expect(writtenPayload).toEqual(payload);
+  });
+
+  it("rejects starter-only create output when --json is omitted", async () => {
+    const rootDir = await createTempDir("salt-cli-create-starter-only-no-json");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry(["create", "Table", "--starter-only"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(30);
+    expect(stdout).toBe("");
+    expect(stderr).toContain("--starter-only is only supported with --json");
+  });
+
+  it("rejects starter-only create output when --full is also requested", async () => {
+    const rootDir = await createTempDir("salt-cli-create-starter-only-full");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry(["create", "Table", "--json", "--full", "--starter-only"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(30);
+    expect(stdout).toBe("");
+    expect(stderr).toContain("--starter-only cannot be combined with --full");
+  });
+
+  it("rejects starter-only outside the create workflow", async () => {
+    const rootDir = await createTempDir("salt-cli-review-starter-only");
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "src", "App.tsx"),
+      'export function App() { return null; }\n',
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--json", "--starter-only"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(30);
+    expect(stdout).toBe("");
+    expect(stderr).toContain(
+      "--starter-only is only supported for `salt-ds create --json`.",
+    );
   });
 
   it("returns structured fix candidates for manual-review navigation cases", async () => {
@@ -2940,7 +3277,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.fixCandidates).toEqual(
       expect.objectContaining({
@@ -3022,13 +3359,16 @@ describe("salt cli", () => {
     expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
+      contract: "salt_workflow_v3",
       workflow: "review",
-      transport_used: "cli",
-      workflow_status: "blocked",
-      canonical_complete: true,
-      safe_to_implement_exact_request: false,
-      blocking_reasons: expect.any(Array),
-      next_step: expect.objectContaining({
+      transport: "cli",
+      status: "blocked",
+      safety: {
+        canonical_complete: true,
+        exact_request_safe: false,
+        blocking_reasons: expect.any(Array),
+      },
+      action: expect.objectContaining({
         kind: expect.any(String),
       }),
       summary: "Salt review found issues that still need attention.",
@@ -3106,7 +3446,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
         status: "needs_attention",
@@ -3194,7 +3534,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.workflow.transportUsed).toBe("cli");
     expect(payload.artifacts.ruleIds).toEqual(
@@ -3352,13 +3692,16 @@ describe("salt cli", () => {
     expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
+      contract: "salt_workflow_v3",
       workflow: "migrate",
-      transport_used: "cli",
-      workflow_status: expect.stringMatching(/^(partial|blocked)$/),
-      canonical_complete: false,
-      safe_to_implement_exact_request: false,
-      blocking_reasons: expect.any(Array),
-      next_step: expect.objectContaining({
+      transport: "cli",
+      status: expect.stringMatching(/^(partial|blocked)$/),
+      safety: {
+        canonical_complete: false,
+        exact_request_safe: false,
+        blocking_reasons: expect.any(Array),
+      },
+      action: expect.objectContaining({
         kind: expect.any(String),
       }),
       summary: expect.any(String),
@@ -3432,7 +3775,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.readiness).toEqual(
       expect.objectContaining({
         status: "starter_needs_attention",
@@ -3486,7 +3829,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.artifacts.postMigrationVerification).toEqual(
       expect.objectContaining({
@@ -3580,7 +3923,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.result.translation.source_ui_model.page_regions).toEqual(
       expect.arrayContaining([
@@ -3707,7 +4050,7 @@ describe("salt cli", () => {
 
       expect(exitCode).toBe(20);
       expect(stderr).toBe("");
-      const payload = JSON.parse(stdout);
+      const payload = readCliJson(stdout);
       expect(payload.workflow.id).toBe("migrate");
       expect(payload.workflow.confidence).toEqual(
         expect.objectContaining({
@@ -3896,7 +4239,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.artifacts.visualEvidence.confidenceImpact.level).toBe(
       "stronger-scoping",
@@ -3969,7 +4312,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("upgrade");
     expect(payload.workflow.transportUsed).toBe("cli");
     expect(payload.artifacts.ruleIds).toEqual(["upgrade-review-version-risks"]);
@@ -4031,13 +4374,16 @@ describe("salt cli", () => {
     expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
+      contract: "salt_workflow_v3",
       workflow: "upgrade",
-      transport_used: "cli",
-      workflow_status: "blocked",
-      canonical_complete: true,
-      safe_to_implement_exact_request: false,
-      blocking_reasons: expect.any(Array),
-      next_step: expect.objectContaining({
+      transport: "cli",
+      status: "blocked",
+      safety: {
+        canonical_complete: true,
+        exact_request_safe: false,
+        blocking_reasons: expect.any(Array),
+      },
+      action: expect.objectContaining({
         kind: expect.any(String),
       }),
       summary: "Salt produced upgrade guidance for @salt-ds/core.",
@@ -4108,7 +4454,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(0);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.workflow.id).toBe("review");
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
@@ -4215,7 +4561,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(20);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
         status: "needs_attention",
@@ -4339,7 +4685,7 @@ describe("salt cli", () => {
 
     expect(exitCode).toBe(0);
     expect(stderr).toBe("");
-    const payload = JSON.parse(stdout);
+    const payload = readCliJson(stdout);
     expect(payload.artifacts.migrationVerification).toEqual(
       expect.objectContaining({
         runtimeCompared: true,

@@ -1,0 +1,34 @@
+[
+  {
+    "path": "packages\\mcp\\README.md",
+    "sha256": "4f04b78e79364d701521997712f72a55f5190e3122e7f361c315f2a94c26aa8a"
+  },
+  {
+    "path": "packages\\cli\\README.md",
+    "sha256": "0422c341184e8a343e06db4b59f5f2cecf7facd9fa960bd2bd05f3b73af825b3"
+  },
+  {
+    "path": "site\\docs\\getting-started\\ai.mdx",
+    "sha256": "354d51143ac1db29446f9ed43bb2080a9d8be3d59d256a4b5338e15624acd6d2"
+  },
+  {
+    "path": "packages\\mcp\\docs\\maintaining-salt-ai-tooling.md",
+    "sha256": "844008c6c56404a811f955a0ae569e300447a94fdd73e4e6c9df4e6f4342297d"
+  },
+  {
+    "path": "packages\\mcp\\docs\\live-eval-harness.md",
+    "sha256": "9c5bad7cc946555f461f48fdede15926c904f38c6f54e296ba6d5f8a7a749564"
+  },
+  {
+    "path": "packages\\mcp\\docs\\public-api-matrix.md",
+    "sha256": "347a59b28847d1ab2021d58fded93e4e36991c4de437f03eecdd45fcddfcfd36"
+  },
+  {
+    "path": "packages\\mcp\\docs\\public-contract-v3-implementation-plan.md",
+    "sha256": "9b6de92598c60fe722151fdbd469df1c896fc31d721c2dba0ac8f720d154e3df"
+  },
+  {
+    "path": "packages\\mcp\\docs\\release-1-release-evidence.md",
+    "sha256": "ab12b3b0d49a07007f8bfb0418c517a75f831cf1b81e6a37adb4945cc4996c23"
+  }
+]

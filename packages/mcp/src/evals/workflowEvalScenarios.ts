@@ -33,6 +33,60 @@ function preferMcpWithCliFallback() {
   };
 }
 
+type WorkflowEvalExpected = WorkflowEvalScenario["expected"];
+type WorkflowEvalMetricBudgets = NonNullable<WorkflowEvalExpected["metrics"]>;
+
+function buildWorkflowMetricBudgets(
+  workflow: WorkflowEvalScenario["task"]["workflow"],
+): WorkflowEvalMetricBudgets {
+  switch (workflow) {
+    case "create":
+      return {
+        max_transcript_bytes: 1600,
+        max_workflow_result_bytes: 1400,
+        max_payload_bytes: 2800,
+        max_duration_ms: 120000,
+      };
+    case "migrate":
+      return {
+        max_transcript_bytes: 2000,
+        max_workflow_result_bytes: 1800,
+        max_payload_bytes: 3200,
+        max_duration_ms: 120000,
+      };
+    case "upgrade":
+      return {
+        max_transcript_bytes: 1400,
+        max_workflow_result_bytes: 900,
+        max_payload_bytes: 2200,
+        max_duration_ms: 120000,
+      };
+    case "review":
+    default:
+      return {
+        max_transcript_bytes: 1800,
+        max_workflow_result_bytes: 1000,
+        max_payload_bytes: 2600,
+        max_duration_ms: 120000,
+      };
+  }
+}
+
+function withWorkflowMetricBudgets(
+  workflow: WorkflowEvalScenario["task"]["workflow"],
+  expected: WorkflowEvalExpected,
+  overrides: Partial<WorkflowEvalMetricBudgets> = {},
+): WorkflowEvalExpected {
+  return {
+    ...expected,
+    metrics: {
+      ...buildWorkflowMetricBudgets(workflow),
+      ...(expected.metrics ?? {}),
+      ...overrides,
+    },
+  };
+}
+
 export function buildDefaultWorkflowEvalScenarios(
   roots: WorkflowEvalFixtureRoots,
 ): WorkflowEvalScenario[] {
@@ -106,7 +160,7 @@ export function buildDefaultWorkflowEvalScenarios(
         },
         cli: buildCliArgs(["review", toolbarPath]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets("review", {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "review_salt_ui",
@@ -120,7 +174,7 @@ export function buildDefaultWorkflowEvalScenarios(
           },
           summary_includes: ["still need attention"],
         },
-      },
+      }),
     },
     {
       id: "existing-salt-upgrade-core",
@@ -151,7 +205,7 @@ export function buildDefaultWorkflowEvalScenarios(
           "--include-deprecations",
         ]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets("upgrade", {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "upgrade_salt_ui",
@@ -166,7 +220,7 @@ export function buildDefaultWorkflowEvalScenarios(
           },
           summary_includes: ["upgrade guidance"],
         },
-      },
+      }),
     },
     {
       id: "non-salt-migrate-screen",
@@ -212,7 +266,7 @@ export function buildDefaultWorkflowEvalScenarios(
           "--include-starter-code",
         ]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets("migrate", {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "migrate_to_salt",
@@ -226,7 +280,7 @@ export function buildDefaultWorkflowEvalScenarios(
           },
           summary_includes: ["migration direction"],
         },
-      },
+      }),
     },
     {
       id: "new-project-create-dashboard",
@@ -254,7 +308,7 @@ export function buildDefaultWorkflowEvalScenarios(
           "--include-starter-code",
         ]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets("create", {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "create_salt_ui",
@@ -275,7 +329,7 @@ export function buildDefaultWorkflowEvalScenarios(
         },
         canonical_choice: "Analytical dashboard",
         final_choice: "Analytical dashboard",
-      },
+      }),
     },
     {
       id: "existing-salt-create-policy-aware-dashboard",
@@ -304,7 +358,7 @@ export function buildDefaultWorkflowEvalScenarios(
           "--include-starter-code",
         ]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets("create", {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "create_salt_ui",
@@ -325,7 +379,7 @@ export function buildDefaultWorkflowEvalScenarios(
         },
         canonical_choice: "Analytical dashboard",
         final_choice: "Analytical dashboard",
-      },
+      }),
     },
     {
       id: "non-salt-migrate-screenshot-derived-outline",
@@ -365,7 +419,7 @@ export function buildDefaultWorkflowEvalScenarios(
           "--include-starter-code",
         ]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets("migrate", {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "migrate_to_salt",
@@ -379,7 +433,7 @@ export function buildDefaultWorkflowEvalScenarios(
           },
           summary_includes: ["migration direction"],
         },
-      },
+      }),
     },
     {
       id: "existing-salt-review-mcp-blocked-cli-fallback",
@@ -414,7 +468,9 @@ export function buildDefaultWorkflowEvalScenarios(
         },
         cli: buildCliArgs(["review", toolbarPath]),
       },
-      expected: {
+      expected: withWorkflowMetricBudgets(
+        "review",
+        {
         transport: preferMcpWithCliFallback(),
         workflow: {
           id: "review_salt_ui",
@@ -428,7 +484,12 @@ export function buildDefaultWorkflowEvalScenarios(
           },
           summary_includes: ["still need attention"],
         },
-      },
+        },
+        {
+          max_transcript_bytes: 2200,
+          max_payload_bytes: 3000,
+        },
+      ),
     },
     {
       id: "existing-salt-review-all-transports-blocked",

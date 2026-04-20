@@ -114,10 +114,13 @@ export function createToolExecutionRuntime(): ToolExecutionRuntime {
 function cacheProjectContext(
   runtime: ToolExecutionRuntime | undefined,
   context: SaltProjectContextData,
-): string {
-  const contextId = buildSaltProjectContextId(context.root_dir);
+): string | null {
+  const contextId =
+    context.resolution.status === "resolved"
+      ? buildSaltProjectContextId(context.root_dir)
+      : null;
   if (runtime) {
-    if (context.resolution.status === "resolved") {
+    if (context.resolution.status === "resolved" && contextId) {
       runtime.projectContexts.set(contextId, context);
       runtime.lastProjectContextId = contextId;
     } else {
@@ -302,7 +305,7 @@ const CONTEXT_POLICY_COMPATIBILITY_SCHEMA = z.object({
 });
 
 const CONTEXT_RESULT_SCHEMA = z.object({
-  context_id: z.string(),
+  context_id: z.string().nullable(),
   root_dir: z.string(),
   resolution: z.object({
     status: z.enum(["resolved", "fallback", "needs_explicit_root", "mismatch"]),
@@ -456,6 +459,21 @@ const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z.object({
           .nullable(),
       }),
       reasons: z.array(z.string()),
+      context_health: z.object({
+        resolution_status: z.enum([
+          "resolved",
+          "fallback",
+          "needs_explicit_root",
+          "mismatch",
+        ]),
+        trusted: z.boolean(),
+        repo_specific_workflows_ready: z.boolean(),
+        reason: z.string().nullable(),
+      }),
+      retry_with: z.object({
+        root_dir: z.string().nullable(),
+        context_id: z.string().nullable(),
+      }),
     }),
     notes: z.array(z.string()),
   }),
@@ -757,6 +775,12 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           source_outline: workflowArgs.source_outline,
           context_checked:
             isSaltProjectContextReadyForRepoAwareWork(projectContext),
+          context_resolution_status: projectContext.resolution.status,
+          context_retry_with_root_dir:
+            projectContext.summary.retry_with.root_dir,
+          context_id: isSaltProjectContextReadyForRepoAwareWork(projectContext)
+            ? buildSaltProjectContextId(projectContext.root_dir)
+            : null,
           project_policy:
             await loadWorkflowProjectPolicyArtifactForContext(projectContext),
           view: workflowArgs.view,
@@ -856,6 +880,12 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           package: workflowArgs.package,
           context_checked:
             isSaltProjectContextReadyForRepoAwareWork(projectContext),
+          context_resolution_status: projectContext.resolution.status,
+          context_retry_with_root_dir:
+            projectContext.summary.retry_with.root_dir,
+          context_id: isSaltProjectContextReadyForRepoAwareWork(projectContext)
+            ? buildSaltProjectContextId(projectContext.root_dir)
+            : null,
           project_policy:
             await loadWorkflowProjectPolicyArtifactForContext(projectContext),
           view: workflowArgs.view,

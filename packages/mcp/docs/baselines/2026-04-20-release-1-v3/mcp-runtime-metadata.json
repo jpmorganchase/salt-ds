@@ -1,0 +1,109 @@
+{
+  "server_name": "salt-mcp",
+  "package_name": "@salt-ds/mcp",
+  "mcp_version": "0.0.0",
+  "registry_version": "0.1.0",
+  "registry_generated_at": "2026-04-20T21:54:48.899Z",
+  "capability_manifest_uri": "salt://capabilities/manifest",
+  "capability_manifest": {
+    "manifest_version": "salt_capability_manifest_v1",
+    "transport": "mcp",
+    "runtime": {
+      "package_name": "@salt-ds/mcp",
+      "package_version": "0.0.0",
+      "server_name": "salt-mcp",
+      "command_name": "salt-mcp"
+    },
+    "registry": {
+      "available": true,
+      "version": "0.1.0",
+      "generated_at": "2026-04-20T21:54:48.899Z"
+    },
+    "contracts": {
+      "compact_workflow_contract_version": "v3",
+      "compact_workflow_ids": [
+        "create",
+        "review",
+        "migrate",
+        "upgrade"
+      ],
+      "setup_contract_ids": [
+        "get_salt_project_context",
+        "bootstrap_salt_repo"
+      ]
+    },
+    "workflow_vocabulary": [
+      {
+        "id": "init",
+        "label": "init"
+      },
+      {
+        "id": "create",
+        "label": "create"
+      },
+      {
+        "id": "review",
+        "label": "review"
+      },
+      {
+        "id": "migrate",
+        "label": "migrate"
+      },
+      {
+        "id": "upgrade",
+        "label": "upgrade"
+      },
+      {
+        "id": "review_url",
+        "label": "review --url"
+      }
+    ],
+    "public_surface": {
+      "story": "workflow_first",
+      "default_response_mode": "compact",
+      "full_response_mode": "explicit_only",
+      "default_surface_ids": [
+        "get_salt_project_context",
+        "bootstrap_salt_repo",
+        "create_salt_ui",
+        "review_salt_ui",
+        "migrate_to_salt",
+        "upgrade_salt_ui"
+      ],
+      "advanced_output_ids": [
+        "view:full"
+      ]
+    },
+    "support_tools": {
+      "policy": "optional_advanced_host_surface",
+      "default_exposed": false,
+      "tool_ids": [
+        "discover_salt",
+        "get_salt_entity",
+        "get_salt_examples"
+      ],
+      "workflow_contract_meaning_changes_when_absent": false
+    },
+    "capabilities": {
+      "repo_context": true,
+      "repo_bootstrap": true,
+      "starter_code": true,
+      "exact_request_safety": true,
+      "deterministic_next_step": true,
+      "review_runtime_url": false,
+      "starter_only_create_artifact": false,
+      "visual_input": {
+        "source_outline": true,
+        "runtime_capture": false,
+        "image_or_mockup_inputs": false,
+        "normalized_adapter_contract": null
+      },
+      "handoff": {
+        "portable_bundle": false
+      }
+    },
+    "resources": {
+      "capability_manifest_uri": "salt://capabilities/manifest"
+    }
+  }
+}

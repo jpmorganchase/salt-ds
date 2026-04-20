@@ -1,3 +1,4 @@
+import type { SaltCapabilityManifest } from "@salt-ds/semantic-core/tools/capabilityManifest";
 import type { ReviewSaltUiResult } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 
 export interface ParsedArgs {
@@ -58,6 +59,7 @@ export interface LintCommandResult {
 export interface SaltInfoResult {
   toolVersion: string;
   timestamp: string;
+  capabilityManifest: SaltCapabilityManifest;
   rootDir: string;
   packageJsonPath: string | null;
   environment: {

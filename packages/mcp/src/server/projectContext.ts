@@ -42,6 +42,16 @@ type ProjectContextResolutionStatus =
   | "needs_explicit_root"
   | "mismatch";
 type ProjectContextResolutionQuality = "ready" | "needs_explicit_root";
+type ProjectContextRetry = {
+  root_dir: string | null;
+  context_id: string | null;
+};
+type ProjectContextHealthSummary = {
+  resolution_status: ProjectContextResolutionStatus;
+  trusted: boolean;
+  repo_specific_workflows_ready: boolean;
+  reason: string | null;
+};
 
 interface SaltProjectContextSource {
   original: string;
@@ -276,10 +286,12 @@ export interface SaltProjectContextData {
         | "create_salt_ui"
         | "review_salt_ui"
         | "migrate_to_salt"
-        | "upgrade_salt_ui"
-        | null;
+      | "upgrade_salt_ui"
+      | null;
     };
     reasons: string[];
+    context_health: ProjectContextHealthSummary;
+    retry_with: ProjectContextRetry;
   };
   notes: string[];
   sources: SaltProjectContextSource[];
@@ -290,7 +302,7 @@ export interface SaltProjectContextResult {
     id: "get_salt_project_context";
   };
   result: Omit<SaltProjectContextData, "summary" | "notes" | "sources"> & {
-    context_id: string;
+    context_id: string | null;
   };
   artifacts: {
     summary: SaltProjectContextData["summary"];
@@ -301,6 +313,19 @@ export interface SaltProjectContextResult {
 
 function toPosix(inputPath: string | null): string | null {
   return inputPath ? inputPath.split(path.sep).join("/") : null;
+}
+
+function toPosixDirname(inputPath: string | null, levels = 1): string | null {
+  if (!inputPath) {
+    return null;
+  }
+
+  let current = inputPath;
+  for (let index = 0; index < levels; index += 1) {
+    current = path.posix.dirname(current);
+  }
+
+  return current === "." ? null : current;
 }
 
 function uniqueContextSources(
@@ -378,6 +403,35 @@ function buildContextSources(input: {
           ),
     ),
   ]);
+}
+
+function deriveDetectedRepoRoot(input: {
+  root_dir: string;
+  package_json_path: string | null;
+  workspace_root: string | null;
+  repo_instructions_path: string | null;
+  team_config_path: string | null;
+  stack_config_path: string | null;
+  tsconfig_path: string | null;
+  framework_name: FrameworkName;
+}): string | null {
+  const candidates = [
+    toPosixDirname(input.package_json_path),
+    input.workspace_root,
+    toPosixDirname(input.team_config_path, 2),
+    toPosixDirname(input.stack_config_path, 2),
+    toPosixDirname(input.repo_instructions_path),
+    toPosixDirname(input.tsconfig_path),
+    input.framework_name !== "unknown" ? input.root_dir : null,
+  ];
+
+  for (const candidate of candidates) {
+    if (candidate) {
+      return candidate;
+    }
+  }
+
+  return null;
 }
 
 async function pathExists(candidatePath: string): Promise<boolean> {
@@ -847,10 +901,23 @@ function buildSummary(input: {
   repoInstructionPath: string | null;
   runtimeTargets: Array<{ label: "storybook" | "app-runtime"; url: string }>;
   resolution: SaltProjectContextData["resolution"];
+  retryRootDir: string | null;
 }): SaltProjectContextData["summary"] {
+  const contextHealth: ProjectContextHealthSummary = {
+    resolution_status: input.resolution.status,
+    trusted: input.resolution.status === "resolved",
+    repo_specific_workflows_ready: input.resolution.status === "resolved",
+    reason: input.resolution.reason,
+  };
+  const retryWith: ProjectContextRetry = {
+    root_dir: input.retryRootDir ?? null,
+    context_id: null,
+  };
+
   if (
     input.resolution.status === "needs_explicit_root" ||
-    input.resolution.status === "mismatch"
+    input.resolution.status === "mismatch" ||
+    input.resolution.status === "fallback"
   ) {
     return {
       recommended_next_tool: null,
@@ -865,6 +932,8 @@ function buildSummary(input: {
         input.resolution.reason ??
           "Project context could not confidently resolve the repo root. Re-run get_salt_project_context with an explicit root_dir before relying on repo-aware workflow guidance.",
       ],
+      context_health: contextHealth,
+      retry_with: retryWith,
     };
   }
 
@@ -925,6 +994,8 @@ function buildSummary(input: {
             : "Salt packages are already present, so review is the safest default first workflow."
           : "Salt packages are already present, but review is blocked until Salt install health is fixed.",
       ],
+      context_health: contextHealth,
+      retry_with: retryWith,
     };
   }
 
@@ -939,6 +1010,8 @@ function buildSummary(input: {
           ? "The repo looks like an existing app without Salt packages, so migrate is the most likely first workflow."
           : "The repo looks like an existing app without Salt packages, but migrate is blocked until Salt install health is fixed.",
       ],
+      context_health: contextHealth,
+      retry_with: retryWith,
     };
   }
 
@@ -950,23 +1023,45 @@ function buildSummary(input: {
       ...(blockedWorkflowReason ? [blockedWorkflowReason] : []),
       "No existing Salt usage was detected, and the repo context looks ready for new Salt UI creation.",
     ],
+    context_health: contextHealth,
+    retry_with: retryWith,
   };
 }
 
 function buildProjectContextResolution(input: {
+  rootDir: string;
   rootDirProvided: boolean;
+  detectedRepoRoot: string | null;
   packageJsonPath: string | null;
   workspaceKind: WorkspaceKind;
   saltPackages: Array<{ name: string; version: string }>;
   repoInstructionPath: string | null;
   policyMode: "none" | "team" | "stack";
+  frameworkName: FrameworkName;
+  tsconfigPath: string | null;
 }): SaltProjectContextData["resolution"] {
   const hasRepoSignals =
+    input.detectedRepoRoot !== null ||
     input.packageJsonPath !== null ||
     input.workspaceKind !== "unknown" ||
     input.saltPackages.length > 0 ||
     input.repoInstructionPath !== null ||
-    input.policyMode !== "none";
+    input.policyMode !== "none" ||
+    input.frameworkName !== "unknown" ||
+    input.tsconfigPath !== null;
+
+  if (
+    input.rootDirProvided &&
+    input.detectedRepoRoot !== null &&
+    input.detectedRepoRoot !== input.rootDir
+  ) {
+    return {
+      status: "mismatch",
+      root_source: "explicit_input",
+      quality: "needs_explicit_root",
+      reason: `The explicit root_dir points inside or outside the detected repo root ${input.detectedRepoRoot}. Re-run get_salt_project_context with root_dir set to ${input.detectedRepoRoot} before relying on repo-specific guidance.`,
+    };
+  }
 
   if (input.rootDirProvided && hasRepoSignals) {
     return {
@@ -991,9 +1086,10 @@ function buildProjectContextResolution(input: {
     return {
       status: "fallback",
       root_source: "process_cwd",
-      quality: "ready",
-      reason:
-        "Repo signals were inferred from the current working directory. Pass root_dir or reuse context_id before relying on repo-specific guidance.",
+      quality: "needs_explicit_root",
+      reason: input.detectedRepoRoot
+        ? `Repo signals were inferred from the current working directory. Re-run get_salt_project_context with root_dir set to ${input.detectedRepoRoot}, then reuse the returned context_id before relying on repo-specific guidance.`
+        : "Repo signals were inferred from the current working directory. Pass root_dir or reuse context_id before relying on repo-specific guidance.",
     };
   }
 
@@ -1029,9 +1125,11 @@ export function buildSaltProjectContextId(rootDir: string): string {
 
 export function toSaltProjectContextResult(
   context: SaltProjectContextData,
-  contextId: string,
+  contextId: string | null,
 ): SaltProjectContextResult {
   const { summary, notes, sources, ...result } = context;
+  const reusableContextId =
+    context.resolution.status === "resolved" ? contextId : null;
 
   return {
     workflow: {
@@ -1039,10 +1137,16 @@ export function toSaltProjectContextResult(
     },
     result: {
       ...result,
-      context_id: contextId,
+      context_id: reusableContextId,
     },
     artifacts: {
-      summary,
+      summary: {
+        ...summary,
+        retry_with: {
+          ...summary.retry_with,
+          context_id: reusableContextId,
+        },
+      },
       notes,
     },
     sources,
@@ -1096,15 +1200,30 @@ export async function collectSaltProjectContextData(
   const workflowAvailability = buildRepoAwareSaltWorkflowAvailability(
     saltInstallation.health_summary.blocking_workflows,
   );
+  const normalizedRootDir = toPosix(rootDir) ?? rootDir;
   const normalizedPackageJsonPath = toPosix(packageJsonPath);
+  const detectedRepoRoot = deriveDetectedRepoRoot({
+    root_dir: normalizedRootDir,
+    package_json_path: normalizedPackageJsonPath,
+    workspace_root: workspace.workspace_root,
+    repo_instructions_path: repoInstructions.path,
+    team_config_path: policy.team_config_path,
+    stack_config_path: policy.stack_config_path,
+    tsconfig_path: imports.tsconfig_path,
+    framework_name: framework.name,
+  });
   const resolution = buildProjectContextResolution({
+    rootDir: normalizedRootDir,
     rootDirProvided:
       typeof args.root_dir === "string" && args.root_dir.length > 0,
+    detectedRepoRoot,
     packageJsonPath: normalizedPackageJsonPath,
     workspaceKind: workspace.kind,
     saltPackages,
     repoInstructionPath: repoInstructions.path,
     policyMode: policy.mode,
+    frameworkName: framework.name,
+    tsconfigPath: imports.tsconfig_path,
   });
 
   if (!policy.team_config_path && !policy.stack_config_path) {
@@ -1165,7 +1284,7 @@ export async function collectSaltProjectContextData(
   });
 
   return {
-    root_dir: toPosix(rootDir) ?? rootDir,
+    root_dir: normalizedRootDir,
     resolution,
     package_json_path: normalizedPackageJsonPath,
     environment: {
@@ -1207,6 +1326,10 @@ export async function collectSaltProjectContextData(
       repoInstructionPath: repoInstructions.path,
       runtimeTargets,
       resolution,
+      retryRootDir:
+        resolution.status === "resolved"
+          ? normalizedRootDir
+          : detectedRepoRoot,
     }),
     notes,
     sources,

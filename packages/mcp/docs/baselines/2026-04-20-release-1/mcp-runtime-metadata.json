@@ -1,0 +1,7 @@
+{
+  "server_name": "salt-mcp",
+  "package_name": "@salt-ds/mcp",
+  "mcp_version": "0.0.0",
+  "registry_version": "0.1.0",
+  "registry_generated_at": "2026-04-11T21:23:51.713Z"
+}

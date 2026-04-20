@@ -1,0 +1,16 @@
+{
+  "workflow": "create",
+  "transport_used": "cli",
+  "workflow_status": "success",
+  "canonical_complete": true,
+  "safe_to_implement_exact_request": true,
+  "requested_entity": "Metric",
+  "resolved_entity": "Metric",
+  "match_status": "exact",
+  "blocking_reasons": [],
+  "next_step": {
+    "kind": "implement",
+    "scope": "exact_request"
+  },
+  "summary": "Salt grounded the exact requested entity Metric."
+}

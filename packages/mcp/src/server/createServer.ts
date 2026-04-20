@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
+import { registerSaltResources } from "./registerResources.js";
 import { registerSaltTools } from "./registerTools.js";
 import {
   buildSaltMcpInstructions,
@@ -18,6 +19,7 @@ export async function createSaltMcpServer(options: CreateServerOptions = {}) {
     instructions: buildSaltMcpInstructions(registry),
   });
 
+  registerSaltResources(server, registry);
   registerSaltTools(server, registry, {
     siteBaseUrl: options.siteBaseUrl,
   });

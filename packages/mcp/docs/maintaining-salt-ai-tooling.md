@@ -11,13 +11,22 @@ For the recommended adapter-based live evaluation model that sits on top of the 
 
 ## Current Public Workflow Contract
 
-The current default public workflow contract is the compact `v2` shape.
+The current default public workflow contract is `salt_workflow_v3`.
 
-- MCP compact workflow responses return compact `v2` by default.
-- CLI workflow `--json` returns compact `v2` by default.
+- MCP compact workflow responses return top-level `salt_workflow_v3` by default.
+- CLI workflow `--json` returns top-level `salt_workflow_v3` by default.
 - Rich workflow output is explicit-only behind MCP `view: "full"` and CLI `--full`.
+- Full workflow output keeps the same top-level `salt_workflow_v3` contract and adds `details`.
+- CLI `create --starter-only --json` is an advanced create-only artifact path. It is not part of the default compact workflow contract and should reject unsupported combinations such as `--starter-only --full`.
 - Top-level workflow state is authoritative for agent action; nested artifacts are secondary.
 - Skills and hosts should branch on compact top-level workflow signals first rather than inspecting nested `implementation_gate`, `readiness`, or similar rich-only detail.
+- Machine-readable capability inspection is part of the public setup contract:
+  - CLI exposes `capabilityManifest` through `salt-ds info --json`
+  - MCP exposes `capability_manifest`, `capability_manifest_uri`, and the JSON resource `salt://capabilities/manifest`
+- Project context has the same rule:
+  - only treat `result.context_id` as reusable when it is non-null
+  - weak contexts must surface `artifacts.summary.context_health` and `artifacts.summary.retry_with`
+  - repo-aware workflows should stay blocked until context is trusted, not merely inferred
 
 ## Core Rule
 

@@ -86,22 +86,48 @@ export type PublicNextStep =
   | PublicReviewStep
   | PublicFixContextStep;
 
-export interface PublicContract {
-  workflow: PublicWorkflowId;
-  transport_used: PublicTransportUsed;
-  workflow_status: PublicWorkflowStatus;
-  canonical_complete: boolean;
-  safe_to_implement_exact_request: boolean;
-  requested_entity?: string;
+export const PUBLIC_WORKFLOW_CONTRACT_VERSION = "salt_workflow_v3";
+
+export interface PublicContractRequest {
+  entity?: string;
   resolved_entity?: string | null;
   match_status?: PublicMatchStatus;
+  exact_match_required?: boolean;
+}
+
+export interface PublicContractSafety {
+  canonical_complete: boolean;
+  exact_request_safe: boolean;
   blocking_reasons: string[];
-  next_step: PublicNextStep;
-  required_post_step?: PublicReviewStep;
+}
+
+export interface PublicPostAction {
+  kind: "review";
+  tool: "review_salt_ui" | "salt-ds review";
+  args?: Record<string, unknown>;
+}
+
+export type PublicAction = PublicNextStep & {
+  rule_ids: string[];
+  post_action: PublicPostAction | null;
+};
+
+export interface PublicContract {
+  contract: typeof PUBLIC_WORKFLOW_CONTRACT_VERSION;
+  workflow: PublicWorkflowId;
+  transport: PublicTransportUsed;
+  status: PublicWorkflowStatus;
+  request: PublicContractRequest;
+  safety: PublicContractSafety;
+  action: PublicAction;
   summary: string;
   truncated?: boolean;
   available_expansions?: string[];
   full_output_bytes?: number;
+}
+
+export interface PublicWorkflowDetailsEnvelope<TDetails> extends PublicContract {
+  details: TDetails;
 }
 
 export interface PublicContractExactRequest {
@@ -130,6 +156,7 @@ export interface PublicContractInput {
   state: PublicContractState;
   summary: string;
   next_step: PublicNextStep;
+  rule_ids?: string[];
   blocking_reasons?: string[];
   truncated?: boolean;
   available_expansions?: string[];
@@ -331,99 +358,86 @@ export function getPublicContractValidationErrors(
   contract: PublicContract,
 ): string[] {
   const errors: string[] = [];
-  const hasRequestedEntity = Boolean(contract.requested_entity?.trim());
+  const request = contract.request;
+  const safety = contract.safety;
+  const action = contract.action;
+  const hasRequestedEntity = Boolean(request.entity?.trim());
   const hasResolvedEntity =
-    contract.resolved_entity === null ||
-    typeof contract.resolved_entity === "string";
+    request.resolved_entity === null ||
+    typeof request.resolved_entity === "string";
 
   if (contract.summary.trim().length === 0) {
     errors.push("summary must be non-empty");
   }
 
-  if (
-    contract.safe_to_implement_exact_request &&
-    contract.workflow_status !== "success"
-  ) {
+  if (contract.contract !== PUBLIC_WORKFLOW_CONTRACT_VERSION) {
     errors.push(
-      "safe_to_implement_exact_request=true requires workflow_status=success",
+      `contract must be ${PUBLIC_WORKFLOW_CONTRACT_VERSION} for workflow payloads`,
     );
   }
 
   if (
-    contract.workflow_status === "success" &&
-    !contract.safe_to_implement_exact_request
+    safety.exact_request_safe &&
+    contract.status !== "success"
   ) {
     errors.push(
-      "workflow_status=success requires safe_to_implement_exact_request=true",
+      "safety.exact_request_safe=true requires status=success",
     );
   }
 
-  if (
-    contract.workflow_status === "blocked" &&
-    contract.blocking_reasons.length === 0
-  ) {
-    errors.push(
-      "workflow_status=blocked requires at least one blocking reason",
-    );
+  if (contract.status === "success" && !safety.exact_request_safe) {
+    errors.push("status=success requires safety.exact_request_safe=true");
+  }
+
+  if (contract.status === "blocked" && safety.blocking_reasons.length === 0) {
+    errors.push("status=blocked requires at least one blocking reason");
+  }
+
+  if ((contract.status === "partial" || contract.status === "blocked") && !action) {
+    errors.push("non-success contract requires action");
   }
 
   if (
-    (contract.workflow_status === "partial" ||
-      contract.workflow_status === "blocked") &&
-    !contract.next_step
+    request.match_status === "misrouted" &&
+    safety.exact_request_safe
   ) {
-    errors.push("non-success contract requires next_step");
+    errors.push("misrouted request.match_status cannot be implementation-safe");
   }
 
-  if (
-    contract.match_status === "misrouted" &&
-    contract.safe_to_implement_exact_request
-  ) {
-    errors.push("misrouted match_status cannot be implementation-safe");
+  if (request.match_status === "no_match" && safety.exact_request_safe) {
+    errors.push("no_match request.match_status cannot be implementation-safe");
   }
 
-  if (
-    contract.match_status === "no_match" &&
-    contract.safe_to_implement_exact_request
-  ) {
-    errors.push("no_match cannot be implementation-safe");
-  }
-
-  if (contract.match_status === "no_match" && contract.canonical_complete) {
-    errors.push("no_match cannot be canonically complete");
+  if (request.match_status === "no_match" && safety.canonical_complete) {
+    errors.push("no_match request.match_status cannot be canonically complete");
   }
 
   if (
     (hasRequestedEntity || hasResolvedEntity) &&
-    contract.match_status === undefined
+    request.match_status === undefined
   ) {
+    errors.push("request.entity or request.resolved_entity requires request.match_status");
+  }
+
+  if (action.kind === "implement" && !safety.exact_request_safe) {
     errors.push(
-      "requested_entity or resolved_entity requires match_status in compact output",
+      "action.kind=implement requires safety.exact_request_safe=true",
     );
   }
 
   if (
-    contract.next_step.kind === "implement" &&
-    !contract.safe_to_implement_exact_request
-  ) {
-    errors.push(
-      "next_step.kind=implement requires safe_to_implement_exact_request=true",
-    );
-  }
-
-  if (
-    contract.next_step.kind === "implement" &&
+    action.kind === "implement" &&
     contract.workflow !== "review" &&
-    !contract.required_post_step
+    action.post_action?.kind !== "review"
   ) {
     errors.push(
-      "next_step.kind=implement requires required_post_step when workflow is not review",
+      "action.kind=implement requires action.post_action.kind=review when workflow is not review",
     );
   }
 
-  if (contract.next_step.kind !== "implement" && contract.required_post_step) {
+  if (action.kind !== "implement" && action.post_action) {
     errors.push(
-      "required_post_step must only appear when next_step.kind=implement",
+      "action.post_action must only appear when action.kind=implement",
     );
   }
 
@@ -454,7 +468,7 @@ export function buildPublicContract(
     input.exact_request?.resolved_entity === null
       ? null
       : input.exact_request?.resolved_entity?.trim();
-  const requiredPostStep: PublicReviewStep | undefined =
+  const postAction: PublicPostAction | null =
     input.next_step.kind === "implement" && input.workflow !== "review"
       ? {
           kind: "review",
@@ -463,24 +477,35 @@ export function buildPublicContract(
               ? "salt-ds review"
               : "review_salt_ui",
         }
-      : undefined;
+      : null;
 
   const contract: PublicContract = {
+    contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
     workflow: input.workflow,
-    transport_used: input.transport_used,
-    workflow_status: workflowStatus,
-    canonical_complete: canonicalComplete,
-    safe_to_implement_exact_request: safeToImplementExactRequest,
-    ...(requestedEntity ? { requested_entity: requestedEntity } : {}),
-    ...(resolvedEntity !== undefined
-      ? { resolved_entity: resolvedEntity }
-      : {}),
-    ...(input.exact_request?.match_status
-      ? { match_status: input.exact_request.match_status }
-      : {}),
-    blocking_reasons: blockingReasons,
-    next_step: input.next_step,
-    ...(requiredPostStep ? { required_post_step: requiredPostStep } : {}),
+    transport: input.transport_used,
+    status: workflowStatus,
+    request: {
+      ...(requestedEntity ? { entity: requestedEntity } : {}),
+      ...(resolvedEntity !== undefined
+        ? { resolved_entity: resolvedEntity }
+        : {}),
+      ...(input.exact_request?.match_status
+        ? { match_status: input.exact_request.match_status }
+        : {}),
+      ...(typeof input.exact_request?.exact_match_required === "boolean"
+        ? { exact_match_required: input.exact_request.exact_match_required }
+        : {}),
+    },
+    safety: {
+      canonical_complete: canonicalComplete,
+      exact_request_safe: safeToImplementExactRequest,
+      blocking_reasons: blockingReasons,
+    },
+    action: {
+      ...input.next_step,
+      rule_ids: uniqueNonEmptyStrings(input.rule_ids ?? []),
+      post_action: postAction,
+    },
     summary: input.summary.trim(),
     ...(input.truncated ? { truncated: true } : {}),
     ...(input.available_expansions?.length
@@ -493,6 +518,16 @@ export function buildPublicContract(
 
   assertValidPublicContract(contract);
   return contract;
+}
+
+export function attachPublicContractDetails<TDetails>(
+  contract: PublicContract,
+  details: TDetails,
+): PublicWorkflowDetailsEnvelope<TDetails> {
+  return {
+    ...contract,
+    details,
+  };
 }
 
 function buildStarterBlockers(
@@ -526,14 +561,19 @@ function buildProjectPolicyBlockers(args: {
 
 function toFixContextStep(
   tool: PublicFixContextStep["tool"],
+  rootDir?: string | null,
 ): PublicFixContextStep {
   return {
     kind: "fix_context",
     tool,
     mode: "stop_and_fix_context",
-    args: {
-      root_dir: ".",
-    },
+    ...(rootDir
+      ? {
+          args: {
+            root_dir: rootDir,
+          },
+        }
+      : {}),
   };
 }
 
@@ -944,7 +984,10 @@ function buildCreateNextStep(
   reference?: CreateTargetReference,
 ): PublicNextStep {
   if (!contract.context_requirement.repo_specific_edits_ready) {
-    return toFixContextStep("get_salt_project_context");
+    return toFixContextStep(
+      "get_salt_project_context",
+      contract.context_requirement.retry_with.root_dir,
+    );
   }
 
   if (
@@ -1049,7 +1092,10 @@ function buildMigrateNextStep(
   contract: MigrateToSaltWorkflowContract,
 ): PublicNextStep {
   if (!contract.context_requirement.repo_specific_edits_ready) {
-    return toFixContextStep("get_salt_project_context");
+    return toFixContextStep(
+      "get_salt_project_context",
+      contract.context_requirement.retry_with.root_dir,
+    );
   }
 
   if ((result.clarifying_questions?.length ?? 0) > 0) {
@@ -1144,12 +1190,20 @@ function buildReviewBlockingReasons(
   contract: ReviewSaltUiWorkflowContract,
   result: ReviewSaltUiResult,
 ): string[] {
+  const topActionableCandidate = contract.fix_candidates.candidates.find(
+    (candidate) =>
+      Boolean(candidate.recommendation ?? candidate.reason ?? candidate.title),
+  );
   const projectPolicyReasons = contract.fix_candidates.candidates
     .filter((candidate) => candidate.category === "project-policy")
     .map((candidate) => candidate.reason ?? candidate.title);
 
   return uniqueNonEmptyStrings([
-    contract.decision.status === "needs_attention"
+    topActionableCandidate?.recommendation ??
+      topActionableCandidate?.reason ??
+      topActionableCandidate?.title ??
+      null,
+    !topActionableCandidate && contract.decision.status === "needs_attention"
       ? contract.decision.why
       : null,
     result.missing_data[0] ?? null,
@@ -1225,6 +1279,7 @@ export function buildCreatePublicContract(
     next_step:
       options.next_step ??
       buildCreateNextStep(contract, exactRequest, reference),
+    rule_ids: contract.implementation_gate.rule_ids,
     blocking_reasons: options.blocking_reasons,
   });
 }
@@ -1257,6 +1312,7 @@ export function buildReviewPublicContract(
         ? "Salt review found no issues blocking the reviewed scope."
         : "Salt review found issues that still need attention.",
     next_step: options.next_step ?? buildReviewNextStep(result, contract),
+    rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ?? buildReviewBlockingReasons(contract, result),
   });
@@ -1295,6 +1351,7 @@ export function buildMigratePublicContract(
         ? "Salt produced a migration direction for the requested source UI."
         : "Salt produced migration guidance, but more clarification is still needed.",
     next_step: options.next_step ?? buildMigrateNextStep(result, contract),
+    rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ??
       buildMigrateBlockingReasons(
@@ -1342,6 +1399,7 @@ export function buildUpgradePublicContract(
         ? `Salt produced upgrade guidance for ${result.decision.target}.`
         : "Salt produced upgrade guidance for the requested target.",
     next_step: options.next_step ?? buildUpgradeNextStep(result),
+    rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ?? buildUpgradeBlockingReasons(result),
   });

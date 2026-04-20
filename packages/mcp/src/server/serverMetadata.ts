@@ -1,9 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
+import {
+  buildSaltCapabilityManifest,
+  type SaltCapabilityManifest,
+} from "@salt-ds/semantic-core/tools/capabilityManifest";
 import { getPackageRoot } from "@salt-ds/semantic-core/registry/paths";
 import type { SaltRegistry } from "../types.js";
 
 const SALT_MCP_SERVER_NAME = "salt-mcp";
+export const SALT_MCP_CAPABILITY_MANIFEST_URI =
+  "salt://capabilities/manifest";
 
 interface SaltMcpPackageManifest {
   name: string;
@@ -49,12 +55,66 @@ export interface SaltMcpRuntimeMetadata {
   mcp_version: string;
   registry_version: string;
   registry_generated_at: string;
+  capability_manifest_uri: typeof SALT_MCP_CAPABILITY_MANIFEST_URI;
+  capability_manifest: SaltCapabilityManifest;
 }
 
 export function getSaltMcpRuntimeMetadata(
   registry: SaltRegistry,
 ): SaltMcpRuntimeMetadata {
   const packageManifest = getSaltMcpPackageManifest();
+  const capabilityManifest = buildSaltCapabilityManifest({
+    transport: "mcp",
+    runtime: {
+      package_name: packageManifest.name,
+      package_version: packageManifest.version,
+      server_name: SALT_MCP_SERVER_NAME,
+      command_name: "salt-mcp",
+    },
+    registry: {
+      available: true,
+      version: registry.version,
+      generated_at: registry.generated_at,
+    },
+    contracts: {
+      setup_contract_ids: [
+        "get_salt_project_context",
+        "bootstrap_salt_repo",
+      ],
+    },
+    public_surface: {
+      default_surface_ids: [
+        "get_salt_project_context",
+        "bootstrap_salt_repo",
+        "create_salt_ui",
+        "review_salt_ui",
+        "migrate_to_salt",
+        "upgrade_salt_ui",
+      ],
+      advanced_output_ids: ["view:full"],
+    },
+    capabilities: {
+      repo_context: true,
+      repo_bootstrap: true,
+      starter_code: true,
+      exact_request_safety: true,
+      deterministic_next_step: true,
+      review_runtime_url: false,
+      starter_only_create_artifact: false,
+      visual_input: {
+        source_outline: true,
+        runtime_capture: false,
+        image_or_mockup_inputs: false,
+        normalized_adapter_contract: null,
+      },
+      handoff: {
+        portable_bundle: false,
+      },
+    },
+    resources: {
+      capability_manifest_uri: SALT_MCP_CAPABILITY_MANIFEST_URI,
+    },
+  });
 
   return {
     server_name: SALT_MCP_SERVER_NAME,
@@ -62,6 +122,8 @@ export function getSaltMcpRuntimeMetadata(
     mcp_version: packageManifest.version,
     registry_version: registry.version,
     registry_generated_at: registry.generated_at,
+    capability_manifest_uri: SALT_MCP_CAPABILITY_MANIFEST_URI,
+    capability_manifest: capabilityManifest,
   };
 }
 
@@ -71,6 +133,7 @@ export function buildSaltMcpServerInfo(registry: SaltRegistry) {
   return {
     name: metadata.server_name,
     version: metadata.mcp_version,
+    description: `Workflow-first Salt MCP for canonical Salt guidance. Capability manifest: ${metadata.capability_manifest_uri}.`,
   };
 }
 
@@ -81,6 +144,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     `Salt MCP runtime: ${metadata.package_name} v${metadata.mcp_version}.`,
     `Serving Salt registry v${metadata.registry_version}.`,
     `Registry generated at ${metadata.registry_generated_at}.`,
+    `Machine-readable capability manifest resource: ${metadata.capability_manifest_uri}.`,
     "When asked for the MCP version, use the runtime version.",
     "When asked about the Salt content version, use the registry version.",
     "This MCP only provides canonical Salt guidance from official Salt sources.",
@@ -89,6 +153,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     "Workflow follow-ups use stable public tool IDs, even when a support helper is not part of the default six-tool surface.",
     "For repo-aware work, start with get_salt_project_context by default before choosing the main workflow tool, and pass an explicit root_dir whenever the host already knows the active workspace path.",
     "If a context result reports resolution.status = needs_explicit_root or mismatch, stop and retry with explicit root_dir or a known context_id before relying on repo-specific guidance.",
+    "Only reuse get_salt_project_context.result.context_id when it is non-null. When context_health.trusted is false, use artifacts.summary.retry_with.root_dir for the next context call instead of guessing.",
     "If repo bootstrap is still required, use bootstrap_salt_repo before relying on repo-specific Salt refinement.",
     "Primary workflow tools now return workflow-level confidence and escalation guidance alongside their canonical Salt payloads.",
     "migrate_to_salt returns post_migration_verification so the agent can carry a deterministic follow-up loop back into local review work.",

@@ -1,5 +1,9 @@
 import type { SaltRegistry, SaltStatus } from "../types.js";
 import {
+  collectCreateQueryAnchors,
+  chooseDominantCreateQueryAnchor,
+} from "./createQueryAnchors.js";
+import {
   type ConsumerRecommendationFilters,
   compareComponentsByConsumerPreference,
   matchesComponentConsumerFilters,
@@ -244,6 +248,48 @@ function getNavigationIntentAdjustment(
   return adjustment;
 }
 
+function getEmbeddedTargetDominanceAdjustment(input: {
+  component: SaltRegistry["components"][number];
+  anchorById: Map<
+    string,
+    ReturnType<typeof collectCreateQueryAnchors>[number]
+  >;
+  dominantAnchor:
+    | ReturnType<typeof chooseDominantCreateQueryAnchor>
+    | null
+    | undefined;
+}): number {
+  const currentAnchor = input.anchorById.get(input.component.id);
+  const dominantAnchor = input.dominantAnchor;
+
+  if (!currentAnchor || !dominantAnchor || input.anchorById.size < 2) {
+    return 0;
+  }
+
+  if (currentAnchor.id === dominantAnchor.id) {
+    return 18 + Math.max(0, currentAnchor.structural_weight - 7);
+  }
+
+  const structureDelta =
+    dominantAnchor.structural_weight - currentAnchor.structural_weight;
+
+  if (structureDelta >= 6) {
+    return -16;
+  }
+  if (structureDelta >= 4) {
+    return -12;
+  }
+  if (structureDelta >= 2) {
+    return -7;
+  }
+
+  if (currentAnchor.low_structure && !dominantAnchor.low_structure) {
+    return -4;
+  }
+
+  return -2;
+}
+
 function getExplicitNameMatchAdjustment(
   task: string,
   component: SaltRegistry["components"][number],
@@ -353,8 +399,7 @@ export function recommendComponent(
     a11y_required: input.a11y_required,
     form_field_support: input.form_field_support,
   };
-
-  const rankedCandidates = registry.components
+  const filteredComponents = registry.components
     .filter((component) => isComponentAllowedByDocsPolicy(component))
     .filter((component) =>
       input.package ? component.package.name === input.package : true,
@@ -362,7 +407,23 @@ export function recommendComponent(
     .filter((component) =>
       input.status ? component.status === input.status : true,
     )
-    .filter((component) => matchesComponentConsumerFilters(component, filters))
+    .filter((component) => matchesComponentConsumerFilters(component, filters));
+  const componentAnchorById = new Map(
+    collectCreateQueryAnchors(registry, input.task, input.package)
+      .filter(
+        (anchor): anchor is ReturnType<typeof collectCreateQueryAnchors>[number] =>
+          anchor.entity_type === "component",
+      )
+      .filter((anchor) =>
+        filteredComponents.some((component) => component.id === anchor.id),
+      )
+      .map((anchor) => [anchor.id, anchor] as const),
+  );
+  const dominantComponentAnchor = chooseDominantCreateQueryAnchor([
+    ...componentAnchorById.values(),
+  ]);
+
+  const rankedCandidates = filteredComponents
     .map((component) => {
       const queryScore = scoreQueryFields(
         task,
@@ -374,6 +435,11 @@ export function recommendComponent(
         getEffectiveUsageSemantics(component),
       );
       const intentAdjustment = getNavigationIntentAdjustment(task, component);
+      const embeddedTargetAdjustment = getEmbeddedTargetDominanceAdjustment({
+        component,
+        anchorById: componentAnchorById,
+        dominantAnchor: dominantComponentAnchor,
+      });
 
       return {
         component,
@@ -382,7 +448,8 @@ export function recommendComponent(
           queryScore.score +
           explicitNameScore.score +
           semanticsScore.score_adjustment +
-          intentAdjustment,
+          intentAdjustment +
+          embeddedTargetAdjustment,
         matched_terms: [
           ...new Set([
             ...queryScore.matched_terms,

@@ -1,6 +1,7 @@
 import type { CreateSaltUiResult } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { MigrateToSaltResult } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import {
+  attachPublicContractDetails,
   buildCreatePublicContract,
   buildMigratePublicContract,
   buildReviewPublicContract,
@@ -106,6 +107,13 @@ function buildCreateWorkflowEnvelope(
     query?: string;
     package?: string;
     context_checked?: boolean;
+    context_resolution_status?:
+      | "resolved"
+      | "fallback"
+      | "needs_explicit_root"
+      | "mismatch";
+    context_retry_with_root_dir?: string | null;
+    context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     view?: "compact" | "full";
   } = {},
@@ -132,17 +140,18 @@ function buildCreateWorkflowEnvelope(
     raw,
     ...domainResult
   } = result;
+  const compactContract = buildCreatePublicContract(result, contract, {
+    transport_used: "mcp",
+    registry,
+    query: input.query,
+    package: input.package,
+  });
 
   if (!isFullView(input.view)) {
-    return buildCreatePublicContract(result, contract, {
-      transport_used: "mcp",
-      registry,
-      query: input.query,
-      package: input.package,
-    });
+    return compactContract;
   }
 
-  return {
+  return attachPublicContractDetails(compactContract, {
     workflow: {
       id: "create_salt_ui" as const,
       transport_used: "mcp" as const,
@@ -166,7 +175,7 @@ function buildCreateWorkflowEnvelope(
       related_guides,
       raw,
     },
-  };
+  });
 }
 
 function buildReviewWorkflowEnvelope(
@@ -193,14 +202,15 @@ function buildReviewWorkflowEnvelope(
   const projectPolicyFixCount = fix_candidates.candidates.filter(
     (candidate) => candidate.category === "project-policy",
   ).length;
+  const compactContract = buildReviewPublicContract(result, contract, {
+    transport_used: "mcp",
+  });
 
   if (!isFullView(input.view)) {
-    return buildReviewPublicContract(result, contract, {
-      transport_used: "mcp",
-    });
+    return compactContract;
   }
 
-  return {
+  return attachPublicContractDetails(compactContract, {
     workflow: {
       id: "review_salt_ui" as const,
       transport_used: "mcp" as const,
@@ -222,7 +232,7 @@ function buildReviewWorkflowEnvelope(
       rule_ids,
       raw,
     },
-  };
+  });
 }
 
 function buildMigrateWorkflowEnvelope(
@@ -232,6 +242,13 @@ function buildMigrateWorkflowEnvelope(
     source_outline?: SourceUiOutlineInput;
     visual_evidence?: NormalizedVisualEvidenceInput[];
     context_checked?: boolean;
+    context_resolution_status?:
+      | "resolved"
+      | "fallback"
+      | "needs_explicit_root"
+      | "mismatch";
+    context_retry_with_root_dir?: string | null;
+    context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     view?: "compact" | "full";
   } = {},
@@ -264,14 +281,15 @@ function buildMigrateWorkflowEnvelope(
     raw,
     ...domainResult
   } = result;
+  const compactContract = buildMigratePublicContract(result, contract, {
+    transport_used: "mcp",
+  });
 
   if (!isFullView(input.view)) {
-    return buildMigratePublicContract(result, contract, {
-      transport_used: "mcp",
-    });
+    return compactContract;
   }
 
-  return {
+  return attachPublicContractDetails(compactContract, {
     workflow: {
       id: "migrate_to_salt" as const,
       transport_used: "mcp" as const,
@@ -293,7 +311,7 @@ function buildMigrateWorkflowEnvelope(
       related_guides,
       raw,
     },
-  };
+  });
 }
 
 function buildUpgradeWorkflowEnvelope(
@@ -306,13 +324,14 @@ function buildUpgradeWorkflowEnvelope(
   const contract = buildUpgradeSaltUiWorkflowContract(result, input);
   const { ide_summary, rule_ids, ...workflow } = contract;
   const { raw, ...domainResult } = result;
+  const compactContract = buildUpgradePublicContract(result, contract, {
+    transport_used: "mcp",
+  });
   if (!isFullView(input.view)) {
-    return buildUpgradePublicContract(result, contract, {
-      transport_used: "mcp",
-    });
+    return compactContract;
   }
 
-  return {
+  return attachPublicContractDetails(compactContract, {
     workflow: {
       id: "upgrade_salt_ui" as const,
       transport_used: "mcp" as const,
@@ -326,7 +345,7 @@ function buildUpgradeWorkflowEnvelope(
       rule_ids,
       raw,
     },
-  };
+  });
 }
 
 export function withChooseWorkflowGuidance(
@@ -336,6 +355,13 @@ export function withChooseWorkflowGuidance(
     query?: string;
     package?: string;
     context_checked?: boolean;
+    context_resolution_status?:
+      | "resolved"
+      | "fallback"
+      | "needs_explicit_root"
+      | "mismatch";
+    context_retry_with_root_dir?: string | null;
+    context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     view?: "compact" | "full";
   } = {},
@@ -361,6 +387,13 @@ export function withTranslateWorkflowGuidance(
     source_outline?: SourceUiOutlineInput;
     visual_evidence?: NormalizedVisualEvidenceInput[];
     context_checked?: boolean;
+    context_resolution_status?:
+      | "resolved"
+      | "fallback"
+      | "needs_explicit_root"
+      | "mismatch";
+    context_retry_with_root_dir?: string | null;
+    context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     view?: "compact" | "full";
   } = {},

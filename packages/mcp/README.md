@@ -25,7 +25,8 @@ Primary repo-aware workflow tools:
 
 - `get_salt_project_context`
   - inspect repo shape for diagnostics: framework, Salt package usage, repo instructions, declared policy, and likely runtime targets
-  - returns a `context_id` that advanced hosts can pass back explicitly when they want to reuse context across multiple workflow calls
+  - returns a reusable `context_id` only when `resolution.status` is `resolved`
+  - weak contexts instead expose `artifacts.summary.context_health` plus `artifacts.summary.retry_with` so hosts can retry with the right `root_dir` instead of guessing
   - returns `artifacts.summary.recommended_next_tool` and `artifacts.summary.bootstrap_requirement` so hosts can tell whether bootstrap would improve future repo-aware refinement
   - keeps policy diagnostics compact by default; request `include_policy_diagnostics: true` only when full layer resolution details are needed
 - `bootstrap_salt_repo`
@@ -33,7 +34,8 @@ Primary repo-aware workflow tools:
   - returns a fresh `context_id` plus an embedded project-context envelope so the next repo-aware workflow can start immediately
 - `create_salt_ui`
   - create workflow
-  - return `result.ide_summary` first and respect `workflow.implementation_gate` before treating broad create output as implementation-ready
+  - compact default returns top-level workflow state for safe branching
+  - request `view: "full"` when you need the additive `details` block for richer create artifacts such as `details.result.ide_summary` or `details.workflow.implementation_gate`
 - `review_salt_ui`
   - review workflow
 - `migrate_to_salt`
@@ -70,6 +72,12 @@ Minimal MCP config:
   }
 }
 ```
+
+Capability metadata:
+
+- MCP runtime metadata includes a shared `capability_manifest` object and `capability_manifest_uri`
+- the same manifest is also available as the JSON resource `salt://capabilities/manifest`
+- use that manifest for machine-readable host setup checks instead of scraping prose for workflow vocabulary, contract version, or support-tool policy
 
 Build the package from the repo:
 
@@ -145,13 +153,16 @@ See:
 ## Notes
 
 - Salt MCP stays intentionally single-server. The simplification is in the public workflow contract, not in server splitting.
-- Public workflow responses are compact and summary-first. Show `result.ide_summary` first, then expand raw artifacts only when needed.
-- `create_salt_ui` can return `workflow.implementation_gate` with `required_follow_through` and `blocking_questions`. Treat that as a real implementation gate for broad or multi-surface asks.
+- Public workflow responses are compact and summary-first. Branch on top-level `salt_workflow_v3` fields such as `status`, `safety`, `action`, `summary`, and `request.match_status` / `request.resolved_entity` when present.
+- Use `view: "full"` only when you need the additive `details` block for richer detail such as `details.result.ide_summary`, `details.workflow.implementation_gate`, starter code, or deeper provenance.
+- Inspect the machine-readable capability manifest at `salt://capabilities/manifest` when the host needs to confirm the workflow vocabulary, contract version, support-tool policy, or runtime version.
+- In `view: "full"`, `create_salt_ui` keeps the same top-level `salt_workflow_v3` contract and adds `details`. Treat `details.workflow.implementation_gate` as a real implementation gate for broad or multi-surface asks.
 - `get_salt_project_context` is the explicit repo-inspection path. Repo-aware workflow tools can also auto-collect context when it is omitted.
+- Only treat `get_salt_project_context.result.context_id` as reusable when it is non-null. If `artifacts.summary.context_health.trusted` is `false`, stop and retry with `artifacts.summary.retry_with.root_dir` before relying on repo-specific guidance.
 - `bootstrap_salt_repo` is the durable-policy step when a repo wants managed `.salt` files or repo instructions after the first canonical Salt result.
 - `migrate_to_salt` owns canonical migration reasoning, but screenshot and mockup interpretation still stays outside MCP. Hosts should preprocess visual evidence into structured migrate inputs first.
-- Repo-aware workflow results keep canonical Salt output separate from repo refinements. Use `artifacts.project_policy`, `artifacts.repo_refinement`, and `result.final_decision` to see that layering.
-- Use `view: "full"` only when you need deeper provenance such as `raw.decision_debug`, `raw.routing_debug`, or the normalized `workflow.provenance.source_urls`.
+- Repo-aware workflow results keep canonical Salt output separate from repo refinements. Use `details.artifacts.project_policy`, `details.artifacts.repo_refinement`, and `details.result.final_decision` to see that layering.
+- Use `view: "full"` only when you need deeper provenance such as `details.raw.decision_debug`, `details.raw.routing_debug`, or the normalized `details.workflow.provenance.source_urls`.
 - The published package serves the bundled registry by default. `--registry-dir` is only for local development or testing against a custom registry build.
 - The published MCP contract stays root-only even though the internal source tree is more granular. Deep imports remain unsupported.
 
@@ -182,7 +193,7 @@ Use `view: "full"` when you need to understand why the MCP chose a particular pa
 
 ## Maintainer Notes
 
-For architectural maintenance guidance, see [`docs/maintainers/maintaining-salt-ai-tooling.md`](./docs/maintainers/maintaining-salt-ai-tooling.md).
+For architectural maintenance guidance, see [`docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md).
 
 - Registry artifact filenames and payload keys are centralized in [`src/registry/artifacts.ts`](./src/registry/artifacts.ts).
 - Canonical registry build/load ownership lives in [`../semantic-core/src/build/buildRegistry.ts`](../semantic-core/src/build/buildRegistry.ts) and [`../semantic-core/src/registry/loadRegistry.ts`](../semantic-core/src/registry/loadRegistry.ts). MCP keeps a small internal runtime loader in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts) for its bundled `generated/` snapshot and maintainer scripts.
