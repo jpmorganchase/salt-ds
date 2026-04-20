@@ -1,4 +1,4 @@
-# build workflow
+# create workflow
 
 ## 1. normalize the input
 

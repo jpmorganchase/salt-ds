@@ -11,6 +11,7 @@ Use this contract whenever a Salt workflow needs to choose between canonical Sal
 - [Completion Gates](#completion-gates)
 - [Noisy Or Partial Results](#noisy-or-partial-results)
 - [Workflow Map](#workflow-map)
+- [CLI Follow-Through for Entity Grounding](#cli-follow-through-for-entity-grounding)
 - [Runtime Evidence Ladder](#runtime-evidence-ladder)
 - [Boundary Rule](#boundary-rule)
 
@@ -76,7 +77,7 @@ Read compact workflow output from top-level fields first:
 
 When citing canonical Salt guidance in an answer, use `top_source_urls` from `ide_summary` as the grounding links instead of fabricating documentation URLs.
 When evaluating component fit, use `key_props` from compact component output to check prop availability without requesting the full prop list.
-When a component is compound (e.g., Dialog, Accordion, Form field), compact output includes `sub_component_names` listing the child exports and `composition` with `required_children` and `optional_children`. Request `include: ["props"]` on `get_salt_entity` to get full props for both the root component and its sub-components.
+When a component is compound (e.g., Dialog, Accordion, Form field), compact output includes `sub_component_names` listing the child exports and `composition` with `required_children` and `optional_children`. When MCP support tools are available in the session, request `include: ["props"]` on `get_salt_entity` to get full props for both the root component and its sub-components. When they are not available, use `salt-ds create "<component>" --json --include-starter-code --starter-only` to get the resolved component with starter code.
 
 Treat these as blocking items when they affect the regions you plan to implement or review:
 
@@ -89,6 +90,7 @@ Treat these as blocking items when they affect the regions you plan to implement
 - `open_questions`
 - `confirmation_needed`
 - warnings that change pattern, component, theme, or token choice
+- follow-through entity calls that exhausted the 2-attempt degraded-tooling budget (see `degraded-tooling.md`)
 
 For page-level and multi-region work, do not treat one valid sub-pattern as permission to skip unresolved peer regions.
 If a required sub-surface is still unresolved, either keep that region pending or stop before final implementation.
@@ -118,6 +120,8 @@ When MCP is the transport:
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.
 
+The default MCP surface exposes six repo-aware workflow tools. Support tools such as `get_salt_entity`, `get_salt_examples`, and `discover_salt` may not be present in the current session — only call tools that are actually listed in the session tool list. When support tools are unavailable, use the workflow tools for entity grounding (e.g., `create_salt_ui` with an exact entity name as `query`).
+
 When CLI is the transport:
 
 - `init`: `salt-ds init`
@@ -125,6 +129,32 @@ When CLI is the transport:
 - `review`: `salt-ds review`
 - `migrate`: `salt-ds migrate`
 - `upgrade`: `salt-ds upgrade`
+
+### CLI Follow-Through for Entity Grounding
+
+When a `salt-ds create --json` call returns a compact `PublicContract`, read these top-level fields first: `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary`.
+
+When `required_follow_through` lists named entities that still need grounding before their regions can be implemented, run a targeted follow-up call for each entity:
+
+```
+salt-ds create "<entity name>" --json --include-starter-code --starter-only
+```
+
+Do not force `--type component` on follow-through calls unless you are certain the entity is a component. Named entities from `required_follow_through` may be patterns (e.g., Metric, App header, Analytical dashboard) or components (e.g., Table, Card). Omit `--type` to let the resolution find the best match across all solution types.
+
+The `--starter-only` flag returns a minimal JSON object with `workflow`, `workflow_status`, `decision`, `starter_code`, `composition_contract`, `required_follow_through`, and `next_step` — no full workflow envelope. Use this for follow-through grounding instead of reparsing a full workflow output.
+
+Read the follow-through result as:
+
+- `workflow`: always `"create"`
+- `workflow_status`: check this for success/partial/blocked before using the result
+- `decision.name`: the resolved Salt entity name
+- `starter_code`: canonical starter snippet(s) for the entity
+- `composition_contract`: slot structure for compound entities
+- `required_follow_through`: any deeper follow-through still needed
+- `next_step`: what to do next
+
+If `decision.name` is null or misrouted (resolves to the wrong entity), count it as one attempt against the degraded-tooling budget. Do not re-query the same entity more than twice.
 
 ## Runtime Evidence Ladder
 

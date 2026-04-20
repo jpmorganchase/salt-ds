@@ -26,7 +26,7 @@ interface InitWorkflowResult {
   };
   stack: {
     path: string | null;
-    action: "created" | "unchanged" | "not-requested";
+    action: "created" | "unchanged" | "not_requested";
     conventionsPackSource: string | null;
   };
   repoInstructions: {
@@ -459,7 +459,7 @@ export async function runInitCommand(
       policyAction = "created";
     }
 
-    let stackAction: InitWorkflowResult["stack"]["action"] = "not-requested";
+    let stackAction: InitWorkflowResult["stack"]["action"] = "not_requested";
     if (conventionsPack.requested) {
       if (stackConfigExists) {
         stackAction = "unchanged";

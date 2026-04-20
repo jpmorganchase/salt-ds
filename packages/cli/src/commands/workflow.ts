@@ -2246,6 +2246,30 @@ export async function runCreateCommand(
       query,
       packageName: flags.package,
     });
+
+    if (flags["starter-only"] === "true" && flags.json === "true") {
+      const starterOnlyResult = {
+        workflow: "create",
+        workflow_status: compactJson.workflow_status,
+        decision: policyRecommendation.decision,
+        starter_code: policyRecommendation.starter_code ?? null,
+        composition_contract:
+          policyRecommendation.composition_contract ?? null,
+        required_follow_through:
+          canonicalContract.implementation_gate.required_follow_through,
+        next_step: compactJson.next_step,
+      };
+      const jsonOutputPath = flags["json-file"] ?? flags.output;
+      if (jsonOutputPath) {
+        await writeJsonFile(
+          path.resolve(io.cwd, jsonOutputPath),
+          starterOnlyResult,
+        );
+      }
+      io.writeStdout(`${JSON.stringify(starterOnlyResult, null, 2)}\n`);
+      return getWorkflowExitCode(compactJson);
+    }
+
     await writeWorkflowOutput(result, flags, io, formatCreateReport, {
       compactJsonOverride: compactJson,
     });

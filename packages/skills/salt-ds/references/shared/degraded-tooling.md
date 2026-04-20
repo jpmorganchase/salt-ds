@@ -7,6 +7,25 @@ Use this file whenever Salt MCP or the Salt CLI is missing, noisy, partial, trun
 Do not treat ambiguous transport output as completed canonical Salt guidance.
 When the transport is ambiguous, preserve the useful signal, state the blocker, and stop before guessed implementation.
 
+## Hard Stop Budget
+
+After **2** noisy, conflicting, or off-target follow-up attempts for the **same** required sub-surface or entity, stop immediately and report the blocker. Do not attempt a third call.
+
+Count any of the following as one attempt against this budget:
+
+- a call that returns a non-matching `decision.name` or a misrouted pattern
+- a call that returns truncated output missing the required contract fields
+- a call that produces a parse failure or malformed payload
+- a call that returns a non-success `workflow_status` without actionable partial guidance
+
+When the budget is exhausted:
+
+- report exactly which entity or sub-surface was blocked
+- state what was attempted and what the transport returned
+- keep any grounded regions from earlier steps intact
+- mark the blocked region as pending instead of guessing its structure
+- suggest the next unblocking step (e.g., try MCP, check Salt docs, or ask the user)
+
 ## Common Cases
 
 ### MCP unavailable
@@ -27,13 +46,14 @@ When the transport is ambiguous, preserve the useful signal, state the blocker, 
 
 - A result that resolves to the wrong pattern, wrong surface, or wrong scope does not complete the canonical step.
 - Re-query the exact required noun or exact returned Salt target name.
-- If the same required item misroutes twice, stop and report transport ambiguity.
+- If the same required item misroutes twice, the hard stop budget is exhausted — stop and report transport ambiguity. Do not attempt a third call.
 
 ### Truncated or malformed payloads
 
 - If required follow-through may be hidden in the missing portion, stop.
 - Do not guess the missing contract.
 - Do not summarize a partial payload as complete.
+- Each truncated or malformed result counts as one attempt against the hard stop budget.
 
 ## Multi-Region Safety Rule
 

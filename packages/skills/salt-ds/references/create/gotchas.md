@@ -1,4 +1,4 @@
-# build gotchas
+# create gotchas
 
 - Do not jump straight to code without choosing primitives and structure first.
 - Do not skip the translation map when the source starts outside Salt. Separate direct swaps, pattern rewrites, and manual review points before coding.

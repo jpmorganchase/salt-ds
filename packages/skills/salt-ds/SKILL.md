@@ -215,7 +215,7 @@ The critical rules are:
 - if MCP is unavailable, explicitly switch to CLI fallback instead of acting as though canonical guidance succeeded
 - if CLI or MCP returns useful output with a non-success status, treat it as **partial**, not as approval to implement
 - if output is truncated, malformed, semantically off-target, or repeatedly misroutes to unrelated patterns, fail closed
-- after two noisy or conflicting follow-up attempts for the same required sub-surface, stop and report the blocker instead of continuing with guessed Salt structure
+- the hard stop budget is **2 attempts** per required sub-surface or entity — after 2 noisy, conflicting, or off-target follow-up attempts, stop immediately and report the blocker instead of continuing with guessed Salt structure
 - do not hide transport ambiguity behind a confident implementation
 - in `quick-check` mode, you may still return bounded provisional observations, but label them as provisional and do not overstate canonical completion
 
@@ -238,6 +238,11 @@ When a workflow returns named sub-surfaces, preserve concrete user nouns such as
 Add slot or page context only as supporting detail.
 Do not paraphrase concrete follow-up asks into abstract taxonomy prompts.
 If an exact Salt target name is already known from canonical output, use that exact name or verified alias in the next call.
+When using CLI fallback for follow-through, use `salt-ds create "<entity>" --json --include-starter-code --starter-only` to get a minimal response — see `references/shared/transport.md` §"CLI Follow-Through for Entity Grounding". Do not force `--type component` unless you are certain the entity is a component, not a pattern.
+
+For broad prompts that mention multiple UI elements (e.g., "a form with inputs, a sidebar navigation, and toggle switches"), the tooling's `required_follow_through` list covers entities the resolved pattern knows about, but **may not cover every entity the user mentioned**.
+After processing the tooling's follow-through list, scan the original user prompt for concrete UI nouns that were not covered and issue follow-through calls for those too.
+Do not wait for the tooling to enumerate every entity — the agent is responsible for bridging the gap between the user's intent and the pattern's built-in anatomy.
 
 ### Stable-First Rule
 
