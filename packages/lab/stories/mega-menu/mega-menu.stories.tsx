@@ -71,7 +71,10 @@ const WithNavigationItemsTemplate: StoryFn = () => {
     setOpenMenu(open ? menu : null);
   };
 
-  const handleSelectedItemChange = (menu: string, value: string | undefined) => {
+  const handleSelectedItemChange = (
+    menu: string,
+    value: string | undefined,
+  ) => {
     const nextValue = selectedItem === value ? undefined : value;
     setSelectedItem(nextValue);
     setActiveMenu(nextValue ? menu : null);
@@ -95,7 +98,9 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "solutions" ? null : "solutions"));
+                  setOpenMenu((prev) =>
+                    prev === "solutions" ? null : "solutions",
+                  );
                 }}
               >
                 Solutions
@@ -108,13 +113,23 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
                   <MegaMenuItem
                     value="Digital Banking"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Digital Banking"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Digital Banking",
+                      );
+                    }}
                   >
                     Digital Banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Risk Management"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Risk Management"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Risk Management",
+                      );
+                    }}
                   >
                     Risk Management
                   </MegaMenuItem>
@@ -123,19 +138,34 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
                     value="Patient Management"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Patient Management"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Patient Management",
+                      );
+                    }}
                   >
                     Patient Management
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Telemedicine"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Telemedicine"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Telemedicine",
+                      );
+                    }}
                   >
                     Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Compliance Solutions"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Compliance Solutions"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Compliance Solutions",
+                      );
+                    }}
                   >
                     Compliance Solutions
                   </MegaMenuItem>
@@ -144,7 +174,12 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
                     value="E-Commerce Platforms"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "E-Commerce Platforms"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "E-Commerce Platforms",
+                      );
+                    }}
                   >
                     E-Commerce Platforms
                   </MegaMenuItem>
@@ -153,19 +188,34 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem
                     value="Supply Chain Optimization"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Supply Chain Optimization"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Supply Chain Optimization",
+                      );
+                    }}
                   >
                     Supply Chain Optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Quality Control"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Quality Control"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Quality Control",
+                      );
+                    }}
                   >
                     Quality Control
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Production Planning"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Production Planning"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Production Planning",
+                      );
+                    }}
                   >
                     Production Planning
                   </MegaMenuItem>
@@ -174,13 +224,23 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem
                     value="Learning Management Systems"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Learning Management Systems"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Learning Management Systems",
+                      );
+                    }}
                   >
                     Learning Management Systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Virtual Classrooms"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Virtual Classrooms"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Virtual Classrooms",
+                      );
+                    }}
                   >
                     Virtual Classrooms
                   </MegaMenuItem>
@@ -189,19 +249,34 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem
                     value="Document Management"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Document Management"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Document Management",
+                      );
+                    }}
                   >
                     Document Management
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Citizen Services"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Citizen Services"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Citizen Services",
+                      );
+                    }}
                   >
                     Citizen Services
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Public Safety Solutions"
-                    onClick={() => { console.log("[Default MegaMenu] selected value:", "Public Safety Solutions"); }}
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Public Safety Solutions",
+                      );
+                    }}
                   >
                     Public Safety Solutions
                   </MegaMenuItem>
@@ -225,7 +300,9 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "services" ? null : "services"));
+                  setOpenMenu((prev) =>
+                    prev === "services" ? null : "services",
+                  );
                 }}
               >
                 Services
@@ -236,30 +313,204 @@ const WithNavigationItemsTemplate: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy" onClick={() => { console.log("[Default MegaMenu] selected value:", "Strategy"); }}>Strategy</MegaMenuItem>
-                  <MegaMenuItem value="IT" onClick={() => { console.log("[Default MegaMenu] selected value:", "IT"); }}>IT</MegaMenuItem>
-                  <MegaMenuItem value="HR" onClick={() => { console.log("[Default MegaMenu] selected value:", "HR"); }}>HR</MegaMenuItem>
-                  <MegaMenuItem value="Marketing" onClick={() => { console.log("[Default MegaMenu] selected value:", "Marketing"); }}>Marketing</MegaMenuItem>
-                  <MegaMenuItem value="Operations" onClick={() => { console.log("[Default MegaMenu] selected value:", "Operations"); }}>Operations</MegaMenuItem>
+                  <MegaMenuItem
+                    value="Strategy"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Strategy",
+                      );
+                    }}
+                  >
+                    Strategy
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="IT"
+                    onClick={() => {
+                      console.log("[Default MegaMenu] selected value:", "IT");
+                    }}
+                  >
+                    IT
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="HR"
+                    onClick={() => {
+                      console.log("[Default MegaMenu] selected value:", "HR");
+                    }}
+                  >
+                    HR
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Marketing"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Marketing",
+                      );
+                    }}
+                  >
+                    Marketing
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Operations"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Operations",
+                      );
+                    }}
+                  >
+                    Operations
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding" onClick={() => { console.log("[Default MegaMenu] selected value:", "Onboarding"); }}>Onboarding</MegaMenuItem>
-                  <MegaMenuItem value="Migration" onClick={() => { console.log("[Default MegaMenu] selected value:", "Migration"); }}>Migration</MegaMenuItem>
-                  <MegaMenuItem value="Customization" onClick={() => { console.log("[Default MegaMenu] selected value:", "Customization"); }}>Customization</MegaMenuItem>
-                  <MegaMenuItem value="Training" onClick={() => { console.log("[Default MegaMenu] selected value:", "Training"); }}>Training</MegaMenuItem>
-                  <MegaMenuItem value="Support" onClick={() => { console.log("[Default MegaMenu] selected value:", "Support"); }}>Support</MegaMenuItem>
-                  <MegaMenuItem value="Testing" onClick={() => { console.log("[Default MegaMenu] selected value:", "Testing"); }}>Testing</MegaMenuItem>
-                  <MegaMenuItem value="Rollout" onClick={() => { console.log("[Default MegaMenu] selected value:", "Rollout"); }}>Rollout</MegaMenuItem>
+                  <MegaMenuItem
+                    value="Onboarding"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Onboarding",
+                      );
+                    }}
+                  >
+                    Onboarding
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Migration"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Migration",
+                      );
+                    }}
+                  >
+                    Migration
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Customization"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Customization",
+                      );
+                    }}
+                  >
+                    Customization
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Training"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Training",
+                      );
+                    }}
+                  >
+                    Training
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Support"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Support",
+                      );
+                    }}
+                  >
+                    Support
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Testing"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Testing",
+                      );
+                    }}
+                  >
+                    Testing
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Rollout"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Rollout",
+                      );
+                    }}
+                  >
+                    Rollout
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online" onClick={() => { console.log("[Default MegaMenu] selected value:", "Online"); }}>Online</MegaMenuItem>
-                  <MegaMenuItem value="In-Person" onClick={() => { console.log("[Default MegaMenu] selected value:", "In-Person"); }}>In-Person</MegaMenuItem>
-                  <MegaMenuItem value="Workshops" onClick={() => { console.log("[Default MegaMenu] selected value:", "Workshops"); }}>Workshops</MegaMenuItem>
-                  <MegaMenuItem value="Certifications" onClick={() => { console.log("[Default MegaMenu] selected value:", "Certifications"); }}>Certifications</MegaMenuItem>
-                  <MegaMenuItem value="Tutorials" onClick={() => { console.log("[Default MegaMenu] selected value:", "Tutorials"); }}>Tutorials</MegaMenuItem>
-                  <MegaMenuItem value="Guides" onClick={() => { console.log("[Default MegaMenu] selected value:", "Guides"); }}>Guides</MegaMenuItem>
+                  <MegaMenuItem
+                    value="Online"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Online",
+                      );
+                    }}
+                  >
+                    Online
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="In-Person"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "In-Person",
+                      );
+                    }}
+                  >
+                    In-Person
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Workshops"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Workshops",
+                      );
+                    }}
+                  >
+                    Workshops
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Certifications"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Certifications",
+                      );
+                    }}
+                  >
+                    Certifications
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Tutorials"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Tutorials",
+                      );
+                    }}
+                  >
+                    Tutorials
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Guides"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Guides",
+                      );
+                    }}
+                  >
+                    Guides
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuContainer>
@@ -280,7 +531,9 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "resources" ? null : "resources"));
+                  setOpenMenu((prev) =>
+                    prev === "resources" ? null : "resources",
+                  );
                 }}
               >
                 Resources
@@ -290,16 +543,83 @@ const WithNavigationItemsTemplate: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides" onClick={() => { console.log("[Default MegaMenu] selected value:", "User Guides"); }}>User Guides</MegaMenuItem>
-                  <MegaMenuItem value="API Reference" onClick={() => { console.log("[Default MegaMenu] selected value:", "API Reference"); }}>API Reference</MegaMenuItem>
-                  <MegaMenuItem value="Release Notes" onClick={() => { console.log("[Default MegaMenu] selected value:", "Release Notes"); }}>Release Notes</MegaMenuItem>
-                  <MegaMenuItem value="FAQs" onClick={() => { console.log("[Default MegaMenu] selected value:", "FAQs"); }}>FAQs</MegaMenuItem>
+                  <MegaMenuItem
+                    value="User Guides"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "User Guides",
+                      );
+                    }}
+                  >
+                    User Guides
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="API Reference"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "API Reference",
+                      );
+                    }}
+                  >
+                    API Reference
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Release Notes"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Release Notes",
+                      );
+                    }}
+                  >
+                    Release Notes
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="FAQs"
+                    onClick={() => {
+                      console.log("[Default MegaMenu] selected value:", "FAQs");
+                    }}
+                  >
+                    FAQs
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact Support" onClick={() => { console.log("[Default MegaMenu] selected value:", "Contact Support"); }}>Contact Support</MegaMenuItem>
-                  <MegaMenuItem value="Community Forum" onClick={() => { console.log("[Default MegaMenu] selected value:", "Community Forum"); }}>Community Forum</MegaMenuItem>
-                  <MegaMenuItem value="Troubleshooting" onClick={() => { console.log("[Default MegaMenu] selected value:", "Troubleshooting"); }}>Troubleshooting</MegaMenuItem>
+                  <MegaMenuItem
+                    value="Contact Support"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Contact Support",
+                      );
+                    }}
+                  >
+                    Contact Support
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Community Forum"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Community Forum",
+                      );
+                    }}
+                  >
+                    Community Forum
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Troubleshooting"
+                    onClick={() => {
+                      console.log(
+                        "[Default MegaMenu] selected value:",
+                        "Troubleshooting",
+                      );
+                    }}
+                  >
+                    Troubleshooting
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuContainer>
@@ -323,7 +643,10 @@ const WithIconsTemplate: StoryFn = () => {
     setOpenMenu(open ? menu : null);
   };
 
-  const handleSelectedItemChange = (menu: string, value: string | undefined) => {
+  const handleSelectedItemChange = (
+    menu: string,
+    value: string | undefined,
+  ) => {
     const nextValue = selectedItem === value ? undefined : value;
     setSelectedItem(nextValue);
     setActiveMenu(nextValue ? menu : null);
@@ -347,7 +670,9 @@ const WithIconsTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "solutions" ? null : "solutions"));
+                  setOpenMenu((prev) =>
+                    prev === "solutions" ? null : "solutions",
+                  );
                 }}
               >
                 Solutions
@@ -362,11 +687,15 @@ const WithIconsTemplate: StoryFn = () => {
                     <DevicesIcon aria-hidden />
                     Digital Banking
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">Risk Management</MegaMenuItem>
+                  <MegaMenuItem value="Risk Management">
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">Patient Management</MegaMenuItem>
+                  <MegaMenuItem value="Patient Management">
+                    Patient Management
+                  </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
                     <CallIcon aria-hidden />
                     Telemedicine
@@ -443,7 +772,9 @@ const WithIconsTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "services" ? null : "services"));
+                  setOpenMenu((prev) =>
+                    prev === "services" ? null : "services",
+                  );
                 }}
               >
                 Services
@@ -542,7 +873,9 @@ const WithIconsTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "resources" ? null : "resources"));
+                  setOpenMenu((prev) =>
+                    prev === "resources" ? null : "resources",
+                  );
                 }}
               >
                 Resources
@@ -576,7 +909,9 @@ const WithIconsTemplate: StoryFn = () => {
                     <ChatGroupIcon aria-hidden />
                     Community Forum
                   </MegaMenuItem>
-                  <MegaMenuItem value="Troubleshooting">Troubleshooting</MegaMenuItem>
+                  <MegaMenuItem value="Troubleshooting">
+                    Troubleshooting
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuContainer>
@@ -600,7 +935,10 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
     setOpenMenu(open ? menu : null);
   };
 
-  const handleSelectedItemChange = (menu: string, value: string | undefined) => {
+  const handleSelectedItemChange = (
+    menu: string,
+    value: string | undefined,
+  ) => {
     const nextValue = selectedItem === value ? undefined : value;
     setSelectedItem(nextValue);
     setActiveMenu(nextValue ? menu : null);
@@ -624,7 +962,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "solutions" ? null : "solutions"));
+                  setOpenMenu((prev) =>
+                    prev === "solutions" ? null : "solutions",
+                  );
                 }}
               >
                 Solutions
@@ -635,12 +975,18 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">Digital Banking</MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">Risk Management</MegaMenuItem>
+                  <MegaMenuItem value="Digital Banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Risk Management">
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">Patient Management</MegaMenuItem>
+                  <MegaMenuItem value="Patient Management">
+                    Patient Management
+                  </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
                     Telemedicine
                     <Tag
@@ -651,16 +997,24 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                       Premium
                     </Tag>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">Compliance Solutions</MegaMenuItem>
+                  <MegaMenuItem value="Compliance Solutions">
+                    Compliance Solutions
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">E-Commerce Platforms</MegaMenuItem>
+                  <MegaMenuItem value="E-Commerce Platforms">
+                    E-Commerce Platforms
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">Supply Chain Optimization</MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">Quality Control</MegaMenuItem>
+                  <MegaMenuItem value="Supply Chain Optimization">
+                    Supply Chain Optimization
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Quality Control">
+                    Quality Control
+                  </MegaMenuItem>
                   <MegaMenuItem value="Production Planning">
                     Production Planning
                     <Tag
@@ -674,14 +1028,24 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning Management Systems">Learning Management Systems</MegaMenuItem>
-                  <MegaMenuItem value="Virtual Classrooms">Virtual Classrooms</MegaMenuItem>
+                  <MegaMenuItem value="Learning Management Systems">
+                    Learning Management Systems
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Virtual Classrooms">
+                    Virtual Classrooms
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document Management">Document Management</MegaMenuItem>
-                  <MegaMenuItem value="Citizen Services">Citizen Services</MegaMenuItem>
-                  <MegaMenuItem value="Public Safety Solutions">Public Safety Solutions</MegaMenuItem>
+                  <MegaMenuItem value="Document Management">
+                    Document Management
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Citizen Services">
+                    Citizen Services
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Public Safety Solutions">
+                    Public Safety Solutions
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuContainer>
@@ -702,7 +1066,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "services" ? null : "services"));
+                  setOpenMenu((prev) =>
+                    prev === "services" ? null : "services",
+                  );
                 }}
               >
                 Services
@@ -723,7 +1089,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem value="Onboarding">Onboarding</MegaMenuItem>
                   <MegaMenuItem value="Migration">Migration</MegaMenuItem>
-                  <MegaMenuItem value="Customization">Customization</MegaMenuItem>
+                  <MegaMenuItem value="Customization">
+                    Customization
+                  </MegaMenuItem>
                   <MegaMenuItem value="Training">
                     Training <Badge value="1" className="menu-item-adornment" />
                   </MegaMenuItem>
@@ -735,10 +1103,13 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem value="Online">Online</MegaMenuItem>
                   <MegaMenuItem value="In-Person">
-                    In-Person <Badge value="3" className="menu-item-adornment" />
+                    In-Person{" "}
+                    <Badge value="3" className="menu-item-adornment" />
                   </MegaMenuItem>
                   <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
-                  <MegaMenuItem value="Certifications">Certifications</MegaMenuItem>
+                  <MegaMenuItem value="Certifications">
+                    Certifications
+                  </MegaMenuItem>
                   <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
                   <MegaMenuItem value="Guides">Guides</MegaMenuItem>
                 </MegaMenuGroup>
@@ -761,7 +1132,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  setOpenMenu((prev) => (prev === "resources" ? null : "resources"));
+                  setOpenMenu((prev) =>
+                    prev === "resources" ? null : "resources",
+                  );
                 }}
               >
                 Resources
@@ -772,7 +1145,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem value="User Guides">User Guides</MegaMenuItem>
-                  <MegaMenuItem value="API Reference">API Reference</MegaMenuItem>
+                  <MegaMenuItem value="API Reference">
+                    API Reference
+                  </MegaMenuItem>
                   <MegaMenuItem value="Release Notes">
                     Release Notes <Badge className="menu-item-adornment" />
                   </MegaMenuItem>
@@ -780,7 +1155,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact Support">Contact Support</MegaMenuItem>
+                  <MegaMenuItem value="Contact Support">
+                    Contact Support
+                  </MegaMenuItem>
                   <MegaMenuItem value="Community Forum">
                     Community Forum
                     <Tag
@@ -791,7 +1168,9 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                       New
                     </Tag>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Troubleshooting">Troubleshooting</MegaMenuItem>
+                  <MegaMenuItem value="Troubleshooting">
+                    Troubleshooting
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuContainer>
@@ -815,34 +1194,64 @@ const TriggerPositionTemplate: StoryFn = () => {
           onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
         >
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "left" ? null : "left"))}>Near Left Edge</Button>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "left" ? null : "left"))
+              }
+            >
+              Near Left Edge
+            </Button>
           </MegaMenuTrigger>
 
           <MegaMenuContainer>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">Mega menu item 1</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">Mega menu item 2</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">Mega menu item 3</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 1">
+                  Mega menu item 1
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 2">
+                  Mega menu item 2
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 3">
+                  Mega menu item 3
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">Mega menu item 4</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">Mega menu item 5</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">Mega menu item 6</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 4">
+                  Mega menu item 4
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 5">
+                  Mega menu item 5
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 6">
+                  Mega menu item 6
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">Mega menu item 7</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">Mega menu item 8</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">Mega menu item 9</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 7">
+                  Mega menu item 7
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 8">
+                  Mega menu item 8
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 9">
+                  Mega menu item 9
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">Mega menu item 10</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">Mega menu item 11</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">Mega menu item 12</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 10">
+                  Mega menu item 10
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 11">
+                  Mega menu item 11
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 12">
+                  Mega menu item 12
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuContainer>
@@ -854,34 +1263,64 @@ const TriggerPositionTemplate: StoryFn = () => {
           onOpenChange={(open) => setOpenMenu(open ? "center" : null)}
         >
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "center" ? null : "center"))}>On Center</Button>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "center" ? null : "center"))
+              }
+            >
+              On Center
+            </Button>
           </MegaMenuTrigger>
 
           <MegaMenuContainer>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">Mega menu item 1</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">Mega menu item 2</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">Mega menu item 3</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 1">
+                  Mega menu item 1
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 2">
+                  Mega menu item 2
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 3">
+                  Mega menu item 3
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">Mega menu item 4</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">Mega menu item 5</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">Mega menu item 6</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 4">
+                  Mega menu item 4
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 5">
+                  Mega menu item 5
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 6">
+                  Mega menu item 6
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">Mega menu item 7</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">Mega menu item 8</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">Mega menu item 9</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 7">
+                  Mega menu item 7
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 8">
+                  Mega menu item 8
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 9">
+                  Mega menu item 9
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">Mega menu item 10</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">Mega menu item 11</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">Mega menu item 12</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 10">
+                  Mega menu item 10
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 11">
+                  Mega menu item 11
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 12">
+                  Mega menu item 12
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuContainer>
@@ -893,7 +1332,11 @@ const TriggerPositionTemplate: StoryFn = () => {
           onOpenChange={(open) => setOpenMenu(open ? "offset" : null)}
         >
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "offset" ? null : "offset"))}>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "offset" ? null : "offset"))
+              }
+            >
               Slightly Offset
             </Button>
           </MegaMenuTrigger>
@@ -902,27 +1345,51 @@ const TriggerPositionTemplate: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">Mega menu item 1</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">Mega menu item 2</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">Mega menu item 3</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 1">
+                  Mega menu item 1
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 2">
+                  Mega menu item 2
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 3">
+                  Mega menu item 3
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">Mega menu item 4</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">Mega menu item 5</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">Mega menu item 6</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 4">
+                  Mega menu item 4
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 5">
+                  Mega menu item 5
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 6">
+                  Mega menu item 6
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">Mega menu item 7</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">Mega menu item 8</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">Mega menu item 9</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 7">
+                  Mega menu item 7
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 8">
+                  Mega menu item 8
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 9">
+                  Mega menu item 9
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">Mega menu item 10</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">Mega menu item 11</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">Mega menu item 12</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 10">
+                  Mega menu item 10
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 11">
+                  Mega menu item 11
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 12">
+                  Mega menu item 12
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuContainer>
@@ -935,33 +1402,63 @@ const TriggerPositionTemplate: StoryFn = () => {
           onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
         >
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "right" ? null : "right"))}>Near The Edge</Button>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "right" ? null : "right"))
+              }
+            >
+              Near The Edge
+            </Button>
           </MegaMenuTrigger>
           <MegaMenuContainer>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">Mega menu item 1</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">Mega menu item 2</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">Mega menu item 3</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 1">
+                  Mega menu item 1
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 2">
+                  Mega menu item 2
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 3">
+                  Mega menu item 3
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">Mega menu item 4</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">Mega menu item 5</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">Mega menu item 6</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 4">
+                  Mega menu item 4
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 5">
+                  Mega menu item 5
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 6">
+                  Mega menu item 6
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">Mega menu item 7</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">Mega menu item 8</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">Mega menu item 9</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 7">
+                  Mega menu item 7
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 8">
+                  Mega menu item 8
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 9">
+                  Mega menu item 9
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">Mega menu item 10</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">Mega menu item 11</MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">Mega menu item 12</MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 10">
+                  Mega menu item 10
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 11">
+                  Mega menu item 11
+                </MegaMenuItem>
+                <MegaMenuItem value="Mega menu item 12">
+                  Mega menu item 12
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuContainer>
@@ -990,15 +1487,25 @@ const FullWidthContainerTemplate: StoryFn = () => {
         <MegaMenuSection>
           <MegaMenuGroup>
             <MegaMenuHeader>Products</MegaMenuHeader>
-            <MegaMenuItem value="Analytics Workspace">Analytics Workspace</MegaMenuItem>
-            <MegaMenuItem value="Order Management">Order Management</MegaMenuItem>
-            <MegaMenuItem value="Pricing Configurator">Pricing Configurator</MegaMenuItem>
+            <MegaMenuItem value="Analytics Workspace">
+              Analytics Workspace
+            </MegaMenuItem>
+            <MegaMenuItem value="Order Management">
+              Order Management
+            </MegaMenuItem>
+            <MegaMenuItem value="Pricing Configurator">
+              Pricing Configurator
+            </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Solutions</MegaMenuHeader>
             <MegaMenuItem value="Risk Monitoring">Risk Monitoring</MegaMenuItem>
-            <MegaMenuItem value="Client Reporting">Client Reporting</MegaMenuItem>
-            <MegaMenuItem value="Trade Automation">Trade Automation</MegaMenuItem>
+            <MegaMenuItem value="Client Reporting">
+              Client Reporting
+            </MegaMenuItem>
+            <MegaMenuItem value="Trade Automation">
+              Trade Automation
+            </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Resources</MegaMenuHeader>
@@ -1029,7 +1536,11 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "right" ? null : "right"))}>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "right" ? null : "right"))
+              }
+            >
               Custom Region on Right
             </Button>
           </MegaMenuTrigger>
@@ -1038,24 +1549,40 @@ const WithCustomRegionTemplate: StoryFn = () => {
               <div className="custom-region-groups">
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">Digital Banking</MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">Risk Management</MegaMenuItem>
+                  <MegaMenuItem value="Digital Banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Risk Management">
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">Patient Management</MegaMenuItem>
+                  <MegaMenuItem value="Patient Management">
+                    Patient Management
+                  </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">Compliance Solutions</MegaMenuItem>
+                  <MegaMenuItem value="Compliance Solutions">
+                    Compliance Solutions
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">E-Commerce Platforms</MegaMenuItem>
+                  <MegaMenuItem value="E-Commerce Platforms">
+                    E-Commerce Platforms
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">Supply Chain Optimization</MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">Quality Control</MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">Production Planning</MegaMenuItem>
+                  <MegaMenuItem value="Supply Chain Optimization">
+                    Supply Chain Optimization
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Quality Control">
+                    Quality Control
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Production Planning">
+                    Production Planning
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </div>
               <MegaMenuLinkRow className="defaultBottomLinkRow">
@@ -1103,7 +1630,11 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "left" ? null : "left"))}>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "left" ? null : "left"))
+              }
+            >
               Custom Region on Left
             </Button>
           </MegaMenuTrigger>
@@ -1141,24 +1672,40 @@ const WithCustomRegionTemplate: StoryFn = () => {
               <div className="custom-region-groups">
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">Digital Banking</MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">Risk Management</MegaMenuItem>
+                  <MegaMenuItem value="Digital Banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Risk Management">
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">Patient Management</MegaMenuItem>
+                  <MegaMenuItem value="Patient Management">
+                    Patient Management
+                  </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">Compliance Solutions</MegaMenuItem>
+                  <MegaMenuItem value="Compliance Solutions">
+                    Compliance Solutions
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">E-Commerce Platforms</MegaMenuItem>
+                  <MegaMenuItem value="E-Commerce Platforms">
+                    E-Commerce Platforms
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">Supply Chain Optimization</MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">Quality Control</MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">Production Planning</MegaMenuItem>
+                  <MegaMenuItem value="Supply Chain Optimization">
+                    Supply Chain Optimization
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Quality Control">
+                    Quality Control
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Production Planning">
+                    Production Planning
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </div>
               <MegaMenuLinkRow className="defaultBottomLinkRow">
@@ -1175,7 +1722,11 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "top" ? null : "top"))}>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "top" ? null : "top"))
+              }
+            >
               Custom Region on Top
             </Button>
           </MegaMenuTrigger>
@@ -1213,24 +1764,40 @@ const WithCustomRegionTemplate: StoryFn = () => {
               <div className="custom-region-top-bottom-groups">
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">Digital Banking</MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">Risk Management</MegaMenuItem>
+                  <MegaMenuItem value="Digital Banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Risk Management">
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">Patient Management</MegaMenuItem>
+                  <MegaMenuItem value="Patient Management">
+                    Patient Management
+                  </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">Compliance Solutions</MegaMenuItem>
+                  <MegaMenuItem value="Compliance Solutions">
+                    Compliance Solutions
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">E-Commerce Platforms</MegaMenuItem>
+                  <MegaMenuItem value="E-Commerce Platforms">
+                    E-Commerce Platforms
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">Supply Chain Optimization</MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">Quality Control</MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">Production Planning</MegaMenuItem>
+                  <MegaMenuItem value="Supply Chain Optimization">
+                    Supply Chain Optimization
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Quality Control">
+                    Quality Control
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Production Planning">
+                    Production Planning
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </div>
               <MegaMenuLinkRow className="defaultBottomLinkRow">
@@ -1247,7 +1814,11 @@ const WithCustomRegionTemplate: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button onClick={() => setOpenMenu((prev) => (prev === "bottom" ? null : "bottom"))}>
+            <Button
+              onClick={() =>
+                setOpenMenu((prev) => (prev === "bottom" ? null : "bottom"))
+              }
+            >
               Custom Region on Bottom
             </Button>
           </MegaMenuTrigger>
@@ -1257,24 +1828,40 @@ const WithCustomRegionTemplate: StoryFn = () => {
               <div className="custom-region-top-bottom-groups">
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">Digital Banking</MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">Risk Management</MegaMenuItem>
+                  <MegaMenuItem value="Digital Banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Risk Management">
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">Patient Management</MegaMenuItem>
+                  <MegaMenuItem value="Patient Management">
+                    Patient Management
+                  </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">Compliance Solutions</MegaMenuItem>
+                  <MegaMenuItem value="Compliance Solutions">
+                    Compliance Solutions
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">E-Commerce Platforms</MegaMenuItem>
+                  <MegaMenuItem value="E-Commerce Platforms">
+                    E-Commerce Platforms
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">Supply Chain Optimization</MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">Quality Control</MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">Production Planning</MegaMenuItem>
+                  <MegaMenuItem value="Supply Chain Optimization">
+                    Supply Chain Optimization
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Quality Control">
+                    Quality Control
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Production Planning">
+                    Production Planning
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </div>
               <MegaMenuLinkRow className="defaultBottomLinkRow">
