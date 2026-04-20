@@ -192,7 +192,7 @@ export const Horizontal = () => {
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
-    // handleRadioChange: (e) => updateField(e.target.name, e.target.value),
+    handleRadioChange: (e) => updateField(e.target.name, e.target.value),
     stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
   };
 
