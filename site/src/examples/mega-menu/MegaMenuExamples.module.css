@@ -1,0 +1,82 @@
+.navList {
+  list-style: none;
+  padding: 0;
+}
+
+.triggerPositionGrid {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+.triggerPositionLeft {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 12px;
+}
+
+.triggerPositionCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.triggerPositionOffset {
+  display: flex;
+  justify-content: center;
+  padding-left: 180px;
+}
+
+.triggerPositionRight {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.menuItemAdornment {
+  margin-left: auto;
+}
+
+.customRegionWrapper {
+  width: 100%;
+}
+
+.customRegionNoContainerPadding {
+  padding: 0;
+}
+
+.customRegionGroupsColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.customRegionGroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-300);
+  flex: 1;
+}
+
+.customRegionContainerColumn {
+  flex-direction: column;
+}
+
+.customRegionTopBottomGroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-300);
+}
+
+.defaultBottomLinkRow {
+  padding-top: var(--salt-spacing-200);
+}
+
+.customRegionRightDescription {
+  max-inline-size: 240px;
+}
+
+.customRegionImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
