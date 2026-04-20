@@ -253,9 +253,8 @@ export function getRelatedEntities(
         Boolean(candidate),
       )
       .filter((candidate) => isComponentAllowedByDocsPolicy(candidate));
-    const relatedTokens = registry.tokens.filter(
-      (token) =>
-        token.applies_to.includes(component.name),
+    const relatedTokens = registry.tokens.filter((token) =>
+      token.applies_to.includes(component.name),
     );
     const relatedGuides = registry.guides.filter(
       (guide) =>

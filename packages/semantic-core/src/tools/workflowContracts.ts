@@ -996,8 +996,14 @@ function buildCreateIdeSummary(input: {
   projectConventionsCheck: WorkflowProjectConventionsCheck;
   provenance: WorkflowProvenance;
 }): WorkflowCreateIdeSummary {
-  const { result, query, intent, starterValidation, projectConventionsCheck, provenance } =
-    input;
+  const {
+    result,
+    query,
+    intent,
+    starterValidation,
+    projectConventionsCheck,
+    provenance,
+  } = input;
   const implementationGate = buildCreateImplementationGate(result, query);
   const requiredSlots =
     result.composition_contract?.slots.filter(
@@ -1065,7 +1071,13 @@ function buildReviewIdeSummary(input: {
   projectConventionsCheck: WorkflowProjectConventionsCheck;
   provenance: WorkflowProvenance;
 }): WorkflowReviewIdeSummary {
-  const { result, decision, fixCandidates, projectConventionsCheck, provenance } = input;
+  const {
+    result,
+    decision,
+    fixCandidates,
+    projectConventionsCheck,
+    provenance,
+  } = input;
   const deterministicCandidate =
     fixCandidates.candidates.find(
       (candidate) => candidate.safety === "deterministic",
@@ -1322,7 +1334,12 @@ function buildMigrateIdeSummary(input: {
   projectConventionsCheck: WorkflowProjectConventionsCheck;
   provenance: WorkflowProvenance;
 }): WorkflowMigrateIdeSummary {
-  const { result, postMigrationVerification, projectConventionsCheck, provenance } = input;
+  const {
+    result,
+    postMigrationVerification,
+    projectConventionsCheck,
+    provenance,
+  } = input;
 
   return {
     screen_map: takeFirstUnique(
@@ -1900,7 +1917,11 @@ export function buildUpgradeSaltUiWorkflowContract(
 
   return {
     confidence: buildUpgradeConfidence(result),
-    ide_summary: buildUpgradeIdeSummary(result, projectConventionsCheck, provenance),
+    ide_summary: buildUpgradeIdeSummary(
+      result,
+      projectConventionsCheck,
+      provenance,
+    ),
     project_conventions_check: projectConventionsCheck,
     rule_ids: getUpgradeRuleIds(),
     provenance,

@@ -2,10 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
 import { toPosixPath } from "../registry/paths.js";
-import type {
-  ComponentRecord,
-  TokenRecord,
-} from "../types.js";
+import type { ComponentRecord, TokenRecord } from "../types.js";
 import {
   cleanMarkdownText,
   normalizeWhitespace,

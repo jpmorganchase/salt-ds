@@ -165,4 +165,3 @@ describe("scoreQueryFields phrase matching", () => {
     expect(result.match_reasons).toContain("tags_tokens");
   });
 });
-

@@ -15,6 +15,7 @@ import {
   type PropMetadata,
   selectDocgenComponent,
   selectSubComponents,
+  selectSubComponentsBySourceExports,
   toComponentProps,
 } from "./buildRegistryDocgen.js";
 import {
@@ -94,9 +95,7 @@ function parsePackageNameFromRepoPath(repoPath: string | null): string | null {
   return `@salt-ds/${match[1]}`;
 }
 
-function parseLivePreviewTags(
-  mdx: string,
-): Array<{
+function parseLivePreviewTags(mdx: string): Array<{
   componentName: string;
   exampleName: string;
   title: string;
@@ -309,17 +308,13 @@ function deriveExampleIntent(title: string, description: string): string[] {
   return uniqueStrings(intents).slice(0, 15);
 }
 
-function inferExampleComplexity(
-  code: string,
-): ExampleRecord["complexity"] {
+function inferExampleComplexity(code: string): ExampleRecord["complexity"] {
   if (!code) {
     return "basic";
   }
 
   const lines = code.split(/\r?\n/).filter((line) => line.trim().length > 0);
-  const importCount = lines.filter((line) =>
-    /^\s*import\b/.test(line),
-  ).length;
+  const importCount = lines.filter((line) => /^\s*import\b/.test(line)).length;
   const hasState = /\buseState\b/.test(code);
   const hasEffect = /\buseEffect\b/.test(code);
   const hasRef = /\buseRef\b/.test(code);
@@ -477,16 +472,13 @@ function deriveComposition(
   // If every sub-component is a parent wrapper, there are no children to compose.
   if (childSubs.length === 0) {
     return {
-      typical_parent: parentWrappers.length === 1 ? parentWrappers[0] : undefined,
+      typical_parent:
+        parentWrappers.length === 1 ? parentWrappers[0] : undefined,
     };
   }
 
   // Names that strongly imply required structural children.
-  const requiredSuffixes = new Set([
-    "Content",
-    "Panel",
-    "Body",
-  ]);
+  const requiredSuffixes = new Set(["Content", "Panel", "Body"]);
 
   // Use the default/first example to check which child sub-components actually appear.
   const defaultExample = exampleRecords.find(
@@ -639,11 +631,21 @@ export async function extractComponents(
     // Extract sub-components and derive composition rules for compound components.
     const rootDisplayName =
       docgenSelection.inference.selected_display_name ?? toPascalCase(title);
-    const subComponents = selectSubComponents(
+    const prefixSubComponents = selectSubComponents(
       propMetadata,
       packageName,
       rootDisplayName,
     );
+    const subComponents =
+      prefixSubComponents.length > 0
+        ? prefixSubComponents
+        : selectSubComponentsBySourceExports(
+            propMetadata,
+            packageName,
+            rootDisplayName,
+            sourceRepoPath,
+            repoRoot,
+          );
     const composition = deriveComposition(subComponents, exampleRecords);
 
     const relatedPatterns = asStringArray(data?.relatedPatterns);

@@ -155,7 +155,6 @@ export function getComponentCaveats(component: ComponentRecord): string[] {
     }
   }
 
-
   return caveats;
 }
 

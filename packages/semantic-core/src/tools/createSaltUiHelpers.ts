@@ -10,7 +10,12 @@ import {
 } from "./guideAwareness.js";
 import { hasSingleDestinationNavigationIntent } from "./navigationIntent.js";
 import { getStructuralPatternIntent } from "./patternIntent.js";
-import { containsWholeWordPhrase, normalizeQuery, tokenize } from "./utils.js";
+import {
+  containsWholeWordPhrase,
+  normalizeQuery,
+  stemToken,
+  tokenize,
+} from "./utils.js";
 
 const FOUNDATION_KEYWORDS = [
   "breakpoint",
@@ -68,9 +73,9 @@ export function getCreateSaltUiRelatedGuides(
 }
 
 function scoreIntent(query: string, keywords: readonly string[]): number {
-  const queryTokens = new Set(tokenize(query));
+  const queryTokens = new Set(tokenize(query).map(stemToken));
   return keywords.reduce((score, keyword) => {
-    const tokenMatch = queryTokens.has(keyword) ? 2 : 0;
+    const tokenMatch = queryTokens.has(stemToken(keyword)) ? 2 : 0;
     const phraseMatch = containsWholeWordPhrase(query, keyword) ? 1 : 0;
     return score + Math.max(tokenMatch, phraseMatch);
   }, 0);

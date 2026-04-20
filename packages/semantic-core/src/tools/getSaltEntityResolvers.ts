@@ -1,5 +1,5 @@
 import type { SaltRegistry, SearchArea, SearchIndexEntry } from "../types.js";
-import { getComponent, type GetComponentInput } from "./getComponent.js";
+import { type GetComponentInput, getComponent } from "./getComponent.js";
 import { getCountrySymbol } from "./getCountrySymbol.js";
 import { getCountrySymbols } from "./getCountrySymbols.js";
 import { getFoundation } from "./getFoundation.js";

@@ -169,10 +169,7 @@ function inferComponentRoles(
         }
         // Also check backtick and link patterns case-insensitively.
         const backtickRe = new RegExp(`\`${pattern}\``, "i");
-        const linkRe = new RegExp(
-          `\\[\\s*\`?${pattern}\`?\\s*\\]\\(`,
-          "i",
-        );
+        const linkRe = new RegExp(`\\[\\s*\`?${pattern}\`?\\s*\\]\\(`, "i");
         return backtickRe.test(trimmed) || linkRe.test(trimmed);
       });
 
@@ -201,9 +198,7 @@ function deriveStoryExampleIntent(exportName: string): string[] {
 
   const intents = [expanded];
 
-  const words = expanded
-    .split(/\s+/)
-    .filter((word) => word.length >= 3);
+  const words = expanded.split(/\s+/).filter((word) => word.length >= 3);
 
   if (words.length > 1) {
     intents.push(...words);
@@ -214,22 +209,17 @@ function deriveStoryExampleIntent(exportName: string): string[] {
   return uniqueStrings(intents);
 }
 
-function inferStoryComplexity(
-  code: string,
-): ExampleRecord["complexity"] {
+function inferStoryComplexity(code: string): ExampleRecord["complexity"] {
   if (!code) {
     return "intermediate";
   }
 
   const lines = code.split(/\r?\n/).filter((line) => line.trim().length > 0);
-  const importCount = lines.filter((line) =>
-    /^\s*import\b/.test(line),
-  ).length;
+  const importCount = lines.filter((line) => /^\s*import\b/.test(line)).length;
   const hasState = /\buseState\b/.test(code);
   const hasEffect = /\buseEffect\b/.test(code);
   const hasRef = /\buseRef\b/.test(code);
-  const hookCount =
-    (hasState ? 1 : 0) + (hasEffect ? 1 : 0) + (hasRef ? 1 : 0);
+  const hookCount = (hasState ? 1 : 0) + (hasEffect ? 1 : 0) + (hasRef ? 1 : 0);
 
   if (lines.length > 80 || importCount > 8 || hookCount >= 3) {
     return "advanced";
