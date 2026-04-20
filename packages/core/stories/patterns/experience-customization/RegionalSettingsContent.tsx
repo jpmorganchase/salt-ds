@@ -17,7 +17,7 @@ export const RegionalSettingsContent = ({
   stepFieldValidation,
 }: FormContentProps) => {
   return (
-    <StackLayout style={{ width: "50%" }}>
+    <StackLayout style={{ width: "60%" }}>
       <FormField
         validationStatus={stepFieldValidation.language?.status}
         necessity="required"

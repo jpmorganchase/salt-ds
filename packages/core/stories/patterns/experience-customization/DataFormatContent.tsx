@@ -19,7 +19,7 @@ export const DataFormatContent = ({
   handleRadioChange,
 }: FormContentProps) => {
   return (
-    <FlexLayout>
+    <FlexLayout wrap>
       <StackLayout>
         <FlexItem>
           <FormField>

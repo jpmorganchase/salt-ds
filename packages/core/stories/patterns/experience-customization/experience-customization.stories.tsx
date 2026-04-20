@@ -14,12 +14,13 @@ import {
   InteractableCardGroup,
   type InteractableCardValue,
   RadioButtonIcon,
-  SaltProviderNext,
   SplitLayout,
   StackLayout,
+  type StackLayoutProps,
   Step,
   Stepper,
   Text,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import {
   BuildingIcon,
@@ -30,6 +31,7 @@ import {
 import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
+  type ElementType,
   type FocusEvent,
   type ReactElement,
   useEffect,
@@ -80,19 +82,16 @@ const wizardSteps = [
     id: "notifications",
     label: "Notification and settings",
     stepTitle: "Notifications",
-    description: "Define how and where you receive critical system updates.",
   },
   {
     id: "displayMode",
     label: "Display preferences",
     stepTitle: "Display",
-    description: "Configure how data is visualized across your dashboards.",
   },
   {
     id: "dataFormat",
     label: "Data format preferences",
     stepTitle: "Data format",
-    description: "Configure how data is visualized across your dashboards.",
   },
 ] as const;
 const stepIds = wizardSteps.map((s) => s.id);
@@ -142,6 +141,15 @@ export const MultiStep = () => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
   const {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
@@ -200,13 +208,6 @@ export const MultiStep = () => {
     notifications: <NotificationsContent {...sharedFormProps} />,
     displayMode: <DisplayModeContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
-  };
-
-  const renderDescription = (step: (typeof wizardSteps)[number]) => {
-    if ("description" in step) {
-      return <Text color="secondary">{step.description}</Text>;
-    }
-    return null;
   };
 
   const header = (
@@ -225,7 +226,6 @@ export const MultiStep = () => {
               {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
             </span>
           </Text>
-          {renderDescription(wizardSteps[activeStepIndex])}
         </Text>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
@@ -243,150 +243,8 @@ export const MultiStep = () => {
     </FlexLayout>
   );
 
-  const endFooter = (
-    <FlexLayout gap={1}>
-      <Button sentiment="accented" appearance="transparent" onClick={reset}>
-        Cancel
-      </Button>
-      {!isFirstStep && (
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={handlePrevious}
-        >
-          Previous
-        </Button>
-      )}
-      <Button sentiment="accented" onClick={handleNext}>
-        {isLastStep ? "Finish" : "Next"}
-      </Button>
-    </FlexLayout>
-  );
-
-  const startFooter =
-    formData.displayDensity === "high" && activeStepIndex === 2 ? (
-      <Button
-        sentiment="accented"
-        appearance="transparent"
-        onClick={() => updateField("displayDensity", "medium")}
-      >
-        Reset to medium density
-      </Button>
-    ) : null;
-
-  const footer = (
-    <SplitLayout padding={3} startItem={startFooter} endItem={endFooter} />
-  );
-
-  return (
-    <SaltProviderNext
-      mode={formData.displayMode}
-      density={formData.displayDensity}
-    >
-      <StackLayout
-        style={{
-          maxWidth: 730,
-          backgroundColor: "var(--salt-container-primary-background)",
-        }}
-        gap={0}
-      >
-        <FlexItem padding={3}>{header}</FlexItem>
-        <FlexItem grow={1}>
-          <ContentOverflow style={{ height: 396 }}>
-            {contentByStep[currentStepId]}
-          </ContentOverflow>
-        </FlexItem>
-        {footer}
-      </StackLayout>
-    </SaltProviderNext>
-  );
-};
-
-export const Modal = () => {
-  const [open, setOpen] = useState(false);
-  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
-  const navigatedRef = useRef(false);
-
-  const {
-    state: { activeStepIndex, formData, validationsByStep },
-    currentStepId,
-    updateField,
-    next,
-    previous,
-    reset,
-    runValidationAndStore,
-  } = useWizardForm({
-    steps: stepIds,
-    initialState: {
-      activeStepIndex: 0,
-      formData: initialFormData,
-      validationsByStep: {},
-    },
-    validateStep: (stepId, data) =>
-      validateStep(stepValidationSchemas, stepId, data),
-  });
-
-  const isLastStep = activeStepIndex === wizardSteps.length - 1;
-  const isFirstStep = activeStepIndex === 0;
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
-  useEffect(() => {
-    if (!navigatedRef.current) return;
-    navigatedRef.current = false;
-    stepHeadingRef.current?.focus();
-  }, [activeStepIndex]);
-
-  const openWizard = () => {
-    reset();
-    setOpen(true);
-  };
-
-  const closeWizardAndReset = () => {
-    setOpen(false);
-    setTimeout(() => {
-      reset();
-    }, 300);
-  };
-
-  const handleNext = async () => {
-    const valid = await runValidationAndStore();
-    if (!valid) return;
-    if (isLastStep) {
-      closeWizardAndReset();
-      return;
-    }
-    navigatedRef.current = true;
-    next();
-  };
-
-  const handlePrevious = () => {
-    navigatedRef.current = true;
-    previous();
-  };
-
-  const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
-    handleInputChange: (e) => updateField(e.target.name, e.target.value),
-    handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
-    handleSelectChange: (value: string, name: string) =>
-      updateField(name, value),
-    handleRadioChange: (e) => updateField(e.target.name, e.target.value),
-    stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
-  };
-
-  const contentByStep: Record<string, ReactElement> = {
-    region: <RegionalSettingsContent {...sharedFormProps} />,
-    notifications: <NotificationsContent {...sharedFormProps} />,
-    displayMode: <DisplayModeContent {...sharedFormProps} />,
-    dataFormat: <DataFormatContent {...sharedFormProps} />,
-  };
-
   const cancel = (
-    <Button
-      sentiment="accented"
-      appearance="transparent"
-      onClick={closeWizardAndReset}
-    >
+    <Button sentiment="accented" appearance="transparent" onClick={reset}>
       Cancel
     </Button>
   );
@@ -403,55 +261,57 @@ export const Modal = () => {
     </Button>
   );
 
-  const activeStep = wizardSteps[activeStepIndex];
-  const activeStepDescription =
-    "description" in activeStep ? activeStep.description : undefined;
+  const endFooter = (
+    <FlexLayout gap={1}>
+      {cancel}
+      {prevBtn}
+      {nextBtn}
+    </FlexLayout>
+  );
+
+  const startFooter =
+    formData.displayDensity === "high" && activeStepIndex === 2 ? (
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={() => updateField("displayDensity", "medium")}
+      >
+        Reset to medium density
+      </Button>
+    ) : null;
+
+  const footer =
+    direction === "column" ? (
+      <StackLayout gap={1} style={{ width: "100%" }} padding={3}>
+        {nextBtn}
+        {prevBtn}
+        {cancel}
+        {startFooter}
+      </StackLayout>
+    ) : (
+      <SplitLayout padding={3} startItem={startFooter} endItem={endFooter} />
+    );
 
   return (
-    <SaltProviderNext
-      mode={formData.displayMode}
-      density={formData.displayDensity}
+    <StackLayout
+      style={{
+        maxWidth: 730,
+        backgroundColor: "var(--salt-container-primary-background)",
+      }}
+      gap={0}
     >
-      <Button onClick={openWizard}>Open experience customization</Button>
-      <Dialog open={open} onOpenChange={setOpen} style={{ height: 588 }}>
-        <DialogHeader
-          header={
-            <span tabIndex={-1} ref={stepHeadingRef}>
-              {wizardSteps[activeStepIndex].label}
-              <span className="salt-visuallyHidden">
-                {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
-              </span>
-            </span>
-          }
-          description={activeStepDescription}
-          preheader="Customize your experience"
-          actions={
-            <Stepper orientation="horizontal">
-              {wizardSteps.map((step, index) => (
-                <Step
-                  key={step.id}
-                  label={step.stepTitle}
-                  status={validationsByStep[step.id]?.status}
-                  stage={getStepStage(index, activeStepIndex)}
-                />
-              ))}
-            </Stepper>
-          }
-        />
-        <DialogContent>{contentByStep[currentStepId]}</DialogContent>
-        <DialogActions>
-          <FlexLayout gap={1}>
-            {cancel}
-            {prevBtn}
-            {nextBtn}
-          </FlexLayout>
-        </DialogActions>
-      </Dialog>
-    </SaltProviderNext>
+      <FlexItem padding={3}>{header}</FlexItem>
+      <FlexItem grow={1}>
+        <ContentOverflow style={{ height: 396 }}>
+          {contentByStep[currentStepId]}
+        </ContentOverflow>
+      </FlexItem>
+      <FlexItem>{footer}</FlexItem>
+    </StackLayout>
   );
 };
 
-export const ModalWithCancelConfirmation = () => {
+export const Modal = () => {
   type WizardState = "form" | "cancel-warning";
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
@@ -476,6 +336,15 @@ export const ModalWithCancelConfirmation = () => {
     validateStep: (stepId, data) =>
       validateStep(stepValidationSchemas, stepId, data),
   });
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
 
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
@@ -567,15 +436,39 @@ export const ModalWithCancelConfirmation = () => {
     </Button>
   );
 
-  const activeStep = wizardSteps[activeStepIndex];
-  const activeStepDescription =
-    "description" in activeStep ? activeStep.description : undefined;
+  const endFooter = (
+    <FlexLayout gap={1}>
+      {cancel}
+      {prevBtn}
+      {nextBtn}
+    </FlexLayout>
+  );
+
+  const startFooter =
+    formData.displayDensity === "high" && activeStepIndex === 2 ? (
+      <Button
+        sentiment="accented"
+        appearance="transparent"
+        onClick={() => updateField("displayDensity", "medium")}
+      >
+        Reset to medium density
+      </Button>
+    ) : null;
+
+  const footer =
+    direction === "column" ? (
+      <StackLayout gap={1} style={{ width: "100%" }}>
+        {nextBtn}
+        {prevBtn}
+        {cancel}
+        {startFooter}
+      </StackLayout>
+    ) : (
+      <SplitLayout padding={0} startItem={startFooter} endItem={endFooter} />
+    );
 
   return (
-    <SaltProviderNext
-      mode={formData.displayMode}
-      density={formData.displayDensity}
-    >
+    <>
       <Button onClick={openWizard}>Open experience customization</Button>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         {wizardState === "cancel-warning" ? (
@@ -629,7 +522,6 @@ export const ModalWithCancelConfirmation = () => {
                   </span>
                 </span>
               }
-              description={activeStepDescription}
               preheader="Customize your experience"
               actions={
                 <Stepper orientation="horizontal">
@@ -645,17 +537,11 @@ export const ModalWithCancelConfirmation = () => {
               }
             />
             <DialogContent>{contentByStep[currentStepId]}</DialogContent>
-            <DialogActions>
-              <FlexLayout gap={1}>
-                {cancel}
-                {prevBtn}
-                {nextBtn}
-              </FlexLayout>
-            </DialogActions>
+            <DialogActions>{footer}</DialogActions>
           </>
         )}
       </Dialog>
-    </SaltProviderNext>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
+import { useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityDark from "./img/high-dark.png";
 import HighDensityLight from "./img/high-light.png";
@@ -23,8 +24,17 @@ import MediumDensityLight from "./img/medium-light.png";
 export const DisplayModeContent = ({
   formData,
   handleSelectChange,
-  stepFieldValidation,
 }: FormContentProps) => {
+  const highDensityBannerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (formData.displayDensity !== "high") {
+      return;
+    }
+
+    highDensityBannerRef.current?.scrollIntoView();
+  }, [formData.displayDensity]);
+
   const displayDensityOptions = [
     {
       value: "medium",
@@ -100,14 +110,16 @@ export const DisplayModeContent = ({
         </FormField>
       </FlexItem>
 
-      {stepFieldValidation.displayDensity?.status && (
-        <Banner status="warning">
-          <BannerContent>
-            High density may reduce readability and make some controls harder to
-            use.{" "}
-            <Link href="#">Read WCAG guidelines for more information.</Link>
-          </BannerContent>
-        </Banner>
+      {formData.displayDensity === "high" && (
+        <div ref={highDensityBannerRef}>
+          <Banner status="warning">
+            <BannerContent>
+              High density may reduce readability and make some controls harder
+              to use.{" "}
+              <Link href="#">Read WCAG guidelines for more information.</Link>
+            </BannerContent>
+          </Banner>
+        </div>
       )}
     </StackLayout>
   );
