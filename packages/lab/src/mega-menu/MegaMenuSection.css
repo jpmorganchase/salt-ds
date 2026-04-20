@@ -6,6 +6,6 @@
 }
 
 .saltMegaMenuSection > .saltMegaMenuGroup {
-  flex: 1 1 16rem;
-  min-inline-size: 16rem;
+  flex: 0 0 16rem;
+  inline-size: 16rem;
 }

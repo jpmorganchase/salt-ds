@@ -1,6 +1,8 @@
 .saltMegaMenuContainer {
   display: flex;
   flex-wrap: wrap;
+  inline-size: min(max-content, var(--saltMegaMenuContainer-availableWidth, calc(100vw - var(--salt-spacing-600))));
+  max-inline-size: var(--saltMegaMenuContainer-availableWidth, calc(100vw - var(--salt-spacing-600)));
   max-height: 90%;
   overflow-y: auto;
   box-sizing: border-box;
