@@ -1,3 +1,4 @@
+import { flip, limitShift, shift, size } from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingComponent,
@@ -60,6 +61,18 @@ export const MegaMenuContainer = forwardRef<
   const floatingUIResult = useFloatingUI({
     rootContext: megaMenu.floatingRootContext,
     placement: megaMenu.placement,
+    middleware: [
+      flip(),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ availableWidth, elements }) {
+          elements.floating.style.setProperty(
+            "--saltMegaMenuContainer-availableWidth",
+            `${availableWidth}px`,
+          );
+        },
+      }),
+    ],
   });
 
   const handleRef = useForkRef<HTMLElement>(ref, megaMenu.setFloating);
