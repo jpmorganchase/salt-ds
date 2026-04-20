@@ -135,18 +135,12 @@ const REGISTRY: SaltRegistry = {
           },
         ],
       },
-      tokens: [
-        {
-          name: "--salt-size-base",
-          category: "size",
-          semantic_intent: "base control size",
-        },
-      ],
       patterns: ["split-button"],
       examples: [
         {
           id: "button.primary.submit",
           title: "Primary form submit",
+          description: "",
           intent: ["submit form"],
           complexity: "basic",
           code: '<Button appearance="solid">Save</Button>',
@@ -190,7 +184,6 @@ const REGISTRY: SaltRegistry = {
         summary: ["Links should have clear text labels."],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {
@@ -232,12 +225,12 @@ const REGISTRY: SaltRegistry = {
         summary: ["Provide a clear accessible name for the navigation region."],
         rules: [],
       },
-      tokens: [],
       patterns: ["Vertical navigation"],
       examples: [
         {
           id: "vertical-navigation.basic",
           title: "Basic vertical navigation",
+          description: "",
           intent: ["sidebar navigation"],
           complexity: "intermediate",
           code: '<VerticalNavigation aria-label="Main navigation" />',
@@ -283,7 +276,6 @@ const REGISTRY: SaltRegistry = {
         summary: [],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {
@@ -322,7 +314,6 @@ const REGISTRY: SaltRegistry = {
         summary: [],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {
@@ -359,7 +350,6 @@ const REGISTRY: SaltRegistry = {
         summary: [],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {
@@ -727,6 +717,7 @@ const REGISTRY: SaltRegistry = {
         {
           id: "split-button.basic",
           title: "Basic split button",
+          description: "",
           intent: ["primary action with alternatives"],
           complexity: "intermediate",
           code: "// split button example",
@@ -944,6 +935,7 @@ const REGISTRY: SaltRegistry = {
     {
       id: "button.primary.submit",
       title: "Primary form submit",
+      description: "",
       intent: ["submit form"],
       complexity: "basic",
       code: '<Button appearance="solid">Save</Button>',
@@ -955,6 +947,7 @@ const REGISTRY: SaltRegistry = {
     {
       id: "datepicker.default",
       title: "Default date picker",
+      description: "",
       intent: ["pick a date"],
       complexity: "basic",
       code: "<DatePicker />",
@@ -966,6 +959,7 @@ const REGISTRY: SaltRegistry = {
     {
       id: "experimental-widget.default",
       title: "Experimental widget",
+      description: "",
       intent: ["experimental"],
       complexity: "basic",
       code: "<ExperimentalWidget />",
@@ -2123,6 +2117,7 @@ describe("getExamples", () => {
         {
           id: "pattern-story.split-button.primary",
           title: "Primary action",
+          description: "",
           intent: ["pattern example"],
           complexity: "intermediate",
           code: "// split button story",
@@ -2285,7 +2280,6 @@ describe("searchApiSurface", () => {
             summary: ["Associate the field with a visible label."],
             rules: [],
           },
-          tokens: [],
           patterns: ["Forms"],
           examples: [],
           related_docs: {
@@ -2532,6 +2526,7 @@ describe("consumer tools", () => {
         {
           id: "button.secondary.action",
           title: "Secondary button action",
+          description: "",
           intent: ["secondary action"],
           complexity: "basic",
           code: '<Button appearance="bordered">Cancel</Button>',
@@ -2716,6 +2711,7 @@ describe("consumer tools", () => {
             {
               id: "pattern.split-button.semantic",
               title: "Grouped action with fallback options",
+              description: "",
               intent: ["dominant action with fallback options"],
               complexity: "intermediate",
               code: "// grouped action example",
@@ -2749,6 +2745,7 @@ describe("consumer tools", () => {
             {
               id: "pattern.action-cluster.example",
               title: "Grouped action cluster",
+              description: "",
               intent: ["dominant action with fallback options"],
               complexity: "intermediate",
               code: "// grouped action example",
@@ -3330,16 +3327,16 @@ describe("consumer tools", () => {
     );
   });
 
-  it("does not silently compare when one option cannot be resolved", () => {
+  it("returns resolved items alongside unresolved names when one option cannot be resolved", () => {
     const result = compareOptions(REGISTRY, {
       option_type: "component",
       names: ["Button", "MadeUp"],
       task: "navigate to another route",
     });
 
-    expect(result.compared).toEqual([]);
+    expect(result.compared.length).toBeGreaterThan(0);
+    expect(result.compared.some((c: any) => c.name === "Button")).toBe(true);
     expect(result.unresolved_names).toEqual(["MadeUp"]);
-    expect(result.recommendation).toBeUndefined();
     expect(result.next_step).toBe(
       "Retry with exact component names or start from create_salt_ui.",
     );
@@ -3383,12 +3380,12 @@ describe("consumer tools", () => {
             summary: ["Associate Input with a visible label or FormField."],
             rules: [],
           },
-          tokens: [],
           patterns: [],
           examples: [
             {
               id: "input.basic",
               title: "Basic input",
+              description: "",
               intent: ["capture short text"],
               complexity: "basic",
               code: '<Input aria-label="Search" />',
@@ -3833,12 +3830,12 @@ describe("consumer tools", () => {
             summary: ["Associate the field with a visible label."],
             rules: [],
           },
-          tokens: [],
           patterns: ["Forms"],
           examples: [
             {
               id: "input.validation",
               title: "Validation in form field",
+              description: "",
               intent: ["form validation"],
               complexity: "intermediate",
               code: '<Input validationStatus="error" readOnly />',

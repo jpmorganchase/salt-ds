@@ -210,6 +210,14 @@ export function validateSaltUsage(
       continue;
     }
 
+    // Lab components that are documented on the Salt site are intentionally
+    // recommended for use — skip the prefer-stable warning for them.
+    // Deprecated components should still be flagged regardless.
+    const isSiteDocumented = component.related_docs?.overview != null;
+    if (isSiteDocumented && component.status !== "deprecated") {
+      continue;
+    }
+
     addIssue({
       id: `component-status.${slugify(component.name)}.${component.status}`,
       category: "catalog-status",

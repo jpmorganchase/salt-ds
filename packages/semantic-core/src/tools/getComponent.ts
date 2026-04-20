@@ -26,11 +26,7 @@ export interface GetComponentInput {
   package?: string;
   view?: "compact" | "full";
   include?: Array<
-    | "examples"
-    | "props"
-    | "accessibility"
-    | "deprecations"
-    | "changes"
+    "examples" | "props" | "accessibility" | "deprecations" | "changes"
   >;
   change_limit?: number;
   since_version?: string;

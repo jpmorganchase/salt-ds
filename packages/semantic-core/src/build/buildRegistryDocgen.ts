@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import type {
   ComponentDocgenInference,
@@ -70,7 +71,6 @@ function parseDocgenDefaultValue(value: unknown): string | null {
   }
   if (
     typeof value === "object" &&
-    value !== null &&
     "value" in (value as Record<string, unknown>)
   ) {
     const inner = (value as Record<string, unknown>).value;
@@ -216,7 +216,7 @@ export function toComponentProps(docgenProps: unknown): ComponentProp[] {
   const entries = Object.entries(
     docgenProps as Record<string, DocgenPropShape>,
   );
-  const props = entries
+  return entries
     .map(([propName, propValue]) => {
       const description = cleanMarkdownText(
         asString(propValue.description) ?? "",
@@ -253,8 +253,6 @@ export function toComponentProps(docgenProps: unknown): ComponentProp[] {
     })
     .filter((prop) => prop.name.trim().length > 0)
     .sort((left, right) => left.name.localeCompare(right.name));
-
-  return props;
 }
 
 export async function loadPropMetadata(
@@ -500,5 +498,97 @@ export function selectSubComponents(
   );
 }
 
+/**
+ * Fallback sub-component discovery that scans the source directory's index.ts
+ * for exported component names and matches them against docgen entries.
+ * Used when prefix-based matching finds nothing (e.g., Tabs → TabBar, TabNext, etc.
+ * don't share a "TabsNext" prefix).
+ */
+export function selectSubComponentsBySourceExports(
+  propMetadata: PropMetadata,
+  packageName: string,
+  rootDisplayName: string,
+  sourceRepoPath: string | null,
+  repoRoot: string,
+): ComponentSubComponent[] {
+  if (!sourceRepoPath || !repoRoot) {
+    return [];
+  }
 
+  const sourceDir = path.resolve(repoRoot, sourceRepoPath);
+  const indexPath = path.join(sourceDir, "index.ts");
+  let indexContent: string;
+  try {
+    indexContent = fs.readFileSync(indexPath, "utf-8");
+  } catch {
+    // Try index.tsx as fallback
+    try {
+      indexContent = fs.readFileSync(
+        path.join(sourceDir, "index.tsx"),
+        "utf-8",
+      );
+    } catch {
+      return [];
+    }
+  }
 
+  // Extract exported component names from the index file.
+  // Matches: export { Foo } from, export { Foo, Bar } from, export type { ... } from
+  // We want value exports that look like PascalCase component names.
+  const exportedNames = new Set<string>();
+  const exportPattern = /export\s+\{([^}]+)}/g;
+  let match: RegExpExecArray | null;
+  while ((match = exportPattern.exec(indexContent)) !== null) {
+    // Skip type-only exports
+    const preceding = indexContent.slice(
+      Math.max(0, match.index - 10),
+      match.index,
+    );
+    if (/export\s+type\s*$/.test(preceding)) {
+      continue;
+    }
+    const names = match[1].split(",").map((n) =>
+      n
+        .trim()
+        .split(/\s+as\s+/)
+        .pop()!
+        .trim(),
+    );
+    for (const name of names) {
+      // Only PascalCase names (components), skip lowercase/UPPER_CASE/type keywords
+      if (/^[A-Z][a-zA-Z0-9]+$/.test(name) && name !== rootDisplayName) {
+        exportedNames.add(name);
+      }
+    }
+  }
+
+  if (exportedNames.size === 0) {
+    return [];
+  }
+
+  const packageEntries = propMetadata.byPackage.get(packageName);
+  if (!packageEntries) {
+    return [];
+  }
+
+  const subComponents: ComponentSubComponent[] = [];
+  for (const candidates of packageEntries.values()) {
+    for (const candidate of candidates) {
+      const displayName = asString(candidate.displayName);
+      if (!displayName || !exportedNames.has(displayName)) {
+        continue;
+      }
+
+      const props = toComponentProps(candidate.props);
+      subComponents.push({
+        name: displayName,
+        export_name: displayName,
+        props,
+      });
+    }
+  }
+
+  return subComponents.sort((left, right) =>
+    left.export_name.localeCompare(right.export_name),
+  );
+}

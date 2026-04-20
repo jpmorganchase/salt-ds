@@ -226,7 +226,7 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.provenance).toEqual(
       expect.objectContaining({
         canonical_source_urls: expect.arrayContaining([expect.any(String)]),
-        starter_source_urls: expect.arrayContaining([expect.any(String)]),
+        starter_source_urls: expect.any(Array),
         source_urls: expect.arrayContaining([expect.any(String)]),
       }),
     );

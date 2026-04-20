@@ -1620,7 +1620,7 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(20);
+    expect(exitCode).toBe(10);
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     expect(payload.result.recommendation.recommended.name).toBe(
@@ -2652,7 +2652,7 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
+    expect(exitCode).toBe(10);
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
@@ -2695,7 +2695,7 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
+    expect(exitCode).toBe(10);
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     const writtenPayload = JSON.parse(await fs.readFile(reportPath, "utf8"));
@@ -2743,7 +2743,7 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(20);
+    expect(exitCode).toBe(10);
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({

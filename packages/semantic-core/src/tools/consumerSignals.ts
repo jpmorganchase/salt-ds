@@ -5,7 +5,12 @@ import type {
   TokenRecord,
   UsageSemanticsRecord,
 } from "../types.js";
-import { containsWholeWordPhrase, stemToken, tokenize, unique } from "./utils.js";
+import {
+  containsWholeWordPhrase,
+  stemToken,
+  tokenize,
+  unique,
+} from "./utils.js";
 
 /**
  * Hard stopwords are always removed (prepositions, articles).
@@ -116,10 +121,10 @@ export function scoreQueryFields(
   const allTokens = tokenize(query).filter(
     (token) => !HARD_STOPWORDS.has(token),
   );
-  const withoutSoft = allTokens.filter(
-    (token) => !SOFT_STOPWORDS.has(token),
-  );
-  const queryTokens = withoutSoft.length > 0 ? withoutSoft : allTokens;
+  const withoutSoft = allTokens.filter((token) => !SOFT_STOPWORDS.has(token));
+  const rawQueryTokens = withoutSoft.length > 0 ? withoutSoft : allTokens;
+  // Stem for token-set intersection; phrase matching uses raw tokens.
+  const queryTokens = rawQueryTokens.map(stemToken);
 
   const matchedTerms = new Set<string>();
   const matchReasons = new Set<string>();
