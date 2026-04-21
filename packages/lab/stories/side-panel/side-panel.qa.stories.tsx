@@ -17,14 +17,16 @@ function FakeSidePanel({
   children,
   variant = "primary",
   position = "right",
+  appearance = "solid",
 }: {
   children: ReactNode;
   variant?: SidePanelProps["variant"];
   position?: SidePanelProps["position"];
+  appearance?: SidePanelProps["appearance"];
 }) {
   return (
     <SidePanelProvider open>
-      <SidePanel variant={variant} position={position}>
+      <SidePanel variant={variant} position={position} appearance={appearance}>
         {children}
       </SidePanel>
     </SidePanelProvider>
@@ -34,10 +36,15 @@ function FakeSidePanel({
 const SidePanelTemplate: StoryFn<SidePanelProps> = ({
   variant = "primary",
   position = "right",
+  appearance = "solid",
 }) => {
   return (
     <div style={{ width: 350, height: 320 }}>
-      <FakeSidePanel variant={variant} position={position}>
+      <FakeSidePanel
+        variant={variant}
+        position={position}
+        appearance={appearance}
+      >
         <StackLayout>
           <H2>Title</H2>
           <Text>
@@ -60,6 +67,9 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <SidePanelTemplate variant="primary" />
       <SidePanelTemplate variant="secondary" />
       <SidePanelTemplate variant="tertiary" />
+      <SidePanelTemplate variant="primary" appearance="transparent" />
+      <SidePanelTemplate variant="secondary" appearance="transparent" />
+      <SidePanelTemplate variant="tertiary" appearance="transparent" />
     </QAContainer>
   );
 };
