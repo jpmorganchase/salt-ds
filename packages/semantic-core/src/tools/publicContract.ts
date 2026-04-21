@@ -4,8 +4,13 @@ import {
 } from "../search/englishFunctionWords.js";
 import type { ComponentRecord, PatternRecord, SaltRegistry } from "../types.js";
 import { resolveComponentTarget } from "./componentLookup.js";
+import {
+  collectCreateQueryAnchors,
+  chooseDominantCreateQueryAnchor,
+} from "./createQueryAnchors.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
 import type { MigrateToSaltResult } from "./migrateToSalt.js";
+import { getStructuralPatternIntent } from "./patternIntent.js";
 import { resolvePatternTarget } from "./patternLookup.js";
 import type { ReviewSaltUiResult } from "./reviewSaltUi.js";
 import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
@@ -662,6 +667,13 @@ function containsLookupKey(queryKey: string, lookupKey: string): boolean {
   return false;
 }
 
+function startsWithLookupKey(queryKey: string, lookupKey: string): boolean {
+  return (
+    queryKey === lookupKey ||
+    queryKey.startsWith(`${lookupKey}-`)
+  );
+}
+
 function buildCreateNamedTargetFromComponent(
   component: ComponentRecord,
   matched_by: string[] = ["name"],
@@ -790,6 +802,43 @@ function inferDescriptiveCreateTarget(
   return scoredTargets[0].target;
 }
 
+function derivePrefixAnchoredCreateTargetReference(
+  registry: SaltRegistry,
+  query: string,
+  packageName?: string,
+): CreateTargetReference | null {
+  if (getStructuralPatternIntent(query).score >= 4) {
+    return null;
+  }
+
+  const anchors = collectCreateQueryAnchors(registry, query, packageName);
+  const queryKey = normalizeCreateLookupKey(query);
+  const prefixAnchoredAnchor =
+    anchors.find((anchor) =>
+      startsWithLookupKey(queryKey, normalizeCreateLookupKey(anchor.name)),
+    ) ?? null;
+  if (!prefixAnchoredAnchor) {
+    return null;
+  }
+
+  const requestedTarget = resolveCreateNamedTarget(
+    registry,
+    prefixAnchoredAnchor.name,
+    packageName,
+  );
+  if (!requestedTarget) {
+    return null;
+  }
+
+  return {
+    requested_entity: requestedTarget.name,
+    requested_target: requestedTarget,
+    reference_kind: prefixAnchoredAnchor.matched_by.includes("name")
+      ? "exact"
+      : "alias",
+  };
+}
+
 function sharesPrimaryCreateCategory(
   left: CreateNamedTarget,
   right: CreateNamedTarget,
@@ -882,6 +931,15 @@ function deriveCreateTargetReference(
         ? "exact"
         : "alias",
     };
+  }
+
+  const prefixAnchoredTarget = derivePrefixAnchoredCreateTargetReference(
+    options.registry,
+    query,
+    options.package,
+  );
+  if (prefixAnchoredTarget) {
+    return prefixAnchoredTarget;
   }
 
   const descriptiveTarget = inferDescriptiveCreateTarget(
