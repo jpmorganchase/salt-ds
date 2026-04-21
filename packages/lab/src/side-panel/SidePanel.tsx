@@ -36,12 +36,12 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
   /**
-   * Change background color palette.
+   * The background color palette. Options are 'primary', 'secondary' and 'tertiary'.
    * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Change the panel's appearance.
+   * The appearance of the panel, affecting background and border styles. Options are 'solid' and 'transparent'.
    * @default "solid"
    */
   appearance?: "solid" | "transparent";
