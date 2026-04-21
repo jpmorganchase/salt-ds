@@ -839,7 +839,7 @@ describe("publicContract", () => {
     ).toThrow(/Invalid PublicContract/);
   });
 
-  it("sets required_post_step to salt-ds review for CLI transport", () => {
+  it("sets required_post_step to the shared review workflow for CLI transport", () => {
     const contract = buildPublicContract(
       buildInput({
         transport_used: "cli",
@@ -848,7 +848,7 @@ describe("publicContract", () => {
 
     expect(contract.action.post_action).toEqual({
       kind: "review",
-      tool: "salt-ds review",
+      tool: "review_salt_ui",
     });
   });
 
@@ -1431,6 +1431,63 @@ describe("publicContract workflow adapters", () => {
         blocking_reasons: expect.arrayContaining([
           "Replace the current element with the canonical Salt primitive.",
         ]),
+      }),
+    );
+  });
+
+  it("prefers required follow-through over re-running the broadened owner for descriptive create queries", () => {
+    const registry = buildRegistryFixture();
+    const result = {
+      mode: "recommend",
+      solution_type: "component",
+      decision: {
+        name: "Table",
+        why: "Best Salt component match for the requested need.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const contract = buildCreateWorkflowContract({
+      implementation_gate: {
+        status: "follow_through_required",
+        reason: "More grounding is required.",
+        required_follow_through: [
+          { region: "breadcrumbs", entity: "Breadcrumbs" },
+        ],
+        blocking_questions: [],
+        next_step: "Run targeted Salt create follow-up.",
+      },
+      ide_summary: {
+        recommended_direction: "Use Table.",
+        bounded_scope: [],
+        open_question: null,
+        starter_plan: [],
+        verify: [],
+      },
+    });
+
+    const compact = buildCreatePublicContract(result, contract, {
+      transport_used: "mcp",
+      registry,
+      query: "file manager with breadcrumbs and table",
+    });
+
+    expect(toComparablePublicContract(compact)).toEqual(
+      expect.objectContaining({
+        workflow: "create",
+        workflow_status: "partial",
+        requested_entity: "file manager with breadcrumbs and table",
+        resolved_entity: "Table",
+        match_status: "broadened",
+        blocking_reasons: expect.arrayContaining([
+          "required follow-through remains: Breadcrumbs",
+        ]),
+        next_step: {
+          kind: "tool_call",
+          tool: "create_salt_ui",
+          mode: "exact_name",
+          args: {
+            query: "Breadcrumbs",
+          },
+        },
       }),
     );
   });

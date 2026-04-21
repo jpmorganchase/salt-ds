@@ -15,6 +15,10 @@ Use this folder by audience:
     - mutable Release 1 execution tracker with gates, evidence, and owners
   - [`release-1-release-evidence.md`](./release-1-release-evidence.md)
     - baseline-to-final contract note, payload budgets, and repo-local host/pilot evidence
+  - [`post-release-1-follow-up-backlog.md`](./post-release-1-follow-up-backlog.md)
+    - narrow post-sign-off backlog for external-host orchestration and first-pass create-routing fixes
+  - [`create-retrieval-architecture-proposal.md`](./create-retrieval-architecture-proposal.md)
+    - draft proposal for replacing prompt-specific create-routing patches with a retrieval-first architecture
   - [`baselines/2026-04-20-release-1/README.md`](./baselines/2026-04-20-release-1/README.md)
     - pre-implementation public-surface baseline snapshot for Release 1
   - [`baselines/2026-04-20-release-1-v3/README.md`](./baselines/2026-04-20-release-1-v3/README.md)

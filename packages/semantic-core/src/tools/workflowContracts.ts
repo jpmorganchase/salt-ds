@@ -6,6 +6,7 @@ import {
   isHighPriorityCreateQueryAnchor,
   toCreateQueryAnchorRegionId,
 } from "./createQueryAnchors.js";
+import { startsWithCreateReferencePhrase } from "./createReferenceQueries.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
 import type { GuidanceBoundary } from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
@@ -471,6 +472,9 @@ function getCreateFollowThroughTargets(
     result.composition_contract?.slots.filter(
       (slot) => slot.certainty !== "optional",
     ) ?? [];
+  const expectedComponentSet = new Set(
+    result.composition_contract?.expected_components ?? [],
+  );
   const queryTokens = new Set(
     normalizeQuery(query ?? result.decision.name ?? result.decision.why)
       .split(/\s+/)
@@ -498,15 +502,20 @@ function getCreateFollowThroughTargets(
   // Build a map from entity name → region (slot id) for region-level binding
   const entityToRegion = new Map<string, string>();
   for (const slot of slots) {
-    for (const name of [
-      ...slot.preferred_patterns,
-      ...slot.preferred_components,
-    ]) {
+    for (const name of slot.preferred_patterns) {
       if (name === primaryTarget) {
         continue;
       }
       frequency.set(name, (frequency.get(name) ?? 0) + 1);
-      // First slot wins — entity is bound to its primary region
+      if (!entityToRegion.has(name)) {
+        entityToRegion.set(name, slot.id);
+      }
+    }
+    for (const name of slot.preferred_components) {
+      if (name === primaryTarget || !expectedComponentSet.has(name)) {
+        continue;
+      }
+      frequency.set(name, (frequency.get(name) ?? 0) + 1);
       if (!entityToRegion.has(name)) {
         entityToRegion.set(name, slot.id);
       }
@@ -517,7 +526,9 @@ function getCreateFollowThroughTargets(
     [
       ...slots.flatMap((slot) => [
         ...slot.preferred_patterns,
-        ...slot.preferred_components,
+        ...slot.preferred_components.filter((name) =>
+          expectedComponentSet.has(name),
+        ),
       ]),
       ...(result.composition_contract?.expected_patterns ?? []),
       ...(result.composition_contract?.expected_components ?? []),
@@ -609,13 +620,12 @@ function getCreateFollowThroughTargets(
         Math.min(anchor.query_index, 24),
     }));
 
-  const normalizedQuery = normalizeQuery(query ?? "");
-  const normalizedPrimaryTarget = normalizeQuery(primaryTarget ?? "");
-  const queryStartsWithPrimaryTarget =
-    Boolean(normalizedQuery) &&
-    Boolean(normalizedPrimaryTarget) &&
-    (normalizedQuery === normalizedPrimaryTarget ||
-      normalizedQuery.startsWith(`${normalizedPrimaryTarget} `));
+  const queryStartsWithPrimaryTarget = primaryTarget
+    ? startsWithCreateReferencePhrase(
+        query ?? result.decision.name ?? result.decision.why,
+        primaryTarget,
+      )
+    : false;
 
   if (
     primaryTarget &&
@@ -1173,7 +1183,6 @@ function buildCreateIdeSummary(input: {
   const {
     result,
     implementationGate,
-    query,
     intent,
     starterValidation,
     projectConventionsCheck,

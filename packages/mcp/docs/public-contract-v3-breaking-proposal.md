@@ -139,9 +139,7 @@ Instead of mixing safety fields across the root, use:
   "safety": {
     "canonical_complete": false,
     "exact_request_safe": false,
-    "blocking_reasons": [
-      "required follow-through remains: Chart"
-    ]
+    "blocking_reasons": ["required follow-through remains: Chart"]
   }
 }
 ```

@@ -12,7 +12,7 @@
     "canonical_complete": false,
     "exact_request_safe": false,
     "blocking_reasons": [
-      "required follow-through remains: Border layout, App header, Header block, Metric"
+      "required follow-through remains: App header, Header block, Metric"
     ]
   },
   "action": {
@@ -20,7 +20,7 @@
     "tool": "create_salt_ui",
     "mode": "exact_name",
     "args": {
-      "query": "Analytical dashboard"
+      "query": "App header"
     },
     "rule_ids": [
       "create-follow-through-required"

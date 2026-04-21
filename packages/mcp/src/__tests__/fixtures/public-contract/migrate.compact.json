@@ -12,13 +12,14 @@
     "canonical_complete": false,
     "exact_request_safe": false,
     "blocking_reasons": [
-      "Does the repo already have an approved shell or navigation wrapper for this app-level region, or a page layout that should take precedence?",
+      "Should this resolve to one destination primitive, or to a broader navigation structure?",
+      "No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code.",
       "blocking questions remain"
     ]
   },
   "action": {
     "kind": "ask_user",
-    "question": "Does the repo already have an approved shell or navigation wrapper for this app-level region, or a page layout that should take precedence?",
+    "question": "Should this resolve to one destination primitive, or to a broader navigation structure?",
     "rule_ids": [
       "migrate-preserve-task-flow",
       "migrate-preserve-interaction-anchors",
