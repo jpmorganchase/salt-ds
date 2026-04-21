@@ -10,24 +10,29 @@ data:
 
 ## Default
 
-Use mega menu with navigation items as triggers.
+The mega menu displays grouped menu items in a multi-column layout. The menu container is typically triggered by a button and can be closed by clicking outside the menu, pressing the Escape key, or clicking the trigger component again. Each menu item acts as a link that navigates to a specific page. If the content exceeds the available space, the menu becomes scrollable.
 
 <LivePreview componentName="mega-menu" exampleName="Default" />
 
 ## With icons
 
-Display item-leading icons to improve quick visual scanning.
+Includes an icon alongside the text, enhancing visual recognition and making navigation more intuitive.
 
 <LivePreview componentName="mega-menu" exampleName="WithIcons" />
 
 ## With static adornment
 
-Add persistent metadata such as badges and tags alongside item labels.
+You can display static adornments such as tags, badges, or icons. This allows you to indicate statuses, show counts, or signal external navigation.
+
+### Best practices
+
+- Only one static component—such as a tag, badge, or icon—should be displayed per item.
+- When using badge components, it’s recommended not to mix default badges and dot badges within the same mega menu container.
 
 <LivePreview componentName="mega-menu" exampleName="WithStaticAdornment" />
 
 ## With custom region
 
-Compose groups with a custom region for featured content.
+A custom region can be positioned on the left, right, top, or bottom, allowing for flexible layouts like banners or images alongside mega menu items.
 
 <LivePreview componentName="mega-menu" exampleName="WithCustomRegion" />
