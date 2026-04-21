@@ -326,6 +326,55 @@ describe("deterministic agentic evals", () => {
     });
   });
 
+  it("keeps long paraphrased profile prompts anchored on Tabs without forcing pattern routing", () => {
+    const query =
+      "User profile page with tabs for switching between profile sections and a avatar display the user's image or initials";
+    const result = runCreateWorkflowFull({ query, contextChecked: true });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Tabs",
+      },
+    });
+    expect(result.request).toMatchObject({
+      resolved_entity: "Tabs",
+      match_status: "broadened",
+    });
+  });
+
+  it("keeps host-rewritten Metric component prompts anchored on exact Metric without unrelated follow-through", () => {
+    const query =
+      "Metric component to display a key value with a label, indicator and direction";
+    const result = runCreateWorkflowFull({ query, contextChecked: true });
+
+    expect(result.request).toMatchObject({
+      entity: "Metric",
+      resolved_entity: "Metric",
+      match_status: "exact",
+      exact_match_required: true,
+    });
+    expect(result.safety).toMatchObject({
+      canonical_complete: true,
+      exact_request_safe: true,
+      blocking_reasons: [],
+    });
+    expect(result.action).toMatchObject({
+      kind: "implement",
+      post_action: {
+        kind: "review",
+      },
+    });
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        status: "clear",
+        required_follow_through: [],
+        next_call: null,
+        rule_ids: [],
+      }),
+    );
+  });
+
   it("keeps secondary named surfaces on exact follow-through for breadcrumbs plus table prompts", () => {
     const query = "file manager with breadcrumbs and table";
     const result = runCreateWorkflowFull({ query });

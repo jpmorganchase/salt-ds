@@ -2,6 +2,7 @@ import type { SaltRegistry } from "../types.js";
 import type { SuggestedFollowUp } from "./consumerPresentation.js";
 import {
   collectCreateQueryAnchors,
+  chooseDominantCreateQueryAnchor,
   isHighPriorityCreateQueryAnchor,
   toCreateQueryAnchorRegionId,
 } from "./createQueryAnchors.js";
@@ -479,7 +480,14 @@ function getCreateFollowThroughTargets(
     /\b(dashboard|page|screen|workspace|overview)\b/i.test(
       result.decision.name ?? "",
     );
-  const queryAnchors = collectCreateQueryAnchors(registry, query ?? "")
+  const allHighPriorityQueryAnchors = collectCreateQueryAnchors(
+    registry,
+    query ?? "",
+  ).filter(isHighPriorityCreateQueryAnchor);
+  const dominantQueryAnchor = chooseDominantCreateQueryAnchor(
+    allHighPriorityQueryAnchors,
+  );
+  const queryAnchors = allHighPriorityQueryAnchors
     .filter((anchor) => anchor.name !== primaryTarget)
     .filter(isHighPriorityCreateQueryAnchor);
   const queryAnchorByName = new Map(
@@ -590,6 +598,41 @@ function getCreateFollowThroughTargets(
       anchor.structural_weight * 8 -
       Math.min(anchor.query_index, 24),
   }));
+  const exactNamedQueryTargets = queryAnchors
+    .filter((anchor) => anchor.matched_by.includes("name"))
+    .map((anchor) => ({
+      region: toCreateQueryAnchorRegionId(anchor),
+      entity: anchor.name,
+      score:
+        160 +
+        anchor.structural_weight * 8 -
+        Math.min(anchor.query_index, 24),
+    }));
+
+  const normalizedQuery = normalizeQuery(query ?? "");
+  const normalizedPrimaryTarget = normalizeQuery(primaryTarget ?? "");
+  const queryStartsWithPrimaryTarget =
+    Boolean(normalizedQuery) &&
+    Boolean(normalizedPrimaryTarget) &&
+    (normalizedQuery === normalizedPrimaryTarget ||
+      normalizedQuery.startsWith(`${normalizedPrimaryTarget} `));
+
+  if (
+    primaryTarget &&
+    dominantQueryAnchor?.name === primaryTarget &&
+    queryStartsWithPrimaryTarget &&
+    !pageLevelDecision
+  ) {
+    return exactNamedQueryTargets
+      .sort((left, right) => {
+        if (left.score !== right.score) {
+          return right.score - left.score;
+        }
+        return left.entity.localeCompare(right.entity);
+      })
+      .slice(0, 4)
+      .map((entry) => ({ region: entry.region, entity: entry.entity }));
+  }
 
   return [...exactQueryTargets, ...scoredTargets]
     .sort((left, right) => {
