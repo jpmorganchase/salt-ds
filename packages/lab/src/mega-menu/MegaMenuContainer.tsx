@@ -1,4 +1,11 @@
-import { flip, limitShift, shift, size } from "@floating-ui/react";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+  useInteractions,
+  useListNavigation,
+} from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingComponent,
@@ -15,6 +22,9 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 import megaMenuContainerCss from "./MegaMenuContainer.css";
 import { MegaMenuContext } from "./MegaMenuContext";
@@ -79,6 +89,40 @@ export const MegaMenuContainer = forwardRef<
 
   const isOpen = megaMenu.openState;
   const floatingProps = megaMenu.getFloatingProps;
+  const elementsRef = useRef<Array<HTMLElement | null>>([]);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const { getFloatingProps: getListNavigationFloatingProps } = useInteractions([
+    useListNavigation(floatingUIResult.context, {
+      listRef: elementsRef,
+      activeIndex,
+      onNavigate: setActiveIndex,
+      orientation: "vertical",
+      loop: false,
+      enabled: isOpen,
+      focusItemOnOpen: false,
+    }),
+  ]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      elementsRef.current = [];
+      setActiveIndex(null);
+      return;
+    }
+
+    const floating = megaMenu.floatingRootContext.elements
+      .floating as HTMLElement | null;
+    if (!floating) return;
+
+    const items = getFocusableElements(floating);
+    elementsRef.current = items;
+
+    const activeElement = floating.ownerDocument.activeElement as
+      | HTMLElement
+      | null;
+    setActiveIndex(activeElement ? items.indexOf(activeElement) : null);
+  }, [isOpen, megaMenu]);
 
   const focusReference = useCallback(() => {
     const reference = megaMenu.floatingRootContext.elements
@@ -135,10 +179,48 @@ export const MegaMenuContainer = forwardRef<
       const container = event.currentTarget;
 
       if (isArrowUp || isArrowDown || isArrowLeft || isArrowRight) {
-        const focusedItem = target.closest(
-          FOCUSABLE_SELECTOR,
-        ) as HTMLElement | null;
+        const focusedItem = target.closest(FOCUSABLE_SELECTOR) as
+          | HTMLElement
+          | null;
         if (!focusedItem) return;
+
+        const items = elementsRef.current.filter(
+          (item): item is HTMLElement => item != null,
+        );
+        const focusedItemIndex = items.indexOf(focusedItem);
+        if (focusedItemIndex === -1) return;
+
+        const isFirstItem = focusedItemIndex === 0;
+        const isLastItem = focusedItemIndex === items.length - 1;
+
+        if (isArrowUp) {
+          // Up on first item keeps prior behavior by moving focus to trigger.
+          if (isFirstItem) {
+            event.preventDefault();
+            focusReference();
+          }
+          return;
+        }
+
+        if (isArrowDown) {
+          // Vertical movement is handled by useListNavigation.
+          return;
+        }
+
+        // Left on first item: focus trigger and keep menu open.
+        if (isArrowLeft && isFirstItem) {
+          event.preventDefault();
+          focusReference();
+          return;
+        }
+
+        // Right on last item: focus trigger and collapse menu.
+        if (isArrowRight && isLastItem) {
+          event.preventDefault();
+          focusReference();
+          megaMenu.setOpen(false);
+          return;
+        }
 
         const regions = Array.from(
           container.querySelectorAll<HTMLElement>(REGION_SELECTOR),
@@ -158,57 +240,6 @@ export const MegaMenuContainer = forwardRef<
 
         const currentItems = regionItems[currentRegionIndex];
         const itemIndex = currentItems.indexOf(focusedItem);
-        const isFirstItem = flatIndex === 0;
-        const isLastItem = flatIndex === flatItems.length - 1;
-
-        // Left/Up on first item: focus trigger and keep menu open.
-        if ((isArrowLeft || isArrowUp) && isFirstItem) {
-          event.preventDefault();
-          focusReference();
-          return;
-        }
-
-        // Right on last item: focus trigger and collapse menu.
-        if (isArrowRight && isLastItem) {
-          event.preventDefault();
-          focusReference();
-          megaMenu.setOpen(false);
-          return;
-        }
-
-        if (isArrowUp) {
-          if (itemIndex > 0) {
-            // Move to previous item in same group
-            event.preventDefault();
-            currentItems[itemIndex - 1]?.focus();
-          } else if (currentRegionIndex > 0) {
-            // On first item of group: move to last item of previous group
-            event.preventDefault();
-            const previousRegion = regionItems[currentRegionIndex - 1];
-            if (previousRegion && previousRegion.length > 0) {
-              previousRegion[previousRegion.length - 1]?.focus();
-            }
-          }
-          // else: first item of first group, no effect
-          return;
-        }
-
-        if (isArrowDown) {
-          if (itemIndex < currentItems.length - 1) {
-            // Move to next item in same group
-            event.preventDefault();
-            currentItems[itemIndex + 1]?.focus();
-          } else if (currentRegionIndex < regionItems.length - 1) {
-            // On last item of group: move to first item of next group
-            event.preventDefault();
-            const nextRegion = regionItems[currentRegionIndex + 1];
-            if (nextRegion && nextRegion.length > 0) {
-              nextRegion[0]?.focus();
-            }
-          }
-          // else: last item of last group, no effect
-          return;
-        }
 
         if (isArrowLeft) {
           const previousRegion = regionItems[currentRegionIndex - 1];
@@ -283,16 +314,18 @@ export const MegaMenuContainer = forwardRef<
         className={clsx(withBaseName(), className)}
         ref={handleRef}
         role="region"
-        {...floatingProps({
-          ...rest,
-          onKeyDown: handleKeyDown,
-          style: {
-            ...rest.style,
-            position: floatingUIResult.strategy,
-            top: floatingUIResult.y ?? 0,
-            left: floatingUIResult.x ?? 0,
-          },
-        })}
+        {...getListNavigationFloatingProps(
+          floatingProps({
+            ...rest,
+            onKeyDown: handleKeyDown,
+            style: {
+              ...rest.style,
+              position: floatingUIResult.strategy,
+              top: floatingUIResult.y ?? 0,
+              left: floatingUIResult.x ?? 0,
+            },
+          }),
+        )}
       >
         {children}
       </nav>
