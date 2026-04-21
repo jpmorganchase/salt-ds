@@ -118,9 +118,8 @@ export const MegaMenuContainer = forwardRef<
     const items = getFocusableElements(floating);
     elementsRef.current = items;
 
-    const activeElement = floating.ownerDocument.activeElement as
-      | HTMLElement
-      | null;
+    const activeElement = floating.ownerDocument
+      .activeElement as HTMLElement | null;
     setActiveIndex(activeElement ? items.indexOf(activeElement) : null);
   }, [isOpen, megaMenu]);
 
@@ -179,9 +178,9 @@ export const MegaMenuContainer = forwardRef<
       const container = event.currentTarget;
 
       if (isArrowUp || isArrowDown || isArrowLeft || isArrowRight) {
-        const focusedItem = target.closest(FOCUSABLE_SELECTOR) as
-          | HTMLElement
-          | null;
+        const focusedItem = target.closest(
+          FOCUSABLE_SELECTOR,
+        ) as HTMLElement | null;
         if (!focusedItem) return;
 
         const items = elementsRef.current.filter(
