@@ -11,18 +11,19 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type FocusEvent,
   forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
   useCallback,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -42,6 +43,11 @@ const getReferenceFocusable = (
   reference: HTMLElement | null,
 ): HTMLElement | null =>
   reference?.querySelector<HTMLElement>("a, button, [tabindex]") ?? reference;
+
+const getRegionItems = (container: HTMLElement): HTMLElement[][] =>
+  Array.from(container.querySelectorAll<HTMLElement>(REGION_SELECTOR))
+    .map((region) => getFocusableElements(region))
+    .filter((items) => items.length > 0);
 
 export interface MegaMenuContainerProps extends HTMLAttributes<HTMLElement> {
   /**
@@ -104,7 +110,7 @@ export const MegaMenuContainer = forwardRef<
     }),
   ]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isOpen) {
       elementsRef.current = [];
       setActiveIndex(null);
@@ -115,12 +121,7 @@ export const MegaMenuContainer = forwardRef<
       .floating as HTMLElement | null;
     if (!floating) return;
 
-    const items = getFocusableElements(floating);
-    elementsRef.current = items;
-
-    const activeElement = floating.ownerDocument
-      .activeElement as HTMLElement | null;
-    setActiveIndex(activeElement ? items.indexOf(activeElement) : null);
+    elementsRef.current = getFocusableElements(floating);
   }, [isOpen, megaMenu]);
 
   const focusReference = useCallback(() => {
@@ -128,6 +129,13 @@ export const MegaMenuContainer = forwardRef<
       .reference as HTMLElement | null;
     getReferenceFocusable(reference)?.focus();
   }, [megaMenu]);
+
+  const handleFocus = useCallback((event: FocusEvent<HTMLElement>) => {
+    const index = elementsRef.current.indexOf(event.target as HTMLElement);
+    if (index !== -1) {
+      setActiveIndex(index);
+    }
+  }, []);
 
   const closeAndFocusNextAfterReference = useCallback(
     (container: HTMLElement) => {
@@ -167,132 +175,83 @@ export const MegaMenuContainer = forwardRef<
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLElement>) => {
-      const isArrowUp = event.key === "ArrowUp";
-      const isArrowDown = event.key === "ArrowDown";
-      const isArrowLeft = event.key === "ArrowLeft";
-      const isArrowRight = event.key === "ArrowRight";
-      const isForwardTab = event.key === "Tab" && !event.shiftKey;
-      const isBackwardTab = event.key === "Tab" && event.shiftKey;
-
       const target = event.target as HTMLElement;
       const container = event.currentTarget;
+      const focusedItem = target.closest(
+        FOCUSABLE_SELECTOR,
+      ) as HTMLElement | null;
 
-      if (isArrowUp || isArrowDown || isArrowLeft || isArrowRight) {
-        const focusedItem = target.closest(
-          FOCUSABLE_SELECTOR,
-        ) as HTMLElement | null;
-        if (!focusedItem) return;
+      const items = elementsRef.current.filter(
+        (item): item is HTMLElement => item != null,
+      );
+      const focusedItemIndex = focusedItem ? items.indexOf(focusedItem) : -1;
+      const isFirstItem = focusedItemIndex === 0;
+      const isLastItem = focusedItemIndex === items.length - 1;
 
-        const items = elementsRef.current.filter(
-          (item): item is HTMLElement => item != null,
-        );
-        const focusedItemIndex = items.indexOf(focusedItem);
-        if (focusedItemIndex === -1) return;
-
-        const isFirstItem = focusedItemIndex === 0;
-        const isLastItem = focusedItemIndex === items.length - 1;
-
-        if (isArrowUp) {
-          // Up on first item keeps prior behavior by moving focus to trigger.
+      switch (event.key) {
+        case "ArrowUp":
+          if (focusedItemIndex === -1) return;
+          // First item: move focus back to trigger
           if (isFirstItem) {
             event.preventDefault();
             focusReference();
           }
+          // Non-first items: useListNavigation handles it
           return;
-        }
 
-        if (isArrowDown) {
-          // Vertical movement is handled by useListNavigation.
-          return;
-        }
-
-        // Left on first item: focus trigger and keep menu open.
-        if (isArrowLeft && isFirstItem) {
+        case "ArrowDown":
+          // useListNavigation handles navigation; preventDefault avoids scroll at boundary
           event.preventDefault();
-          focusReference();
           return;
-        }
 
-        // Right on last item: focus trigger and collapse menu.
-        if (isArrowRight && isLastItem) {
+        case "ArrowLeft": {
+          if (focusedItemIndex === -1) return;
           event.preventDefault();
-          focusReference();
-          megaMenu.setOpen(false);
+          if (isFirstItem) {
+            focusReference();
+            return;
+          }
+          const regions = getRegionItems(container);
+          const regionIndex = regions.findIndex((r) =>
+            r.includes(focusedItem!),
+          );
+          regions[regionIndex - 1]?.[0]?.focus();
           return;
         }
 
-        const regions = Array.from(
-          container.querySelectorAll<HTMLElement>(REGION_SELECTOR),
-        );
-        const regionItems = regions
-          .map((region) => getFocusableElements(region))
-          .filter((items) => items.length > 0);
+        case "ArrowRight": {
+          if (focusedItemIndex === -1) return;
+          event.preventDefault();
+          if (isLastItem) {
+            focusReference();
+            megaMenu.setOpen(false);
+            return;
+          }
+          const regions = getRegionItems(container);
+          const regionIndex = regions.findIndex((r) =>
+            r.includes(focusedItem!),
+          );
+          regions[regionIndex + 1]?.[0]?.focus();
+          return;
+        }
 
-        const flatItems = regionItems.flat();
-        const flatIndex = flatItems.indexOf(focusedItem);
-        if (flatIndex === -1) return;
-
-        const currentRegionIndex = regionItems.findIndex((items) =>
-          items.includes(focusedItem),
-        );
-        if (currentRegionIndex === -1) return;
-
-        const currentItems = regionItems[currentRegionIndex];
-        const itemIndex = currentItems.indexOf(focusedItem);
-
-        if (isArrowLeft) {
-          const previousRegion = regionItems[currentRegionIndex - 1];
-          if (previousRegion && previousRegion.length > 0) {
-            event.preventDefault();
-            previousRegion[0]?.focus();
+        case "Tab": {
+          if (focusedItemIndex === -1) return;
+          event.preventDefault();
+          const dir = event.shiftKey ? -1 : 1;
+          if (dir === -1 && isFirstItem) {
+            focusReference();
+          } else if (dir === 1 && isLastItem) {
+            closeAndFocusNextAfterReference(container);
+          } else {
+            items[focusedItemIndex + dir]?.focus();
           }
           return;
         }
 
-        if (isArrowRight) {
-          const nextRegion = regionItems[currentRegionIndex + 1];
-          if (nextRegion && nextRegion.length > 0) {
-            event.preventDefault();
-            nextRegion[0]?.focus();
-          }
+        default:
           return;
-        }
       }
-
-      const dir = isBackwardTab ? -1 : isForwardTab ? 1 : 0;
-      if (!dir) return;
-
-      const allFocusable = getFocusableElements(container);
-      const focusTarget = target.closest(
-        FOCUSABLE_SELECTOR,
-      ) as HTMLElement | null;
-      const i = focusTarget ? allFocusable.indexOf(focusTarget) : -1;
-      if (i === -1) return;
-
-      // First item + backward: focus trigger
-      if (dir === -1 && i === 0) {
-        event.preventDefault();
-        focusReference();
-        return;
-      }
-
-      // Last item + forward: close and move to the next page interactive element.
-      // Arrow Down/Right keeps existing behavior (focus trigger + close).
-      if (dir === 1 && i === allFocusable.length - 1) {
-        event.preventDefault();
-        if (isForwardTab) {
-          closeAndFocusNextAfterReference(container);
-          return;
-        }
-
-        focusReference();
-        megaMenu.setOpen(false);
-        return;
-      }
-
-      // Move to next/prev focusable
-      event.preventDefault();
-      allFocusable[i + dir]?.focus();
     },
     [closeAndFocusNextAfterReference, focusReference, megaMenu],
   );
@@ -317,6 +276,7 @@ export const MegaMenuContainer = forwardRef<
           floatingProps({
             ...rest,
             onKeyDown: handleKeyDown,
+            onFocus: handleFocus,
             style: {
               ...rest.style,
               position: floatingUIResult.strategy,
