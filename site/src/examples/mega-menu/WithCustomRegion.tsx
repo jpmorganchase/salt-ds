@@ -12,7 +12,7 @@ import {
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
-import styles from "./MegaMenuExamples.module.css";
+import styles from "./index.module.css";
 
 const exampleImage = "/img/examples/image-skeleton.png";
 const exampleImage2 = "/img/examples/image-skeleton2.png";

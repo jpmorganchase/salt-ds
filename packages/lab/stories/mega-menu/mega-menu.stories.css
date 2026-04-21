@@ -3,6 +3,11 @@ nav > ul {
   padding: 0;
 }
 
+.saltMegaMenuSection > .saltMegaMenuGroup {
+  flex: 0 0 16rem;
+  inline-size: 16rem;
+}
+
 .trigger-position-grid {
   width: 100%;
   display: grid;

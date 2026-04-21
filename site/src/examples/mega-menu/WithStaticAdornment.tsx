@@ -9,7 +9,7 @@ import {
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
-import styles from "./MegaMenuExamples.module.css";
+import styles from "./index.module.css";
 
 export const WithStaticAdornment = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);

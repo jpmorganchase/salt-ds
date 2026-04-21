@@ -33,7 +33,7 @@ import {
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
-import styles from "./MegaMenuExamples.module.css";
+import styles from "./index.module.css";
 
 export const WithIcons = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
