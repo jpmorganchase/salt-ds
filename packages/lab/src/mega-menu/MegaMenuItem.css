@@ -14,23 +14,33 @@
   gap: var(--salt-spacing-100);
   position: relative;
   list-style: none;
+  border-radius: var(--salt-palette-corner-weak);
 }
 
 .saltMegaMenuItem:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
-  border-radius: var(--salt-palette-corner-weak);
 }
 
 .saltMegaMenuItem:hover {
   outline: none;
-  border-radius: var(--salt-palette-corner-weak);
   background: var(--salt-navigable-background-hover);
 }
 
 .saltMegaMenuItem:active,
-.saltMegaMenuItem-active {
-  border-radius: var(--salt-palette-corner-weak);
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
+.saltMegaMenuItem-active,
+.saltMegaMenuItem-active:hover {
   background: var(--salt-navigable-accent-background-active);
+}
+
+.saltMegaMenuItem:active::before,
+.saltMegaMenuItem-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: inherit;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-navigable-accent-borderColor-active);
+  pointer-events: none;
 }
