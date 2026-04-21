@@ -2,19 +2,18 @@ import {
   ENGLISH_FUNCTION_WORDS,
   REGISTRY_META_WORDS,
 } from "../search/englishFunctionWords.js";
-import type { ComponentRecord, PatternRecord, SaltRegistry } from "../types.js";
-import { resolveComponentTarget } from "./componentLookup.js";
 import {
-  collectCreateQueryAnchors,
-  chooseDominantCreateQueryAnchor,
-} from "./createQueryAnchors.js";
+  deriveCreateTargetReferenceFromQuery,
+  resolveCreateNamedTarget,
+  type CreateNamedTarget,
+  type CreateTargetReference,
+} from "./createRetrieval.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
 import type { MigrateToSaltResult } from "./migrateToSalt.js";
-import { getStructuralPatternIntent } from "./patternIntent.js";
-import { resolvePatternTarget } from "./patternLookup.js";
 import type { ReviewSaltUiResult } from "./reviewSaltUi.js";
 import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
-import { isComponentAllowedByDocsPolicy, tokenize } from "./utils.js";
+import type { SaltRegistry } from "../types.js";
+import { tokenize } from "./utils.js";
 import type {
   CreateSaltUiWorkflowContract,
   FollowThroughItem,
@@ -73,7 +72,7 @@ export type PublicImplementStep = {
 
 export type PublicReviewStep = {
   kind: "review";
-  tool: "review_salt_ui" | "salt-ds review";
+  tool: "review_salt_ui";
   args?: Record<string, unknown>;
 };
 
@@ -108,7 +107,7 @@ export interface PublicContractSafety {
 
 export interface PublicPostAction {
   kind: "review";
-  tool: "review_salt_ui" | "salt-ds review";
+  tool: "review_salt_ui";
   args?: Record<string, unknown>;
 }
 
@@ -477,10 +476,7 @@ export function buildPublicContract(
     input.next_step.kind === "implement" && input.workflow !== "review"
       ? {
           kind: "review",
-          tool:
-            input.transport_used === "cli"
-              ? "salt-ds review"
-              : "review_salt_ui",
+          tool: "review_salt_ui",
         }
       : null;
 
@@ -582,23 +578,6 @@ function toFixContextStep(
   };
 }
 
-type CreateNamedTarget = {
-  entity_type: "component" | "pattern";
-  name: string;
-  matched_by: string[];
-  categories: string[];
-  related_names: string[];
-  lookup_keys: string[];
-};
-
-type CreateTargetReferenceKind = "exact" | "alias" | "descriptive";
-
-type CreateTargetReference = {
-  requested_entity: string;
-  requested_target: CreateNamedTarget;
-  reference_kind: CreateTargetReferenceKind;
-};
-
 /**
  * Filter tokens to only those carrying meaningful information.
  *
@@ -621,222 +600,6 @@ function getMeaningfulTokens(value: string): string[] {
     }
     return true;
   });
-}
-
-function getPatternRouteSlug(route: string | null): string | null {
-  if (!route) {
-    return null;
-  }
-
-  const parts = route.split("/").filter((part) => part.length > 0);
-  return parts.at(-1) ?? null;
-}
-
-function normalizeCreateLookupKey(value: string): string {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
-
-function containsLookupKey(queryKey: string, lookupKey: string): boolean {
-  if (!queryKey || !lookupKey) {
-    return false;
-  }
-
-  if (queryKey === lookupKey) {
-    return true;
-  }
-
-  let currentIndex = queryKey.indexOf(lookupKey);
-  while (currentIndex !== -1) {
-    const beforeIndex = currentIndex - 1;
-    const afterIndex = currentIndex + lookupKey.length;
-    const startsAtBoundary = beforeIndex < 0 || queryKey[beforeIndex] === "-";
-    const endsAtBoundary =
-      afterIndex >= queryKey.length || queryKey[afterIndex] === "-";
-
-    if (startsAtBoundary && endsAtBoundary) {
-      return true;
-    }
-
-    currentIndex = queryKey.indexOf(lookupKey, currentIndex + 1);
-  }
-
-  return false;
-}
-
-function startsWithLookupKey(queryKey: string, lookupKey: string): boolean {
-  return (
-    queryKey === lookupKey ||
-    queryKey.startsWith(`${lookupKey}-`)
-  );
-}
-
-function buildCreateNamedTargetFromComponent(
-  component: ComponentRecord,
-  matched_by: string[] = ["name"],
-): CreateNamedTarget {
-  return {
-    entity_type: "component",
-    name: component.name,
-    matched_by,
-    categories: [...component.category],
-    related_names: [...component.patterns],
-    lookup_keys: uniqueNonEmptyStrings([component.name, ...component.aliases]),
-  };
-}
-
-function buildCreateNamedTargetFromPattern(
-  pattern: PatternRecord,
-  matched_by: string[] = ["name"],
-): CreateNamedTarget {
-  const routeSlug = getPatternRouteSlug(pattern.related_docs.overview);
-
-  return {
-    entity_type: "pattern",
-    name: pattern.name,
-    matched_by,
-    categories: [...(pattern.category ?? [])],
-    related_names: [...pattern.related_patterns],
-    lookup_keys: uniqueNonEmptyStrings([
-      pattern.name,
-      ...pattern.aliases,
-      routeSlug,
-    ]),
-  };
-}
-
-function listCreateNamedTargets(
-  registry: SaltRegistry,
-  packageName?: string,
-): CreateNamedTarget[] {
-  return [
-    ...registry.components
-      .filter((component) => isComponentAllowedByDocsPolicy(component))
-      .filter((component) =>
-        packageName ? component.package.name === packageName : true,
-      )
-      .map((component) => buildCreateNamedTargetFromComponent(component)),
-    ...registry.patterns.map((pattern) =>
-      buildCreateNamedTargetFromPattern(pattern),
-    ),
-  ];
-}
-
-function inferDescriptiveCreateTarget(
-  registry: SaltRegistry,
-  query: string,
-  packageName?: string,
-): CreateNamedTarget | null {
-  const queryKey = normalizeCreateLookupKey(query);
-  const queryTokens = getMeaningfulTokens(query);
-  const queryTokenPositions = new Map<string, number>();
-
-  queryTokens.forEach((token, index) => {
-    if (!queryTokenPositions.has(token)) {
-      queryTokenPositions.set(token, index);
-    }
-  });
-
-  const scoredTargets = listCreateNamedTargets(registry, packageName)
-    .map((target) => {
-      const canonicalKey = normalizeCreateLookupKey(target.name);
-      const aliasKeys = target.lookup_keys
-        .map((entry) => normalizeCreateLookupKey(entry))
-        .filter((entry) => entry !== canonicalKey);
-      const hasCanonicalPhraseMatch = containsLookupKey(queryKey, canonicalKey);
-      const aliasPhraseMatchKey =
-        aliasKeys.find((entry) => containsLookupKey(queryKey, entry)) ?? null;
-      const matchedTokens = getMeaningfulTokens(target.name).filter((token) =>
-        queryTokenPositions.has(token),
-      );
-
-      if (
-        !hasCanonicalPhraseMatch &&
-        aliasPhraseMatchKey === null &&
-        matchedTokens.length === 0
-      ) {
-        return null;
-      }
-
-      const firstMatchedPosition = matchedTokens.reduce(
-        (lowest, token) =>
-          Math.min(
-            lowest,
-            queryTokenPositions.get(token) ?? Number.MAX_SAFE_INTEGER,
-          ),
-        Number.MAX_SAFE_INTEGER,
-      );
-      const phraseScore = hasCanonicalPhraseMatch
-        ? 500 + canonicalKey.split("-").length * 20
-        : aliasPhraseMatchKey
-          ? 420 + aliasPhraseMatchKey.split("-").length * 15
-          : 0;
-      const tokenScore = matchedTokens.length * 40;
-      const positionScore =
-        firstMatchedPosition === Number.MAX_SAFE_INTEGER
-          ? 0
-          : Math.max(0, 20 - firstMatchedPosition);
-
-      return {
-        target,
-        score: phraseScore + tokenScore + positionScore,
-      };
-    })
-    .filter(
-      (entry): entry is { target: CreateNamedTarget; score: number } =>
-        entry !== null,
-    )
-    .sort((left, right) => right.score - left.score);
-
-  if (scoredTargets.length === 0) {
-    return null;
-  }
-
-  if (scoredTargets[1] && scoredTargets[0].score === scoredTargets[1].score) {
-    return null;
-  }
-
-  return scoredTargets[0].target;
-}
-
-function derivePrefixAnchoredCreateTargetReference(
-  registry: SaltRegistry,
-  query: string,
-  packageName?: string,
-): CreateTargetReference | null {
-  if (getStructuralPatternIntent(query).score >= 4) {
-    return null;
-  }
-
-  const anchors = collectCreateQueryAnchors(registry, query, packageName);
-  const queryKey = normalizeCreateLookupKey(query);
-  const prefixAnchoredAnchor =
-    anchors.find((anchor) =>
-      startsWithLookupKey(queryKey, normalizeCreateLookupKey(anchor.name)),
-    ) ?? null;
-  if (!prefixAnchoredAnchor) {
-    return null;
-  }
-
-  const requestedTarget = resolveCreateNamedTarget(
-    registry,
-    prefixAnchoredAnchor.name,
-    packageName,
-  );
-  if (!requestedTarget) {
-    return null;
-  }
-
-  return {
-    requested_entity: requestedTarget.name,
-    requested_target: requestedTarget,
-    reference_kind: prefixAnchoredAnchor.matched_by.includes("name")
-      ? "exact"
-      : "alias",
-  };
 }
 
 function sharesPrimaryCreateCategory(
@@ -918,86 +681,18 @@ function deriveCreateTargetReference(
     return undefined;
   }
 
-  const exactTarget = resolveCreateNamedTarget(
+  return deriveCreateTargetReferenceFromQuery(
     options.registry,
     query,
     options.package,
+    {
+      solution_type_hint:
+        result.solution_type === "component" || result.solution_type === "pattern"
+          ? result.solution_type
+          : undefined,
+      status: undefined,
+    },
   );
-  if (exactTarget) {
-    return {
-      requested_entity: query,
-      requested_target: exactTarget,
-      reference_kind: exactTarget.matched_by.includes("name")
-        ? "exact"
-        : "alias",
-    };
-  }
-
-  const prefixAnchoredTarget = derivePrefixAnchoredCreateTargetReference(
-    options.registry,
-    query,
-    options.package,
-  );
-  if (prefixAnchoredTarget) {
-    return prefixAnchoredTarget;
-  }
-
-  const descriptiveTarget = inferDescriptiveCreateTarget(
-    options.registry,
-    query,
-    options.package,
-  );
-  if (!descriptiveTarget) {
-    return undefined;
-  }
-
-  return {
-    requested_entity: query,
-    requested_target: descriptiveTarget,
-    reference_kind: "descriptive",
-  };
-}
-
-function resolveCreateNamedTarget(
-  registry: SaltRegistry,
-  query: string,
-  packageName?: string,
-): CreateNamedTarget | null {
-  const componentResolution = resolveComponentTarget(
-    registry,
-    query,
-    packageName,
-  );
-  const patternResolution = resolvePatternTarget(registry, query);
-
-  if (componentResolution.ambiguity || patternResolution.ambiguity) {
-    return null;
-  }
-
-  const candidates: CreateNamedTarget[] = [];
-
-  if (componentResolution.candidate) {
-    candidates.push(
-      buildCreateNamedTargetFromComponent(
-        componentResolution.candidate.component,
-        [...componentResolution.candidate.matched_by],
-      ),
-    );
-  }
-
-  if (patternResolution.candidate) {
-    candidates.push(
-      buildCreateNamedTargetFromPattern(patternResolution.candidate.pattern, [
-        ...patternResolution.candidate.matched_by,
-      ]),
-    );
-  }
-
-  if (candidates.length !== 1) {
-    return null;
-  }
-
-  return candidates[0];
 }
 
 function deriveCreateExactRequest(
@@ -1049,26 +744,11 @@ function buildCreateNextStep(
   }
 
   if (
-    reference?.requested_target.name &&
-    exactRequest?.match_status &&
-    !isMatchSafe(exactRequest.match_status)
-  ) {
-    return {
-      kind: "tool_call",
-      tool: "create_salt_ui",
-      mode: "exact_name",
-      args: {
-        query: reference.requested_target.name,
-      },
-    };
-  }
-
-  if (
     exactRequest?.requested_entity &&
+    exactRequest.exact_match_required &&
     (exactRequest.match_status === "misrouted" ||
       exactRequest.match_status === "no_match" ||
-      (exactRequest.exact_match_required &&
-        exactRequest.match_status === "broadened"))
+      exactRequest.match_status === "broadened")
   ) {
     return {
       kind: "tool_call",
@@ -1087,6 +767,21 @@ function buildCreateNextStep(
       mode: "exact_name",
       args: {
         query: contract.implementation_gate.required_follow_through[0].entity,
+      },
+    };
+  }
+
+  if (
+    reference?.requested_target.name &&
+    exactRequest?.match_status &&
+    !isMatchSafe(exactRequest.match_status)
+  ) {
+    return {
+      kind: "tool_call",
+      tool: "create_salt_ui",
+      mode: "exact_name",
+      args: {
+        query: reference.requested_target.name,
       },
     };
   }

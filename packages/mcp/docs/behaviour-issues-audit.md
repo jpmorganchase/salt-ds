@@ -30,6 +30,7 @@ This document catalogues concrete behaviour issues found in `packages/semantic-c
 **Issue:** For any single-token query that matches a field, both the phrase branch and the token loop fire, awarding `phrase_weight + token_weight`. The phrase check (`containsWholeWordPhrase`) and the token check (`fieldTokens.has(token)`) are independent — there is no `else` between them.
 
 **Example:**
+
 - Query `"table"`, field value `"data table component"`.
 - `containsWholeWordPhrase` → true → `+phrase_weight`
 - Token loop: `fieldTokens.has("table")` → true → `+token_weight`
@@ -48,14 +49,15 @@ This document catalogues concrete behaviour issues found in `packages/semantic-c
 **Issue:** `when_to_use` text is scored three times:
 
 1. **`getComponentQueryFields` → `when_to_use` field** (phrase_weight: 9, token_weight: 4)
-2. **`getComponentQueryFields` → `semantics_preferred_for` field** (phrase_weight: 10, token_weight: 4) — this is `component.semantics.preferred_for` which is the *same text* as `when_to_use` for all 72 current components
+2. **`getComponentQueryFields` → `semantics_preferred_for` field** (phrase_weight: 10, token_weight: 4) — this is `component.semantics.preferred_for` which is the _same text_ as `when_to_use` for all 72 current components
 3. **`scoreUsageSemantics`** called separately in `recommendComponent` (phrase_weight: 10, token_weight: 4) — again reads `semantics.preferred_for`
 
 Verified empirically: all 72 components have `semantics.preferred_for === when_to_use`.
 
-**Impact:** Same relative inflation for all components (no ranking distortion today). However, if a component is added where `semantics.preferred_for` differs from `when_to_use`, it would get a *lower* multiplier than components where they're identical — the opposite of the intended design.
+**Impact:** Same relative inflation for all components (no ranking distortion today). However, if a component is added where `semantics.preferred_for` differs from `when_to_use`, it would get a _lower_ multiplier than components where they're identical — the opposite of the intended design.
 
 **Suggested fix:** Either:
+
 - Remove `semantics_preferred_for` and `semantics_category` from `getComponentQueryFields` (since they're already scored via `scoreUsageSemantics`), or
 - Remove the `scoreUsageSemantics` call from `recommendComponent` and keep only the field-level scoring.
 
@@ -96,10 +98,11 @@ Both the token set matching (`Set.has()`) and the phrase matching (`containsWhol
 **Issue:** When all query tokens are stopwords (e.g. `"component for ui"`), the filtered `queryTokens` array is empty. The token loop does nothing. Only the phrase check can produce a score.
 
 This means:
+
 - `"component for ui"` → tokens after stopword filtering: `[]` → no token matches, only phrase match possible
 - `"component"` alone → also stopword-filtered to `[]`
 
-The phrase check (`containsWholeWordPhrase(normalizedValue, query)`) uses the *full normalised query* (not the filtered tokens), so it still works — but only if the *entire* query string appears as a phrase in a field value. For `"component for ui"` this is unlikely to match.
+The phrase check (`containsWholeWordPhrase(normalizedValue, query)`) uses the _full normalised query_ (not the filtered tokens), so it still works — but only if the _entire_ query string appears as a phrase in a field value. For `"component for ui"` this is unlikely to match.
 
 **Impact:** Low (most real queries contain at least one non-stopword), but edge-case queries like `"ui component"`, `"component for the ui"` produce surprisingly weak scores.
 
@@ -118,14 +121,14 @@ The phrase check (`containsWholeWordPhrase(normalizedValue, query)`) uses the *f
 if (unresolvedNames.length > 0) {
   return {
     option_type: "component",
-    compared: [],                     // <-- throws away resolved components
+    compared: [], // <-- throws away resolved components
     unresolved_names: unresolvedNames,
     next_step: getNoComparisonNextStep("component"),
   };
 }
 ```
 
-The successfully resolved `"Button"` data is computed (including its presentation and ship check) but then discarded. The caller gets `compared: []` with no information about what *did* resolve.
+The successfully resolved `"Button"` data is computed (including its presentation and ship check) but then discarded. The caller gets `compared: []` with no information about what _did_ resolve.
 
 **Impact:** Medium. A comparison with one typo discards all useful work. The host gets no partial results and no indication of which names were valid.
 
@@ -138,11 +141,12 @@ The successfully resolved `"Button"` data is computed (including its presentatio
 **File:** `utils.ts` — `normalizeQuery` (line 15)
 
 **Issue:** `normalizeQuery` only does `trim().toLowerCase()`. Punctuation like `?`, `!`, `"` and trailing periods remain. This means:
+
 - `"table?"` → `"table?"` (not `"table"`)
 - The exact match check `normalizeQuery(component.name) === query` will fail for `"table?"` vs `"table"`
 - `containsWholeWordPhrase("table", "table?")` will treat `?` as a literal regex-escaped character
 
-The `tokenize` function *does* strip non-alphanumeric characters (except hyphens), so token matching is unaffected. But the phrase/exact pathways use `normalizeQuery` output directly.
+The `tokenize` function _does_ strip non-alphanumeric characters (except hyphens), so token matching is unaffected. But the phrase/exact pathways use `normalizeQuery` output directly.
 
 **Impact:** Low-medium. Queries with trailing punctuation (common from natural-language prompts) won't get exact-match or phrase-match bonuses they should get.
 
@@ -155,6 +159,7 @@ The `tokenize` function *does* strip non-alphanumeric characters (except hyphens
 **File:** `navigationIntent.ts` — `hasSingleDestinationNavigationIntent` (lines 18–39)
 
 **Issue:** The final fallback check (line 38) is:
+
 ```typescript
 return DIRECT_NAVIGATION_HINT.test(query) && SINGLE_TARGET_HINT.test(query);
 ```
@@ -174,16 +179,26 @@ The `STRUCTURED_NAVIGATION_HINT` blocklist catches `"tabs"` and `"sidebar"` but 
 **File:** `createSaltUiHelpers.ts` — `resolveSolutionType` (lines 106–125)
 
 **Issue:** The tie-breaking logic is:
+
 ```typescript
-if (foundationScore > 0 && foundationScore >= tokenScore && foundationScore > patternScore) {
+if (
+  foundationScore > 0 &&
+  foundationScore >= tokenScore &&
+  foundationScore > patternScore
+) {
   return "foundation";
 }
-if (tokenScore > 0 && tokenScore >= foundationScore && tokenScore > patternScore) {
+if (
+  tokenScore > 0 &&
+  tokenScore >= foundationScore &&
+  tokenScore > patternScore
+) {
   return "token";
 }
 ```
 
 When `foundationScore === tokenScore` and both are > 0 and > patternScore, the `>=` in the first condition means **foundation always wins**. This is because:
+
 - First check: `foundationScore >= tokenScore` → true (they're equal)
 - Returns `"foundation"` without reaching the token check
 
@@ -233,20 +248,20 @@ The keyword lists overlap — `"density"` appears in both `FOUNDATION_KEYWORDS` 
 
 ## Summary Table
 
-| ID  | Severity | Category         | Ranking Impact |
-|-----|----------|------------------|----------------|
-| B1  | Medium   | Score inflation   | Relative: No (today). Absolute: Yes |
-| B2  | Medium   | Score inflation   | Relative: No (today). Fragile for future |
-| B3  | Low      | Score inflation   | No              |
-| B4  | Medium   | Missing matches   | Yes — plural/singular misses |
-| B5  | Low      | Silent degradation| Edge case only  |
-| B6  | Medium   | Data loss         | Yes — partial results discarded |
-| B7  | Low-Med  | Matching failure  | Yes — punctuated queries miss bonuses |
-| B8  | Medium   | False positive    | Yes — wrong routing for ambiguous queries |
-| B9  | Low      | Asymmetric logic  | Edge case only  |
-| B10 | Low      | Performance       | No              |
-| B11 | Low      | Score inflation   | No              |
-| B12 | Low      | Incomplete guard  | No (today)      |
+| ID  | Severity | Category           | Ranking Impact                            |
+| --- | -------- | ------------------ | ----------------------------------------- |
+| B1  | Medium   | Score inflation    | Relative: No (today). Absolute: Yes       |
+| B2  | Medium   | Score inflation    | Relative: No (today). Fragile for future  |
+| B3  | Low      | Score inflation    | No                                        |
+| B4  | Medium   | Missing matches    | Yes — plural/singular misses              |
+| B5  | Low      | Silent degradation | Edge case only                            |
+| B6  | Medium   | Data loss          | Yes — partial results discarded           |
+| B7  | Low-Med  | Matching failure   | Yes — punctuated queries miss bonuses     |
+| B8  | Medium   | False positive     | Yes — wrong routing for ambiguous queries |
+| B9  | Low      | Asymmetric logic   | Edge case only                            |
+| B10 | Low      | Performance        | No                                        |
+| B11 | Low      | Score inflation    | No                                        |
+| B12 | Low      | Incomplete guard   | No (today)                                |
 
 ## Recommended Fix Priority
 
@@ -257,4 +272,3 @@ The keyword lists overlap — `"density"` appears in both `FOUNDATION_KEYWORDS` 
 5. **B8** (navigation intent false positives) — prevents ranking distortion
 6. **B2** (triple-scoring cleanup) — future-proofs scoring
 7. **B9 → B12** — lower priority polish
-

@@ -196,7 +196,6 @@ describe("deterministic agentic evals", () => {
       expect.objectContaining({
         status: "follow_through_required",
         required_follow_through: expect.arrayContaining([
-          expect.objectContaining({ entity: "App header" }),
           expect.objectContaining({ entity: "Metric" }),
         ]),
         next_step: expect.stringContaining(
@@ -208,7 +207,13 @@ describe("deterministic agentic evals", () => {
       result.workflow.implementation_gate.required_follow_through.map(
         (item: { entity: string }) => item.entity,
       ),
-    ).not.toEqual(expect.arrayContaining(["Announcement dialog"]));
+    ).not.toEqual(
+      expect.arrayContaining([
+        "Announcement dialog",
+        "App header",
+        "Border layout",
+      ]),
+    );
     expect(result.workflow.context_requirement).toMatchObject({
       status: "context_required",
       suggested_follow_up_tool: "get_salt_project_context",
@@ -343,9 +348,37 @@ describe("deterministic agentic evals", () => {
     });
   });
 
+  it("keeps detailed profile page prompts with tabbed content anchored on Tabs instead of dashboard drift", () => {
+    const query =
+      "User profile page with tabs for different sections (Overview, Activity, Settings) and an avatar showing the user's initials. The profile header should display the avatar, user name, and role. Tabs switch between content panels below.";
+    const result = runCreateWorkflowFull({ query, contextChecked: true });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Tabs",
+      },
+    });
+    expect(result.request).toMatchObject({
+      resolved_entity: "Tabs",
+    });
+    expect(
+      result.workflow.implementation_gate.required_follow_through.map(
+        (item: { entity: string }) => item.entity,
+      ),
+    ).not.toEqual(
+      expect.arrayContaining([
+        "Analytical dashboard",
+        "Border layout",
+        "Panel",
+        "Switch",
+      ]),
+    );
+  });
+
   it("keeps host-rewritten Metric component prompts anchored on exact Metric without unrelated follow-through", () => {
     const query =
-      "Metric component to display a key value with a label, indicator and direction";
+      "Create a Metric component to display a key value with a label, indicator and direction";
     const result = runCreateWorkflowFull({ query, contextChecked: true });
 
     expect(result.request).toMatchObject({
@@ -372,6 +405,9 @@ describe("deterministic agentic evals", () => {
         next_call: null,
         rule_ids: [],
       }),
+    );
+    expect(result.result.composition_contract?.expected_components ?? []).toEqual(
+      [],
     );
   });
 
@@ -919,19 +955,14 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow).toMatchObject({
       id: "migrate_to_salt",
       readiness: {
-        status: "starter_needs_attention",
+        status: "guidance_only",
         implementation_ready: false,
       },
       context_requirement: {
         status: "context_required",
       },
     });
-    expect(result.artifacts.starter_validation).toEqual(
-      expect.objectContaining({
-        status: "needs_attention",
-        snippets_checked: expect.any(Number),
-      }),
-    );
+    expect(result.artifacts.starter_validation).toBeNull();
     expect(result.artifacts.post_migration_verification).toEqual(
       expect.objectContaining({
         suggested_workflow: "review_salt_ui",

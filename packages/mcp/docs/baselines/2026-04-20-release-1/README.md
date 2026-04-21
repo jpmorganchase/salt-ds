@@ -56,20 +56,24 @@ MCP metadata artifacts were generated from the built `@salt-ds/mcp` package expo
 ## Baseline Observations
 
 1. Compact create output for the exact named query `Metric` is the expected small branchable contract:
+
    - `workflow_status: "success"`
    - `safe_to_implement_exact_request: true`
    - `match_status: "exact"`
    - `next_step.kind: "implement"`
 
 2. Full create output is materially larger than compact output:
+
    - compact example file size: `416` bytes
    - full example file size: `92463` bytes
 
 3. The root `info` baseline reports a package-manager inspection fallback:
+
    - `spawn yarn ENOENT`
    - fallback to `node_modules` scan
 
 4. The default MCP metadata baseline exposes six workflow-first tools:
+
    - `get_salt_project_context`
    - `bootstrap_salt_repo`
    - `create_salt_ui`

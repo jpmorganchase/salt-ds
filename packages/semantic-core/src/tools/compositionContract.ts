@@ -1,4 +1,5 @@
 import type { SaltRegistry } from "../types.js";
+import { containsExplicitCreateReferencePhrase } from "./createReferenceQueries.js";
 import { normalizeQuery, unique } from "./utils.js";
 
 export type WorkflowCompositionCertainty =
@@ -67,16 +68,18 @@ function tokenMatches(left: string, right: string): boolean {
   return left === right || left.startsWith(right) || right.startsWith(left);
 }
 
-function includesAllTokens(
-  haystackTokens: string[],
-  needleTokens: string[],
+function overlapsAnyMeaningfulToken(
+  left: string[],
+  right: string[],
+  ignoredTokens: Set<string> = new Set(),
 ): boolean {
-  if (needleTokens.length === 0) {
-    return false;
-  }
-
-  return needleTokens.every((needle) =>
-    haystackTokens.some((haystack) => tokenMatches(haystack, needle)),
+  return left.some(
+    (leftToken) =>
+      !ignoredTokens.has(leftToken) &&
+      right.some(
+        (rightToken) =>
+          !ignoredTokens.has(rightToken) && tokenMatches(leftToken, rightToken),
+      ),
   );
 }
 
@@ -173,12 +176,12 @@ function getComponentSearchTokens(component: ComponentRecord): string[][] {
 
 function findQueryMatchedPatternNames(
   registry: SaltRegistry,
-  queryTokens: string[],
+  query: string,
 ): string[] {
   return registry.patterns
     .filter((pattern) =>
       getPatternSearchTokens(pattern).some((tokens) =>
-        includesAllTokens(queryTokens, tokens),
+        containsExplicitCreateReferencePhrase(query, tokens),
       ),
     )
     .map((pattern) => pattern.name);
@@ -186,12 +189,12 @@ function findQueryMatchedPatternNames(
 
 function findQueryMatchedComponentNames(
   registry: SaltRegistry,
-  queryTokens: string[],
+  query: string,
 ): string[] {
   return registry.components
     .filter((component) =>
       getComponentSearchTokens(component).some((tokens) =>
-        includesAllTokens(queryTokens, tokens),
+        containsExplicitCreateReferencePhrase(query, tokens),
       ),
     )
     .map((component) => component.name);
@@ -203,17 +206,6 @@ function findPatternByName(
 ): PatternRecord | null {
   return (
     registry.patterns.find(
-      (entry) => entry.name === name || entry.aliases.includes(name),
-    ) ?? null
-  );
-}
-
-function findComponentByName(
-  registry: SaltRegistry,
-  name: string,
-): ComponentRecord | null {
-  return (
-    registry.components.find(
       (entry) => entry.name === name || entry.aliases.includes(name),
     ) ?? null
   );
@@ -260,13 +252,22 @@ function inferPreferredComponentsForSlot(input: {
   slotTokens: string[];
   queryMatchedComponentNames: string[];
 }): string[] {
+  const patternNameTokens = new Set(tokenize(input.pattern.name));
   const composedOfMatches = input.pattern.composed_of
     .filter((entry) => {
       const roleTokens = tokenize(entry.role ?? "");
       const componentTokens = tokenize(entry.component);
       return (
-        overlapsAnyToken(input.slotTokens, roleTokens) ||
-        overlapsAnyToken(input.slotTokens, componentTokens)
+        overlapsAnyMeaningfulToken(
+          input.slotTokens,
+          roleTokens,
+          patternNameTokens,
+        ) ||
+        overlapsAnyMeaningfulToken(
+          input.slotTokens,
+          componentTokens,
+          patternNameTokens,
+        )
       );
     })
     .map((entry) => entry.component);
@@ -280,6 +281,27 @@ function inferPreferredComponentsForSlot(input: {
   });
 
   return unique([...composedOfMatches, ...queryMatches]);
+}
+
+function buildExpectedComponents(input: {
+  slots: WorkflowCompositionSlot[];
+  queryMatchedComponentNames: string[];
+}): string[] {
+  const explicitMatches = new Set(input.queryMatchedComponentNames);
+
+  return unique(
+    input.slots.flatMap((slot) => {
+      if (slot.certainty === "optional") {
+        return [];
+      }
+
+      return slot.preferred_components.filter(
+        (componentName) =>
+          explicitMatches.has(componentName) ||
+          slot.certainty === "confirmation_needed",
+      );
+    }),
+  );
 }
 
 function buildSlotNotes(input: {
@@ -329,6 +351,7 @@ function buildPatternContract(
   decisionName: string,
   query: string | undefined,
 ): CompositionGuidanceResult {
+  const normalizedQuery = query ?? "";
   const pattern = findPatternByName(registry, decisionName);
   if (!pattern) {
     return {
@@ -347,15 +370,15 @@ function buildPatternContract(
     };
   }
 
-  const queryTokens = tokenize(query);
   const queryMatchedPatternNames = findQueryMatchedPatternNames(
     registry,
-    queryTokens,
+    normalizedQuery,
   ).filter((name) => name !== decisionName);
   const queryMatchedComponentNames = findQueryMatchedComponentNames(
     registry,
-    queryTokens,
+    normalizedQuery,
   );
+  const queryTokens = tokenize(normalizedQuery);
   const scaffold = pattern.starter_scaffold;
   const requiredRegions = new Set(scaffold?.semantics.required_regions ?? []);
   const buildAround = scaffold?.semantics.build_around ?? [];
@@ -457,9 +480,10 @@ function buildPatternContract(
       expected_patterns: unique(
         slots.flatMap((slot) => slot.preferred_patterns),
       ),
-      expected_components: unique(
-        slots.flatMap((slot) => slot.preferred_components),
-      ),
+      expected_components: buildExpectedComponents({
+        slots,
+        queryMatchedComponentNames,
+      }),
       slots,
       avoid: unique([
         ...preserveConstraints,

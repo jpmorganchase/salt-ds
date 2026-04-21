@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
+  REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_ARRAY_ARTIFACTS,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
@@ -12,6 +13,7 @@ import {
 import { findSaltRepoRoot, getPackageRoot } from "../registry/paths.js";
 import { buildSerializedPageSearchIndex } from "../search/pageSearchIndex.js";
 import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
+import { buildCreateRetrievalIndex } from "../tools/createRetrieval.js";
 import { extractCountrySymbols, extractIcons } from "./buildRegistryAssets.js";
 import { buildRegistryBuildInfo } from "./buildRegistryBuildInfo.js";
 import { extractChanges } from "./buildRegistryChanges.js";
@@ -152,10 +154,12 @@ export async function buildRegistry(
   };
 
   const search_index = buildSearchIndex(baseRegistry);
+  const create_retrieval_index = buildCreateRetrievalIndex(baseRegistry);
   const page_search_index = buildSerializedPageSearchIndex(pages);
   const registry: SaltRegistry = {
     ...baseRegistry,
     search_index,
+    create_retrieval_index,
   };
 
   await fs.mkdir(outputDir, { recursive: true });
@@ -184,6 +188,11 @@ export async function buildRegistry(
     fs.writeFile(
       path.join(outputDir, REGISTRY_SEARCH_INDEX_ARTIFACT.file_name),
       serializeJsonLines(search_index),
+      "utf8",
+    ),
+    fs.writeFile(
+      path.join(outputDir, REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT.file_name),
+      serializeJsonLines(create_retrieval_index),
       "utf8",
     ),
   ]);
