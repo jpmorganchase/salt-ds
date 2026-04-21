@@ -43,7 +43,3 @@
   line-height: var(--salt-text-lineHeight);
   box-sizing: border-box;
 }
-
-.saltRating-label.saltRating-label-left {
-  text-align: right;
-}

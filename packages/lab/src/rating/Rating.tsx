@@ -13,7 +13,6 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
-  useRef,
   useState,
 } from "react";
 import ratingCss from "./Rating.css";
@@ -60,7 +59,6 @@ export interface RatingProps
   getVisibleLabel?: (value: number, max: number) => string;
   /**
    * Position of the label relative to the rating component.
-   * Can be "top", "right", "bottom", or "left".
    * @default "right"
    */
   labelPlacement?: "right" | "bottom";
@@ -118,7 +116,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     name: "Rating",
     state: "value",
   });
-  const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
 
   const handleMouseEnter = (event: MouseEvent<HTMLInputElement>) => {
@@ -151,7 +148,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       <div
         role="radiogroup"
         className={withBaseName("container")}
-        ref={radioGroupRef}
         aria-readonly={readOnly || undefined}
         aria-label={ariaLabel}
         aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
