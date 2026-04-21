@@ -40,7 +40,6 @@
   inset: 0;
   box-sizing: border-box;
   border-radius: inherit;
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
-    var(--salt-navigable-accent-borderColor-active);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
   pointer-events: none;
 }
