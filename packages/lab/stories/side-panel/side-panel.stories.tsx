@@ -909,7 +909,6 @@ function useResizableSidePanel({
  *  controls width so the SidePanel's own width and border are disabled). */
 const resizableSidePanelStyle = {
   "--saltSidePanel-width": "100%",
-  "--saltSidePanel-internal-border": "0",
 } as CSSProperties;
 
 // ---------------------------------------------------------------------------
@@ -1218,13 +1217,13 @@ const CardsContent = () => {
           aria-labelledby={headingId}
           style={
             {
-              "--saltSidePanel-internal-border": "0",
               position: "sticky",
               top: 0,
               alignSelf: "flex-start",
               maxHeight: "100%",
             } as CSSProperties
           }
+          appearance="transparent"
           variant="primary"
         >
           <HelpPanelCard
@@ -1327,13 +1326,18 @@ const ResizableCardsContent = () => {
             defaultSize={25}
             minSize={expanded && !animating ? 15 : 0}
             maxSize={expanded || animating ? 50 : 0}
-            style={{ overflow: "hidden", transition: panelTransition }}
+            style={{
+              overflow: "hidden",
+              transition: panelTransition,
+              padding: "var(--salt-spacing-100)",
+            }}
           >
             <SidePanel
               animated={false}
               aria-labelledby={headingId}
               style={resizableSidePanelStyle}
               variant="primary"
+              appearance="transparent"
             >
               <HelpPanelCard
                 headingId={headingId}

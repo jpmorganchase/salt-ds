@@ -40,6 +40,11 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
+  /**
+   * Change the panel's appearance.
+   * @default "solid"
+   */
+  appearance?: "solid" | "transparent";
 }
 
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
@@ -47,6 +52,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const {
       animated = true,
       position = "right",
+      appearance = "solid",
       initialFocus = 0,
       variant = "primary",
       children,
@@ -129,11 +135,11 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const panelDiv = (
       <div
-        aria-expanded={openState ? "true" : "false"}
         ref={handleRef}
         className={clsx(
           withBaseName(),
           {
+            [withBaseName(appearance)]: appearance,
             [withBaseName(position)]: position,
             [withBaseName(variant)]: variant,
             [withBaseName("enterAnimation")]:

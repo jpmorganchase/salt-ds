@@ -26,6 +26,11 @@
   border-left: var(--saltSidePanel-internal-border);
 }
 
+.saltSidePanel-transparent {
+  --saltSidePanel-background: none;
+  border: none;
+}
+
 .saltSidePanel-left,
 .saltSidePanel-right {
   width: var(--saltSidePanel-width);
