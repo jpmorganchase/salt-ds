@@ -453,6 +453,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       onVisibleMonthChange: handleVisibleMonthChange,
       timezone,
       ...CalendarProps,
+      createAnnouncement: null,
     };
 
     return (

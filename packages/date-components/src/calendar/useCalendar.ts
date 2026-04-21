@@ -891,6 +891,10 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
   );
 
   useEffect(() => {
+    if (createAnnouncement === null) {
+      return;
+    }
+
     const dateSelectionAnnouncementState =
       selectionVariant === "single"
         ? {
@@ -907,7 +911,13 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
     announce("dateSelected", {
       ...dateSelectionAnnouncementState,
     });
-  }, [announce, selectionVariant, selectedDate, multiselect]);
+  }, [
+    announce,
+    createAnnouncement,
+    multiselect,
+    selectedDate,
+    selectionVariant,
+  ]);
 
   const setFocusedDate = useCallback(
     (event: SyntheticEvent | null, date: DateFrameworkType | null) => {

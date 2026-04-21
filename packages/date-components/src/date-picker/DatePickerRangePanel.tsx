@@ -23,6 +23,7 @@ import {
   forwardRef,
   type SyntheticEvent,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -363,16 +364,19 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
     [dateAdapter, startVisibleMonth, onEndVisibleMonthChange],
   );
 
-  const calendarSelectedDate = {
-    startDate:
-      selectedDate && dateAdapter.isValid(selectedDate.startDate)
-        ? selectedDate.startDate
-        : null,
-    endDate:
-      selectedDate && dateAdapter.isValid(selectedDate.endDate)
-        ? selectedDate.endDate
-        : null,
-  };
+  const calendarSelectedDate = useMemo(
+    () => ({
+      startDate:
+        selectedDate && dateAdapter.isValid(selectedDate.startDate)
+          ? selectedDate.startDate
+          : null,
+      endDate:
+        selectedDate && dateAdapter.isValid(selectedDate.endDate)
+          ? selectedDate.endDate
+          : null,
+    }),
+    [dateAdapter, selectedDate],
+  );
 
   const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
     null,
@@ -636,6 +640,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
     maxDate,
     timezone,
     ...StartCalendarPropsProp,
+    createAnnouncement: null,
   } as Partial<UseCalendarSelectionRangeProps>;
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
@@ -661,6 +666,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
     maxDate,
     timezone,
     ...EndCalendarPropsProp,
+    createAnnouncement: null,
   } as Partial<UseCalendarSelectionRangeProps>;
 
   const startMonthLabel = dateAdapter.format(startVisibleMonth, "MMMM YYYY");

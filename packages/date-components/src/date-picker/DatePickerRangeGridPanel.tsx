@@ -392,6 +392,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       maxDate,
       timezone,
       ...CalendarProps,
+      createAnnouncement: null,
     };
 
     return (
