@@ -11,61 +11,43 @@ import {
   RadioButtonIcon,
   StackLayout,
   Text,
-  ToggleButton,
-  ToggleButtonGroup,
 } from "@salt-ds/core";
-import { useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
-import HighDensityDark from "./img/high-dark.png";
 import HighDensityLight from "./img/high-light.png";
-import MediumDensityDark from "./img/medium-dark.png";
 import MediumDensityLight from "./img/medium-light.png";
 
 export const DisplayModeContent = ({
   formData,
   handleSelectChange,
 }: FormContentProps) => {
-  const highDensityBannerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (formData.displayDensity !== "high") {
-      return;
-    }
-
-    highDensityBannerRef.current?.scrollIntoView();
-  }, [formData.displayDensity]);
-
   const displayDensityOptions = [
     {
       value: "medium",
       label: "Medium density",
-      lightImage: MediumDensityLight,
-      darkImage: MediumDensityDark,
+      description: "Balanced spacing (Recommended)",
+      image: MediumDensityLight,
       alt: "Medium Density Light",
     },
     {
       value: "high",
       label: "High density",
-      lightImage: HighDensityLight,
-      darkImage: HighDensityDark,
+      description: "More content on screen",
+      image: HighDensityLight,
       alt: "High Density Light",
     },
   ] as const;
 
   return (
     <StackLayout aria-live="polite">
-      <FormField>
-        <FormFieldLabel>Display mode</FormFieldLabel>
-        <ToggleButtonGroup
-          value={formData.displayMode}
-          onChange={(event) => {
-            handleSelectChange?.(event.currentTarget.value, "displayMode");
-          }}
-        >
-          <ToggleButton value="light">Light</ToggleButton>
-          <ToggleButton value="dark">Dark</ToggleButton>
-        </ToggleButtonGroup>
-      </FormField>
+      {formData.displayDensity === "high" && (
+        <Banner status="warning">
+          <BannerContent>
+            High density may reduce readability and make some controls harder to
+            use.{" "}
+            <Link href="#">Read WCAG guidelines for more information.</Link>
+          </BannerContent>
+        </Banner>
+      )}
 
       <FlexItem>
         <FormField>
@@ -81,11 +63,7 @@ export const DisplayModeContent = ({
                   <InteractableCard value={option.value}>
                     <StackLayout gap={1}>
                       <img
-                        src={
-                          formData.displayMode === "light"
-                            ? option.lightImage
-                            : option.darkImage
-                        }
+                        src={option.image}
                         alt=""
                         style={{
                           height: 200,
@@ -99,7 +77,10 @@ export const DisplayModeContent = ({
                           aria-hidden
                           checked={formData.displayDensity === option.value}
                         />
-                        <Text>{option.label}</Text>
+                        <StackLayout gap={0}>
+                          <Text>{option.label}</Text>
+                          <Text color="secondary">{option.description}</Text>
+                        </StackLayout>
                       </StackLayout>
                     </StackLayout>
                   </InteractableCard>
@@ -109,18 +90,6 @@ export const DisplayModeContent = ({
           </InteractableCardGroup>
         </FormField>
       </FlexItem>
-
-      {formData.displayDensity === "high" && (
-        <div ref={highDensityBannerRef}>
-          <Banner status="warning">
-            <BannerContent>
-              High density may reduce readability and make some controls harder
-              to use.{" "}
-              <Link href="#">Read WCAG guidelines for more information.</Link>
-            </BannerContent>
-          </Banner>
-        </div>
-      )}
     </StackLayout>
   );
 };

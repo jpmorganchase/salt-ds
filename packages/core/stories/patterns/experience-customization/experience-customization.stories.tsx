@@ -104,7 +104,6 @@ const initialFormData = {
   // Notification settings
   position: "top-right",
   // Display preferences
-  displayMode: "light",
   displayDensity: "medium",
   // Data format preferences
   currency: "usd",
@@ -137,7 +136,11 @@ const stepValidationSchemas: Record<
   }),
 };
 
-export const MultiStep = () => {
+interface MultiStepTemplateArgs {
+  initialStep: number;
+}
+
+const MultiStepTemplate = (args: MultiStepTemplateArgs) => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -161,7 +164,7 @@ export const MultiStep = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 0,
+      activeStepIndex: args.initialStep,
       formData: initialFormData,
       validationsByStep: {},
     },
@@ -311,7 +314,149 @@ export const MultiStep = () => {
   );
 };
 
-export const Modal = () => {
+export const LocalizationAndStandards = {
+  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
+  args: {
+    initialStep: 0,
+  },
+};
+
+export const VisualExperienceSetting = {
+  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
+  args: {
+    initialStep: 1,
+  },
+};
+
+export const InformedChoices = {
+  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
+  args: {
+    initialStep: 2,
+  },
+};
+
+export const DataFormat = {
+  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
+  args: {
+    initialStep: 3,
+  },
+};
+
+export const MandatoryConfigurations = () => {
+  const [selected, setSelected] = useState<InteractableCardValue>();
+  const [hasError, setHasError] = useState(false);
+
+  const handleSubmit = () => {
+    if (!selected) {
+      setHasError(true);
+    }
+  };
+
+  const governanceOptions = [
+    {
+      value: "standard",
+      title: "Standard",
+      description: "Business-recommended. Standard access logging.",
+      Icon: BuildingIcon,
+    },
+    {
+      value: "restricted",
+      title: "Credit Card",
+      description: "High compliance, Full data logging and MFA required.",
+      Icon: LockedIcon,
+    },
+    {
+      value: "external",
+      title: "External",
+      description: "Allow controlled access for partners.",
+      Icon: GlobeIcon,
+    },
+  ];
+
+  return (
+    <StackLayout gap={0} style={{ maxWidth: 730 }}>
+      <StackLayout padding={3}>
+        <Text>
+          Customize your experience
+          <Text as="h2" style={{ margin: 0 }}>
+            Set governance & privacy standards
+          </Text>
+          A selection is required to proceed
+        </Text>
+      </StackLayout>
+
+      <FlexItem grow={1}>
+        <ContentOverflow style={{ minHeight: 300 }}>
+          <StackLayout>
+            {hasError && (
+              <Banner status="error">
+                <BannerContent>
+                  A selection is required to proceed
+                </BannerContent>
+              </Banner>
+            )}
+            <StackLayout>
+              <InteractableCardGroup
+                onChange={(_event, value) => {
+                  setHasError(false);
+                  setSelected(value);
+                }}
+              >
+                {governanceOptions.map(
+                  ({ value, title, description, Icon }) => (
+                    <InteractableCard
+                      key={value}
+                      value={value}
+                      style={{ width: "180px" }}
+                    >
+                      <StackLayout gap={1}>
+                        <StackLayout gap={1} direction="row" align="center">
+                          <Icon aria-hidden size={1} />
+                          <Text style={{ margin: 0 }}>{title}</Text>
+                        </StackLayout>
+                        <StackLayout direction="row" gap={1}>
+                          <RadioButtonIcon
+                            aria-hidden
+                            checked={selected === value}
+                          />
+                          <Text>{description}</Text>
+                        </StackLayout>
+                      </StackLayout>
+                    </InteractableCard>
+                  ),
+                )}
+              </InteractableCardGroup>
+            </StackLayout>
+          </StackLayout>
+        </ContentOverflow>
+      </FlexItem>
+
+      <FlexLayout gap={1} justify="end" padding={3}>
+        <Button
+          sentiment="accented"
+          appearance="bordered"
+          onClick={() => {
+            setSelected(undefined);
+            setHasError(false);
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          sentiment="accented"
+          style={{
+            cursor: !selected ? "var(--salt-cursor-disabled)" : "pointer",
+          }}
+          onClick={handleSubmit}
+        >
+          Finish
+        </Button>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const Onboarding = () => {
   type WizardState = "form" | "cancel-warning";
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
@@ -542,116 +687,5 @@ export const Modal = () => {
         )}
       </Dialog>
     </>
-  );
-};
-
-export const MandatoryAction = () => {
-  const [selected, setSelected] = useState<InteractableCardValue>();
-  const [hasError, setHasError] = useState(false);
-
-  const handleSubmit = () => {
-    if (!selected) {
-      setHasError(true);
-    }
-  };
-
-  const governanceOptions = [
-    {
-      value: "standard",
-      title: "Standard",
-      description: "Business-recommended. Standard access logging.",
-      Icon: BuildingIcon,
-    },
-    {
-      value: "restricted",
-      title: "Credit Card",
-      description: "High compliance, Full data logging and MFA required.",
-      Icon: LockedIcon,
-    },
-    {
-      value: "external",
-      title: "External",
-      description: "Allow controlled access for partners.",
-      Icon: GlobeIcon,
-    },
-  ];
-
-  return (
-    <StackLayout style={{ maxWidth: 730 }}>
-      <StackLayout padding={3}>
-        <Text>
-          Customize your experience
-          <Text as="h2" style={{ margin: 0 }}>
-            Set governance & privacy standards
-          </Text>
-          A selection is required to proceed
-        </Text>
-      </StackLayout>
-
-      <FlexItem grow={1}>
-        <ContentOverflow style={{ minHeight: 300 }}>
-          <StackLayout>
-            <InteractableCardGroup
-              onChange={(_event, value) => {
-                setHasError(false);
-                setSelected(value);
-              }}
-            >
-              {governanceOptions.map(({ value, title, description, Icon }) => (
-                <InteractableCard
-                  key={value}
-                  value={value}
-                  style={{ width: "180px" }}
-                >
-                  <StackLayout gap={1}>
-                    <StackLayout gap={1} direction="row" align="center">
-                      <Icon aria-hidden size={1} />
-                      <Text style={{ margin: 0 }}>{title}</Text>
-                    </StackLayout>
-                    <StackLayout direction="row" gap={1}>
-                      <RadioButtonIcon
-                        aria-hidden
-                        checked={selected === value}
-                      />
-                      <Text>{description}</Text>
-                    </StackLayout>
-                  </StackLayout>
-                </InteractableCard>
-              ))}
-            </InteractableCardGroup>
-
-            {hasError && (
-              <Banner status="error">
-                <BannerContent>
-                  A selection is required to proceed
-                </BannerContent>
-              </Banner>
-            )}
-          </StackLayout>
-        </ContentOverflow>
-      </FlexItem>
-
-      <FlexLayout gap={1} justify="end" padding={3}>
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={() => {
-            setSelected(undefined);
-            setHasError(false);
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          sentiment="accented"
-          style={{
-            cursor: !selected ? "var(--salt-cursor-disabled)" : "pointer",
-          }}
-          onClick={handleSubmit}
-        >
-          Finish
-        </Button>
-      </FlexLayout>
-    </StackLayout>
   );
 };
