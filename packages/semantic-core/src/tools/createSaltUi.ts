@@ -146,13 +146,53 @@ function queryMatchesExactPatternLookup(
   });
 }
 
-function shouldPreferComponentRecommendationOverForcedPattern(
+function startsWithLookupKey(queryKey: string, lookupKey: string): boolean {
+  return queryKey === lookupKey || queryKey.startsWith(`${lookupKey} `);
+}
+
+function getPrefixAnchoredTarget(
   registry: SaltRegistry,
   input: CreateSaltUiInput,
   query: string | undefined,
+):
+  | {
+      solution_type: Exclude<SaltSolutionType, "auto">;
+      name: string;
+    }
+  | null {
+  if (!query) {
+    return null;
+  }
+
+  if (getStructuralPatternIntent(query).score >= 4) {
+    return null;
+  }
+
+  const anchors = collectCreateQueryAnchors(registry, query, input.package);
+  const queryKey = normalizeLookupKey(query);
+  const prefixAnchoredAnchor =
+    anchors.find((anchor) =>
+      startsWithLookupKey(queryKey, normalizeLookupKey(anchor.name)),
+    ) ?? null;
+  if (!prefixAnchoredAnchor) {
+    return null;
+  }
+
+  return {
+    solution_type:
+      prefixAnchoredAnchor.entity_type === "pattern" ? "pattern" : "component",
+    name: prefixAnchoredAnchor.name,
+  };
+}
+
+function shouldPreferComponentRecommendationOverPatternRouting(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  solutionType: Exclude<SaltSolutionType, "auto">,
+  query: string | undefined,
   topK: number,
 ): boolean {
-  if (input.solution_type !== "pattern" || !query) {
+  if (solutionType !== "pattern" || !query) {
     return false;
   }
 
@@ -219,6 +259,13 @@ export function createSaltUi(
     .filter(Boolean)
     .slice(0, 10);
   let solutionType = resolveSolutionType(input);
+  let routedQuery = query;
+  let prefixAnchoredTarget:
+    | {
+        solution_type: Exclude<SaltSolutionType, "auto">;
+        name: string;
+      }
+    | null = null;
 
   // When the keyword-based solution type is not "component" or "pattern",
   // check whether the query is an exact component or pattern name.  This
@@ -239,11 +286,20 @@ export function createSaltUi(
       solutionType = "component";
     }
   }
+  if (query && !comparisonRequested) {
+    prefixAnchoredTarget = getPrefixAnchoredTarget(registry, input, query);
+    if (prefixAnchoredTarget) {
+      solutionType = prefixAnchoredTarget.solution_type;
+      routedQuery = prefixAnchoredTarget.name;
+    }
+  }
   if (
+    !prefixAnchoredTarget &&
     solutionType === "pattern" &&
-    shouldPreferComponentRecommendationOverForcedPattern(
+    shouldPreferComponentRecommendationOverPatternRouting(
       registry,
       input,
+      solutionType,
       query,
       topK,
     )
@@ -462,13 +518,13 @@ export function createSaltUi(
   if (solutionType === "foundation") {
     const exact = query
       ? getFoundation(registry, {
-          name: query,
+          name: routedQuery ?? query,
           include_starter_code: includeStarterCode,
           view,
         })
       : ({ foundation: null } as ReturnType<typeof getFoundation>);
     const list = listFoundations(registry, {
-      query,
+      query: routedQuery ?? query,
       max_results: topK,
     });
     const [recommended, ...alternatives] = exact.foundation
@@ -541,7 +597,7 @@ export function createSaltUi(
 
   if (solutionType === "token") {
     const tokenResult = recommendTokens(registry, {
-      query: query ?? "",
+      query: routedQuery ?? query ?? "",
       top_k: topK,
       view,
     });
@@ -593,7 +649,7 @@ export function createSaltUi(
 
   if (solutionType === "pattern") {
     const recipeResult = getCompositionRecipe(registry, {
-      query: query ?? "",
+      query: routedQuery ?? query ?? "",
       top_k: Math.min(topK, 10),
       production_ready: input.production_ready,
       prefer_stable: input.prefer_stable,
@@ -656,7 +712,7 @@ export function createSaltUi(
   }
 
   const recommendation = recommendComponent(registry, {
-    task: query ?? "",
+    task: routedQuery ?? query ?? "",
     package: input.package,
     status: input.status,
     top_k: topK,
