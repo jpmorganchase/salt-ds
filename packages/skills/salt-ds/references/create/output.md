@@ -9,7 +9,8 @@
 
 - State what to scaffold first from the translated plan.
 - Name the grouped region or pattern the implementation should build around.
-- If compact create output is not yet implementation-safe, list the `blocking_reasons` and the returned `next_step` before implementation.
+- If compact create output is not yet implementation-safe, list the top-level `safety.blocking_reasons` and the returned `action` before implementation.
+- If `status` stays `partial` or `blocked`, state clearly that the workflow is not complete even if starter code or one file was created.
 - State what must be validated immediately after the first scaffold pass.
 - If runtime validation is still needed and a runnable URL exists, note whether `salt-ds doctor` or `salt-ds review <file-or-dir> --url <url>` should be used as local evidence after the first scaffold pass.
 
@@ -36,10 +37,10 @@
   - safe-to-implement check
   - validation
 - State the compact workflow fields you relied on first:
-  - `workflow_status`
-  - `safe_to_implement_exact_request`
-  - `blocking_reasons`
-  - `next_step`
+  - `status`
+  - `safety.exact_request_safe`
+  - `safety.blocking_reasons`
+  - `action`
   - `summary`
 - List the Salt primitives, patterns, or foundations that were checked before settling on the solution.
 - State whether the implementation uses a standard Salt option; if not, justify the custom composition briefly.
@@ -67,7 +68,7 @@
 Example blocked phrasing:
 
 - `The create step resolved the dashboard shell and metric summary region, but the chart surface misrouted twice. The chart region is marked pending instead of improvised.`
-- `Compact create output returned safe_to_implement_exact_request: false with a blocking_reason of unresolved navigation pattern. The next_step is to resolve the navigation region before scaffolding the full page.`
+- `Compact create output returned safety.exact_request_safe: false with a blocking reason of unresolved navigation pattern. The action is to resolve the navigation region before scaffolding the full page.`
 - `I can return a bounded partial scaffold for the header and form regions, but the table region is still pending canonical Salt follow-through.`
 
 ## starter code

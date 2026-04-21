@@ -19,6 +19,11 @@ import {
   toFoundationDifference,
   uniqueNormalized,
 } from "./createSaltUiHelpers.js";
+import {
+  collectCreateQueryAnchors,
+  chooseDominantCreateQueryAnchor,
+  isHighPriorityCreateQueryAnchor,
+} from "./createQueryAnchors.js";
 import { getCompositionRecipe } from "./getCompositionRecipe.js";
 import { getFoundation } from "./getFoundation.js";
 import {
@@ -28,6 +33,7 @@ import {
 } from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
 import { listFoundations } from "./listFoundations.js";
+import { getStructuralPatternIntent } from "./patternIntent.js";
 import { recommendComponent } from "./recommendComponent.js";
 import { recommendTokens } from "./recommendTokens.js";
 import { searchComponentCapabilities } from "./searchComponentCapabilities.js";
@@ -35,6 +41,7 @@ import {
   createFoundationStarterCode,
   type StarterCodeSnippet,
 } from "./starterCode.js";
+import { normalizeQuery } from "./utils.js";
 
 export type SaltSolutionType =
   | "auto"
@@ -109,6 +116,94 @@ function withCompositionGuidance(
   };
 }
 
+function normalizeLookupKey(value: string): string {
+  return normalizeQuery(value).replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function queryMatchesExactPatternLookup(
+  registry: SaltRegistry,
+  query: string,
+): boolean {
+  const lookupKey = normalizeLookupKey(query);
+  if (!lookupKey) {
+    return false;
+  }
+
+  return registry.patterns.some((pattern) => {
+    const routeSlug = pattern.related_docs.overview
+      ?.split("/")
+      .filter((part) => part.length > 0)
+      .at(-1);
+    const candidates = [
+      pattern.name,
+      ...pattern.aliases,
+      ...(routeSlug ? [routeSlug] : []),
+    ];
+
+    return candidates.some(
+      (candidate) => normalizeLookupKey(candidate) === lookupKey,
+    );
+  });
+}
+
+function shouldPreferComponentRecommendationOverForcedPattern(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  query: string | undefined,
+  topK: number,
+): boolean {
+  if (input.solution_type !== "pattern" || !query) {
+    return false;
+  }
+
+  if (queryMatchesExactPatternLookup(registry, query)) {
+    return false;
+  }
+
+  const structuralPatternIntent = getStructuralPatternIntent(query);
+  if (structuralPatternIntent.score >= 4) {
+    return false;
+  }
+
+  const anchors = collectCreateQueryAnchors(registry, query, input.package);
+  const dominantComponentAnchor = chooseDominantCreateQueryAnchor(
+    anchors.filter(
+      (anchor) =>
+        anchor.entity_type === "component" &&
+        isHighPriorityCreateQueryAnchor(anchor),
+    ),
+  );
+
+  if (
+    !dominantComponentAnchor ||
+    dominantComponentAnchor.entity_type !== "component"
+  ) {
+    return false;
+  }
+
+  const recommendation = recommendComponent(registry, {
+    task: query,
+    package: input.package,
+    status: input.status,
+    top_k: topK,
+    production_ready: input.production_ready,
+    prefer_stable: input.prefer_stable,
+    a11y_required: input.a11y_required,
+    form_field_support: input.form_field_support,
+    include_starter_code: false,
+    view: "compact",
+  });
+  const recommendedName = getDecisionName(
+    (recommendation.recommended ?? null) as Record<string, unknown> | null,
+  );
+
+  return (
+    typeof recommendedName === "string" &&
+    normalizeLookupKey(recommendedName) ===
+      normalizeLookupKey(dominantComponentAnchor.name)
+  );
+}
+
 export function createSaltUi(
   registry: SaltRegistry,
   input: CreateSaltUiInput,
@@ -143,6 +238,17 @@ export function createSaltUi(
     if (exactComponent.candidate && !exactComponent.ambiguity) {
       solutionType = "component";
     }
+  }
+  if (
+    solutionType === "pattern" &&
+    shouldPreferComponentRecommendationOverForcedPattern(
+      registry,
+      input,
+      query,
+      topK,
+    )
+  ) {
+    solutionType = "component";
   }
   const preferredCategories = uniqueNormalized(
     input.preferred_categories ?? [],
