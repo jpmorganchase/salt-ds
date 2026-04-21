@@ -100,6 +100,30 @@ const REPLAY_FIXTURE_PATHS = [
     "mcp",
     "eval-fixtures",
     "replays",
+    "intellij-create-metric-stop-after-partial.json",
+  ),
+  path.join(
+    REPO_ROOT,
+    "packages",
+    "mcp",
+    "eval-fixtures",
+    "replays",
+    "intellij-create-tabs-avatar-first-pass-misroute.json",
+  ),
+  path.join(
+    REPO_ROOT,
+    "packages",
+    "mcp",
+    "eval-fixtures",
+    "replays",
+    "intellij-create-breadcrumbs-table-first-pass-misroute.json",
+  ),
+  path.join(
+    REPO_ROOT,
+    "packages",
+    "mcp",
+    "eval-fixtures",
+    "replays",
     "existing-salt-review-wrong-root-context.json",
   ),
   path.join(
@@ -315,6 +339,38 @@ describe("workflow eval replay", () => {
         }),
       }),
     );
+    expect(
+      entriesById.get("intellij-create-metric-stop-after-partial")?.judgment,
+    ).toEqual(
+      expect.objectContaining({
+        status: "failed",
+        reasons: expect.arrayContaining([
+          expect.stringContaining("banned fragment"),
+        ]),
+      }),
+    );
+    expect(
+      entriesById.get("intellij-create-tabs-avatar-first-pass-misroute")
+        ?.judgment,
+    ).toEqual(
+      expect.objectContaining({
+        status: "failed",
+        reasons: expect.arrayContaining([
+          expect.stringContaining("Canonical choice"),
+        ]),
+      }),
+    );
+    expect(
+      entriesById.get("intellij-create-breadcrumbs-table-first-pass-misroute")
+        ?.judgment,
+    ).toEqual(
+      expect.objectContaining({
+        status: "failed",
+        reasons: expect.arrayContaining([
+          expect.stringContaining("Canonical choice"),
+        ]),
+      }),
+    );
   });
 
   it("emits a machine-readable replay report with aggregate metrics", async () => {
@@ -391,6 +447,32 @@ describe("workflow eval replay", () => {
       )?.judgment.reasons,
     ).toEqual(
       expect.arrayContaining([expect.stringContaining("needs_explicit_root")]),
+    );
+    expect(
+      parsed.entries.find(
+        (entry) =>
+          entry.scenario_id === "intellij-create-metric-stop-after-partial",
+      )?.judgment.reasons,
+    ).toEqual(
+      expect.arrayContaining([expect.stringContaining("banned fragment")]),
+    );
+    expect(
+      parsed.entries.find(
+        (entry) =>
+          entry.scenario_id ===
+          "intellij-create-tabs-avatar-first-pass-misroute",
+      )?.judgment.reasons,
+    ).toEqual(
+      expect.arrayContaining([expect.stringContaining("Canonical choice")]),
+    );
+    expect(
+      parsed.entries.find(
+        (entry) =>
+          entry.scenario_id ===
+          "intellij-create-breadcrumbs-table-first-pass-misroute",
+      )?.judgment.reasons,
+    ).toEqual(
+      expect.arrayContaining([expect.stringContaining("Canonical choice")]),
     );
     expect(
       parsed.entries

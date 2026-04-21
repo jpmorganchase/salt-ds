@@ -35,7 +35,9 @@ Primary repo-aware workflow tools:
 - `create_salt_ui`
   - create workflow
   - compact default returns top-level workflow state for safe branching
-  - request `view: "full"` when you need the additive `details` block for richer create artifacts such as `details.result.ide_summary` or `details.workflow.implementation_gate`
+  - if compact output stays `partial` or `blocked`, do not treat starter code or early file creation as completion; follow top-level `action` and `safety.blocking_reasons` first
+  - leave `solution_type` unset on broad or mixed-surface prompts unless the request already clearly points to a known Salt family
+  - request `view: "full"` only when compact output is insufficient or the user explicitly asked for starter code, richer provenance, or implementation detail such as `details.result.ide_summary` or `details.workflow.implementation_gate`
 - `review_salt_ui`
   - review workflow
 - `migrate_to_salt`
@@ -154,7 +156,9 @@ See:
 
 - Salt MCP stays intentionally single-server. The simplification is in the public workflow contract, not in server splitting.
 - Public workflow responses are compact and summary-first. Branch on top-level `salt_workflow_v3` fields such as `status`, `safety`, `action`, `summary`, and `request.match_status` / `request.resolved_entity` when present.
+- If `status` is `partial` or `blocked`, do not stop after creating a starter file or scaffold. Continue the returned follow-through from `action`, or explicitly report that the workflow remains incomplete.
 - Use `view: "full"` only when you need the additive `details` block for richer detail such as `details.result.ide_summary`, `details.workflow.implementation_gate`, starter code, or deeper provenance.
+- Do not use `view: "full"` just to fix context or to guess past blocked compact output. Retry context or exact follow-through first.
 - Inspect the machine-readable capability manifest at `salt://capabilities/manifest` when the host needs to confirm the workflow vocabulary, contract version, support-tool policy, or runtime version.
 - In `view: "full"`, `create_salt_ui` keeps the same top-level `salt_workflow_v3` contract and adds `details`. Treat `details.workflow.implementation_gate` as a real implementation gate for broad or multi-surface asks.
 - `get_salt_project_context` is the explicit repo-inspection path. Repo-aware workflow tools can also auto-collect context when it is omitted.

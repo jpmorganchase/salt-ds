@@ -814,7 +814,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .enum(["auto", "component", "pattern", "foundation", "token"])
         .optional()
         .describe(
-          "Optional solution-family hint when the request already points to components, patterns, foundations, or tokens.",
+          "Optional solution-family hint when the request already points clearly to a known component, pattern, foundation, or token family. Leave unset on broad or mixed-surface prompts instead of forcing pattern mode.",
         ),
       package: z
         .string()
@@ -843,7 +843,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .enum(VIEWS)
         .optional()
         .describe(
-          "Use full to include raw comparison or recommendation evidence.",
+          "Use full only when compact output is insufficient or you explicitly need richer recommendation evidence, starter-code detail, or raw provenance.",
         ),
       context_id: z
         .string()

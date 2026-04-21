@@ -69,10 +69,10 @@ Use this order unless the task is explicitly narrower:
 The canonical step is not complete until the transport result is both relevant and complete enough for the intended output.
 Read compact workflow output from top-level fields first:
 
-- `workflow_status`
-- `safe_to_implement_exact_request`
-- `blocking_reasons`
-- `next_step`
+- `status`
+- `safety.exact_request_safe`
+- `safety.blocking_reasons`
+- `action`
 - `summary`
 
 When citing canonical Salt guidance in an answer, use `top_source_urls` from `ide_summary` as the grounding links instead of fabricating documentation URLs.
@@ -81,10 +81,10 @@ When a component is compound (e.g., Dialog, Accordion, Form field), compact outp
 
 Treat these as blocking items when they affect the regions you plan to implement or review:
 
-- `workflow_status != "success"`
-- `safe_to_implement_exact_request = false`
-- `blocking_reasons`
-- `next_step`
+- `status != "success"`
+- `safety.exact_request_safe = false`
+- `safety.blocking_reasons`
+- `action`
 - `required_follow_through`
 - `implementation_gate` or equivalent follow-through markers
 - `open_questions`
@@ -94,6 +94,7 @@ Treat these as blocking items when they affect the regions you plan to implement
 
 For page-level and multi-region work, do not treat one valid sub-pattern as permission to skip unresolved peer regions.
 If a required sub-surface is still unresolved, either keep that region pending or stop before final implementation.
+Do not treat `status: partial` as completion just because a starter file, scaffold, or initial diff was created.
 Request or inspect `full` workflow output only when the blocking signal points to deeper artifacts such as composition details, starter snippets, or validation internals.
 
 ## Noisy Or Partial Results
@@ -106,6 +107,7 @@ When tooling is noisy, fail closed.
 4. If repeated follow-up calls for the same required item return conflicting or off-target results twice in a row, stop and report the blocker instead of guessing.
 5. Do not use broad code generation to paper over incomplete canonical guidance.
 6. When partial output is the best available signal, say what was learned, what remains unresolved, and what transport limitation prevented completion.
+7. Do not ask for `view: "full"` just to fix context or to guess past a blocked compact result. Retry context or exact follow-through first.
 
 ## Workflow Map
 
@@ -115,7 +117,7 @@ When MCP is the transport:
 
 - `init`: bootstrap repo-local `.salt/team.json` and the managed root instruction block locally by default; add host adapters and `ui:verify` only when explicitly requested.
 - `context`: use `get_salt_project_context` for repo diagnostics, policy inspection, or explicit context reuse.
-- `create`: start with `create_salt_ui`; read `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary` first; if compact output blocks implementation, follow `next_step` before editing the blocked region; for exact named follow-up, use `requested_entity`, `resolved_entity`, and `match_status`; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
+- `create`: start with `create_salt_ui`; read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first; if compact output blocks implementation, follow `action` before editing the blocked region; for exact named follow-up, use `request.entity`, `request.resolved_entity`, and `request.match_status`; leave `solution_type` unset on broad or mixed-surface asks unless the request already points clearly to a known Salt family; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 - `review`: start with `review_salt_ui`; read returned `confidence` and `fix_candidates`; add runtime evidence only if the source pass is still not enough.
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.
@@ -132,7 +134,7 @@ When CLI is the transport:
 
 ### CLI Follow-Through for Entity Grounding
 
-When a `salt-ds create --json` call returns a compact `PublicContract`, read these top-level fields first: `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary`.
+When a `salt-ds create --json` call returns a compact `PublicContract`, read these top-level fields first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary`.
 
 When `required_follow_through` lists named entities that still need grounding before their regions can be implemented, run a targeted follow-up call for each entity:
 
@@ -142,17 +144,16 @@ salt-ds create "<entity name>" --json --include-starter-code --starter-only
 
 Do not force `--type component` on follow-through calls unless you are certain the entity is a component. Named entities from `required_follow_through` may be patterns (e.g., Metric, App header, Analytical dashboard) or components (e.g., Table, Card). Omit `--type` to let the resolution find the best match across all solution types.
 
-The `--starter-only` flag returns a minimal JSON object with `workflow`, `workflow_status`, `decision`, `starter_code`, `composition_contract`, `required_follow_through`, and `next_step` — no full workflow envelope. Use this for follow-through grounding instead of reparsing a full workflow output.
+The `--starter-only` flag returns a minimal JSON object with `workflow`, `status`, `decision`, `starter_code`, `composition_contract`, and any deeper follow-through metadata that still remains — no full workflow envelope. Use this for follow-through grounding instead of reparsing a full workflow output.
 
 Read the follow-through result as:
 
 - `workflow`: always `"create"`
-- `workflow_status`: check this for success/partial/blocked before using the result
+- `status`: check this for success/partial/blocked before using the result
 - `decision.name`: the resolved Salt entity name
 - `starter_code`: canonical starter snippet(s) for the entity
 - `composition_contract`: slot structure for compound entities
-- `required_follow_through`: any deeper follow-through still needed
-- `next_step`: what to do next
+- any deeper follow-through metadata that remains: use it before treating the entity as complete
 
 If `decision.name` is null or misrouted (resolves to the wrong entity), count it as one attempt against the degraded-tooling budget. Do not re-query the same entity more than twice.
 
