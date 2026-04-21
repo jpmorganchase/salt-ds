@@ -60,6 +60,10 @@
   visibility: hidden;
 }
 
+.fixedWidthCarouselContainer {
+  width: 100vw;
+}
+
 .fixedWidthCarousel {
   width: 100%;
   --carousel-slide-size: 550px;
