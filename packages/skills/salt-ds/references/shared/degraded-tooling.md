@@ -16,7 +16,7 @@ Count any of the following as one attempt against this budget:
 - a call that returns a non-matching `decision.name` or a misrouted pattern
 - a call that returns truncated output missing the required contract fields
 - a call that produces a parse failure or malformed payload
-- a call that returns a non-success `workflow_status` without actionable partial guidance
+- a call that returns `status != "success"` without actionable partial guidance
 
 When the budget is exhausted:
 
@@ -40,7 +40,7 @@ When the budget is exhausted:
 - Summarize what was learned.
 - List the unresolved blockers or missing follow-through items.
 - Continue only with inspection or clarification.
-- Do not move into final implementation yet.
+- Do not move into final implementation yet, and do not treat starter-code creation as completion while status remains partial or blocked.
 
 ### Misrouted or semantically off-target results
 

@@ -29,7 +29,9 @@ Use this file only for `create` work after project context is known.
 - use workflow confidence to decide whether to proceed or ask a follow-up question
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
 - for compound components, check `sub_component_names` and `composition` from the canonical output to use the correct child components and structure instead of guessing the JSX nesting
-- if compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before implementing the blocked sub-surface
+- if compact `create` output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked sub-surface
+- do not treat `status: partial` as completion just because starter code or one file was created; continue follow-through or report the work as incomplete
+- leave `solution_type` unset on broad or mixed-surface create prompts unless the request already points clearly to a known Salt family
 - if an exact Salt target name is already known from `required_follow_through`, `requested_entity`, `resolved_entity`, or a resolved MCP result, use that exact name or verified alias in the next create call instead of paraphrasing it
 - do not implement named contract items from general React, CSS, HTML, or copied repo code before that Salt follow-through completes
 
@@ -64,7 +66,7 @@ Use this file only for `create` work after project context is known.
 5. State whether theme bootstrap guidance matters for this task and, if so, which path from `references/shared/theme.md` applies or remains pending.
 6. Verify any explicit Salt token or API names you plan to mention.
 7. If a targeted follow-up is needed, keep the concrete user noun phrase visible and add slot or page context without turning it into taxonomy-style wording.
-8. If compact `create` output is not safe to implement, follow the returned `next_step` before writing the blocked region.
+8. If compact `create` output is not safe to implement, follow the returned `action` before writing the blocked region.
 9. If the exact Salt target name is already known, use it directly in the follow-up instead of paraphrasing it.
 10. Only then move into code or starter guidance.
 

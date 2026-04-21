@@ -75,6 +75,7 @@ function readFullWorkflowResult<T>(value: T): T {
 function runCreateWorkflowFull(input: {
   query: string;
   includeStarterCode?: boolean;
+  solutionType?: Parameters<typeof createSaltUi>[1]["solution_type"];
   contextChecked?: boolean;
   projectPolicy?: ReturnType<typeof buildWorkflowProjectPolicyArtifact> | null;
 }): CreateWorkflowFullResult {
@@ -84,6 +85,7 @@ function runCreateWorkflowFull(input: {
       createSaltUi(registry, {
         query: input.query,
         include_starter_code: input.includeStarterCode ?? true,
+        solution_type: input.solutionType,
       }),
       {
         query: input.query,
@@ -311,6 +313,19 @@ describe("deterministic agentic evals", () => {
     );
   });
 
+  it("falls back to component routing when a forced-pattern profile prompt still clearly names Tabs", () => {
+    const query =
+      "User profile page with tabs for different sections and an avatar displaying user image";
+    const result = runCreateWorkflowFull({ query, solutionType: "pattern" });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Tabs",
+      },
+    });
+  });
+
   it("keeps secondary named surfaces on exact follow-through for breadcrumbs plus table prompts", () => {
     const query = "file manager with breadcrumbs and table";
     const result = runCreateWorkflowFull({ query });
@@ -337,6 +352,39 @@ describe("deterministic agentic evals", () => {
         rule_ids: ["create-follow-through-required"],
       }),
     );
+  });
+
+  it("falls back to component routing when a forced-pattern file-manager prompt still clearly names Table", () => {
+    const query =
+      "file manager with breadcrumbs navigation and a data table showing files and folders";
+    const result = runCreateWorkflowFull({ query, solutionType: "pattern" });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Table",
+      },
+    });
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        status: "follow_through_required",
+        required_follow_through: expect.arrayContaining([
+          expect.objectContaining({ entity: "Breadcrumbs" }),
+        ]),
+      }),
+    );
+  });
+
+  it("keeps strong structural dashboard prompts on the pattern path even when pattern is forced", () => {
+    const query = "chart dashboard with filters and summary";
+    const result = runCreateWorkflowFull({ query, solutionType: "pattern" });
+
+    expect(result.result).toMatchObject({
+      solution_type: "pattern",
+      decision: {
+        name: "Analytical dashboard",
+      },
+    });
   });
 
   it("keeps dashboard follow-through focused on the explicit chart region instead of generic header drift", () => {

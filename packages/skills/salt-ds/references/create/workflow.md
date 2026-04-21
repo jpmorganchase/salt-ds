@@ -23,8 +23,10 @@
 - Decide where foundations and tokens should handle spacing, density, typography, and color.
 - For non-Salt starts, use the translation step to lock the Salt building blocks first, then choose the JSX composition that fits them cleanly.
 - Use the translated workstreams and scaffold handoff to decide what gets built first instead of inventing a new implementation order.
-- If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before building the blocked region.
-- Request `full` output only when `next_step` or `blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
+- If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before building the blocked region.
+- Do not treat `status: partial` as a finished create step just because starter code or a first scaffold exists.
+- Leave `solution_type` unset on broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.
+- Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 - If the canonical Salt result recommends a project conventions check, confirm repo-specific wrappers or local patterns before you commit to the final structure.
 
 ## 3. clarify only when it changes the structure
