@@ -1,6 +1,7 @@
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
+import type { SaltColorAxis } from "../src/color-axis";
 import {
   AreaChart as AreaChartComponent,
   BarChart as BarChartComponent,
@@ -11,6 +12,7 @@ import {
   ColumnChart as ColumnChartComponent,
   DonutChart as DonutChartComponent,
   DualAxisChart as DualAxisChartComponent,
+  HeatmapChart as HeatmapChartComponent,
   LineChart as LineChartComponent,
   PieChart as PieChartComponent,
   ScatterChart as ScatterChartComponent,
@@ -27,6 +29,17 @@ import {
   columnOptions,
   donutOptions,
   dualAxisOptions,
+  heatmapColorAxisOverrideOptions,
+  heatmapDataClassesOptions,
+  heatmapDataClassesSaltColorAxis,
+  heatmapDiscreteRangesOptions,
+  heatmapDiscreteRangesSaltColorAxis,
+  heatmapOptions,
+  heatmapSaltColorAxis,
+  heatmapThresholdOptions,
+  heatmapThresholdSaltColorAxis,
+  heatmapTwoColorDiscreteRangesOptions,
+  heatmapTwoColorDiscreteRangesSaltColorAxis,
   lineOptions,
   pieOptions,
   scatterOptions,
@@ -39,6 +52,10 @@ accessibility(Highcharts);
 interface ChartStoryArgs {
   fillPatterns?: boolean;
   options: Options;
+}
+
+interface HeatmapStoryArgs extends ChartStoryArgs {
+  saltColorAxis?: SaltColorAxis;
 }
 
 export default {
@@ -75,6 +92,66 @@ export const DualAxisChart = {
   args: {
     fillPatterns: false,
     options: dualAxisOptions,
+  },
+};
+
+export const HeatmapChart = {
+  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  argTypes: {
+    saltColorAxis: {
+      control: "object",
+      description: "Salt hook-level colorAxis configuration",
+    },
+  },
+  args: {
+    fillPatterns: false,
+    options: heatmapOptions,
+    saltColorAxis: heatmapSaltColorAxis,
+  },
+};
+
+export const HeatmapDataClassesChart = {
+  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  args: {
+    fillPatterns: false,
+    options: heatmapDataClassesOptions,
+    saltColorAxis: heatmapDataClassesSaltColorAxis,
+  },
+};
+
+export const HeatmapDiscreteRangesChart = {
+  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  args: {
+    fillPatterns: false,
+    options: heatmapDiscreteRangesOptions,
+    saltColorAxis: heatmapDiscreteRangesSaltColorAxis,
+  },
+};
+
+export const HeatmapTwoColorDiscreteRangesChart = {
+  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  args: {
+    fillPatterns: false,
+    options: heatmapTwoColorDiscreteRangesOptions,
+    saltColorAxis: heatmapTwoColorDiscreteRangesSaltColorAxis,
+  },
+};
+
+export const HeatmapThresholdChart = {
+  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  args: {
+    fillPatterns: false,
+    options: heatmapThresholdOptions,
+    saltColorAxis: heatmapThresholdSaltColorAxis,
+  },
+};
+
+export const HeatmapColorAxisOverrideChart = {
+  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  args: {
+    fillPatterns: false,
+    options: heatmapColorAxisOverrideOptions,
+    saltColorAxis: heatmapSaltColorAxis,
   },
 };
 

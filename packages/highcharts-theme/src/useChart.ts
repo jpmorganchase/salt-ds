@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { resolveSaltColorAxis, type SaltColorAxis } from "./color-axis";
 import { getDefaultOptions } from "./default-options";
 import {
   getDensityTokenMap,
@@ -21,12 +22,13 @@ import { mergeChartOptions } from "./merge-chart-options";
 
 export interface UseChartConfig {
   fillPatterns?: boolean;
+  saltColorAxis?: SaltColorAxis;
 }
 
 export const useChart = (
   chartRef: RefObject<HighchartsReact.RefObject | null>,
   chartOptions: Options,
-  { fillPatterns = false }: UseChartConfig = {},
+  { fillPatterns = false, saltColorAxis }: UseChartConfig = {},
 ) => {
   const density = useDensity();
   const { mode } = useTheme();
@@ -51,15 +53,22 @@ export const useChart = (
         tokens,
         fillPatterns,
       );
+      const chartOptionsWithColorAxis =
+        resolvedChartOptions.colorAxis == null && saltColorAxis != null
+          ? {
+              ...resolvedChartOptions,
+              colorAxis: resolveSaltColorAxis(saltColorAxis, tokens),
+            }
+          : resolvedChartOptions;
       const defaults = getDefaultOptions(
-        resolvedChartOptions,
+        chartOptionsWithColorAxis,
         tokens,
         fillPatterns,
       );
 
-      return mergeChartOptions(defaults, resolvedChartOptions);
+      return mergeChartOptions(defaults, chartOptionsWithColorAxis);
     },
-    [chartOptions, density, fillPatterns],
+    [chartOptions, density, fillPatterns, saltColorAxis],
   );
 
   const [mergedOptions, setMergedOptions] = useState<Options>(() => {

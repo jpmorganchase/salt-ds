@@ -37,11 +37,12 @@ import accessibility from "highcharts/modules/accessibility";
 accessibility(Highcharts);
 ```
 
-Use the same pattern for other modules such as `pattern-fill`, `highcharts-more`, `stock`, and `bullet`.
+Use the same pattern for other modules such as `pattern-fill`, `heatmap`,
+`highcharts-more`, `stock`, and `bullet`.
 
 ### Highcharts v12+
 
-From Highcharts v12 onwards, modules such as `accessibility` and `pattern-fill` auto-initialize upon import:
+From Highcharts v12 onwards, modules auto-initialize upon import:
 
 ```js
 import "highcharts/modules/accessibility";
@@ -71,9 +72,97 @@ The `useChart` hook takes:
 
 - `chartRef`: A ref object to be attached to the `HighchartsReact` component
 - `chartOptions`: Your chart-specific options
-- `config` (optional): Additional hook configuration such as `{ fillPatterns: true }`
+- `config` (optional): Additional hook configuration such as
+  `{ fillPatterns: true }` or `saltColorAxis`
 
 See [examples](./examples) and the [Highcharts options](https://www.highcharts.com/docs/getting-started/how-to-set-options) documentation for more information.
+
+## Color axis
+
+Use `saltColorAxis` when your chart needs a Salt-themed `colorAxis`, such as a
+heatmap. Pass it as the optional third argument to `useChart`, and the hook
+will resolve the color axis using Salt data visualization tokens.
+
+```jsx
+const options = useChart(chartRef, yourChartSpecificOptions, {
+  saltColorAxis: {
+    min: 0,
+    max: 100,
+    color: "--salt-category-1-dataviz",
+    minOpacity: 0.12,
+    maxOpacity: 1,
+    steps: 5,
+  },
+});
+```
+
+This is useful for common color-axis patterns such as:
+
+- continuous scales for numeric ranges
+- threshold scales for values above and below a midpoint
+- data classes for named ranges such as low, medium, and high
+
+### Data classes
+
+Semantic classes such as low, moderate, and high, explicit class colors
+remain at full opacity by default.
+
+```jsx
+const saltColorAxis = {
+  dataClasses: [
+    { to: 30, color: "--salt-sentiment-negative-dataviz", name: "Low" },
+    {
+      from: 30,
+      to: 55,
+      color: "--salt-sentiment-caution-dataviz",
+      name: "Moderate",
+    },
+    { from: 55, color: "--salt-sentiment-positive-dataviz", name: "High" },
+  ],
+};
+```
+
+### Discrete ranges
+
+When you want labeled numeric bands with the same hue progression, enable
+`dataClassOpacityRamp` to apply Salt's standard stepped opacity ramp across the
+ordered classes.
+
+```jsx
+const saltColorAxis = {
+  dataClassOpacityRamp: true,
+  dataClasses: [
+    { to: 30, color: "--salt-category-1-dataviz", name: "0 - 30" },
+    { from: 30, to: 45, color: "--salt-category-1-dataviz", name: "30 - 45" },
+    { from: 45, to: 60, color: "--salt-category-1-dataviz", name: "45 - 60" },
+    { from: 60, color: "--salt-category-1-dataviz", name: "60+" },
+  ],
+};
+```
+
+### Two-color discrete ranges
+
+Use the same opt-in when the bands should keep more than one supplied hue. Salt
+ramps opacity across the class order while preserving the color assigned to each
+range.
+
+```jsx
+const saltColorAxis = {
+  dataClassOpacityRamp: true,
+  dataClasses: [
+    { to: 30, color: "--salt-category-4-dataviz", name: "0 - 30" },
+    { from: 30, to: 45, color: "--salt-category-4-dataviz", name: "30 - 45" },
+    { from: 45, to: 60, color: "--salt-category-1-dataviz", name: "45 - 60" },
+    { from: 60, color: "--salt-category-1-dataviz", name: "60+" },
+  ],
+};
+```
+
+If you need a specific class to break the default ramp, set `opacity` on that
+class directly.
+
+If your `chartOptions` already include a Highcharts `colorAxis`, that explicit
+`colorAxis` configuration takes precedence over `saltColorAxis`.
 
 ## Patterns and fills
 

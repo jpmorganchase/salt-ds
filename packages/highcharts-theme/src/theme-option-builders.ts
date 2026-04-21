@@ -23,6 +23,19 @@ const shouldShowAxesGridLines = (chartOptions: Options): boolean => {
   });
 };
 
+const isHeatmapChart = (chartOptions: Options): boolean => {
+  const chartType = chartOptions.chart?.type;
+  const series = chartOptions.series ?? [];
+
+  if (chartType === "heatmap") {
+    return series.every(
+      (entry) => entry.type == null || entry.type === "heatmap",
+    );
+  }
+
+  return series.length > 0 && series.every((entry) => entry.type === "heatmap");
+};
+
 export const buildChartOptions = (
   tokens: SaltChartTokenMap,
 ): NonNullable<HighchartsOptionsCompat["chart"]> => ({
@@ -61,6 +74,7 @@ export const buildAxisOptions = (
   chartOptions: Options,
 ): Pick<HighchartsOptionsCompat, "xAxis" | "yAxis"> => {
   const showAxesGridLines = shouldShowAxesGridLines(chartOptions);
+  const heatmapChart = isHeatmapChart(chartOptions);
 
   return {
     xAxis: {
@@ -75,7 +89,7 @@ export const buildAxisOptions = (
         },
       },
       lineColor: tokens["--salt-separable-primary-borderColor"],
-      lineWidth: tokens["--salt-size-fixed-100"],
+      lineWidth: heatmapChart ? 0 : tokens["--salt-size-fixed-100"],
       tickLength: 0,
       title: {
         margin: tokens["--salt-spacing-200"],
@@ -89,7 +103,7 @@ export const buildAxisOptions = (
     },
     yAxis: {
       gridLineColor: tokens["--salt-separable-tertiary-borderColor"],
-      gridLineWidth: tokens["--salt-size-fixed-100"],
+      gridLineWidth: heatmapChart ? 0 : tokens["--salt-size-fixed-100"],
       labels: {
         style: {
           color: tokens["--salt-content-secondary-foreground"],
@@ -99,7 +113,11 @@ export const buildAxisOptions = (
         },
       },
       lineColor: tokens["--salt-separable-primary-borderColor"],
-      lineWidth: showAxesGridLines ? tokens["--salt-size-fixed-100"] : 0,
+      lineWidth: heatmapChart
+        ? 0
+        : showAxesGridLines
+          ? tokens["--salt-size-fixed-100"]
+          : 0,
       title: {
         margin: tokens["--salt-spacing-200"],
         style: {
@@ -167,9 +185,8 @@ export const buildPlotOptions = (
 
     The `contrast` value returns #000000 just so happens to match the value we want
   */
-  const textOutline = fillPatterns
-    ? `${tokens["--salt-size-fixed-100"]}px contrast`
-    : "none";
+  const strongTextOutline = `${tokens["--salt-size-fixed-100"]}px contrast`;
+  const textOutline = fillPatterns ? strongTextOutline : "none";
 
   return {
     area: {
@@ -254,6 +271,25 @@ export const buildPlotOptions = (
       states: {
         hover: {
           brightness: 0,
+        },
+      },
+    },
+    heatmap: {
+      borderColor: tokens["--salt-container-primary-background"],
+      pointPadding: 0,
+      dataLabels: {
+        style: {
+          color: tokens["--salt-content-bold-foreground"],
+          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+          textOutline: strongTextOutline,
+        },
+      },
+      states: {
+        hover: {
+          enabled: false,
         },
       },
     },

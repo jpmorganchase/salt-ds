@@ -60,6 +60,7 @@ export type SaltChartTokenMap = {
   "--salt-container-primary-background": string;
   "--salt-separable-primary-borderColor": string;
   "--salt-separable-tertiary-borderColor": string;
+  "--salt-sentiment-caution-dataviz": string;
   "--salt-sentiment-positive-dataviz": string;
   "--salt-sentiment-negative-dataviz": string;
   "--salt-sentiment-neutral-dataviz": string;
@@ -121,6 +122,7 @@ const COLOR_TOKENS = {
   containerPrimaryBackground: "--salt-container-primary-background",
   separablePrimaryBorderColor: "--salt-separable-primary-borderColor",
   separableTertiaryBorderColor: "--salt-separable-tertiary-borderColor",
+  sentimentCautionDataviz: "--salt-sentiment-caution-dataviz",
   sentimentPositiveDataviz: "--salt-sentiment-positive-dataviz",
   sentimentNegativeDataviz: "--salt-sentiment-negative-dataviz",
   sentimentNeutralDataviz: "--salt-sentiment-neutral-dataviz",
@@ -176,6 +178,9 @@ export const getDensityTokenMap = (
   );
   let separableTertiaryBorderColor = getTokenFallback(
     COLOR_TOKENS.separableTertiaryBorderColor,
+  );
+  let sentimentCautionDataviz = getTokenFallback(
+    COLOR_TOKENS.sentimentCautionDataviz,
   );
   let sentimentPositiveDataviz = getTokenFallback(
     COLOR_TOKENS.sentimentPositiveDataviz,
@@ -290,6 +295,10 @@ export const getDensityTokenMap = (
       tokenValues,
       COLOR_TOKENS.separableTertiaryBorderColor,
     );
+    sentimentCautionDataviz = getResolvedStringToken(
+      tokenValues,
+      COLOR_TOKENS.sentimentCautionDataviz,
+    );
     sentimentPositiveDataviz = getResolvedStringToken(
       tokenValues,
       COLOR_TOKENS.sentimentPositiveDataviz,
@@ -334,6 +343,7 @@ export const getDensityTokenMap = (
     "--salt-container-primary-background": containerPrimaryBackground,
     "--salt-separable-primary-borderColor": separablePrimaryBorderColor,
     "--salt-separable-tertiary-borderColor": separableTertiaryBorderColor,
+    "--salt-sentiment-caution-dataviz": sentimentCautionDataviz,
     "--salt-sentiment-positive-dataviz": sentimentPositiveDataviz,
     "--salt-sentiment-negative-dataviz": sentimentNegativeDataviz,
     "--salt-sentiment-neutral-dataviz": sentimentNeutralDataviz,
