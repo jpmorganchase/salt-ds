@@ -19,6 +19,9 @@ The current default public workflow contract is `salt_workflow_v3`.
 - Full workflow output keeps the same top-level `salt_workflow_v3` contract and adds `details`.
 - CLI `create --starter-only --json` is an advanced create-only artifact path. It is not part of the default compact workflow contract and should reject unsupported combinations such as `--starter-only --full`.
 - Top-level workflow state is authoritative for agent action; nested artifacts are secondary.
+- `status = "partial"` or `status = "blocked"` is not completion. Hosts should continue the returned `action` or report the workflow as incomplete instead of stopping after starter-code creation.
+- Hosts should request `view: "full"` only after compact output proves insufficient or the user explicitly asks for starter code, richer provenance, or detailed implementation artifacts.
+- Hosts should leave `solution_type` unset for broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.
 - Skills and hosts should branch on compact top-level workflow signals first rather than inspecting nested `implementation_gate`, `readiness`, or similar rich-only detail.
 - Machine-readable capability inspection is part of the public setup contract:
   - CLI exposes `capabilityManifest` through `salt-ds info --json`

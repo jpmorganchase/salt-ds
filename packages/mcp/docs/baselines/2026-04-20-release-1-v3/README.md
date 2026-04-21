@@ -51,6 +51,7 @@ MCP metadata artifacts were generated from the built `@salt-ds/mcp` CommonJS exp
 ## Final Snapshot Observations
 
 1. Compact create output is now the shared top-level `salt_workflow_v3` contract:
+
    - `contract: "salt_workflow_v3"`
    - `workflow: "create"`
    - `transport: "cli"`
@@ -58,10 +59,12 @@ MCP metadata artifacts were generated from the built `@salt-ds/mcp` CommonJS exp
    - top-level `request`, `safety`, `action`, and `summary`
 
 2. Full create output now keeps that same top-level contract and adds `details`:
+
    - compact example file size: `724` bytes
    - full example file size: `110267` bytes
 
 3. The built CLI `starter-only` path is now narrow again:
+
    - create-only artifact shape
    - `starter_code` content plus supporting composition details
    - no accidental reuse of the compact contract payload
@@ -69,6 +72,7 @@ MCP metadata artifacts were generated from the built `@salt-ds/mcp` CommonJS exp
 4. The CLI capability manifest now advertises compact workflow contract version `v3`.
 
 5. The default MCP metadata still exposes the intended six-tool workflow-first public surface:
+
    - `get_salt_project_context`
    - `bootstrap_salt_repo`
    - `create_salt_ui`

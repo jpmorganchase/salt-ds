@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import type { SerializedPageSearchIndex } from "../search/pageSearchIndex.js";
 import type {
+  CreateRetrievalDocument,
   LoadRegistryOptions,
   RegistryBuildInfo,
   SaltRegistry,
@@ -11,6 +12,7 @@ import {
   type MetadataArtifact,
   type PageSearchIndexArtifact,
   REGISTRY_ARRAY_ARTIFACTS,
+  REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
   REGISTRY_SEARCH_INDEX_ARTIFACT,
@@ -98,17 +100,36 @@ function assertConsistentArtifacts(artifacts: Array<LoadedArtifact<unknown>>): {
 async function loadSearchIndex(
   registryDir: string,
 ): Promise<SearchIndexEntry[]> {
+  return loadJsonLines<SearchIndexEntry>(
+    path.join(registryDir, REGISTRY_SEARCH_INDEX_ARTIFACT.file_name),
+  );
+}
+
+async function loadCreateRetrievalIndex(
+  registryDir: string,
+): Promise<CreateRetrievalDocument[]> {
   const indexPath = path.join(
     registryDir,
-    REGISTRY_SEARCH_INDEX_ARTIFACT.file_name,
+    REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT.file_name,
   );
-  const content = await fs.readFile(indexPath, "utf8");
+  try {
+    return await loadJsonLines<CreateRetrievalDocument>(indexPath);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return [];
+    }
+    throw error;
+  }
+}
+
+async function loadJsonLines<T>(filePath: string): Promise<T[]> {
+  const content = await fs.readFile(filePath, "utf8");
 
   return content
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter((line) => line.length > 0)
-    .map((line) => JSON.parse(line) as SearchIndexEntry);
+    .map((line) => JSON.parse(line) as T);
 }
 
 async function loadMetadata(
@@ -216,6 +237,7 @@ export async function loadRegistry(
   const [
     arrayArtifactEntries,
     searchIndex,
+    createRetrievalIndex,
     metadataArtifact,
     pageSearchIndexArtifact,
   ] = await Promise.all([
@@ -225,6 +247,7 @@ export async function loadRegistry(
       ),
     ),
     loadSearchIndex(registryDir),
+    loadCreateRetrievalIndex(registryDir),
     loadMetadata(registryDir),
     loadPageSearchIndex(registryDir),
   ]);
@@ -255,6 +278,8 @@ export async function loadRegistry(
     examples: arrayArtifacts.examples.values,
     changes: arrayArtifacts.changes.values,
     search_index: searchIndex,
+    create_retrieval_index:
+      createRetrievalIndex.length > 0 ? createRetrievalIndex : undefined,
   };
 
   setSerializedPageSearchIndex(

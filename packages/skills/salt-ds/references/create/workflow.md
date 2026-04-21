@@ -27,6 +27,8 @@
 - Do not treat `status: partial` as a finished create step just because starter code or a first scaffold exists.
 - Leave `solution_type` unset on broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.
 - Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
+- For exact named asks, keep the first create call close to the named Salt target. Do not paraphrase `Metric`, `Tabs`, or similar exact requests into broader descriptive text before the first grounded call.
+- If the host already knows the workspace root, get project context first and reuse `context_id` on repeated repo-aware calls instead of recollecting context each time.
 - If the canonical Salt result recommends a project conventions check, confirm repo-specific wrappers or local patterns before you commit to the final structure.
 
 ## 3. clarify only when it changes the structure

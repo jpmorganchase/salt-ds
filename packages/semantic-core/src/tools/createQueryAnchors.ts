@@ -3,6 +3,7 @@ import type {
   PatternRecord,
   SaltRegistry,
 } from "../types.js";
+import { containsExplicitCreateReferencePhrase } from "./createReferenceQueries.js";
 import { isComponentAllowedByDocsPolicy } from "./utils.js";
 
 export type CreateQueryAnchorMatchKind = "name" | "alias" | "slug";
@@ -190,6 +191,7 @@ function chooseBetterAnchorMatch(
 
 function collectComponentAnchor(
   queryKey: string,
+  query: string,
   component: ComponentRecord,
 ): CreateQueryAnchor | null {
   let bestMatch:
@@ -203,6 +205,9 @@ function collectComponentAnchor(
   for (const entry of [{ kind: "name" as const, value: component.name }]) {
     const lookupKey = normalizeAnchorLookupKey(entry.value);
     if (!lookupKey || shouldIgnoreLookupKey(lookupKey)) {
+      continue;
+    }
+    if (!containsExplicitCreateReferencePhrase(query, entry.value)) {
       continue;
     }
 
@@ -221,6 +226,9 @@ function collectComponentAnchor(
   for (const alias of component.aliases) {
     const lookupKey = normalizeAnchorLookupKey(alias);
     if (!lookupKey || shouldIgnoreLookupKey(lookupKey)) {
+      continue;
+    }
+    if (!containsExplicitCreateReferencePhrase(query, alias)) {
       continue;
     }
 
@@ -280,6 +288,7 @@ function getPatternLookupKeys(pattern: PatternRecord): Array<{
 
 function collectPatternAnchor(
   queryKey: string,
+  query: string,
   pattern: PatternRecord,
 ): CreateQueryAnchor | null {
   let bestMatch:
@@ -293,6 +302,9 @@ function collectPatternAnchor(
   for (const entry of getPatternLookupKeys(pattern)) {
     const lookupKey = normalizeAnchorLookupKey(entry.value);
     if (!lookupKey || shouldIgnoreLookupKey(lookupKey)) {
+      continue;
+    }
+    if (!containsExplicitCreateReferencePhrase(query, entry.value)) {
       continue;
     }
 
@@ -356,7 +368,8 @@ export function collectCreateQueryAnchors(
   query: string | null | undefined,
   packageName?: string,
 ): CreateQueryAnchor[] {
-  const queryKey = normalizeAnchorLookupKey(query ?? "");
+  const normalizedQuery = query ?? "";
+  const queryKey = normalizeAnchorLookupKey(normalizedQuery);
   if (!queryKey) {
     return [];
   }
@@ -367,10 +380,10 @@ export function collectCreateQueryAnchors(
       .filter((component) =>
         packageName ? component.package.name === packageName : true,
       )
-      .map((component) => collectComponentAnchor(queryKey, component))
+      .map((component) => collectComponentAnchor(queryKey, normalizedQuery, component))
       .filter((anchor): anchor is CreateQueryAnchor => anchor !== null),
     ...registry.patterns
-      .map((pattern) => collectPatternAnchor(queryKey, pattern))
+      .map((pattern) => collectPatternAnchor(queryKey, normalizedQuery, pattern))
       .filter((anchor): anchor is CreateQueryAnchor => anchor !== null),
   ].sort(compareAnchors);
 

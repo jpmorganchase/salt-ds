@@ -1,5 +1,4 @@
 import type { SaltRegistry, SaltStatus } from "../types.js";
-import { resolveComponentTarget } from "./componentLookup.js";
 import { compareOptions } from "./compareOptions.js";
 import {
   buildCreateCompositionGuidance,
@@ -20,10 +19,10 @@ import {
   uniqueNormalized,
 } from "./createSaltUiHelpers.js";
 import {
-  collectCreateQueryAnchors,
-  chooseDominantCreateQueryAnchor,
-  isHighPriorityCreateQueryAnchor,
-} from "./createQueryAnchors.js";
+  pickRetrievedCreateOwner,
+  retrieveCreateCandidates,
+  type RetrieveCreateCandidatesResult,
+} from "./createRetrieval.js";
 import { getCompositionRecipe } from "./getCompositionRecipe.js";
 import { getFoundation } from "./getFoundation.js";
 import {
@@ -33,7 +32,6 @@ import {
 } from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
 import { listFoundations } from "./listFoundations.js";
-import { getStructuralPatternIntent } from "./patternIntent.js";
 import { recommendComponent } from "./recommendComponent.js";
 import { recommendTokens } from "./recommendTokens.js";
 import { searchComponentCapabilities } from "./searchComponentCapabilities.js";
@@ -41,7 +39,6 @@ import {
   createFoundationStarterCode,
   type StarterCodeSnippet,
 } from "./starterCode.js";
-import { normalizeQuery } from "./utils.js";
 
 export type SaltSolutionType =
   | "auto"
@@ -116,131 +113,28 @@ function withCompositionGuidance(
   };
 }
 
-function normalizeLookupKey(value: string): string {
-  return normalizeQuery(value).replace(/[^a-z0-9]+/g, " ").trim();
-}
-
-function queryMatchesExactPatternLookup(
-  registry: SaltRegistry,
-  query: string,
-): boolean {
-  const lookupKey = normalizeLookupKey(query);
-  if (!lookupKey) {
+function shouldUseRetrievedCreateOwner(input: {
+  solution_type_hint: Exclude<SaltSolutionType, "auto">;
+  retrieval: RetrieveCreateCandidatesResult;
+}): boolean {
+  if (!input.retrieval.owner) {
     return false;
   }
-
-  return registry.patterns.some((pattern) => {
-    const routeSlug = pattern.related_docs.overview
-      ?.split("/")
-      .filter((part) => part.length > 0)
-      .at(-1);
-    const candidates = [
-      pattern.name,
-      ...pattern.aliases,
-      ...(routeSlug ? [routeSlug] : []),
-    ];
-
-    return candidates.some(
-      (candidate) => normalizeLookupKey(candidate) === lookupKey,
-    );
-  });
-}
-
-function startsWithLookupKey(queryKey: string, lookupKey: string): boolean {
-  return queryKey === lookupKey || queryKey.startsWith(`${lookupKey} `);
-}
-
-function getPrefixAnchoredTarget(
-  registry: SaltRegistry,
-  input: CreateSaltUiInput,
-  query: string | undefined,
-):
-  | {
-      solution_type: Exclude<SaltSolutionType, "auto">;
-      name: string;
-    }
-  | null {
-  if (!query) {
-    return null;
-  }
-
-  if (getStructuralPatternIntent(query).score >= 4) {
-    return null;
-  }
-
-  const anchors = collectCreateQueryAnchors(registry, query, input.package);
-  const queryKey = normalizeLookupKey(query);
-  const prefixAnchoredAnchor =
-    anchors.find((anchor) =>
-      startsWithLookupKey(queryKey, normalizeLookupKey(anchor.name)),
-    ) ?? null;
-  if (!prefixAnchoredAnchor) {
-    return null;
-  }
-
-  return {
-    solution_type:
-      prefixAnchoredAnchor.entity_type === "pattern" ? "pattern" : "component",
-    name: prefixAnchoredAnchor.name,
-  };
-}
-
-function shouldPreferComponentRecommendationOverPatternRouting(
-  registry: SaltRegistry,
-  input: CreateSaltUiInput,
-  solutionType: Exclude<SaltSolutionType, "auto">,
-  query: string | undefined,
-  topK: number,
-): boolean {
-  if (solutionType !== "pattern" || !query) {
-    return false;
-  }
-
-  if (queryMatchesExactPatternLookup(registry, query)) {
-    return false;
-  }
-
-  const structuralPatternIntent = getStructuralPatternIntent(query);
-  if (structuralPatternIntent.score >= 4) {
-    return false;
-  }
-
-  const anchors = collectCreateQueryAnchors(registry, query, input.package);
-  const dominantComponentAnchor = chooseDominantCreateQueryAnchor(
-    anchors.filter(
-      (anchor) =>
-        anchor.entity_type === "component" &&
-        isHighPriorityCreateQueryAnchor(anchor),
-    ),
-  );
 
   if (
-    !dominantComponentAnchor ||
-    dominantComponentAnchor.entity_type !== "component"
+    input.solution_type_hint === "component" ||
+    input.solution_type_hint === "pattern"
   ) {
-    return false;
+    return true;
   }
 
-  const recommendation = recommendComponent(registry, {
-    task: query,
-    package: input.package,
-    status: input.status,
-    top_k: topK,
-    production_ready: input.production_ready,
-    prefer_stable: input.prefer_stable,
-    a11y_required: input.a11y_required,
-    form_field_support: input.form_field_support,
-    include_starter_code: false,
-    view: "compact",
-  });
-  const recommendedName = getDecisionName(
-    (recommendation.recommended ?? null) as Record<string, unknown> | null,
-  );
+  if (input.retrieval.status === "exact") {
+    return true;
+  }
 
   return (
-    typeof recommendedName === "string" &&
-    normalizeLookupKey(recommendedName) ===
-      normalizeLookupKey(dominantComponentAnchor.name)
+    input.retrieval.owner.confidence >= 90 &&
+    input.retrieval.owner.total_score >= 60
   );
 }
 
@@ -258,53 +152,55 @@ export function createSaltUi(
   const names = [...new Set((input.names ?? []).map((name) => name.trim()))]
     .filter(Boolean)
     .slice(0, 10);
-  let solutionType = resolveSolutionType(input);
+  const solutionTypeHint = resolveSolutionType(input);
+  let solutionType = solutionTypeHint;
   let routedQuery = query;
-  let prefixAnchoredTarget:
-    | {
-        solution_type: Exclude<SaltSolutionType, "auto">;
-        name: string;
-      }
-    | null = null;
+  let retrieval: RetrieveCreateCandidatesResult | null = null;
 
-  // When the keyword-based solution type is not "component" or "pattern",
-  // check whether the query is an exact component or pattern name.  This
-  // prevents misrouting queries like "Data grid" (a component) to the
-  // foundation path just because "grid" is a foundation keyword.
-  if (
-    query &&
-    solutionType !== "component" &&
-    solutionType !== "pattern" &&
-    !comparisonRequested
-  ) {
-    const exactComponent = resolveComponentTarget(
-      registry,
-      query,
-      input.package,
-    );
-    if (exactComponent.candidate && !exactComponent.ambiguity) {
-      solutionType = "component";
-    }
-  }
   if (query && !comparisonRequested) {
-    prefixAnchoredTarget = getPrefixAnchoredTarget(registry, input, query);
-    if (prefixAnchoredTarget) {
-      solutionType = prefixAnchoredTarget.solution_type;
-      routedQuery = prefixAnchoredTarget.name;
-    }
-  }
-  if (
-    !prefixAnchoredTarget &&
-    solutionType === "pattern" &&
-    shouldPreferComponentRecommendationOverPatternRouting(
-      registry,
-      input,
-      solutionType,
+    retrieval = retrieveCreateCandidates(registry, {
       query,
-      topK,
-    )
-  ) {
-    solutionType = "component";
+      package: input.package,
+      status: input.status,
+      top_k: Math.min(topK, 10),
+      solution_type_hint:
+        solutionTypeHint === "component" || solutionTypeHint === "pattern"
+          ? solutionTypeHint
+          : undefined,
+      filters: {
+        production_ready: input.production_ready,
+        prefer_stable: input.prefer_stable,
+        a11y_required: input.a11y_required,
+        form_field_support: input.form_field_support,
+      },
+    });
+
+    if (
+      shouldUseRetrievedCreateOwner({
+        solution_type_hint: solutionTypeHint,
+        retrieval,
+      })
+    ) {
+      solutionType = retrieval.owner!.entity_type;
+      routedQuery = retrieval.owner!.entity_name;
+    } else if (
+      solutionTypeHint !== "foundation" &&
+      solutionTypeHint !== "token" &&
+      retrieval.status === "ambiguous"
+    ) {
+      const fallbackOwner = pickRetrievedCreateOwner(retrieval);
+      if (fallbackOwner) {
+        solutionType = fallbackOwner.entity_type;
+        routedQuery = fallbackOwner.entity_name;
+      }
+    } else if (
+      solutionTypeHint !== "foundation" &&
+      solutionTypeHint !== "token" &&
+      retrieval.owner
+    ) {
+      solutionType = retrieval.owner.entity_type;
+      routedQuery = retrieval.owner.entity_name;
+    }
   }
   const preferredCategories = uniqueNormalized(
     input.preferred_categories ?? [],
@@ -588,6 +484,7 @@ export function createSaltUi(
                 recommended,
                 preferredCategories,
               ),
+              create_retrieval: retrieval,
               exact,
               list,
             }
@@ -641,6 +538,7 @@ export function createSaltUi(
                 recommended,
                 preferredCategories,
               ),
+              create_retrieval: retrieval,
               token_recommendations: tokenResult,
             }
           : undefined,
@@ -705,6 +603,7 @@ export function createSaltUi(
                 recommended,
                 preferredCategories,
               ),
+              create_retrieval: retrieval,
               composition_recipe: recipeResult,
             }
           : undefined,
@@ -775,6 +674,7 @@ export function createSaltUi(
               recommended,
               preferredCategories,
             ),
+            create_retrieval: retrieval,
             component_recommendations: recommendation,
             capability_matches: searchComponentCapabilities(registry, {
               query: query ?? "",

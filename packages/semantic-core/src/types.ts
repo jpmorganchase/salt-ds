@@ -438,6 +438,48 @@ export interface SearchIndexEntry {
   keywords: string[];
 }
 
+export type CreateRetrievalEntityType = "component" | "pattern";
+
+export type CreateRetrievalSourceKind =
+  | "canonical_name"
+  | "alias"
+  | "summary"
+  | "category"
+  | "tag"
+  | "when_to_use"
+  | "when_not_to_use"
+  | "semantics_preferred_for"
+  | "semantics_not_for"
+  | "example"
+  | "prop"
+  | "capability"
+  | "pattern_composition"
+  | "pattern_how_to_build"
+  | "pattern_how_it_works"
+  | "starter_scaffold_region"
+  | "starter_scaffold_build_around"
+  | "starter_scaffold_constraint";
+
+export type CreateRetrievalEvidenceRole = "owner" | "supporting" | "caution";
+
+export interface CreateRetrievalDocument {
+  id: string;
+  entity_id: string;
+  entity_type: CreateRetrievalEntityType;
+  entity_name: string;
+  package: string | null;
+  status: SaltStatus | null;
+  source_kind: CreateRetrievalSourceKind;
+  evidence_role: CreateRetrievalEvidenceRole;
+  text: string;
+  normalized_text: string;
+  tokens: string[];
+  stemmed_tokens: string[];
+  source_weight: number;
+  structural_weight: number;
+  categories: string[];
+}
+
 export interface RegistryArtifact<T> {
   generated_at: string;
   version: string;
@@ -460,6 +502,7 @@ export interface SaltRegistry {
   examples: ExampleRecord[];
   changes: ChangeRecord[];
   search_index: SearchIndexEntry[];
+  create_retrieval_index?: CreateRetrievalDocument[];
 }
 
 export interface BuildRegistryOptions {

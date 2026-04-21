@@ -543,7 +543,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   defineTool<{ root_dir?: string; include_policy_diagnostics?: boolean }>({
     name: "get_salt_project_context",
     description:
-      "Inspect repo context for advanced Salt workflow debugging or explicit context reuse. Detect the local framework, workspace shape, Salt package usage, repo instructions, declared project policy, and likely runtime targets. The main create, review, migrate, and upgrade workflows can auto-collect this context when context_id is omitted.",
+      "Inspect and cache repo context for repo-aware Salt workflows or explicit context reuse. Detect the local framework, workspace shape, Salt package usage, repo instructions, declared project policy, and likely runtime targets.",
     inputSchema: {
       root_dir: z
         .string()
@@ -796,7 +796,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "create_salt_ui",
     description:
-      "Primary fit for the salt-ds create workflow. Use this for Salt recommendation or side-by-side comparison. If names is present, comparison mode wins; otherwise query drives recommendation mode. It returns canonical Salt guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
+      "Primary Salt create workflow. Use query for recommendation or names for side-by-side comparison. It returns canonical Salt guidance plus repo-policy refinement when resolved project context contributes to the result.",
     inputSchema: {
       query: z
         .string()
@@ -814,7 +814,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .enum(["auto", "component", "pattern", "foundation", "token"])
         .optional()
         .describe(
-          "Optional solution-family hint when the request already points clearly to a known component, pattern, foundation, or token family. Leave unset on broad or mixed-surface prompts instead of forcing pattern mode.",
+          "Optional solution-family hint when the request already points clearly to a known component, pattern, foundation, or token family.",
         ),
       package: z
         .string()
@@ -843,7 +843,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .enum(VIEWS)
         .optional()
         .describe(
-          "Use full only when compact output is insufficient or you explicitly need richer recommendation evidence, starter-code detail, or raw provenance.",
+          "Use full to include detailed recommendation artifacts, starter-code detail, and richer provenance.",
         ),
       context_id: z
         .string()

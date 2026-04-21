@@ -1,6 +1,9 @@
 import fs from "node:fs/promises";
 import type { SerializedPageSearchIndex } from "../search/pageSearchIndex.js";
-import type { RegistryBuildInfo, SaltRegistry } from "../types.js";
+import type {
+  RegistryBuildInfo,
+  SaltRegistry,
+} from "../types.js";
 
 export const REGISTRY_ARRAY_ARTIFACTS = [
   { file_name: "packages.json", key: "packages" },
@@ -49,6 +52,10 @@ export const REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT = {
 
 export const REGISTRY_SEARCH_INDEX_ARTIFACT = {
   file_name: "search-index.jsonl",
+} as const;
+
+export const REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT = {
+  file_name: "create-retrieval-index.jsonl",
 } as const;
 
 export interface MetadataArtifact {

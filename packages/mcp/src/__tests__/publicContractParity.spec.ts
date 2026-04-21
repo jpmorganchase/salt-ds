@@ -100,9 +100,12 @@ function readFirst(
 
 function readString(value: unknown, pathCandidates: string[][]): string | null {
   const candidate = readFirst(value, pathCandidates);
-  return typeof candidate === "string" && candidate.trim().length > 0
-    ? candidate.trim()
-    : null;
+  const normalized =
+    typeof candidate === "string" && candidate.trim().length > 0
+      ? candidate.trim()
+      : null;
+
+  return normalized === "not_run" ? null : normalized;
 }
 
 function readBoolean(

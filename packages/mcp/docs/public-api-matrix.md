@@ -61,14 +61,14 @@ These must not become public compatibility commitments by accident:
 
 ## Workflow Mapping
 
-| User workflow | CLI path | MCP path | Stable default contract |
-| --- | --- | --- | --- |
-| `create` | `salt-ds create <query> --json` | `create_salt_ui` | `salt_workflow_v3` compact |
-| `review` | `salt-ds review <target> --json` | `review_salt_ui` | `salt_workflow_v3` compact |
-| `migrate` | `salt-ds migrate <query> --json` | `migrate_to_salt` | `salt_workflow_v3` compact |
-| `upgrade` | `salt-ds upgrade ... --json` | `upgrade_salt_ui` | `salt_workflow_v3` compact |
-| repo context | `salt-ds info . --json` | `get_salt_project_context` | setup/support contract |
-| repo bootstrap | `salt-ds init . --json` | `bootstrap_salt_repo` | setup/support contract |
+| User workflow  | CLI path                         | MCP path                   | Stable default contract    |
+| -------------- | -------------------------------- | -------------------------- | -------------------------- |
+| `create`       | `salt-ds create <query> --json`  | `create_salt_ui`           | `salt_workflow_v3` compact |
+| `review`       | `salt-ds review <target> --json` | `review_salt_ui`           | `salt_workflow_v3` compact |
+| `migrate`      | `salt-ds migrate <query> --json` | `migrate_to_salt`          | `salt_workflow_v3` compact |
+| `upgrade`      | `salt-ds upgrade ... --json`     | `upgrade_salt_ui`          | `salt_workflow_v3` compact |
+| repo context   | `salt-ds info . --json`          | `get_salt_project_context` | setup/support contract     |
+| repo bootstrap | `salt-ds init . --json`          | `bootstrap_salt_repo`      | setup/support contract     |
 
 ## Compact Workflow Contract
 
@@ -108,13 +108,13 @@ Compact rules:
 
 ## Full And Advanced Output Paths
 
-| Output path | Tier | Shape | Notes |
-| --- | --- | --- | --- |
-| MCP compact default | public stable | top-level `salt_workflow_v3` | main host branching path |
-| MCP `view: "full"` | advanced stable | top-level `salt_workflow_v3` plus `details` | explicit-only rich mode |
-| CLI `--json` | public stable | top-level `salt_workflow_v3` | main CLI machine path |
-| CLI `--full` | advanced stable | top-level `salt_workflow_v3` plus `details` | explicit-only rich mode |
-| CLI `starter-only` | advanced stable | create-only narrow JSON artifact | explicit advanced path for starter grounding and required follow-through |
+| Output path         | Tier            | Shape                                       | Notes                                                                    |
+| ------------------- | --------------- | ------------------------------------------- | ------------------------------------------------------------------------ |
+| MCP compact default | public stable   | top-level `salt_workflow_v3`                | main host branching path                                                 |
+| MCP `view: "full"`  | advanced stable | top-level `salt_workflow_v3` plus `details` | explicit-only rich mode                                                  |
+| CLI `--json`        | public stable   | top-level `salt_workflow_v3`                | main CLI machine path                                                    |
+| CLI `--full`        | advanced stable | top-level `salt_workflow_v3` plus `details` | explicit-only rich mode                                                  |
+| CLI `starter-only`  | advanced stable | create-only narrow JSON artifact            | explicit advanced path for starter grounding and required follow-through |
 
 Full-output guidance:
 
