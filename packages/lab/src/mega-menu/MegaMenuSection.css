@@ -4,8 +4,3 @@
   gap: var(--salt-spacing-300);
   padding: var(--salt-spacing-300);
 }
-
-.saltMegaMenuSection > .saltMegaMenuGroup {
-  flex: 0 0 16rem;
-  inline-size: 16rem;
-}

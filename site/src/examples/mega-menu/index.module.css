@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+.saltMegaMenuSection > .saltMegaMenuGroup {
+  flex: 0 0 16rem;
+  inline-size: 16rem;
+}
+
 .triggerPositionGrid {
   width: 100%;
   display: grid;
