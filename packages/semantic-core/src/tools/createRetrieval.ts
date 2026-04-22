@@ -114,27 +114,6 @@ interface CreateRetrievalTokenStats {
   entity_frequency: Map<string, number>;
 }
 
-function hasBreadcrumbWayfindingIntent(query: string): boolean {
-  const normalizedQuery = normalizeQuery(query);
-  if (!normalizedQuery) {
-    return false;
-  }
-
-  return (
-    /\b(path trail|breadcrumb|breadcrumbs|current directory path|directory path|directory tree|hierarchy path)\b/.test(
-      normalizedQuery,
-    ) ||
-    (/\b(path|directory|tree|trail|folders|hierarchy)\b/.test(
-      normalizedQuery,
-    ) &&
-      /\b(navigate back|back up|current location|current directory|previous levels|previous level|drill down)\b/.test(
-        normalizedQuery,
-      )) ||
-    (/\b(file browser|file manager)\b/.test(normalizedQuery) &&
-      /\b(path|trail|directory)\b/.test(normalizedQuery))
-  );
-}
-
 const HARD_STOPWORDS = new Set([
   "a",
   "an",
@@ -204,6 +183,7 @@ const CREATE_RETRIEVAL_TOKEN_STATS_CACHE = new WeakMap<
   SaltRegistry,
   CreateRetrievalTokenStats
 >();
+const HIGH_SIGNAL_RELATED_SURFACE_MIN_WEIGHT = 8;
 
 function normalizeLookupKey(value: string): string {
   return value
@@ -241,10 +221,7 @@ function getQueryTerms(query: string): string[] {
   );
 }
 
-function deriveSemanticCreateQueryExpansions(
-  query: string,
-  mode: "owner" | "support" = "owner",
-): string[] {
+function deriveSemanticCreateQueryExpansions(query: string): string[] {
   const normalizedQuery = normalizeQuery(query);
   if (!normalizedQuery) {
     return [];
@@ -257,12 +234,6 @@ function deriveSemanticCreateQueryExpansions(
     Number(/\berror\b/.test(normalizedQuery)) +
     Number(/\bwarning\b/.test(normalizedQuery)) +
     Number(/\bsuccess\b/.test(normalizedQuery));
-
-  if (mode === "support" && hasBreadcrumbWayfindingIntent(query)) {
-    expansions.push(
-      "current location within a hierarchy previous levels secondary navigation drill down into tables or charts",
-    );
-  }
 
   if (
     /\b(navigate|navigation|navigating)\b/.test(normalizedQuery) &&
@@ -444,6 +415,112 @@ function getCreateEntityStructuralWeight(input: {
   return Math.max(1, weight);
 }
 
+function getCandidateSurfaceReferenceKeys(input: {
+  entity_name: string;
+  categories: string[];
+  entity_type: CreateRetrievalEntityType;
+}): string[] {
+  const structuralWeight = getCreateEntityStructuralWeight({
+    entity_type: input.entity_type,
+    name: input.entity_name,
+    categories: input.categories,
+  });
+  if (structuralWeight < HIGH_SIGNAL_RELATED_SURFACE_MIN_WEIGHT) {
+    return [];
+  }
+
+  const normalizedName = normalizeQuery(input.entity_name);
+  if (!normalizedName) {
+    return [];
+  }
+
+  const keys = [normalizedName];
+  const nameTokens = input.entity_name.split(/\s+/).filter(Boolean);
+  if (nameTokens.length === 1) {
+    const [token] = nameTokens;
+    if (/^[A-Za-z]+$/.test(token)) {
+      if (/y$/i.test(token)) {
+        keys.push(normalizeQuery(`${token.slice(0, -1)}ies`));
+      } else if (/(s|x|z|ch|sh)$/i.test(token)) {
+        keys.push(normalizeQuery(`${token}es`));
+      } else {
+        keys.push(normalizeQuery(`${token}s`));
+      }
+    }
+  }
+
+  return unique(keys.filter(Boolean));
+}
+
+function buildRelatedSurfaceRetrievalDocs(
+  registry: Pick<SaltRegistry, "components" | "patterns">,
+  input: {
+    entity_id: string;
+    entity_type: CreateRetrievalEntityType;
+    entity_name: string;
+    package: string | null;
+    status: SaltStatus | null;
+    categories: string[];
+    structural_weight: number;
+    source_texts: string[];
+  },
+): CreateRetrievalDocument[] {
+  const docs: CreateRetrievalDocument[] = [];
+  const normalizedTexts = input.source_texts
+    .map((text) => ({ raw: text, normalized: normalizeQuery(text) }))
+    .filter(
+      (entry): entry is { raw: string; normalized: string } =>
+        entry.normalized.length > 0,
+    );
+
+  if (normalizedTexts.length === 0) {
+    return docs;
+  }
+
+  const targets = [
+    ...registry.components.map((component) => ({
+      entity_name: component.name,
+      entity_type: "component" as const,
+      categories: component.category,
+    })),
+    ...registry.patterns.map((pattern) => ({
+      entity_name: pattern.name,
+      entity_type: "pattern" as const,
+      categories: pattern.category ?? [],
+    })),
+  ]
+    .filter((target) => target.entity_name !== input.entity_name)
+    .map((target) => ({
+      ...target,
+      keys: getCandidateSurfaceReferenceKeys(target),
+    }))
+    .filter((target) => target.keys.length > 0);
+
+  for (const target of targets) {
+    for (const text of normalizedTexts) {
+      if (!target.keys.some((key) => containsWholeWordPhrase(text.normalized, key))) {
+        continue;
+      }
+
+      pushRetrievalDocument(docs, {
+        entity_id: input.entity_id,
+        entity_type: input.entity_type,
+        entity_name: input.entity_name,
+        package: input.package,
+        status: input.status,
+        source_kind: "related_surface",
+        evidence_role: "supporting",
+        text: `${target.entity_name} ${text.raw}`,
+        source_weight: 10,
+        categories: input.categories,
+        structural_weight: input.structural_weight,
+      });
+    }
+  }
+
+  return docs;
+}
+
 function pushRetrievalDocument(
   docs: CreateRetrievalDocument[],
   input: {
@@ -486,6 +563,7 @@ function pushRetrievalDocument(
 
 function buildComponentRetrievalDocs(
   component: ComponentRecord,
+  registry: Pick<SaltRegistry, "components" | "patterns">,
 ): CreateRetrievalDocument[] {
   const structuralWeight = getCreateEntityStructuralWeight({
     entity_type: "component",
@@ -607,6 +685,23 @@ function buildComponentRetrievalDocs(
     });
   }
 
+  for (const target of component.retrieval_signals?.contrast_targets ?? []) {
+    pushRetrievalDocument(docs, {
+      entity_id: component.id,
+      entity_type: "component",
+      entity_name: component.name,
+      package: componentPackage,
+      status: component.status,
+      source_kind: "contrast_target",
+      evidence_role:
+        target.relation === "complements" ? "supporting" : "caution",
+      text: [target.target, ...target.evidence].join(" "),
+      source_weight: target.relation === "complements" ? 10 : 16,
+      categories: component.category,
+      structural_weight: structuralWeight,
+    });
+  }
+
   const semantics = getEffectiveUsageSemantics(component);
   for (const value of semantics?.preferred_for ?? []) {
     pushRetrievalDocument(docs, {
@@ -696,11 +791,28 @@ function buildComponentRetrievalDocs(
     });
   }
 
+  docs.push(
+    ...buildRelatedSurfaceRetrievalDocs(registry, {
+      entity_id: component.id,
+      entity_type: "component",
+      entity_name: component.name,
+      package: componentPackage,
+      status: component.status,
+      categories: component.category,
+      structural_weight: structuralWeight,
+      source_texts: [
+        ...component.when_to_use,
+        ...(semantics?.preferred_for ?? []),
+      ],
+    }),
+  );
+
   return docs;
 }
 
 function buildPatternRetrievalDocs(
   pattern: PatternRecord,
+  registry: Pick<SaltRegistry, "components" | "patterns">,
 ): CreateRetrievalDocument[] {
   const structuralWeight = getCreateEntityStructuralWeight({
     entity_type: "pattern",
@@ -800,6 +912,23 @@ function buildPatternRetrievalDocs(
       evidence_role: "caution",
       text: value,
       source_weight: 14,
+      categories: pattern.category ?? [],
+      structural_weight: structuralWeight,
+    });
+  }
+
+  for (const target of pattern.retrieval_signals?.contrast_targets ?? []) {
+    pushRetrievalDocument(docs, {
+      entity_id: pattern.id,
+      entity_type: "pattern",
+      entity_name: pattern.name,
+      package: null,
+      status: pattern.status,
+      source_kind: "contrast_target",
+      evidence_role:
+        target.relation === "complements" ? "supporting" : "caution",
+      text: [target.target, ...target.evidence].join(" "),
+      source_weight: target.relation === "complements" ? 10 : 16,
       categories: pattern.category ?? [],
       structural_weight: structuralWeight,
     });
@@ -950,6 +1079,23 @@ function buildPatternRetrievalDocs(
     });
   }
 
+  docs.push(
+    ...buildRelatedSurfaceRetrievalDocs(registry, {
+      entity_id: pattern.id,
+      entity_type: "pattern",
+      entity_name: pattern.name,
+      package: null,
+      status: pattern.status,
+      categories: pattern.category ?? [],
+      structural_weight: structuralWeight,
+      source_texts: [
+        ...pattern.when_to_use,
+        ...(semantics?.preferred_for ?? []),
+        ...pattern.how_to_build,
+      ],
+    }),
+  );
+
   return docs;
 }
 
@@ -959,9 +1105,9 @@ export function buildCreateRetrievalIndex(
   return [
     ...registry.components
       .filter((component) => isComponentAllowedByDocsPolicy(component))
-      .flatMap((component) => buildComponentRetrievalDocs(component)),
+      .flatMap((component) => buildComponentRetrievalDocs(component, registry)),
     ...registry.patterns.flatMap((pattern) =>
-      buildPatternRetrievalDocs(pattern),
+      buildPatternRetrievalDocs(pattern, registry),
     ),
   ];
 }
@@ -1616,10 +1762,7 @@ export function retrieveCreateCandidates(
   }
 
   const topK = Math.max(1, Math.min(input.top_k ?? 5, 25));
-  const semanticExpansions = deriveSemanticCreateQueryExpansions(
-    retrievalQuery,
-    "owner",
-  );
+  const semanticExpansions = deriveSemanticCreateQueryExpansions(retrievalQuery);
   const semanticQueries = semanticExpansions
     .map((expansion) => normalizeQuery(expansion))
     .filter(Boolean);
@@ -1926,10 +2069,7 @@ export function retrieveCreateSupportCandidates(
   }
 
   const topK = Math.max(1, Math.min(input.top_k ?? 8, 25));
-  const semanticExpansions = deriveSemanticCreateQueryExpansions(
-    input.query,
-    "support",
-  );
+  const semanticExpansions = deriveSemanticCreateQueryExpansions(input.query);
   const semanticQueries = semanticExpansions
     .map((expansion) => normalizeQuery(expansion))
     .filter(Boolean);
@@ -1991,6 +2131,29 @@ export function retrieveCreateSupportCandidates(
       candidate.caution_score += scored.score;
     }
 
+    if (
+      doc.source_kind === "canonical_name" &&
+      doc.normalized_text === normalizeQuery(input.query)
+    ) {
+      candidate.exact_match = true;
+    }
+    if (
+      doc.source_kind === "canonical_name" &&
+      normalizeQuery(input.query).startsWith(`${doc.normalized_text} `)
+    ) {
+      candidate.prefix_match = true;
+    }
+    if (
+      doc.evidence_role === "owner" &&
+      (doc.source_kind === "canonical_name" || doc.source_kind === "alias") &&
+      (scored.reasons.includes("exact_phrase") ||
+        scored.reasons.includes("prefix_phrase") ||
+        scored.reasons.includes("full_phrase")) &&
+      containsExplicitCreateReferencePhrase(input.query, doc.text)
+    ) {
+      candidate.explicit_owner_hits += 1;
+    }
+
     candidate.matched_terms = unique([
       ...candidate.matched_terms,
       ...scored.matched_terms,
@@ -2034,6 +2197,14 @@ export function retrieveCreateSupportCandidates(
       if (ownerLinkedTermCount === 0) {
         totalScore -= 18;
       }
+      if (
+        ownerLinkedTermCount === 0 &&
+        !categoryOverlap &&
+        candidate.owner_score > candidate.support_score
+      ) {
+        totalScore = Math.round(totalScore * 0.45);
+      }
+      totalScore += candidate.explicit_owner_hits * 28;
 
       return {
         ...candidate,

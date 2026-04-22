@@ -632,6 +632,7 @@ function getCreateFollowThroughTargets(
     query &&
     primaryTarget &&
     primaryTargetType === "component" &&
+    exactNamedQueryTargets.length === 0 &&
     [...primaryTargetCategories].some((category) =>
       ["data-display-and-analysis", "data-display-and-visualization"].includes(
         category,

@@ -20,6 +20,7 @@ import {
   toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { buildRetrievalSignals } from "./buildRegistryRetrievalSignals.js";
 
 function isExportedStoryStatement(statement: ts.Statement): boolean {
   return Boolean(
@@ -954,7 +955,10 @@ export async function extractPatterns(
         structuredGuidance.avoid.length > 0
           ? (["usage-callouts"] as const)
           : []),
-      ],
+        ],
+    });
+    const retrievalSignals = buildRetrievalSignals({
+      caution_statements: [...whenNotToUse, ...structuredGuidance.avoid],
     });
 
     const summary =
@@ -1021,6 +1025,7 @@ export async function extractPatterns(
         overview: route,
       },
       semantics,
+      retrieval_signals: retrievalSignals,
       last_verified_at: verifiedAt,
     });
   }

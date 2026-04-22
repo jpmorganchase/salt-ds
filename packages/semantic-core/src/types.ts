@@ -133,6 +133,21 @@ export interface UsageSemanticsRecord {
   derived_from: UsageSemanticsSource[];
 }
 
+export type RetrievalContrastRelation =
+  | "prefer-instead"
+  | "not-for"
+  | "complements";
+
+export interface RetrievalContrastTarget {
+  target: string;
+  relation: RetrievalContrastRelation;
+  evidence: string[];
+}
+
+export interface RetrievalSignalsRecord {
+  contrast_targets: RetrievalContrastTarget[];
+}
+
 export interface ExampleRecord {
   id: string;
   title: string;
@@ -178,6 +193,7 @@ export interface ComponentRecord {
     examples: string | null;
   };
   semantics?: UsageSemanticsRecord;
+  retrieval_signals?: RetrievalSignalsRecord;
   source: {
     repo_path: string | null;
     export_name: string | null;
@@ -299,6 +315,7 @@ export interface PatternRecord {
     overview: string | null;
   };
   semantics?: UsageSemanticsRecord;
+  retrieval_signals?: RetrievalSignalsRecord;
   last_verified_at: string;
 }
 
@@ -448,6 +465,8 @@ export type CreateRetrievalSourceKind =
   | "tag"
   | "when_to_use"
   | "when_not_to_use"
+  | "contrast_target"
+  | "related_surface"
   | "semantics_preferred_for"
   | "semantics_not_for"
   | "example"
