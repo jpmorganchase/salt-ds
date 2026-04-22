@@ -23,9 +23,7 @@
     "args": {
       "query": "Link"
     },
-    "rule_ids": [
-      "create-follow-through-required"
-    ],
+    "rule_ids": ["create-follow-through-required"],
     "post_action": null
   },
   "summary": "Salt grounded the exact requested entity Metric."

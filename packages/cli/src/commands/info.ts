@@ -37,6 +37,11 @@ function formatInfoReport(result: SaltInfoResult): string {
         ? `${result.registry.source} (${result.registry.registryDir})`
         : "unavailable"
     }`,
+    `Catalog support: ${
+      result.capabilityManifest.support_surface.retrieval_catalog.available
+        ? `${result.capabilityManifest.support_surface.retrieval_catalog.contract_version} via ${result.capabilityManifest.support_surface.retrieval_catalog.access.join(", ")}`
+        : "unavailable"
+    }`,
     `Policy: ${
       result.policy.mode === "none"
         ? "not detected"
@@ -58,6 +63,27 @@ function formatInfoReport(result: SaltInfoResult): string {
         (layer) =>
           `- ${layer.id} [${layer.scope}] via ${layer.sourceType}:${layer.source}${layer.optional ? " (optional)" : ""}${layer.resolution.packId ? ` {${layer.resolution.packId}}` : ""}${layer.resolution.compatibility ? ` <${layer.resolution.compatibility.status}>` : ""}${layer.resolution.reason ? ` - ${layer.resolution.reason}` : ""}`,
       ),
+    );
+  }
+
+  if (result.catalog?.query) {
+    lines.push("Catalog query:");
+    lines.push(
+      `- ${result.catalog.query.query} -> ${result.catalog.query.owner?.entity.name ?? "no owner"} [${result.catalog.query.status}]`,
+    );
+  }
+
+  if (result.catalog?.entity) {
+    lines.push("Catalog entity:");
+    lines.push(
+      `- ${result.catalog.entity.query} -> ${result.catalog.entity.matches.length} match${result.catalog.entity.matches.length === 1 ? "" : "es"} [${result.catalog.entity.status}]`,
+    );
+  }
+
+  if (result.catalog?.family) {
+    lines.push("Catalog family:");
+    lines.push(
+      `- ${result.catalog.family.query} -> ${result.catalog.family.matches.length} family match${result.catalog.family.matches.length === 1 ? "" : "es"} [${result.catalog.family.status}]`,
     );
   }
 
@@ -131,6 +157,9 @@ export async function runInfoCommand(
   const rootDir = path.resolve(io.cwd, positionals[0] ?? ".");
   const result = await collectSaltInfo(rootDir, flags["registry-dir"], {
     policyDetail: "resolved",
+    catalogQuery: flags["catalog-query"],
+    entityName: flags.entity,
+    familyName: flags.family,
   });
   const outputPath = flags.output
     ? path.resolve(io.cwd, flags.output)

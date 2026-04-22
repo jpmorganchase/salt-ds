@@ -26,6 +26,11 @@ Counter that by making workflow completion explicit.
 - A generated patch is not proof that canonical Salt discovery completed.
 - A successful build is not proof that the Salt workflow contract completed.
 - For create and migrate work, run source-level Salt validation after the first scaffold pass when code is available.
+- For create work, prefer `compact -> retrieval support -> exact follow-through -> full only when needed`.
+- If compact create is still `partial` or `blocked`, inspect the catalog support surface before escalating:
+  - MCP: `salt://catalog/candidates/{query}` and `salt://catalog/entity/{name}`
+  - CLI fallback: `salt-ds info --json --catalog-query "<prompt>"` and `salt-ds info --json --entity "<name>"`
+- Do not let the host paraphrase a grounded exact entity back into a broader prompt on the next call.
 
 ## Communication Rules
 

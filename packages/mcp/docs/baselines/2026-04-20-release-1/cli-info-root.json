@@ -10,10 +10,7 @@
   },
   "framework": {
     "name": "vite-react",
-    "evidence": [
-      "dependency:vite",
-      "dependency:react"
-    ]
+    "evidence": ["dependency:vite", "dependency:react"]
   },
   "workspace": {
     "kind": "workspace-root",
@@ -23,9 +20,7 @@
     "packages": [],
     "packageVersion": null,
     "installation": {
-      "nodeModulesRoots": [
-        "D:/Work/salt-ds-3/node_modules"
-      ],
+      "nodeModulesRoots": ["D:/Work/salt-ds-3/node_modules"],
       "resolvedPackages": [],
       "installedPackages": [
         {
@@ -165,9 +160,7 @@
           "Package-manager inspection failed for yarn; Salt relied on the node_modules scan instead.",
           "Dependency override fields detected: resolutions."
         ],
-        "manifestOverrideFields": [
-          "resolutions"
-        ]
+        "manifestOverrideFields": ["resolutions"]
       },
       "remediation": {
         "explainCommand": "yarn why @salt-ds/core",
@@ -226,15 +219,11 @@
     "aliases": [
       {
         "alias": ".storybook/*",
-        "targets": [
-          "./.storybook/*"
-        ]
+        "targets": ["./.storybook/*"]
       },
       {
         "alias": "@salt-ds/date-adapters/*",
-        "targets": [
-          "./packages/date-adapters/src/*-adapter/index.ts"
-        ]
+        "targets": ["./packages/date-adapters/src/*-adapter/index.ts"]
       },
       {
         "alias": "@stories/*",
@@ -250,9 +239,7 @@
       },
       {
         "alias": "packages/*",
-        "targets": [
-          "./packages/*"
-        ]
+        "targets": ["./packages/*"]
       }
     ]
   },

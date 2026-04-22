@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
+import { getPackageRoot } from "@salt-ds/semantic-core/registry/paths";
 import {
   buildSaltCapabilityManifest,
   type SaltCapabilityManifest,
 } from "@salt-ds/semantic-core/tools/capabilityManifest";
-import { getPackageRoot } from "@salt-ds/semantic-core/registry/paths";
 
 interface SaltCliPackageManifest {
   name: string;
@@ -82,8 +82,21 @@ export function buildSaltCliCapabilityManifest(input: {
       setup_contract_ids: ["info", "init"],
     },
     public_surface: {
-      default_surface_ids: ["info", "init", "create", "review", "migrate", "upgrade"],
+      default_surface_ids: [
+        "info",
+        "init",
+        "create",
+        "review",
+        "migrate",
+        "upgrade",
+      ],
       advanced_output_ids: ["full", "starter-only"],
+    },
+    support_surface: {
+      retrieval_catalog: {
+        available: input.registry_available,
+        access: ["info"],
+      },
     },
     capabilities: {
       repo_context: true,
@@ -102,6 +115,13 @@ export function buildSaltCliCapabilityManifest(input: {
       handoff: {
         portable_bundle: false,
       },
+    },
+    resources: {
+      capability_manifest_uri: null,
+      catalog_manifest_uri: null,
+      catalog_entity_template_uri: null,
+      catalog_candidates_template_uri: null,
+      catalog_family_template_uri: null,
     },
   });
 }

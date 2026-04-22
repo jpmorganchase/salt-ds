@@ -50,3 +50,4 @@ affordances
 trackpad
 toggletip
 toggletips
+wayfinding

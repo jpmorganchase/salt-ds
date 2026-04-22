@@ -37,52 +37,27 @@ async function runSaltJson(rootDir, args, options = {}) {
   };
 }
 
-const PUBLIC_MCP_WORKFLOW_IDS = new Set([
-  "get_salt_project_context",
-  "bootstrap_salt_repo",
-  "create_salt_ui",
-  "review_salt_ui",
-  "migrate_to_salt",
-  "upgrade_salt_ui",
-]);
-
-function assertPublicMcpNextStep(nextStep, message) {
-  assert(
-    nextStep &&
-      typeof nextStep === "object" &&
-      typeof nextStep.kind === "string",
-    message,
-  );
-
-  if (
-    nextStep.kind === "tool_call" ||
-    nextStep.kind === "review" ||
-    nextStep.kind === "fix_context"
-  ) {
-    assert(
-      typeof nextStep.tool === "string" &&
-        PUBLIC_MCP_WORKFLOW_IDS.has(nextStep.tool),
-      message,
-    );
-  }
-}
-
 function assertCompactMcpWorkflowPayload(payload, workflow, message) {
   assert(
-    payload?.workflow === workflow &&
-      payload?.transport_used === "mcp" &&
-      typeof payload?.workflow_status === "string" &&
-      ["success", "partial", "blocked", "failed"].includes(
-        payload.workflow_status,
-      ) &&
-      typeof payload?.canonical_complete === "boolean" &&
-      typeof payload?.safe_to_implement_exact_request === "boolean" &&
-      Array.isArray(payload?.blocking_reasons) &&
+    payload?.contract === "salt_workflow_v3" &&
+      payload?.workflow === workflow &&
+      payload?.transport === "mcp" &&
+      typeof payload?.status === "string" &&
+      ["success", "partial", "blocked", "failed"].includes(payload.status) &&
+      payload?.request &&
+      typeof payload.request === "object" &&
+      payload?.safety &&
+      typeof payload.safety === "object" &&
+      typeof payload?.safety?.canonical_complete === "boolean" &&
+      typeof payload?.safety?.exact_request_safe === "boolean" &&
+      Array.isArray(payload?.safety?.blocking_reasons) &&
+      payload?.action &&
+      typeof payload.action === "object" &&
+      typeof payload?.action?.kind === "string" &&
       typeof payload?.summary === "string" &&
       payload.summary.length > 0,
     message,
   );
-  assertPublicMcpNextStep(payload?.next_step, message);
 }
 
 const WORKFLOW_EXIT_CODES = {
@@ -94,22 +69,29 @@ const WORKFLOW_EXIT_CODES = {
 
 function assertCompactCliWorkflowPayload(payload, workflow, exitCode, message) {
   assert(
-    payload?.workflow === workflow &&
-      payload?.transport_used === "cli" &&
-      typeof payload?.workflow_status === "string" &&
-      Object.hasOwn(WORKFLOW_EXIT_CODES, payload.workflow_status) &&
-      typeof payload?.canonical_complete === "boolean" &&
-      typeof payload?.safe_to_implement_exact_request === "boolean" &&
-      Array.isArray(payload?.blocking_reasons) &&
+    payload?.contract === "salt_workflow_v3" &&
+      payload?.workflow === workflow &&
+      payload?.transport === "cli" &&
+      typeof payload?.status === "string" &&
+      Object.hasOwn(WORKFLOW_EXIT_CODES, payload.status) &&
+      payload?.request &&
+      typeof payload.request === "object" &&
+      payload?.safety &&
+      typeof payload.safety === "object" &&
+      typeof payload?.safety?.canonical_complete === "boolean" &&
+      typeof payload?.safety?.exact_request_safe === "boolean" &&
+      Array.isArray(payload?.safety?.blocking_reasons) &&
+      payload?.action &&
+      typeof payload.action === "object" &&
+      typeof payload?.action?.kind === "string" &&
       typeof payload?.summary === "string" &&
       payload.summary.length > 0,
     message,
   );
   assert(
-    exitCode === WORKFLOW_EXIT_CODES[payload.workflow_status],
-    `${message} Exit code ${exitCode} did not match workflow_status ${payload.workflow_status}.`,
+    exitCode === WORKFLOW_EXIT_CODES[payload.status],
+    `${message} Exit code ${exitCode} did not match status ${payload.status}.`,
   );
-  assertPublicMcpNextStep(payload?.next_step, message);
 }
 
 export async function runDoctor(installRoot, repoRoot, runtimeUrl) {

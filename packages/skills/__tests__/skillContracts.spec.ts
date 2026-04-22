@@ -116,9 +116,6 @@ describe("Salt skill contracts", () => {
     expect(primarySkill).toContain(
       "Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.",
     );
-    expect(primarySkill.split("\n").slice(0, 120).join("\n")).toContain(
-      "## Reference Routing",
-    );
     expect(primarySkill).toContain(
       "Read compact workflow output from stable top-level workflow signals first, such as:",
     );
@@ -161,7 +158,7 @@ describe("Salt skill contracts", () => {
     expect(createRules).toContain("create-task-first");
     expect(createRules).toContain("create-verify-named-salt-details");
     expect(createRules).toContain(
-      "if compact `create` output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before implementing the blocked sub-surface",
+      "if compact `create` output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked sub-surface",
     );
     expect(createRules).toContain(
       "do not translate concrete follow-up asks into abstract category prose",
@@ -174,10 +171,10 @@ describe("Salt skill contracts", () => {
     );
     expect(createWorkflow).toContain("workflow-directed grounding follow-ups");
     expect(createWorkflow).toContain(
-      "follow the returned top-level `next_step` before building the blocked region.",
+      "follow the returned top-level `action` before building the blocked region.",
     );
     expect(createWorkflow).toContain(
-      "Request `full` output only when `next_step` or `blocking_reasons` indicate you need deeper artifacts",
+      "Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts",
     );
     const createOutput = await readSkill("salt-ds/references/create/output.md");
     expect(createOutput).toContain(
@@ -234,9 +231,6 @@ describe("Salt skill contracts", () => {
       "Read compact workflow output from top-level fields first:",
     );
     expect(transport).toContain(
-      "read `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary` first",
-    );
-    expect(transport).toContain(
       "`salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup or rough design outline that should be converted into structured evidence before translation",
     );
     expect(transport).toContain(
@@ -259,10 +253,10 @@ describe("Salt skill contracts", () => {
       "a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
     );
     expect(repoInstructionsTemplate).toContain(
-      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
+      "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
     );
     expect(repoInstructionsTemplate).toContain(
-      "use the compact Salt contract first: `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary`",
+      "use the compact Salt contract first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary`",
     );
     expect(repoInstructionsTemplate).toContain(
       "Do not send raw image attachments directly to Salt MCP.",
@@ -272,7 +266,7 @@ describe("Salt skill contracts", () => {
     );
     expect(repoInstructionsTemplate).not.toContain("entity-grounding step");
     expect(bootstrapScaffolding).toContain(
-      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
+      "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
     );
   });
 

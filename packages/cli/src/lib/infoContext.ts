@@ -11,18 +11,25 @@ import {
   type ProjectPolicyDetailLevel,
 } from "@salt-ds/semantic-core/policy/detection";
 import { deriveComparableSaltVersion } from "@salt-ds/semantic-core/policy/layerDiagnostics";
+import {
+  buildCreateCatalogSupportManifest,
+  inspectCreateCatalogQuery,
+  lookupCreateCatalogEntity,
+  lookupCreateCatalogFamily,
+  SALT_CREATE_CATALOG_TOP_K_DEFAULT,
+} from "@salt-ds/semantic-core/tools/createCatalogSupport";
 import { getTsconfig } from "get-tsconfig";
 import type { SaltInfoResult } from "../types.js";
 import { pathExists } from "./common.js";
-import {
-  buildSaltCliCapabilityManifest,
-  getSaltCliRuntimeMetadata,
-} from "./runtimeMetadata.js";
 import {
   detectSaltPackageVersion,
   findAncestorWithChild,
   resolveSemanticRegistry,
 } from "./registry.js";
+import {
+  buildSaltCliCapabilityManifest,
+  getSaltCliRuntimeMetadata,
+} from "./runtimeMetadata.js";
 
 interface PackageJsonLike {
   name?: string;
@@ -240,6 +247,9 @@ function createDetectedTargets(
 
 export interface CollectSaltInfoOptions {
   policyDetail?: ProjectPolicyDetailLevel;
+  catalogQuery?: string;
+  entityName?: string;
+  familyName?: string;
 }
 
 export async function collectSaltInfo(
@@ -281,6 +291,7 @@ export async function collectSaltInfo(
     mcpPackageInstalled: false,
     canonicalTransport: "unavailable",
   };
+  let catalog: SaltInfoResult["catalog"] | undefined;
   let capabilityManifest = buildSaltCliCapabilityManifest({
     registry_available: false,
     registry_version: null,
@@ -304,6 +315,29 @@ export async function collectSaltInfo(
       registry_version: resolvedRegistry.registry.version,
       registry_generated_at: resolvedRegistry.registry.generated_at,
     });
+    if (options.catalogQuery || options.entityName || options.familyName) {
+      catalog = {
+        manifest: buildCreateCatalogSupportManifest(),
+        query: options.catalogQuery
+          ? inspectCreateCatalogQuery(resolvedRegistry.registry, {
+              query: options.catalogQuery,
+              top_k: SALT_CREATE_CATALOG_TOP_K_DEFAULT,
+            })
+          : null,
+        entity: options.entityName
+          ? lookupCreateCatalogEntity(
+              resolvedRegistry.registry,
+              options.entityName,
+            )
+          : null,
+        family: options.familyName
+          ? lookupCreateCatalogFamily(
+              resolvedRegistry.registry,
+              options.familyName,
+            )
+          : null,
+      };
+    }
   } catch (error) {
     notes.push(
       error instanceof Error
@@ -384,6 +418,7 @@ export async function collectSaltInfo(
       detectedTargets: createDetectedTargets(packageJson, doctor.repoSignals),
     },
     registry,
+    catalog,
     workflows: {
       bootstrapConventions: true,
       create: registry.available && repoAwareWorkflowAvailability.create,

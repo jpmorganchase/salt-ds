@@ -1,15 +1,21 @@
 import fs from "node:fs";
 import path from "node:path";
+import { getPackageRoot } from "@salt-ds/semantic-core/registry/paths";
 import {
   buildSaltCapabilityManifest,
   type SaltCapabilityManifest,
 } from "@salt-ds/semantic-core/tools/capabilityManifest";
-import { getPackageRoot } from "@salt-ds/semantic-core/registry/paths";
 import type { SaltRegistry } from "../types.js";
 
 const SALT_MCP_SERVER_NAME = "salt-mcp";
-export const SALT_MCP_CAPABILITY_MANIFEST_URI =
-  "salt://capabilities/manifest";
+export const SALT_MCP_CAPABILITY_MANIFEST_URI = "salt://capabilities/manifest";
+export const SALT_MCP_CATALOG_MANIFEST_URI = "salt://catalog/manifest";
+export const SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI =
+  "salt://catalog/entity/{name}";
+export const SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI =
+  "salt://catalog/candidates/{query}";
+export const SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI =
+  "salt://catalog/family/{family}";
 
 interface SaltMcpPackageManifest {
   name: string;
@@ -77,10 +83,7 @@ export function getSaltMcpRuntimeMetadata(
       generated_at: registry.generated_at,
     },
     contracts: {
-      setup_contract_ids: [
-        "get_salt_project_context",
-        "bootstrap_salt_repo",
-      ],
+      setup_contract_ids: ["get_salt_project_context", "bootstrap_salt_repo"],
     },
     public_surface: {
       default_surface_ids: [
@@ -92,6 +95,12 @@ export function getSaltMcpRuntimeMetadata(
         "upgrade_salt_ui",
       ],
       advanced_output_ids: ["view:full"],
+    },
+    support_surface: {
+      retrieval_catalog: {
+        available: true,
+        access: ["resource"],
+      },
     },
     capabilities: {
       repo_context: true,
@@ -113,6 +122,10 @@ export function getSaltMcpRuntimeMetadata(
     },
     resources: {
       capability_manifest_uri: SALT_MCP_CAPABILITY_MANIFEST_URI,
+      catalog_manifest_uri: SALT_MCP_CATALOG_MANIFEST_URI,
+      catalog_entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
+      catalog_candidates_template_uri: SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
+      catalog_family_template_uri: SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
     },
   });
 
@@ -145,6 +158,8 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     `Serving Salt registry v${metadata.registry_version}.`,
     `Registry generated at ${metadata.registry_generated_at}.`,
     `Machine-readable capability manifest resource: ${metadata.capability_manifest_uri}.`,
+    `Machine-readable retrieval catalog resources: ${SALT_MCP_CATALOG_MANIFEST_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}, ${SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI}.`,
+    `Catalog family browsing is available through ${SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI}.`,
     "When asked for the MCP version, use the runtime version.",
     "When asked about the Salt content version, use the registry version.",
     "This MCP only provides canonical Salt guidance from official Salt sources.",
@@ -156,6 +171,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     "Only reuse get_salt_project_context.result.context_id when it is non-null. When context_health.trusted is false, use artifacts.summary.retry_with.root_dir for the next context call instead of guessing.",
     "If repo bootstrap is still required, use bootstrap_salt_repo before relying on repo-specific Salt refinement.",
     "Primary workflow tools return a compact top-level contract by default. Treat top-level status, safety, and action as the authoritative branching surface.",
+    `When compact create remains broad or mixed-surface, inspect retrieval catalog support through ${SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}, and ${SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI} before escalating to full output.`,
     "A partial or blocked workflow result is not complete. Follow the returned action or report the incomplete state explicitly.",
     "migrate_to_salt returns post_migration_verification so the agent can carry a deterministic follow-up loop back into local review work.",
     "review_salt_ui returns fix_candidates as agent-applied remediation guidance rather than as direct file mutation.",

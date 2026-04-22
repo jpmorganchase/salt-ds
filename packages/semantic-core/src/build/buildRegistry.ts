@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
-  REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_ARRAY_ARTIFACTS,
+  REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
   REGISTRY_SEARCH_INDEX_ARTIFACT,
@@ -12,8 +12,8 @@ import {
 } from "../registry/artifacts.js";
 import { findSaltRepoRoot, getPackageRoot } from "../registry/paths.js";
 import { buildSerializedPageSearchIndex } from "../search/pageSearchIndex.js";
-import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
 import { buildCreateRetrievalIndex } from "../tools/createRetrieval.js";
+import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
 import { extractCountrySymbols, extractIcons } from "./buildRegistryAssets.js";
 import { buildRegistryBuildInfo } from "./buildRegistryBuildInfo.js";
 import { extractChanges } from "./buildRegistryChanges.js";

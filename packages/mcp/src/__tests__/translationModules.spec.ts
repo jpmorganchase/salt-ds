@@ -55,12 +55,12 @@ const REGISTRY: SaltRegistry = {
         summary: ["Use discernible link text."],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [
         {
           id: "link.basic",
           title: "Basic link",
+          description: "Simple link that navigates to another route.",
           intent: ["navigation"],
           complexity: "basic",
           code: '<Link href="/next">Next</Link>',
@@ -104,12 +104,12 @@ const REGISTRY: SaltRegistry = {
         summary: ["Associate Input with a visible label or FormField."],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [
         {
           id: "input.basic",
           title: "Basic input",
+          description: "Simple text input example.",
           intent: ["capture short text"],
           complexity: "basic",
           code: '<Input aria-label="Search" />',
@@ -153,12 +153,12 @@ const REGISTRY: SaltRegistry = {
         summary: ["Provide a clear accessible name for the navigation region."],
         rules: [],
       },
-      tokens: [],
       patterns: ["Vertical navigation"],
       examples: [
         {
           id: "vertical-navigation.basic",
           title: "Basic vertical navigation",
+          description: "Sidebar navigation example with a labeled region.",
           intent: ["sidebar navigation"],
           complexity: "intermediate",
           code: '<VerticalNavigation aria-label="Main navigation" />',

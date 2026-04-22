@@ -1,40 +1,37 @@
 # MCP Docs
 
-Use this folder by audience:
+Use this folder as the minimal maintainer set for the current Salt AI direction.
 
-- maintainer guidance, strategy, and execution tracking:
-  - [`ai-product-roadmap.md`](./ai-product-roadmap.md)
-    - current strategic roadmap
-  - [`public-api-matrix.md`](./public-api-matrix.md)
-    - Release 1 contract-freeze matrix for public outputs
-  - [`public-contract-v3-breaking-proposal.md`](./public-contract-v3-breaking-proposal.md)
-    - optional final breaking-change proposal for a smaller, stricter post-Release-1 public contract
-  - [`public-contract-v3-implementation-plan.md`](./public-contract-v3-implementation-plan.md)
-    - execution plan for the approved v3 contract migration
-  - [`release-1-execution-checklist.md`](./release-1-execution-checklist.md)
-    - mutable Release 1 execution tracker with gates, evidence, and owners
-  - [`release-1-release-evidence.md`](./release-1-release-evidence.md)
-    - baseline-to-final contract note, payload budgets, and repo-local host/pilot evidence
-  - [`post-release-1-follow-up-backlog.md`](./post-release-1-follow-up-backlog.md)
-    - narrow post-sign-off backlog for external-host orchestration and first-pass create-routing fixes
-  - [`create-retrieval-architecture-proposal.md`](./create-retrieval-architecture-proposal.md)
-    - draft proposal for replacing prompt-specific create-routing patches with a retrieval-first architecture
-  - [`baselines/2026-04-20-release-1/README.md`](./baselines/2026-04-20-release-1/README.md)
-    - pre-implementation public-surface baseline snapshot for Release 1
-  - [`baselines/2026-04-20-release-1-v3/README.md`](./baselines/2026-04-20-release-1-v3/README.md)
-    - post-migration shipped-artifact snapshot for the final `salt_workflow_v3` surface
-  - [`maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)
-    - architectural maintainer guide
-  - [`ai-design-system-quality-standard.md`](./ai-design-system-quality-standard.md)
-    - internal quality standard and product lessons from strong public design-system AI offerings
-  - [`ai-tooling-hardening-backlog.md`](./ai-tooling-hardening-backlog.md)
-    - current implementation backlog for Salt AI reliability, ranking, payload efficiency, and host integration hardening
-  - [`live-eval-harness.md`](./live-eval-harness.md)
-    - checked-in live and replay workflow eval harness docs
-  - [`external-validation-guide.md`](./external-validation-guide.md)
-    - step-by-step runbook for post-Release-1 MCP host and CLI repo validation before rollout
-  - [`archive/README.md`](./archive/README.md)
-    - historical alpha, V1, and productization planning docs
+## Active Docs
+
+- [`maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)
+  - architectural maintainer guide
+- [`ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md)
+  - target product shape: registry-first for context, workflow-first for safety
+- [`ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md)
+  - change gate for future tooling work
+- [`ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md)
+  - active rewrite path for the current architecture
+- [`host-validation-checklist.md`](./host-validation-checklist.md)
+  - short real-host validation checklist for the current build
+- [`public-api-matrix.md`](./public-api-matrix.md)
+  - current `salt_workflow_v3` public contract matrix
+
+## Historical Docs
+
+- [`archive/public-contract-v3-implementation-plan.md`](./archive/public-contract-v3-implementation-plan.md)
+  - retained `v3` migration record
+- [`archive/release-1-release-evidence.md`](./archive/release-1-release-evidence.md)
+  - retained release evidence and external validation note
+- [`archive/README.md`](./archive/README.md)
+  - minimal archive index
+
+## Snapshots
+
+- [`baselines/2026-04-20-release-1/README.md`](./baselines/2026-04-20-release-1/README.md)
+  - pre-implementation Release 1 public-surface snapshot
+- [`baselines/2026-04-20-release-1-v3/README.md`](./baselines/2026-04-20-release-1-v3/README.md)
+  - post-migration shipped-artifact snapshot for `salt_workflow_v3`
 
 Consumer-facing guidance lives in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
-Keep current-state maintainer docs in this folder. Archive superseded planning docs once their guidance is folded into the active docs.
+Keep only the current direction and live contract docs here. Use Git history for anything older unless it is one of the two retained archive records above.

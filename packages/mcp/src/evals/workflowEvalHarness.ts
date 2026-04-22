@@ -349,9 +349,7 @@ function averageMetric(total: number, count: number): number {
   return Number((total / count).toFixed(2));
 }
 
-function extractPublicNextStep(
-  value: unknown,
-): Record<string, unknown> | null {
+function extractPublicNextStep(value: unknown): Record<string, unknown> | null {
   const publicContract = extractPublicContract(value);
   return publicContract && isRecord(publicContract.action)
     ? publicContract.action
@@ -359,9 +357,8 @@ function extractPublicNextStep(
 }
 
 function countTransportAttempts(trace: WorkflowEvalTrace): number {
-  return trace.transport_trace.filter(
-    (entry) => entry.status !== "unavailable",
-  ).length;
+  return trace.transport_trace.filter((entry) => entry.status !== "unavailable")
+    .length;
 }
 
 function hasFallbackTransport(trace: WorkflowEvalTrace): boolean {
@@ -384,8 +381,8 @@ function hasRetryContract(trace: WorkflowEvalTrace): boolean {
   return (
     serialized.includes("retry_with.root_dir") ||
     serialized.includes("needs_explicit_root") ||
-    serialized.includes("\"kind\":\"fix_context\"") ||
-    serialized.includes("\"kind\": \"fix_context\"")
+    serialized.includes('"kind":"fix_context"') ||
+    serialized.includes('"kind": "fix_context"')
   );
 }
 
@@ -421,7 +418,9 @@ export function buildWorkflowEvalScorecard(
     const nextStep = extractPublicNextStep(entry.trace.workflow_result);
     return nextStep?.kind === "fix_context";
   });
-  const retryContracts = entries.filter((entry) => hasRetryContract(entry.trace));
+  const retryContracts = entries.filter((entry) =>
+    hasRetryContract(entry.trace),
+  );
   const safeContextStops = entries.filter((entry) => {
     const tags = entry.tags ?? [];
     return (
@@ -445,7 +444,8 @@ export function buildWorkflowEvalScorecard(
   });
   const directSuccesses = passed.filter(
     (entry) =>
-      !hasFallbackTransport(entry.trace) && countTransportAttempts(entry.trace) <= 1,
+      !hasFallbackTransport(entry.trace) &&
+      countTransportAttempts(entry.trace) <= 1,
   );
   const fallbackSuccesses = passed.filter((entry) =>
     hasFallbackTransport(entry.trace),
@@ -522,7 +522,10 @@ export function buildWorkflowEvalScorecard(
         entryCount,
       ),
       repeated_transport_attempts: multiAttemptRuns.length,
-      average_time_to_safe_next_step_ms: averageMetric(totalDurationMs, entryCount),
+      average_time_to_safe_next_step_ms: averageMetric(
+        totalDurationMs,
+        entryCount,
+      ),
       average_prompt_tokens: averageMetric(totalPromptTokens, entryCount),
     },
   };
@@ -557,7 +560,11 @@ function toPublicWorkflowId(rawId: string | null): string | null {
 }
 
 function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
-  if (isRecord(value) && isRecord(value.details) && isRecord(value.details.workflow)) {
+  if (
+    isRecord(value) &&
+    isRecord(value.details) &&
+    isRecord(value.details.workflow)
+  ) {
     return value.details.workflow;
   }
 
@@ -570,9 +577,7 @@ function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
     return {
       id: toPublicWorkflowId(value.workflow),
       workflow_status:
-        typeof value.status === "string"
-          ? value.status
-          : value.workflow_status,
+        typeof value.status === "string" ? value.status : value.workflow_status,
       canonical_complete:
         typeof safety?.canonical_complete === "boolean"
           ? safety.canonical_complete
@@ -588,7 +593,11 @@ function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
 }
 
 function extractResultObject(value: unknown): Record<string, unknown> | null {
-  if (isRecord(value) && isRecord(value.details) && isRecord(value.details.result)) {
+  if (
+    isRecord(value) &&
+    isRecord(value.details) &&
+    isRecord(value.details.result)
+  ) {
     return value.details.result;
   }
 
@@ -653,7 +662,8 @@ export function normalizeWorkflowEvalPublicContract(
       typeof request?.resolved_entity === "string" ||
       request?.resolved_entity === null
         ? request.resolved_entity
-        : typeof value.resolved_entity === "string" || value.resolved_entity === null
+        : typeof value.resolved_entity === "string" ||
+            value.resolved_entity === null
           ? value.resolved_entity
           : null;
     const matchStatus =
@@ -697,7 +707,9 @@ export function normalizeWorkflowEvalPublicContract(
       ...(exactRequestSafe !== null
         ? { safe_to_implement_exact_request: exactRequestSafe }
         : {}),
-      ...(requestedEntity !== null ? { requested_entity: requestedEntity } : {}),
+      ...(requestedEntity !== null
+        ? { requested_entity: requestedEntity }
+        : {}),
       ...(resolvedEntity !== null || request?.resolved_entity === null
         ? { resolved_entity: resolvedEntity }
         : {}),

@@ -647,7 +647,7 @@ describe("registry integration", () => {
       expect.arrayContaining([
         expect.stringContaining("single selection"),
         expect.stringContaining("List filtering"),
-        expect.stringContaining("simple reorderable list"),
+        expect.stringContaining("simple re-orderable list"),
       ]),
     );
   });

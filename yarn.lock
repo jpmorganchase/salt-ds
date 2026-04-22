@@ -4331,7 +4331,6 @@ __metadata:
     remark-mdx: "npm:^3.1.1"
     remark-parse: "npm:^11.0.0"
     semver: "npm:^7.7.3"
-    stemmer: "npm:^2.0.0"
     typescript: "npm:^6.0.0"
     unified: "npm:^11.0.5"
   languageName: unknown
@@ -8443,8 +8442,8 @@ __metadata:
   linkType: hard
 
 "cypress@npm:^15.0.0":
-  version: 15.10.0
-  resolution: "cypress@npm:15.10.0"
+  version: 15.14.1
+  resolution: "cypress@npm:15.14.1"
   dependencies:
     "@cypress/request": "npm:^3.0.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -8483,14 +8482,15 @@ __metadata:
     proxy-from-env: "npm:1.0.0"
     request-progress: "npm:^3.0.0"
     supports-color: "npm:^8.1.1"
-    systeminformation: "npm:^5.27.14"
+    systeminformation: "npm:^5.31.1"
     tmp: "npm:~0.2.4"
     tree-kill: "npm:1.2.2"
+    tslib: "npm:1.14.1"
     untildify: "npm:^4.0.0"
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/b1e9726a7c386118b461be89a4b46ff544b10be23d0c7c03f98a9c4bc9b0a85c0282b7c3dc4a86cacbad293706b387af5985645fa119d3f88080577ee677d42b
+  checksum: 10/e896f5f3b08b90ce121ed71a7d8974dd6fff31aed2448c80ae624d469b6716b6e9626a6757e8ca0ef6113e679a3e632cdd93a9879c55e5bc37434395c1bf0be6
   languageName: node
   linkType: hard
 
@@ -16323,15 +16323,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stemmer@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "stemmer@npm:2.0.0"
-  bin:
-    stemmer: cli.js
-  checksum: 10/4a4f1673f62aaa6221b0d696dfd166ad2306249898df13e97cecccfa4abd448226176c9af46480e50e0dcd3ea9ba95b098d0176f09864eaf839f52b6434809d7
-  languageName: node
-  linkType: hard
-
 "stop-iteration-iterator@npm:^1.0.0":
   version: 1.0.0
   resolution: "stop-iteration-iterator@npm:1.0.0"
@@ -16810,7 +16801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.27.14":
+"systeminformation@npm:^5.31.1":
   version: 5.31.5
   resolution: "systeminformation@npm:5.31.5"
   bin:

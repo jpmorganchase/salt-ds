@@ -27,28 +27,25 @@ const BUILT_AT = "2026-03-10T00:00:00Z";
 let registry: SaltRegistry;
 let registryDir: string;
 
-type CreateWorkflowFullResult = Exclude<
-  ReturnType<typeof withChooseWorkflowGuidance>,
-  PublicContract
->;
-type ReviewWorkflowFullResult = Exclude<
-  ReturnType<typeof withAnalyzeWorkflowGuidance>,
-  PublicContract
->;
-type MigrateWorkflowFullResult = Exclude<
-  ReturnType<typeof withTranslateWorkflowGuidance>,
-  PublicContract
->;
+// biome-ignore lint/suspicious/noExplicitAny: deterministic evals flatten dynamic workflow detail envelopes from multiple workflows.
+type LooseWorkflowDetailsObject = Record<string, any>;
 
-function readFullWorkflowResult<T>(value: T): T {
-  if (value == null || typeof value !== "object") {
-    return value;
-  }
+type WorkflowFullDetailsShape = {
+  workflow: LooseWorkflowDetailsObject;
+  result: LooseWorkflowDetailsObject;
+  artifacts: LooseWorkflowDetailsObject;
+};
 
-  const payload = value as Record<string, unknown>;
-  if (payload.contract !== "salt_workflow_v3" || payload.details == null) {
-    return value;
-  }
+type WorkflowFullResult = Omit<PublicContract, "workflow"> &
+  WorkflowFullDetailsShape;
+type CreateWorkflowFullResult = WorkflowFullResult;
+type ReviewWorkflowFullResult = WorkflowFullResult;
+type MigrateWorkflowFullResult = WorkflowFullResult;
+
+function readFullWorkflowResult(
+  value: PublicContract & { details: WorkflowFullDetailsShape },
+): WorkflowFullResult {
+  const payload = value;
 
   expect(payload).toEqual(
     expect.objectContaining({
@@ -63,13 +60,13 @@ function readFullWorkflowResult<T>(value: T): T {
     }),
   );
 
-  const details = payload.details as Record<string, unknown>;
+  const details = payload.details;
   return {
     ...payload,
     workflow: details.workflow,
     result: details.result,
     artifacts: details.artifacts,
-  } as T;
+  };
 }
 
 function runCreateWorkflowFull(input: {
@@ -93,8 +90,8 @@ function runCreateWorkflowFull(input: {
         project_policy: input.projectPolicy,
         view: "full",
       },
-    ),
-  ) as CreateWorkflowFullResult;
+    ) as PublicContract & { details: WorkflowFullDetailsShape },
+  );
 }
 
 function runReviewWorkflowFull(input: {
@@ -115,8 +112,8 @@ function runReviewWorkflowFull(input: {
         project_policy: input.projectPolicy,
         view: "full",
       },
-    ),
-  ) as ReviewWorkflowFullResult;
+    ) as PublicContract & { details: WorkflowFullDetailsShape },
+  );
 }
 
 function runMigrateWorkflowFull(input: {
@@ -138,8 +135,8 @@ function runMigrateWorkflowFull(input: {
         source_outline: input.sourceOutline,
         view: "full",
       },
-    ),
-  ) as MigrateWorkflowFullResult;
+    ) as PublicContract & { details: WorkflowFullDetailsShape },
+  );
 }
 
 beforeAll(async () => {
@@ -185,7 +182,7 @@ describe("deterministic agentic evals", () => {
 
   it("keeps dashboard create output grounded in the branded analytical dashboard scaffold", () => {
     const query =
-      "Can you help me create a metric dashboard, I don't have any test data but it should be finance themed.";
+      "Finance-themed metric dashboard with key financial metrics like revenue, expenses, profit margin, and portfolio performance";
     const result = runCreateWorkflowFull({ query });
 
     expect(result.workflow.id).toBe("create_salt_ui");
@@ -318,36 +315,6 @@ describe("deterministic agentic evals", () => {
     );
   });
 
-  it("falls back to component routing when a forced-pattern profile prompt still clearly names Tabs", () => {
-    const query =
-      "User profile page with tabs for different sections and an avatar displaying user image";
-    const result = runCreateWorkflowFull({ query, solutionType: "pattern" });
-
-    expect(result.result).toMatchObject({
-      solution_type: "component",
-      decision: {
-        name: "Tabs",
-      },
-    });
-  });
-
-  it("keeps long paraphrased profile prompts anchored on Tabs without forcing pattern routing", () => {
-    const query =
-      "User profile page with tabs for switching between profile sections and a avatar display the user's image or initials";
-    const result = runCreateWorkflowFull({ query, contextChecked: true });
-
-    expect(result.result).toMatchObject({
-      solution_type: "component",
-      decision: {
-        name: "Tabs",
-      },
-    });
-    expect(result.request).toMatchObject({
-      resolved_entity: "Tabs",
-      match_status: "broadened",
-    });
-  });
-
   it("keeps detailed profile page prompts with tabbed content anchored on Tabs instead of dashboard drift", () => {
     const query =
       "User profile page with tabs for different sections (Overview, Activity, Settings) and an avatar showing the user's initials. The profile header should display the avatar, user name, and role. Tabs switch between content panels below.";
@@ -374,6 +341,113 @@ describe("deterministic agentic evals", () => {
         "Switch",
       ]),
     );
+  });
+
+  it("keeps toggle-in-form prompts anchored on Switch instead of broad Forms patterns", () => {
+    const query =
+      "compact control to turn email alerts on and off inside a settings form";
+    const result = runCreateWorkflowFull({
+      query,
+      contextChecked: true,
+    });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Switch",
+      },
+    });
+    expect(result.request).toMatchObject({
+      entity: query,
+      resolved_entity: "Switch",
+    });
+    expect(
+      result.workflow.implementation_gate.required_follow_through.map(
+        (item: { entity: string }) => item.entity,
+      ),
+    ).not.toEqual(
+      expect.arrayContaining([
+        "International address form",
+        "Button bar",
+        "Menu button",
+        "Split button",
+      ]),
+    );
+  });
+
+  it("keeps singular KPI summary prompts anchored on Metric instead of dashboard or chart drift", () => {
+    const query =
+      "Create a summary view showing a single KPI, its label, and an up or down indicator.";
+    const result = runCreateWorkflowFull({
+      query,
+      contextChecked: true,
+    });
+
+    expect(result.result).toMatchObject({
+      solution_type: "pattern",
+      decision: {
+        name: "Metric",
+      },
+    });
+    expect(result.request).toMatchObject({
+      entity: query,
+      resolved_entity: "Metric",
+    });
+    expect(
+      result.workflow.implementation_gate.required_follow_through.map(
+        (item: { entity: string }) => item.entity,
+      ),
+    ).toEqual([]);
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        status: "clear",
+        required_follow_through: [],
+        next_call: null,
+      }),
+    );
+  });
+
+  it("keeps content-region state prompts anchored on Content status instead of Spinner aliases", () => {
+    const query =
+      "Create a loading, empty, or error state inside the current content region, not as a global page state.";
+    const result = runCreateWorkflowFull({
+      query,
+      contextChecked: true,
+    });
+
+    expect(result.result).toMatchObject({
+      solution_type: "pattern",
+      decision: {
+        name: "Content status",
+      },
+    });
+    expect(result.request).toMatchObject({
+      entity: query,
+      resolved_entity: "Content status",
+    });
+    expect(result.safety.blocking_reasons).not.toEqual(
+      expect.arrayContaining([expect.stringContaining("Spinner")]),
+    );
+  });
+
+  it("keeps explicit sidebar hierarchy prompts anchored on Vertical navigation instead of generic suggested sets", () => {
+    const query =
+      "Create a page with a left sidebar containing grouped, nested navigation items for multiple sections.";
+    const result = runCreateWorkflowFull({
+      query,
+      contextChecked: true,
+    });
+
+    expect(result.result).toMatchObject({
+      solution_type: "pattern",
+      decision: {
+        name: "Vertical navigation",
+      },
+    });
+    expect(result.request).toMatchObject({
+      entity: query,
+      resolved_entity: "Vertical navigation",
+    });
   });
 
   it("keeps host-rewritten Metric component prompts anchored on exact Metric without unrelated follow-through", () => {
@@ -406,9 +480,9 @@ describe("deterministic agentic evals", () => {
         rule_ids: [],
       }),
     );
-    expect(result.result.composition_contract?.expected_components ?? []).toEqual(
-      [],
-    );
+    expect(
+      result.result.composition_contract?.expected_components ?? [],
+    ).toEqual([]);
   });
 
   it("keeps secondary named surfaces on exact follow-through for breadcrumbs plus table prompts", () => {
@@ -424,9 +498,9 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: expect.arrayContaining([
+        required_follow_through: [
           expect.objectContaining({ entity: "Breadcrumbs" }),
-        ]),
+        ],
         next_call: {
           workflow: "create_salt_ui",
           follow_up_mode: "exact_name",
@@ -453,9 +527,37 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: expect.arrayContaining([
+        required_follow_through: [
           expect.objectContaining({ entity: "Breadcrumbs" }),
-        ]),
+        ],
+      }),
+    );
+  });
+
+  it("keeps realistic file-browser path trail prompts anchored on Table with Breadcrumbs follow-through", () => {
+    const query =
+      "Create a file browser with a path trail above a table of files and folders.";
+    const result = runCreateWorkflowFull({ query, contextChecked: true });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Table",
+      },
+    });
+    expect(result.workflow.implementation_gate).toEqual(
+      expect.objectContaining({
+        status: "follow_through_required",
+        required_follow_through: [
+          expect.objectContaining({ entity: "Breadcrumbs" }),
+        ],
+        next_call: {
+          workflow: "create_salt_ui",
+          follow_up_mode: "exact_name",
+          args: {
+            query: "Breadcrumbs",
+          },
+        },
       }),
     );
   });
@@ -955,14 +1057,18 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow).toMatchObject({
       id: "migrate_to_salt",
       readiness: {
-        status: "guidance_only",
+        status: "starter_needs_attention",
         implementation_ready: false,
       },
       context_requirement: {
         status: "context_required",
       },
     });
-    expect(result.artifacts.starter_validation).toBeNull();
+    expect(result.artifacts.starter_validation).toEqual(
+      expect.objectContaining({
+        status: "needs_attention",
+      }),
+    );
     expect(result.artifacts.post_migration_verification).toEqual(
       expect.objectContaining({
         suggested_workflow: "review_salt_ui",

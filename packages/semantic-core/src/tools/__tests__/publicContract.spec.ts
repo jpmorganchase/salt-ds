@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import type { SaltRegistry } from "../../types.js";
 import type { CreateSaltUiResult } from "../createSaltUi.js";
 import {
-  PUBLIC_WORKFLOW_CONTRACT_VERSION,
   assertValidPublicContract,
   buildCreatePublicContract,
   buildMigratePublicContract,
@@ -10,6 +9,7 @@ import {
   buildReviewPublicContract,
   buildUpgradePublicContract,
   getPublicContractValidationErrors,
+  PUBLIC_WORKFLOW_CONTRACT_VERSION,
   type PublicContract,
   type PublicContractInput,
   type PublicNextStep,
@@ -22,6 +22,11 @@ import type {
   MigrateToSaltWorkflowContract,
   ReviewSaltUiWorkflowContract,
   UpgradeSaltUiWorkflowContract,
+  WorkflowCreateIdeSummary,
+  WorkflowCreateImplementationGate,
+  WorkflowMigrateIdeSummary,
+  WorkflowReviewIdeSummary,
+  WorkflowUpgradeIdeSummary,
 } from "../workflowContracts.js";
 
 const exactNameStep: PublicNextStep = {
@@ -127,7 +132,6 @@ function buildComponent(
       summary: [],
       rules: [],
     },
-    tokens: [],
     patterns: options.patterns ?? [],
     examples: [],
     related_docs: {
@@ -142,6 +146,82 @@ function buildComponent(
     },
     deprecations: [],
     last_verified_at: "2026-04-10T00:00:00Z",
+  };
+}
+
+function buildCreateImplementationGate(
+  overrides: Partial<WorkflowCreateImplementationGate> = {},
+): WorkflowCreateImplementationGate {
+  return {
+    status: "clear",
+    reason: "No follow-through remains.",
+    required_follow_through: [],
+    blocking_questions: [],
+    next_step: null,
+    next_call: null,
+    rule_ids: [],
+    ...overrides,
+  };
+}
+
+function buildCreateIdeSummary(
+  overrides: Partial<WorkflowCreateIdeSummary> = {},
+): WorkflowCreateIdeSummary {
+  return {
+    recommended_direction: "Use the canonical Salt direction.",
+    bounded_scope: [],
+    open_question: null,
+    starter_plan: [],
+    verify: [],
+    top_source_urls: [],
+    ...overrides,
+  };
+}
+
+function buildReviewIdeSummary(
+  overrides: Partial<WorkflowReviewIdeSummary> = {},
+): WorkflowReviewIdeSummary {
+  return {
+    verdict: {
+      level: "clean",
+      summary: "No blocking issues remain.",
+    },
+    top_findings: [],
+    safest_next_fix: null,
+    verify: [],
+    top_source_urls: [],
+    ...overrides,
+  };
+}
+
+function buildMigrateIdeSummary(
+  overrides: Partial<WorkflowMigrateIdeSummary> = {},
+): WorkflowMigrateIdeSummary {
+  return {
+    screen_map: [],
+    preserve: [],
+    needs_confirmation: [],
+    recommended_direction: [],
+    first_scaffold: [],
+    verify: [],
+    top_source_urls: [],
+    ...overrides,
+  };
+}
+
+function buildUpgradeIdeSummary(
+  overrides: Partial<WorkflowUpgradeIdeSummary> = {},
+): WorkflowUpgradeIdeSummary {
+  return {
+    target: null,
+    from_version: null,
+    to_version: null,
+    required_changes: [],
+    optional_cleanup: [],
+    suggested_order: [],
+    verify: [],
+    top_source_urls: [],
+    ...overrides,
   };
 }
 
@@ -161,10 +241,9 @@ function toComparablePublicContract(contract: PublicContract) {
       typeof contract.request.entity === "string"
         ? contract.request.entity
         : undefined,
-    resolved_entity:
-      Object.hasOwn(contract.request, "resolved_entity")
-        ? contract.request.resolved_entity
-        : undefined,
+    resolved_entity: Object.hasOwn(contract.request, "resolved_entity")
+      ? contract.request.resolved_entity
+      : undefined,
     match_status:
       typeof contract.request.match_status === "string"
         ? contract.request.match_status
@@ -249,13 +328,7 @@ function buildCreateWorkflowContract(
       implementation_ready: true,
       reason: "Starter code validated.",
     },
-    implementation_gate: {
-      status: "clear",
-      reason: "No follow-through remains.",
-      required_follow_through: [],
-      blocking_questions: [],
-      next_step: null,
-    },
+    implementation_gate: buildCreateImplementationGate(),
     context_requirement: {
       status: "context_checked",
       repo_specific_edits_ready: true,
@@ -279,13 +352,7 @@ function buildCreateWorkflowContract(
       next_step: null,
       source_urls: [],
     },
-    ide_summary: {
-      recommended_direction: "Use the canonical Salt direction.",
-      bounded_scope: [],
-      open_question: null,
-      starter_plan: [],
-      verify: [],
-    },
+    ide_summary: buildCreateIdeSummary(),
     intent: {
       user_task: "Create the requested Salt UI.",
       key_interaction: "Present the requested Salt surface.",
@@ -329,15 +396,7 @@ function buildReviewWorkflowContract(
       ask_before_proceeding: false,
       raise_confidence: [],
     },
-    ide_summary: {
-      verdict: {
-        level: "clean",
-        summary: "No blocking issues remain.",
-      },
-      top_findings: [],
-      safest_next_fix: null,
-      verify: [],
-    },
+    ide_summary: buildReviewIdeSummary(),
     decision: {
       status: "clean",
       why: "No blocking review issues remain.",
@@ -386,14 +445,7 @@ function buildMigrateWorkflowContract(
       ask_before_proceeding: false,
       raise_confidence: [],
     },
-    ide_summary: {
-      screen_map: [],
-      preserve: [],
-      needs_confirmation: [],
-      recommended_direction: [],
-      first_scaffold: [],
-      verify: [],
-    },
+    ide_summary: buildMigrateIdeSummary(),
     readiness: {
       status: "starter_validated",
       implementation_ready: true,
@@ -501,15 +553,7 @@ function buildUpgradeWorkflowContract(
       ask_before_proceeding: false,
       raise_confidence: [],
     },
-    ide_summary: {
-      target: null,
-      from_version: null,
-      to_version: null,
-      required_changes: [],
-      optional_cleanup: [],
-      suggested_order: [],
-      verify: [],
-    },
+    ide_summary: buildUpgradeIdeSummary(),
     project_conventions_check: {
       supported: true,
       contract: "project_conventions_v1",
@@ -959,13 +1003,9 @@ describe("publicContract workflow adapters", () => {
       next_step: "Implement Metric.",
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use Metric.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1003,13 +1043,9 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use Analytical dashboard.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1021,21 +1057,21 @@ describe("publicContract workflow adapters", () => {
     expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
-        workflow_status: "partial",
-        canonical_complete: false,
-        safe_to_implement_exact_request: false,
+        workflow_status: "success",
+        canonical_complete: true,
+        safe_to_implement_exact_request: true,
         requested_entity: "dashboard summary area",
         resolved_entity: "Analytical dashboard",
         match_status: "broadened",
         summary:
           "Salt interpreted dashboard summary area as the broader Salt entity Analytical dashboard.",
         next_step: {
-          kind: "tool_call",
-          tool: "create_salt_ui",
-          mode: "exact_name",
-          args: {
-            query: "Analytical dashboard",
-          },
+          kind: "implement",
+          scope: "exact_request",
+        },
+        required_post_step: {
+          kind: "review",
+          tool: "review_salt_ui",
         },
       }),
     );
@@ -1052,13 +1088,9 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use App header.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1103,13 +1135,9 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use List filtering.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1143,7 +1171,7 @@ describe("publicContract workflow adapters", () => {
     );
   });
 
-  it("derives a cross-family misroute for a descriptive create query", () => {
+  it("treats a descriptive create query as broadened instead of a hidden exact misroute", () => {
     const registry = buildRegistryFixture();
     const result = {
       mode: "recommend",
@@ -1154,13 +1182,9 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use Stack layout.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1173,24 +1197,18 @@ describe("publicContract workflow adapters", () => {
     expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
-        workflow_status: "blocked",
-        safe_to_implement_exact_request: false,
+        workflow_status: "success",
+        safe_to_implement_exact_request: true,
         requested_entity:
           "chart of data visualization component for dashboard analytical body",
         resolved_entity: "Stack layout",
-        match_status: "misrouted",
+        match_status: "broadened",
         summary:
-          "Salt resolved Stack layout instead of the requested chart of data visualization component for dashboard analytical body.",
-        blocking_reasons: expect.arrayContaining([
-          "requested entity resolved to a different Salt entity",
-        ]),
+          "Salt interpreted chart of data visualization component for dashboard analytical body as the broader Salt entity Stack layout.",
+        blocking_reasons: [],
         next_step: {
-          kind: "tool_call",
-          tool: "create_salt_ui",
-          mode: "exact_name",
-          args: {
-            query: "Chart",
-          },
+          kind: "implement",
+          scope: "exact_request",
         },
       }),
     );
@@ -1207,13 +1225,9 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use Keyboard shortcuts.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1251,13 +1265,9 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Clarify the canonical Salt direction.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1304,16 +1314,15 @@ describe("publicContract workflow adapters", () => {
         implementation_ready: false,
         reason: "Starter code still needs attention.",
       },
-      implementation_gate: {
+      implementation_gate: buildCreateImplementationGate({
         status: "follow_through_required",
         reason: "More grounding is required.",
         required_follow_through: [
           { region: "header", entity: "App header" },
           { region: "key-metrics", entity: "Metric" },
         ],
-        blocking_questions: [],
         next_step: "Run targeted Salt create follow-up.",
-      },
+      }),
       starter_validation: {
         status: "needs_attention",
         snippets_checked: 1,
@@ -1326,13 +1335,9 @@ describe("publicContract workflow adapters", () => {
         next_step: "Fix the starter import.",
         source_urls: [],
       },
-      ide_summary: {
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use Analytical dashboard.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1385,15 +1390,13 @@ describe("publicContract workflow adapters", () => {
     } as unknown as ReviewSaltUiResult;
     const contract = buildReviewWorkflowContract({
       decision: result.decision,
-      ide_summary: {
+      ide_summary: buildReviewIdeSummary({
         verdict: {
           level: "medium_risk",
           summary: "Issues remain.",
         },
-        top_findings: [],
         safest_next_fix: "Replace the incorrect component usage.",
-        verify: [],
-      },
+      }),
       fix_candidates: {
         total_count: 1,
         deterministic_count: 0,
@@ -1446,22 +1449,17 @@ describe("publicContract workflow adapters", () => {
       },
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
-      implementation_gate: {
+      implementation_gate: buildCreateImplementationGate({
         status: "follow_through_required",
         reason: "More grounding is required.",
         required_follow_through: [
           { region: "breadcrumbs", entity: "Breadcrumbs" },
         ],
-        blocking_questions: [],
         next_step: "Run targeted Salt create follow-up.",
-      },
-      ide_summary: {
+      }),
+      ide_summary: buildCreateIdeSummary({
         recommended_direction: "Use Table.",
-        bounded_scope: [],
-        open_question: null,
-        starter_plan: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildCreatePublicContract(result, contract, {
@@ -1582,15 +1580,11 @@ describe("publicContract workflow adapters", () => {
       breaking: ["Replace deprecated API usage."],
     } as unknown as UpgradeSaltUiResult;
     const contract = buildUpgradeWorkflowContract({
-      ide_summary: {
+      ide_summary: buildUpgradeIdeSummary({
         target: "@salt-ds/core",
         from_version: "1.0.0",
         to_version: "2.0.0",
-        required_changes: [],
-        optional_cleanup: [],
-        suggested_order: [],
-        verify: [],
-      },
+      }),
     });
 
     const compact = buildUpgradePublicContract(

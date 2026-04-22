@@ -1,0 +1,474 @@
+{
+  "generated_at": "2026-04-22T00:00:00Z",
+  "version": "0.1.0",
+  "guides": [
+    {
+      "id": "guide.choosing-the-right-primitive",
+      "name": "Choosing the right primitive",
+      "aliases": [
+        "Choosing the right primitive",
+        "choosing the right primitive",
+        "Start with user intent",
+        "Quick decision table",
+        "Common decisions",
+        "Read next",
+        "Button or Link",
+        "Button vs Link",
+        "Component or pattern",
+        "Component vs pattern",
+        "Salt primitive or custom wrapper",
+        "Salt primitive vs custom wrapper"
+      ],
+      "kind": "getting-started",
+      "summary": "Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI.",
+      "packages": [],
+      "steps": [
+        {
+          "title": "Start with user intent",
+          "statements": [
+            "Trigger work in the current view: use Button.",
+            "Navigate to another route, page, or document: use Link.",
+            "Show or hide related content: use a disclosure primitive such as Accordion or Collapsible.",
+            "Structure a page or region: start with layouts.",
+            "Build a repeated multi-part flow: check patterns before inventing a new composition."
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Common decisions",
+          "statements": [
+            "Use Button for actions such as save, apply, retry, or open dialog.",
+            "Use Link for real destinations such as routes, pages, help articles, or document downloads.",
+            "Start with a component when you need one UI element with clear semantics.",
+            "Start with a pattern when the job spans multiple components or repeated page structure.",
+            "Prefer the Salt primitive first.",
+            "Add a wrapper only when it adds stable semantics, shared behavior, or a real domain API."
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Read next",
+          "statements": [
+            "Button usage",
+            "Link usage",
+            "Layouts overview",
+            "Patterns overview",
+            "Composition pitfalls",
+            "Custom wrappers"
+          ],
+          "snippets": []
+        }
+      ],
+      "related_docs": {
+        "overview": "/salt/getting-started/choosing-the-right-primitive",
+        "related_components": ["Button", "Link", "Accordion", "Collapsible"],
+        "related_packages": []
+      },
+      "last_verified_at": "2026-04-22T00:00:00Z"
+    },
+    {
+      "id": "guide.composition-pitfalls",
+      "name": "Composition pitfalls",
+      "aliases": [
+        "Composition pitfalls",
+        "composition pitfalls",
+        "Compose to simplify",
+        "Pitfalls to avoid",
+        "Before and after",
+        "When wrappers are justified",
+        "Quick review checklist",
+        "Next reads",
+        "Avoid nesting interactive Salt primitives",
+        "Avoid pass-through wrappers over Salt primitives",
+        "Recreating standard Salt primitives",
+        "Extra layout wrappers",
+        "Styling that fights Salt",
+        "Nested interactive primitives",
+        "Pass-through wrappers",
+        "Recreating a Salt primitive"
+      ],
+      "kind": "getting-started",
+      "summary": "Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives.",
+      "packages": ["@salt-ds/core"],
+      "steps": [
+        {
+          "title": "Compose to simplify",
+          "statements": [
+            "make intent clearer",
+            "reduce repeated code",
+            "preserve the semantics of the underlying Salt primitives",
+            "keep structure shallow unless deeper nesting is necessary for the interaction"
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Pitfalls to avoid",
+          "statements": [
+            "Do not nest interactive components such as Button and Link inside each other. Choose one interactive owner for the action or navigation.",
+            "Treat wrappers that only forward props to a Salt primitive as suspicious. If a wrapper does not add behavior, semantics, or a stable domain API, prefer using the Salt primitive directly.",
+            "Avoid rebuilding Salt buttons, links, navigation items, or other common components from raw HTML, custom roles, and ad hoc styling when Salt already provides the correct primitive.",
+            "Avoid stacking multiple layout containers when one Salt layout component can express the structure more clearly. Each wrapper should have a clear job such as controlling spacing, flow, split regions, or parent-child arrangement.",
+            "Avoid raw spacing, sizing, and color values that override Salt foundations and token usage without a strong reason. Prefer Salt layouts, foundations, and tokens before introducing custom styling."
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Before and after",
+          "statements": [
+            "If a wrapper remains, it should add more than prop forwarding. Give it a clear reason such as shared behavior, domain semantics, or a stable public API."
+          ],
+          "snippets": [
+            {
+              "title": "Before and after example 1",
+              "language": "tsx",
+              "code": "// Avoid\nimport { Button, Link } from \"@salt-ds/core\";\n\nexport function OpenHelp() {\n  return (\n    <Button>\n      <Link href=\"/help\">Open help</Link>\n    </Button>\n  );\n}"
+            },
+            {
+              "title": "Before and after example 2",
+              "language": "tsx",
+              "code": "// Prefer\nimport { Link } from \"@salt-ds/core\";\n\nexport function OpenHelp() {\n  return <Link href=\"/help\">Open help</Link>;\n}"
+            },
+            {
+              "title": "Before and after example 3",
+              "language": "tsx",
+              "code": "// Avoid\nimport { Button } from \"@salt-ds/core\";\n\nexport function PrimaryButton(props) {\n  return <Button {...props} />;\n}"
+            },
+            {
+              "title": "Before and after example 4",
+              "language": "tsx",
+              "code": "// Prefer\nimport { Button } from \"@salt-ds/core\";\n\nexport function SaveAction() {\n  return <Button appearance=\"solid\">Save</Button>;\n}"
+            },
+            {
+              "title": "Before and after example 5",
+              "language": "tsx",
+              "code": "// Avoid\nexport function HelpAction() {\n  return (\n    <a className=\"custom-link-button\" onClick={openHelp}>\n      Help\n    </a>\n  );\n}"
+            },
+            {
+              "title": "Before and after example 6",
+              "language": "tsx",
+              "code": "// Prefer\nimport { Button } from \"@salt-ds/core\";\n\nexport function HelpAction() {\n  return <Button onClick={openHelp}>Help</Button>;\n}"
+            }
+          ]
+        },
+        {
+          "title": "When wrappers are justified",
+          "statements": [
+            "establishes a stable domain-specific API",
+            "adds shared behavior such as analytics, permissions, or data wiring",
+            "adds semantics that the base primitive does not carry on its own",
+            "coordinates multiple Salt primitives into a reusable higher-level unit",
+            "If the wrapper is justified, keep the responsibilities explicit and avoid hiding the underlying interaction model.",
+            "This wrapper adds a domain-specific API and shared behavior rather than only renaming Button."
+          ],
+          "snippets": [
+            {
+              "title": "When wrappers are justified example 1",
+              "language": "tsx",
+              "code": "// Reasonable wrapper\nimport { Button } from \"@salt-ds/core\";\n\nexport function BlockingAction({ canRun, onRun, children }) {\n  return (\n    <Button disabled={!canRun} onClick={onRun}>\n      {children}\n    </Button>\n  );\n}"
+            }
+          ]
+        },
+        {
+          "title": "Quick review checklist",
+          "statements": [
+            "Is the interaction owned by the right Salt primitive?",
+            "Are there nested interactive Salt primitives that should be flattened?",
+            "Is there a pass-through wrapper over a Salt primitive that should be removed?",
+            "Could a Salt layout or pattern replace some of the custom structure?",
+            "Does the styling still follow Salt foundations and token guidance?"
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Next reads",
+          "statements": [
+            "Choosing the right primitive",
+            "Custom wrappers",
+            "Developing with Salt",
+            "Layouts overview",
+            "Patterns overview"
+          ],
+          "snippets": []
+        }
+      ],
+      "related_docs": {
+        "overview": "/salt/getting-started/composition-pitfalls",
+        "related_components": ["Button", "Link"],
+        "related_packages": ["@salt-ds/core"]
+      },
+      "last_verified_at": "2026-04-22T00:00:00Z"
+    },
+    {
+      "id": "guide.custom-wrappers",
+      "name": "Custom wrappers",
+      "aliases": [
+        "Custom wrappers",
+        "custom wrappers",
+        "When wrappers help",
+        "When wrappers hurt",
+        "Avoid pass-through wrappers over Salt primitives",
+        "Prefer explicit added behavior",
+        "Wrapper review checklist",
+        "Next reads"
+      ],
+      "kind": "getting-started",
+      "summary": "Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.",
+      "packages": ["@salt-ds/core"],
+      "steps": [
+        {
+          "title": "When wrappers help",
+          "statements": [
+            "add a stable domain-specific API",
+            "coordinate permissions, analytics, or data wiring",
+            "add semantics that the primitive does not carry on its own",
+            "combine several Salt primitives into a reusable higher-level unit"
+          ],
+          "snippets": []
+        },
+        {
+          "title": "When wrappers hurt",
+          "statements": [
+            "only forward props to a single Salt primitive",
+            "hide the real interaction owner",
+            "recreate an existing Salt primitive with a different name",
+            "make it harder to find the canonical Salt usage guidance"
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Avoid pass-through wrappers over Salt primitives",
+          "statements": [
+            "Treat pass-through wrappers as suspicious. If the wrapper only spreads props into Button, Link, or another Salt primitive, prefer using the primitive directly."
+          ],
+          "snippets": [
+            {
+              "title": "Avoid pass-through wrappers over Salt primitives example 1",
+              "language": "tsx",
+              "code": "// Avoid\nimport { Button } from \"@salt-ds/core\";\n\nexport function PrimaryButton(props) {\n  return <Button {...props} />;\n}"
+            },
+            {
+              "title": "Avoid pass-through wrappers over Salt primitives example 2",
+              "language": "tsx",
+              "code": "// Prefer\nimport { Button } from \"@salt-ds/core\";\n\nexport function SaveAction() {\n  return <Button appearance=\"solid\">Save</Button>;\n}"
+            }
+          ]
+        },
+        {
+          "title": "Prefer explicit added behavior",
+          "statements": [
+            "If a wrapper remains, make the added value obvious in its API and implementation.",
+            "This wrapper adds domain behavior and a clearer business API instead of just renaming Button."
+          ],
+          "snippets": [
+            {
+              "title": "Prefer explicit added behavior example 1",
+              "language": "tsx",
+              "code": "// Reasonable wrapper\nimport { Button } from \"@salt-ds/core\";\n\nexport function BlockingAction({ canRun, onRun, children }) {\n  return (\n    <Button disabled={!canRun} onClick={onRun}>\n      {children}\n    </Button>\n  );\n}"
+            }
+          ]
+        },
+        {
+          "title": "Wrapper review checklist",
+          "statements": [
+            "Does it add behavior, semantics, or a stable domain API?",
+            "Would direct use of the Salt primitive be clearer?",
+            "Is the interaction owner still obvious from the JSX?",
+            "Does the wrapper preserve Salt guidance instead of obscuring it?"
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Next reads",
+          "statements": [
+            "Composition pitfalls",
+            "Choosing the right primitive",
+            "Button usage",
+            "Link usage"
+          ],
+          "snippets": []
+        }
+      ],
+      "related_docs": {
+        "overview": "/salt/getting-started/custom-wrappers",
+        "related_components": ["Button", "Link"],
+        "related_packages": ["@salt-ds/core"]
+      },
+      "last_verified_at": "2026-04-22T00:00:00Z"
+    },
+    {
+      "id": "guide.developing",
+      "name": "Developing with Salt",
+      "aliases": [
+        "Developing with Salt",
+        "developing",
+        "What you’ll need",
+        "The step-by-step process",
+        "Before you build screens and flows",
+        "Install the Salt packages",
+        "Add required web fonts",
+        "Integrate Salt into your app",
+        "Import components",
+        "(Optional) Play with lab components"
+      ],
+      "kind": "getting-started",
+      "summary": "Learn how to install Salt, bootstrap a React app with the recommended JPM Brand theme, and start importing components intentionally.",
+      "packages": [
+        "@salt-ds/core",
+        "@salt-ds/theme",
+        "@salt-ds/icons",
+        "@salt-ds/lab"
+      ],
+      "steps": [
+        {
+          "title": "Install the Salt packages",
+          "statements": [
+            "@salt-ds/core contains production-ready UI components.",
+            "@salt-ds/theme contains CSS files that apply Salt's default theme.",
+            "@salt-ds/icons contains SVG-based icons.",
+            "If you prefer not to use npm, you can install the packages using yarn or other package managers."
+          ],
+          "snippets": [
+            {
+              "title": "Install the Salt packages example 1",
+              "language": "tsx",
+              "code": "npm install @salt-ds/core @salt-ds/theme @salt-ds/icons"
+            }
+          ]
+        },
+        {
+          "title": "Add required web fonts",
+          "statements": [
+            "Salt uses the Open Sans and PT Mono web fonts. If you follow the recommended JPM Brand setup below, also make the Amplitude font available for headingFont=\"Amplitude\" and actionFont=\"Amplitude\". See Themes for the matching @font-face example and the Legacy theme setup.",
+            "Refer to the Google Fonts page for more information.",
+            "With Fontsource, you can include the web font files into your build and self-host them.",
+            "Learn more about Fontsource.",
+            "If you prefer not to use Google Fonts or Fontsource, you can use any other method to incorporate the web fonts. Make sure the CSS @font-face declarations associate the correct font-family, font-weightandfont-style with the corresponding web fonts."
+          ],
+          "snippets": [
+            {
+              "title": "Add required web fonts example 1",
+              "language": "html",
+              "code": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />\n<link\n  href=\"https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=PT+Mono&display=swap\"\n  rel=\"stylesheet\"\n/>"
+            },
+            {
+              "title": "Add required web fonts example 2",
+              "language": "tsx",
+              "code": "npm install @fontsource/open-sans @fontsource/pt-mono"
+            },
+            {
+              "title": "Add required web fonts example 3",
+              "language": "tsx",
+              "code": "import \"@fontsource/open-sans/300.css\";\nimport \"@fontsource/open-sans/300-italic.css\";\nimport \"@fontsource/open-sans/400.css\";\nimport \"@fontsource/open-sans/400-italic.css\";\nimport \"@fontsource/open-sans/500.css\";\nimport \"@fontsource/open-sans/500-italic.css\";\nimport \"@fontsource/open-sans/600.css\";\nimport \"@fontsource/open-sans/600-italic.css\";\nimport \"@fontsource/open-sans/700.css\";\nimport \"@fontsource/open-sans/700-italic.css\";\nimport \"@fontsource/open-sans/800.css\";\nimport \"@fontsource/open-sans/800-italic.css\";\nimport \"@fontsource/pt-mono\";"
+            }
+          ]
+        },
+        {
+          "title": "Integrate Salt into your app",
+          "statements": [
+            "For new projects, import the Salt theme CSS, add the JPM Brand theme CSS, and wrap your application in SaltProviderNext with the default brand props."
+          ],
+          "snippets": [
+            {
+              "title": "Integrate Salt into your app example 1",
+              "language": "tsx",
+              "code": "import React from \"react\";\nimport ReactDOM from \"react-dom/client\";\nimport App from \"./App\";\n\n// Import <SaltProviderNext>\nimport { SaltProviderNext } from \"@salt-ds/core\";\n\n// Import theme CSS\nimport \"@salt-ds/theme/index.css\";\nimport \"@salt-ds/theme/css/theme-next.css\";\n\n// Wrap your application in <SaltProviderNext>\nconst root = ReactDOM.createRoot(document.getElementById(\"root\"));\nroot.render(\n  <SaltProviderNext\n    accent=\"teal\"\n    corner=\"rounded\"\n    headingFont=\"Amplitude\"\n    actionFont=\"Amplitude\"\n  >\n    <App />\n  </SaltProviderNext>,\n);"
+            }
+          ]
+        },
+        {
+          "title": "Import components",
+          "statements": [
+            "Now that you’re ready to use our UI components, you can import them from the @salt-ds/core package and use them in your JSX code.",
+            "Head over to our available components to view their respective APIs."
+          ],
+          "snippets": [
+            {
+              "title": "Import components example 1",
+              "language": "tsx",
+              "code": "import { Button } from \"@salt-ds/core\";\n\nfunction App() {\n  return <Button>Click me</Button>;\n}\n\nexport default App;"
+            }
+          ]
+        },
+        {
+          "title": "(Optional) Play with lab components",
+          "statements": [
+            "Our @salt-ds/lab package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.",
+            "Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using lab components in production applications. However, early adopters are welcome to use and experiment with them.",
+            "We're keen to hear your feedback, bug reports and feature requests, so please don't hesitate to raise new issues or comment on existing ones."
+          ],
+          "snippets": []
+        }
+      ],
+      "related_docs": {
+        "overview": "/salt/getting-started/developing",
+        "related_components": [],
+        "related_packages": [
+          "@salt-ds/core",
+          "@salt-ds/theme",
+          "@salt-ds/icons",
+          "@salt-ds/lab"
+        ]
+      },
+      "last_verified_at": "2026-04-22T00:00:00Z"
+    },
+    {
+      "id": "guide.themes",
+      "name": "Themes",
+      "aliases": ["theme", "theming", "jpm brand", "legacy", "uitk"],
+      "kind": "theming",
+      "summary": "A theme is a collection of design tokens that define the overall look and feel of an interface. Themes allow you to quickly switch the visual style of components to match different brands or user preferences, ensuring consistency across your application.",
+      "packages": ["@salt-ds/core", "@salt-ds/theme"],
+      "steps": [
+        {
+          "title": "Choose a Salt theme",
+          "statements": [
+            "Salt offers the default JPM Brand theme for new work and a Legacy theme for UITK migration paths.",
+            "Salt recommends the JPM Brand theme for accessibility and long-term brand alignment."
+          ],
+          "snippets": []
+        },
+        {
+          "title": "Apply the JPM Brand theme",
+          "statements": [
+            "The JPM Brand theme is Salt’s long-term visual style, designed to match the JPMorgan look across CIB digital applications. Developed with Corporate Brand and CIB Marketing, it uses approved styles for consistent visuals on desktop and web. Salt recommends switching to the JPM Brand theme for better accessibility and brand alignment.",
+            "Use SaltProviderNext with accent=\"teal\", corner=\"rounded\", headingFont=\"Amplitude\", actionFont=\"Amplitude\" for the default new-project brand mapping.",
+            "Import \"@salt-ds/theme/index.css\" and \"@salt-ds/theme/css/theme-next.css\" before rendering the provider.",
+            "Ensure the host app loads Amplitude when using headingFont=\"Amplitude\" and actionFont=\"Amplitude\"."
+          ],
+          "snippets": [
+            {
+              "title": "JPM Brand theme",
+              "language": "tsx",
+              "code": "import { SaltProviderNext } from \"@salt-ds/core\";\nimport \"@salt-ds/theme/index.css\";\nimport \"@salt-ds/theme/css/theme-next.css\";\n\n<SaltProviderNext\n  accent=\"teal\"\n  corner=\"rounded\"\n  headingFont=\"Amplitude\"\n  actionFont=\"Amplitude\"\n>\n  // ...\n</SaltProviderNext>;"
+            },
+            {
+              "title": "Amplitude font-face declarations",
+              "language": "css",
+              "code": "@font-face {\n  font-family: Amplitude;\n  font-style: normal;\n  font-weight: 300;\n  src:\n    local(\"Amplitude Light\"),\n    url(\"../public/fonts/amplitude-light.woff2\") format(\"woff2\");\n}\n\n@font-face {\n  font-family: Amplitude;\n  font-style: normal;\n  font-weight: 400;\n  src:\n    local(\"Amplitude\"),\n    url(\"../public/fonts/amplitude-regular.woff2\") format(\"woff2\");\n}\n\n@font-face {\n  font-family: Amplitude;\n  font-style: normal;\n  font-weight: 500;\n  src:\n    local(\"Amplitude Medium\"),\n    url(\"../public/fonts/amplitude-medium.woff2\") format(\"woff2\");\n}\n\n@font-face {\n  font-family: Amplitude;\n  font-style: normal;\n  font-weight: 700;\n  src:\n    local(\"Amplitude Bold\"),\n    url(\"../public/fonts/amplitude-bold.woff2\") format(\"woff2\");\n}"
+            }
+          ]
+        },
+        {
+          "title": "Apply the Legacy theme",
+          "statements": [
+            "For a gradual move from the UITK system, Salt’s Legacy (UITK) theme can be used with UITK components to support different migration timelines and needs. J.P. Morgan employees can find more details on migration options and system comparisons.",
+            "Use SaltProvider with \"@salt-ds/theme/index.css\" when compatibility or migration work must stay on the Legacy theme."
+          ],
+          "snippets": [
+            {
+              "title": "Legacy theme",
+              "language": "tsx",
+              "code": "import { SaltProvider } from \"@salt-ds/core\";\nimport \"@salt-ds/theme/index.css\";\n\n<SaltProvider>\n  // ...\n</SaltProvider>;"
+            }
+          ]
+        }
+      ],
+      "related_docs": {
+        "overview": "/salt/themes",
+        "related_components": ["SaltProvider", "SaltProviderNext"],
+        "related_packages": ["@salt-ds/core", "@salt-ds/theme"]
+      },
+      "last_verified_at": "2026-04-22T00:00:00Z"
+    }
+  ]
+}

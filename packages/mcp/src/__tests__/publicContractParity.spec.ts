@@ -21,8 +21,7 @@ const FIXTURE_DIR = path.join(
   "fixtures",
   "public-contract",
 );
-const UPDATE_FIXTURES =
-  process.env.UPDATE_PUBLIC_CONTRACT_FIXTURES === "true";
+const UPDATE_FIXTURES = process.env.UPDATE_PUBLIC_CONTRACT_FIXTURES === "true";
 let registryDir = "";
 
 const COMPACT_BYTE_BUDGETS = {
@@ -198,9 +197,7 @@ function readRuleIds(value: unknown): string[] {
   ]);
 
   return uniqueSortedStrings(
-    (ruleIds ?? []).map((entry) =>
-      typeof entry === "string" ? entry : null,
-    ),
+    (ruleIds ?? []).map((entry) => (typeof entry === "string" ? entry : null)),
   );
 }
 
@@ -279,7 +276,10 @@ function toComparableCompactContract(value: Record<string, unknown>) {
 function toComparableCreateFull(value: Record<string, unknown>) {
   return {
     workflow_id: normalizeWorkflowId(
-      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+      readString(value, [
+        ["details", "workflow", "id"],
+        ["workflow", "id"],
+      ]),
     ),
     confidence_level: readString(value, [
       ["details", "workflow", "confidence", "level"],
@@ -328,7 +328,10 @@ function toComparableCreateFull(value: Record<string, unknown>) {
 function toComparableReviewFull(value: Record<string, unknown>) {
   return {
     workflow_id: normalizeWorkflowId(
-      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+      readString(value, [
+        ["details", "workflow", "id"],
+        ["workflow", "id"],
+      ]),
     ),
     confidence_level: readString(value, [
       ["details", "workflow", "confidence", "level"],
@@ -348,21 +351,22 @@ function toComparableReviewFull(value: Record<string, unknown>) {
         ["details", "artifacts", "projectPolicy"],
         ["artifacts", "project_policy"],
         ["artifacts", "projectPolicy"],
-      ]) !=
-      null,
+      ]) != null,
     runtime_evidence_requested:
       readBoolean(value, [
         ["details", "artifacts", "runtimeEvidence", "requested"],
         ["artifacts", "runtimeEvidence", "requested"],
-      ]) ??
-      false,
+      ]) ?? false,
   };
 }
 
 function toComparableMigrateFull(value: Record<string, unknown>) {
   return {
     workflow_id: normalizeWorkflowId(
-      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+      readString(value, [
+        ["details", "workflow", "id"],
+        ["workflow", "id"],
+      ]),
     ),
     confidence_level: readString(value, [
       ["details", "workflow", "confidence", "level"],
@@ -428,7 +432,10 @@ function toComparableMigrateFull(value: Record<string, unknown>) {
 function toComparableUpgradeFull(value: Record<string, unknown>) {
   return {
     workflow_id: normalizeWorkflowId(
-      readString(value, [["details", "workflow", "id"], ["workflow", "id"]]),
+      readString(value, [
+        ["details", "workflow", "id"],
+        ["workflow", "id"],
+      ]),
     ),
     confidence_level: readString(value, [
       ["details", "workflow", "confidence", "level"],
@@ -475,9 +482,10 @@ async function assertFixture(
     );
   }
 
-  const expected = JSON.parse(
-    await fs.readFile(fixturePath, "utf8"),
-  ) as Record<string, unknown>;
+  const expected = JSON.parse(await fs.readFile(fixturePath, "utf8")) as Record<
+    string,
+    unknown
+  >;
   expect(actual).toEqual(expected);
 }
 
@@ -558,7 +566,9 @@ async function runMcpWorkflow(
   view: "compact" | "full",
 ): Promise<Record<string, unknown>> {
   const registry = await loadRegistry({ registryDir });
-  const tool = TOOL_DEFINITIONS.find((definition) => definition.name === toolName);
+  const tool = TOOL_DEFINITIONS.find(
+    (definition) => definition.name === toolName,
+  );
   const runtime = createToolExecutionRuntime();
 
   return (await tool?.execute(
@@ -690,7 +700,10 @@ describe("public contract parity", () => {
     const filePath = path.join(rootDir, "src", "Demo.tsx");
     await fs.writeFile(filePath, code, "utf8");
 
-    const cliResult = await runCliWorkflowCompact(rootDir, ["review", filePath]);
+    const cliResult = await runCliWorkflowCompact(rootDir, [
+      "review",
+      filePath,
+    ]);
     const mcpResult = await runMcpWorkflow(
       "review_salt_ui",
       {
@@ -831,8 +844,74 @@ describe("public contract parity", () => {
       FULL_BYTE_BUDGETS.create,
     );
     expectUniqueStringArrayAtPath(cliResult, [["artifacts", "notes"]]);
-    expectUniqueStringArrayAtPath(cliResult, [["workflow", "provenance", "source_urls"]]);
+    expectUniqueStringArrayAtPath(cliResult, [
+      ["workflow", "provenance", "source_urls"],
+    ]);
     await assertFixture("create-exact.full.json", cliComparable);
+  });
+
+  it("keeps create full top-level facts aligned with compact for mixed-surface prompts", async () => {
+    const rootDir = await createRepo("salt-parity-create-tabs-full-", {
+      name: "parity-create-tabs-full",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    const query =
+      "User profile page with tabs for different sections (e.g. profile details, settings, activity) and an avatar displaying user initials or image.";
+
+    const cliCompact = await runCliCreateCompact(rootDir, query);
+    const cliFull = await runCliCreateFull(rootDir, query);
+    const mcpCompact = await runMcpCreate(rootDir, query, "compact");
+    const mcpFull = await runMcpCreate(rootDir, query, "full");
+
+    expect(toComparableCompactContract(cliFull)).toEqual(
+      toComparableCompactContract(cliCompact),
+    );
+    expect(toComparableCompactContract(mcpFull)).toEqual(
+      toComparableCompactContract(mcpCompact),
+    );
+    expect(readString(cliFull, [["request", "resolved_entity"]])).toBe("Tabs");
+    expect(readString(mcpFull, [["request", "resolved_entity"]])).toBe("Tabs");
+    expect(readString(cliFull, [["action", "kind"]])).toBe("implement");
+    expect(readString(mcpFull, [["action", "kind"]])).toBe("implement");
+    expect(readString(cliFull, [["action", "args", "query"]])).toBeNull();
+    expect(readString(mcpFull, [["action", "args", "query"]])).toBeNull();
+  });
+
+  it("keeps create full request metadata populated for control prompts", async () => {
+    const rootDir = await createRepo("salt-parity-create-switch-full-", {
+      name: "parity-create-switch-full",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    const query =
+      "Create a compact control to turn email alerts on and off inside a settings form.";
+
+    const cliCompact = await runCliCreateCompact(rootDir, query);
+    const cliFull = await runCliCreateFull(rootDir, query);
+    const mcpCompact = await runMcpCreate(rootDir, query, "compact");
+    const mcpFull = await runMcpCreate(rootDir, query, "full");
+
+    expect(toComparableCompactContract(cliFull)).toEqual(
+      toComparableCompactContract(cliCompact),
+    );
+    expect(toComparableCompactContract(mcpFull)).toEqual(
+      toComparableCompactContract(mcpCompact),
+    );
+    expect(asRecord(readPath(cliFull, ["request"]))).not.toBeNull();
+    expect(asRecord(readPath(mcpFull, ["request"]))).not.toBeNull();
+    expect(readString(cliFull, [["request", "entity"]])).not.toBeNull();
+    expect(readString(mcpFull, [["request", "entity"]])).not.toBeNull();
+    expect(
+      readString(cliFull, [["request", "resolved_entity"]]),
+    ).not.toBeNull();
+    expect(
+      readString(mcpFull, [["request", "resolved_entity"]]),
+    ).not.toBeNull();
   });
 
   it("keeps review full semantics aligned where CLI and MCP overlap", async () => {

@@ -537,8 +537,8 @@ export function selectSubComponentsBySourceExports(
   // We want value exports that look like PascalCase component names.
   const exportedNames = new Set<string>();
   const exportPattern = /export\s+\{([^}]+)}/g;
-  let match: RegExpExecArray | null;
-  while ((match = exportPattern.exec(indexContent)) !== null) {
+  let match = exportPattern.exec(indexContent);
+  while (match !== null) {
     // Skip type-only exports
     const preceding = indexContent.slice(
       Math.max(0, match.index - 10),
@@ -547,12 +547,13 @@ export function selectSubComponentsBySourceExports(
     if (/export\s+type\s*$/.test(preceding)) {
       continue;
     }
-    const names = match[1].split(",").map((n) =>
-      n
-        .trim()
-        .split(/\s+as\s+/)
-        .pop()!
-        .trim(),
+    const names = match[1].split(",").map(
+      (n) =>
+        n
+          .trim()
+          .split(/\s+as\s+/)
+          .pop()
+          ?.trim() ?? "",
     );
     for (const name of names) {
       // Only PascalCase names (components), skip lowercase/UPPER_CASE/type keywords
@@ -560,6 +561,7 @@ export function selectSubComponentsBySourceExports(
         exportedNames.add(name);
       }
     }
+    match = exportPattern.exec(indexContent);
   }
 
   if (exportedNames.size === 0) {

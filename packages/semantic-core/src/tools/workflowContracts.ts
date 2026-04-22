@@ -1,12 +1,13 @@
 import type { SaltRegistry } from "../types.js";
 import type { SuggestedFollowUp } from "./consumerPresentation.js";
 import {
-  collectCreateQueryAnchors,
   chooseDominantCreateQueryAnchor,
+  collectCreateQueryAnchors,
   isHighPriorityCreateQueryAnchor,
   toCreateQueryAnchorRegionId,
 } from "./createQueryAnchors.js";
 import { startsWithCreateReferencePhrase } from "./createReferenceQueries.js";
+import { retrieveCreateSupportCandidates } from "./createRetrieval.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
 import type { GuidanceBoundary } from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
@@ -468,6 +469,8 @@ function getCreateFollowThroughTargets(
 ): FollowThroughItem[] {
   const primaryTarget =
     result.composition_contract?.primary_target.name ?? null;
+  const primaryTargetType =
+    result.composition_contract?.primary_target.solution_type ?? null;
   const slots =
     result.composition_contract?.slots.filter(
       (slot) => slot.certainty !== "optional",
@@ -496,6 +499,15 @@ function getCreateFollowThroughTargets(
     .filter(isHighPriorityCreateQueryAnchor);
   const queryAnchorByName = new Map(
     queryAnchors.map((anchor) => [anchor.name, anchor] as const),
+  );
+  const primaryTargetCategories = new Set(
+    (
+      registry.components.find((entry) => entry.name === primaryTarget)
+        ?.category ??
+      registry.patterns.find((entry) => entry.name === primaryTarget)
+        ?.category ??
+      []
+    ).map((category) => normalizeQuery(category)),
   );
   const frequency = new Map<string, number>();
 
@@ -605,9 +617,7 @@ function getCreateFollowThroughTargets(
     region: toCreateQueryAnchorRegionId(anchor),
     entity: anchor.name,
     score:
-      160 +
-      anchor.structural_weight * 8 -
-      Math.min(anchor.query_index, 24),
+      160 + anchor.structural_weight * 8 - Math.min(anchor.query_index, 24),
   }));
   const exactNamedQueryTargets = queryAnchors
     .filter((anchor) => anchor.matched_by.includes("name"))
@@ -615,10 +625,50 @@ function getCreateFollowThroughTargets(
       region: toCreateQueryAnchorRegionId(anchor),
       entity: anchor.name,
       score:
-        160 +
-        anchor.structural_weight * 8 -
-        Math.min(anchor.query_index, 24),
+        160 + anchor.structural_weight * 8 - Math.min(anchor.query_index, 24),
     }));
+  const retrievalSupportTargets =
+    slots.length === 0 &&
+    query &&
+    primaryTarget &&
+    primaryTargetType === "component" &&
+    [...primaryTargetCategories].some((category) =>
+      ["data-display-and-analysis", "data-display-and-visualization"].includes(
+        category,
+      ),
+    )
+      ? retrieveCreateSupportCandidates(registry, {
+          query,
+          owner_name: primaryTarget,
+          owner_categories: [...primaryTargetCategories],
+          top_k: 8,
+        })
+          .filter((candidate) => candidate.entity_name !== primaryTarget)
+          .filter((candidate) => candidate.structural_weight >= 10)
+          .filter(
+            (candidate) => candidate.support_score > candidate.caution_score,
+          )
+          .filter(
+            (candidate) =>
+              candidate.support_score >=
+              Math.max(10, Math.round(candidate.owner_score * 0.2)),
+          )
+          .filter((candidate) => {
+            const candidateCategories = new Set(
+              candidate.categories.map((category) => normalizeQuery(category)),
+            );
+            return ![...candidateCategories].some((category) =>
+              primaryTargetCategories.has(category),
+            );
+          })
+          .map((candidate) => ({
+            region:
+              normalizeQuery(candidate.entity_name).replace(/\s+/g, "-") ||
+              "top-level",
+            entity: candidate.entity_name,
+            score: 100 + Math.round(candidate.confidence),
+          }))
+      : [];
 
   const queryStartsWithPrimaryTarget = primaryTarget
     ? startsWithCreateReferencePhrase(
@@ -644,7 +694,7 @@ function getCreateFollowThroughTargets(
       .map((entry) => ({ region: entry.region, entity: entry.entity }));
   }
 
-  return [...exactQueryTargets, ...scoredTargets]
+  return [...exactQueryTargets, ...retrievalSupportTargets, ...scoredTargets]
     .sort((left, right) => {
       if (left.score !== right.score) {
         return right.score - left.score;
@@ -717,10 +767,12 @@ function buildCreateImplementationGate(
   };
 }
 
-export function buildWorkflowContextRequirement(input: {
-  resolution_status?: Exclude<WorkflowContextResolutionStatus, "resolved">;
-  retry_with_root_dir?: string | null;
-} = {}): WorkflowContextRequirement {
+export function buildWorkflowContextRequirement(
+  input: {
+    resolution_status?: Exclude<WorkflowContextResolutionStatus, "resolved">;
+    retry_with_root_dir?: string | null;
+  } = {},
+): WorkflowContextRequirement {
   return {
     status: "context_required",
     repo_specific_edits_ready: false,
@@ -736,10 +788,12 @@ export function buildWorkflowContextRequirement(input: {
   };
 }
 
-export function buildSatisfiedWorkflowContextRequirement(input: {
-  retry_with_root_dir?: string | null;
-  context_id?: string | null;
-} = {}): WorkflowContextRequirement {
+export function buildSatisfiedWorkflowContextRequirement(
+  input: {
+    retry_with_root_dir?: string | null;
+    context_id?: string | null;
+  } = {},
+): WorkflowContextRequirement {
   return {
     status: "context_checked",
     repo_specific_edits_ready: true,

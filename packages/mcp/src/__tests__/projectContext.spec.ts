@@ -105,14 +105,10 @@ describe("getSaltProjectContext", () => {
       },
     });
     expect(result.artifacts.summary.reasons).toEqual(
-      expect.arrayContaining([
-        expect.stringContaining("root_dir set to"),
-      ]),
+      expect.arrayContaining([expect.stringContaining("root_dir set to")]),
     );
     expect(result.artifacts.notes).toEqual(
-      expect.arrayContaining([
-        expect.stringContaining("root_dir set to"),
-      ]),
+      expect.arrayContaining([expect.stringContaining("root_dir set to")]),
     );
   });
 

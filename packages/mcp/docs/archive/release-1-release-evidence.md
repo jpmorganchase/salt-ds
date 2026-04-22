@@ -8,11 +8,11 @@ This note records the repo-local release evidence for the approved Release 1 wor
 
 Baseline source:
 
-- [`./baselines/2026-04-20-release-1/README.md`](./baselines/2026-04-20-release-1/README.md)
+- [`../baselines/2026-04-20-release-1/README.md`](../baselines/2026-04-20-release-1/README.md)
 
 Final shipped snapshot:
 
-- [`./baselines/2026-04-20-release-1-v3/README.md`](./baselines/2026-04-20-release-1-v3/README.md)
+- [`../baselines/2026-04-20-release-1-v3/README.md`](../baselines/2026-04-20-release-1-v3/README.md)
 
 Release 1 public-surface outcome:
 
@@ -44,7 +44,7 @@ Release 1 public-surface outcome:
 
 The post-migration shipped-artifact snapshot lives in:
 
-- [`./baselines/2026-04-20-release-1-v3/README.md`](./baselines/2026-04-20-release-1-v3/README.md)
+- [`../baselines/2026-04-20-release-1-v3/README.md`](../baselines/2026-04-20-release-1-v3/README.md)
 
 Key final observations from that snapshot:
 

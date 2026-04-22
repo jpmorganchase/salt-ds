@@ -86,6 +86,6 @@ MCP metadata artifacts were generated from the built `@salt-ds/mcp` package expo
 
 ## Related Docs
 
-- [`../../release-1-execution-checklist.md`](../../release-1-execution-checklist.md)
+- [`../../archive/release-1-release-evidence.md`](../../archive/release-1-release-evidence.md)
 - [`../../public-api-matrix.md`](../../public-api-matrix.md)
 - [`../../../../../salt-ai-tooling-next-releases-plan.md`](../../../../../salt-ai-tooling-next-releases-plan.md)

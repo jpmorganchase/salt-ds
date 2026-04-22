@@ -79,6 +79,11 @@ Capability metadata:
 
 - MCP runtime metadata includes a shared `capability_manifest` object and `capability_manifest_uri`
 - the same manifest is also available as the JSON resource `salt://capabilities/manifest`
+- retrieval catalog support is available through:
+  - `salt://catalog/manifest`
+  - `salt://catalog/entity/{name}`
+  - `salt://catalog/candidates/{query}`
+  - `salt://catalog/family/{family}`
 - use that manifest for machine-readable host setup checks instead of scraping prose for workflow vocabulary, contract version, or support-tool policy
 
 Build the package from the repo:
@@ -139,6 +144,7 @@ npm install -g @salt-ds/cli
 ```
 
 When the CLI is used directly, keep it workflow-first through `salt-ds init`, `salt-ds info`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, and `salt-ds upgrade`. Use `salt-ds review --url <url>` when source validation and runtime evidence should stay in the same workflow pass. Keep `salt-ds doctor` and `salt-ds runtime inspect` in the runtime-evidence layer.
+Advanced retrieval inspection lives under `salt-ds info`, not under `create`. Use `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, or `salt-ds info --json --family "<category>"` when a strong host or maintainer needs candidate inspection without changing the main workflow story.
 
 Consumer start path:
 
@@ -147,8 +153,8 @@ Consumer start path:
 See:
 
 - [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx)
-- [`./docs/ai-product-roadmap.md`](./docs/ai-product-roadmap.md)
-- [`./docs/ai-tooling-hardening-backlog.md`](./docs/ai-tooling-hardening-backlog.md)
+- [`./docs/ai-tooling-large-rewrite-plan.md`](./docs/ai-tooling-large-rewrite-plan.md)
+- [`./docs/public-api-matrix.md`](./docs/public-api-matrix.md)
 - [`./docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md)
 - [`../skills/README.md`](../skills/README.md)
 

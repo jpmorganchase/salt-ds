@@ -5,6 +5,7 @@ import {
   normalizeRegistryLookupKey,
 } from "../registry/runtimeCache.js";
 import type { ChangeRecord, ComponentRecord, SaltRegistry } from "../types.js";
+import { normalizeComparableVersion } from "../versionUtils.js";
 
 export function sortChangesNewestFirst(
   changes: ChangeRecord[],
@@ -40,10 +41,7 @@ export function filterChangesSinceVersion(
     return changes;
   }
 
-  const minVersion =
-    semver.valid(normalizedSinceVersion) ??
-    semver.minVersion(normalizedSinceVersion)?.version ??
-    semver.coerce(normalizedSinceVersion)?.version;
+  const minVersion = normalizeComparableVersion(normalizedSinceVersion);
   if (!minVersion) {
     return changes;
   }

@@ -42,9 +42,7 @@
                 "id": {
                   "def": {
                     "type": "literal",
-                    "values": [
-                      "get_salt_project_context"
-                    ]
+                    "values": ["get_salt_project_context"]
                   },
                   "type": "literal",
                   "values": {}
@@ -122,10 +120,7 @@
                           "explicit_input": "explicit_input",
                           "process_cwd": "process_cwd"
                         },
-                        "options": [
-                          "explicit_input",
-                          "process_cwd"
-                        ]
+                        "options": ["explicit_input", "process_cwd"]
                       },
                       "quality": {
                         "def": {
@@ -140,10 +135,7 @@
                           "ready": "ready",
                           "needs_explicit_root": "needs_explicit_root"
                         },
-                        "options": [
-                          "ready",
-                          "needs_explicit_root"
-                        ]
+                        "options": ["ready", "needs_explicit_root"]
                       },
                       "reason": {
                         "def": {
@@ -1541,11 +1533,7 @@
                                       "warn": "warn",
                                       "fail": "fail"
                                     },
-                                    "options": [
-                                      "pass",
-                                      "warn",
-                                      "fail"
-                                    ]
+                                    "options": ["pass", "warn", "fail"]
                                   },
                                   "recommended_action": {
                                     "def": {
@@ -1722,10 +1710,7 @@
                               "AGENTS.md": "AGENTS.md",
                               "CLAUDE.md": "CLAUDE.md"
                             },
-                            "options": [
-                              "AGENTS.md",
-                              "CLAUDE.md"
-                            ]
+                            "options": ["AGENTS.md", "CLAUDE.md"]
                           }
                         },
                         "type": "nullable"
@@ -1783,11 +1768,7 @@
                           "team": "team",
                           "stack": "stack"
                         },
-                        "options": [
-                          "none",
-                          "team",
-                          "stack"
-                        ]
+                        "options": ["none", "team", "stack"]
                       },
                       "approved_wrappers": {
                         "def": {
@@ -1866,10 +1847,7 @@
                                     "file": "file",
                                     "package": "package"
                                   },
-                                  "options": [
-                                    "file",
-                                    "package"
-                                  ]
+                                  "options": ["file", "package"]
                                 },
                                 "source": {
                                   "def": {
@@ -2219,10 +2197,7 @@
                                   "file": "file",
                                   "package": "package"
                                 },
-                                "options": [
-                                  "file",
-                                  "package"
-                                ]
+                                "options": ["file", "package"]
                               },
                               "source": {
                                 "def": {
@@ -3262,10 +3237,7 @@
                                     "storybook": "storybook",
                                     "app-runtime": "app-runtime"
                                   },
-                                  "options": [
-                                    "storybook",
-                                    "app-runtime"
-                                  ]
+                                  "options": ["storybook", "app-runtime"]
                                 },
                                 "url": {
                                   "def": {
@@ -3317,10 +3289,7 @@
                                   "storybook": "storybook",
                                   "app-runtime": "app-runtime"
                                 },
-                                "options": [
-                                  "storybook",
-                                  "app-runtime"
-                                ]
+                                "options": ["storybook", "app-runtime"]
                               },
                               "url": {
                                 "def": {
@@ -3365,9 +3334,7 @@
                       "canonical_transport": {
                         "def": {
                           "type": "literal",
-                          "values": [
-                            "mcp"
-                          ]
+                          "values": ["mcp"]
                         },
                         "type": "literal",
                         "values": {}
@@ -3491,17 +3458,12 @@
                                 "recommended": "recommended",
                                 "not_required": "not_required"
                               },
-                              "options": [
-                                "recommended",
-                                "not_required"
-                              ]
+                              "options": ["recommended", "not_required"]
                             },
                             "tool": {
                               "def": {
                                 "type": "literal",
-                                "values": [
-                                  "bootstrap_salt_repo"
-                                ]
+                                "values": ["bootstrap_salt_repo"]
                               },
                               "type": "literal",
                               "values": {}
@@ -3509,9 +3471,7 @@
                             "cli_command": {
                               "def": {
                                 "type": "literal",
-                                "values": [
-                                  "salt-ds init"
-                                ]
+                                "values": ["salt-ds init"]
                               },
                               "type": "literal",
                               "values": {}
@@ -3758,11 +3718,7 @@
                         "external": "external",
                         "repo": "repo"
                       },
-                      "options": [
-                        "site",
-                        "external",
-                        "repo"
-                      ]
+                      "options": ["site", "external", "repo"]
                     }
                   }
                 },
@@ -3807,11 +3763,7 @@
                       "external": "external",
                       "repo": "repo"
                     },
-                    "options": [
-                      "site",
-                      "external",
-                      "repo"
-                    ]
+                    "options": ["site", "external", "repo"]
                   }
                 }
               },
@@ -3907,9 +3859,7 @@
                 "enum": {
                   "vscode": "vscode"
                 },
-                "options": [
-                  "vscode"
-                ]
+                "options": ["vscode"]
               }
             },
             "type": "array",
@@ -3924,9 +3874,7 @@
               "enum": {
                 "vscode": "vscode"
               },
-              "options": [
-                "vscode"
-              ]
+              "options": ["vscode"]
             }
           }
         },
@@ -3956,9 +3904,7 @@
                 "id": {
                   "def": {
                     "type": "literal",
-                    "values": [
-                      "bootstrap_salt_repo"
-                    ]
+                    "values": ["bootstrap_salt_repo"]
                   },
                   "type": "literal",
                   "values": {}
@@ -4032,11 +3978,7 @@
                           "unchanged": "unchanged",
                           "skipped-layered": "skipped-layered"
                         },
-                        "options": [
-                          "created",
-                          "unchanged",
-                          "skipped-layered"
-                        ]
+                        "options": ["created", "unchanged", "skipped-layered"]
                       },
                       "mode": {
                         "def": {
@@ -4053,11 +3995,7 @@
                           "team": "team",
                           "stack": "stack"
                         },
-                        "options": [
-                          "none",
-                          "team",
-                          "stack"
-                        ]
+                        "options": ["none", "team", "stack"]
                       }
                     }
                   },
@@ -4097,11 +4035,7 @@
                           "unchanged": "unchanged",
                           "not_requested": "not_requested"
                         },
-                        "options": [
-                          "created",
-                          "unchanged",
-                          "not_requested"
-                        ]
+                        "options": ["created", "unchanged", "not_requested"]
                       },
                       "conventions_pack_source": {
                         "def": {
@@ -4151,10 +4085,7 @@
                               "AGENTS.md": "AGENTS.md",
                               "CLAUDE.md": "CLAUDE.md"
                             },
-                            "options": [
-                              "AGENTS.md",
-                              "CLAUDE.md"
-                            ]
+                            "options": ["AGENTS.md", "CLAUDE.md"]
                           }
                         },
                         "type": "nullable"
@@ -4174,11 +4105,7 @@
                           "updated": "updated",
                           "unchanged": "unchanged"
                         },
-                        "options": [
-                          "created",
-                          "updated",
-                          "unchanged"
-                        ]
+                        "options": ["created", "updated", "unchanged"]
                       }
                     }
                   },
@@ -4256,9 +4183,7 @@
                             "id": {
                               "def": {
                                 "type": "literal",
-                                "values": [
-                                  "get_salt_project_context"
-                                ]
+                                "values": ["get_salt_project_context"]
                               },
                               "type": "literal",
                               "values": {}
@@ -4336,10 +4261,7 @@
                                       "explicit_input": "explicit_input",
                                       "process_cwd": "process_cwd"
                                     },
-                                    "options": [
-                                      "explicit_input",
-                                      "process_cwd"
-                                    ]
+                                    "options": ["explicit_input", "process_cwd"]
                                   },
                                   "quality": {
                                     "def": {
@@ -4354,10 +4276,7 @@
                                       "ready": "ready",
                                       "needs_explicit_root": "needs_explicit_root"
                                     },
-                                    "options": [
-                                      "ready",
-                                      "needs_explicit_root"
-                                    ]
+                                    "options": ["ready", "needs_explicit_root"]
                                   },
                                   "reason": {
                                     "def": {
@@ -5936,10 +5855,7 @@
                                           "AGENTS.md": "AGENTS.md",
                                           "CLAUDE.md": "CLAUDE.md"
                                         },
-                                        "options": [
-                                          "AGENTS.md",
-                                          "CLAUDE.md"
-                                        ]
+                                        "options": ["AGENTS.md", "CLAUDE.md"]
                                       }
                                     },
                                     "type": "nullable"
@@ -5997,11 +5913,7 @@
                                       "team": "team",
                                       "stack": "stack"
                                     },
-                                    "options": [
-                                      "none",
-                                      "team",
-                                      "stack"
-                                    ]
+                                    "options": ["none", "team", "stack"]
                                   },
                                   "approved_wrappers": {
                                     "def": {
@@ -6080,10 +5992,7 @@
                                                 "file": "file",
                                                 "package": "package"
                                               },
-                                              "options": [
-                                                "file",
-                                                "package"
-                                              ]
+                                              "options": ["file", "package"]
                                             },
                                             "source": {
                                               "def": {
@@ -6433,10 +6342,7 @@
                                               "file": "file",
                                               "package": "package"
                                             },
-                                            "options": [
-                                              "file",
-                                              "package"
-                                            ]
+                                            "options": ["file", "package"]
                                           },
                                           "source": {
                                             "def": {
@@ -7579,9 +7485,7 @@
                                   "canonical_transport": {
                                     "def": {
                                       "type": "literal",
-                                      "values": [
-                                        "mcp"
-                                      ]
+                                      "values": ["mcp"]
                                     },
                                     "type": "literal",
                                     "values": {}
@@ -7713,9 +7617,7 @@
                                         "tool": {
                                           "def": {
                                             "type": "literal",
-                                            "values": [
-                                              "bootstrap_salt_repo"
-                                            ]
+                                            "values": ["bootstrap_salt_repo"]
                                           },
                                           "type": "literal",
                                           "values": {}
@@ -7723,9 +7625,7 @@
                                         "cli_command": {
                                           "def": {
                                             "type": "literal",
-                                            "values": [
-                                              "salt-ds init"
-                                            ]
+                                            "values": ["salt-ds init"]
                                           },
                                           "type": "literal",
                                           "values": {}
@@ -7972,11 +7872,7 @@
                                     "external": "external",
                                     "repo": "repo"
                                   },
-                                  "options": [
-                                    "site",
-                                    "external",
-                                    "repo"
-                                  ]
+                                  "options": ["site", "external", "repo"]
                                 }
                               }
                             },
@@ -8021,11 +7917,7 @@
                                   "external": "external",
                                   "repo": "repo"
                                 },
-                                "options": [
-                                  "site",
-                                  "external",
-                                  "repo"
-                                ]
+                                "options": ["site", "external", "repo"]
                               }
                             }
                           },
@@ -8104,11 +7996,7 @@
                         "external": "external",
                         "repo": "repo"
                       },
-                      "options": [
-                        "site",
-                        "external",
-                        "repo"
-                      ]
+                      "options": ["site", "external", "repo"]
                     }
                   }
                 },
@@ -8153,11 +8041,7 @@
                       "external": "external",
                       "repo": "repo"
                     },
-                    "options": [
-                      "site",
-                      "external",
-                      "repo"
-                    ]
+                    "options": ["site", "external", "repo"]
                   }
                 }
               },
@@ -8246,13 +8130,7 @@
               "foundation": "foundation",
               "token": "token"
             },
-            "options": [
-              "auto",
-              "component",
-              "pattern",
-              "foundation",
-              "token"
-            ]
+            "options": ["auto", "component", "pattern", "foundation", "token"]
           }
         },
         "type": "optional"
@@ -8292,12 +8170,7 @@
               "lab": "lab",
               "deprecated": "deprecated"
             },
-            "options": [
-              "stable",
-              "beta",
-              "lab",
-              "deprecated"
-            ]
+            "options": ["stable", "beta", "lab", "deprecated"]
           }
         },
         "type": "optional"
@@ -8413,10 +8286,7 @@
               "compact": "compact",
               "full": "full"
             },
-            "options": [
-              "compact",
-              "full"
-            ]
+            "options": ["compact", "full"]
           }
         },
         "type": "optional"
@@ -8596,10 +8466,7 @@
               "compact": "compact",
               "full": "full"
             },
-            "options": [
-              "compact",
-              "full"
-            ]
+            "options": ["compact", "full"]
           }
         },
         "type": "optional"
@@ -8902,10 +8769,7 @@
               "compact": "compact",
               "full": "full"
             },
-            "options": [
-              "compact",
-              "full"
-            ]
+            "options": ["compact", "full"]
           }
         },
         "type": "optional"
@@ -9085,13 +8949,7 @@
                 "deprecated": "deprecated",
                 "removed": "removed"
               },
-              "options": [
-                "added",
-                "changed",
-                "fixed",
-                "deprecated",
-                "removed"
-              ]
+              "options": ["added", "changed", "fixed", "deprecated", "removed"]
             }
           }
         },
@@ -9148,10 +9006,7 @@
               "compact": "compact",
               "full": "full"
             },
-            "options": [
-              "compact",
-              "full"
-            ]
+            "options": ["compact", "full"]
           }
         },
         "type": "optional"

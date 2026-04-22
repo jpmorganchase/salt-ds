@@ -2299,8 +2299,7 @@ export async function runCreateCommand(
         status: compactJson.status,
         decision: policyRecommendation.decision,
         starter_code: policyRecommendation.starter_code ?? null,
-        composition_contract:
-          policyRecommendation.composition_contract ?? null,
+        composition_contract: policyRecommendation.composition_contract ?? null,
         required_follow_through:
           canonicalContract.implementation_gate.required_follow_through,
         action: compactJson.action,

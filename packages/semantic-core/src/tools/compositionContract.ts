@@ -1,5 +1,8 @@
 import type { SaltRegistry } from "../types.js";
-import { containsExplicitCreateReferencePhrase } from "./createReferenceQueries.js";
+import {
+  containsExactTokenPhrase,
+  containsExplicitCreateReferencePhrase,
+} from "./createReferenceQueries.js";
 import { normalizeQuery, unique } from "./utils.js";
 
 export type WorkflowCompositionCertainty =
@@ -166,12 +169,18 @@ function getPatternSearchTokens(pattern: PatternRecord): string[][] {
 }
 
 function getComponentSearchTokens(component: ComponentRecord): string[][] {
+  const canonicalNameTokens = tokenize(component.name);
+
   return [
     component.name,
     ...component.aliases.filter((alias) => !alias.includes("/")),
   ]
     .map((value) => tokenize(value))
-    .filter((tokens) => tokens.length > 0);
+    .filter((tokens) => tokens.length > 0)
+    .filter(
+      (tokens) =>
+        tokens.length > 1 || tokens.join(" ") === canonicalNameTokens.join(" "),
+    );
 }
 
 function findQueryMatchedPatternNames(
@@ -192,11 +201,15 @@ function findQueryMatchedComponentNames(
   query: string,
 ): string[] {
   return registry.components
-    .filter((component) =>
-      getComponentSearchTokens(component).some((tokens) =>
+    .filter((component) => {
+      if (containsExactTokenPhrase(query, component.name)) {
+        return true;
+      }
+
+      return getComponentSearchTokens(component).some((tokens) =>
         containsExplicitCreateReferencePhrase(query, tokens),
-      ),
-    )
+      );
+    })
     .map((component) => component.name);
 }
 
@@ -403,10 +416,16 @@ function buildPatternContract(
       const tabularChoiceNeedsConfirmation =
         preferredComponents.includes("Data grid") &&
         preferredComponents.includes("Table");
+      const slotHasExplicitPatternQueryMatch = preferredPatterns.some((name) =>
+        queryMatchedPatternNames.includes(name),
+      );
+      const slotHasExplicitComponentQueryMatch = preferredComponents.some(
+        (name) => queryMatchedComponentNames.includes(name),
+      );
       const queryMentionsSlot =
         overlapsAnyToken(queryTokens, slotTokens) ||
-        preferredPatterns.length > 0 ||
-        preferredComponents.length > 0;
+        slotHasExplicitPatternQueryMatch ||
+        slotHasExplicitComponentQueryMatch;
       const isRequired = requiredRegions.has(slotId);
 
       return {

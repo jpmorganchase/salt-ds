@@ -77,10 +77,10 @@ describe("deterministic agentic policy evals", () => {
     );
     expect(consumerAgents).toContain("keep the first result canonical-only");
     expect(consumerCopilotInstructions).toContain(
-      "If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.",
+      "If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked region.",
     );
     expect(consumerSaltUiAgent).toContain(
-      "If compact create output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned `next_step` before implementing the blocked region.",
+      "If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked region.",
     );
   });
 
@@ -102,19 +102,19 @@ describe("deterministic agentic policy evals", () => {
 
     expect(skill).toContain("## Compact Contract First");
     expect(transport).toContain(
-      "read `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, `next_step`, and `summary` first",
+      "Read compact workflow output from top-level fields first:",
     );
     expect(repoInstructions).toContain(
-      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
+      "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
     );
     expect(consumerAgents).toContain(
-      "if compact Salt output is `blocked`, `partial`, or `safe_to_implement_exact_request: false`, follow the returned top-level `next_step` before editing",
+      "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
     );
     expect(consumerCopilotInstructions).toContain(
-      "When Salt returns compact workflow output, read `summary`, `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, and `next_step` first.",
+      "When Salt returns compact workflow output, read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first.",
     );
     expect(consumerSaltUiAgent).toContain(
-      "When Salt returns compact workflow output, read `summary`, `workflow_status`, `safe_to_implement_exact_request`, `blocking_reasons`, and `next_step` first.",
+      "When Salt returns compact workflow output, read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first.",
     );
   });
 });

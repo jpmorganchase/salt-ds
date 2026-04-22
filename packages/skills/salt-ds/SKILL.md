@@ -26,6 +26,13 @@ For every Salt task, follow this order:
 7. If safe progress is blocked, stop or ask one blocker question instead of guessing.
 8. Answer in the workflow-appropriate format, leading with the summary and current workflow state.
 
+For `create`, prefer this sequencing by default:
+
+1. compact workflow result
+2. retrieval support inspection when the owner is still broad or mixed-surface
+3. exact named follow-through for owner or supporting surfaces
+4. `full` only when additive details are actually needed
+
 ## Example Triggers
 
 - `Quick-check this Salt form before I commit.`

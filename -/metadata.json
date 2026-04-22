@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-04-22T00:00:00Z",
+  "version": "0.1.0",
+  "build_info": {
+    "source_root": "D:/Work/salt-ds-3",
+    "source_artifacts": {
+      "docs_root": {
+        "path": "site/docs",
+        "kind": "directory",
+        "exists": true,
+        "sha256": "91eac3208c01a1c5cae7ea458ca278e52bb8555252be4569e2d9ba5229d6c590",
+        "last_modified_at": "2026-03-20T01:14:49.468Z",
+        "file_count": 373,
+        "newest_file_modified_at": "2026-04-20T20:00:54.436Z"
+      },
+      "search_data": {
+        "path": "site/public/search-data.json",
+        "kind": "file",
+        "exists": true,
+        "sha256": "7c35f11c4b3aeecf797304d32b31312bd5edd0682eb20c2d0109d064c72c701f",
+        "last_modified_at": "2026-03-20T01:06:48.592Z",
+        "file_count": 1,
+        "newest_file_modified_at": "2026-03-20T01:06:48.592Z"
+      },
+      "snapshot_root": {
+        "path": "site/snapshots/latest/salt",
+        "kind": "directory",
+        "exists": true,
+        "sha256": "5985872f86845dd40bd767a4481aaf4653957a4baee2883fca9445db1ef235c9",
+        "last_modified_at": "2026-02-13T10:37:39.083Z",
+        "file_count": 809,
+        "newest_file_modified_at": "2026-03-20T01:06:54.455Z"
+      }
+    }
+  }
+}
