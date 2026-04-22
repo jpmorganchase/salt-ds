@@ -41,31 +41,12 @@ nav > ul {
   width: 100%;
 }
 
-.custom-region-container-column {
-  flex-direction: column;
+.custom-region-content {
+  flex: 1;
 }
 
 .custom-region-no-container-padding {
   padding: 0;
-}
-
-.custom-region-groups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--salt-spacing-300);
-  flex: 1;
-}
-
-.custom-region-groups-column {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.custom-region-top-bottom-groups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--salt-spacing-300);
 }
 
 .custom-region-right-description {

@@ -45,35 +45,12 @@
   width: 100%;
 }
 
+.customRegionContent {
+  flex: 1;
+}
+
 .customRegionNoContainerPadding {
   padding: 0;
-}
-
-.customRegionGroupsColumn {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.customRegionGroups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--salt-spacing-300);
-  flex: 1;
-}
-
-.customRegionContainerColumn {
-  flex-direction: column;
-}
-
-.customRegionTopBottomGroups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--salt-spacing-300);
-}
-
-.defaultBottomLinkRow {
-  padding-top: var(--salt-spacing-200);
 }
 
 .customRegionRightDescription {

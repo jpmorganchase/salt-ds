@@ -1545,8 +1545,8 @@ const WithCustomRegionTemplate: StoryFn = () => {
             </Button>
           </MegaMenuTrigger>
           <MegaMenuContainer className="custom-region-no-container-padding">
-            <MegaMenuSection className="custom-region-groups-column">
-              <div className="custom-region-groups">
+            <div className="custom-region-content">
+              <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
                   <MegaMenuItem value="Digital Banking">
@@ -1584,11 +1584,11 @@ const WithCustomRegionTemplate: StoryFn = () => {
                     Production Planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
-              </div>
-              <MegaMenuLinkRow className="defaultBottomLinkRow">
+              </MegaMenuSection>
+              <MegaMenuLinkRow>
                 <Link href="#">Explore details</Link>
               </MegaMenuLinkRow>
-            </MegaMenuSection>
+            </div>
             <MegaMenuCustomRegion
               variant="tertiary"
               style={{ width: "fit-content" }}
@@ -1668,8 +1668,8 @@ const WithCustomRegionTemplate: StoryFn = () => {
                 </StackLayout>
               </FlexLayout>
             </MegaMenuCustomRegion>
-            <MegaMenuSection className="custom-region-groups-column">
-              <div className="custom-region-groups">
+            <div className="custom-region-content">
+              <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
                   <MegaMenuItem value="Digital Banking">
@@ -1707,11 +1707,11 @@ const WithCustomRegionTemplate: StoryFn = () => {
                     Production Planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
-              </div>
-              <MegaMenuLinkRow className="defaultBottomLinkRow">
+              </MegaMenuSection>
+              <MegaMenuLinkRow>
                 <Link href="#">Explore details</Link>
               </MegaMenuLinkRow>
-            </MegaMenuSection>
+            </div>
           </MegaMenuContainer>
         </div>
       </MegaMenu>
@@ -1731,7 +1731,10 @@ const WithCustomRegionTemplate: StoryFn = () => {
             </Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer className="custom-region-container-column custom-region-no-container-padding">
+          <MegaMenuContainer
+            className="custom-region-no-container-padding"
+            style={{ flexDirection: "column" }}
+          >
             <MegaMenuCustomRegion variant="primary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -1760,50 +1763,48 @@ const WithCustomRegionTemplate: StoryFn = () => {
                 </StackLayout>
               </FlexLayout>
             </MegaMenuCustomRegion>
-            <MegaMenuSection className="custom-region-container-column">
-              <div className="custom-region-top-bottom-groups">
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </div>
-              <MegaMenuLinkRow className="defaultBottomLinkRow">
-                <Link href="#">Explore details</Link>
-              </MegaMenuLinkRow>
+            <MegaMenuSection>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem value="Digital Banking">
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem value="Risk Management">
+                  Risk Management
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                <MegaMenuItem value="Patient Management">
+                  Patient Management
+                </MegaMenuItem>
+                <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                <MegaMenuItem value="Compliance Solutions">
+                  Compliance Solutions
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Retail</MegaMenuHeader>
+                <MegaMenuItem value="E-Commerce Platforms">
+                  E-Commerce Platforms
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                <MegaMenuItem value="Supply Chain Optimization">
+                  Supply Chain Optimization
+                </MegaMenuItem>
+                <MegaMenuItem value="Quality Control">
+                  Quality Control
+                </MegaMenuItem>
+                <MegaMenuItem value="Production Planning">
+                  Production Planning
+                </MegaMenuItem>
+              </MegaMenuGroup>
             </MegaMenuSection>
+            <MegaMenuLinkRow>
+              <Link href="#">Explore details</Link>
+            </MegaMenuLinkRow>
           </MegaMenuContainer>
         </div>
       </MegaMenu>
@@ -1823,51 +1824,52 @@ const WithCustomRegionTemplate: StoryFn = () => {
             </Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer className="custom-region-container-column custom-region-no-container-padding">
-            <MegaMenuSection className="custom-region-container-column">
-              <div className="custom-region-top-bottom-groups">
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </div>
-              <MegaMenuLinkRow className="defaultBottomLinkRow">
-                <Link href="#">Explore details</Link>
-              </MegaMenuLinkRow>
+          <MegaMenuContainer
+            className="custom-region-no-container-padding"
+            style={{ flexDirection: "column" }}
+          >
+            <MegaMenuSection>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem value="Digital Banking">
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem value="Risk Management">
+                  Risk Management
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                <MegaMenuItem value="Patient Management">
+                  Patient Management
+                </MegaMenuItem>
+                <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                <MegaMenuItem value="Compliance Solutions">
+                  Compliance Solutions
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Retail</MegaMenuHeader>
+                <MegaMenuItem value="E-Commerce Platforms">
+                  E-Commerce Platforms
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                <MegaMenuItem value="Supply Chain Optimization">
+                  Supply Chain Optimization
+                </MegaMenuItem>
+                <MegaMenuItem value="Quality Control">
+                  Quality Control
+                </MegaMenuItem>
+                <MegaMenuItem value="Production Planning">
+                  Production Planning
+                </MegaMenuItem>
+              </MegaMenuGroup>
             </MegaMenuSection>
+            <MegaMenuLinkRow>
+              <Link href="#">Explore details</Link>
+            </MegaMenuLinkRow>
             <MegaMenuCustomRegion variant="tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
