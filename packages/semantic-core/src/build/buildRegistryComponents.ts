@@ -33,6 +33,7 @@ import {
   toPascalCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { buildRetrievalSignals } from "./buildRegistryRetrievalSignals.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
   if (name === "@salt-ds/lab") {
@@ -666,7 +667,10 @@ export async function extractComponents(
         structuredGuidance.avoid.length > 0
           ? (["usage-callouts"] as const)
           : []),
-      ],
+        ],
+    });
+    const retrievalSignals = buildRetrievalSignals({
+      caution_statements: [...whenNotToUse, ...structuredGuidance.avoid],
     });
     const relatedComponents = Array.isArray(data?.relatedComponents)
       ? (data?.relatedComponents as Array<Record<string, unknown>>)
@@ -737,6 +741,7 @@ export async function extractComponents(
         examples: examplesMdx ? `${componentRoute}/examples` : null,
       },
       semantics,
+      retrieval_signals: retrievalSignals,
       source: {
         repo_path: sourceRepoPath,
         export_name: rootDisplayName,

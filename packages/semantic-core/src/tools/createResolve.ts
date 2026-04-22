@@ -1,5 +1,9 @@
 import type { SaltRegistry, SaltStatus } from "../types.js";
-import { collectCreateQueryAnchors } from "./createQueryAnchors.js";
+import {
+  chooseDominantCreateQueryAnchor,
+  collectCreateQueryAnchors,
+  isHighPriorityCreateQueryAnchor,
+} from "./createQueryAnchors.js";
 import {
   type CreateRetrievalCandidate,
   type CreateTargetReference,
@@ -13,6 +17,7 @@ import {
 } from "./createRetrieval.js";
 import { resolveSolutionType } from "./createSaltUiHelpers.js";
 import { getStructuralPatternIntent } from "./patternIntent.js";
+import { containsWholeWordPhrase, normalizeQuery } from "./utils.js";
 
 export type CreateResolutionSolutionType =
   | "auto"
@@ -151,12 +156,17 @@ function pickForcedPatternComponentOverride(input: {
       .filter((anchor) => anchor.entity_type === "component")
       .map((anchor) => anchor.name),
   );
+  const normalizedQuery = normalizeQuery(input.query);
 
   const [candidate] = input.retrieval.candidates
     .filter((entry) => entry.entity_type === "component")
     .filter(
       (entry) =>
         anchoredComponentNames.has(entry.entity_name) ||
+        containsWholeWordPhrase(
+          normalizedQuery,
+          normalizeQuery(entry.entity_name),
+        ) ||
         entry.match_reasons.some((reason) =>
           [
             "canonical_name:full_phrase",
@@ -172,6 +182,14 @@ function pickForcedPatternComponentOverride(input: {
     return null;
   }
 
+  const candidateStronglyGrounded =
+    candidate.exact_match ||
+    candidate.prefix_match ||
+    hasHighSignalExplicitCreateGrounding(candidate);
+  if (!candidateStronglyGrounded) {
+    return null;
+  }
+
   const strongPatternIntent =
     input.explicit_pattern_hint ||
     (input.structural_pattern_intent_score ?? 0) >= 4;
@@ -181,6 +199,14 @@ function pickForcedPatternComponentOverride(input: {
       !strongPatternIntent &&
       input.retrieval.owner.explicit_owner_hits === 0 &&
       candidate.explicit_owner_hits > 0;
+    const allowStrongGroundedForcedOverride =
+      !strongPatternIntent &&
+      candidateStronglyGrounded &&
+      !input.retrieval.owner.exact_match &&
+      !input.retrieval.owner.prefix_match;
+    if (allowStrongGroundedForcedOverride) {
+      return candidate;
+    }
     if (
       allowLooseForcedOverride
         ? candidate.total_score <
@@ -222,9 +248,18 @@ function pickAnchoredCreateOverride(input: {
       (anchor) => anchor.name,
     ),
   );
+  const normalizedQuery = normalizeQuery(input.query);
 
   const [candidate] = input.retrieval.candidates
-    .filter((entry) => anchoredNames.has(entry.entity_name))
+    .filter(
+      (entry) =>
+        anchoredNames.has(entry.entity_name) ||
+        (entry.entity_type === "component" &&
+          containsWholeWordPhrase(
+            normalizedQuery,
+            normalizeQuery(entry.entity_name),
+          )),
+    )
     .sort(sortCreateCandidates);
 
   if (!candidate || candidate.entity_id === topOwner.entity_id) {
@@ -254,19 +289,71 @@ function pickAnchoredCreateOverride(input: {
   }
 
   const closeEnough =
-    candidate.explicit_owner_hits > 0 ||
-    candidate.match_reasons.some((reason) =>
-      [
-        "canonical_name:full_phrase",
-        "canonical_name:prefix_phrase",
-        "alias:full_phrase",
-        "alias:prefix_phrase",
-      ].includes(reason),
-    ) ||
+    hasHighSignalExplicitCreateGrounding(candidate) ||
     candidate.confidence >= topOwner.confidence - 16 ||
     candidate.total_score >= topOwner.total_score - 16;
 
   return closeEnough ? candidate : null;
+}
+
+function pickDominantAnchoredComponentRouteOverride(input: {
+  registry: SaltRegistry;
+  query: string | undefined;
+  retrieval: RetrieveCreateCandidatesResult | null;
+  solution_type_hint: Exclude<CreateResolutionSolutionType, "auto">;
+}): { entity_name: string; entity_type: "component" } | null {
+  if (
+    !input.query ||
+    !input.retrieval?.candidates.length ||
+    (input.solution_type_hint !== "component" &&
+      input.solution_type_hint !== "pattern")
+  ) {
+    return null;
+  }
+
+  const topOwner =
+    input.retrieval.owner ?? input.retrieval.candidates[0] ?? null;
+  if (!topOwner) {
+    return null;
+  }
+
+  const dominantComponentAnchor = chooseDominantCreateQueryAnchor(
+    collectCreateQueryAnchors(input.registry, input.query).filter(
+      (anchor) =>
+        anchor.entity_type === "component" &&
+        isHighPriorityCreateQueryAnchor(anchor),
+    ),
+  );
+  if (!dominantComponentAnchor) {
+    return null;
+  }
+
+  if (topOwner.entity_name === dominantComponentAnchor.name) {
+    return null;
+  }
+
+  const anchorAlreadyRetrieved = input.retrieval.candidates.some(
+    (candidate) =>
+      candidate.entity_type === "component" &&
+      candidate.entity_name === dominantComponentAnchor.name,
+  );
+  if (anchorAlreadyRetrieved) {
+    return null;
+  }
+
+  const ownerStronglyGrounded =
+    topOwner.exact_match ||
+    topOwner.prefix_match ||
+    topOwner.explicit_owner_hits > 0 ||
+    hasHighSignalExplicitCreateGrounding(topOwner);
+  if (ownerStronglyGrounded) {
+    return null;
+  }
+
+  return {
+    entity_name: dominantComponentAnchor.name,
+    entity_type: "component",
+  };
 }
 
 function pickHintAlignedCreateOverride(input: {
@@ -295,11 +382,144 @@ function pickHintAlignedCreateOverride(input: {
     return null;
   }
 
+  if (
+    input.solution_type_hint === "pattern" &&
+    topOwner.entity_type === "component" &&
+    topOwner.explicit_owner_hits > candidate.explicit_owner_hits
+  ) {
+    const componentAlreadyGrounded =
+      topOwner.confidence >= candidate.confidence - 8 ||
+      topOwner.total_score >= candidate.total_score - 8;
+    if (componentAlreadyGrounded) {
+      return null;
+    }
+  }
+
   const closeEnough =
     candidate.confidence >= topOwner.confidence - 8 ||
     candidate.total_score >= topOwner.total_score - 8;
 
   return closeEnough ? candidate : null;
+}
+
+function getTopRetrievedCandidateByType(
+  retrieval: RetrieveCreateCandidatesResult | null,
+  entityType: "component" | "pattern",
+): CreateRetrievalCandidate | null {
+  if (!retrieval?.candidates.length) {
+    return null;
+  }
+
+  return (
+    retrieval.candidates.find((entry) => entry.entity_type === entityType) ??
+    null
+  );
+}
+
+function hasHighSignalExplicitCreateGrounding(
+  candidate: CreateRetrievalCandidate,
+): boolean {
+  const hasStrongCanonicalPhrase = candidate.match_reasons.some((reason) =>
+    ["canonical_name:full_phrase", "canonical_name:prefix_phrase"].includes(
+      reason,
+    ),
+  );
+  const hasStrongAliasPhrase = candidate.evidence.some(
+    (entry) =>
+      entry.source_kind === "alias" &&
+      entry.evidence_role === "owner" &&
+      entry.score >= 18 &&
+      normalizeQuery(entry.text).split(/\s+/).filter(Boolean).length > 1,
+  );
+
+  return hasStrongCanonicalPhrase || hasStrongAliasPhrase;
+}
+
+function pickStrongCrossTypeCreateOverride(input: {
+  retrieval: RetrieveCreateCandidatesResult | null;
+  solution_type_hint: Exclude<CreateResolutionSolutionType, "auto">;
+  explicit_pattern_hint?: boolean;
+  structural_pattern_intent_score?: number;
+}): CreateRetrievalCandidate | null {
+  if (
+    !input.retrieval?.owner ||
+    input.solution_type_hint !== "pattern" ||
+    input.retrieval.owner.entity_type !== "component"
+  ) {
+    return null;
+  }
+
+  const owner = input.retrieval.owner;
+  const topPattern = getTopRetrievedCandidateByType(input.retrieval, "pattern");
+  const strongPatternIntent =
+    input.explicit_pattern_hint ||
+    (input.structural_pattern_intent_score ?? 0) >= 4;
+
+  if (!topPattern) {
+    return hasHighSignalExplicitCreateGrounding(owner) || owner.owner_score >= 64
+      ? owner
+      : null;
+  }
+
+  const componentClearlyDominant =
+    owner.confidence >= topPattern.confidence + 20 ||
+    owner.total_score >= topPattern.total_score + 20 ||
+    owner.owner_score >= topPattern.owner_score + 24;
+  const patternStillGrounded =
+    topPattern.explicit_owner_hits > 0 ||
+    (strongPatternIntent &&
+      topPattern.confidence >= owner.confidence - 4 &&
+      topPattern.total_score >= owner.total_score - 4);
+
+  if (!componentClearlyDominant || patternStillGrounded) {
+    return null;
+  }
+
+  return owner;
+}
+
+function pickAmbiguousCrossTypeCreateOverride(input: {
+  retrieval: RetrieveCreateCandidatesResult | null;
+  solution_type_hint: Exclude<CreateResolutionSolutionType, "auto">;
+  explicit_pattern_hint?: boolean;
+  structural_pattern_intent_score?: number;
+}): CreateRetrievalCandidate | null {
+  if (
+    !input.retrieval?.candidates.length ||
+    input.retrieval.status !== "ambiguous" ||
+    input.solution_type_hint !== "pattern"
+  ) {
+    return null;
+  }
+
+  const topPattern = getTopRetrievedCandidateByType(input.retrieval, "pattern");
+  const topComponent = getTopRetrievedCandidateByType(
+    input.retrieval,
+    "component",
+  );
+  if (!topPattern || !topComponent) {
+    return null;
+  }
+
+  const componentExplicitlyGrounded =
+    hasHighSignalExplicitCreateGrounding(topComponent) &&
+    topComponent.explicit_owner_hits > topPattern.explicit_owner_hits;
+  const closeEnough =
+    topComponent.confidence >= topPattern.confidence - 6 ||
+    topComponent.total_score >= topPattern.total_score - 6;
+  const patternWeaklyGrounded = topPattern.explicit_owner_hits === 0;
+  const preservePatternOwner = topPattern.explicit_owner_hits > 0;
+
+  if (
+    !componentExplicitlyGrounded ||
+    !closeEnough ||
+    !patternWeaklyGrounded ||
+    preservePatternOwner
+  ) {
+    return null;
+  }
+
+  return topComponent;
 }
 
 export function resolveCreateRecommendation(
@@ -361,6 +581,12 @@ export function resolveCreateRecommendation(
       solutionType = forcedPatternComponentOverride.entity_type;
       routedQuery = forcedPatternComponentOverride.entity_name;
     } else {
+      const strongCrossTypeOverride = pickStrongCrossTypeCreateOverride({
+        retrieval,
+        solution_type_hint: solutionTypeHint,
+        explicit_pattern_hint: explicitPatternHint,
+        structural_pattern_intent_score: structuralPatternIntent.score,
+      });
       const anchoredOverride = pickAnchoredCreateOverride({
         registry,
         query,
@@ -368,16 +594,32 @@ export function resolveCreateRecommendation(
         explicit_pattern_hint: explicitPatternHint,
         structural_pattern_intent_score: structuralPatternIntent.score,
       });
+      const anchoredComponentRouteOverride = anchoredOverride
+        ? null
+        : pickDominantAnchoredComponentRouteOverride({
+            registry,
+            query,
+            retrieval,
+            solution_type_hint: solutionTypeHint,
+          });
       const hintAlignedOverride = anchoredOverride
+        ? null
+        : anchoredComponentRouteOverride
         ? null
         : pickHintAlignedCreateOverride({
             retrieval,
             solution_type_hint: solutionTypeHint,
           });
 
-      if (anchoredOverride) {
+      if (strongCrossTypeOverride) {
+        solutionType = strongCrossTypeOverride.entity_type;
+        routedQuery = strongCrossTypeOverride.entity_name;
+      } else if (anchoredOverride) {
         solutionType = anchoredOverride.entity_type;
         routedQuery = anchoredOverride.entity_name;
+      } else if (anchoredComponentRouteOverride) {
+        solutionType = anchoredComponentRouteOverride.entity_type;
+        routedQuery = anchoredComponentRouteOverride.entity_name;
       } else if (hintAlignedOverride) {
         solutionType = hintAlignedOverride.entity_type;
         routedQuery = hintAlignedOverride.entity_name;
@@ -394,12 +636,21 @@ export function resolveCreateRecommendation(
         solutionTypeHint !== "token" &&
         retrieval.status === "ambiguous"
       ) {
+        const ambiguousCrossTypeOverride = pickAmbiguousCrossTypeCreateOverride({
+          retrieval,
+          solution_type_hint: solutionTypeHint,
+          explicit_pattern_hint: explicitPatternHint,
+          structural_pattern_intent_score: structuralPatternIntent.score,
+        });
         const fallbackOwner = pickRetrievedCreateOwner(retrieval, {
           prefer_component: explicitComponentHint && !explicitPatternHint,
           prefer_structural_patterns:
             explicitPatternHint || structuralPatternIntent.score >= 4,
         });
-        if (fallbackOwner) {
+        if (ambiguousCrossTypeOverride) {
+          solutionType = ambiguousCrossTypeOverride.entity_type;
+          routedQuery = ambiguousCrossTypeOverride.entity_name;
+        } else if (fallbackOwner) {
           solutionType = fallbackOwner.entity_type;
           routedQuery = fallbackOwner.entity_name;
         }

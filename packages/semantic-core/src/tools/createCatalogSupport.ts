@@ -4,6 +4,7 @@ import type {
   CreateRetrievalEvidenceRole,
   CreateRetrievalSourceKind,
   PatternRecord,
+  RetrievalSignalsRecord,
   SaltRegistry,
   SaltStatus,
 } from "../types.js";
@@ -43,6 +44,7 @@ export interface CreateCatalogEntitySummary {
   starter_available: boolean;
   supporting_surfaces: string[];
   related_entities: string[];
+  retrieval_signals: RetrievalSignalsRecord | null;
   example_count: number;
   source_urls: string[];
 }
@@ -202,6 +204,7 @@ function summarizeComponent(
       ...component.patterns,
       ...(component.sub_components?.map((sub) => sub.name) ?? []),
     ]),
+    retrieval_signals: component.retrieval_signals ?? null,
     example_count: component.examples.length,
     source_urls: uniqueSorted([
       component.related_docs.overview,
@@ -236,6 +239,7 @@ function summarizePattern(pattern: PatternRecord): CreateCatalogEntitySummary {
       ...pattern.composed_of.map((item) => item.component),
       ...pattern.related_patterns,
     ]),
+    retrieval_signals: pattern.retrieval_signals ?? null,
     example_count: pattern.examples.length,
     source_urls: uniqueSorted([
       pattern.related_docs.overview,
@@ -288,6 +292,66 @@ function summarizeCandidate(
         text: entry.text,
         matched_terms: [...entry.matched_terms],
       })),
+  };
+}
+
+function summarizeResolvedOwnerFallback(
+  registry: SaltRegistry,
+  input: {
+    entity_name: string;
+    entity_type: CreateRetrievalEntityType;
+  },
+): CreateCatalogCandidateSummary | null {
+  if (input.entity_type === "component") {
+    const entityRecord = registry.components.find(
+      (record) => record.name === input.entity_name,
+    );
+    if (!entityRecord) {
+      return null;
+    }
+
+    return {
+      entity: summarizeEntityRecord({
+        entity_type: "component",
+        record: entityRecord,
+      }),
+      confidence: 0,
+      exact_match: false,
+      prefix_match: false,
+      explicit_owner_hits: 0,
+      owner_score: 0,
+      support_score: 0,
+      caution_score: 0,
+      total_score: 0,
+      matched_terms: [],
+      match_reasons: [],
+      evidence: [],
+    };
+  }
+
+  const entityRecord = registry.patterns.find(
+    (record) => record.name === input.entity_name,
+  );
+  if (!entityRecord) {
+    return null;
+  }
+
+  return {
+    entity: summarizeEntityRecord({
+      entity_type: "pattern",
+      record: entityRecord,
+    }),
+    confidence: 0,
+    exact_match: false,
+    prefix_match: false,
+    explicit_owner_hits: 0,
+    owner_score: 0,
+    support_score: 0,
+    caution_score: 0,
+    total_score: 0,
+    matched_terms: [],
+    match_reasons: [],
+    evidence: [],
   };
 }
 
@@ -508,6 +572,14 @@ export function inspectCreateCatalogQuery(
     retrievalOwner.entity.name === resolution.routed_query &&
     retrievalOwner.entity.entity_type === resolution.solution_type
       ? retrievalOwner
+      : null) ??
+    (resolution.routed_query &&
+    (resolution.solution_type === "component" ||
+      resolution.solution_type === "pattern")
+      ? summarizeResolvedOwnerFallback(registry, {
+          entity_name: resolution.routed_query,
+          entity_type: resolution.solution_type,
+        })
       : null);
   const owner = resolvedOwner ?? retrievalOwner;
 
