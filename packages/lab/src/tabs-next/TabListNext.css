@@ -9,8 +9,8 @@
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   gap: var(--salt-spacing-100);
   max-width: 100%;
-  width: 100%;
   min-width: 0;
+  flex: 0 1 auto;
 }
 
 .saltTabListNext-center {
@@ -33,6 +33,13 @@
   --saltTabListNext-activeColor: var(--salt-container-tertiary-background);
 }
 
-.saltTabListNext-overflowWarning {
-  display: none;
+.saltTabListNext-measureContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  white-space: nowrap;
 }

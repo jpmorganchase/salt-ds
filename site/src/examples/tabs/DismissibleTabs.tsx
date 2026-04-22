@@ -1,0 +1,62 @@
+import { useAriaAnnouncer } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextAction,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
+
+export const DismissibleTabs = (): ReactElement => {
+  const [tabs, setTabs] = useState([
+    "Home",
+    "Transactions",
+    "Loans",
+    "Checks",
+    "Liquidity",
+  ]);
+
+  const { announce } = useAriaAnnouncer();
+
+  const handleDismissTab = (value: string) => {
+    setTabs((oldTabs) => oldTabs.filter((tab) => tab !== value));
+    announce(`${value} tab has been removed`, 150);
+  };
+
+  return (
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar inset divider>
+          <TabListNext aria-label="Example tablist">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger
+                  onKeyDown={(event) => {
+                    if (event.key === "Delete" && tabs.length > 1) {
+                      handleDismissTab(label);
+                    }
+                  }}
+                >
+                  {label}
+                </TabNextTrigger>
+                {tabs.length > 1 && (
+                  <TabNextAction
+                    onClick={() => {
+                      handleDismissTab(label);
+                    }}
+                    aria-label="Dismiss tab"
+                  >
+                    <CloseIcon aria-hidden />
+                  </TabNextAction>
+                )}
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
+  );
+};
