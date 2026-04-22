@@ -11,6 +11,10 @@ import {
   buildSaltMcpServerInfo,
   getSaltMcpRuntimeMetadata,
   SALT_MCP_CAPABILITY_MANIFEST_URI,
+  SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
+  SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
+  SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
+  SALT_MCP_CATALOG_MANIFEST_URI,
 } from "../server/serverMetadata.js";
 import {
   createToolExecutionRuntime,
@@ -139,13 +143,13 @@ describe("createSaltMcpServer", () => {
       "visual_evidence",
     );
     expect(contextTool?.description).toContain(
-      "Inspect repo context for advanced Salt workflow debugging",
+      "Inspect and cache repo context for repo-aware Salt workflows",
     );
     expect(chooseTool?.description).toContain(
-      "If names is present, comparison mode wins",
+      "compare exact names side by side with names",
     );
     expect(chooseTool?.description).toContain(
-      "It returns canonical Salt guidance plus repo-policy artifacts",
+      "Use retrieval catalog resources for richer candidate inspection",
     );
     expect(translateTool?.description).toContain(
       "translated into Salt primitives, patterns, and migration steps",
@@ -399,35 +403,71 @@ describe("createSaltMcpServer", () => {
     );
   });
 
-  it("registers a machine-readable capability manifest resource", async () => {
+  it("registers machine-readable capability and catalog resources", async () => {
     await withRegistryDir(
       async (registryDir) => {
-        await writeBaseArtifacts(registryDir);
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-04-22T00:00:00Z",
+        });
       },
       async (registryDir) => {
         const server = await createSaltMcpServer({ registryDir });
         const registry = await loadRegistry({ registryDir });
         const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
-        const registeredResources = (
-          server as unknown as {
-            _registeredResources: Record<
-              string,
-              {
-                metadata?: Record<string, unknown>;
-                readCallback: (uri: URL, extra: unknown) => Promise<{
-                  contents: Array<{
-                    uri: string;
-                    mimeType?: string;
-                    text?: string;
-                  }>;
+        const transportRegistrations = server as unknown as {
+          _registeredResources: Record<
+            string,
+            {
+              metadata?: Record<string, unknown>;
+              readCallback: (
+                uri: URL,
+                extra: unknown,
+              ) => Promise<{
+                contents: Array<{
+                  uri: string;
+                  mimeType?: string;
+                  text?: string;
                 }>;
-              }
-            >;
-          }
-        )._registeredResources;
+              }>;
+            }
+          >;
+          _registeredResourceTemplates: Record<
+            string,
+            {
+              metadata?: Record<string, unknown>;
+              resourceTemplate: {
+                uriTemplate: {
+                  toString(): string;
+                };
+              };
+              readCallback: (
+                uri: URL,
+                variables: Record<string, string>,
+                extra: unknown,
+              ) => Promise<{
+                contents: Array<{
+                  uri: string;
+                  mimeType?: string;
+                  text?: string;
+                }>;
+              }>;
+            }
+          >;
+        };
+        const registeredResources = transportRegistrations._registeredResources;
+        const registeredResourceTemplates =
+          transportRegistrations._registeredResourceTemplates;
 
         expect(Object.keys(registeredResources)).toEqual([
           SALT_MCP_CAPABILITY_MANIFEST_URI,
+          SALT_MCP_CATALOG_MANIFEST_URI,
+        ]);
+        expect(Object.keys(registeredResourceTemplates).sort()).toEqual([
+          "salt_catalog_candidates",
+          "salt_catalog_entity",
+          "salt_catalog_family",
         ]);
         expect(
           registeredResources[SALT_MCP_CAPABILITY_MANIFEST_URI]?.metadata,
@@ -437,10 +477,9 @@ describe("createSaltMcpServer", () => {
           }),
         );
 
-        const resourceResult =
-          await registeredResources[
-            SALT_MCP_CAPABILITY_MANIFEST_URI
-          ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {});
+        const resourceResult = await registeredResources[
+          SALT_MCP_CAPABILITY_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {});
 
         expect(resourceResult.contents).toEqual([
           expect.objectContaining({
@@ -449,9 +488,99 @@ describe("createSaltMcpServer", () => {
             text: JSON.stringify(runtimeMetadata.capability_manifest, null, 2),
           }),
         ]);
+
+        const catalogManifestResult = await registeredResources[
+          SALT_MCP_CATALOG_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CATALOG_MANIFEST_URI), {});
+        const catalogManifest = JSON.parse(
+          catalogManifestResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(catalogManifest).toEqual(
+          expect.objectContaining({
+            contract_version: "salt_create_catalog_v1",
+            resources: {
+              manifest_uri: SALT_MCP_CATALOG_MANIFEST_URI,
+              entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
+              candidates_template_uri: SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
+              family_template_uri: SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
+            },
+          }),
+        );
+
+        const entityTemplateResult =
+          await registeredResourceTemplates.salt_catalog_entity.readCallback(
+            new URL("salt://catalog/entity/Tabs"),
+            { name: "Tabs" },
+            {},
+          );
+        const entityPayload = JSON.parse(
+          entityTemplateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+        expect(entityPayload).toEqual(
+          expect.objectContaining({
+            query: "Tabs",
+            status: "resolved",
+            matches: [
+              expect.objectContaining({
+                name: "Tabs",
+                aliases: expect.arrayContaining(["Tab"]),
+              }),
+            ],
+          }),
+        );
+
+        const candidatesTemplateResult =
+          await registeredResourceTemplates.salt_catalog_candidates.readCallback(
+            new URL(
+              "salt://catalog/candidates/Create%20a%20metric%20component%20to%20display%20a%20key%20value",
+            ),
+            {
+              query:
+                "Create%20a%20metric%20component%20to%20display%20a%20key%20value",
+            },
+            {},
+          );
+        const candidatesPayload = JSON.parse(
+          candidatesTemplateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+        expect(candidatesPayload).toEqual(
+          expect.objectContaining({
+            query: "Create a metric component to display a key value",
+            owner: expect.objectContaining({
+              entity: expect.objectContaining({
+                name: "Metric",
+              }),
+            }),
+          }),
+        );
+
+        const familyTemplateResult =
+          await registeredResourceTemplates.salt_catalog_family.readCallback(
+            new URL("salt://catalog/family/selection-controls"),
+            { family: "selection-controls" },
+            {},
+          );
+        const familyPayload = JSON.parse(
+          familyTemplateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+        expect(familyPayload).toEqual(
+          expect.objectContaining({
+            query: "selection-controls",
+            status: "resolved",
+            matches: [
+              expect.objectContaining({
+                family: "selection-controls",
+                entities: expect.arrayContaining([
+                  expect.objectContaining({ name: "Tabs" }),
+                ]),
+              }),
+            ],
+          }),
+        );
       },
     );
-  });
+  }, 20_000);
 
   it("registers output schemas and workflow annotations for the default workflow tools", async () => {
     await withRegistryDir(
@@ -496,7 +625,7 @@ describe("createSaltMcpServer", () => {
         }
       },
     );
-  });
+  }, 60_000);
 
   it("advertises the MCP runtime version separately from the registry version", async () => {
     await withRegistryDir(
@@ -557,6 +686,9 @@ describe("createSaltMcpServer", () => {
         expect(internalServer._instructions).toBe(instructions);
         expect(internalServer._instructions).toContain(
           `Machine-readable capability manifest resource: ${SALT_MCP_CAPABILITY_MANIFEST_URI}.`,
+        );
+        expect(internalServer._instructions).toContain(
+          `Machine-readable retrieval catalog resources: ${SALT_MCP_CATALOG_MANIFEST_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}, ${SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI}.`,
         );
         expect(internalServer._instructions).toContain(
           "When asked for the MCP version, use the runtime version.",
@@ -786,7 +918,7 @@ describe("createSaltMcpServer", () => {
           }),
         );
         const publicFollowUps = (
-          chooseResult as {
+          chooseResult as unknown as {
             artifacts: { suggested_follow_ups: Array<{ workflow: string }> };
           }
         ).artifacts.suggested_follow_ups;
@@ -1313,9 +1445,7 @@ describe("createSaltMcpServer", () => {
           contract: "salt_workflow_v3",
           workflow: "create",
           transport: "mcp",
-          status: expect.stringMatching(
-            /^(success|partial|blocked|failed)$/,
-          ),
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
           safety: {
             canonical_complete: expect.any(Boolean),
             exact_request_safe: expect.any(Boolean),
@@ -1453,7 +1583,7 @@ describe("createSaltMcpServer", () => {
             tool: "create_salt_ui",
             mode: "exact_name",
             args: {
-              query: "Analytical dashboard",
+              query: "App header",
             },
           },
         });
@@ -1519,9 +1649,7 @@ describe("createSaltMcpServer", () => {
           contract: "salt_workflow_v3",
           workflow: "review",
           transport: "mcp",
-          status: expect.stringMatching(
-            /^(success|partial|blocked|failed)$/,
-          ),
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
           safety: {
             canonical_complete: expect.any(Boolean),
             exact_request_safe: expect.any(Boolean),
@@ -1557,9 +1685,7 @@ describe("createSaltMcpServer", () => {
           contract: "salt_workflow_v3",
           workflow: "migrate",
           transport: "mcp",
-          status: expect.stringMatching(
-            /^(success|partial|blocked|failed)$/,
-          ),
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
           safety: {
             canonical_complete: expect.any(Boolean),
             exact_request_safe: expect.any(Boolean),
@@ -1594,9 +1720,7 @@ describe("createSaltMcpServer", () => {
           contract: "salt_workflow_v3",
           workflow: "upgrade",
           transport: "mcp",
-          status: expect.stringMatching(
-            /^(success|partial|blocked|failed)$/,
-          ),
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
           safety: {
             canonical_complete: expect.any(Boolean),
             exact_request_safe: expect.any(Boolean),

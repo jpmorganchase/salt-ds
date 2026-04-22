@@ -8,6 +8,7 @@ import type {
   SaltRegistry,
   SaltStatus,
 } from "../types.js";
+import { resolveComponentTarget } from "./componentLookup.js";
 import type { ConsumerRecommendationFilters } from "./consumerFilters.js";
 import {
   matchesComponentConsumerFilters,
@@ -17,7 +18,6 @@ import {
   getEffectiveUsageSemantics,
   inferComponentCapabilities,
 } from "./consumerSignals.js";
-import { resolveComponentTarget } from "./componentLookup.js";
 import {
   containsExplicitCreateReferencePhrase,
   getCreateReferenceQueries,
@@ -102,25 +102,37 @@ export interface RetrieveCreateCandidatesResult {
   reference?: CreateTargetReference;
 }
 
-interface CreateQueryCompatibilitySignals {
-  single_destination_intent: boolean;
-  shell_container_intent: boolean;
-  data_display_intent: boolean;
-  same_page_sections_intent: boolean;
-}
-
-interface CreateCandidateCompatibilitySignals {
-  shell_container_score: number;
-  single_destination_score: number;
-  multi_destination_score: number;
-  data_display_score: number;
-  same_page_sections_score: number;
-  generic_container_component: boolean;
+export interface RetrieveCreateSupportCandidatesInput {
+  query: string;
+  owner_name: string;
+  owner_categories?: string[];
+  top_k?: number;
 }
 
 interface CreateRetrievalTokenStats {
   entity_count: number;
   entity_frequency: Map<string, number>;
+}
+
+function hasBreadcrumbWayfindingIntent(query: string): boolean {
+  const normalizedQuery = normalizeQuery(query);
+  if (!normalizedQuery) {
+    return false;
+  }
+
+  return (
+    /\b(path trail|breadcrumb|breadcrumbs|current directory path|directory path|directory tree|hierarchy path)\b/.test(
+      normalizedQuery,
+    ) ||
+    (/\b(path|directory|tree|trail|folders|hierarchy)\b/.test(
+      normalizedQuery,
+    ) &&
+      /\b(navigate back|back up|current location|current directory|previous levels|previous level|drill down)\b/.test(
+        normalizedQuery,
+      )) ||
+    (/\b(file browser|file manager)\b/.test(normalizedQuery) &&
+      /\b(path|trail|directory)\b/.test(normalizedQuery))
+  );
 }
 
 const HARD_STOPWORDS = new Set([
@@ -170,6 +182,18 @@ const LOW_SIGNAL_SINGLE_TOKEN_ALIASES = new Set([
   "screen",
   "shell",
 ]);
+const LOW_SIGNAL_SINGLE_TOKEN_SUPPORT_SOURCES =
+  new Set<CreateRetrievalSourceKind>(["tag"]);
+const OWNER_RETRIEVAL_EXCLUDED_SOURCES = new Set<CreateRetrievalSourceKind>([
+  "example",
+  "prop",
+  "pattern_composition",
+  "pattern_how_to_build",
+  "pattern_how_it_works",
+  "starter_scaffold_region",
+  "starter_scaffold_build_around",
+  "starter_scaffold_constraint",
+]);
 
 const CREATE_RETRIEVAL_INDEX_CACHE = new WeakMap<
   SaltRegistry,
@@ -215,6 +239,99 @@ function getQueryTerms(query: string): string[] {
   return stemTokenize(
     (softFiltered.length > 0 ? softFiltered : hardFiltered).join(" "),
   );
+}
+
+function deriveSemanticCreateQueryExpansions(
+  query: string,
+  mode: "owner" | "support" = "owner",
+): string[] {
+  const normalizedQuery = normalizeQuery(query);
+  if (!normalizedQuery) {
+    return [];
+  }
+
+  const expansions: string[] = [];
+  const multiStateMatches =
+    Number(/\bloading\b/.test(normalizedQuery)) +
+    Number(/\bempty\b/.test(normalizedQuery)) +
+    Number(/\berror\b/.test(normalizedQuery)) +
+    Number(/\bwarning\b/.test(normalizedQuery)) +
+    Number(/\bsuccess\b/.test(normalizedQuery));
+
+  if (mode === "support" && hasBreadcrumbWayfindingIntent(query)) {
+    expansions.push(
+      "current location within a hierarchy previous levels secondary navigation drill down into tables or charts",
+    );
+  }
+
+  if (
+    /\b(navigate|navigation|navigating)\b/.test(normalizedQuery) &&
+    /\b(route|routes|destination|destinations)\b/.test(normalizedQuery) &&
+    !/\b(sidebar|hierarchy|nested|submenu|section|sections)\b/.test(
+      normalizedQuery,
+    )
+  ) {
+    expansions.push(
+      "link to another page or site related information same page section",
+    );
+  }
+
+  if (
+    /\b(tab|tabs|tabbed|tablist|tabpanel|tab-panel|content panel|content panels)\b/.test(
+      normalizedQuery,
+    ) ||
+    (/\b(section|sections)\b/.test(normalizedQuery) &&
+      /\b(switch|switching|between|overview|activity|settings|details|profile)\b/.test(
+        normalizedQuery,
+      ))
+  ) {
+    expansions.push(
+      "switch between content panels within a single page same page sections",
+    );
+  }
+
+  if (
+    (/\b(toggle|toggled|toggling|enable|enabled|disable|disabled|switch on|switch off)\b/.test(
+      normalizedQuery,
+    ) ||
+      (/\bturn\b/.test(normalizedQuery) &&
+        /\b(on|off)\b/.test(normalizedQuery)) ||
+      (/\bon\b/.test(normalizedQuery) && /\boff\b/.test(normalizedQuery))) &&
+    /\b(control|setting|settings|alert|alerts|preference|preferences|form|forms)\b/.test(
+      normalizedQuery,
+    )
+  ) {
+    expansions.push(
+      "binary control between two different states adjusting settings or preferences immediate effect",
+    );
+  }
+
+  if (
+    multiStateMatches >= 2 &&
+    (/\b(content|container|region|area)\b/.test(normalizedQuery) ||
+      /\bnot (?:as )?a global\b/.test(normalizedQuery) ||
+      /\bcurrent\b/.test(normalizedQuery))
+  ) {
+    expansions.push(
+      "loading empty warning error success states inside a container component tied to the current content area",
+    );
+  }
+
+  if (
+    /\b(single|one|summary)\b/.test(normalizedQuery) &&
+    /\b(metric|metrics|kpi|kpis|value|values|indicator|indicators|trend|trends|label|labels)\b/.test(
+      normalizedQuery,
+    ) &&
+    !/\b(dashboard|dashboards|table|tables|grid|grids|chart|charts|shell|layout|workspace)\b/.test(
+      normalizedQuery,
+    )
+  ) {
+    expansions.push(
+      "key performance indicator single value label trend indicator",
+    );
+  }
+
+  return unique(expansions);
 }
 
 function getCreateRetrievalTokenStats(
@@ -534,7 +651,7 @@ function buildComponentRetrievalDocs(
       text: [example.title, example.description, ...example.intent]
         .filter(Boolean)
         .join(" "),
-      source_weight: 12,
+      source_weight: 8,
       categories: component.category,
       structural_weight: structuralWeight,
     });
@@ -557,7 +674,7 @@ function buildComponentRetrievalDocs(
       ]
         .filter(Boolean)
         .join(" "),
-      source_weight: 6,
+      source_weight: 4,
       categories: component.category,
       structural_weight: structuralWeight,
     });
@@ -573,7 +690,7 @@ function buildComponentRetrievalDocs(
       source_kind: "capability",
       evidence_role: "supporting",
       text: capability,
-      source_weight: 8,
+      source_weight: 6,
       categories: component.category,
       structural_weight: structuralWeight,
     });
@@ -746,7 +863,7 @@ function buildPatternRetrievalDocs(
       source_kind: "pattern_how_it_works",
       evidence_role: "supporting",
       text: value,
-      source_weight: 10,
+      source_weight: 6,
       categories: pattern.category ?? [],
       structural_weight: structuralWeight,
     });
@@ -780,7 +897,7 @@ function buildPatternRetrievalDocs(
       text: [example.title, example.description, ...example.intent]
         .filter(Boolean)
         .join(" "),
-      source_weight: 12,
+      source_weight: 8,
       categories: pattern.category ?? [],
       structural_weight: structuralWeight,
     });
@@ -796,7 +913,7 @@ function buildPatternRetrievalDocs(
       source_kind: "starter_scaffold_region",
       evidence_role: "supporting",
       text: value,
-      source_weight: 10,
+      source_weight: 4,
       categories: pattern.category ?? [],
       structural_weight: structuralWeight,
     });
@@ -811,12 +928,13 @@ function buildPatternRetrievalDocs(
       source_kind: "starter_scaffold_build_around",
       evidence_role: "supporting",
       text: value,
-      source_weight: 12,
+      source_weight: 5,
       categories: pattern.category ?? [],
       structural_weight: structuralWeight,
     });
   }
-  for (const value of pattern.starter_scaffold?.semantics.preserve_constraints ?? []) {
+  for (const value of pattern.starter_scaffold?.semantics
+    .preserve_constraints ?? []) {
     pushRetrievalDocument(docs, {
       entity_id: pattern.id,
       entity_type: "pattern",
@@ -826,7 +944,7 @@ function buildPatternRetrievalDocs(
       source_kind: "starter_scaffold_constraint",
       evidence_role: "caution",
       text: value,
-      source_weight: 12,
+      source_weight: 6,
       categories: pattern.category ?? [],
       structural_weight: structuralWeight,
     });
@@ -842,7 +960,9 @@ export function buildCreateRetrievalIndex(
     ...registry.components
       .filter((component) => isComponentAllowedByDocsPolicy(component))
       .flatMap((component) => buildComponentRetrievalDocs(component)),
-    ...registry.patterns.flatMap((pattern) => buildPatternRetrievalDocs(pattern)),
+    ...registry.patterns.flatMap((pattern) =>
+      buildPatternRetrievalDocs(pattern),
+    ),
   ];
 }
 
@@ -997,7 +1117,9 @@ function listCreateNamedTargets(registry: SaltRegistry): CreateNamedTarget[] {
     ...registry.components
       .filter((component) => isComponentAllowedByDocsPolicy(component))
       .map((component) => buildCreateNamedTargetFromComponent(component)),
-    ...registry.patterns.map((pattern) => buildCreateNamedTargetFromPattern(pattern)),
+    ...registry.patterns.map((pattern) =>
+      buildCreateNamedTargetFromPattern(pattern),
+    ),
   ];
   CREATE_TARGET_CACHE.set(registry, targets);
   return targets;
@@ -1007,8 +1129,13 @@ export function resolveCreateNamedTarget(
   registry: SaltRegistry,
   query: string,
   packageName?: string,
+  preferredEntityType?: CreateRetrievalEntityType,
 ): CreateNamedTarget | null {
-  const componentResolution = resolveComponentTarget(registry, query, packageName);
+  const componentResolution = resolveComponentTarget(
+    registry,
+    query,
+    packageName,
+  );
   const patternResolution = resolvePatternTarget(registry, query);
 
   if (componentResolution.ambiguity || patternResolution.ambiguity) {
@@ -1034,6 +1161,16 @@ export function resolveCreateNamedTarget(
     );
   }
 
+  if (preferredEntityType) {
+    const preferredCandidate =
+      candidates.find(
+        (candidate) => candidate.entity_type === preferredEntityType,
+      ) ?? null;
+    if (preferredCandidate) {
+      return preferredCandidate;
+    }
+  }
+
   if (candidates.length !== 1) {
     return null;
   }
@@ -1047,10 +1184,10 @@ function derivePrefixAnchoredCreateTargetReference(
   packageName?: string,
 ): CreateTargetReference | null {
   for (const queryVariant of getCreateReferenceQueries(query)) {
-    if (getStructuralPatternIntent(queryVariant).score >= 4) {
+    const structuralPatternIntent = getStructuralPatternIntent(queryVariant);
+    if (structuralPatternIntent.score >= 4) {
       continue;
     }
-
     const queryKey = normalizeLookupKey(queryVariant);
     const candidates = listCreateNamedTargets(registry)
       .filter((target) =>
@@ -1102,6 +1239,16 @@ function derivePrefixAnchoredCreateTargetReference(
       normalizeLookupKey(second.lookupKey) ===
         normalizeLookupKey(first.lookupKey)
     ) {
+      continue;
+    }
+
+    const normalizedLookupKey = normalizeLookupKey(first.lookupKey);
+    const normalizedTargetName = normalizeLookupKey(first.target.name);
+    const singleTokenAliasReference =
+      normalizedLookupKey !== normalizedTargetName &&
+      countLookupTokens(normalizedLookupKey) === 1;
+
+    if (singleTokenAliasReference && getQueryTerms(queryVariant).length >= 3) {
       continue;
     }
 
@@ -1157,6 +1304,7 @@ function getAllowedTargetIds(
 
 function scoreRetrievalDocument(input: {
   normalized_query: string;
+  semantic_queries: string[];
   query_terms: string[];
   doc: CreateRetrievalDocument;
   token_stats: CreateRetrievalTokenStats;
@@ -1166,10 +1314,12 @@ function scoreRetrievalDocument(input: {
     input.doc.stemmed_tokens.filter((token) => queryTermSet.has(token)),
   );
   const exact = input.doc.normalized_text === input.normalized_query;
-  const prefix = input.normalized_query.startsWith(`${input.doc.normalized_text} `);
-  const phrase = containsWholeWordPhrase(
-    input.normalized_query,
-    input.doc.normalized_text,
+  const prefix = input.normalized_query.startsWith(
+    `${input.doc.normalized_text} `,
+  );
+  const phrase = [input.normalized_query, ...input.semantic_queries].some(
+    (normalizedQuery) =>
+      containsWholeWordPhrase(normalizedQuery, input.doc.normalized_text),
   );
 
   if (!exact && !prefix && !phrase && matchedTerms.length === 0) {
@@ -1220,6 +1370,17 @@ function scoreRetrievalDocument(input: {
   }
 
   if (
+    input.doc.source_kind === "canonical_name" &&
+    input.doc.tokens.length === 1 &&
+    input.query_terms.length >= 4 &&
+    !exact &&
+    !prefix
+  ) {
+    score = Math.min(score, 18);
+    reasons.push("single_token_name_downweighted");
+  }
+
+  if (
     input.doc.source_kind === "alias" &&
     input.doc.tokens.length === 1 &&
     input.query_terms.length >= 3 &&
@@ -1231,6 +1392,42 @@ function scoreRetrievalDocument(input: {
       LOW_SIGNAL_SINGLE_TOKEN_ALIASES.has(input.doc.tokens[0] ?? "") ? 2 : 4,
     );
     reasons.push("single_token_alias_downweighted");
+  }
+
+  if (
+    input.doc.source_kind === "alias" &&
+    input.doc.tokens.length === 1 &&
+    input.query_terms.length >= 3 &&
+    prefix &&
+    !exact
+  ) {
+    score = Math.min(
+      score,
+      LOW_SIGNAL_SINGLE_TOKEN_ALIASES.has(input.doc.tokens[0] ?? "") ? 4 : 10,
+    );
+    reasons.push("single_token_alias_prefix_downweighted");
+  }
+
+  if (
+    LOW_SIGNAL_SINGLE_TOKEN_SUPPORT_SOURCES.has(input.doc.source_kind) &&
+    input.doc.tokens.length === 1 &&
+    input.query_terms.length >= 3 &&
+    !exact &&
+    !prefix
+  ) {
+    score = Math.min(score, 4);
+    reasons.push("single_token_support_downweighted");
+  }
+
+  if (
+    LOW_SIGNAL_SINGLE_TOKEN_SUPPORT_SOURCES.has(input.doc.source_kind) &&
+    input.doc.tokens.length === 1 &&
+    input.query_terms.length >= 3 &&
+    prefix &&
+    !exact
+  ) {
+    score = Math.min(score, 4);
+    reasons.push("single_token_support_prefix_downweighted");
   }
 
   return {
@@ -1259,6 +1456,10 @@ function buildCandidateConfidence(candidate: {
 
 export function pickRetrievedCreateOwner(
   retrieval: RetrieveCreateCandidatesResult,
+  options?: {
+    prefer_component?: boolean;
+    prefer_structural_patterns?: boolean;
+  },
 ): CreateRetrievalCandidate | null {
   if (retrieval.owner) {
     return retrieval.owner;
@@ -1270,22 +1471,56 @@ export function pickRetrievedCreateOwner(
   }
 
   const closeCandidates = retrieval.candidates
-    .filter((candidate) => candidate.confidence >= topCandidate.confidence - 8)
-    .filter((candidate) => candidate.entity_type === topCandidate.entity_type);
+    .filter(
+      (candidate) =>
+        candidate.confidence >=
+        topCandidate.confidence - (options?.prefer_component ? 60 : 8),
+    )
+    .filter((candidate) =>
+      options?.prefer_component
+        ? true
+        : candidate.entity_type === topCandidate.entity_type,
+    );
 
   if (closeCandidates.length === 0) {
     return null;
   }
 
   const [preferred] = [...closeCandidates].sort((left, right) => {
+    if (options?.prefer_component && left.entity_type !== right.entity_type) {
+      return left.entity_type === "component" ? -1 : 1;
+    }
+
+    if (
+      options?.prefer_component &&
+      left.entity_type === "component" &&
+      right.entity_type === "component"
+    ) {
+      if (left.explicit_owner_hits !== right.explicit_owner_hits) {
+        return right.explicit_owner_hits - left.explicit_owner_hits;
+      }
+      if (left.owner_score !== right.owner_score) {
+        return right.owner_score - left.owner_score;
+      }
+    }
+
+    if (
+      options?.prefer_structural_patterns &&
+      left.entity_type === "pattern" &&
+      right.entity_type === "pattern" &&
+      left.structural_weight !== right.structural_weight
+    ) {
+      return right.structural_weight - left.structural_weight;
+    }
+
     if (left.explicit_owner_hits !== right.explicit_owner_hits) {
       return right.explicit_owner_hits - left.explicit_owner_hits;
     }
-    if (left.structural_weight !== right.structural_weight) {
-      return right.structural_weight - left.structural_weight;
-    }
     if (left.total_score !== right.total_score) {
       return right.total_score - left.total_score;
+    }
+    if (left.structural_weight !== right.structural_weight) {
+      return right.structural_weight - left.structural_weight;
     }
     return left.entity_name.localeCompare(right.entity_name);
   });
@@ -1293,151 +1528,16 @@ export function pickRetrievedCreateOwner(
   return preferred ?? null;
 }
 
-function hasExplicitComponentHint(query: string): boolean {
+export function hasExplicitComponentHint(query: string): boolean {
   return /\b(component|components|control|controls|widget|widgets)\b/.test(
     normalizeQuery(query),
   );
 }
 
-function hasExplicitPatternHint(query: string): boolean {
+export function hasExplicitPatternHint(query: string): boolean {
   return /\b(pattern|patterns|dashboard|wizard|workflow|app shell|workspace|overview)\b/.test(
     normalizeQuery(query),
   );
-}
-
-function deriveCreateQueryCompatibilitySignals(input: {
-  query: string;
-  structuralPatternIntent: ReturnType<typeof getStructuralPatternIntent>;
-}): CreateQueryCompatibilitySignals {
-  const normalizedQuery = normalizeQuery(input.query);
-  const singleDestinationIntent =
-    /\b(link|route|page|pages|site|sites|destination|destinations|document|documents|article|articles|help|details|email|phone)\b/.test(
-      normalizedQuery,
-    ) &&
-    !/\b(sidebar|navigation|menu|menus|toolbar|nav|hierarchy|hierarchical|nested|multi-level|multilevel|sections|tabs)\b/.test(
-      normalizedQuery,
-    );
-  const shellContainerIntent =
-    input.structuralPatternIntent.score >= 4 ||
-    /\b(dashboard|workspace|app shell|shell|layout|console|control center)\b/.test(
-      normalizedQuery,
-    );
-  const dataDisplayIntent =
-    /\b(metric|metrics|kpi|kpis|trend|trends|indicator|indicators|chart|charts|table|tables|grid|grids|analysis|analytics|revenue|expenses|profit|portfolio|performance|stat|stats|value|values)\b/.test(
-      normalizedQuery,
-    );
-  const samePageSectionsIntent =
-    /\b(tab|tabs|tabbed|tablist|tabpanel|tab-panel|content panel|content panels)\b/.test(
-      normalizedQuery,
-    ) ||
-    (/\b(section|sections)\b/.test(normalizedQuery) &&
-      /\b(switch|switching|between|overview|activity|settings|details|profile)\b/.test(
-        normalizedQuery,
-      ));
-
-  return {
-    single_destination_intent: singleDestinationIntent,
-    shell_container_intent: shellContainerIntent,
-    data_display_intent: dataDisplayIntent,
-    same_page_sections_intent: samePageSectionsIntent,
-  };
-}
-
-function clampCompatibilityScore(value: number): number {
-  return Math.max(0, Math.min(6, value));
-}
-
-function deriveCreateCandidateCompatibilitySignals(
-  candidate: Pick<
-    CreateRetrievalCandidate,
-    "entity_name" | "entity_type" | "categories" | "evidence"
-  >,
-): CreateCandidateCompatibilitySignals {
-  const ownerEvidenceText = normalizeQuery(
-    candidate.evidence
-      .filter((entry) => entry.evidence_role === "owner")
-      .map((entry) => entry.text)
-      .join(" "),
-  );
-  const categories = candidate.categories.map(normalizeLookupKey);
-  const normalizedName = normalizeLookupKey(candidate.entity_name);
-
-  const shellContainerScore = clampCompatibilityScore(
-    (categories.includes("layout-and-shells") ? 2 : 0) +
-      ((/\b(dashboard regions|main body region|header region|fixed panel|outer shell|app shell|page shell|shell layout|workspace layout|dashboard pages)\b/.test(
-        ownerEvidenceText,
-      )
-        ? 3
-        : 0) +
-        (/\b(dashboard|wizard|dialog|workspace|app-header|app-header|header-block)\b/.test(
-          normalizedName,
-        )
-          ? 1
-          : 0)),
-  );
-  const singleDestinationScore = clampCompatibilityScore(
-    ((/\b(navigate to a page|same or different site|specific section on the same page|documents email addresses or phone numbers|more detailed information|more detail|linked content|linked destination)\b/.test(
-      ownerEvidenceText,
-    )
-      ? 3
-      : 0) +
-      (/\b(link|hyperlink|anchor|skip-link)\b/.test(normalizedName) ? 1 : 0)),
-  );
-  const multiDestinationScore = clampCompatibilityScore(
-    ((/\b(multiple levels of navigation|more than eight|group of navigation items|structured vertical navigation|distinct webpages or applications|nested navigation|hierarchy|navigation items)\b/.test(
-      ownerEvidenceText,
-    )
-      ? 3
-      : 0) +
-      (/\b(vertical-navigation|navigation-item|navigation)\b/.test(
-        normalizedName,
-      )
-        ? 1
-        : 0)),
-  );
-  const dataDisplayScore = clampCompatibilityScore(
-    (categories.some((category) =>
-      [
-        "data-display-and-analysis",
-        "data-display-and-visualization",
-      ].includes(category),
-    )
-      ? 2
-      : 0) +
-      ((/\b(metric|metrics|chart|charts|table|tables|grid|grids|analysis|analytics|kpi|trend|indicator|performance)\b/.test(
-        ownerEvidenceText,
-      )
-        ? 2
-        : 0) +
-        (/\b(metric|chart|table|data-grid|analytical-dashboard)\b/.test(
-          normalizedName,
-        )
-          ? 1
-          : 0)),
-  );
-  const samePageSectionsScore = clampCompatibilityScore(
-    ((/\b(switch between content panels|switch between panels|content panels|tab panels|tabpanel|tab list|tablist|tabbed content|organize content into multiple dashboards using tabs|organize content using tabs)\b/.test(
-      ownerEvidenceText,
-    )
-      ? 3
-      : 0) +
-      (/\btabs?\b/.test(normalizedName) ? 2 : 0) +
-      (categories.includes("navigation") ||
-      categories.includes("navigation-and-wayfinding")
-        ? 1
-        : 0)),
-  );
-
-  return {
-    shell_container_score: shellContainerScore,
-    single_destination_score: singleDestinationScore,
-    multi_destination_score: multiDestinationScore,
-    data_display_score: dataDisplayScore,
-    same_page_sections_score: samePageSectionsScore,
-    generic_container_component:
-      candidate.entity_type === "component" &&
-      categories.includes("containers-and-disclosure"),
-  };
 }
 
 export function deriveCreateTargetReferenceFromQuery(
@@ -1501,7 +1601,11 @@ export function retrieveCreateCandidates(
   input: RetrieveCreateCandidatesInput,
 ): RetrieveCreateCandidatesResult {
   const query = input.query.trim();
-  const normalizedQuery = normalizeQuery(query);
+  const retrievalQuery =
+    [...getCreateReferenceQueries(query)].sort(
+      (left, right) => left.length - right.length,
+    )[0] ?? query;
+  const normalizedQuery = normalizeQuery(retrievalQuery);
   if (!normalizedQuery) {
     return {
       status: "none",
@@ -1512,11 +1616,20 @@ export function retrieveCreateCandidates(
   }
 
   const topK = Math.max(1, Math.min(input.top_k ?? 5, 25));
-  const queryTerms = getQueryTerms(query);
+  const semanticExpansions = deriveSemanticCreateQueryExpansions(
+    retrievalQuery,
+    "owner",
+  );
+  const semanticQueries = semanticExpansions
+    .map((expansion) => normalizeQuery(expansion))
+    .filter(Boolean);
+  const queryTerms = getQueryTerms(
+    [retrievalQuery, ...semanticExpansions].join(" "),
+  );
   const tokenStats = getCreateRetrievalTokenStats(registry);
   const reference = derivePrefixAnchoredCreateTargetReference(
     registry,
-    query,
+    retrievalQuery,
     input.package,
   );
   if (reference) {
@@ -1561,16 +1674,15 @@ export function retrieveCreateCandidates(
       explicit_owner_hits: number;
     }
   >();
-  const structuralPatternIntent = getStructuralPatternIntent(query);
-  const explicitComponentHint = hasExplicitComponentHint(query);
-  const explicitPatternHint = hasExplicitPatternHint(query);
-  const queryCompatibility = deriveCreateQueryCompatibilitySignals({
-    query,
-    structuralPatternIntent,
-  });
+  const structuralPatternIntent = getStructuralPatternIntent(retrievalQuery);
+  const explicitComponentHint = hasExplicitComponentHint(retrievalQuery);
+  const explicitPatternHint = hasExplicitPatternHint(retrievalQuery);
 
   for (const doc of getCreateRetrievalIndex(registry)) {
     if (!allowedTargetIds.has(doc.entity_id)) {
+      continue;
+    }
+    if (OWNER_RETRIEVAL_EXCLUDED_SOURCES.has(doc.source_kind)) {
       continue;
     }
     if (input.package && doc.package && doc.package !== input.package) {
@@ -1582,6 +1694,7 @@ export function retrieveCreateCandidates(
 
     const scored = scoreRetrievalDocument({
       normalized_query: normalizedQuery,
+      semantic_queries: semanticQueries,
       query_terms: queryTerms,
       doc,
       token_stats: tokenStats,
@@ -1664,14 +1777,15 @@ export function retrieveCreateCandidates(
 
   const hasExplicitComponentSurface = [...candidateMap.values()].some(
     (candidate) =>
-      candidate.entity_type === "component" && candidate.explicit_owner_hits > 0,
+      candidate.entity_type === "component" &&
+      candidate.explicit_owner_hits > 0,
   );
 
   const candidates = [...candidateMap.values()]
     .map((candidate) => {
       let totalScore =
         candidate.owner_score +
-        Math.round(candidate.support_score * 0.65) -
+        Math.round(candidate.support_score * 0.45) -
         Math.round(candidate.caution_score * 0.8) +
         candidate.structural_weight *
           (candidate.entity_type === "component" ? 2 : 1);
@@ -1682,10 +1796,24 @@ export function retrieveCreateCandidates(
       if (candidate.entity_type === "pattern") {
         if (patternIntentStrong) {
           totalScore += structuralPatternIntent.score * 5 + 18;
+          totalScore -= Math.round(candidate.caution_score * 0.35);
         } else if (!candidate.exact_match && !candidate.prefix_match) {
-          totalScore = Math.round(
-            totalScore * (hasExplicitComponentSurface ? 0.35 : 0.45),
-          );
+          const hasStrongOwnerEvidence =
+            candidate.explicit_owner_hits > 0 ||
+            candidate.owner_score >= 48 ||
+            candidate.structural_weight >= 13;
+          const penalty =
+            explicitComponentHint &&
+            !hasStrongOwnerEvidence &&
+            !candidate.exact_match &&
+            !candidate.prefix_match
+              ? 0.42
+              : hasExplicitComponentSurface && !hasStrongOwnerEvidence
+                ? 0.65
+                : hasStrongOwnerEvidence
+                  ? 0.92
+                  : 0.8;
+          totalScore = Math.round(totalScore * penalty);
         }
       }
       if (candidate.entity_type === "component") {
@@ -1705,76 +1833,6 @@ export function retrieveCreateCandidates(
 
       if (input.solution_type_hint === candidate.entity_type) {
         totalScore += 6;
-      }
-
-      const compatibility = deriveCreateCandidateCompatibilitySignals(candidate);
-
-      if (queryCompatibility.single_destination_intent) {
-        if (
-          compatibility.single_destination_score >
-          compatibility.multi_destination_score
-        ) {
-          totalScore +=
-            32 +
-            compatibility.single_destination_score * 8 -
-            compatibility.multi_destination_score * 4;
-        } else if (compatibility.multi_destination_score > 0) {
-          totalScore -= 18 + compatibility.multi_destination_score * 8;
-        }
-      }
-
-      if (queryCompatibility.shell_container_intent) {
-        totalScore += compatibility.shell_container_score * 16;
-        if (
-          candidate.entity_type === "pattern" &&
-          compatibility.shell_container_score === 0 &&
-          !candidate.exact_match &&
-          !candidate.prefix_match
-        ) {
-          totalScore -= 18;
-        }
-      }
-
-      if (queryCompatibility.data_display_intent) {
-        totalScore += compatibility.data_display_score * 9;
-        if (
-          compatibility.data_display_score > 0 &&
-          candidate.explicit_owner_hits > 0
-        ) {
-          totalScore += candidate.explicit_owner_hits * 6;
-        }
-        if (
-          compatibility.generic_container_component &&
-          compatibility.data_display_score === 0
-        ) {
-          totalScore -= 26;
-        }
-      }
-
-      if (queryCompatibility.same_page_sections_intent) {
-        totalScore += compatibility.same_page_sections_score * 18;
-        if (
-          candidate.entity_type === "component" &&
-          compatibility.same_page_sections_score > 0 &&
-          candidate.explicit_owner_hits > 0
-        ) {
-          totalScore += 28 + candidate.explicit_owner_hits * 6;
-        }
-        if (
-          candidate.entity_type === "pattern" &&
-          compatibility.same_page_sections_score === 0 &&
-          !candidate.exact_match &&
-          !candidate.prefix_match
-        ) {
-          totalScore -= 28;
-        }
-        if (
-          !queryCompatibility.data_display_intent &&
-          compatibility.shell_container_score > 0 &&
-          compatibility.same_page_sections_score === 0
-        ) {
-          totalScore -= 14;
-        }
       }
 
       return {
@@ -1817,8 +1875,8 @@ export function retrieveCreateCandidates(
     (candidate) =>
       candidate.entity_id !== topCandidate.entity_id &&
       candidate.total_score >=
-        Math.max(12, Math.round(topCandidate.total_score * 0.45)) &&
-      candidate.confidence >= Math.max(10, topCandidate.confidence - 18),
+        Math.max(8, Math.round(topCandidate.total_score * 0.18)) &&
+      candidate.confidence >= Math.max(6, topCandidate.confidence - 96),
   );
 
   if (topCandidate.exact_match || topCandidate.prefix_match) {
@@ -1832,7 +1890,7 @@ export function retrieveCreateCandidates(
 
   if (
     topCandidate.total_score < 18 ||
-    (topCandidate.total_score < 26 && dominantMargin < 6)
+    (topCandidate.total_score < 26 && dominantMargin < 8)
   ) {
     return {
       status: "ambiguous",
@@ -1843,9 +1901,161 @@ export function retrieveCreateCandidates(
   }
 
   return {
-    status: dominantMargin < 5 ? "ambiguous" : "ranked",
-    owner: dominantMargin < 5 ? null : topCandidate,
+    status: dominantMargin < 8 ? "ambiguous" : "ranked",
+    owner: dominantMargin < 8 ? null : topCandidate,
     supporting_candidates: supportingCandidates,
     candidates,
   };
+}
+
+export function retrieveCreateSupportCandidates(
+  registry: SaltRegistry,
+  input: RetrieveCreateSupportCandidatesInput,
+): CreateRetrievalCandidate[] {
+  const ownerCategories = input.owner_categories ?? [];
+  const supportQuery = [
+    input.query,
+    input.owner_name,
+    ...ownerCategories.map((category) => category.replace(/-/g, " ")),
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const normalizedQuery = normalizeQuery(supportQuery);
+  if (!normalizedQuery) {
+    return [];
+  }
+
+  const topK = Math.max(1, Math.min(input.top_k ?? 8, 25));
+  const semanticExpansions = deriveSemanticCreateQueryExpansions(
+    input.query,
+    "support",
+  );
+  const semanticQueries = semanticExpansions
+    .map((expansion) => normalizeQuery(expansion))
+    .filter(Boolean);
+  const queryTerms = getQueryTerms(
+    [supportQuery, ...semanticExpansions].join(" "),
+  );
+  const tokenStats = getCreateRetrievalTokenStats(registry);
+  const ownerCategorySet = new Set(ownerCategories.map(normalizeLookupKey));
+  const ownerTerms = new Set(
+    stemTokenize([input.owner_name, ...ownerCategories].join(" ")),
+  );
+  const candidateMap = new Map<
+    string,
+    Omit<CreateRetrievalCandidate, "confidence" | "total_score"> & {
+      explicit_owner_hits: number;
+    }
+  >();
+
+  for (const doc of getCreateRetrievalIndex(registry)) {
+    const scored = scoreRetrievalDocument({
+      normalized_query: normalizedQuery,
+      semantic_queries: semanticQueries,
+      query_terms: queryTerms,
+      doc,
+      token_stats: tokenStats,
+    });
+    if (scored.score <= 0) {
+      continue;
+    }
+
+    let candidate = candidateMap.get(doc.entity_id);
+    if (!candidate) {
+      candidate = {
+        entity_id: doc.entity_id,
+        entity_type: doc.entity_type,
+        entity_name: doc.entity_name,
+        package: doc.package,
+        status: doc.status,
+        categories: doc.categories,
+        structural_weight: doc.structural_weight,
+        owner_score: 0,
+        support_score: 0,
+        caution_score: 0,
+        explicit_owner_hits: 0,
+        exact_match: false,
+        prefix_match: false,
+        matched_terms: [],
+        match_reasons: [],
+        evidence: [],
+      };
+      candidateMap.set(doc.entity_id, candidate);
+    }
+
+    if (doc.evidence_role === "owner") {
+      candidate.owner_score += scored.score;
+    } else if (doc.evidence_role === "supporting") {
+      candidate.support_score += scored.score;
+    } else {
+      candidate.caution_score += scored.score;
+    }
+
+    candidate.matched_terms = unique([
+      ...candidate.matched_terms,
+      ...scored.matched_terms,
+    ]).sort();
+    candidate.match_reasons = unique([
+      ...candidate.match_reasons,
+      ...scored.reasons.map((reason) => `${doc.source_kind}:${reason}`),
+    ]).sort();
+    candidate.evidence.push({
+      document_id: doc.id,
+      source_kind: doc.source_kind,
+      evidence_role: doc.evidence_role,
+      score: scored.score,
+      text: doc.text,
+      matched_terms: scored.matched_terms,
+    });
+  }
+
+  return [...candidateMap.values()]
+    .filter((candidate) => candidate.entity_name !== input.owner_name)
+    .map((candidate) => {
+      let totalScore =
+        candidate.owner_score +
+        Math.round(candidate.support_score * 0.65) -
+        Math.round(candidate.caution_score * 0.8) +
+        candidate.structural_weight;
+      const ownerLinkedTermCount = unique(
+        candidate.evidence.flatMap((entry) =>
+          stemTokenize(entry.text).filter((token) => ownerTerms.has(token)),
+        ),
+      ).length;
+      const categoryOverlap = candidate.categories.some((category) =>
+        ownerCategorySet.has(normalizeLookupKey(category)),
+      );
+      totalScore += ownerLinkedTermCount * 12;
+      if (!categoryOverlap) {
+        totalScore += 6;
+      } else {
+        totalScore -= 4;
+      }
+      if (ownerLinkedTermCount === 0) {
+        totalScore -= 18;
+      }
+
+      return {
+        ...candidate,
+        total_score: totalScore,
+        confidence: buildCandidateConfidence({
+          ...candidate,
+          total_score: totalScore,
+        }),
+      };
+    })
+    .filter((candidate) => candidate.total_score > 0)
+    .sort((left, right) => {
+      if (left.confidence !== right.confidence) {
+        return right.confidence - left.confidence;
+      }
+      if (left.total_score !== right.total_score) {
+        return right.total_score - left.total_score;
+      }
+      if (left.structural_weight !== right.structural_weight) {
+        return right.structural_weight - left.structural_weight;
+      }
+      return left.entity_name.localeCompare(right.entity_name);
+    })
+    .slice(0, topK);
 }

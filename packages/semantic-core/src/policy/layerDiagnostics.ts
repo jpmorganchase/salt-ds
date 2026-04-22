@@ -1,7 +1,8 @@
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
-import { coerce, minVersion, satisfies, valid, validRange } from "semver";
+import { satisfies, validRange } from "semver";
+import { normalizeComparableVersion } from "../versionUtils.js";
 import type { ProjectConventions } from "./index.js";
 
 const require = createRequire(import.meta.url);
@@ -76,21 +77,7 @@ function isMissingModuleError(error: unknown): boolean {
 function normalizeSaltVersion(
   version: string | null | undefined,
 ): string | null {
-  if (typeof version !== "string") {
-    return null;
-  }
-
-  const trimmed = version.trim();
-  if (trimmed.length === 0) {
-    return null;
-  }
-
-  return (
-    valid(trimmed) ??
-    minVersion(trimmed)?.version ??
-    coerce(trimmed)?.version ??
-    null
-  );
+  return normalizeComparableVersion(version);
 }
 
 function extractProjectConventionsCandidate(

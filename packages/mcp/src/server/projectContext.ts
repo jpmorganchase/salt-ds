@@ -286,8 +286,8 @@ export interface SaltProjectContextData {
         | "create_salt_ui"
         | "review_salt_ui"
         | "migrate_to_salt"
-      | "upgrade_salt_ui"
-      | null;
+        | "upgrade_salt_ui"
+        | null;
     };
     reasons: string[];
     context_health: ProjectContextHealthSummary;
@@ -1327,9 +1327,7 @@ export async function collectSaltProjectContextData(
       runtimeTargets,
       resolution,
       retryRootDir:
-        resolution.status === "resolved"
-          ? normalizedRootDir
-          : detectedRepoRoot,
+        resolution.status === "resolved" ? normalizedRootDir : detectedRepoRoot,
     }),
     notes,
     sources,

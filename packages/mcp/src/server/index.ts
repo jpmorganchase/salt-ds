@@ -7,9 +7,9 @@ export { registerSaltResources } from "./registerResources.js";
 export { registerSaltTools } from "./registerTools.js";
 export {
   buildSaltMcpInstructions,
-  SALT_MCP_CAPABILITY_MANIFEST_URI,
   buildSaltMcpServerInfo,
   getSaltMcpRuntimeMetadata,
+  SALT_MCP_CAPABILITY_MANIFEST_URI,
   type SaltMcpRuntimeMetadata,
 } from "./serverMetadata.js";
 export {

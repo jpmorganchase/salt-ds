@@ -47,9 +47,7 @@
         },
         "summary_includes": ["required follow-through remains"]
       },
-      "banned_fragments": [
-        "\"host_outcome\":\"stopped_after_partial\""
-      ]
+      "banned_fragments": ["\"host_outcome\":\"stopped_after_partial\""]
     }
   },
   "trace": {
@@ -91,9 +89,7 @@
       "The host stopped after creating Metric.tsx even though the workflow was still partial and required exact follow-through."
     ],
     "artifacts": {
-      "files": [
-        "packages/mcp/eval-fixtures/replays/intellij-create-metric"
-      ],
+      "files": ["packages/mcp/eval-fixtures/replays/intellij-create-metric"],
       "logs": [],
       "report_path": null
     }

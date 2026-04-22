@@ -1,9 +1,5 @@
 import type { SaltRegistry, SaltStatus } from "../types.js";
 import {
-  collectCreateQueryAnchors,
-  chooseDominantCreateQueryAnchor,
-} from "./createQueryAnchors.js";
-import {
   type ConsumerRecommendationFilters,
   compareComponentsByConsumerPreference,
   matchesComponentConsumerFilters,
@@ -21,6 +17,10 @@ import {
   scoreQueryFields,
   scoreUsageSemantics,
 } from "./consumerSignals.js";
+import {
+  chooseDominantCreateQueryAnchor,
+  collectCreateQueryAnchors,
+} from "./createQueryAnchors.js";
 import { hasSingleDestinationNavigationIntent } from "./navigationIntent.js";
 import { buildComponentPresentationBase } from "./solutionPresentation.js";
 import {
@@ -250,10 +250,7 @@ function getNavigationIntentAdjustment(
 
 function getEmbeddedTargetDominanceAdjustment(input: {
   component: SaltRegistry["components"][number];
-  anchorById: Map<
-    string,
-    ReturnType<typeof collectCreateQueryAnchors>[number]
-  >;
+  anchorById: Map<string, ReturnType<typeof collectCreateQueryAnchors>[number]>;
   dominantAnchor:
     | ReturnType<typeof chooseDominantCreateQueryAnchor>
     | null
@@ -411,7 +408,9 @@ export function recommendComponent(
   const componentAnchorById = new Map(
     collectCreateQueryAnchors(registry, input.task, input.package)
       .filter(
-        (anchor): anchor is ReturnType<typeof collectCreateQueryAnchors>[number] =>
+        (
+          anchor,
+        ): anchor is ReturnType<typeof collectCreateQueryAnchors>[number] =>
           anchor.entity_type === "component",
       )
       .filter((anchor) =>

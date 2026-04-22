@@ -4,10 +4,11 @@ This guide is for agents and maintainers working on the Salt AI stack inside thi
 
 Use it to keep the architecture stable as the MCP, skills, docs extraction, and project conventions evolve.
 
-For the canonical AI entity model that the tooling should reason over, see [`./ai-domain-model.md`](./ai-domain-model.md).
-For the shared install-diagnostics behavior across `doctor`, `info`, and MCP context, see [`./install-health-contract.md`](./install-health-contract.md).
-For doc and example improvements that would let Salt AI rely less on hand-authored scaffolds, see [`./canonical-doc-and-example-improvements.md`](./canonical-doc-and-example-improvements.md).
-For the recommended adapter-based live evaluation model that sits on top of the deterministic eval suite, see [`./live-eval-harness.md`](./live-eval-harness.md).
+For the target architecture Salt should now protect, see [`./ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md).
+For the approval rubric future AI tooling work should pass, see [`./ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md).
+For the active implementation path, use [`./ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md).
+For the current public contract, use [`./public-api-matrix.md`](./public-api-matrix.md).
+Historical Release 1 and `v3` migration paperwork now lives under [`./archive/README.md`](./archive/README.md).
 
 ## Current Public Workflow Contract
 

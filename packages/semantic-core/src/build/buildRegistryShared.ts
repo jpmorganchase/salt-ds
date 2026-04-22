@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import semver from "semver";
 import type { UsageSemanticsRecord, UsageSemanticsSource } from "../types.js";
+import { normalizeComparableVersion } from "../versionUtils.js";
 
 export function normalizeWhitespace(input: string): string {
   return input.replace(/\s+/g, " ").trim();
@@ -83,26 +84,7 @@ export function buildUsageSemantics(input: {
 export function normalizeVersion(
   value: string | null | undefined,
 ): string | null {
-  if (!value) {
-    return null;
-  }
-
-  const trimmed = value.trim();
-  if (!trimmed) {
-    return null;
-  }
-
-  const valid = semver.valid(trimmed);
-  if (valid) {
-    return valid;
-  }
-
-  const min = semver.minVersion(trimmed)?.version;
-  if (min) {
-    return min;
-  }
-
-  return semver.coerce(trimmed)?.version ?? null;
+  return normalizeComparableVersion(value);
 }
 
 export function preferEarlierVersion(

@@ -1,0 +1,1066 @@
+{
+  "generated_at": "2026-04-22T00:00:00Z",
+  "version": "0.1.0",
+  "deprecations": [
+    {
+      "id": "dep.salt-ds-core.button-button.variant.prop.73",
+      "package": "@salt-ds/core",
+      "component": "Button",
+      "kind": "prop",
+      "name": "variant",
+      "deprecated_in": "1.36.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "appearance",
+        "notes": "Use appearance and sentiment instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "variant",
+            "to": "appearance"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/button/Button.tsx"],
+      "inference": {
+        "matched_component_names": ["Button"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.checkbox-checkboxicon.error.prop.16",
+      "package": "@salt-ds/core",
+      "component": "CheckboxIcon",
+      "kind": "prop",
+      "name": "error",
+      "deprecated_in": "1.8.0-rc.2",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "validationStatus",
+        "notes": "Use validationStatus instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "error",
+            "to": "validationStatus"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/checkbox/CheckboxIcon.tsx"],
+      "inference": {
+        "matched_component_names": ["Checkbox"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.dialog-dialog.idprop.prop.80",
+      "package": "@salt-ds/core",
+      "component": "Dialog",
+      "kind": "prop",
+      "name": "idProp",
+      "deprecated_in": "1.58.0",
+      "removed_in": null,
+      "replacement": {
+        "type": null,
+        "name": null,
+        "notes": "IDs are now auto-generated internally for proper ARIA labeling."
+      },
+      "migration": {
+        "strategy": "manual",
+        "details": []
+      },
+      "source_urls": ["packages/core/src/dialog/Dialog.tsx"],
+      "inference": {
+        "matched_component_names": ["Dialog"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.interactable-card-interactablecard.accentplacement.prop.29",
+      "package": "@salt-ds/core",
+      "component": "InteractableCard",
+      "kind": "prop",
+      "name": "accentPlacement",
+      "deprecated_in": "1.23.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "the",
+        "notes": "Use the accent prop instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "accentPlacement",
+            "to": "the"
+          }
+        ]
+      },
+      "source_urls": [
+        "packages/core/src/interactable-card/InteractableCard.tsx"
+      ],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.radio-button-radiobuttonicon.error.prop.17",
+      "package": "@salt-ds/core",
+      "component": "RadioButtonIcon",
+      "kind": "prop",
+      "name": "error",
+      "deprecated_in": "1.8.0-rc.2",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "validationStatus",
+        "notes": "Use validationStatus instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "error",
+            "to": "validationStatus"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/radio-button/RadioButtonIcon.tsx"],
+      "inference": {
+        "matched_component_names": ["Radio button"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.salt-provider-saltprovider.unstable-accent.prop.59",
+      "package": "@salt-ds/core",
+      "component": "ThemeContext",
+      "kind": "prop",
+      "name": "UNSTABLE_accent",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "accent",
+        "notes": "Use accent."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_accent",
+            "to": "accent"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/salt-provider/SaltProvider.tsx"],
+      "inference": {
+        "matched_component_names": ["Salt provider"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.salt-provider-saltprovider.unstable-actionfont.prop.62",
+      "package": "@salt-ds/core",
+      "component": "ThemeContext",
+      "kind": "prop",
+      "name": "UNSTABLE_actionFont",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "actionFont",
+        "notes": "Use actionFont."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_actionFont",
+            "to": "actionFont"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/salt-provider/SaltProvider.tsx"],
+      "inference": {
+        "matched_component_names": ["Salt provider"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.salt-provider-saltprovider.unstable-corner.prop.53",
+      "package": "@salt-ds/core",
+      "component": "ThemeContext",
+      "kind": "prop",
+      "name": "UNSTABLE_corner",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "corner",
+        "notes": "Use corner."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_corner",
+            "to": "corner"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/salt-provider/SaltProvider.tsx"],
+      "inference": {
+        "matched_component_names": ["Salt provider"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.salt-provider-saltprovider.unstable-headingfont.prop.56",
+      "package": "@salt-ds/core",
+      "component": "ThemeContext",
+      "kind": "prop",
+      "name": "UNSTABLE_headingFont",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "headingFont",
+        "notes": "Use headingFont."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_headingFont",
+            "to": "headingFont"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/salt-provider/SaltProvider.tsx"],
+      "inference": {
+        "matched_component_names": ["Salt provider"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.salt-provider-saltprovider.unstable-saltprovidernext.component.278",
+      "package": "@salt-ds/core",
+      "component": "Salt provider",
+      "kind": "component",
+      "name": "UNSTABLE_SaltProviderNext",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "SaltProviderNext",
+        "notes": "Use SaltProviderNext."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_SaltProviderNext",
+            "to": "SaltProviderNext"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/salt-provider/SaltProvider.tsx"],
+      "inference": {
+        "matched_component_names": ["Salt provider"],
+        "component_inferred": true,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.salt-provider-saltprovider.unstable-saltprovidernextprops.type.275",
+      "package": "@salt-ds/core",
+      "component": "UNSTABLE_SaltProviderNext",
+      "kind": "type",
+      "name": "UNSTABLE_SaltProviderNextProps",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "SaltProviderNextProps",
+        "notes": "Use SaltProviderNextProps."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_SaltProviderNextProps",
+            "to": "SaltProviderNextProps"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/salt-provider/SaltProvider.tsx"],
+      "inference": {
+        "matched_component_names": ["Salt provider"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.status-indicator-validationstatus.validation-named-status.component.15",
+      "package": "@salt-ds/core",
+      "component": "Status indicator",
+      "kind": "component",
+      "name": "VALIDATION_NAMED_STATUS",
+      "deprecated_in": "1.55.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "ValidationStatusValues",
+        "notes": "Use ValidationStatusValues."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "VALIDATION_NAMED_STATUS",
+            "to": "ValidationStatusValues"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/status-indicator/ValidationStatus.ts"],
+      "inference": {
+        "matched_component_names": ["Status indicator"],
+        "component_inferred": true,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.text-text.variant.prop.49",
+      "package": "@salt-ds/core",
+      "component": "Text",
+      "kind": "prop",
+      "name": "variant",
+      "deprecated_in": "1.28.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "color",
+        "notes": "Use color instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "variant",
+            "to": "color"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/text/Text.tsx"],
+      "inference": {
+        "matched_component_names": ["Text"],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-accent.unstable-accent.type.7",
+      "package": "@salt-ds/core",
+      "component": "UNSTABLE_Accent",
+      "kind": "type",
+      "name": "UNSTABLE_Accent",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "Accent",
+        "notes": "Use Accent."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_Accent",
+            "to": "Accent"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/Accent.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-accent.unstable-accentvalues.component.3",
+      "package": "@salt-ds/core",
+      "component": null,
+      "kind": "component",
+      "name": "UNSTABLE_AccentValues",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "AccentValues",
+        "notes": "Use AccentValues."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_AccentValues",
+            "to": "AccentValues"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/Accent.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-actionfont.unstable-actionfont.type.7",
+      "package": "@salt-ds/core",
+      "component": "UNSTABLE_ActionFont",
+      "kind": "type",
+      "name": "UNSTABLE_ActionFont",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "ActionFont",
+        "notes": "Use ActionFont."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_ActionFont",
+            "to": "ActionFont"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/ActionFont.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-actionfont.unstable-actionfontvalues.component.3",
+      "package": "@salt-ds/core",
+      "component": null,
+      "kind": "component",
+      "name": "UNSTABLE_ActionFontValues",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "ActionFontValues",
+        "notes": "Use ActionFontValues."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_ActionFontValues",
+            "to": "ActionFontValues"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/ActionFont.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-corner.unstable-corner.type.7",
+      "package": "@salt-ds/core",
+      "component": "UNSTABLE_Corner",
+      "kind": "type",
+      "name": "UNSTABLE_Corner",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "Corner",
+        "notes": "Use Corner."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_Corner",
+            "to": "Corner"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/Corner.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-corner.unstable-cornervalues.component.3",
+      "package": "@salt-ds/core",
+      "component": null,
+      "kind": "component",
+      "name": "UNSTABLE_CornerValues",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "CornerValues",
+        "notes": "Use CornerValues."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_CornerValues",
+            "to": "CornerValues"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/Corner.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-headingfont.unstable-headingfont.type.7",
+      "package": "@salt-ds/core",
+      "component": "UNSTABLE_HeadingFont",
+      "kind": "type",
+      "name": "UNSTABLE_HeadingFont",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "HeadingFont",
+        "notes": "Use HeadingFont."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_HeadingFont",
+            "to": "HeadingFont"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/HeadingFont.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-core.theme-headingfont.unstable-headingfontvalues.component.3",
+      "package": "@salt-ds/core",
+      "component": null,
+      "kind": "component",
+      "name": "UNSTABLE_HeadingFontValues",
+      "deprecated_in": "1.32.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "HeadingFontValues",
+        "notes": "Use HeadingFontValues."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "UNSTABLE_HeadingFontValues",
+            "to": "HeadingFontValues"
+          }
+        ]
+      },
+      "source_urls": ["packages/core/src/theme/HeadingFont.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-date-adapters.moment-adapter-index.adaptermoment.component.25",
+      "package": "@salt-ds/date-adapters",
+      "component": "AdapterMoment",
+      "kind": "component",
+      "name": "AdapterMoment",
+      "deprecated_in": "0.1.0-alpha.1",
+      "removed_in": null,
+      "replacement": {
+        "type": null,
+        "name": null,
+        "notes": "Moment date library has been deprecated by its maintainers since September 2020; consider migration to a maintained OSS library."
+      },
+      "migration": {
+        "strategy": "manual",
+        "details": []
+      },
+      "source_urls": ["packages/date-adapters/src/moment-adapter/index.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-barchart.barcharticon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "BarChartIcon",
+      "deprecated_in": "1.16.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "ChartBarIcon",
+        "notes": "Use ChartBarIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "BarChartIcon",
+            "to": "ChartBarIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/BarChart.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-errorexecute.errorexecuteicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "ErrorExecuteIcon",
+      "deprecated_in": "1.17.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "NotAllowedIcon",
+        "notes": "Use NotAllowedIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "ErrorExecuteIcon",
+            "to": "NotAllowedIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/ErrorExecute.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-help.helpicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "HelpIcon",
+      "deprecated_in": "1.18.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "HelpCircleIcon",
+        "notes": "Use HelpCircleIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "HelpIcon",
+            "to": "HelpCircleIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/Help.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-helpsolid.helpsolidicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "HelpSolidIcon",
+      "deprecated_in": "1.18.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "HelpCircleSolidIcon",
+        "notes": "Use HelpCircleSolidIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "HelpSolidIcon",
+            "to": "HelpCircleSolidIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/HelpSolid.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-iconfigma.iconfigmaicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "IconFigmaIcon",
+      "deprecated_in": "1.16.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "FigmaIcon",
+        "notes": "Use FigmaIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "IconFigmaIcon",
+            "to": "FigmaIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/IconFigma.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-linechart.linecharticon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "LineChartIcon",
+      "deprecated_in": "1.16.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "ChartLineIcon",
+        "notes": "Use ChartLineIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "LineChartIcon",
+            "to": "ChartLineIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/LineChart.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-piechart.piecharticon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "PieChartIcon",
+      "deprecated_in": "1.16.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "ChartPieIcon",
+        "notes": "Use ChartPieIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "PieChartIcon",
+            "to": "ChartPieIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/PieChart.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-stepsuccess.stepsuccessicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "StepSuccessIcon",
+      "deprecated_in": "1.13.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "SuccessCircleIcon",
+        "notes": "Use SuccessCircleIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "StepSuccessIcon",
+            "to": "SuccessCircleIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/StepSuccess.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-success.successicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "SuccessIcon",
+      "deprecated_in": "1.13.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "CheckmarkIcon",
+        "notes": "Use CheckmarkIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "SuccessIcon",
+            "to": "CheckmarkIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/Success.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-successsmall.successsmallicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "SuccessSmallIcon",
+      "deprecated_in": "1.13.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "CheckmarkIcon",
+        "notes": "Use CheckmarkIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "SuccessSmallIcon",
+            "to": "CheckmarkIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/SuccessSmall.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-successsmallsolid.successsmallsolidicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "SuccessSmallSolidIcon",
+      "deprecated_in": "1.13.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "CheckmarkSolidIcon",
+        "notes": "Use CheckmarkSolidIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "SuccessSmallSolidIcon",
+            "to": "CheckmarkSolidIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/SuccessSmallSolid.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-successsolid.successsolidicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "SuccessSolidIcon",
+      "deprecated_in": "1.13.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "CheckmarkSolidIcon",
+        "notes": "Use CheckmarkSolidIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "SuccessSolidIcon",
+            "to": "CheckmarkSolidIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/SuccessSolid.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-icons.components-successtick.successtickicon.component.10",
+      "package": "@salt-ds/icons",
+      "component": null,
+      "kind": "component",
+      "name": "SuccessTickIcon",
+      "deprecated_in": "1.13.0",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "CheckmarkIcon",
+        "notes": "Use CheckmarkIcon instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "SuccessTickIcon",
+            "to": "CheckmarkIcon"
+          }
+        ]
+      },
+      "source_urls": ["packages/icons/src/components/SuccessTick.tsx"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-lab.date-picker-datepickersinglepanel.datepickersinglepanel.component.12",
+      "package": "@salt-ds/lab",
+      "component": "Date picker",
+      "kind": "component",
+      "name": "DatePickerSinglePanel",
+      "deprecated_in": "1.0.0-alpha.68",
+      "removed_in": null,
+      "replacement": {
+        "type": "symbol",
+        "name": "DatePickerSingleGridPanel",
+        "notes": "Use DatePickerSingleGridPanel instead."
+      },
+      "migration": {
+        "strategy": "replace",
+        "details": [
+          {
+            "from": "DatePickerSinglePanel",
+            "to": "DatePickerSingleGridPanel"
+          }
+        ]
+      },
+      "source_urls": ["packages/lab/src/date-picker/DatePickerSinglePanel.tsx"],
+      "inference": {
+        "matched_component_names": ["Date picker"],
+        "component_inferred": true,
+        "ambiguous_component_match": false
+      }
+    },
+    {
+      "id": "dep.salt-ds-lab.tabs-tabstypes.enableclosetab.prop.57",
+      "package": "@salt-ds/lab",
+      "component": "Tabstrip",
+      "kind": "prop",
+      "name": "enableCloseTab",
+      "deprecated_in": null,
+      "removed_in": null,
+      "replacement": {
+        "type": null,
+        "name": null,
+        "notes": "Boolean that enables closing tabs"
+      },
+      "migration": {
+        "strategy": "manual",
+        "details": []
+      },
+      "source_urls": ["packages/lab/src/tabs/TabsTypes.ts"],
+      "inference": {
+        "matched_component_names": [],
+        "component_inferred": false,
+        "ambiguous_component_match": false
+      }
+    }
+  ]
+}

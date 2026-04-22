@@ -318,14 +318,16 @@ export function buildDefaultWorkflowEvalScenarios(
           canonical_complete: false,
           safe_to_implement_exact_request: false,
           resolved_entity: "Analytical dashboard",
-          match_status: "misrouted",
+          match_status: "broadened",
           next_step: {
             kind: "tool_call",
             tool: "create_salt_ui",
             mode: "exact_name",
             query: "Data grid",
           },
-          summary_includes: ["Salt resolved Analytical dashboard"],
+          summary_includes: [
+            "broader Salt entity Analytical dashboard",
+          ],
         },
         canonical_choice: "Analytical dashboard",
         final_choice: "Analytical dashboard",
@@ -373,7 +375,7 @@ export function buildDefaultWorkflowEvalScenarios(
             kind: "tool_call",
             tool: "create_salt_ui",
             mode: "exact_name",
-            query: "Analytical dashboard",
+            query: "Metric",
           },
           summary_includes: ["broader Salt entity Analytical dashboard"],
         },
@@ -471,19 +473,19 @@ export function buildDefaultWorkflowEvalScenarios(
       expected: withWorkflowMetricBudgets(
         "review",
         {
-        transport: preferMcpWithCliFallback(),
-        workflow: {
-          id: "review_salt_ui",
-        },
-        public_contract: {
-          workflow_status: "blocked",
-          canonical_complete: true,
-          safe_to_implement_exact_request: false,
-          next_step: {
-            kind: "ask_user",
+          transport: preferMcpWithCliFallback(),
+          workflow: {
+            id: "review_salt_ui",
           },
-          summary_includes: ["still need attention"],
-        },
+          public_contract: {
+            workflow_status: "blocked",
+            canonical_complete: true,
+            safe_to_implement_exact_request: false,
+            next_step: {
+              kind: "ask_user",
+            },
+            summary_includes: ["still need attention"],
+          },
         },
         {
           max_transcript_bytes: 2200,

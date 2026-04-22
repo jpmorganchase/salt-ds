@@ -108,6 +108,25 @@ export {
 } from "./tools/consumerPresentation.js";
 export { scoreCountrySymbol } from "./tools/countrySymbolSearch.js";
 export {
+  buildCreateCatalogSupportManifest,
+  type CreateCatalogCandidateSummary,
+  type CreateCatalogEntityLookupResult,
+  type CreateCatalogEntitySummary,
+  type CreateCatalogEvidenceSummary,
+  type CreateCatalogFamilyLookupResult,
+  type CreateCatalogFamilySummary,
+  type CreateCatalogQuerySummary,
+  type CreateCatalogSupportManifest,
+  inspectCreateCatalogQuery,
+  listCreateCatalogEntityNames,
+  listCreateCatalogFamilies,
+  lookupCreateCatalogEntity,
+  lookupCreateCatalogFamily,
+  SALT_CREATE_CATALOG_CONTRACT_VERSION,
+  SALT_CREATE_CATALOG_TOP_K_DEFAULT,
+  SALT_CREATE_CATALOG_TOP_K_MAX,
+} from "./tools/createCatalogSupport.js";
+export {
   type CreateSaltUiInput,
   type CreateSaltUiResult,
   createSaltUi,

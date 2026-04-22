@@ -17,16 +17,8 @@
     },
     "contracts": {
       "compact_workflow_contract_version": "v3",
-      "compact_workflow_ids": [
-        "create",
-        "review",
-        "migrate",
-        "upgrade"
-      ],
-      "setup_contract_ids": [
-        "info",
-        "init"
-      ]
+      "compact_workflow_ids": ["create", "review", "migrate", "upgrade"],
+      "setup_contract_ids": ["info", "init"]
     },
     "workflow_vocabulary": [
       {
@@ -66,19 +58,12 @@
         "migrate",
         "upgrade"
       ],
-      "advanced_output_ids": [
-        "full",
-        "starter-only"
-      ]
+      "advanced_output_ids": ["full", "starter-only"]
     },
     "support_tools": {
       "policy": "optional_advanced_host_surface",
       "default_exposed": false,
-      "tool_ids": [
-        "discover_salt",
-        "get_salt_entity",
-        "get_salt_examples"
-      ],
+      "tool_ids": ["discover_salt", "get_salt_entity", "get_salt_examples"],
       "workflow_contract_meaning_changes_when_absent": false
     },
     "capabilities": {
@@ -112,10 +97,7 @@
   },
   "framework": {
     "name": "vite-react",
-    "evidence": [
-      "dependency:vite",
-      "dependency:react"
-    ]
+    "evidence": ["dependency:vite", "dependency:react"]
   },
   "workspace": {
     "kind": "workspace-root",
@@ -125,9 +107,7 @@
     "packages": [],
     "packageVersion": null,
     "installation": {
-      "nodeModulesRoots": [
-        "D:/Work/salt-ds-3/node_modules"
-      ],
+      "nodeModulesRoots": ["D:/Work/salt-ds-3/node_modules"],
       "resolvedPackages": [],
       "installedPackages": [
         {
@@ -267,9 +247,7 @@
           "Package-manager inspection failed for yarn; Salt relied on the node_modules scan instead.",
           "Dependency override fields detected: resolutions."
         ],
-        "manifestOverrideFields": [
-          "resolutions"
-        ]
+        "manifestOverrideFields": ["resolutions"]
       },
       "remediation": {
         "explainCommand": "yarn why @salt-ds/core",
@@ -328,15 +306,11 @@
     "aliases": [
       {
         "alias": ".storybook/*",
-        "targets": [
-          "./.storybook/*"
-        ]
+        "targets": ["./.storybook/*"]
       },
       {
         "alias": "@salt-ds/date-adapters/*",
-        "targets": [
-          "./packages/date-adapters/src/*-adapter/index.ts"
-        ]
+        "targets": ["./packages/date-adapters/src/*-adapter/index.ts"]
       },
       {
         "alias": "@stories/*",
@@ -352,9 +326,7 @@
       },
       {
         "alias": "packages/*",
-        "targets": [
-          "./packages/*"
-        ]
+        "targets": ["./packages/*"]
       }
     ]
   },

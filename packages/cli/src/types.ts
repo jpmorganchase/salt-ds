@@ -1,4 +1,10 @@
 import type { SaltCapabilityManifest } from "@salt-ds/semantic-core/tools/capabilityManifest";
+import type {
+  CreateCatalogEntityLookupResult,
+  CreateCatalogFamilyLookupResult,
+  CreateCatalogQuerySummary,
+  CreateCatalogSupportManifest,
+} from "@salt-ds/semantic-core/tools/createCatalogSupport";
 import type { ReviewSaltUiResult } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 
 export interface ParsedArgs {
@@ -256,6 +262,12 @@ export interface SaltInfoResult {
     registryDir: string | null;
     mcpPackageInstalled: boolean;
     canonicalTransport: "cli" | "unavailable";
+  };
+  catalog?: {
+    manifest: CreateCatalogSupportManifest;
+    query: CreateCatalogQuerySummary | null;
+    entity: CreateCatalogEntityLookupResult | null;
+    family: CreateCatalogFamilyLookupResult | null;
   };
   workflows: {
     bootstrapConventions: boolean;

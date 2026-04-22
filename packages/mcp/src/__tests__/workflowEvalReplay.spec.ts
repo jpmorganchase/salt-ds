@@ -380,7 +380,10 @@ describe("workflow eval replay", () => {
       replay_paths: string[];
       metrics: { transcript_bytes: number; payload_bytes: number };
       scorecard: {
-        context_safety: { safe_context_stops: number; context_failures: number };
+        context_safety: {
+          safe_context_stops: number;
+          context_failures: number;
+        };
         next_step_quality: { exact_name_follow_ups: number };
         workflow_efficiency: { average_transport_attempts: number };
       };
@@ -488,10 +491,12 @@ describe("workflow eval replay", () => {
       parsed.scorecard.context_safety.safe_context_stops +
         parsed.scorecard.context_safety.context_failures,
     ).toBeGreaterThan(0);
-    expect(parsed.scorecard.next_step_quality.exact_name_follow_ups).toBeGreaterThan(0);
-    expect(parsed.scorecard.workflow_efficiency.average_transport_attempts).toBeGreaterThanOrEqual(
-      1,
-    );
+    expect(
+      parsed.scorecard.next_step_quality.exact_name_follow_ups,
+    ).toBeGreaterThan(0);
+    expect(
+      parsed.scorecard.workflow_efficiency.average_transport_attempts,
+    ).toBeGreaterThanOrEqual(1);
   });
 
   it("runs the replay CLI against an explicit saved transcript and writes JSON output", async () => {

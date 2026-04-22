@@ -75,6 +75,21 @@ Read compact workflow output from top-level fields first:
 - `action`
 - `summary`
 
+When compact `create` remains `partial` or `blocked` on a broad or mixed-surface prompt, inspect the retrieval support surface before escalating to `full`:
+
+- MCP:
+  - `salt://catalog/candidates/{query}`
+  - `salt://catalog/entity/{name}`
+  - `salt://catalog/family/{family}`
+- CLI:
+  - `salt-ds info --json --catalog-query "<prompt>"`
+  - `salt-ds info --json --entity "<name>"`
+  - `salt-ds info --json --family "<category>"`
+
+Use that support surface to inspect grounded candidates, `when_to_use`, `when_not_to_use`, and supporting surfaces.
+Do not treat it as a replacement for the workflow contract.
+It is a support layer for choosing the next exact follow-up or confirming the owner before requesting additive `full` output.
+
 When citing canonical Salt guidance in an answer, use `top_source_urls` from `ide_summary` as the grounding links instead of fabricating documentation URLs.
 When evaluating component fit, use `key_props` from compact component output to check prop availability without requesting the full prop list.
 When a component is compound (e.g., Dialog, Accordion, Form field), compact output includes `sub_component_names` listing the child exports and `composition` with `required_children` and `optional_children`. When MCP support tools are available in the session, request `include: ["props"]` on `get_salt_entity` to get full props for both the root component and its sub-components. When they are not available, use `salt-ds create "<component>" --json --include-starter-code --starter-only` to get the resolved component with starter code.
@@ -108,6 +123,7 @@ When tooling is noisy, fail closed.
 5. Do not use broad code generation to paper over incomplete canonical guidance.
 6. When partial output is the best available signal, say what was learned, what remains unresolved, and what transport limitation prevented completion.
 7. Do not ask for `view: "full"` just to fix context or to guess past a blocked compact result. Retry context or exact follow-through first.
+8. If compact create stays broad on a mixed-surface prompt, inspect retrieval support and then continue with an exact named follow-up instead of jumping straight to `full`.
 
 ## Workflow Map
 
@@ -118,6 +134,8 @@ When MCP is the transport:
 - `init`: bootstrap repo-local `.salt/team.json` and the managed root instruction block locally by default; add host adapters and `ui:verify` only when explicitly requested.
 - `context`: use `get_salt_project_context` for repo diagnostics, policy inspection, or explicit context reuse.
 - `create`: start with `create_salt_ui`; read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first; if compact output blocks implementation, follow `action` before editing the blocked region; for exact named follow-up, use `request.entity`, `request.resolved_entity`, and `request.match_status`; leave `solution_type` unset on broad or mixed-surface asks unless the request already points clearly to a known Salt family; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
+  - if compact output is still broad or mixed-surface after the first pass, inspect `salt://catalog/candidates/{query}` or the CLI catalog-query support before asking for `full`
+  - once the owner is grounded, use `salt://catalog/entity/{name}` or an exact follow-up create call to ground the supporting surface instead of paraphrasing it again
 - `review`: start with `review_salt_ui`; read returned `confidence` and `fix_candidates`; add runtime evidence only if the source pass is still not enough.
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.
@@ -135,6 +153,14 @@ When CLI is the transport:
 ### CLI Follow-Through for Entity Grounding
 
 When a `salt-ds create --json` call returns a compact `PublicContract`, read these top-level fields first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary`.
+
+If the first compact result is still broad on a mixed-surface prompt and the next exact entity is not obvious, inspect:
+
+```sh
+salt-ds info --json --catalog-query "<original prompt>"
+```
+
+Use the returned owner and supporting candidates to choose the next exact follow-up before requesting `--full`.
 
 When `required_follow_through` lists named entities that still need grounding before their regions can be implemented, run a targeted follow-up call for each entity:
 

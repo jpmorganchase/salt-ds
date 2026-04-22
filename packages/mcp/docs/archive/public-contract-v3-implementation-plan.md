@@ -4,7 +4,7 @@ Status: v3 migration complete
 
 Date: April 20, 2026
 
-This document is the execution plan for the approved `v3` public-contract migration described in [`./public-contract-v3-breaking-proposal.md`](./public-contract-v3-breaking-proposal.md).
+This document is the retained execution record for the approved `v3` public-contract migration.
 
 ## Goal
 

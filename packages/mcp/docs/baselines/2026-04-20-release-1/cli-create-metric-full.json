@@ -40,17 +40,11 @@
       "supported": true,
       "contract": "project_conventions_v1",
       "check_recommended": true,
-      "topics": [
-        "page-patterns",
-        "local-layout"
-      ],
+      "topics": ["page-patterns", "local-layout"],
       "reason": "Pattern and composition recommendations are canonical Salt guidance only. Confirm approved repo-level wrappers, page patterns, or workflow conventions through separate project conventions before finalizing the implementation.",
       "canonical_only": true,
       "declared_policy_status": "unknown-until-project-context",
-      "policy_paths": [
-        ".salt/team.json",
-        ".salt/stack.json"
-      ],
+      "policy_paths": [".salt/team.json", ".salt/stack.json"],
       "suggested_follow_up_tool": "get_salt_project_context",
       "suggested_follow_up_cli": "salt-ds info --json",
       "next_step": "Load repo policy context before finalizing wrappers, shells, migration shims, or other repo-local decisions."
@@ -110,10 +104,7 @@
           "supported": true,
           "contract": "project_conventions_v1",
           "check_recommended": true,
-          "topics": [
-            "page-patterns",
-            "local-layout"
-          ],
+          "topics": ["page-patterns", "local-layout"],
           "reason": "Pattern and composition recommendations are canonical Salt guidance only. Confirm approved repo-level wrappers, page patterns, or workflow conventions through separate project conventions before finalizing the implementation."
         }
       },
@@ -129,15 +120,11 @@
       "recommended": {
         "recipe_name": "Metric",
         "name": "Metric",
-        "category": [
-          "data-display-and-analysis"
-        ],
+        "category": ["data-display-and-analysis"],
         "recipe_type": "pattern",
         "summary": "A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value.",
         "score": 85,
-        "matched_terms": [
-          "metric"
-        ],
+        "matched_terms": ["metric"],
         "match_reasons": [
           "aliases_phrase",
           "aliases_tokens",
@@ -205,25 +192,19 @@
         "supporting_examples": [
           {
             "title": "HorizontalMetric",
-            "intent": [
-              "pattern example"
-            ],
+            "intent": ["pattern example"],
             "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const HorizontalMetric = () => {\r\n  return (\r\n    <StackLayout direction=\"row\" gap={1}>\r\n      <Text style={{ marginTop: \"var(--salt-spacing-150)\" }}>\r\n        <strong>Performance</strong>\r\n      </Text>\r\n      <Display1>801</Display1>\r\n    </StackLayout>\r\n  );\r\n};",
             "source_url": "packages/core/stories/patterns/metric/metric.stories.tsx"
           },
           {
             "title": "HorizontalSizes",
-            "intent": [
-              "pattern example"
-            ],
+            "intent": ["pattern example"],
             "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const HorizontalSizes = () => {\r\n  return (\r\n    <StackLayout gap={8} align=\"end\">\r\n      <StackLayout direction=\"row\" gap={1}>\r\n        <Text style={{ marginTop: \"var(--salt-spacing-50)\" }}>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Display3>801</Display3>\r\n      </StackLayout>\r\n      <StackLayout direction=\"row\" gap={1}>\r\n        <Text style={{ marginTop: \"var(--salt-spacing-100)\" }}>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Display2>801</Display2>\r\n      </StackLayout>\r\n      <StackLayout direction=\"row\" gap={1}>\r\n        <Text style={{ marginTop: \"var(--salt-spacing-150)\" }}>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Display1>801</Display1>\r\n      </StackLayout>\r\n    </StackLayout>\r\n  );\r\n};",
             "source_url": "packages/core/stories/patterns/metric/metric.stories.tsx"
           },
           {
             "title": "Indicators",
-            "intent": [
-              "pattern example"
-            ],
+            "intent": ["pattern example"],
             "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const Indicators = () => {\r\n  return (\r\n    <StackLayout direction={\"row\"} gap={8}>\r\n      <StackLayout gap={0}>\r\n        <Text>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Text color=\"secondary\">Interactions</Text>\r\n        <Display1>\r\n          801\r\n          <ArrowUpIcon\r\n            style={{\r\n              fill: \"var(--salt-sentiment-positive-foreground-decorative)\",\r\n            }}\r\n            size={3}\r\n          />\r\n        </Display1>\r\n        <Text\r\n          style={{\r\n            color: \"var(--salt-sentiment-positive-foreground-informative)\",\r\n          }}\r\n        >\r\n          +10 (+1.23%)\r\n        </Text>\r\n      </StackLayout>\r\n      <StackLayout gap={0}>\r\n        <Text>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Text color=\"secondary\">Interactions</Text>\r\n        <Display1>\r\n          801\r\n          <ArrowDownIcon\r\n            style={{\r\n              fill: \"var(--salt-sentiment-negative-foreground-decorative)\",\r\n            }}\r\n            size={3}\r\n          />\r\n        </Display1>\r\n        <Text\r\n          style={{\r\n            color: \"var(--salt-sentiment-negative-foreground-informative)\",\r\n          }}\r\n        >\r\n          -10 (-1.23%)\r\n        </Text>\r\n      </StackLayout>\r\n    </StackLayout>\r\n  );\r\n};",
             "source_url": "packages/core/stories/patterns/metric/metric.stories.tsx"
           }
@@ -235,9 +216,7 @@
         },
         "starter_scaffold": {
           "fidelity": "hybrid",
-          "source_urls": [
-            "/salt/patterns/metric"
-          ],
+          "source_urls": ["/salt/patterns/metric"],
           "example_source_urls": [
             "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
             "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0"
@@ -249,9 +228,7 @@
               "metric-supporting-context"
             ],
             "required_regions": [],
-            "optional_regions": [
-              "metric-supporting-context"
-            ],
+            "optional_regions": ["metric-supporting-context"],
             "build_around": [
               "Metric title",
               "Metric value",
@@ -349,16 +326,11 @@
         {
           "recipe_name": "Analytical dashboard",
           "name": "Analytical dashboard",
-          "category": [
-            "data-display-and-analysis",
-            "layout-and-shells"
-          ],
+          "category": ["data-display-and-analysis", "layout-and-shells"],
           "recipe_type": "pattern",
           "summary": "An analytical dashboard enables users to analyze trends, patterns and metrics effectively. You can use this to present data in a hierarchical and intuitive manner. The mock-ups displayed in this pattern are available as templates in Figma _(J.P. Morgan employees only)_.",
           "score": 31,
-          "matched_terms": [
-            "metric"
-          ],
+          "matched_terms": ["metric"],
           "match_reasons": [
             "semantics_preferred_for_phrase",
             "semantics_preferred_for_tokens",
@@ -416,9 +388,7 @@
           "supporting_examples": [
             {
               "title": "Templates",
-              "intent": [
-                "pattern resource"
-              ],
+              "intent": ["pattern resource"],
               "code": "// Linked resource: https://www.figma.com/file/O3FYUQYXLosmEuZc0T30Qo/Analytical-Dashboard-Pattern?type=design&node-id=1270-11314&mode=design&t=mek99qYi5z5Sxi8J-0",
               "source_url": "https://www.figma.com/file/O3FYUQYXLosmEuZc0T30Qo/Analytical-Dashboard-Pattern?type=design&node-id=1270-11314&mode=design&t=mek99qYi5z5Sxi8J-0"
             }
@@ -446,9 +416,7 @@
                 "fixed-panel",
                 "main-body"
               ],
-              "required_regions": [
-                "main-body"
-              ],
+              "required_regions": ["main-body"],
               "optional_regions": [
                 "dashboard-header",
                 "key-metrics",
@@ -652,10 +620,7 @@
               "overview": "/salt/themes"
             }
           ],
-          "guidance_sources": [
-            "component-category-map",
-            "usage-docs"
-          ],
+          "guidance_sources": ["component-category-map", "usage-docs"],
           "caveats": [],
           "ship_check": {
             "stable_for_production": true,
@@ -750,9 +715,7 @@
             "pattern-docs",
             "usage-callouts"
           ],
-          "selected_categories": [
-            "data-display-and-analysis"
-          ],
+          "selected_categories": ["data-display-and-analysis"],
           "preferred_categories": []
         },
         "composition_recipe": {
@@ -760,15 +723,11 @@
             {
               "recipe_name": "Metric",
               "name": "Metric",
-              "category": [
-                "data-display-and-analysis"
-              ],
+              "category": ["data-display-and-analysis"],
               "recipe_type": "pattern",
               "summary": "A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value.",
               "score": 85,
-              "matched_terms": [
-                "metric"
-              ],
+              "matched_terms": ["metric"],
               "match_reasons": [
                 "aliases_phrase",
                 "aliases_tokens",
@@ -836,25 +795,19 @@
               "supporting_examples": [
                 {
                   "title": "HorizontalMetric",
-                  "intent": [
-                    "pattern example"
-                  ],
+                  "intent": ["pattern example"],
                   "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const HorizontalMetric = () => {\r\n  return (\r\n    <StackLayout direction=\"row\" gap={1}>\r\n      <Text style={{ marginTop: \"var(--salt-spacing-150)\" }}>\r\n        <strong>Performance</strong>\r\n      </Text>\r\n      <Display1>801</Display1>\r\n    </StackLayout>\r\n  );\r\n};",
                   "source_url": "packages/core/stories/patterns/metric/metric.stories.tsx"
                 },
                 {
                   "title": "HorizontalSizes",
-                  "intent": [
-                    "pattern example"
-                  ],
+                  "intent": ["pattern example"],
                   "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const HorizontalSizes = () => {\r\n  return (\r\n    <StackLayout gap={8} align=\"end\">\r\n      <StackLayout direction=\"row\" gap={1}>\r\n        <Text style={{ marginTop: \"var(--salt-spacing-50)\" }}>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Display3>801</Display3>\r\n      </StackLayout>\r\n      <StackLayout direction=\"row\" gap={1}>\r\n        <Text style={{ marginTop: \"var(--salt-spacing-100)\" }}>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Display2>801</Display2>\r\n      </StackLayout>\r\n      <StackLayout direction=\"row\" gap={1}>\r\n        <Text style={{ marginTop: \"var(--salt-spacing-150)\" }}>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Display1>801</Display1>\r\n      </StackLayout>\r\n    </StackLayout>\r\n  );\r\n};",
                   "source_url": "packages/core/stories/patterns/metric/metric.stories.tsx"
                 },
                 {
                   "title": "Indicators",
-                  "intent": [
-                    "pattern example"
-                  ],
+                  "intent": ["pattern example"],
                   "code": "import {\r\n  Display1,\r\n  Display2,\r\n  Display3,\r\n  Link,\r\n  StackLayout,\r\n  Text,\r\n} from \"@salt-ds/core\";\n\nimport { ArrowDownIcon, ArrowUpIcon } from \"@salt-ds/icons\";\n\nimport type { Meta } from \"@storybook/react-vite\";\n\nexport default {\r\n  title: \"Patterns/Metric\",\r\n} as Meta;\n\nexport const Indicators = () => {\r\n  return (\r\n    <StackLayout direction={\"row\"} gap={8}>\r\n      <StackLayout gap={0}>\r\n        <Text>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Text color=\"secondary\">Interactions</Text>\r\n        <Display1>\r\n          801\r\n          <ArrowUpIcon\r\n            style={{\r\n              fill: \"var(--salt-sentiment-positive-foreground-decorative)\",\r\n            }}\r\n            size={3}\r\n          />\r\n        </Display1>\r\n        <Text\r\n          style={{\r\n            color: \"var(--salt-sentiment-positive-foreground-informative)\",\r\n          }}\r\n        >\r\n          +10 (+1.23%)\r\n        </Text>\r\n      </StackLayout>\r\n      <StackLayout gap={0}>\r\n        <Text>\r\n          <strong>Performance</strong>\r\n        </Text>\r\n        <Text color=\"secondary\">Interactions</Text>\r\n        <Display1>\r\n          801\r\n          <ArrowDownIcon\r\n            style={{\r\n              fill: \"var(--salt-sentiment-negative-foreground-decorative)\",\r\n            }}\r\n            size={3}\r\n          />\r\n        </Display1>\r\n        <Text\r\n          style={{\r\n            color: \"var(--salt-sentiment-negative-foreground-informative)\",\r\n          }}\r\n        >\r\n          -10 (-1.23%)\r\n        </Text>\r\n      </StackLayout>\r\n    </StackLayout>\r\n  );\r\n};",
                   "source_url": "packages/core/stories/patterns/metric/metric.stories.tsx"
                 }
@@ -866,9 +819,7 @@
               },
               "starter_scaffold": {
                 "fidelity": "hybrid",
-                "source_urls": [
-                  "/salt/patterns/metric"
-                ],
+                "source_urls": ["/salt/patterns/metric"],
                 "example_source_urls": [
                   "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric",
                   "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0"
@@ -880,9 +831,7 @@
                     "metric-supporting-context"
                   ],
                   "required_regions": [],
-                  "optional_regions": [
-                    "metric-supporting-context"
-                  ],
+                  "optional_regions": ["metric-supporting-context"],
                   "build_around": [
                     "Metric title",
                     "Metric value",
@@ -979,16 +928,11 @@
             {
               "recipe_name": "Analytical dashboard",
               "name": "Analytical dashboard",
-              "category": [
-                "data-display-and-analysis",
-                "layout-and-shells"
-              ],
+              "category": ["data-display-and-analysis", "layout-and-shells"],
               "recipe_type": "pattern",
               "summary": "An analytical dashboard enables users to analyze trends, patterns and metrics effectively. You can use this to present data in a hierarchical and intuitive manner. The mock-ups displayed in this pattern are available as templates in Figma _(J.P. Morgan employees only)_.",
               "score": 31,
-              "matched_terms": [
-                "metric"
-              ],
+              "matched_terms": ["metric"],
               "match_reasons": [
                 "semantics_preferred_for_phrase",
                 "semantics_preferred_for_tokens",
@@ -1046,9 +990,7 @@
               "supporting_examples": [
                 {
                   "title": "Templates",
-                  "intent": [
-                    "pattern resource"
-                  ],
+                  "intent": ["pattern resource"],
                   "code": "// Linked resource: https://www.figma.com/file/O3FYUQYXLosmEuZc0T30Qo/Analytical-Dashboard-Pattern?type=design&node-id=1270-11314&mode=design&t=mek99qYi5z5Sxi8J-0",
                   "source_url": "https://www.figma.com/file/O3FYUQYXLosmEuZc0T30Qo/Analytical-Dashboard-Pattern?type=design&node-id=1270-11314&mode=design&t=mek99qYi5z5Sxi8J-0"
                 }
@@ -1076,9 +1018,7 @@
                     "fixed-panel",
                     "main-body"
                   ],
-                  "required_regions": [
-                    "main-body"
-                  ],
+                  "required_regions": ["main-body"],
                   "optional_regions": [
                     "dashboard-header",
                     "key-metrics",
@@ -1282,10 +1222,7 @@
                   "overview": "/salt/themes"
                 }
               ],
-              "guidance_sources": [
-                "component-category-map",
-                "usage-docs"
-              ],
+              "guidance_sources": ["component-category-map", "usage-docs"],
               "caveats": [],
               "ship_check": {
                 "stable_for_production": true,
@@ -1480,10 +1417,7 @@
       },
       "framework": {
         "name": "vite-react",
-        "evidence": [
-          "dependency:vite",
-          "dependency:react"
-        ]
+        "evidence": ["dependency:vite", "dependency:react"]
       },
       "workspace": {
         "kind": "workspace-root",
@@ -1493,9 +1427,7 @@
         "packages": [],
         "packageVersion": null,
         "installation": {
-          "nodeModulesRoots": [
-            "D:/Work/salt-ds-3/node_modules"
-          ],
+          "nodeModulesRoots": ["D:/Work/salt-ds-3/node_modules"],
           "resolvedPackages": [],
           "installedPackages": [
             {
@@ -1635,9 +1567,7 @@
               "Package-manager inspection failed for yarn; Salt relied on the node_modules scan instead.",
               "Dependency override fields detected: resolutions."
             ],
-            "manifestOverrideFields": [
-              "resolutions"
-            ]
+            "manifestOverrideFields": ["resolutions"]
           },
           "remediation": {
             "explainCommand": "yarn why @salt-ds/core",
@@ -1696,15 +1626,11 @@
         "aliases": [
           {
             "alias": ".storybook/*",
-            "targets": [
-              "./.storybook/*"
-            ]
+            "targets": ["./.storybook/*"]
           },
           {
             "alias": "@salt-ds/date-adapters/*",
-            "targets": [
-              "./packages/date-adapters/src/*-adapter/index.ts"
-            ]
+            "targets": ["./packages/date-adapters/src/*-adapter/index.ts"]
           },
           {
             "alias": "@stories/*",
@@ -1720,9 +1646,7 @@
           },
           {
             "alias": "packages/*",
-            "targets": [
-              "./packages/*"
-            ]
+            "targets": ["./packages/*"]
           }
         ]
       },
@@ -1785,10 +1709,7 @@
       "checkRecommended": true,
       "consulted": false,
       "reason": "Pattern and composition recommendations are canonical Salt guidance only. Confirm approved repo-level wrappers, page patterns, or workflow conventions through separate project conventions before finalizing the implementation.",
-      "topics": [
-        "page-patterns",
-        "local-layout"
-      ],
+      "topics": ["page-patterns", "local-layout"],
       "layersConsulted": [],
       "applied": false,
       "appliedRule": null,

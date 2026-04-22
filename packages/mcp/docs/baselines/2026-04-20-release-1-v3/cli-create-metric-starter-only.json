@@ -34,21 +34,14 @@
       "name": "Metric"
     },
     "expected_patterns": [],
-    "expected_components": [
-      "Link",
-      "Stack layout",
-      "Text"
-    ],
+    "expected_components": ["Link", "Stack layout", "Text"],
     "slots": [
       {
         "id": "metric-title",
         "label": "Metric Title",
         "certainty": "strongly_implied",
         "preferred_patterns": [],
-        "preferred_components": [
-          "Link",
-          "Stack layout"
-        ],
+        "preferred_components": ["Link", "Stack layout"],
         "reason": "Metric Title is an optional Salt pattern region that becomes relevant when the task or supporting evidence calls for it. The current request and docs-backed scaffold point to Link, Stack layout here.",
         "source_urls": [
           "/salt/patterns/metric",
@@ -78,10 +71,7 @@
         "label": "Metric Value",
         "certainty": "strongly_implied",
         "preferred_patterns": [],
-        "preferred_components": [
-          "Link",
-          "Stack layout"
-        ],
+        "preferred_components": ["Link", "Stack layout"],
         "reason": "Metric Value is an optional Salt pattern region that becomes relevant when the task or supporting evidence calls for it. The current request and docs-backed scaffold point to Link, Stack layout here.",
         "source_urls": [
           "/salt/patterns/metric",
@@ -111,11 +101,7 @@
         "label": "Metric Supporting Context",
         "certainty": "strongly_implied",
         "preferred_patterns": [],
-        "preferred_components": [
-          "Link",
-          "Stack layout",
-          "Text"
-        ],
+        "preferred_components": ["Link", "Stack layout", "Text"],
         "reason": "Metric Supporting Context is an optional Salt pattern region that becomes relevant when the task or supporting evidence calls for it. The current request and docs-backed scaffold point to Link, Stack layout, Text here.",
         "source_urls": [
           "/salt/patterns/metric",
@@ -177,9 +163,7 @@
     "args": {
       "query": "Link"
     },
-    "rule_ids": [
-      "create-follow-through-required"
-    ],
+    "rule_ids": ["create-follow-through-required"],
     "post_action": null
   }
 }

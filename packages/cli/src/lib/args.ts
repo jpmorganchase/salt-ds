@@ -33,7 +33,7 @@ export function printHelp(writeStdout: (message: string) => void): number {
       "",
       "Workflow commands:",
       "  salt-ds init [rootDir] [--json] [--output <path>] [--registry-dir <path>] [--project <name>] [--create-stack] [--conventions-pack [<package[#export]>]] [--host-adapters <vscode>] [--add-ui-verify]",
-      "  salt-ds info [rootDir] [--json] [--output <path>] [--registry-dir <path>]",
+      "  salt-ds info [rootDir] [--json] [--output <path>] [--registry-dir <path>] [--catalog-query <prompt>] [--entity <name>] [--family <category>]",
       "  salt-ds create <query> [--json] [--json-file <path>] [--output <path>] [--registry-dir <path>] [--include-starter-code] [--type <auto|component|pattern|composition|foundation|token>] [--package <name>] [--status <stable|beta|lab|deprecated>] [--starter-only] [--full]",
       "  salt-ds review [target ...] [--url <url>] [--create-report <path>] [--migration-report <path>] [--json] [--json-file <path>] [--output <path>] [--registry-dir <path>] [--timeout <ms>] [--mode <auto|browser|fetched-html>] [--output-dir <path>] [--no-screenshot] [--full]",
       "  salt-ds migrate [query] [--source-outline <path>] [--mockup <path-or-url>] [--screenshot <path-or-url>] [--url <url>] [--json] [--json-file <path>] [--output <path>] [--registry-dir <path>] [--include-starter-code] [--timeout <ms>] [--mode <auto|browser|fetched-html>] [--output-dir <path>] [--no-screenshot] [--full]",
