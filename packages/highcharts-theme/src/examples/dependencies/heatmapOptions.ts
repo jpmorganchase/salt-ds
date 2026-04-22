@@ -5,25 +5,25 @@ const dayCategories = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 const deskCategories = ["Equities", "Rates", "Credit", "FX"];
 
 const activityHeatmapData: Array<[number, number, number]> = [
-  [0, 0, 42],
-  [1, 0, 55],
-  [2, 0, 61],
-  [3, 0, 73],
-  [4, 0, 68],
-  [0, 1, 38],
-  [1, 1, 47],
-  [2, 1, 58],
-  [3, 1, 64],
-  [4, 1, 59],
-  [0, 2, 29],
-  [1, 2, 36],
-  [2, 2, 44],
-  [3, 2, 57],
-  [4, 2, 62],
-  [0, 3, 21],
-  [1, 3, 34],
-  [2, 3, 49],
-  [3, 3, 52],
+  [0, 0, 52],
+  [1, 0, 35],
+  [2, 0, 54],
+  [3, 0, 80],
+  [4, 0, 72],
+  [0, 1, 78],
+  [1, 1, 27],
+  [2, 1, 49],
+  [3, 1, 67],
+  [4, 1, 100],
+  [0, 2, 8],
+  [1, 2, 55],
+  [2, 2, 42],
+  [3, 2, 74],
+  [4, 2, 94],
+  [0, 3, 30],
+  [1, 3, 10],
+  [2, 3, 25],
+  [3, 3, 51],
   [4, 3, 100],
 ];
 
@@ -287,29 +287,4 @@ export const heatmapThresholdOptions: Options = {
       data: thresholdHeatmapData,
     },
   ],
-};
-
-export const heatmapColorAxisOverrideOptions: Options = {
-  ...baseHeatmapOptions,
-  title: {
-    text: "Desk activity heatmap with explicit colorAxis override",
-  },
-  series: [
-    {
-      type: "heatmap",
-      name: "Activity level",
-      data: activityHeatmapData,
-    },
-  ],
-  colorAxis: {
-    dataClasses: [
-      { to: 35, color: "#E16A76", name: "Lower" },
-      { from: 35, to: 60, color: "#F0C65A", name: "Middle" },
-      { from: 60, color: "#2A8D67", name: "Upper" },
-    ],
-  },
-  accessibility: {
-    description:
-      "A heatmap showing that direct Highcharts colorAxis options override hook-level Salt colorAxis config.",
-  },
 };

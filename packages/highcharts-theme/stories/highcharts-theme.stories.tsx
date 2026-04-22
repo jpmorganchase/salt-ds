@@ -29,7 +29,6 @@ import {
   columnOptions,
   donutOptions,
   dualAxisOptions,
-  heatmapColorAxisOverrideOptions,
   heatmapDataClassesOptions,
   heatmapDataClassesSaltColorAxis,
   heatmapDiscreteRangesOptions,
@@ -143,15 +142,6 @@ export const HeatmapThresholdChart = {
     fillPatterns: false,
     options: heatmapThresholdOptions,
     saltColorAxis: heatmapThresholdSaltColorAxis,
-  },
-};
-
-export const HeatmapColorAxisOverrideChart = {
-  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
-  args: {
-    fillPatterns: false,
-    options: heatmapColorAxisOverrideOptions,
-    saltColorAxis: heatmapSaltColorAxis,
   },
 };
 

@@ -8,7 +8,6 @@ export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
 export { dualAxisOptions } from "./dualAxisOptions";
 export {
-  heatmapColorAxisOverrideOptions,
   heatmapDataClassesOptions,
   heatmapDataClassesSaltColorAxis,
   heatmapDiscreteRangesOptions,

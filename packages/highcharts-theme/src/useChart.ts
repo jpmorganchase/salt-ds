@@ -31,6 +31,8 @@ export const useChart = (
   { fillPatterns = false, saltColorAxis }: UseChartConfig = {},
 ) => {
   const density = useDensity();
+
+  // Not supporting theme/style options for now
   const { mode } = useTheme();
   const targetWindow = useWindow();
 

@@ -1,4 +1,4 @@
-import { useChart } from "@salt-ds/highcharts-theme";
+import { type SaltColorAxis, useChart } from "@salt-ds/highcharts-theme";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import heatmap from "highcharts/modules/heatmap";
@@ -13,40 +13,40 @@ accessibility(Highcharts);
 const dayCategories = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 const deskCategories = ["Equities", "Rates", "Credit", "FX"];
 
-const heatmapData: Array<[number, number, number]> = [
-  [0, 0, 42],
-  [1, 0, 55],
-  [2, 0, 61],
-  [3, 0, 73],
-  [4, 0, 68],
-  [0, 1, 38],
-  [1, 1, 47],
-  [2, 1, 58],
-  [3, 1, 64],
-  [4, 1, 59],
-  [0, 2, 29],
-  [1, 2, 36],
-  [2, 2, 44],
-  [3, 2, 57],
-  [4, 2, 62],
-  [0, 3, 21],
-  [1, 3, 34],
-  [2, 3, 49],
-  [3, 3, 52],
+const activityHeatmapData: Array<[number, number, number]> = [
+  [0, 0, 52],
+  [1, 0, 35],
+  [2, 0, 54],
+  [3, 0, 80],
+  [4, 0, 72],
+  [0, 1, 78],
+  [1, 1, 27],
+  [2, 1, 49],
+  [3, 1, 67],
+  [4, 1, 100],
+  [0, 2, 8],
+  [1, 2, 55],
+  [2, 2, 42],
+  [3, 2, 74],
+  [4, 2, 94],
+  [0, 3, 30],
+  [1, 3, 10],
+  [2, 3, 25],
+  [3, 3, 51],
   [4, 3, 100],
 ];
 
-const heatmapOptions: Options = {
+const heatmapChartOptions: Options = {
   chart: {
     type: "heatmap",
     height: 420,
   },
-  title: {
-    text: "Desk activity heatmap",
-  },
   accessibility: {
     description:
       "A heatmap showing desk activity levels across the trading week.",
+  },
+  title: {
+    text: "Desk activity heatmap",
   },
   xAxis: {
     categories: dayCategories,
@@ -81,12 +81,12 @@ const heatmapOptions: Options = {
     {
       type: "heatmap",
       name: "Activity level",
-      data: heatmapData,
+      data: activityHeatmapData,
     },
   ],
 };
 
-const heatmapColorAxis = {
+const heatmapSaltColorAxis: SaltColorAxis = {
   min: 0,
   max: 100,
   color: "--salt-category-1-dataviz",
@@ -98,8 +98,8 @@ const heatmapColorAxis = {
 export const HeatmapChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
 
-  const chartOptions = useChart(chartRef, heatmapOptions, {
-    saltColorAxis: heatmapColorAxis,
+  const chartOptions = useChart(chartRef, heatmapChartOptions, {
+    saltColorAxis: heatmapSaltColorAxis,
   });
 
   return (
