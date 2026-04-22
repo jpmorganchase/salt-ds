@@ -1,10 +1,16 @@
 import {
+  useDismiss,
   useFloatingRootContext,
   useInteractions,
-  useRole,
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
-import { type ReactNode, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { SidePanelContext } from "./SidePanelContext";
 
 export interface SidePanelGroupProps {
@@ -36,13 +42,20 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
     state: "open",
   });
 
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpenState(newOpen);
-    onOpenChange?.(newOpen);
-  };
+  const handleOpenChange = useCallback(
+    (newOpen: boolean) => {
+      setOpenState(newOpen);
+      onOpenChange?.(newOpen);
+    },
+    [onOpenChange],
+  );
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [panelHeaderId, setPanelHeaderId] = useState<string | undefined>(
+    undefined,
+  );
 
   const floatingRootContext = useFloatingRootContext({
     open: openState,
@@ -54,8 +67,50 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
-    useRole(floatingRootContext, { role: "dialog" }),
+    useDismiss(floatingRootContext, {
+      // Escape is handled below so only the currently focused panel (or trigger)
+      // can close, preventing unrelated open panels from dismissing.
+      escapeKey: false,
+      outsidePress: false,
+      bubbles: false,
+    }),
   ]);
+
+  useEffect(() => {
+    if (!openState) {
+      return;
+    }
+
+    const targetDocument = floating?.ownerDocument ?? reference?.ownerDocument;
+    if (!targetDocument) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      const activeElement = targetDocument.activeElement;
+      const focusOwnedByPanel =
+        activeElement != null &&
+        (floating?.contains(activeElement) ||
+          reference?.contains(activeElement));
+
+      if (!focusOwnedByPanel) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      handleOpenChange(false);
+    };
+
+    targetDocument.addEventListener("keydown", onKeyDown);
+    return () => {
+      targetDocument.removeEventListener("keydown", onKeyDown);
+    };
+  }, [floating, reference, openState, handleOpenChange]);
 
   return (
     <SidePanelContext.Provider
@@ -67,6 +122,9 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
         setFloating,
         setReference,
         setOpen: handleOpenChange,
+        closeButtonRef,
+        panelHeaderId,
+        setPanelHeaderId,
       }}
     >
       {children}

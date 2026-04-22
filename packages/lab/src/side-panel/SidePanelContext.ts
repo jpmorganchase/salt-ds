@@ -1,6 +1,11 @@
 import type { FloatingRootContext, useInteractions } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
-import { type Dispatch, type SetStateAction, useContext } from "react";
+import {
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
+  useContext,
+} from "react";
 
 export interface SidePanelContextValue {
   /**
@@ -37,6 +42,18 @@ export interface SidePanelContextValue {
    * Called by SidePanelCloseTrigger or any consumer that needs to close the panel.
    */
   setOpen: (open: boolean) => void;
+  /**
+   * Ref to the close button in panel content used for open-time initial focus.
+   */
+  closeButtonRef: MutableRefObject<HTMLButtonElement | null>;
+  /**
+   * Header element id used to label the side panel region.
+   */
+  panelHeaderId?: string;
+  /**
+   * Registers or clears the header id used for aria-labelledby.
+   */
+  setPanelHeaderId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const SidePanelContext = createContext<SidePanelContextValue>(
@@ -49,6 +66,9 @@ export const SidePanelContext = createContext<SidePanelContextValue>(
     setFloating: () => {},
     setReference: () => {},
     setOpen: () => {},
+    closeButtonRef: { current: null },
+    panelHeaderId: undefined,
+    setPanelHeaderId: () => {},
   },
 );
 
