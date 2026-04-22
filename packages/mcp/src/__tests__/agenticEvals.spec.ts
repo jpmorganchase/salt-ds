@@ -343,6 +343,29 @@ describe("deterministic agentic evals", () => {
     );
   });
 
+  it("keeps tabbed-sections profile prompts anchored on Tabs instead of decoration or navigation drift", () => {
+    const query =
+      "User profile page with tabbed sections showing personal info, settings, and activity. Includes an avatar displaying the user's initials or profile image at the top.";
+    const result = runCreateWorkflowFull({ query, contextChecked: true });
+
+    expect(result.result).toMatchObject({
+      solution_type: "component",
+      decision: {
+        name: "Tabs",
+      },
+    });
+    expect(result.request).toMatchObject({
+      entity: query,
+      resolved_entity: "Tabs",
+    });
+    expect(result.safety.blocking_reasons).not.toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Vertical navigation"),
+        expect.stringContaining("Navigation"),
+      ]),
+    );
+  });
+
   it("keeps toggle-in-form prompts anchored on Switch instead of broad Forms patterns", () => {
     const query =
       "compact control to turn email alerts on and off inside a settings form";
@@ -1057,18 +1080,14 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow).toMatchObject({
       id: "migrate_to_salt",
       readiness: {
-        status: "starter_needs_attention",
+        status: "guidance_only",
         implementation_ready: false,
       },
       context_requirement: {
         status: "context_required",
       },
     });
-    expect(result.artifacts.starter_validation).toEqual(
-      expect.objectContaining({
-        status: "needs_attention",
-      }),
-    );
+    expect(result.artifacts.starter_validation).toBeNull();
     expect(result.artifacts.post_migration_verification).toEqual(
       expect.objectContaining({
         suggested_workflow: "review_salt_ui",

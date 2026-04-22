@@ -1,6 +1,6 @@
 ---
 title: Content status
-description: "A content status communicates loading, empty, warning, error, and success states inside a container component. Use it to keep state messaging attached to the content the user is already working with."
+description: "A content status communicates loading, empty, warning, error, and success states inside a container component or bounded content region. Use it to keep state messaging attached to the content the user is already working with."
 layout: DetailPattern
 tags:
   - pattern
@@ -24,6 +24,7 @@ data:
 
 Use this pattern in a container component when the state belongs to the content area itself:
 
+- When a bounded region or local content area needs a loading, empty, warning, error, or success state.
 - When content is loading.
 - When a container has no data to show and you need an empty-state message.
 - To share information, warnings, or errors with users that relate to the current content area.
@@ -31,7 +32,7 @@ Use this pattern in a container component when the state belongs to the content 
 
 ## When not to use
 
-- When the message should reach across the app, use Banner or Toast instead.
+- When the message should reach across the app or the whole page, use Banner or Toast instead.
 - When the state requires a full workflow interruption or a decision, use Dialog or the owning form pattern instead.
 - When the state is not tied to a container, use inline text or another component instead.
 

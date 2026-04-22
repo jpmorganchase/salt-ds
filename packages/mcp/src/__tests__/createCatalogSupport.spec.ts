@@ -81,6 +81,7 @@ describe("create catalog support benchmark", () => {
         const registry = await loadRegistry({ registryDir });
 
         const entity = lookupCreateCatalogEntity(registry, "Tabs");
+        const tableEntity = lookupCreateCatalogEntity(registry, "Table");
         const family = lookupCreateCatalogFamily(
           registry,
           "selection-controls",
@@ -98,6 +99,25 @@ describe("create catalog support benchmark", () => {
                 name: "Tabs",
                 aliases: expect.arrayContaining(["Tab"]),
                 example_count: expect.any(Number),
+              }),
+            ]),
+          }),
+        );
+
+        expect(tableEntity).toEqual(
+          expect.objectContaining({
+            status: "resolved",
+            matches: expect.arrayContaining([
+              expect.objectContaining({
+                name: "Table",
+                retrieval_signals: expect.objectContaining({
+                  contrast_targets: expect.arrayContaining([
+                    expect.objectContaining({
+                      target: "Data grid",
+                      relation: "prefer-instead",
+                    }),
+                  ]),
+                }),
               }),
             ]),
           }),
