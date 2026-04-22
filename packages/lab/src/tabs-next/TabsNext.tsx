@@ -122,11 +122,13 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     });
 
     const commitSelection = useCallback(
-      (event: SyntheticEvent | null, value: string) => {
-        setSelectedState(value);
-        onChange?.(event, value);
+      (event: SyntheticEvent | null, newValue: string) => {
+        setSelectedState(newValue);
+        if (selected !== newValue) {
+          onChange?.(event, newValue);
+        }
       },
-      [onChange],
+      [onChange, selected],
     );
     const { selectionFromOverflowValueRef, setSelected } =
       useOverflowSelectionState({
