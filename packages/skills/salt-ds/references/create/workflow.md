@@ -26,6 +26,10 @@
 - If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before building the blocked region.
 - Do not treat `status: partial` as a finished create step just because starter code or a first scaffold exists.
 - Leave `solution_type` unset on broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.
+- If compact create stays broad on a mixed-surface prompt and the next exact follow-up is not obvious, inspect retrieval support first:
+  - MCP: `salt://catalog/candidates/{query}`, `salt://catalog/entity/{name}`, then `salt://catalog/family/{family}` when the broader Salt family still matters
+  - CLI: `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, then `salt-ds info --json --family "<category>"`
+- Use retrieval support to confirm the owner and supporting surfaces, then continue with exact named follow-through. Do not jump to `full` just to re-run selection.
 - Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 - For exact named asks, keep the first create call close to the named Salt target. Do not paraphrase `Metric`, `Tabs`, or similar exact requests into broader descriptive text before the first grounded call.
 - If the host already knows the workspace root, get project context first and reuse `context_id` on repeated repo-aware calls instead of recollecting context each time.
@@ -57,6 +61,7 @@
 - Confirm the chosen direction against canonical Salt guidance through the Salt MCP or the docs it points to.
 - Do not stop after a plausible first scaffold if the request is a Salt UI task; complete the selection, validation, and any workflow-directed grounding follow-ups before finishing.
 - Do not substitute custom KPI cards, raw tables, bespoke headers, or other guessed sub-patterns when the contract already named a canonical Salt target that still needs follow-through.
+- Once the owner is grounded, keep supporting follow-through exact. Do not paraphrase a grounded `Tabs`, `Breadcrumbs`, `Avatar`, `Switch`, or `Content status` follow-up back into a broad prompt.
 - Keep canonical Salt guidance separate from repo-specific conventions. Use project conventions or explicit repo guidance for local overrides instead of assuming the core MCP already knows them.
 - If you mention a specific Salt token, prop, or API name, verify that the exact name exists in canonical Salt guidance before returning it.
 - When token choices affect surfaces, borders, separators, or semantic color, confirm the token family and direct-use policy before finalizing the styling.

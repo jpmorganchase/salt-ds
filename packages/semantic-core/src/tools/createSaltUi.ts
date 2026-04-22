@@ -6,6 +6,13 @@ import {
   type WorkflowOpenQuestion,
 } from "./compositionContract.js";
 import type { SuggestedFollowUp } from "./consumerPresentation.js";
+import { enrichResolvedCreateResult } from "./createEnrichment.js";
+import {
+  type CreateRecommendationResolution,
+  hasCreateComparisonInput,
+  resolveCreateRecommendation,
+} from "./createResolve.js";
+import { deriveCreateTargetReferenceFromQuery } from "./createRetrieval.js";
 import {
   buildDecisionDebug,
   getCreateSaltUiRelatedGuides,
@@ -13,18 +20,13 @@ import {
   getGuidanceSources,
   getNamedRecords,
   reorderByPreferredCategories,
-  resolveSolutionType,
   scoreFoundationComparison,
   toFoundationDifference,
   uniqueNormalized,
 } from "./createSaltUiHelpers.js";
-import {
-  pickRetrievedCreateOwner,
-  retrieveCreateCandidates,
-  type RetrieveCreateCandidatesResult,
-} from "./createRetrieval.js";
 import { getCompositionRecipe } from "./getCompositionRecipe.js";
 import { getFoundation } from "./getFoundation.js";
+import { getSaltEntity } from "./getSaltEntity.js";
 import {
   appendProjectConventionsNextStep,
   buildGuidanceBoundary,
@@ -39,6 +41,7 @@ import {
   createFoundationStarterCode,
   type StarterCodeSnippet,
 } from "./starterCode.js";
+import { normalizeQuery } from "./utils.js";
 
 export type SaltSolutionType =
   | "auto"
@@ -113,95 +116,141 @@ function withCompositionGuidance(
   };
 }
 
-function shouldUseRetrievedCreateOwner(input: {
-  solution_type_hint: Exclude<SaltSolutionType, "auto">;
-  retrieval: RetrieveCreateCandidatesResult;
+function shouldUseNamedPatternGuidance(input: {
+  registry: SaltRegistry;
+  query: string | undefined;
+  routed_query: string | undefined;
+  retrieval: CreateRecommendationResolution["retrieval"];
 }): boolean {
-  if (!input.retrieval.owner) {
+  const targetName = input.routed_query?.trim();
+  if (!targetName) {
     return false;
   }
 
-  if (
-    input.solution_type_hint === "component" ||
-    input.solution_type_hint === "pattern"
-  ) {
+  if (!input.query) {
     return true;
   }
 
-  if (input.retrieval.status === "exact") {
+  if (normalizeQuery(targetName) === normalizeQuery(input.query)) {
     return true;
+  }
+
+  const reference = deriveCreateTargetReferenceFromQuery(
+    input.registry,
+    input.query,
+  );
+  if (
+    !reference ||
+    reference.requested_target.entity_type !== "pattern" ||
+    reference.requested_target.name !== targetName
+  ) {
+    const retrievalOwner = input.retrieval?.owner;
+    return (
+      retrievalOwner?.entity_type === "pattern" &&
+      retrievalOwner.entity_name === targetName &&
+      retrievalOwner.explicit_owner_hits > 0
+    );
   }
 
   return (
-    input.retrieval.owner.confidence >= 90 &&
-    input.retrieval.owner.total_score >= 60
+    reference.reference_kind === "exact" || reference.reference_kind === "alias"
   );
 }
 
-export function createSaltUi(
+function buildNamedPatternCreateResult(
   registry: SaltRegistry,
   input: CreateSaltUiInput,
+  guidanceBoundary: GuidanceBoundary,
+  retrieval: CreateRecommendationResolution["retrieval"],
+  preferredCategories: string[],
+  patternName: string,
+): CreateSaltUiResult | null {
+  const exact = getSaltEntity(registry, {
+    entity_type: "pattern",
+    name: patternName,
+    include_related: true,
+    include_starter_code: input.include_starter_code !== false,
+    view: input.view ?? "compact",
+  });
+
+  if (exact.decision.status !== "found" || !exact.entity) {
+    return null;
+  }
+
+  const relatedPatterns =
+    exact.related?.patterns?.filter(
+      (entry): entry is Record<string, unknown> =>
+        Boolean(entry) && typeof entry === "object",
+    ) ?? [];
+  const relatedComponents =
+    exact.related?.components?.filter(
+      (entry): entry is Record<string, unknown> =>
+        Boolean(entry) && typeof entry === "object",
+    ) ?? [];
+
+  return withCompositionGuidance(registry, input, {
+    mode: "recommend",
+    solution_type: "pattern",
+    guidance_boundary: guidanceBoundary,
+    decision: {
+      name: getDecisionName(exact.entity),
+      why: exact.decision.why,
+    },
+    guidance_sources: getGuidanceSources(exact.entity),
+    recommended: exact.entity,
+    alternatives: reorderByPreferredCategories(
+      registry,
+      "pattern",
+      relatedPatterns,
+      preferredCategories,
+    ),
+    suggested_follow_ups: exact.suggested_follow_ups,
+    related_guides: getCreateSaltUiRelatedGuides(registry, [
+      exact.entity,
+      ...relatedPatterns,
+      ...relatedComponents,
+    ]),
+    starter_code: exact.starter_code,
+    next_step: appendProjectConventionsNextStep(
+      exact.next_step,
+      guidanceBoundary,
+    ),
+    did_you_mean: exact.did_you_mean,
+    ambiguity: exact.ambiguity as Record<string, unknown> | undefined,
+    raw:
+      (input.view ?? "compact") === "full"
+        ? {
+            decision_debug: buildDecisionDebug(
+              registry,
+              "pattern",
+              exact.entity,
+              preferredCategories,
+            ),
+            create_retrieval: retrieval,
+            exact_pattern: exact,
+          }
+        : undefined,
+  });
+}
+
+function createSaltUiAtView(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  resolutionInput?: CreateRecommendationResolution,
 ): CreateSaltUiResult {
   const view = input.view ?? "compact";
   const includeStarterCode = input.include_starter_code !== false;
   const topK = Math.max(1, Math.min(input.top_k ?? 5, 25));
-  const query = input.query?.trim();
-  const comparisonRequested =
-    Array.isArray(input.names) &&
-    input.names.some((name) => name.trim().length > 0);
+  const resolution =
+    resolutionInput ?? resolveCreateRecommendation(registry, input);
+  const query = resolution.query;
+  const comparisonRequested = resolution.comparison_requested;
   const names = [...new Set((input.names ?? []).map((name) => name.trim()))]
     .filter(Boolean)
     .slice(0, 10);
-  const solutionTypeHint = resolveSolutionType(input);
-  let solutionType = solutionTypeHint;
-  let routedQuery = query;
-  let retrieval: RetrieveCreateCandidatesResult | null = null;
-
-  if (query && !comparisonRequested) {
-    retrieval = retrieveCreateCandidates(registry, {
-      query,
-      package: input.package,
-      status: input.status,
-      top_k: Math.min(topK, 10),
-      solution_type_hint:
-        solutionTypeHint === "component" || solutionTypeHint === "pattern"
-          ? solutionTypeHint
-          : undefined,
-      filters: {
-        production_ready: input.production_ready,
-        prefer_stable: input.prefer_stable,
-        a11y_required: input.a11y_required,
-        form_field_support: input.form_field_support,
-      },
-    });
-
-    if (
-      shouldUseRetrievedCreateOwner({
-        solution_type_hint: solutionTypeHint,
-        retrieval,
-      })
-    ) {
-      solutionType = retrieval.owner!.entity_type;
-      routedQuery = retrieval.owner!.entity_name;
-    } else if (
-      solutionTypeHint !== "foundation" &&
-      solutionTypeHint !== "token" &&
-      retrieval.status === "ambiguous"
-    ) {
-      const fallbackOwner = pickRetrievedCreateOwner(retrieval);
-      if (fallbackOwner) {
-        solutionType = fallbackOwner.entity_type;
-        routedQuery = fallbackOwner.entity_name;
-      }
-    } else if (
-      solutionTypeHint !== "foundation" &&
-      solutionTypeHint !== "token" &&
-      retrieval.owner
-    ) {
-      solutionType = retrieval.owner.entity_type;
-      routedQuery = retrieval.owner.entity_name;
-    }
-  }
+  const solutionType = resolution.solution_type;
+  const routedQuery = resolution.routed_query;
+  const retrieval = resolution.retrieval;
   const preferredCategories = uniqueNormalized(
     input.preferred_categories ?? [],
   );
@@ -546,6 +595,27 @@ export function createSaltUi(
   }
 
   if (solutionType === "pattern") {
+    const exactPatternResult =
+      shouldUseNamedPatternGuidance({
+        registry,
+        query,
+        routed_query: routedQuery ?? query,
+        retrieval,
+      }) && routedQuery
+        ? buildNamedPatternCreateResult(
+            registry,
+            input,
+            guidanceBoundary,
+            retrieval,
+            preferredCategories,
+            routedQuery,
+          )
+        : null;
+
+    if (exactPatternResult) {
+      return exactPatternResult;
+    }
+
     const recipeResult = getCompositionRecipe(registry, {
       query: routedQuery ?? query ?? "",
       top_k: Math.min(topK, 10),
@@ -685,4 +755,29 @@ export function createSaltUi(
           }
         : undefined,
   });
+}
+
+export function createSaltUi(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+): CreateSaltUiResult {
+  const requestedView = input.view ?? "compact";
+  const resolution = resolveCreateRecommendation(registry, input);
+
+  if (requestedView !== "full" || hasCreateComparisonInput(input)) {
+    return createSaltUiAtView(registry, input, resolution);
+  }
+
+  // Owner resolution happens once through the compact path. Full mode only
+  // enriches that resolved owner so the public workflow contract cannot drift.
+  const compactResult = createSaltUiAtView(
+    registry,
+    {
+      ...input,
+      view: "compact",
+    },
+    resolution,
+  );
+
+  return enrichResolvedCreateResult(registry, input, compactResult, resolution);
 }

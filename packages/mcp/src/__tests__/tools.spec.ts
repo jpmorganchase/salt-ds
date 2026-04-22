@@ -4551,10 +4551,21 @@ describe("curated public tools", () => {
     });
 
     expect(result.raw).toMatchObject({
-      decision_debug: {
-        selected_name: "Link",
-        selected_guidance_sources: ["component-category-map", "usage-docs"],
-        selected_categories: ["navigation"],
+      resolution: {
+        decision_name: "Link",
+        solution_type: "component",
+        trace: {
+          query: "navigate to another route",
+          reference_kind: "descriptive",
+          solution_type_hint: "component",
+        },
+      },
+      exact_entity: {
+        entity: {
+          semantics: {
+            derived_from: ["component-category-map", "usage-docs"],
+          },
+        },
       },
     });
   });
@@ -4621,7 +4632,7 @@ describe("curated public tools", () => {
     });
   });
 
-  it("prefers patterns for structured navigation shell queries", () => {
+  it("keeps structured navigation shell queries on Vertical navigation", () => {
     const registry: SaltRegistry = {
       ...REGISTRY,
       patterns: [
@@ -4705,17 +4716,20 @@ describe("curated public tools", () => {
       include_starter_code: true,
     });
 
-    expect(result.solution_type).toBe("pattern");
     expect(result.decision).toMatchObject({
-      name: "Vertical navigation",
+      name: "VerticalNavigation",
     });
-    expect(result.starter_code?.[0]?.code).toContain("<NavigationItem");
     expect(result.starter_code?.[0]?.code).toContain(
-      '<nav aria-label="Primary">',
+      'import { VerticalNavigation } from "@salt-ds/core";',
+    );
+    expect(result.starter_code?.[0]?.code).toContain(
+      '<VerticalNavigation aria-label="Main navigation" />',
     );
     expect(result.starter_code?.[0]?.notes).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Fixed or responsive navigation pane"),
+        expect.stringContaining(
+          "Starter shape derived from the closest attached Salt example.",
+        ),
       ]),
     );
   });

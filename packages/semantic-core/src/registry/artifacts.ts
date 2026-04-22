@@ -1,9 +1,6 @@
 import fs from "node:fs/promises";
 import type { SerializedPageSearchIndex } from "../search/pageSearchIndex.js";
-import type {
-  RegistryBuildInfo,
-  SaltRegistry,
-} from "../types.js";
+import type { RegistryBuildInfo, SaltRegistry } from "../types.js";
 
 export const REGISTRY_ARRAY_ARTIFACTS = [
   { file_name: "packages.json", key: "packages" },

@@ -21,16 +21,8 @@
     },
     "contracts": {
       "compact_workflow_contract_version": "v3",
-      "compact_workflow_ids": [
-        "create",
-        "review",
-        "migrate",
-        "upgrade"
-      ],
-      "setup_contract_ids": [
-        "get_salt_project_context",
-        "bootstrap_salt_repo"
-      ]
+      "compact_workflow_ids": ["create", "review", "migrate", "upgrade"],
+      "setup_contract_ids": ["get_salt_project_context", "bootstrap_salt_repo"]
     },
     "workflow_vocabulary": [
       {
@@ -70,18 +62,12 @@
         "migrate_to_salt",
         "upgrade_salt_ui"
       ],
-      "advanced_output_ids": [
-        "view:full"
-      ]
+      "advanced_output_ids": ["view:full"]
     },
     "support_tools": {
       "policy": "optional_advanced_host_surface",
       "default_exposed": false,
-      "tool_ids": [
-        "discover_salt",
-        "get_salt_entity",
-        "get_salt_examples"
-      ],
+      "tool_ids": ["discover_salt", "get_salt_entity", "get_salt_examples"],
       "workflow_contract_meaning_changes_when_absent": false
     },
     "capabilities": {

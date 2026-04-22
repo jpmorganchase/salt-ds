@@ -18,9 +18,7 @@
   "action": {
     "kind": "ask_user",
     "question": "Use Link for navigation and keep Button for in-place actions.",
-    "rule_ids": [
-      "review-canonical-mismatch"
-    ],
+    "rule_ids": ["review-canonical-mismatch"],
     "post_action": null
   },
   "summary": "Salt review found issues that still need attention."

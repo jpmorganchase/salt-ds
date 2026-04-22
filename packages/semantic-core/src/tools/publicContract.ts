@@ -1,19 +1,12 @@
+import type { SaltRegistry } from "../types.js";
 import {
-  ENGLISH_FUNCTION_WORDS,
-  REGISTRY_META_WORDS,
-} from "../search/englishFunctionWords.js";
-import {
-  deriveCreateTargetReferenceFromQuery,
-  resolveCreateNamedTarget,
-  type CreateNamedTarget,
-  type CreateTargetReference,
-} from "./createRetrieval.js";
+  type CreateRequestMatch,
+  deriveCreateRequestMatch,
+} from "./createResolve.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
 import type { MigrateToSaltResult } from "./migrateToSalt.js";
 import type { ReviewSaltUiResult } from "./reviewSaltUi.js";
 import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
-import type { SaltRegistry } from "../types.js";
-import { tokenize } from "./utils.js";
 import type {
   CreateSaltUiWorkflowContract,
   FollowThroughItem,
@@ -130,7 +123,8 @@ export interface PublicContract {
   full_output_bytes?: number;
 }
 
-export interface PublicWorkflowDetailsEnvelope<TDetails> extends PublicContract {
+export interface PublicWorkflowDetailsEnvelope<TDetails>
+  extends PublicContract {
   details: TDetails;
 }
 
@@ -202,6 +196,20 @@ function isMatchSafe(matchStatus: PublicMatchStatus | undefined): boolean {
     matchStatus === "exact" ||
     matchStatus === "alias"
   );
+}
+
+function isExactRequestSafe(
+  exactRequest: PublicContractExactRequest | undefined,
+): boolean {
+  if (!exactRequest?.match_status) {
+    return true;
+  }
+
+  if (exactRequest.match_status === "broadened") {
+    return exactRequest.exact_match_required !== true;
+  }
+
+  return isMatchSafe(exactRequest.match_status);
 }
 
 function shouldBlockOnSemanticMismatch(
@@ -282,10 +290,7 @@ export function derivePublicCanonicalComplete(
     return false;
   }
 
-  if (
-    hasExactRequest(exactRequest) &&
-    !isMatchSafe(exactRequest.match_status)
-  ) {
+  if (hasExactRequest(exactRequest) && !isExactRequestSafe(exactRequest)) {
     return false;
   }
 
@@ -310,10 +315,7 @@ export function derivePublicSafeToImplementExactRequest(
     return false;
   }
 
-  if (
-    hasExactRequest(exactRequest) &&
-    !isMatchSafe(exactRequest.match_status)
-  ) {
+  if (hasExactRequest(exactRequest) && !isExactRequestSafe(exactRequest)) {
     return false;
   }
 
@@ -380,13 +382,8 @@ export function getPublicContractValidationErrors(
     );
   }
 
-  if (
-    safety.exact_request_safe &&
-    contract.status !== "success"
-  ) {
-    errors.push(
-      "safety.exact_request_safe=true requires status=success",
-    );
+  if (safety.exact_request_safe && contract.status !== "success") {
+    errors.push("safety.exact_request_safe=true requires status=success");
   }
 
   if (contract.status === "success" && !safety.exact_request_safe) {
@@ -397,14 +394,14 @@ export function getPublicContractValidationErrors(
     errors.push("status=blocked requires at least one blocking reason");
   }
 
-  if ((contract.status === "partial" || contract.status === "blocked") && !action) {
+  if (
+    (contract.status === "partial" || contract.status === "blocked") &&
+    !action
+  ) {
     errors.push("non-success contract requires action");
   }
 
-  if (
-    request.match_status === "misrouted" &&
-    safety.exact_request_safe
-  ) {
+  if (request.match_status === "misrouted" && safety.exact_request_safe) {
     errors.push("misrouted request.match_status cannot be implementation-safe");
   }
 
@@ -420,7 +417,9 @@ export function getPublicContractValidationErrors(
     (hasRequestedEntity || hasResolvedEntity) &&
     request.match_status === undefined
   ) {
-    errors.push("request.entity or request.resolved_entity requires request.match_status");
+    errors.push(
+      "request.entity or request.resolved_entity requires request.match_status",
+    );
   }
 
   if (action.kind === "implement" && !safety.exact_request_safe) {
@@ -578,163 +577,42 @@ function toFixContextStep(
   };
 }
 
-/**
- * Filter tokens to only those carrying meaningful information.
- *
- * Uses shared static sets to remove:
- * 1. English function words (a, an, the, etc.)
- * 2. Registry meta words (component, pattern, salt, etc.)
- */
-function getMeaningfulTokens(value: string): string[] {
-  return uniqueNonEmptyStrings(
-    tokenize(value).flatMap((token) => token.split("-")),
-  ).filter((token) => {
-    if (token.length <= 2) {
-      return false;
-    }
-    if (ENGLISH_FUNCTION_WORDS.has(token)) {
-      return false;
-    }
-    if (REGISTRY_META_WORDS.has(token)) {
-      return false;
-    }
-    return true;
-  });
-}
-
-function sharesPrimaryCreateCategory(
-  left: CreateNamedTarget,
-  right: CreateNamedTarget,
-): boolean {
-  const leftPrimaryCategory = left.categories[0] ?? null;
-  const rightPrimaryCategory = right.categories[0] ?? null;
-
-  return (
-    leftPrimaryCategory !== null && leftPrimaryCategory === rightPrimaryCategory
-  );
-}
-
-function sharesMeaningfulTargetTokens(
-  leftName: string,
-  rightName: string,
-): boolean {
-  const leftTokens = new Set(getMeaningfulTokens(leftName));
-
-  return getMeaningfulTokens(rightName).some((token) => leftTokens.has(token));
-}
-
-function areCreateTargetsRelated(
-  left: CreateNamedTarget,
-  right: CreateNamedTarget,
-): boolean {
-  return (
-    left.related_names.includes(right.name) ||
-    right.related_names.includes(left.name)
-  );
-}
-
-function classifyCreateTargetMatch(
-  reference: CreateTargetReference,
-  resolvedTarget: CreateNamedTarget | null,
-): PublicMatchStatus {
-  if (!resolvedTarget) {
-    return "no_match";
-  }
-
-  if (resolvedTarget.name === reference.requested_target.name) {
-    if (reference.reference_kind === "exact") {
-      return "exact";
-    }
-
-    if (reference.reference_kind === "alias") {
-      return "alias";
-    }
-
-    return "broadened";
-  }
-
-  if (
-    reference.requested_target.entity_type === resolvedTarget.entity_type &&
-    sharesPrimaryCreateCategory(reference.requested_target, resolvedTarget) &&
-    (sharesMeaningfulTargetTokens(
-      reference.requested_target.name,
-      resolvedTarget.name,
-    ) ||
-      areCreateTargetsRelated(reference.requested_target, resolvedTarget))
-  ) {
-    return "broadened";
-  }
-
-  return "misrouted";
-}
-
-function deriveCreateTargetReference(
-  result: CreateSaltUiResult,
-  options: PublicContractBuildOptions,
-): CreateTargetReference | undefined {
-  if (result.mode !== "recommend" || !options.registry) {
-    return undefined;
-  }
-
-  const query = options.query?.trim();
-  if (!query) {
-    return undefined;
-  }
-
-  return deriveCreateTargetReferenceFromQuery(
-    options.registry,
-    query,
-    options.package,
-    {
-      solution_type_hint:
-        result.solution_type === "component" || result.solution_type === "pattern"
-          ? result.solution_type
-          : undefined,
-      status: undefined,
-    },
-  );
-}
-
 function deriveCreateExactRequest(
   result: CreateSaltUiResult,
-  reference: CreateTargetReference | undefined,
   options: PublicContractBuildOptions,
 ): PublicContractExactRequest | undefined {
   if (options.exact_request) {
     return options.exact_request;
   }
 
-  if (result.mode !== "recommend" || !options.registry || !reference) {
+  if (!options.registry) {
     return undefined;
   }
 
-  if (!result.decision.name) {
-    return {
-      requested_entity: reference.requested_entity,
-      resolved_entity: null,
-      match_status: "no_match",
-      exact_match_required: reference.reference_kind !== "descriptive",
-    };
+  const requestMatch = deriveCreateRequestMatch(options.registry, {
+    query: options.query,
+    package: options.package,
+    result_mode: result.mode,
+    result_decision_name: result.decision.name,
+    result_solution_type: result.solution_type,
+  });
+
+  if (!requestMatch) {
+    return undefined;
   }
 
-  const resolvedTarget = resolveCreateNamedTarget(
-    options.registry,
-    result.decision.name,
-    options.package,
-  );
-
   return {
-    requested_entity: reference.requested_entity,
-    resolved_entity: result.decision.name,
-    match_status: classifyCreateTargetMatch(reference, resolvedTarget),
-    exact_match_required: reference.reference_kind !== "descriptive",
+    requested_entity: requestMatch.requested_entity,
+    resolved_entity: requestMatch.resolved_entity,
+    match_status: requestMatch.match_status,
+    exact_match_required: requestMatch.exact_match_required,
   };
 }
 
 function buildCreateNextStep(
   contract: CreateSaltUiWorkflowContract,
   exactRequest?: PublicContractExactRequest,
-  reference?: CreateTargetReference,
+  reference?: CreateRequestMatch["reference"],
 ): PublicNextStep {
   if (!contract.context_requirement.repo_specific_edits_ready) {
     return toFixContextStep(
@@ -774,7 +652,7 @@ function buildCreateNextStep(
   if (
     reference?.requested_target.name &&
     exactRequest?.match_status &&
-    !isMatchSafe(exactRequest.match_status)
+    !isExactRequestSafe(exactRequest)
   ) {
     return {
       kind: "tool_call",
@@ -795,7 +673,7 @@ function buildCreateNextStep(
 
   if (
     contract.readiness.implementation_ready &&
-    (!exactRequest || isMatchSafe(exactRequest.match_status))
+    (!exactRequest || isExactRequestSafe(exactRequest))
   ) {
     return {
       kind: "implement",
@@ -1001,8 +879,16 @@ export function buildCreatePublicContract(
   contract: CreateSaltUiWorkflowContract,
   options: PublicContractBuildOptions,
 ): PublicContract {
-  const reference = deriveCreateTargetReference(result, options);
-  const exactRequest = deriveCreateExactRequest(result, reference, options);
+  const requestMatch = options.registry
+    ? deriveCreateRequestMatch(options.registry, {
+        query: options.query,
+        package: options.package,
+        result_mode: result.mode,
+        result_decision_name: result.decision.name,
+        result_solution_type: result.solution_type,
+      })
+    : undefined;
+  const exactRequest = deriveCreateExactRequest(result, options);
   const starterBlockers = buildStarterBlockers(contract.starter_validation);
   const projectPolicyBlockers = buildProjectPolicyBlockers({
     implementation_ready: contract.readiness.implementation_ready,
@@ -1031,7 +917,7 @@ export function buildCreatePublicContract(
     summary: buildCreateSummary(result, exactRequest),
     next_step:
       options.next_step ??
-      buildCreateNextStep(contract, exactRequest, reference),
+      buildCreateNextStep(contract, exactRequest, requestMatch?.reference),
     rule_ids: contract.implementation_gate.rule_ids,
     blocking_reasons: options.blocking_reasons,
   });

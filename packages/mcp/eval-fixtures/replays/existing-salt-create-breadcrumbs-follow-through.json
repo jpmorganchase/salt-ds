@@ -81,9 +81,7 @@
       "requested_entity": "file manager with breadcrumbs and table",
       "resolved_entity": "Table",
       "match_status": "broadened",
-      "blocking_reasons": [
-        "required follow-through remains: Breadcrumbs"
-      ],
+      "blocking_reasons": ["required follow-through remains: Breadcrumbs"],
       "next_step": {
         "kind": "tool_call",
         "tool": "create_salt_ui",

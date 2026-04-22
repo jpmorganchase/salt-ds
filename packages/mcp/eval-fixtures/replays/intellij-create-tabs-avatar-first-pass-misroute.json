@@ -89,9 +89,7 @@
       "The host paraphrased the request and the first pass drifted to Vertical navigation before it retried Tabs directly."
     ],
     "artifacts": {
-      "files": [
-        "packages/mcp/eval-fixtures/replays/intellij-create-profile"
-      ],
+      "files": ["packages/mcp/eval-fixtures/replays/intellij-create-profile"],
       "logs": [],
       "report_path": null
     }

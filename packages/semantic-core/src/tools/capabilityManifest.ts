@@ -1,3 +1,4 @@
+import { SALT_CREATE_CATALOG_CONTRACT_VERSION } from "./createCatalogSupport.js";
 import type { PublicWorkflowId } from "./publicContract.js";
 
 export const SALT_CAPABILITY_MANIFEST_VERSION =
@@ -62,6 +63,13 @@ export interface SaltCapabilityManifest {
     tool_ids: Array<(typeof SALT_SUPPORT_TOOL_IDS)[number]>;
     workflow_contract_meaning_changes_when_absent: false;
   };
+  support_surface: {
+    retrieval_catalog: {
+      available: boolean;
+      contract_version: typeof SALT_CREATE_CATALOG_CONTRACT_VERSION | null;
+      access: Array<"info" | "resource">;
+    };
+  };
   capabilities: {
     repo_context: boolean;
     repo_bootstrap: boolean;
@@ -82,6 +90,10 @@ export interface SaltCapabilityManifest {
   };
   resources: {
     capability_manifest_uri: string | null;
+    catalog_manifest_uri: string | null;
+    catalog_entity_template_uri: string | null;
+    catalog_candidates_template_uri: string | null;
+    catalog_family_template_uri: string | null;
   };
 }
 
@@ -95,6 +107,12 @@ export interface BuildSaltCapabilityManifestOptions {
   public_surface: {
     default_surface_ids: string[];
     advanced_output_ids: string[];
+  };
+  support_surface: {
+    retrieval_catalog: {
+      available: boolean;
+      access: Array<"info" | "resource">;
+    };
   };
   capabilities: SaltCapabilityManifest["capabilities"];
   resources?: Partial<SaltCapabilityManifest["resources"]>;
@@ -112,8 +130,7 @@ export function buildSaltCapabilityManifest(
     runtime: options.runtime,
     registry: options.registry,
     contracts: {
-      compact_workflow_contract_version:
-        SALT_COMPACT_WORKFLOW_CONTRACT_VERSION,
+      compact_workflow_contract_version: SALT_COMPACT_WORKFLOW_CONTRACT_VERSION,
       compact_workflow_ids: [...SALT_COMPACT_WORKFLOW_IDS],
       setup_contract_ids: [...options.contracts.setup_contract_ids],
     },
@@ -126,16 +143,31 @@ export function buildSaltCapabilityManifest(
       advanced_output_ids: [...options.public_surface.advanced_output_ids],
     },
     support_tools: {
-      policy:
-        options.support_tools?.policy ?? "optional_advanced_host_surface",
+      policy: options.support_tools?.policy ?? "optional_advanced_host_surface",
       default_exposed: options.support_tools?.default_exposed ?? false,
       tool_ids: [...SALT_SUPPORT_TOOL_IDS],
       workflow_contract_meaning_changes_when_absent: false,
+    },
+    support_surface: {
+      retrieval_catalog: {
+        available: options.support_surface.retrieval_catalog.available,
+        contract_version: options.support_surface.retrieval_catalog.available
+          ? SALT_CREATE_CATALOG_CONTRACT_VERSION
+          : null,
+        access: [...options.support_surface.retrieval_catalog.access],
+      },
     },
     capabilities: options.capabilities,
     resources: {
       capability_manifest_uri:
         options.resources?.capability_manifest_uri ?? null,
+      catalog_manifest_uri: options.resources?.catalog_manifest_uri ?? null,
+      catalog_entity_template_uri:
+        options.resources?.catalog_entity_template_uri ?? null,
+      catalog_candidates_template_uri:
+        options.resources?.catalog_candidates_template_uri ?? null,
+      catalog_family_template_uri:
+        options.resources?.catalog_family_template_uri ?? null,
     },
   };
 }

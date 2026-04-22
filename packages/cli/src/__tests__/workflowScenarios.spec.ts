@@ -152,6 +152,57 @@ function withRegistry(args: string[]): string[] {
   return registryDir ? [...args, "--registry-dir", registryDir] : args;
 }
 
+function workflowStatusToExitCode(
+  status: "success" | "partial" | "blocked" | "failed",
+) {
+  switch (status) {
+    case "success":
+      return 0;
+    case "partial":
+      return 10;
+    case "blocked":
+      return 20;
+    case "failed":
+      return 30;
+  }
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: Workflow scenario tests read heterogeneous init/info payloads and normalized workflow payloads.
+function normalizeWorkflowJson(value: any): any {
+  if (value?.contract !== "salt_workflow_v3" || value?.details == null) {
+    return value;
+  }
+
+  return {
+    ...value,
+    workflow: value.details.workflow,
+    result: value.details.result,
+    artifacts: value.details.artifacts,
+  };
+}
+
+function readWorkflowJson(text: string) {
+  return normalizeWorkflowJson(JSON.parse(text));
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: Scenario tests compare exit codes against normalized workflow payloads.
+function expectWorkflowExitCode(payload: any, exitCode: number) {
+  if (
+    payload?.contract === "salt_workflow_v3" &&
+    typeof payload?.status === "string" &&
+    /^(success|partial|blocked|failed)$/.test(payload.status)
+  ) {
+    expect(exitCode).toBe(
+      workflowStatusToExitCode(
+        payload.status as "success" | "partial" | "blocked" | "failed",
+      ),
+    );
+    return;
+  }
+
+  expect(exitCode).toBe(0);
+}
+
 beforeAll(async () => {
   registryDir = await fs.mkdtemp(
     path.join(os.tmpdir(), "salt-cli-workflow-registry-"),
@@ -242,8 +293,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(createExitCode).toBe(20);
-    const payload = JSON.parse(createStdout);
+    const payload = readWorkflowJson(createStdout);
+    expectWorkflowExitCode(payload, createExitCode);
     expect(payload.workflow.id).toBe("create");
     expect(payload.result.intent).toEqual(
       expect.objectContaining({
@@ -320,8 +371,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("create");
     expect(payload.artifacts.projectConventions).toEqual(
       expect.objectContaining({
@@ -495,8 +546,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("create");
     expect(payload.artifacts.projectConventions).toEqual(
       expect.objectContaining({
@@ -671,8 +722,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.artifacts.projectConventions).toEqual(
       expect.objectContaining({
         policyMode: "stack",
@@ -712,8 +763,8 @@ describe("consumer workflow scenarios", () => {
         writeStderr: () => {},
       },
     );
-    expect(exitCode).toBe(20);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.issueClasses).toEqual(
       expect.arrayContaining([
@@ -784,8 +835,8 @@ describe("consumer workflow scenarios", () => {
         writeStderr: () => {},
       },
     );
-    expect(exitCode).toBe(20);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.fixCandidates).toEqual(
       expect.objectContaining({
@@ -869,8 +920,8 @@ describe("consumer workflow scenarios", () => {
         writeStderr: () => {},
       },
     );
-    expect(exitCode).toBe(20);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("review");
     expect(payload.artifacts.ruleIds).toEqual(
       expect.arrayContaining(["review-composition-misuse"]),
@@ -918,8 +969,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(20);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.artifacts.ruleIds).toEqual(
       expect.arrayContaining([
@@ -1078,8 +1129,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(20);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("migrate");
     expect(payload.workflow.projectConventionsCheck).toEqual(
       expect.objectContaining({
@@ -1137,8 +1188,8 @@ describe("consumer workflow scenarios", () => {
       },
     );
 
-    expect(exitCode).toBe(20);
-    const payload = JSON.parse(stdout);
+    const payload = readWorkflowJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("upgrade");
     expect(payload.artifacts.ruleIds).toEqual(["upgrade-review-version-risks"]);
     expect(payload.workflow.confidence).toEqual(

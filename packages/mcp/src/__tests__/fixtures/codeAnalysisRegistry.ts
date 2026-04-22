@@ -76,13 +76,6 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
           },
         ],
       },
-      tokens: [
-        {
-          name: "--salt-size-base",
-          category: "size",
-          semantic_intent: "base control size",
-        },
-      ],
       patterns: [],
       examples: [],
       related_docs: {
@@ -119,7 +112,6 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
         summary: ["Links should have clear text labels."],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {
@@ -158,7 +150,6 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
         summary: [],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {
@@ -197,7 +188,6 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
         summary: [],
         rules: [],
       },
-      tokens: [],
       patterns: [],
       examples: [],
       related_docs: {

@@ -9,6 +9,7 @@ const SINGLE_TOKEN_REFERENCE_PREFIXES = new Set([
   "an",
   "and",
   "as",
+  "data",
   "display",
   "featuring",
   "feature",
@@ -97,14 +98,15 @@ export function containsExactTokenPhrase(
   haystack: string | string[],
   needle: string | string[],
 ): boolean {
-  const haystackTokens = toNormalizedPhraseTokens(haystack).map(
-    normalizePhraseToken,
-  );
-  const needleTokens = toNormalizedPhraseTokens(needle).map(
-    normalizePhraseToken,
-  );
+  const haystackTokens =
+    toNormalizedPhraseTokens(haystack).map(normalizePhraseToken);
+  const needleTokens =
+    toNormalizedPhraseTokens(needle).map(normalizePhraseToken);
 
-  if (needleTokens.length === 0 || needleTokens.length > haystackTokens.length) {
+  if (
+    needleTokens.length === 0 ||
+    needleTokens.length > haystackTokens.length
+  ) {
     return false;
   }
 
@@ -115,7 +117,8 @@ export function containsExactTokenPhrase(
   ) {
     if (
       needleTokens.every(
-        (token, tokenIndex) => haystackTokens[startIndex + tokenIndex] === token,
+        (token, tokenIndex) =>
+          haystackTokens[startIndex + tokenIndex] === token,
       )
     ) {
       return true;
@@ -129,15 +132,15 @@ export function startsWithCreateReferencePhrase(
   query: string,
   target: string,
 ): boolean {
-  const targetTokens = toNormalizedPhraseTokens(target).map(normalizePhraseToken);
+  const targetTokens =
+    toNormalizedPhraseTokens(target).map(normalizePhraseToken);
   if (targetTokens.length === 0) {
     return false;
   }
 
   return getCreateReferenceQueries(query).some((queryVariant) => {
-    const queryTokens = toNormalizedPhraseTokens(queryVariant).map(
-      normalizePhraseToken,
-    );
+    const queryTokens =
+      toNormalizedPhraseTokens(queryVariant).map(normalizePhraseToken);
     if (queryTokens.length < targetTokens.length) {
       return false;
     }
@@ -152,15 +155,15 @@ export function containsExplicitCreateReferencePhrase(
   query: string,
   target: string | string[],
 ): boolean {
-  const targetTokens = toNormalizedPhraseTokens(target).map(normalizePhraseToken);
+  const targetTokens =
+    toNormalizedPhraseTokens(target).map(normalizePhraseToken);
   if (targetTokens.length === 0) {
     return false;
   }
 
   return getCreateReferenceQueries(query).some((queryVariant) => {
-    const queryTokens = toNormalizedPhraseTokens(queryVariant).map(
-      normalizePhraseToken,
-    );
+    const queryTokens =
+      toNormalizedPhraseTokens(queryVariant).map(normalizePhraseToken);
     if (queryTokens.length < targetTokens.length) {
       return false;
     }
@@ -177,7 +180,10 @@ export function containsExplicitCreateReferencePhrase(
         continue;
       }
 
-      if (targetTokens.length > 1 || queryTokens.length === targetTokens.length) {
+      if (
+        targetTokens.length > 1 ||
+        queryTokens.length === targetTokens.length
+      ) {
         return true;
       }
 

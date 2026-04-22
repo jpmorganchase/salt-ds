@@ -9,8 +9,8 @@ Last updated: April 20, 2026
 Use this alongside:
 
 - [`../../../salt-ai-tooling-next-releases-plan.md`](../../../salt-ai-tooling-next-releases-plan.md)
-- [`./public-contract-v3-breaking-proposal.md`](./public-contract-v3-breaking-proposal.md)
-- [`./public-contract-v3-implementation-plan.md`](./public-contract-v3-implementation-plan.md)
+- [`./ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md)
+- [`./archive/public-contract-v3-implementation-plan.md`](./archive/public-contract-v3-implementation-plan.md)
 
 ## Purpose
 

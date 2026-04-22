@@ -152,6 +152,7 @@ describe("recommendFixRecipes", () => {
         {
           id: "button.a11y",
           title: "Accessible icon button",
+          description: "Icon-only button with an explicit accessible label.",
           intent: ["button accessibility"],
           complexity: "intermediate",
           code: '<Button aria-label="Search"><SearchIcon aria-hidden /></Button>',
@@ -169,6 +170,8 @@ describe("recommendFixRecipes", () => {
                 {
                   id: "button.a11y",
                   title: "Accessible icon button",
+                  description:
+                    "Icon-only button with an explicit accessible label.",
                   intent: ["button accessibility"],
                   complexity: "intermediate",
                   code: '<Button aria-label="Search"><SearchIcon aria-hidden /></Button>',
@@ -302,6 +305,7 @@ describe("recommendFixRecipes", () => {
         {
           id: "button.default",
           title: "Default button",
+          description: "Basic action button example.",
           intent: ["button action"],
           complexity: "basic",
           code: "<Button onClick={save}>Save</Button>",
@@ -313,6 +317,7 @@ describe("recommendFixRecipes", () => {
         {
           id: "link.default",
           title: "Default link",
+          description: "Basic navigation link example.",
           intent: ["link navigation"],
           complexity: "basic",
           code: '<Link href="/next">Go</Link>',
@@ -330,6 +335,7 @@ describe("recommendFixRecipes", () => {
               {
                 id: "button.default",
                 title: "Default button",
+                description: "Basic action button example.",
                 intent: ["button action"],
                 complexity: "basic",
                 code: "<Button onClick={save}>Save</Button>",
@@ -349,6 +355,7 @@ describe("recommendFixRecipes", () => {
               {
                 id: "link.default",
                 title: "Default link",
+                description: "Basic navigation link example.",
                 intent: ["link navigation"],
                 complexity: "basic",
                 code: '<Link href="/next">Go</Link>',
@@ -431,6 +438,7 @@ describe("recommendFixRecipes", () => {
         {
           id: "button.default",
           title: "Default button",
+          description: "Basic action button example.",
           intent: ["button action"],
           complexity: "basic",
           code: "<Button onClick={save}>Save</Button>",
@@ -442,6 +450,7 @@ describe("recommendFixRecipes", () => {
         {
           id: "link.default",
           title: "Default link",
+          description: "Basic navigation link example.",
           intent: ["link navigation"],
           complexity: "basic",
           code: '<Link href="/next">Go</Link>',
@@ -459,6 +468,7 @@ describe("recommendFixRecipes", () => {
               {
                 id: "button.default",
                 title: "Default button",
+                description: "Basic action button example.",
                 intent: ["button action"],
                 complexity: "basic",
                 code: "<Button onClick={save}>Save</Button>",
@@ -478,6 +488,7 @@ describe("recommendFixRecipes", () => {
               {
                 id: "link.default",
                 title: "Default link",
+                description: "Basic navigation link example.",
                 intent: ["link navigation"],
                 complexity: "basic",
                 code: '<Link href="/next">Go</Link>',

@@ -4,6 +4,7 @@ import type {
   DeprecationRecord,
   SaltRegistry,
 } from "../types.js";
+import { normalizeComparableVersion } from "../versionUtils.js";
 import {
   getChangesForPackage,
   sortChangesNewestFirst,
@@ -70,12 +71,7 @@ interface FullCompareVersionsResult {
 }
 
 function normalizeVersionBoundary(version: string): string | null {
-  return (
-    semver.valid(version) ??
-    semver.minVersion(version)?.version ??
-    semver.coerce(version)?.version ??
-    null
-  );
+  return normalizeComparableVersion(version);
 }
 
 function isVersionBetween(

@@ -796,7 +796,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "create_salt_ui",
     description:
-      "Primary Salt create workflow. Use query for recommendation or names for side-by-side comparison. It returns canonical Salt guidance plus repo-policy refinement when resolved project context contributes to the result.",
+      "Primary Salt create workflow. Resolve the nearest canonical Salt owner and current workflow state from query, or compare exact names side by side with names. Use retrieval catalog resources for richer candidate inspection instead of forcing full-mode create to act like broad search.",
     inputSchema: {
       query: z
         .string()
@@ -843,7 +843,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .enum(VIEWS)
         .optional()
         .describe(
-          "Use full to include detailed recommendation artifacts, starter-code detail, and richer provenance.",
+          "Use full only after compact output has grounded the owner or when you explicitly need additive details such as starter code, composition artifacts, or richer provenance.",
         ),
       context_id: z
         .string()

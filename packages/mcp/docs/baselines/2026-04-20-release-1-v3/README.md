@@ -84,7 +84,7 @@ MCP metadata artifacts were generated from the built `@salt-ds/mcp` CommonJS exp
 
 ## Related Docs
 
-- [`../../release-1-release-evidence.md`](../../release-1-release-evidence.md)
+- [`../../archive/release-1-release-evidence.md`](../../archive/release-1-release-evidence.md)
 - [`../../public-api-matrix.md`](../../public-api-matrix.md)
-- [`../../public-contract-v3-implementation-plan.md`](../../public-contract-v3-implementation-plan.md)
+- [`../../archive/public-contract-v3-implementation-plan.md`](../../archive/public-contract-v3-implementation-plan.md)
 - [`../../../../../salt-ai-tooling-next-releases-plan.md`](../../../../../salt-ai-tooling-next-releases-plan.md)

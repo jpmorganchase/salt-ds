@@ -54,6 +54,7 @@ UITK
 trackpad
 toggletip
 toggletips
+wayfinding
 Zhang
 Priya
 Mateus

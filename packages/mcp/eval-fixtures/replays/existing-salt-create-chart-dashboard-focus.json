@@ -82,9 +82,7 @@
       "requested_entity": "chart dashboard with filters and summary",
       "resolved_entity": "Analytical dashboard",
       "match_status": "broadened",
-      "blocking_reasons": [
-        "required follow-through remains: Chart"
-      ],
+      "blocking_reasons": ["required follow-through remains: Chart"],
       "next_step": {
         "kind": "tool_call",
         "tool": "create_salt_ui",

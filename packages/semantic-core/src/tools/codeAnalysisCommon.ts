@@ -3,6 +3,7 @@ import traverse from "@babel/traverse";
 import * as t from "@babel/types";
 import semver from "semver";
 import type { DeprecationRecord } from "../types.js";
+import { normalizeComparableVersion } from "../versionUtils.js";
 
 export interface ImportedSaltSymbol {
   packageName: string;
@@ -61,26 +62,7 @@ export function parseSaltCode(code: string): t.File {
 export function normalizeVersion(
   version: string | null | undefined,
 ): string | null {
-  if (!version) {
-    return null;
-  }
-
-  const trimmed = version.trim();
-  if (!trimmed) {
-    return null;
-  }
-
-  const valid = semver.valid(trimmed);
-  if (valid) {
-    return valid;
-  }
-
-  const min = semver.minVersion(trimmed)?.version;
-  if (min) {
-    return min;
-  }
-
-  return semver.coerce(trimmed)?.version ?? null;
+  return normalizeComparableVersion(version);
 }
 
 export function createVersionContext(
