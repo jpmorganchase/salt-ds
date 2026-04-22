@@ -1,0 +1,74 @@
+.saltToolbarNextOverflow-region {
+  position: relative;
+}
+
+.saltToolbarNextOverflow-slot,
+.saltToolbarNextOverflow-panelItem {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--salt-spacing-100);
+  min-width: 0;
+}
+
+.saltToolbarNextOverflow-slot[data-align="end"] {
+  margin-inline-start: auto;
+}
+
+.saltToolbarNextOverflow-slot[data-align="center"] {
+  margin-inline: auto;
+}
+
+.saltToolbarNextOverflow-item {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.saltToolbarNextOverflow-menu {
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.saltToolbarNextOverflow-itemHost,
+.saltToolbarNextOverflow-contentHost {
+  display: contents;
+}
+
+.saltToolbarNextOverflow-trigger {
+  white-space: nowrap;
+}
+
+.saltToolbarNextOverflow-panel {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  border-radius: var(--salt-palette-corner, 0);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
+  max-width: min(32rem, calc(100vw - var(--salt-spacing-300)));
+  overflow: auto;
+  position: absolute;
+  z-index: var(--salt-zIndex-flyover);
+}
+
+.saltToolbarNextOverflow-panelContent {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
+  max-width: inherit;
+  min-width: max-content;
+  padding: var(--salt-spacing-100);
+}
+
+.saltToolbarNextOverflow-panel .saltTooltrayNext[data-align="center"],
+.saltToolbarNextOverflow-panel .saltTooltrayNext[data-align="end"] {
+  margin-inline: 0;
+}
+
+.saltToolbarNextOverflow-region > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="center"],
+.saltToolbarNextOverflow-region > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="end"] {
+  margin-inline: 0;
+}

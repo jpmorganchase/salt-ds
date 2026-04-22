@@ -1,0 +1,396 @@
+import type { ToolbarNextOverflowItem } from "./toolbarNextUtils";
+
+export const TOOLBAR_NEXT_SCOPE_ROOT_ATTR = "data-salt-toolbar-next-scope-root";
+export const TOOLBAR_NEXT_ITEM_ATTR = "data-salt-toolbar-next-item-id";
+export const TOOLBAR_NEXT_GROUP_KEY_ATTR =
+  "data-salt-toolbar-next-overflow-group-key";
+export const TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR =
+  "data-salt-toolbar-next-overflow-trigger";
+
+const focusableSelector = [
+  "button",
+  "[href]",
+  "input",
+  "select",
+  "textarea",
+  "[tabindex]",
+].join(", ");
+
+const textEntryInputTypes = new Set([
+  "",
+  "date",
+  "datetime-local",
+  "email",
+  "month",
+  "number",
+  "password",
+  "search",
+  "tel",
+  "text",
+  "time",
+  "url",
+  "week",
+]);
+
+export type ToolbarNextFocusMemory =
+  | {
+      controlIndex: number;
+      itemId: string;
+      scopeIndex: number;
+      type: "item";
+    }
+  | {
+      groupKey: string;
+      scopeIndex: number;
+      type: "overflow-trigger";
+    }
+  | {
+      scopeIndex: number;
+      type: "scope";
+    };
+
+export function getClosestToolbarNextScopeRoot(target: EventTarget | null) {
+  if (!(target instanceof Element)) {
+    return null;
+  }
+
+  return target.closest<HTMLElement>(`[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`);
+}
+
+export function getToolbarNextScopeFocusableElements(scopeRoot: HTMLElement) {
+  return Array.from(
+    scopeRoot.querySelectorAll<HTMLElement>(focusableSelector),
+  ).filter((element) => {
+    return (
+      getClosestToolbarNextScopeRoot(element) === scopeRoot &&
+      isToolbarNextFocusable(element)
+    );
+  });
+}
+
+export function getToolbarNextFocusMemory(
+  scopeRoot: HTMLElement,
+  target: HTMLElement,
+): ToolbarNextFocusMemory | null {
+  const scopeElements = getToolbarNextScopeFocusableElements(scopeRoot);
+  const scopeIndex = scopeElements.indexOf(target);
+  if (scopeIndex === -1) {
+    return null;
+  }
+
+  const groupTrigger = target.closest<HTMLElement>(
+    `[${TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR}]`,
+  );
+  const groupKey = groupTrigger?.getAttribute(TOOLBAR_NEXT_GROUP_KEY_ATTR);
+
+  if (groupKey) {
+    return {
+      groupKey,
+      scopeIndex,
+      type: "overflow-trigger",
+    };
+  }
+
+  const itemRoot = target.closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`);
+  const itemId = itemRoot?.getAttribute(TOOLBAR_NEXT_ITEM_ATTR);
+
+  if (itemRoot && itemId) {
+    const itemElements = getToolbarNextItemFocusableElements(
+      itemRoot,
+      scopeRoot,
+    );
+    const controlIndex = itemElements.indexOf(target);
+
+    return {
+      controlIndex: Math.max(controlIndex, 0),
+      itemId,
+      scopeIndex,
+      type: "item",
+    };
+  }
+
+  return {
+    scopeIndex,
+    type: "scope",
+  };
+}
+
+export function resolveToolbarNextFocusTarget(
+  scopeRoot: HTMLElement,
+  focusMemory: ToolbarNextFocusMemory | null,
+  {
+    items = [],
+    overflowedIds,
+  }: {
+    items?: ToolbarNextOverflowItem[];
+    overflowedIds?: Set<string>;
+  } = {},
+) {
+  if (!focusMemory) {
+    return getToolbarNextScopeFocusableElements(scopeRoot)[0] ?? null;
+  }
+
+  const fallback = getToolbarNextFocusFallback(
+    scopeRoot,
+    focusMemory.scopeIndex,
+  );
+
+  if (focusMemory.type === "overflow-trigger") {
+    const trigger = getToolbarNextOverflowTriggerElement(
+      scopeRoot,
+      focusMemory.groupKey,
+    );
+
+    if (trigger) {
+      return trigger;
+    }
+
+    const firstVisibleItem = items.find((item) => {
+      return item.overflowGroupKey === focusMemory.groupKey;
+    });
+
+    if (firstVisibleItem) {
+      return (
+        getToolbarNextFocusableElementForItem(
+          scopeRoot,
+          firstVisibleItem.id,
+          0,
+        ) ?? fallback
+      );
+    }
+
+    return fallback;
+  }
+
+  if (focusMemory.type === "item") {
+    const visibleItemTarget = getToolbarNextFocusableElementForItem(
+      scopeRoot,
+      focusMemory.itemId,
+      focusMemory.controlIndex,
+    );
+
+    if (visibleItemTarget) {
+      return visibleItemTarget;
+    }
+
+    const item = items.find((entry) => entry.id === focusMemory.itemId);
+
+    if (item && overflowedIds?.has(item.id)) {
+      return (
+        getToolbarNextOverflowTriggerElement(
+          scopeRoot,
+          item.overflowGroupKey,
+        ) ?? fallback
+      );
+    }
+
+    return fallback;
+  }
+
+  return fallback;
+}
+
+export function getToolbarNextDirectionalMoveTarget(
+  scopeRoot: HTMLElement,
+  target: HTMLElement,
+  key: string,
+) {
+  if (key !== "ArrowLeft" && key !== "ArrowRight") {
+    return null;
+  }
+
+  if (target.isContentEditable) {
+    return null;
+  }
+
+  if (isPlainTextInput(target)) {
+    return null;
+  }
+
+  if (!isComboBoxInput(target)) {
+    const toggleGroupButtons = getToggleGroupButtons(target);
+
+    if (toggleGroupButtons.length > 0) {
+      const visualDelta = getVisualDelta(scopeRoot, key);
+      const currentIndex = toggleGroupButtons.indexOf(target);
+
+      if (
+        currentIndex === -1 ||
+        !isToggleGroupBoundary(
+          currentIndex,
+          toggleGroupButtons.length,
+          visualDelta,
+        )
+      ) {
+        return null;
+      }
+    }
+  }
+
+  const scopeElements = getToolbarNextScopeFocusableElements(scopeRoot);
+  const currentIndex = scopeElements.indexOf(target);
+
+  if (currentIndex === -1 || scopeElements.length <= 1) {
+    return null;
+  }
+
+  const nextIndex =
+    (currentIndex + getVisualDelta(scopeRoot, key) + scopeElements.length) %
+    scopeElements.length;
+
+  return scopeElements[nextIndex] ?? null;
+}
+
+function getToolbarNextItemFocusableElements(
+  itemRoot: HTMLElement,
+  scopeRoot: HTMLElement,
+) {
+  return Array.from(
+    itemRoot.querySelectorAll<HTMLElement>(focusableSelector),
+  ).filter((element) => {
+    return (
+      getClosestToolbarNextScopeRoot(element) === scopeRoot &&
+      isToolbarNextFocusable(element)
+    );
+  });
+}
+
+function getToolbarNextFocusableElementForItem(
+  scopeRoot: HTMLElement,
+  itemId: string,
+  controlIndex: number,
+) {
+  const itemRoot = scopeRoot.querySelector<HTMLElement>(
+    `[${TOOLBAR_NEXT_ITEM_ATTR}="${itemId}"]`,
+  );
+
+  if (!itemRoot) {
+    return null;
+  }
+
+  const itemElements = getToolbarNextItemFocusableElements(itemRoot, scopeRoot);
+
+  return (
+    itemElements[Math.min(controlIndex, itemElements.length - 1)] ??
+    itemElements[0] ??
+    null
+  );
+}
+
+function getToolbarNextOverflowTriggerElement(
+  scopeRoot: HTMLElement,
+  groupKey: string,
+) {
+  return scopeRoot.querySelector<HTMLElement>(
+    `[${TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR}][${TOOLBAR_NEXT_GROUP_KEY_ATTR}="${groupKey}"]`,
+  );
+}
+
+function getToolbarNextFocusFallback(
+  scopeRoot: HTMLElement,
+  rememberedIndex: number,
+) {
+  const focusableElements = getToolbarNextScopeFocusableElements(scopeRoot);
+
+  if (focusableElements.length === 0) {
+    return null;
+  }
+
+  return (
+    focusableElements[
+      Math.max(0, Math.min(rememberedIndex, focusableElements.length - 1))
+    ] ?? focusableElements[0]
+  );
+}
+
+function getVisualDelta(scopeRoot: HTMLElement, key: string) {
+  const direction =
+    scopeRoot.ownerDocument.defaultView?.getComputedStyle(scopeRoot).direction;
+
+  if (key === "ArrowRight") {
+    return direction === "rtl" ? -1 : 1;
+  }
+
+  return direction === "rtl" ? 1 : -1;
+}
+
+function isToggleGroupBoundary(
+  currentIndex: number,
+  length: number,
+  visualDelta: number,
+) {
+  if (visualDelta > 0) {
+    return currentIndex === length - 1;
+  }
+
+  return currentIndex === 0;
+}
+
+function getToggleGroupButtons(target: HTMLElement) {
+  const toggleGroup = target.closest<HTMLElement>(".saltToggleButtonGroup");
+
+  if (!toggleGroup || target.tagName !== "BUTTON") {
+    return [];
+  }
+
+  return Array.from(
+    toggleGroup.querySelectorAll<HTMLElement>("button:not([disabled])"),
+  ).filter(isToolbarNextFocusable);
+}
+
+function isComboBoxInput(target: HTMLElement) {
+  return (
+    target.tagName === "INPUT" &&
+    target.closest('[role="combobox"], .saltComboBox') != null
+  );
+}
+
+function isPlainTextInput(target: HTMLElement) {
+  if (target.tagName === "TEXTAREA") {
+    return true;
+  }
+
+  if (target.tagName !== "INPUT") {
+    return false;
+  }
+
+  if (isComboBoxInput(target)) {
+    return false;
+  }
+
+  return textEntryInputTypes.has(
+    (target as HTMLInputElement).type.toLowerCase(),
+  );
+}
+
+function isToolbarNextFocusable(target: HTMLElement) {
+  if (target.matches(":disabled")) {
+    return false;
+  }
+
+  if (target.getAttribute("aria-hidden") === "true") {
+    return false;
+  }
+
+  if (target.getAttribute("tabindex") === "-1") {
+    return false;
+  }
+
+  if (target.hidden) {
+    return false;
+  }
+
+  const win = target.ownerDocument.defaultView;
+
+  if (!win) {
+    return false;
+  }
+
+  const styles = win.getComputedStyle(target);
+
+  if (styles.display === "none" || styles.visibility === "hidden") {
+    return false;
+  }
+
+  return target.getClientRects().length > 0;
+}

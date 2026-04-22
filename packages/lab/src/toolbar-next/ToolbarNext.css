@@ -1,0 +1,83 @@
+.saltToolbarNext {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-width: 0;
+  position: relative;
+}
+
+.saltToolbarNext-layout {
+  align-items: center;
+  --saltToolbarNext-band-gap: var(--salt-spacing-100);
+}
+
+.saltToolbarNext-layout:not([data-centered]) {
+  display: flex;
+  column-gap: var(--saltToolbarNext-band-gap);
+}
+
+.saltToolbarNext-layout[data-centered] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.saltToolbarNext-band {
+  display: flex;
+  align-items: center;
+  gap: var(--saltToolbarNext-band-gap);
+  min-width: 0;
+}
+
+.saltToolbarNext-layout:not([data-centered]) > .saltToolbarNext-band[data-band-position="end"] {
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+
+.saltToolbarNext-layout[data-centered] > .saltToolbarNext-band[data-band-position="start"] {
+  grid-column: 1;
+}
+
+.saltToolbarNext-layout[data-centered] > .saltToolbarNext-band[data-band-position="center"] {
+  grid-column: 2;
+  justify-content: center;
+}
+
+.saltToolbarNext-layout[data-centered] > .saltToolbarNext-band[data-band-position="end"] {
+  grid-column: 3;
+  justify-content: flex-end;
+}
+
+.saltToolbarNext-fallback {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltToolbarNext-layout > * {
+  min-width: 0;
+}
+
+.saltToolbarNext-bordered {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+  padding: var(--salt-spacing-100);
+}
+
+.saltToolbarNext-transparent {
+  border: none;
+  padding: 0;
+}
+
+.saltToolbarNext-measurements {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  inset: 0 auto auto 0;
+  block-size: 0;
+  overflow: hidden;
+}
+
+.saltToolbarNext-measureTrigger {
+  white-space: nowrap;
+}

@@ -1,0 +1,24 @@
+.saltToolbarRegion {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.saltToolbarRegion[data-position="start"] {
+  justify-content: flex-start;
+}
+
+.saltToolbarRegion[data-position="center"] {
+  justify-content: center;
+}
+
+.saltToolbarRegion[data-position="end"] {
+  justify-content: flex-end;
+}
+
+.saltToolbarRegion[data-implicit] > .saltTooltrayNext[data-align="center"],
+.saltToolbarRegion[data-implicit] > .saltTooltrayNext[data-align="end"] {
+  margin-inline: 0;
+}
