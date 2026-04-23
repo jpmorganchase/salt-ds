@@ -36,6 +36,10 @@ defaultDayjs.extend(localeData);
  * Provides methods for date manipulation and formatting using Day.js.
  */
 export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
+  private hasExplicitOffset = (value: string): boolean => {
+    return /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value);
+  };
+
   /**
    * The Day.js instance used for date operations.
    */
@@ -138,11 +142,11 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
       return this.dayjs(value);
     }
 
-    // If the value is a UTC instant (trailing 'Z'), keep the instant and just view it
-    // in the target timezone.
+    // If the value is an explicit instant (UTC 'Z' or numeric offset), keep the
+    // instant and just view it in the target timezone.
     // Example: 2025-01-05T00:00:00.000Z in America/New_York is 2025-01-04 19:00 (NY)
     // and the epoch should remain 2025-01-05T00:00:00.000Z.
-    if (value?.endsWith("Z")) {
+    if (value && this.hasExplicitOffset(value)) {
       if (this.dayjs.utc) {
         return this.dayjs.utc(value).tz(resolvedTimezone);
       }
@@ -457,9 +461,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (timezone === "system") {
       return date.local();
     }
-    if (timezone === "default") {
-      return date;
-    }
+    // "default" resolves to the system timezone in this adapter
     // In Salt components, user-typed dates are parsed as *naive* local wall-clock values (no timezone).
     // `setTimezone` is then used to reinterpret that wall-clock time in the chosen IANA timezone.
     // Example: user enters "05 Jan 2025" which corresponds to 2025-01-05 00:00 *in the selected

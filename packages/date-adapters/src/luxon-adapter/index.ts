@@ -1,4 +1,4 @@
-import { DateTime, Duration, Info, Settings } from "luxon";
+import { DateTime, Duration, Info } from "luxon";
 import {
   type AdapterOptions,
   DateDetailError,
@@ -85,7 +85,6 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    */
   constructor({ locale }: AdapterOptions<string, typeof DateTime> = {}) {
     this.locale = locale || "en-US";
-    Settings.defaultLocale = this.locale;
   }
 
   /**
@@ -515,9 +514,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     // DateTime.fromMillis() uses the system zone by default, which would drop the
     // original zone. Preserve the *instant* and keep the original zone.
     // (Do NOT use keepLocalTime here, as that can change the instant and fail equality checks.)
+    // Preserve the original date's locale for consistency with other adapters.
     return DateTime.fromMillis(date.toMillis(), {
       zone: date.zone,
-      locale: this.locale,
+      locale: date.locale ?? this.locale,
     });
   }
 

@@ -509,7 +509,10 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     format: "long" | "short" | "narrow",
   ): string {
     const day = this.moment().locale(this.locale).weekday(dow);
-    return format === "narrow" ? day.format("dd")[0] : day.format("dddd");
+    if (format === "narrow") {
+      return day.format("dd")[0];
+    }
+    return day.format(format === "short" ? "ddd" : "dddd");
   }
 
   /**

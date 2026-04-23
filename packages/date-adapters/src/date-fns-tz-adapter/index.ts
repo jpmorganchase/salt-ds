@@ -8,6 +8,10 @@ import type { Timezone } from "../types";
  * Provides methods for date manipulation and formatting using date-fns, without timezone support.
  */
 export class AdapterDateFnsTZ extends AdapterDateFns {
+  private hasExplicitOffset = (value: string): boolean => {
+    return /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value);
+  };
+
   /**
    * Creates a Date object from a string or returns an invalid date.
    * @param value - The date string to parse.
@@ -26,6 +30,12 @@ export class AdapterDateFnsTZ extends AdapterDateFns {
       return new TZDate(Number.NaN);
     }
     const parsedDate = parseISO(value);
+
+    // Preserve the exact instant when the input has explicit UTC/offset information.
+    if (this.hasExplicitOffset(value)) {
+      return new TZDate(parsedDate.getTime(), newTimezone);
+    }
+
     return new TZDate(
       parsedDate.getFullYear(),
       parsedDate.getMonth(),

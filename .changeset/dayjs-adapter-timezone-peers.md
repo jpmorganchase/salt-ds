@@ -1,28 +1,15 @@
 ---
-"@salt-ds/date-adapters": minor
+"@salt-ds/date-adapters": patch
 ---
 
-## Peer dependency updates
+## Adapter fixes
 
-Updated date library dependency version ranges used by date components and `@salt-ds/date-adapters`.
+- Fixed `AdapterDayjs#setTimezone` so `"default"` no longer behaves as a no-op and is handled consistently with adapter timezone resolution.
+- Updated `AdapterLuxon#clone` to preserve the source date locale when cloning (with a safe fallback), while still preserving instant and zone.
+- Removed Luxon global locale mutation from the adapter constructor to avoid cross-instance locale side effects.
+- Fixed `AdapterMoment#getDayOfWeekName` so `"short"` returns abbreviated weekday names (for example `Wed`) instead of long-form names.
 
-Changes applied across the repo (root, `@salt-ds/lab` devDependencies, site dependencies, and `@salt-ds/date-adapters` peer dependencies):
+## Consumer impact
 
-- `@date-fns/tz`: `^1.2.0` → `^1.4.1`
-- `dayjs`: `^1.11.13` → `^1.11.20`
-- `luxon`: `^3.6.1` → `^3.7.2`
-- `moment-timezone`: `^0.5.46` → `^0.6.1`
-- `@types/luxon`: `^3.6.2` → `^3.7.1`
-
-These dependency updates do not introduce any Salt component API changes.
-
-## Adapter API
-
-- Added `toJSDate` to the date adapter API.
-- Fixed dayjs timezone handling for date input/picker workflows so that user-entered dates are correctly interpreted as midnight in the selected IANA timezone when serializing to ISO (e.g. `America/New_York`, `Asia/Shanghai`).
-- Fixed adapter types to allow for date framework based types in userland
-- Added default generics, to simplify usage with Salt's default `DateFrameworkType`
-- Removed unused `getDayOfWeek`, if required, use the date framework directly
-- Correct default format for luxon and date-fns to DD/MM/YYYY
-- Fixed dayjs day of week name should return a single character for `narrow`
-- Fixed moment adapter `setTimezone` for UTC to preserve wall-clock time, consistent with all other adapters. Previously, converting a local date to UTC would shift the instant instead of reinterpreting the wall-clock time in UTC.
+- Potentially breaking (RC): `AdapterLuxon` no longer mutates Luxon global locale defaults during adapter construction. If an app relied on that side effect to localize non-adapter Luxon usage, locale behavior may change.
+- Recommended migration: set Luxon global defaults explicitly in app bootstrap when global behavior is required, or set locale per Luxon `DateTime` instance where needed.
