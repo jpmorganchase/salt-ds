@@ -1,6 +1,6 @@
 .saltTreeNodeExpansionIcon {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: var(--salt-size-selectable);
   min-width: var(--salt-size-selectable);

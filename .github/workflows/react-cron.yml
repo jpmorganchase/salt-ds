@@ -22,7 +22,7 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7.1.9
         with:
           install: false
           command: yarn run test:components

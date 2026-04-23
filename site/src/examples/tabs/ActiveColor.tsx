@@ -28,25 +28,24 @@ export const ActiveColor = (): ReactElement => {
   };
 
   return (
-    <StackLayout gap={6}>
-      <div style={{ alignItems: "center", width: "40vw" }}>
-        <TabsNext defaultValue={tabs[0]}>
-          <TabBar divider>
-            <TabListNext activeColor={variant}>
-              {tabs.map((label) => (
-                <TabNext value={label} key={label}>
-                  <TabNextTrigger>{label}</TabNextTrigger>
-                </TabNext>
-              ))}
-            </TabListNext>
-          </TabBar>
-          {tabs.map((label) => (
-            <TabNextPanel value={label} key={label} style={{ height: 200 }}>
-              <Panel variant={variant}>{label}</Panel>
-            </TabNextPanel>
-          ))}
-        </TabsNext>
-      </div>
+    <StackLayout gap={6} style={{ width: "100%", minWidth: 0 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar divider>
+          <TabListNext activeColor={variant} aria-label="Example tablist">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+        {tabs.map((label) => (
+          <TabNextPanel value={label} key={label} style={{ height: 200 }}>
+            <Panel variant={variant}>{label}</Panel>
+          </TabNextPanel>
+        ))}
+      </TabsNext>
+
       <FormField style={{ width: "auto" }}>
         <FormFieldLabel>Select tabstrip color</FormFieldLabel>
         <RadioButtonGroup

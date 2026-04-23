@@ -20,7 +20,8 @@ import { useTabsNext } from "./TabsNextContext";
 
 export interface TabNextPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The value of the panel, this should map to the corresponding tab.
+   * The value of the panel. This should map to the corresponding tab and must
+   * be unique within a `TabsNext` instance.
    */
   value: string;
 }
@@ -38,48 +39,75 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     });
     const id = useId(idProp);
     const { registerPanel, getTabId, selected } = useTabsNext();
+    const hidden = selected !== value;
 
     const panelRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(panelRef, ref);
 
     useIsomorphicLayoutEffect(() => {
-      if (value && id) {
+      if (id) {
         return registerPanel(id, value);
       }
     }, [value, id, registerPanel]);
 
     const [hasFocusableChildren, setHasFocusableChildren] = useState(false);
     useEffect(() => {
-      if (!panelRef.current) return;
+      const element = panelRef.current;
+      const mutationObserverCtor = (
+        targetWindow as
+          | (Window & { MutationObserver?: typeof MutationObserver })
+          | undefined
+      )?.MutationObserver;
+      if (!element || hidden) return;
+
+      let rafId: number | null = null;
 
       const detectFocusableChildren = () => {
-        requestAnimationFrame(() => {
-          if (!panelRef.current) return;
-          const elements = tabbable(panelRef.current);
-          setHasFocusableChildren(elements.length > 0);
+        rafId = null;
+        const elements = tabbable(element);
+        const nextHasFocusableChildren = elements.length > 0;
+        setHasFocusableChildren((prev) => {
+          return prev === nextHasFocusableChildren
+            ? prev
+            : nextHasFocusableChildren;
         });
       };
 
-      const observer = new MutationObserver(() => {
-        detectFocusableChildren();
-      });
+      const scheduleDetectFocusableChildren = () => {
+        if (rafId != null && targetWindow) {
+          targetWindow.cancelAnimationFrame(rafId);
+        }
 
-      requestAnimationFrame(() => {
-        detectFocusableChildren();
-      });
+        if (!targetWindow?.requestAnimationFrame) {
+          detectFocusableChildren();
+          return;
+        }
 
-      observer.observe(panelRef.current, {
+        rafId = targetWindow.requestAnimationFrame(detectFocusableChildren);
+      };
+
+      const observer = mutationObserverCtor
+        ? new mutationObserverCtor(() => {
+            scheduleDetectFocusableChildren();
+          })
+        : null;
+
+      scheduleDetectFocusableChildren();
+
+      observer?.observe(element, {
         childList: true,
         subtree: true,
         attributes: true,
       });
 
       return () => {
-        observer.disconnect();
+        observer?.disconnect();
+        if (rafId != null && targetWindow) {
+          targetWindow.cancelAnimationFrame(rafId);
+        }
       };
-    }, []);
+    }, [hidden, targetWindow]);
 
-    const hidden = selected !== value;
     const tabId = getTabId(value);
 
     return (

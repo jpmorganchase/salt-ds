@@ -146,7 +146,11 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const defaultContent = usesLabelProp ? (
       <TreeNodeTrigger>
-        {Icon ? <Icon aria-hidden className={withBaseName("icon")} /> : null}
+        {Icon ? (
+          <span className={withBaseName("icon")}>
+            <Icon aria-hidden />
+          </span>
+        ) : null}
         <TreeNodeLabel>{label}</TreeNodeLabel>
       </TreeNodeTrigger>
     ) : null;
