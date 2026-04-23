@@ -8,6 +8,7 @@ import {
   GridLayout,
   Option,
   StackLayout,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import type {
   DateFrameworkType,
@@ -769,6 +770,7 @@ export const TodayButton: StoryFn<React.FC<CalendarSingleProps>> = ({
   ...args
 }) => {
   const { dateAdapter } = useLocalization();
+  const { announce } = useAriaAnnouncer();
   const today = dateAdapter.today();
   const [selectedDate, setSelectedDate] =
     useState<CalendarSingleProps["selectedDate"]>(null);
@@ -796,7 +798,12 @@ export const TodayButton: StoryFn<React.FC<CalendarSingleProps>> = ({
           style={{ margin: "var(--salt-spacing-50)" }}
           sentiment="accented"
           appearance="bordered"
-          onClick={() => setSelectedDate(today)}
+          onClick={() => {
+            setSelectedDate(today);
+            announce(
+              `${dateAdapter.format(today, "dddd D MMMM YYYY")}, selected`,
+            );
+          }}
         >
           Today
         </Button>

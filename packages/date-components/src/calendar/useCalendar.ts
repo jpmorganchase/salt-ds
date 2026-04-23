@@ -575,13 +575,61 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
     [dateAdapter, responsiveNumberOfVisibleMonths, visibleMonth],
   );
 
+  const defaultCreateAnnouncement =
+    selectionVariant === "single"
+      ? createSingleSelectionAnnouncement
+      : createRangeSelectionAnnouncement;
+  const { announce } = useDateSelectionAnnouncer(
+    createAnnouncement === undefined
+      ? defaultCreateAnnouncement
+      : createAnnouncement,
+    dateAdapter,
+  );
+
+  const handleSelectionChange = useCallback(
+    (event: SyntheticEvent, nextSelectedDate: unknown) => {
+      // biome-ignore lint/suspicious/noExplicitAny: onSelectionChange is polymorphic over selection variants
+      (onSelectionChange as UseCalendarSelectionProps["onSelectionChange"])?.(
+        event,
+        nextSelectedDate as any,
+      );
+
+      if (createAnnouncement === null) {
+        return;
+      }
+
+      const dateSelectionAnnouncementState =
+        selectionVariant === "single"
+          ? {
+              multiselect: multiselect ?? false,
+              selectedDate: (nextSelectedDate ??
+                null) as AnnouncerSingleDateSelectedState["selectedDate"],
+            }
+          : {
+              multiselect: multiselect ?? false,
+              selectedDate: (nextSelectedDate ??
+                null) as AnnouncerRangeDateSelectedState["selectedDate"],
+            };
+
+      announce("dateSelected", dateSelectionAnnouncementState);
+    },
+    [
+      announce,
+      createAnnouncement,
+      multiselect,
+      onSelectionChange,
+      selectionVariant,
+    ],
+  );
+
   const selectionManager = useCalendarSelection({
     defaultSelectedDate,
     selectedDate: selectedDateProp,
     isDaySelectable,
     isOutsideAllowedDates,
     multiselect,
-    onSelectionChange,
+    onSelectionChange:
+      handleSelectionChange as UseCalendarSelectionProps["onSelectionChange"],
     select,
     selectionVariant,
     startDateOffset,
@@ -878,46 +926,6 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
       isDaySelectable,
     ],
   );
-
-  const defaultCreateAnnouncement =
-    selectionVariant === "single"
-      ? createSingleSelectionAnnouncement
-      : createRangeSelectionAnnouncement;
-  const { announce } = useDateSelectionAnnouncer(
-    createAnnouncement === undefined
-      ? defaultCreateAnnouncement
-      : createAnnouncement,
-    dateAdapter,
-  );
-
-  useEffect(() => {
-    if (createAnnouncement === null) {
-      return;
-    }
-
-    const dateSelectionAnnouncementState =
-      selectionVariant === "single"
-        ? {
-            multiselect: multiselect ?? false,
-            selectedDate: (selectedDate ??
-              null) as AnnouncerSingleDateSelectedState["selectedDate"],
-          }
-        : {
-            multiselect: multiselect ?? false,
-            selectedDate: (selectedDate ??
-              null) as AnnouncerRangeDateSelectedState["selectedDate"],
-          };
-
-    announce("dateSelected", {
-      ...dateSelectionAnnouncementState,
-    });
-  }, [
-    announce,
-    createAnnouncement,
-    multiselect,
-    selectedDate,
-    selectionVariant,
-  ]);
 
   const setFocusedDate = useCallback(
     (event: SyntheticEvent | null, date: DateFrameworkType | null) => {
