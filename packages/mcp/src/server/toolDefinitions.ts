@@ -525,7 +525,173 @@ const BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA = z.object({
 
 const CONTEXT_OUTPUT_SCHEMA = CONTEXT_WORKFLOW_ENVELOPE_SCHEMA;
 const BOOTSTRAP_OUTPUT_SCHEMA = BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA;
-const MCP_WORKFLOW_OUTPUT_SCHEMA = z.object({}).passthrough();
+
+const PUBLIC_ACTION_KINDS = [
+  "tool_call",
+  "retrieve_entity",
+  "retrieve_examples",
+  "ask_user",
+  "install_dependencies",
+  "bootstrap_repo",
+  "implement",
+  "review",
+  "fix_context",
+] as const;
+const PUBLIC_WORKFLOW_IDS = [
+  "init",
+  "create",
+  "review",
+  "migrate",
+  "upgrade",
+] as const;
+const PUBLIC_WORKFLOW_STATUSES = [
+  "success",
+  "partial",
+  "blocked",
+  "failed",
+] as const;
+const PUBLIC_MATCH_STATUSES = [
+  "exact",
+  "alias",
+  "broadened",
+  "misrouted",
+  "no_match",
+] as const;
+const PUBLIC_EVIDENCE_KINDS = [
+  "docs",
+  "examples",
+  "registry",
+  "project_policy",
+  "heuristic_fallback",
+] as const;
+
+const PUBLIC_ARGS_SCHEMA = z.record(z.string(), z.unknown());
+const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("tool_call"),
+    tool: z.enum([
+      "get_salt_project_context",
+      "create_salt_ui",
+      "review_salt_ui",
+      "migrate_to_salt",
+      "upgrade_salt_ui",
+    ]),
+    mode: z.enum([
+      "exact_name",
+      "compare_named",
+      "broad_query",
+      "stop_and_fix_context",
+    ]),
+    args: PUBLIC_ARGS_SCHEMA,
+  }),
+  z.object({
+    kind: z.literal("retrieve_entity"),
+    tool: z.enum(["get_salt_entity", "create_salt_ui"]),
+    args: PUBLIC_ARGS_SCHEMA,
+  }),
+  z.object({
+    kind: z.literal("retrieve_examples"),
+    tool: z.enum(["get_salt_examples", "create_salt_ui"]),
+    args: PUBLIC_ARGS_SCHEMA,
+  }),
+  z.object({
+    kind: z.literal("ask_user"),
+    question: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal("install_dependencies"),
+    package_manager: z.string().min(1),
+    packages: z.array(z.string().min(1)).min(1),
+  }),
+  z.object({
+    kind: z.literal("bootstrap_repo"),
+    tool: z.enum(["bootstrap_salt_repo", "salt-ds init"]),
+    args: PUBLIC_ARGS_SCHEMA.optional(),
+  }),
+  z.object({
+    kind: z.literal("implement"),
+    scope: z.literal("exact_request"),
+  }),
+  z.object({
+    kind: z.literal("review"),
+    tool: z.literal("review_salt_ui"),
+    args: PUBLIC_ARGS_SCHEMA.optional(),
+  }),
+  z.object({
+    kind: z.literal("fix_context"),
+    tool: z.enum(["get_salt_project_context", "salt-ds info"]),
+    mode: z.literal("stop_and_fix_context"),
+    args: PUBLIC_ARGS_SCHEMA.optional(),
+  }),
+]);
+const PUBLIC_POST_ACTION_SCHEMA = z.object({
+  kind: z.literal("review"),
+  tool: z.literal("review_salt_ui"),
+  args: PUBLIC_ARGS_SCHEMA.optional(),
+});
+const PUBLIC_ACTION_SCHEMA = z.intersection(
+  PUBLIC_NEXT_STEP_SCHEMA,
+  z.object({
+    rule_ids: z.array(z.string()),
+    post_action: PUBLIC_POST_ACTION_SCHEMA.nullable(),
+  }),
+);
+const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({
+  kind: z.enum(PUBLIC_EVIDENCE_KINDS),
+  source: z.enum(["canonical_salt", "project_policy", "heuristic_fallback"]),
+  entity: z.string().optional(),
+  field: z.string().optional(),
+  source_urls: z.array(z.string()),
+  summary: z.string().optional(),
+});
+const PUBLIC_EVIDENCE_SCHEMA = z.object({
+  status: z.enum(["complete", "partial", "missing"]),
+  items: z.array(PUBLIC_EVIDENCE_ITEM_SCHEMA),
+  source_urls: z.array(z.string()),
+  missing: z.array(z.string()),
+  heuristic_fallback: z.boolean(),
+});
+const PUBLIC_RECIPE_SCHEMA = z.object({
+  steps: z.array(
+    z.object({
+      id: z.string().min(1),
+      action: PUBLIC_NEXT_STEP_SCHEMA,
+      status: z.enum(["required", "available", "complete"]),
+      evidence_required: z.array(z.string()).optional(),
+      reason: z.string().optional(),
+    }),
+  ).min(1),
+});
+const MCP_WORKFLOW_OUTPUT_SCHEMA = z
+  .object({
+    contract: z.literal("salt_workflow_v1"),
+    workflow: z.enum(PUBLIC_WORKFLOW_IDS),
+    transport: z.literal("mcp"),
+    status: z.enum(PUBLIC_WORKFLOW_STATUSES),
+    request: z.object({
+      entity: z.string().optional(),
+      resolved_entity: z.string().nullable().optional(),
+      match_status: z.enum(PUBLIC_MATCH_STATUSES).optional(),
+      exact_match_required: z.boolean().optional(),
+    }),
+    safety: z.object({
+      canonical_complete: z.boolean(),
+      exact_request_safe: z.boolean(),
+      blocking_reasons: z.array(z.string()),
+    }),
+    action: PUBLIC_ACTION_SCHEMA,
+    next_required_action: PUBLIC_NEXT_STEP_SCHEMA,
+    allowed_next_actions: z.array(z.enum(PUBLIC_ACTION_KINDS)).min(1),
+    recipe: PUBLIC_RECIPE_SCHEMA,
+    questions: z.array(z.string()),
+    evidence: PUBLIC_EVIDENCE_SCHEMA,
+    summary: z.string().min(1),
+    truncated: z.boolean().optional(),
+    available_expansions: z.array(z.string()).optional(),
+    full_output_bytes: z.number().optional(),
+    details: z.unknown().optional(),
+  })
+  .strict();
 const CHOOSE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const ANALYZE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const TRANSLATE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
@@ -889,6 +1055,10 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           project_policy:
             await loadWorkflowProjectPolicyArtifactForContext(projectContext),
           view: workflowArgs.view,
+          salt_packages: projectContext.salt.packages.map(
+            (entry) => entry.name,
+          ),
+          package_manager: projectContext.environment.package_manager,
         },
       );
     },

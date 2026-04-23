@@ -25,10 +25,10 @@ const UPDATE_FIXTURES = process.env.UPDATE_PUBLIC_CONTRACT_FIXTURES === "true";
 let registryDir = "";
 
 const COMPACT_BYTE_BUDGETS = {
-  create: 700,
-  review: 650,
-  migrate: 850,
-  upgrade: 650,
+  create: 5_000,
+  review: 1_800,
+  migrate: 2_600,
+  upgrade: 2_500,
 } as const;
 
 const FULL_BYTE_BUDGETS = {
@@ -874,10 +874,16 @@ describe("public contract parity", () => {
     );
     expect(readString(cliFull, [["request", "resolved_entity"]])).toBe("Tabs");
     expect(readString(mcpFull, [["request", "resolved_entity"]])).toBe("Tabs");
-    expect(readString(cliFull, [["action", "kind"]])).toBe("implement");
-    expect(readString(mcpFull, [["action", "kind"]])).toBe("implement");
-    expect(readString(cliFull, [["action", "args", "query"]])).toBeNull();
-    expect(readString(mcpFull, [["action", "args", "query"]])).toBeNull();
+    expect(readString(cliFull, [["action", "kind"]])).toBe("retrieve_entity");
+    expect(readString(mcpFull, [["action", "kind"]])).toBe("retrieve_entity");
+    expect(readString(cliFull, [["action", "args", "name"]])).toBe("Avatar");
+    expect(readString(mcpFull, [["action", "args", "name"]])).toBe("Avatar");
+    expect(readString(cliFull, [["next_required_action", "kind"]])).toBe(
+      "retrieve_entity",
+    );
+    expect(readString(mcpFull, [["next_required_action", "kind"]])).toBe(
+      "retrieve_entity",
+    );
   });
 
   it("keeps create full request metadata populated for control prompts", async () => {

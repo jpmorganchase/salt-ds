@@ -487,16 +487,26 @@ function getCreateFollowThroughTargets(
     /\b(dashboard|page|screen|workspace|overview)\b/i.test(
       result.decision.name ?? "",
     );
-  const allHighPriorityQueryAnchors = collectCreateQueryAnchors(
+  const allQueryAnchors = collectCreateQueryAnchors(
     registry,
     query ?? "",
-  ).filter(isHighPriorityCreateQueryAnchor);
+  );
+  const allHighPriorityQueryAnchors = allQueryAnchors.filter(
+    isHighPriorityCreateQueryAnchor,
+  );
   const dominantQueryAnchor = chooseDominantCreateQueryAnchor(
     allHighPriorityQueryAnchors,
   );
-  const queryAnchors = allHighPriorityQueryAnchors
-    .filter((anchor) => anchor.name !== primaryTarget)
-    .filter(isHighPriorityCreateQueryAnchor);
+  const explicitNamedQueryAnchors = allQueryAnchors.filter(
+    (anchor) =>
+      anchor.name !== primaryTarget &&
+      anchor.matched_by.includes("name") &&
+      !isHighPriorityCreateQueryAnchor(anchor),
+  );
+  const queryAnchors = [
+    ...allHighPriorityQueryAnchors,
+    ...explicitNamedQueryAnchors,
+  ].filter((anchor) => anchor.name !== primaryTarget);
   const queryAnchorByName = new Map(
     queryAnchors.map((anchor) => [anchor.name, anchor] as const),
   );
@@ -711,6 +721,34 @@ function getCreateFollowThroughTargets(
     .map((entry) => ({ region: entry.region, entity: entry.entity }));
 }
 
+function getDocsBackedCreateBlockingQuestions(
+  registry: SaltRegistry,
+  result: CreateSaltUiResult,
+  query?: string,
+): string[] {
+  const normalizedQuery = normalizeQuery(query ?? "");
+  if (!normalizedQuery.includes("navigation")) {
+    return [];
+  }
+
+  const decisionName = result.decision.name;
+  if (!decisionName) {
+    return [];
+  }
+
+  const record =
+    registry.components.find((component) => component.name === decisionName) ??
+    registry.patterns.find((pattern) => pattern.name === decisionName);
+  const notFor = (record?.when_not_to_use ?? []).join(" ").toLowerCase();
+  if (!notFor.includes("navigation")) {
+    return [];
+  }
+
+  return [
+    `Salt docs warn that ${decisionName} is not for navigation. Should this request use in-page tabs, or route/page navigation?`,
+  ];
+}
+
 function buildCreateImplementationGate(
   registry: SaltRegistry,
   result: CreateSaltUiResult,
@@ -721,9 +759,10 @@ function buildCreateImplementationGate(
     result,
     query,
   );
-  const blockingQuestions = (result.open_questions ?? []).map(
-    (question) => question.prompt,
-  );
+  const blockingQuestions = unique([
+    ...(result.open_questions ?? []).map((question) => question.prompt),
+    ...getDocsBackedCreateBlockingQuestions(registry, result, query),
+  ]);
   const ruleIds: WorkflowCreateImplementationGateRuleId[] = [];
 
   if (requiredFollowThrough.length > 0) {

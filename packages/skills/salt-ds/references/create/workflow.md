@@ -24,6 +24,8 @@
 - For non-Salt starts, use the translation step to lock the Salt building blocks first, then choose the JSX composition that fits them cleanly.
 - Use the translated workstreams and scaffold handoff to decide what gets built first instead of inventing a new implementation order.
 - If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before building the blocked region.
+- Branch on `salt_workflow_v1.action.kind`: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.
+- Use `recipe.steps`, `questions`, and `evidence.missing` to keep unresolved regions visible instead of filling them with guessed Salt structure.
 - Do not treat `status: partial` as a finished create step just because starter code or a first scaffold exists.
 - Leave `solution_type` unset on broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.
 - If compact create stays broad on a mixed-surface prompt and the next exact follow-up is not obvious, inspect retrieval support first:

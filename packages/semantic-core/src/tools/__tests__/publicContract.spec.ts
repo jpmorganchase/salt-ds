@@ -66,6 +66,21 @@ function buildInput(
       kind: "implement",
       scope: "exact_request",
     },
+    evidence: {
+      status: "complete",
+      items: [
+        {
+          kind: "docs",
+          source: "canonical_salt",
+          entity: "Metric",
+          field: "source_urls",
+          source_urls: ["/salt/components/metric"],
+        },
+      ],
+      source_urls: ["/salt/components/metric"],
+      missing: [],
+      heuristic_fallback: false,
+    },
     ...overrides,
   };
 }
@@ -822,20 +837,17 @@ describe("publicContract", () => {
   });
 
   it("flags contradiction states through validation helpers", () => {
+    const validContract = buildPublicContract(buildInput());
     const errors = getPublicContractValidationErrors({
-      contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
-      workflow: "create",
-      transport: "mcp",
-      status: "success",
+      ...validContract,
       request: {
         entity: "Header block",
         resolved_entity: "List filtering",
         match_status: "misrouted",
       },
       safety: {
-        canonical_complete: true,
+        ...validContract.safety,
         exact_request_safe: false,
-        blocking_reasons: [],
       },
       action: {
         ...exactNameStep,
@@ -852,12 +864,40 @@ describe("publicContract", () => {
     );
   });
 
+  it("rejects success without source-backed evidence", () => {
+    const validContract = buildPublicContract(buildInput());
+    const errors = getPublicContractValidationErrors({
+      ...validContract,
+      evidence: {
+        status: "complete",
+        items: [
+          {
+            kind: "registry",
+            source: "canonical_salt",
+            source_urls: [],
+            summary: "Unsourced registry fallback.",
+          },
+        ],
+        source_urls: [],
+        missing: [],
+        heuristic_fallback: false,
+      },
+    });
+
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        "status=success requires source-backed evidence",
+        "safety.exact_request_safe=true requires source-backed evidence",
+      ]),
+    );
+  });
+
   it("throws when a contract violates core contradiction rules", () => {
+    const validContract = buildPublicContract(buildInput());
+
     expect(() =>
       assertValidPublicContract({
-        contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
-        workflow: "create",
-        transport: "mcp",
+        ...validContract,
         status: "blocked",
         request: {
           entity: "Unknown Thing",
@@ -865,6 +905,7 @@ describe("publicContract", () => {
           match_status: "no_match",
         },
         safety: {
+          ...validContract.safety,
           canonical_complete: true,
           exact_request_safe: true,
           blocking_reasons: [],
@@ -932,28 +973,15 @@ describe("publicContract", () => {
   });
 
   it("flags missing required_post_step when next_step is implement on a non-review workflow", () => {
+    const validContract = buildPublicContract(buildInput());
     const errors = getPublicContractValidationErrors({
-      contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
-      workflow: "create",
-      transport: "mcp",
-      status: "success",
-      request: {
-        entity: "Metric",
-        resolved_entity: "Metric",
-        match_status: "exact",
-      },
-      safety: {
-        canonical_complete: true,
-        exact_request_safe: true,
-        blocking_reasons: [],
-      },
+      ...validContract,
       action: {
+        ...validContract.action,
         kind: "implement",
         scope: "exact_request",
-        rule_ids: [],
         post_action: null,
       },
-      summary: "Salt grounded the exact requested entity Metric.",
     });
 
     expect(errors).toContain(
@@ -962,26 +990,31 @@ describe("publicContract", () => {
   });
 
   it("flags required_post_step present when next_step is not implement", () => {
+    const partialContract = buildPublicContract(
+      buildInput({
+        state: {
+          implementation_ready: false,
+          required_follow_through: [{ region: "header", entity: "App header" }],
+          blocking_questions: [],
+          starter_blockers: [],
+          project_policy_blockers: [],
+          hard_blocked: false,
+          context_ready: true,
+          usable_guidance_present: true,
+          transport_failed: false,
+        },
+        next_step: exactNameStep,
+      }),
+    );
     const errors = getPublicContractValidationErrors({
-      contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
-      workflow: "create",
-      transport: "mcp",
-      status: "partial",
-      request: {},
-      safety: {
-        canonical_complete: false,
-        exact_request_safe: false,
-        blocking_reasons: ["follow-through remains"],
-      },
+      ...partialContract,
       action: {
-        ...exactNameStep,
-        rule_ids: [],
+        ...partialContract.action,
         post_action: {
           kind: "review",
           tool: "review_salt_ui",
         },
       },
-      summary: "Salt still needs follow-through.",
     });
 
     expect(errors).toContain(
@@ -1057,21 +1090,20 @@ describe("publicContract workflow adapters", () => {
     expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
-        workflow_status: "success",
-        canonical_complete: true,
-        safe_to_implement_exact_request: true,
+        workflow_status: "partial",
+        canonical_complete: false,
+        safe_to_implement_exact_request: false,
         requested_entity: "dashboard summary area",
         resolved_entity: "Analytical dashboard",
         match_status: "broadened",
         summary:
           "Salt interpreted dashboard summary area as the broader Salt entity Analytical dashboard.",
         next_step: {
-          kind: "implement",
-          scope: "exact_request",
-        },
-        required_post_step: {
-          kind: "review",
-          tool: "review_salt_ui",
+          kind: "retrieve_entity",
+          tool: "get_salt_entity",
+          args: {
+            name: "Analytical dashboard",
+          },
         },
       }),
     );
@@ -1197,8 +1229,8 @@ describe("publicContract workflow adapters", () => {
     expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
         workflow: "create",
-        workflow_status: "success",
-        safe_to_implement_exact_request: true,
+        workflow_status: "partial",
+        safe_to_implement_exact_request: false,
         requested_entity:
           "chart of data visualization component for dashboard analytical body",
         resolved_entity: "Stack layout",
@@ -1207,8 +1239,11 @@ describe("publicContract workflow adapters", () => {
           "Salt interpreted chart of data visualization component for dashboard analytical body as the broader Salt entity Stack layout.",
         blocking_reasons: [],
         next_step: {
-          kind: "implement",
-          scope: "exact_request",
+          kind: "retrieve_entity",
+          tool: "get_salt_entity",
+          args: {
+            name: "Chart",
+          },
         },
       }),
     );
@@ -1354,11 +1389,10 @@ describe("publicContract workflow adapters", () => {
           "Missing import.",
         ]),
         next_step: {
-          kind: "tool_call",
-          tool: "create_salt_ui",
-          mode: "exact_name",
+          kind: "retrieve_entity",
+          tool: "get_salt_entity",
           args: {
-            query: "App header",
+            name: "App header",
           },
         },
       }),
@@ -1479,11 +1513,10 @@ describe("publicContract workflow adapters", () => {
           "required follow-through remains: Breadcrumbs",
         ]),
         next_step: {
-          kind: "tool_call",
-          tool: "create_salt_ui",
-          mode: "exact_name",
+          kind: "retrieve_entity",
+          tool: "get_salt_entity",
           args: {
-            query: "Breadcrumbs",
+            name: "Breadcrumbs",
           },
         },
       }),

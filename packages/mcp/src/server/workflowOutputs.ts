@@ -116,6 +116,8 @@ function buildCreateWorkflowEnvelope(
     context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     view?: "compact" | "full";
+    salt_packages?: string[];
+    package_manager?: string;
   } = {},
 ) {
   const starter_code = applyProjectPolicyToStarterCodeSnippets(
@@ -145,6 +147,8 @@ function buildCreateWorkflowEnvelope(
     registry,
     query: input.query,
     package: input.package,
+    salt_packages: input.salt_packages,
+    package_manager: input.package_manager,
   });
 
   if (!isFullView(input.view)) {
@@ -364,6 +368,8 @@ export function withChooseWorkflowGuidance(
     context_id?: string | null;
     project_policy?: WorkflowProjectPolicyArtifact | null;
     view?: "compact" | "full";
+    salt_packages?: string[];
+    package_manager?: string;
   } = {},
 ) {
   return buildCreateWorkflowEnvelope(registry, result, input);
