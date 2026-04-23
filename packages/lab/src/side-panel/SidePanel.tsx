@@ -1,5 +1,5 @@
 import { FloatingFocusManager } from "@floating-ui/react";
-import { makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useFloatingUI, useForkRef, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -56,6 +56,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       initialFocus,
       variant = "primary",
       children,
+      id: idProp,
       className,
       ...rest
     } = props;
@@ -66,7 +67,10 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       setFloating,
       getFloatingProps,
       closeButtonRef,
+      setPanelId,
     } = useSidePanelContext();
+
+    const id = useId(idProp);
 
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
@@ -94,6 +98,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         setShowComponent(false);
       }
     }, [openState]);
+
+    useEffect(() => {
+      setPanelId(id);
+
+      return () => {
+        setPanelId(undefined);
+      };
+    }, [id, setPanelId]);
 
     useEffect(() => {
       if (!animated) {
@@ -139,6 +151,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const panelDiv = (
       <div
+        role="region"
         ref={handleRef}
         className={clsx(
           withBaseName(),
@@ -154,7 +167,10 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           className,
         )}
         onAnimationEnd={animated ? handleAnimationEnd : undefined}
-        {...getFloatingProps(rest)}
+        {...getFloatingProps({
+          ...rest,
+          id,
+        })}
       >
         <div className={withBaseName("inner")}>{children}</div>
       </div>

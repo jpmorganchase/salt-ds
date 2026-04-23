@@ -56,6 +56,7 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
   const [panelHeaderId, setPanelHeaderId] = useState<string | undefined>(
     undefined,
   );
+  const [panelId, setPanelId] = useState<string | undefined>(undefined);
 
   const floatingRootContext = useFloatingRootContext({
     open: openState,
@@ -125,6 +126,8 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
         closeButtonRef,
         panelHeaderId,
         setPanelHeaderId,
+        panelId,
+        setPanelId,
       }}
     >
       {children}

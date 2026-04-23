@@ -236,18 +236,14 @@ const ManualLeftPanel = () => {
 };
 
 const ManualTriggerButton = ({ children }: { children: string }) => {
-  const {
-    openState,
-    setOpen,
-    getFloatingProps,
-    getReferenceProps,
-    setReference,
-  } = useSidePanelContext();
+  const { openState, setOpen, getReferenceProps, setReference, panelId } =
+    useSidePanelContext();
 
   return (
     <Button
       {...(getReferenceProps({
-        "aria-controls": getFloatingProps().id as string,
+        "aria-expanded": openState,
+        "aria-controls": openState ? panelId : undefined,
         onClick: () => setOpen(!openState),
       }) as Record<string, unknown>)}
       ref={setReference as React.Ref<HTMLButtonElement>}
@@ -267,7 +263,8 @@ const ManualContentArea = () => {
         <FlexLayout gap={1} justify="space-between">
           <Button
             {...(leftCtx.getReferenceProps({
-              "aria-controls": leftCtx.getFloatingProps().id as string,
+              "aria-expanded": leftCtx.openState,
+              "aria-controls": leftCtx.openState ? leftCtx.panelId : undefined,
               onClick: () => leftCtx.setOpen(!leftCtx.openState),
             }) as Record<string, unknown>)}
             ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}
@@ -424,7 +421,7 @@ const withTablePanelStyle = {
 const WithTableContent = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
-  const { setOpen, setReference, getFloatingProps, getReferenceProps } =
+  const { setOpen, setReference, getReferenceProps, openState, panelId } =
     useSidePanelContext();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
@@ -433,14 +430,18 @@ const WithTableContent = () => {
     setOpen(true);
   };
 
-  const getTriggerProps = (row: TeamMember) =>
-    getReferenceProps({
-      "aria-controls": getFloatingProps().id as string,
+  const getTriggerProps = (row: TeamMember) => {
+    const isExpanded = openState && selectedRow?.id === row.id;
+
+    return getReferenceProps({
+      "aria-expanded": isExpanded,
+      "aria-controls": isExpanded ? panelId : undefined,
       "aria-label": `Edit details for ${row.name}`,
       onClick: (e: React.MouseEvent<HTMLElement>) => {
         handleRowClick(row, e.currentTarget);
       },
     }) as Record<string, unknown>;
+  };
 
   return (
     <FlexLayout

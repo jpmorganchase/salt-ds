@@ -20,13 +20,8 @@ export const SidePanelTrigger = forwardRef<
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
   const { children, onClick, ...rest } = props;
-  const {
-    setReference,
-    getReferenceProps,
-    getFloatingProps,
-    openState,
-    setOpen,
-  } = useSidePanelContext();
+  const { setReference, getReferenceProps, openState, setOpen, panelId } =
+    useSidePanelContext();
 
   const handleRef = useForkRef(setReference, ref);
 
@@ -46,7 +41,8 @@ export const SidePanelTrigger = forwardRef<
 
   const mergedProps = mergeProps(
     getReferenceProps({
-      "aria-controls": getFloatingProps().id as string,
+      "aria-expanded": openState,
+      "aria-controls": openState ? panelId : undefined,
       ...rest,
       onClick: handleClick,
     }) as Record<string, unknown>,

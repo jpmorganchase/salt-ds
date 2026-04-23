@@ -70,7 +70,7 @@ const panelStyle = {
 const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
-  const { setOpen, setReference, getFloatingProps, getReferenceProps } =
+  const { setOpen, setReference, openState, getReferenceProps, panelId } =
     useSidePanelContext();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
@@ -79,14 +79,18 @@ const SidePanelExample = () => {
     setOpen(true);
   };
 
-  const getTriggerProps = (row: TeamMember) =>
-    getReferenceProps({
-      "aria-controls": getFloatingProps().id as string,
+  const getTriggerProps = (row: TeamMember) => {
+    const isExpanded = openState && selectedRow?.id === row.id;
+
+    return getReferenceProps({
+      "aria-expanded": isExpanded,
+      "aria-controls": isExpanded ? panelId : undefined,
       "aria-label": `Edit details for ${row.name}`,
       onClick: (e: React.MouseEvent<HTMLElement>) => {
         handleRowClick(row, e.currentTarget);
       },
     }) as Record<string, unknown>;
+  };
 
   return (
     <FlexLayout

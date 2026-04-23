@@ -44,18 +44,14 @@ const LeftPanel = () => {
 };
 
 const ManualTriggerButton = ({ children }: { children: string }) => {
-  const {
-    openState,
-    setOpen,
-    getFloatingProps,
-    getReferenceProps,
-    setReference,
-  } = useSidePanelContext();
+  const { openState, setOpen, panelId, getReferenceProps, setReference } =
+    useSidePanelContext();
 
   return (
     <Button
       {...(getReferenceProps({
-        "aria-controls": getFloatingProps().id as string,
+        "aria-expanded": openState,
+        "aria-controls": openState ? panelId : undefined,
         onClick: () => setOpen(!openState),
       }) as Record<string, unknown>)}
       ref={setReference as React.Ref<HTMLButtonElement>}
@@ -75,7 +71,8 @@ const ContentArea = () => {
         <FlexLayout gap={1} justify="space-between">
           <Button
             {...(leftCtx.getReferenceProps({
-              "aria-controls": leftCtx.getFloatingProps().id as string,
+              "aria-expanded": leftCtx.openState,
+              "aria-controls": leftCtx.openState ? leftCtx.panelId : undefined,
               onClick: () => leftCtx.setOpen(!leftCtx.openState),
             }) as Record<string, unknown>)}
             ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}

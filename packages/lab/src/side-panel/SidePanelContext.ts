@@ -54,6 +54,14 @@ export interface SidePanelContextValue {
    * Registers or clears the header id used for aria-labelledby.
    */
   setPanelHeaderId: Dispatch<SetStateAction<string | undefined>>;
+  /**
+   * Side panel id used for aria-controls on the trigger.
+   */
+  panelId?: string;
+  /**
+   * Registers or clears the side panel id used for aria-controls/id linkage.
+   */
+  setPanelId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const SidePanelContext = createContext<SidePanelContextValue>(
@@ -69,6 +77,8 @@ export const SidePanelContext = createContext<SidePanelContextValue>(
     closeButtonRef: { current: null },
     panelHeaderId: undefined,
     setPanelHeaderId: () => {},
+    panelId: undefined,
+    setPanelId: () => {},
   },
 );
 
