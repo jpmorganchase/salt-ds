@@ -49,6 +49,14 @@
   flex: 1;
 }
 
+.withLinkMenuContainer {
+  flex-direction: column;
+}
+
+.smallViewportContainer {
+  width: 320px;
+}
+
 .customRegionNoContainerPadding {
   padding: 0;
 }

@@ -53,6 +53,10 @@ nav > ul {
   max-inline-size: 240px;
 }
 
+.withLink-menu-container {
+  flex-direction: column;
+}
+
 .custom-region-image {
   width: 100%;
   height: auto;
@@ -61,4 +65,8 @@ nav > ul {
 
 .menu-item-adornment {
   margin-left: auto;
+}
+
+.small-viewport-container {
+  width: 320px;
 }

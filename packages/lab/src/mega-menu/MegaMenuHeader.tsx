@@ -26,7 +26,7 @@ export const MegaMenuHeader = forwardRef<HTMLDivElement, MegaMenuHeaderProps>(
     return (
       <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         <div className={clsx(withBaseName("content"))}>{children}</div>
-        <Divider variant="tertiary" />
+        <Divider variant="tertiary" aria-hidden />
       </div>
     );
   },
