@@ -500,6 +500,28 @@ describe("GIVEN a SidePanel component", () => {
   });
 
   describe("Scrollable", () => {
+    it("WHEN panel content is not scrollable, THEN content body is not focusable", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("button", { name: "Open right panel" }).click();
+
+      cy.get(".saltSidePanelContent-body")
+        .should("be.visible")
+        .and("not.have.attr", "tabindex")
+        .and("not.have.attr", "role", "region");
+    });
+
+    it("WHEN panel content is scrollable, THEN content body is focusable", () => {
+      cy.mount(<Scrollable />);
+
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+
+      cy.get(".saltSidePanelContent-body")
+        .should("be.visible")
+        .and("have.attr", "tabindex", "0")
+        .and("have.attr", "role", "region");
+    });
+
     it("WHEN panel is opened, THEN both main content and panel content are visible", () => {
       cy.mount(<Scrollable />);
 
@@ -507,6 +529,14 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region", { name: "Main content" }).should("be.visible");
+    });
+
+    it("WHEN scrollable panel is opened, THEN Close button receives initial focus", () => {
+      cy.mount(<Scrollable />);
+
+      cy.findByRole("button", { name: "Toggle right panel" }).click();
+
+      cy.findByRole("button", { name: "Close" }).should("have.focus");
     });
 
     it("WHEN panel is opened and closed, THEN panel can be toggled", () => {

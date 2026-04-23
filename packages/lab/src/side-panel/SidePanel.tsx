@@ -7,7 +7,6 @@ import {
   type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
-  type KeyboardEvent,
   useCallback,
   useEffect,
   useRef,
@@ -33,7 +32,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
    * Which element receives focus when the panel opens.
    * Pass a number for the tabbable element index (0 = first), or a ref to a specific element.
-   * @default 0
+   * Defaults to the side panel close button.
    */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
   /**
@@ -54,11 +53,10 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       animated = true,
       position = "right",
       appearance = "solid",
-      initialFocus = 0,
+      initialFocus,
       variant = "primary",
       children,
       className,
-      onKeyDownCapture,
       ...rest
     } = props;
 
@@ -67,18 +65,15 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       floatingRootContext,
       setFloating,
       getFloatingProps,
-      setOpen,
+      closeButtonRef,
     } = useSidePanelContext();
 
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
-    // True while the panel is still in its initial open state (e.g. defaultOpen)
-    // and has not yet been closed by the user.  While true we:
-    //  1. Skip the CSS enter animation (the panel is already visible).
-    //  2. Omit FloatingFocusManager so it cannot steal focus on mount.
-    // Once the panel closes for the first time the flag is set to false
-    // permanently and normal animation + focus behaviour takes over.
-    const initialOpen = useRef(openState);
+    // Track whether this is the initial render. Skip animation on first render
+    // when panel is already open (e.g. defaultOpen=true), but still move focus
+    // to the panel for accessibility announcements.
+    const initialRender = useRef(true);
     const targetWindow = useWindow();
 
     useComponentCssInjection({
@@ -97,25 +92,24 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       setAnimating(false);
       if (!openState) {
         setShowComponent(false);
-        initialOpen.current = false;
       }
     }, [openState]);
 
     useEffect(() => {
       if (!animated) {
         // When not animated the panel is always kept mounted so the parent can
-        // control sizing (e.g. flex-grow transition in a splitter).  Only
-        // initialOpen needs updating so FloatingFocusManager activates after
-        // the first close.
+        // control sizing (e.g. flex-grow transition in a splitter).
         setShowComponent(true);
         setAnimating(false);
-        if (!openState) {
-          initialOpen.current = false;
-        }
+        initialRender.current = false;
         return;
       }
 
-      if (initialOpen.current && openState) {
+      // Skip animation on initial render when panel is already open
+      if (initialRender.current && openState) {
+        setShowComponent(true);
+        setAnimating(false);
+        initialRender.current = false;
         return;
       }
 
@@ -131,29 +125,20 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         setAnimating(false);
         if (!openState) {
           setShowComponent(false);
-          initialOpen.current = false;
         }
       } else {
         setAnimating(true);
       }
+
+      initialRender.current = false;
     }, [openState, targetWindow, animated]);
-
-    const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDownCapture?.(event);
-
-      if (event.defaultPrevented || event.key !== "Escape") {
-        return;
-      }
-
-      event.stopPropagation();
-      setOpen(false);
-    };
 
     if (!showComponent) return null;
 
+    const resolvedInitialFocus = initialFocus ?? closeButtonRef;
+
     const panelDiv = (
       <div
-        onKeyDownCapture={handleKeyDownCapture}
         ref={handleRef}
         className={clsx(
           withBaseName(),
@@ -170,18 +155,17 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         )}
         onAnimationEnd={animated ? handleAnimationEnd : undefined}
         {...getFloatingProps(rest)}
-        role={"region"}
       >
         <div className={withBaseName("inner")}>{children}</div>
       </div>
     );
 
-    if (openState && !initialOpen.current) {
+    if (openState) {
       return (
         <FloatingFocusManager
           context={context}
           modal={false}
-          initialFocus={initialFocus}
+          initialFocus={resolvedInitialFocus}
           closeOnFocusOut={false}
           guards={false}
         >
