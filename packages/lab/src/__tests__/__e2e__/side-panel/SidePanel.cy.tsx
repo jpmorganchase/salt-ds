@@ -299,13 +299,15 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("button", { name: "Edit details for Alex Morgan" }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should(
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
         "be.visible",
       );
 
       cy.findByRole("button", { name: "Close" }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should("not.exist");
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
+        "not.exist",
+      );
       cy.findByRole("table").should("be.visible");
     });
 
@@ -314,27 +316,33 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("button", { name: "Edit details for Alex Morgan" }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should(
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
         "be.visible",
       );
-      cy.findByRole("region", { name: "Employee Details" }).within(() => {
-        cy.findByDisplayValue("Alex Morgan").should("be.visible");
-      });
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).within(
+        () => {
+          cy.findByDisplayValue("Alex Morgan").should("be.visible");
+        },
+      );
 
       cy.findByRole("button", { name: "Close" }).click();
-      cy.findByRole("region", { name: "Employee Details" }).should("not.exist");
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
+        "not.exist",
+      );
 
       cy.findByRole("button", {
         name: "Edit details for Jordan Lee",
       }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should(
+      cy.findByRole("region", { name: "Jordan Lee Employee Details" }).should(
         "be.visible",
       );
-      cy.findByRole("region", { name: "Employee Details" }).within(() => {
-        cy.findByDisplayValue("Jordan Lee").should("be.visible");
-        cy.findByDisplayValue("jordan.lee@example.com").should("be.visible");
-      });
+      cy.findByRole("region", { name: "Jordan Lee Employee Details" }).within(
+        () => {
+          cy.findByDisplayValue("Jordan Lee").should("be.visible");
+          cy.findByDisplayValue("jordan.lee@example.com").should("be.visible");
+        },
+      );
     });
 
     it("WHEN Edit button is clicked, THEN panel opens and can be closed", () => {
@@ -342,27 +350,33 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("button", { name: "Edit details for Alex Morgan" }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should(
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
         "be.visible",
       );
-      cy.findByRole("region", { name: "Employee Details" }).within(() => {
-        cy.findByDisplayValue("Alex Morgan").should("be.visible");
-      });
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).within(
+        () => {
+          cy.findByDisplayValue("Alex Morgan").should("be.visible");
+        },
+      );
 
       cy.findByRole("button", { name: "Close" }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should("not.exist");
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
+        "not.exist",
+      );
 
       cy.findByRole("button", {
         name: "Edit details for Jordan Lee",
       }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should(
+      cy.findByRole("region", { name: "Jordan Lee Employee Details" }).should(
         "be.visible",
       );
-      cy.findByRole("region", { name: "Employee Details" }).within(() => {
-        cy.findByDisplayValue("Jordan Lee").should("be.visible");
-      });
+      cy.findByRole("region", { name: "Jordan Lee Employee Details" }).within(
+        () => {
+          cy.findByDisplayValue("Jordan Lee").should("be.visible");
+        },
+      );
     });
   });
 

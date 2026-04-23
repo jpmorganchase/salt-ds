@@ -139,10 +139,16 @@ const SidePanelExample = () => {
         position="right"
         aria-labelledby={panelHeadingId}
         style={panelStyle}
+        key={selectedRow?.id}
       >
         {selectedRow && (
           <SidePanelContent
-            header={<H2 id={panelHeadingId}>Employee Details</H2>}
+            header={
+              <H2 id={panelHeadingId}>
+                <span className="salt-visuallyHidden">{selectedRow.name}</span>
+                Employee Details
+              </H2>
+            }
           >
             <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
               <FormField>
