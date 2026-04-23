@@ -25,6 +25,7 @@ import {
   LaptopIcon,
   LinkedIcon,
   MarkerIcon,
+  MenuIcon,
   NotificationIcon,
   PasteIcon,
   PinIcon,
@@ -1906,3 +1907,802 @@ const WithCustomRegionTemplate: StoryFn = () => {
 };
 
 export const WithCustomRegion = WithCustomRegionTemplate.bind({});
+
+const WithLinkTemplate: StoryFn = () => {
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | undefined>(
+    undefined,
+  );
+
+  const handleOpenChange = (menu: string) => (open: boolean) => {
+    setOpenMenu(open ? menu : null);
+  };
+
+  const handleSelectedItemChange = (
+    menu: string,
+    value: string | undefined,
+  ) => {
+    const nextValue = selectedItem === value ? undefined : value;
+    setSelectedItem(nextValue);
+    setActiveMenu(nextValue ? menu : null);
+  };
+
+  return (
+    <nav>
+      <StackLayout as="ul" direction="row" gap={1}>
+        <li>
+          <MegaMenu
+            open={openMenu === "solutions"}
+            onOpenChange={handleOpenChange("solutions")}
+            selectedItem={selectedItem}
+            onSelectedItemChange={(value) =>
+              handleSelectedItemChange("solutions", value)
+            }
+          >
+            <MegaMenuTrigger>
+              <NavigationItem
+                active={activeMenu === "solutions"}
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setOpenMenu((prev) =>
+                    prev === "solutions" ? null : "solutions",
+                  );
+                }}
+              >
+                Solutions
+              </NavigationItem>
+            </MegaMenuTrigger>
+
+            <MegaMenuContainer className="withLink-menu-container">
+              <MegaMenuSection>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Digital Banking"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Digital Banking",
+                      );
+                    }}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Risk Management"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Risk Management",
+                      );
+                    }}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Patient Management"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Patient Management",
+                      );
+                    }}
+                  >
+                    Patient Management
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Telemedicine"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Telemedicine",
+                      );
+                    }}
+                  >
+                    Telemedicine
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Compliance Solutions"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Compliance Solutions",
+                      );
+                    }}
+                  >
+                    Compliance Solutions
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Retail</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="E-Commerce Platforms"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "E-Commerce Platforms",
+                      );
+                    }}
+                  >
+                    E-Commerce Platforms
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Supply Chain Optimization"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Supply Chain Optimization",
+                      );
+                    }}
+                  >
+                    Supply Chain Optimization
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Quality Control"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Quality Control",
+                      );
+                    }}
+                  >
+                    Quality Control
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Production Planning"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Production Planning",
+                      );
+                    }}
+                  >
+                    Production Planning
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Education</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Learning Management Systems"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Learning Management Systems",
+                      );
+                    }}
+                  >
+                    Learning Management Systems
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Virtual Classrooms"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Virtual Classrooms",
+                      );
+                    }}
+                  >
+                    Virtual Classrooms
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Government</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Document Management"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Document Management",
+                      );
+                    }}
+                  >
+                    Document Management
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Citizen Services"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Citizen Services",
+                      );
+                    }}
+                  >
+                    Citizen Services
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Public Safety Solutions"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Public Safety Solutions",
+                      );
+                    }}
+                  >
+                    Public Safety Solutions
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+              </MegaMenuSection>
+              <MegaMenuLinkRow>
+                <Link href="#">See all solutions</Link>
+              </MegaMenuLinkRow>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+        <li>
+          <MegaMenu
+            open={openMenu === "services"}
+            onOpenChange={handleOpenChange("services")}
+            selectedItem={selectedItem}
+            onSelectedItemChange={(value) =>
+              handleSelectedItemChange("services", value)
+            }
+          >
+            <MegaMenuTrigger>
+              <NavigationItem
+                active={activeMenu === "services"}
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setOpenMenu((prev) =>
+                    prev === "services" ? null : "services",
+                  );
+                }}
+              >
+                Services
+              </NavigationItem>
+            </MegaMenuTrigger>
+
+            <MegaMenuContainer className="withLink-menu-container">
+              <MegaMenuSection>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Consulting</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Strategy"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Strategy",
+                      );
+                    }}
+                  >
+                    Strategy
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="IT"
+                    onClick={() => {
+                      console.log("[WithLink MegaMenu] selected value:", "IT");
+                    }}
+                  >
+                    IT
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="HR"
+                    onClick={() => {
+                      console.log("[WithLink MegaMenu] selected value:", "HR");
+                    }}
+                  >
+                    HR
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Marketing"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Marketing",
+                      );
+                    }}
+                  >
+                    Marketing
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Operations"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Operations",
+                      );
+                    }}
+                  >
+                    Operations
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Implementation</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Onboarding"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Onboarding",
+                      );
+                    }}
+                  >
+                    Onboarding
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Migration"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Migration",
+                      );
+                    }}
+                  >
+                    Migration
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Customization"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Customization",
+                      );
+                    }}
+                  >
+                    Customization
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Training"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Training",
+                      );
+                    }}
+                  >
+                    Training
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Support"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Support",
+                      );
+                    }}
+                  >
+                    Support
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Testing"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Testing",
+                      );
+                    }}
+                  >
+                    Testing
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Rollout"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Rollout",
+                      );
+                    }}
+                  >
+                    Rollout
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Training</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Online"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Online",
+                      );
+                    }}
+                  >
+                    Online
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="In-Person"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "In-Person",
+                      );
+                    }}
+                  >
+                    In-Person
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Workshops"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Workshops",
+                      );
+                    }}
+                  >
+                    Workshops
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Certifications"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Certifications",
+                      );
+                    }}
+                  >
+                    Certifications
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Tutorials"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Tutorials",
+                      );
+                    }}
+                  >
+                    Tutorials
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Guides"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Guides",
+                      );
+                    }}
+                  >
+                    Guides
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+              </MegaMenuSection>
+              <MegaMenuLinkRow>
+                <Link href="#">See all services</Link>
+              </MegaMenuLinkRow>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+        <li>
+          <MegaMenu
+            open={openMenu === "resources"}
+            onOpenChange={handleOpenChange("resources")}
+            selectedItem={selectedItem}
+            onSelectedItemChange={(value) =>
+              handleSelectedItemChange("resources", value)
+            }
+          >
+            <MegaMenuTrigger>
+              <NavigationItem
+                active={activeMenu === "resources"}
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setOpenMenu((prev) =>
+                    prev === "resources" ? null : "resources",
+                  );
+                }}
+              >
+                Resources
+              </NavigationItem>
+            </MegaMenuTrigger>
+            <MegaMenuContainer className="withLink-menu-container">
+              <MegaMenuSection>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Documentation</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="User Guides"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "User Guides",
+                      );
+                    }}
+                  >
+                    User Guides
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="API Reference"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "API Reference",
+                      );
+                    }}
+                  >
+                    API Reference
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Release Notes"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Release Notes",
+                      );
+                    }}
+                  >
+                    Release Notes
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="FAQs"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "FAQs",
+                      );
+                    }}
+                  >
+                    FAQs
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
+                  <MegaMenuItem
+                    value="Contact Support"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Contact Support",
+                      );
+                    }}
+                  >
+                    Contact Support
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Community Forum"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Community Forum",
+                      );
+                    }}
+                  >
+                    Community Forum
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    value="Troubleshooting"
+                    onClick={() => {
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Troubleshooting",
+                      );
+                    }}
+                  >
+                    Troubleshooting
+                  </MegaMenuItem>
+                </MegaMenuGroup>
+              </MegaMenuSection>
+              <MegaMenuLinkRow>
+                <Link href="#">See all resources</Link>
+              </MegaMenuLinkRow>
+            </MegaMenuContainer>
+          </MegaMenu>
+        </li>
+      </StackLayout>
+    </nav>
+  );
+};
+
+export const WithLink = WithLinkTemplate.bind({});
+
+const InSmallViewportTemplate: StoryFn = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<string | undefined>(
+    undefined,
+  );
+
+  return (
+    <div>
+      <nav>
+        <StackLayout as="ul" direction="row" gap={1}>
+          <li>
+            <MegaMenu
+              open={isOpen}
+              onOpenChange={setIsOpen}
+              selectedItem={selectedItem}
+              onSelectedItemChange={(value) => {
+                const nextValue = selectedItem === value ? undefined : value;
+                setSelectedItem(nextValue);
+              }}
+            >
+              <MegaMenuTrigger>
+                <Button
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  sentiment="neutral"
+                  appearance="solid"
+                >
+                  <MenuIcon />
+                </Button>
+              </MegaMenuTrigger>
+              <MegaMenuContainer className="small-viewport-container">
+                <MegaMenuSection>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Digital Banking"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Digital Banking",
+                        );
+                      }}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Risk Management"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Risk Management",
+                        );
+                      }}
+                    >
+                      Risk Management
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Patient Management"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Patient Management",
+                        );
+                      }}
+                    >
+                      Patient Management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Telemedicine"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Telemedicine",
+                        );
+                      }}
+                    >
+                      Telemedicine
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Compliance Solutions"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Compliance Solutions",
+                        );
+                      }}
+                    >
+                      Compliance Solutions
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Retail</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="E-Commerce Platforms"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "E-Commerce Platforms",
+                        );
+                      }}
+                    >
+                      E-Commerce Platforms
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Supply Chain Optimization"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Supply Chain Optimization",
+                        );
+                      }}
+                    >
+                      Supply Chain Optimization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Quality Control"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Quality Control",
+                        );
+                      }}
+                    >
+                      Quality Control
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Production Planning"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Production Planning",
+                        );
+                      }}
+                    >
+                      Production Planning
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Education</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Learning Management Systems"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Learning Management Systems",
+                        );
+                      }}
+                    >
+                      Learning Management Systems
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Virtual Classrooms"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Virtual Classrooms",
+                        );
+                      }}
+                    >
+                      Virtual Classrooms
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Government</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Document Management"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Document Management",
+                        );
+                      }}
+                    >
+                      Document Management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Citizen Services"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Citizen Services",
+                        );
+                      }}
+                    >
+                      Citizen Services
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Public Safety Solutions"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Public Safety Solutions",
+                        );
+                      }}
+                    >
+                      Public Safety Solutions
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                </MegaMenuSection>
+              </MegaMenuContainer>
+            </MegaMenu>
+          </li>
+        </StackLayout>
+      </nav>
+    </div>
+  );
+};
+
+export const InSmallViewport = InSmallViewportTemplate.bind({});

@@ -24,6 +24,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -137,6 +138,47 @@ export const MegaMenuContainer = forwardRef<
     }
   }, []);
 
+  // Intercept Tab/ArrowDown on trigger when menu is open to move focus into menu.
+  // Uses document capture phase so it fires before FloatingFocusManager or
+  // React synthetic events can redirect focus elsewhere.
+  useEffect(() => {
+    const reference = megaMenu.floatingRootContext.elements
+      .reference as HTMLElement | null;
+    if (!isOpen || !reference) return;
+
+    const doc = reference.ownerDocument;
+
+    const onKeyDown = (e: globalThis.KeyboardEvent) => {
+      const activeElement = doc.activeElement;
+      if (!(activeElement instanceof HTMLElement)) return;
+      if (!(reference === activeElement || reference.contains(activeElement))) {
+        return;
+      }
+      if ((e.key === "Tab" && !e.shiftKey) || e.key === "ArrowDown") {
+        const floating = megaMenu.floatingRootContext.elements
+          .floating as HTMLElement | null;
+        if (floating) {
+          const items = elementsRef.current.filter(
+            (item): item is HTMLElement => item != null,
+          );
+          const firstFocusable =
+            items[0] ??
+            floating.querySelector<HTMLElement>(
+              '.saltMegaMenuItem, a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            );
+          if (firstFocusable) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            firstFocusable.focus();
+          }
+        }
+      }
+    };
+
+    doc.addEventListener("keydown", onKeyDown, true);
+    return () => doc.removeEventListener("keydown", onKeyDown, true);
+  }, [isOpen, megaMenu]);
+
   const closeAndFocusNextAfterReference = useCallback(
     (container: HTMLElement) => {
       const reference = megaMenu.floatingRootContext.elements
@@ -223,8 +265,7 @@ export const MegaMenuContainer = forwardRef<
           if (focusedItemIndex === -1) return;
           event.preventDefault();
           if (isLastItem) {
-            focusReference();
-            megaMenu.setOpen(false);
+            // Match ArrowDown boundary behavior: keep focus and menu state unchanged.
             return;
           }
           const regions = getRegionItems(container);
@@ -253,7 +294,7 @@ export const MegaMenuContainer = forwardRef<
           return;
       }
     },
-    [closeAndFocusNextAfterReference, focusReference, megaMenu],
+    [closeAndFocusNextAfterReference, focusReference],
   );
 
   return (
