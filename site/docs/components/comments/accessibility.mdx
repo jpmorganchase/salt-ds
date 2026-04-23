@@ -1,0 +1,41 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- When a button has both an icon and text, use `aria-hidden` on the icon so that screen readers don't announce its text.
+- When a button has an icon only and no text, pass an `aria-label` to the button that describes its purpose.
+
+### Focusable disabled button
+
+- By default, a user can't place focus on a disabled button. However in certain scenarios, it may be preferable for a disabled button to receive focus. To determine if this is necessary, you can apply the following logic: if the user or the system can enable a disabled element, it should be focusable. For further information, view the W3C guidance on the [`aria-disabled` attribute](https://www.w3.org/TR/wai-aria/#aria-disabled).
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Tab moves focus to the button.
+- If the button is disabled and cannot receive focus, Tab moves focus to the next focusable component.
+- If the button has focus, Tab moves focus to the next focusable component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- This action moves focus out of the component to the previous component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If the button has focus, this action activates it.
+- If the button is disabled and can receive focus, this action does nothing.
+
+</KeyboardControl>
+</KeyboardControls>
