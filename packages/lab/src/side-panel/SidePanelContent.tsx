@@ -2,12 +2,7 @@ import { Button, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  type ComponentPropsWithRef,
-  forwardRef,
-  type KeyboardEvent,
-  type ReactNode,
-} from "react";
+import { type ComponentPropsWithRef, forwardRef, type ReactNode } from "react";
 import sidePanelContentCss from "./SidePanelContent.css";
 import { useSidePanelContext } from "./SidePanelContext";
 
@@ -36,24 +31,8 @@ export const SidePanelContent = forwardRef<
     window: targetWindow,
   });
 
-  const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
-    onKeyDownCapture?.(event);
-
-    if (event.defaultPrevented || event.key !== "Escape") {
-      return;
-    }
-
-    event.stopPropagation();
-    setOpen(false);
-  };
-
   return (
-    <div
-      onKeyDownCapture={handleKeyDownCapture}
-      ref={ref}
-      className={clsx(withBaseName(), className)}
-      {...rest}
-    >
+    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
       <div className={withBaseName("header")}>
         {header}
         <Button

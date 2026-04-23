@@ -7,6 +7,7 @@ import {
   type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
+  type KeyboardEvent,
   useCallback,
   useEffect,
   useRef,
@@ -57,11 +58,17 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       variant = "primary",
       children,
       className,
+      onKeyDownCapture,
       ...rest
     } = props;
 
-    const { openState, floatingRootContext, setFloating, getFloatingProps } =
-      useSidePanelContext();
+    const {
+      openState,
+      floatingRootContext,
+      setFloating,
+      getFloatingProps,
+      setOpen,
+    } = useSidePanelContext();
 
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
@@ -131,10 +138,22 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
     }, [openState, targetWindow, animated]);
 
+    const handleKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDownCapture?.(event);
+
+      if (event.defaultPrevented || event.key !== "Escape") {
+        return;
+      }
+
+      event.stopPropagation();
+      setOpen(false);
+    };
+
     if (!showComponent) return null;
 
     const panelDiv = (
       <div
+        onKeyDownCapture={handleKeyDownCapture}
         ref={handleRef}
         className={clsx(
           withBaseName(),
