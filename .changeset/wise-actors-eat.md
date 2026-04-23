@@ -5,11 +5,13 @@
 `AriaAnnouncer` prop `delay` is deprecated in favour of an `options` prop.
 
 The `options` prop provides `ariaLive` which can be set to either `polite` or `assertive` depending on the use case.
+It also provides `target`, which routes announcements to a specific `AriaAnnouncerProvider` target (useful for nested contexts such as dialogs/modals).
 
 ```diff
 const { announce } = useAriaAnnouncer();
 - announce("message", 500)
 + announce("message", { ariaLive: "polite" });
++ announce("message", { target: "date-picker-overlay", ariaLive: "polite" });
 ```
 
 The `delay` is replaced by two DOM elements that are used to announce messages.

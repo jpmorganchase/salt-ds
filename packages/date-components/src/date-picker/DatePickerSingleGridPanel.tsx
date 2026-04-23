@@ -34,6 +34,7 @@ import {
   type DateRangeSelection,
   type SingleDateSelection,
 } from "../calendar";
+import { createSingleNavigationAnnouncement } from "../calendar/internal/createAnnouncement";
 import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import {
@@ -453,7 +454,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       onVisibleMonthChange: handleVisibleMonthChange,
       timezone,
       ...CalendarProps,
-      createAnnouncement: null,
+      createAnnouncement: createSingleNavigationAnnouncement,
     };
 
     return (

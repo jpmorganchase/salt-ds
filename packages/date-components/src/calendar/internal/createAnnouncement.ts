@@ -146,3 +146,37 @@ export function createRangeSelectionAnnouncement(
     }
   }
 }
+
+/**
+ * Creates navigation announcements for single selection (visibleMonthChanged, min/maxFocusableDateExceeded).
+ * Used in DatePicker grid panels where dateSelected is handled by the parent DatePicker.
+ */
+export function createSingleNavigationAnnouncement(
+  announcementType: AnnouncementType,
+  state: DateSelectionAnnouncerState,
+  dateAdapter: SaltDateAdapter,
+): string | undefined {
+  if (announcementType === "dateSelected") {
+    return undefined;
+  }
+  return createSingleSelectionAnnouncement(
+    announcementType,
+    state,
+    dateAdapter,
+  );
+}
+
+/**
+ * Creates navigation announcements for range selection (visibleMonthChanged, min/maxFocusableDateExceeded).
+ * Used in DatePicker grid panels where dateSelected is handled by the parent DatePicker.
+ */
+export function createRangeNavigationAnnouncement(
+  announcementType: AnnouncementType,
+  state: DateSelectionAnnouncerState,
+  dateAdapter: SaltDateAdapter,
+): string | undefined {
+  if (announcementType === "dateSelected") {
+    return undefined;
+  }
+  return createRangeSelectionAnnouncement(announcementType, state, dateAdapter);
+}

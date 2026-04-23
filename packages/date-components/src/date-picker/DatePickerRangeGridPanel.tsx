@@ -30,6 +30,7 @@ import {
   type DateRangeSelection,
   type SingleDateSelection,
 } from "../calendar";
+import { createRangeNavigationAnnouncement } from "../calendar/internal/createAnnouncement";
 import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import {
@@ -392,7 +393,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       maxDate,
       timezone,
       ...CalendarProps,
-      createAnnouncement: null,
+      createAnnouncement: createRangeNavigationAnnouncement,
     };
 
     return (

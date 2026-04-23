@@ -16,6 +16,8 @@ import {
 import datePickerOverlayCss from "./DatePickerOverlay.css";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
+export const DATE_PICKER_OVERLAY_ANNOUNCER_TARGET = "date-picker-overlay";
+
 const withBaseName = makePrefixer("saltDatePickerOverlay");
 
 /**
@@ -69,7 +71,9 @@ export const DatePickerOverlay = forwardRef<
           })
         : rest)}
     >
-      <AriaAnnouncerProvider>{children}</AriaAnnouncerProvider>
+      <AriaAnnouncerProvider target={DATE_PICKER_OVERLAY_ANNOUNCER_TARGET}>
+        {children}
+      </AriaAnnouncerProvider>
     </FloatingComponent>
   );
 });

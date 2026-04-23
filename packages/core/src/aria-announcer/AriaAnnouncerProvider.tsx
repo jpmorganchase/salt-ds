@@ -6,15 +6,22 @@ import {
   useRef,
   useState,
 } from "react";
+import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import {
   type AnnounceFnOptions,
   AriaAnnouncerContext,
 } from "./AriaAnnouncerContext";
+import { registerAnnouncementTarget } from "./announcementRegistry";
 
 export const ANNOUNCEMENT_TIME_IN_DOM = 300; // time between DOM updates
 
 export interface AriaAnnouncerProviderProps
-  extends ComponentPropsWithRef<"div"> {}
+  extends ComponentPropsWithRef<"div"> {
+  /**
+   * Optional target key used to route announcements to this provider.
+   */
+  target?: string;
+}
 
 const AnnouncementRegion = forwardRef<
   HTMLDivElement,
@@ -39,7 +46,7 @@ type AnnouncementMessage = {
 export const AriaAnnouncerProvider = forwardRef<
   HTMLDivElement,
   AriaAnnouncerProviderProps
->(function AriaAnnouncerProvider({ children, style, ...rest }, ref) {
+>(function AriaAnnouncerProvider({ children, style, target, ...rest }, ref) {
   const [politeAnnouncements, setPoliteAnnouncements] = useState<
     AnnouncementMessage[]
   >([]);
@@ -107,6 +114,13 @@ export const AriaAnnouncerProvider = forwardRef<
   );
 
   const value = useMemo(() => ({ announce }), [announce]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!target) {
+      return;
+    }
+    return registerAnnouncementTarget(target, announce);
+  }, [announce, target]);
 
   return (
     <AriaAnnouncerContext.Provider value={value}>

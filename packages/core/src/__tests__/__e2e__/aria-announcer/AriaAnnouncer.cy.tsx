@@ -11,6 +11,7 @@ const BUTTON_TEXT = "CLICK ME";
 const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
 const BUTTON_TEXT_POLITE = "CLICK ME POLITE";
 const BUTTON_TEXT_ASSERTIVE = "CLICK ME ASSERTIVE";
+const BUTTON_TEXT_TARGETED = "CLICK ME TARGETED";
 
 const TestComponent = ({
   announcement,
@@ -63,7 +64,73 @@ const TestComponent = ({
   );
 };
 
+const TargetedAnnouncementComponent = () => {
+  const { announce } = useAriaAnnouncer();
+
+  return (
+    <button
+      onClick={() => {
+        announce("targeted announcement", { target: "inner-announcer" });
+      }}
+    >
+      {BUTTON_TEXT_TARGETED}
+    </button>
+  );
+};
+
+const MountTargetedAnnouncementComponent = () => {
+  const { announce } = useAriaAnnouncer();
+
+  React.useLayoutEffect(() => {
+    announce("targeted on mount", { target: "inner-announcer" });
+  }, [announce]);
+
+  return <div>mount targeted announcer</div>;
+};
+
 describe("Given useAriaAnnouncer", () => {
+  it("should route an announcement to a named target provider", () => {
+    mount(
+      <AriaAnnouncerProvider data-testid="outer-announcer">
+        <TargetedAnnouncementComponent />
+        <AriaAnnouncerProvider
+          data-testid="inner-announcer"
+          target="inner-announcer"
+        />
+      </AriaAnnouncerProvider>,
+    );
+
+    cy.findByText(BUTTON_TEXT_TARGETED).realClick();
+
+    cy.findByTestId("inner-announcer")
+      .find('[aria-live="polite"]')
+      .should("contain.text", "targeted announcement");
+
+    cy.findByTestId("outer-announcer")
+      .find('[aria-live="polite"]')
+      .should("not.contain.text", "targeted announcement");
+  });
+
+  it("should route an immediate on-mount announcement to a named target provider", () => {
+    mount(
+      <AriaAnnouncerProvider data-testid="outer-announcer">
+        <AriaAnnouncerProvider
+          data-testid="inner-announcer"
+          target="inner-announcer"
+        />
+        <MountTargetedAnnouncementComponent />
+      </AriaAnnouncerProvider>,
+    );
+
+    cy.findByTestId("inner-announcer")
+      .find('[aria-live="polite"]')
+      .should("contain.text", "targeted on mount");
+
+    cy.findByTestId("outer-announcer")
+      .find('[aria-live="polite"]')
+      .should("not.contain.text", "targeted on mount");
+  });
+
   it("should allow announcements triggered during component cleanup (unmount)", () => {
     const CleanupAnnouncer = () => {
       const { announce } = useAriaAnnouncer();

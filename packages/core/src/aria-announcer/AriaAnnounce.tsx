@@ -19,6 +19,8 @@ export const AriaAnnounce: ComponentType<AriaAnnounceProps> = ({
   announcement,
   delay,
   ariaLive,
+  duration,
+  target,
 }) => {
   const { announce } = useAriaAnnouncer();
 
@@ -27,10 +29,14 @@ export const AriaAnnounce: ComponentType<AriaAnnounceProps> = ({
       if (delay !== undefined) {
         announce(announcement, delay);
       } else {
-        announce(announcement, ariaLive ? { ariaLive } : undefined);
+        announce(announcement, {
+          ...(ariaLive ? { ariaLive } : {}),
+          ...(duration !== undefined ? { duration } : {}),
+          ...(target ? { target } : {}),
+        });
       }
     }
-  }, [announce, announcement, ariaLive, delay]);
+  }, [announce, announcement, ariaLive, delay, duration, target]);
 
   // biome-ignore lint/complexity/noUselessFragments: If we return null here, react-docgen wouldn't be able to locate the component.
   return <></>;

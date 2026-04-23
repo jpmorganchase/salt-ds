@@ -5,6 +5,7 @@ import {
   type AriaAnnouncer,
   AriaAnnouncerContext,
 } from "./AriaAnnouncerContext";
+import { getAnnouncementTarget } from "./announcementRegistry";
 
 export type useAnnouncerOptions = {
   debounce?: number;
@@ -49,6 +50,17 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       }
 
       function makeAnnouncement() {
+        console.log(announcement);
+
+        if (options.target) {
+          const targetAnnouncer = getAnnouncementTarget(options.target);
+          if (targetAnnouncer) {
+            const { target: _target, ...targetOptions } = options;
+            targetAnnouncer(announcement, targetOptions);
+            return;
+          }
+        }
+
         // Allow announcements from component cleanup.
         // React runs effect cleanups in parent->child ordering, so gating announcements on a
         // hook-level mounted flag can incorrectly block announcements that occur during unmount

@@ -10,6 +10,11 @@ export type AnnounceFnOptions = {
    * Defaults to the provider's ANNOUNCEMENT_TIME_IN_DOM.
    */
   duration?: number;
+  /**
+   * Optional named target live region.
+   * When set, announcements can be routed to a provider registered with the same target.
+   */
+  target?: string;
 };
 
 export type AriaAnnouncer = {

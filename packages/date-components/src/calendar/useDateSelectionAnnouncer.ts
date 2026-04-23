@@ -1,6 +1,7 @@
+import type { AnnounceFnOptions } from "@salt-ds/core";
 import { useAriaAnnouncer } from "@salt-ds/core";
 import type { SaltDateAdapter } from "@salt-ds/date-adapters";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import type {
   AnnouncementType,
   DateSelectionAnnouncerState,
@@ -12,12 +13,18 @@ export type CreateAnnouncement = (
   dateAdapter: SaltDateAdapter,
 ) => string | undefined;
 
-const DEBOUNCE_MSECS = 2000;
+export interface DateSelectionAnnouncer {
+  announce: (
+    announcementType: AnnouncementType,
+    state?: DateSelectionAnnouncerState,
+    announceOptions?: AnnounceFnOptions,
+  ) => void;
+}
 
 export function useDateSelectionAnnouncer(
   createAnnouncement: CreateAnnouncement | null | undefined,
   dateAdapter: SaltDateAdapter,
-) {
+): DateSelectionAnnouncer {
   const { announce: saltAnnouncer } = useAriaAnnouncer();
 
   // Ensure the returned announce function always uses the latest inputs.
@@ -26,9 +33,6 @@ export function useDateSelectionAnnouncer(
 
   const dateAdapterRef = useRef(dateAdapter);
   dateAdapterRef.current = dateAdapter;
-
-  const latestAnnouncementRef = useRef<string | null>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   /**
    * Call this function with the announcement type and the state needed for that announcement.
@@ -40,6 +44,7 @@ export function useDateSelectionAnnouncer(
     (
       announcementType: AnnouncementType,
       state?: DateSelectionAnnouncerState | undefined,
+      announceOptions?: AnnounceFnOptions,
     ) => {
       const create = createAnnouncementRef.current;
       if (!create) {
@@ -52,30 +57,11 @@ export function useDateSelectionAnnouncer(
       );
 
       if (announcement) {
-        latestAnnouncementRef.current = announcement;
-
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-        }
-
-        timerRef.current = setTimeout(() => {
-          if (latestAnnouncementRef.current) {
-            saltAnnouncer(latestAnnouncementRef.current);
-            latestAnnouncementRef.current = null;
-          }
-        }, DEBOUNCE_MSECS);
+        saltAnnouncer(announcement, announceOptions);
       }
     },
     [saltAnnouncer],
   );
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, []);
 
   return { announce };
 }

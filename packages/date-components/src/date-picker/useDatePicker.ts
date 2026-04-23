@@ -9,13 +9,13 @@ import {
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {
-  type CreateAnnouncement,
-  useDateSelectionAnnouncer,
-} from "../calendar";
-import {
   createRangeSelectionAnnouncement,
   createSingleSelectionAnnouncement,
 } from "../calendar/internal/createAnnouncement";
+import {
+  type CreateAnnouncement,
+  useDateSelectionAnnouncer,
+} from "../calendar/useDateSelectionAnnouncer";
 import type {
   DateInputRangeDetails,
   DateInputSingleDetails,
@@ -25,6 +25,7 @@ import type {
   RangeDatePickerState,
   SingleDatePickerState,
 } from "./DatePickerContext";
+import { DATE_PICKER_OVERLAY_ANNOUNCER_TARGET } from "./DatePickerOverlay";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 interface UseDatePickerBaseProps {
@@ -197,6 +198,10 @@ export function useDatePicker(
     helpers: { setOpen, setOnDismiss },
   } = useDatePickerOverlay();
 
+  const overlayAnnounceOptions = open
+    ? { target: DATE_PICKER_OVERLAY_ANNOUNCER_TARGET }
+    : undefined;
+
   const [selectedDate, setSelectedDate] = useControlled({
     controlled: selectedDateProp,
     default: defaultSelectedDate,
@@ -234,12 +239,19 @@ export function useDatePicker(
     (event: SyntheticEvent, date: SingleDateSelection | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
-      announce("dateSelected", { multiselect: false, selectedDate: date });
+      announce(
+        "dateSelected",
+        {
+          multiselect: false,
+          selectedDate: date,
+        },
+        overlayAnnounceOptions,
+      );
       if (selectionVariant === "single") {
         onApply?.(event, date);
       }
     },
-    [announce, selectionVariant, setOpen, onApply],
+    [announce, overlayAnnounceOptions, selectionVariant, setOpen, onApply],
   );
 
   const checkAndAddError = useCallback(
@@ -298,20 +310,24 @@ export function useDatePicker(
     (event: SyntheticEvent, date: DateRangeSelection | null): void => {
       setCancelled(false);
       setOpen(false, event.nativeEvent, "apply");
-      announce("dateSelected", {
-        multiselect: false,
-        selectedDate: date
-          ? {
-              startDate: date.startDate ?? undefined,
-              endDate: date.endDate ?? undefined,
-            }
-          : null,
-      });
+      announce(
+        "dateSelected",
+        {
+          multiselect: false,
+          selectedDate: date
+            ? {
+                startDate: date.startDate ?? undefined,
+                endDate: date.endDate ?? undefined,
+              }
+            : null,
+        },
+        overlayAnnounceOptions,
+      );
       if (selectionVariant === "range") {
         onApply?.(event, date);
       }
     },
-    [announce, onApply, setOpen, selectionVariant],
+    [announce, overlayAnnounceOptions, onApply, setOpen, selectionVariant],
   );
 
   const selectRange = useCallback(
@@ -373,10 +389,14 @@ export function useDatePicker(
           incompleteRangeAnnouncementKeyRef.current !==
           incompleteRangeAnnouncementKey
         ) {
-          announce("dateSelected", {
-            multiselect: false,
-            selectedDate: incompleteRangeSelection,
-          });
+          announce(
+            "dateSelected",
+            {
+              multiselect: false,
+              selectedDate: incompleteRangeSelection,
+            },
+            overlayAnnounceOptions,
+          );
           incompleteRangeAnnouncementKeyRef.current =
             incompleteRangeAnnouncementKey;
         }
@@ -398,6 +418,7 @@ export function useDatePicker(
     [
       checkAndAddError,
       announce,
+      overlayAnnounceOptions,
       dateAdapter,
       applyRange,
       isDayUnselectable,
