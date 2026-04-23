@@ -1,7 +1,7 @@
 {
-  "contract": "salt_workflow_v3",
+  "contract": "salt_workflow_v1",
   "workflow": "create",
-  "status": "partial",
+  "status": "blocked",
   "request": {
     "entity": "analytical dashboard body",
     "resolved_entity": "Analytical dashboard",
@@ -12,16 +12,14 @@
     "canonical_complete": false,
     "exact_request_safe": false,
     "blocking_reasons": [
-      "required follow-through remains: App header, Header block, Metric"
+      "required follow-through remains: App header, Header block, Metric",
+      "Salt packages are not installed; install @salt-ds/core, @salt-ds/theme before implementing Salt UI."
     ]
   },
   "action": {
-    "kind": "tool_call",
-    "tool": "create_salt_ui",
-    "mode": "exact_name",
-    "args": {
-      "query": "App header"
-    },
+    "kind": "install_dependencies",
+    "packages": ["@salt-ds/core", "@salt-ds/theme"],
+    "package_manager": "pnpm",
     "rule_ids": ["create-follow-through-required"],
     "post_action": null
   },

@@ -8,18 +8,24 @@ For the target architecture Salt should now protect, see [`./ai-tooling-winning-
 For the approval rubric future AI tooling work should pass, see [`./ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md).
 For the active implementation path, use [`./ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md).
 For the current public contract, use [`./public-api-matrix.md`](./public-api-matrix.md).
-Historical Release 1 and `v3` migration paperwork now lives under [`./archive/README.md`](./archive/README.md).
+For host and skill consumers of the current action contract, use [`./salt-workflow-v1-host-contract.md`](./salt-workflow-v1-host-contract.md).
 
 ## Current Public Workflow Contract
 
-The current default public workflow contract is `salt_workflow_v3`.
+The current default public workflow contract is `salt_workflow_v1`.
 
-- MCP compact workflow responses return top-level `salt_workflow_v3` by default.
-- CLI workflow `--json` returns top-level `salt_workflow_v3` by default.
+- MCP compact workflow responses return top-level `salt_workflow_v1` by default.
+- CLI workflow `--json` returns top-level `salt_workflow_v1` by default.
 - Rich workflow output is explicit-only behind MCP `view: "full"` and CLI `--full`.
-- Full workflow output keeps the same top-level `salt_workflow_v3` contract and adds `details`.
+- Full workflow output keeps the same top-level `salt_workflow_v1` contract and adds `details`.
 - CLI `create --starter-only --json` is an advanced create-only artifact path. It is not part of the default compact workflow contract and should reject unsupported combinations such as `--starter-only --full`.
 - Top-level workflow state is authoritative for agent action; nested artifacts are secondary.
+- Hosts must branch on `action.kind` before editing:
+  - `implement` is the only action that permits Salt UI edits, and only when `status = "success"`, `safety.exact_request_safe = true`, and `evidence.status = "complete"`
+  - `ask_user` means stop and ask
+  - `retrieve_entity` and `retrieve_examples` mean gather canonical evidence first
+  - `install_dependencies` means install the listed packages before writing Salt UI
+  - `fix_context` and `bootstrap_repo` mean resolve setup before repo-specific edits
 - `status = "partial"` or `status = "blocked"` is not completion. Hosts should continue the returned `action` or report the workflow as incomplete instead of stopping after starter-code creation.
 - Hosts should request `view: "full"` only after compact output proves insufficient or the user explicitly asks for starter code, richer provenance, or detailed implementation artifacts.
 - Hosts should leave `solution_type` unset for broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.

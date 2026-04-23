@@ -132,7 +132,13 @@ describe("Salt skill contracts", () => {
       "if output is truncated, malformed, semantically off-target, or repeatedly misroutes to unrelated patterns, fail closed",
     );
     expect(primarySkill).toContain(
-      "If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned next step before implementing the blocked region.",
+      "If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned action before implementing the blocked region.",
+    );
+    expect(primarySkill).toContain(
+      "Treat `salt_workflow_v1` action kinds as binding:",
+    );
+    expect(primarySkill).toContain(
+      "`install_dependencies`: install the listed Salt packages before writing Salt UI",
     );
     expect(primarySkill).toContain(
       "do not claim a Salt workflow completed merely because the host emitted a large payload",
@@ -161,6 +167,9 @@ describe("Salt skill contracts", () => {
       "if compact `create` output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked sub-surface",
     );
     expect(createRules).toContain(
+      "branch on `salt_workflow_v1.action.kind`: `ask_user` asks, `retrieve_entity` or `retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` allows Salt UI edits",
+    );
+    expect(createRules).toContain(
       "do not translate concrete follow-up asks into abstract category prose",
     );
     expect(createRules).toContain(
@@ -172,6 +181,9 @@ describe("Salt skill contracts", () => {
     expect(createWorkflow).toContain("workflow-directed grounding follow-ups");
     expect(createWorkflow).toContain(
       "follow the returned top-level `action` before building the blocked region.",
+    );
+    expect(createWorkflow).toContain(
+      "Branch on `salt_workflow_v1.action.kind`: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.",
     );
     expect(createWorkflow).toContain(
       "Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts",
@@ -231,6 +243,9 @@ describe("Salt skill contracts", () => {
       "Read compact workflow output from top-level fields first:",
     );
     expect(transport).toContain(
+      "Treat `salt_workflow_v1` action kinds as binding:",
+    );
+    expect(transport).toContain(
       "`salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup or rough design outline that should be converted into structured evidence before translation",
     );
     expect(transport).toContain(
@@ -256,7 +271,10 @@ describe("Salt skill contracts", () => {
       "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
     );
     expect(repoInstructionsTemplate).toContain(
-      "use the compact Salt contract first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary`",
+      "use the compact Salt contract first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`",
+    );
+    expect(repoInstructionsTemplate).toContain(
+      'Treat the compact `salt_workflow_v1` action as a command, not advice:',
     );
     expect(repoInstructionsTemplate).toContain(
       "Do not send raw image attachments directly to Salt MCP.",

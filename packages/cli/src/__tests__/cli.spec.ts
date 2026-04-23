@@ -162,7 +162,7 @@ function workflowStatusToExitCode(
 // biome-ignore lint/suspicious/noExplicitAny: Test helper accepts both compact and normalized full workflow payloads.
 function expectWorkflowExitCode(payload: any, exitCode: number) {
   if (
-    payload?.contract === "salt_workflow_v3" &&
+    payload?.contract === "salt_workflow_v1" &&
     typeof payload?.status === "string" &&
     /^(success|partial|blocked|failed)$/.test(payload.status)
   ) {
@@ -184,13 +184,13 @@ function normalizeCliJson(value: unknown): any {
   }
 
   const payload = value as Record<string, unknown>;
-  if (payload.contract !== "salt_workflow_v3" || payload.details == null) {
+  if (payload.contract !== "salt_workflow_v1" || payload.details == null) {
     return value;
   }
 
   expect(payload).toEqual(
     expect.objectContaining({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: expect.any(String),
       transport: expect.any(String),
       status: expect.any(String),
@@ -322,8 +322,8 @@ describe("salt cli", () => {
       },
     });
 
-    expect(exitCode).toBe(0);
     expect(stderr).toBe("");
+    expect(exitCode).toBe(0);
     const payload = JSON.parse(stdout);
     expect(payload.toolVersion).toBe("0.0.0");
     expect(payload.capabilityManifest).toEqual(
@@ -340,9 +340,35 @@ describe("salt cli", () => {
           version: "0.1.0",
         }),
         contracts: expect.objectContaining({
-          compact_workflow_contract_version: "v3",
+          compact_workflow_contract_version: "v1",
           compact_workflow_ids: ["create", "review", "migrate", "upgrade"],
           setup_contract_ids: ["info", "init"],
+          workflow_action_contract: expect.objectContaining({
+            implementation_gate: expect.objectContaining({
+              required: {
+                status: "success",
+                "safety.exact_request_safe": true,
+                "action.kind": "implement",
+                "evidence.status": "complete",
+                "action.post_action.kind": "review",
+              },
+              non_implementable_statuses: ["partial", "blocked", "failed"],
+            }),
+            evidence_contract: expect.objectContaining({
+              source_backed_kinds: [
+                "docs",
+                "examples",
+                "registry",
+                "project_policy",
+              ],
+              fallback_kind: "heuristic_fallback",
+              success_requires_complete_evidence: true,
+            }),
+            recipe_contract: expect.objectContaining({
+              composite_requests_use_recipe: true,
+              questions_block_implementation: true,
+            }),
+          }),
         }),
         public_surface: expect.objectContaining({
           default_surface_ids: [
@@ -449,8 +475,8 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
     expect(stderr).toBe("");
+    expect(exitCode).toBe(0);
     const payload = JSON.parse(stdout);
     expect(payload.packageJsonPath).toBeNull();
     expect(payload.capabilityManifest.registry).toEqual({
@@ -851,6 +877,7 @@ describe("salt cli", () => {
           name: "salt-cli-init",
           packageManager: "pnpm@9.1.0",
           dependencies: {
+            "@salt-ds/core": "^2.0.0",
             react: "^18.3.1",
             vite: "^7.1.0",
           },
@@ -1352,6 +1379,7 @@ describe("salt cli", () => {
         {
           packageManager: "pnpm@9.1.0",
           dependencies: {
+            "@salt-ds/core": "^2.0.0",
             react: "^18.3.1",
             vite: "^7.1.0",
           },
@@ -1492,6 +1520,8 @@ describe("salt cli", () => {
         {
           packageManager: "pnpm@9.1.0",
           dependencies: {
+            "@salt-ds/core": "^2.0.0",
+            "@salt-ds/theme": "^2.0.0",
             react: "^18.3.1",
             vite: "^7.1.0",
           },
@@ -1732,6 +1762,8 @@ describe("salt cli", () => {
         {
           packageManager: "pnpm@9.1.0",
           dependencies: {
+            "@salt-ds/core": "^2.0.0",
+            "@salt-ds/theme": "^2.0.0",
             react: "^18.3.1",
             vite: "^7.1.0",
           },
@@ -1821,6 +1853,8 @@ describe("salt cli", () => {
         {
           packageManager: "pnpm@9.1.0",
           dependencies: {
+            "@salt-ds/core": "^2.0.0",
+            "@salt-ds/theme": "^2.0.0",
             react: "^18.3.1",
             vite: "^7.1.0",
           },
@@ -2293,6 +2327,8 @@ describe("salt cli", () => {
         {
           packageManager: "pnpm@9.1.0",
           dependencies: {
+            "@salt-ds/core": "^2.0.0",
+            "@salt-ds/theme": "^2.0.0",
             react: "^18.3.1",
             vite: "^7.1.0",
           },
@@ -2326,9 +2362,9 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
     expect(stderr).toBe("");
     const payload = readCliJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     const starterSnippets = payload.result?.recommendation?.starter_code ?? [];
     expect(starterSnippets.length).toBeGreaterThan(0);
 
@@ -2946,7 +2982,7 @@ describe("salt cli", () => {
     expect(stderr).toBe("");
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: "create",
       transport: "cli",
       status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
@@ -3101,9 +3137,9 @@ describe("salt cli", () => {
         match_status: "broadened",
       },
       action: {
-        kind: "tool_call",
-        tool: "create_salt_ui",
-        mode: "exact_name",
+        kind: "install_dependencies",
+        package_manager: "pnpm",
+        packages: expect.arrayContaining(["@salt-ds/core", "@salt-ds/theme"]),
       },
     });
   });
@@ -3475,7 +3511,7 @@ describe("salt cli", () => {
     expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: "review",
       transport: "cli",
       status: "blocked",
@@ -3677,8 +3713,8 @@ describe("salt cli", () => {
     );
     expect(payload.workflow.readiness).toEqual(
       expect.objectContaining({
-        status: "starter_needs_attention",
-        implementationReady: false,
+        status: "starter_validated",
+        implementationReady: true,
         reason: expect.any(String),
       }),
     );
@@ -3808,7 +3844,7 @@ describe("salt cli", () => {
     expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: "migrate",
       transport: "cli",
       status: expect.stringMatching(/^(partial|blocked)$/),
@@ -3896,7 +3932,7 @@ describe("salt cli", () => {
       expect.objectContaining({
         status: "starter_needs_attention",
         implementationReady: false,
-        reason: expect.stringContaining("--salt-size-base"),
+        reason: expect.stringContaining("provider_import metadata"),
       }),
     );
     expect(payload.result.summary).toEqual(
@@ -4490,7 +4526,7 @@ describe("salt cli", () => {
     expect(exitCode).toBe(20);
     const payload = JSON.parse(stdout);
     expect(payload).toMatchObject({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: "upgrade",
       transport: "cli",
       status: "blocked",
@@ -4568,9 +4604,9 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
     expect(stderr).toBe("");
     const payload = readCliJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.workflow.id).toBe("review");
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
@@ -4799,9 +4835,9 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(0);
     expect(stderr).toBe("");
     const payload = readCliJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.artifacts.migrationVerification).toEqual(
       expect.objectContaining({
         runtimeCompared: true,

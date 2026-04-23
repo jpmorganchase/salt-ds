@@ -1,5 +1,5 @@
 {
-  "contract": "salt_workflow_v3",
+  "contract": "salt_workflow_v1",
   "workflow": "upgrade",
   "status": "blocked",
   "request": {

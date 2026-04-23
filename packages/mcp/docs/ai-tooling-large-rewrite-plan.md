@@ -1,6 +1,6 @@
 # AI Tooling Large Rewrite Plan
 
-Status: active proposed rewrite path; Phase 0 frozen, Phase 1 support surface landed, and the first Phase 2/3 create cutovers are in repo
+Status: active proposed rewrite path; Phase 0 frozen, Phase 1 support surface landed, and the first Phase 2/3 create changes are in repo
 Date: April 22, 2026
 Owner: AI tooling maintainers
 
@@ -34,7 +34,7 @@ If the team accepts one more large rewrite, prefer this plan over continued incr
 
 Why:
 
-- the compact `v3` workflow contract is now good enough to preserve
+- the compact `v1` workflow contract is now the only public workflow contract
 - the remaining failures cluster in the same place:
   - rich `create` paths
   - mixed owner versus supporting-surface prompts
@@ -63,7 +63,7 @@ Repo-local progress now in place:
 - the public workflow story is unchanged:
   - compact `create` still owns workflow routing
   - the new support surface is additive only
-- the first architecture cutover step is now live:
+- the first architecture simplification step is now live:
   - recommend-mode `create` resolves owner facts through the compact path first
   - full-mode `create` now enriches that resolved owner instead of re-running owner selection
   - compact/full parity coverage now exists for mixed-surface prompts and the old empty-`request` regression path
@@ -91,7 +91,7 @@ The next retrieval-first slices should stay narrow and cumulative:
    - close the remaining raw-retrieval ambiguity for multi-state regional prompts such as `Content status` versus single-state components, even though the resolved owner is now stable
 2. move more semantics into generated artifacts
    - keep runtime scoring generic
-   - reduce handwritten runtime intent classes and compatibility branches
+   - reduce handwritten runtime intent classes and duplicate branches
 3. keep `create` thin
    - compact chooses owner and next action from retrieval evidence
    - full only enriches the compact decision
@@ -107,7 +107,7 @@ These decisions should remain stable through the rewrite:
 
 ### Keep
 
-- `salt_workflow_v3` as the public workflow contract
+- `salt_workflow_v1` as the public workflow contract
 - the workflow-first product story:
   - `create`
   - `review`
@@ -206,7 +206,7 @@ This is the only place owner selection should happen.
 
 ### 4. Workflow Contract Layer
 
-The workflow layer should translate the resolve result into `salt_workflow_v3`.
+The workflow layer should translate the resolve result into `salt_workflow_v1`.
 
 Its job is not to search again.
 
@@ -405,7 +405,7 @@ Do not own:
 
 Before rewriting:
 
-- freeze the current `v3` contract fixtures
+- freeze the current `v1` contract fixtures
 - freeze external-host failure packets
 - freeze the current retrieval regression corpus
 
@@ -483,7 +483,7 @@ Acceptance:
 After the new stack is green:
 
 - remove obsolete heuristics
-- remove transitional compatibility layers
+- remove transitional layers
 - archive superseded planning docs if their rules are fully absorbed
 
 Do not leave both systems live indefinitely.

@@ -53,9 +53,33 @@ export type PublicToolCallStep = {
   args: Record<string, unknown>;
 };
 
+export type PublicRetrieveEntityStep = {
+  kind: "retrieve_entity";
+  tool: "get_salt_entity" | "create_salt_ui";
+  args: Record<string, unknown>;
+};
+
+export type PublicRetrieveExamplesStep = {
+  kind: "retrieve_examples";
+  tool: "get_salt_examples" | "create_salt_ui";
+  args: Record<string, unknown>;
+};
+
 export type PublicAskUserStep = {
   kind: "ask_user";
   question: string;
+};
+
+export type PublicInstallDependenciesStep = {
+  kind: "install_dependencies";
+  package_manager: string;
+  packages: string[];
+};
+
+export type PublicBootstrapRepoStep = {
+  kind: "bootstrap_repo";
+  tool: "bootstrap_salt_repo" | "salt-ds init";
+  args?: Record<string, unknown>;
 };
 
 export type PublicImplementStep = {
@@ -78,12 +102,54 @@ export type PublicFixContextStep = {
 
 export type PublicNextStep =
   | PublicToolCallStep
+  | PublicRetrieveEntityStep
+  | PublicRetrieveExamplesStep
   | PublicAskUserStep
+  | PublicInstallDependenciesStep
+  | PublicBootstrapRepoStep
   | PublicImplementStep
   | PublicReviewStep
   | PublicFixContextStep;
 
-export const PUBLIC_WORKFLOW_CONTRACT_VERSION = "salt_workflow_v3";
+export const PUBLIC_WORKFLOW_CONTRACT_VERSION = "salt_workflow_v1";
+
+export type PublicActionKind = PublicNextStep["kind"];
+
+export type PublicEvidenceKind =
+  | "docs"
+  | "examples"
+  | "registry"
+  | "project_policy"
+  | "heuristic_fallback";
+
+export interface PublicEvidenceItem {
+  kind: PublicEvidenceKind;
+  source: "canonical_salt" | "project_policy" | "heuristic_fallback";
+  entity?: string;
+  field?: string;
+  source_urls: string[];
+  summary?: string;
+}
+
+export interface PublicEvidenceSummary {
+  status: "complete" | "partial" | "missing";
+  items: PublicEvidenceItem[];
+  source_urls: string[];
+  missing: string[];
+  heuristic_fallback: boolean;
+}
+
+export interface PublicRecipeStep {
+  id: string;
+  action: PublicNextStep;
+  status: "required" | "available" | "complete";
+  evidence_required?: string[];
+  reason?: string;
+}
+
+export interface PublicRecipe {
+  steps: PublicRecipeStep[];
+}
 
 export interface PublicContractRequest {
   entity?: string;
@@ -117,6 +183,11 @@ export interface PublicContract {
   request: PublicContractRequest;
   safety: PublicContractSafety;
   action: PublicAction;
+  next_required_action: PublicNextStep;
+  allowed_next_actions: PublicActionKind[];
+  recipe: PublicRecipe;
+  questions: string[];
+  evidence: PublicEvidenceSummary;
   summary: string;
   truncated?: boolean;
   available_expansions?: string[];
@@ -154,6 +225,10 @@ export interface PublicContractInput {
   state: PublicContractState;
   summary: string;
   next_step: PublicNextStep;
+  questions?: string[];
+  evidence?: PublicEvidenceSummary;
+  recipe?: PublicRecipe;
+  allowed_next_actions?: PublicActionKind[];
   rule_ids?: string[];
   blocking_reasons?: string[];
   truncated?: boolean;
@@ -169,6 +244,8 @@ export interface PublicContractBuildOptions {
   registry?: SaltRegistry;
   query?: string;
   package?: string;
+  salt_packages?: string[];
+  package_manager?: string;
 }
 
 function uniqueNonEmptyStrings(
@@ -206,7 +283,7 @@ function isExactRequestSafe(
   }
 
   if (exactRequest.match_status === "broadened") {
-    return exactRequest.exact_match_required !== true;
+    return false;
   }
 
   return isMatchSafe(exactRequest.match_status);
@@ -294,6 +371,10 @@ export function derivePublicCanonicalComplete(
     return false;
   }
 
+  if (input.evidence && input.evidence.status !== "complete") {
+    return false;
+  }
+
   return true;
 }
 
@@ -319,6 +400,10 @@ export function derivePublicSafeToImplementExactRequest(
     return false;
   }
 
+  if (input.evidence && input.evidence.status !== "complete") {
+    return false;
+  }
+
   return state.usable_guidance_present;
 }
 
@@ -331,7 +416,48 @@ function shouldBlock(input: PublicContractInput): boolean {
     state.blocking_questions.length > 0 ||
     state.starter_blockers.length > 0 ||
     state.project_policy_blockers.length > 0 ||
+    input.next_step.kind === "ask_user" ||
+    input.next_step.kind === "install_dependencies" ||
     shouldBlockOnSemanticMismatch(input.exact_request)
+  );
+}
+
+function buildFallbackEvidence(
+  input: PublicContractInput,
+): PublicEvidenceSummary {
+  return {
+    status: "missing",
+    items: [],
+    source_urls: [],
+    missing: ["source-backed Salt evidence is incomplete"],
+    heuristic_fallback: false,
+  };
+}
+
+function hasSourceBackedEvidence(evidence: PublicEvidenceSummary): boolean {
+  return evidence.items.some(
+    (item) =>
+      item.kind !== "heuristic_fallback" &&
+      item.source !== "heuristic_fallback" &&
+      item.source_urls.length > 0,
+  );
+}
+
+function deriveAllowedNextActions(
+  input: PublicContractInput,
+): PublicActionKind[] {
+  return [
+    input.next_step.kind,
+    ...input.state.required_follow_through.map(() => "retrieve_entity" as const),
+    ...(input.state.blocking_questions.length > 0
+      ? (["ask_user"] as const)
+      : []),
+    ...(input.next_step.kind === "implement"
+      ? (["review"] as const)
+      : []),
+  ].filter(
+    (kind, index, all): kind is PublicActionKind =>
+      all.indexOf(kind) === index,
   );
 }
 
@@ -367,6 +493,7 @@ export function getPublicContractValidationErrors(
   const request = contract.request;
   const safety = contract.safety;
   const action = contract.action;
+  const nextRequiredAction = contract.next_required_action;
   const hasRequestedEntity = Boolean(request.entity?.trim());
   const hasResolvedEntity =
     request.resolved_entity === null ||
@@ -388,6 +515,28 @@ export function getPublicContractValidationErrors(
 
   if (contract.status === "success" && !safety.exact_request_safe) {
     errors.push("status=success requires safety.exact_request_safe=true");
+  }
+
+  if (contract.status === "success" && contract.evidence.status !== "complete") {
+    errors.push("status=success requires evidence.status=complete");
+  }
+
+  if (safety.exact_request_safe && contract.evidence.status !== "complete") {
+    errors.push("safety.exact_request_safe=true requires complete evidence");
+  }
+
+  if (
+    contract.status === "success" &&
+    !hasSourceBackedEvidence(contract.evidence)
+  ) {
+    errors.push("status=success requires source-backed evidence");
+  }
+
+  if (
+    safety.exact_request_safe &&
+    !hasSourceBackedEvidence(contract.evidence)
+  ) {
+    errors.push("safety.exact_request_safe=true requires source-backed evidence");
   }
 
   if (contract.status === "blocked" && safety.blocking_reasons.length === 0) {
@@ -444,6 +593,47 @@ export function getPublicContractValidationErrors(
     );
   }
 
+  if (nextRequiredAction.kind !== action.kind) {
+    errors.push("next_required_action.kind must match action.kind");
+  }
+
+  if (!contract.allowed_next_actions.includes(action.kind)) {
+    errors.push("allowed_next_actions must include action.kind");
+  }
+
+  if (
+    contract.questions.length > 0 &&
+    !["ask_user", "fix_context", "install_dependencies"].includes(
+      action.kind,
+    ) &&
+    contract.status === "blocked"
+  ) {
+    errors.push("blocked contracts with questions must use action.kind=ask_user");
+  }
+
+  if (
+    action.kind === "ask_user" &&
+    contract.questions.length === 0 &&
+    !action.question
+  ) {
+    errors.push("action.kind=ask_user requires a question");
+  }
+
+  if (
+    contract.evidence.items.some((item) => item.kind === "heuristic_fallback")
+  ) {
+    if (contract.evidence.status === "complete") {
+      errors.push("heuristic fallback evidence cannot be complete");
+    }
+    if (contract.status === "success") {
+      errors.push("heuristic fallback evidence cannot produce success");
+    }
+  }
+
+  if (contract.recipe.steps.length === 0) {
+    errors.push("recipe.steps must include at least the next required action");
+  }
+
   return uniqueNonEmptyStrings(errors);
 }
 
@@ -466,6 +656,14 @@ export function buildPublicContract(
     derivePublicSafeToImplementExactRequest(input);
   const workflowStatus = derivePublicWorkflowStatus(input);
   const blockingReasons = deriveBlockingReasons(input);
+  const evidence = input.evidence ?? buildFallbackEvidence(input);
+  const allowedNextActions =
+    input.allowed_next_actions ?? deriveAllowedNextActions(input);
+  const questions = uniqueNonEmptyStrings([
+    ...(input.questions ?? []),
+    ...input.state.blocking_questions,
+    input.next_step.kind === "ask_user" ? input.next_step.question : null,
+  ]);
   const requestedEntity = input.exact_request?.requested_entity?.trim();
   const resolvedEntity =
     input.exact_request?.resolved_entity === null
@@ -506,6 +704,19 @@ export function buildPublicContract(
       rule_ids: uniqueNonEmptyStrings(input.rule_ids ?? []),
       post_action: postAction,
     },
+    next_required_action: input.next_step,
+    allowed_next_actions: allowedNextActions,
+    recipe: input.recipe ?? {
+      steps: [
+        {
+          id: "next-required-action",
+          action: input.next_step,
+          status: "required",
+        },
+      ],
+    },
+    questions,
+    evidence,
     summary: input.summary.trim(),
     ...(input.truncated ? { truncated: true } : {}),
     ...(input.available_expansions?.length
@@ -613,12 +824,25 @@ function buildCreateNextStep(
   contract: CreateSaltUiWorkflowContract,
   exactRequest?: PublicContractExactRequest,
   reference?: CreateRequestMatch["reference"],
+  dependencyStep?: PublicInstallDependenciesStep | null,
+  evidence?: PublicEvidenceSummary,
 ): PublicNextStep {
+  if (dependencyStep) {
+    return dependencyStep;
+  }
+
   if (!contract.context_requirement.repo_specific_edits_ready) {
     return toFixContextStep(
       "get_salt_project_context",
       contract.context_requirement.retry_with.root_dir,
     );
+  }
+
+  if (contract.implementation_gate.blocking_questions.length > 0) {
+    return {
+      kind: "ask_user",
+      question: contract.implementation_gate.blocking_questions[0],
+    };
   }
 
   if (
@@ -640,11 +864,10 @@ function buildCreateNextStep(
 
   if (contract.implementation_gate.required_follow_through.length > 0) {
     return {
-      kind: "tool_call",
-      tool: "create_salt_ui",
-      mode: "exact_name",
+      kind: "retrieve_entity",
+      tool: "get_salt_entity",
       args: {
-        query: contract.implementation_gate.required_follow_through[0].entity,
+        name: contract.implementation_gate.required_follow_through[0].entity,
       },
     };
   }
@@ -655,19 +878,29 @@ function buildCreateNextStep(
     !isExactRequestSafe(exactRequest)
   ) {
     return {
-      kind: "tool_call",
-      tool: "create_salt_ui",
-      mode: "exact_name",
+      kind: "retrieve_entity",
+      tool: "get_salt_entity",
       args: {
-        query: reference.requested_target.name,
+        name: reference.requested_target.name,
       },
     };
   }
 
-  if (contract.implementation_gate.blocking_questions.length > 0) {
+  if (evidence && evidence.status !== "complete") {
+    if (exactRequest?.resolved_entity) {
+      return {
+        kind: "retrieve_entity",
+        tool: "get_salt_entity",
+        args: {
+          name: exactRequest.resolved_entity,
+        },
+      };
+    }
+
     return {
-      kind: "ask_user",
-      question: contract.implementation_gate.blocking_questions[0],
+      kind: "retrieve_examples",
+      tool: "get_salt_examples",
+      args: {},
     };
   }
 
@@ -692,8 +925,9 @@ function buildCreateNextStep(
 function buildReviewNextStep(
   result: ReviewSaltUiResult,
   contract: ReviewSaltUiWorkflowContract,
+  options?: { can_implement: boolean },
 ): PublicNextStep {
-  if (contract.decision.status === "clean") {
+  if (options?.can_implement) {
     return {
       kind: "implement",
       scope: "exact_request",
@@ -874,6 +1108,350 @@ function countProjectPolicyFixCandidates(
   ).length;
 }
 
+function readRecord(value: unknown): Record<string, unknown> | null {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+function readRecordString(value: unknown, key: string): string | null {
+  const record = readRecord(value);
+  const entry = record?.[key];
+  return typeof entry === "string" && entry.trim().length > 0
+    ? entry.trim()
+    : null;
+}
+
+function readRecordStringArray(value: unknown, key: string): string[] {
+  const record = readRecord(value);
+  const entry = record?.[key];
+  return Array.isArray(entry)
+    ? entry.filter(
+        (item): item is string =>
+          typeof item === "string" && item.trim().length > 0,
+      )
+    : [];
+}
+
+function readRelatedDocUrls(value: unknown): string[] {
+  const relatedDocs = readRecord(readRecord(value)?.related_docs);
+  if (!relatedDocs) {
+    return [];
+  }
+
+  return Object.values(relatedDocs).filter(
+    (entry): entry is string =>
+      typeof entry === "string" && entry.trim().length > 0,
+  );
+}
+
+function readExampleSourceUrls(value: unknown): string[] {
+  const examples = readRecord(value)?.examples;
+  if (!Array.isArray(examples)) {
+    return [];
+  }
+
+  return examples
+    .map((example) => readRecordString(example, "source_url"))
+    .filter((entry): entry is string => Boolean(entry));
+}
+
+function readEntityName(value: unknown): string | undefined {
+  return readRecordString(value, "name") ?? undefined;
+}
+
+function findCreateEvidenceRecord(
+  registry: SaltRegistry | undefined,
+  entity: string | null,
+): Record<string, unknown> | null {
+  if (!registry || !entity) {
+    return null;
+  }
+
+  const normalizedEntity = entity.trim().toLowerCase();
+  const collections: unknown[][] = [
+    registry.components,
+    registry.patterns,
+    registry.pages,
+    registry.guides,
+    registry.tokens,
+  ];
+
+  for (const collection of collections) {
+    const record = collection
+      .map((entry) => readRecord(entry))
+      .find(
+        (entry) => readEntityName(entry)?.toLowerCase() === normalizedEntity,
+      );
+    if (record) {
+      return record;
+    }
+  }
+
+  return null;
+}
+
+function buildEvidenceItem(input: {
+  kind: PublicEvidenceKind;
+  source?: PublicEvidenceItem["source"];
+  entity?: string;
+  field?: string;
+  source_urls?: string[];
+  summary?: string;
+}): PublicEvidenceItem {
+  return {
+    kind: input.kind,
+    source: input.source ?? "canonical_salt",
+    ...(input.entity ? { entity: input.entity } : {}),
+    ...(input.field ? { field: input.field } : {}),
+    source_urls: uniqueNonEmptyStrings(input.source_urls ?? []),
+    ...(input.summary ? { summary: input.summary } : {}),
+  };
+}
+
+function buildWorkflowEvidenceFromProvenance(input: {
+  provenance?: { source_urls?: string[]; canonical_source_urls?: string[] };
+  entity?: string | null;
+  extra_items?: PublicEvidenceItem[];
+  missing?: string[];
+}): PublicEvidenceSummary {
+  const sourceUrls = uniqueNonEmptyStrings([
+    ...(input.provenance?.canonical_source_urls ?? []),
+    ...(input.provenance?.source_urls ?? []),
+    ...(input.extra_items ?? []).flatMap((item) => item.source_urls),
+  ]);
+  const items = [
+    ...(sourceUrls.length > 0
+      ? [
+          buildEvidenceItem({
+            kind: "docs",
+            entity: input.entity ?? undefined,
+            field: "source_urls",
+            source_urls: sourceUrls,
+            summary: "Canonical Salt documentation or registry sources support this workflow decision.",
+          }),
+        ]
+      : []),
+    ...(input.extra_items ?? []),
+  ];
+  const missing = uniqueNonEmptyStrings(input.missing ?? []);
+
+  return {
+    status:
+      items.length > 0 && missing.length === 0
+        ? "complete"
+        : items.length > 0
+          ? "partial"
+          : "missing",
+    items,
+    source_urls: sourceUrls,
+    missing:
+      items.length > 0 ? missing : ["canonical Salt source evidence is missing"],
+    heuristic_fallback: items.some((item) => item.kind === "heuristic_fallback"),
+  };
+}
+
+function buildCreateEvidence(
+  result: CreateSaltUiResult,
+  contract: CreateSaltUiWorkflowContract,
+  exactRequest: PublicContractExactRequest | undefined,
+  registry?: SaltRegistry,
+): PublicEvidenceSummary {
+  const recommended = readRecord(result.recommended);
+  const entity = readEntityName(recommended) ?? result.decision.name ?? null;
+  const registryRecord = findCreateEvidenceRecord(registry, entity);
+  const relatedDocs = uniqueNonEmptyStrings([
+    ...readRelatedDocUrls(recommended),
+    ...readRelatedDocUrls(registryRecord),
+  ]);
+  const exampleSourceUrls = uniqueNonEmptyStrings([
+    ...readExampleSourceUrls(recommended),
+    ...readExampleSourceUrls(registryRecord),
+  ]);
+  const explicitSourceUrls = uniqueNonEmptyStrings([
+    ...readRecordStringArray(recommended, "source_urls"),
+    ...readRecordStringArray(registryRecord, "source_urls"),
+  ]);
+  const whenToUse = uniqueNonEmptyStrings([
+    ...readRecordStringArray(recommended, "when_to_use"),
+    ...readRecordStringArray(registryRecord, "when_to_use"),
+  ]);
+  const whenNotToUse = uniqueNonEmptyStrings([
+    ...readRecordStringArray(recommended, "when_not_to_use"),
+    ...readRecordStringArray(registryRecord, "when_not_to_use"),
+  ]);
+  const sourceUrls = uniqueNonEmptyStrings([
+    ...contract.provenance.canonical_source_urls,
+    ...contract.provenance.related_guide_urls,
+    ...contract.provenance.starter_source_urls,
+    ...contract.provenance.source_urls,
+    ...relatedDocs,
+    ...exampleSourceUrls,
+    ...explicitSourceUrls,
+  ]);
+  const items: PublicEvidenceItem[] = [
+    ...(sourceUrls.length > 0
+      ? [
+          buildEvidenceItem({
+            kind: "docs",
+            entity: entity ?? undefined,
+            field: "source_urls",
+            source_urls: sourceUrls,
+            summary: "Canonical Salt docs or registry sources support the create decision.",
+          }),
+        ]
+      : []),
+    ...(whenToUse.length > 0
+      ? [
+          buildEvidenceItem({
+            kind: "registry",
+            entity: entity ?? undefined,
+            field: "when_to_use",
+            source_urls: sourceUrls,
+            summary: whenToUse[0],
+          }),
+        ]
+      : []),
+    ...(whenNotToUse.length > 0
+      ? [
+          buildEvidenceItem({
+            kind: "registry",
+            entity: entity ?? undefined,
+            field: "when_not_to_use",
+            source_urls: sourceUrls,
+            summary: whenNotToUse[0],
+          }),
+        ]
+      : []),
+    ...(exampleSourceUrls.length > 0
+      ? [
+          buildEvidenceItem({
+            kind: "examples",
+            entity: entity ?? undefined,
+            field: "examples",
+            source_urls: exampleSourceUrls,
+            summary: "Canonical examples are available for implementation grounding.",
+          }),
+        ]
+      : []),
+  ];
+  const missing = uniqueNonEmptyStrings([
+    sourceUrls.length === 0 ? "canonical source URLs" : null,
+    exactRequest?.match_status === "broadened"
+      ? "full-request evidence beyond broadened owner"
+      : null,
+    ...contract.implementation_gate.required_follow_through.map(
+      (item) => `follow-through evidence for ${item.entity}`,
+    ),
+    ...contract.implementation_gate.blocking_questions.map(
+      () => "answered clarification",
+    ),
+  ]);
+
+  return {
+    status:
+      items.length > 0 && missing.length === 0
+        ? "complete"
+        : items.length > 0
+          ? "partial"
+          : "missing",
+    items,
+    source_urls: sourceUrls,
+    missing:
+      items.length > 0 ? missing : ["canonical Salt source evidence is missing"],
+    heuristic_fallback: false,
+  };
+}
+
+function buildCreateDependencyStep(input: {
+  salt_packages?: string[];
+  package_manager?: string;
+  result: CreateSaltUiResult;
+}): PublicInstallDependenciesStep | null {
+  if (!input.salt_packages || input.salt_packages.length > 0) {
+    return null;
+  }
+
+  const recommendedPackage = readRecord(input.result.recommended)?.package;
+  const packageName = readRecordString(recommendedPackage, "name");
+
+  return {
+    kind: "install_dependencies",
+    package_manager: input.package_manager ?? "npm",
+    packages: uniqueNonEmptyStrings([
+      "@salt-ds/core",
+      packageName,
+      "@salt-ds/theme",
+    ]),
+  };
+}
+
+function buildCreateRecipe(input: {
+  next_step: PublicNextStep;
+  contract: CreateSaltUiWorkflowContract;
+  evidence: PublicEvidenceSummary;
+  dependency_step: PublicInstallDependenciesStep | null;
+}): PublicRecipe {
+  const steps: PublicRecipeStep[] = [];
+  const pushStep = (
+    id: string,
+    action: PublicNextStep,
+    reason?: string,
+  ) => {
+    if (steps.some((step) => step.id === id)) {
+      return;
+    }
+
+    steps.push({
+      id,
+      action,
+      status: action.kind === input.next_step.kind ? "required" : "available",
+      evidence_required:
+        action.kind === "implement" ? input.evidence.missing : undefined,
+      ...(reason ? { reason } : {}),
+    });
+  };
+
+  if (input.dependency_step) {
+    pushStep(
+      "install-salt-dependencies",
+      input.dependency_step,
+      "Salt packages are not installed in the target repo yet.",
+    );
+  }
+
+  for (const followThrough of input.contract.implementation_gate
+    .required_follow_through) {
+    pushStep(
+      `retrieve-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
+      {
+        kind: "retrieve_entity",
+        tool: "get_salt_entity",
+        args: {
+          name: followThrough.entity,
+        },
+      },
+      `Ground ${followThrough.entity} before implementing the ${followThrough.region} region.`,
+    );
+  }
+
+  for (const [index, question] of input.contract.implementation_gate
+    .blocking_questions.entries()) {
+    pushStep(`ask-user-${index + 1}`, { kind: "ask_user", question });
+  }
+
+  pushStep("next-required-action", input.next_step);
+
+  if (input.next_step.kind === "implement") {
+    pushStep("review-after-implementation", {
+      kind: "review",
+      tool: "review_salt_ui",
+    });
+  }
+
+  return { steps };
+}
+
 export function buildCreatePublicContract(
   result: CreateSaltUiResult,
   contract: CreateSaltUiWorkflowContract,
@@ -890,11 +1468,36 @@ export function buildCreatePublicContract(
     : undefined;
   const exactRequest = deriveCreateExactRequest(result, options);
   const starterBlockers = buildStarterBlockers(contract.starter_validation);
+  const dependencyStep = buildCreateDependencyStep({
+    salt_packages: options.salt_packages,
+    package_manager: options.package_manager,
+    result,
+  });
+  const evidence = buildCreateEvidence(
+    result,
+    contract,
+    exactRequest,
+    options.registry,
+  );
+  const nextStep =
+    options.next_step ??
+    buildCreateNextStep(
+      contract,
+      exactRequest,
+      requestMatch?.reference,
+      dependencyStep,
+      evidence,
+    );
   const projectPolicyBlockers = buildProjectPolicyBlockers({
     implementation_ready: contract.readiness.implementation_ready,
     readiness_reason: contract.readiness.reason,
     starter_blockers: starterBlockers,
   });
+  const dependencyBlockers = dependencyStep
+    ? [
+        `Salt packages are not installed; install ${dependencyStep.packages.join(", ")} before implementing Salt UI.`,
+      ]
+    : [];
 
   return buildPublicContract({
     workflow: "create",
@@ -906,7 +1509,10 @@ export function buildCreatePublicContract(
         contract.implementation_gate.required_follow_through,
       blocking_questions: contract.implementation_gate.blocking_questions,
       starter_blockers: starterBlockers,
-      project_policy_blockers: projectPolicyBlockers,
+      project_policy_blockers: [
+        ...projectPolicyBlockers,
+        ...dependencyBlockers,
+      ],
       hard_blocked: false,
       context_ready: contract.context_requirement.repo_specific_edits_ready,
       usable_guidance_present:
@@ -915,9 +1521,15 @@ export function buildCreatePublicContract(
       transport_failed: false,
     },
     summary: buildCreateSummary(result, exactRequest),
-    next_step:
-      options.next_step ??
-      buildCreateNextStep(contract, exactRequest, requestMatch?.reference),
+    next_step: nextStep,
+    questions: contract.implementation_gate.blocking_questions,
+    evidence,
+    recipe: buildCreateRecipe({
+      next_step: nextStep,
+      contract,
+      evidence,
+      dependency_step: dependencyStep,
+    }),
     rule_ids: contract.implementation_gate.rule_ids,
     blocking_reasons: options.blocking_reasons,
   });
@@ -928,15 +1540,27 @@ export function buildReviewPublicContract(
   contract: ReviewSaltUiWorkflowContract,
   options: PublicContractBuildOptions,
 ): PublicContract {
+  const evidence = buildWorkflowEvidenceFromProvenance({
+    provenance: contract.provenance,
+  });
+  const implementationReady =
+    contract.decision.status === "clean" &&
+    countProjectPolicyFixCandidates(contract.fix_candidates.candidates) === 0;
+  const nextStep =
+    options.next_step ??
+    buildReviewNextStep(result, contract, {
+      can_implement:
+        implementationReady &&
+        evidence.status === "complete" &&
+        hasSourceBackedEvidence(evidence),
+    });
+
   return buildPublicContract({
     workflow: "review",
     transport_used: options.transport_used,
     exact_request: options.exact_request,
     state: {
-      implementation_ready:
-        contract.decision.status === "clean" &&
-        countProjectPolicyFixCandidates(contract.fix_candidates.candidates) ===
-          0,
+      implementation_ready: implementationReady,
       required_follow_through: [],
       blocking_questions: [],
       starter_blockers: [],
@@ -950,7 +1574,8 @@ export function buildReviewPublicContract(
       contract.decision.status === "clean"
         ? "Salt review found no issues blocking the reviewed scope."
         : "Salt review found issues that still need attention.",
-    next_step: options.next_step ?? buildReviewNextStep(result, contract),
+    next_step: nextStep,
+    evidence,
     rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ?? buildReviewBlockingReasons(contract, result),
@@ -968,6 +1593,10 @@ export function buildMigratePublicContract(
     readiness_reason: contract.readiness.reason,
     starter_blockers: starterBlockers,
   });
+  const evidence = buildWorkflowEvidenceFromProvenance({
+    provenance: contract.provenance,
+  });
+  const nextStep = options.next_step ?? buildMigrateNextStep(result, contract);
 
   return buildPublicContract({
     workflow: "migrate",
@@ -989,7 +1618,9 @@ export function buildMigratePublicContract(
       result.translations.length > 0
         ? "Salt produced a migration direction for the requested source UI."
         : "Salt produced migration guidance, but more clarification is still needed.",
-    next_step: options.next_step ?? buildMigrateNextStep(result, contract),
+    next_step: nextStep,
+    questions: result.clarifying_questions ?? [],
+    evidence,
     rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ??
@@ -1015,6 +1646,11 @@ export function buildUpgradePublicContract(
       (result.important?.length ?? 0) +
       (result.nice_to_know?.length ?? 0) >
     0;
+  const evidence = buildWorkflowEvidenceFromProvenance({
+    provenance: contract.provenance,
+    entity: result.decision.target,
+  });
+  const nextStep = options.next_step ?? buildUpgradeNextStep(result);
 
   return buildPublicContract({
     workflow: "upgrade",
@@ -1037,7 +1673,8 @@ export function buildUpgradePublicContract(
       result.decision.target != null
         ? `Salt produced upgrade guidance for ${result.decision.target}.`
         : "Salt produced upgrade guidance for the requested target.",
-    next_step: options.next_step ?? buildUpgradeNextStep(result),
+    next_step: nextStep,
+    evidence,
     rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ?? buildUpgradeBlockingReasons(result),

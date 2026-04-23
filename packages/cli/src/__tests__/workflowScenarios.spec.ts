@@ -169,7 +169,7 @@ function workflowStatusToExitCode(
 
 // biome-ignore lint/suspicious/noExplicitAny: Workflow scenario tests read heterogeneous init/info payloads and normalized workflow payloads.
 function normalizeWorkflowJson(value: any): any {
-  if (value?.contract !== "salt_workflow_v3" || value?.details == null) {
+  if (value?.contract !== "salt_workflow_v1" || value?.details == null) {
     return value;
   }
 
@@ -188,7 +188,7 @@ function readWorkflowJson(text: string) {
 // biome-ignore lint/suspicious/noExplicitAny: Scenario tests compare exit codes against normalized workflow payloads.
 function expectWorkflowExitCode(payload: any, exitCode: number) {
   if (
-    payload?.contract === "salt_workflow_v3" &&
+    payload?.contract === "salt_workflow_v1" &&
     typeof payload?.status === "string" &&
     /^(success|partial|blocked|failed)$/.test(payload.status)
   ) {

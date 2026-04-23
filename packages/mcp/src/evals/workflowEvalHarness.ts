@@ -81,6 +81,35 @@ export interface WorkflowEvalScenario {
         tool?: string;
         mode?: string;
         query?: string;
+        name?: string;
+      };
+      next_required_action?: {
+        kind?: string;
+        tool?: string;
+        mode?: string;
+        query?: string;
+        name?: string;
+      };
+      allowed_next_actions?: string[];
+      evidence?: {
+        status?: "complete" | "partial" | "missing";
+        required_kinds?: Array<
+          | "docs"
+          | "examples"
+          | "registry"
+          | "project_policy"
+          | "heuristic_fallback"
+        >;
+        min_source_urls?: number;
+      };
+      recipe?: {
+        required_action_kinds?: string[];
+        required_entities?: string[];
+      };
+      questions?: {
+        min_count?: number;
+        max_count?: number;
+        includes?: string[];
       };
       summary_includes?: string[];
     };
@@ -623,6 +652,17 @@ export function normalizeWorkflowEvalPublicContract(
       : isRecord(value.next_step)
         ? value.next_step
         : null;
+    const nextRequiredAction = isRecord(value.next_required_action)
+      ? value.next_required_action
+      : action;
+    const allowedNextActions = Array.isArray(value.allowed_next_actions)
+      ? value.allowed_next_actions.filter(
+          (entry): entry is string => typeof entry === "string",
+        )
+      : [];
+    const questions = readStringArray(value, "questions");
+    const evidence = isRecord(value.evidence) ? value.evidence : null;
+    const recipe = isRecord(value.recipe) ? value.recipe : null;
     const transport =
       typeof value.transport === "string"
         ? value.transport
@@ -699,6 +739,13 @@ export function normalizeWorkflowEvalPublicContract(
         blocking_reasons: blockingReasons,
       },
       ...(action ? { action } : {}),
+      ...(nextRequiredAction
+        ? { next_required_action: nextRequiredAction }
+        : {}),
+      allowed_next_actions: allowedNextActions,
+      questions,
+      ...(evidence ? { evidence } : {}),
+      ...(recipe ? { recipe } : {}),
       ...(transport ? { transport_used: transport } : {}),
       ...(status ? { workflow_status: status } : {}),
       ...(canonicalComplete !== null
@@ -812,6 +859,129 @@ function extractFinalChoice(
   }
 
   return extractCanonicalChoice(result);
+}
+
+function readStepArg(step: Record<string, unknown>, key: string): string | null {
+  return isRecord(step.args) && typeof step.args[key] === "string"
+    ? step.args[key]
+    : null;
+}
+
+function getRecipeSteps(recipe: unknown): Array<Record<string, unknown>> {
+  if (!isRecord(recipe) || !Array.isArray(recipe.steps)) {
+    return [];
+  }
+
+  return recipe.steps.filter(isRecord);
+}
+
+function getRecipeAction(step: Record<string, unknown>): Record<
+  string,
+  unknown
+> | null {
+  return isRecord(step.action) ? step.action : null;
+}
+
+function recipeContainsActionKind(recipe: unknown, actionKind: string): boolean {
+  return getRecipeSteps(recipe).some((step) => {
+    const action = getRecipeAction(step);
+    return action?.kind === actionKind;
+  });
+}
+
+function recipeContainsEntity(recipe: unknown, entity: string): boolean {
+  return getRecipeSteps(recipe).some((step) => {
+    const action = getRecipeAction(step);
+    if (!action) {
+      return false;
+    }
+
+    return (
+      readStepArg(action, "name") === entity ||
+      readStepArg(action, "query") === entity ||
+      readStepArg(action, "target_name") === entity
+    );
+  });
+}
+
+function evidenceKinds(evidence: unknown): string[] {
+  if (!isRecord(evidence) || !Array.isArray(evidence.items)) {
+    return [];
+  }
+
+  return uniqueStrings(
+    evidence.items
+      .filter(isRecord)
+      .map((item) => readString(item, "kind"))
+      .filter((entry): entry is string => Boolean(entry)),
+  );
+}
+
+function evidenceSourceUrlCount(evidence: unknown): number {
+  if (!isRecord(evidence)) {
+    return 0;
+  }
+
+  return uniqueStrings([
+    ...readStringArray(evidence, "source_urls"),
+    ...(Array.isArray(evidence.items)
+      ? evidence.items
+          .filter(isRecord)
+          .flatMap((item) => readStringArray(item, "source_urls"))
+      : []),
+  ]).length;
+}
+
+function judgeStepExpectation(
+  failures: string[],
+  label: string,
+  actualStep: unknown,
+  expectedStep: {
+    kind?: string;
+    tool?: string;
+    mode?: string;
+    query?: string;
+    name?: string;
+  },
+): void {
+  const step = isRecord(actualStep) ? actualStep : null;
+
+  if (!step) {
+    failures.push(`Workflow result did not expose ${label}.`);
+    return;
+  }
+
+  if (expectedStep.kind && step.kind !== expectedStep.kind) {
+    failures.push(
+      `${label}.kind ${String(step.kind)} did not match expected ${expectedStep.kind}.`,
+    );
+  }
+  if (expectedStep.tool && step.tool !== expectedStep.tool) {
+    failures.push(
+      `${label}.tool ${String(step.tool)} did not match expected ${expectedStep.tool}.`,
+    );
+  }
+  if (expectedStep.mode && step.mode !== expectedStep.mode) {
+    failures.push(
+      `${label}.mode ${String(step.mode)} did not match expected ${expectedStep.mode}.`,
+    );
+  }
+  if (Object.hasOwn(expectedStep, "query")) {
+    const actualQuery = readStepArg(step, "query");
+    if (actualQuery !== expectedStep.query) {
+      failures.push(
+        `${label}.args.query ${String(actualQuery)} did not match expected ${String(expectedStep.query)}.`,
+      );
+    }
+  }
+  if (Object.hasOwn(expectedStep, "name")) {
+    const actualName = readStepArg(step, "name");
+    if (actualName !== expectedStep.name) {
+      failures.push(
+        `${label}.args.name ${String(actualName)} did not match expected ${String(expectedStep.name)}.`,
+      );
+    }
+  }
 }
 
 function serializeTraceResult(value: unknown): string {
@@ -1638,49 +1808,125 @@ export function judgeWorkflowEvalScenario(
       }
 
       if (expectedPublicContract.next_step) {
-        const nextStep = isRecord(publicContract.next_step)
-          ? publicContract.next_step
+        judgeStepExpectation(
+          failures,
+          "next_step",
+          publicContract.next_step,
+          expectedPublicContract.next_step,
+        );
+      }
+
+      if (expectedPublicContract.next_required_action) {
+        judgeStepExpectation(
+          failures,
+          "next_required_action",
+          publicContract.next_required_action,
+          expectedPublicContract.next_required_action,
+        );
+      }
+
+      for (const actionKind of expectedPublicContract.allowed_next_actions ??
+        []) {
+        if (
+          !Array.isArray(publicContract.allowed_next_actions) ||
+          !publicContract.allowed_next_actions.includes(actionKind)
+        ) {
+          failures.push(
+            `allowed_next_actions did not include expected action kind ${actionKind}.`,
+          );
+        }
+      }
+
+      if (expectedPublicContract.evidence) {
+        const evidence = isRecord(publicContract.evidence)
+          ? publicContract.evidence
           : null;
 
-        if (!nextStep) {
+        if (!evidence) {
           failures.push(
-            `Workflow result for ${scenario.id} did not expose a compact next_step object.`,
+            `Workflow result for ${scenario.id} did not expose evidence.`,
           );
         } else {
           if (
-            expectedPublicContract.next_step.kind &&
-            nextStep.kind !== expectedPublicContract.next_step.kind
+            expectedPublicContract.evidence.status &&
+            evidence.status !== expectedPublicContract.evidence.status
           ) {
             failures.push(
-              `next_step.kind ${String(nextStep.kind)} did not match expected ${expectedPublicContract.next_step.kind}.`,
+              `evidence.status ${String(evidence.status)} did not match expected ${expectedPublicContract.evidence.status}.`,
             );
           }
-          if (
-            expectedPublicContract.next_step.tool &&
-            nextStep.tool !== expectedPublicContract.next_step.tool
-          ) {
-            failures.push(
-              `next_step.tool ${String(nextStep.tool)} did not match expected ${expectedPublicContract.next_step.tool}.`,
-            );
-          }
-          if (
-            expectedPublicContract.next_step.mode &&
-            nextStep.mode !== expectedPublicContract.next_step.mode
-          ) {
-            failures.push(
-              `next_step.mode ${String(nextStep.mode)} did not match expected ${expectedPublicContract.next_step.mode}.`,
-            );
-          }
-          if (Object.hasOwn(expectedPublicContract.next_step, "query")) {
-            const actualNextQuery =
-              isRecord(nextStep.args) && typeof nextStep.args.query === "string"
-                ? nextStep.args.query
-                : null;
-            if (actualNextQuery !== expectedPublicContract.next_step.query) {
+
+          const actualKinds = evidenceKinds(evidence);
+          for (const requiredKind of expectedPublicContract.evidence
+            .required_kinds ?? []) {
+            if (!actualKinds.includes(requiredKind)) {
               failures.push(
-                `next_step.args.query ${String(actualNextQuery)} did not match expected ${String(expectedPublicContract.next_step.query)}.`,
+                `evidence.items did not include required kind ${requiredKind}.`,
               );
             }
+          }
+
+          if (
+            typeof expectedPublicContract.evidence.min_source_urls ===
+              "number" &&
+            evidenceSourceUrlCount(evidence) <
+              expectedPublicContract.evidence.min_source_urls
+          ) {
+            failures.push(
+              `evidence source URL count ${evidenceSourceUrlCount(evidence)} was below expected minimum ${expectedPublicContract.evidence.min_source_urls}.`,
+            );
+          }
+        }
+      }
+
+      if (expectedPublicContract.recipe) {
+        const recipe = publicContract.recipe;
+        for (const actionKind of expectedPublicContract.recipe
+          .required_action_kinds ?? []) {
+          if (!recipeContainsActionKind(recipe, actionKind)) {
+            failures.push(
+              `recipe.steps did not include required action kind ${actionKind}.`,
+            );
+          }
+        }
+        for (const entity of expectedPublicContract.recipe.required_entities ??
+          []) {
+          if (!recipeContainsEntity(recipe, entity)) {
+            failures.push(
+              `recipe.steps did not include required entity ${entity}.`,
+            );
+          }
+        }
+      }
+
+      if (expectedPublicContract.questions) {
+        const questions = Array.isArray(publicContract.questions)
+          ? publicContract.questions.filter(
+              (entry): entry is string => typeof entry === "string",
+            )
+          : [];
+        if (
+          typeof expectedPublicContract.questions.min_count === "number" &&
+          questions.length < expectedPublicContract.questions.min_count
+        ) {
+          failures.push(
+            `questions length ${questions.length} was below expected minimum ${expectedPublicContract.questions.min_count}.`,
+          );
+        }
+        if (
+          typeof expectedPublicContract.questions.max_count === "number" &&
+          questions.length > expectedPublicContract.questions.max_count
+        ) {
+          failures.push(
+            `questions length ${questions.length} exceeded expected maximum ${expectedPublicContract.questions.max_count}.`,
+          );
+        }
+        for (const fragment of expectedPublicContract.questions.includes ??
+          []) {
+          if (!questions.some((question) => question.includes(fragment))) {
+            failures.push(
+              `questions did not include expected fragment ${fragment}.`,
+            );
           }
         }
       }

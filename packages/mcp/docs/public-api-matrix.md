@@ -1,31 +1,16 @@
 # Public API Matrix
 
-This file is the current Salt AI tooling public-output matrix after the `salt_workflow_v3` cutover.
+Status: active `v1` contract
 
-Status: active `v3` contract
-
-Last updated: April 20, 2026
-
-Use this alongside:
-
-- [`../../../salt-ai-tooling-next-releases-plan.md`](../../../salt-ai-tooling-next-releases-plan.md)
-- [`./ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md)
-- [`./archive/public-contract-v3-implementation-plan.md`](./archive/public-contract-v3-implementation-plan.md)
+Last updated: April 24, 2026
 
 ## Purpose
 
-This document defines:
+This document defines the intended pre-release public surface for Salt AI tooling. There is no compatibility promise for older workflow shapes. Hosts should branch on the v1 contract and should not scrape prose, fallback fields, or rich output details when a v1 field exists.
 
-- which output paths are public stable, advanced stable, or internal only
-- which `salt_workflow_v3` fields hosts are allowed to branch on
-- how Salt workflows map across CLI and MCP
-- what is stable in additive full output versus transport-specific detail
+## Public Surface
 
-## Contract Tiers
-
-### Public Stable
-
-These are the default consumer-facing contracts that should remain stable through rollout:
+Default public workflow outputs:
 
 - MCP compact workflow responses
 - CLI workflow `--json`
@@ -33,42 +18,35 @@ These are the default consumer-facing contracts that should remain stable throug
 - MCP `bootstrap_salt_repo`
 - CLI `salt-ds info --json`
 - CLI `salt-ds init --json`
-- workflow vocabulary:
-  - `init`
-  - `create`
-  - `review`
-  - `migrate`
-  - `upgrade`
-  - `review --url`
 
-### Advanced Stable
+Workflow vocabulary:
 
-These are explicit richer or host-oriented surfaces. They can evolve more than compact output, but they still need deliberate compatibility:
+- `init`
+- `create`
+- `review`
+- `migrate`
+- `upgrade`
+- `review --url`
+
+Rich/debug surfaces:
 
 - MCP `view: "full"`
 - CLI `--full`
 - CLI `starter-only`
-- optional advanced support-tool outputs when they are exposed intentionally
+- optional support-tool outputs when intentionally exposed
 
-### Internal Only
-
-These must not become public compatibility commitments by accident:
-
-- hidden implementation helpers
-- deep import paths
-- unexposed semantic-core helper outputs
-- debug-only raw artifacts unless requested through explicit full output
+Rich/debug surfaces may add detail, but they do not define host branching behavior. The top-level v1 workflow contract remains authoritative.
 
 ## Workflow Mapping
 
-| User workflow  | CLI path                         | MCP path                   | Stable default contract    |
-| -------------- | -------------------------------- | -------------------------- | -------------------------- |
-| `create`       | `salt-ds create <query> --json`  | `create_salt_ui`           | `salt_workflow_v3` compact |
-| `review`       | `salt-ds review <target> --json` | `review_salt_ui`           | `salt_workflow_v3` compact |
-| `migrate`      | `salt-ds migrate <query> --json` | `migrate_to_salt`          | `salt_workflow_v3` compact |
-| `upgrade`      | `salt-ds upgrade ... --json`     | `upgrade_salt_ui`          | `salt_workflow_v3` compact |
-| repo context   | `salt-ds info . --json`          | `get_salt_project_context` | setup/support contract     |
-| repo bootstrap | `salt-ds init . --json`          | `bootstrap_salt_repo`      | setup/support contract     |
+| User workflow | CLI path | MCP path | Default contract |
+| --- | --- | --- | --- |
+| `create` | `salt-ds create <query> --json` | `create_salt_ui` | `salt_workflow_v1` |
+| `review` | `salt-ds review <target> --json` | `review_salt_ui` | `salt_workflow_v1` |
+| `migrate` | `salt-ds migrate <query> --json` | `migrate_to_salt` | `salt_workflow_v1` |
+| `upgrade` | `salt-ds upgrade ... --json` | `upgrade_salt_ui` | `salt_workflow_v1` |
+| repo context | `salt-ds info . --json` | `get_salt_project_context` | setup/support contract |
+| repo bootstrap | `salt-ds init . --json` | `bootstrap_salt_repo` | setup/support contract |
 
 ## Compact Workflow Contract
 
@@ -77,7 +55,7 @@ For create, review, migrate, and upgrade workflow outputs, the public compact co
 Compact public fields:
 
 - `contract`
-  - always `salt_workflow_v3`
+  - always `salt_workflow_v1`
 - `workflow`
   - `create`, `review`, `migrate`, or `upgrade`
 - `transport`
@@ -85,59 +63,50 @@ Compact public fields:
 - `status`
   - `success`, `partial`, `blocked`, or `failed`
 - `request`
-  - optional request-grounding block
-  - when present, hosts may branch on `entity`, `resolved_entity`, and `match_status`
+  - request-grounding block
+  - hosts may branch on `entity`, `resolved_entity`, `match_status`, and `exact_match_required`
 - `safety`
-  - stable safety block
   - hosts may branch on `canonical_complete`, `exact_request_safe`, and `blocking_reasons`
 - `action`
-  - stable next-action block
-  - hosts may branch on `kind`, `tool`, `mode`, `args`, `rule_ids`, and `post_action` when present
+  - authoritative next-action block
+  - hosts may branch on `kind`, `tool`, `mode`, `args`, `rule_ids`, and `post_action`
+- `next_required_action`
+  - mirrors the next action without rule/post-action decoration
+- `allowed_next_actions`
+  - valid action kinds the host may take next
+- `recipe.steps`
+  - ordered implementation or retrieval plan for composite work
+- `questions`
+  - user-facing blockers; non-empty questions block implementation
+- `evidence`
+  - source-backed grounding, missing evidence, and heuristic fallback status
 - `summary`
   - short branchable summary
 
 Compact rules:
 
-- hosts should branch on `status`, `safety`, `action`, and `summary` first
-- hosts may inspect `request.match_status` and `request.resolved_entity` when grounding behavior matters
+- hosts should branch on `status`, `safety`, `action`, `next_required_action`, `recipe.steps`, `questions`, and `evidence`
 - compact hosts must not require `details`
-- `safety.exact_request_safe: true` requires `status: "success"`
-- `request.match_status: "misrouted"` or `request.match_status: "no_match"` must never look implementation-safe
-- create follow-through should surface through `action` as an exact-name tool call when the next canonical Salt entity is already known
-- repo-context repair should surface through `action.kind = "fix_context"` rather than through full-only nested artifacts
-
-## Full And Advanced Output Paths
-
-| Output path         | Tier            | Shape                                       | Notes                                                                    |
-| ------------------- | --------------- | ------------------------------------------- | ------------------------------------------------------------------------ |
-| MCP compact default | public stable   | top-level `salt_workflow_v3`                | main host branching path                                                 |
-| MCP `view: "full"`  | advanced stable | top-level `salt_workflow_v3` plus `details` | explicit-only rich mode                                                  |
-| CLI `--json`        | public stable   | top-level `salt_workflow_v3`                | main CLI machine path                                                    |
-| CLI `--full`        | advanced stable | top-level `salt_workflow_v3` plus `details` | explicit-only rich mode                                                  |
-| CLI `starter-only`  | advanced stable | create-only narrow JSON artifact            | explicit advanced path for starter grounding and required follow-through |
-
-Full-output guidance:
-
-- full output keeps the same top-level branching contract as compact output
-- full output adds `details.workflow`, `details.result`, and `details.artifacts`
-- hosts should keep branching on the top-level `status` / `safety` / `action` / `summary` contract even when `details` is available
-- `details` is advanced-stable, but transport-specific naming or artifact shape outside the parity-tested overlap may still evolve deliberately
-- `starter-only` remains create-only, requires `--json`, and must reject `--full`
+- `status: "success"` requires `safety.exact_request_safe: true`
+- `safety.exact_request_safe: true` requires `evidence.status: "complete"` and source-backed evidence
+- `action.kind: "implement"` is valid only when `safety.exact_request_safe` is true
+- `action.kind: "implement"` on create, migrate, or upgrade requires a review post-action
+- `partial`, `blocked`, and `failed` are non-implementable states
+- `request.match_status: "broadened"`, `"misrouted"`, or `"no_match"` must not look implementation-safe unless the full request is covered by source-backed evidence
+- dependency, clarification, retrieval, bootstrap, and context repair actions block implementation until completed
 
 ## Setup And Support Contracts
 
-These outputs are public, but they are not the workflow compact contract:
+These outputs are public, but they are not workflow contracts:
 
 - `salt-ds info --json`
 - `salt-ds init --json`
 - `get_salt_project_context`
 - `bootstrap_salt_repo`
 
-`init` remains part of the public workflow vocabulary, but its shipped output should currently be treated as setup/bootstrap contract rather than as part of the accepted `salt_workflow_v3` create/review/migrate/upgrade workflow surface.
-
 Required rule:
 
-- setup/support outputs must remain clearly separate from the workflow compact contract so hosts do not confuse repo inspection/bootstrap results with workflow readiness results
+- setup/support outputs must stay clearly separate from workflow readiness so hosts do not confuse repo inspection/bootstrap results with implementation permission
 
 Context support fields hosts may branch on:
 
@@ -159,7 +128,7 @@ The shared machine-readable capability manifest is part of the public setup cont
 Manifest facts:
 
 - manifest version: `salt_capability_manifest_v1`
-- compact workflow contract version: `v3`
+- compact workflow contract version: `v1`
 - default workflow vocabulary:
   - `init`
   - `create`
@@ -180,7 +149,8 @@ Published access paths:
 
 Manifest rules:
 
-- hosts should inspect the manifest rather than scraping README prose for contract version, workflow vocabulary, support-tool policy, or runtime version
+- hosts should inspect the manifest rather than scraping README prose
+- hosts should inspect `contracts.workflow_action_contract` for agent-agnostic v1 branching rules
 - CLI and MCP must expose the same manifest semantics even though the transport wrapper differs
 - the manifest is setup/support metadata, not a replacement for workflow result contracts
 
@@ -192,18 +162,16 @@ Default public story:
 - compact by default
 - full only when explicitly requested
 
-Advanced-host support tools:
+Support helpers:
 
-- may be exposed intentionally later
-- must stay clearly secondary to the workflow-first public story
-- must not change the meaning of the workflow contracts when absent
+- may be exposed intentionally
+- must stay secondary to the workflow-first public story
+- must not change workflow contract meaning when absent
 
 ## Current Contract Facts
 
-These are the current compatibility facts after the `v3` migration:
-
-1. Compact CLI and MCP emit `salt_workflow_v3`.
-2. Full CLI and MCP keep the same top-level `salt_workflow_v3` contract and add `details`.
-3. The machine-readable capability manifest now advertises compact contract version `v3`.
-4. `starter-only` remains an advanced create-only path, not the main public contract story.
-5. Full parity is tested only for overlapping semantics; deeper transport-specific detail remains advanced-stable rather than compact-stable.
+1. Compact CLI and MCP emit `salt_workflow_v1`.
+2. Full CLI and MCP keep the same top-level `salt_workflow_v1` contract and add `details`.
+3. The capability manifest advertises compact contract version `v1`.
+4. `starter-only` is a create-only debug/detail artifact, not the main public contract.
+5. Host branching belongs on the v1 top-level contract, not rich details.

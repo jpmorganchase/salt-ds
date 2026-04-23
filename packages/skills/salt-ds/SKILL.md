@@ -233,10 +233,23 @@ Read compact workflow output from stable top-level workflow signals first, such 
 - workflow status
 - exact-request safety
 - blocking reasons
-- next-step guidance
+- action and next required action
+- allowed next actions
+- recipe steps
+- questions
+- evidence status and missing evidence
 - summary
 
-If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned next step before implementing the blocked region.
+Treat `salt_workflow_v1` action kinds as binding:
+
+- `implement`: edit only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; then run the returned review/post action
+- `ask_user`: stop and ask the returned question before writing code
+- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region
+- `install_dependencies`: install the listed Salt packages before writing Salt UI
+- `fix_context` or `bootstrap_repo`: resolve setup or repo context before repo-specific edits
+
+If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned action before implementing the blocked region.
+Use `recipe.steps`, `questions`, and `evidence.missing` to explain what remains unresolved instead of filling gaps with guessed Salt structure.
 Request expanded workflow output only when the compact contract points to deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 
 ### Concrete-Noun Follow-Through

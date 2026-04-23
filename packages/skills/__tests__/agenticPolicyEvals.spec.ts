@@ -117,4 +117,55 @@ describe("deterministic agentic policy evals", () => {
       "When Salt returns compact workflow output, read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first.",
     );
   });
+
+  it("keeps v1 action semantics aligned across skill and host adapter guidance", async () => {
+    const skill = await readSkill("salt-ds/SKILL.md");
+    const transport = await readSkill("salt-ds/references/shared/transport.md");
+    const copilotHosts = await readSkill(
+      "salt-ds/references/shared/copilot-hosts.md",
+    );
+    const repoInstructions = await readSkill(
+      "salt-ds/assets/repo-instructions.template.md",
+    );
+    const consumerAgents = await readRepoFile(
+      "workflow-examples/consumer-repo/AGENTS.md",
+    );
+    const consumerCopilotInstructions = await readRepoFile(
+      "workflow-examples/consumer-repo/.github/copilot-instructions.md",
+    );
+    const consumerSaltUiAgent = await readRepoFile(
+      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
+    );
+
+    expect(skill).toContain("Treat `salt_workflow_v1` action kinds as binding:");
+    expect(transport).toContain(
+      "Treat `salt_workflow_v1` action kinds as binding:",
+    );
+    expect(copilotHosts).toContain(
+      "Branch on compact `salt_workflow_v1.action.kind` before editing",
+    );
+    expect(repoInstructions).toContain(
+      "Treat the compact `salt_workflow_v1` action as a command, not advice:",
+    );
+    expect(consumerAgents).toContain(
+      "Treat the compact `salt_workflow_v1` action as a command, not advice:",
+    );
+    expect(consumerCopilotInstructions).toContain(
+      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
+    );
+    expect(consumerSaltUiAgent).toContain(
+      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
+    );
+    expect(skill).toContain(
+      "`install_dependencies`: install the listed Salt packages before writing Salt UI",
+    );
+    expect(transport).toContain(
+      "`install_dependencies`: install the listed Salt packages before writing Salt UI",
+    );
+    for (const source of [repoInstructions, consumerAgents]) {
+      expect(source).toContain(
+        "`action.kind: \"install_dependencies\"`: install the listed packages before writing Salt UI",
+      );
+    }
+  });
 });
