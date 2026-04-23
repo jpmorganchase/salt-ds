@@ -73,7 +73,22 @@ Read compact workflow output from top-level fields first:
 - `safety.exact_request_safe`
 - `safety.blocking_reasons`
 - `action`
+- `next_required_action`
+- `allowed_next_actions`
+- `recipe.steps`
+- `questions`
+- `evidence`
 - `summary`
+
+Treat `salt_workflow_v1` action kinds as binding:
+
+- `implement`: edit only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; then run the returned review/post action
+- `ask_user`: stop and ask the returned question before writing code
+- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region
+- `install_dependencies`: install the listed Salt packages before writing Salt UI
+- `fix_context` or `bootstrap_repo`: resolve setup or repo context before repo-specific edits
+
+Use `recipe.steps`, `questions`, and `evidence.missing` to explain remaining work instead of guessing past a partial result.
 
 When compact `create` remains `partial` or `blocked` on a broad or mixed-surface prompt, inspect the retrieval support surface before escalating to `full`:
 
@@ -99,11 +114,15 @@ Treat these as blocking items when they affect the regions you plan to implement
 - `status != "success"`
 - `safety.exact_request_safe = false`
 - `safety.blocking_reasons`
-- `action`
+- `action.kind != "implement"`
+- `next_required_action`
 - `required_follow_through`
 - `implementation_gate` or equivalent follow-through markers
 - `open_questions`
 - `confirmation_needed`
+- `questions`
+- `evidence.status != "complete"`
+- `evidence.missing`
 - warnings that change pattern, component, theme, or token choice
 - follow-through entity calls that exhausted the 2-attempt degraded-tooling budget (see `degraded-tooling.md`)
 
@@ -134,6 +153,7 @@ When MCP is the transport:
 - `init`: bootstrap repo-local `.salt/team.json` and the managed root instruction block locally by default; add host adapters and `ui:verify` only when explicitly requested.
 - `context`: use `get_salt_project_context` for repo diagnostics, policy inspection, or explicit context reuse.
 - `create`: start with `create_salt_ui`; read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first; if compact output blocks implementation, follow `action` before editing the blocked region; for exact named follow-up, use `request.entity`, `request.resolved_entity`, and `request.match_status`; leave `solution_type` unset on broad or mixed-surface asks unless the request already points clearly to a known Salt family; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
+  - branch on `action.kind` rather than prose: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` allows editing
   - if compact output is still broad or mixed-surface after the first pass, inspect `salt://catalog/candidates/{query}` or the CLI catalog-query support before asking for `full`
   - once the owner is grounded, use `salt://catalog/entity/{name}` or an exact follow-up create call to ground the supporting surface instead of paraphrasing it again
 - `review`: start with `review_salt_ui`; read returned `confidence` and `fix_candidates`; add runtime evidence only if the source pass is still not enough.

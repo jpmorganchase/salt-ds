@@ -49,7 +49,7 @@ function readFullWorkflowResult(
 
   expect(payload).toEqual(
     expect.objectContaining({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: expect.any(String),
       transport: expect.any(String),
       status: expect.any(String),
@@ -307,10 +307,16 @@ describe("deterministic agentic evals", () => {
     });
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
-        status: "clear",
-        required_follow_through: [],
-        next_call: null,
-        rule_ids: [],
+        status: "follow_through_required",
+        required_follow_through: expect.arrayContaining([
+          expect.objectContaining({ entity: "Avatar" }),
+        ]),
+        next_call: expect.objectContaining({
+          workflow: "create_salt_ui",
+          follow_up_mode: "exact_name",
+          args: expect.objectContaining({ query: "Avatar" }),
+        }),
+        rule_ids: expect.arrayContaining(["create-follow-through-required"]),
       }),
     );
   });

@@ -57,7 +57,7 @@ function readFullWorkflowDetails(value: unknown): Record<string, unknown> & {
 } {
   expect(value).toEqual(
     expect.objectContaining({
-      contract: "salt_workflow_v3",
+      contract: "salt_workflow_v1",
       workflow: expect.any(String),
       transport: expect.any(String),
       status: expect.any(String),
@@ -488,6 +488,52 @@ describe("createSaltMcpServer", () => {
             text: JSON.stringify(runtimeMetadata.capability_manifest, null, 2),
           }),
         ]);
+        const capabilityManifest = JSON.parse(
+          resourceResult.contents[0]?.text ?? "null",
+        ) as {
+          contracts?: {
+            workflow_action_contract?: {
+              action_semantics?: Array<{
+                kind?: string;
+                implementation_allowed?: boolean;
+                host_obligation?: string;
+              }>;
+              implementation_gate?: {
+                required?: Record<string, unknown>;
+              };
+            };
+          };
+        };
+        const actionContract =
+          capabilityManifest.contracts?.workflow_action_contract;
+        const actionSemantics = new Map(
+          actionContract?.action_semantics?.map((entry) => [
+            entry.kind,
+            entry,
+          ]) ?? [],
+        );
+
+        expect(actionContract?.implementation_gate?.required).toEqual(
+          expect.objectContaining({
+            status: "success",
+            "safety.exact_request_safe": true,
+            "action.kind": "implement",
+            "evidence.status": "complete",
+            "action.post_action.kind": "review",
+          }),
+        );
+        expect(actionSemantics.get("implement")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: true,
+            host_obligation: "implement_exact_request",
+          }),
+        );
+        expect(actionSemantics.get("ask_user")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: false,
+            host_obligation: "ask_user_and_stop",
+          }),
+        );
 
         const catalogManifestResult = await registeredResources[
           SALT_MCP_CATALOG_MANIFEST_URI
@@ -1311,7 +1357,7 @@ describe("createSaltMcpServer", () => {
         );
       },
     );
-  }, 20000);
+  }, 30000);
 
   it("accepts explicit root_dir on create_salt_ui without a separate context lookup", async () => {
     await withRegistryDir(
@@ -1442,7 +1488,7 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(chooseResult).toMatchObject({
-          contract: "salt_workflow_v3",
+          contract: "salt_workflow_v1",
           workflow: "create",
           transport: "mcp",
           status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
@@ -1460,12 +1506,7 @@ describe("createSaltMcpServer", () => {
         expect(chooseResult).not.toHaveProperty("artifacts");
 
         const chooseSchema = chooseTool?.outputSchema as z.ZodType;
-        expect(
-          chooseSchema.safeParse({
-            ...chooseResult,
-            sources: [],
-          }).success,
-        ).toBe(true);
+        expect(chooseSchema.safeParse(chooseResult).success).toBe(true);
       },
     );
   }, 20000);
@@ -1546,6 +1587,7 @@ describe("createSaltMcpServer", () => {
             {
               name: "broadened-compact-view",
               private: true,
+              packageManager: "npm@10.0.0",
               dependencies: {
                 react: "^18.3.1",
                 vite: "^7.1.0",
@@ -1579,12 +1621,12 @@ describe("createSaltMcpServer", () => {
             match_status: "broadened",
           },
           action: {
-            kind: "tool_call",
-            tool: "create_salt_ui",
-            mode: "exact_name",
-            args: {
-              query: "App header",
-            },
+            kind: "install_dependencies",
+            package_manager: "npm",
+            packages: expect.arrayContaining([
+              "@salt-ds/core",
+              "@salt-ds/theme",
+            ]),
           },
         });
       },
@@ -1646,7 +1688,7 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(reviewResult).toMatchObject({
-          contract: "salt_workflow_v3",
+          contract: "salt_workflow_v1",
           workflow: "review",
           transport: "mcp",
           status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
@@ -1663,12 +1705,7 @@ describe("createSaltMcpServer", () => {
         expect(reviewResult).not.toHaveProperty("result");
         expect(reviewResult).not.toHaveProperty("artifacts");
         const reviewSchema = reviewTool?.outputSchema as z.ZodType;
-        expect(
-          reviewSchema.safeParse({
-            ...reviewResult,
-            sources: [],
-          }).success,
-        ).toBe(true);
+        expect(reviewSchema.safeParse(reviewResult).success).toBe(true);
 
         const migrateResult = (await migrateTool?.execute(
           registry,
@@ -1682,7 +1719,7 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(migrateResult).toMatchObject({
-          contract: "salt_workflow_v3",
+          contract: "salt_workflow_v1",
           workflow: "migrate",
           transport: "mcp",
           status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
@@ -1699,12 +1736,7 @@ describe("createSaltMcpServer", () => {
         expect(migrateResult).not.toHaveProperty("result");
         expect(migrateResult).not.toHaveProperty("artifacts");
         const migrateSchema = migrateTool?.outputSchema as z.ZodType;
-        expect(
-          migrateSchema.safeParse({
-            ...migrateResult,
-            sources: [],
-          }).success,
-        ).toBe(true);
+        expect(migrateSchema.safeParse(migrateResult).success).toBe(true);
 
         const upgradeResult = (await upgradeTool?.execute(
           registry,
@@ -1717,7 +1749,7 @@ describe("createSaltMcpServer", () => {
         )) as Record<string, unknown>;
 
         expect(upgradeResult).toMatchObject({
-          contract: "salt_workflow_v3",
+          contract: "salt_workflow_v1",
           workflow: "upgrade",
           transport: "mcp",
           status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
@@ -1734,12 +1766,7 @@ describe("createSaltMcpServer", () => {
         expect(upgradeResult).not.toHaveProperty("result");
         expect(upgradeResult).not.toHaveProperty("artifacts");
         const upgradeSchema = upgradeTool?.outputSchema as z.ZodType;
-        expect(
-          upgradeSchema.safeParse({
-            ...upgradeResult,
-            sources: [],
-          }).success,
-        ).toBe(true);
+        expect(upgradeSchema.safeParse(upgradeResult).success).toBe(true);
       },
     );
   }, 30000);

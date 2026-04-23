@@ -1833,6 +1833,8 @@ function toCreateAgentWorkflowJson(
     registry: Awaited<ReturnType<typeof resolveSemanticRegistry>>["registry"];
     query: string;
     packageName?: string;
+    saltPackages?: string[];
+    packageManager?: string;
   },
 ): PublicContract {
   return buildCreatePublicContract(result.result.recommendation, contract, {
@@ -1840,6 +1842,8 @@ function toCreateAgentWorkflowJson(
     registry: options.registry,
     query: options.query,
     package: options.packageName,
+    salt_packages: options.saltPackages,
+    package_manager: options.packageManager,
   });
 }
 
@@ -2291,6 +2295,8 @@ export async function runCreateCommand(
       registry,
       query,
       packageName: flags.package,
+      saltPackages: context.salt.packages.map((entry) => entry.name),
+      packageManager: context.environment.packageManager,
     });
 
     if (flags["starter-only"] === "true" && flags.json === "true") {

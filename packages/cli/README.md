@@ -29,7 +29,7 @@ Primary workflow commands:
   - supports `--output <path>`
   - supports `--registry-dir <path>`
   - reports detected repo context, declared Salt policy, runtime signals, and workflow capabilities
-  - includes a machine-readable `capabilityManifest` in JSON mode so hosts can inspect the compact contract version, workflow vocabulary, support-tool policy, and runtime metadata without parsing prose
+  - includes a machine-readable `capabilityManifest` in JSON mode so hosts can inspect the compact contract version, workflow vocabulary, support-tool policy, v3 action/evidence gates, and runtime metadata without parsing prose
 - `salt-ds create <query>`
   - supports `--json`
   - supports `--output <path>`
@@ -111,7 +111,7 @@ Workflow JSON modes:
 - `--json`
   - compact public contract
 - `--full`
-  - explicit rich workflow path: top-level `salt_workflow_v3` plus additive `details`
+  - explicit rich workflow path: top-level `salt_workflow_v1` plus additive `details`
 - `create --starter-only --json`
   - create-only narrow artifact contract for starter grounding and required follow-through
   - requires `--json`

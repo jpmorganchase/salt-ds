@@ -13,7 +13,8 @@ Goal:
 - Enable the Salt skill/support path in the host if available.
 - Confirm Salt MCP is connected.
 - Confirm the host can see the Salt tools.
-- Confirm the host can read the capability manifest and report compact workflow contract `v3`.
+- Confirm the host can read the capability manifest and report compact workflow contract `v1`.
+- Confirm the host follows [`salt_workflow_v1` action semantics](./salt-workflow-v1-host-contract.md): only `action.kind = implement` permits Salt UI edits, and only with complete evidence.
 
 ## Core Scenarios
 
@@ -43,6 +44,8 @@ Pass:
 
 - owner stays on `Tabs`
 - `Avatar` is secondary follow-through, not the primary owner
+- `action.kind` is `retrieve_entity`, `ask_user`, or another non-implement action until `Avatar` is grounded
+- `recipe.steps` or `evidence.missing` names the unresolved follow-through
 - no drift to `Navigation`, `Vertical navigation`, or dashboard patterns
 
 ### 3. Owner + Wayfinding Follow-Through
@@ -56,6 +59,7 @@ Pass:
 - owner resolves to `Table`
 - `Breadcrumbs` appears as the required follow-through
 - next action points to `Breadcrumbs`
+- the host does not implement Breadcrumbs from generic examples before the exact Salt follow-through is grounded
 
 ### 4. Binary Control In Form Context
 
@@ -89,6 +93,13 @@ For each scenario, capture:
 - `resolved_entity`
 - `match_status`
 - `blocking_reasons`
+- `action.kind`
+- `next_required_action.kind`
+- `allowed_next_actions`
+- `recipe.steps`
+- `questions`
+- `evidence.status`
+- `evidence.missing`
 - `action.args.query` when present
 - whether the host asked for `view: "full"` immediately
 
@@ -98,6 +109,9 @@ For each scenario, capture:
 - `full` is only used after the owner is grounded
 - `request` stays populated
 - `partial` does not get treated as done
+- `ask_user` stops host implementation until the user answers
+- `install_dependencies` happens before Salt UI edits when Salt packages are missing
+- `retrieve_entity` and `retrieve_examples` are treated as evidence gathering, not permission to code
 - exact follow-through stays exact on the next call
 
 ## Sign-Off Rule

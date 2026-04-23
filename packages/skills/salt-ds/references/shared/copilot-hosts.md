@@ -25,6 +25,8 @@ Counter that by making workflow completion explicit.
 - Large output is not the same as successful output.
 - A generated patch is not proof that canonical Salt discovery completed.
 - A successful build is not proof that the Salt workflow contract completed.
+- Branch on compact `salt_workflow_v1.action.kind` before editing: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.
+- Do not treat `status: partial` or `status: blocked` as completion; use `recipe.steps`, `questions`, and `evidence.missing` to report what remains.
 - For create and migrate work, run source-level Salt validation after the first scaffold pass when code is available.
 - For create work, prefer `compact -> retrieval support -> exact follow-through -> full only when needed`.
 - If compact create is still `partial` or `blocked`, inspect the catalog support surface before escalating:

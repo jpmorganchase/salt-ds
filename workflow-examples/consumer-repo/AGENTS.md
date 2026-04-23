@@ -15,7 +15,18 @@ For Salt UI tasks, complete:
 - a canonical Salt selection step through Salt MCP or the Salt CLI fallback
 - a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)
 - if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing
-- use the compact Salt contract first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary`; inspect full workflow fields only when deeper artifacts are required
+- do not treat `status: partial` as completion just because starter code or an initial scaffold was created; continue follow-through or report the work as incomplete
+- use the compact Salt contract first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`; inspect full workflow fields only when deeper artifacts are required
+- leave `solution_type` unset on broad or mixed-surface create prompts unless the user already asked for a known Salt family
+
+Treat the compact `salt_workflow_v1` action as a command, not advice:
+
+- `action.kind: "implement"`: implementation is allowed only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; after editing, run the returned review/post action
+- `action.kind: "ask_user"`: stop and ask the returned question; do not edit around it
+- `action.kind: "retrieve_entity"` or `"retrieve_examples"`: gather the named Salt evidence first, then continue the workflow with that evidence
+- `action.kind: "install_dependencies"`: install the listed packages before writing Salt UI
+- `action.kind: "fix_context"` or `"bootstrap_repo"`: resolve repo setup or context before repo-specific edits
+- use `recipe.steps`, `questions`, and `evidence.missing` to report remaining work instead of guessing
 
 If screenshots or mockups are involved in migration work, normalize them into structured outline evidence before the canonical Salt migrate step. Do not send raw image attachments directly to Salt MCP.
 
