@@ -53,9 +53,6 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-  const [panelHeaderId, setPanelHeaderId] = useState<string | undefined>(
-    undefined,
-  );
   const [panelId, setPanelId] = useState<string | undefined>(undefined);
 
   const floatingRootContext = useFloatingRootContext({
@@ -124,8 +121,6 @@ export function SidePanelProvider(props: SidePanelGroupProps) {
         setReference,
         setOpen: handleOpenChange,
         closeButtonRef,
-        panelHeaderId,
-        setPanelHeaderId,
         panelId,
         setPanelId,
       }}

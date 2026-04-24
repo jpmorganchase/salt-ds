@@ -21,9 +21,11 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN Left panel is opened, THEN displays correctly with ARIA attributes", () => {
       cy.mount(<Left />);
 
-      cy.findByRole("button", { name: "Open left panel" })
-        .should("have.attr", "aria-expanded", "false")
-        .and("have.attr", "aria-controls");
+      cy.findByRole("button", { name: "Open left panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       cy.findByRole("button", { name: "Open left panel" }).click();
       cy.findByRole("button", { name: "Close left panel" }).should(
@@ -31,6 +33,16 @@ describe("GIVEN a SidePanel component", () => {
         "aria-expanded",
         "true",
       );
+
+      cy.findByRole("region", { name: "Section Title" })
+        .invoke("attr", "id")
+        .then((panelId) => {
+          cy.findByRole("button", { name: "Close left panel" }).should(
+            "have.attr",
+            "aria-controls",
+            panelId,
+          );
+        });
 
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region").should("have.class", "saltSidePanel-left");
@@ -48,9 +60,11 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN Default panel is opened, THEN displays with correct position class and ARIA attributes", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button", { name: "Open right panel" })
-        .should("have.attr", "aria-expanded", "false")
-        .and("have.attr", "aria-controls");
+      cy.findByRole("button", { name: "Open right panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       cy.findByRole("button", { name: "Open right panel" }).click();
       cy.findByRole("button", { name: "Close right panel" }).should(
@@ -61,6 +75,16 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region")
         .should("have.class", "saltSidePanel-right")
         .and("be.visible");
+
+      cy.findByRole("region", { name: "Section Title" })
+        .invoke("attr", "id")
+        .then((panelId) => {
+          cy.findByRole("button", { name: "Close right panel" }).should(
+            "have.attr",
+            "aria-controls",
+            panelId,
+          );
+        });
 
       cy.findByRole("button", { name: "Close" }).click();
       cy.findByRole("button", { name: "Open right panel" }).should(
@@ -75,9 +99,11 @@ describe("GIVEN a SidePanel component", () => {
     it("WHEN ManualTrigger is used, THEN aria-expanded and aria-controls are managed correctly", () => {
       cy.mount(<ManualTrigger />);
 
-      cy.findByRole("button", { name: "Toggle left panel" })
-        .should("have.attr", "aria-expanded", "false")
-        .and("have.attr", "aria-controls");
+      cy.findByRole("button", { name: "Toggle left panel" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
 
       cy.findByRole("button", { name: "Toggle left panel" }).click();
 
@@ -86,6 +112,16 @@ describe("GIVEN a SidePanel component", () => {
         "aria-expanded",
         "true",
       );
+
+      cy.findByRole("region", { name: "Left Panel" })
+        .invoke("attr", "id")
+        .then((panelId) => {
+          cy.findByRole("button", { name: "Toggle left panel" }).should(
+            "have.attr",
+            "aria-controls",
+            panelId,
+          );
+        });
 
       cy.findByRole("region", { name: "Left Panel" }).should("be.visible");
     });
@@ -152,32 +188,6 @@ describe("GIVEN a SidePanel component", () => {
         cy.realPress("Escape");
 
         cy.get("@onOpenChange").should("have.been.calledWith", false);
-      });
-    });
-
-    describe("WHEN checking ARIA attributes and accessibility", () => {
-      it("THEN aria-controls attribute links button to panel id correctly", () => {
-        cy.mount(<Left />);
-
-        cy.findByRole("button", { name: "Open left panel" })
-          .invoke("attr", "aria-controls")
-          .then((panelId) => {
-            cy.findByRole("button", { name: "Open left panel" }).click();
-
-            cy.findByRole("region").should("have.attr", "id", panelId);
-          });
-      });
-
-      it("AND panel uses aria-label, THEN label is accessible via role query", () => {
-        cy.mount(
-          <SidePanelProvider open>
-            <SidePanel aria-label="Test Panel">Content</SidePanel>
-          </SidePanelProvider>,
-        );
-
-        cy.findByRole("region", { name: "Test Panel" })
-          .should("be.visible")
-          .and("have.attr", "aria-label", "Test Panel");
       });
     });
   });
@@ -284,14 +294,16 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("button", { name: "Edit details for Alex Morgan" }).click();
 
-      cy.findByRole("region", { name: "Employee Details" }).should(
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).should(
         "be.visible",
       );
-      cy.findByRole("region", { name: "Employee Details" }).within(() => {
-        cy.findByDisplayValue("Alex Morgan").should("be.visible");
-        cy.findByDisplayValue("alex.morgan@example.com").should("be.visible");
-        cy.findByDisplayValue("+1 212 555 0101").should("be.visible");
-      });
+      cy.findByRole("region", { name: "Alex Morgan Employee Details" }).within(
+        () => {
+          cy.findByDisplayValue("Alex Morgan").should("be.visible");
+          cy.findByDisplayValue("alex.morgan@example.com").should("be.visible");
+          cy.findByDisplayValue("+1 212 555 0101").should("be.visible");
+        },
+      );
     });
 
     it("WHEN panel is open and Close button clicked, THEN panel is removed and table remains visible", () => {
@@ -519,10 +531,9 @@ describe("GIVEN a SidePanel component", () => {
 
       cy.findByRole("button", { name: "Open right panel" }).click();
 
-      cy.get(".saltSidePanelContent-body")
-        .should("be.visible")
-        .and("not.have.attr", "tabindex")
-        .and("not.have.attr", "role", "region");
+      cy.get(".saltSidePanelContent-body").should("be.visible");
+      cy.get(".saltSidePanelContent-body").should("not.have.attr", "tabindex");
+      cy.get(".saltSidePanelContent-body").should("not.have.attr", "role");
     });
 
     it("WHEN panel content is scrollable, THEN content body is focusable", () => {

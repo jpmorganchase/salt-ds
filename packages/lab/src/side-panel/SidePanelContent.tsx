@@ -29,17 +29,13 @@ export const SidePanelContent = forwardRef<
   const { header, children, className, ...rest } = props;
 
   const { CloseIcon } = useIcon();
-  const { closeButtonRef, setOpen, setPanelHeaderId } = useSidePanelContext();
+  const { closeButtonRef, setOpen } = useSidePanelContext();
   const targetWindow = useWindow();
   const headerId = useId();
+  const contentSuffixId = useId();
   const hasHeader = header != null;
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const [isScrollable, setIsScrollable] = useState(false);
-
-  useEffect(() => {
-    setPanelHeaderId(hasHeader ? headerId : undefined);
-    return () => setPanelHeaderId(undefined);
-  }, [hasHeader, headerId, setPanelHeaderId]);
 
   // Monitor scrollability of the body element
   useEffect(() => {
@@ -77,9 +73,21 @@ export const SidePanelContent = forwardRef<
     window: targetWindow,
   });
 
-  const ariaLabelledBy =
-    rest["aria-labelledby"] ?? (hasHeader ? headerId : undefined);
-  const ariaLabel = rest["aria-label"];
+  const explicitLabelledBy = rest["aria-labelledby"] as string | undefined;
+  const explicitLabel = rest["aria-label"] as string | undefined;
+
+  let bodyAriaLabelledBy: string | undefined;
+  let bodyAriaLabel: string | undefined;
+
+  if (isScrollable) {
+    if (explicitLabelledBy) {
+      bodyAriaLabelledBy = explicitLabelledBy;
+    } else if (hasHeader) {
+      bodyAriaLabelledBy = `${headerId} ${contentSuffixId}`;
+    } else {
+      bodyAriaLabel = explicitLabel ?? "Content";
+    }
+  }
 
   return (
     <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
@@ -95,14 +103,17 @@ export const SidePanelContent = forwardRef<
           <CloseIcon aria-hidden />
         </Button>
       </div>
+      <span id={contentSuffixId} className="salt-visuallyHidden">
+        content
+      </span>
       <div
         ref={bodyRef}
         className={withBaseName("body")}
-        role={isScrollable ? "region" : undefined}
-        tabIndex={isScrollable ? 0 : undefined}
         {...(isScrollable && {
-          "aria-labelledby": ariaLabelledBy || undefined,
-          "aria-label": ariaLabel && !ariaLabelledBy ? ariaLabel : undefined,
+          role: isScrollable ? "region" : undefined,
+          tabIndex: isScrollable ? 0 : undefined,
+          "aria-labelledby": bodyAriaLabelledBy,
+          "aria-label": bodyAriaLabel,
         })}
       >
         {children}
