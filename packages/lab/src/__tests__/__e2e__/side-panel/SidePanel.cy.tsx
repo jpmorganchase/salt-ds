@@ -193,6 +193,27 @@ describe("GIVEN a SidePanel component", () => {
   });
 
   describe("Focus Management", () => {
+    describe("WHEN panel is rendered with defaultOpen=true", () => {
+      it("THEN focus is not moved to the panel on mount", () => {
+        cy.mount(<Variants />);
+
+        // Panel is already open (defaultOpen={true}) but focus should not
+        // have been stolen — the close button must not be the active element.
+        cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+        cy.findByRole("button", { name: "Close" }).should("not.have.focus");
+      });
+
+      it("AND user then closes and reopens the panel, THEN focus moves to the close button", () => {
+        cy.mount(<Variants />);
+
+        cy.findByRole("button", { name: "Close" }).click();
+        cy.findByRole("region").should("not.exist");
+
+        cy.findByRole("button", { name: /open right panel/i }).click();
+        cy.findByRole("button", { name: "Close" }).should("have.focus");
+      });
+    });
+
     describe("WHEN panel is opened via trigger", () => {
       it("THEN initial focus moves to first button inside the panel", () => {
         cy.mount(<Default />);

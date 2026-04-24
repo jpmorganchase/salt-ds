@@ -39,7 +39,7 @@ export interface SidePanelContextValue {
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
   /**
    * Sets the open state of the panel.
-   * Called by SidePanelCloseTrigger or any consumer that needs to close the panel.
+   * Called by the close button in SidePanelContent, or any consumer that needs to close the panel.
    */
   setOpen: (open: boolean) => void;
   /**

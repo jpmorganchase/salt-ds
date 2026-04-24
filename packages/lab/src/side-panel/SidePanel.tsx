@@ -74,9 +74,9 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
-    // Track whether this is the initial render. Skip animation on first render
-    // when panel is already open (e.g. defaultOpen=true), but still move focus
-    // to the panel for accessibility announcements.
+    // Track whether this is the initial render. Skip animation AND focus movement
+    // on first render when the panel is already open (e.g. defaultOpen=true) —
+    // focus should only move when the user explicitly triggers the panel.
     const initialRender = useRef(true);
     const targetWindow = useWindow();
 
@@ -184,6 +184,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           initialFocus={resolvedInitialFocus}
           closeOnFocusOut={false}
           guards={false}
+          disabled={initialRender.current}
         >
           {panelDiv}
         </FloatingFocusManager>

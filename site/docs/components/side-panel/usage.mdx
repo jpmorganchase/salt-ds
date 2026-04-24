@@ -91,24 +91,25 @@ You must provide an accessible name via `aria-labelledby` (pointing to a heading
 A minimal side panel combines all four parts inside a flex container:
 
 ```jsx
+const headingId = useId();
+
 <SidePanelProvider>
-  <FlexLayout>
+  <FlexLayout gap={0}>
 
     <StackLayout style={{ flex: 1 }}>
       <SidePanelTrigger>
-        <Button style={{width: "fit-content"}}>Toggle panel</Button>
+        <Button style={{ width: "fit-content" }}>Toggle panel</Button>
       </SidePanelTrigger>
     </StackLayout>
 
-    <SidePanel position="right" aria-labelledby={"heading id"}>
-      <Text>Side panel content goes here.</Text>
-      <SidePanelContent header={<H2 id={"heading id"}>Details</H2>}>
+    <SidePanel position="right" aria-labelledby={headingId}>
+      <SidePanelContent header={<H2 id={headingId}>Details</H2>}>
         <Text>Side panel content goes here.</Text>
       </SidePanelContent>
     </SidePanel>
 
   </FlexLayout>
-</SidePanelProvider>);
+</SidePanelProvider>
 ```
 
 ### Custom triggers
@@ -116,20 +117,21 @@ A minimal side panel combines all four parts inside a flex container:
 When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a custom trigger using `useSidePanelContext`. Call `setOpen`, `setReference`, and spread `getReferenceProps` onto your element to maintain the correct ARIA attributes and focus return behavior.
 
 ```jsx
-const { setOpen, setReference, getReferenceProps, getFloatingProps } =
+const { setOpen, setReference, getReferenceProps, panelId, openState } =
   useSidePanelContext();
 
 <Button
   {...getReferenceProps({
-    "aria-controls": getFloatingProps().id,
-    onClick: () => {
+    "aria-expanded": openState,
+    "aria-controls": openState ? panelId : undefined,
+    onClick: (event) => {
       setReference(event.currentTarget);
       setOpen(true);
     },
   })}
 >
   Edit
-</Button>;
+</Button>
 ```
 
 ## Props

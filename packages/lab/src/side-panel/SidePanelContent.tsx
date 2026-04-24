@@ -55,15 +55,21 @@ export const SidePanelContent = forwardRef<
     // Check immediately
     checkScrollable();
 
-    // Use ResizeObserver to detect when content changes or panel resizes
+    // Use ResizeObserver to detect when the panel resizes
     const resizeObserver = new ResizeObserver(() => {
       checkScrollable();
     });
 
     resizeObserver.observe(bodyElement);
 
+    // Use MutationObserver to detect when dynamic content is added/removed,
+    // since child size changes don't trigger ResizeObserver on the parent.
+    const mutationObserver = new MutationObserver(checkScrollable);
+    mutationObserver.observe(bodyElement, { childList: true, subtree: true });
+
     return () => {
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
     };
   }, []);
 
@@ -110,8 +116,8 @@ export const SidePanelContent = forwardRef<
         ref={bodyRef}
         className={withBaseName("body")}
         {...(isScrollable && {
-          role: isScrollable ? "region" : undefined,
-          tabIndex: isScrollable ? 0 : undefined,
+          role: "region",
+          tabIndex: 0,
           "aria-labelledby": bodyAriaLabelledBy,
           "aria-label": bodyAriaLabel,
         })}
