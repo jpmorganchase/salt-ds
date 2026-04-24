@@ -7,7 +7,6 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
-  useEffect,
   useRef,
 } from "react";
 import { useLocalization } from "../localization-provider";
@@ -214,16 +213,17 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       ...propsRest
     } = props;
 
-    useEffect(() => {
-      if (process.env.NODE_ENV !== "production") {
-        if (!warnedOnce && multiselect && selectionVariant !== "single") {
-          console.warn(
-            `'multiselect' with selection variant '${selectionVariant}' is experimental and not for production use.`,
-          );
-          warnedOnce = true;
-        }
-      }
-    }, [multiselect, selectionVariant]);
+    if (
+      process.env.NODE_ENV !== "production" &&
+      !warnedOnce &&
+      multiselect &&
+      selectionVariant !== "single"
+    ) {
+      console.warn(
+        `'multiselect' with selection variant '${selectionVariant}' is experimental and not for production use.`,
+      );
+      warnedOnce = true;
+    }
 
     let timezone: Timezone = "default";
     if (timezoneProp) {

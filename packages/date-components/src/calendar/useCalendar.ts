@@ -964,7 +964,7 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
   useEffect(() => {
     const shouldTransition =
       focusedDate &&
-      !focusedDateProp !== undefined &&
+      focusedDateProp === undefined &&
       !isDayVisible(focusedDate) &&
       isOutsideAllowedDates(focusedDate) === 0;
 
