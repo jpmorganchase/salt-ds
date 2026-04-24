@@ -791,6 +791,57 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findByLabelText("End date").should("have.value", "");
       });
 
+      it("SHOULD call custom validate for cleared/unset range values", () => {
+        const validateSpy = cy
+          .stub()
+          .as("validateSpy")
+          .callsFake((date, details) => details);
+
+        cy.mount(
+          <DatePicker selectionVariant="range">
+            <DatePickerTrigger>
+              <DatePickerRangeInput validate={validateSpy} />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerRangeGridPanel />
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+
+        // Set values first, then clear both inputs to exercise unset validation.
+        cy.findByLabelText("Start date")
+          .click()
+          .clear()
+          .type(initialRangeDateValue.startDate);
+        cy.findByLabelText("End date")
+          .click()
+          .clear()
+          .type(initialRangeDateValue.endDate);
+        cy.realPress("Tab");
+
+        cy.findByLabelText("Start date").click().clear();
+        cy.findByLabelText("End date").click().clear();
+        cy.realPress("Tab");
+
+        // biome-ignore lint/suspicious/noExplicitAny: cypress spy wrapper
+        cy.get("@validateSpy").should((spy: any) => {
+          const calls = spy.getCalls();
+          expect(calls.length).to.be.greaterThan(0);
+
+          const sawUnsetRange = calls.some((call: { args: unknown[] }) => {
+            const date = call.args[0] as
+              | { startDate?: DateFrameworkType; endDate?: DateFrameworkType }
+              | null;
+
+            return (
+              !adapter.isValid(date?.startDate) && !adapter.isValid(date?.endDate)
+            );
+          });
+
+          expect(sawUnsetRange).to.equal(true);
+        });
+      });
+
       it("SHOULD render helper text in the panel when opened ", () => {
         cy.mount(<RangeWithFormField />);
         // Verify the helper text is visible on the page

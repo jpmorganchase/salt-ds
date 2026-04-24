@@ -323,6 +323,47 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.get("@selectionChangeSpy").should("have.callCount", 4);
       });
 
+      it("SHOULD call custom validate for null/unset values", () => {
+        const validateSpy = cy
+          .stub()
+          .as("validateSpy")
+          .callsFake((date, details) => {
+            if (!date) {
+              details.errors = [
+                {
+                  type: "custom-unset",
+                  message: "custom empty message",
+                },
+              ];
+            }
+            return details;
+          });
+
+        cy.mount(
+          <DatePicker selectionVariant="single">
+            <DatePickerTrigger>
+              <DatePickerSingleInput validate={validateSpy} />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerSingleGridPanel />
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+
+        // Establish a valid value first, then clear to trigger null/unset validation.
+        cy.findByRole("textbox").click().clear().type(initialDateValue);
+        cy.realPress("Tab");
+        cy.findByRole("textbox").click().clear();
+        cy.realPress("Tab");
+
+        // biome-ignore lint/suspicious/noExplicitAny: cypress spy wrapper
+        cy.get("@validateSpy").should((spy: any) => {
+          expect(spy.callCount).to.equal(2);
+          expect(adapter.isValid(spy.getCall(0).args[0])).to.equal(true);
+          expect(spy.getCall(1).args[0]).to.equal(null);
+        });
+      });
+
       it("SHOULD only be able to select a date between min/max", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(

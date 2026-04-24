@@ -149,7 +149,7 @@ export const DatePickerSingleInput = forwardRef<
       details: DateInputSingleDetails,
     ) => {
       const validatedDetails =
-        validate && date
+        validate
           ? validate(date, details)
           : defaultSingleValidation(
               dateAdapter,
