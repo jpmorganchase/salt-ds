@@ -829,12 +829,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           expect(calls.length).to.be.greaterThan(0);
 
           const sawUnsetRange = calls.some((call: { args: unknown[] }) => {
-            const date = call.args[0] as
-              | { startDate?: DateFrameworkType; endDate?: DateFrameworkType }
-              | null;
+            const date = call.args[0] as {
+              startDate?: DateFrameworkType;
+              endDate?: DateFrameworkType;
+            } | null;
 
             return (
-              !adapter.isValid(date?.startDate) && !adapter.isValid(date?.endDate)
+              !adapter.isValid(date?.startDate) &&
+              !adapter.isValid(date?.endDate)
             );
           });
 

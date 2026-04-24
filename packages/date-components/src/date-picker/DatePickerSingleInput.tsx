@@ -148,16 +148,9 @@ export const DatePickerSingleInput = forwardRef<
       date: SingleDateSelection | null | undefined,
       details: DateInputSingleDetails,
     ) => {
-      const validatedDetails =
-        validate
-          ? validate(date, details)
-          : defaultSingleValidation(
-              dateAdapter,
-              date,
-              details,
-              minDate,
-              maxDate,
-            );
+      const validatedDetails = validate
+        ? validate(date, details)
+        : defaultSingleValidation(dateAdapter, date, details, minDate, maxDate);
       select(event, date ?? null, validatedDetails);
     },
     [dateAdapter, minDate, maxDate, select, validate],
