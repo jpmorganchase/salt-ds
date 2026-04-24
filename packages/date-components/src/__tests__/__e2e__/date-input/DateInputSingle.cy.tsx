@@ -128,6 +128,24 @@ describe("GIVEN a DateInputSingle", () => {
         cy.findByRole("textbox").should("have.attr", "aria-invalid", "true");
       });
 
+      it("SHOULD use top-level aria-label", () => {
+        cy.mount(<DateInputSingle aria-label="trade date" />);
+
+        cy.findByRole("textbox", { name: "trade date" })
+          .should("have.attr", "aria-label", "trade date")
+          .and("not.have.attr", "aria-labelledby");
+      });
+
+      it("SHOULD use inputProps aria-label override", () => {
+        cy.mount(
+          <DateInputSingle inputProps={{ "aria-label": "Settlement date" }} />,
+        );
+
+        cy.findByRole("textbox", { name: "Settlement date" })
+          .should("have.attr", "aria-label", "Settlement date")
+          .and("not.have.attr", "aria-labelledby");
+      });
+
       it("SHOULD call onDateChange only if value changes", () => {
         const onDateChangeSpy = cy.stub().as("dateChangeSpy");
         const onDateValueChangeSpy = cy.stub().as("dateValueChangeSpy");

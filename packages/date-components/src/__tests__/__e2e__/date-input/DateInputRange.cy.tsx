@@ -187,6 +187,47 @@ describe("GIVEN a DateInputRange", () => {
           });
       });
 
+      it("SHOULD use top-level aria-label for both inputs", () => {
+        cy.mount(<DateInputRange aria-label="trade and settlement dates" />);
+
+        cy.findByRole("textbox", {
+          name: "Start date trade and settlement dates",
+        })
+          .should(
+            "have.attr",
+            "aria-label",
+            "Start date trade and settlement dates",
+          )
+          .and("not.have.attr", "aria-labelledby");
+
+        cy.findByRole("textbox", {
+          name: "End date trade and settlement dates",
+        })
+          .should(
+            "have.attr",
+            "aria-label",
+            "End date trade and settlement dates",
+          )
+          .and("not.have.attr", "aria-labelledby");
+      });
+
+      it("SHOULD use per-input aria-label overrides for both inputs", () => {
+        cy.mount(
+          <DateInputRange
+            startInputProps={{ "aria-label": "Trade date" }}
+            endInputProps={{ "aria-label": "Settlement date" }}
+          />,
+        );
+
+        cy.findByRole("textbox", { name: "Trade date" })
+          .should("have.attr", "aria-label", "Trade date")
+          .and("not.have.attr", "aria-labelledby");
+
+        cy.findByRole("textbox", { name: "Settlement date" })
+          .should("have.attr", "aria-label", "Settlement date")
+          .and("not.have.attr", "aria-labelledby");
+      });
+
       it("SHOULD render value, even when not a valid date", () => {
         cy.mount(
           <DateInputRange

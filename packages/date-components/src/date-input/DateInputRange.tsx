@@ -216,10 +216,15 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
-      timezone = dateProp?.startDate || defaultDate?.startDate
+      timezone = dateProp?.startDate ||
+      dateProp?.endDate ||
+      defaultDate?.startDate ||
+      defaultDate?.endDate
         ? dateAdapter.getTimezone(
             (dateProp?.startDate ??
-              defaultDate?.startDate) as DateFrameworkType,
+              dateProp?.endDate ??
+              defaultDate?.startDate ??
+              defaultDate?.endDate) as DateFrameworkType,
           )
         : "default",
       ...rest
@@ -363,6 +368,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const {
       "aria-describedby": startInputPropsDescribedBy,
       "aria-labelledby": startInputPropsLabelledBy,
+      "aria-label": startInputPropsAriaLabel,
       onBlur: startInputPropsOnBlur,
       onChange: startInputPropsOnChange,
       onKeyDown: startInputPropsOnKeyDown,
@@ -378,6 +384,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const {
       "aria-describedby": endInputPropsDescribedBy,
       "aria-labelledby": endInputPropsLabelledBy,
+      "aria-label": endInputPropsAriaLabel,
       onBlur: endInputPropsOnBlur,
       onChange: endInputPropsOnChange,
       onKeyDown: endInputPropsOnKeyDown,
@@ -386,20 +393,27 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       ...restEndInputProps
     } = endInputProps;
 
-    const startAriaLabelledBy =
-      clsx(
-        formFieldLabelledBy,
-        startDateLabelId,
-        startInputPropsLabelledBy,
-        restAriaLabelledBy,
-      ) || undefined;
-    const endAriaLabelledBy =
-      clsx(
-        formFieldLabelledBy,
-        endDateLabelId,
-        endInputPropsLabelledBy,
-        restAriaLabelledBy,
-      ) || undefined;
+    const hasStartExplicitAriaLabel =
+      startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
+    const hasEndExplicitAriaLabel =
+      endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
+
+    const startAriaLabelledBy = hasStartExplicitAriaLabel
+      ? undefined
+      : clsx(
+          formFieldLabelledBy,
+          startDateLabelId,
+          startInputPropsLabelledBy,
+          restAriaLabelledBy,
+        ) || undefined;
+    const endAriaLabelledBy = hasEndExplicitAriaLabel
+      ? undefined
+      : clsx(
+          formFieldLabelledBy,
+          endDateLabelId,
+          endInputPropsLabelledBy,
+          restAriaLabelledBy,
+        ) || undefined;
     const startAriaDescribedBy =
       clsx(
         formFieldDescribedBy,
@@ -413,9 +427,13 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         restAriaDescribedBy,
       ) || undefined;
 
-    const startAriaLabel = ariaLabel ? `Start date ${ariaLabel}` : "Start date";
+    const startAriaLabel =
+      startInputPropsAriaLabel ??
+      (ariaLabel ? `Start date ${ariaLabel}` : "Start date");
 
-    const endAriaLabel = ariaLabel ? `End date ${ariaLabel}` : "End date";
+    const endAriaLabel =
+      endInputPropsAriaLabel ??
+      (ariaLabel ? `End date ${ariaLabel}` : "End date");
 
     const endInputIsRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)

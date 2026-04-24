@@ -262,6 +262,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     const {
       "aria-describedby": dateInputDescribedBy,
       "aria-labelledby": dateInputLabelledBy,
+      "aria-label": dateInputAriaLabel,
       onBlur: inputPropsOnBlur,
       onChange: inputPropsOnChange,
       onKeyDown: inputPropsOnKeyDown,
@@ -270,12 +271,17 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...restDateInputProps
     } = inputProps;
 
-    const inputAriaLabelledBy =
-      clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
-      undefined;
+    const hasExplicitAriaLabel =
+      dateInputAriaLabel !== undefined || ariaLabel !== undefined;
+
+    const inputAriaLabelledBy = hasExplicitAriaLabel
+      ? undefined
+      : clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
+        undefined;
     const inputAriaDescribedBy =
       clsx(formFieldDescribedBy, dateInputDescribedBy, restAriaDescribedBy) ||
       undefined;
+    const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -375,7 +381,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           aria-invalid={
             (!isReadOnly && validationStatus === "error") || undefined
           }
-          aria-label={ariaLabel ?? "date input"}
+          aria-label={inputAriaLabel}
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}
