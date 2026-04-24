@@ -26,7 +26,7 @@
   border-left: var(--saltSidePanel-internal-border);
 }
 
-.saltSidePanel-transparent {
+.saltSidePanel-none {
   --saltSidePanel-background: none;
   border: none;
 }

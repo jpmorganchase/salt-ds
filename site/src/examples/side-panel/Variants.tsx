@@ -21,7 +21,7 @@ import {
 import { type ChangeEventHandler, useState } from "react";
 import { ContentExample } from "./ContentExample";
 
-const variantOptions = ["primary", "secondary", "tertiary"];
+const variantOptions = ["primary", "secondary", "tertiary", "none"];
 
 const SidePanelExample = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");

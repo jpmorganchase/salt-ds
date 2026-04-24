@@ -257,6 +257,13 @@ describe("GIVEN a SidePanel component", () => {
             "saltSidePanel-primary",
           );
 
+          // Switch to none
+          cy.findByRole("radio", { name: "None" }).click();
+          cy.findByRole("region", { name: "Section Title" }).should(
+            "have.class",
+            "saltSidePanel-none",
+          );
+
           cy.findByRole("radio", { name: "Tertiary" }).click();
           cy.findByRole("region", { name: "Section Title" }).should(
             "have.class",

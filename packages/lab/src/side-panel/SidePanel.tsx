@@ -36,15 +36,10 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
   /**
-   * The background color palette. Options are 'primary', 'secondary' and 'tertiary'.
+   * The background color palette. Options are 'primary', 'secondary', 'tertiary' and 'none'.
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "tertiary";
-  /**
-   * The appearance of the panel, affecting background and border styles. Options are 'solid' and 'transparent'.
-   * @default "solid"
-   */
-  appearance?: "solid" | "transparent";
+  variant?: "primary" | "secondary" | "tertiary" | "none";
 }
 
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
@@ -52,7 +47,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const {
       animated = true,
       position = "right",
-      appearance = "solid",
       initialFocus,
       variant = "primary",
       children,
@@ -169,7 +163,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName(appearance)]: appearance,
             [withBaseName(position)]: position,
             [withBaseName(variant)]: variant,
             [withBaseName("enterAnimation")]:

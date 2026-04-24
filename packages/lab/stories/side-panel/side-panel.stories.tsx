@@ -303,7 +303,7 @@ export const ManualTrigger: StoryFn = () => (
 // Variants
 // ---------------------------------------------------------------------------
 
-const variantOptions = ["primary", "secondary", "tertiary"];
+const variantOptions = ["primary", "secondary", "tertiary", "none"];
 
 const VariantsPanelContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
@@ -1230,8 +1230,7 @@ const CardsContent = () => {
               maxHeight: "100%",
             } as CSSProperties
           }
-          appearance="transparent"
-          variant="primary"
+          variant="none"
         >
           <HelpPanelCard
             headingId={headingId}
@@ -1343,8 +1342,7 @@ const ResizableCardsContent = () => {
               animated={false}
               aria-labelledby={headingId}
               style={resizableSidePanelStyle}
-              variant="primary"
-              appearance="transparent"
+              variant="none"
             >
               <HelpPanelCard
                 headingId={headingId}
