@@ -74,7 +74,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     // be false, and a ref value used as a prop isn't safe across that extra render.
     // Passing -1 to initialFocus tells FloatingFocusManager to skip focus movement
     // while keeping all other focus management (tab handling, return focus) active.
-    const [skipInitialFocus, setSkipInitialFocus] = useState(openState);
+    const [skipInitialFocus, setSkipInitialFocus] = useState(() => {
+      if (!openState) return false;
+      const reference = floatingRootContext.elements.reference;
+      return !(
+        reference instanceof Element &&
+        reference.contains(document.activeElement)
+      );
+    });
     // Track whether this is the initial render to skip the open animation.
     const initialRender = useRef(true);
     const targetWindow = useWindow();

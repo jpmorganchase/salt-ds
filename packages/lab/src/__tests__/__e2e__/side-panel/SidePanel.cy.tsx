@@ -333,6 +333,63 @@ describe("GIVEN a SidePanel component", () => {
           });
         });
       });
+
+      describe("WHEN Edit buttons are activated and the panel is closed in different ways", () => {
+        it("THEN focus moves into the panel on open and returns to the trigger on close", () => {
+          cy.mount(<WithTable />);
+
+          // First Edit click — focus moves into the panel
+          cy.findByRole("button", {
+            name: "Edit details for Alex Morgan",
+          }).click();
+          cy.findByRole("region", {
+            name: "Alex Morgan Employee Details",
+          }).should("be.visible");
+          cy.findByRole("button", { name: "Close" }).should("have.focus");
+
+          // Switch rows while panel is open — focus moves into the new panel
+          cy.findByRole("button", {
+            name: "Edit details for Taylor Reed",
+          }).click();
+          cy.findByRole("region", {
+            name: "Taylor Reed Employee Details",
+          }).should("be.visible");
+          cy.findByRole("button", { name: "Close" }).should("have.focus");
+
+          // Close via Escape — focus returns to the trigger
+          cy.realPress("Escape");
+          cy.findByRole("region").should("not.exist");
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            "Edit details for Taylor Reed",
+          );
+
+          // Reopen a row — close via Close button — focus returns to the trigger
+          cy.findByRole("button", {
+            name: "Edit details for Alex Morgan",
+          }).click();
+          cy.findByRole("button", { name: "Close" }).click();
+          cy.findByRole("region").should("not.exist");
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            "Edit details for Alex Morgan",
+          );
+
+          // Reopen — close via Cancel button — focus returns to the trigger
+          cy.findByRole("button", {
+            name: "Edit details for Jordan Lee",
+          }).click();
+          cy.findByRole("button", { name: "Cancel" }).click();
+          cy.findByRole("region").should("not.exist");
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            "Edit details for Jordan Lee",
+          );
+        });
+      });
     });
   });
 
