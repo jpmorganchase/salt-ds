@@ -123,6 +123,9 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
 
   useEffect(() => {
     setEnableApply(true);
+    return () => {
+      setEnableApply(false);
+    };
   }, [setEnableApply]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
