@@ -74,9 +74,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
-    // Track whether this is the initial render. Skip animation AND focus movement
-    // on first render when the panel is already open (e.g. defaultOpen=true) —
-    // focus should only move when the user explicitly triggers the panel.
+    // Skip initial focus movement when the panel is open on first mount
+    // (defaultOpen / controlled open=true). Uses state rather than a ref because
+    // the setPanelId effect triggers a context re-render after initialRender would
+    // be false, and a ref value used as a prop isn't safe across that extra render.
+    // Passing -1 to initialFocus tells FloatingFocusManager to skip focus movement
+    // while keeping all other focus management (tab handling, return focus) active.
+    const [skipInitialFocus, setSkipInitialFocus] = useState(openState);
+    // Track whether this is the initial render to skip the open animation.
     const initialRender = useRef(true);
     const targetWindow = useWindow();
 
@@ -106,6 +111,12 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         setPanelId(undefined);
       };
     }, [id, setPanelId]);
+
+    useEffect(() => {
+      if (!openState) {
+        setSkipInitialFocus(false);
+      }
+    }, [openState]);
 
     useEffect(() => {
       if (!animated) {
@@ -147,7 +158,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
-    const resolvedInitialFocus = initialFocus ?? closeButtonRef;
+    const resolvedInitialFocus = skipInitialFocus ? -1 : (initialFocus ?? closeButtonRef);
 
     const panelDiv = (
       <div
@@ -184,7 +195,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           initialFocus={resolvedInitialFocus}
           closeOnFocusOut={false}
           guards={false}
-          disabled={initialRender.current}
         >
           {panelDiv}
         </FloatingFocusManager>
