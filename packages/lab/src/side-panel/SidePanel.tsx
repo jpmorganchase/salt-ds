@@ -158,7 +158,9 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
-    const resolvedInitialFocus = skipInitialFocus ? -1 : (initialFocus ?? closeButtonRef);
+    const resolvedInitialFocus = skipInitialFocus
+      ? -1
+      : (initialFocus ?? closeButtonRef);
 
     const panelDiv = (
       <div
