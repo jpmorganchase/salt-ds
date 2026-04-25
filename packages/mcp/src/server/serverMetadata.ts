@@ -24,7 +24,7 @@ interface SaltMcpPackageManifest {
 
 let cachedPackageManifest: SaltMcpPackageManifest | null = null;
 
-function getSaltMcpPackageManifest(): SaltMcpPackageManifest {
+export function getSaltMcpPackageManifest(): SaltMcpPackageManifest {
   if (cachedPackageManifest) {
     return cachedPackageManifest;
   }

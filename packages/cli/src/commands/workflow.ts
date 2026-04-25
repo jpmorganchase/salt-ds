@@ -1835,6 +1835,7 @@ function toCreateAgentWorkflowJson(
     packageName?: string;
     saltPackages?: string[];
     packageManager?: string;
+    resolvedEntities?: string[];
   },
 ): PublicContract {
   return buildCreatePublicContract(result.result.recommendation, contract, {
@@ -1844,6 +1845,7 @@ function toCreateAgentWorkflowJson(
     package: options.packageName,
     salt_packages: options.saltPackages,
     package_manager: options.packageManager,
+    resolved_entities: options.resolvedEntities,
   });
 }
 
@@ -2069,6 +2071,7 @@ export async function runCreateCommand(
 
   try {
     const createType = flags.type === "composition" ? "pattern" : flags.type;
+    const resolvedEntities = readRepeatableFlagValues(flags["resolved-entity"]);
     const context = await collectSaltInfo(io.cwd, flags["registry-dir"]);
     const { registry } = await resolveSemanticRegistry(
       io.cwd,
@@ -2297,6 +2300,7 @@ export async function runCreateCommand(
       packageName: flags.package,
       saltPackages: context.salt.packages.map((entry) => entry.name),
       packageManager: context.environment.packageManager,
+      resolvedEntities,
     });
 
     if (flags["starter-only"] === "true" && flags.json === "true") {

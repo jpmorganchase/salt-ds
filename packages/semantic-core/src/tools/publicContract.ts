@@ -241,6 +241,7 @@ export interface PublicContractExactRequest {
   resolved_entity?: string | null;
   match_status?: PublicMatchStatus;
   exact_match_required?: boolean;
+  full_request_evidence_complete?: boolean;
 }
 
 export interface PublicContractState {
@@ -283,6 +284,7 @@ export interface PublicContractBuildOptions {
   package?: string;
   salt_packages?: string[];
   package_manager?: string;
+  resolved_entities?: string[];
 }
 
 function uniqueNonEmptyStrings(
@@ -302,6 +304,10 @@ function readStringValue(value: unknown): string | null {
   return typeof value === "string" && value.trim().length > 0
     ? value.trim()
     : null;
+}
+
+function normalizeEvidenceKey(value: string): string {
+  return value.trim().toLowerCase();
 }
 
 function quoteCliArgument(value: string): string {
@@ -522,7 +528,10 @@ function isExactRequestSafe(
   }
 
   if (exactRequest.match_status === "broadened") {
-    return false;
+    return (
+      exactRequest.exact_match_required !== true &&
+      exactRequest.full_request_evidence_complete === true
+    );
   }
 
   return isMatchSafe(exactRequest.match_status);
@@ -941,6 +950,13 @@ export function buildPublicContract(
       ...(typeof input.exact_request?.exact_match_required === "boolean"
         ? { exact_match_required: input.exact_request.exact_match_required }
         : {}),
+      ...(typeof input.exact_request?.full_request_evidence_complete ===
+      "boolean"
+        ? {
+            full_request_evidence_complete:
+              input.exact_request.full_request_evidence_complete,
+          }
+        : {}),
     },
     safety: {
       canonical_complete: canonicalComplete,
@@ -1076,6 +1092,8 @@ function buildCreateNextStep(
   reference?: CreateRequestMatch["reference"],
   dependencyStep?: PublicInstallDependenciesStep | null,
   evidence?: PublicEvidenceSummary,
+  requiredFollowThrough: FollowThroughItem[] = contract.implementation_gate
+    .required_follow_through,
 ): PublicNextStep {
   if (dependencyStep) {
     return dependencyStep;
@@ -1112,12 +1130,12 @@ function buildCreateNextStep(
     };
   }
 
-  if (contract.implementation_gate.required_follow_through.length > 0) {
+  if (requiredFollowThrough.length > 0) {
     return {
       kind: "retrieve_entity",
       tool: "get_salt_entity",
       args: {
-        name: contract.implementation_gate.required_follow_through[0].entity,
+        name: requiredFollowThrough[0].entity,
       },
     };
   }
@@ -1600,6 +1618,10 @@ function buildCreateEvidence(
   contract: CreateSaltUiWorkflowContract,
   exactRequest: PublicContractExactRequest | undefined,
   registry?: SaltRegistry,
+  options: {
+    remaining_follow_through?: FollowThroughItem[];
+    resolved_follow_through_evidence?: PublicEvidenceItem[];
+  } = {},
 ): PublicEvidenceSummary {
   const recommended = readRecord(result.recommended);
   const entity = readEntityName(recommended) ?? result.decision.name ?? null;
@@ -1616,6 +1638,12 @@ function buildCreateEvidence(
     ...readRecordStringArray(recommended, "source_urls"),
     ...readRecordStringArray(registryRecord, "source_urls"),
   ]);
+  const registrySourceUrls = uniqueNonEmptyStrings([
+    ...contract.provenance.canonical_source_urls,
+    ...contract.provenance.source_urls,
+    ...relatedDocs,
+    ...explicitSourceUrls,
+  ]);
   const whenToUse = uniqueNonEmptyStrings([
     ...readRecordStringArray(recommended, "when_to_use"),
     ...readRecordStringArray(registryRecord, "when_to_use"),
@@ -1629,10 +1657,17 @@ function buildCreateEvidence(
     ...contract.provenance.related_guide_urls,
     ...contract.provenance.starter_source_urls,
     ...contract.provenance.source_urls,
+    ...(options.resolved_follow_through_evidence ?? []).flatMap(
+      (item) => item.source_urls,
+    ),
     ...relatedDocs,
     ...exampleSourceUrls,
     ...explicitSourceUrls,
   ]);
+  const docsEvidenceSourceUrls = sourceUrls.slice(0, 6);
+  const registryEvidenceSourceUrls = (
+    registrySourceUrls.length > 0 ? registrySourceUrls : sourceUrls
+  ).slice(0, 4);
   const items: PublicEvidenceItem[] = [
     ...(sourceUrls.length > 0
       ? [
@@ -1640,7 +1675,7 @@ function buildCreateEvidence(
             kind: "docs",
             entity: entity ?? undefined,
             field: "source_urls",
-            source_urls: sourceUrls,
+            source_urls: docsEvidenceSourceUrls,
             summary:
               "Canonical Salt docs or registry sources support the create decision.",
           }),
@@ -1652,7 +1687,7 @@ function buildCreateEvidence(
             kind: "registry",
             entity: entity ?? undefined,
             field: "when_to_use",
-            source_urls: sourceUrls,
+            source_urls: registryEvidenceSourceUrls,
             summary: whenToUse[0],
           }),
         ]
@@ -1663,7 +1698,7 @@ function buildCreateEvidence(
             kind: "registry",
             entity: entity ?? undefined,
             field: "when_not_to_use",
-            source_urls: sourceUrls,
+            source_urls: registryEvidenceSourceUrls,
             summary: whenNotToUse[0],
           }),
         ]
@@ -1680,13 +1715,18 @@ function buildCreateEvidence(
           }),
         ]
       : []),
+    ...(options.resolved_follow_through_evidence ?? []),
   ];
+  const remainingFollowThrough =
+    options.remaining_follow_through ??
+    contract.implementation_gate.required_follow_through;
   const missing = uniqueNonEmptyStrings([
     sourceUrls.length === 0 ? "canonical source URLs" : null,
-    exactRequest?.match_status === "broadened"
+    exactRequest?.match_status === "broadened" &&
+    exactRequest.full_request_evidence_complete !== true
       ? "full-request evidence beyond broadened owner"
       : null,
-    ...contract.implementation_gate.required_follow_through.map(
+    ...remainingFollowThrough.map(
       (item) => `follow-through evidence for ${item.entity}`,
     ),
     ...contract.implementation_gate.blocking_questions.map(
@@ -1734,14 +1774,80 @@ function buildCreateDependencyStep(input: {
   };
 }
 
+function buildResolvedFollowThroughEvidence(input: {
+  registry?: SaltRegistry;
+  required_follow_through: FollowThroughItem[];
+  resolved_entities?: string[];
+}): {
+  remaining_follow_through: FollowThroughItem[];
+  evidence_items: PublicEvidenceItem[];
+  full_request_evidence_complete: boolean;
+} {
+  const resolvedEntityKeys = new Set(
+    (input.resolved_entities ?? []).map(normalizeEvidenceKey),
+  );
+  const remaining: FollowThroughItem[] = [];
+  const evidenceItems: PublicEvidenceItem[] = [];
+
+  for (const followThrough of input.required_follow_through) {
+    if (!resolvedEntityKeys.has(normalizeEvidenceKey(followThrough.entity))) {
+      remaining.push(followThrough);
+      continue;
+    }
+
+    const record = findCreateEvidenceRecord(
+      input.registry,
+      followThrough.entity,
+    );
+    const sourceUrls = uniqueNonEmptyStrings([
+      ...readRecordStringArray(record, "source_urls"),
+      ...readRelatedDocUrls(record),
+      ...readExampleSourceUrls(record),
+    ]);
+
+    if (sourceUrls.length === 0) {
+      remaining.push(followThrough);
+      continue;
+    }
+
+    evidenceItems.push(
+      buildEvidenceItem({
+        kind: "docs",
+        entity: followThrough.entity,
+        field: "resolved_follow_through",
+        source_urls: sourceUrls.slice(0, 4),
+        summary: `Retrieved canonical Salt evidence for ${followThrough.entity} before implementing the ${followThrough.region} region.`,
+      }),
+    );
+  }
+
+  return {
+    remaining_follow_through: remaining,
+    evidence_items: evidenceItems,
+    full_request_evidence_complete:
+      input.required_follow_through.length > 0 &&
+      remaining.length === 0 &&
+      evidenceItems.length === input.required_follow_through.length,
+  };
+}
+
 function buildCreateRecipe(input: {
   next_step: PublicNextStep;
   contract: CreateSaltUiWorkflowContract;
   evidence: PublicEvidenceSummary;
   dependency_step: PublicInstallDependenciesStep | null;
+  remaining_follow_through: FollowThroughItem[];
+  resolved_follow_through: FollowThroughItem[];
 }): PublicRecipe {
   const steps: PublicRecipeStep[] = [];
-  const pushStep = (id: string, action: PublicNextStep, reason?: string) => {
+  const rerunCreateAfterAction =
+    "After completing this action, rerun the original create workflow and wait for status=success with action.kind=implement before editing.";
+  const pushStep = (
+    id: string,
+    action: PublicNextStep,
+    reason?: string,
+    status?: PublicRecipeStep["status"],
+  ) => {
     if (steps.some((step) => step.id === id)) {
       return;
     }
@@ -1749,7 +1855,9 @@ function buildCreateRecipe(input: {
     steps.push({
       id,
       action,
-      status: action.kind === input.next_step.kind ? "required" : "available",
+      status:
+        status ??
+        (action.kind === input.next_step.kind ? "required" : "available"),
       evidence_required:
         action.kind === "implement" ? input.evidence.missing : undefined,
       ...(reason ? { reason } : {}),
@@ -1760,12 +1868,12 @@ function buildCreateRecipe(input: {
     pushStep(
       "install-salt-dependencies",
       input.dependency_step,
-      "Salt packages are not installed in the target repo yet.",
+      `Salt packages are not installed in the target repo yet. ${rerunCreateAfterAction}`,
     );
   }
 
-  for (const followThrough of input.contract.implementation_gate
-    .required_follow_through) {
+  for (const followThrough of input.remaining_follow_through) {
+    const resolvedEntityRerun = `After retrieving ${followThrough.entity}, rerun the original create workflow with resolved_entities including ${followThrough.entity} (CLI: add --resolved-entity ${quoteCliArgument(followThrough.entity)}) and wait for status=success with action.kind=implement before editing.`;
     pushStep(
       `retrieve-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
       {
@@ -1775,7 +1883,22 @@ function buildCreateRecipe(input: {
           name: followThrough.entity,
         },
       },
-      `Ground ${followThrough.entity} before implementing the ${followThrough.region} region.`,
+      `Ground ${followThrough.entity} before implementing the ${followThrough.region} region. ${resolvedEntityRerun}`,
+    );
+  }
+
+  for (const followThrough of input.resolved_follow_through) {
+    pushStep(
+      `resolved-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
+      {
+        kind: "retrieve_entity",
+        tool: "get_salt_entity",
+        args: {
+          name: followThrough.entity,
+        },
+      },
+      `Canonical evidence for ${followThrough.entity} has been supplied for the ${followThrough.region} region.`,
+      "complete",
     );
   }
 
@@ -1783,10 +1906,18 @@ function buildCreateRecipe(input: {
     index,
     question,
   ] of input.contract.implementation_gate.blocking_questions.entries()) {
-    pushStep(`ask-user-${index + 1}`, { kind: "ask_user", question });
+    pushStep(
+      `ask-user-${index + 1}`,
+      { kind: "ask_user", question },
+      `Ask this blocking question and rerun the original create workflow with the user's answer before editing.`,
+    );
   }
 
-  pushStep("next-required-action", input.next_step);
+  pushStep(
+    "next-required-action",
+    input.next_step,
+    input.next_step.kind === "implement" ? undefined : rerunCreateAfterAction,
+  );
 
   if (input.next_step.kind === "implement") {
     pushStep("review-after-implementation", {
@@ -1819,11 +1950,33 @@ export function buildCreatePublicContract(
     package_manager: options.package_manager,
     result,
   });
+  const followThroughEvidence = buildResolvedFollowThroughEvidence({
+    registry: options.registry,
+    required_follow_through:
+      contract.implementation_gate.required_follow_through,
+    resolved_entities: options.resolved_entities,
+  });
+  const resolvedFollowThrough =
+    contract.implementation_gate.required_follow_through.filter(
+      (followThrough) =>
+        !followThroughEvidence.remaining_follow_through.some(
+          (remaining) =>
+            normalizeEvidenceKey(remaining.entity) ===
+            normalizeEvidenceKey(followThrough.entity),
+        ),
+    );
+  if (exactRequest && followThroughEvidence.full_request_evidence_complete) {
+    exactRequest.full_request_evidence_complete = true;
+  }
   const evidence = buildCreateEvidence(
     result,
     contract,
     exactRequest,
     options.registry,
+    {
+      remaining_follow_through: followThroughEvidence.remaining_follow_through,
+      resolved_follow_through_evidence: followThroughEvidence.evidence_items,
+    },
   );
   const nextStep =
     options.next_step ??
@@ -1833,6 +1986,7 @@ export function buildCreatePublicContract(
       requestMatch?.reference,
       dependencyStep,
       evidence,
+      followThroughEvidence.remaining_follow_through,
     );
   const projectPolicyBlockers = buildProjectPolicyBlockers({
     implementation_ready: contract.readiness.implementation_ready,
@@ -1851,8 +2005,7 @@ export function buildCreatePublicContract(
     exact_request: exactRequest,
     state: {
       implementation_ready: contract.readiness.implementation_ready,
-      required_follow_through:
-        contract.implementation_gate.required_follow_through,
+      required_follow_through: followThroughEvidence.remaining_follow_through,
       blocking_questions: contract.implementation_gate.blocking_questions,
       starter_blockers: starterBlockers,
       project_policy_blockers: [
@@ -1875,6 +2028,8 @@ export function buildCreatePublicContract(
       contract,
       evidence,
       dependency_step: dependencyStep,
+      remaining_follow_through: followThroughEvidence.remaining_follow_through,
+      resolved_follow_through: resolvedFollowThrough,
     }),
     rule_ids: contract.implementation_gate.rule_ids,
     blocking_reasons: options.blocking_reasons,

@@ -67,6 +67,7 @@ Use this order unless the task is explicitly narrower:
 ## Completion Gates
 
 The canonical step is not complete until the transport result is both relevant and complete enough for the intended output.
+Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, component capabilities, composition rules, examples, or documentation links; fetch canonical Salt evidence through MCP or CLI before naming or implementing Salt-specific structure.
 Read compact workflow output from top-level fields first:
 
 - `status`
@@ -86,11 +87,15 @@ Treat `salt_workflow_v1` action kinds as binding:
 - `complete`: stop without edits; the reviewed scope has no changes required
 - `review`: run the returned Salt review action before calling the workflow complete
 - `ask_user`: stop and ask the returned question before writing code
-- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region
+- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region; for create entity follow-through, rerun with MCP `resolved_entities` or CLI `--resolved-entity`
 - `install_dependencies`: install the listed Salt packages before writing Salt UI
 - `fix_context` or `bootstrap_repo`: resolve setup or repo context before repo-specific edits
 
+Hard Gate: do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has `status: success`, `action.kind: implement`, `safety.exact_request_safe: true`, and `evidence.status: complete`.
 Use `recipe.steps`, `questions`, and `evidence.missing` to explain remaining work instead of guessing past a partial result.
+After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge and wait for `status: success` with `action.kind: implement` before editing.
+For create entity follow-through, the evidence bridge is MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.
+Action Loop: call the workflow, read `status` and `action.kind`, perform exactly the returned action, then after follow-up rerun the originating workflow with the evidence bridge, edit only on `implement`, and run review after edits.
 
 When compact `create` remains `partial` or `blocked` on a broad or mixed-surface prompt, inspect the retrieval support surface before escalating to `full`:
 
@@ -158,14 +163,14 @@ When MCP is the transport:
 - `init`: bootstrap repo-local `.salt/team.json` and the managed root instruction block locally by default; add host adapters and `ui:verify` only when explicitly requested.
 - `context`: use `get_salt_project_context` for repo diagnostics, policy inspection, or explicit context reuse.
 - `create`: start with `create_salt_ui`; read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first; if compact output blocks implementation, follow `action` before editing the blocked region; for exact named follow-up, use `request.entity`, `request.resolved_entity`, and `request.match_status`; leave `solution_type` unset on broad or mixed-surface asks unless the request already points clearly to a known Salt family; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
-  - branch on `action.kind` rather than prose: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` allows editing
+  - branch on `action.kind` rather than prose: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages first, and only `implement` allows editing
   - if compact output is still broad or mixed-surface after the first pass, inspect `salt://catalog/candidates/{query}` or the CLI catalog-query support before asking for `full`
   - once the owner is grounded, use `salt://catalog/entity/{name}` or an exact follow-up create call to ground the supporting surface instead of paraphrasing it again
 - `review`: start with `review_salt_ui`; read returned `confidence` and `fix_candidates`; add runtime evidence only if the source pass is still not enough.
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.
 
-The default MCP surface exposes six repo-aware workflow tools first, followed by read-only support tools: `get_salt_entity`, `get_salt_examples`, and `discover_salt`. `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable in the default MCP surface. In constrained hosts, still verify the session tool list before calling a support tool; if a support tool is unavailable, use the workflow fallback for entity grounding (for example, `create_salt_ui` with an exact entity name as `query`).
+The default MCP surface exposes six repo-aware workflow tools first, followed by read-only support tools: `get_salt_entity`, `get_salt_examples`, and `discover_salt`. `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable in the default MCP surface. In constrained hosts, still verify the session tool list before calling a support tool; if a support tool is unavailable, use the workflow fallback for entity grounding (for example, `create_salt_ui` with an exact entity name as `query`). After create entity follow-through succeeds, rerun the original create workflow with `resolved_entities`.
 
 When CLI is the transport:
 
@@ -195,12 +200,14 @@ When `required_follow_through` lists named entities that still need grounding be
 
 ```
 salt-ds get_salt_entity "<entity name>" --json --include examples,accessibility
-salt-ds create "<entity name>" --json --include-starter-code --starter-only
+salt-ds create "<original prompt>" --json --resolved-entity "<entity name>"
 ```
 
 Do not force `--type component` on follow-through calls unless you are certain the entity is a component. Named entities from `required_follow_through` may be patterns (e.g., Metric, App header, Analytical dashboard) or components (e.g., Table, Card). Omit `--type` to let the resolution find the best match across all solution types.
 
-The `--starter-only` flag returns a minimal JSON object with `workflow`, `status`, `decision`, `starter_code`, `composition_contract`, and any deeper follow-through metadata that still remains — no full workflow envelope. Use this for follow-through grounding instead of reparsing a full workflow output.
+The `--resolved-entity` rerun is the CLI evidence bridge for create entity follow-through. MCP hosts use the same bridge as `resolved_entities: ["<entity name>"]` on the rerun of the original `create_salt_ui` call.
+
+The `--starter-only` flag returns a minimal JSON object with `workflow`, `status`, `decision`, `starter_code`, `composition_contract`, and any deeper follow-through metadata that still remains — no full workflow envelope. Use this only as additive support for the exact entity, not as a replacement for rerunning the original workflow with the resolved entity.
 
 Read the follow-through result as:
 

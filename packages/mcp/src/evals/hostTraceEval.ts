@@ -2,6 +2,8 @@ export type HostTraceCriticalFailureCode =
   | "broadened_success_without_composite_recipe"
   | "implement_without_source_backed_evidence"
   | "missing_dependency_action"
+  | "implementation_after_non_implement_contract"
+  | "missing_success_contract_before_edit"
   | "ask_user_ignored"
   | "generic_example_used_as_canonical_evidence"
   | "review_post_action_skipped";
@@ -125,9 +127,7 @@ function collectToolCalls(raw: unknown): HostTraceToolCall[] {
 
     const toolId = readString(value, "toolId");
     if (toolId) {
-      const details = isRecord(value.resultDetails)
-        ? value.resultDetails
-        : {};
+      const details = isRecord(value.resultDetails) ? value.resultDetails : {};
       const outputValues = readOutputValues(details.output ?? value.output);
       calls.push({
         index: calls.length,
@@ -148,11 +148,10 @@ function collectToolCalls(raw: unknown): HostTraceToolCall[] {
 }
 
 function collectParsedOutputs(toolCall: HostTraceToolCall): unknown[] {
-  return (toolCall.output_values ?? [toolCall.output_text])
-    .flatMap((chunk) => {
-      const parsed = safeJsonParse(chunk.trim());
-      return parsed ? [parsed] : [];
-    });
+  return (toolCall.output_values ?? [toolCall.output_text]).flatMap((chunk) => {
+    const parsed = safeJsonParse(chunk.trim());
+    return parsed ? [parsed] : [];
+  });
 }
 
 function collectWorkflowContractsFromValue(
@@ -223,7 +222,10 @@ function collectStrings(value: unknown, strings: string[] = []): string[] {
   return strings;
 }
 
-function getRecord(value: unknown, key: string): Record<string, unknown> | null {
+function getRecord(
+  value: unknown,
+  key: string,
+): Record<string, unknown> | null {
   const entry = isRecord(value) ? value[key] : null;
   return isRecord(entry) ? entry : null;
 }
@@ -231,7 +233,9 @@ function getRecord(value: unknown, key: string): Record<string, unknown> | null 
 function hasCompositeProfileTabsAvatar(raw: unknown): boolean {
   const text = collectStrings(raw).join("\n").toLowerCase();
   return (
-    /\bprofile\b/.test(text) && /\btabs?\b/.test(text) && /\bavatar\b/.test(text)
+    /\bprofile\b/.test(text) &&
+    /\btabs?\b/.test(text) &&
+    /\bavatar\b/.test(text)
   );
 }
 
@@ -271,7 +275,9 @@ function hasSourceBackedEvidence(contract: Record<string, unknown>): boolean {
   return hasSourceUrls && hasSourceKind;
 }
 
-function collectEvidenceSourceUrls(contract: Record<string, unknown>): string[] {
+function collectEvidenceSourceUrls(
+  contract: Record<string, unknown>,
+): string[] {
   const evidence = getRecord(contract, "evidence");
   if (!evidence) {
     return [];
@@ -332,11 +338,15 @@ function contextShowsNoSaltPackages(toolCalls: HostTraceToolCall[]): boolean {
   );
 }
 
+function isShellLikeToolCall(toolCall: HostTraceToolCall): boolean {
+  return /terminal|shell|command|exec/i.test(toolCall.tool_id);
+}
+
 function hasTerminalSaltInstall(toolCalls: HostTraceToolCall[]): boolean {
   return toolCalls.some(
     (toolCall) =>
-      /terminal/i.test(toolCall.tool_id) &&
-      /\bnpm\s+(?:install|i)\b[\s\S]*@salt-ds\//i.test(
+      isShellLikeToolCall(toolCall) &&
+      /\b(?:npm\s+(?:install|i|add)|pnpm\s+(?:(?:--filter|-F)\s+\S+\s+)?(?:install|i|add)|yarn\s+(?:(?:workspace|--cwd)\s+\S+\s+)?add|bun\s+add)\b[\s\S]*@salt-ds\//i.test(
         toolCall.input_text,
       ),
   );
@@ -355,14 +365,64 @@ function hasInstallDependencyContractBefore(
   });
 }
 
-function isImplementationLikeToolCall(toolCall: HostTraceToolCall): boolean {
+function isImplementReadyContract(contract: Record<string, unknown>): boolean {
+  const action = getRecord(contract, "action");
+  const safety = getRecord(contract, "safety");
+  const evidence = getRecord(contract, "evidence");
+
   return (
-    /edit|write/i.test(toolCall.tool_id) ||
-    (/terminal/i.test(toolCall.tool_id) &&
-      /\b(npm|pnpm|yarn|bun|touch|cat|python|node|sed)\b/i.test(
-        toolCall.input_text,
-      ))
+    contract.status === "success" &&
+    action?.kind === "implement" &&
+    safety?.exact_request_safe === true &&
+    evidence?.status === "complete" &&
+    hasSourceBackedEvidence(contract)
   );
+}
+
+function isImplementationEditToolCall(toolCall: HostTraceToolCall): boolean {
+  const normalizedToolId = toolCall.tool_id.toLowerCase();
+  if (
+    /(?:^|[._-])(?:apply_patch|patch|edit|write|str_replace_editor|write_file)(?:$|[._-])/.test(
+      normalizedToolId,
+    ) ||
+    /(?:editfile|createfile|writefile|replacestring|multireplacestring)/.test(
+      normalizedToolId,
+    )
+  ) {
+    return true;
+  }
+
+  return (
+    isShellLikeToolCall(toolCall) &&
+    /\b(?:touch|sed\s+-i|tee|cat\s*>|python|node)\b/i.test(
+      toolCall.input_text,
+    ) &&
+    /\.(?:tsx?|jsx?|css|scss|mdx?|json)\b/i.test(toolCall.input_text)
+  );
+}
+
+function hasInstallDependencyContractBeforeIndex(
+  contracts: HostTraceWorkflowContract[],
+  toolCallIndex: number,
+): boolean {
+  return contracts.some((entry) => {
+    if (entry.tool_call_index >= toolCallIndex) {
+      return false;
+    }
+
+    const action = getRecord(entry.contract, "action");
+    return action?.kind === "install_dependencies";
+  });
+}
+
+function latestWorkflowContractBefore(
+  contracts: HostTraceWorkflowContract[],
+  toolCallIndex: number,
+): HostTraceWorkflowContract | null {
+  const candidates = contracts.filter(
+    (entry) => entry.tool_call_index < toolCallIndex,
+  );
+  return candidates[candidates.length - 1] ?? null;
 }
 
 function isReviewToolCall(toolCall: HostTraceToolCall): boolean {
@@ -379,6 +439,7 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
   const observations: string[] = [];
   const isCompositeProfile = hasCompositeProfileTabsAvatar(raw);
   const noSaltPackages = contextShowsNoSaltPackages(toolCalls);
+  const skippedReviewEditIndexes = new Set<number>();
 
   if (isCompositeProfile) {
     observations.push(
@@ -389,6 +450,39 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
     observations.push("Project context reported no installed Salt packages.");
   }
 
+  const firstImplementationEdit = toolCalls.find(isImplementationEditToolCall);
+  if (firstImplementationEdit) {
+    const latestContract = latestWorkflowContractBefore(
+      workflowContracts,
+      firstImplementationEdit.index,
+    );
+    const hasPriorImplementReadyContract = workflowContracts.some(
+      (entry) =>
+        entry.tool_call_index < firstImplementationEdit.index &&
+        isImplementReadyContract(entry.contract),
+    );
+
+    if (!hasPriorImplementReadyContract) {
+      criticalFailures.push({
+        code: "missing_success_contract_before_edit",
+        tool_id: firstImplementationEdit.tool_id,
+        message:
+          "The host edited before any current workflow contract granted status=success, action.kind=implement, safety.exact_request_safe=true, and complete source-backed evidence.",
+      });
+    }
+
+    if (latestContract && !isImplementReadyContract(latestContract.contract)) {
+      const action = getRecord(latestContract.contract, "action");
+      criticalFailures.push({
+        code: "implementation_after_non_implement_contract",
+        tool_id: firstImplementationEdit.tool_id,
+        message: `The host edited after the latest workflow contract required ${String(
+          action?.kind ?? latestContract.contract.status ?? "follow-up",
+        )}; rerun the originating workflow until it returns an implement action before editing.`,
+      });
+    }
+  }
+
   for (const entry of workflowContracts) {
     const { contract } = entry;
     const request = getRecord(contract, "request");
@@ -397,7 +491,8 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
     if (
       contract.workflow === "create" &&
       contract.status === "success" &&
-      request?.match_status === "broadened"
+      request?.match_status === "broadened" &&
+      request.full_request_evidence_complete !== true
     ) {
       criticalFailures.push({
         code: "broadened_success_without_composite_recipe",
@@ -450,7 +545,11 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
     if (
       noSaltPackages &&
       contract.workflow === "create" &&
-      action?.kind === "implement"
+      action?.kind === "implement" &&
+      !hasInstallDependencyContractBeforeIndex(
+        workflowContracts,
+        entry.tool_call_index,
+      )
     ) {
       criticalFailures.push({
         code: "missing_dependency_action",
@@ -466,7 +565,7 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
         const firstEditAfterImplement = toolCalls.find(
           (toolCall) =>
             toolCall.index > entry.tool_call_index &&
-            isImplementationLikeToolCall(toolCall),
+            isImplementationEditToolCall(toolCall),
         );
         const reviewAfterEdit =
           firstEditAfterImplement &&
@@ -476,7 +575,12 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
               isReviewToolCall(toolCall),
           );
 
-        if (firstEditAfterImplement && !reviewAfterEdit) {
+        if (
+          firstEditAfterImplement &&
+          !reviewAfterEdit &&
+          !skippedReviewEditIndexes.has(firstEditAfterImplement.index)
+        ) {
+          skippedReviewEditIndexes.add(firstEditAfterImplement.index);
           criticalFailures.push({
             code: "review_post_action_skipped",
             tool_id: firstEditAfterImplement.tool_id,
@@ -511,7 +615,7 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
     const laterToolCall = toolCalls.find(
       (toolCall) =>
         toolCall.index > askUserContract.tool_call_index &&
-        isImplementationLikeToolCall(toolCall),
+        isImplementationEditToolCall(toolCall),
     );
     if (laterToolCall) {
       criticalFailures.push({

@@ -39,7 +39,8 @@
   ],
   "publishAdditionalEntryPaths": [
     "src/evals/runWorkflowEval.ts",
-    "src/evals/runWorkflowEvalReplay.ts"
+    "src/evals/runWorkflowEvalReplay.ts",
+    "src/evals/runHostTraceEval.ts"
   ],
   "bin": {
     "salt-mcp": "bin/salt-mcp.js"

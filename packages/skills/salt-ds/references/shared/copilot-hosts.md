@@ -25,9 +25,13 @@ Counter that by making workflow completion explicit.
 - Large output is not the same as successful output.
 - A generated patch is not proof that canonical Salt discovery completed.
 - A successful build is not proof that the Salt workflow contract completed.
-- Branch on compact `salt_workflow_v1.action.kind` before editing: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.
+- Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, component capabilities, composition rules, examples, or documentation links.
+- Hard Gate: do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has `status: success`, `action.kind: implement`, `safety.exact_request_safe: true`, and `evidence.status: complete`.
+- Branch on compact `salt_workflow_v1.action.kind` before editing: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.
+- After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge before editing.
 - Do not treat `status: partial` or `status: blocked` as completion; use `recipe.steps`, `questions`, and `evidence.missing` to report what remains.
-- For create and migrate work, run source-level Salt validation after the first scaffold pass when code is available.
+- For create, migrate, and upgrade work, run source-level Salt validation after the first scaffold pass when code is available.
+- After editing, run the returned review or post action before calling the work complete.
 - For create work, prefer `compact -> retrieval support -> exact follow-through -> full only when needed`.
 - If compact create is still `partial` or `blocked`, inspect the catalog support surface before escalating:
   - MCP: `salt://catalog/candidates/{query}` and `salt://catalog/entity/{name}`

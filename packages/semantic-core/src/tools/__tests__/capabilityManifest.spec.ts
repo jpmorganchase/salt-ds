@@ -56,8 +56,7 @@ function buildTestManifest() {
 describe("Salt capability manifest", () => {
   it("publishes host-obeyable v1 workflow action semantics", () => {
     const manifest = buildTestManifest();
-    const actionContract =
-      manifest.contracts.workflow_action_contract;
+    const actionContract = manifest.contracts.workflow_action_contract;
 
     expect(actionContract.authoritative_fields).toEqual(
       expect.arrayContaining([
@@ -107,6 +106,7 @@ describe("Salt capability manifest", () => {
         host_obligation: "ask_user_and_stop",
         implementation_allowed: false,
         blocks_implementation_until_complete: true,
+        follow_up_required: "rerun_originating_workflow",
       }),
     );
     expect(semanticsByKind.get("retrieve_entity")).toEqual(
@@ -114,14 +114,22 @@ describe("Salt capability manifest", () => {
         host_obligation: "retrieve_entity_evidence",
         implementation_allowed: false,
         blocks_implementation_until_complete: true,
+        follow_up_required: "rerun_originating_workflow",
+      }),
+    );
+    expect(semanticsByKind.get("install_dependencies")).toEqual(
+      expect.objectContaining({
+        host_obligation: "install_packages_first",
+        implementation_allowed: false,
+        blocks_implementation_until_complete: true,
+        follow_up_required: "rerun_originating_workflow",
       }),
     );
   });
 
   it("documents evidence and composite recipe requirements as data", () => {
     const manifest = buildTestManifest();
-    const actionContract =
-      manifest.contracts.workflow_action_contract;
+    const actionContract = manifest.contracts.workflow_action_contract;
 
     expect(actionContract.evidence_contract).toEqual({
       source_backed_kinds: ["docs", "examples", "registry", "project_policy"],

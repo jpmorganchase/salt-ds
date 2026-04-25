@@ -20,11 +20,11 @@ import {
   SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
   SALT_MCP_CATALOG_MANIFEST_URI,
 } from "../server/serverMetadata.js";
+import { buildStructuredToolContent } from "../server/sourceAttribution.js";
 import {
   createToolExecutionRuntime,
   TOOL_DEFINITIONS,
 } from "../server/toolDefinitions.js";
-import { buildStructuredToolContent } from "../server/sourceAttribution.js";
 import {
   GENERATED_AT,
   REPO_ROOT,
@@ -124,6 +124,7 @@ describe("createSaltMcpServer", () => {
       "a11y_required",
       "form_field_support",
       "include_starter_code",
+      "resolved_entities",
       "view",
       "context_id",
       "root_dir",
@@ -542,8 +543,11 @@ describe("createSaltMcpServer", () => {
         );
 
         expect(outputObjectSchema).toBeTruthy();
+        if (!outputObjectSchema) {
+          throw new Error("Expected create_salt_ui output schema.");
+        }
 
-        const outputJsonSchema = toJsonSchemaCompat(outputObjectSchema!, {
+        const outputJsonSchema = toJsonSchemaCompat(outputObjectSchema, {
           strictUnions: true,
           pipeStrategy: "output",
         });
@@ -1758,9 +1762,9 @@ describe("createSaltMcpServer", () => {
         expect(chooseSchema.safeParse(chooseResult).success).toBe(true);
         const structuredChooseResult = buildStructuredToolContent(chooseResult);
         expect(structuredChooseResult).not.toHaveProperty("sources");
-        expect(
-          chooseSchema.safeParse(structuredChooseResult).success,
-        ).toBe(true);
+        expect(chooseSchema.safeParse(structuredChooseResult).success).toBe(
+          true,
+        );
       },
     );
   }, 20000);
@@ -1880,6 +1884,78 @@ describe("createSaltMcpServer", () => {
             packages: expect.arrayContaining([
               "@salt-ds/core",
               "@salt-ds/theme",
+            ]),
+          },
+        });
+      },
+    );
+  }, 20000);
+
+  it("accepts resolved follow-through evidence on create rerun", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir(
+          "salt-mcp-create-resolved-follow-through",
+        );
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "resolved-follow-through",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+                "@salt-ds/theme": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "profile page with tabs and avatar",
+            root_dir: rootDir,
+            resolved_entities: ["Avatar"],
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          status: "success",
+          request: {
+            match_status: "broadened",
+            full_request_evidence_complete: true,
+          },
+          safety: {
+            exact_request_safe: true,
+          },
+          action: {
+            kind: "implement",
+          },
+          evidence: {
+            status: "complete",
+            missing: [],
+            items: expect.arrayContaining([
+              expect.objectContaining({
+                entity: "Avatar",
+                field: "resolved_follow_through",
+              }),
             ]),
           },
         });
