@@ -243,6 +243,8 @@ Read compact workflow output from stable top-level workflow signals first, such 
 Treat `salt_workflow_v1` action kinds as binding:
 
 - `implement`: edit only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; then run the returned review/post action
+- `complete`: stop without edits; the reviewed scope has no changes required
+- `review`: run the returned Salt review action before calling the workflow complete
 - `ask_user`: stop and ask the returned question before writing code
 - `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region
 - `install_dependencies`: install the listed Salt packages before writing Salt UI
@@ -258,7 +260,7 @@ When a workflow returns named sub-surfaces, preserve concrete user nouns such as
 Add slot or page context only as supporting detail.
 Do not paraphrase concrete follow-up asks into abstract taxonomy prompts.
 If an exact Salt target name is already known from canonical output, use that exact name or verified alias in the next call.
-When using CLI fallback for follow-through, use `salt-ds create "<entity>" --json --include-starter-code --starter-only` to get a minimal response — see `references/shared/transport.md` §"CLI Follow-Through for Entity Grounding". Do not force `--type component` unless you are certain the entity is a component, not a pattern.
+When using CLI fallback for follow-through, prefer `salt-ds get_salt_entity "<entity>" --json` or `salt-ds get_salt_examples "<target>" --json` for `retrieve_entity` / `retrieve_examples`; use `salt-ds create "<entity>" --json --include-starter-code --starter-only` when you need starter code or composition-contract grounding — see `references/shared/transport.md` §"CLI Follow-Through for Entity Grounding". Do not force `--type component` unless you are certain the entity is a component, not a pattern.
 
 For broad prompts that mention multiple UI elements (e.g., "a form with inputs, a sidebar navigation, and toggle switches"), the tooling's `required_follow_through` list covers entities the resolved pattern knows about, but **may not cover every entity the user mentioned**.
 After processing the tooling's follow-through list, scan the original user prompt for concrete UI nouns that were not covered and issue follow-through calls for those too.

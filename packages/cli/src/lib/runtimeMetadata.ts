@@ -89,13 +89,20 @@ export function buildSaltCliCapabilityManifest(input: {
         "review",
         "migrate",
         "upgrade",
+        "get_salt_entity",
+        "get_salt_examples",
+        "discover_salt",
       ],
       advanced_output_ids: ["full", "starter-only"],
+    },
+    support_tools: {
+      policy: "default_read_only_host_surface",
+      default_exposed: true,
     },
     support_surface: {
       retrieval_catalog: {
         available: input.registry_available,
-        access: ["info"],
+        access: ["info", "command"],
       },
     },
     capabilities: {

@@ -65,11 +65,16 @@ describe("Salt capability manifest", () => {
         "safety.exact_request_safe",
         "action.kind",
         "next_required_action",
+        "next_required_action.cli",
+        "next_required_action.mcp",
         "allowed_next_actions",
         "recipe.steps",
+        "recipe.steps.action.cli",
+        "recipe.steps.action.mcp",
         "questions",
         "evidence.status",
         "evidence.source_urls",
+        "evidence.input_context",
       ]),
     );
     expect(actionContract.implementation_gate.required).toEqual({

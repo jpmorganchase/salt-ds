@@ -253,6 +253,52 @@ afterAll(async () => {
 });
 
 describe("salt cli", () => {
+  it("prints root and command-specific workflow help", async () => {
+    let rootHelp = "";
+    let createHelp = "";
+    let migrateHelp = "";
+    let reviewHelp = "";
+
+    expect(
+      await runCli(["help"], {
+        writeStdout: (message) => {
+          rootHelp += message;
+        },
+        writeStderr: () => {},
+      }),
+    ).toBe(0);
+    expect(
+      await runCli(["create", "--help"], {
+        writeStdout: (message) => {
+          createHelp += message;
+        },
+        writeStderr: () => {},
+      }),
+    ).toBe(0);
+    expect(
+      await runCli(["help", "migrate"], {
+        writeStdout: (message) => {
+          migrateHelp += message;
+        },
+        writeStderr: () => {},
+      }),
+    ).toBe(0);
+    expect(
+      await runCli(["review", "--help"], {
+        writeStdout: (message) => {
+          reviewHelp += message;
+        },
+        writeStderr: () => {},
+      }),
+    ).toBe(0);
+
+    expect(rootHelp).toContain("Workflow commands:");
+    expect(createHelp).toContain("Salt DS CLI - create");
+    expect(createHelp).toContain("salt-ds get_salt_entity Avatar --json");
+    expect(migrateHelp).toContain("--source-outline must be JSON");
+    expect(reviewHelp).toContain("action.kind is complete");
+  });
+
   it("prints info json output with detected repo context and workflow capabilities", async () => {
     const rootDir = await createTempDir("salt-cli-info");
     await fs.mkdir(path.join(rootDir, ".storybook"));
@@ -378,19 +424,22 @@ describe("salt cli", () => {
             "review",
             "migrate",
             "upgrade",
+            "get_salt_entity",
+            "get_salt_examples",
+            "discover_salt",
           ],
           advanced_output_ids: ["full", "starter-only"],
         }),
         support_tools: expect.objectContaining({
-          policy: "optional_advanced_host_surface",
-          default_exposed: false,
+          policy: "default_read_only_host_surface",
+          default_exposed: true,
           tool_ids: ["discover_salt", "get_salt_entity", "get_salt_examples"],
         }),
         support_surface: expect.objectContaining({
           retrieval_catalog: expect.objectContaining({
             available: true,
             contract_version: "salt_create_catalog_v1",
-            access: ["info"],
+            access: ["info", "command"],
           }),
         }),
         capabilities: expect.objectContaining({
@@ -488,7 +537,7 @@ describe("salt cli", () => {
       retrieval_catalog: {
         available: false,
         contract_version: null,
-        access: ["info"],
+        access: ["info", "command"],
       },
     });
     expect(payload.registry).toEqual(
@@ -2579,6 +2628,126 @@ describe("salt cli", () => {
               ]),
             }),
           ]),
+        }),
+      }),
+    );
+  });
+
+  it("exposes workflow action support commands through CLI aliases", async () => {
+    const rootDir = await createTempDir("salt-cli-support-tools");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let entityStdout = "";
+    let examplesStdout = "";
+    let discoverStdout = "";
+    let stderr = "";
+
+    const entityExitCode = await runCli(
+      withRegistry([
+        "get_salt_entity",
+        "Avatar",
+        "--json",
+        "--entity-type",
+        "component",
+        "--include",
+        "examples,accessibility",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          entityStdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+    const examplesExitCode = await runCli(
+      withRegistry([
+        "get_salt_examples",
+        "Avatar",
+        "--json",
+        "--target-type",
+        "component",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          examplesStdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+    const discoverExitCode = await runCli(
+      withRegistry(["discover_salt", "profile avatar tabs", "--json"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          discoverStdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(stderr).toBe("");
+    expect(entityExitCode).toBe(0);
+    expect(examplesExitCode).toBe(0);
+    expect(discoverExitCode).toBe(0);
+
+    const entityPayload = JSON.parse(entityStdout);
+    const examplesPayload = JSON.parse(examplesStdout);
+    const discoverPayload = JSON.parse(discoverStdout);
+
+    expect(entityPayload).toEqual(
+      expect.objectContaining({
+        entity_type: "component",
+        decision: expect.objectContaining({
+          status: "found",
+        }),
+        entity: expect.objectContaining({
+          name: "Avatar",
+        }),
+        guidance_boundary: expect.objectContaining({
+          guidance_source: "canonical_salt",
+        }),
+      }),
+    );
+    expect(examplesPayload).toEqual(
+      expect.objectContaining({
+        decision: expect.objectContaining({
+          target_name: "Avatar",
+          target_type: "component",
+        }),
+        best_example: expect.any(Object),
+        guidance_boundary: expect.objectContaining({
+          guidance_source: "canonical_salt",
+        }),
+      }),
+    );
+    expect(discoverPayload).toEqual(
+      expect.objectContaining({
+        mode: "route",
+        decision: expect.objectContaining({
+          workflow: expect.any(String),
+        }),
+        guidance_boundary: expect.objectContaining({
+          guidance_source: "canonical_salt",
         }),
       }),
     );

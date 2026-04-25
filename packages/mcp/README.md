@@ -45,8 +45,8 @@ Primary repo-aware workflow tools:
 - `upgrade_salt_ui`
   - upgrade workflow
 
-The default beta MCP surface is intentionally limited to these six repo-aware workflow tools.
-Grounding and exploratory support helpers remain available in the implementation layer, but they are not part of the default client-visible beta surface.
+The default beta MCP surface exposes these six repo-aware workflow tools first, followed by read-only Salt support tools: `get_salt_entity`, `get_salt_examples`, and `discover_salt`.
+The support tools exist so `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable by MCP hosts.
 
 ## Workflow Boundary
 
@@ -144,7 +144,7 @@ npm install -g @salt-ds/cli
 ```
 
 When the CLI is used directly, keep it workflow-first through `salt-ds init`, `salt-ds info`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, and `salt-ds upgrade`. Use `salt-ds review --url <url>` when source validation and runtime evidence should stay in the same workflow pass. Keep `salt-ds doctor` and `salt-ds runtime inspect` in the runtime-evidence layer.
-Advanced retrieval inspection lives under `salt-ds info`, not under `create`. Use `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, or `salt-ds info --json --family "<category>"` when a strong host or maintainer needs candidate inspection without changing the main workflow story.
+Advanced retrieval inspection is available through `salt-ds info` and through read-only support command aliases that mirror MCP action names. Use `salt-ds get_salt_entity "<name>" --json` or `salt-ds get_salt_examples "<target>" --json` when a compact workflow returns `retrieve_entity` or `retrieve_examples`; use `salt-ds discover_salt "<prompt>" --json`, `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, or `salt-ds info --json --family "<category>"` for broader inspection without changing the main workflow story.
 
 Consumer start path:
 
@@ -208,7 +208,7 @@ For architectural maintenance guidance, see [`docs/maintaining-salt-ai-tooling.m
 - Registry artifact filenames and payload keys are centralized in [`src/registry/artifacts.ts`](./src/registry/artifacts.ts).
 - Canonical registry build/load ownership lives in [`../semantic-core/src/build/buildRegistry.ts`](../semantic-core/src/build/buildRegistry.ts) and [`../semantic-core/src/registry/loadRegistry.ts`](../semantic-core/src/registry/loadRegistry.ts). MCP keeps a small internal runtime loader in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts) for its bundled `generated/` snapshot and maintainer scripts.
 - MCP tool metadata is defined in [`src/server/toolDefinitions.ts`](./src/server/toolDefinitions.ts). The server registration layer in [`src/server/registerTools.ts`](./src/server/registerTools.ts) and [`src/server/createServer.ts`](./src/server/createServer.ts) stays intentionally thin, with runtime-vs-registry version metadata centralized in [`src/server/serverMetadata.ts`](./src/server/serverMetadata.ts).
-- Lookup, recommendation, search, translation, and code-analysis helpers now live in [`../semantic-core/src/tools`](../semantic-core/src/tools) as internal building blocks. The default public `@salt-ds/mcp` surface is the curated six-tool workflow set plus the server entrypoints and tool metadata above.
+- Lookup, recommendation, search, translation, and code-analysis helpers now live in [`../semantic-core/src/tools`](../semantic-core/src/tools) as internal building blocks. The default public `@salt-ds/mcp` surface is the curated workflow-first set plus read-only Salt support tools, server entrypoints, and tool metadata above.
 - The main test entry points are:
   - [`src/__tests__/tools.spec.ts`](./src/__tests__/tools.spec.ts)
   - [`src/__tests__/codeAnalysisTools.spec.ts`](./src/__tests__/codeAnalysisTools.spec.ts)

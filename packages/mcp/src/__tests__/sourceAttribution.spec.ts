@@ -86,6 +86,56 @@ describe("sourceAttribution", () => {
     });
   });
 
+  it("does not add transport sources to public workflow contract content", () => {
+    const structuredContent = buildStructuredToolContent({
+      contract: "salt_workflow_v1",
+      workflow: "create",
+      evidence: {
+        source_urls: ["/salt/patterns/metric"],
+      },
+    });
+
+    expect(structuredContent).toEqual(
+      expect.objectContaining({
+        contract: "salt_workflow_v1",
+        evidence: {
+          source_urls: ["/salt/patterns/metric"],
+        },
+      }),
+    );
+    expect(structuredContent).not.toHaveProperty("sources");
+  });
+
+  it("preserves existing structured sources and merges collected attribution", () => {
+    const structuredContent = buildStructuredToolContent({
+      sources: [
+        {
+          original: "package.json",
+          resolved: "/repo/package.json",
+          kind: "repo",
+        },
+      ],
+      package: {
+        docs_root: "/salt/components",
+      },
+    });
+
+    expect(structuredContent.sources).toEqual(
+      expect.arrayContaining([
+        {
+          original: "package.json",
+          resolved: "/repo/package.json",
+          kind: "repo",
+        },
+        {
+          original: "/salt/components",
+          resolved: "https://www.saltdesignsystem.com/salt/components",
+          kind: "site",
+        },
+      ]),
+    );
+  });
+
   it("collects docs arrays as source-bearing fields", () => {
     const sources = collectToolSources({
       recommended: {

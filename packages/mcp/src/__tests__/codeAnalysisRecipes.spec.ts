@@ -619,6 +619,33 @@ describe("reviewSaltUi", () => {
     });
   });
 
+  it("grounds clean reviews in docs for the Salt entities present in source", () => {
+    const result = reviewSaltUi(REGISTRY, {
+      code: `
+        import { Button, Link } from "@salt-ds/core";
+
+        export function Demo() {
+          return (
+            <div>
+              <Button>Save</Button>
+              <Link href="/details">Details</Link>
+            </div>
+          );
+        }
+      `,
+      framework: "react",
+      package_version: "2.0.0",
+    });
+
+    expect(result.decision.status).toBe("clean");
+    expect(result.source_urls).toEqual(
+      expect.arrayContaining([
+        "/salt/components/button",
+        "/salt/components/link",
+      ]),
+    );
+  });
+
   it("flags metric-pattern drift only when review is given an explicit expected target", () => {
     const code = `
       import { Card, StackLayout, Text } from "@salt-ds/core";

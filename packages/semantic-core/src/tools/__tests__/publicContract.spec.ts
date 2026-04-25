@@ -244,6 +244,14 @@ function toComparablePublicContract(contract: PublicContract) {
   const nextStep = { ...contract.action } as Record<string, unknown>;
   delete nextStep.rule_ids;
   delete nextStep.post_action;
+  delete nextStep.cli;
+  delete nextStep.mcp;
+  const postAction = contract.action.post_action
+    ? {
+        kind: contract.action.post_action.kind,
+        tool: contract.action.post_action.tool,
+      }
+    : undefined;
 
   return {
     contract: contract.contract,
@@ -265,7 +273,7 @@ function toComparablePublicContract(contract: PublicContract) {
         : undefined,
     blocking_reasons: contract.safety.blocking_reasons,
     next_step: nextStep,
-    required_post_step: contract.action.post_action ?? undefined,
+    required_post_step: postAction,
     summary: contract.summary,
   };
 }
@@ -663,6 +671,28 @@ describe("publicContract", () => {
         ]),
       }),
     );
+    expect(contract.next_required_action).toEqual(
+      expect.objectContaining({
+        cli: "salt-ds create Metric --json",
+        mcp: {
+          tool: "create_salt_ui",
+          args: {
+            query: "Metric",
+          },
+        },
+      }),
+    );
+    expect(contract.recipe.steps[0]?.action).toEqual(
+      expect.objectContaining({
+        cli: "salt-ds create Metric --json",
+        mcp: {
+          tool: "create_salt_ui",
+          args: {
+            query: "Metric",
+          },
+        },
+      }),
+    );
   });
 
   it("blocks an exact request when the resolver is misrouted", () => {
@@ -934,6 +964,11 @@ describe("publicContract", () => {
     expect(contract.action.post_action).toEqual({
       kind: "review",
       tool: "review_salt_ui",
+      cli: "salt-ds review <changed-path> --json",
+      mcp: {
+        tool: "review_salt_ui",
+        args: {},
+      },
     });
   });
 
@@ -1472,6 +1507,67 @@ describe("publicContract workflow adapters", () => {
     );
   });
 
+  it("treats clean review output with canonical source evidence as complete", () => {
+    const result = {
+      guidance_boundary: {
+        workflow: "review_salt_ui",
+      },
+      decision: {
+        status: "clean",
+        why: "No significant Salt usage issues were detected.",
+      },
+      summary: {
+        errors: 0,
+        warnings: 0,
+        infos: 0,
+        fix_count: 0,
+        migration_count: 0,
+      },
+      fixes: [],
+      issues: [],
+      migrations: [],
+      missing_data: [
+        "package_version 'latest' is not a valid semver value; version-aware deprecation filtering was skipped.",
+      ],
+      source_urls: ["/salt/components/button"],
+    } as unknown as ReviewSaltUiResult;
+    const contract = buildReviewWorkflowContract({
+      provenance: {
+        canonical_source_urls: ["/salt/components/button"],
+        related_guide_urls: [],
+        starter_source_urls: [],
+        source_urls: ["/salt/components/button"],
+        guidance_signals: [],
+        project_conventions_contract: "project_conventions_v1",
+      },
+    });
+
+    const compact = buildReviewPublicContract(result, contract, {
+      transport_used: "cli",
+    });
+
+    expect(toComparablePublicContract(compact)).toEqual(
+      expect.objectContaining({
+        workflow: "review",
+        workflow_status: "success",
+        canonical_complete: true,
+        safe_to_implement_exact_request: true,
+        blocking_reasons: [],
+        next_step: {
+          kind: "complete",
+          outcome: "no_changes_required",
+        },
+      }),
+    );
+    expect(compact.action.post_action).toBeNull();
+    expect(compact.evidence).toEqual(
+      expect.objectContaining({
+        status: "complete",
+        source_urls: ["/salt/components/button"],
+      }),
+    );
+  });
+
   it("prefers required follow-through over re-running the broadened owner for descriptive create queries", () => {
     const registry = buildRegistryFixture();
     const result = {
@@ -1514,6 +1610,17 @@ describe("publicContract workflow adapters", () => {
         ]),
         next_step: {
           kind: "retrieve_entity",
+          tool: "get_salt_entity",
+          args: {
+            name: "Breadcrumbs",
+          },
+        },
+      }),
+    );
+    expect(compact.next_required_action).toEqual(
+      expect.objectContaining({
+        cli: "salt-ds get_salt_entity Breadcrumbs --json",
+        mcp: {
           tool: "get_salt_entity",
           args: {
             name: "Breadcrumbs",
@@ -1596,6 +1703,79 @@ describe("publicContract workflow adapters", () => {
         },
       }),
     );
+  });
+
+  it("surfaces migrate source outline evidence context in the public contract", () => {
+    const result = {
+      translations: [{}],
+      migration_plan: ["Start with the main shell."],
+      clarifying_questions: [],
+    } as unknown as MigrateToSaltResult;
+    const contract = buildMigrateWorkflowContract({
+      visual_evidence_contract: {
+        ...buildMigrateWorkflowContract().visual_evidence_contract,
+        source_outline_provided: true,
+        source_outline_signal_counts: {
+          regions: 2,
+          actions: 1,
+          states: 1,
+          notes: 1,
+        },
+      },
+    });
+
+    const compact = buildMigratePublicContract(
+      result as unknown as never,
+      contract,
+      {
+        transport_used: "cli",
+      },
+    );
+
+    expect(compact.evidence.input_context).toEqual(
+      expect.objectContaining({
+        source_outline_provided: true,
+        source_outline_signal_counts: {
+          regions: 2,
+          actions: 1,
+          states: 1,
+          notes: 1,
+        },
+        source_outline_summary:
+          "Structured source outline contributed 2 regions, 1 action, 1 state, 1 note.",
+      }),
+    );
+  });
+
+  it("filters generic migration convention questions when no project policy exists", () => {
+    const result = {
+      translations: [{}],
+      migration_plan: ["Start with the main shell."],
+      clarifying_questions: [
+        "Which approved repo wrapper or shell should this use?",
+      ],
+    } as unknown as MigrateToSaltResult;
+    const contract = buildMigrateWorkflowContract({
+      project_conventions_check: {
+        ...buildMigrateWorkflowContract().project_conventions_check,
+        check_recommended: true,
+        declared_policy_status: "none-declared",
+      },
+    });
+
+    const compact = buildMigratePublicContract(
+      result as unknown as never,
+      contract,
+      {
+        transport_used: "mcp",
+      },
+    );
+
+    expect(compact.questions).toEqual([]);
+    expect(compact.safety.blocking_reasons).not.toContain(
+      "Which approved repo wrapper or shell should this use?",
+    );
+    expect(compact.next_required_action.kind).not.toBe("ask_user");
   });
 
   it("derives upgrade contract output from the shared upgrade workflow contract", () => {
