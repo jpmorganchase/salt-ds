@@ -25,7 +25,7 @@ const UPDATE_FIXTURES = process.env.UPDATE_PUBLIC_CONTRACT_FIXTURES === "true";
 let registryDir = "";
 
 const COMPACT_BYTE_BUDGETS = {
-  create: 5_000,
+  create: 9_000,
   review: 1_800,
   migrate: 2_600,
   upgrade: 2_500,
@@ -222,6 +222,13 @@ function readIssueClassIds(value: unknown): string[] {
 
 function toComparableCompactContract(value: Record<string, unknown>) {
   const action = asRecord(value.action);
+  const actionWithoutHints = action
+    ? ({ ...action } as Record<string, unknown>)
+    : null;
+  if (actionWithoutHints) {
+    delete actionWithoutHints.cli;
+    delete actionWithoutHints.mcp;
+  }
   const request = asRecord(value.request);
   const safety = asRecord(value.safety);
   const postAction = asRecord(action?.post_action ?? null);
@@ -257,10 +264,12 @@ function toComparableCompactContract(value: Record<string, unknown>) {
         ? safety.blocking_reasons
         : [],
     },
-    action: action
+    action: actionWithoutHints
       ? {
-          ...action,
-          rule_ids: Array.isArray(action.rule_ids) ? action.rule_ids : [],
+          ...actionWithoutHints,
+          rule_ids: Array.isArray(actionWithoutHints.rule_ids)
+            ? actionWithoutHints.rule_ids
+            : [],
           post_action: postAction
             ? {
                 kind: postAction.kind,
@@ -271,6 +280,45 @@ function toComparableCompactContract(value: Record<string, unknown>) {
       : null,
     summary: value.summary,
   };
+}
+
+function readRecipeActionHints(value: Record<string, unknown>) {
+  const recipeSteps = readArray(value, [["recipe", "steps"]]) ?? [];
+  return recipeSteps.map((step) => ({
+    id: readString(step, [["id"]]),
+    status: readString(step, [["status"]]),
+    action_kind: readString(step, [["action", "kind"]]),
+    cli: readString(step, [["action", "cli"]]),
+    mcp_tool: readString(step, [["action", "mcp", "tool"]]),
+    mcp_args: readPath(step, ["action", "mcp", "args"]) ?? null,
+  }));
+}
+
+function expectPublicActionHintParity(
+  cliResult: Record<string, unknown>,
+  mcpResult: Record<string, unknown>,
+): void {
+  expect(readPath(cliResult, ["next_required_action"])).toEqual(
+    readPath(mcpResult, ["next_required_action"]),
+  );
+  expect(readPath(cliResult, ["action", "cli"])).toEqual(
+    readPath(mcpResult, ["action", "cli"]),
+  );
+  expect(readPath(cliResult, ["action", "mcp"])).toEqual(
+    readPath(mcpResult, ["action", "mcp"]),
+  );
+  expect(readRecipeActionHints(cliResult)).toEqual(
+    readRecipeActionHints(mcpResult),
+  );
+}
+
+function expectEvidenceInputContextParity(
+  cliResult: Record<string, unknown>,
+  mcpResult: Record<string, unknown>,
+): void {
+  expect(readPath(cliResult, ["evidence", "input_context"])).toEqual(
+    readPath(mcpResult, ["evidence", "input_context"]),
+  );
 }
 
 function toComparableCreateFull(value: Record<string, unknown>) {
@@ -622,6 +670,7 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectPublicActionHintParity(cliResult, mcpResult);
     expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
       COMPACT_BYTE_BUDGETS.create,
     );
@@ -663,6 +712,10 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectPublicActionHintParity(cliResult, mcpResult);
+    expect(readString(cliResult, [["next_required_action", "cli"]])).toBe(
+      "pnpm add @salt-ds/core @salt-ds/theme",
+    );
     expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
       COMPACT_BYTE_BUDGETS.create,
     );
@@ -678,6 +731,32 @@ describe("public contract parity", () => {
       ["blocking_reasons"],
     ]);
     await assertFixture("create-broadened.compact.json", cliComparable);
+  });
+
+  it("keeps ask-user create compact semantics aligned without fake tool hints", async () => {
+    const rootDir = await createRepo("salt-parity-ask-user-", {
+      name: "parity-ask-user",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+
+    const query = "Add navigation tabs to this page.";
+    const cliResult = await runCliCreateCompact(rootDir, query);
+    const mcpResult = await runMcpCreate(rootDir, query, "compact");
+
+    expect(toComparableCompactContract(cliResult)).toEqual(
+      toComparableCompactContract(mcpResult),
+    );
+    expectPublicActionHintParity(cliResult, mcpResult);
+    expect(readString(cliResult, [["next_required_action", "kind"]])).toBe(
+      "ask_user",
+    );
+    expect(readString(cliResult, [["next_required_action", "cli"]])).toBeNull();
+    expect(asRecord(readPath(cliResult, ["next_required_action", "mcp"]))).toBe(
+      null,
+    );
   });
 
   it("keeps review compact semantics aligned across CLI and MCP", async () => {
@@ -733,6 +812,50 @@ describe("public contract parity", () => {
     await assertFixture("review.compact.json", cliComparable);
   });
 
+  it("keeps clean review compact completion aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-review-clean-", {
+      name: "parity-review-clean",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    const code = [
+      'import { Button } from "@salt-ds/core";',
+      "",
+      "export function Demo() {",
+      "  return <Button>Save</Button>;",
+      "}",
+      "",
+    ].join("\n");
+    const filePath = path.join(rootDir, "src", "Demo.tsx");
+    await fs.writeFile(filePath, code, "utf8");
+
+    const cliResult = await runCliWorkflowCompact(rootDir, [
+      "review",
+      filePath,
+    ]);
+    const mcpResult = await runMcpWorkflow(
+      "review_salt_ui",
+      {
+        code,
+        root_dir: rootDir,
+      },
+      "compact",
+    );
+
+    expect(toComparableCompactContract(cliResult)).toEqual(
+      toComparableCompactContract(mcpResult),
+    );
+    expectPublicActionHintParity(cliResult, mcpResult);
+    expect(readString(cliResult, [["action", "kind"]])).toBe("complete");
+    expect(readString(cliResult, [["next_required_action", "kind"]])).toBe(
+      "complete",
+    );
+    expect(asRecord(readPath(cliResult, ["action", "post_action"]))).toBeNull();
+  });
+
   it("keeps migrate compact semantics aligned across CLI and MCP", async () => {
     const rootDir = await createRepo("salt-parity-migrate-", {
       name: "parity-migrate",
@@ -774,6 +897,66 @@ describe("public contract parity", () => {
       ["blocking_reasons"],
     ]);
     await assertFixture("migrate.compact.json", cliComparable);
+  });
+
+  it("keeps migrate source outline evidence context aligned across CLI and MCP", async () => {
+    const rootDir = await createRepo("salt-parity-migrate-outline-", {
+      name: "parity-migrate-outline",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    const sourceOutline = {
+      regions: ["header", "main content"],
+      actions: ["Save"],
+      states: ["loading"],
+      notes: ["Preserve the existing save flow."],
+    };
+    const outlinePath = path.join(rootDir, "source-outline.json");
+    await fs.writeFile(
+      outlinePath,
+      `${JSON.stringify(sourceOutline, null, 2)}\n`,
+      "utf8",
+    );
+
+    const query = "Migrate the existing save form.";
+    const cliResult = await runCliWorkflowCompact(rootDir, [
+      "migrate",
+      query,
+      "--source-outline",
+      outlinePath,
+    ]);
+    const mcpResult = await runMcpWorkflow(
+      "migrate_to_salt",
+      {
+        query,
+        root_dir: rootDir,
+        source_outline: sourceOutline,
+      },
+      "compact",
+    );
+
+    expect(toComparableCompactContract(cliResult)).toEqual(
+      toComparableCompactContract(mcpResult),
+    );
+    expectPublicActionHintParity(cliResult, mcpResult);
+    expectEvidenceInputContextParity(cliResult, mcpResult);
+    expect(
+      readBoolean(cliResult, [
+        ["evidence", "input_context", "source_outline_provided"],
+      ]),
+    ).toBe(true);
+    expect(
+      readNumber(cliResult, [
+        [
+          "evidence",
+          "input_context",
+          "source_outline_signal_counts",
+          "regions",
+        ],
+      ]),
+    ).toBe(2);
   });
 
   it("keeps upgrade compact semantics aligned across CLI and MCP", async () => {

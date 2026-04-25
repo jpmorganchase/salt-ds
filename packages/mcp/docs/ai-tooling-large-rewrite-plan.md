@@ -113,7 +113,7 @@ These decisions should remain stable through the rewrite:
   - `review`
   - `migrate`
   - `upgrade`
-- the six-tool default MCP surface
+- the workflow-first default MCP surface plus read-only Salt support tools
 - one public CLI
 - one public skill
 - compact as the authoritative workflow contract

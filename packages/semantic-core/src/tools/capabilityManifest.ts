@@ -40,6 +40,7 @@ export const SALT_PUBLIC_ACTION_KINDS = [
   "install_dependencies",
   "bootstrap_repo",
   "implement",
+  "complete",
   "review",
   "fix_context",
 ] as const satisfies readonly PublicActionKind[];
@@ -107,6 +108,7 @@ export interface SaltCapabilityManifest {
           | "install_packages_first"
           | "bootstrap_repo_first"
           | "implement_exact_request"
+          | "finish_without_changes"
           | "run_review"
           | "repair_context_first";
         implementation_allowed: boolean;
@@ -142,7 +144,7 @@ export interface SaltCapabilityManifest {
     advanced_output_ids: string[];
   };
   support_tools: {
-    policy: "optional_advanced_host_surface";
+    policy: "optional_advanced_host_surface" | "default_read_only_host_surface";
     default_exposed: boolean;
     tool_ids: Array<(typeof SALT_SUPPORT_TOOL_IDS)[number]>;
     workflow_contract_meaning_changes_when_absent: false;
@@ -151,7 +153,7 @@ export interface SaltCapabilityManifest {
     retrieval_catalog: {
       available: boolean;
       contract_version: typeof SALT_CREATE_CATALOG_CONTRACT_VERSION | null;
-      access: Array<"info" | "resource">;
+      access: Array<"info" | "resource" | "command">;
     };
   };
   capabilities: {
@@ -195,7 +197,7 @@ export interface BuildSaltCapabilityManifestOptions {
   support_surface: {
     retrieval_catalog: {
       available: boolean;
-      access: Array<"info" | "resource">;
+      access: Array<"info" | "resource" | "command">;
     };
   };
   capabilities: SaltCapabilityManifest["capabilities"];
@@ -225,12 +227,17 @@ export function buildSaltCapabilityManifest(
           "action.kind",
           "action.post_action",
           "next_required_action",
+          "next_required_action.cli",
+          "next_required_action.mcp",
           "allowed_next_actions",
           "recipe.steps",
+          "recipe.steps.action.cli",
+          "recipe.steps.action.mcp",
           "questions",
           "evidence.status",
           "evidence.items",
           "evidence.source_urls",
+          "evidence.input_context",
           "summary",
         ],
         implementation_gate: {
@@ -290,6 +297,12 @@ export function buildSaltCapabilityManifest(
             implementation_allowed: true,
             blocks_implementation_until_complete: false,
             follow_up_required: "review",
+          },
+          {
+            kind: "complete",
+            host_obligation: "finish_without_changes",
+            implementation_allowed: false,
+            blocks_implementation_until_complete: false,
           },
           {
             kind: "review",

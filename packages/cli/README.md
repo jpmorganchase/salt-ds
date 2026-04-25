@@ -29,7 +29,7 @@ Primary workflow commands:
   - supports `--output <path>`
   - supports `--registry-dir <path>`
   - reports detected repo context, declared Salt policy, runtime signals, and workflow capabilities
-  - includes a machine-readable `capabilityManifest` in JSON mode so hosts can inspect the compact contract version, workflow vocabulary, support-tool policy, v3 action/evidence gates, and runtime metadata without parsing prose
+  - includes a machine-readable `capabilityManifest` in JSON mode so hosts can inspect the compact contract version, workflow vocabulary, support-tool policy, v1 action/evidence gates, and runtime metadata without parsing prose
 - `salt-ds create <query>`
   - supports `--json`
   - supports `--output <path>`
@@ -81,6 +81,31 @@ Primary workflow commands:
   - supports `--registry-dir <path>`
   - supports `--full`
   - compares Salt versions and turns the result into upgrade-oriented workflow output
+- `salt-ds get_salt_entity <name>`
+  - supports `--json`
+  - supports `--output <path>`
+  - supports `--registry-dir <path>`
+  - supports `--entity-type <type>`
+  - supports `--include <section[,section]>`
+  - supports `--include-starter-code`
+  - resolves a known or near-known Salt entity when a workflow action returns `retrieve_entity`
+- `salt-ds get_salt_examples <target>`
+  - supports `--json`
+  - supports `--output <path>`
+  - supports `--registry-dir <path>`
+  - supports `--target-type <component|pattern>`
+  - supports `--query <scenario>`
+  - supports `--include-code`
+  - supports `--include-starter-code`
+  - returns canonical examples when a workflow action returns `retrieve_examples`
+- `salt-ds discover_salt [query]`
+  - supports `--json`
+  - supports `--output <path>`
+  - supports `--registry-dir <path>`
+  - supports `--area <area>`
+  - supports `--package <name>`
+  - supports `--status <stable|beta|lab|deprecated>`
+  - routes broad or exploratory Salt questions without changing the primary workflow commands
 
 Support commands:
 
@@ -104,7 +129,7 @@ Support commands:
   - tries browser-session inspection by default, including screenshots, console and page errors, computed layout evidence, bounding boxes, and flex/grid ancestry when a browser runtime is available
   - falls back to `fetched-html` mode when browser-session inspection is unavailable, so consumers can still get structure, landmark, and accessible-name evidence even though computed layout evidence is unavailable
 
-Canonical Salt grounding and declared-project-policy application now happen inside the public workflow commands and MCP tools. There is no second manual semantic CLI surface.
+Canonical Salt grounding and declared-project-policy application now happen inside the public workflow commands, MCP tools, and the read-only support commands that mirror `salt_workflow_v1` retrieval actions.
 
 Workflow JSON modes:
 
@@ -138,6 +163,9 @@ salt-ds review src --url http://127.0.0.1:6006/?path=/story/example --json
 salt-ds migrate "Translate this external UI toolbar into Salt" --json
 salt-ds migrate "Translate this external UI toolbar into Salt" --url http://127.0.0.1:6006/legacy-toolbar --json --mode fetched-html
 salt-ds upgrade --package @salt-ds/core --from-version 1.1.0 --json
+salt-ds get_salt_entity Avatar --json --include examples,accessibility
+salt-ds get_salt_examples Avatar --json --target-type component
+salt-ds discover_salt "profile avatar tabs" --json
 ```
 
 Support-only examples:
