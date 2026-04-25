@@ -1,8 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { evaluateHostTrace } from "../evals/hostTraceEval.js";
-import { REPO_ROOT } from "./registryTestUtils.js";
 
 function toolCall(toolId: string, output: unknown, input = "") {
   return {
@@ -89,10 +86,43 @@ function createContract(
 }
 
 describe("host trace eval", () => {
-  it("flags the saved Copilot trace as unsafe for composite Salt create work", () => {
-    const tracePath = path.join(REPO_ROOT, "chat.json");
-    const raw = JSON.parse(fs.readFileSync(tracePath, "utf8")) as unknown;
-    const report = evaluateHostTrace(raw);
+  it("flags unsafe composite Salt create work without relying on a saved host transcript", () => {
+    const report = evaluateHostTrace([
+      toolCall("get_salt_project_context", {
+        result: {
+          salt: {
+            packages: [],
+          },
+        },
+      }),
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "success",
+          request: {
+            entity: "profile page with tabs and avatar",
+            resolved_entity: "Tabs",
+            match_status: "broadened",
+            exact_match_required: false,
+          },
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: [],
+          },
+          evidence: {
+            status: "missing",
+            items: [],
+            source_urls: [],
+            missing: ["source-backed Salt evidence"],
+            heuristic_fallback: true,
+          },
+          summary:
+            "Unsafe historical behavior: broadened profile tabs/avatar work was treated as directly implementable.",
+        }),
+        '{"query":"profile page with tabs and avatar"}',
+      ),
+    ]);
     const failureCodes = report.critical_failures.map(
       (failure) => failure.code,
     );

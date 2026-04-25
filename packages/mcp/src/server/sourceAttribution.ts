@@ -141,6 +141,48 @@ function hasWorkflowProvenanceShape(payload: unknown): payload is {
   );
 }
 
+function hasPublicWorkflowContractShape(
+  payload: unknown,
+): payload is Record<string, unknown> {
+  return isRecord(payload) && payload.contract === "salt_workflow_v1";
+}
+
+function isToolSourceKind(value: unknown): value is ToolSourceKind {
+  return value === "site" || value === "external" || value === "repo";
+}
+
+function readToolSources(value: unknown): ToolSource[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((entry): ToolSource[] => {
+    if (!isRecord(entry)) {
+      return [];
+    }
+
+    const { original, resolved, kind } = entry;
+    return typeof original === "string" &&
+      typeof resolved === "string" &&
+      isToolSourceKind(kind)
+      ? [{ original, resolved, kind }]
+      : [];
+  });
+}
+
+function mergeToolSources(...groups: ToolSource[][]): ToolSource[] {
+  const deduped = new Map<string, ToolSource>();
+
+  for (const source of groups.flat()) {
+    const key = `${source.kind}:${source.original}:${source.resolved}`;
+    if (!deduped.has(key)) {
+      deduped.set(key, source);
+    }
+  }
+
+  return [...deduped.values()];
+}
+
 export function collectToolSources(
   payload: unknown,
   options: SourceAttributionOptions = {},
@@ -241,10 +283,19 @@ export function buildStructuredToolContent(
   payload: unknown,
   options: SourceAttributionOptions = {},
 ): Record<string, unknown> {
-  const baseContent = isRecord(payload) ? { ...payload } : { result: payload };
+  const baseContent: Record<string, unknown> = isRecord(payload)
+    ? { ...payload }
+    : { result: payload };
+
+  if (hasPublicWorkflowContractShape(payload)) {
+    return baseContent;
+  }
 
   return {
     ...baseContent,
-    sources: collectToolSources(payload, options),
+    sources: mergeToolSources(
+      readToolSources(baseContent.sources),
+      collectToolSources(payload, options),
+    ),
   };
 }

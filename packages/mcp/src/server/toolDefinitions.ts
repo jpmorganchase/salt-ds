@@ -70,6 +70,8 @@ const CONTEXT_NEXT_TOOL_IDS = [
   "migrate_to_salt",
   "upgrade_salt_ui",
 ] as const;
+const UNKNOWN_RECORD_SCHEMA = z.record(z.string(), z.unknown());
+const UNKNOWN_RECORD_ARRAY_SCHEMA = z.array(UNKNOWN_RECORD_SCHEMA);
 
 function normalizeWorkflowView(
   view: (typeof VIEWS)[number] | undefined,
@@ -534,6 +536,7 @@ const PUBLIC_ACTION_KINDS = [
   "install_dependencies",
   "bootstrap_repo",
   "implement",
+  "complete",
   "review",
   "fix_context",
 ] as const;
@@ -566,8 +569,16 @@ const PUBLIC_EVIDENCE_KINDS = [
 ] as const;
 
 const PUBLIC_ARGS_SCHEMA = z.record(z.string(), z.unknown());
-const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
-  z.object({
+const PUBLIC_MCP_HINT_SCHEMA = z.object({
+  tool: z.string().min(1),
+  args: PUBLIC_ARGS_SCHEMA,
+});
+const PUBLIC_ACTION_HINTS_SHAPE = {
+  cli: z.string().min(1).optional(),
+  mcp: PUBLIC_MCP_HINT_SCHEMA.optional(),
+};
+const PUBLIC_TOOL_CALL_STEP_SCHEMA = z
+  .object({
     kind: z.literal("tool_call"),
     tool: z.enum([
       "get_salt_project_context",
@@ -583,59 +594,107 @@ const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
       "stop_and_fix_context",
     ]),
     args: PUBLIC_ARGS_SCHEMA,
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA = z
+  .object({
     kind: z.literal("retrieve_entity"),
     tool: z.enum(["get_salt_entity", "create_salt_ui"]),
     args: PUBLIC_ARGS_SCHEMA,
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA = z
+  .object({
     kind: z.literal("retrieve_examples"),
     tool: z.enum(["get_salt_examples", "create_salt_ui"]),
     args: PUBLIC_ARGS_SCHEMA,
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_ASK_USER_STEP_SCHEMA = z
+  .object({
     kind: z.literal("ask_user"),
     question: z.string().min(1),
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA = z
+  .object({
     kind: z.literal("install_dependencies"),
     package_manager: z.string().min(1),
     packages: z.array(z.string().min(1)).min(1),
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA = z
+  .object({
     kind: z.literal("bootstrap_repo"),
     tool: z.enum(["bootstrap_salt_repo", "salt-ds init"]),
     args: PUBLIC_ARGS_SCHEMA.optional(),
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_IMPLEMENT_STEP_SCHEMA = z
+  .object({
     kind: z.literal("implement"),
     scope: z.literal("exact_request"),
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_COMPLETE_STEP_SCHEMA = z
+  .object({
+    kind: z.literal("complete"),
+    outcome: z.literal("no_changes_required"),
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_REVIEW_STEP_SCHEMA = z
+  .object({
     kind: z.literal("review"),
     tool: z.literal("review_salt_ui"),
     args: PUBLIC_ARGS_SCHEMA.optional(),
-  }),
-  z.object({
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_FIX_CONTEXT_STEP_SCHEMA = z
+  .object({
     kind: z.literal("fix_context"),
     tool: z.enum(["get_salt_project_context", "salt-ds info"]),
     mode: z.literal("stop_and_fix_context"),
     args: PUBLIC_ARGS_SCHEMA.optional(),
-  }),
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_NEXT_STEP_SCHEMAS = [
+  PUBLIC_TOOL_CALL_STEP_SCHEMA,
+  PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA,
+  PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA,
+  PUBLIC_ASK_USER_STEP_SCHEMA,
+  PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA,
+  PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA,
+  PUBLIC_IMPLEMENT_STEP_SCHEMA,
+  PUBLIC_COMPLETE_STEP_SCHEMA,
+  PUBLIC_REVIEW_STEP_SCHEMA,
+  PUBLIC_FIX_CONTEXT_STEP_SCHEMA,
+] as const;
+const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
+  ...PUBLIC_NEXT_STEP_SCHEMAS,
 ]);
-const PUBLIC_POST_ACTION_SCHEMA = z.object({
-  kind: z.literal("review"),
-  tool: z.literal("review_salt_ui"),
-  args: PUBLIC_ARGS_SCHEMA.optional(),
-});
-const PUBLIC_ACTION_SCHEMA = z.intersection(
-  PUBLIC_NEXT_STEP_SCHEMA,
-  z.object({
-    rule_ids: z.array(z.string()),
-    post_action: PUBLIC_POST_ACTION_SCHEMA.nullable(),
-  }),
-);
+const PUBLIC_POST_ACTION_SCHEMA = z
+  .object({
+    kind: z.literal("review"),
+    tool: z.literal("review_salt_ui"),
+    args: PUBLIC_ARGS_SCHEMA.optional(),
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_ACTION_METADATA_SHAPE = {
+  rule_ids: z.array(z.string()),
+  post_action: PUBLIC_POST_ACTION_SCHEMA.nullable(),
+};
+const PUBLIC_ACTION_SCHEMA = z.discriminatedUnion("kind", [
+  PUBLIC_TOOL_CALL_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_ASK_USER_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_IMPLEMENT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_COMPLETE_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_REVIEW_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_FIX_CONTEXT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+]);
 const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({
   kind: z.enum(PUBLIC_EVIDENCE_KINDS),
   source: z.enum(["canonical_salt", "project_policy", "heuristic_fallback"]),
@@ -650,17 +709,126 @@ const PUBLIC_EVIDENCE_SCHEMA = z.object({
   source_urls: z.array(z.string()),
   missing: z.array(z.string()),
   heuristic_fallback: z.boolean(),
+  input_context: z
+    .object({
+      source_outline_provided: z.boolean().optional(),
+      source_outline_signal_counts: z
+        .object({
+          regions: z.number(),
+          actions: z.number(),
+          states: z.number(),
+          notes: z.number(),
+        })
+        .optional(),
+      derived_outline_available: z.boolean().optional(),
+      derived_outline_signal_counts: z
+        .object({
+          regions: z.number(),
+          actions: z.number(),
+          states: z.number(),
+          notes: z.number(),
+        })
+        .optional(),
+      visual_input_count: z.number().optional(),
+      visual_input_kinds: z.array(z.string()).optional(),
+      source_outline_summary: z.string().optional(),
+    })
+    .optional(),
 });
-const PUBLIC_RECIPE_SCHEMA = z.object({
-  steps: z.array(
-    z.object({
-      id: z.string().min(1),
-      action: PUBLIC_NEXT_STEP_SCHEMA,
-      status: z.enum(["required", "available", "complete"]),
-      evidence_required: z.array(z.string()).optional(),
-      reason: z.string().optional(),
+const SUPPORT_SOURCES_SHAPE = {
+  sources: z.array(TOOL_SOURCE_SCHEMA).optional(),
+};
+const GUIDANCE_BOUNDARY_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
+const SUPPORT_FOLLOW_UPS_SCHEMA = UNKNOWN_RECORD_ARRAY_SCHEMA.optional();
+const SUPPORT_RAW_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
+const DISCOVER_SALT_OUTPUT_SCHEMA = z
+  .object({
+    mode: z.enum(["route", "browse", "related"]),
+    guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
+    guidance_sources: z.array(z.string()).optional(),
+    query: z.string().optional(),
+    decision: UNKNOWN_RECORD_SCHEMA.nullable(),
+    best_start: UNKNOWN_RECORD_SCHEMA.nullable().optional(),
+    options: UNKNOWN_RECORD_SCHEMA.optional(),
+    catalog: UNKNOWN_RECORD_SCHEMA.optional(),
+    related: UNKNOWN_RECORD_SCHEMA.optional(),
+    clarifying_questions: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    starter_code: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    related_guides: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    suggested_follow_ups: SUPPORT_FOLLOW_UPS_SCHEMA,
+    next_step: z.string().optional(),
+    signals: UNKNOWN_RECORD_SCHEMA.optional(),
+    raw: SUPPORT_RAW_SCHEMA,
+    did_you_mean: z.array(z.string()).optional(),
+    ambiguity: UNKNOWN_RECORD_SCHEMA.optional(),
+    ...SUPPORT_SOURCES_SHAPE,
+  })
+  .passthrough();
+const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
+  .object({
+    guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
+    entity_type: z
+      .enum([
+        "component",
+        "pattern",
+        "foundation",
+        "token",
+        "guide",
+        "page",
+        "package",
+        "icon",
+        "country_symbol",
+      ])
+      .nullable(),
+    decision: z.object({
+      status: z.enum(["found", "multiple_matches", "results", "not_found"]),
+      why: z.string(),
     }),
-  ).min(1),
+    entity: UNKNOWN_RECORD_SCHEMA.nullable(),
+    matches: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    related: UNKNOWN_RECORD_SCHEMA.optional(),
+    starter_code: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    suggested_follow_ups: SUPPORT_FOLLOW_UPS_SCHEMA,
+    next_step: z.string().optional(),
+    did_you_mean: z.array(z.string()).optional(),
+    ambiguity: UNKNOWN_RECORD_SCHEMA.optional(),
+    raw: SUPPORT_RAW_SCHEMA,
+    ...SUPPORT_SOURCES_SHAPE,
+  })
+  .passthrough();
+const GET_SALT_EXAMPLES_OUTPUT_SCHEMA = z
+  .object({
+    guidance_boundary: UNKNOWN_RECORD_SCHEMA,
+    decision: z.object({
+      target_name: z.string().nullable(),
+      target_type: z.enum(["component", "pattern"]).nullable(),
+      why: z.string(),
+    }),
+    best_example: UNKNOWN_RECORD_SCHEMA.nullable(),
+    alternatives: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    examples: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    starter_code: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
+    suggested_follow_ups: SUPPORT_FOLLOW_UPS_SCHEMA,
+    next_step: z.string().optional(),
+    resolved_target: UNKNOWN_RECORD_SCHEMA.optional(),
+    did_you_mean: z.array(z.string()).optional(),
+    ambiguity: UNKNOWN_RECORD_SCHEMA.optional(),
+    raw: SUPPORT_RAW_SCHEMA,
+    ...SUPPORT_SOURCES_SHAPE,
+  })
+  .passthrough();
+const PUBLIC_RECIPE_SCHEMA = z.object({
+  steps: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        action: PUBLIC_NEXT_STEP_SCHEMA,
+        status: z.enum(["required", "available", "complete"]),
+        evidence_required: z.array(z.string()).optional(),
+        reason: z.string().optional(),
+      }),
+    )
+    .min(1),
 });
 const MCP_WORKFLOW_OUTPUT_SCHEMA = z
   .object({
@@ -697,12 +865,14 @@ const ANALYZE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const TRANSLATE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const COMPARE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 
-const DEFAULT_TOOL_ORDER = PUBLIC_WORKFLOW_TOOL_IDS;
-
 const SUPPORT_TOOL_ORDER = [
   "get_salt_entity",
   "get_salt_examples",
   "discover_salt",
+] as const;
+const DEFAULT_TOOL_ORDER = [
+  ...PUBLIC_WORKFLOW_TOOL_IDS,
+  ...SUPPORT_TOOL_ORDER,
 ] as const;
 
 const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
@@ -851,6 +1021,8 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           "Use full to include routing evidence and raw search payloads.",
         ),
     },
+    outputSchema: DISCOVER_SALT_OUTPUT_SCHEMA,
+    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: discoverSalt,
   }),
   defineTool<
@@ -1147,6 +1319,8 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           "Use full to include raw lookup and fallback search payloads.",
         ),
     },
+    outputSchema: GET_SALT_ENTITY_OUTPUT_SCHEMA,
+    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: getSaltEntity,
   }),
   defineTool<Parameters<typeof getSaltExamples>[1]>({
@@ -1170,6 +1344,8 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .optional()
         .describe("Use full to include the ranked example list."),
     },
+    outputSchema: GET_SALT_EXAMPLES_OUTPUT_SCHEMA,
+    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: getSaltExamples,
   }),
   defineTool<
@@ -1314,8 +1490,8 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
 
 const WORKFLOW_TOOL_DEFINITIONS: readonly ToolDefinition[] =
   ALL_TOOL_DEFINITIONS.filter((definition) =>
-    DEFAULT_TOOL_ORDER.includes(
-      definition.name as (typeof DEFAULT_TOOL_ORDER)[number],
+    PUBLIC_WORKFLOW_TOOL_IDS.includes(
+      definition.name as (typeof PUBLIC_WORKFLOW_TOOL_IDS)[number],
     ),
   );
 
@@ -1327,9 +1503,9 @@ const INTERNAL_SUPPORT_TOOL_DEFINITIONS: readonly ToolDefinition[] =
   );
 
 const toolPriorityByName = new Map<string, number>([
-  ...DEFAULT_TOOL_ORDER.map((name, index) => [name, index] as const),
+  ...PUBLIC_WORKFLOW_TOOL_IDS.map((name, index) => [name, index] as const),
   ...SUPPORT_TOOL_ORDER.map(
-    (name, index) => [name, DEFAULT_TOOL_ORDER.length + index] as const,
+    (name, index) => [name, PUBLIC_WORKFLOW_TOOL_IDS.length + index] as const,
   ),
 ]);
 

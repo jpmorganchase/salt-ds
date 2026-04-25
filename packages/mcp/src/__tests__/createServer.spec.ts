@@ -1,6 +1,10 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { normalizeObjectSchema } from "@modelcontextprotocol/sdk/server/zod-compat.js";
+import { toJsonSchemaCompat } from "@modelcontextprotocol/sdk/server/zod-json-schema-compat.js";
+import type { JsonSchemaType } from "@modelcontextprotocol/sdk/validation";
+import { AjvJsonSchemaValidator } from "@modelcontextprotocol/sdk/validation/ajv";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { describe, expect, it } from "vitest";
 import * as z from "zod/v4";
@@ -20,6 +24,7 @@ import {
   createToolExecutionRuntime,
   TOOL_DEFINITIONS,
 } from "../server/toolDefinitions.js";
+import { buildStructuredToolContent } from "../server/sourceAttribution.js";
 import {
   GENERATED_AT,
   REPO_ROOT,
@@ -30,6 +35,9 @@ import {
 
 const EXPECTED_TOOL_NAMES = [
   "bootstrap_salt_repo",
+  "discover_salt",
+  "get_salt_entity",
+  "get_salt_examples",
   "review_salt_ui",
   "create_salt_ui",
   "upgrade_salt_ui",
@@ -403,6 +411,210 @@ describe("createSaltMcpServer", () => {
     );
   });
 
+  it("registers the support tools named by v1 retrieve actions", () => {
+    const toolNames = TOOL_DEFINITIONS.map((definition) => definition.name);
+    const chooseTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "create_salt_ui",
+    );
+    const entityTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "get_salt_entity",
+    );
+    const examplesTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "get_salt_examples",
+    );
+    const discoverTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "discover_salt",
+    );
+    const chooseSchema = chooseTool?.outputSchema as z.ZodType;
+
+    expect(toolNames).toEqual(
+      expect.arrayContaining(["get_salt_entity", "get_salt_examples"]),
+    );
+    expect(
+      chooseSchema.safeParse({
+        contract: "salt_workflow_v1",
+        workflow: "create",
+        transport: "mcp",
+        status: "partial",
+        request: {
+          entity: "profile page with tabs and avatar",
+          resolved_entity: "Tabs",
+          match_status: "broadened",
+        },
+        safety: {
+          canonical_complete: false,
+          exact_request_safe: false,
+          blocking_reasons: ["required follow-through remains: Avatar"],
+        },
+        action: {
+          kind: "retrieve_entity",
+          tool: "get_salt_entity",
+          args: { name: "Avatar" },
+          rule_ids: ["create-follow-through-required"],
+          post_action: null,
+        },
+        next_required_action: {
+          kind: "retrieve_entity",
+          tool: "get_salt_entity",
+          args: { name: "Avatar" },
+        },
+        allowed_next_actions: ["retrieve_entity"],
+        recipe: {
+          steps: [
+            {
+              id: "retrieve-avatar",
+              action: {
+                kind: "retrieve_entity",
+                tool: "get_salt_entity",
+                args: { name: "Avatar" },
+              },
+              status: "required",
+            },
+          ],
+        },
+        questions: [],
+        evidence: {
+          status: "partial",
+          items: [],
+          source_urls: [],
+          missing: ["follow-through evidence for Avatar"],
+          heuristic_fallback: false,
+        },
+        summary: "Ground Avatar before implementing.",
+      }).success,
+    ).toBe(true);
+    expect(
+      (entityTool?.outputSchema as z.ZodType).safeParse({
+        entity_type: "component",
+        decision: {
+          status: "found",
+          why: "Resolved Avatar as a Salt component.",
+        },
+        entity: { name: "Avatar" },
+        guidance_boundary: {},
+        sources: [],
+      }).success,
+    ).toBe(true);
+    expect(
+      (examplesTool?.outputSchema as z.ZodType).safeParse({
+        guidance_boundary: {},
+        decision: {
+          target_name: "Avatar",
+          target_type: "component",
+          why: "Best example from the current Salt registry.",
+        },
+        best_example: { title: "Image" },
+        sources: [],
+      }).success,
+    ).toBe(true);
+    expect(
+      (discoverTool?.outputSchema as z.ZodType).safeParse({
+        mode: "route",
+        guidance_boundary: {},
+        decision: {
+          workflow: "create_salt_ui",
+          why: "Start from the strongest component fit.",
+        },
+        sources: [],
+      }).success,
+    ).toBe(true);
+  });
+
+  it("publishes an MCP output schema that accepts install dependency actions", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const registeredTools = (
+          server as unknown as {
+            _registeredTools: Record<
+              string,
+              {
+                outputSchema?: unknown;
+              }
+            >;
+          }
+        )._registeredTools;
+        const outputObjectSchema = normalizeObjectSchema(
+          registeredTools.create_salt_ui?.outputSchema as z.ZodType,
+        );
+
+        expect(outputObjectSchema).toBeTruthy();
+
+        const outputJsonSchema = toJsonSchemaCompat(outputObjectSchema!, {
+          strictUnions: true,
+          pipeStrategy: "output",
+        });
+        const validator = new AjvJsonSchemaValidator().getValidator(
+          outputJsonSchema as JsonSchemaType,
+        );
+
+        const result = validator({
+          contract: "salt_workflow_v1",
+          workflow: "create",
+          transport: "mcp",
+          status: "blocked",
+          request: {
+            entity: "profile page with tabs and avatar",
+            resolved_entity: "Tabs",
+            match_status: "broadened",
+            exact_match_required: false,
+          },
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: [
+              "Salt packages are not installed; install @salt-ds/core, @salt-ds/theme before implementing Salt UI.",
+            ],
+          },
+          action: {
+            kind: "install_dependencies",
+            package_manager: "yarn",
+            packages: ["@salt-ds/core", "@salt-ds/theme"],
+            rule_ids: ["create-follow-through-required"],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "install_dependencies",
+            package_manager: "yarn",
+            packages: ["@salt-ds/core", "@salt-ds/theme"],
+          },
+          allowed_next_actions: ["install_dependencies", "retrieve_entity"],
+          recipe: {
+            steps: [
+              {
+                id: "install-salt-dependencies",
+                action: {
+                  kind: "install_dependencies",
+                  package_manager: "yarn",
+                  packages: ["@salt-ds/core", "@salt-ds/theme"],
+                },
+                status: "required",
+              },
+            ],
+          },
+          questions: [],
+          evidence: {
+            status: "partial",
+            items: [],
+            source_urls: [],
+            missing: ["follow-through evidence for Avatar"],
+            heuristic_fallback: false,
+          },
+          summary: "Install Salt dependencies before implementing.",
+        });
+
+        expect(result).toEqual(
+          expect.objectContaining({
+            valid: true,
+          }),
+        );
+      },
+    );
+  });
+
   it("registers machine-readable capability and catalog resources", async () => {
     await withRegistryDir(
       async (registryDir) => {
@@ -491,6 +703,14 @@ describe("createSaltMcpServer", () => {
         const capabilityManifest = JSON.parse(
           resourceResult.contents[0]?.text ?? "null",
         ) as {
+          public_surface?: {
+            default_surface_ids?: string[];
+          };
+          support_tools?: {
+            policy?: string;
+            default_exposed?: boolean;
+            tool_ids?: string[];
+          };
           contracts?: {
             workflow_action_contract?: {
               action_semantics?: Array<{
@@ -532,6 +752,24 @@ describe("createSaltMcpServer", () => {
           expect.objectContaining({
             implementation_allowed: false,
             host_obligation: "ask_user_and_stop",
+          }),
+        );
+        expect(capabilityManifest.public_surface?.default_surface_ids).toEqual(
+          expect.arrayContaining([
+            "get_salt_entity",
+            "get_salt_examples",
+            "discover_salt",
+          ]),
+        );
+        expect(capabilityManifest.support_tools).toEqual(
+          expect.objectContaining({
+            policy: "default_read_only_host_surface",
+            default_exposed: true,
+            tool_ids: expect.arrayContaining([
+              "get_salt_entity",
+              "get_salt_examples",
+              "discover_salt",
+            ]),
           }),
         );
 
@@ -648,7 +886,7 @@ describe("createSaltMcpServer", () => {
         )._registeredTools;
 
         for (const toolName of EXPECTED_TOOL_NAMES) {
-          expect(registeredTools[toolName]?.outputSchema).toBeTruthy();
+          expect(registeredTools[toolName]).toBeTruthy();
           if (toolName === "bootstrap_salt_repo") {
             expect(registeredTools[toolName]?.annotations).toEqual(
               expect.objectContaining({
@@ -668,6 +906,10 @@ describe("createSaltMcpServer", () => {
               }),
             );
           }
+        }
+
+        for (const toolName of EXPECTED_DEFAULT_TOOL_ORDER) {
+          expect(registeredTools[toolName]?.outputSchema).toBeTruthy();
         }
       },
     );
@@ -752,7 +994,7 @@ describe("createSaltMcpServer", () => {
           "Keep the product workflows stable across transports",
         );
         expect(internalServer._instructions).toContain(
-          "The default beta MCP surface is intentionally limited to the six repo-aware workflow tools.",
+          "The default beta MCP surface exposes six repo-aware workflow tools plus read-only Salt support tools",
         );
         expect(internalServer._instructions).toContain(
           "Only call tools that are actually present in the current session tool list.",
@@ -849,6 +1091,13 @@ describe("createSaltMcpServer", () => {
         expect(
           (contextTool?.outputSchema as z.ZodType).safeParse(contextResult)
             .success,
+        ).toBe(true);
+        const contextStructuredContent =
+          buildStructuredToolContent(contextResult);
+        expect(
+          (contextTool?.outputSchema as z.ZodType).safeParse(
+            contextStructuredContent,
+          ).success,
         ).toBe(true);
         expect(contextResult).toEqual(
           expect.objectContaining({
@@ -1507,6 +1756,11 @@ describe("createSaltMcpServer", () => {
 
         const chooseSchema = chooseTool?.outputSchema as z.ZodType;
         expect(chooseSchema.safeParse(chooseResult).success).toBe(true);
+        const structuredChooseResult = buildStructuredToolContent(chooseResult);
+        expect(structuredChooseResult).not.toHaveProperty("sources");
+        expect(
+          chooseSchema.safeParse(structuredChooseResult).success,
+        ).toBe(true);
       },
     );
   }, 20000);
@@ -2302,6 +2556,13 @@ describe("createSaltMcpServer", () => {
             }),
           }),
         );
+        const bootstrapStructuredContent =
+          buildStructuredToolContent(bootstrapResult);
+        expect(
+          (bootstrapTool?.outputSchema as z.ZodType).safeParse(
+            bootstrapStructuredContent,
+          ).success,
+        ).toBe(true);
 
         const agents = await fs.readFile(
           path.join(rootDir, "AGENTS.md"),

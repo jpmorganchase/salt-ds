@@ -71,6 +71,69 @@ function unique(values: string[]): string[] {
   return [...new Set(values)];
 }
 
+function normalizeSaltEntityName(value: string): string {
+  return value.replace(/[\s_-]+/g, "").toLowerCase();
+}
+
+function componentDocUrlsForImport(
+  registry: SaltRegistry,
+  importedName: string,
+): string[] {
+  const normalizedImportedName = normalizeSaltEntityName(importedName);
+  const component = registry.components.find(
+    (item) =>
+      normalizeSaltEntityName(item.name) === normalizedImportedName ||
+      normalizeSaltEntityName(item.source.export_name ?? "") ===
+        normalizedImportedName ||
+      item.aliases.some(
+        (alias) => normalizeSaltEntityName(alias) === normalizedImportedName,
+      ),
+  );
+
+  return component
+    ? componentDocUrls(registry, component.name, [
+        "overview",
+        "usage",
+        "examples",
+      ])
+    : [];
+}
+
+function collectReviewedSaltSourceUrls(
+  registry: SaltRegistry,
+  analysis: SaltCodeAnalysis | null,
+): string[] {
+  if (!analysis) {
+    return [];
+  }
+
+  const importedNames = new Set<string>();
+
+  for (const symbol of analysis.directImportByLocal.values()) {
+    importedNames.add(symbol.imported);
+  }
+
+  traverseAst(analysis.ast, {
+    JSXOpeningElement(path) {
+      const imported = resolveImportedSaltSymbol(
+        path.node.name,
+        analysis.directImportByLocal,
+        analysis.namespaceImportByLocal,
+      );
+
+      if (imported) {
+        importedNames.add(imported.imported);
+      }
+    },
+  });
+
+  return unique(
+    [...importedNames].flatMap((name) =>
+      componentDocUrlsForImport(registry, name),
+    ),
+  );
+}
+
 function toRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object"
     ? (value as Record<string, unknown>)
@@ -472,6 +535,7 @@ export function reviewSaltUi(
     ...migrations.notes,
   ]);
   const sourceUrls = unique([
+    ...collectReviewedSaltSourceUrls(registry, analysis),
     ...validation.issues.flatMap((issue) => issue.source_urls),
     ...migrations.source_urls,
     ...fixes.source_urls,

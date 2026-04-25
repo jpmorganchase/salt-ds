@@ -93,8 +93,15 @@ export function getSaltMcpRuntimeMetadata(
         "review_salt_ui",
         "migrate_to_salt",
         "upgrade_salt_ui",
+        "get_salt_entity",
+        "get_salt_examples",
+        "discover_salt",
       ],
       advanced_output_ids: ["view:full"],
+    },
+    support_tools: {
+      policy: "default_read_only_host_surface",
+      default_exposed: true,
     },
     support_surface: {
       retrieval_catalog: {
@@ -165,7 +172,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     "This MCP only provides canonical Salt guidance from official Salt sources.",
     "Repo-local wrappers, approved custom patterns, and team-specific conventions stay in declared project policy, not in the core Salt registry.",
     "When a repo-aware workflow says project conventions matter, make sure the repo has declared policy through .salt/team.json or .salt/stack.json and let the workflow artifacts carry the resulting refinement and provenance.",
-    "Workflow follow-ups use stable public tool IDs, even when a support helper is not part of the default six-tool surface.",
+    "Workflow follow-ups use stable public tool IDs. retrieve_entity and retrieve_examples actions name registered read-only support tools.",
     "For repo-aware work, start with get_salt_project_context by default before choosing the main workflow tool, and pass an explicit root_dir whenever the host already knows the active workspace path.",
     "If a context result reports resolution.status = needs_explicit_root or mismatch, stop and retry with explicit root_dir or a known context_id before relying on repo-specific guidance.",
     "Only reuse get_salt_project_context.result.context_id when it is non-null. When context_health.trusted is false, use artifacts.summary.retry_with.root_dir for the next context call instead of guessing.",
@@ -176,7 +183,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     "migrate_to_salt returns post_migration_verification so the agent can carry a deterministic follow-up loop back into local review work.",
     "review_salt_ui returns fix_candidates as agent-applied remediation guidance rather than as direct file mutation.",
     "Keep the visible MCP front door workflow-first: get_salt_project_context first, bootstrap via bootstrap_salt_repo when required, then create via create_salt_ui, review via review_salt_ui, migrate via migrate_to_salt, and upgrade via upgrade_salt_ui.",
-    "The default beta MCP surface is intentionally limited to the six repo-aware workflow tools.",
+    "The default beta MCP surface exposes six repo-aware workflow tools plus read-only Salt support tools for entity, example, and discovery grounding.",
     "Keep the product workflows stable across transports: create maps to create_salt_ui, review maps to review_salt_ui, migrate maps to migrate_to_salt, upgrade maps to upgrade_salt_ui and then review_salt_ui on changed code, and review --url combines source analysis with local runtime evidence outside MCP when needed.",
     "For non-Salt UI adoption, foreign-library conversion, or mockup-to-Salt planning, prefer migrate_to_salt before review_salt_ui.",
     "Only call tools that are actually present in the current session tool list.",

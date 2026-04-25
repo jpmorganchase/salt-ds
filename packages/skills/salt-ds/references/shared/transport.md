@@ -83,6 +83,8 @@ Read compact workflow output from top-level fields first:
 Treat `salt_workflow_v1` action kinds as binding:
 
 - `implement`: edit only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; then run the returned review/post action
+- `complete`: stop without edits; the reviewed scope has no changes required
+- `review`: run the returned Salt review action before calling the workflow complete
 - `ask_user`: stop and ask the returned question before writing code
 - `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region
 - `install_dependencies`: install the listed Salt packages before writing Salt UI
@@ -97,6 +99,9 @@ When compact `create` remains `partial` or `blocked` on a broad or mixed-surface
   - `salt://catalog/entity/{name}`
   - `salt://catalog/family/{family}`
 - CLI:
+  - `salt-ds discover_salt "<prompt>" --json`
+  - `salt-ds get_salt_entity "<name>" --json`
+  - `salt-ds get_salt_examples "<target>" --json`
   - `salt-ds info --json --catalog-query "<prompt>"`
   - `salt-ds info --json --entity "<name>"`
   - `salt-ds info --json --family "<category>"`
@@ -160,7 +165,7 @@ When MCP is the transport:
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.
 
-The default MCP surface exposes six repo-aware workflow tools. Support tools such as `get_salt_entity`, `get_salt_examples`, and `discover_salt` may not be present in the current session — only call tools that are actually listed in the session tool list. When support tools are unavailable, use the workflow tools for entity grounding (e.g., `create_salt_ui` with an exact entity name as `query`).
+The default MCP surface exposes six repo-aware workflow tools first, followed by read-only support tools: `get_salt_entity`, `get_salt_examples`, and `discover_salt`. `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable in the default MCP surface. In constrained hosts, still verify the session tool list before calling a support tool; if a support tool is unavailable, use the workflow fallback for entity grounding (for example, `create_salt_ui` with an exact entity name as `query`).
 
 When CLI is the transport:
 
@@ -169,6 +174,9 @@ When CLI is the transport:
 - `review`: `salt-ds review`
 - `migrate`: `salt-ds migrate`
 - `upgrade`: `salt-ds upgrade`
+- `retrieve_entity`: `salt-ds get_salt_entity`
+- `retrieve_examples`: `salt-ds get_salt_examples`
+- broad support routing: `salt-ds discover_salt`
 
 ### CLI Follow-Through for Entity Grounding
 
@@ -177,6 +185,7 @@ When a `salt-ds create --json` call returns a compact `PublicContract`, read the
 If the first compact result is still broad on a mixed-surface prompt and the next exact entity is not obvious, inspect:
 
 ```sh
+salt-ds discover_salt "<original prompt>" --json
 salt-ds info --json --catalog-query "<original prompt>"
 ```
 
@@ -185,6 +194,7 @@ Use the returned owner and supporting candidates to choose the next exact follow
 When `required_follow_through` lists named entities that still need grounding before their regions can be implemented, run a targeted follow-up call for each entity:
 
 ```
+salt-ds get_salt_entity "<entity name>" --json --include examples,accessibility
 salt-ds create "<entity name>" --json --include-starter-code --starter-only
 ```
 

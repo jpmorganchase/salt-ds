@@ -3,6 +3,11 @@ import { runInfoCommand } from "./commands/info.js";
 import { runInitCommand } from "./commands/init.js";
 import { runRuntimeInspectCommand } from "./commands/runtimeInspect.js";
 import {
+  runDiscoverSaltCommand,
+  runGetSaltEntityCommand,
+  runGetSaltExamplesCommand,
+} from "./commands/support.js";
+import {
   runCreateCommand,
   runMigrateCommand,
   runReviewCommand,
@@ -32,7 +37,8 @@ export async function runCli(
   const { command, positionals, flags } = parseArgs(argv);
 
   if (command === "help" || flags.help === "true") {
-    return printHelp(normalizedIo.writeStdout);
+    const helpCommand = command === "help" ? positionals[0] : command;
+    return printHelp(normalizedIo.writeStdout, helpCommand);
   }
 
   if (command === "doctor") {
@@ -61,6 +67,18 @@ export async function runCli(
 
   if (command === "upgrade") {
     return runUpgradeCommand(positionals, flags, normalizedIo);
+  }
+
+  if (command === "get_salt_entity" || command === "get-salt-entity") {
+    return runGetSaltEntityCommand(positionals, flags, normalizedIo);
+  }
+
+  if (command === "get_salt_examples" || command === "get-salt-examples") {
+    return runGetSaltExamplesCommand(positionals, flags, normalizedIo);
+  }
+
+  if (command === "discover_salt" || command === "discover-salt") {
+    return runDiscoverSaltCommand(positionals, flags, normalizedIo);
   }
 
   if (command === "runtime" && positionals[0] === "inspect") {
