@@ -1,11 +1,24 @@
 import path from "node:path";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { createSaltMcpServer } from "./server/createServer.js";
+import { getSaltMcpPackageManifest } from "./server/serverMetadata.js";
 
 interface ParsedArgs {
   command: string;
   flags: Record<string, string>;
 }
+
+const HELP_TEXT = `Usage: salt-mcp [serve] [options]
+
+Commands:
+  serve                   Start the Salt MCP server on stdio (default)
+  help                    Show this help message
+
+Options:
+  --registry-dir <path>   Read the Salt registry from a custom directory
+  --site-base-url <url>   Use a custom Salt docs base URL
+  -h, --help              Show this help message
+  --version               Show the package version`;
 
 function waitForStdioShutdown(transport: StdioServerTransport): Promise<void> {
   return new Promise((resolve) => {
@@ -80,6 +93,16 @@ async function runServe(flags: Record<string, string>): Promise<void> {
 export async function runCli(
   argv: string[] = process.argv.slice(2),
 ): Promise<void> {
+  if (argv.includes("--help") || argv.includes("-h") || argv[0] === "help") {
+    console.log(HELP_TEXT);
+    return;
+  }
+
+  if (argv.includes("--version") || argv[0] === "version") {
+    console.log(getSaltMcpPackageManifest().version);
+    return;
+  }
+
   const { command, flags } = parseArgs(argv);
 
   if (command === "serve") {

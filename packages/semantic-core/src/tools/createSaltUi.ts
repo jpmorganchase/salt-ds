@@ -63,6 +63,7 @@ export interface CreateSaltUiInput {
   a11y_required?: boolean;
   form_field_support?: boolean;
   include_starter_code?: boolean;
+  resolved_entities?: string[];
   view?: "compact" | "full";
 }
 

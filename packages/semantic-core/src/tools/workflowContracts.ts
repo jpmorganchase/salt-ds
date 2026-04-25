@@ -487,10 +487,7 @@ function getCreateFollowThroughTargets(
     /\b(dashboard|page|screen|workspace|overview)\b/i.test(
       result.decision.name ?? "",
     );
-  const allQueryAnchors = collectCreateQueryAnchors(
-    registry,
-    query ?? "",
-  );
+  const allQueryAnchors = collectCreateQueryAnchors(registry, query ?? "");
   const allHighPriorityQueryAnchors = allQueryAnchors.filter(
     isHighPriorityCreateQueryAnchor,
   );

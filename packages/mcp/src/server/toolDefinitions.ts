@@ -841,6 +841,7 @@ const MCP_WORKFLOW_OUTPUT_SCHEMA = z
       resolved_entity: z.string().nullable().optional(),
       match_status: z.enum(PUBLIC_MATCH_STATUSES).optional(),
       exact_match_required: z.boolean().optional(),
+      full_request_evidence_complete: z.boolean().optional(),
     }),
     safety: z.object({
       canonical_complete: z.boolean(),
@@ -1177,6 +1178,12 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Defaults to true. Set false only when you explicitly want planning guidance without starter code.",
         ),
+      resolved_entities: z
+        .array(z.string().min(1))
+        .optional()
+        .describe(
+          "Names of follow-through entities already resolved through canonical support tools. Use when rerunning create after retrieve_entity or retrieve_examples.",
+        ),
       view: z
         .enum(VIEWS)
         .optional()
@@ -1231,6 +1238,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
             (entry) => entry.name,
           ),
           package_manager: projectContext.environment.package_manager,
+          resolved_entities: workflowArgs.resolved_entities,
         },
       );
     },

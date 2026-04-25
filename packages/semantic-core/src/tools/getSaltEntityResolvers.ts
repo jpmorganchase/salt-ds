@@ -748,6 +748,18 @@ const ENTITY_RESOLVERS: Record<KnownSaltEntityType, EntityResolver> = {
   country_symbol: resolveCountrySymbolEntity,
 };
 
+const AUTO_EXACT_ENTITY_PRIORITY: KnownSaltEntityType[] = [
+  "component",
+  "pattern",
+  "foundation",
+  "token",
+  "guide",
+  "package",
+  "icon",
+  "country_symbol",
+  "page",
+];
+
 export function createGetSaltEntityContext(
   registry: SaltRegistry,
   input: GetSaltEntityInput,
@@ -759,6 +771,34 @@ export function createGetSaltEntityContext(
     maxResults: clampMaxResults(input.max_results, 5, 50),
     lookupValue: input.name?.trim() || input.query?.trim() || "",
   };
+}
+
+function resolveExactAutoSaltEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult | null {
+  const { registry, input, lookupValue } = context;
+
+  if (!input.name?.trim()) {
+    return null;
+  }
+
+  for (const entityType of AUTO_EXACT_ENTITY_PRIORITY) {
+    const resolved = resolveKnownSaltEntity(
+      createGetSaltEntityContext(registry, {
+        ...input,
+        entity_type: entityType,
+        name: lookupValue,
+        query: undefined,
+      }),
+      entityType,
+    );
+
+    if (resolved.decision.status === "found") {
+      return resolved;
+    }
+  }
+
+  return null;
 }
 
 export function resolveAutoSaltEntity(
@@ -777,6 +817,11 @@ export function resolveAutoSaltEntity(
       next_step:
         "Pass a component, pattern, token, guide, page, icon, or country symbol name.",
     };
+  }
+
+  const exactEntity = resolveExactAutoSaltEntity(context);
+  if (exactEntity) {
+    return exactEntity;
   }
 
   const search = searchSaltDocs(registry, {

@@ -15,6 +15,12 @@ async function readRepoFile(relativePath: string) {
   return fs.readFile(path.join(repoRoot, relativePath), "utf8");
 }
 
+function expectAllConcepts(source: string, concepts: RegExp[]) {
+  for (const concept of concepts) {
+    expect(source).toMatch(concept);
+  }
+}
+
 describe("deterministic agentic policy evals", () => {
   it("keeps the MCP to CLI fallback contract aligned across the skill, transport contract, repo instructions, and consumer example", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
@@ -33,7 +39,7 @@ describe("deterministic agentic policy evals", () => {
     );
 
     expect(skill).toContain(
-      "if MCP is unavailable, explicitly switch to CLI fallback instead of acting as though canonical guidance succeeded",
+      "Use `references/shared/transport.md` for the full transport, degraded-tooling, completion, and CLI follow-through rules.",
     );
     expect(transport).toContain("Prefer Salt MCP when it is available.");
     expect(transport).toContain(
@@ -63,6 +69,9 @@ describe("deterministic agentic policy evals", () => {
     expect(repoInstructions).toContain(
       "If both Salt MCP and the Salt CLI are unavailable or failing, stop, resolve the blocker, or ask the user before proceeding.",
     );
+    expect(repoInstructions).toContain(
+      "Do not choose Salt components, patterns, props, tokens, or write Salt-specific code until the canonical workflow satisfies the hard gate; after editing, run the validation or review step.",
+    );
     expect(consumerAgents).toContain(
       "- a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
     );
@@ -75,12 +84,21 @@ describe("deterministic agentic policy evals", () => {
     expect(consumerAgents).toContain(
       "If both Salt MCP and the Salt CLI are unavailable or failing, stop, resolve the blocker, or ask the user before proceeding.",
     );
+    expect(consumerAgents).toContain(
+      "Do not choose Salt components, patterns, props, tokens, or write Salt-specific code until the canonical workflow satisfies the hard gate; after editing, run the validation or review step.",
+    );
     expect(consumerAgents).toContain("keep the first result canonical-only");
     expect(consumerCopilotInstructions).toContain(
       "If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked region.",
     );
     expect(consumerSaltUiAgent).toContain(
       "If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked region.",
+    );
+    expect(repoInstructions).not.toContain(
+      "canonical selection step and the validation step have completed successfully",
+    );
+    expect(consumerAgents).not.toContain(
+      "canonical selection step and the validation step have completed successfully",
     );
   });
 
@@ -100,7 +118,12 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
     );
 
-    expect(skill).toContain("## Compact Contract First");
+    expect(skill).toContain(
+      "Read compact workflow output from stable top-level workflow signals first:",
+    );
+    expect(skill).toContain(
+      "`status`, `safety`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`.",
+    );
     expect(transport).toContain(
       "Read compact workflow output from top-level fields first:",
     );
@@ -137,7 +160,9 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
     );
 
-    expect(skill).toContain("Treat `salt_workflow_v1` action kinds as binding:");
+    expect(skill).toContain(
+      "Treat `salt_workflow_v1` action kinds as binding:",
+    );
     expect(transport).toContain(
       "Treat `salt_workflow_v1` action kinds as binding:",
     );
@@ -151,10 +176,10 @@ describe("deterministic agentic policy evals", () => {
       "Treat the compact `salt_workflow_v1` action as a command, not advice:",
     );
     expect(consumerCopilotInstructions).toContain(
-      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
+      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
     );
     expect(consumerSaltUiAgent).toContain(
-      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
+      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
     );
     expect(skill).toContain(
       "`install_dependencies`: install the listed Salt packages before writing Salt UI",
@@ -164,8 +189,96 @@ describe("deterministic agentic policy evals", () => {
     );
     for (const source of [repoInstructions, consumerAgents]) {
       expect(source).toContain(
-        "`action.kind: \"install_dependencies\"`: install the listed packages before writing Salt UI",
+        '`action.kind: "install_dependencies"`: install the listed packages before writing Salt UI',
       );
     }
+  });
+
+  it("keeps anti-hallucination, hard gate, rerun, and review semantics on first-load skill surfaces", async () => {
+    const skill = await readSkill("salt-ds/SKILL.md");
+    const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
+    const transport = await readSkill("salt-ds/references/shared/transport.md");
+    const copilotHosts = await readSkill(
+      "salt-ds/references/shared/copilot-hosts.md",
+    );
+    const modes = await readSkill("salt-ds/references/shared/modes.md");
+    const repoInstructions = await readSkill(
+      "salt-ds/assets/repo-instructions.template.md",
+    );
+    const consumerAgents = await readRepoFile(
+      "workflow-examples/consumer-repo/AGENTS.md",
+    );
+    const consumerCopilotInstructions = await readRepoFile(
+      "workflow-examples/consumer-repo/.github/copilot-instructions.md",
+    );
+    const consumerSaltUiAgent = await readRepoFile(
+      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
+    );
+
+    const requiredConcepts = [
+      /do not (?:guess|invent|hallucinate)[\s\S]+Salt APIs/i,
+      /props[\s\S]+imports[\s\S]+package names[\s\S]+tokens/i,
+      /status(?:`|\b)[\s\S]+success/i,
+      /action\.kind(?:`|\b)[\s\S]+implement/i,
+      /safety\.exact_request_safe(?:`|\b)[\s\S]+true/i,
+      /evidence\.status(?:`|\b)[\s\S]+complete/i,
+      /rerun (?:the )?originating workflow/i,
+      /run (?:the returned )?review/i,
+    ];
+
+    for (const source of [
+      skill,
+      openAiMetadata,
+      transport,
+      copilotHosts,
+      repoInstructions,
+      consumerAgents,
+      consumerCopilotInstructions,
+      consumerSaltUiAgent,
+    ]) {
+      expectAllConcepts(source, requiredConcepts);
+    }
+
+    expectAllConcepts(skill, [
+      /quick-check[\s\S]+not permission to implement/i,
+      /quick-check[\s\S]+Salt-specific props[\s\S]+canonical/i,
+    ]);
+    expectAllConcepts(modes, [
+      /quick-check is not permission to implement create, migrate, or upgrade work/i,
+      /Salt-specific props[\s\S]+verified through MCP or CLI evidence/i,
+    ]);
+  });
+
+  it("keeps explicit user nouns as evidence-backed unresolved requirements instead of magic inferred implementation", async () => {
+    const skill = await readSkill("salt-ds/SKILL.md");
+    const createRules = await readSkill("salt-ds/references/create/rules.md");
+    const surfaceResolution = await readSkill(
+      "salt-ds/references/shared/surface-resolution.md",
+    );
+
+    expectAllConcepts(skill, [
+      /preserve explicit user nouns[\s\S]+unresolved requirements/i,
+      /retrieve canonical evidence[\s\S]+do not implement those regions/i,
+      /workflow contract or support evidence covers them/i,
+    ]);
+    expectAllConcepts(createRules, [
+      /preserve explicit user nouns[\s\S]+unresolved requirements/i,
+      /retrieve canonical evidence[\s\S]+do not implement those regions/i,
+    ]);
+    expect(surfaceResolution).toContain(
+      "if a region remains unresolved after the canonical step, either keep it pending or ask instead of inventing a bespoke structure",
+    );
+  });
+
+  it("keeps the Salt skill metadata agent agnostic for future host adapters", async () => {
+    const skill = await readSkill("salt-ds/SKILL.md");
+    const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
+
+    expect(skill).toMatch(
+      /AI agent[\s\S]+ChatGPT[\s\S]+Copilot[\s\S]+Claude[\s\S]+Codex/i,
+    );
+    expect(openAiMetadata).toContain(
+      "agent-agnostic Salt design system workflow",
+    );
   });
 });
