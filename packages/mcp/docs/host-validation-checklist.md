@@ -45,6 +45,7 @@ Pass:
 - owner stays on `Tabs`
 - `Avatar` is secondary follow-through, not the primary owner
 - `action.kind` is `retrieve_entity`, `ask_user`, or another non-implement action until `Avatar` is grounded
+- after `Avatar` is grounded, the rerun passes MCP `resolved_entities: ["Avatar"]` or CLI `--resolved-entity Avatar`
 - `recipe.steps` or `evidence.missing` names the unresolved follow-through
 - no drift to `Navigation`, `Vertical navigation`, or dashboard patterns
 
@@ -111,7 +112,7 @@ For each scenario, capture:
 - `partial` does not get treated as done
 - `ask_user` stops host implementation until the user answers
 - `install_dependencies` happens before Salt UI edits when Salt packages are missing
-- `retrieve_entity` and `retrieve_examples` are treated as evidence gathering, not permission to code
+- `retrieve_entity` and `retrieve_examples` are treated as evidence gathering and rerun inputs, not permission to code
 - exact follow-through stays exact on the next call
 
 ## Sign-Off Rule

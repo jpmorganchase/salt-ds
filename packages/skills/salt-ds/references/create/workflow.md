@@ -24,14 +24,14 @@
 - For non-Salt starts, use the translation step to lock the Salt building blocks first, then choose the JSX composition that fits them cleanly.
 - Use the translated workstreams and scaffold handoff to decide what gets built first instead of inventing a new implementation order.
 - If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before building the blocked region.
-- Branch on `salt_workflow_v1.action.kind`: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.
+- Branch on `salt_workflow_v1.action.kind`: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages first, and only `implement` permits Salt UI edits.
 - Use `recipe.steps`, `questions`, and `evidence.missing` to keep unresolved regions visible instead of filling them with guessed Salt structure.
 - Do not treat `status: partial` as a finished create step just because starter code or a first scaffold exists.
 - Leave `solution_type` unset on broad or mixed-surface create prompts unless the request already points clearly to a known Salt family.
 - If compact create stays broad on a mixed-surface prompt and the next exact follow-up is not obvious, inspect retrieval support first:
   - MCP: `salt://catalog/candidates/{query}`, `salt://catalog/entity/{name}`, then `salt://catalog/family/{family}` when the broader Salt family still matters
   - CLI: `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, then `salt-ds info --json --family "<category>"`
-- Use retrieval support to confirm the owner and supporting surfaces, then continue with exact named follow-through. Do not jump to `full` just to re-run selection.
+- Use retrieval support to confirm the owner and supporting surfaces, then continue with exact named follow-through. For create entity follow-through, rerun with MCP `resolved_entities` or CLI `--resolved-entity`. Do not jump to `full` just to re-run selection.
 - Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
 - For exact named asks, keep the first create call close to the named Salt target. Do not paraphrase `Metric`, `Tabs`, or similar exact requests into broader descriptive text before the first grounded call.
 - If the host already knows the workspace root, get project context first and reuse `context_id` on repeated repo-aware calls instead of recollecting context each time.
@@ -41,7 +41,8 @@
 
 - Ask a small number of high-value questions when package choice, layout pattern, responsiveness, or interaction model is unclear.
 - In blocker-question mode, ask one focused question at a time and provide a recommended default answer.
-- If the ambiguity does not block a good first implementation, state an assumption instead of stopping.
+- State an assumption only after the workflow satisfies the implementation gate, and only for non-structural details that do not affect component or pattern choice, navigation behavior, accessibility semantics, data model, package choice, repo policy, or Salt API/prop/token usage.
+- If an unresolved decision affects those structural choices, ask one blocker question instead of implementing through the gap.
 
 ## 3b. branch into options only when requested
 

@@ -95,8 +95,7 @@ export interface SaltCapabilityManifest {
         non_implementable_statuses: Array<
           (typeof SALT_NON_IMPLEMENTABLE_WORKFLOW_STATUSES)[number]
         >;
-        heuristic_fallback_policy:
-          | "heuristic_fallback_must_not_be_sole_evidence_for_success";
+        heuristic_fallback_policy: "heuristic_fallback_must_not_be_sole_evidence_for_success";
       };
       action_semantics: Array<{
         kind: (typeof SALT_PUBLIC_ACTION_KINDS)[number];
@@ -113,7 +112,7 @@ export interface SaltCapabilityManifest {
           | "repair_context_first";
         implementation_allowed: boolean;
         blocks_implementation_until_complete: boolean;
-        follow_up_required?: "review";
+        follow_up_required?: "review" | "rerun_originating_workflow";
       }>;
       evidence_contract: {
         source_backed_kinds: Array<
@@ -260,36 +259,42 @@ export function buildSaltCapabilityManifest(
             host_obligation: "call_requested_tool",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
           {
             kind: "retrieve_entity",
             host_obligation: "retrieve_entity_evidence",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
           {
             kind: "retrieve_examples",
             host_obligation: "retrieve_example_evidence",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
           {
             kind: "ask_user",
             host_obligation: "ask_user_and_stop",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
           {
             kind: "install_dependencies",
             host_obligation: "install_packages_first",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
           {
             kind: "bootstrap_repo",
             host_obligation: "bootstrap_repo_first",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
           {
             kind: "implement",
@@ -315,6 +320,7 @@ export function buildSaltCapabilityManifest(
             host_obligation: "repair_context_first",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
+            follow_up_required: "rerun_originating_workflow",
           },
         ],
         evidence_contract: {

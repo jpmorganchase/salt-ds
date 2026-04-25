@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -23,6 +24,10 @@ vi.mock("@modelcontextprotocol/sdk/server/stdio.js", () => ({
 
 import { runCli } from "../cli.js";
 
+const packageVersion = JSON.parse(
+  fs.readFileSync(path.resolve("packages/mcp/package.json"), "utf8"),
+).version as string;
+
 describe("runCli", () => {
   beforeEach(() => {
     connectMock.mockReset();
@@ -42,6 +47,28 @@ describe("runCli", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  it("prints help without starting the stdio server", async () => {
+    const log = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    await runCli(["--help"]);
+
+    expect(log).toHaveBeenCalledWith(
+      expect.stringContaining("Usage: salt-mcp"),
+    );
+    expect(createSaltMcpServerMock).not.toHaveBeenCalled();
+    expect(transportMock).not.toHaveBeenCalled();
+  });
+
+  it("prints version without starting the stdio server", async () => {
+    const log = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    await runCli(["--version"]);
+
+    expect(log).toHaveBeenCalledWith(packageVersion);
+    expect(createSaltMcpServerMock).not.toHaveBeenCalled();
+    expect(transportMock).not.toHaveBeenCalled();
   });
 
   it("defaults to serve when no command is provided", async () => {

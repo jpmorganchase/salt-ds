@@ -3,6 +3,7 @@ import http from "node:http";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { upsertSaltRepoInstructions } from "@salt-ds/semantic-core/bootstrapScaffolding";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { runCli } from "../cli.js";
@@ -1306,8 +1307,65 @@ describe("salt cli", () => {
     expect(agents).toContain("Team-specific notes stay here.");
     expect(agents).toContain("<!-- salt-ds:repo-instructions:start -->");
     expect(agents).toContain("keep the first result canonical-only");
+    expect(
+      agents.match(/Use the Salt MCP for canonical Salt guidance\./g),
+    ).toHaveLength(1);
+    expect(agents).not.toContain("- a selection step through Salt MCP");
+    expect(agents).not.toContain(
+      "if the workflow output says stronger grounding is needed",
+    );
     expect(agents).not.toContain(
       "Do not choose Salt components, patterns, props, tokens, or write Salt-specific code until both the canonical selection step and the validation step have completed successfully.",
+    );
+  });
+
+  it("strips stale validation-before-code legacy repo instruction snippets", () => {
+    const legacyInstructions = [
+      "Team-specific notes stay here.",
+      "",
+      "Use the Salt MCP for canonical Salt guidance.",
+      "",
+      "Treat requests to build, refine, restyle, or structurally fix UI in this repo as Salt UI tasks by default when they touch dashboards, metrics, navigation, forms, dialogs, tables, layouts, or alignment/composition fixes on existing Salt UI.",
+      "",
+      "Do not complete Salt UI tasks with generic React/CSS output if a canonical Salt option exists.",
+      "",
+      "For Salt UI tasks, complete:",
+      "",
+      "- a selection step through Salt MCP or the Salt CLI fallback",
+      "- a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
+      "- if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
+      "",
+      "Do not inspect `node_modules`, copied app code, or generic web examples to choose Salt-specific components, patterns, tokens, props, or layout structures.",
+      "",
+      "Do not choose Salt components, patterns, props, tokens, or write Salt-specific code until both the canonical selection step and the validation step have completed successfully.",
+      "",
+      "If Salt MCP is unavailable and the Salt CLI is available, keep the same workflow and let the environment use the CLI fallback for canonical Salt guidance.",
+      "",
+      "Before considering Salt UI work complete, run the repo `ui:verify` script when it exists, or run `salt-ds review` directly.",
+      "",
+      "If both Salt MCP and the Salt CLI are unavailable or failing, stop, resolve the blocker, or ask the user before proceeding. Do not continue with guessed Salt-specific guidance.",
+      "",
+      "If a Salt workflow result says project conventions matter:",
+      "",
+      "- keep repo-local policy in `.salt/team.json` when it exists",
+      "- use `.salt/stack.json` only when the repo already declares layered upstream policy",
+      "- use repo-aware Salt workflows so Salt applies the declared project conventions",
+      "- keep the canonical Salt choice visible as provenance",
+      "",
+      "Default to `.salt/team.json` for simple repos. Add `.salt/stack.json` only when shared upstream layers or explicit merge ordering are real.",
+      "",
+    ].join("\n");
+
+    const { content } = upsertSaltRepoInstructions(legacyInstructions);
+
+    expect(content).toContain("Team-specific notes stay here.");
+    expect(content).toContain("<!-- salt-ds:repo-instructions:start -->");
+    expect(
+      content.match(/Use the Salt MCP for canonical Salt guidance\./g),
+    ).toHaveLength(1);
+    expect(content).not.toContain("- a selection step through Salt MCP");
+    expect(content).not.toContain(
+      "canonical selection step and the validation step have completed successfully",
     );
   });
 
@@ -2650,6 +2708,7 @@ describe("salt cli", () => {
     );
 
     let entityStdout = "";
+    let bareEntityStdout = "";
     let examplesStdout = "";
     let discoverStdout = "";
     let stderr = "";
@@ -2668,6 +2727,18 @@ describe("salt cli", () => {
         cwd: rootDir,
         writeStdout: (message) => {
           entityStdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+    const bareEntityExitCode = await runCli(
+      withRegistry(["get_salt_entity", "Avatar", "--json"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          bareEntityStdout += message;
         },
         writeStderr: (message) => {
           stderr += message;
@@ -2707,10 +2778,12 @@ describe("salt cli", () => {
 
     expect(stderr).toBe("");
     expect(entityExitCode).toBe(0);
+    expect(bareEntityExitCode).toBe(0);
     expect(examplesExitCode).toBe(0);
     expect(discoverExitCode).toBe(0);
 
     const entityPayload = JSON.parse(entityStdout);
+    const bareEntityPayload = JSON.parse(bareEntityStdout);
     const examplesPayload = JSON.parse(examplesStdout);
     const discoverPayload = JSON.parse(discoverStdout);
 
@@ -2725,6 +2798,17 @@ describe("salt cli", () => {
         }),
         guidance_boundary: expect.objectContaining({
           guidance_source: "canonical_salt",
+        }),
+      }),
+    );
+    expect(bareEntityPayload).toEqual(
+      expect.objectContaining({
+        entity_type: "component",
+        decision: expect.objectContaining({
+          status: "found",
+        }),
+        entity: expect.objectContaining({
+          name: "Avatar",
         }),
       }),
     );
@@ -3311,6 +3395,79 @@ describe("salt cli", () => {
         packages: expect.arrayContaining(["@salt-ds/core", "@salt-ds/theme"]),
       },
     });
+  });
+
+  it("accepts resolved follow-through evidence on create rerun", async () => {
+    const rootDir = await createTempDir(
+      "salt-cli-create-resolved-follow-through",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+            "@salt-ds/theme": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "profile page with tabs and avatar",
+        "--json",
+        "--resolved-entity",
+        "Avatar",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    const payload = JSON.parse(stdout);
+    expectWorkflowExitCode(payload, exitCode);
+    expect(stderr).toBe("");
+    expect(payload).toEqual(
+      expect.objectContaining({
+        status: "success",
+        action: expect.objectContaining({
+          kind: "implement",
+        }),
+        safety: expect.objectContaining({
+          exact_request_safe: true,
+        }),
+        evidence: expect.objectContaining({
+          status: "complete",
+          missing: [],
+          items: expect.arrayContaining([
+            expect.objectContaining({
+              entity: "Avatar",
+              field: "resolved_follow_through",
+              source_urls: expect.any(Array),
+            }),
+          ]),
+        }),
+      }),
+    );
+    expect(payload.request).toEqual(
+      expect.objectContaining({
+        match_status: "broadened",
+        full_request_evidence_complete: true,
+      }),
+    );
   });
 
   it("prints minimal starter-only create json output for follow-through grounding", async () => {

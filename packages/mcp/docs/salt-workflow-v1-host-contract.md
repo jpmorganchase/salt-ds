@@ -37,17 +37,17 @@ After implementation, run the returned review/post action when present.
 
 Treat `action.kind` as a command, not a suggestion.
 
-| Action kind | Host behavior |
-| --- | --- |
-| `implement` | Implement only if the implementation gate is satisfied, then run review. |
-| `ask_user` | Stop and ask the returned question. Do not edit around it. |
-| `retrieve_entity` | Gather canonical evidence for the named entity before implementing that region. |
-| `retrieve_examples` | Gather canonical examples before implementing example-dependent code. |
-| `install_dependencies` | Install the listed packages before writing Salt UI. |
-| `fix_context` | Resolve repo context, then rerun the workflow with the trusted context. |
-| `bootstrap_repo` | Bootstrap managed Salt repo setup before repo-specific Salt edits. |
-| `review` | Run the Salt review workflow before treating work as complete. |
-| `tool_call` | Make the exact tool call requested by the contract. |
+| Action kind            | Host behavior                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------- |
+| `implement`            | Implement only if the implementation gate is satisfied, then run review.        |
+| `ask_user`             | Stop and ask the returned question. Do not edit around it.                      |
+| `retrieve_entity`      | Gather canonical evidence for the named entity, then rerun with the returned evidence bridge before implementing that region. |
+| `retrieve_examples`    | Gather canonical examples, then rerun with the returned evidence bridge before implementing example-dependent code. |
+| `install_dependencies` | Install the listed packages before writing Salt UI.                             |
+| `fix_context`          | Resolve repo context, then rerun the workflow with the trusted context.         |
+| `bootstrap_repo`       | Bootstrap managed Salt repo setup before repo-specific Salt edits.              |
+| `review`               | Run the Salt review workflow before treating work as complete.                  |
+| `tool_call`            | Make the exact tool call requested by the contract.                             |
 
 ## Fail-Closed Rules
 
@@ -68,6 +68,7 @@ Good host behavior:
 
 - keep the owner grounded
 - follow `retrieve_entity` or another returned action for unresolved regions
+- when create entity follow-through is resolved, rerun with MCP `resolved_entities: ["Avatar"]` or CLI `--resolved-entity Avatar`
 - do not implement unresolved regions as generic UI
 - do not call the partial result "done"
 

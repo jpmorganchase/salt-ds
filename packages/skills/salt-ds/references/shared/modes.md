@@ -24,6 +24,8 @@ Behavior:
 - a clearly bounded answer may start before full project context when the issue is confined to the current file, selection, or diff
 - prefer source reading and canonical validation over broad repo exploration
 - return the top 1-3 issues, the safest next fix, and any confidence gap
+- quick-check is not permission to implement create, migrate, or upgrade work
+- do not state Salt-specific props, tokens, imports, package names, or composition rules as canonical unless they were verified through MCP or CLI evidence
 - if canonical transport is degraded, you may still return provisional observations, but label them as provisional and avoid claiming completion
 - escalate to `deep` when the issue is structurally ambiguous, a canonical mismatch is likely, repo policy clearly matters, or transport/tooling must be consulted to answer safely
 - if the user clearly wants implementation or a comprehensive answer, escalate to `deep`

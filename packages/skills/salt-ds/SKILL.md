@@ -1,6 +1,6 @@
 ---
 name: salt-ds
-description: salt design system workflow for consumer repos. use when chatgpt, codex, or copilot needs salt-specific create, review, migrate, upgrade, init, quick-check, accessibility-audit, or option-exploration guidance for ui work in repos that already use @salt-ds packages, .salt/team.json, .salt/stack.json, salt mcp, or the salt-ds cli, or when the user explicitly asks to adopt salt. use for salt-specific structure, composition, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, migration, version upgrades, and repo conventions in salt consumer repos. accessibility audits normally route through review. bootstrap tasks normally route through init. do not use for generic react/css advice, generic typescript cleanup, build/test/ci/package-management work, generic debugging, or non-ui work unless salt primitives, patterns, policy, migration, upgrade, or repo-specific salt decisions are part of the answer.
+description: salt design system workflow for consumer repos. use when an AI agent such as ChatGPT, Copilot, Claude, or Codex needs salt-specific create, review, migrate, upgrade, init, quick-check, accessibility-audit, or option-exploration guidance for ui work in repos that already use @salt-ds packages, .salt/team.json, .salt/stack.json, salt mcp, or the salt-ds cli, or when the user explicitly asks to adopt salt. use for salt-specific structure, composition, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, migration, version upgrades, and repo conventions in salt consumer repos. accessibility audits normally route through review. bootstrap tasks normally route through init. do not use for generic react/css advice, generic typescript cleanup, build/test/ci/package-management work, generic debugging, or non-ui work unless salt primitives, patterns, policy, migration, upgrade, or repo-specific salt decisions are part of the answer.
 ---
 
 # Salt DS
@@ -8,6 +8,36 @@ description: salt design system workflow for consumer repos. use when chatgpt, c
 Salt's public orchestrator skill for repo-aware design-system work in consumer repos.
 Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.
 Do not make the user choose between separate builder, reviewer, migration, accessibility, or conventions skills.
+
+## No Salt Invention Rule
+
+Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, component capabilities, composition rules, examples, or documentation links.
+Before naming or implementing Salt-specific structure, fetch canonical Salt evidence through MCP or CLI.
+If evidence is missing, follow `next_required_action`, retrieve the required entity or examples, ask the user, or stop with the blocker.
+Do not fill gaps from generic React, CSS, HTML, copied repo code, or model memory.
+
+## Hard Gate
+
+Do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has all of these fields:
+
+- `status: success`
+- `action.kind: implement`
+- `safety.exact_request_safe: true`
+- `evidence.status: complete`
+
+After editing, run the returned review or post action before calling the work complete.
+Treat quick-check observations, starter snippets, package installs, retrieval results, successful builds, and partial scaffolds as non-implementation approval.
+
+## Action Loop
+
+For implementation-capable Salt workflows:
+
+1. Call the workflow.
+2. Read `status`, `action.kind`, `next_required_action`, `safety`, `questions`, and `evidence`.
+3. Perform exactly the returned action.
+4. After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge. For create entity follow-through, pass MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.
+5. Edit only when the rerun satisfies the Hard Gate.
+6. Run review after edits.
 
 ## Root Execution Flow
 
@@ -70,6 +100,8 @@ Load `references/shared/modes.md` before acting when the user intent is not obvi
 - `clarify-blockers`: when canonical progress is blocked by one or two structural decisions; ask focused questions one at a time and provide a recommended default answer.
 
 `quick-check` may start from the current file, selection, or diff when the answer is clearly bounded.
+`quick-check` may return bounded provisional observations, but it is not permission to implement `create`, `migrate`, or `upgrade` work.
+Do not state Salt-specific props, tokens, imports, package names, or composition rules as canonical in quick-check mode unless they were verified through MCP or CLI evidence.
 Escalate to `deep` when the issue is structurally ambiguous, a canonical mismatch is likely, repo policy clearly matters, or transport/tooling must be consulted to answer safely.
 Do not force `explore-options` or `clarify-blockers` when the user wants straightforward execution.
 Do not let `quick-check` quietly turn into a full migration or deep redesign without saying so.
@@ -159,86 +191,18 @@ Use this skill when:
 Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.
 Do not use this skill for generic repo work that merely happens in a Salt repo, including generic refactors, TypeScript cleanup, CSS-only fixes, build/test/CI/package-management work, or generic debugging where Salt primitives, patterns, policy, migration, or upgrade logic are not part of the answer.
 
-## Root Behavior Examples
-
-### Grounded execution
-
-User: `Use salt-ds to review this file.`
-
-Good behavior:
-
-- choose `review`
-- use `quick-check` if the issue is local and low-ambiguity
-- return the main finding, safest next fix, and any important confidence gap
-
-### Partial execution
-
-User: `Use salt-ds to add a dashboard summary area above this table.`
-
-Good behavior:
-
-- choose `create`
-- keep the request page-level first
-- if follow-through is still required, say so clearly and do not code unresolved regions as if they were grounded
-
-### Blocked execution
-
-User: `Use salt-ds to migrate this screen into Salt.`
-
-Good behavior:
-
-- choose `migrate`
-- keep the preserved interaction anchors explicit
-- if one unresolved decision blocks safe progress, ask one blocker question or return a bounded provisional direction instead of guessing
-
 ## Shared Workflow Contract
 
-Follow these rules for every Salt workflow:
+Keep this section as the first-load summary.
+Use `references/shared/transport.md` for the full transport, degraded-tooling, completion, and CLI follow-through rules.
+
+For every Salt workflow:
 
 1. Obtain canonical Salt guidance through MCP or CLI before making Salt-specific choices.
 2. Keep the user task and page-level framing intact in the first canonical step.
-3. Treat repo conventions and project memory as later refinements, not as canonical Salt guidance.
-4. Validate the source result before treating the work as done.
-5. Add runtime evidence only when the source pass still leaves an important gap.
-
-### Canonical Completion Rules
-
-Do not treat the canonical step as complete until all of the following are true:
-
-- the compact workflow result clearly indicates that the current step is safe to continue, or you have explicitly requested expanded output because the compact contract pointed to deeper artifacts
-- the top-level surface is grounded
-- any named `expected_patterns`, `expected_components`, `required_follow_through`, `implementation_gate`, or equivalent follow-through items are resolved for the regions you plan to implement or finalize
-- unresolved `open_questions`, `confirmation_needed`, or compatibility questions that would change the structure have been answered or explicitly left pending
-- named Salt tokens, props, APIs, and theme bootstrap choices you plan to mention have been verified against canonical Salt guidance
-
-For multi-region asks such as dashboards, pages, workspaces, overviews, shells, and complex forms, do not silently continue from only a partial subset of named sub-patterns.
-If an essential region is unresolved, stop or return only a clearly-labeled partial scaffold with the unresolved region marked as pending.
-
-### Degraded Tooling Rules
-
-Use `references/shared/degraded-tooling.md` whenever tooling is noisy.
-The critical rules are:
-
-- if MCP is unavailable, explicitly switch to CLI fallback instead of acting as though canonical guidance succeeded
-- if CLI or MCP returns useful output with a non-success status, treat it as **partial**, not as approval to implement
-- if output is truncated, malformed, semantically off-target, or repeatedly misroutes to unrelated patterns, fail closed
-- the hard stop budget is **2 attempts** per required sub-surface or entity — after 2 noisy, conflicting, or off-target follow-up attempts, stop immediately and report the blocker instead of continuing with guessed Salt structure
-- do not hide transport ambiguity behind a confident implementation
-- in `quick-check` mode, you may still return bounded provisional observations, but label them as provisional and do not overstate canonical completion
-
-### Compact Contract First
-
-Read compact workflow output from stable top-level workflow signals first, such as:
-
-- workflow status
-- exact-request safety
-- blocking reasons
-- action and next required action
-- allowed next actions
-- recipe steps
-- questions
-- evidence status and missing evidence
-- summary
+3. Treat repo conventions and project memory as downstream context, not canonical Salt guidance.
+4. Read compact workflow output from stable top-level workflow signals first: `status`, `safety`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`.
+5. Validate the source result before treating the work as done.
 
 Treat `salt_workflow_v1` action kinds as binding:
 
@@ -246,25 +210,17 @@ Treat `salt_workflow_v1` action kinds as binding:
 - `complete`: stop without edits; the reviewed scope has no changes required
 - `review`: run the returned Salt review action before calling the workflow complete
 - `ask_user`: stop and ask the returned question before writing code
-- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region
+- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region; for create entity follow-through, rerun with MCP `resolved_entities` or CLI `--resolved-entity`
 - `install_dependencies`: install the listed Salt packages before writing Salt UI
 - `fix_context` or `bootstrap_repo`: resolve setup or repo context before repo-specific edits
 
 If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned action before implementing the blocked region.
+After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge and wait for `status: success` with `action.kind: implement` before editing.
 Use `recipe.steps`, `questions`, and `evidence.missing` to explain what remains unresolved instead of filling gaps with guessed Salt structure.
-Request expanded workflow output only when the compact contract points to deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
-
-### Concrete-Noun Follow-Through
-
-When a workflow returns named sub-surfaces, preserve concrete user nouns such as `chart`, `table`, `filter`, `metric`, `header`, or `navigation` in follow-up create calls.
-Add slot or page context only as supporting detail.
-Do not paraphrase concrete follow-up asks into abstract taxonomy prompts.
-If an exact Salt target name is already known from canonical output, use that exact name or verified alias in the next call.
-When using CLI fallback for follow-through, prefer `salt-ds get_salt_entity "<entity>" --json` or `salt-ds get_salt_examples "<target>" --json` for `retrieve_entity` / `retrieve_examples`; use `salt-ds create "<entity>" --json --include-starter-code --starter-only` when you need starter code or composition-contract grounding — see `references/shared/transport.md` §"CLI Follow-Through for Entity Grounding". Do not force `--type component` unless you are certain the entity is a component, not a pattern.
 
 For broad prompts that mention multiple UI elements (e.g., "a form with inputs, a sidebar navigation, and toggle switches"), the tooling's `required_follow_through` list covers entities the resolved pattern knows about, but **may not cover every entity the user mentioned**.
-After processing the tooling's follow-through list, scan the original user prompt for concrete UI nouns that were not covered and issue follow-through calls for those too.
-Do not wait for the tooling to enumerate every entity — the agent is responsible for bridging the gap between the user's intent and the pattern's built-in anatomy.
+Preserve explicit user nouns that are not yet covered as unresolved requirements.
+Retrieve canonical evidence for those nouns, but do not implement those regions until the workflow contract or support evidence covers them.
 
 ### Stable-First Rule
 

@@ -23,7 +23,7 @@ The current default public workflow contract is `salt_workflow_v1`.
 - Hosts must branch on `action.kind` before editing:
   - `implement` is the only action that permits Salt UI edits, and only when `status = "success"`, `safety.exact_request_safe = true`, and `evidence.status = "complete"`
   - `ask_user` means stop and ask
-  - `retrieve_entity` and `retrieve_examples` mean gather canonical evidence first
+  - `retrieve_entity` and `retrieve_examples` mean gather canonical evidence first, then rerun with the returned evidence bridge
   - `install_dependencies` means install the listed packages before writing Salt UI
   - `fix_context` and `bootstrap_repo` mean resolve setup before repo-specific edits
 - `status = "partial"` or `status = "blocked"` is not completion. Hosts should continue the returned `action` or report the workflow as incomplete instead of stopping after starter-code creation.

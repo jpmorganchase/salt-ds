@@ -39,14 +39,14 @@ Rich/debug surfaces may add detail, but they do not define host branching behavi
 
 ## Workflow Mapping
 
-| User workflow | CLI path | MCP path | Default contract |
-| --- | --- | --- | --- |
-| `create` | `salt-ds create <query> --json` | `create_salt_ui` | `salt_workflow_v1` |
-| `review` | `salt-ds review <target> --json` | `review_salt_ui` | `salt_workflow_v1` |
-| `migrate` | `salt-ds migrate <query> --json` | `migrate_to_salt` | `salt_workflow_v1` |
-| `upgrade` | `salt-ds upgrade ... --json` | `upgrade_salt_ui` | `salt_workflow_v1` |
-| repo context | `salt-ds info . --json` | `get_salt_project_context` | setup/support contract |
-| repo bootstrap | `salt-ds init . --json` | `bootstrap_salt_repo` | setup/support contract |
+| User workflow  | CLI path                         | MCP path                   | Default contract       |
+| -------------- | -------------------------------- | -------------------------- | ---------------------- |
+| `create`       | `salt-ds create <query> --json`  | `create_salt_ui`           | `salt_workflow_v1`     |
+| `review`       | `salt-ds review <target> --json` | `review_salt_ui`           | `salt_workflow_v1`     |
+| `migrate`      | `salt-ds migrate <query> --json` | `migrate_to_salt`          | `salt_workflow_v1`     |
+| `upgrade`      | `salt-ds upgrade ... --json`     | `upgrade_salt_ui`          | `salt_workflow_v1`     |
+| repo context   | `salt-ds info . --json`          | `get_salt_project_context` | setup/support contract |
+| repo bootstrap | `salt-ds init . --json`          | `bootstrap_salt_repo`      | setup/support contract |
 
 ## Compact Workflow Contract
 
@@ -93,6 +93,7 @@ Compact rules:
 - `action.kind: "implement"` on create, migrate, or upgrade requires a review post-action
 - `partial`, `blocked`, and `failed` are non-implementable states
 - `request.match_status: "broadened"`, `"misrouted"`, or `"no_match"` must not look implementation-safe unless the full request is covered by source-backed evidence
+- create entity follow-through must rerun with the returned evidence bridge, using MCP `resolved_entities` or CLI `--resolved-entity`
 - dependency, clarification, retrieval, bootstrap, and context repair actions block implementation until completed
 
 ## Setup And Support Contracts
