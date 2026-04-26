@@ -148,6 +148,17 @@ export interface RetrievalSignalsRecord {
   contrast_targets: RetrievalContrastTarget[];
 }
 
+export interface ComponentImplementationImport {
+  kind: "css";
+  specifier: string;
+  statement: string;
+  source_url: string;
+}
+
+export interface ComponentImplementationRequirements {
+  required_imports: ComponentImplementationImport[];
+}
+
 export interface ExampleRecord {
   id: string;
   title: string;
@@ -186,6 +197,7 @@ export interface ComponentRecord {
   };
   patterns: string[];
   examples: ExampleRecord[];
+  implementation_requirements?: ComponentImplementationRequirements;
   related_docs: {
     overview: string | null;
     usage: string | null;

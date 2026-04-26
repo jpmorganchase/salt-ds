@@ -5,6 +5,7 @@ import { toPosixPath } from "../registry/paths.js";
 import type {
   AccessibilityRule,
   ComponentComposition,
+  ComponentImplementationRequirements,
   ComponentRecord,
   ComponentSubComponent,
   ExampleRecord,
@@ -19,10 +20,13 @@ import {
   toComponentProps,
 } from "./buildRegistryDocgen.js";
 import {
+  extractFencedCodeBlocks,
   extractFirstParagraph,
+  parseMarkdownSections,
   parseSectionStatements,
   parseStructuredGuidanceCallouts,
 } from "./buildRegistryMarkdown.js";
+import { buildRetrievalSignals } from "./buildRegistryRetrievalSignals.js";
 import {
   asString,
   asStringArray,
@@ -33,7 +37,6 @@ import {
   toPascalCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
-import { buildRetrievalSignals } from "./buildRegistryRetrievalSignals.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
   if (name === "@salt-ds/lab") {
@@ -529,6 +532,42 @@ function deriveComposition(
   };
 }
 
+function extractImplementationRequirements(
+  usageContent: string | null,
+  componentRoute: string,
+): ComponentImplementationRequirements | undefined {
+  if (!usageContent) {
+    return undefined;
+  }
+
+  const importSection = parseMarkdownSections(usageContent, 2).find(
+    (section) => section.title.toLowerCase() === "import",
+  );
+  if (!importSection) {
+    return undefined;
+  }
+
+  const sourceUrl = `${componentRoute}/usage`;
+  const requiredImports = uniqueStrings(
+    extractFencedCodeBlocks(importSection.content).flatMap((block) =>
+      [...block.code.matchAll(/^\s*import\s+["']([^"']+\.css)["'];?\s*$/gm)]
+        .map((match) => match[1])
+        .filter((specifier) => specifier.length > 0),
+    ),
+  ).map((specifier) => ({
+    kind: "css" as const,
+    specifier,
+    statement: `import "${specifier}";`,
+    source_url: sourceUrl,
+  }));
+
+  return requiredImports.length > 0
+    ? {
+        required_imports: requiredImports,
+      }
+    : undefined;
+}
+
 export async function extractComponents(
   repoRoot: string,
   packageByName: Map<string, PackageRecord>,
@@ -667,11 +706,15 @@ export async function extractComponents(
         structuredGuidance.avoid.length > 0
           ? (["usage-callouts"] as const)
           : []),
-        ],
+      ],
     });
     const retrievalSignals = buildRetrievalSignals({
       caution_statements: [...whenNotToUse, ...structuredGuidance.avoid],
     });
+    const implementationRequirements = extractImplementationRequirements(
+      usageContent,
+      componentRoute,
+    );
     const relatedComponents = Array.isArray(data?.relatedComponents)
       ? (data?.relatedComponents as Array<Record<string, unknown>>)
       : [];
@@ -732,6 +775,9 @@ export async function extractComponents(
       patterns: relatedPatterns,
       deprecations: [],
       examples: exampleRecords,
+      ...(implementationRequirements
+        ? { implementation_requirements: implementationRequirements }
+        : {}),
       related_docs: {
         overview: componentRoute,
         usage: usageContent ? `${componentRoute}/usage` : null,

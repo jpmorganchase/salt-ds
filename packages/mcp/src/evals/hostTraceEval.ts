@@ -13,6 +13,8 @@ export interface HostTraceCriticalFailure {
   code: HostTraceCriticalFailureCode;
   message: string;
   tool_id?: string;
+  request_index?: number;
+  request_prompt?: string;
 }
 
 export interface HostTraceToolCall {
@@ -35,6 +37,23 @@ export interface HostTraceEvalReport {
   observations: string[];
   tool_calls: HostTraceToolCall[];
   workflow_contracts: HostTraceWorkflowContract[];
+  request_reports?: HostTraceRequestReport[];
+}
+
+export type HostTraceRequestClassification =
+  | "salt_ui_work"
+  | "generic_debugging"
+  | "unscored";
+
+export interface HostTraceRequestReport {
+  request_index: number;
+  prompt: string;
+  classification: HostTraceRequestClassification;
+  passed: boolean;
+  critical_failures: HostTraceCriticalFailure[];
+  observations: string[];
+  tool_call_count: number;
+  workflow_contract_count: number;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -126,6 +145,17 @@ function collectToolCalls(raw: unknown): HostTraceToolCall[] {
       return;
     }
 
+    if (value.kind === "questionCarousel") {
+      const serialized = stringifyUnknown(value);
+      calls.push({
+        index: calls.length,
+        tool_id: "vscode_questionCarousel",
+        input_text: readToolCallText(value.questions),
+        output_text: serialized,
+        output_values: serialized ? [serialized] : [],
+      });
+    }
+
     const toolId = readString(value, "toolId");
     if (toolId) {
       const details = isRecord(value.resultDetails) ? value.resultDetails : {};
@@ -202,6 +232,52 @@ function collectWorkflowContracts(
       collectWorkflowContractsFromValue(parsed, toolCall),
     ),
   );
+}
+
+function readTextFragments(value: unknown): string[] {
+  if (typeof value === "string") {
+    return [value];
+  }
+  if (Array.isArray(value)) {
+    return value.flatMap(readTextFragments);
+  }
+  if (!isRecord(value)) {
+    return [];
+  }
+
+  const ownText = readString(value, "text");
+  const parts = Array.isArray(value.parts)
+    ? value.parts.flatMap(readTextFragments)
+    : [];
+
+  return [...(ownText ? [ownText] : []), ...parts];
+}
+
+function readRequestPrompt(request: unknown): string {
+  if (!isRecord(request)) {
+    return "";
+  }
+
+  const messageFragments = readTextFragments(request.message);
+  if (messageFragments.length > 0) {
+    return messageFragments.join(" ").replace(/\s+/g, " ").trim();
+  }
+
+  return readTextFragments(request).join(" ").replace(/\s+/g, " ").trim();
+}
+
+function collectRequestEntries(
+  raw: unknown,
+): Array<{ index: number; prompt: string; raw: unknown }> {
+  if (!isRecord(raw) || !Array.isArray(raw.requests)) {
+    return [];
+  }
+
+  return raw.requests.map((request, index) => ({
+    index,
+    prompt: readRequestPrompt(request),
+    raw: request,
+  }));
 }
 
 function collectStrings(value: unknown, strings: string[] = []): string[] {
@@ -456,7 +532,78 @@ function isReviewToolCall(toolCall: HostTraceToolCall): boolean {
   );
 }
 
-export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
+function looksGenericDebuggingPrompt(prompt: string): boolean {
+  return /\b(?:why|what)\b.*\b(?:doesn'?t|isn'?t|won'?t|not)\b.*\b(?:work|working|run|render|load|build|compile)\b|\b(?:error|bug|broken|failing|failure|exception|stack trace|wrong import|import is wrong)\b/i.test(
+    prompt,
+  );
+}
+
+function looksSaltUiPrompt(prompt: string): boolean {
+  return /\b(?:salt|@salt-ds|design system|profile|dashboard|tabs?|avatar|data grid|table|metric|card|button|toolbar|sidebar|header|app header|navigation|nav item|layout|page|screen|view|theme provider|saltprovider)\b/i.test(
+    prompt,
+  );
+}
+
+function classifyHostTraceRequest(
+  prompt: string,
+  toolCalls: HostTraceToolCall[],
+  workflowContracts: HostTraceWorkflowContract[],
+): HostTraceRequestClassification {
+  if (workflowContracts.length > 0) {
+    return "salt_ui_work";
+  }
+
+  const hasSaltToolCall = toolCalls.some(
+    (toolCall) =>
+      /salt/i.test(toolCall.tool_id) ||
+      /\bsalt-ds\b|@salt-ds\//i.test(
+        `${toolCall.input_text}\n${toolCall.output_text}`,
+      ),
+  );
+  if (hasSaltToolCall) {
+    return "salt_ui_work";
+  }
+
+  if (looksSaltUiPrompt(prompt)) {
+    return "salt_ui_work";
+  }
+
+  if (looksGenericDebuggingPrompt(prompt)) {
+    return "generic_debugging";
+  }
+
+  return "unscored";
+}
+
+function hasSelectedQuestionAnswer(toolCall: HostTraceToolCall): boolean {
+  if (
+    !/askquestions|request_user_input|requestuserinput|question/i.test(
+      toolCall.tool_id,
+    )
+  ) {
+    return false;
+  }
+
+  const text = `${toolCall.input_text}\n${toolCall.output_text}`;
+  return /selectedValue|selected_value|resolvedValue|answer|isUsed["']?\s*:\s*true/i.test(
+    text,
+  );
+}
+
+function hasUserAnswerBetween(
+  toolCalls: HostTraceToolCall[],
+  afterIndex: number,
+  beforeIndex: number,
+): boolean {
+  return toolCalls.some(
+    (toolCall) =>
+      toolCall.index > afterIndex &&
+      toolCall.index < beforeIndex &&
+      hasSelectedQuestionAnswer(toolCall),
+  );
+}
+
+function evaluateHostTraceSegment(raw: unknown): HostTraceEvalReport {
   const toolCalls = collectToolCalls(raw);
   const workflowContracts = collectWorkflowContracts(toolCalls);
   const criticalFailures: HostTraceCriticalFailure[] = [];
@@ -650,7 +797,14 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
         toolCall.index > askUserContract.tool_call_index &&
         isImplementationEditToolCall(toolCall),
     );
-    if (laterToolCall) {
+    if (
+      laterToolCall &&
+      !hasUserAnswerBetween(
+        toolCalls,
+        askUserContract.tool_call_index,
+        laterToolCall.index,
+      )
+    ) {
       criticalFailures.push({
         code: "ask_user_ignored",
         tool_id: laterToolCall.tool_id,
@@ -666,5 +820,80 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
     observations,
     tool_calls: toolCalls,
     workflow_contracts: workflowContracts,
+  };
+}
+
+function evaluateRequestEntry(request: {
+  index: number;
+  prompt: string;
+  raw: unknown;
+}): HostTraceRequestReport {
+  const toolCalls = collectToolCalls(request.raw);
+  const workflowContracts = collectWorkflowContracts(toolCalls);
+  const classification = classifyHostTraceRequest(
+    request.prompt,
+    toolCalls,
+    workflowContracts,
+  );
+
+  if (classification !== "salt_ui_work") {
+    return {
+      request_index: request.index,
+      prompt: request.prompt,
+      classification,
+      passed: true,
+      critical_failures: [],
+      observations: [
+        `Request classified as ${classification}; Salt workflow gate was not scored.`,
+      ],
+      tool_call_count: toolCalls.length,
+      workflow_contract_count: workflowContracts.length,
+    };
+  }
+
+  const segmentReport = evaluateHostTraceSegment(request.raw);
+  const criticalFailures = segmentReport.critical_failures.map((failure) => ({
+    ...failure,
+    request_index: request.index,
+    request_prompt: request.prompt,
+  }));
+
+  return {
+    request_index: request.index,
+    prompt: request.prompt,
+    classification,
+    passed: criticalFailures.length === 0,
+    critical_failures: criticalFailures,
+    observations: segmentReport.observations,
+    tool_call_count: segmentReport.tool_calls.length,
+    workflow_contract_count: segmentReport.workflow_contracts.length,
+  };
+}
+
+export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
+  const requests = collectRequestEntries(raw);
+  if (requests.length === 0) {
+    return evaluateHostTraceSegment(raw);
+  }
+
+  const requestReports = requests.map(evaluateRequestEntry);
+  const criticalFailures = requestReports.flatMap(
+    (report) => report.critical_failures,
+  );
+  const observations = requestReports.flatMap((report) =>
+    report.observations.map(
+      (observation) => `request ${report.request_index}: ${observation}`,
+    ),
+  );
+  const toolCalls = collectToolCalls(raw);
+  const workflowContracts = collectWorkflowContracts(toolCalls);
+
+  return {
+    passed: criticalFailures.length === 0,
+    critical_failures: criticalFailures,
+    observations,
+    tool_calls: toolCalls,
+    workflow_contracts: workflowContracts,
+    request_reports: requestReports,
   };
 }
