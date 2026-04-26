@@ -2,6 +2,7 @@ export type HostTraceCriticalFailureCode =
   | "broadened_success_without_composite_recipe"
   | "implement_without_source_backed_evidence"
   | "missing_dependency_action"
+  | "edit_after_install_dependencies_without_rerun"
   | "implementation_after_non_implement_contract"
   | "missing_success_contract_before_edit"
   | "ask_user_ignored"
@@ -342,13 +343,35 @@ function isShellLikeToolCall(toolCall: HostTraceToolCall): boolean {
   return /terminal|shell|command|exec/i.test(toolCall.tool_id);
 }
 
+function hasSaltPackageReference(inputText: string): boolean {
+  return /@salt-ds\//i.test(inputText);
+}
+
+function hasPackageManagerInstallCommand(inputText: string): boolean {
+  const leadingNpmOptions = String.raw`(?:\s+(?:--workspace|-w|--prefix|--location|--include-workspace-root)\s+\S+|\s+(?:--workspace|--prefix|--location)=\S+|\s+(?:--workspaces?|--include-workspace-root))*`;
+  const leadingPnpmOptions = String.raw`(?:\s+(?:--filter|-F|--dir|-C)\s+\S+|\s+(?:--filter|--dir)=\S+|\s+(?:--workspace-root|-w))*`;
+  const leadingYarnOptions = String.raw`(?:\s+--cwd\s+\S+|\s+--cwd=\S+|\s+workspace\s+\S+|\s+-W)*`;
+
+  return [
+    new RegExp(
+      String.raw`\bnpm${leadingNpmOptions}\s+(?:install|i|add)\b`,
+      "i",
+    ),
+    new RegExp(
+      String.raw`\bpnpm${leadingPnpmOptions}\s+(?:install|i|add)\b`,
+      "i",
+    ),
+    new RegExp(String.raw`\byarn${leadingYarnOptions}\s+add\b`, "i"),
+    /\bbun\s+add\b/i,
+  ].some((pattern) => pattern.test(inputText));
+}
+
 function hasTerminalSaltInstall(toolCalls: HostTraceToolCall[]): boolean {
   return toolCalls.some(
     (toolCall) =>
       isShellLikeToolCall(toolCall) &&
-      /\b(?:npm\s+(?:install|i|add)|pnpm\s+(?:(?:--filter|-F)\s+\S+\s+)?(?:install|i|add)|yarn\s+(?:(?:workspace|--cwd)\s+\S+\s+)?add|bun\s+add)\b[\s\S]*@salt-ds\//i.test(
-        toolCall.input_text,
-      ),
+      hasSaltPackageReference(toolCall.input_text) &&
+      hasPackageManagerInstallCommand(toolCall.input_text),
   );
 }
 
@@ -381,12 +404,13 @@ function isImplementReadyContract(contract: Record<string, unknown>): boolean {
 
 function isImplementationEditToolCall(toolCall: HostTraceToolCall): boolean {
   const normalizedToolId = toolCall.tool_id.toLowerCase();
+  const compactToolId = normalizedToolId.replace(/[^a-z0-9]/g, "");
   if (
     /(?:^|[._-])(?:apply_patch|patch|edit|write|str_replace_editor|write_file)(?:$|[._-])/.test(
       normalizedToolId,
     ) ||
-    /(?:editfile|createfile|writefile|replacestring|multireplacestring)/.test(
-      normalizedToolId,
+    /(?:applypatch|patchfile|editfile|createfile|writefile|replacestring|multireplacestring|strreplaceeditor)/.test(
+      compactToolId,
     )
   ) {
     return true;
@@ -473,6 +497,15 @@ export function evaluateHostTrace(raw: unknown): HostTraceEvalReport {
 
     if (latestContract && !isImplementReadyContract(latestContract.contract)) {
       const action = getRecord(latestContract.contract, "action");
+      if (action?.kind === "install_dependencies") {
+        criticalFailures.push({
+          code: "edit_after_install_dependencies_without_rerun",
+          tool_id: firstImplementationEdit.tool_id,
+          message:
+            "The host edited after an install_dependencies contract without rerunning the originating workflow to obtain status=success and action.kind=implement.",
+        });
+      }
+
       criticalFailures.push({
         code: "implementation_after_non_implement_contract",
         tool_id: firstImplementationEdit.tool_id,

@@ -538,6 +538,7 @@ const PUBLIC_ACTION_KINDS = [
   "implement",
   "complete",
   "review",
+  "rerun_workflow",
   "fix_context",
 ] as const;
 const PUBLIC_WORKFLOW_IDS = [
@@ -649,6 +650,18 @@ const PUBLIC_REVIEW_STEP_SCHEMA = z
     args: PUBLIC_ARGS_SCHEMA.optional(),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
+const PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA = z
+  .object({
+    kind: z.literal("rerun_workflow"),
+    tool: z.enum([
+      "create_salt_ui",
+      "review_salt_ui",
+      "migrate_to_salt",
+      "upgrade_salt_ui",
+    ]),
+    args: PUBLIC_ARGS_SCHEMA,
+  })
+  .extend(PUBLIC_ACTION_HINTS_SHAPE);
 const PUBLIC_FIX_CONTEXT_STEP_SCHEMA = z
   .object({
     kind: z.literal("fix_context"),
@@ -667,6 +680,7 @@ const PUBLIC_NEXT_STEP_SCHEMAS = [
   PUBLIC_IMPLEMENT_STEP_SCHEMA,
   PUBLIC_COMPLETE_STEP_SCHEMA,
   PUBLIC_REVIEW_STEP_SCHEMA,
+  PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA,
   PUBLIC_FIX_CONTEXT_STEP_SCHEMA,
 ] as const;
 const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
@@ -693,6 +707,7 @@ const PUBLIC_ACTION_SCHEMA = z.discriminatedUnion("kind", [
   PUBLIC_IMPLEMENT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_COMPLETE_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_REVIEW_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
+  PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_FIX_CONTEXT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
 ]);
 const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({

@@ -106,7 +106,7 @@ describe("Salt capability manifest", () => {
         host_obligation: "ask_user_and_stop",
         implementation_allowed: false,
         blocks_implementation_until_complete: true,
-        follow_up_required: "rerun_originating_workflow",
+        follow_up_required: "updated_user_input",
       }),
     );
     expect(semanticsByKind.get("retrieve_entity")).toEqual(
@@ -119,10 +119,17 @@ describe("Salt capability manifest", () => {
     );
     expect(semanticsByKind.get("install_dependencies")).toEqual(
       expect.objectContaining({
-        host_obligation: "install_packages_first",
+        host_obligation: "install_packages_then_rerun",
         implementation_allowed: false,
         blocks_implementation_until_complete: true,
         follow_up_required: "rerun_originating_workflow",
+      }),
+    );
+    expect(semanticsByKind.get("rerun_workflow")).toEqual(
+      expect.objectContaining({
+        host_obligation: "rerun_originating_workflow",
+        implementation_allowed: false,
+        blocks_implementation_until_complete: true,
       }),
     );
   });

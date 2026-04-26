@@ -42,6 +42,7 @@ export const SALT_PUBLIC_ACTION_KINDS = [
   "implement",
   "complete",
   "review",
+  "rerun_workflow",
   "fix_context",
 ] as const satisfies readonly PublicActionKind[];
 
@@ -104,15 +105,19 @@ export interface SaltCapabilityManifest {
           | "retrieve_entity_evidence"
           | "retrieve_example_evidence"
           | "ask_user_and_stop"
-          | "install_packages_first"
+          | "install_packages_then_rerun"
           | "bootstrap_repo_first"
           | "implement_exact_request"
           | "finish_without_changes"
           | "run_review"
+          | "rerun_originating_workflow"
           | "repair_context_first";
         implementation_allowed: boolean;
         blocks_implementation_until_complete: boolean;
-        follow_up_required?: "review" | "rerun_originating_workflow";
+        follow_up_required?:
+          | "review"
+          | "rerun_originating_workflow"
+          | "updated_user_input";
       }>;
       evidence_contract: {
         source_backed_kinds: Array<
@@ -280,11 +285,11 @@ export function buildSaltCapabilityManifest(
             host_obligation: "ask_user_and_stop",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
-            follow_up_required: "rerun_originating_workflow",
+            follow_up_required: "updated_user_input",
           },
           {
             kind: "install_dependencies",
-            host_obligation: "install_packages_first",
+            host_obligation: "install_packages_then_rerun",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
             follow_up_required: "rerun_originating_workflow",
@@ -312,6 +317,12 @@ export function buildSaltCapabilityManifest(
           {
             kind: "review",
             host_obligation: "run_review",
+            implementation_allowed: false,
+            blocks_implementation_until_complete: true,
+          },
+          {
+            kind: "rerun_workflow",
+            host_obligation: "rerun_originating_workflow",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
           },

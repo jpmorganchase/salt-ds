@@ -86,16 +86,18 @@ Treat `salt_workflow_v1` action kinds as binding:
 - `implement`: edit only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; then run the returned review/post action
 - `complete`: stop without edits; the reviewed scope has no changes required
 - `review`: run the returned Salt review action before calling the workflow complete
-- `ask_user`: stop and ask the returned question before writing code
+- `ask_user`: stop and ask the returned question before writing code; when the user answers, treat it as a new or updated workflow input, not as an evidence bridge
 - `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region; for create entity follow-through, rerun with MCP `resolved_entities` or CLI `--resolved-entity`
-- `install_dependencies`: install the listed Salt packages before writing Salt UI
+- `install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission
 - `fix_context` or `bootstrap_repo`: resolve setup or repo context before repo-specific edits
 
 Hard Gate: do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has `status: success`, `action.kind: implement`, `safety.exact_request_safe: true`, and `evidence.status: complete`.
 Use `recipe.steps`, `questions`, and `evidence.missing` to explain remaining work instead of guessing past a partial result.
-After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge and wait for `status: success` with `action.kind: implement` before editing.
+After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `bootstrap_repo`, rerun the originating workflow with the returned evidence bridge and wait for `status: success` with `action.kind: implement` before editing.
+If `action.kind` is `ask_user`, stop and wait for the user answer; do not rerun the original workflow unchanged.
+Installing Salt packages is not implementation permission. After installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`.
 For create entity follow-through, the evidence bridge is MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.
-Action Loop: call the workflow, read `status` and `action.kind`, perform exactly the returned action, then after follow-up rerun the originating workflow with the evidence bridge, edit only on `implement`, and run review after edits.
+Action Loop: establish trusted project context for repo-aware work, call the workflow, read `status` and `action.kind`, perform exactly the returned action, stop when `ask_user` asks for updated input, then after non-user follow-up rerun the originating workflow with the evidence bridge, edit only on `implement`, and run review after edits.
 
 When compact `create` remains `partial` or `blocked` on a broad or mixed-surface prompt, inspect the retrieval support surface before escalating to `full`:
 
@@ -163,7 +165,7 @@ When MCP is the transport:
 - `init`: bootstrap repo-local `.salt/team.json` and the managed root instruction block locally by default; add host adapters and `ui:verify` only when explicitly requested.
 - `context`: use `get_salt_project_context` for repo diagnostics, policy inspection, or explicit context reuse.
 - `create`: start with `create_salt_ui`; read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first; if compact output blocks implementation, follow `action` before editing the blocked region; for exact named follow-up, use `request.entity`, `request.resolved_entity`, and `request.match_status`; leave `solution_type` unset on broad or mixed-surface asks unless the request already points clearly to a known Salt family; request `full` only when you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
-  - branch on `action.kind` rather than prose: `ask_user` asks, `retrieve_entity`/`retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages first, and only `implement` allows editing
+  - branch on `action.kind` rather than prose: `ask_user` asks and stops until the user provides updated input, `retrieve_entity`/`retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages and then reruns the workflow, and only `implement` allows editing
   - if compact output is still broad or mixed-surface after the first pass, inspect `salt://catalog/candidates/{query}` or the CLI catalog-query support before asking for `full`
   - once the owner is grounded, use `salt://catalog/entity/{name}` or an exact follow-up create call to ground the supporting surface instead of paraphrasing it again
 - `review`: start with `review_salt_ui`; read returned `confidence` and `fix_candidates`; add runtime evidence only if the source pass is still not enough.

@@ -372,9 +372,63 @@ describe("host trace eval", () => {
 
     expect(failureCodes).toContain("missing_success_contract_before_edit");
     expect(failureCodes).toContain(
+      "edit_after_install_dependencies_without_rerun",
+    );
+    expect(failureCodes).toContain(
       "implementation_after_non_implement_contract",
     );
     expect(failureCodes).not.toContain("missing_dependency_action");
+  });
+
+  it("passes dependency install, rerun success, edit, and review in order", () => {
+    const report = evaluateHostTrace([
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "blocked",
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: ["Salt packages are not installed"],
+          },
+          action: {
+            kind: "install_dependencies",
+            package_manager: "npm",
+            packages: ["@salt-ds/core", "@salt-ds/theme"],
+            rule_ids: [],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "install_dependencies",
+            package_manager: "npm",
+            packages: ["@salt-ds/core", "@salt-ds/theme"],
+          },
+          allowed_next_actions: ["install_dependencies", "rerun_workflow"],
+          evidence: {
+            status: "missing",
+            items: [],
+            source_urls: [],
+            missing: ["Salt dependencies must be installed first"],
+            heuristic_fallback: false,
+          },
+        }),
+      ),
+      toolCall(
+        "run_in_terminal",
+        {},
+        "npm install @salt-ds/core @salt-ds/theme",
+      ),
+      toolCall("create_salt_ui", createContract()),
+      toolCall("copilot_createFile", {}, "create src/ProfilePage.tsx"),
+      toolCall("review_salt_ui", { contract: "salt_workflow_v1" }),
+    ]);
+
+    expect(report).toEqual(
+      expect.objectContaining({
+        passed: true,
+        critical_failures: [],
+      }),
+    );
   });
 
   it("flags edits after retrieval when the originating workflow was not rerun", () => {
@@ -434,67 +488,83 @@ describe("host trace eval", () => {
     );
   });
 
-  it("flags apply_patch edits after retrieval when the originating workflow was not rerun", () => {
-    const report = evaluateHostTrace([
-      toolCall(
-        "create_salt_ui",
-        createContract({
-          status: "partial",
-          safety: {
-            canonical_complete: false,
-            exact_request_safe: false,
-            blocking_reasons: ["required follow-through remains: Avatar"],
-          },
-          action: {
-            kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
-            rule_ids: ["create-follow-through-required"],
-            post_action: null,
-          },
-          next_required_action: {
-            kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
-          },
-          allowed_next_actions: ["retrieve_entity"],
-          evidence: {
+  it("flags patch and file mutation tool calls after retrieval when the originating workflow was not rerun", () => {
+    for (const toolId of [
+      "functions.apply_patch",
+      "applypatch",
+      "patch_file",
+      "fs.writeFile",
+    ]) {
+      const report = evaluateHostTrace([
+        toolCall(
+          "create_salt_ui",
+          createContract({
             status: "partial",
-            items: [
-              {
-                kind: "docs",
-                source: "canonical_salt",
-                entity: "Tabs",
-                field: "source_urls",
-                source_urls: ["/salt/components/tabs"],
-              },
-            ],
-            source_urls: ["/salt/components/tabs"],
-            missing: ["follow-through evidence for Avatar"],
-            heuristic_fallback: false,
-          },
-        }),
-      ),
-      toolCall(
-        "functions.apply_patch",
-        {},
-        "*** Begin Patch\n*** Update File: src/Profile.tsx\n+write profile avatar and tabs\n*** End Patch",
-      ),
-    ]);
-    const failureCodes = report.critical_failures.map(
-      (failure) => failure.code,
-    );
+            safety: {
+              canonical_complete: false,
+              exact_request_safe: false,
+              blocking_reasons: ["required follow-through remains: Avatar"],
+            },
+            action: {
+              kind: "retrieve_entity",
+              tool: "get_salt_entity",
+              args: { name: "Avatar" },
+              rule_ids: ["create-follow-through-required"],
+              post_action: null,
+            },
+            next_required_action: {
+              kind: "retrieve_entity",
+              tool: "get_salt_entity",
+              args: { name: "Avatar" },
+            },
+            allowed_next_actions: ["retrieve_entity"],
+            evidence: {
+              status: "partial",
+              items: [
+                {
+                  kind: "docs",
+                  source: "canonical_salt",
+                  entity: "Tabs",
+                  field: "source_urls",
+                  source_urls: ["/salt/components/tabs"],
+                },
+              ],
+              source_urls: ["/salt/components/tabs"],
+              missing: ["follow-through evidence for Avatar"],
+              heuristic_fallback: false,
+            },
+          }),
+        ),
+        toolCall(
+          toolId,
+          {},
+          "*** Begin Patch\n*** Update File: src/Profile.tsx\n+write profile avatar and tabs\n*** End Patch",
+        ),
+      ]);
+      const failureCodes = report.critical_failures.map(
+        (failure) => failure.code,
+      );
 
-    expect(failureCodes).toContain("missing_success_contract_before_edit");
-    expect(failureCodes).toContain(
-      "implementation_after_non_implement_contract",
-    );
+      expect(failureCodes).toContain("missing_success_contract_before_edit");
+      expect(failureCodes).toContain(
+        "implementation_after_non_implement_contract",
+      );
+    }
   });
 
-  it("flags yarn and pnpm Salt installs without an install_dependencies action", () => {
+  it("flags workspace package-manager Salt installs without an install_dependencies action", () => {
     for (const command of [
+      "npm --workspace app install @salt-ds/core @salt-ds/theme",
+      "npm --workspace=app install @salt-ds/core @salt-ds/theme",
       "yarn add @salt-ds/core @salt-ds/theme",
+      "yarn workspace app add @salt-ds/core @salt-ds/theme",
+      "yarn --cwd app add @salt-ds/core @salt-ds/theme",
+      "yarn --cwd=app add @salt-ds/core @salt-ds/theme",
       "pnpm add @salt-ds/core @salt-ds/theme",
+      "pnpm --filter app add @salt-ds/core @salt-ds/theme",
+      "pnpm --filter=app add @salt-ds/core @salt-ds/theme",
+      "pnpm -w add @salt-ds/core @salt-ds/theme",
+      "bun add @salt-ds/core @salt-ds/theme",
     ]) {
       const report = evaluateHostTrace([
         toolCall("run_in_terminal", {}, command),

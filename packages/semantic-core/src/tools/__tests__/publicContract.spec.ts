@@ -1568,6 +1568,52 @@ describe("publicContract workflow adapters", () => {
     );
   });
 
+  it("treats create ask_user as a stop for updated workflow input, not an evidence bridge", () => {
+    const registry = buildRegistryFixture();
+    const result = {
+      mode: "recommend",
+      solution_type: "component",
+      decision: {
+        name: "Tabs",
+        why: "Best Salt component match for the requested need.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const contract = buildCreateWorkflowContract({
+      implementation_gate: buildCreateImplementationGate({
+        status: "blocked",
+        reason: "Clarification is required.",
+        blocking_questions: [
+          "Should tabs switch in-page content or navigate between pages?",
+        ],
+      }),
+    });
+
+    const compact = buildCreatePublicContract(result, contract, {
+      transport_used: "mcp",
+      registry,
+      query: "profile page with tabs",
+    });
+    const askStep = compact.recipe.steps.find(
+      (step) => step.id === "ask-user-1",
+    );
+
+    expect(compact.next_required_action).toEqual(
+      expect.objectContaining({
+        kind: "ask_user",
+      }),
+    );
+    expect(compact.allowed_next_actions).not.toContain("rerun_workflow");
+    expect(askStep?.reason).toContain(
+      "Treat the user's answer as new or updated workflow input",
+    );
+    expect(askStep?.reason).toContain(
+      "do not rerun the original workflow unchanged",
+    );
+    expect(askStep?.reason).not.toContain(
+      "rerun the original create workflow with the user's answer",
+    );
+  });
+
   it("prefers required follow-through over re-running the broadened owner for descriptive create queries", () => {
     const registry = buildRegistryFixture();
     const result = {
@@ -1627,6 +1673,28 @@ describe("publicContract workflow adapters", () => {
           },
         },
       }),
+    );
+    expect(compact.allowed_next_actions).toEqual(
+      expect.arrayContaining(["retrieve_entity", "rerun_workflow"]),
+    );
+    expect(compact.recipe.steps).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "rerun-originating-create-workflow",
+          action: expect.objectContaining({
+            kind: "rerun_workflow",
+            cli: 'salt-ds create "file manager with breadcrumbs and table" --json --resolved-entity Breadcrumbs',
+            mcp: {
+              tool: "create_salt_ui",
+              args: {
+                query: "file manager with breadcrumbs and table",
+                resolved_entities: ["Breadcrumbs"],
+              },
+            },
+          }),
+          status: "required",
+        }),
+      ]),
     );
   });
 

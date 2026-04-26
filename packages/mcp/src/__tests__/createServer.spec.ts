@@ -585,7 +585,11 @@ describe("createSaltMcpServer", () => {
             package_manager: "yarn",
             packages: ["@salt-ds/core", "@salt-ds/theme"],
           },
-          allowed_next_actions: ["install_dependencies", "retrieve_entity"],
+          allowed_next_actions: [
+            "install_dependencies",
+            "retrieve_entity",
+            "rerun_workflow",
+          ],
           recipe: {
             steps: [
               {
@@ -594,6 +598,18 @@ describe("createSaltMcpServer", () => {
                   kind: "install_dependencies",
                   package_manager: "yarn",
                   packages: ["@salt-ds/core", "@salt-ds/theme"],
+                },
+                status: "required",
+              },
+              {
+                id: "rerun-originating-create-workflow",
+                action: {
+                  kind: "rerun_workflow",
+                  tool: "create_salt_ui",
+                  args: {
+                    query: "profile page with tabs and avatar",
+                    resolved_entities: ["Avatar"],
+                  },
                 },
                 status: "required",
               },
@@ -721,6 +737,7 @@ describe("createSaltMcpServer", () => {
                 kind?: string;
                 implementation_allowed?: boolean;
                 host_obligation?: string;
+                follow_up_required?: string;
               }>;
               implementation_gate?: {
                 required?: Record<string, unknown>;
@@ -756,6 +773,19 @@ describe("createSaltMcpServer", () => {
           expect.objectContaining({
             implementation_allowed: false,
             host_obligation: "ask_user_and_stop",
+            follow_up_required: "updated_user_input",
+          }),
+        );
+        expect(actionSemantics.get("install_dependencies")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: false,
+            host_obligation: "install_packages_then_rerun",
+          }),
+        );
+        expect(actionSemantics.get("rerun_workflow")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: false,
+            host_obligation: "rerun_originating_workflow",
           }),
         );
         expect(capabilityManifest.public_surface?.default_surface_ids).toEqual(
