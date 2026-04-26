@@ -118,6 +118,9 @@ function toCompactComponent(
   if (component.composition) {
     compact.composition = component.composition;
   }
+  if (component.implementation_requirements) {
+    compact.implementation_requirements = component.implementation_requirements;
+  }
 
   if (component.package.name !== "@salt-ds/core") {
     compact.package = component.package.name;

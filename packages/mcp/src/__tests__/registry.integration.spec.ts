@@ -10,6 +10,7 @@ import {
   getIcon,
   getPage,
   getPattern,
+  getSaltEntity,
   recommendComponent,
   searchSaltDocs,
   validateSaltUsage,
@@ -470,6 +471,51 @@ describe("registry integration", () => {
         expect.stringContaining("edit, filter, or select rows"),
       ]),
     );
+  });
+
+  it("exposes Data grid CSS imports directly from usage docs", () => {
+    const dataGrid = registry.components.find(
+      (component) => component.name === "Data grid",
+    );
+
+    expect(dataGrid?.implementation_requirements).toEqual({
+      required_imports: expect.arrayContaining([
+        {
+          kind: "css",
+          specifier: "ag-grid-community/styles/ag-grid.css",
+          statement: 'import "ag-grid-community/styles/ag-grid.css";',
+          source_url: "/salt/components/ag-grid-theme/usage",
+        },
+        {
+          kind: "css",
+          specifier: "@salt-ds/ag-grid-theme/salt-ag-theme.css",
+          statement: 'import "@salt-ds/ag-grid-theme/salt-ag-theme.css";',
+          source_url: "/salt/components/ag-grid-theme/usage",
+        },
+      ]),
+    });
+    expect(
+      dataGrid?.implementation_requirements?.required_imports.map(
+        (entry) => entry.specifier,
+      ),
+    ).not.toContain("@salt-ds/ag-grid-theme/css/salt-ag-theme.css");
+
+    const lookup = getSaltEntity(registry, {
+      name: "Data grid",
+      entity_type: "component",
+      view: "compact",
+    });
+
+    expect(lookup.entity).toMatchObject({
+      implementation_requirements: {
+        required_imports: expect.arrayContaining([
+          expect.objectContaining({
+            specifier: "@salt-ds/ag-grid-theme/salt-ag-theme.css",
+            source_url: "/salt/components/ag-grid-theme/usage",
+          }),
+        ]),
+      },
+    });
   });
 
   it("extracts explicit usage guidance for Search, Button bar, and Forms", () => {

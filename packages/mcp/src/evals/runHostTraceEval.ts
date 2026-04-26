@@ -19,12 +19,16 @@ interface HostTraceFileReport {
   observations: string[];
   tool_call_count: number;
   workflow_contract_count: number;
+  request_count?: number;
+  failed_request_count?: number;
 }
 
 interface HostTraceEvalCliReport {
   passed: boolean;
   traces: HostTraceFileReport[];
 }
+
+export const DEFAULT_TRACE_PATTERNS = ["chat.json", "chat-*.json"] as const;
 
 function parseArgs(argv: string[]): ParsedArgs {
   const parsed: ParsedArgs = {
@@ -48,7 +52,7 @@ function parseArgs(argv: string[]): ParsedArgs {
   }
 
   if (parsed.trace_patterns.length === 0) {
-    parsed.trace_patterns.push("chat-*.json");
+    parsed.trace_patterns.push(...DEFAULT_TRACE_PATTERNS);
   }
 
   return parsed;
@@ -95,6 +99,10 @@ function buildFileReport(
     observations: report.observations,
     tool_call_count: report.tool_calls.length,
     workflow_contract_count: report.workflow_contracts.length,
+    request_count: report.request_reports?.length,
+    failed_request_count: report.request_reports?.filter(
+      (request) => !request.passed,
+    ).length,
   };
 }
 
@@ -106,6 +114,11 @@ function formatTextReport(report: HostTraceEvalCliReport): string {
     lines.push(
       `  tool_calls=${trace.tool_call_count} workflow_contracts=${trace.workflow_contract_count} critical_failures=${trace.critical_failures.length}`,
     );
+    if (trace.request_count !== undefined) {
+      lines.push(
+        `  requests=${trace.request_count} failed_requests=${trace.failed_request_count ?? 0}`,
+      );
+    }
 
     for (const observation of trace.observations) {
       lines.push(`  observation: ${observation}`);
