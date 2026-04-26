@@ -108,6 +108,16 @@ export type PublicReviewStep = PublicActionHints & {
   args?: Record<string, unknown>;
 };
 
+export type PublicRerunWorkflowStep = PublicActionHints & {
+  kind: "rerun_workflow";
+  tool:
+    | "create_salt_ui"
+    | "review_salt_ui"
+    | "migrate_to_salt"
+    | "upgrade_salt_ui";
+  args: Record<string, unknown>;
+};
+
 export type PublicFixContextStep = PublicActionHints & {
   kind: "fix_context";
   tool: "get_salt_project_context" | "salt-ds info";
@@ -125,6 +135,7 @@ export type PublicNextStep =
   | PublicImplementStep
   | PublicCompleteStep
   | PublicReviewStep
+  | PublicRerunWorkflowStep
   | PublicFixContextStep;
 
 export const PUBLIC_WORKFLOW_CONTRACT_VERSION = "salt_workflow_v1";
@@ -413,6 +424,40 @@ function buildReviewCliHint(step: PublicReviewStep): string {
     : "salt-ds review <changed-path> --json";
 }
 
+function buildRerunWorkflowCliHint(
+  step: PublicRerunWorkflowStep,
+): string | null {
+  const query = readStringValue(step.args.query);
+  const resolvedEntities = Array.isArray(step.args.resolved_entities)
+    ? step.args.resolved_entities.filter(
+        (value): value is string => typeof value === "string",
+      )
+    : [];
+
+  switch (step.tool) {
+    case "create_salt_ui": {
+      if (!query) {
+        return null;
+      }
+
+      const resolvedFlags = resolvedEntities
+        .map((entity) => ` --resolved-entity ${quoteCliArgument(entity)}`)
+        .join("");
+      return `salt-ds create ${quoteCliArgument(query)} --json${resolvedFlags}`;
+    }
+    case "review_salt_ui":
+      return "salt-ds review <changed-path> --json";
+    case "migrate_to_salt":
+      return query
+        ? `salt-ds migrate ${quoteCliArgument(query)} --json`
+        : "salt-ds migrate --json";
+    case "upgrade_salt_ui":
+      return query
+        ? `salt-ds upgrade ${quoteCliArgument(query)} --json`
+        : "salt-ds upgrade --json";
+  }
+}
+
 function buildPublicActionHints(step: PublicNextStep): PublicActionHints {
   switch (step.kind) {
     case "tool_call": {
@@ -469,6 +514,16 @@ function buildPublicActionHints(step: PublicNextStep): PublicActionHints {
           args: step.args ?? {},
         },
       };
+    case "rerun_workflow": {
+      const cli = buildRerunWorkflowCliHint(step);
+      return {
+        ...(cli ? { cli } : {}),
+        mcp: {
+          tool: step.tool,
+          args: step.args,
+        },
+      };
+    }
     case "fix_context":
       return {
         cli: "salt-ds info --json",
@@ -699,6 +754,11 @@ function deriveAllowedNextActions(
     ),
     ...(input.state.blocking_questions.length > 0
       ? (["ask_user"] as const)
+      : []),
+    ...(input.workflow === "create" &&
+    input.next_step.kind !== "implement" &&
+    input.next_step.kind !== "ask_user"
+      ? (["rerun_workflow"] as const)
       : []),
     ...(input.next_step.kind === "implement" ? (["review"] as const) : []),
   ].filter(
@@ -1831,9 +1891,32 @@ function buildResolvedFollowThroughEvidence(input: {
   };
 }
 
+function buildCreateRerunWorkflowStep(input: {
+  query?: string;
+  result: CreateSaltUiResult;
+  resolved_entities: string[];
+}): PublicRerunWorkflowStep {
+  const query = input.query?.trim() || input.result.decision.name;
+  const args: Record<string, unknown> = {
+    query,
+  };
+  const resolvedEntities = uniqueNonEmptyStrings(input.resolved_entities);
+
+  if (resolvedEntities.length > 0) {
+    args.resolved_entities = resolvedEntities;
+  }
+
+  return {
+    kind: "rerun_workflow",
+    tool: "create_salt_ui",
+    args,
+  };
+}
+
 function buildCreateRecipe(input: {
   next_step: PublicNextStep;
   contract: CreateSaltUiWorkflowContract;
+  rerun_step: PublicRerunWorkflowStep;
   evidence: PublicEvidenceSummary;
   dependency_step: PublicInstallDependenciesStep | null;
   remaining_follow_through: FollowThroughItem[];
@@ -1909,7 +1992,7 @@ function buildCreateRecipe(input: {
     pushStep(
       `ask-user-${index + 1}`,
       { kind: "ask_user", question },
-      `Ask this blocking question and rerun the original create workflow with the user's answer before editing.`,
+      "Ask this blocking question and stop. Treat the user's answer as new or updated workflow input before calling create again; do not rerun the original workflow unchanged.",
     );
   }
 
@@ -1918,6 +2001,22 @@ function buildCreateRecipe(input: {
     input.next_step,
     input.next_step.kind === "implement" ? undefined : rerunCreateAfterAction,
   );
+
+  if (
+    input.next_step.kind === "install_dependencies" ||
+    input.next_step.kind === "retrieve_entity" ||
+    input.next_step.kind === "retrieve_examples" ||
+    input.next_step.kind === "fix_context" ||
+    input.next_step.kind === "bootstrap_repo" ||
+    input.next_step.kind === "tool_call"
+  ) {
+    pushStep(
+      "rerun-originating-create-workflow",
+      input.rerun_step,
+      "After the required follow-up actions are complete, rerun this original create workflow with the returned evidence bridge. Do not edit until the rerun returns status=success, action.kind=implement, and evidence.status=complete.",
+      "required",
+    );
+  }
 
   if (input.next_step.kind === "implement") {
     pushStep("review-after-implementation", {
@@ -1988,6 +2087,16 @@ export function buildCreatePublicContract(
       evidence,
       followThroughEvidence.remaining_follow_through,
     );
+  const rerunStep = buildCreateRerunWorkflowStep({
+    query: options.query,
+    result,
+    resolved_entities: [
+      ...(options.resolved_entities ?? []),
+      ...followThroughEvidence.remaining_follow_through.map(
+        (followThrough) => followThrough.entity,
+      ),
+    ],
+  });
   const projectPolicyBlockers = buildProjectPolicyBlockers({
     implementation_ready: contract.readiness.implementation_ready,
     readiness_reason: contract.readiness.reason,
@@ -2026,6 +2135,7 @@ export function buildCreatePublicContract(
     recipe: buildCreateRecipe({
       next_step: nextStep,
       contract,
+      rerun_step: rerunStep,
       evidence,
       dependency_step: dependencyStep,
       remaining_follow_through: followThroughEvidence.remaining_follow_through,

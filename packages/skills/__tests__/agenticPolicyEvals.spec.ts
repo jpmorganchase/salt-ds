@@ -39,7 +39,7 @@ describe("deterministic agentic policy evals", () => {
     );
 
     expect(skill).toContain(
-      "Use `references/shared/transport.md` for the full transport, degraded-tooling, completion, and CLI follow-through rules.",
+      "Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.",
     );
     expect(transport).toContain("Prefer Salt MCP when it is available.");
     expect(transport).toContain(
@@ -160,7 +160,8 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
     );
 
-    expect(skill).toContain(
+    expect(skill).toContain("Treat `salt_workflow_v1.action.kind` as binding");
+    expect(skill).not.toContain(
       "Treat `salt_workflow_v1` action kinds as binding:",
     );
     expect(transport).toContain(
@@ -176,20 +177,35 @@ describe("deterministic agentic policy evals", () => {
       "Treat the compact `salt_workflow_v1` action as a command, not advice:",
     );
     expect(consumerCopilotInstructions).toContain(
-      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
+      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask and stop until the user provides updated input, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages and then rerun the originating workflow, and only `implement` permits editing Salt UI.",
     );
     expect(consumerSaltUiAgent).toContain(
-      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages first, and only `implement` permits editing Salt UI.",
+      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask and stop until the user provides updated input, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages and then rerun the originating workflow, and only `implement` permits editing Salt UI.",
     );
-    expect(skill).toContain(
-      "`install_dependencies`: install the listed Salt packages before writing Salt UI",
+    expect(consumerCopilotInstructions).toContain(
+      "For create entity follow-through, use MCP `resolved_entities` or CLI `--resolved-entity` on the rerun.",
+    );
+    expect(consumerSaltUiAgent).toContain(
+      "For create entity follow-through, use MCP `resolved_entities` or CLI `--resolved-entity` on the rerun.",
+    );
+    expect(skill).not.toContain(
+      "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
     );
     expect(transport).toContain(
-      "`install_dependencies`: install the listed Salt packages before writing Salt UI",
+      "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
     );
     for (const source of [repoInstructions, consumerAgents]) {
       expect(source).toContain(
-        '`action.kind: "install_dependencies"`: install the listed packages before writing Salt UI',
+        '`action.kind: "install_dependencies"`: install the listed packages, then rerun the originating workflow; installing packages is not implementation permission',
+      );
+      expect(source).toContain(
+        "installing Salt packages is not implementation permission",
+      );
+      expect(source).toContain(
+        "for repo-aware workflow calls, pass a trusted `root_dir` or reuse a trusted `context_id` so package state and repo policy can be applied",
+      );
+      expect(source).toContain(
+        "if `action.kind` is `ask_user`, stop and treat the user's answer as updated workflow input",
       );
     }
   });
@@ -249,6 +265,49 @@ describe("deterministic agentic policy evals", () => {
     ]);
   });
 
+  it("keeps the default new-work theme bootstrap aligned across first-load agent surfaces", async () => {
+    const skill = await readSkill("salt-ds/SKILL.md");
+    const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
+    const themeReference = await readSkill(
+      "salt-ds/references/shared/theme.md",
+    );
+    const repoInstructions = await readSkill(
+      "salt-ds/assets/repo-instructions.template.md",
+    );
+    const consumerAgents = await readRepoFile(
+      "workflow-examples/consumer-repo/AGENTS.md",
+    );
+    const consumerCopilotInstructions = await readRepoFile(
+      "workflow-examples/consumer-repo/.github/copilot-instructions.md",
+    );
+    const consumerSaltUiAgent = await readRepoFile(
+      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
+    );
+
+    const requiredThemeConcepts = [
+      /SaltProviderNext/,
+      /@salt-ds\/theme\/index\.css/,
+      /@salt-ds\/theme\/css\/theme-next\.css/,
+      /accent(?:=\\?")?teal/i,
+      /corner(?:=\\?")?rounded/i,
+      /headingFont(?:=\\?")?Amplitude/i,
+      /actionFont(?:=\\?")?Amplitude/i,
+      /legacy[\s\S]+SaltProvider[\s\S]+(?:migration compatibility|repo policy)/i,
+    ];
+
+    for (const source of [
+      skill,
+      openAiMetadata,
+      themeReference,
+      repoInstructions,
+      consumerAgents,
+      consumerCopilotInstructions,
+      consumerSaltUiAgent,
+    ]) {
+      expectAllConcepts(source, requiredThemeConcepts);
+    }
+  });
+
   it("keeps explicit user nouns as evidence-backed unresolved requirements instead of magic inferred implementation", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
     const createRules = await readSkill("salt-ds/references/create/rules.md");
@@ -273,9 +332,19 @@ describe("deterministic agentic policy evals", () => {
   it("keeps the Salt skill metadata agent agnostic for future host adapters", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
     const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
+    const description = skill.match(/^description: (.*)$/m)?.[1] ?? "";
 
-    expect(skill).toMatch(
-      /AI agent[\s\S]+ChatGPT[\s\S]+Copilot[\s\S]+Claude[\s\S]+Codex/i,
+    expect(description).toContain(
+      "Agent-agnostic Salt design system workflow for Salt-specific create",
+    );
+    expect(description).toContain("review, migrate, upgrade");
+    expect(description).toContain("Use only when @salt-ds packages");
+    expect(description).toContain("leave non-Salt work to the host");
+    expect(description).not.toMatch(
+      /\b(?:React|CSS|TypeScript|build|test|CI|debugging|generic repo)\b/i,
+    );
+    expect(description).not.toMatch(
+      /\b(?:AI agent|ChatGPT|Copilot|Claude|Codex)\b/i,
     );
     expect(openAiMetadata).toContain(
       "agent-agnostic Salt design system workflow",

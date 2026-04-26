@@ -30,7 +30,8 @@ Use this file only for `create` work after project context is known.
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
 - for compound components, check `sub_component_names` and `composition` from the canonical output to use the correct child components and structure instead of guessing the JSX nesting
 - if compact `create` output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked sub-surface
-- branch on `salt_workflow_v1.action.kind`: `ask_user` asks, `retrieve_entity` or `retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages first, and only `implement` allows Salt UI edits
+- branch on `salt_workflow_v1.action.kind`: `ask_user` asks and stops until the user provides updated input, `retrieve_entity` or `retrieve_examples` gathers evidence and reruns with the returned evidence bridge, `install_dependencies` installs packages and then reruns the workflow, and only `implement` allows Salt UI edits
+- installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`
 - require `evidence.status: complete` before treating create output as implementation-ready
 - use `recipe.steps`, `questions`, and `evidence.missing` to report remaining create work instead of guessing through gaps
 - do not treat `status: partial` as completion just because starter code or one file was created; continue follow-through or report the work as incomplete

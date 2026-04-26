@@ -1,6 +1,6 @@
 ---
 name: salt-ds
-description: salt design system workflow for consumer repos. use when an AI agent such as ChatGPT, Copilot, Claude, or Codex needs salt-specific create, review, migrate, upgrade, init, quick-check, accessibility-audit, or option-exploration guidance for ui work in repos that already use @salt-ds packages, .salt/team.json, .salt/stack.json, salt mcp, or the salt-ds cli, or when the user explicitly asks to adopt salt. use for salt-specific structure, composition, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, migration, version upgrades, and repo conventions in salt consumer repos. accessibility audits normally route through review. bootstrap tasks normally route through init. do not use for generic react/css advice, generic typescript cleanup, build/test/ci/package-management work, generic debugging, or non-ui work unless salt primitives, patterns, policy, migration, upgrade, or repo-specific salt decisions are part of the answer.
+description: Agent-agnostic Salt design system workflow for Salt-specific create, review, migrate, upgrade, init, quick-check, accessibility audits, repo conventions, and UI composition/layout work in consumer repos. Use only when @salt-ds packages, .salt policy, Salt MCP/CLI, or explicit Salt adoption is involved; leave non-Salt work to the host.
 ---
 
 # Salt DS
@@ -15,6 +15,11 @@ Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, co
 Before naming or implementing Salt-specific structure, fetch canonical Salt evidence through MCP or CLI.
 If evidence is missing, follow `next_required_action`, retrieve the required entity or examples, ask the user, or stop with the blocker.
 Do not fill gaps from generic React, CSS, HTML, copied repo code, or model memory.
+
+## Theme Default
+
+For new Salt-native work, the default bootstrap is `SaltProviderNext` from `@salt-ds/core` with `@salt-ds/theme/index.css`, `@salt-ds/theme/css/theme-next.css`, `accent="teal"`, `corner="rounded"`, `headingFont="Amplitude"`, and `actionFont="Amplitude"`.
+Use legacy `SaltProvider` only when workflow evidence or explicit repo policy says migration compatibility requires it.
 
 ## Hard Gate
 
@@ -32,12 +37,16 @@ Treat quick-check observations, starter snippets, package installs, retrieval re
 
 For implementation-capable Salt workflows:
 
-1. Call the workflow.
-2. Read `status`, `action.kind`, `next_required_action`, `safety`, `questions`, and `evidence`.
-3. Perform exactly the returned action.
-4. After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge. For create entity follow-through, pass MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.
-5. Edit only when the rerun satisfies the Hard Gate.
-6. Run review after edits.
+1. For repo-aware work, establish trusted project context first, or pass a known `root_dir` or `context_id` to the workflow.
+2. Call the workflow.
+3. Read `status`, `action.kind`, `next_required_action`, `safety`, `questions`, and `evidence`.
+4. Perform exactly the returned action.
+5. If `action.kind` is `ask_user`, stop and wait for the user answer; treat the answer as a new or updated workflow input, not as an evidence bridge.
+6. After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `bootstrap_repo`, rerun the originating workflow with the returned evidence bridge. For create entity follow-through, pass MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.
+7. Edit only when the rerun satisfies the Hard Gate.
+8. Run review after edits.
+
+Installing Salt packages is not implementation permission. After installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`.
 
 ## Root Execution Flow
 
@@ -194,7 +203,7 @@ Do not use this skill for generic repo work that merely happens in a Salt repo, 
 ## Shared Workflow Contract
 
 Keep this section as the first-load summary.
-Use `references/shared/transport.md` for the full transport, degraded-tooling, completion, and CLI follow-through rules.
+Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.
 
 For every Salt workflow:
 
@@ -202,25 +211,12 @@ For every Salt workflow:
 2. Keep the user task and page-level framing intact in the first canonical step.
 3. Treat repo conventions and project memory as downstream context, not canonical Salt guidance.
 4. Read compact workflow output from stable top-level workflow signals first: `status`, `safety`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`.
-5. Validate the source result before treating the work as done.
+5. Treat `salt_workflow_v1.action.kind` as binding: perform exactly the returned action, and only edit when the Hard Gate is satisfied.
+6. Validate with the returned review or post action before treating implementation work as done.
 
-Treat `salt_workflow_v1` action kinds as binding:
-
-- `implement`: edit only when `status` is `success`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; then run the returned review/post action
-- `complete`: stop without edits; the reviewed scope has no changes required
-- `review`: run the returned Salt review action before calling the workflow complete
-- `ask_user`: stop and ask the returned question before writing code
-- `retrieve_entity` or `retrieve_examples`: gather the requested Salt evidence before implementing that region; for create entity follow-through, rerun with MCP `resolved_entities` or CLI `--resolved-entity`
-- `install_dependencies`: install the listed Salt packages before writing Salt UI
-- `fix_context` or `bootstrap_repo`: resolve setup or repo context before repo-specific edits
-
-If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned action before implementing the blocked region.
-After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, `bootstrap_repo`, or an answered `ask_user`, rerun the originating workflow with the returned evidence bridge and wait for `status: success` with `action.kind: implement` before editing.
-Use `recipe.steps`, `questions`, and `evidence.missing` to explain what remains unresolved instead of filling gaps with guessed Salt structure.
-
-For broad prompts that mention multiple UI elements (e.g., "a form with inputs, a sidebar navigation, and toggle switches"), the tooling's `required_follow_through` list covers entities the resolved pattern knows about, but **may not cover every entity the user mentioned**.
 Preserve explicit user nouns that are not yet covered as unresolved requirements.
 Retrieve canonical evidence for those nouns, but do not implement those regions until the workflow contract or support evidence covers them.
+Use `recipe.steps`, `questions`, and `evidence.missing` to explain what remains unresolved instead of filling gaps with guessed Salt structure.
 
 ### Stable-First Rule
 
@@ -228,16 +224,11 @@ Prefer stable production-ready Salt directions first.
 Do not reach for custom UI, lab/experimental usage, or decorative styling until the nearest canonical Salt pattern, primitive, composition, and foundation have been ruled out.
 If the transport or validation warns that a recommendation is unstable, noisy, or needs attention, do not finalize it as the main answer without saying so.
 
-## Copilot Host Behavior
+## Host Behavior
 
-Consumers usually use this skill in VS Code or IntelliJ Copilot.
-In those environments:
-
-- bias toward the current file, current selection, active feature folder, and nearby imports before broad repo sweeps
-- confirm tool availability before promising a workflow step
-- if the host lacks MCP, say so and switch to CLI
-- if CLI output is machine-noisy, keep parsing/inspection separate from implementation and use the degraded-tooling rules
-- do not claim a Salt workflow completed merely because the host emitted a large payload
+For VS Code or IntelliJ Copilot-specific host behavior, load `references/shared/copilot-hosts.md`.
+For degraded MCP or CLI handling, load `references/shared/degraded-tooling.md`.
+Do not claim a Salt workflow completed merely because the host emitted a large payload.
 
 ## Output Posture
 

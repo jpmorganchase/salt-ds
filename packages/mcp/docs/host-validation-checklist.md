@@ -110,7 +110,7 @@ For each scenario, capture:
 - `full` is only used after the owner is grounded
 - `request` stays populated
 - `partial` does not get treated as done
-- `ask_user` stops host implementation until the user answers
+- `ask_user` stops host implementation until the user answers; the answer becomes updated workflow input, not an evidence bridge
 - `install_dependencies` happens before Salt UI edits when Salt packages are missing
 - `retrieve_entity` and `retrieve_examples` are treated as evidence gathering and rerun inputs, not permission to code
 - exact follow-through stays exact on the next call
