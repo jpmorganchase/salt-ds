@@ -294,8 +294,20 @@ describe("salt cli", () => {
     ).toBe(0);
 
     expect(rootHelp).toContain("Workflow commands:");
+    expect(rootHelp).toContain(
+      "Create compact JSON is a workflow contract only; starter code requires --full --include-starter-code or --starter-only.",
+    );
     expect(createHelp).toContain("Salt DS CLI - create");
+    expect(createHelp).toContain(
+      "salt-ds create <query> --json --full --include-starter-code",
+    );
+    expect(createHelp).toContain(
+      "Compact JSON is a workflow contract only and does not include starter code.",
+    );
     expect(createHelp).toContain("salt-ds get_salt_entity Avatar --json");
+    expect(createHelp).not.toContain(
+      "salt-ds create <query> [--json] [--full] [--include-starter-code]",
+    );
     expect(migrateHelp).toContain("--source-outline must be JSON");
     expect(reviewHelp).toContain("action.kind is complete");
   });

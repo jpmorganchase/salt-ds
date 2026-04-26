@@ -39,14 +39,14 @@ function buildScenario(): WorkflowEvalScenario {
           tool: "get_salt_entity",
           name: "Avatar",
         },
-        allowed_next_actions: ["retrieve_entity"],
+        allowed_next_actions: ["retrieve_entity", "rerun_workflow"],
         evidence: {
           status: "partial",
           required_kinds: ["docs", "registry"],
           min_source_urls: 1,
         },
         recipe: {
-          required_action_kinds: ["retrieve_entity"],
+          required_action_kinds: ["retrieve_entity", "rerun_workflow"],
           required_entities: ["Avatar"],
         },
       },
@@ -110,7 +110,7 @@ function buildCompositeContract() {
       tool: "get_salt_entity",
       args: { name: "Avatar" },
     },
-    allowed_next_actions: ["retrieve_entity"],
+    allowed_next_actions: ["retrieve_entity", "rerun_workflow"],
     recipe: {
       steps: [
         {
@@ -119,6 +119,18 @@ function buildCompositeContract() {
             kind: "retrieve_entity",
             tool: "get_salt_entity",
             args: { name: "Avatar" },
+          },
+          status: "required",
+        },
+        {
+          id: "rerun-originating-create-workflow",
+          action: {
+            kind: "rerun_workflow",
+            tool: "create_salt_ui",
+            args: {
+              query: "profile page with tabs and avatar",
+              resolved_entities: ["Avatar"],
+            },
           },
           status: "required",
         },
