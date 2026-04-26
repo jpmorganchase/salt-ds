@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { evaluateHostTrace } from "../evals/hostTraceEval.js";
+import { DEFAULT_TRACE_PATTERNS } from "../evals/runHostTraceEval.js";
 
 function toolCall(toolId: string, output: unknown, input = "") {
   return {
@@ -90,7 +91,20 @@ function createContract(
   };
 }
 
+function requestFixture(prompt: string, calls: unknown[]) {
+  return {
+    message: {
+      parts: [{ text: prompt, kind: "text" }],
+    },
+    response: calls,
+  };
+}
+
 describe("host trace eval", () => {
+  it("includes chat.json and chat-*.json in the default trace patterns", () => {
+    expect(DEFAULT_TRACE_PATTERNS).toEqual(["chat.json", "chat-*.json"]);
+  });
+
   it("flags unsafe composite Salt create work without relying on a saved host transcript", () => {
     const report = evaluateHostTrace([
       toolCall("get_salt_project_context", {
@@ -277,6 +291,208 @@ describe("host trace eval", () => {
         }),
       ),
       toolCall("copilot_editFile", {}, "write profile tabs implementation"),
+    ]);
+
+    expect(report.critical_failures.map((failure) => failure.code)).toContain(
+      "ask_user_ignored",
+    );
+  });
+
+  it("does not count a real VS Code question answer as ask_user ignored", () => {
+    const report = evaluateHostTrace([
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "blocked",
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: ["answered clarification"],
+          },
+          action: {
+            kind: "ask_user",
+            question:
+              "Should these tabs switch in-page content or navigate between pages?",
+            rule_ids: [],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "ask_user",
+            question:
+              "Should these tabs switch in-page content or navigate between pages?",
+          },
+          allowed_next_actions: ["ask_user"],
+          questions: [
+            "Should these tabs switch in-page content or navigate between pages?",
+          ],
+          evidence: {
+            status: "partial",
+            items: [
+              {
+                kind: "docs",
+                source: "canonical_salt",
+                entity: "Tabs",
+                field: "when_not_to_use",
+                source_urls: ["/salt/components/tabs"],
+              },
+            ],
+            source_urls: ["/salt/components/tabs"],
+            missing: ["answered clarification"],
+            heuristic_fallback: false,
+          },
+        }),
+      ),
+      {
+        kind: "toolInvocationSerialized",
+        toolId: "vscode_askQuestions",
+        invocationMessage: "Asking a question (Tab usage)",
+      },
+      {
+        kind: "questionCarousel",
+        data: {
+          "tab-usage": {
+            selectedValue: "Yes, use in-page tabs",
+          },
+        },
+        isUsed: true,
+      },
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "partial",
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: ["required follow-through remains: Tabs"],
+          },
+          action: {
+            kind: "retrieve_entity",
+            tool: "get_salt_entity",
+            args: { name: "Tabs" },
+            rule_ids: ["create-follow-through-required"],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "retrieve_entity",
+            tool: "get_salt_entity",
+            args: { name: "Tabs" },
+          },
+          allowed_next_actions: ["retrieve_entity"],
+          evidence: {
+            status: "partial",
+            items: [
+              {
+                kind: "docs",
+                source: "canonical_salt",
+                entity: "Avatar",
+                field: "source_urls",
+                source_urls: ["/salt/components/avatar"],
+              },
+            ],
+            source_urls: ["/salt/components/avatar"],
+            missing: ["follow-through evidence for Tabs"],
+            heuristic_fallback: false,
+          },
+        }),
+      ),
+      toolCall("copilot_replaceString", {}, "write profile tabs"),
+    ]);
+    const failureCodes = report.critical_failures.map(
+      (failure) => failure.code,
+    );
+
+    expect(failureCodes).not.toContain("ask_user_ignored");
+    expect(failureCodes).toContain("missing_success_contract_before_edit");
+    expect(failureCodes).toContain(
+      "implementation_after_non_implement_contract",
+    );
+  });
+
+  it("flags fabricated ask_user answers that are only restated in a later workflow prompt", () => {
+    const report = evaluateHostTrace([
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "blocked",
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: ["answered clarification"],
+          },
+          action: {
+            kind: "ask_user",
+            question:
+              "Should these tabs switch in-page content or navigate between pages?",
+            rule_ids: [],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "ask_user",
+            question:
+              "Should these tabs switch in-page content or navigate between pages?",
+          },
+          allowed_next_actions: ["ask_user"],
+          questions: [
+            "Should these tabs switch in-page content or navigate between pages?",
+          ],
+          evidence: {
+            status: "partial",
+            items: [
+              {
+                kind: "docs",
+                source: "canonical_salt",
+                entity: "Tabs",
+                field: "when_not_to_use",
+                source_urls: ["/salt/components/tabs"],
+              },
+            ],
+            source_urls: ["/salt/components/tabs"],
+            missing: ["answered clarification"],
+            heuristic_fallback: false,
+          },
+        }),
+      ),
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "partial",
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: ["required follow-through remains: Tabs"],
+          },
+          action: {
+            kind: "retrieve_entity",
+            tool: "get_salt_entity",
+            args: { name: "Tabs" },
+            rule_ids: ["create-follow-through-required"],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "retrieve_entity",
+            tool: "get_salt_entity",
+            args: { name: "Tabs" },
+          },
+          allowed_next_actions: ["retrieve_entity"],
+          evidence: {
+            status: "partial",
+            items: [
+              {
+                kind: "docs",
+                source: "canonical_salt",
+                entity: "Avatar",
+                field: "source_urls",
+                source_urls: ["/salt/components/avatar"],
+              },
+            ],
+            source_urls: ["/salt/components/avatar"],
+            missing: ["follow-through evidence for Tabs"],
+            heuristic_fallback: false,
+          },
+        }),
+        '{"query":"Profile page using in-page Salt Tabs; user confirmed in-page tabs"}',
+      ),
+      toolCall("copilot_replaceString", {}, "write profile tabs"),
     ]);
 
     expect(report.critical_failures.map((failure) => failure.code)).toContain(
@@ -706,5 +922,56 @@ describe("host trace eval", () => {
         critical_failures: [],
       }),
     );
+  });
+
+  it("scores each requests entry independently so earlier success cannot bless a later edit", () => {
+    const report = evaluateHostTrace({
+      requests: [
+        requestFixture("Create a dashboard", [
+          toolCall("create_salt_ui", createContract()),
+          toolCall("copilot_createFile", {}, "create src/Dashboard.tsx"),
+          toolCall("review_salt_ui", { contract: "salt_workflow_v1" }),
+        ]),
+        requestFixture("shouldn't the header follow the app header?", [
+          toolCall("copilot_multiReplaceString", {}, "edit dashboard header"),
+        ]),
+      ],
+    });
+    const secondRequest = report.request_reports?.[1];
+
+    expect(report.passed).toBe(false);
+    expect(secondRequest).toEqual(
+      expect.objectContaining({
+        classification: "salt_ui_work",
+        passed: false,
+      }),
+    );
+    expect(
+      secondRequest?.critical_failures.map((failure) => failure.code),
+    ).toContain("missing_success_contract_before_edit");
+  });
+
+  it("does not score generic debugging turns as Salt create or review work", () => {
+    const report = evaluateHostTrace({
+      requests: [
+        requestFixture("Why doesn't the app work?", [
+          toolCall("copilot_replaceString", {}, "fix a syntax error"),
+        ]),
+        requestFixture(
+          "Actually the issue is the ag-grid-theme import is wrong",
+          [toolCall("copilot_replaceString", {}, "fix ag-grid import")],
+        ),
+      ],
+    });
+
+    expect(report).toEqual(
+      expect.objectContaining({
+        passed: true,
+        critical_failures: [],
+      }),
+    );
+    expect(
+      report.request_reports?.map((entry) => entry.classification),
+    ).toEqual(["generic_debugging", "generic_debugging"]);
   });
 });
