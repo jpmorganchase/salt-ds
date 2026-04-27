@@ -1,10 +1,10 @@
-import { all as allProperties } from "known-css-properties";
+import { lexer } from "css-tree";
 import valueParser from "postcss-value-parser";
 import stylelint from "stylelint";
 import { declarationValueIndex, isVarFunction } from "../utils.mjs";
 
 /* excluding `accent-color` property so `--card-accent-color` is allowed */
-const properties = allProperties.filter(
+const properties = Object.keys(lexer.properties).filter(
   (property) => property !== "accent-color",
 );
 
@@ -32,17 +32,64 @@ const cssAttributes = properties
     x.includes("-"),
   ); /* only need to check properting needing kebab case */
 
+const cssAttributesByFirstPart = cssAttributes.reduce((map, attribute) => {
+  const parts = attribute.split("-");
+  const firstPart = parts[0];
+  const candidates = map.get(firstPart);
+
+  if (candidates) {
+    candidates.push(parts);
+  } else {
+    map.set(firstPart, [parts]);
+  }
+
+  return map;
+}, new Map());
+
+const allowedSaltRootProperties = new Set(
+  cssAttributes.map((attribute) => `--salt-${attribute}`),
+);
+
 /**
  * Test whether a property contains CSS attr
  */
 const includesCssAttribute = (property) =>
   property.startsWith("--") &&
-  cssAttributes.find(
-    (attr) =>
-      property.includes(`-${attr}-`) ||
-      (property.endsWith(`-${attr}`) &&
-        property !== `--salt-${attr}`) /* --salt-animation-duration */,
-  );
+  (() => {
+    const parts = property.slice(2).split("-");
+
+    for (let index = 0; index < parts.length; index += 1) {
+      const candidates = cssAttributesByFirstPart.get(parts[index]);
+
+      if (!candidates) continue;
+
+      for (const candidate of candidates) {
+        const endIndex = index + candidate.length;
+
+        if (endIndex > parts.length) continue;
+
+        let isMatch = true;
+
+        for (let offset = 0; offset < candidate.length; offset += 1) {
+          if (parts[index + offset] !== candidate[offset]) {
+            isMatch = false;
+            break;
+          }
+        }
+
+        if (!isMatch) continue;
+
+        if (
+          endIndex < parts.length ||
+          !allowedSaltRootProperties.has(property)
+        ) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  })();
 
 function check(property, verboseLog) {
   const checkResult = includesCssAttribute(property);
@@ -68,27 +115,29 @@ const ruleFunction = (primary) => {
     root.walkDecls((decl) => {
       const { prop, value } = decl;
 
-      const parsedValue = valueParser(value);
+      if (value.includes("var(")) {
+        const parsedValue = valueParser(value);
 
-      parsedValue.walk((node) => {
-        if (!isVarFunction(node)) return;
+        parsedValue.walk((node) => {
+          if (!isVarFunction(node)) return;
 
-        const { nodes } = node;
+          const { nodes } = node;
 
-        const firstNode = nodes[0];
+          const firstNode = nodes[0];
 
-        verboseLog && console.log({ nodes });
+          verboseLog && console.log({ nodes });
 
-        if (!firstNode || check(firstNode.value)) return;
+          if (!firstNode || check(firstNode.value)) return;
 
-        complain(
-          declarationValueIndex(decl) + firstNode.sourceIndex,
-          firstNode.value.length,
-          decl,
-        );
-      });
+          complain(
+            declarationValueIndex(decl) + firstNode.sourceIndex,
+            firstNode.value.length,
+            decl,
+          );
+        });
+      }
 
-      if (check(prop)) return;
+      if (!prop.startsWith("--") || check(prop)) return;
 
       verboseLog && console.log({ prop });
 

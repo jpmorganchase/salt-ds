@@ -68,28 +68,32 @@ const ruleFunction = (primaryOption, secondaryOptionObject) => {
     root.walkDecls((decl) => {
       const { prop, value } = decl;
 
-      const parsedValue = valueParser(value);
+      if (value.includes("var(")) {
+        const parsedValue = valueParser(value);
 
-      parsedValue.walk((node) => {
-        if (!isVarFunction(node)) return;
+        parsedValue.walk((node) => {
+          if (!isVarFunction(node)) return;
 
-        const { nodes } = node;
+          const { nodes } = node;
 
-        const firstNode = nodes[0];
+          const firstNode = nodes[0];
 
-        verboseLog && console.log({ nodes });
+          verboseLog && console.log({ nodes });
 
-        if (!firstNode) return;
+          if (!firstNode) return;
 
-        if (isDeprecatedToken(firstNode.value, verboseLog)) {
-          complainDeprecatedTokenUsage(
-            declarationValueIndex(decl) + firstNode.sourceIndex,
-            firstNode.value.length,
-            decl,
-            firstNode.value,
-          );
-        }
-      });
+          if (isDeprecatedToken(firstNode.value, verboseLog)) {
+            complainDeprecatedTokenUsage(
+              declarationValueIndex(decl) + firstNode.sourceIndex,
+              firstNode.value.length,
+              decl,
+              firstNode.value,
+            );
+          }
+        });
+      }
+
+      if (!prop.startsWith("--")) return;
 
       verboseLog && console.log({ prop });
 
