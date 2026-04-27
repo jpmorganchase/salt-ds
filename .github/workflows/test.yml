@@ -6,12 +6,16 @@ on:
   workflow_dispatch:
   pull_request:
 
+permissions: {}
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
@@ -39,6 +43,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
@@ -71,6 +77,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
@@ -85,6 +93,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
@@ -102,6 +112,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
@@ -110,9 +122,11 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Setup react
+        env:
+          REACT_VERSION: ${{ matrix.react }}
         run: |
-          yarn set resolution react@npm:^18.0.0 npm:^${{ matrix.react }}
-          yarn set resolution react-dom@npm:^18.0.0 npm:^${{ matrix.react }}
+          yarn set resolution react@npm:^18.0.0 "npm:^$REACT_VERSION"
+          yarn set resolution react-dom@npm:^18.0.0 "npm:^$REACT_VERSION"
       - name: Build packages
         run: yarn run build
       - name: Cypress Components

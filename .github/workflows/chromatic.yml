@@ -6,97 +6,162 @@ on:
     types:
       - completed
 
-permissions:
-  issues: write
-  pull-requests: write
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
 
 jobs:
   chromatic-deployment:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: read
+    outputs:
+      issueNumber: ${{ steps.run_context.outputs.issueNumber }}
+      runChromatic: ${{ steps.run_context.outputs.runChromatic }}
     steps:
+      - name: Resolve workflow run context
+        uses: actions/github-script@v9
+        id: run_context
+        with:
+          script: |
+            const workflowRun = context.payload.workflow_run;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            async function getPullRequest() {
+              if (workflowRun.event !== "pull_request") {
+                return undefined;
+              }
+
+              const workflowPullRequest = workflowRun.pull_requests?.[0];
+
+              if (workflowPullRequest?.number) {
+                const response = await github.rest.pulls.get({
+                  owner,
+                  repo,
+                  pull_number: workflowPullRequest.number,
+                });
+
+                return response.data;
+              }
+
+              const associatedPullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner,
+                repo,
+                commit_sha: workflowRun.head_sha,
+              });
+
+              const pullRequest = associatedPullRequests.data.find(({ head }) => (
+                head.sha === workflowRun.head_sha &&
+                head.repo?.full_name === workflowRun.head_repository.full_name
+              )) ?? associatedPullRequests.data[0];
+
+              if (!pullRequest) {
+                throw new Error(`Could not resolve a pull request for workflow run ${workflowRun.id}`);
+              }
+
+              const response = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: pullRequest.number,
+              });
+
+              return response.data;
+            }
+
+            const pullRequest = await getPullRequest();
+            const labels = new Set((pullRequest?.labels ?? []).map(({ name }) => name));
+            const branchName = pullRequest ? pullRequest.head.label : workflowRun.head_branch;
+            const base = pullRequest ? pullRequest.base.ref : workflowRun.head_branch;
+            const headRepository = pullRequest?.head.repo?.full_name ?? workflowRun.head_repository.full_name;
+            const headSha = workflowRun.head_sha;
+
+            core.setOutput("branchName", branchName);
+            core.setOutput("base", base);
+            core.setOutput("headRepository", headRepository);
+            core.setOutput("headSha", headSha);
+            core.setOutput("issueNumber", pullRequest?.number ?? "");
+            core.setOutput("runChromatic", String(labels.has("chromatic")));
+            core.setOutput("noTurbosnap", String(labels.has("no turbosnap")));
+
+            core.info(`Resolved ${workflowRun.event} workflow run for ${branchName} at ${headSha}`);
+
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          repository: ${{ github.event.workflow_run.head_repository.full_name }}
-          ref: ${{ github.event.workflow_run.head_branch }}
-      - name: "Download run metadata"
-        uses: actions/download-artifact@v8
-        with:
-          name: metadata
-          path: ./METADATA
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
-      - name: Get branch for Chromatic
-        uses: actions/github-script@v9
-        id: run_metadata
-        with:
-          script: |
-            const fs = require("fs");
-            const branchName = fs.readFileSync("./METADATA/branch-name", "utf8").trim();
-            core.setOutput("branchName", branchName);
+          repository: ${{ steps.run_context.outputs.headRepository }}
+          ref: ${{ steps.run_context.outputs.headSha }}
+          persist-credentials: false
 
-            const base = fs.readFileSync("./METADATA/base", "utf8").trim();
-            core.setOutput("base", base);
-
-            const runChromatic = fs.readFileSync("./METADATA/run-chromatic", "utf8").trim();
-            core.setOutput("runChromatic", runChromatic);
-
-            const noTurbosnap = fs.readFileSync("./METADATA/no-turbosnap", "utf8").trim();
-            core.setOutput("noTurbosnap", noTurbosnap);
-
-            const issueNumber = fs.readFileSync("./METADATA/issue-number", "utf8").trim();
-            core.setOutput("issueNumber", issueNumber);
       - name: Fetch base branch from upstream
         if: github.event.workflow_run.event == 'pull_request'
+        env:
+          UPSTREAM_URL: ${{ github.event.repository.clone_url }}
+          BASE_BRANCH: ${{ steps.run_context.outputs.base }}
+          HEAD_SHA: ${{ steps.run_context.outputs.headSha }}
         run: |
-          git remote add upstream ${{ github.event.repository.clone_url }}
-          git fetch upstream
-          git checkout -B ${{ steps.run_metadata.outputs.base }} upstream/${{ steps.run_metadata.outputs.base }}
-          git checkout ${{ github.event.workflow_run.head_branch }}
+          git remote add upstream "$UPSTREAM_URL"
+          git fetch upstream "$BASE_BRANCH"
+          git checkout -B "$BASE_BRANCH" "upstream/$BASE_BRANCH"
+          git checkout -B pr-head "$HEAD_SHA"
           git clean -ffdx && git reset --hard HEAD
-      - name: Use Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: "24"
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn
       - name: "Download build artifact"
         uses: actions/download-artifact@v8
         with:
           name: storybook-build
-          path: ./storybook-static
+          path: ${{ runner.temp }}/storybook-static
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
-        if: ${{ steps.run_metadata.outputs.branchName == 'main' || steps.run_metadata.outputs.runChromatic == 'true' }}
-        uses: chromaui/action@v16.0.0
+        if: ${{ steps.run_context.outputs.branchName == 'main' || steps.run_context.outputs.runChromatic == 'true' }}
+        uses: chromaui/action@v16
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
-          onlyChanged: ${{ steps.run_metadata.outputs.branchName != 'main' && steps.run_metadata.outputs.noTurbosnap != 'true' }}
-          externals: ${{ steps.run_metadata.outputs.branchName != 'main' && steps.run_metadata.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
+          onlyChanged: ${{ steps.run_context.outputs.branchName != 'main' && steps.run_context.outputs.noTurbosnap != 'true' }}
+          externals: ${{ steps.run_context.outputs.branchName != 'main' && steps.run_context.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
           skip: "changeset-release/*"
-          autoAcceptChanges: ${{ steps.run_metadata.outputs.branchName == 'main' && steps.run_metadata.outputs.noTurbosnap != 'true' }}
+          autoAcceptChanges: ${{ steps.run_context.outputs.branchName == 'main' && steps.run_context.outputs.noTurbosnap != 'true' }}
           ignoreLastBuildOnBranch: "**"
-          traceChanged: ${{ (steps.run_metadata.outputs.branchName != 'main' && steps.run_metadata.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
-          storybookBuildDir: "./storybook-static"
-          branchName: ${{ steps.run_metadata.outputs.branchName }}
+          traceChanged: ${{ (steps.run_context.outputs.branchName != 'main' && steps.run_context.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
+          storybookBuildDir: ${{ runner.temp }}/storybook-static
+          branchName: ${{ steps.run_context.outputs.branchName }}
           debug: true
         env:
           LOG_LEVEL: "debug"
+  remove-chromatic-label:
+    if: ${{ needs.chromatic-deployment.result == 'success' && needs.chromatic-deployment.outputs.issueNumber != '' && needs.chromatic-deployment.outputs.runChromatic == 'true' }}
+    needs: chromatic-deployment
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
       - name: Remove Chromatic label
-        if: ${{ steps.run_metadata.outputs.branchName != 'main' }}
         uses: actions/github-script@v9
+        env:
+          ISSUE_NUMBER: ${{ needs.chromatic-deployment.outputs.issueNumber }}
         with:
           script: |
+            const issueNumberValue = process.env.ISSUE_NUMBER;
+
+            if (!/^[1-9]\d*$/.test(issueNumberValue)) {
+              core.warning(`Skipping label removal for invalid issue number: ${issueNumberValue}`);
+              return;
+            }
+
+            const issueNumber = Number.parseInt(issueNumberValue, 10);
+
             try {
               await github.rest.issues.removeLabel({
-                issue_number: ${{ steps.run_metadata.outputs.issueNumber }},
+                issue_number: issueNumber,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 name: "chromatic"
