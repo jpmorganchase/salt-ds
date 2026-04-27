@@ -100,7 +100,7 @@ export const RangeResponsiveGridPanel = (): ReactElement => {
               xl: 3,
             }}
             numberOfVisibleMonths={{
-              xs: 1,
+              xs: 2,
               sm: 2,
               md: 3,
               lg: 6,
