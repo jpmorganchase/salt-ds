@@ -10,8 +10,8 @@
   max-width: var(--calendarNavigation-maxWidth, none);
 }
 
-.saltCalendarNavigation-yearDropdown {
-  min-width: 4.3em;
+.saltDropdown.saltCalendarNavigation-yearDropdown {
+  min-width: min-content;
 }
 
 .saltCalendarNavigation-hideYearDropdown {
