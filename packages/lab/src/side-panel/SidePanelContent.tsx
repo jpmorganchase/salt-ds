@@ -101,7 +101,6 @@ export const SidePanelContent = forwardRef<
         {hasHeader ? <div id={headerId}>{header}</div> : null}
         <Button
           ref={closeButtonRef}
-          tabIndex={0}
           aria-label="Close"
           appearance="transparent"
           onClick={() => setOpen(false)}

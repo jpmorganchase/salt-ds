@@ -13,7 +13,7 @@ import {
 } from "react";
 import { SidePanelContext } from "./SidePanelContext";
 
-export interface SidePanelGroupProps {
+export interface SidePanelProviderProps {
   /**
    * Whether the panel is open.
    */
@@ -32,7 +32,7 @@ export interface SidePanelGroupProps {
   children: ReactNode;
 }
 
-export function SidePanelProvider(props: SidePanelGroupProps) {
+export function SidePanelProvider(props: SidePanelProviderProps) {
   const { children, open: openProp, defaultOpen, onOpenChange } = props;
 
   const [openState, setOpenState] = useControlled({
