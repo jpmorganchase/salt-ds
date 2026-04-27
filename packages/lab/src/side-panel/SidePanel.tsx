@@ -68,12 +68,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
-    // Skip initial focus movement when the panel is open on first mount
-    // (defaultOpen / controlled open=true). Uses state rather than a ref because
-    // the setPanelId effect triggers a context re-render after initialRender would
-    // be false, and a ref value used as a prop isn't safe across that extra render.
-    // Passing -1 to initialFocus tells FloatingFocusManager to skip focus movement
-    // while keeping all other focus management (tab handling, return focus) active.
+    // On first mount while open, skip moving focus when focus did not come from the trigger.
     const [skipInitialFocus, setSkipInitialFocus] = useState(() => {
       if (!openState) return false;
       const reference = floatingRootContext.elements.reference;
@@ -106,6 +101,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     }, [openState]);
 
     useEffect(() => {
+      // Keep this as state (not ref): setPanelId causes a context re-render and
+      // this value is consumed as a prop for initial focus behavior.
       setPanelId(id);
 
       return () => {
@@ -159,6 +156,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
+    // `-1` skips initial focus movement but preserves focus guards/return focus handling.
     const resolvedInitialFocus = skipInitialFocus
       ? -1
       : (initialFocus ?? closeButtonRef);

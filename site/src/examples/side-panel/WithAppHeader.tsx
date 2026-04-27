@@ -6,7 +6,6 @@ import {
   FlexLayout,
   H2,
   Input,
-  Link,
   StackLayout,
   Text,
   Tooltip,
@@ -77,48 +76,38 @@ const DesktopAppHeader = () => {
   );
 };
 
-const SidePanelExample = () => {
+export const WithAppHeader = () => {
   const headingId = useId();
-
   return (
-    <BorderLayout
-      style={{
-        position: "relative",
-        width: "100%",
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-      }}
-    >
-      <BorderItem position="north">
-        <DesktopAppHeader />
-      </BorderItem>
-      <BorderItem position="center">
-        <FlexLayout padding={3}>
-          <Link href="#">Link 1</Link>
-          <Link href="#">Link 2</Link>
-          <Link href="#">Link 3</Link>
-        </FlexLayout>
-        <ContentExample />
-      </BorderItem>
-      <BorderItem position="east">
-        <SidePanel aria-labelledby={headingId}>
-          <SidePanelContent header={<H2 id={headingId}>Help & support</H2>}>
-            <Text>
-              The content shown here is for illustrative purposes and does not
-              contain specific information or advice. Using placeholder text
-              like this helps review formatting, spacing, and overall
-              presentation in the user interface. Adjust the wording as needed
-              to suit your particular requirements or design preferences.
-            </Text>
-          </SidePanelContent>
-        </SidePanel>
-      </BorderItem>
-    </BorderLayout>
+    <SidePanelProvider defaultOpen={true}>
+      <BorderLayout
+        style={{
+          position: "relative",
+          width: "100%",
+          border:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        }}
+      >
+        <BorderItem position="north">
+          <DesktopAppHeader />
+        </BorderItem>
+        <BorderItem position="center">
+          <ContentExample />
+        </BorderItem>
+        <BorderItem position="east">
+          <SidePanel aria-labelledby={headingId}>
+            <SidePanelContent header={<H2 id={headingId}>Help & support</H2>}>
+              <Text>
+                The content shown here is for illustrative purposes and does not
+                contain specific information or advice. Using placeholder text
+                like this helps review formatting, spacing, and overall
+                presentation in the user interface. Adjust the wording as needed
+                to suit your particular requirements or design preferences.
+              </Text>
+            </SidePanelContent>
+          </SidePanel>
+        </BorderItem>
+      </BorderLayout>
+    </SidePanelProvider>
   );
 };
-
-export const WithAppHeader = () => (
-  <SidePanelProvider defaultOpen={true}>
-    <SidePanelExample />
-  </SidePanelProvider>
-);
