@@ -45,3 +45,6 @@ Update your DatePicker usage to explicitly set `enableApply`:
 
 The automatic detection will be removed in a future version.
 
+### DatePickerRangePanel navigation fix
+
+Fixed an issue where the end calendar's Next button was incorrectly disabled near `minDate`. The `isEndNextDisabled` guard was comparing against `minDate` plus one month instead of `maxDate`, which meant the Next button could be disabled even when valid later months were available.

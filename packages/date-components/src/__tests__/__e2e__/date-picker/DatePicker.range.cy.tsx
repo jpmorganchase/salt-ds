@@ -386,6 +386,44 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         });
       });
 
+      it("SHOULD enable the end calendar Next button when the end visible month is before maxDate", () => {
+        const minDate = adapter.parse("15/01/2030", "DD/MM/YYYY").date;
+        const maxDate = adapter.parse("15/12/2030", "DD/MM/YYYY").date;
+        const defaultStartVisibleMonth = adapter.parse(
+          "01/01/2030",
+          "DD/MM/YYYY",
+        ).date;
+        const defaultEndVisibleMonth = adapter.parse(
+          "01/02/2030",
+          "DD/MM/YYYY",
+        ).date;
+        cy.mount(
+          <DatePicker
+            selectionVariant="range"
+            minDate={minDate}
+            maxDate={maxDate}
+          >
+            <DatePickerTrigger>
+              <DatePickerRangeInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerRangePanel
+                defaultStartVisibleMonth={defaultStartVisibleMonth}
+                defaultEndVisibleMonth={defaultEndVisibleMonth}
+              />
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+        // Open the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        cy.findAllByRole("application").should("have.length", 2);
+        // End calendar shows February 2030, maxDate is December 2030
+        // The end calendar Next button should be enabled
+        cy.findAllByRole("button", { name: /^Next Month/ })
+          .eq(1)
+          .should("not.have.attr", "aria-disabled", "true");
+      });
+
       it("SHOULD navigate to minDate month and call onStartVisibleMonthChange when a start date before minDate is entered", () => {
         const visibleMonthChangeSpy = cy.stub().as("visibleMonthChangeSpy");
         const minDate = adapter.parse("15/01/2030", "DD/MM/YYYY").date;

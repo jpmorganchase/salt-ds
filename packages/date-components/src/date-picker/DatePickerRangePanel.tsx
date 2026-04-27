@@ -689,7 +689,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
   );
   const isEndNextDisabled = dateAdapter.isSame(
     endVisibleMonth,
-    dateAdapter.add(minDate, { months: 1 }),
+    dateAdapter.startOf(maxDate, "month"),
     "month",
   );
 
