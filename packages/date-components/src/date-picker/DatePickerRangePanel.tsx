@@ -674,12 +674,12 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
 
   const isStartPreviousDisabled = dateAdapter.isSame(
     startVisibleMonth,
-    dateAdapter.startOf(minDate, "month"),
+    minDate,
     "month",
   );
   const isEndPreviousDisabled = dateAdapter.isSame(
     endVisibleMonth,
-    dateAdapter.startOf(minDate, "month"),
+    minDate,
     "month",
   );
   const isStartNextDisabled = dateAdapter.isSame(
@@ -689,7 +689,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel(
   );
   const isEndNextDisabled = dateAdapter.isSame(
     endVisibleMonth,
-    dateAdapter.startOf(maxDate, "month"),
+    maxDate,
     "month",
   );
 

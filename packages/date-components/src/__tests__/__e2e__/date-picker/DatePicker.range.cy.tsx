@@ -336,8 +336,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findAllByLabelText(/Previous Month/)
           .eq(0)
           .should("not.have.attr", "aria-disabled", "true");
-        cy.findAllByRole("button", { name: /^Next Month/ })
-          .eq(1)
+        cy.findAllByLabelText(/Future dates are out of range/)
+          .eq(0)
           .should("have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
@@ -543,9 +543,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
               <DatePickerRangeInput />
             </DatePickerTrigger>
             <DatePickerOverlay>
-              <DatePickerRangePanel>
-                <DatePickerActions selectionVariant="range" />
-              </DatePickerRangePanel>
+              <DatePickerRangePanel />
+              <DatePickerActions selectionVariant="range" />
             </DatePickerOverlay>
           </DatePicker>,
         );
@@ -568,9 +567,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
               <DatePickerRangeInput />
             </DatePickerTrigger>
             <DatePickerOverlay>
-              <DatePickerRangePanel>
-                <DatePickerActions selectionVariant="range" />
-              </DatePickerRangePanel>
+              <DatePickerRangePanel />
+              <DatePickerActions selectionVariant="range" />
             </DatePickerOverlay>
           </DatePicker>,
         );
@@ -886,7 +884,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         const validateSpy = cy
           .stub()
           .as("validateSpy")
-          .callsFake((date, details) => details);
+          .callsFake((_date, details) => details);
 
         cy.mount(
           <DatePicker selectionVariant="range">

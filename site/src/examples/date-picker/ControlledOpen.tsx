@@ -96,12 +96,9 @@ export const ControlledOpen = (): ReactElement => {
             <Divider variant="tertiary" />
           </FlexItem>
           <FlexItem>
-            can you review the enableApply api now across all components and
-            docs and tests and check if there are any remaining issues and also
-            that we have solved this related issuecan you review the enableApply
-            api now across all components and docs and tests and check if there
-            are any remaining issues and also that we have solved this related
-            issue selectionVariant="single" applyButtonRef={applyButtonRef}
+            <DatePickerActions
+              selectionVariant="single"
+              applyButtonRef={applyButtonRef}
             />
           </FlexItem>
         </FlexLayout>

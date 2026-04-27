@@ -588,11 +588,11 @@ export function useCalendar(props: UseCalendarProps): UseCalendarReturn {
 
   const handleSelectionChange = useCallback(
     (event: SyntheticEvent, nextSelectedDate: unknown) => {
-      // biome-ignore lint/suspicious/noExplicitAny: onSelectionChange is polymorphic over selection variants
-      (onSelectionChange as UseCalendarSelectionProps["onSelectionChange"])?.(
-        event,
-        nextSelectedDate as any,
-      );
+      (
+        onSelectionChange as
+          | ((event: SyntheticEvent, selectedDate: unknown) => void)
+          | undefined
+      )?.(event, nextSelectedDate);
 
       if (createAnnouncement === null) {
         return;
