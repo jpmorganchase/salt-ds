@@ -4,12 +4,16 @@ on:
   schedule:
     - cron: "0 0 * * *"
 
+permissions: {}
+
 jobs:
   cypress-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
@@ -22,7 +26,7 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
-        uses: cypress-io/github-action@v7.1.9
+        uses: cypress-io/github-action@v7
         with:
           install: false
           command: yarn run test:components
