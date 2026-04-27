@@ -171,15 +171,6 @@ export type UseCalendarSelectionProps =
   | UseCalendarSelectionOffsetProps
   | UseCalendarSelectionMultiselectOffsetProps;
 
-function isMultiselect(
-  props: UseCalendarSelectionProps,
-): props is
-  | UseCalendarSelectionMultiselectSingleProps
-  | UseCalendarSelectionMultiselectRangeProps
-  | UseCalendarSelectionMultiselectOffsetProps {
-  return props.multiselect === true;
-}
-
 function selectDateRange(
   dateAdapter: SaltDateAdapter,
   previousSelectedDate: DateRangeSelection<DateFrameworkType>,
@@ -238,9 +229,14 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
     isOutsideAllowedDates = () => 0,
     select: selectProp,
     selectionVariant,
-    // startDateOffset,
-    // endDateOffset,
-  } = props;
+    startDateOffset,
+    endDateOffset,
+    multiselect,
+  } = props as UseCalendarSelectionProps & {
+    startDateOffset?: (date: DateFrameworkType) => DateFrameworkType;
+    endDateOffset?: (date: DateFrameworkType) => DateFrameworkType;
+    multiselect?: boolean;
+  };
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const [selectedDate, setSelectedDateState] = useControlled({
     controlled: selectedDateProp,
@@ -273,7 +269,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
 
         switch (selectionVariant) {
           case "single": {
-            if (isMultiselect(props)) {
+            if (multiselect) {
               const multipleSingleSelectedDate = selectedDate as Array<
                 SingleDateSelection<DateFrameworkType>
               >;
@@ -305,7 +301,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
             break;
           }
           case "range": {
-            if (isMultiselect(props)) {
+            if (multiselect) {
               const multipleRangeSelectedDate = selectedDate as Array<
                 DateRangeSelection<DateFrameworkType>
               >;
@@ -344,8 +340,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
             break;
           }
           case "offset": {
-            const { startDateOffset, endDateOffset } = props;
-            if (isMultiselect(props)) {
+            if (multiselect) {
               const multipleOffsetSelectedDate = selectedDate as Array<
                 DateRangeSelection<DateFrameworkType>
               >;
@@ -399,7 +394,9 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
       selectedDate,
       selectionVariant,
       onSelectionChange,
-      props, // Ensure props is included in the dependency array
+      multiselect,
+      startDateOffset,
+      endDateOffset,
     ],
   );
 
