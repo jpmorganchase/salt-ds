@@ -69,7 +69,7 @@ jobs:
       contents: read
       id-token: write # Needed for npm trusted publishing provenance.
       issues: write # Needed to react to and comment on the trigger comment.
-      pull-requests: read # Needed to read the PR head repository and fork status.
+      pull-requests: write # Needed to read the PR head repository and fork status.
     concurrency:
       group: ${{ github.workflow }}-snapshot-${{ github.event.issue.number }}
       cancel-in-progress: false
