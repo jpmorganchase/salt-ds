@@ -140,6 +140,7 @@ export const RangeWithConfirmation = (): ReactElement => {
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        enableApply
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}

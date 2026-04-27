@@ -397,6 +397,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(
           <DatePicker
             selectionVariant="range"
+            enableApply
             minDate={minDate}
             maxDate={maxDate}
           >
@@ -445,6 +446,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(
           <DatePicker
             selectionVariant="range"
+            enableApply
             minDate={minDate}
             maxDate={maxDate}
           >
@@ -507,6 +509,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(
           <DatePicker
             selectionVariant="range"
+            enableApply
             minDate={minDate}
             maxDate={maxDate}
           >
@@ -551,6 +554,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(
           <DatePicker
             selectionVariant="range"
+            enableApply
             minDate={minDate}
             maxDate={maxDate}
           >

@@ -118,6 +118,7 @@ export const SingleWithConfirmation = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        enableApply
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}

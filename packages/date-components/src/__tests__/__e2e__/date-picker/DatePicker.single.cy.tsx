@@ -460,6 +460,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.mount(
           <DatePicker
             selectionVariant="single"
+            enableApply
             minDate={minDate}
             maxDate={maxDate}
           >
@@ -510,6 +511,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.mount(
           <DatePicker
             selectionVariant="single"
+            enableApply
             minDate={minDate}
             maxDate={maxDate}
           >
@@ -983,6 +985,47 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             }
             currentDate = adapter.add(currentDate, { days: 1 });
           }
+        });
+
+        it("SHOULD NOT auto-apply typed unselectable dates when DatePickerActions are not rendered", () => {
+          const applySpy = cy.stub().as("applySpy");
+          const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+          const blockedDate = adapter.parse("04 Jan 2025", "DD MMM YYYY").date;
+
+          cy.mount(
+            <DatePicker
+              selectionVariant="single"
+              isDayUnselectable={(day) =>
+                adapter.isSame(day, blockedDate, "day") ? "blocked date" : false
+              }
+              onSelectionChange={selectionChangeSpy}
+              onApply={applySpy}
+            >
+              <DatePickerTrigger>
+                <DatePickerSingleInput />
+              </DatePickerTrigger>
+              <DatePickerOverlay>
+                <DatePickerSingleGridPanel />
+              </DatePickerOverlay>
+            </DatePicker>,
+          );
+
+          cy.findByRole("textbox").click().clear().type("04 Jan 2025");
+          cy.realPress("Tab");
+
+          cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+          // biome-ignore lint/suspicious/noExplicitAny: spy assertions
+          cy.get("@selectionChangeSpy").should((spy: any) => {
+            const [_event, date, details] = spy.lastCall.args;
+            expect(adapter.isValid(date)).to.be.true;
+            expect(details?.errors).to.deep.equal([
+              {
+                type: "unselectable",
+                message: "blocked date",
+              },
+            ]);
+          });
+          cy.get("@applySpy").should("not.have.been.called");
         });
 
         it("SHOULD be able to select a date", () => {

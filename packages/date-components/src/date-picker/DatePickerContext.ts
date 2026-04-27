@@ -74,11 +74,6 @@ interface DatePickerBaseState {
      * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
      */
     isDayUnselectable?: (date: DateFrameworkType) => string | false | undefined;
-    /**
-     * Sets the enableApply state.
-     * @param newEnableApply - The new value for enableApply.
-     */
-    setEnableApply: (newEnableApply: boolean) => void;
   };
 }
 

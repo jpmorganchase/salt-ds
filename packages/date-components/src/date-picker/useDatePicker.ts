@@ -38,6 +38,11 @@ interface UseDatePickerBaseProps {
    */
   disabled?: boolean;
   /**
+   * If `true`, enables apply mode where selections are not committed until explicitly applied.
+   * When using `DatePickerActions`, this is automatically set to `true`.
+   */
+  enableApply?: boolean;
+  /**
    * Function to determine if a day is highlighted.
    * @param date - The date to check.
    * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
@@ -167,6 +172,7 @@ export function useDatePicker(
     createAnnouncement,
     readOnly = false,
     disabled,
+    enableApply = false,
     selectionVariant,
     defaultSelectedDate,
     isDayHighlighted,
@@ -209,7 +215,6 @@ export function useDatePicker(
     state: "selectedDate",
   });
 
-  const [enableApply, setEnableApply] = useState<boolean>(false);
   const [cancelled, setCancelled] = useState<boolean>(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
@@ -283,10 +288,10 @@ export function useDatePicker(
       date: SingleDateSelection | null,
       details: DateInputSingleDetails,
     ) => {
-      const canBeApplied =
-        dateAdapter.isValid(date) && !details?.errors?.length;
       setSelectedDate(date);
       checkAndAddError(date, isDayUnselectable, "unselectable", details);
+      const canBeApplied =
+        dateAdapter.isValid(date) && !details?.errors?.length;
 
       if (selectionVariant === "single") {
         onSelectionChange?.(event, date, details);
@@ -454,7 +459,6 @@ export function useDatePicker(
       cancel,
       isDayHighlighted,
       isDayUnselectable,
-      setEnableApply,
     },
   };
   if (props.selectionVariant === "range") {

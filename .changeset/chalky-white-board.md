@@ -1,5 +1,6 @@
 ---
 "@salt-ds/lab": patch
+"@salt-ds/date-components": patch
 ---
 
 Date components and related utilities have been extracted into a new package: `@salt-ds/date-components`. This package is intended to be the long-term home for these components.
@@ -14,3 +15,33 @@ In addition, `DatePickerSinglePanel` which was previously deprecated in favour o
 - import { DatePickerSinglePanel } from "@salt-ds/lab";
 + import { DatePickerSingleGridPanel } from "@salt-ds/date-components";
 ```
+
+### DatePicker `enableApply` prop deprecation
+
+The automatic detection of `DatePickerActions` to infer the `enableApply` prop is now deprecated. When using a modal `DatePicker` with confirmation controls, you must explicitly set `enableApply={true}` on the `DatePicker` component.
+
+A deprecation warning will be emitted in development mode if `DatePickerActions` is detected and `enableApply` is not explicitly provided.
+
+**Migration:**
+
+Update your DatePicker usage to explicitly set `enableApply`:
+
+```diff
+  <DatePicker
+    selectionVariant="single"
++   enableApply={true}
+    onApply={handleApply}
+    onCancel={handleCancel}
+  >
+    <DatePickerTrigger>
+      <DatePickerSingleInput />
+    </DatePickerTrigger>
+    <DatePickerOverlay>
+      <DatePickerSingleGridPanel />
+      <DatePickerActions selectionVariant="single" />
+    </DatePickerOverlay>
+  </DatePicker>
+```
+
+The automatic detection will be removed in a future version.
+

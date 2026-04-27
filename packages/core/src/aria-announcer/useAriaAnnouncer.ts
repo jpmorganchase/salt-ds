@@ -50,8 +50,6 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       }
 
       function makeAnnouncement() {
-        console.log(announcement);
-
         if (options.target) {
           const targetAnnouncer = getAnnouncementTarget(options.target);
           if (targetAnnouncer) {

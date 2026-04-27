@@ -8,7 +8,6 @@ import {
   type MouseEventHandler,
   type Ref,
   type SyntheticEvent,
-  useEffect,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
@@ -118,15 +117,8 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
 
   const {
     state: { selectedDate },
-    helpers: { cancel, setEnableApply },
+    helpers: { cancel },
   } = stateAndHelpers;
-
-  useEffect(() => {
-    setEnableApply(true);
-    return () => {
-      setEnableApply(false);
-    };
-  }, [setEnableApply]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
     cancel(event.nativeEvent);

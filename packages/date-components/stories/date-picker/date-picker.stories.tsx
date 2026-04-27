@@ -1566,6 +1566,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
       <DatePicker
         selectionVariant="single"
         {...args}
+        enableApply
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
@@ -1734,6 +1735,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
       <DatePicker
         selectionVariant="range"
         {...args}
+        enableApply
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
@@ -3613,6 +3615,7 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
     <DatePicker
       selectionVariant="range"
       {...args}
+      enableApply
       selectedDate={selectedDate}
       onApply={handleApply}
       onCancel={handleCancel}
@@ -3794,6 +3797,7 @@ export const ControlledOpen: StoryFn<DatePickerSingleProps> = ({
     <DatePicker
       selectionVariant={"single"}
       {...args}
+      enableApply
       onSelectionChange={handleSelectionChange}
       selectedDate={selectedDate}
       onApply={handleApply}

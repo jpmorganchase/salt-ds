@@ -158,6 +158,10 @@ Valid values for `timezone` are date framework specific and can be one of the fo
 
 `DatePickerActions` provides the controls to apply or cancel a date selection.
 
+When using a modal `DatePicker` with confirmation controls, you must explicitly set `enableApply={true}` on the `DatePicker` component to enable apply mode. This ensures that date selections are not committed until the user explicitly applies them through the confirmation controls (e.g., Apply button).
+
+If you are creating your own confirmation controls instead of using `DatePickerActions`, you must also explicitly set `enableApply={true}` on the `DatePicker` component.
+
 ### useDatePicker
 
 The `useDatePicker` hook provides `state` and `helpers` to manage the `DatePicker` state.
