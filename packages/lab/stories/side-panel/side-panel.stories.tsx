@@ -815,9 +815,11 @@ const ScrollableContent = () => (
       }}
     >
       {Array.from({ length: 12 }, (_, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: Static list of identical placeholder items
         <div
-          key={`grid-item-${i}`}
+          key={`grid-item-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+            i
+          }`}
           style={{
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
@@ -901,6 +903,7 @@ function useResizableSidePanel({
         getComputedStyle(document.documentElement).getPropertyValue(
           "--salt-duration-perceptible",
         ),
+        10,
       ) || 300; // var(--salt-duration-perceptible)
     setAnimating(true);
     setExpanded(willExpand);
@@ -1194,6 +1197,7 @@ const HelpPanelCard = ({
     >
       <StackLayout gap={2}>
         {Array.from({ length: 15 }, (_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Example-only static placeholder items
           <Text key={`panel-item-${i}`}>
             Panel item {i + 1} — The content shown here is for illustrative
             purposes and does not contain specific information or advice.
@@ -1223,6 +1227,7 @@ const CardsContent = () => {
         <FlexItem grow={1}>
           <StackLayout gap={2}>
             {Array.from({ length: 20 }, (_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: Example-only static placeholder items
               <Card key={`content-card-${i}`}>
                 <Text>
                   Content card {i + 1} — This card is part of the main
@@ -1321,6 +1326,7 @@ const ResizableCardsContent = () => {
           >
             <StackLayout gap={2}>
               {Array.from({ length: 20 }, (_, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: Example-only static placeholder items
                 <Card key={`content-card-${i}`}>
                   <Text>
                     Content card {i + 1} — This card is part of the main
