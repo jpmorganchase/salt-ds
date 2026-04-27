@@ -12,6 +12,8 @@ const panelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
+type PanelContext = ReturnType<typeof useSidePanelContext>;
+
 const RightPanel = () => {
   const headingId = useId();
   return (
@@ -43,9 +45,15 @@ const LeftPanel = () => {
   );
 };
 
-const ManualTriggerButton = ({ children }: { children: string }) => {
+const TriggerButton = ({
+  children,
+  context,
+}: {
+  children: string;
+  context: PanelContext;
+}) => {
   const { openState, setOpen, panelId, getReferenceProps, setReference } =
-    useSidePanelContext();
+    context;
 
   return (
     <Button
@@ -62,25 +70,27 @@ const ManualTriggerButton = ({ children }: { children: string }) => {
   );
 };
 
+const RightPanelTriggerButton = () => {
+  const rightPanelContext = useSidePanelContext();
+
+  return (
+    <TriggerButton context={rightPanelContext}>
+      Toggle right panel
+    </TriggerButton>
+  );
+};
+
 const ContentArea = () => {
-  const leftCtx = useSidePanelContext();
+  const leftPanelContext = useSidePanelContext();
 
   return (
     <SidePanelProvider>
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
-          <Button
-            {...(leftCtx.getReferenceProps({
-              "aria-expanded": leftCtx.openState,
-              "aria-controls": leftCtx.openState ? leftCtx.panelId : undefined,
-              onClick: () => leftCtx.setOpen(!leftCtx.openState),
-            }) as Record<string, unknown>)}
-            ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}
-            style={{ width: "fit-content", whiteSpace: "nowrap" }}
-          >
+          <TriggerButton context={leftPanelContext}>
             Toggle left panel
-          </Button>
-          <ManualTriggerButton>Toggle right panel</ManualTriggerButton>
+          </TriggerButton>
+          <RightPanelTriggerButton />
         </FlexLayout>
       </ContentExample>
       <RightPanel />

@@ -204,6 +204,8 @@ const manualPanelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
+type ManualPanelContext = ReturnType<typeof useSidePanelContext>;
+
 const ManualRightPanel = () => {
   const headingId = useId();
   return (
@@ -235,9 +237,15 @@ const ManualLeftPanel = () => {
   );
 };
 
-const ManualTriggerButton = ({ children }: { children: string }) => {
+const ManualTriggerButton = ({
+  children,
+  context,
+}: {
+  children: string;
+  context: ManualPanelContext;
+}) => {
   const { openState, setOpen, getReferenceProps, setReference, panelId } =
-    useSidePanelContext();
+    context;
 
   return (
     <Button
@@ -254,25 +262,31 @@ const ManualTriggerButton = ({ children }: { children: string }) => {
   );
 };
 
+const ManualRightPanelTriggerButton = () => {
+  const rightPanelContext = useSidePanelContext();
+
+  return (
+    <ManualTriggerButton context={rightPanelContext}>
+      Toggle right panel
+    </ManualTriggerButton>
+  );
+};
+
 const ManualContentArea = () => {
-  const leftCtx = useSidePanelContext();
+  const leftPanelContext = useSidePanelContext();
 
   return (
     <SidePanelProvider>
       <ContentExample>
+        <Text style={{ marginBottom: "var(--salt-spacing-100)" }}>
+          Each side panel needs its own provider context. The left panel uses
+          the outer provider, and the right panel uses this nested provider.
+        </Text>
         <FlexLayout gap={1} justify="space-between">
-          <Button
-            {...(leftCtx.getReferenceProps({
-              "aria-expanded": leftCtx.openState,
-              "aria-controls": leftCtx.openState ? leftCtx.panelId : undefined,
-              onClick: () => leftCtx.setOpen(!leftCtx.openState),
-            }) as Record<string, unknown>)}
-            ref={leftCtx.setReference as React.Ref<HTMLButtonElement>}
-            style={{ width: "fit-content", whiteSpace: "nowrap" }}
-          >
+          <ManualTriggerButton context={leftPanelContext}>
             Toggle left panel
-          </Button>
-          <ManualTriggerButton>Toggle right panel</ManualTriggerButton>
+          </ManualTriggerButton>
+          <ManualRightPanelTriggerButton />
         </FlexLayout>
       </ContentExample>
       <ManualRightPanel />
