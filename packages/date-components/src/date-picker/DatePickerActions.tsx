@@ -146,7 +146,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
   };
 
   let selectedLabel = "";
-  if (selectedDate === null) {
+  if (selectedDate === null || selectedDate === undefined) {
     selectedLabel = "no date selected";
   } else if (selectionVariant === "single") {
     const date = selectedDate as SingleDateSelection[] | SingleDateSelection;
@@ -166,7 +166,13 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
           ? "no dates selected"
           : `${dateRange.length} range dates`;
     } else {
-      selectedLabel = `${dateAdapter.format(dateRange?.startDate, "dddd D MMMM YYYY")} to ${dateAdapter.format(dateRange?.endDate, "dddd D MMMM YYYY")}`;
+      const startLabel = dateRange?.startDate
+        ? dateAdapter.format(dateRange.startDate, "dddd D MMMM YYYY")
+        : "no start date";
+      const endLabel = dateRange?.endDate
+        ? dateAdapter.format(dateRange.endDate, "dddd D MMMM YYYY")
+        : "no end date";
+      selectedLabel = `${startLabel} to ${endLabel}`;
     }
   }
 

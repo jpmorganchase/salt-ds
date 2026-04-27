@@ -536,6 +536,55 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         }).should("be.focused");
       });
 
+      it("SHOULD show 'no date selected' on action buttons when no date has been selected", () => {
+        cy.mount(
+          <DatePicker selectionVariant="range" enableApply>
+            <DatePickerTrigger>
+              <DatePickerRangeInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerRangePanel>
+                <DatePickerActions selectionVariant="range" />
+              </DatePickerRangePanel>
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+        // Open the calendar without selecting any date
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        cy.findAllByRole("application").should("have.length", 2);
+        // Verify action buttons show "no date selected"
+        cy.findByRole("button", {
+          name: "Apply no date selected",
+        }).should("exist");
+        cy.findByRole("button", {
+          name: "Cancel no date selected",
+        }).should("exist");
+      });
+
+      it("SHOULD show partial range labels on action buttons when only start date is selected", () => {
+        cy.mount(
+          <DatePicker selectionVariant="range" enableApply>
+            <DatePickerTrigger>
+              <DatePickerRangeInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerRangePanel>
+                <DatePickerActions selectionVariant="range" />
+              </DatePickerRangePanel>
+            </DatePickerOverlay>
+          </DatePicker>,
+        );
+        // Open the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        cy.findAllByRole("application").should("have.length", 2);
+        // Select only a start date (6 May 2024 - today per clock)
+        cy.findByRole("button", { name: "Monday 6 May 2024" }).realClick();
+        // Verify action buttons show partial range with "no end date"
+        cy.findByRole("button", {
+          name: /Apply Monday 6 May 2024 to no end date/,
+        }).should("exist");
+      });
+
       it("SHOULD navigate to minDate month in RangeGridPanel and call onVisibleMonthChange when a start date before minDate is entered", () => {
         const visibleMonthChangeSpy = cy.stub().as("visibleMonthChangeSpy");
         const minDate = adapter.parse("15/01/2030", "DD/MM/YYYY").date;
