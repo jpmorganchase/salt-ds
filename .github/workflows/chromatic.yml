@@ -25,7 +25,7 @@ jobs:
       runChromatic: ${{ steps.run_context.outputs.runChromatic }}
     steps:
       - name: Resolve workflow run context
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         id: run_context
         with:
           script: |
@@ -91,7 +91,7 @@ jobs:
 
             core.info(`Resolved ${workflowRun.event} workflow run for ${branchName} at ${headSha}`);
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
           repository: ${{ steps.run_context.outputs.headRepository }}
@@ -111,7 +111,7 @@ jobs:
           git checkout -B pr-head "$HEAD_SHA"
           git clean -ffdx && git reset --hard HEAD
       - name: "Download build artifact"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: storybook-build
           path: ${{ runner.temp }}/storybook-static
@@ -145,7 +145,7 @@ jobs:
       issues: write
     steps:
       - name: Remove Chromatic label
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           ISSUE_NUMBER: ${{ needs.chromatic-deployment.outputs.issueNumber }}
         with:
