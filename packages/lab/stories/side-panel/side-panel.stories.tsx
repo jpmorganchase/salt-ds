@@ -106,70 +106,82 @@ const ContentExample = ({ children }: { children?: ReactNode }) => (
 );
 
 export const Default: StoryFn = () => {
-  const headingId = useId();
-  const { openState } = useSidePanelContext();
-
   return (
     <SidePanelProvider>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: 300,
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-        }}
-        gap={0}
-      >
-        <ContentExample>
-          <SidePanelTrigger>
-            <Button style={{ width: "fit-content" }}>
-              {openState ? "Close" : "Open"} right panel
-            </Button>
-          </SidePanelTrigger>
-        </ContentExample>
-
-        <SidePanel position="right" aria-labelledby={headingId}>
-          <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
-            <Text>Side panel content goes here.</Text>
-          </SidePanelContent>
-        </SidePanel>
-      </FlexLayout>
+      <DefaultContent />
     </SidePanelProvider>
   );
 };
 
-export const Left: StoryFn = () => {
+const DefaultContent = () => {
   const headingId = useId();
   const { openState } = useSidePanelContext();
 
   return (
-    <SidePanelProvider>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: 300,
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-        }}
-        gap={0}
-      >
-        <SidePanel position="left" aria-labelledby={headingId}>
-          <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
-            <Text>Side panel content goes here.</Text>
-          </SidePanelContent>
-        </SidePanel>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <ContentExample>
+        <SidePanelTrigger>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} right panel
+          </Button>
+        </SidePanelTrigger>
+      </ContentExample>
 
-        <ContentExample>
-          <SidePanelTrigger>
-            <Button style={{ width: "fit-content" }}>
-              {openState ? "Close" : "Open"} left panel
-            </Button>
-          </SidePanelTrigger>
-        </ContentExample>
-      </FlexLayout>
+      <SidePanel position="right" aria-labelledby={headingId}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    </FlexLayout>
+  );
+};
+
+export const Left: StoryFn = () => {
+  return (
+    <SidePanelProvider>
+      <LeftContent />
     </SidePanelProvider>
+  );
+};
+
+const LeftContent = () => {
+  const headingId = useId();
+  const { openState } = useSidePanelContext();
+
+  return (
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <SidePanel position="left" aria-labelledby={headingId}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+
+      <ContentExample>
+        <SidePanelTrigger>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} left panel
+          </Button>
+        </SidePanelTrigger>
+      </ContentExample>
+    </FlexLayout>
   );
 };
 
@@ -293,6 +305,14 @@ export const ManualTrigger: StoryFn = () => (
 const variantOptions = ["primary", "secondary", "tertiary", "none"];
 
 export const Variants: StoryFn = () => {
+  return (
+    <SidePanelProvider defaultOpen={true}>
+      <VariantsContent />
+    </SidePanelProvider>
+  );
+};
+
+const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const headingId = useId();
   const { openState } = useSidePanelContext();
@@ -302,56 +322,50 @@ export const Variants: StoryFn = () => {
   };
 
   return (
-    <SidePanelProvider defaultOpen={true}>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: 320,
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-        }}
-        gap={0}
-      >
-        <ContentExample>
-          <StackLayout direction="column" gap={1}>
-            <SidePanelTrigger>
-              <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-                {openState ? "Close" : "Open"} right panel
-              </Button>
-            </SidePanelTrigger>
-            <FormField>
-              <FormFieldLabel>Variant</FormFieldLabel>
-              <RadioButtonGroup
-                direction="horizontal"
-                aria-label="Variant Controls"
-                name="variant"
-                onChange={handleVariantChange}
-                value={variant}
-              >
-                {variantOptions.map((option) => (
-                  <RadioButton
-                    key={option}
-                    label={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-                    value={option}
-                  />
-                ))}
-              </RadioButtonGroup>
-            </FormField>
-          </StackLayout>
-        </ContentExample>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 320,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <ContentExample>
+        <StackLayout direction="column" gap={1}>
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
+              {openState ? "Close" : "Open"} right panel
+            </Button>
+          </SidePanelTrigger>
+          <FormField>
+            <FormFieldLabel>Variant</FormFieldLabel>
+            <RadioButtonGroup
+              direction="horizontal"
+              aria-label="Variant Controls"
+              name="variant"
+              onChange={handleVariantChange}
+              value={variant}
+            >
+              {variantOptions.map((option) => (
+                <RadioButton
+                  key={option}
+                  label={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                  value={option}
+                />
+              ))}
+            </RadioButtonGroup>
+          </FormField>
+        </StackLayout>
+      </ContentExample>
 
-        <SidePanel
-          position="right"
-          aria-labelledby={headingId}
-          variant={variant}
-        >
-          <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
-            <Text>Side panel content goes here.</Text>
-          </SidePanelContent>
-        </SidePanel>
-      </FlexLayout>
-    </SidePanelProvider>
+      <SidePanel position="right" aria-labelledby={headingId} variant={variant}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    </FlexLayout>
   );
 };
 
@@ -400,6 +414,14 @@ const withTablePanelStyle = {
 } as CSSProperties;
 
 export const WithTable: StoryFn = () => {
+  return (
+    <SidePanelProvider>
+      <WithTableContent />
+    </SidePanelProvider>
+  );
+};
+
+const WithTableContent = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const panelHeadingId = useId();
   const { setOpen, setReference, getReferenceProps, openState, panelId } =
@@ -425,104 +447,98 @@ export const WithTable: StoryFn = () => {
   };
 
   return (
-    <SidePanelProvider>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: "100%",
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-        }}
-        gap={0}
-      >
-        <div
-          style={{ flex: 1, minWidth: 0, padding: "var(--salt-spacing-300)" }}
-        >
-          <TableContainer>
-            <Table>
-              <caption>Users</caption>
-              <THead>
-                <TR>
-                  <TH>Name</TH>
-                  <TH>Email</TH>
-                  <TH>Phone</TH>
-                  <TH>Action</TH>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: "100%",
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+      }}
+      gap={0}
+    >
+      <div style={{ flex: 1, minWidth: 0, padding: "var(--salt-spacing-300)" }}>
+        <TableContainer>
+          <Table>
+            <caption>Users</caption>
+            <THead>
+              <TR>
+                <TH>Name</TH>
+                <TH>Email</TH>
+                <TH>Phone</TH>
+                <TH>Action</TH>
+              </TR>
+            </THead>
+            <TBody>
+              {tableData.map((row) => (
+                <TR key={row.id}>
+                  <TD>{row.name}</TD>
+                  <TD>{row.email}</TD>
+                  <TD>{row.phone}</TD>
+                  <TD>
+                    <Button
+                      {...getTriggerProps(row)}
+                      style={{ minWidth: "auto" }}
+                    >
+                      Edit
+                    </Button>
+                  </TD>
                 </TR>
-              </THead>
-              <TBody>
-                {tableData.map((row) => (
-                  <TR key={row.id}>
-                    <TD>{row.name}</TD>
-                    <TD>{row.email}</TD>
-                    <TD>{row.phone}</TD>
-                    <TD>
-                      <Button
-                        {...getTriggerProps(row)}
-                        style={{ minWidth: "auto" }}
-                      >
-                        Edit
-                      </Button>
-                    </TD>
-                  </TR>
-                ))}
-              </TBody>
-            </Table>
-          </TableContainer>
-        </div>
+              ))}
+            </TBody>
+          </Table>
+        </TableContainer>
+      </div>
 
-        <SidePanel
-          position="right"
-          aria-labelledby={panelHeadingId}
-          style={withTablePanelStyle}
-          key={selectedRow?.id}
-        >
-          {selectedRow && (
-            <SidePanelContent
-              header={
-                <H2 id={panelHeadingId}>
-                  <span className="salt-visuallyHidden">
-                    {selectedRow.name}
-                  </span>
-                  Employee Details
-                </H2>
-              }
-            >
-              <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
-                <FormField>
-                  <FormFieldLabel>Name</FormFieldLabel>
-                  <Input defaultValue={selectedRow.name} />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Email</FormFieldLabel>
-                  <Input defaultValue={selectedRow.email} />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Phone</FormFieldLabel>
-                  <Input defaultValue={selectedRow.phone} />
-                </FormField>
-                <FlexLayout gap={1}>
-                  <Button
-                    sentiment="accented"
-                    appearance="bordered"
-                    style={{ width: "100%" }}
-                    onClick={() => setOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    sentiment="accented"
-                    style={{ width: "100%" }}
-                    onClick={() => setOpen(false)}
-                  >
-                    Save
-                  </Button>
-                </FlexLayout>
-              </StackLayout>
-            </SidePanelContent>
-          )}
-        </SidePanel>
-      </FlexLayout>
-    </SidePanelProvider>
+      <SidePanel
+        position="right"
+        aria-labelledby={panelHeadingId}
+        style={withTablePanelStyle}
+        key={selectedRow?.id}
+      >
+        {selectedRow && (
+          <SidePanelContent
+            header={
+              <H2 id={panelHeadingId}>
+                <span className="salt-visuallyHidden">{selectedRow.name}</span>
+                Employee Details
+              </H2>
+            }
+          >
+            <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
+              <FormField>
+                <FormFieldLabel>Name</FormFieldLabel>
+                <Input defaultValue={selectedRow.name} />
+              </FormField>
+              <FormField>
+                <FormFieldLabel>Email</FormFieldLabel>
+                <Input defaultValue={selectedRow.email} />
+              </FormField>
+              <FormField>
+                <FormFieldLabel>Phone</FormFieldLabel>
+                <Input defaultValue={selectedRow.phone} />
+              </FormField>
+              <FlexLayout gap={1}>
+                <Button
+                  sentiment="accented"
+                  appearance="bordered"
+                  style={{ width: "100%" }}
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  sentiment="accented"
+                  style={{ width: "100%" }}
+                  onClick={() => setOpen(false)}
+                >
+                  Save
+                </Button>
+              </FlexLayout>
+            </StackLayout>
+          </SidePanelContent>
+        )}
+      </SidePanel>
+    </FlexLayout>
   );
 };
 
@@ -969,36 +985,42 @@ const Nav = () => (
 );
 
 export const WithNav: StoryFn = () => {
+  return (
+    <SidePanelProvider>
+      <WithNavContent />
+    </SidePanelProvider>
+  );
+};
+
+const WithNavContent = () => {
   const headingId = useId();
   const { openState } = useSidePanelContext();
 
   return (
-    <SidePanelProvider>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: 300,
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-        }}
-        gap={0}
-      >
-        <Nav />
-        <SidePanel position="left" aria-labelledby={headingId}>
-          <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
-            <Text>Side panel content goes here.</Text>
-          </SidePanelContent>
-        </SidePanel>
-        <ContentExample>
-          <SidePanelTrigger>
-            <Button style={{ width: "fit-content" }}>
-              {openState ? "Close" : "Open"} side panel
-            </Button>
-          </SidePanelTrigger>
-        </ContentExample>
-      </FlexLayout>
-    </SidePanelProvider>
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <Nav />
+      <SidePanel position="left" aria-labelledby={headingId}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+      <ContentExample>
+        <SidePanelTrigger>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} side panel
+          </Button>
+        </SidePanelTrigger>
+      </ContentExample>
+    </FlexLayout>
   );
 };
 

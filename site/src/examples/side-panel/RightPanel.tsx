@@ -9,34 +9,41 @@ import {
 import { ContentExample } from "./ContentExample";
 
 export const RightPanel = () => {
-  const headingId = useId();
-  const { openState } = useSidePanelContext();
   return (
     <SidePanelProvider>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: 300,
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-        }}
-        gap={0}
-      >
-        <ContentExample>
-          <SidePanelTrigger>
-            <Button style={{ width: "fit-content" }}>
-              {openState ? "Close" : "Open"} right panel
-            </Button>
-          </SidePanelTrigger>
-        </ContentExample>
-
-        <SidePanel position="right" aria-labelledby={headingId}>
-          <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
-            <Text>Side panel content goes here.</Text>
-          </SidePanelContent>
-        </SidePanel>
-      </FlexLayout>
+      <RightPanelContent />
     </SidePanelProvider>
+  );
+};
+
+const RightPanelContent = () => {
+  const headingId = useId();
+  const { openState } = useSidePanelContext();
+
+  return (
+    <FlexLayout
+      style={{
+        width: "100%",
+        height: 300,
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        borderRadius: "var(--salt-palette-corner-weak)",
+      }}
+      gap={0}
+    >
+      <ContentExample>
+        <SidePanelTrigger>
+          <Button style={{ width: "fit-content" }}>
+            {openState ? "Close" : "Open"} right panel
+          </Button>
+        </SidePanelTrigger>
+      </ContentExample>
+
+      <SidePanel position="right" aria-labelledby={headingId}>
+        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+          <Text>Side panel content goes here.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    </FlexLayout>
   );
 };
