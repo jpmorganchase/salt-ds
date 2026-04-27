@@ -24,11 +24,11 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           persist-credentials: false
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: "24"
           package-manager-cache: false
@@ -51,7 +51,7 @@ jobs:
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
       - name: Publish Storybook
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
@@ -75,7 +75,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Enforce write permissions
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           COMMENT_ID: ${{ github.event.comment.id }}
         with:
@@ -116,7 +116,7 @@ jobs:
             }
 
       - name: Validate pull request
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         id: pr_data
         with:
           script: |
@@ -145,7 +145,7 @@ jobs:
             }
 
       - name: Create snapshot status comment
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         id: snapshot_status
         env:
           HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
@@ -167,14 +167,14 @@ jobs:
             core.setOutput("commentId", response.data.id);
 
       - name: Checkout pull request
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           repository: ${{ steps.pr_data.outputs.headRepository }}
           ref: ${{ steps.pr_data.outputs.headSha }}
           persist-credentials: false
 
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: "24"
           package-manager-cache: false
@@ -184,7 +184,7 @@ jobs:
         run: yarn install
 
       - name: Create and publish snapshot release
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_ID: ${{ github.event.comment.id }}
@@ -259,7 +259,7 @@ jobs:
 
       - name: Update snapshot status on failure
         if: ${{ always() && steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
           HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
