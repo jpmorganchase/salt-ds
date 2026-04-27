@@ -27,7 +27,7 @@ jobs:
     name: Deploy Storybook to Cloudflare Pages
     steps:
       - name: Set initial commit status
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const sha = context.payload.workflow_run.head_sha;
@@ -42,7 +42,7 @@ jobs:
             })
 
       - name: Resolve workflow run context
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         id: run_context
         with:
           script: |
@@ -103,7 +103,7 @@ jobs:
             core.info(`Resolved ${workflowRun.event} workflow run for ${branchName} at ${workflowRun.head_sha}`);
 
       - name: "Download build artifact"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: storybook-build
           path: ${{ runner.temp }}/storybook-static
@@ -116,7 +116,7 @@ jobs:
           STORYBOOK_STATIC_DIR: ${{ runner.temp }}/storybook-static
 
       - name: Publish
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         id: publish
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
@@ -124,7 +124,7 @@ jobs:
           command: pages deploy ${{ runner.temp }}/storybook-static --project-name=saltdesignsystem-storybook --branch=${{ steps.run_context.outputs.deploymentBranch }}
 
       - name: Update deploy status (success)
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         if: success()
         env:
           STORYBOOK_URL: ${{ steps.publish.outputs.pages-deployment-alias-url }}
@@ -143,7 +143,7 @@ jobs:
             });
 
       - name: Update deploy status (failure)
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         if: failure()
         with:
           script: |
