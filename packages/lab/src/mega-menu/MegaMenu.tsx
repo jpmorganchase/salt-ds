@@ -3,6 +3,7 @@ import {
   useDismiss,
   useFloatingRootContext,
   useInteractions,
+  useRole,
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
 import {
@@ -93,13 +94,13 @@ export const MegaMenu = ({
     },
   });
 
+  const defaultInteractions = [
+    useRole(floatingRootContext, { role: "menu" }),
+    useDismiss(floatingRootContext, { bubbles: true }),
+  ];
+
   const { getReferenceProps, getFloatingProps } = useInteractions(
-    interactions
-      ? interactions(floatingRootContext)
-      : [
-          // biome-ignore lint/correctness/useHookAtTopLevel: useDismiss is not a React hook
-          useDismiss(floatingRootContext, { bubbles: true }),
-        ],
+    interactions ? interactions(floatingRootContext) : defaultInteractions,
   );
 
   const contextValue = useMemo(

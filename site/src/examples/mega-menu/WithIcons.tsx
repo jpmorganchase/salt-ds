@@ -22,6 +22,7 @@ import {
   SettingsIcon,
   SwapIcon,
   UserGroupIcon,
+  UserIcon,
 } from "@salt-ds/icons";
 import {
   MegaMenu,
@@ -232,7 +233,10 @@ export const WithIcons = (): ReactElement => {
                     <DisplayIcon aria-hidden />
                     Online
                   </MegaMenuItem>
-                  <MegaMenuItem value="In-Person">In-Person</MegaMenuItem>
+                  <MegaMenuItem value="In-Person">
+                    <UserIcon aria-hidden />
+                    In-Person
+                  </MegaMenuItem>
                   <MegaMenuItem value="Workshops">
                     <KeyIcon aria-hidden />
                     Workshops

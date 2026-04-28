@@ -163,7 +163,7 @@ describe("Given a MegaMenu", () => {
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuContainer").should("exist");
 
-    cy.findByRole("button", { name: "Outside" }).click();
+    cy.get("body").click(0, 0);
     cy.get(".saltMegaMenuContainer").should("not.exist");
   });
 });
