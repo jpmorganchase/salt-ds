@@ -85,7 +85,7 @@ export const WithCustomRegion = (): ReactElement => {
               variant="tertiary"
               style={{ width: "fit-content" }}
             >
-              <FlexLayout direction="column" gap={2}>
+              <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
                   src={exampleImage}
@@ -132,7 +132,7 @@ export const WithCustomRegion = (): ReactElement => {
 
           <MegaMenuContainer className={styles.customRegionNoContainerPadding}>
             <MegaMenuCustomRegion variant="secondary">
-              <FlexLayout direction="column" gap={2}>
+              <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
                   src={exampleImage}
@@ -226,7 +226,7 @@ export const WithCustomRegion = (): ReactElement => {
             style={{ flexDirection: "column" }}
           >
             <MegaMenuCustomRegion variant="primary">
-              <FlexLayout direction="column" gap={2}>
+              <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
                   src={exampleImage2}
@@ -360,7 +360,7 @@ export const WithCustomRegion = (): ReactElement => {
               <Link href="#">Explore details</Link>
             </MegaMenuLinkRow>
             <MegaMenuCustomRegion variant="tertiary">
-              <FlexLayout direction="column" gap={2}>
+              <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
                   src={exampleImage2}

@@ -1,4 +1,5 @@
-import { makePrefixer } from "@salt-ds/core";
+import { useListItem } from "@floating-ui/react";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -31,6 +32,8 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
   function MegaMenuItem({ children, className, value, ...rest }, ref) {
     const targetWindow = useWindow();
     const megaMenu = useContext(MegaMenuContext);
+    const { ref: listItemRef } = useListItem();
+    const handleRef = useForkRef<HTMLLIElement>(ref, listItemRef);
 
     useComponentCssInjection({
       testId: "salt-mega-menu-item",
@@ -69,7 +72,8 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
           { [withBaseName("active")]: isSelected },
           className,
         )}
-        ref={ref}
+        ref={handleRef}
+        role={rest.role ?? "menuitem"}
         tabIndex={0}
         aria-current={isSelected ? "page" : undefined}
         {...rest}

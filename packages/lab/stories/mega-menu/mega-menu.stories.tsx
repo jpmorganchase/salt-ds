@@ -1594,7 +1594,6 @@ const WithCustomRegionTemplate: StoryFn = () => {
                   <Link
                     color="primary"
                     underline="default"
-                    target="_blank"
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
@@ -1642,7 +1641,6 @@ const WithCustomRegionTemplate: StoryFn = () => {
                   <Link
                     color="primary"
                     underline="default"
-                    target="_blank"
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
@@ -1737,7 +1735,6 @@ const WithCustomRegionTemplate: StoryFn = () => {
                   <Link
                     color="primary"
                     underline="default"
-                    target="_blank"
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
@@ -1872,7 +1869,6 @@ const WithCustomRegionTemplate: StoryFn = () => {
                   <Link
                     color="primary"
                     underline="default"
-                    target="_blank"
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
