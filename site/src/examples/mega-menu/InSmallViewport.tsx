@@ -21,7 +21,7 @@ export const InSmallViewport = (): ReactElement => {
   return (
     <div>
       <nav>
-        <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
+        <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
           <li>
             <MegaMenu
               open={isOpen}

@@ -31,7 +31,7 @@ export const WithStaticAdornment = (): ReactElement => {
 
   return (
     <nav>
-      <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
+      <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -44,9 +44,7 @@ export const WithStaticAdornment = (): ReactElement => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "solutions"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "solutions" ? null : "solutions",
                   );
@@ -147,9 +145,7 @@ export const WithStaticAdornment = (): ReactElement => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "services"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "services" ? null : "services",
                   );
@@ -213,9 +209,7 @@ export const WithStaticAdornment = (): ReactElement => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "resources"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "resources" ? null : "resources",
                   );

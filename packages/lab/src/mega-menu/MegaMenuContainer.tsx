@@ -95,6 +95,9 @@ export const MegaMenuContainer = forwardRef<
   const handleRef = useForkRef<HTMLElement>(ref, megaMenu.setFloating);
 
   const isOpen = megaMenu.openState;
+  const { menuRegionId } = megaMenu;
+  const { requestFocusFirstItemOnOpen, setRequestFocusFirstItemOnOpen } =
+    megaMenu;
   const floatingProps = megaMenu.getFloatingProps;
   const elementsRef = useRef<Array<HTMLElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -123,7 +126,39 @@ export const MegaMenuContainer = forwardRef<
     if (!floating) return;
 
     elementsRef.current = getFocusableElements(floating);
-  }, [isOpen, megaMenu]);
+
+    if (requestFocusFirstItemOnOpen) {
+      const focusFirstFocusable = (attempt = 0) => {
+        const items = elementsRef.current.filter(
+          (item): item is HTMLElement => item != null,
+        );
+        const firstFocusable =
+          items[0] ?? floating.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+
+        if (firstFocusable) {
+          firstFocusable.focus();
+          return;
+        }
+
+        const view = floating.ownerDocument.defaultView;
+        if (!view || attempt >= 6) {
+          return;
+        }
+
+        view.requestAnimationFrame(() => {
+          focusFirstFocusable(attempt + 1);
+        });
+      };
+
+      setRequestFocusFirstItemOnOpen(false);
+      focusFirstFocusable();
+    }
+  }, [
+    isOpen,
+    megaMenu,
+    requestFocusFirstItemOnOpen,
+    setRequestFocusFirstItemOnOpen,
+  ]);
 
   const focusReference = useCallback(() => {
     const reference = megaMenu.floatingRootContext.elements
@@ -297,6 +332,31 @@ export const MegaMenuContainer = forwardRef<
     [closeAndFocusNextAfterReference, focusReference],
   );
 
+  const floatingInteractionProps = getListNavigationFloatingProps(
+    floatingProps({
+      ...rest,
+      onKeyDown: handleKeyDown,
+      onFocus: handleFocus,
+      style: {
+        ...rest.style,
+        position: floatingUIResult.strategy,
+        top: floatingUIResult.y ?? 0,
+        left: floatingUIResult.x ?? 0,
+      },
+    }),
+  );
+  const {
+    id: floatingId,
+    "aria-orientation": _ariaOrientation,
+    ...floatingPropsWithoutAriaOrientation
+  } = floatingInteractionProps;
+  const menuContainerId =
+    typeof rest.id === "string"
+      ? rest.id
+      : typeof floatingId === "string"
+        ? floatingId
+        : menuRegionId;
+
   return (
     <FloatingComponent
       open={isOpen}
@@ -312,20 +372,9 @@ export const MegaMenuContainer = forwardRef<
       <nav
         className={clsx(withBaseName(), className)}
         ref={handleRef}
+        id={menuContainerId}
         role="region"
-        {...getListNavigationFloatingProps(
-          floatingProps({
-            ...rest,
-            onKeyDown: handleKeyDown,
-            onFocus: handleFocus,
-            style: {
-              ...rest.style,
-              position: floatingUIResult.strategy,
-              top: floatingUIResult.y ?? 0,
-              left: floatingUIResult.x ?? 0,
-            },
-          }),
-        )}
+        {...floatingPropsWithoutAriaOrientation}
       >
         {children}
       </nav>

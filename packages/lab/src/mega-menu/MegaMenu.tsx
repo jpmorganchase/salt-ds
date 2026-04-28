@@ -10,6 +10,7 @@ import {
   type ReactNode,
   type SetStateAction,
   useCallback,
+  useId,
   useMemo,
   useState,
 } from "react";
@@ -38,6 +39,8 @@ export const MegaMenu = ({
   placement = "bottom",
   interactions,
 }: MegaMenuProps) => {
+  const menuRegionId = useId();
+
   const [openState, setOpenState] = useControlled({
     controlled: open,
     default: false,
@@ -47,6 +50,8 @@ export const MegaMenu = ({
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
+  const [requestFocusFirstItemOnOpen, setRequestFocusFirstItemOnOpen] =
+    useState(false);
   const [selectedItem, setSelectedItemState] = useControlled({
     controlled: selectedItemProp,
     default: defaultSelectedItem,
@@ -102,11 +107,14 @@ export const MegaMenu = ({
       openState,
       floatingRootContext,
       placement,
+      menuRegionId,
       getFloatingProps,
       getReferenceProps,
       setFloating,
       setReference,
       setOpen,
+      requestFocusFirstItemOnOpen,
+      setRequestFocusFirstItemOnOpen,
       selectedItem,
       setSelectedItem,
     }),
@@ -114,9 +122,11 @@ export const MegaMenu = ({
       openState,
       floatingRootContext,
       placement,
+      menuRegionId,
       getFloatingProps,
       getReferenceProps,
       setOpen,
+      requestFocusFirstItemOnOpen,
       selectedItem,
     ],
   );

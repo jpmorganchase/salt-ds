@@ -1,6 +1,7 @@
 .saltMegaMenuSection {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, var(--saltMegaMenuSection-columnWidth, 12rem));
   gap: var(--salt-spacing-300);
   padding: var(--salt-spacing-300);
+  max-inline-size: var(--saltMegaMenuContainer-availableWidth, calc(100vw - var(--salt-spacing-600)));
 }

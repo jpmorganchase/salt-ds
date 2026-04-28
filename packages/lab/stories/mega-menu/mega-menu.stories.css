@@ -1,11 +1,10 @@
-nav > ul {
+nav > ol {
   list-style: none;
   padding: 0;
 }
 
-.saltMegaMenuSection > .saltMegaMenuGroup {
-  flex: 0 0 16rem;
-  inline-size: 16rem;
+.saltMegaMenuSection {
+  --saltMegaMenuSection-columnWidth: 16rem;
 }
 
 .trigger-position-grid {
@@ -42,11 +41,15 @@ nav > ul {
 }
 
 .custom-region-content {
-  flex: 1;
+  flex: 0 0 auto;
 }
 
 .custom-region-no-container-padding {
   padding: 0;
+}
+
+.custom-region-no-container-padding .saltMegaMenuCustomRegion {
+  flex: 0 0 auto;
 }
 
 .custom-region-right-description {
@@ -68,5 +71,10 @@ nav > ul {
 }
 
 .small-viewport-container {
-  width: 320px;
+  --saltMegaMenuContainer-inlineSize: 320px;
+  --saltMegaMenuContainer-maxInlineSize: 320px;
+}
+
+.small-viewport-container .saltMegaMenuSection {
+  max-inline-size: 100%;
 }
