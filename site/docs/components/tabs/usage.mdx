@@ -29,6 +29,8 @@ data:
 - Always use sentence case for badge labels when nesting in a tab.
 - Do not wrap labels. Use truncation with `Tooltip` if necessary.
 - Icon and text should match each other semantically.
+- Each `TabNext` and matching `TabNextPanel` must use a unique `value` within a
+  single `TabsNext`.
 
 ## Import
 
@@ -42,7 +44,7 @@ import {
   TabNext,
   TabNextTrigger,
   TabNextAction,
-  TabPanelNext,
+  TabNextPanel,
 } from "@salt-ds/lab";
 ```
 
@@ -64,6 +66,14 @@ import {
 
 <PropsTable packageName="lab" componentName="TabNext" />
 
+### `TabNextTrigger`
+
+<PropsTable packageName="lab" componentName="TabNextTrigger" />
+
 ### `TabNextAction`
 
 <PropsTable packageName="lab" componentName="TabNextAction" />
+
+### `TabNextPanel`
+
+<PropsTable packageName="lab" componentName="TabNextPanel" />

@@ -15,10 +15,10 @@ export const DividerAndInset = (): ReactElement => {
   const [inset, setInset] = useState(true);
 
   return (
-    <StackLayout>
+    <StackLayout style={{ width: "100%", minWidth: 0 }}>
       <TabsNext defaultValue={tabs[0]}>
         <TabBar divider={divider} inset={inset}>
-          <TabListNext appearance="bordered">
+          <TabListNext appearance="bordered" aria-label="Example tablist">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>

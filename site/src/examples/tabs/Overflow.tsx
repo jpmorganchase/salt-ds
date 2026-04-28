@@ -29,16 +29,18 @@ const tabs = [
 
 export const Overflow = (): ReactElement => {
   return (
-    <TabsNext defaultValue={tabs[0]}>
-      <TabBar inset divider>
-        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <div style={{ width: "100%", minWidth: 0, maxWidth: 350 }}>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabBar inset divider>
+          <TabListNext aria-label="Example tablist">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
   );
 };

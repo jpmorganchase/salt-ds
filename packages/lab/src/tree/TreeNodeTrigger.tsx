@@ -103,8 +103,8 @@ export const TreeNodeTrigger = forwardRef<
   };
 
   const handleFocus = (event: FocusEvent<HTMLLIElement>) => {
-    onFocus?.(event);
     if (event.target !== event.currentTarget) return;
+    onFocus?.(event);
     if (!wasMouseDownRef.current) {
       setFocusVisible(true);
     }
@@ -113,8 +113,8 @@ export const TreeNodeTrigger = forwardRef<
   };
 
   const handleBlur = (event: FocusEvent<HTMLLIElement>) => {
-    onBlur?.(event);
     if (event.target !== event.currentTarget) return;
+    onBlur?.(event);
     setFocusVisible(false);
   };
 

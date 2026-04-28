@@ -1,5 +1,19 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.89
+
+### Patch Changes
+
+- e131baa: Improved `useEventCallback`'s stability.
+- 7427b2c: - Updated spacing between tree node elements.
+  - Fixed missing gap between node elements.
+  - Fixed node focus indicator outline placement.
+- 39e684a: Fixed incorrect Tooltip positioning and behavior when used with TreeNodeTrigger.
+- b9c81ae: Refactored Tabs to address accessibility issues, known bugs and improve stability.
+- Updated dependencies [e131baa]
+- Updated dependencies [2d2d62b]
+  - @salt-ds/core@1.59.1
+
 ## 1.0.0-alpha.88
 
 ### Patch Changes
