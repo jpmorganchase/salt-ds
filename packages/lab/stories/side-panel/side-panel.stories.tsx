@@ -504,7 +504,7 @@ const WithTableContent = () => {
               </H2>
             }
           >
-            <StackLayout key={selectedRow.id} style={{ width: "100%" }}>
+            <StackLayout style={{ width: "100%" }}>
               <FormField>
                 <FormFieldLabel>Name</FormFieldLabel>
                 <Input defaultValue={selectedRow.name} />
