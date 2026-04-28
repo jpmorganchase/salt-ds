@@ -83,7 +83,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
+      <StackLayout as="ol" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -96,9 +96,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "solutions"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "solutions" ? null : "solutions",
                   );
@@ -298,9 +296,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "services"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "services" ? null : "services",
                   );
@@ -529,9 +525,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "resources"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "resources" ? null : "resources",
                   );
@@ -655,7 +649,7 @@ const WithIconsTemplate: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
+      <StackLayout as="ol" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -668,9 +662,7 @@ const WithIconsTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "solutions"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "solutions" ? null : "solutions",
                   );
@@ -770,9 +762,7 @@ const WithIconsTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "services"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "services" ? null : "services",
                   );
@@ -871,9 +861,7 @@ const WithIconsTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "resources"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "resources" ? null : "resources",
                   );
@@ -947,7 +935,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
+      <StackLayout as="ol" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -960,9 +948,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "solutions"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "solutions" ? null : "solutions",
                   );
@@ -1064,9 +1050,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "services"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "services" ? null : "services",
                   );
@@ -1130,9 +1114,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "resources"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "resources" ? null : "resources",
                   );
@@ -1930,7 +1912,7 @@ const WithLinkTemplate: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
+      <StackLayout as="ol" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -1943,9 +1925,7 @@ const WithLinkTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "solutions"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "solutions" ? null : "solutions",
                   );
@@ -2148,9 +2128,7 @@ const WithLinkTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "services"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "services" ? null : "services",
                   );
@@ -2382,9 +2360,7 @@ const WithLinkTemplate: StoryFn = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "resources"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "resources" ? null : "resources",
                   );
@@ -2501,7 +2477,7 @@ const InSmallViewportTemplate: StoryFn = () => {
   return (
     <div>
       <nav>
-        <StackLayout as="ul" direction="row" gap={1}>
+        <StackLayout as="ol" direction="row" gap={1}>
           <li>
             <MegaMenu
               open={isOpen}
