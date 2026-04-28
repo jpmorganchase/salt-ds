@@ -50,12 +50,12 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
     return (
       <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         {header}
-        <ul
+        <ol
           className={withBaseName("list")}
           aria-labelledby={header ? headerId : undefined}
         >
           {items}
-        </ul>
+        </ol>
       </div>
     );
   },

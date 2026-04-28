@@ -5,13 +5,12 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { useControlled } from "@salt-ds/core";
+import { useControlled, useId } from "@salt-ds/core";
 import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
   useCallback,
-  useId,
   useMemo,
   useState,
 } from "react";
