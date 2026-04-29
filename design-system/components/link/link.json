@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Link",
+  "description": "Navigation element for linking to pages, resources, or locations.",
+  "package": "@salt-ds/core",
+  "import": "import { Link } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "href": {
+      "type": "string",
+      "description": "Destination URL, anchor, or protocol link (for example `mailto:` or `tel:`)."
+    },
+    "target": {
+      "type": "'_self' | '_blank' | '_parent' | '_top' | string",
+      "default": "'_self'",
+      "description": "Where to open the linked document."
+    },
+    "rel": {
+      "type": "string",
+      "description": "Relationship of the linked URL; use `noopener`/`noreferrer` for cross-origin `_blank` links."
+    },
+    "color": {
+      "type": "'inherit' | 'primary' | 'secondary' | 'accent'",
+      "default": "'primary'",
+      "description": "Visual color treatment for link text."
+    },
+    "underline": {
+      "type": "'default' | 'never'",
+      "default": "'default'",
+      "description": "Controls underline decoration behavior."
+    },
+    "IconComponent": {
+      "type": "ComponentType<IconProps> | null",
+      "description": "Icon shown for `_blank` links; set to `null` to hide it where appropriate."
+    },
+    "render": {
+      "type": "RenderPropsType['render']",
+      "description": "Custom render strategy for anchor element composition."
+    },
+    "maxRows": {
+      "type": "number",
+      "description": "Maximum visible text rows before truncation."
+    },
+    "styleAs": {
+      "type": "Text style token",
+      "description": "Text presentation style inherited from `Text` component."
+    },
+    "variant": {
+      "type": "Text variant token",
+      "deprecated": true,
+      "description": "Deprecated alias path for visual styling; prefer `color`."
+    }
+  },
+  "slots": {
+    "children": "Link label content."
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "visited",
+    "target-blank",
+    "underline-default",
+    "underline-never"
+  ],
+  "tokens": {
+    "linkColor": "--link-color",
+    "linkColorHover": "--link-color-hover",
+    "linkColorActive": "--link-color-active",
+    "linkColorVisited": "--link-color-visited",
+    "linkColorFocus": "--link-color-focus",
+    "focusOutlineColor": "--link-focus-outlineColor"
+  },
+  "accessibility": {
+    "role": "semantic anchor (`a`)",
+    "keyboard": [
+      "Enter activates navigation when `href` is present",
+      "Tab/Shift+Tab move focus through links in document order"
+    ],
+    "aria": [
+      "Link text must be meaningful out of context and unique where possible",
+      "If link has icon-only content, provide `aria-label`",
+      "When link has icon plus text, set icon `aria-hidden=true` to avoid duplicate announcement",
+      "For `_blank` links, accessible text includes an external-navigation cue"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Text",
+      "LinkCard",
+      "LinkBase (custom render wrappers)"
+    ],
+    "inside": [
+      "Inline body copy",
+      "Navigation sections",
+      "Help and reference content"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/link/examples"
+}

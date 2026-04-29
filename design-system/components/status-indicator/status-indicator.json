@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "StatusIndicator",
+  "description": "Displays a semantic validation status icon for info, success, warning, or error states.",
+  "package": "@salt-ds/core",
+  "import": "import { StatusIndicator } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "status": {
+      "type": "'info' | 'warning' | 'error' | 'success'",
+      "required": true,
+      "description": "Semantic status value used to select the rendered indicator icon"
+    },
+    "size": {
+      "type": "number",
+      "default": "1",
+      "description": "Icon size inherited from icon sizing props"
+    },
+    "aria-label": {
+      "type": "string",
+      "default": "status value",
+      "description": "Accessible name; defaults to the `status` value"
+    },
+    "aria-hidden": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Hide from assistive technology when used decoratively beside equivalent text"
+    }
+  },
+  "slots": {},
+  "states": [
+    "info",
+    "warning",
+    "error",
+    "success"
+  ],
+  "tokens": {
+    "infoColor": "--salt-status-info-foreground-decorative",
+    "warningColor": "--salt-status-warning-foreground-decorative",
+    "errorColor": "--salt-status-error-foreground-decorative",
+    "successColor": "--salt-status-success-foreground-decorative"
+  },
+  "accessibility": {
+    "role": "img",
+    "keyboard": [],
+    "aria": [
+      "aria-label — required for meaningful standalone usage; defaults to the status value",
+      "When decorative and duplicated by nearby text, set aria-hidden=\"true\""
+    ]
+  },
+  "composition": {
+    "with": [
+      "Text",
+      "Banner",
+      "Toast",
+      "Tooltip"
+    ],
+    "inside": [
+      "Banner",
+      "Toast"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/status-indicator/examples"
+}

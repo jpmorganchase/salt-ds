@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Toggle Button Group",
+  "description": "Groups ToggleButton options into a single-select radiogroup with shared styling, keyboard navigation, and optional controlled value management.",
+  "package": "@salt-ds/core",
+  "import": "import { ToggleButton, ToggleButtonGroup } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "value": {
+      "type": "string | ReadonlyArray<string> | number | undefined",
+      "description": "Controlled selected value"
+    },
+    "defaultValue": {
+      "type": "string | ReadonlyArray<string> | number | undefined",
+      "description": "Initial selected value for uncontrolled usage"
+    },
+    "onChange": {
+      "type": "(event: SyntheticEvent<HTMLButtonElement>) => void",
+      "description": "Called when selected option changes"
+    },
+    "orientation": {
+      "type": "'horizontal' | 'vertical'",
+      "default": "'horizontal'",
+      "description": "Layout direction for grouped buttons"
+    },
+    "appearance": {
+      "type": "'solid' | 'bordered'",
+      "default": "'solid'",
+      "description": "Shared appearance for child toggle buttons"
+    },
+    "sentiment": {
+      "type": "'neutral' | 'accented' | 'positive' | 'negative' | 'caution'",
+      "default": "'neutral'",
+      "description": "Shared sentiment for child toggle buttons"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Makes group non-interactive while preserving selected-state perception"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables interaction for all child toggle buttons"
+    },
+    "children": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Two or more related `ToggleButton` options"
+    }
+  },
+  "slots": {
+    "children": "ToggleButton options participating in single-select behavior"
+  },
+  "states": [
+    "default",
+    "controlled",
+    "uncontrolled",
+    "readOnly",
+    "disabled",
+    "vertical",
+    "horizontal"
+  ],
+  "tokens": {
+    "groupBackground": "--salt-container-primary-background",
+    "groupBorderColor": "--salt-container-primary-borderColor",
+    "groupDisabledBackground": "--salt-container-primary-background-disabled",
+    "groupDisabledBorderColor": "--salt-container-primary-borderColor-disabled",
+    "groupCornerRadius": "--salt-palette-corner-weak",
+    "groupGap": "--salt-spacing-50",
+    "groupBorderWidth": "--salt-size-fixed-100"
+  },
+  "accessibility": {
+    "role": "radiogroup",
+    "keyboard": [
+      "Tab",
+      "Shift+Tab",
+      "Space",
+      "Enter",
+      "ArrowRight",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowUp"
+    ],
+    "aria": [
+      "Provide an accessible group label (`aria-label` or `aria-labelledby`) when the visible context is insufficient",
+      "Child `ToggleButton` items inside the group expose radio semantics (`role=radio`, `aria-checked`)",
+      "Arrow keys move focus between enabled options and wrap at boundaries",
+      "In icon-only groups, each button requires an `aria-label` and decorative icons should be `aria-hidden`"
+    ]
+  },
+  "composition": {
+    "with": [
+      "ToggleButton",
+      "Tooltip",
+      "Icon"
+    ],
+    "inside": [
+      "Toolbar",
+      "Panel",
+      "Card",
+      "Form sections"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/toggle-button/examples"
+}

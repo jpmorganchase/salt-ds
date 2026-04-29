@@ -1,0 +1,60 @@
+{
+  "name": "Spacing",
+  "description": "Salt spacing scale. All spacing values map to CSS custom properties and adapt to density automatically.",
+  "scale": {
+    "--salt-spacing-25": {
+      "value": "2px",
+      "description": "Extra-extra-small spacing"
+    },
+    "--salt-spacing-50": {
+      "value": "4px",
+      "description": "Extra-small spacing"
+    },
+    "--salt-spacing-75": {
+      "value": "6px",
+      "description": "Small spacing"
+    },
+    "--salt-spacing-100": {
+      "value": "8px",
+      "description": "Base spacing unit"
+    },
+    "--salt-spacing-150": {
+      "value": "12px",
+      "description": "Medium-small spacing"
+    },
+    "--salt-spacing-200": {
+      "value": "16px",
+      "description": "Medium spacing"
+    },
+    "--salt-spacing-250": {
+      "value": "20px",
+      "description": "Medium-large spacing"
+    },
+    "--salt-spacing-300": {
+      "value": "24px",
+      "description": "Large spacing"
+    },
+    "--salt-spacing-350": {
+      "value": "28px",
+      "description": "Extra-large spacing"
+    },
+    "--salt-spacing-400": {
+      "value": "32px",
+      "description": "Extra-extra-large spacing"
+    }
+  },
+  "gapPropMapping": {
+    "description": "The `gap` prop on Salt layout components (StackLayout, FlowLayout, FlexLayout, GridLayout, SplitLayout) accepts a number 0–4 that maps to the spacing scale.",
+    "values": {
+      "0": "0",
+      "1": "--salt-spacing-100",
+      "2": "--salt-spacing-200",
+      "3": "--salt-spacing-300",
+      "4": "--salt-spacing-400"
+    }
+  },
+  "usage": {
+    "layoutGap": "<StackLayout gap={1}> produces 8px gap (--salt-spacing-100)",
+    "customCSS": "var(--salt-spacing-200) for 16px in custom stylesheets"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Switch",
+  "description": "Toggles a binary setting on or off with immediate effect.",
+  "package": "@salt-ds/core",
+  "import": "import { Switch } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "checked": {
+      "type": "boolean",
+      "description": "Controlled checked state"
+    },
+    "defaultChecked": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Initial checked state for uncontrolled usage"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables interaction and focus"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Allows focus without allowing value changes"
+    },
+    "label": {
+      "type": "ReactNode",
+      "description": "Text label displayed to the right of the switch"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name for form submission"
+    },
+    "value": {
+      "type": "string",
+      "description": "Submitted value when checked"
+    },
+    "onChange": {
+      "type": "(event: React.ChangeEvent<HTMLInputElement>) => void",
+      "description": "Called when checked state changes"
+    },
+    "onFocus": {
+      "type": "(event: React.FocusEvent<HTMLInputElement>) => void",
+      "description": "Called when switch receives focus"
+    },
+    "onBlur": {
+      "type": "(event: React.FocusEvent<HTMLInputElement>) => void",
+      "description": "Called when switch loses focus"
+    },
+    "inputProps": {
+      "type": "Partial<ComponentPropsWithoutRef<'input'>> & DataAttributes",
+      "description": "Additional props applied directly to the internal input"
+    }
+  },
+  "slots": {
+    "label": "Optional label text rendered to the right of the switch control"
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "checked",
+    "unchecked",
+    "disabled",
+    "readonly"
+  ],
+  "tokens": {
+    "labelColor": "--salt-content-primary-foreground",
+    "trackBorder": "--salt-selectable-borderColor",
+    "trackBorderHover": "--salt-selectable-borderColor-hover",
+    "trackBorderSelected": "--salt-selectable-borderColor-selected",
+    "trackBorderReadOnly": "--salt-selectable-borderColor-readonly",
+    "trackBackground": "--salt-container-primary-background",
+    "thumbColor": "--salt-selectable-foreground",
+    "thumbColorHover": "--salt-selectable-foreground-hover",
+    "thumbColorSelected": "--salt-selectable-foreground-selected"
+  },
+  "accessibility": {
+    "role": "switch",
+    "keyboard": [
+      "Tab — moves focus to the switch, then to the next focusable element",
+      "Shift + Tab — moves focus to the previous focusable element",
+      "Space — toggles checked and unchecked state"
+    ],
+    "aria": [
+      "aria-label or visible label — required to describe what the switch controls",
+      "When readOnly is true, aria-readonly is set on the input",
+      "Use role=\"switch\" semantics rather than checkbox wording in labels"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FormField",
+      "FormFieldLabel",
+      "FormFieldHelperText"
+    ],
+    "inside": [
+      "Form",
+      "Dialog",
+      "Settings panels"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/switch/examples"
+}

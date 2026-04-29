@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "ParentChildLayout",
+  "description": "Arranges parent and child regions side by side and collapses to a single visible view at configured breakpoints.",
+  "package": "@salt-ds/core",
+  "import": "import { ParentChildLayout } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "collapseAtBreakpoint": {
+      "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+      "default": "'sm'",
+      "description": "Breakpoint at which the layout collapses from two regions to a single visible region."
+    },
+    "visibleView": {
+      "type": "'child' | 'parent'",
+      "default": "'child'",
+      "description": "Determines which region is displayed when collapsed."
+    },
+    "gap": {
+      "type": "number",
+      "default": "0",
+      "description": "Controls spacing between parent and child regions."
+    },
+    "parent": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Parent region content (typically controlling/master content)."
+    },
+    "child": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Child region content (typically dependent/detail content)."
+    },
+    "onCollapseChange": {
+      "type": "(isCollapsed: boolean) => void",
+      "description": "Callback fired when viewport enters or exits collapsed mode."
+    }
+  },
+  "slots": {
+    "parent": "Primary/master content area.",
+    "child": "Secondary/detail content area."
+  },
+  "states": [
+    "default",
+    "collapsed"
+  ],
+  "tokens": {
+    "gapBase": "--salt-spacing-100"
+  },
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [
+      "Tab / Shift+Tab — move focus between interactive descendants in the currently visible region(s)"
+    ],
+    "aria": [
+      "Use semantic HTML landmarks/structure for parent and child content sections",
+      "Manage region labels (aria-label/aria-labelledby) when these sections act as named areas"
+    ]
+  },
+  "composition": {
+    "with": [
+      "StackLayout",
+      "ToggleButtonGroup",
+      "ToggleButton",
+      "Label"
+    ],
+    "inside": [
+      "Preferences dialogs",
+      "Responsive settings pages",
+      "Master-detail subsections"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/layouts/parent-child-layout/examples"
+}

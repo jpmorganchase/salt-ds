@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Skip Link",
+  "description": "Accessible navigation link that lets keyboard and screen reader users bypass repeated header/navigation content and move focus to main content.",
+  "package": "@salt-ds/core",
+  "import": "import { SkipLink } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "targetId": {
+      "type": "string",
+      "required": true,
+      "description": "ID of the target element to focus when the skip link is activated. If no matching element exists, SkipLink does not render."
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "Visible skip link label, for example 'Skip to main content'."
+    },
+    "onClick": {
+      "type": "MouseEventHandler<HTMLAnchorElement>",
+      "description": "Optional click handler; component still moves focus to target before invoking callback."
+    },
+    "onKeyUp": {
+      "type": "KeyboardEventHandler<HTMLAnchorElement>",
+      "description": "Optional keyup handler; Enter and Space trigger focus movement to target."
+    },
+    "onBlur": {
+      "type": "FocusEventHandler<HTMLAnchorElement>",
+      "description": "Optional blur handler; internal behavior restores temporary tabindex handling on target."
+    }
+  },
+  "slots": {
+    "default": "Anchor text content for the skip action."
+  },
+  "states": [
+    "hidden-unfocused",
+    "visible-focused",
+    "target-available",
+    "target-missing-not-rendered"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "link",
+    "keyboard": [
+      "Tab: when entering page focus order, focus lands on skip link; subsequent Tab moves to next focusable element",
+      "Shift+Tab: from skip link, focus moves to previous focusable element; from main content, shifts back toward header controls",
+      "Enter/Space: activates skip link and moves focus to target element"
+    ],
+    "aria": [
+      "Provide clear link text describing target destination (for example 'Skip to main content')",
+      "Target element should be a meaningful landmark or heading container for primary content"
+    ]
+  },
+  "composition": {
+    "with": [
+      "BorderLayout",
+      "NavigationItem",
+      "Header",
+      "Main content heading"
+    ],
+    "inside": [
+      "App header",
+      "Page shell"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/skip-link/examples"
+}

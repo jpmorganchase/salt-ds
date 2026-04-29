@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Panel",
+  "description": "Organizes and divides application content areas using flat background surfaces and layout hierarchy.",
+  "package": "@salt-ds/core",
+  "import": "import { Panel } from \"@salt-ds/core\";",
+  "status": "stable",
+  "components": {
+    "Panel": {
+      "description": "Non-interactive container surface for grouping and visually segmenting content.",
+      "props": {
+        "variant": "Visual variant for background hierarchy: primary, secondary, tertiary.",
+        "children": "Panel content.",
+        "className": "Optional custom class names.",
+        "style": "Inline style overrides for size/layout when needed."
+      }
+    }
+  },
+  "props": {
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary'",
+      "default": "'primary'",
+      "description": "Background styling variant for content hierarchy."
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "Content rendered inside the panel surface."
+    },
+    "className": {
+      "type": "string",
+      "description": "Additional class names applied to panel root."
+    },
+    "style": {
+      "type": "CSSProperties",
+      "description": "Inline style overrides for dimensions or layout tuning."
+    }
+  },
+  "slots": {
+    "children": "Panel body content area."
+  },
+  "states": [
+    "default"
+  ],
+  "tokens": {
+    "primaryBackground": "--salt-container-primary-background",
+    "secondaryBackground": "--salt-container-secondary-background",
+    "tertiaryBackground": "--salt-container-tertiary-background"
+  },
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [
+      "Tab — Focus moves to interactive descendants; Panel itself is not focusable by default"
+    ],
+    "aria": [
+      "aria-label — Use when Panel is promoted to a named region",
+      "aria-labelledby — Use when Panel region is labeled by visible heading"
+    ]
+  },
+  "composition": {
+    "with": [
+      "BorderLayout",
+      "GridLayout",
+      "StackLayout"
+    ],
+    "inside": [
+      "Application layout regions",
+      "Page sections",
+      "Dashboard areas"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/panel/examples"
+}

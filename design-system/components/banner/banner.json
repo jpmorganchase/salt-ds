@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Banner",
+  "description": "Displays an in-context notification related to the user\u2019s current task or workflow.",
+  "package": "@salt-ds/core",
+  "import": "import { Banner, BannerContent, BannerActions } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "status": {
+      "type": "'info' | 'warning' | 'error' | 'success'",
+      "default": "'info'",
+      "description": "Determines the current banner state"
+    },
+    "variant": {
+      "type": "'primary' | 'secondary'",
+      "default": "'primary'",
+      "description": "Emphasizes styling by applying a background color"
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "Banner content, typically composed with BannerContent and optional BannerActions"
+    }
+  },
+  "slots": {
+    "children": "Use BannerContent for message content and BannerActions for interactive actions"
+  },
+  "states": [
+    "info",
+    "warning",
+    "error",
+    "success"
+  ],
+  "tokens": {
+    "variantPrimary": "saltBanner-primary",
+    "variantSecondary": "saltBanner-secondary",
+    "statusInfo": "saltBanner-info",
+    "statusWarning": "saltBanner-warning",
+    "statusError": "saltBanner-error",
+    "statusSuccess": "saltBanner-success"
+  },
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [
+      "Tab moves focus through interactive elements"
+    ],
+    "aria": [
+      "Use role=\"alert\" for alerts",
+      "Use role=\"status\" for notifications",
+      "When dynamically inserting role=\"status\" content, test screen reader announcements and consider preloading a status container if announcements are not reliable"
+    ]
+  },
+  "composition": {
+    "with": [
+      "BannerContent",
+      "BannerActions",
+      "Button",
+      "Link"
+    ],
+    "inside": [
+      "Main content area",
+      "Container components directly below navigation"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/banner/examples"
+}

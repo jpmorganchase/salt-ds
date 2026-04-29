@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Salt AG Grid Theme",
+  "description": "CSS theme that maps AG Grid's visual layer to Salt Design System tokens. Applied via CSS class names on the grid container — not a React wrapper component.",
+  "package": "@salt-ds/ag-grid-theme",
+  "import": "import \"@salt-ds/ag-grid-theme/salt-ag-theme.css\";",
+  "additionalImports": [
+    "import \"ag-grid-community/styles/ag-grid.css\";"
+  ],
+  "installCommand": "npm install ag-grid-community@\">=28.0.0 <=32.0.0\" ag-grid-react@\">=28.0.0 <=32.0.0\" @salt-ds/ag-grid-theme",
+  "status": "stable",
+  "supportedAgGridVersions": ">=28.0.0 <=32.0.0",
+  "themeClasses": {
+    "ag-theme-salt-light": "Standard density, light mode",
+    "ag-theme-salt-dark": "Standard density, dark mode",
+    "ag-theme-salt-compact-light": "HD Compact density, light mode",
+    "ag-theme-salt-compact-dark": "HD Compact density, dark mode"
+  },
+  "variantClasses": {
+    "ag-theme-salt-variant-secondary": "Secondary background variant (additive — combine with a theme class)",
+    "ag-theme-salt-variant-tertiary": "Tertiary background variant (additive — combine with a theme class)",
+    "ag-theme-salt-variant-zebra": "Alternating row backgrounds (additive — combine with a theme class)"
+  },
+  "cssCustomProperties": {
+    "layout": {
+      "--ag-row-height": "calc(var(--salt-size-base) + var(--salt-spacing-100))",
+      "--ag-header-height": "calc(var(--salt-size-base) + var(--salt-spacing-100))",
+      "--ag-grid-size": "var(--salt-spacing-50)",
+      "--ag-cell-horizontal-padding": "var(--salt-spacing-100)",
+      "--ag-list-item-height": "calc(var(--salt-size-base) + var(--salt-spacing-100))"
+    },
+    "typography": {
+      "--ag-font-family": "var(--salt-text-fontFamily)",
+      "--ag-font-size": "var(--salt-text-fontSize)"
+    },
+    "colors": {
+      "--ag-background-color": "var(--salt-container-primary-background)",
+      "--ag-data-color": "var(--salt-content-primary-foreground)",
+      "--ag-foreground-color": "var(--salt-content-primary-foreground)",
+      "--ag-header-background-color": "var(--salt-container-primary-background)",
+      "--ag-header-foreground-color": "var(--salt-content-secondary-foreground)",
+      "--ag-row-hover-color": "var(--salt-selectable-background-hover)",
+      "--ag-selected-row-background-color": "var(--salt-selectable-background-selected)",
+      "--ag-selected-row-border-color": "var(--salt-selectable-borderColor-selected)",
+      "--ag-border-color": "var(--salt-separable-secondary-borderColor)",
+      "--ag-secondary-border-color": "var(--salt-separable-tertiary-borderColor)"
+    },
+    "icons": {
+      "--ag-icon-font-family": "salt-icons (custom icon font bundled with the theme)",
+      "--ag-icon-size": "max(var(--salt-size-icon), 12px)",
+      "--ag-icon-image-display": "none (disabled — Salt uses font icons instead)"
+    }
+  },
+  "cellStyling": {
+    "display": "inline-block (inherited from AG Grid base CSS — see knownIssues)",
+    "lineHeight": "calc(var(--ag-line-height) - 1px)",
+    "paddingLeft": "var(--salt-spacing-100)",
+    "paddingRight": "var(--salt-spacing-100)",
+    "border": "none"
+  },
+  "editableCellClasses": {
+    "editable-cell": "Required on any editable column via cellClass — renders the border outline",
+    "numeric-cell": "Add alongside editable-cell for numeric columns",
+    "error-cell": "Validation error state (red border + dot indicator)",
+    "warning-cell": "Validation warning state (orange border + dot indicator)",
+    "success-cell": "Validation success state (green border + dot indicator)"
+  },
+  "rowValidationClasses": {
+    "error-row": "Full-row error state (applied via rowClassRules or getRowClass)",
+    "warning-row": "Full-row warning state",
+    "success-row": "Full-row success state"
+  },
+  "knownIssues": [
+    {
+      "id": "cell-vertical-alignment",
+      "summary": "Cell content sits at the top of the row instead of being vertically centered",
+      "cause": "AG Grid base CSS sets .ag-cell to display: inline-block. The Salt theme sets line-height: calc(var(--ag-line-height) - 1px) but does not override the display property. The combination of inline-block + the 1px line-height offset causes content to not vertically center, especially at non-default densities.",
+      "fix": "Override .ag-cell to use inline-flex with align-items: center. Add this CSS rule to your project (e.g., in App.css or a dedicated ag-grid-overrides.css):\n\n.ag-ltr .ag-cell {\n  display: inline-flex;\n  align-items: center;\n}",
+      "affectedVersions": "ag-grid-community >=28.0.0 with @salt-ds/ag-grid-theme >=2.0.0"
+    }
+  ],
+  "checkboxSelection": {
+    "description": "AG Grid renders row selection checkboxes using a custom checkbox styled by the Salt theme. The checkbox size is controlled by --salt-size-selectable. Column width must be density-aware.",
+    "checkboxSize": "var(--salt-size-selectable) — varies by density: high=12px, medium=14px, low=16px, touch=18px",
+    "cellPadding": "var(--salt-spacing-100) — varies by density: high=4px, medium=8px, low=12px, touch=16px",
+    "columnWidthFormula": "--salt-size-selectable + 2 × --salt-spacing-100",
+    "columnWidthByDensity": {
+      "high": 20,
+      "medium": 30,
+      "low": 40,
+      "touch": 50
+    },
+    "recommendedColDef": {
+      "checkboxSelection": true,
+      "headerCheckboxSelection": true,
+      "width": "{{checkboxWidth from density lookup}}",
+      "maxWidth": "{{checkboxWidth from density lookup}}",
+      "suppressMenu": true,
+      "lockPosition": "left",
+      "resizable": false,
+      "sortable": false,
+      "headerName": ""
+    },
+    "tokens": {
+      "--ag-checkbox-checked-color": "var(--salt-selectable-foreground-selected)",
+      "--ag-checkbox-unchecked-color": "var(--salt-selectable-borderColor)",
+      "--ag-checkbox-indeterminate-color": "var(--salt-selectable-foreground)",
+      "--ag-checkbox-border-radius": "0"
+    }
+  },
+  "compactDensityOverride": {
+    "description": "Compact theme classes override --salt-size-base to 16px and --salt-size-selectable to 12px, producing tighter rows regardless of the Salt density context"
+  },
+  "accessibility": {
+    "keyboard": "AG Grid handles keyboard navigation natively (arrow keys, Tab, Enter for editing)",
+    "aria": "AG Grid sets aria-selected on selected rows. Ensure custom cell renderers preserve semantic meaning."
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/ag-grid-theme/examples"
+}

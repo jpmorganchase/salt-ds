@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Button",
+  "description": "Triggers an action or event. The primary interactive element for user-initiated actions.",
+  "package": "@salt-ds/core",
+  "import": "import { Button } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "variant": {
+      "type": "'primary' | 'secondary' | 'cta'",
+      "default": "'primary'",
+      "description": "Deprecated variant; use appearance and sentiment instead"
+    },
+    "appearance": {
+      "type": "'solid' | 'bordered' | 'transparent'",
+      "default": "'solid'",
+      "description": "Visual weight of the button"
+    },
+    "sentiment": {
+      "type": "'accented' | 'neutral' | 'positive' | 'negative' | 'caution'",
+      "default": "'neutral'",
+      "description": "Semantic meaning of the action"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether the button is non-interactive"
+    },
+    "focusableWhenDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Allows a disabled button to receive focus"
+    },
+    "loading": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a loading spinner"
+    },
+    "loadingAnnouncement": {
+      "type": "string",
+      "description": "Text announced by screen readers during loading"
+    },
+    "type": {
+      "type": "'button' | 'submit' | 'reset'",
+      "default": "'button'",
+      "description": "HTML button type attribute"
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "Button label text and/or icon"
+    },
+    "onClick": {
+      "type": "(event: React.MouseEvent<HTMLButtonElement>) => void",
+      "description": "Callback fired on click"
+    }
+  },
+  "slots": {
+    "children": "Label text, icon, or both. For icon-only buttons, provide aria-label."
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading"
+  ],
+  "tokens": {
+    "background": "--salt-actionable-primary-background",
+    "foreground": "--salt-actionable-primary-foreground",
+    "borderColor": "--salt-actionable-primary-border-color",
+    "padding": "--salt-spacing-100 --salt-spacing-200"
+  },
+  "accessibility": {
+    "role": "button",
+    "keyboard": [
+      "Tab — moves focus to the button and then the next focusable component",
+      "Shift + Tab — moves focus to the previous focusable component",
+      "Enter / Space — activates the button",
+      "Enter / Space do nothing when disabled and focusableWhenDisabled is true"
+    ],
+    "aria": [
+      "Set aria-label on icon-only buttons",
+      "Set aria-hidden on icons when button also has visible text",
+      "Use loadingAnnouncement with loading for screen reader context"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FlowLayout (button groups)",
+      "Tooltip"
+    ],
+    "inside": [
+      "Card",
+      "Dialog",
+      "Form",
+      "Panel",
+      "Toolbar"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/button/examples"
+}

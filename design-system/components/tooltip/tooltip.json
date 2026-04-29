@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Tooltip",
+  "description": "Brief, supplementary message for an interactive UI element shown on hover/focus.",
+  "package": "@salt-ds/core",
+  "import": "import { Tooltip } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "content": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Content displayed inside the tooltip. Keep short and concise for accessibility."
+    },
+    "status": {
+      "type": "'info' | 'warning' | 'error' | 'success'",
+      "description": "Optional status controlling icon and border color. If omitted, status icon is hidden unless inherited from FormField context."
+    },
+    "placement": {
+      "type": "Placement",
+      "default": "'right'",
+      "description": "Preferred position of tooltip relative to trigger. Uses floating-ui placement values and can flip/shift when constrained."
+    },
+    "enterDelay": {
+      "type": "number",
+      "default": "300",
+      "description": "Delay in milliseconds before tooltip appears."
+    },
+    "leaveDelay": {
+      "type": "number",
+      "default": "0",
+      "description": "Delay in milliseconds before tooltip hides."
+    },
+    "hideArrow": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Hides tooltip arrow when true."
+    },
+    "hideIcon": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Hides status icon when true."
+    },
+    "open": {
+      "type": "boolean",
+      "description": "Controlled open state."
+    },
+    "onOpenChange": {
+      "type": "(open: boolean) => void",
+      "description": "Callback fired when tooltip open state changes."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables tooltip rendering and trigger behavior. Useful for conditional display cases."
+    },
+    "disableHoverListener": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables hover-trigger behavior."
+    },
+    "disableFocusListener": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables focus-trigger behavior."
+    },
+    "children": {
+      "type": "ReactElement",
+      "required": true,
+      "description": "Single trigger element cloned by Tooltip to attach hover/focus/ARIA behavior."
+    }
+  },
+  "slots": {
+    "children": "Single interactive trigger element"
+  },
+  "states": [
+    "closed",
+    "open",
+    "info",
+    "warning",
+    "error",
+    "success"
+  ],
+  "tokens": {
+    "background": "--salt-container-primary-background",
+    "foreground": "--salt-content-primary-foreground",
+    "borderColor": "--salt-container-primary-borderColor",
+    "statusInfoBorderColor": "--salt-status-info-borderColor",
+    "statusErrorBorderColor": "--salt-status-error-borderColor",
+    "statusWarningBorderColor": "--salt-status-warning-borderColor",
+    "statusSuccessBorderColor": "--salt-status-success-borderColor",
+    "shadow": "--salt-overlayable-shadow-popout",
+    "radius": "--salt-palette-corner-weak"
+  },
+  "accessibility": {
+    "role": "tooltip",
+    "keyboard": [
+      "Tab",
+      "Escape"
+    ],
+    "aria": [
+      "aria-describedby is applied to trigger and linked to tooltip content",
+      "Tooltip content should stay concise; rich formatting may not be conveyed by aria-describedby",
+      "Avoid attaching tooltips to non-interactive elements",
+      "Tooltip does not receive focus; focus remains on trigger",
+      "Only one tooltip should be visible at a time"
+    ],
+    "mobile": "Tooltips do not reliably display on touch-only devices for links/buttons/non-interactive elements; form field patterns are supported."
+  },
+  "composition": {
+    "with": [
+      "Button",
+      "Link",
+      "Form controls",
+      "IconButton"
+    ],
+    "inside": [
+      "Form",
+      "Panel",
+      "Toolbar",
+      "Data grid cell",
+      "Dense action areas"
+    ],
+    "avoid": [
+      "Interactive content inside tooltip (links, inputs, buttons)",
+      "Critical instructions only shown in tooltip",
+      "Non-interactive trigger anchors with added tabindex"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/tooltip/examples"
+}
