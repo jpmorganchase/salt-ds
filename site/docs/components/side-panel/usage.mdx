@@ -12,14 +12,14 @@ data:
 
 A side panel spans the full height of its container and is always non-modal. This means the content beside it remains interactive when the panel is expanded.
 
-Always choose a width that suits the content in the side panel. Refer to Salt's Forms pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
+Always choose a width that suits the content in the side panel. Refer to the [Forms pattern](/salt/patterns/forms) for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
 ### When to use
 
 - To view supporting details alongside the primary content (e.g., record details, metadata, history, related items) while keeping the main view visible and interactive.
 - To edit or update information in-context (e.g., update attributes, adjust settings, annotate) while referencing the main view for confirmation.
 - To apply and refine filters (e.g., facets, query parameters) while keeping results visible and interactive next to the filtering controls.
-- To support multi-step workflows (e.g., review → decide → update → confirm) where context and supporting controls must remain available across steps.
+- To support multi-step workflows where context and supporting controls must remain available across steps.
 - To keep supplementary information and actions persistently available during longer parallel tasks (e.g., compare items, validate fields, cross-check data).
 
 ### When not to use
@@ -155,9 +155,9 @@ const { setOpen } = useSidePanelContext();
 </SidePanelProvider>;
 ```
 
-### Custom triggers
+### Manual trigger
 
-When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a custom trigger using `useSidePanelContext`. Call `setOpen`, `setReference`, and spread `getReferenceProps` onto your element to maintain the correct ARIA attributes and focus return behavior.
+When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a manual trigger using `useSidePanelContext`. Call `setOpen`, `setReference`, and spread `getReferenceProps` onto your element to maintain the correct ARIA attributes and focus return behavior.
 
 ```jsx
 const { setOpen, setReference, getReferenceProps, panelId, openState } =
