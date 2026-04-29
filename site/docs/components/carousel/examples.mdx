@@ -47,6 +47,14 @@ The carousel can showcase multiple slides simultaneously, offering flexibility i
 
 <LivePreview componentName="carousel" exampleName="MultipleSlides" />
 
+## Fixed width slides
+
+The carousel can display slides at a constant width regardless of viewport size. Set the required Embla props, then set `--carousel-slide-size` to a value (e.g., `550px`) to prevent the slides from scaling with the viewport.
+
+When `--carousel-slide-size` is not overridden, the default responsive behavior is preserved.
+
+<LivePreview componentName="carousel" exampleName="FixedWidth" />
+
 ## Autoplay
 
 Autoplay can be added through the Embla plugin [`Autoplay`](https://www.embla-carousel.com/plugins/autoplay/), but requires additional code to support accessibility.
@@ -74,4 +82,3 @@ The Embla API enables programmatic control, such as the visible slide.
 </Callout>
 
 <LivePreview componentName="carousel" exampleName="ControlledCarousel" />
-<br />

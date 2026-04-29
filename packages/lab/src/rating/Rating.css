@@ -13,23 +13,21 @@
   padding-top: var(--salt-spacing-100);
 }
 
-.saltRating-labelTop,
 .saltRating-labelBottom {
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--salt-spacing-fixed-600);
+  gap: var(--salt-spacing-75);
 }
 
-.saltRating-labelLeft,
 .saltRating-labelRight {
   flex-direction: row;
-  gap: var(--salt-spacing-fixed-1200);
+  gap: var(--salt-spacing-150);
 }
 
 .saltRating-container {
   display: flex;
   flex-direction: row;
-  gap: var(--salt-spacing-fixed-1200);
+  gap: var(--salt-spacing-150);
   flex-wrap: nowrap;
   justify-content: flex-start;
   padding-top: var(--salt-spacing-fixed-100);
@@ -44,8 +42,4 @@
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
   box-sizing: border-box;
-}
-
-.saltRating-label.saltRating-label-left {
-  text-align: right;
 }

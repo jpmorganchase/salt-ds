@@ -1,0 +1,9 @@
+.example {
+  width: 100%;
+  min-width: 0;
+}
+
+.example > * {
+  width: 100%;
+  min-width: 0;
+}

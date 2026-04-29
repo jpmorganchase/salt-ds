@@ -166,3 +166,13 @@ FadePlugin.args = {
   },
   emblaPlugins: [Fade()],
 };
+
+export const FixedWidthSlide: StoryFn<CarouselProps> = (args) => (
+  <div className="fixedWidthCarouselContainer">
+    <CarouselNumberExample
+      {...args}
+      className="fixedWidthCarousel"
+      emblaOptions={{ align: "start", slidesToScroll: 1, containScroll: false }}
+    />
+  </div>
+);
