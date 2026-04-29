@@ -1,8 +1,10 @@
-import { Button, FlexLayout, H2, Text, useId } from "@salt-ds/core";
+import { Button, FlexLayout, H2, Text, useIcon } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   SidePanelProvider,
+  SidePanelTitle,
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
@@ -17,8 +19,8 @@ export const RightPanel = () => {
 };
 
 const RightPanelContent = () => {
-  const headingId = useId();
-  const { openState } = useSidePanelContext();
+  const { CloseIcon } = useIcon();
+  const { openState, setOpen } = useSidePanelContext();
 
   return (
     <FlexLayout
@@ -39,8 +41,20 @@ const RightPanelContent = () => {
         </SidePanelTrigger>
       </ContentExample>
 
-      <SidePanel position="right" aria-labelledby={headingId}>
-        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+      <SidePanel position="right">
+        <SidePanelHeader>
+          <SidePanelTitle>
+            <H2>Section Title</H2>
+          </SidePanelTitle>
+          <Button
+            aria-label="Close"
+            appearance="transparent"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        </SidePanelHeader>
+        <SidePanelContent>
           <Text>Side panel content goes here.</Text>
         </SidePanelContent>
       </SidePanel>

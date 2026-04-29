@@ -9,7 +9,7 @@ import {
   StackLayout,
   Text,
   Tooltip,
-  useId,
+  useIcon,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -20,7 +20,9 @@ import {
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   SidePanelProvider,
+  SidePanelTitle,
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
@@ -83,8 +85,37 @@ const DesktopAppHeader = () => {
   );
 };
 
+const HelpPanel = () => {
+  const { CloseIcon } = useIcon();
+  const { setOpen } = useSidePanelContext();
+  return (
+    <SidePanel>
+      <SidePanelHeader>
+        <SidePanelTitle>
+          <H2>Help & support</H2>
+        </SidePanelTitle>
+        <Button
+          aria-label="Close"
+          appearance="transparent"
+          onClick={() => setOpen(false)}
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      </SidePanelHeader>
+      <SidePanelContent>
+        <Text>
+          The content shown here is for illustrative purposes and does not
+          contain specific information or advice. Using placeholder text like
+          this helps review formatting, spacing, and overall presentation in the
+          user interface. Adjust the wording as needed to suit your particular
+          requirements or design preferences.
+        </Text>
+      </SidePanelContent>
+    </SidePanel>
+  );
+};
+
 export const WithAppHeader = () => {
-  const headingId = useId();
   return (
     <SidePanelProvider defaultOpen={true}>
       <BorderLayout
@@ -102,17 +133,7 @@ export const WithAppHeader = () => {
           <ContentExample />
         </BorderItem>
         <BorderItem position="east">
-          <SidePanel aria-labelledby={headingId}>
-            <SidePanelContent header={<H2 id={headingId}>Help & support</H2>}>
-              <Text>
-                The content shown here is for illustrative purposes and does not
-                contain specific information or advice. Using placeholder text
-                like this helps review formatting, spacing, and overall
-                presentation in the user interface. Adjust the wording as needed
-                to suit your particular requirements or design preferences.
-              </Text>
-            </SidePanelContent>
-          </SidePanel>
+          <HelpPanel />
         </BorderItem>
       </BorderLayout>
     </SidePanelProvider>

@@ -1,8 +1,10 @@
-import { Button, FlexLayout, H2, Text, useId } from "@salt-ds/core";
+import { Button, FlexLayout, H2, Text, useIcon } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   SidePanelProvider,
+  SidePanelTitle,
   useSidePanelContext,
 } from "@salt-ds/lab";
 import type { CSSProperties } from "react";
@@ -15,14 +17,23 @@ const panelStyle = {
 type PanelContext = ReturnType<typeof useSidePanelContext>;
 
 const RightPanel = () => {
-  const headingId = useId();
+  const { CloseIcon } = useIcon();
+  const { setOpen } = useSidePanelContext();
   return (
-    <SidePanel
-      aria-labelledby={headingId}
-      style={panelStyle}
-      variant="secondary"
-    >
-      <SidePanelContent header={<H2 id={headingId}>Right Panel</H2>}>
+    <SidePanel style={panelStyle} variant="secondary">
+      <SidePanelHeader>
+        <SidePanelTitle>
+          <H2>Right Panel</H2>
+        </SidePanelTitle>
+        <Button
+          aria-label="Close"
+          appearance="transparent"
+          onClick={() => setOpen(false)}
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      </SidePanelHeader>
+      <SidePanelContent>
         <Text>Right panel content.</Text>
       </SidePanelContent>
     </SidePanel>
@@ -30,15 +41,23 @@ const RightPanel = () => {
 };
 
 const LeftPanel = () => {
-  const headingId = useId();
+  const { CloseIcon } = useIcon();
+  const { setOpen } = useSidePanelContext();
   return (
-    <SidePanel
-      position="left"
-      aria-labelledby={headingId}
-      style={panelStyle}
-      variant="secondary"
-    >
-      <SidePanelContent header={<H2 id={headingId}>Left Panel</H2>}>
+    <SidePanel position="left" style={panelStyle} variant="secondary">
+      <SidePanelHeader>
+        <SidePanelTitle>
+          <H2>Left Panel</H2>
+        </SidePanelTitle>
+        <Button
+          aria-label="Close"
+          appearance="transparent"
+          onClick={() => setOpen(false)}
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      </SidePanelHeader>
+      <SidePanelContent>
         <Text>Left panel content.</Text>
       </SidePanelContent>
     </SidePanel>

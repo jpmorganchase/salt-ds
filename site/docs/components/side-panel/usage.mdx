@@ -29,13 +29,15 @@ Always choose a width that suits the content in the side panel. Refer to Salt's 
 
 ## Import
 
-To import `SidePanel`, `SidePanelContent`, `SidePanelProvider` and `SidePanelTrigger` from the lab Salt package, use:
+To import `SidePanel`, `SidePanelContent`, `SidePanelHeader`, `SidePanelProvider`, `SidePanelTitle` and `SidePanelTrigger` from the lab Salt package, use:
 
 ```js
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   SidePanelProvider,
+  SidePanelTitle,
   SidePanelTrigger,
 } from "@salt-ds/lab";
 ```
@@ -66,32 +68,63 @@ Use the `defaultOpen` prop to render the panel open on first mount, or pass `ope
 
 `SidePanel` is the panel surface itself. It renders as a `region` landmark, manages its enter/exit animation, and moves focus into the panel when it opens. Use the `position` prop to anchor the panel to the `"left"` or `"right"` edge of its container (defaults to `"right"`), and the `variant` prop to set its background color (`"primary"`, `"secondary"`, or `"tertiary"`).
 
-You must provide an accessible name via `aria-labelledby` (pointing to a heading inside the panel) or `aria-label`.
+When you use `SidePanelTitle` inside `SidePanelHeader`, the accessible name for the panel region is provided automatically. If you are not using `SidePanelTitle`, you must provide an accessible name via `aria-labelledby` or `aria-label`.
 
 ```jsx
-<SidePanel position="right" aria-labelledby={headingId}>
-  {/* panel content */}
-</SidePanel>
+<SidePanel position="right">{/* header and content */}</SidePanel>
+```
+
+### SidePanelHeader
+
+`SidePanelHeader` is a layout wrapper for the panel header area. It is intended to contain a `SidePanelTitle` and a close button.
+
+```jsx
+const { CloseIcon } = useIcon();
+const { setOpen } = useSidePanelContext();
+
+<SidePanelHeader>
+  <SidePanelTitle>
+    <H2>Panel Title</H2>
+  </SidePanelTitle>
+  <Button
+    aria-label="Close"
+    appearance="transparent"
+    onClick={() => setOpen(false)}
+  >
+    <CloseIcon aria-hidden />
+  </Button>
+</SidePanelHeader>;
+```
+
+### SidePanelTitle
+
+`SidePanelTitle` provides the accessible name for the side panel region. It generates a unique ID internally and registers it with the context so that `SidePanel` can use it for `aria-labelledby` automatically. Place your heading element (e.g. `<H2>`) inside it.
+
+```jsx
+<SidePanelTitle>
+  <H2>Section Title</H2>
+</SidePanelTitle>
 ```
 
 ### SidePanelContent
 
-`SidePanelContent` is an optional layout helper that provides a standard panel structure: a header row with a close button and a scrollable body. Pass a heading element to the `header` prop and your content as children.
+`SidePanelContent` is a scrollable body wrapper. When the content overflows, it automatically becomes a focusable `region` with an accessible name derived from the `SidePanelTitle`.
 
 ```jsx
-<SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+<SidePanelContent>
   <Text>Panel body content goes here.</Text>
 </SidePanelContent>
 ```
 
-`SidePanelContent` renders a close button automatically. If you need a custom header layout or close behavior, you can skip `SidePanelContent` and compose your own header using `useSidePanelContext` to call `setOpen(false)`.
+If you need a custom layout or close behavior, you can skip `SidePanelContent` and compose your own body using `useSidePanelContext`.
 
 ### Putting it together
 
-A minimal side panel combines all four parts inside a flex container:
+A minimal side panel combines all parts inside a flex container:
 
 ```jsx
-const headingId = useId();
+const { CloseIcon } = useIcon();
+const { setOpen } = useSidePanelContext();
 
 <SidePanelProvider>
   <FlexLayout gap={0}>
@@ -101,8 +134,20 @@ const headingId = useId();
       </SidePanelTrigger>
     </StackLayout>
 
-    <SidePanel position="right" aria-labelledby={headingId}>
-      <SidePanelContent header={<H2 id={headingId}>Details</H2>}>
+    <SidePanel position="right">
+      <SidePanelHeader>
+        <SidePanelTitle>
+          <H2>Details</H2>
+        </SidePanelTitle>
+        <Button
+          aria-label="Close"
+          appearance="transparent"
+          onClick={() => setOpen(false)}
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      </SidePanelHeader>
+      <SidePanelContent>
         <Text>Side panel content goes here.</Text>
       </SidePanelContent>
     </SidePanel>
@@ -145,6 +190,14 @@ const { setOpen, setReference, getReferenceProps, panelId, openState } =
 ### SidePanelTrigger
 
 <PropsTable packageName="lab" componentName="SidePanelTrigger" />
+
+### SidePanelHeader
+
+<PropsTable packageName="lab" componentName="SidePanelHeader" />
+
+### SidePanelTitle
+
+<PropsTable packageName="lab" componentName="SidePanelTitle" />
 
 ### SidePanelContent
 

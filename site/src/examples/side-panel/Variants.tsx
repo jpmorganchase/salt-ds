@@ -8,13 +8,15 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
-  useId,
+  useIcon,
 } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   type SidePanelProps,
   SidePanelProvider,
+  SidePanelTitle,
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
@@ -33,8 +35,8 @@ export const Variants = () => {
 
 const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
-  const headingId = useId();
-  const { openState } = useSidePanelContext();
+  const { CloseIcon } = useIcon();
+  const { openState, setOpen } = useSidePanelContext();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setVariant(event.target.value as SidePanelProps["variant"]);
@@ -79,8 +81,20 @@ const VariantsContent = () => {
         </StackLayout>
       </ContentExample>
 
-      <SidePanel position="right" aria-labelledby={headingId} variant={variant}>
-        <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
+      <SidePanel position="right" variant={variant}>
+        <SidePanelHeader>
+          <SidePanelTitle>
+            <H2>Section Title</H2>
+          </SidePanelTitle>
+          <Button
+            aria-label="Close"
+            appearance="transparent"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        </SidePanelHeader>
+        <SidePanelContent>
           <Text>Side panel content goes here.</Text>
         </SidePanelContent>
       </SidePanel>

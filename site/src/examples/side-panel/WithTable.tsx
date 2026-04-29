@@ -13,12 +13,14 @@ import {
   TH,
   THead,
   TR,
-  useId,
+  useIcon,
 } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   SidePanelProvider,
+  SidePanelTitle,
   useSidePanelContext,
 } from "@salt-ds/lab";
 import React, { type CSSProperties, useState } from "react";
@@ -69,7 +71,7 @@ const panelStyle = {
 
 const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
-  const panelHeadingId = useId();
+  const { CloseIcon } = useIcon();
   const { setOpen, setReference, openState, getReferenceProps, panelId } =
     useSidePanelContext();
 
@@ -135,53 +137,60 @@ const SidePanelExample = () => {
         </TableContainer>
       </div>
 
-      <SidePanel
-        position="right"
-        aria-labelledby={panelHeadingId}
-        style={panelStyle}
-        key={selectedRow?.id}
-      >
+      <SidePanel position="right" style={panelStyle} key={selectedRow?.id}>
         {selectedRow && (
-          <SidePanelContent
-            header={
-              <H2 id={panelHeadingId}>
-                <span className="salt-visuallyHidden">{selectedRow.name}</span>
-                Employee Details
-              </H2>
-            }
-          >
-            <StackLayout style={{ width: "100%" }}>
-              <FormField>
-                <FormFieldLabel>Name</FormFieldLabel>
-                <Input defaultValue={selectedRow.name} />
-              </FormField>
-              <FormField>
-                <FormFieldLabel>Email</FormFieldLabel>
-                <Input defaultValue={selectedRow.email} />
-              </FormField>
-              <FormField>
-                <FormFieldLabel>Phone</FormFieldLabel>
-                <Input defaultValue={selectedRow.phone} />
-              </FormField>
-              <FlexLayout gap={1}>
-                <Button
-                  sentiment="accented"
-                  appearance="bordered"
-                  style={{ width: "100%" }}
-                  onClick={() => setOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  sentiment="accented"
-                  style={{ width: "100%" }}
-                  onClick={() => setOpen(false)}
-                >
-                  Save
-                </Button>
-              </FlexLayout>
-            </StackLayout>
-          </SidePanelContent>
+          <>
+            <SidePanelHeader>
+              <SidePanelTitle>
+                <H2>
+                  <span className="salt-visuallyHidden">
+                    {selectedRow.name}
+                  </span>
+                  Employee Details
+                </H2>
+              </SidePanelTitle>
+              <Button
+                aria-label="Close"
+                appearance="transparent"
+                onClick={() => setOpen(false)}
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </SidePanelHeader>
+            <SidePanelContent>
+              <StackLayout style={{ width: "100%" }}>
+                <FormField>
+                  <FormFieldLabel>Name</FormFieldLabel>
+                  <Input defaultValue={selectedRow.name} />
+                </FormField>
+                <FormField>
+                  <FormFieldLabel>Email</FormFieldLabel>
+                  <Input defaultValue={selectedRow.email} />
+                </FormField>
+                <FormField>
+                  <FormFieldLabel>Phone</FormFieldLabel>
+                  <Input defaultValue={selectedRow.phone} />
+                </FormField>
+                <FlexLayout gap={1}>
+                  <Button
+                    sentiment="accented"
+                    appearance="bordered"
+                    style={{ width: "100%" }}
+                    onClick={() => setOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    sentiment="accented"
+                    style={{ width: "100%" }}
+                    onClick={() => setOpen(false)}
+                  >
+                    Save
+                  </Button>
+                </FlexLayout>
+              </StackLayout>
+            </SidePanelContent>
+          </>
         )}
       </SidePanel>
     </FlexLayout>

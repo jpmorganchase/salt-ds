@@ -9,7 +9,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { SidePanelContext } from "./SidePanelContext";
@@ -53,8 +52,8 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const [panelId, setPanelId] = useState<string | undefined>(undefined);
+  const [headerId, setHeaderId] = useState<string | undefined>(undefined);
 
   const floatingRootContext = useFloatingRootContext({
     open: openState,
@@ -120,9 +119,10 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
       setFloating,
       setReference,
       setOpen: handleOpenChange,
-      closeButtonRef,
       panelId,
       setPanelId,
+      headerId,
+      setHeaderId,
     }),
     [
       openState,
@@ -131,6 +131,7 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
       getReferenceProps,
       handleOpenChange,
       panelId,
+      headerId,
     ],
   );
 

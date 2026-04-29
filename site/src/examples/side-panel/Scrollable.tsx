@@ -4,13 +4,16 @@ import {
   H2,
   StackLayout,
   Text,
-  useId,
+  useIcon,
 } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
+  SidePanelHeader,
   SidePanelProvider,
+  SidePanelTitle,
   SidePanelTrigger,
+  useSidePanelContext,
 } from "@salt-ds/lab";
 
 const ScrollableContent = () => (
@@ -60,9 +63,39 @@ const ScrollableContent = () => (
   </div>
 );
 
-export const Scrollable = () => {
-  const headingId = useId();
+const ScrollablePanel = () => {
+  const { CloseIcon } = useIcon();
+  const { setOpen } = useSidePanelContext();
+  return (
+    <SidePanel position="right">
+      <SidePanelHeader>
+        <SidePanelTitle>
+          <H2>Section Title</H2>
+        </SidePanelTitle>
+        <Button
+          aria-label="Close"
+          appearance="transparent"
+          onClick={() => setOpen(false)}
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      </SidePanelHeader>
+      <SidePanelContent>
+        <StackLayout>
+          {Array.from({ length: 10 }, (_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: Static list of identical placeholder items
+            <Text key={`panel-item-${i}`}>
+              Panel item — This is scrollable content inside the side panel that
+              demonstrates independent scrolling.
+            </Text>
+          ))}
+        </StackLayout>
+      </SidePanelContent>
+    </SidePanel>
+  );
+};
 
+export const Scrollable = () => {
   return (
     <SidePanelProvider>
       <FlexLayout
@@ -76,19 +109,7 @@ export const Scrollable = () => {
         gap={0}
       >
         <ScrollableContent />
-        <SidePanel position="right" aria-labelledby={headingId}>
-          <SidePanelContent header={<H2 id={headingId}>Section Title</H2>}>
-            <StackLayout>
-              {Array.from({ length: 10 }, (_, i) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: Static list of identical placeholder items
-                <Text key={`panel-item-${i}`}>
-                  Panel item — This is scrollable content inside the side panel
-                  that demonstrates independent scrolling.
-                </Text>
-              ))}
-            </StackLayout>
-          </SidePanelContent>
-        </SidePanel>
+        <ScrollablePanel />
       </FlexLayout>
     </SidePanelProvider>
   );

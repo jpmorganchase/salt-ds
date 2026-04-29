@@ -1,21 +1,10 @@
 .saltSidePanelContent {
   display: flex;
   flex-direction: column;
-  padding: var(--salt-spacing-300) 0 var(--salt-spacing-300) var(--salt-spacing-300);
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.saltSidePanelContent-header {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  gap: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-300);
-}
-
-.saltSidePanelContent-header > *:first-child {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
   flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .saltSidePanelContent-body {

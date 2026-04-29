@@ -1,11 +1,6 @@
 import type { FloatingRootContext, useInteractions } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
-import {
-  type Dispatch,
-  type MutableRefObject,
-  type SetStateAction,
-  useContext,
-} from "react";
+import { type Dispatch, type SetStateAction, useContext } from "react";
 
 export interface SidePanelContextValue {
   /**
@@ -39,13 +34,9 @@ export interface SidePanelContextValue {
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
   /**
    * Sets the open state of the panel.
-   * Called by the close button in SidePanelContent, or any consumer that needs to close the panel.
+   * Called by the close button in SidePanelHeader, or any consumer that needs to close the panel.
    */
   setOpen: (open: boolean) => void;
-  /**
-   * Ref to the close button in panel content used for open-time initial focus.
-   */
-  closeButtonRef: MutableRefObject<HTMLButtonElement | null>;
   /**
    * Side panel id used for aria-controls on the trigger.
    */
@@ -54,6 +45,16 @@ export interface SidePanelContextValue {
    * Registers or clears the side panel id used for aria-controls/id linkage.
    */
   setPanelId: Dispatch<SetStateAction<string | undefined>>;
+  /**
+   * The auto-generated id placed on SidePanelTitle.
+   * Used for aria-labelledby on the panel region and the scrollable body.
+   */
+  headerId?: string;
+  /**
+   * Registers the heading id from SidePanelTitle back to the context
+   * so that SidePanel and SidePanelContent can use it for aria-labelledby.
+   */
+  setHeaderId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const SidePanelContext = createContext<SidePanelContextValue>(
@@ -66,9 +67,10 @@ export const SidePanelContext = createContext<SidePanelContextValue>(
     setFloating: () => {},
     setReference: () => {},
     setOpen: () => {},
-    closeButtonRef: { current: null },
     panelId: undefined,
     setPanelId: () => {},
+    headerId: undefined,
+    setHeaderId: () => {},
   },
 );
 

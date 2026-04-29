@@ -52,6 +52,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       children,
       id: idProp,
       className,
+      "aria-labelledby": ariaLabelledBy,
       ...rest
     } = props;
 
@@ -60,8 +61,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       floatingRootContext,
       setFloating,
       getFloatingProps,
-      closeButtonRef,
       setPanelId,
+      headerId,
     } = useSidePanelContext();
 
     const id = useId(idProp);
@@ -156,13 +157,12 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     if (!showComponent) return null;
 
     // `-1` skips initial focus movement but preserves focus guards/return focus handling.
-    const resolvedInitialFocus = skipInitialFocus
-      ? -1
-      : (initialFocus ?? closeButtonRef);
+    const resolvedInitialFocus = skipInitialFocus ? -1 : (initialFocus ?? 0);
 
     const panelDiv = (
       <div
         role="region"
+        aria-labelledby={clsx(ariaLabelledBy, headerId) || undefined}
         ref={handleRef}
         className={clsx(
           withBaseName(),

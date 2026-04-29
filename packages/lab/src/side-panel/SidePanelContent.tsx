@@ -1,11 +1,10 @@
-import { Button, makePrefixer, useIcon, useId } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
   forwardRef,
-  type ReactNode,
   useEffect,
   useRef,
   useState,
@@ -15,25 +14,17 @@ import { useSidePanelContext } from "./SidePanelContext";
 
 const withBaseName = makePrefixer("saltSidePanelContent");
 
-export interface SidePanelContentProps extends ComponentPropsWithRef<"div"> {
-  /**
-   * Content rendered in the header area next to the close button.
-   */
-  header?: ReactNode;
-}
+export interface SidePanelContentProps extends ComponentPropsWithRef<"div"> {}
 
 export const SidePanelContent = forwardRef<
   HTMLDivElement,
   SidePanelContentProps
 >(function SidePanelContent(props, ref) {
-  const { header, children, className, ...rest } = props;
+  const { children, className, ...rest } = props;
 
-  const { CloseIcon } = useIcon();
-  const { closeButtonRef, setOpen } = useSidePanelContext();
+  const { headerId } = useSidePanelContext();
   const targetWindow = useWindow();
-  const headerId = useId();
   const contentSuffixId = useId();
-  const hasHeader = header != null;
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const [isScrollable, setIsScrollable] = useState(false);
 
@@ -88,7 +79,7 @@ export const SidePanelContent = forwardRef<
   if (isScrollable) {
     if (explicitLabelledBy) {
       bodyAriaLabelledBy = explicitLabelledBy;
-    } else if (hasHeader) {
+    } else if (headerId) {
       bodyAriaLabelledBy = `${headerId} ${contentSuffixId}`;
     } else {
       bodyAriaLabel = explicitLabel ?? "Content";
@@ -97,17 +88,6 @@ export const SidePanelContent = forwardRef<
 
   return (
     <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-      <div className={withBaseName("header")}>
-        {hasHeader ? <div id={headerId}>{header}</div> : null}
-        <Button
-          ref={closeButtonRef}
-          aria-label="Close"
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
-      </div>
       <span id={contentSuffixId} className="salt-visuallyHidden">
         content
       </span>
