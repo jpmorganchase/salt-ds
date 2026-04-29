@@ -1012,7 +1012,7 @@ const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
   const { setOpen } = useSidePanelContext();
   return (
     <SidePanel
-      animated={false}
+      disableAnimation
       style={{ ...resizableSidePanelStyle, ...style }}
       variant="primary"
     >
@@ -1409,7 +1409,7 @@ export const ResizableCards: StoryFn = () => {
               }}
             >
               <SidePanel
-                animated={false}
+                disableAnimation
                 aria-labelledby={headingId}
                 style={resizableSidePanelStyle}
                 variant="none"

@@ -18,11 +18,11 @@ const withBaseName = makePrefixer("saltSidePanel");
 
 export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Whether the panel animates its own open/close transitions.
-   * Set to `false` when the parent controls sizing and animation (e.g. inside a splitter).
-   * @default true
+   * Disable the panel's own open/close animation.
+   * Set to `true` when the parent controls sizing and animation (e.g. inside a splitter).
+   * @default false
    */
-  animated?: boolean;
+  disableAnimation?: boolean;
   /**
    * Edge the panel is anchored to; controls animation direction and divider side.
    * @default "right"
@@ -44,7 +44,7 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
     const {
-      animated = true,
+      disableAnimation = false,
       position = "right",
       initialFocus,
       variant = "primary",
@@ -116,8 +116,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     }, [openState]);
 
     useEffect(() => {
-      if (!animated) {
-        // When not animated the panel is always kept mounted so the parent can
+      if (disableAnimation) {
+        // When animation is disabled the panel is always kept mounted so the parent can
         // control sizing (e.g. flex-grow transition in a splitter).
         setShowComponent(true);
         setAnimating(false);
@@ -151,7 +151,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
 
       initialRender.current = false;
-    }, [openState, targetWindow, animated]);
+    }, [openState, targetWindow, disableAnimation]);
 
     if (!showComponent) return null;
 
@@ -169,13 +169,13 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
             [withBaseName(position)]: position,
             [withBaseName(variant)]: variant,
             [withBaseName("enterAnimation")]:
-              animated && openState && animating,
+              !disableAnimation && openState && animating,
             [withBaseName("exitAnimation")]:
-              animated && !openState && animating,
+              !disableAnimation && !openState && animating,
           },
           className,
         )}
-        onAnimationEnd={animated ? handleAnimationEnd : undefined}
+        onAnimationEnd={disableAnimation ? undefined : handleAnimationEnd}
         {...getFloatingProps({
           ...rest,
           id,
