@@ -22,10 +22,12 @@ import {
   SidePanelContent,
   SidePanelProvider,
   SidePanelTrigger,
+  useSidePanelContext,
 } from "@salt-ds/lab";
 import { ContentExample } from "src/examples/side-panel/ContentExample";
 
 const DesktopAppHeader = () => {
+  const { openState } = useSidePanelContext();
   return (
     <header>
       <FlexLayout
@@ -54,18 +56,23 @@ const DesktopAppHeader = () => {
           <StackLayout direction="row" gap={1}>
             <Tooltip content="Toggle help panel" hideArrow>
               <SidePanelTrigger>
-                <Button appearance="transparent" aria-label="open help panel">
+                <Button
+                  appearance="transparent"
+                  aria-label={
+                    openState ? "Close help panel" : "Open help panel"
+                  }
+                >
                   <HelpCircleIcon aria-hidden />
                 </Button>
               </SidePanelTrigger>
             </Tooltip>
             <Tooltip content="Show notifications" hideArrow>
-              <Button appearance="transparent">
+              <Button appearance="transparent" aria-label="Show notifications">
                 <NotificationIcon aria-hidden />
               </Button>
             </Tooltip>
             <Tooltip content="Open chat" hideArrow>
-              <Button appearance="transparent">
+              <Button appearance="transparent" aria-label="Open chat">
                 <ChattingIcon aria-hidden />
               </Button>
             </Tooltip>
