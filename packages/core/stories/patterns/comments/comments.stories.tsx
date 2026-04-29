@@ -75,7 +75,9 @@ export const Default = () => {
               </Button>
             }
             value={inputValue}
-            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            onChange={(e) =>
+              setInputValue((e.target as HTMLInputElement).value)
+            }
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
@@ -156,7 +158,9 @@ export const WithAvatar = () => {
               </Button>
             }
             value={inputValue}
-            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            onChange={(e) =>
+              setInputValue((e.target as HTMLInputElement).value)
+            }
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
@@ -239,16 +243,16 @@ export const WithMultilineInput = () => {
             placeholder="Add a comment..."
             endAdornment={
               <>
-                <Label>
-                  {`${inputValue.length}/${MAX_CHARS}`}
-                </Label>
+                <Label>{`${inputValue.length}/${MAX_CHARS}`}</Label>
                 <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
                   <SendIcon />
                 </Button>
               </>
             }
             value={inputValue}
-            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            onChange={(e) =>
+              setInputValue((e.target as HTMLInputElement).value)
+            }
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
