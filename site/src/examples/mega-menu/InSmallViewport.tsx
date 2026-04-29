@@ -42,7 +42,7 @@ export const InSmallViewport = (): ReactElement => {
                 </Button>
               </MegaMenuTrigger>
               <MegaMenuContainer className={styles.smallViewportContainer}>
-                <MegaMenuSection>
+                <MegaMenuSection className={styles.smallViewportSection}>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial Services</MegaMenuHeader>
                     <MegaMenuItem

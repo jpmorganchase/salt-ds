@@ -117,10 +117,10 @@ export const WithLink = (): ReactElement => {
                     Public Safety Solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
-                <MegaMenuLinkRow>
-                  <Link href="#">See all solutions</Link>
-                </MegaMenuLinkRow>
               </MegaMenuSection>
+              <MegaMenuLinkRow>
+                <Link href="#">See all solutions</Link>
+              </MegaMenuLinkRow>
             </MegaMenuContainer>
           </MegaMenu>
         </li>
@@ -181,10 +181,10 @@ export const WithLink = (): ReactElement => {
                   <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
                   <MegaMenuItem value="Guides">Guides</MegaMenuItem>
                 </MegaMenuGroup>
-                <MegaMenuLinkRow>
-                  <Link href="#">See all services</Link>
-                </MegaMenuLinkRow>
               </MegaMenuSection>
+              <MegaMenuLinkRow>
+                <Link href="#">See all services</Link>
+              </MegaMenuLinkRow>
             </MegaMenuContainer>
           </MegaMenu>
         </li>
@@ -237,10 +237,10 @@ export const WithLink = (): ReactElement => {
                     Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
-                <MegaMenuLinkRow>
-                  <Link href="#">See all resources</Link>
-                </MegaMenuLinkRow>
               </MegaMenuSection>
+              <MegaMenuLinkRow>
+                <Link href="#">See all resources</Link>
+              </MegaMenuLinkRow>
             </MegaMenuContainer>
           </MegaMenu>
         </li>

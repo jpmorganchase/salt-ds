@@ -3,40 +3,6 @@
   padding: 0;
 }
 
-.saltMegaMenuSection > .saltMegaMenuGroup {
-  flex: 0 0 16rem;
-  inline-size: 16rem;
-}
-
-.triggerPositionGrid {
-  width: 100%;
-  display: grid;
-  gap: 1rem;
-}
-
-.triggerPositionLeft {
-  display: flex;
-  justify-content: flex-start;
-  padding-left: 12px;
-}
-
-.triggerPositionCenter {
-  display: flex;
-  justify-content: center;
-}
-
-.triggerPositionOffset {
-  display: flex;
-  justify-content: center;
-  padding-left: 180px;
-}
-
-.triggerPositionRight {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 12px;
-}
-
 .menuItemAdornment {
   margin-left: auto;
 }
@@ -54,7 +20,18 @@
 }
 
 .smallViewportContainer {
-  width: 320px;
+  --saltMegaMenuContainer-inlineSize: 320px;
+  --saltMegaMenuContainer-maxInlineSize: 320px;
+}
+
+.smallViewportSection {
+  max-inline-size: 100%;
+  grid-template-columns: 1fr;
+}
+
+.smallViewportSection > * {
+  flex: initial;
+  inline-size: auto;
 }
 
 .customRegionNoContainerPadding {
