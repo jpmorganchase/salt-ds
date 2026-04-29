@@ -6,13 +6,12 @@ import {
   isValidElement,
   type MouseEvent,
   type ReactNode,
-  useCallback,
 } from "react";
 import { useSidePanelContext } from "./SidePanelContext";
 
 export interface SidePanelTriggerProps
   extends ComponentPropsWithoutRef<"button"> {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const SidePanelTrigger = forwardRef<
@@ -25,15 +24,12 @@ export const SidePanelTrigger = forwardRef<
 
   const handleRef = useForkRef(setReference, ref);
 
-  const handleClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      onClick?.(event);
-      if (!event.defaultPrevented) {
-        setOpen(!openState);
-      }
-    },
-    [onClick, openState, setOpen],
-  );
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
+    if (!event.defaultPrevented) {
+      setOpen(!openState);
+    }
+  };
 
   if (!children || !isValidElement<{ ref?: unknown }>(children)) {
     return <>{children}</>;

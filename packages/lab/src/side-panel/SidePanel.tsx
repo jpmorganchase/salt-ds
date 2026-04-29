@@ -7,7 +7,6 @@ import {
   type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -93,12 +92,12 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
-    const handleAnimationEnd = useCallback(() => {
+    const handleAnimationEnd = () => {
       setAnimating(false);
       if (!openState) {
         setShowComponent(false);
       }
-    }, [openState]);
+    };
 
     useEffect(() => {
       // Keep this as state (not ref): setPanelId causes a context re-render and
