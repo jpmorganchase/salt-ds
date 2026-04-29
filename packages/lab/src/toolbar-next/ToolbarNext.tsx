@@ -26,9 +26,7 @@ import {
   ToolbarNextOverflowTriggerContent,
 } from "./ToolbarNextOverflow";
 import type { ToolbarRegionPosition } from "./ToolbarRegion";
-import {
-  TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
-} from "./toolbarNextKeyboardUtils";
+import { TOOLBAR_NEXT_SCOPE_ROOT_ATTR } from "./toolbarNextKeyboardUtils";
 import {
   normalizeToolbarChildren,
   type ToolbarNextOverflowItem,
