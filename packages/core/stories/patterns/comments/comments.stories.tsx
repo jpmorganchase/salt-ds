@@ -4,7 +4,6 @@ import {
   BannerActions,
   BannerContent,
   Button,
-  Divider,
   FlexLayout,
   FormField,
   FormFieldLabel,
@@ -64,43 +63,43 @@ export const Default = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <FormField style={{ padding: "var(--salt-spacing-100)", width: "auto" }}>
-        <FormFieldLabel>Write a comment</FormFieldLabel>
-        <Input
-          style={{ height: "36px" }}
-          bordered
-          placeholder="Add a comment..."
-          endAdornment={
-            <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
-              <SendIcon />
-            </Button>
-          }
-          value={inputValue}
-          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSubmit();
-          }}
-        />
-      </FormField>
-      {comments.map((c, i) => (
-        <StackLayout gap={0} key={`${c.name}-${c.date}`}>
-          <StackLayout padding={1} gap={1}>
-            <div>
+      <div style={{ padding: "var(--salt-spacing-100)" }}>
+        <FormField>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            endAdornment={
+              <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
+                <SendIcon />
+              </Button>
+            }
+            value={inputValue}
+            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSubmit();
+            }}
+          />
+        </FormField>
+      </div>
+      <StackLayout gap={0} separators>
+        {comments.map((c) => (
+          <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
+            <StackLayout gap={0.5}>
               <Text styleAs="h4">{c.name}</Text>
               <Text styleAs="label" color="secondary">
                 {c.role} • {c.date}
               </Text>
-            </div>
+            </StackLayout>
             <Text>{c.text}</Text>
           </StackLayout>
-          {i < comments.length - 1 && <Divider variant="tertiary" />}
-        </StackLayout>
-      ))}
+        ))}
+      </StackLayout>
     </StackLayout>
   );
 };
 
-export const CommentsWithAvatar = () => {
+export const WithAvatar = () => {
   const [inputValue, setInputValue] = useState("");
   const [comments, setComments] = useState([
     {
@@ -145,48 +144,48 @@ export const CommentsWithAvatar = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <FormField style={{ padding: "var(--salt-spacing-100)", width: "auto" }}>
-        <FormFieldLabel>Write a comment</FormFieldLabel>
-        <Input
-          style={{ height: "36px" }}
-          bordered
-          placeholder="Add a comment..."
-          endAdornment={
-            <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
-              <SendIcon />
-            </Button>
-          }
-          value={inputValue}
-          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSubmit();
-          }}
-        />
-      </FormField>
-      {comments.map((c, i) => (
-        <StackLayout gap={0} key={`${c.name}-${c.date}`}>
-          <StackLayout padding={1} gap={1}>
+      <div style={{ padding: "var(--salt-spacing-100)" }}>
+        <FormField>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            endAdornment={
+              <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
+                <SendIcon />
+              </Button>
+            }
+            value={inputValue}
+            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSubmit();
+            }}
+          />
+        </FormField>
+      </div>
+      <StackLayout gap={0} separators>
+        {comments.map((c) => (
+          <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <FlexLayout gap={1}>
               <Avatar size={1} color="accent" name={c.initials} />
               <StackLayout gap={1}>
-                <div>
+                <StackLayout gap={0.5}>
                   <Text styleAs="h4">{c.name}</Text>
                   <Text styleAs="label" color="secondary">
                     {c.role} • {c.date}
                   </Text>
-                </div>
+                </StackLayout>
                 <Text>{c.text}</Text>
               </StackLayout>
             </FlexLayout>
           </StackLayout>
-          {i < comments.length - 1 && <Divider variant="tertiary" />}
-        </StackLayout>
-      ))}
+        ))}
+      </StackLayout>
     </StackLayout>
   );
 };
 
-export const CommentsWithMultilineInput = () => {
+export const WithMultilineInput = () => {
   const [inputValue, setInputValue] = useState("");
   const MAX_CHARS = 1000;
   const [comments, setComments] = useState([
@@ -232,68 +231,69 @@ export const CommentsWithMultilineInput = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <FormField style={{ padding: "var(--salt-spacing-100)", width: "auto" }}>
-        <FormFieldLabel>Write a comment</FormFieldLabel>
-        <MultilineInput
-          bordered
-          placeholder="Add a comment..."
-          endAdornment={
-            <>
-              <Label>
-                {`${inputValue.length}/${MAX_CHARS}`}
-                <strong>{`${inputValue.length}/${MAX_CHARS}`}</strong>
-              </Label>
-              <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
-                <SendIcon />
-              </Button>
-            </>
-          }
-          value={inputValue}
-          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSubmit();
-          }}
-        />
-      </FormField>
-      {comments.map((c, i) => (
-        <StackLayout gap={0} key={`${c.name}-${c.date}`}>
-          <StackLayout padding={1} gap={1}>
+      <div style={{ padding: "var(--salt-spacing-100)" }}>
+        <FormField>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <MultilineInput
+            bordered
+            placeholder="Add a comment..."
+            endAdornment={
+              <>
+                <Label>
+                  {`${inputValue.length}/${MAX_CHARS}`}
+                </Label>
+                <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
+                  <SendIcon />
+                </Button>
+              </>
+            }
+            value={inputValue}
+            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSubmit();
+            }}
+          />
+        </FormField>
+      </div>
+      <StackLayout gap={0} separators>
+        {comments.map((c) => (
+          <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <FlexLayout gap={1}>
               <Avatar size={1} color="accent" name={c.initials} />
               <StackLayout gap={1}>
-                <div>
+                <StackLayout gap={0.5}>
                   <Text styleAs="h4">{c.name}</Text>
                   <Text styleAs="label" color="secondary">
                     {c.role} • {c.date}
                   </Text>
-                </div>
+                </StackLayout>
                 <Text>{c.text}</Text>
               </StackLayout>
             </FlexLayout>
           </StackLayout>
-          {i < comments.length - 1 && <Divider variant="tertiary" />}
-        </StackLayout>
-      ))}
+        ))}
+      </StackLayout>
     </StackLayout>
   );
 };
 
-export const CommentsWithEmptyState = () => {
+export const WithEmptyState = () => {
   return (
     <StackLayout gap={3} style={{ width: "420px" }}>
-      <FormField>
-        <FormFieldLabel>Write a comment</FormFieldLabel>
-        <Input
-          style={{ height: "36px" }}
-          bordered
-          placeholder="Add a comment..."
-          endAdornment={
-            <Button disabled>
-              <SendIcon />
-            </Button>
-          }
-        />
-      </FormField>
+      <div style={{ padding: "var(--salt-spacing-100)" }}>
+        <FormField>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            endAdornment={
+              <Button disabled>
+                <SendIcon />
+              </Button>
+            }
+          />
+        </FormField>
+      </div>
       <StackLayout gap={3} align="center">
         <InfoIcon
           style={{
@@ -311,7 +311,7 @@ export const CommentsWithEmptyState = () => {
   );
 };
 
-export const CommentsWithSubmissionError = () => {
+export const WithSubmissionError = () => {
   const [comments, _setComments] = useState([
     {
       name: "Alex Rivera",
@@ -331,19 +331,20 @@ export const CommentsWithSubmissionError = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <FormField style={{ padding: "var(--salt-spacing-100)", width: "auto" }}>
-        <FormFieldLabel>Write a comment</FormFieldLabel>
-        <Input
-          style={{ height: "36px" }}
-          bordered
-          placeholder="Add a comment..."
-          endAdornment={
-            <Button disabled>
-              <SendIcon />
-            </Button>
-          }
-        />
-      </FormField>
+      <div style={{ padding: "var(--salt-spacing-100)" }}>
+        <FormField>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            endAdornment={
+              <Button disabled>
+                <SendIcon />
+              </Button>
+            }
+          />
+        </FormField>
+      </div>
       <Banner
         status="error"
         variant="secondary"
@@ -369,25 +370,24 @@ export const CommentsWithSubmissionError = () => {
           </Button>
         </BannerActions>
       </Banner>
-      {comments.map((c, i) => (
-        <StackLayout gap={0} key={`${c.name}-${c.date}`}>
-          <StackLayout padding={1} gap={1}>
+      <StackLayout gap={0} separators>
+        {comments.map((c) => (
+          <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <FlexLayout gap={1}>
               <Avatar size={1} color="accent" name={c.initials} />
               <StackLayout gap={1}>
-                <div>
+                <StackLayout gap={0.5}>
                   <Text styleAs="h4">{c.name}</Text>
                   <Text styleAs="label" color="secondary">
                     {c.role} • {c.date}
                   </Text>
-                </div>
+                </StackLayout>
                 <Text>{c.text}</Text>
               </StackLayout>
             </FlexLayout>
           </StackLayout>
-          {i < comments.length - 1 && <Divider variant="tertiary" />}
-        </StackLayout>
-      ))}
+        ))}
+      </StackLayout>
     </StackLayout>
   );
 };

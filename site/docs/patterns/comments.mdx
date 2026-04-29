@@ -1,5 +1,5 @@
 ---
-title: Comments pattern
+title: Comments
 description: "The Comments pattern enables users to post, view, and interact with user-generated content, such as feedback, discussions, or reviews."
 layout: DetailPattern
 tags:
@@ -9,13 +9,14 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-comments--default", label: "Comments examples" },
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-comments", label: "Comments examples" },
     ]
   components: ["Avatar", "Form field", "Input", "Multiline input"]
 ---
 
 <Diagram
-  src="/img/patterns/comments/comments-pattern.png"
+  src="/img/patterns/comments/comments-hero-shot.png"
+  srcDark="/img/patterns/comments/comments-hero-shot-dark.png"
   alt="Example showing comments."
   border
 />
@@ -35,13 +36,14 @@ At the top level, Comments consists of an input for adding new comments and a ru
 
 Each comment tile can include:
 
-1. Author: Display name 
-2. Avatar (optional): Initials or image identifying the commenter.
-3. Supporting details: Metadata such as timestamp, an optional user role, or an “Edited” indicator.. 
-4. Content: Main body of the comment.
+1. **Author**: Display name 
+2. **Avatar (optional)**: Initials or image identifying the commenter.
+3. **Supporting details**: Metadata such as timestamp, an optional user role, or an “Edited” indicator.. 
+4. **Content**: Main body of the comment.
 
 <Diagram
   src="/img/patterns/comments/comments-anatomy.png"
+  srcDark="/img/patterns/comments/comments-anatomy-dark.png"
   alt="Comments anatomy"
   border
 />
@@ -52,6 +54,7 @@ Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the input 
 
 <Diagram
   src="/img/patterns/comments/comments-layout.png"
+  srcDark="/img/patterns/comments/comments-layout-dark.png"
   alt="comments layout"
   border
 />
@@ -65,14 +68,16 @@ Include when identity cues improve scanning or clarify ownership.
 
 <Diagram
   src="/img/patterns/comments/comments-avatar.png"
+  srcDark="/img/patterns/comments/comments-avatar-dark.png"
   alt="comments with avatars"
   border
 />
 
-Use the Salt [`Avatar`](/salt/components/avatar) component’s categorical colors to differentiate authors; don’t use avatar color to imply status or severity.
+Use the [`Avatar`](/salt/components/avatar) component’s categorical colors to differentiate authors; don’t use avatar color to imply status or severity.
 
 <Diagram
   src="/img/patterns/comments/comments-user-role.png"
+  srcDark="/img/patterns/comments/comments-user-role-dark.png"
   alt="comments with user roles"
   border
 />
@@ -82,6 +87,7 @@ Use the Salt [`Avatar`](/salt/components/avatar) component’s categorical color
 Always show a timestamp and the last edit time. Place it next to the author by default.
 <Diagram
   src="/img/patterns/comments/comments-timestamp.png"
+  srcDark="/img/patterns/comments/comments-timestamp-dark.png"
   alt="comments with time stamp"
   border
 />
@@ -97,6 +103,7 @@ Use a short, neutral message to indicate there are no comments yet.
 
 <Diagram
   src="/img/patterns/comments/comments-empty-state.png"
+  srcDark="/img/patterns/comments/comments-empty-state-dark.png"
   alt="Comments with empty state"
   border
 />
@@ -112,6 +119,7 @@ Use a [`MultilineInput`](/salt/components/multiline-input) when longer messages 
 
 <Diagram
   src="/img/patterns/comments/comments-multiline-input.png"
+  srcDark="/img/patterns/comments/comments-multiline-input-dark.png"
   alt="Comments with multiline input"
   border
 />
@@ -130,6 +138,7 @@ Choose the order that best fits the task.
 
 <Diagram
   src="/img/patterns/comments/comments-display-order.png"
+  srcDark="/img/patterns/comments/comments-display-order-dark.png"
   alt="Comments display order"
   border
 />
@@ -140,6 +149,7 @@ Offer recovery without losing work by showing an inline error. Preserve the fail
 
 <Diagram
   src="/img/patterns/comments/comments-submission-error.png"
+  srcDark="/img/patterns/comments/comments-submission-error-dark.png"
   alt="Comments with submission error"
   border
 />
