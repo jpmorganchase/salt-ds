@@ -3,7 +3,6 @@ import {
   useDismiss,
   useFloatingRootContext,
   useInteractions,
-  useRole,
 } from "@floating-ui/react";
 import { useControlled, useId } from "@salt-ds/core";
 import {
@@ -39,7 +38,7 @@ export const MegaMenu = ({
   placement = "bottom",
   interactions,
 }: MegaMenuProps) => {
-  const menuRegionId = useId();
+  const menuRegionId = useId() ?? "salt-mega-menu-region";
 
   const [openState, setOpenState] = useControlled({
     controlled: open,
@@ -94,7 +93,6 @@ export const MegaMenu = ({
   });
 
   const defaultInteractions = [
-    useRole(floatingRootContext, { role: "menu" }),
     useDismiss(floatingRootContext, { bubbles: true }),
   ];
 

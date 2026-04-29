@@ -53,7 +53,7 @@ export const Default = (): ReactElement => {
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -138,7 +138,7 @@ export const Default = (): ReactElement => {
                 Services
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -196,7 +196,7 @@ export const Default = (): ReactElement => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>

@@ -106,7 +106,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -306,7 +306,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -534,7 +534,7 @@ const WithNavigationItemsTemplate: StoryFn = () => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
@@ -672,7 +672,7 @@ const WithIconsTemplate: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -772,7 +772,7 @@ const WithIconsTemplate: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -870,7 +870,7 @@ const WithIconsTemplate: StoryFn = () => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
@@ -958,7 +958,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -1060,7 +1060,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -1123,7 +1123,7 @@ const WithStaticAdornmentTemplate: StoryFn = () => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
@@ -1186,7 +1186,7 @@ const TriggerPositionTemplate: StoryFn = () => {
             </Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer>
+          <MegaMenuContainer aria-label="Near Left Edge menu">
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
@@ -1255,7 +1255,7 @@ const TriggerPositionTemplate: StoryFn = () => {
             </Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer>
+          <MegaMenuContainer aria-label="On Center menu">
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
@@ -1324,7 +1324,7 @@ const TriggerPositionTemplate: StoryFn = () => {
             </Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer>
+          <MegaMenuContainer aria-label="Slightly Offset menu">
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
@@ -1393,7 +1393,7 @@ const TriggerPositionTemplate: StoryFn = () => {
               Near The Edge
             </Button>
           </MegaMenuTrigger>
-          <MegaMenuContainer>
+          <MegaMenuContainer aria-label="Near The Edge menu">
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>

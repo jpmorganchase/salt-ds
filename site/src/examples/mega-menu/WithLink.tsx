@@ -54,7 +54,10 @@ export const WithLink = (): ReactElement => {
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer className={styles.withLinkMenuContainer}>
+            <MegaMenuContainer
+              className={styles.withLinkMenuContainer}
+              aria-label="Solutions menu"
+            >
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -142,7 +145,10 @@ export const WithLink = (): ReactElement => {
                 Services
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer className={styles.withLinkMenuContainer}>
+            <MegaMenuContainer
+              className={styles.withLinkMenuContainer}
+              aria-label="Services menu"
+            >
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -203,7 +209,10 @@ export const WithLink = (): ReactElement => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer className={styles.withLinkMenuContainer}>
+            <MegaMenuContainer
+              className={styles.withLinkMenuContainer}
+              aria-label="Resources menu"
+            >
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
