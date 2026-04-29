@@ -95,7 +95,7 @@ const ContentExample = ({ children }: { children?: ReactNode }) => (
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
