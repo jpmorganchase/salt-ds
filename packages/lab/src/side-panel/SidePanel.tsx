@@ -72,10 +72,9 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const [skipInitialFocus, setSkipInitialFocus] = useState(() => {
       if (!openState) return false;
       const reference = floatingRootContext.elements.reference;
-      return !(
-        reference instanceof Element &&
-        reference.contains(document.activeElement)
-      );
+      if (!(reference instanceof Element)) return true;
+      const activeElement = reference.ownerDocument?.activeElement;
+      return !activeElement || !reference.contains(activeElement);
     });
     // Track whether this is the initial render to skip the open animation.
     const initialRender = useRef(true);
