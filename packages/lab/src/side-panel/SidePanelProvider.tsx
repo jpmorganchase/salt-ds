@@ -8,6 +8,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -110,21 +111,31 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
     };
   }, [floating, reference, openState, handleOpenChange]);
 
+  const context = useMemo(
+    () => ({
+      openState,
+      floatingRootContext,
+      getFloatingProps,
+      getReferenceProps,
+      setFloating,
+      setReference,
+      setOpen: handleOpenChange,
+      closeButtonRef,
+      panelId,
+      setPanelId,
+    }),
+    [
+      openState,
+      floatingRootContext,
+      getFloatingProps,
+      getReferenceProps,
+      handleOpenChange,
+      panelId,
+    ],
+  );
+
   return (
-    <SidePanelContext.Provider
-      value={{
-        openState,
-        floatingRootContext,
-        getFloatingProps,
-        getReferenceProps,
-        setFloating,
-        setReference,
-        setOpen: handleOpenChange,
-        closeButtonRef,
-        panelId,
-        setPanelId,
-      }}
-    >
+    <SidePanelContext.Provider value={context}>
       {children}
     </SidePanelContext.Provider>
   );
