@@ -76,7 +76,7 @@
     "chromatic": "^16.0.0",
     "ci-info": "^4.0.0",
     "clsx": "^2.0.0",
-    "cypress": "15.10.0",
+    "cypress": "15.14.2",
     "cypress-axe": "^1.7.0",
     "cypress-real-events": "^1.15.0",
     "deepmerge": "^4.2.2",
