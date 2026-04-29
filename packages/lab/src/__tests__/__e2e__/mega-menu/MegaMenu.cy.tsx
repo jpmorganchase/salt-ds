@@ -43,9 +43,7 @@ const InteractiveMegaMenu = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "solutions"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "solutions" ? null : "solutions",
                   );
@@ -82,9 +80,7 @@ const InteractiveMegaMenu = () => {
             <MegaMenuTrigger>
               <NavigationItem
                 active={activeMenu === "services"}
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   setOpenMenu((prev) =>
                     prev === "services" ? null : "services",
                   );

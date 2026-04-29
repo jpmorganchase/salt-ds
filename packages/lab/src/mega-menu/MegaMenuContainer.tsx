@@ -196,7 +196,6 @@ export const MegaMenuContainer = forwardRef<
         className={clsx(withBaseName(), className)}
         ref={handleRef}
         id={menuContainerId}
-        role="region"
         {...floatingPropsWithoutAriaOrientation}
       >
         <FloatingList elementsRef={elementsRef}>{children}</FloatingList>

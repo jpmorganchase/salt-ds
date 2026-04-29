@@ -1,4 +1,9 @@
-import { getRefFromChildren, mergeProps, useForkRef } from "@salt-ds/core";
+import {
+  getRefFromChildren,
+  mergeProps,
+  NavigationItem,
+  useForkRef,
+} from "@salt-ds/core";
 import {
   cloneElement,
   forwardRef,
@@ -28,7 +33,6 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     }
 
     const {
-      menuRegionId,
       getReferenceProps,
       setReference,
       setOpen,
@@ -70,12 +74,15 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
       return <>{children}</>;
     }
 
+    const childProps = children.props as Record<string, unknown>;
+    const isNavigationItemChild = children.type === NavigationItem;
+    const shouldSyncExpanded =
+      isNavigationItemChild || childProps.expanded !== undefined;
+
     return cloneElement(children, {
       ...mergeProps(
         getReferenceProps({
-          role: "button",
-          "aria-expanded": openState,
-          "aria-controls": menuRegionId,
+          ...(shouldSyncExpanded ? { expanded: openState } : null),
           onKeyDown: handleKeyDown,
           ...rest,
         }),

@@ -73,7 +73,6 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
           className,
         )}
         ref={handleRef}
-        role={rest.role ?? "menuitem"}
         tabIndex={0}
         aria-current={isSelected ? "page" : undefined}
         {...rest}

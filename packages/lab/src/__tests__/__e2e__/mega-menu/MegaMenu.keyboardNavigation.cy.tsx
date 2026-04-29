@@ -15,14 +15,7 @@ const KeyboardMegaMenu = () => (
       <li>
         <MegaMenu>
           <MegaMenuTrigger>
-            <NavigationItem
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-              }}
-            >
-              Solutions
-            </NavigationItem>
+            <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuContainer>
             <MegaMenuSection>
@@ -44,14 +37,7 @@ const KeyboardMegaMenu = () => (
       <li>
         <MegaMenu>
           <MegaMenuTrigger>
-            <NavigationItem
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-              }}
-            >
-              Services
-            </NavigationItem>
+            <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuContainer>
             <MegaMenuSection>
@@ -71,7 +57,7 @@ const KeyboardMegaMenu = () => (
 );
 
 const focusSolutionsTrigger = () => {
-  cy.findByRole("link", { name: "Solutions" }).focus().should("be.focused");
+  cy.findByRole("button", { name: "Solutions" }).focus().should("be.focused");
 };
 
 const openSolutionsWithEnter = () => {
@@ -103,16 +89,18 @@ describe("Given a MegaMenu", () => {
       focusSolutionsTrigger();
 
       cy.realPress("ArrowRight");
-      cy.findByRole("link", { name: "Services" }).should("be.focused");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
       cy.get(".saltMegaMenuContainer").should("not.exist");
     });
 
     it("moves focus to previous trigger on ArrowLeft", () => {
       cy.mount(<KeyboardMegaMenu />);
-      cy.findByRole("link", { name: "Services" }).focus().should("be.focused");
+      cy.findByRole("button", { name: "Services" })
+        .focus()
+        .should("be.focused");
 
       cy.realPress("ArrowLeft");
-      cy.findByRole("link", { name: "Solutions" }).should("be.focused");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuContainer").should("not.exist");
     });
   });
@@ -148,7 +136,7 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Digital Banking").should("be.focused");
 
       cy.realPress("ArrowUp");
-      cy.findByRole("link", { name: "Solutions" }).should("be.focused");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
     it("supports ArrowDown and ArrowUp within and across groups", () => {
@@ -226,7 +214,7 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Digital Banking").should("be.focused");
 
       cy.realPress(["Shift", "Tab"]);
-      cy.findByRole("link", { name: "Solutions" }).should("be.focused");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
 
       cy.realPress("Tab");
       cy.findByText("Digital Banking").should("be.focused");
@@ -265,7 +253,7 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Telemedicine").should("be.focused");
 
       cy.realPress("Tab");
-      cy.findByRole("link", { name: "Services" }).should("be.focused");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
     });
   });
 });

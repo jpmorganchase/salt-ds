@@ -53,7 +53,7 @@ export const WithStaticAdornment = (): ReactElement => {
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -154,7 +154,7 @@ export const WithStaticAdornment = (): ReactElement => {
                 Services
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -218,7 +218,7 @@ export const WithStaticAdornment = (): ReactElement => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer>
+            <MegaMenuContainer aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
