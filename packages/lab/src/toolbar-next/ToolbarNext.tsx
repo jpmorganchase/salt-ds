@@ -1,4 +1,9 @@
-import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  Button,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -21,7 +26,9 @@ import {
   ToolbarNextOverflowTriggerContent,
 } from "./ToolbarNextOverflow";
 import type { ToolbarRegionPosition } from "./ToolbarRegion";
-import { TOOLBAR_NEXT_SCOPE_ROOT_ATTR } from "./toolbarNextKeyboardUtils";
+import {
+  TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
+} from "./toolbarNextKeyboardUtils";
 import {
   normalizeToolbarChildren,
   type ToolbarNextOverflowItem,
@@ -152,6 +159,11 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       overflowedIds,
       scopeRef: containerRef,
     });
+    const overflowedIdsKey = useMemo(
+      () => Array.from(overflowedIds).sort().join("\0"),
+      [overflowedIds],
+    );
+    const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
 
     const getItemHostRef = useCallback((id: string) => {
       const existing = itemHostRefCallbacks.current.get(id);
@@ -176,6 +188,60 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       itemHostRefCallbacks.current.set(id, callback);
       return callback;
     }, []);
+
+    useIsomorphicLayoutEffect(() => {
+      const overflowChanged =
+        previousOverflowedIdsKeyRef.current !== overflowedIdsKey;
+      previousOverflowedIdsKeyRef.current = overflowedIdsKey;
+
+      if (!overflowChanged) {
+        return;
+      }
+
+      const doc = targetWindow?.document;
+      const rememberedFocus = keyboardNavigation.rememberedFocusRef.current;
+
+      if (!doc || !rememberedFocus) {
+        return;
+      }
+
+      const activeElement = doc.activeElement;
+      const focusWasLost =
+        !activeElement ||
+        activeElement === doc.body ||
+        activeElement === doc.documentElement ||
+        !activeElement.isConnected;
+      const target = keyboardNavigation.getEntryFocusable();
+
+      if (!focusWasLost) {
+        return;
+      }
+
+      if (!target) {
+        return;
+      }
+
+      const focusTarget = () => {
+        if (target.isConnected) {
+          target.focus({ preventScroll: true });
+        }
+      };
+
+      if (targetWindow?.requestAnimationFrame) {
+        const frame = targetWindow.requestAnimationFrame(focusTarget);
+
+        return () => {
+          targetWindow.cancelAnimationFrame(frame);
+        };
+      }
+
+      queueMicrotask(focusTarget);
+    }, [
+      keyboardNavigation.getEntryFocusable,
+      keyboardNavigation.rememberedFocusRef,
+      overflowedIdsKey,
+      targetWindow,
+    ]);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -312,6 +378,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                       getNamedTriggerRef={getNamedTriggerRef}
                       getRegionRef={getRegionRef}
                       key={region.key}
+                      onItemFocus={keyboardNavigation.rememberItemFocus}
                       overflowGroups={namedOverflowGroups.filter(
                         (group) => group.regionKey === region.key,
                       )}
@@ -325,6 +392,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                           getItemHostRef={getItemHostRef}
                           group={group}
                           key={group.id}
+                          onItemFocus={keyboardNavigation.rememberItemFocus}
                         />
                       ))
                     : null}

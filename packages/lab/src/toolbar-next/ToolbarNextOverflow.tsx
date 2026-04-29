@@ -1,13 +1,16 @@
 import {
   flip,
   offset,
+  shift,
   size,
+  useClick,
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
 import {
   Button,
   makePrefixer,
+  useFloatingComponent,
   useFloatingUI,
   useForkRef,
   useIcon,
@@ -20,6 +23,7 @@ import { clsx } from "clsx";
 import {
   Children,
   cloneElement,
+  type FocusEvent,
   isValidElement,
   type KeyboardEvent,
   type ReactElement,
@@ -31,10 +35,10 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
-import { useFocusOutside } from "../tabs-next/hooks/useFocusOutside";
 import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
 import { ToolbarRegion } from "./ToolbarRegion";
 import {
+  getToolbarNextFocusMemory,
   TOOLBAR_NEXT_GROUP_KEY_ATTR,
   TOOLBAR_NEXT_ITEM_ATTR,
   TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
@@ -64,6 +68,9 @@ function ToolbarNextOverflowItemOwner({
 }) {
   const targetWindow = useWindow();
   const [mountNode, setMountNode] = useState<HTMLDivElement | null>(null);
+  const mainToolbarTabIndexMemoryRef = useRef(
+    new WeakMap<HTMLElement, string | null>(),
+  );
 
   useIsomorphicLayoutEffect(() => {
     const nextMountNode = targetWindow?.document.createElement("div");
@@ -88,6 +95,37 @@ function ToolbarNextOverflowItemOwner({
     if (host) {
       if (mountNode.parentElement !== host) {
         host.appendChild(mountNode);
+      }
+
+      const isMainToolbarHost =
+        host
+          .closest(`[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`)
+          ?.getAttribute(TOOLBAR_NEXT_SCOPE_ROOT_ATTR) === "main";
+
+      if (isMainToolbarHost) {
+        const focusableElements = Array.from(
+          mountNode.querySelectorAll<HTMLElement>(focusableSelector),
+        );
+
+        for (const element of focusableElements) {
+          const rememberedTabIndex =
+            mainToolbarTabIndexMemoryRef.current.get(element);
+
+          if (rememberedTabIndex !== undefined) {
+            if (rememberedTabIndex == null) {
+              element.removeAttribute("tabindex");
+            } else {
+              element.setAttribute("tabindex", rememberedTabIndex);
+            }
+          }
+        }
+
+        for (const element of focusableElements) {
+          mainToolbarTabIndexMemoryRef.current.set(
+            element,
+            element.getAttribute("tabindex"),
+          );
+        }
       }
 
       return;
@@ -172,33 +210,102 @@ function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
     : `Open overflow. ${hiddenCount} ${hiddenLabel}.`;
 }
 
+const focusableSelector = [
+  "button",
+  "[href]",
+  "input",
+  "select",
+  "textarea",
+  "[tabindex]",
+].join(", ");
+
+function isFocusable(
+  target: HTMLElement,
+  { includeTabIndexMinusOne = false } = {},
+) {
+  if (
+    target.matches(":disabled") ||
+    target.getAttribute("aria-hidden") === "true" ||
+    target.hidden
+  ) {
+    return false;
+  }
+
+  if (!includeTabIndexMinusOne && target.getAttribute("tabindex") === "-1") {
+    return false;
+  }
+
+  const win = target.ownerDocument.defaultView;
+  if (!win) {
+    return false;
+  }
+
+  const styles = win.getComputedStyle(target);
+  return (
+    styles.display !== "none" &&
+    styles.visibility !== "hidden" &&
+    target.getClientRects().length > 0
+  );
+}
+
+function getNextFocusableAfterToolbar(trigger: HTMLElement) {
+  const toolbarRoot = trigger.closest<HTMLElement>(
+    `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
+  );
+
+  if (!toolbarRoot) {
+    return null;
+  }
+
+  const focusableElements = Array.from(
+    trigger.ownerDocument.querySelectorAll<HTMLElement>(focusableSelector),
+  ).filter((element) => isFocusable(element));
+
+  return (
+    focusableElements.find((element) => {
+      return (
+        !toolbarRoot.contains(element) &&
+        !!(
+          toolbarRoot.compareDocumentPosition(element) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+        )
+      );
+    }) ?? null
+  );
+}
+
 interface ToolbarNextOverflowMenuProps {
   getItemHostRef: (id: string) => (node: HTMLDivElement | null) => void;
   group: ToolbarNextOverflowGroup;
+  onItemFocus?: (itemId: string, controlIndex: number) => void;
 }
 
 export function ToolbarNextOverflowMenu({
   getItemHostRef,
   group,
+  onItemFocus,
 }: ToolbarNextOverflowMenuProps) {
   const panelId = useId();
   const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const panelContentRef = useRef<HTMLDivElement>(null);
+  const [panelContentNode, setPanelContentNode] =
+    useState<HTMLDivElement | null>(null);
   const wasOpenRef = useRef(false);
+  const focusedOpenPanelRef = useRef(false);
   const {
     focusEntryTarget,
     handleBlurCapture,
     handleFocusCapture,
     handleKeyDownCapture,
   } = useToolbarNextKeyboardNavigation({
+    includeTabIndexMinusOne: true,
     items: group.items,
     scopeRef: panelContentRef,
   });
 
-  const { refs, x, y, strategy, context } = useFloatingUI({
+  const { refs, x, y, strategy, context, elements } = useFloatingUI({
     open,
     onOpenChange(nextOpen, _, reason) {
       setOpen(nextOpen);
@@ -220,18 +327,18 @@ export function ToolbarNextOverflowMenu({
         },
       }),
       flip(),
+      shift({
+        padding: 8,
+      }),
     ],
   });
-  const { getFloatingProps } = useInteractions([useDismiss(context)]);
+  const { getFloatingProps, getReferenceProps } = useInteractions([
+    useClick(context),
+    useDismiss(context),
+  ]);
 
   const closeMenu = useCallback(() => {
     setOpen(false);
-  }, []);
-
-  useFocusOutside(rootRef, closeMenu, open, "[data-floating-ui-portal]");
-
-  const handleTriggerClick = useCallback(() => {
-    setOpen((current) => !current);
   }, []);
 
   const handleTriggerKeyDown = useCallback(
@@ -255,15 +362,40 @@ export function ToolbarNextOverflowMenu({
 
   const handlePanelKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "Escape") {
+      if (event.key === "Tab" && !event.shiftKey) {
+        const nextFocusTarget = triggerRef.current
+          ? getNextFocusableAfterToolbar(triggerRef.current)
+          : null;
+
+        if (nextFocusTarget) {
+          event.preventDefault();
+          setOpen(false);
+          queueMicrotask(() => {
+            nextFocusTarget.focus({ preventScroll: true });
+          });
+        }
+
+        return;
+      }
+
+      if (event.key === "Tab" && event.shiftKey) {
         event.preventDefault();
         setOpen(false);
         queueMicrotask(() => {
           triggerRef.current?.focus({ preventScroll: true });
         });
+        return;
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        queueMicrotask(() => {
+          triggerRef.current?.focus({ preventScroll: true });
+        });
       }
     },
-    [],
+    [closeMenu],
   );
 
   const handleTriggerRef = useForkRef<HTMLButtonElement>(
@@ -271,6 +403,34 @@ export function ToolbarNextOverflowMenu({
     refs.setReference,
   );
   const handlePanelRef = useForkRef<HTMLDivElement>(panelRef, refs.setFloating);
+  const handlePanelContentRef = useForkRef<HTMLDivElement>(
+    panelContentRef,
+    setPanelContentNode,
+  );
+  const handlePanelFocusCapture = useCallback(
+    (event: FocusEvent<HTMLElement>) => {
+      handleFocusCapture(event);
+
+      const panelContent = panelContentRef.current;
+      const target = event.target;
+
+      if (!panelContent || !(target instanceof HTMLElement)) {
+        return;
+      }
+
+      const focusMemory = getToolbarNextFocusMemory(panelContent, target, {
+        includeTabIndexMinusOne: true,
+      });
+
+      if (focusMemory?.type !== "item") {
+        return;
+      }
+
+      onItemFocus?.(focusMemory.itemId, focusMemory.controlIndex);
+    },
+    [handleFocusCapture, onItemFocus],
+  );
+  const { Component: FloatingComponent } = useFloatingComponent();
 
   useEffect(() => {
     if (open && !wasOpenRef.current) {
@@ -280,11 +440,80 @@ export function ToolbarNextOverflowMenu({
     wasOpenRef.current = open;
   }, [focusEntryTarget, open]);
 
+  useIsomorphicLayoutEffect(() => {
+    if (!open) {
+      focusedOpenPanelRef.current = false;
+      return;
+    }
+
+    if (!panelContentNode || focusedOpenPanelRef.current) {
+      return;
+    }
+
+    const getPanelFocusables = () => {
+      return Array.from(
+        panelContentNode.querySelectorAll<HTMLElement>(focusableSelector),
+      ).filter((element) =>
+        isFocusable(element, { includeTabIndexMinusOne: true }),
+      );
+    };
+    const focusEntryWhenReady = () => {
+      const panelFocusables = getPanelFocusables();
+
+      if (panelFocusables.length === 0) {
+        return false;
+      }
+
+      focusedOpenPanelRef.current = true;
+      focusEntryTarget();
+      return true;
+    };
+
+    if (focusEntryWhenReady()) {
+      return;
+    }
+
+    const panelWindow = panelContentNode.ownerDocument.defaultView;
+    const mutationObserverCtor = panelWindow?.MutationObserver;
+    const resizeObserverCtor = panelWindow?.ResizeObserver;
+    let mutationObserver: MutationObserver | null = null;
+    let resizeObserver: ResizeObserver | null = null;
+
+    mutationObserver =
+      mutationObserverCtor != null
+        ? new mutationObserverCtor(() => {
+            if (focusEntryWhenReady()) {
+              mutationObserver?.disconnect();
+              resizeObserver?.disconnect();
+            }
+          })
+        : null;
+    resizeObserver =
+      resizeObserverCtor != null
+        ? new resizeObserverCtor(() => {
+            if (focusEntryWhenReady()) {
+              mutationObserver?.disconnect();
+              resizeObserver?.disconnect();
+            }
+          })
+        : null;
+
+    mutationObserver?.observe(panelContentNode, {
+      childList: true,
+      subtree: true,
+    });
+    resizeObserver?.observe(panelContentNode);
+
+    return () => {
+      mutationObserver?.disconnect();
+      resizeObserver?.disconnect();
+    };
+  }, [focusEntryTarget, open, panelContentNode]);
+
   return (
     <div
       className={withBaseName("menu")}
       data-overflowgroup={group.overflowGroup}
-      ref={rootRef}
     >
       <Button
         appearance="transparent"
@@ -297,8 +526,9 @@ export function ToolbarNextOverflowMenu({
           [TOOLBAR_NEXT_GROUP_KEY_ATTR]: group.key,
           [TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR]: "",
         }}
-        onClick={handleTriggerClick}
-        onKeyDown={handleTriggerKeyDown}
+        {...getReferenceProps({
+          onKeyDown: handleTriggerKeyDown,
+        })}
         ref={handleTriggerRef}
         sentiment="neutral"
       >
@@ -307,54 +537,60 @@ export function ToolbarNextOverflowMenu({
           named={group.named}
         />
       </Button>
-      {open ? (
+      <FloatingComponent
+        {...getFloatingProps({
+          onKeyDown: handlePanelKeyDown,
+          role: "presentation",
+        })}
+        className={withBaseName("panel")}
+        focusManagerProps={
+          context
+            ? {
+                context,
+                initialFocus: -1,
+                returnFocus: false,
+                modal: false,
+                closeOnFocusOut: true,
+              }
+            : undefined
+        }
+        id={panelId}
+        left={x ?? 0}
+        open={open}
+        position={strategy}
+        ref={handlePanelRef}
+        top={y ?? 0}
+        width={elements.floating?.offsetWidth}
+        height={elements.floating?.offsetHeight}
+      >
         <div
-          {...getFloatingProps({
-            onKeyDown: handlePanelKeyDown,
-            role: "presentation",
-          })}
-          className={withBaseName("panel")}
-          id={panelId}
-          ref={handlePanelRef}
-          style={{
-            left: x ?? 0,
-            top: y ?? 0,
-            position: strategy,
-          }}
+          aria-label={`${group.label} overflow`}
+          aria-orientation="horizontal"
+          className={withBaseName("panelContent")}
+          {...{ [TOOLBAR_NEXT_SCOPE_ROOT_ATTR]: group.key }}
+          onBlurCapture={handleBlurCapture}
+          onFocusCapture={handlePanelFocusCapture}
+          onKeyDownCapture={handleKeyDownCapture}
+          role="toolbar"
+          ref={handlePanelContentRef}
         >
-          <div
-            aria-label={`${group.label} overflow`}
-            aria-orientation="horizontal"
-            className={withBaseName("panelContent")}
-            {...{ [TOOLBAR_NEXT_SCOPE_ROOT_ATTR]: group.key }}
-            onBlurCapture={handleBlurCapture}
-            onFocusCapture={handleFocusCapture}
-            onKeyDownCapture={handleKeyDownCapture}
-            role="toolbar"
-            ref={panelContentRef}
-          >
-            {group.items.map((item, index) => (
+          {group.items.map((item, index) => (
+            <div
+              className={withBaseName("panelItem")}
+              key={`${group.id}-${item.id}`}
+            >
+              {index > 0 &&
+                item.leadingDecorations.length > 0 &&
+                cloneDecorations(item.id, item.leadingDecorations, "leading")}
               <div
-                className={withBaseName("panelItem")}
-                key={`${group.id}-${item.id}`}
-              >
-                {index > 0 &&
-                  item.leadingDecorations.length > 0 &&
-                  cloneDecorations(item.id, item.leadingDecorations, "leading")}
-                <div
-                  className={withBaseName("itemHost")}
-                  ref={getItemHostRef(item.id)}
-                />
-                {cloneDecorations(
-                  item.id,
-                  item.trailingDecorations,
-                  "trailing",
-                )}
-              </div>
-            ))}
-          </div>
+                className={withBaseName("itemHost")}
+                ref={getItemHostRef(item.id)}
+              />
+              {cloneDecorations(item.id, item.trailingDecorations, "trailing")}
+            </div>
+          ))}
         </div>
-      ) : null}
+      </FloatingComponent>
     </div>
   );
 }
@@ -364,6 +600,7 @@ export interface ToolbarNextOverflowRegionProps {
   getItemRef: (id: string) => (node: HTMLDivElement | null) => void;
   getNamedTriggerRef: (id: string) => (node: HTMLDivElement | null) => void;
   getRegionRef: (regionKey: string) => (node: HTMLDivElement | null) => void;
+  onItemFocus?: (itemId: string, controlIndex: number) => void;
   overflowGroups: ToolbarNextOverflowGroup[];
   overflowedIds: Set<string>;
   region: ToolbarNextRegionModel;
@@ -374,6 +611,7 @@ export function ToolbarNextOverflowRegion({
   getItemRef,
   getNamedTriggerRef,
   getRegionRef,
+  onItemFocus,
   overflowGroups,
   overflowedIds,
   region,
@@ -447,6 +685,7 @@ export function ToolbarNextOverflowRegion({
                   <ToolbarNextOverflowMenu
                     getItemHostRef={getItemHostRef}
                     group={triggerGroup}
+                    onItemFocus={onItemFocus}
                   />
                 </div>
               ) : null}

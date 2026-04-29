@@ -29,7 +29,6 @@
 .saltToolbarNextOverflow-menu {
   display: flex;
   flex-shrink: 0;
-  position: relative;
 }
 
 .saltToolbarNextOverflow-itemHost,

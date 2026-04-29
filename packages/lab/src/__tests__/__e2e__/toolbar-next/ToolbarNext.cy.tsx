@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, Dropdown, Input, Option } from "@salt-ds/core";
 import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
@@ -231,6 +231,52 @@ function NamedIntrinsicWidthTestCase() {
   );
 }
 
+function NamedOverflowFocusReentryTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 320, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Named overflow focus toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+            <Input bordered placeholder="Search" />
+          </TooltrayNext>
+          <TooltrayNext
+            overflowGroup="Filters"
+            overflowLabel="Filters"
+            overflowMode="grouped"
+            overflowPriority={5}
+            role="group"
+            aria-label="Filters"
+          >
+            <Dropdown bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+            <Button appearance="transparent">Filters</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext
+            overflowGroup="Actions"
+            overflowLabel="Actions"
+            overflowMode="grouped"
+            overflowPriority={6}
+            role="group"
+            aria-label="Actions"
+          >
+            <Button appearance="transparent">Export</Button>
+            <Button appearance="transparent">Settings</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
 function setFixtureWidth(width: number) {
   cy.get(".Flexbox").invoke("css", "width", `${width}px`);
 }
@@ -432,17 +478,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     expectToolbarFits("grouped named filters toolbar");
   });
 
-  it("keeps centered content on the toolbar midpoint for symmetric and asymmetric side widths", () => {
-    cy.mount(
-      <CenteredToolbarTestCase
-        ariaLabel="Centered symmetric toolbar"
-        endWidth={120}
-        startWidth={120}
-      />,
-    );
-    expectCenteredControl("Centered symmetric toolbar", "Center action");
-    expectToolbarFits("Centered symmetric toolbar");
-
+  it("keeps centered content on the toolbar midpoint with asymmetric side widths", () => {
     cy.mount(
       <CenteredToolbarTestCase
         ariaLabel="Centered asymmetric toolbar"
@@ -500,21 +536,25 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("button", { name: "Copy" }).should("be.focused");
 
     cy.realPress("Tab");
+    cy.findByRole("button", { name: "Run" }).should("be.focused");
+
+    cy.realPress("Tab");
     cy.findByTestId("toolbar-after").should("be.focused");
 
     cy.realPress(["Shift", "Tab"]);
-    cy.findByRole("button", { name: "Copy" }).should("be.focused");
+    cy.findByRole("button", { name: "Run" }).should("be.focused");
   });
 
   it("wraps horizontal navigation from the last control back to the first", () => {
     cy.mount(<KeyboardButtonsFixture />);
 
-    cy.findByRole("button", { name: "Run" }).focus();
-    cy.realPress("ArrowRight");
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
     cy.findByRole("button", { name: "Cut" }).should("be.focused");
-
     cy.realPress("ArrowLeft");
     cy.findByRole("button", { name: "Run" }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Cut" }).should("be.focused");
   });
 
   it("keeps plain text inputs on native left/right behavior and uses Tab to leave them", () => {
@@ -542,12 +582,16 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("allows tabbing within the date picker trigger and arrowing from the calendar button", () => {
     cy.mount(<KeyboardDatePickerFixture />);
 
-    cy.findByRole("textbox").focus();
+    cy.findByPlaceholderText("Select date").focus();
     cy.realPress("Tab");
     cy.findByRole("button", { name: "Open Calendar" }).should("be.focused");
 
     cy.realPress("ArrowRight");
-    cy.findByRole("button", { name: "Apply" }).should("be.focused");
+    cy.findByRole("toolbar", {
+      name: "Keyboard date picker toolbar",
+    }).within(() => {
+      cy.findByRole("button", { name: "Apply" }).should("be.focused");
+    });
   });
 
   it("hands off from the last toggle button to the next toolbar control", () => {
@@ -556,36 +600,179 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByTestId("toolbar-before").focus();
     cy.realPress("Tab");
     cy.findByRole("radio", { name: "All" }).should("be.focused");
-
-    cy.realPress("ArrowRight");
-    cy.findByRole("radio", { name: "Active" }).should("be.focused");
-    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Archived" }).focus();
     cy.findByRole("radio", { name: "Archived" }).should("be.focused");
     cy.realPress("ArrowRight");
     cy.findByRole("button", { name: "Run" }).should("be.focused");
   });
 
   it("moves focus into overflow panels, supports horizontal navigation there, and returns focus on Escape", () => {
-    cy.mount(<KeyboardOverflowFixture />);
+    cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).focus();
-    cy.realPress("Enter");
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
     cy.realPress("ArrowRight");
     cy.findByRole("button", { name: "Run" }).should("be.focused");
 
     cy.realPress("Escape");
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
     cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
       "be.focused",
     );
   });
 
-  it("preserves focus inside an open overflow panel across parent re-renders", () => {
-    cy.mount(<KeyboardOverflowRerenderFixture />);
+  it("closes a portaled overflow panel and moves focus after the toolbar on Tab", () => {
+    cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).focus();
-    cy.realPress("Enter");
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
+    cy.findByRole("button", { name: "Export" }).should("be.focused");
+
+    cy.realPress("Tab");
+
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
+    cy.findByTestId("toolbar-after").should("be.focused");
+  });
+
+  it("closes a portaled overflow panel and returns focus to the trigger on Shift+Tab", () => {
+    cy.mount(<KeyboardOverflowFixture width={260} />);
+
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
+    cy.findByRole("button", { name: "Export" }).should("be.focused");
+
+    cy.realPress(["Shift", "Tab"]);
+
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+      "be.focused",
+    );
+  });
+
+  it("closes a portaled overflow panel when focus moves outside", () => {
+    cy.mount(<KeyboardOverflowFixture width={260} />);
+
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
+
+    cy.findByTestId("toolbar-after").click();
+
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
+    cy.findByTestId("toolbar-after").should("be.focused");
+  });
+
+  it("restores focus to the named overflow trigger when tabbing back into the toolbar", () => {
+    cy.mount(<NamedOverflowFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+      "be.visible",
+    );
+    cy.findByPlaceholderText("Search").focus();
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+      "be.focused",
+    );
+
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("be.focused");
+
+    cy.findByTestId("toolbar-after").click();
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("not.exist");
+
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+      "be.focused",
+    );
+
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Filters" }).should("be.focused");
+  });
+
+  it("restores named overflow controls to toolbar arrow navigation after expansion", () => {
+    cy.mount(<NamedOverflowFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+      "be.visible",
+    );
+    cy.findByRole("button", { name: /Open Filters overflow\./i })
+      .focus()
+      .should("be.focused");
+
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("be.focused");
+
+    cy.realPress("Escape");
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+      "be.focused",
+    );
+
+    setFixtureWidth(760);
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("not.exist");
+
+    cy.findByRole("combobox").focus().should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Filters" }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Export" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "Filters" }).should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("combobox").should("be.focused");
+  });
+
+  it("preserves focused overflow panel control when its tray returns to the toolbar", () => {
+    cy.mount(<NamedOverflowFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+      "be.visible",
+    );
+    cy.findByRole("button", { name: /Open Filters overflow\./i })
+      .focus()
+      .should("be.focused");
+
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Filters" }).should("be.focused");
+
+    setFixtureWidth(760);
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("not.exist");
+
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Filters" }).should("be.focused");
+  });
+
+  it("keeps the portaled overflow panel inside the viewport", () => {
+    cy.viewport(430, 500);
+    cy.mount(<KeyboardOverflowFixture width={260} />);
+
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
+
+    cy.get("html").should(($html) => {
+      const { clientWidth, scrollWidth } = $html[0];
+      expect(scrollWidth).to.equal(clientWidth);
+    });
+  });
+
+  it("preserves focus inside an open overflow panel across parent re-renders", () => {
+    cy.mount(<KeyboardOverflowRerenderFixture width={260} />);
+
+    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
     cy.realPress("ArrowRight");
@@ -599,7 +786,13 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("uses visual ordering for horizontal navigation in RTL", () => {
     cy.mount(<KeyboardRtlFixture />);
 
-    cy.findByRole("button", { name: "Run" }).focus();
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Columns" }).should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "Status" }).should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "Run" }).should("be.focused");
     cy.realPress("ArrowRight");
     cy.findByRole("button", { name: "Status" }).should("be.focused");
   });

@@ -49,6 +49,10 @@ export type ToolbarNextFocusMemory =
       type: "scope";
     };
 
+interface ToolbarNextFocusableOptions {
+  includeTabIndexMinusOne?: boolean;
+}
+
 export function getClosestToolbarNextScopeRoot(target: EventTarget | null) {
   if (!(target instanceof Element)) {
     return null;
@@ -57,13 +61,16 @@ export function getClosestToolbarNextScopeRoot(target: EventTarget | null) {
   return target.closest<HTMLElement>(`[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`);
 }
 
-export function getToolbarNextScopeFocusableElements(scopeRoot: HTMLElement) {
+export function getToolbarNextScopeFocusableElements(
+  scopeRoot: HTMLElement,
+  options: ToolbarNextFocusableOptions = {},
+) {
   return Array.from(
     scopeRoot.querySelectorAll<HTMLElement>(focusableSelector),
   ).filter((element) => {
     return (
       getClosestToolbarNextScopeRoot(element) === scopeRoot &&
-      isToolbarNextFocusable(element)
+      isToolbarNextFocusable(element, options)
     );
   });
 }
@@ -71,8 +78,12 @@ export function getToolbarNextScopeFocusableElements(scopeRoot: HTMLElement) {
 export function getToolbarNextFocusMemory(
   scopeRoot: HTMLElement,
   target: HTMLElement,
+  options: ToolbarNextFocusableOptions = {},
 ): ToolbarNextFocusMemory | null {
-  const scopeElements = getToolbarNextScopeFocusableElements(scopeRoot);
+  const scopeElements = getToolbarNextScopeFocusableElements(
+    scopeRoot,
+    options,
+  );
   const scopeIndex = scopeElements.indexOf(target);
   if (scopeIndex === -1) {
     return null;
@@ -98,6 +109,7 @@ export function getToolbarNextFocusMemory(
     const itemElements = getToolbarNextItemFocusableElements(
       itemRoot,
       scopeRoot,
+      options,
     );
     const controlIndex = itemElements.indexOf(target);
 
@@ -119,20 +131,30 @@ export function resolveToolbarNextFocusTarget(
   scopeRoot: HTMLElement,
   focusMemory: ToolbarNextFocusMemory | null,
   {
+    includeTabIndexMinusOne,
     items = [],
     overflowedIds,
   }: {
     items?: ToolbarNextOverflowItem[];
+    includeTabIndexMinusOne?: boolean;
     overflowedIds?: Set<string>;
   } = {},
 ) {
+  const focusableOptions = {
+    includeTabIndexMinusOne,
+  };
+
   if (!focusMemory) {
-    return getToolbarNextScopeFocusableElements(scopeRoot)[0] ?? null;
+    return (
+      getToolbarNextScopeFocusableElements(scopeRoot, focusableOptions)[0] ??
+      null
+    );
   }
 
   const fallback = getToolbarNextFocusFallback(
     scopeRoot,
     focusMemory.scopeIndex,
+    focusableOptions,
   );
 
   if (focusMemory.type === "overflow-trigger") {
@@ -155,6 +177,7 @@ export function resolveToolbarNextFocusTarget(
           scopeRoot,
           firstVisibleItem.id,
           0,
+          focusableOptions,
         ) ?? fallback
       );
     }
@@ -167,6 +190,7 @@ export function resolveToolbarNextFocusTarget(
       scopeRoot,
       focusMemory.itemId,
       focusMemory.controlIndex,
+      focusableOptions,
     );
 
     if (visibleItemTarget) {
@@ -194,6 +218,7 @@ export function getToolbarNextDirectionalMoveTarget(
   scopeRoot: HTMLElement,
   target: HTMLElement,
   key: string,
+  options: ToolbarNextFocusableOptions = {},
 ) {
   if (key !== "ArrowLeft" && key !== "ArrowRight") {
     return null;
@@ -227,7 +252,10 @@ export function getToolbarNextDirectionalMoveTarget(
     }
   }
 
-  const scopeElements = getToolbarNextScopeFocusableElements(scopeRoot);
+  const scopeElements = getToolbarNextScopeFocusableElements(
+    scopeRoot,
+    options,
+  );
   const currentIndex = scopeElements.indexOf(target);
 
   if (currentIndex === -1 || scopeElements.length <= 1) {
@@ -244,13 +272,14 @@ export function getToolbarNextDirectionalMoveTarget(
 function getToolbarNextItemFocusableElements(
   itemRoot: HTMLElement,
   scopeRoot: HTMLElement,
+  options: ToolbarNextFocusableOptions = {},
 ) {
   return Array.from(
     itemRoot.querySelectorAll<HTMLElement>(focusableSelector),
   ).filter((element) => {
     return (
       getClosestToolbarNextScopeRoot(element) === scopeRoot &&
-      isToolbarNextFocusable(element)
+      isToolbarNextFocusable(element, options)
     );
   });
 }
@@ -259,6 +288,7 @@ function getToolbarNextFocusableElementForItem(
   scopeRoot: HTMLElement,
   itemId: string,
   controlIndex: number,
+  options: ToolbarNextFocusableOptions = {},
 ) {
   const itemRoot = scopeRoot.querySelector<HTMLElement>(
     `[${TOOLBAR_NEXT_ITEM_ATTR}="${itemId}"]`,
@@ -268,7 +298,11 @@ function getToolbarNextFocusableElementForItem(
     return null;
   }
 
-  const itemElements = getToolbarNextItemFocusableElements(itemRoot, scopeRoot);
+  const itemElements = getToolbarNextItemFocusableElements(
+    itemRoot,
+    scopeRoot,
+    options,
+  );
 
   return (
     itemElements[Math.min(controlIndex, itemElements.length - 1)] ??
@@ -289,8 +323,12 @@ function getToolbarNextOverflowTriggerElement(
 function getToolbarNextFocusFallback(
   scopeRoot: HTMLElement,
   rememberedIndex: number,
+  options: ToolbarNextFocusableOptions = {},
 ) {
-  const focusableElements = getToolbarNextScopeFocusableElements(scopeRoot);
+  const focusableElements = getToolbarNextScopeFocusableElements(
+    scopeRoot,
+    options,
+  );
 
   if (focusableElements.length === 0) {
     return null;
@@ -335,7 +373,7 @@ function getToggleGroupButtons(target: HTMLElement) {
 
   return Array.from(
     toggleGroup.querySelectorAll<HTMLElement>("button:not([disabled])"),
-  ).filter(isToolbarNextFocusable);
+  ).filter((button) => isToolbarNextFocusable(button));
 }
 
 function isComboBoxInput(target: HTMLElement) {
@@ -363,7 +401,10 @@ function isPlainTextInput(target: HTMLElement) {
   );
 }
 
-function isToolbarNextFocusable(target: HTMLElement) {
+function isToolbarNextFocusable(
+  target: HTMLElement,
+  { includeTabIndexMinusOne = false }: ToolbarNextFocusableOptions = {},
+) {
   if (target.matches(":disabled")) {
     return false;
   }
@@ -372,7 +413,7 @@ function isToolbarNextFocusable(target: HTMLElement) {
     return false;
   }
 
-  if (target.getAttribute("tabindex") === "-1") {
+  if (!includeTabIndexMinusOne && target.getAttribute("tabindex") === "-1") {
     return false;
   }
 

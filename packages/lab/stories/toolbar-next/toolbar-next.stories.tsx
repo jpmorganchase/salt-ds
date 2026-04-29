@@ -43,6 +43,66 @@ export default {
 } as Meta<typeof ToolbarNext>;
 
 const options = ["Option A", "Option B", "Option C"];
+const deskOptions = ["All desks", "Rates", "Credit", "Equities"];
+const exceptionRows = [
+  ["FX-4120", "Morgan Stanley", "Missing allocation"],
+  ["EQ-8091", "BlackRock", "Limit override"],
+  ["CR-1174", "Goldman Sachs", "Price tolerance"],
+];
+
+const clippingValidationShellStyle = {
+  maxWidth: 680,
+};
+
+const clippingValidationCardStyle = {
+  background: "var(--salt-container-primary-background)",
+  border:
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+  borderRadius: "var(--salt-palette-corner, 0)",
+  boxShadow: "var(--salt-overlayable-shadow-popout)",
+  display: "flex" as const,
+  flexDirection: "column" as const,
+  height: 260,
+  overflow: "hidden" as const,
+};
+
+const clippingValidationHeaderStyle = {
+  borderBottom:
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+  padding: "var(--salt-spacing-200)",
+};
+
+const clippingValidationBodyStyle = {
+  display: "flex" as const,
+  flex: 1,
+  flexDirection: "column" as const,
+  gap: "var(--salt-spacing-100)",
+  minHeight: 0,
+  overflow: "hidden" as const,
+  padding: "var(--salt-spacing-200)",
+};
+
+const clippingValidationRowStyle = {
+  alignItems: "center",
+  background: "var(--salt-container-secondary-background)",
+  border:
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+  display: "grid" as const,
+  gap: "var(--salt-spacing-100)",
+  gridTemplateColumns: "80px minmax(0, 1fr) minmax(0, 1.4fr)",
+  padding: "var(--salt-spacing-100) var(--salt-spacing-150)",
+};
+
+const clippingValidationToolbarDockStyle = {
+  background: "var(--salt-container-secondary-background)",
+  borderTop:
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+  padding: "var(--salt-spacing-100)",
+};
+
+const clippingValidationNoteStyle = {
+  marginTop: "var(--salt-spacing-200)",
+};
 
 /**
  * Empty playground for building up a toolbar configuration from scratch.
@@ -993,5 +1053,120 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
   </ToolbarNext>
 );
 NamedOverflowWithDividers.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * Overflow panel clipping validation in a realistic bounded container.
+ *
+ * Intended behavior:
+ * - The toolbar is docked at the bottom of a compact review-queue card whose
+ *   container uses `overflow: hidden`, like many dashboard cards and modals.
+ * - The available width intentionally collapses the end-region actions into a
+ *   named `Actions` overflow trigger.
+ * - Open the Actions trigger. The overflow panel should float outside the card
+ *   and remain fully visible over the note below instead of being clipped by
+ *   the card boundary.
+ * - This validates that the overflow surface is portalled and positioned by
+ *   Floating UI rather than being rendered inside the clipped toolbar context.
+ */
+export const OverflowMenuInClippingContainer: StoryFn<
+  typeof ToolbarNext
+> = () => (
+  <div style={clippingValidationShellStyle}>
+    <div style={clippingValidationCardStyle}>
+      <div style={clippingValidationHeaderStyle}>
+        <Text>
+          <strong>Trade exception review</strong>
+        </Text>
+        <Text>Resolve exceptions before the desk closes the batch.</Text>
+      </div>
+      <div style={clippingValidationBodyStyle}>
+        {exceptionRows.map(([id, client, exception]) => (
+          <div style={clippingValidationRowStyle} key={id}>
+            <Text>{id}</Text>
+            <Text>{client}</Text>
+            <Text>{exception}</Text>
+          </div>
+        ))}
+      </div>
+      <div style={clippingValidationToolbarDockStyle}>
+        <ToolbarNext
+          aria-label="Trade exception review toolbar"
+          variant="transparent"
+        >
+          <ToolbarRegion position="start">
+            <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+              <Input
+                bordered
+                placeholder="Search exceptions"
+                startAdornment={<SearchIcon />}
+                style={{ width: 180 }}
+              />
+            </TooltrayNext>
+            <TooltrayNext
+              overflowGroup="Filters"
+              overflowLabel="Filters"
+              overflowMode="independent"
+              overflowPriority={3}
+            >
+              <Dropdown
+                bordered
+                defaultSelected={["All desks"]}
+                style={{ width: 140 }}
+              >
+                {deskOptions.map((option) => (
+                  <Option value={option} key={option} />
+                ))}
+              </Dropdown>
+            </TooltrayNext>
+            <TooltrayNext
+              overflowGroup="Filters"
+              overflowLabel="Filters"
+              overflowMode="independent"
+              overflowPriority={4}
+            >
+              <Button appearance="transparent">
+                <FilterIcon aria-hidden />
+                Status
+              </Button>
+            </TooltrayNext>
+          </ToolbarRegion>
+          <ToolbarRegion position="end">
+            <TooltrayNext
+              aria-label="Review actions"
+              overflowGroup="Actions"
+              overflowLabel="Actions"
+              overflowMode="grouped"
+              overflowPriority={6}
+              role="group"
+            >
+              <Button appearance="transparent">
+                <ExportIcon aria-hidden />
+                Export
+              </Button>
+              <Button appearance="transparent">Reassign</Button>
+              <Button appearance="solid">Approve</Button>
+            </TooltrayNext>
+            <TooltrayNext
+              overflowMode="none"
+              role="group"
+              aria-label="Toolbar settings"
+            >
+              <Button appearance="transparent" aria-label="Toolbar settings">
+                <SettingsIcon aria-hidden />
+              </Button>
+            </TooltrayNext>
+          </ToolbarRegion>
+        </ToolbarNext>
+      </div>
+    </div>
+    <Text style={clippingValidationNoteStyle}>
+      Open the Actions menu from the toolbar footer. The panel should render
+      over this note instead of disappearing behind the clipped card edge.
+    </Text>
+  </div>
+);
+OverflowMenuInClippingContainer.globals = {
   responsive: "wrap",
 };
