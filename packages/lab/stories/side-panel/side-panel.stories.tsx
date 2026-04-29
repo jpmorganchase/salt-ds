@@ -1132,66 +1132,72 @@ const HelpPanelCard = ({
   </Card>
 );
 
-export const Cards: StoryFn = () => {
+const CardsContent = () => {
   const headingId = useId();
   const { openState, setOpen } = useSidePanelContext();
 
   return (
-    <SidePanelProvider defaultOpen={true}>
+    <FlexLayout
+      direction="column"
+      style={{
+        width: "100%",
+        height: "100vh",
+      }}
+      gap={0}
+    >
+      <CardsAppHeader />
+
       <FlexLayout
-        direction="column"
+        gap={2}
+        padding={2}
         style={{
-          width: "100%",
-          height: "100vh",
+          flex: 1,
+          overflow: "auto",
         }}
-        gap={0}
       >
-        <CardsAppHeader />
+        <FlexItem grow={1}>
+          <StackLayout gap={2}>
+            {Array.from({ length: 20 }, (_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: Example-only static placeholder items
+              <Card key={`content-card-${i}`}>
+                <Text>
+                  Content card {i + 1} — This card is part of the main
+                  scrollable content area. It demonstrates how content can
+                  overflow and scroll independently within the layout.
+                </Text>
+              </Card>
+            ))}
+          </StackLayout>
+        </FlexItem>
 
-        <FlexLayout
-          gap={2}
-          padding={2}
-          style={{
-            flex: 1,
-            overflow: "auto",
-          }}
+        <SidePanel
+          aria-labelledby={headingId}
+          style={
+            {
+              position: "sticky",
+              top: 0,
+              alignSelf: "flex-start",
+              maxHeight: "100%",
+            } as CSSProperties
+          }
+          variant="none"
         >
-          <FlexItem grow={1}>
-            <StackLayout gap={2}>
-              {Array.from({ length: 20 }, (_, i) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: Example-only static placeholder items
-                <Card key={`content-card-${i}`}>
-                  <Text>
-                    Content card {i + 1} — This card is part of the main
-                    scrollable content area. It demonstrates how content can
-                    overflow and scroll independently within the layout.
-                  </Text>
-                </Card>
-              ))}
-            </StackLayout>
-          </FlexItem>
-
-          <SidePanel
-            aria-labelledby={headingId}
-            style={
-              {
-                position: "sticky",
-                top: 0,
-                alignSelf: "flex-start",
-                maxHeight: "100%",
-              } as CSSProperties
-            }
-            variant="none"
-          >
-            <HelpPanelCard
-              headingId={headingId}
-              open={openState}
-              onToggle={() => setOpen(!openState)}
-              style={{ flex: 1 }}
-            />
-          </SidePanel>
-        </FlexLayout>
+          <HelpPanelCard
+            headingId={headingId}
+            open={openState}
+            onToggle={() => setOpen(!openState)}
+            style={{ flex: 1 }}
+          />
+        </SidePanel>
       </FlexLayout>
+    </FlexLayout>
+  );
+};
+
+export const Cards: StoryFn = () => {
+  return (
+    <SidePanelProvider defaultOpen={true}>
+      <CardsContent />
     </SidePanelProvider>
   );
 };
